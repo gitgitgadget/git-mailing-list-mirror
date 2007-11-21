@@ -1,90 +1,56 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: Re: [PATCH] git-p4: Fix typo in --detect-labels
-Date: Wed, 21 Nov 2007 08:48:56 +0100
-Message-ID: <200711210848.59818.simon@lst.de>
-References: <e66701d40711201901n712e17e6x6018a4dc16e75cea@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Improve documentation of git-filter-branch rev-list specification.
+Date: Wed, 21 Nov 2007 08:49:29 +0100
+Message-ID: <4743E309.4090707@viscovery.net>
+References: <877ikc3gzc.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1469796.L6l3UuoV0Z";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Git ML" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Shun Kei Leung" <kevinlsk@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 21 08:49:28 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Carl Worth <cworth@cworth.org>
+X-From: git-owner@vger.kernel.org Wed Nov 21 08:49:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IukKq-00027i-B9
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 08:49:24 +0100
+	id 1IukLI-0002FU-Sj
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 08:49:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757055AbXKUHtF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 02:49:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755861AbXKUHtF
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 02:49:05 -0500
-Received: from esparsett.troll.no ([62.70.27.18]:44657 "EHLO
-	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756020AbXKUHtD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 02:49:03 -0500
-Received: from esparsett.troll.no (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP
-	id 3A399741FF; Wed, 21 Nov 2007 08:49:01 +0100 (CET)
-Received: from luria.local (unknown [10.3.5.222])
-	by esparsett.troll.no (Postfix) with ESMTP
-	id 30033741D6; Wed, 21 Nov 2007 08:49:01 +0100 (CET)
-User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
-In-Reply-To: <e66701d40711201901n712e17e6x6018a4dc16e75cea@mail.gmail.com>
+	id S1757035AbXKUHte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 02:49:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757412AbXKUHte
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 02:49:34 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:58568 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757035AbXKUHtd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 02:49:33 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IukKJ-0003hR-VO; Wed, 21 Nov 2007 08:48:52 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 24D746EF; Wed, 21 Nov 2007 08:49:29 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <877ikc3gzc.wl%cworth@cworth.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65618>
 
---nextPart1469796.L6l3UuoV0Z
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Carl Worth schrieb:
+> +The filters can modify the tree content stored in each commit,
+> +(e.g. removing a file or running a perl rewrite on all files), or the
+> +associated information about each commit, (commit message, author,
+> +parent, etc.). Any information not affected by a filter (including
+> +original commit times or merge information) will be preserved. If you
+> +specify no filters, the commits will be recommitted without any
+> +changes.
 
-On Wednesday 21 November 2007 04:01:19 Shun Kei Leung wrote:
-> Signed-off-by: Kevin Leung <kevinlsk@gmail.com>
+"... will be recommitted without any changes as long as no grafted parents 
+are encountered. Any grafted parents will be written into the commits even 
+if no filters are specified."
 
-Acked-by: Simon Hausmann <simon@lst.de>
-
-
-
-Thanks,
-Simon
-
->  contrib/fast-import/git-p4 |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-> index 65c57ac..66b79b6 100755
-> --- a/contrib/fast-import/git-p4
-> +++ b/contrib/fast-import/git-p4
-> @@ -1026,7 +1026,7 @@ class P4Sync(Command):
->
->          l = p4CmdList("labels %s..." % ' '.join (self.depotPaths))
->          if len(l) > 0 and not self.silent:
-> -            print "Finding files belonging to labels in %s" %
-> `self.depotPath` +            print "Finding files belonging to labels in
-> %s" % `self.depotPaths`
->
->          for output in l:
->              label = output["label"]
-
---nextPart1469796.L6l3UuoV0Z
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHQ+LrWXvMThJCpvIRAj7+AJ9JzvZZLpNTMHwBLAumfApGOK375gCffjfS
-rILHYUJMRJK3hkdcjoVyvpg=
-=aZZP
------END PGP SIGNATURE-----
-
---nextPart1469796.L6l3UuoV0Z--
+-- Hannes
