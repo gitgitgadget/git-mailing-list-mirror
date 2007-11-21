@@ -1,87 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Using Filemerge.app as a git-diff viewer
-Date: Wed, 21 Nov 2007 06:27:57 -0500
-Message-ID: <20071121112757.GA17231@sigill.intra.peff.net>
-References: <47440912.8010800@cam.ac.uk>
+From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
+Subject: Adding push configuration to .git/config
+Date: Wed, 21 Nov 2007 11:55:17 +0100
+Message-ID: <20071121105517.GA11875@denkbrett.schottelius.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Wincent Colaiuta <win@wincent.com>
-To: Toby White <tow21@cam.ac.uk>
-X-From: git-owner@vger.kernel.org Wed Nov 21 12:28:25 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="RnlQjJ0d97Da+TV1"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 21 12:48:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iunkf-0006jU-UW
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 12:28:18 +0100
+	id 1Iuo48-0004JB-96
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 12:48:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755153AbXKUL2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 06:28:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755250AbXKUL2B
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 06:28:01 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4405 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755130AbXKUL2A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 06:28:00 -0500
-Received: (qmail 6468 invoked by uid 111); 21 Nov 2007 11:27:58 -0000
-Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 21 Nov 2007 06:27:58 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Nov 2007 06:27:57 -0500
+	id S1757339AbXKULsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 06:48:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757252AbXKULsE
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 06:48:04 -0500
+Received: from natgw.netstream.ch ([62.65.128.28]:35972 "EHLO
+	denkbrett.schottelius.org" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754793AbXKULsD (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Nov 2007 06:48:03 -0500
+X-Greylist: delayed 3149 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Nov 2007 06:48:02 EST
+Received: from nico by denkbrett.schottelius.org with local (Exim 4.68)
+	(envelope-from <nico-linux-git@schottelius.org>)
+	id 1IunEj-0005tm-DM
+	for git@vger.kernel.org; Wed, 21 Nov 2007 11:55:17 +0100
 Content-Disposition: inline
-In-Reply-To: <47440912.8010800@cam.ac.uk>
+User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
+X-Unix-Info: http://unix.schottelius.org/
+X-Netzseite: http://nico.schottelius.org/
+X-System-Info: denkbrett running Linux 2.6.23.1-denkbrett on i686
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65632>
 
-On Wed, Nov 21, 2007 at 10:31:46AM +0000, Toby White wrote:
 
-> So I wrote a quick script (below) which does what I need. Of all
-> the available git-diff flags, it only understands "--cached", and
-> up to two commit objects, and no paths, but that's enough for me.
-> Within those constraints, it has the same semantics as git-diff.
+--RnlQjJ0d97Da+TV1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Have you looked at the documentation for GIT_EXTERNAL_DIFF (try git(7))?
-I think it is a cleaner way of doing what you want (although I think you
-will get each file diffed individually, which is perhaps not what you
-want).
+Hello guys!
 
-Something like:
+We are working pretty much with branches here and I think it would be
+pretty cool, to make git-push recognize some configuratio in
+~/.git/config that describes where to push what:
 
-$ cat >merge.sh <<EOF
-#!/bin/sh
-opendiff "$1" "$2"
-EOF
-$ GIT_EXTERNAL_DIFF=./merge.sh git-diff ...
+   git-push origin master:<name of worker> is what we currenty do
+   manually
 
-> #!/bin/sh
-> #
-> # Filemerge.app must not already be open before running
-> # this script, or opendiff below will return immediately,
-> # and the TMPDIRs deleted before it gets the chance to read
-> # them.
->
-> if test $# = 0; then
->   OLD=`git-write-tree`
-> elif test "$1" = --cached; then
->   OLD=HEAD
->   NEW=`git-write-tree`
->   shift
-> fi
-> if test $# -gt 0; then
->   OLD="$1"; shift
-> fi
-> test $# -gt 0 && test -z "$CACHED" && NEW="$1"
+Nice would be
 
-write-tree? Yikes. If you want to diff against the working tree, then do
-that. If you want to diff against the index, then you probably want to
-git-checkout-index to a tmpdir, and diff against that.
+[branch "master"]
+   remote-push          =3D origin
+   remote-push-merge    =3D another_branch
 
-> git-archive --format=tar $OLD | (cd $TMPDIR1; tar xf -)
+And thus perhaps also changing the existing specs:
 
-Again, this could be simpler and faster by using git-checkout-index
-(preceded by git-read-tree into a temp index, if you are comparing
-against a tree).
+   remote =3D ... to remote-fetch =3D ...
+   merge =3D ... to remote-fetch-merge =3D=20
 
--Peff
+And perhaps it would also make sense to replace "refs/heads/master" with
+only "master"?
+
+What do you think about those three ideas?
+
+Nico
+
+--=20
+Think about Free and Open Source Software (FOSS).
+http://nico.schottelius.org/documentations/foss/the-term-foss/
+
+PGP: BFE4 C736 ABE5 406F 8F42  F7CF B8BE F92A 9885 188C
+
+--RnlQjJ0d97Da+TV1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHRA6VuL75KpiFGIwRAngAAJ91qHqODMGsxn4zR9xnSydCUwXgHQCgpHAt
+J3e5CfipOKHb570gXJYNLrs=
+=vBJS
+-----END PGP SIGNATURE-----
+
+--RnlQjJ0d97Da+TV1--
