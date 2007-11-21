@@ -1,59 +1,98 @@
-From: Jarek Poplawski <jarkao2@o2.pl>
-Subject: Re: gitweb: kernel versions in the history (feature request, probably)
-Date: Wed, 21 Nov 2007 09:09:25 +0100
-Message-ID: <20071121080925.GA2183@ff.dom.local>
-References: <20071120142042.GA4157@ff.dom.local> <20071120215904.GF1001@machine.or.cz> <47436E0F.6080003@o2.pl> <20071121032009.GB4175@fieldses.org> <20071121075217.GA1642@ff.dom.local>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: t9106 failure, bisect weirdness
+Date: Wed, 21 Nov 2007 01:10:01 -0800
+Message-ID: <20071121091001.GA23266@soma>
+References: <20071119230601.GA15624@net-ronin.org> <200711200552.27001.chriscool@tuxfamily.org> <20071120061314.GA21819@net-ronin.org> <200711210508.27455.chriscool@tuxfamily.org> <20071121045638.GA9184@net-ronin.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, linux-kernel@vger.kernel.org,
-	git@vger.kernel.org
-To: "J\. Bruce Fields" <bfields@fieldses.org>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1759758AbXKUIFX@vger.kernel.org Wed Nov 21 09:05:53 2007
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1759758AbXKUIFX@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: carbonated beverage <ramune@net-ronin.org>
+X-From: git-owner@vger.kernel.org Wed Nov 21 10:10:25 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iukai-0005p4-0x
-	for glk-linux-kernel-3@gmane.org; Wed, 21 Nov 2007 09:05:48 +0100
+	id 1IulbE-0006YU-Mg
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 10:10:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759758AbXKUIFX (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 21 Nov 2007 03:05:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756227AbXKUIFF
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Wed, 21 Nov 2007 03:05:05 -0500
-Received: from mx2.go2.pl ([193.17.41.42]:59838 "EHLO poczta.o2.pl"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755186AbXKUIFE (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 21 Nov 2007 03:05:04 -0500
-Received: from poczta.o2.pl (mx2 [127.0.0.1])
-	by poczta.o2.pl (Postfix) with ESMTP id D0785748068;
-	Wed, 21 Nov 2007 09:05:02 +0100 (CET)
-Received: from ff.dom.local (bv170.internetdsl.tpnet.pl [80.53.205.170])
-	by poczta.o2.pl (Postfix) with ESMTP;
-	Wed, 21 Nov 2007 09:05:02 +0100 (CET)
-Received: (nullmailer pid 2290 invoked by uid 1000);
-	Wed, 21 Nov 2007 08:09:25 -0000
+	id S1752222AbXKUJKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 04:10:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750959AbXKUJKF
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 04:10:05 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:36401 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751198AbXKUJKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 04:10:03 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id A24137DC0FE;
+	Wed, 21 Nov 2007 01:10:01 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20071121075217.GA1642@ff.dom.local>
-User-Agent: Mutt/1.4.2.2i
-Sender: linux-kernel-owner@vger.kernel.org
+In-Reply-To: <20071121045638.GA9184@net-ronin.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65619>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65620>
 
-On Wed, Nov 21, 2007 at 08:52:17AM +0100, Jarek Poplawski wrote:
-...
-> Of course, you are right, and I probably miss something, but to be
-> sure we think about the same thing let's look at some example: so, I
-> open a page with current Linus' tree, go to something titled:
-> /pub/scm / linux/kernel/git/torvalds/linux-2.6.git / history
+Hi, thanks for the heads up, Christian
 
-I've forgotten to mention it's: 
+carbonated beverage <ramune@net-ronin.org> wrote:
+> > Ok thanks for doing that too.
+> > Could you also look at the "file" when the test succeed and when it does not 
+> > and send us both versions and a diff between them (if it's not too big).
+> 
+> Size-wise, they're tiny -- though there's a lot of lines.
+> 
+> The diff:
+> 
+> ramune/lycaeum:t: diff -u works.t fails.t 
+> --- works.t     2007-11-20 21:54:29.000000000 -0700
+> +++ fails.t     2007-11-20 21:54:39.000000000 -0700
+> @@ -55,9 +55,9 @@
+>  55
+>  56
+>  57
+> -5588
+> +58
+>  59
+>  60
+> -6611
+> +61
+>  62
+>  63
 
-[linux/kernel/git/torvalds/linux-2.6.git] / net / core / dev.c
+Ah, these changes should've been made on the svn side.  But I'm betting
+a race condition appears on faster computers (which we've seen before in
+other tests).
 
-> and see:
-> 2007-10-10 Stephen Hemminger [NET]: Make NAPI polling independent ...
-> and just below something with 2007-08-14 date.
+I can't reproduce it at all on any of my boxes, but does the following
+one-liner fix it consistently?
 
-Jarek P.
+Thanks,
+
+From: Eric Wong <normalperson@yhbt.net>
+Date: Wed, 21 Nov 2007 00:57:33 -0800
+Subject: [PATCH] t9106: fix a race condition that caused svn to miss modifications
+
+carbonated beverage noticed this test was occasionally failing.
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ t/t9106-git-svn-dcommit-clobber-series.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/t/t9106-git-svn-dcommit-clobber-series.sh b/t/t9106-git-svn-dcommit-clobber-series.sh
+index d59acc8..7452546 100755
+--- a/t/t9106-git-svn-dcommit-clobber-series.sh
++++ b/t/t9106-git-svn-dcommit-clobber-series.sh
+@@ -22,6 +22,7 @@ test_expect_success '(supposedly) non-conflicting change from SVN' "
+ 	cd tmp &&
+ 		perl -i -p -e 's/^58\$/5588/' file &&
+ 		perl -i -p -e 's/^61\$/6611/' file &&
++		poke file &&
+ 		test x\"\`sed -n -e 58p < file\`\" = x5588 &&
+ 		test x\"\`sed -n -e 61p < file\`\" = x6611 &&
+ 		svn commit -m '58 => 5588, 61 => 6611' &&
+-- 
+Eric Wong
