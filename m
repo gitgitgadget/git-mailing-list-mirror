@@ -1,78 +1,59 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: Using Filemerge.app as a git-diff viewer
-Date: Wed, 21 Nov 2007 14:28:03 +0100
-Message-ID: <4455F263-251E-4B04-9F61-A26A3548B316@wincent.com>
-References: <47440912.8010800@cam.ac.uk> <20071121112757.GA17231@sigill.intra.peff.net> <47442E57.8010004@cam.ac.uk>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Toby White <tow21@cam.ac.uk>
-X-From: git-owner@vger.kernel.org Wed Nov 21 14:28:33 2007
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Can git for MinGW clone from http
+Date: Wed, 21 Nov 2007 14:54:34 +0100
+Message-ID: <4744389A.4020808@viscovery.net>
+References: <474430F9.4080902@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Bo Yang <techrazy.yang@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 21 14:55:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iupd0-0004TO-7x
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 14:28:30 +0100
+	id 1Iuq2Z-0006yx-TM
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 14:54:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751027AbXKUN2M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Nov 2007 08:28:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbXKUN2M
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 08:28:12 -0500
-Received: from wincent.com ([72.3.236.74]:54807 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751027AbXKUN2L convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Nov 2007 08:28:11 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lALDS46E015382;
-	Wed, 21 Nov 2007 07:28:05 -0600
-In-Reply-To: <47442E57.8010004@cam.ac.uk>
-X-Mailer: Apple Mail (2.915)
+	id S1752158AbXKUNyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 08:54:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751892AbXKUNyi
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 08:54:38 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:55392 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751192AbXKUNyh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 08:54:37 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Iuq1d-0005tm-LM; Wed, 21 Nov 2007 14:53:57 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 078B46EF; Wed, 21 Nov 2007 14:54:34 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <474430F9.4080902@gmail.com>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65649>
 
-El 21/11/2007, a las 14:10, Toby White escribi=F3:
+Bo Yang schrieb:
+> Hi
+>   I just installed the Git for MinGW in windows platform and I try to
+> git clone http://......
+> But it give a error message saying that there is no curl available. 
+> Could you please tell me that does this version support clone through 
+> http protocol? Thanks in advance!
 
-> (Wincent pointed out its flaws better than me. Basically,
-> opendiff is not really diff-like enough.)
->
-> And in any case, that launches Filemerge repeatedly
-> on every file separately, which makes reviewing a large diff
-> time-consuming and not very helpful.
+Lets see:
 
-I know it's not much help to you right now, but when I first asked =20
-about a side-by-side diff viewer back in September I explored creating =
-=20
-a wrapper using GIT_EXTERNAL_DIFF and was basically unsatisfied with =20
-the results.
+	D:\Src>git clone http://repo.or.cz/r/kdbg.git
+	Initialized empty Git repository in d:/Src/kdbg/.git/
+	http transport not supported, rebuild Git with curl support
 
-So I decided to write a very simple native Cocoa app (I'm working on =20
-Mac OS X); it was to be a diff viewer and nothing more (not a =20
-repository browser). I was able to spend a few hours on it back in =20
-September but then other things came up so I haven't been able to =20
-finish it, but I do intend to come back to it when time permits. You =20
-can browse the work in progress at:
+Which part of "http transport not supported" requires further explanation?
 
-<http://git.wincent.com/gdiff.git>
-
-Basically consists of a fast Ragel-generated state machine for parsing =
-=20
-git-diff output, patches and email messages, and the beginnings of a =20
-UI. But like I said, not much help to you right now as it can't yet be =
-=20
-used to do anything useful. My goal for it is to provide a nice =20
-experience, above all when reviewing patches on a mailing list (ie. =20
-where your local repository doesn't have the proposed commits in it =20
-yet). In fact, even when run from outside of any Git repo I want it to =
-=20
-at least show the known parts of the files (the context) and provide a =
-=20
-shaded background for the unknown bits.
-
-Cheers,
-Wincent
+-- Hannes
