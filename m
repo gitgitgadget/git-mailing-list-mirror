@@ -1,62 +1,63 @@
-From: Dan Zwell <dzwell@gmail.com>
-Subject: Re: [PATCH] Highlight keyboard shortcuts in git-add--interactive
-Date: Wed, 21 Nov 2007 17:00:50 -0600
-Message-ID: <4744B8A2.6020503@zwell.net>
-References: <1195655278-19535-1-git-send-email-win@wincent.com> <20071121152817.GA27144@sigill.intra.peff.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH] Added test case for stg refresh
+Date: Thu, 22 Nov 2007 00:15:53 +0100
+Message-ID: <20071121231553.GA19422@diana.vm.bytemark.co.uk>
+References: <87tznfvqb4.fsf@lysator.liu.se> <87oddnvpzf.fsf@virtutech.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Wincent Colaiuta <win@wincent.com>, Dan Zwell <dzwell@gmail.com>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 22 00:01:37 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Catalin Marinas <catalin.marinas@gmail.com>
+To: David =?iso-8859-1?Q?K=E5gedal?= <david@virtutech.se>
+X-From: git-owner@vger.kernel.org Thu Nov 22 00:16:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuyZS-0006u8-V6
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 00:01:27 +0100
+	id 1Iuynv-00046R-N8
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 00:16:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753870AbXKUXBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 18:01:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753685AbXKUXBI
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 18:01:08 -0500
-Received: from wa-out-1112.google.com ([209.85.146.177]:32156 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753444AbXKUXBG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 18:01:06 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so2957030wah
-        for <git@vger.kernel.org>; Wed, 21 Nov 2007 15:01:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        bh=Ex/1zwBuSxK+qEwK7vGtja1Bh7DtMzkY7cEcYyInsbA=;
-        b=i8c7dXQ45fbp6Zru43CGY/0/yZI1W14pv/RxTen/zlG/G+nXQna8ZMvAd9dm3/rDwXv0KATh1RNSEOiz2Rlr819D7pxc7A8NqJJ0tyvcn5NnEJ8fy6QQPSntaFluW6sK/UVFZ6NHySEsdFPgm+d1a8oZhNEOUB+R+kaQzXZVSsg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=hk66M3AnbwGL75h/5sNXfER2rNFs27cNoZzw2XB698TVex8XmD+QULcvqIM0HjFtGUnbGEBzFPUAPiq+wvmP9TGg/5NkpWD5gDafZfnZbo0/3G7xaT8OWVm/UA6AwS+aWclszhyjaFtcS6MZOzEYZ979KBuGNjpSq9XdxgRc+Vw=
-Received: by 10.115.107.1 with SMTP id j1mr494697wam.1195686065715;
-        Wed, 21 Nov 2007 15:01:05 -0800 (PST)
-Received: from ?143.44.70.185? ( [143.44.70.185])
-        by mx.google.com with ESMTPS id f78sm638673pyh.2007.11.21.15.01.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 21 Nov 2007 15:01:04 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071031)
-In-Reply-To: <20071121152817.GA27144@sigill.intra.peff.net>
+	id S1754845AbXKUXQF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Nov 2007 18:16:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754557AbXKUXQE
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 18:16:04 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4520 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754733AbXKUXQD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 18:16:03 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IuynR-0005MZ-00; Wed, 21 Nov 2007 23:15:53 +0000
+Content-Disposition: inline
+In-Reply-To: <87oddnvpzf.fsf@virtutech.se>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65712>
 
-Jeff King wrote:
- > Dan, any progress on the next revision of the patch
- > series?
- >
+On 2007-11-21 11:43:00 +0100, David K=E5gedal wrote:
 
-Yeah, I've been busy with school work, but Thanksgiving break has just 
-started. I hope to have something to send tonight, though it probably 
-will not be the final draft, as it has quite a bit of changes from the 
-last version.
+> David K=E5gedal <davidk@lysator.liu.se> writes:
+>
+> > This test case fails on the kha/experimental branch. Using "stg
+> > refresh -p <patch>" can cause all sorts of wieirdness, and there
+> > is no test case for it.
+>
+> I just checked, and it fails on kha/safe as well. So maybe there is
+> some problem with the test case, but I don't know what it is.
 
-Dan
+Thanks, more tests are always welcome. But it doesn't fail for me.
+I've just pushed out updated kha/safe and kha/experimental branches --
+with this new test at the bottom of the stack -- and the whole test
+suite passes at every step. Could you try the updated branches and see
+if you can still make it fail?
+
+> And maybe it should be called t2301 instead?
+
+Those numbers are just one big jumble anyway, so no need to bother.
+:-)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
