@@ -1,62 +1,59 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Using Filemerge.app as a git-diff viewer
-Date: Wed, 21 Nov 2007 14:58:09 +0100
-Organization: At home
-Message-ID: <fi1dhg$eb5$1@ger.gmane.org>
-References: <47440912.8010800@cam.ac.uk> <20071121112757.GA17231@sigill.intra.peff.net> <1A9343EE-BB45-4CF8-9F17-E6A73C5F0B83@wincent.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [WIP PATCH] Add 'git fast-export', the sister of 'git fast-import'
+Date: Wed, 21 Nov 2007 14:01:00 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711211209080.27959@racer.site>
+References: <Pine.LNX.4.64.0711210336210.27959@racer.site> <4743E1D6.4010308@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 21 14:59:05 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Nov 21 15:02:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iuq6Z-0000Qu-JH
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 14:59:04 +0100
+	id 1Iuq8p-0001Rp-T3
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 15:01:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752390AbXKUN6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 08:58:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752173AbXKUN6q
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 08:58:46 -0500
-Received: from main.gmane.org ([80.91.229.2]:40305 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751892AbXKUN6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 08:58:45 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Iuq5z-0007kl-7u
-	for git@vger.kernel.org; Wed, 21 Nov 2007 13:58:27 +0000
-Received: from abxf19.neoplus.adsl.tpnet.pl ([83.8.255.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 21 Nov 2007 13:58:27 +0000
-Received: from jnareb by abxf19.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 21 Nov 2007 13:58:27 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abxf19.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1753305AbXKUOBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 09:01:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753477AbXKUOBF
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 09:01:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35011 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753218AbXKUOBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 09:01:04 -0500
+Received: (qmail invoked by alias); 21 Nov 2007 14:01:02 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp031) with SMTP; 21 Nov 2007 15:01:02 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+VJWMvFUeVhXQsa8e0ev7Pk/lS3orFRYslSNNV5u
+	dOxklo1F+gFg4c
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4743E1D6.4010308@viscovery.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65651>
 
-Wincent Colaiuta wrote:
+Hi,
 
-> - you need to escape those $-signs
+On Wed, 21 Nov 2007, Johannes Sixt wrote:
 
-[...]
+> Johannes Schindelin schrieb:
+> > 	Oh, and it relies on "int" being castable to void * and vice versa.
+> >     Is anybody aware of a platform where this can lead to problems?
+> 
+> Win64?
 
-> $ cat >merge.sh <<EOF
+Is this really a problem?  I mean, all I need is that i == (int)(void *)i.
 
-Or use
+My doubts came from platforms where you can access memory only aligned to 
+4-byte chunks, and that it _may_ be possible that some of them do not even 
+store the least significant two bits.
 
-$ cat >merge.sh <<\EOF
+Ciao,
+Dscho
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+P.S.: I'll try to read up on ptrint_t, as suggested by Shawn.
