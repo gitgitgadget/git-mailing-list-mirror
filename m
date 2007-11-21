@@ -1,238 +1,183 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [ANNOUNCE] git-gui 0.9.0
-Date: Wed, 21 Nov 2007 02:36:45 -0500
-Message-ID: <20071121073645.GV14735@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] send-pack: cluster ref status reporting
+Date: Wed, 21 Nov 2007 02:37:01 -0500
+Message-ID: <20071121073700.GA10742@sigill.intra.peff.net>
+References: <20071120111317.GA4120@sigill.intra.peff.net> <20071120111801.GA7814@sigill.intra.peff.net> <7v1wakhxh4.fsf@gitster.siamese.dyndns.org> <20071121073332.GA10244@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 21 08:37:14 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 21 08:37:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iuk8x-0007EE-Ac
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 08:37:07 +0100
+	id 1Iuk9e-0007Qd-2N
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 08:37:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759211AbXKUHgv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Nov 2007 02:36:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759197AbXKUHgv
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 02:36:51 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:56460 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755913AbXKUHgt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Nov 2007 02:36:49 -0500
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Iuk8c-0006D0-7w; Wed, 21 Nov 2007 02:36:46 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6C41A20FBAE; Wed, 21 Nov 2007 02:36:45 -0500 (EST)
+	id S1756938AbXKUHhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 02:37:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757035AbXKUHhG
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 02:37:06 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2732 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756871AbXKUHhE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 02:37:04 -0500
+Received: (qmail 4887 invoked by uid 111); 21 Nov 2007 07:37:02 -0000
+Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 21 Nov 2007 02:37:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Nov 2007 02:37:01 -0500
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <20071121073332.GA10244@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65612>
 
-git-gui 0.9.0 is now available on repo.or.cz:
+On Wed, Nov 21, 2007 at 02:33:32AM -0500, Jeff King wrote:
 
-  gitweb:  http://repo.or.cz/w/git-gui.git
-  git:     git://repo.or.cz/git-gui.git
-           http://repo.or.cz/r/git-gui.git
+> > > +	case REF_STATUS_REMOTE_REJECT:
+> > > +		print_ref_status('!', "[remote rejected]", ref,
+> > > +				ref->deletion ? ref->peer_ref : NULL,
+> > > +				ref->remote_status);
+> > > +		break;
+> 
+> Gah, sorry. This crept in because I based it on the previous, broken
+> version of the other patch series which had the same problem (and
+> obviously this chunk is just a pure code move + reindent).
 
-This is the first release that includes i18n support.  I'm kicking
-it out as something between a pre-release and a full release.
+You will also find that it doesn't apply cleanly to 'next', since it
+attempts to remove the bogus version of the lines (while you correctly
+fixed them up when you applied to 'next').
 
-The English version has been quite stable and is in heavy production
-use by a lot of users so I figure its time to tag it.  Some of the
-non-English translations may need to be updated, but many of them
-are reasonably current.  I'm inclined to do a 0.9.1 in the near
-future if updated translations come in.
+Below is a fixed version of the patch for convenience.
 
-Many thanks to all those who have contributed to this release.
+-- >8 --
+send-pack: cluster ref status reporting
 
------
+Instead of intermingling success and failure, we now print:
 
-Major notable improvements over the 0.8 series:
+  1. all uptodate refs (if args.verbose is enabled)
+  2. successfully pushed refs
+  3. failed refs
 
-* More native appearance on Mac OS X
+with the assumption that the user is most likely to see the
+ones at the end, and therefore we order them from "least
+interesting" to "most interesting."
+---
+ builtin-send-pack.c |   93 +++++++++++++++++++++++++++++----------------------
+ 1 files changed, 53 insertions(+), 40 deletions(-)
 
-  git-gui now displays "Git Gui" as its application name in the
-  menu bar, instead of "Wish".  It also uses Henrik Nyh's Git
-  logo in the dock and error dialogs.
-
-* Window/shortcut icon on Microsoft Windows
-
-  The icon in the upper left corner of each window's title bar
-  (and on the taskbar) is now Henrik Nyh's Git logo instead of
-  the Tcl feather.
-
-  On Windows git-gui now creates true Windows shortcuts to launch
-  git-gui in a specific repository.  This allows the icon to be a
-  git specific icon instead of the generic Windows batch file icon.
-
-* Repository creation/clone UI
-
-  Starting git-gui outside of a repository allows the user to
-  create a new repository, clone an existing repository or open a
-  previously accessed repository. The clone process actually uses
-  a pure Tcl implementation of git-clone, based on `git init &&
-  git remote add origin ... && git fetch`.
-
-  This makes it easier to create a shortcut to launch git-gui
-  from desktop menu systems, e.g. the Windows Start menu or
-  the Mac OS X dock.
-
-* i18n translations for de, hu, it, ja, ru, zh_cn
-
-  Some of these are still under development.  Hopefully we can
-  get even more translations in 0.9.1.
-
------
-
-Changes since 0.8.4:
-
-Alex Riesen (2):
-      More updates and corrections to the russian translation of git-gu=
-i
-      Updated russian translation of git-gui
-
-Christian Stimming (12):
-      Mark strings for translation.
-      Makefile rules for translation catalog generation and installatio=
-n.
-      Add glossary that can be converted into a po file for each langua=
-ge.
-      Add glossary translation template into git.
-      German translation for git-gui
-      German glossary for translation
-      git-gui: Add more words to translation glossary
-      git-gui: Update German glossary according to mailing list discuss=
-ion
-      git-gui: Incorporate glossary changes into existing German transl=
-ation
-      git-gui: Update German translation, including latest glossary cha=
-nges
-      git-gui: Add more terms to glossary.
-      git-gui: Update German translation
-
-Harri Ilari Tapio Liusvaara (1):
-      git-gui: Disambiguate "commit"
-
-Irina Riesen (1):
-      git-gui: initial version of russian translation
-
-Johannes Schindelin (7):
-      Add po/git-gui.pot
-      Ignore po/*.msg
-      git-gui: Deiconify startup wizard so it raises to the top
-      git-gui: add a simple msgfmt replacement
-      po2msg: ignore entries marked with "fuzzy"
-      po2msg: ignore untranslated messages
-      po2msg: actually output statistics
-
-Johannes Sixt (1):
-      git-gui: Change main window layout to support wider screens
-
-Junio C Hamano (2):
-      git-gui po/README: Guide to translators
-      git-gui: Update Japanese strings (part 2)
-
-Kirill (1):
-      Updated Russian translation.
-
-Michele Ballabio (4):
-      git-gui: remove dots in some UI strings
-      git-gui: add some strings to translation
-      git-gui: fix typo in lib/blame.tcl
-      git-gui: update Italian translation
-
-Miklos Vajna (1):
-      Hungarian translation of git-gui
-
-Paolo Ciarrocchi (1):
-      Italian translation of git-gui
-
-Shawn O. Pearce (55):
-      git-gui: Locate the library directory early during startup
-      git-gui: Initialize Tcl's msgcat library for internationalization
-      git-gui: Update po/README as symlink process is not necessary
-      git-gui: Correct stock message for 'Invalid font specified in %s'
-      git-gui: Quiet the msgfmt part of the make process
-      git-gui: Ensure msgfmt failure stops GNU make
-      git-gui: Mark revision chooser tooltip for translation
-      git-gui: Localize commit/author dates when displaying them
-      git-gui: Support context-sensitive i18n
-      git-gui: Document the new i18n context support
-      git-gui: Make the tree browser also use lightgray selection
-      git-gui: Paper bag fix missing translated strings
-      git-gui: Fix missing i18n markup in push/fetch windows
-      git-gui: Support native Win32 Tcl/Tk under Cygwin
-      git-gui: Refactor some UI init to occur earlier
-      git-gui: Allow users to choose/create/clone a repository
-      git-gui: Avoid console scrollbars unless they are necessary
-      git-gui: Don't bother showing OS error message about hardlinks
-      git-gui: Keep the UI responsive while counting objects in clone
-      git-gui: Copy objects/info/alternates during standard clone
-      git-gui: Don't delete console window namespaces too early
-      git-gui: Don't delete scrollbars in console windows
-      git-gui: Switch the git-gui logo to Henrik Nyh's logo
-      git-gui: Make the status bar easier to read in the setup wizard
-      git-gui: Use Henrik Nyh's git logo icon on Windows systems
-      git-gui: Support a native Mac OS X application bundle
-      git-gui: Refer to ourselves as "Git Gui" and not "git-gui"
-      git-gui: Allow forced push into remote repository
-      git-gui: Refactor Henrik Nyh's logo into its own procedure
-      git-gui: Refactor about dialog code into its own module
-      git-gui: Include our Git logo in the about dialog
-      git-gui: Use progress meter in the status bar during index update=
-s
-      git-gui: Consolidate the Fetch and Push menus into a Remote menu
-      git-gui: Bind Cmd-, to Preferences on Mac OS X
-      git-gui: Shorten the staged/unstaged changes title bar text
-      git-gui: Updated po strings based on current sources
-      git-gui: Move load_config procedure below git-version selection
-      git-gui: Refactor git-config --list parsing
-      git-gui: Support LFs embedded in config file values
-      git-gui: Change repository browser radio buttons to hyperlinks
-      git-gui: Offer repository management features in menu bar
-      git-gui: Fix bind errors when switching repository chooser panels
-      git-gui: Disable the text widget in the repository chooser
-      git-gui: Bind n/c/o accelerators in repository chooser
-      git-gui: Ensure copyright message is correctly read as UTF-8
-      git-gui: Use proper Windows shortcuts instead of bat files
-      git-gui: Support cloning Cygwin based work-dirs
-      git-gui: Collapse $env(HOME) to ~/ in recent repositories on Wind=
-ows
-      git-gui: Honor a config.mak in git-gui's top level
-      git-gui: Paper bag fix the global config parsing
-      git-gui: Make sure we get errors from git-update-index
-      git-gui: Protect against bad translation strings
-      git-gui: Allow users to set font weights to bold
-      git-gui: Bind Meta-T for "Stage To Commit" menu action
-      git-gui 0.9.0
-
-Steffen Prohaska (4):
-      git-gui: add directory git-gui is located in to PATH (on Windows)
-      git-gui: set NO_MSGFMT to force using pure tcl replacement in msy=
-sgit
-      git-gui: add mingw specific startup wrapper
-      git-gui: offer a list of recent repositories on startup
-
-Xudong Guan (2):
-      Initial Chinese translation for git-gui
-      git-gui: Added initial version of po/glossary/zh_cn.po
-
-=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93 (2):
-      Japanese translation of git-gui
-      git-gui: Update Japanese strings
-
---=20
-Shawn.
+diff --git a/builtin-send-pack.c b/builtin-send-pack.c
+index 3aab89c..25ae1fe 100644
+--- a/builtin-send-pack.c
++++ b/builtin-send-pack.c
+@@ -298,52 +298,65 @@ static void print_ok_ref_status(struct ref *ref)
+ 	}
+ }
+ 
++static int print_one_push_status(struct ref *ref, const char *dest, int count)
++{
++	if (!count)
++		fprintf(stderr, "To %s\n", dest);
++
++	switch(ref->status) {
++	case REF_STATUS_NONE:
++		print_ref_status('X', "[no match]", ref, NULL, NULL);
++		break;
++	case REF_STATUS_REJECT_NODELETE:
++		print_ref_status('!', "[rejected]", ref, NULL,
++				"remote does not support deleting refs");
++		break;
++	case REF_STATUS_UPTODATE:
++		print_ref_status('=', "[up to date]", ref,
++				ref->peer_ref, NULL);
++		break;
++	case REF_STATUS_REJECT_NONFASTFORWARD:
++		print_ref_status('!', "[rejected]", ref, ref->peer_ref,
++				"non-fast forward");
++		break;
++	case REF_STATUS_REMOTE_REJECT:
++		print_ref_status('!', "[remote rejected]", ref,
++				ref->deletion ? NULL : ref->peer_ref,
++				ref->remote_status);
++		break;
++	case REF_STATUS_EXPECTING_REPORT:
++		print_ref_status('!', "[remote failure]", ref,
++				ref->deletion ? NULL : ref->peer_ref,
++				"remote failed to report status");
++		break;
++	case REF_STATUS_OK:
++		print_ok_ref_status(ref);
++		break;
++	}
++
++	return 1;
++}
++
+ static void print_push_status(const char *dest, struct ref *refs)
+ {
+ 	struct ref *ref;
+-	int shown_dest = 0;
++	int n = 0;
+ 
+-	for (ref = refs; ref; ref = ref->next) {
+-		if (!ref->status)
+-			continue;
+-		if (ref->status == REF_STATUS_UPTODATE && !args.verbose)
+-			continue;
++	if (args.verbose) {
++		for (ref = refs; ref; ref = ref->next)
++			if (ref->status == REF_STATUS_UPTODATE)
++				n += print_one_push_status(ref, dest, n);
++	}
+ 
+-		if (!shown_dest) {
+-			fprintf(stderr, "To %s\n", dest);
+-			shown_dest = 1;
+-		}
++	for (ref = refs; ref; ref = ref->next)
++		if (ref->status == REF_STATUS_OK)
++			n += print_one_push_status(ref, dest, n);
+ 
+-		switch(ref->status) {
+-		case REF_STATUS_NONE:
+-			print_ref_status('X', "[no match]", ref, NULL, NULL);
+-			break;
+-		case REF_STATUS_REJECT_NODELETE:
+-			print_ref_status('!', "[rejected]", ref, NULL,
+-					"remote does not support deleting refs");
+-			break;
+-		case REF_STATUS_UPTODATE:
+-			print_ref_status('=', "[up to date]", ref,
+-					ref->peer_ref, NULL);
+-			break;
+-		case REF_STATUS_REJECT_NONFASTFORWARD:
+-			print_ref_status('!', "[rejected]", ref, ref->peer_ref,
+-					"non-fast forward");
+-			break;
+-		case REF_STATUS_REMOTE_REJECT:
+-			print_ref_status('!', "[remote rejected]", ref,
+-					ref->deletion ? NULL : ref->peer_ref,
+-					ref->remote_status);
+-			break;
+-		case REF_STATUS_EXPECTING_REPORT:
+-			print_ref_status('!', "[remote failure]", ref,
+-					ref->deletion ? NULL : ref->peer_ref,
+-					"remote failed to report status");
+-			break;
+-		case REF_STATUS_OK:
+-			print_ok_ref_status(ref);
+-			break;
+-		}
++	for (ref = refs; ref; ref = ref->next) {
++		if (ref->status != REF_STATUS_NONE &&
++		    ref->status != REF_STATUS_UPTODATE &&
++		    ref->status != REF_STATUS_OK)
++			n += print_one_push_status(ref, dest, n);
+ 	}
+ }
+ 
+-- 
+1.5.3.6.1786.g2e199
