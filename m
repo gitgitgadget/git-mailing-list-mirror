@@ -1,66 +1,102 @@
 From: Wincent Colaiuta <win@wincent.com>
-Subject: [PATCH 1/4] Refactor patch_update_cmd
-Date: Wed, 21 Nov 2007 13:36:38 +0100
-Message-ID: <1195648601-21736-2-git-send-email-win@wincent.com>
+Subject: [PATCH 3/4] Teach builtin-add to pass a path argument to git-add--interactive
+Date: Wed, 21 Nov 2007 13:36:40 +0100
+Message-ID: <1195648601-21736-4-git-send-email-win@wincent.com>
 References: <1195648601-21736-1-git-send-email-win@wincent.com>
+ <1195648601-21736-2-git-send-email-win@wincent.com>
+ <1195648601-21736-3-git-send-email-win@wincent.com>
 Cc: gitster@pobox.com, Wincent Colaiuta <win@wincent.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 21 13:37:19 2007
+X-From: git-owner@vger.kernel.org Wed Nov 21 13:37:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuopR-0002kQ-Cp
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 13:37:17 +0100
+	id 1Iuopn-0002sG-2Y
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 13:37:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754114AbXKUMg7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 07:36:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755752AbXKUMg6
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 07:36:58 -0500
-Received: from wincent.com ([72.3.236.74]:54658 "EHLO s69819.wincent.com"
+	id S1755752AbXKUMhJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 07:37:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756045AbXKUMhJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 07:37:09 -0500
+Received: from wincent.com ([72.3.236.74]:54660 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750958AbXKUMg6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 07:36:58 -0500
+	id S1755752AbXKUMhH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 07:37:07 -0500
 Received: from localhost.localdomain (localhost [127.0.0.1])
 	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lALCagck013817;
-	Wed, 21 Nov 2007 06:36:44 -0600
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lALCagcm013817;
+	Wed, 21 Nov 2007 06:36:48 -0600
 X-Mailer: git-send-email 1.5.3.6.862.g369c8
-In-Reply-To: <1195648601-21736-1-git-send-email-win@wincent.com>
+In-Reply-To: <1195648601-21736-3-git-send-email-win@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65637>
 
-Split patch_update_cmd into two functions, one to prompt the user for
-a path to patch and another to do the actual work given that file path.
-This lays the groundwork for a future commit which will teach
-git-add--interactive to accept a path parameter and jump directly to
-the patch subcommand for that path, bypassing the interactive prompt.
+The previous patch in the series taught git-add--interactive to handle
+a single optional path argument. This patch teaches builtin-add to pass
+this argument through to the script.
 
 Signed-off-by: Wincent Colaiuta <win@wincent.com>
 ---
- git-add--interactive.perl |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+ builtin-add.c |   16 ++++++++++------
+ commit.h      |    2 +-
+ 2 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 0317ad9..fb1e92a 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -564,10 +564,12 @@ sub patch_update_cmd {
- 				     IMMEDIATE => 1,
- 				     HEADER => $status_head, },
- 				   @mods);
--	return if (!$it);
-+	patch_update_file($it->{VALUE}) if ($it);
-+}
+diff --git a/builtin-add.c b/builtin-add.c
+index cf815a0..278c02e 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -135,9 +135,9 @@ static void refresh(int verbose, const char **pathspec)
+         free(seen);
+ }
  
-+sub patch_update_file {
- 	my ($ix, $num);
--	my $path = $it->{VALUE};
-+	my $path = shift;
- 	my ($head, @hunk) = parse_diff($path);
- 	for (@{$head->{TEXT}}) {
- 		print;
+-int interactive_add(void)
++int interactive_add(const char *path)
+ {
+-	const char *argv[2] = { "add--interactive", NULL };
++	const char *argv[3] = { "add--interactive", path, NULL };
+ 
+ 	return run_command_v_opt(argv, RUN_GIT_CMD);
+ }
+@@ -163,16 +163,20 @@ static struct option builtin_add_options[] = {
+ 
+ int cmd_add(int argc, const char **argv, const char *prefix)
+ {
+-	int i, newfd, orig_argc = argc;
++	int i, newfd = argc;
+ 	const char **pathspec;
+ 	struct dir_struct dir;
+ 
+ 	argc = parse_options(argc, argv, builtin_add_options,
+ 			  builtin_add_usage, 0);
+ 	if (add_interactive) {
+-		if (add_interactive != 1 || orig_argc != 2)
+-			die("add --interactive does not take any parameters");
+-		exit(interactive_add());
++		if (argc > 1)
++			die("add --interactive may take only 1 optional "
++			    "parameter");
++		else if (argc == 1)
++			exit(interactive_add(argv[0]));
++		else
++			exit(interactive_add(NULL));
+ 	}
+ 
+ 	git_config(git_default_config);
+diff --git a/commit.h b/commit.h
+index aa67986..03a6ec5 100644
+--- a/commit.h
++++ b/commit.h
+@@ -113,7 +113,7 @@ extern struct commit_list *get_shallow_commits(struct object_array *heads,
+ 
+ int in_merge_bases(struct commit *, struct commit **, int);
+ 
+-extern int interactive_add(void);
++extern int interactive_add(const char *path);
+ extern void add_files_to_cache(int verbose, const char *prefix, const char **files);
+ extern int rerere(void);
+ 
 -- 
 1.5.3.5.737.gdee1b
