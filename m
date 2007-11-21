@@ -1,90 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] Revert "t5516: test update of local refs on push"
-Date: Wed, 21 Nov 2007 02:19:34 -0500
-Message-ID: <20071121071934.GA10112@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] send-pack: cluster ref status reporting
+Date: Tue, 20 Nov 2007 23:24:55 -0800
+Message-ID: <7v1wakhxh4.fsf@gitster.siamese.dyndns.org>
+References: <20071120111317.GA4120@sigill.intra.peff.net>
+	<20071120111801.GA7814@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 21 08:19:55 2007
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 21 08:25:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IujsI-00035L-VW
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 08:19:55 +0100
+	id 1Iujxh-0004UQ-Mh
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 08:25:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753399AbXKUHTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 02:19:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754211AbXKUHTi
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 02:19:38 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3874 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752334AbXKUHTh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 02:19:37 -0500
-Received: (qmail 4716 invoked by uid 111); 21 Nov 2007 07:19:36 -0000
-Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 21 Nov 2007 02:19:36 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Nov 2007 02:19:34 -0500
-Content-Disposition: inline
+	id S1755320AbXKUHZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 02:25:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755434AbXKUHZE
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 02:25:04 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:45704 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754938AbXKUHZB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 02:25:01 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 8CEF52F0;
+	Wed, 21 Nov 2007 02:25:22 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B7DE96351;
+	Wed, 21 Nov 2007 02:25:18 -0500 (EST)
+In-Reply-To: <20071120111801.GA7814@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 20 Nov 2007 06:18:01 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65608>
 
-This reverts commit 09fba7a59d38d1cafaf33eadaf1d409c4113b30c.
+Jeff King <peff@peff.net> writes:
 
-These tests are superseded by the ones in t5404 (added in
-6fa92bf3 and 8736a848), which are more extensive and better
-organized.
+> +static int print_one_push_status(struct ref *ref, const char *dest, int count)
+> +{
+> ...
+> +	case REF_STATUS_REMOTE_REJECT:
+> +		print_ref_status('!', "[remote rejected]", ref,
+> +				ref->deletion ? ref->peer_ref : NULL,
+> +				ref->remote_status);
+> +		break;
+> +	case REF_STATUS_EXPECTING_REPORT:
+> +		print_ref_status('!', "[remote failure]", ref,
+> +				ref->deletion ? ref->peer_ref : NULL,
+> +				"remote failed to report status");
+> +		break;
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-When Alex introduced t5404, I had the feeling I had written similar
-tests before, but I failed to find them. I think starting t5404 was a
-much more sensible organization, especially since these two tests don't
-follow the style of the rest of t5516 very well.
-
- t/t5516-fetch-push.sh |   28 ----------------------------
- 1 files changed, 0 insertions(+), 28 deletions(-)
-
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 86f9b53..4fbd5b1 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -254,32 +254,4 @@ test_expect_success 'push with dry-run' '
- 	check_push_result $old_commit heads/master
- '
- 
--test_expect_success 'push updates local refs' '
--
--	rm -rf parent child &&
--	mkdir parent && cd parent && git init &&
--		echo one >foo && git add foo && git commit -m one &&
--	cd .. &&
--	git clone parent child && cd child &&
--		echo two >foo && git commit -a -m two &&
--		git push &&
--	test $(git rev-parse master) = $(git rev-parse remotes/origin/master)
--
--'
--
--test_expect_success 'push does not update local refs on failure' '
--
--	rm -rf parent child &&
--	mkdir parent && cd parent && git init &&
--		echo one >foo && git add foo && git commit -m one &&
--		echo exit 1 >.git/hooks/pre-receive &&
--		chmod +x .git/hooks/pre-receive &&
--	cd .. &&
--	git clone parent child && cd child &&
--		echo two >foo && git commit -a -m two || exit 1
--		git push && exit 1
--	test $(git rev-parse master) != $(git rev-parse remotes/origin/master)
--
--'
--
- test_done
--- 
-1.5.3.6.1786.g2e199
+Eh,... in ref->deletion mode, the peer_ref is...
