@@ -1,90 +1,61 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Wishlist for a bundle-only transport mode
-Date: Wed, 21 Nov 2007 18:52:03 +0100
-Message-ID: <200711211852.03887.jnareb@gmail.com>
-References: <8aa486160711210654p357ccd87i4809e0cda9471303@mail.gmail.com> <200711211811.34391.jnareb@gmail.com> <Pine.LNX.4.64.0711211719330.27959@racer.site>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] avoid "defined but not used" warning for fetch_objs_via_walker
+Date: Wed, 21 Nov 2007 13:05:01 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0711211303460.32410@iabervon.org>
+References: <20071118081722.GA31563@sigill.intra.peff.net>
+ <7v63zwhy4i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Santi =?iso-8859-1?q?B=E9jar?= <sbejar@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 21 18:56:22 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 21 19:06:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iuto5-0004mp-Qq
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 18:56:14 +0100
+	id 1IutxJ-0000Pv-Pf
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 19:05:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751958AbXKURwL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 12:52:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751892AbXKURwK
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 12:52:10 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:39932 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750702AbXKURwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 12:52:08 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so2193181nfb
-        for <git@vger.kernel.org>; Wed, 21 Nov 2007 09:52:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=PD4tKnhK+JS6xQ5uq8JNWCnDsYuDOcvg45FKDhIP4gc=;
-        b=MiS5z8dr/w01SQlBmSDcU/5vZk1wcOrwAb7Rnd9uJiyZVnRcxdnIwIPO1nuTiabr3sZ/8j8FFR79c0hYS9BgtSL/2o5619tqHnZsWwY3ovpmxNetAoHNXc/t4iWwGUva0f0+boG9VJvFoPE+ScC/f823pEf1O3pQiEDaWVPnx+o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=lf7Y6ukohtG0nw33YcZFbXsIuxzKJd/Pb4vuCc5wufB36b+lA+lGUJhEKEAp7SaAQhU9PYSSmvKbIAUD7+BfekkE5ttgcSGaxTTLtKrfO0mv8YqDAtTwbOTidWgkCDSYwj0rBhUhYjwQTNiIlNWeN+j4W7qXTLZtvFbwpwgF8wI=
-Received: by 10.86.90.2 with SMTP id n2mr7528769fgb.1195667527379;
-        Wed, 21 Nov 2007 09:52:07 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.255.19])
-        by mx.google.com with ESMTPS id e20sm10141854fga.2007.11.21.09.52.04
-        (version=SSLv3 cipher=OTHER);
-        Wed, 21 Nov 2007 09:52:05 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.64.0711211719330.27959@racer.site>
-Content-Disposition: inline
+	id S1752209AbXKUSFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 13:05:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752224AbXKUSFG
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 13:05:06 -0500
+Received: from iabervon.org ([66.92.72.58]:50505 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752141AbXKUSFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 13:05:04 -0500
+Received: (qmail 14884 invoked by uid 1000); 21 Nov 2007 18:05:02 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 21 Nov 2007 18:05:02 -0000
+In-Reply-To: <7v63zwhy4i.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65689>
 
-On Wed, 21 Nov 2007, Johannes Schindelin wrote:
-> On Wed, 21 Nov 2007, Jakub Narebski wrote:
->> Johannes Schindelin wrote:
->>> On Wed, 21 Nov 2007, Jakub Narebski wrote:
->>>
->>>> That has the disadvantage of pushing to bundle when you make an error 
->>>> in the lastpart of path to existing repository.
->>> 
->>> As I wrote in another reply, I would not allow overwriting an existing 
->>> file.
->> 
->>> Specifying a non-existing file should be good enough.
->> 
->> What I meant here that if you do "git push /some/path/to/rpeo.git", with 
->> mistake in the last part of path to repository, you would end up with a 
->> bundle, and you would have to really watch what happened to catch the 
->> error.
+On Tue, 20 Nov 2007, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
 > 
-> I use tab completion all the time, so this would not happen to me.  IMHO 
-> that is a lesser issue than to introduce a "protocol".
+> > Because this function is static and used only by the
+> > http-walker, when NO_CURL is defined, gcc emits a "defined
+> > but not used" warning.
+> >
+> > Signed-off-by: Jeff King <peff@peff.net>
+> > ---
+> > On master. I like to compile with -Werror to make sure I don't miss
+> > warnings as the compile scrolls by.
+> >
+> > This fix feels a little wrong, since the function isn't specific to http
+> > support, but hopefully the comment should be obvious if we ever add
+> > another similar commit walker that needs it.
+> 
+> Yeah, while I share your -Werror desire it sure feels a bit
+> dirty.  As it does not look like we will be taking any new
+> walkers, I think your patch is reasonable, though.
 
-When I copy'n'paste pathname I sometimes catch return / linefeed in
-the middle, ending with incorect pathname (which would create bundle).
-Tab completon is not always solution (tab completion can be slow,
-or nonexistent).
+I think we're likely to do sftp someday, but everything is likely to get 
+reorganized before that anyway.
 
-[cut]
-
-But I agree that because "git create bundle" needs refspecs _and revlist_,
-while "git push" gets only refspecs because it calculates revlist it would
-be better to have to use "git bundle create" to create bundle.
-
-Contrary to "git clone <bundle>" which should just work IMHO.
-
--- 
-Jakub Narebski
-Poland
+	-Daniel
+*This .sig left intentionally blank*
