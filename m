@@ -1,88 +1,56 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: Adding push configuration to .git/config
-Date: Wed, 21 Nov 2007 23:02:08 +0100
-Message-ID: <90095755-2B2B-49DA-9841-7399CB53585A@zib.de>
-References: <20071121105517.GA11875@denkbrett.schottelius.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: Git Screencast ?
+Date: Wed, 21 Nov 2007 14:36:14 -0800
+Message-ID: <86bq9n4469.fsf@blue.stonehenge.com>
+References: <fi1a9f$30q$1@ger.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
-X-From: git-owner@vger.kernel.org Wed Nov 21 23:02:00 2007
+To: Michael Donaghy <mike@mikedonaghy.org>
+X-From: git-owner@vger.kernel.org Wed Nov 21 23:36:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuxdG-0001XQ-4h
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 23:01:18 +0100
+	id 1IuyBO-0006Vz-HS
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 23:36:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752606AbXKUWBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 17:01:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752609AbXKUWBA
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 17:01:00 -0500
-Received: from mailer.zib.de ([130.73.108.11]:48386 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752283AbXKUWA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 17:00:59 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lALM0uSJ014145;
-	Wed, 21 Nov 2007 23:00:56 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db1afe9.pool.einsundeins.de [77.177.175.233])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lALM0t7C004110
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 21 Nov 2007 23:00:55 +0100 (MET)
-In-Reply-To: <20071121105517.GA11875@denkbrett.schottelius.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1753177AbXKUWgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 17:36:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753150AbXKUWgQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 17:36:16 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:35033 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752677AbXKUWgP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 17:36:15 -0500
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id CE7081DEAEF; Wed, 21 Nov 2007 14:36:14 -0800 (PST)
+x-mayan-date: Long count = 12.19.14.15.3; tzolkin = 6 Akbal; haab = 11 Ceh
+In-Reply-To: <fi1a9f$30q$1@ger.gmane.org> (Michael Donaghy's message of "Wed, 21 Nov 2007 08:02:31 -0500")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65709>
 
+>>>>> "Michael" == Michael Donaghy <mike@mikedonaghy.org> writes:
 
-On Nov 21, 2007, at 11:55 AM, Nico -telmich- Schottelius wrote:
+Michael> I am a new user of git and SCMs in general , I have learned a lot
+Michael> from the docs , irc and just using it , but there are just some
+Michael> concepts that hare hard to grasp , I am a very visual persion
+Michael> (probably like a lot of you :) ) , is there a screencast of git
+Michael> somewhere (for free) that can demonstrate some of the advanced
+Michael> features of git...  (Also...I have seen both Randal (Schwartz) and
+Michael> Linus' (you better know his last name) presentations at google on git
+Michael> , in which they explain the ideas behind git more than the actual
+Michael> usage,
 
-> Hello guys!
->
-> We are working pretty much with branches here and I think it would be
-> pretty cool, to make git-push recognize some configuratio in
-> ~/.git/config that describes where to push what:
->
->    git-push origin master:<name of worker> is what we currenty do
->    manually
->
-> Nice would be
->
-> [branch "master"]
->    remote-push          = origin
->    remote-push-merge    = another_branch
+Having been involved in that screencast that you reference, I'm curious
+about what you think you're missing in order to use git.  The feedback
+will help me produce better presentations.
 
-This was discussed in a similar form here:
-
-http://marc.info/?l=git&m=119384331712996&w=2
-http://marc.info/?l=git&m=119400354601328&w=2
-
-So, yes, I think it would be very useful.  I did not yet find
-time to implement it.
-
-
-> And thus perhaps also changing the existing specs:
->
->    remote = ... to remote-fetch = ...
->    merge = ... to remote-fetch-merge =
-
-This is a logical consequence.  It gives more freedom to pull
-from one repo and push to another one.
-
-I'm not fully convinced, though, of the configuration names
-you propose.  However, I have no better suggestion right away.
-
-
-> And perhaps it would also make sense to replace "refs/heads/master"  
-> with
-> only "master"?
-
-No.  We use full refnames everywhere.  I think we should stick
-with them.
-
-	Steffen
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
