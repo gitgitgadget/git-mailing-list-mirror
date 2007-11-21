@@ -1,121 +1,63 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 3/3] Replace setenv(GIT_DIR_ENVIRONMENT, ...) with set_git_dir()
-Date: Wed, 21 Nov 2007 21:27:21 +0100
-Message-ID: <11956768412755-git-send-email-prohaska@zib.de>
-References: <11956768414090-git-send-email-prohaska@zib.de>
- <11956768412804-git-send-email-prohaska@zib.de>
- <11956768413887-git-send-email-prohaska@zib.de>
-Cc: Dmitry Kakurin <Dmitry.Kakurin@gmail.com>,
-	Steffen Prohaska <prohaska@zib.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 21 21:28:14 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] Teach git-add--interactive to accept a file path to patch
+Date: Wed, 21 Nov 2007 12:40:47 -0800
+Message-ID: <7vejejfi28.fsf@gitster.siamese.dyndns.org>
+References: <1195648601-21736-1-git-send-email-win@wincent.com>
+	<1195648601-21736-2-git-send-email-win@wincent.com>
+	<1195648601-21736-3-git-send-email-win@wincent.com>
+	<20071121152118.GG24108@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 21 21:41:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuwB4-0008Rz-IK
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 21:28:06 +0100
+	id 1IuwOM-0005Nw-40
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 21:41:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752824AbXKUU1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 15:27:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752013AbXKUU13
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 15:27:29 -0500
-Received: from mailer.zib.de ([130.73.108.11]:42021 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752824AbXKUU1Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 15:27:25 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lALKRMRd007527;
-	Wed, 21 Nov 2007 21:27:22 +0100 (CET)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lALKRLdI013767;
-	Wed, 21 Nov 2007 21:27:21 +0100 (MET)
-X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <11956768413887-git-send-email-prohaska@zib.de>
+	id S1756429AbXKUUk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 15:40:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756405AbXKUUk4
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 15:40:56 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:54446 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756292AbXKUUkz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 15:40:55 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 3D9CC2F0;
+	Wed, 21 Nov 2007 15:41:16 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id B68A398123;
+	Wed, 21 Nov 2007 15:41:11 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65705>
 
-From: Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
+Jeff King <peff@peff.net> writes:
 
-We have a function set_git_dir().  So let's use it, instead
-of setting the evironment directly.
+> ...
+> On top of that, it would be great to be able to do something like
+>
+>   git-add -i *.c
+>
+> and just get prompted for changed files (right now, you only get
+> prompted for changed files, but unchanged files seem to print a spurious
+> newline).
+>
+> And at any rate, this would require fixing 3/4 to handle the multiple
+> files from git-add.
+>
+> What do you think?
 
-This also fixes a problem on Windows: environment.c caches
-results of many getenv calls.  A setenv(X) call to the Windows
-C runtime (CRT) invalidates all previous values returned by
-getenv(X).  So cached values become dangling pointers.
-
-Before this change, git clone was failing with 'invalid object
-name HEAD' if ran from Windows' cmd.exe.
-
-[sp: rebased; split off get_git_dir() in builtin-init-db.c
-     to separate commit; adjusted commit message. ]
-
-Signed-off-by: Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- git.c   |    6 +++---
- path.c  |    2 +-
- setup.c |    2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/git.c b/git.c
-index 7604319..8bc25b7 100644
---- a/git.c
-+++ b/git.c
-@@ -45,14 +45,14 @@ static int handle_options(const char*** argv, int* argc, int* envchanged)
- 				fprintf(stderr, "No directory given for --git-dir.\n" );
- 				usage(git_usage_string);
- 			}
--			setenv(GIT_DIR_ENVIRONMENT, (*argv)[1], 1);
-+			set_git_dir( (*argv)[1] );
- 			if (envchanged)
- 				*envchanged = 1;
- 			(*argv)++;
- 			(*argc)--;
- 			handled++;
- 		} else if (!prefixcmp(cmd, "--git-dir=")) {
--			setenv(GIT_DIR_ENVIRONMENT, cmd + 10, 1);
-+			set_git_dir(cmd + 10);
- 			if (envchanged)
- 				*envchanged = 1;
- 		} else if (!strcmp(cmd, "--work-tree")) {
-@@ -72,7 +72,7 @@ static int handle_options(const char*** argv, int* argc, int* envchanged)
- 		} else if (!strcmp(cmd, "--bare")) {
- 			static char git_dir[PATH_MAX+1];
- 			is_bare_repository_cfg = 1;
--			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir, sizeof(git_dir)), 0);
-+			set_git_dir(getcwd(git_dir, sizeof(git_dir)));
- 			if (envchanged)
- 				*envchanged = 1;
- 		} else {
-diff --git a/path.c b/path.c
-index 4260952..f26a4a1 100644
---- a/path.c
-+++ b/path.c
-@@ -248,7 +248,7 @@ char *enter_repo(char *path, int strict)
- 
- 	if (access("objects", X_OK) == 0 && access("refs", X_OK) == 0 &&
- 	    validate_headref("HEAD") == 0) {
--		setenv(GIT_DIR_ENVIRONMENT, ".", 1);
-+		set_git_dir(".");
- 		check_repository_format();
- 		return path;
- 	}
-diff --git a/setup.c b/setup.c
-index 43cd3f9..8dbd46c 100644
---- a/setup.c
-+++ b/setup.c
-@@ -285,7 +285,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 			inside_git_dir = 1;
- 			if (!work_tree_env)
- 				inside_work_tree = 0;
--			setenv(GIT_DIR_ENVIRONMENT, ".", 1);
-+			set_git_dir(".");
- 			return NULL;
- 		}
- 		chdir("..");
--- 
-1.5.3.5.750.g8692
+If we are to add path limited behaviour, I think it should also
+grok "git-add -i sub/dir/".  IOW, you would want to have the
+same path selection semantics as git-add without the
+"interactive" bit.
