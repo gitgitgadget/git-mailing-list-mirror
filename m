@@ -1,57 +1,87 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: stgit: another way of storing patches
-Date: Wed, 21 Nov 2007 12:24:59 +0100
-Message-ID: <20071121112459.GA6592@diana.vm.bytemark.co.uk>
-References: <9e4733910711200653g4d87c433gae2d48f3508940f5@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Using Filemerge.app as a git-diff viewer
+Date: Wed, 21 Nov 2007 06:27:57 -0500
+Message-ID: <20071121112757.GA17231@sigill.intra.peff.net>
+References: <47440912.8010800@cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 21 12:25:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Wincent Colaiuta <win@wincent.com>
+To: Toby White <tow21@cam.ac.uk>
+X-From: git-owner@vger.kernel.org Wed Nov 21 12:28:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iunhz-0005r1-IM
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 12:25:31 +0100
+	id 1Iunkf-0006jU-UW
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 12:28:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755372AbXKULZO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Nov 2007 06:25:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755130AbXKULZO
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 06:25:14 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3126 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754819AbXKULZM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 06:25:12 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IunhT-00026O-00; Wed, 21 Nov 2007 11:24:59 +0000
+	id S1755153AbXKUL2B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 06:28:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755250AbXKUL2B
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 06:28:01 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4405 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755130AbXKUL2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 06:28:00 -0500
+Received: (qmail 6468 invoked by uid 111); 21 Nov 2007 11:27:58 -0000
+Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 21 Nov 2007 06:27:58 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Nov 2007 06:27:57 -0500
 Content-Disposition: inline
-In-Reply-To: <9e4733910711200653g4d87c433gae2d48f3508940f5@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <47440912.8010800@cam.ac.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65631>
 
-On 2007-11-20 09:53:55 -0500, Jon Smirl wrote:
+On Wed, Nov 21, 2007 at 10:31:46AM +0000, Toby White wrote:
 
-> What about storing each stg git patch in a branch and then
-> auto-merging them into the working copy?
+> So I wrote a quick script (below) which does what I need. Of all
+> the available git-diff flags, it only understands "--cached", and
+> up to two commit objects, and no paths, but that's enough for me.
+> Within those constraints, it has the same semantics as git-diff.
 
-You mean making a "patch" be a topic branch rather than just one
-commit, with the successive commits on the topic branch reflecting the
-changes to the patch over time?
+Have you looked at the documentation for GIT_EXTERNAL_DIFF (try git(7))?
+I think it is a cleaner way of doing what you want (although I think you
+will get each file diffed individually, which is perhaps not what you
+want).
 
-How would you handle operations such as refreshing a non-topmost
-patch, reordering patches, dropping patches, etc? It seems to me that
-the operation you'd want then would look more like cherry-picking than
-merging, at least sometimes.
+Something like:
 
-It might work, but someone would have to sit down with pen and paper
-and work out how all the common operations should work.
+$ cat >merge.sh <<EOF
+#!/bin/sh
+opendiff "$1" "$2"
+EOF
+$ GIT_EXTERNAL_DIFF=./merge.sh git-diff ...
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+> #!/bin/sh
+> #
+> # Filemerge.app must not already be open before running
+> # this script, or opendiff below will return immediately,
+> # and the TMPDIRs deleted before it gets the chance to read
+> # them.
+>
+> if test $# = 0; then
+>   OLD=`git-write-tree`
+> elif test "$1" = --cached; then
+>   OLD=HEAD
+>   NEW=`git-write-tree`
+>   shift
+> fi
+> if test $# -gt 0; then
+>   OLD="$1"; shift
+> fi
+> test $# -gt 0 && test -z "$CACHED" && NEW="$1"
+
+write-tree? Yikes. If you want to diff against the working tree, then do
+that. If you want to diff against the index, then you probably want to
+git-checkout-index to a tmpdir, and diff against that.
+
+> git-archive --format=tar $OLD | (cd $TMPDIR1; tar xf -)
+
+Again, this could be simpler and faster by using git-checkout-index
+(preceded by git-read-tree into a temp index, if you are comparing
+against a tree).
+
+-Peff
