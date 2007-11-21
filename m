@@ -1,145 +1,73 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <david@virtutech.se>
-Subject: Re: [StGit PATCH] Added test case for stg refresh
-Date: Wed, 21 Nov 2007 11:43:00 +0100
-Message-ID: <87oddnvpzf.fsf@virtutech.se>
-References: <87tznfvqb4.fsf@lysator.liu.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Nov 21 12:08:29 2007
+From: Jonathan del Strother <maillist@steelskies.com>
+Subject: Re: Using Filemerge.app as a git-diff viewer
+Date: Wed, 21 Nov 2007 11:20:05 +0000
+Message-ID: <2736C1E3-6294-49B0-96A2-8BCCFA27EDCD@steelskies.com>
+References: <47440912.8010800@cam.ac.uk>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Wincent Colaiuta <win@wincent.com>
+To: Toby White <tow21@cam.ac.uk>
+X-From: git-owner@vger.kernel.org Wed Nov 21 12:20:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IunRT-0000e9-Dh
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 12:08:27 +0100
+	id 1IundA-0004LF-ED
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 12:20:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756741AbXKULIK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Nov 2007 06:08:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756683AbXKULIJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 06:08:09 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:34936 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756446AbXKULIH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Nov 2007 06:08:07 -0500
-X-Greylist: delayed 1511 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Nov 2007 06:08:07 EST
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 607A6200A1DF;
-	Wed, 21 Nov 2007 11:42:53 +0100 (CET)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 13755-01-85; Wed, 21 Nov 2007 11:42:53 +0100 (CET)
-Received: from krank (vtab.com [62.20.90.195])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 004D3200A1DA;
-	Wed, 21 Nov 2007 11:42:52 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id 55AD37B406A; Wed, 21 Nov 2007 11:43:00 +0100 (CET)
-In-Reply-To: <87tznfvqb4.fsf@lysator.liu.se> ("David =?utf-8?Q?K=C3=A5geda?=
- =?utf-8?Q?l=22's?= message of "Wed\, 21 Nov 2007 11\:35\:59 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1754391AbXKULUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 06:20:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754728AbXKULUM
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 06:20:12 -0500
+Received: from juliet.asmallorange.com ([207.210.105.70]:56236 "EHLO
+	juliet.asmallorange.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752251AbXKULUK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 06:20:10 -0500
+Received: from [89.105.122.147] (port=55245 helo=gir.office.bestbefore.tv)
+	by juliet.asmallorange.com with esmtpa (Exim 4.68)
+	(envelope-from <maillist@steelskies.com>)
+	id 1Iuncn-0006Jo-A4; Wed, 21 Nov 2007 06:20:10 -0500
+In-Reply-To: <47440912.8010800@cam.ac.uk>
+X-Mailer: Apple Mail (2.912)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - juliet.asmallorange.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - steelskies.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65629>
 
-David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+On 21 Nov 2007, at 10:31, Toby White wrote:
 
-> Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
-> ---
+> Mac OS X bundles a rather nice graphical diff viewer (Filemerge.app)
+> with its developer tools.
 >
-> This test case fails on the kha/experimental branch.  Using "stg
-> refresh -p <patch>" can cause all sorts of wieirdness, and there is n=
-o
-> test case for it.
-
-I just checked, and it fails on kha/safe as well. So maybe there is
-some problem with the test case, but I don't know what it is.
-
-And maybe it should be called t2301 instead?
-
->  t/t2700-refresh.sh |   65 ++++++++++++++++++++++++++++++++++++++++++=
-++++++++++
->  1 files changed, 65 insertions(+), 0 deletions(-)
->  create mode 100755 t/t2700-refresh.sh
+> While git-merge knows how to use this as a merge tool, I couldn't
+> find any way to easily use Filemerge as a viewer for the output
+> of git-diff.
 >
-> diff --git a/t/t2700-refresh.sh b/t/t2700-refresh.sh
-> new file mode 100755
-> index 0000000..2e7901c
-> --- /dev/null
-> +++ b/t/t2700-refresh.sh
-> @@ -0,0 +1,65 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'Run "stg refresh"'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'Initialize StGit stack' '
-> +    stg init &&
-> +    echo expected.txt >> .git/info/exclude &&
-> +    echo patches.txt >> .git/info/exclude &&
-> +    stg new p0 -m "base" &&
-> +    for i in 1 2 3; do
-> +        echo base >> foo$i.txt &&
-> +        git add foo$i.txt
-> +    done
-> +    stg refresh &&
-> +    for i in 1 2 3; do
-> +        stg new p$i -m "foo $i" &&
-> +        echo "foo $i" >> foo$i.txt &&
-> +        stg refresh
-> +    done
-> +'
-> +
-> +cat > expected.txt <<EOF
-> +p0
-> +p3
-> +EOF
-> +test_expect_success 'Refresh top patch' '
-> +    echo bar 3 >> foo3.txt &&
-> +    stg refresh &&
-> +    stg status &&
-> +    test -z "$(stg status)" &&
-> +    stg patches foo3.txt > patches.txt &&
-> +    diff -u expected.txt patches.txt
-> +'
-> +
-> +cat > expected.txt <<EOF
-> +p0
-> +p2
-> +EOF
-> +test_expect_success 'Refresh middle patch' '
-> +    stg status &&
-> +    echo bar 2 >> foo2.txt &&
-> +    stg refresh -p p2 &&
-> +    stg status &&
-> +    test -z "$(stg status)" &&
-> +    stg patches foo2.txt > patches.txt &&
-> +    diff -u expected.txt patches.txt
-> +'
-> +
-> +cat > expected.txt <<EOF
-> +p0
-> +p1
-> +EOF
-> +test_expect_success 'Refresh bottom patch' '
-> +    stg status &&
-> +    echo bar 1 >> foo1.txt &&
-> +    stg refresh -p p1 &&
-> +    stg status &&
-> +    test -z "$(stg status)" &&
-> +    stg patches foo1.txt > patches.txt &&
-> +    diff -u expected.txt patches.txt
-> +'
-> +
-> +test_done
-> --=20
-> 1.5.3.6.740.ge3d12
+> (http://thread.gmane.org/gmane.comp.version-control.git/58702
+> discusses the problem, and recommends piping git-diff into kompare.
+> Filemerge unfortunately won't accept diff output on stdin)
+>
+> So I wrote a quick script (below) which does what I need. Of all
+> the available git-diff flags, it only understands "--cached", and
+> up to two commit objects, and no paths, but that's enough for me.
+> Within those constraints, it has the same semantics as git-diff.
 
---=20
-David K=C3=A5gedal, Virtutech
+> ...
+
+Handy, thanks.
+Just as a note to anyone who runs into the same problems as me - I  
+couldn't persuade this script to work at first.  On my Leopard  
+install, mktemp needs a template argument to run.  After replacing  
+both `mktemp -d`s in this script with `mktemp -d /tmp/diff.XXXXX`, it  
+works nicely.
+
+Jon
