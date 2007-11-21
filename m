@@ -1,251 +1,125 @@
-From: "David D. Kilzer" <ddkilzer@kilzer.net>
-Subject: [PATCH 1/3 v3] git-svn: extract reusable code into utility functions
-Date: Wed, 21 Nov 2007 11:57:17 -0800
-Message-ID: <1195675039-26746-2-git-send-email-ddkilzer@kilzer.net>
-References: <1195675039-26746-1-git-send-email-ddkilzer@kilzer.net>
-Cc: git@vger.kernel.org, "David D. Kilzer" <ddkilzer@kilzer.net>
-To: "Eric Wong" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Nov 21 20:58:39 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+From: Jarek Poplawski <jarkao2@o2.pl>
+Subject: Re: gitweb: kernel versions in the history (feature request,	probably)
+Date: Wed, 21 Nov 2007 21:16:26 +0100
+Message-ID: <4744921A.6000801@o2.pl>
+References: <20071120142042.GA4157@ff.dom.local> <20071120215904.GF1001@machine.or.cz> <47436E0F.6080003@o2.pl> <20071121032009.GB4175@fieldses.org> <20071121075217.GA1642@ff.dom.local> <20071121151831.GO1001@machine.or.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1758647AbXKUUOf@vger.kernel.org Wed Nov 21 21:15:14 2007
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1758647AbXKUUOf@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuviQ-00055F-3b
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 20:58:30 +0100
+	id 1Iuvyc-0003HH-EU
+	for glk-linux-kernel-3@gmane.org; Wed, 21 Nov 2007 21:15:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753234AbXKUT5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 14:57:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756294AbXKUT5Y
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 14:57:24 -0500
-Received: from mail-out3.apple.com ([17.254.13.22]:64650 "EHLO
-	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753234AbXKUT5V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 14:57:21 -0500
-Received: from relay11.apple.com (relay11.apple.com [17.128.113.48])
-	by mail-out3.apple.com (Postfix) with ESMTP id CC8421924C65;
-	Wed, 21 Nov 2007 11:57:20 -0800 (PST)
-Received: from relay11.apple.com (unknown [127.0.0.1])
-	by relay11.apple.com (Symantec Mail Security) with ESMTP id B1DC528092;
-	Wed, 21 Nov 2007 11:57:20 -0800 (PST)
-X-AuditID: 11807130-a53a7bb000006ed1-fb-47448da02848
-Received: from localhost.localdomain (unknown [17.151.86.253])
-	by relay11.apple.com (Apple SCV relay) with ESMTP id 657572808A;
-	Wed, 21 Nov 2007 11:57:20 -0800 (PST)
-X-Mailer: git-send-email 1.5.3.4
-In-Reply-To: <1195675039-26746-1-git-send-email-ddkilzer@kilzer.net>
-X-Brightmail-Tracker: AAAAAA==
-Sender: git-owner@vger.kernel.org
+	id S1758647AbXKUUOf (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 21 Nov 2007 15:14:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754794AbXKUUOW
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Wed, 21 Nov 2007 15:14:22 -0500
+Received: from mx12.go2.pl ([193.17.41.142]:50240 "EHLO poczta.o2.pl"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753294AbXKUUOV (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 21 Nov 2007 15:14:21 -0500
+Received: from poczta.o2.pl (mx12 [127.0.0.1])
+	by poczta.o2.pl (Postfix) with ESMTP id 93C0E3E80B2;
+	Wed, 21 Nov 2007 21:14:18 +0100 (CET)
+Received: from [83.27.50.127] (avq127.neoplus.adsl.tpnet.pl [83.27.50.127])
+	by poczta.o2.pl (Postfix) with ESMTP;
+	Wed, 21 Nov 2007 21:14:18 +0100 (CET)
+User-Agent: Icedove 1.5.0.14pre (X11/20071020)
+In-Reply-To: <20071121151831.GO1001@machine.or.cz>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65698>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65699>
 
-Extacted canonicalize_path() in the main package.
+Petr Baudis wrote, On 11/21/2007 04:18 PM:
 
-Created new Git::SVN::Util package with an md5sum() function.  A
-new package was created so that Digest::MD5 did not have to be
-loaded in the main package.  Replaced code in the SVN::Git::Editor
-and SVN::Git::Fetcher packages with calls to md5sum().
+> On Wed, Nov 21, 2007 at 08:52:17AM +0100, Jarek Poplawski wrote:
+>> ...
+>> tags
+>> 4 days ago 	v2.6.24-rc3 	Linux 2.6.24-rc3
+>> 2 weeks ago 	v2.6.24-rc2 	Linux 2.6.24-rc2
+>> 4 weeks ago 	v2.6.24-rc1 	Linux 2.6.24-rc1
+>> 6 weeks ago 	v2.6.23 	Linux 2.6.23
+>>
+>> which drives me crazy, because, without looking at the calendar, and
+>> calculator, I don't really know which month was 6 weeks ago, and 4
+>> days ago, either!
+> 
+> I have myself never been sure if the relative times are a good idea or
+> not. :-) Sometimes I hate them, sometimes they are more convenient...
+> 
+> At any rate, if you click at the tag name, you should get tag page with
+> full date.
 
-Extracted the format_svn_date(), parse_git_date() and
-set_local_timezone() functions within the Git::SVN::Log package.
 
-Signed-off-by: David D. Kilzer <ddkilzer@kilzer.net>
----
- git-svn.perl |   96 ++++++++++++++++++++++++++++++++++++++-------------------
- 1 files changed, 64 insertions(+), 32 deletions(-)
+So, it's so easy! Great! It seems I've to get used to this clicking
+more. It seems I've become too cautious with this, when I've really
+- really, waited after each click there. (I mean a few months ago,
+and my connection was the same; sometimes, one such click took one
+whole break for coffee.)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 5b1deea..98c980f 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -48,7 +48,8 @@ BEGIN {
- 	foreach (qw/command command_oneline command_noisy command_output_pipe
- 	            command_input_pipe command_close_pipe/) {
- 		for my $package ( qw(SVN::Git::Editor SVN::Git::Fetcher
--			Git::SVN::Migration Git::SVN::Log Git::SVN),
-+			Git::SVN::Migration Git::SVN::Log Git::SVN
-+			Git::SVN::Util),
- 			__PACKAGE__) {
- 			*{"${package}::$_"} = \&{"Git::$_"};
- 		}
-@@ -583,6 +584,17 @@ sub cmd_create_ignore {
- 	});
- }
+I seems, there are simply two kinds of people wrt. calendar/time. I'm
+usually happy if I can figure by myself which day of week is today, but
+I wouldn't even try with something like 4 days ago. But I understand
+I'm not the brightest here...
+
+So, maybe, some day, with: linux-kernel-for-dummies.org such things
+could be reconsidered...
+
+> 
+>> So, I go to the: http://www.eu.kernel.org/pub/linux/kernel/v2.6/, 
+>> do some scrolling, look at this:
+>> ChangeLog-2.6.23             09-Oct-2007 20:38  3.8M  
+>>
+>> and only now I can guess, this napi patch didn't manage to 2.6.23.
+>> Of course, usually I've to do a few more clicks and reading to make
+>> sure where it really started.
+>>
+>> So, this could suggest this 2007-10-10 (probably stored with time
+>> too), could be useful here... but it seems, I'm wrong.
+> 
+> Yes, there are three scenarios:
+> 
+> (i) The patch has been _created_ after the release date. It can't be in
+> the release.
+> (ii) The patch has been created before the release date, but _committed_
+> after the release date. It can't be in the release either.
+> (iii) The patch has been committed before the release date. It _still_
+> might not be in the release if it comes from a different branch.
+> Imagine, say, tglx accepting the patch in his branch, then Linus
+> releasing new kernel version, and only _then_ Linus merging tglx's
+> branch.
+> 
+> So the time information isn't really too useful if you want to be any
+> sort of reliable.
+> 
+>> Of course, this problem doesn't look so hard if we forget about
+>> git internals: I can imagine keeping a simple database, which
+>> could simply retrieve commit numbers from these ChangeLogs, and
+>> connecting this with gitweb's commit page as well... For
+>> performance reasons, doing it only for stable and testing, so with
+>> -rc 'precision' would be very helpful too.
+> 
+> It isn't too hard if we don't forget about git internals either. It's
+> just that getting this information might not be cheap. But maybe I'm
+> wrong and this won't be a problem for sane projects. Someone should post
+> a patch. ;-)
+
+
+It looks, after Kay's notice, my main problem is solved. And your current
+explanations are also very precious to me. Probably some things considered
+here could be done a bit better in the future, but I guess there is enough
+urgent work with git or kernel too, so let's say it's OK for now!
+
+Thanks every good git people!
+Jarek P.
+
  
-+sub canonicalize_path {
-+	my ($path) = @_;
-+	# File::Spec->canonpath doesn't collapse x/../y into y (for a
-+	# good reason), so let's do this manually.
-+	$path =~ s#/+#/#g;
-+	$path =~ s#/\.(?:/|$)#/#g;
-+	$path =~ s#/[^/]+/\.\.##g;
-+	$path =~ s#/$##g;
-+	return $path;
-+}
-+
- # get_svnprops(PATH)
- # ------------------
- # Helper for cmd_propget and cmd_proplist below.
-@@ -600,12 +612,7 @@ sub get_svnprops {
- 
- 	# canonicalize the path (otherwise libsvn will abort or fail to
- 	# find the file)
--	# File::Spec->canonpath doesn't collapse x/../y into y (for a
--	# good reason), so let's do this manually.
--	$path =~ s#/+#/#g;
--	$path =~ s#/\.(?:/|$)#/#g;
--	$path =~ s#/[^/]+/\.\.##g;
--	$path =~ s#/$##g;
-+	$path = canonicalize_path($path);
- 
- 	my $r = (defined $_revision ? $_revision : $gs->ra->get_latest_revnum);
- 	my $props;
-@@ -1043,6 +1050,27 @@ sub linearize_history {
- 	(\@linear_refs, \%parents);
- }
- 
-+package Git::SVN::Util;
-+use strict;
-+use warnings;
-+use Digest::MD5;
-+
-+sub md5sum {
-+	my $arg = shift;
-+	my $ref = ref $arg;
-+	my $md5 = Digest::MD5->new();
-+        if ($ref eq 'GLOB' || $ref eq 'IO::File') {
-+		$md5->addfile($arg) or croak $!;
-+	} elsif ($ref eq 'SCALAR') {
-+		$md5->add($$arg) or croak $!;
-+	} elsif (!$ref) {
-+		$md5->add($arg) or croak $!;
-+	} else {
-+		::fatal "Can't provide MD5 hash for unknown ref type: '", $ref, "'";
-+	}
-+	return $md5->hexdigest();
-+}
-+
- package Git::SVN;
- use strict;
- use warnings;
-@@ -2610,7 +2638,6 @@ use strict;
- use warnings;
- use Carp qw/croak/;
- use IO::File qw//;
--use Digest::MD5;
- 
- # file baton members: path, mode_a, mode_b, pool, fh, blob, base
- sub new {
-@@ -2762,9 +2789,7 @@ sub apply_textdelta {
- 
- 		if (defined $exp) {
- 			seek $base, 0, 0 or croak $!;
--			my $md5 = Digest::MD5->new;
--			$md5->addfile($base);
--			my $got = $md5->hexdigest;
-+			my $got = Git::SVN::Util::md5sum($base);
- 			die "Checksum mismatch: $fb->{path} $fb->{blob}\n",
- 			    "expected: $exp\n",
- 			    "     got: $got\n" if ($got ne $exp);
-@@ -2783,9 +2808,7 @@ sub close_file {
- 	if (my $fh = $fb->{fh}) {
- 		if (defined $exp) {
- 			seek($fh, 0, 0) or croak $!;
--			my $md5 = Digest::MD5->new;
--			$md5->addfile($fh);
--			my $got = $md5->hexdigest;
-+			my $got = Git::SVN::Util::md5sum($fh);
- 			if ($got ne $exp) {
- 				die "Checksum mismatch: $path\n",
- 				    "expected: $exp\n    got: $got\n";
-@@ -2837,7 +2860,6 @@ use strict;
- use warnings;
- use Carp qw/croak/;
- use IO::File;
--use Digest::MD5;
- 
- sub new {
- 	my ($class, $opts) = @_;
-@@ -3141,11 +3163,9 @@ sub chg_file {
- 	$fh->flush == 0 or croak $!;
- 	seek $fh, 0, 0 or croak $!;
- 
--	my $md5 = Digest::MD5->new;
--	$md5->addfile($fh) or croak $!;
-+	my $exp = Git::SVN::Util::md5sum($fh);
- 	seek $fh, 0, 0 or croak $!;
- 
--	my $exp = $md5->hexdigest;
- 	my $pool = SVN::Pool->new;
- 	my $atd = $self->apply_textdelta($fbat, undef, $pool);
- 	my $got = SVN::TxDelta::send_stream($fh, @$atd, $pool);
-@@ -3859,6 +3879,29 @@ sub run_pager {
- 	exec $pager or ::fatal "Can't run pager: $! ($pager)";
- }
- 
-+sub format_svn_date {
-+	return strftime("%Y-%m-%d %H:%M:%S %z (%a, %d %b %Y)", localtime(shift));
-+}
-+
-+sub parse_git_date {
-+	my ($t, $tz) = @_;
-+	# Date::Parse isn't in the standard Perl distro :(
-+	if ($tz =~ s/^\+//) {
-+		$t += tz_to_s_offset($tz);
-+	} elsif ($tz =~ s/^\-//) {
-+		$t -= tz_to_s_offset($tz);
-+	}
-+	return $t;
-+}
-+
-+sub set_local_timezone {
-+	if (defined $TZ) {
-+		$ENV{TZ} = $TZ;
-+	} else {
-+		delete $ENV{TZ};
-+	}
-+}
-+
- sub tz_to_s_offset {
- 	my ($tz) = @_;
- 	$tz =~ s/(\d\d)$//;
-@@ -3879,13 +3922,7 @@ sub get_author_info {
- 	$dest->{t} = $t;
- 	$dest->{tz} = $tz;
- 	$dest->{a} = $au;
--	# Date::Parse isn't in the standard Perl distro :(
--	if ($tz =~ s/^\+//) {
--		$t += tz_to_s_offset($tz);
--	} elsif ($tz =~ s/^\-//) {
--		$t -= tz_to_s_offset($tz);
--	}
--	$dest->{t_utc} = $t;
-+	$dest->{t_utc} = parse_git_date($t, $tz);
- }
- 
- sub process_commit {
-@@ -3939,8 +3976,7 @@ sub show_commit_normal {
- 	my ($c) = @_;
- 	print commit_log_separator, "r$c->{r} | ";
- 	print "$c->{c} | " if $show_commit;
--	print "$c->{a} | ", strftime("%Y-%m-%d %H:%M:%S %z (%a, %d %b %Y)",
--				 localtime($c->{t_utc})), ' | ';
-+	print "$c->{a} | ", format_svn_date($c->{t_utc}), ' | ';
- 	my $nr_line = 0;
- 
- 	if (my $l = $c->{l}) {
-@@ -3980,11 +4016,7 @@ sub cmd_show_log {
- 	my (@args) = @_;
- 	my ($r_min, $r_max);
- 	my $r_last = -1; # prevent dupes
--	if (defined $TZ) {
--		$ENV{TZ} = $TZ;
--	} else {
--		delete $ENV{TZ};
--	}
-+	set_local_timezone();
- 	if (defined $::_revision) {
- 		if ($::_revision =~ /^(\d+):(\d+)$/) {
- 			($r_min, $r_max) = ($1, $2);
--- 
-1.5.3.4
