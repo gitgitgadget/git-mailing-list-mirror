@@ -1,54 +1,50 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] send-pack: cluster ref status reporting
-Date: Wed, 21 Nov 2007 02:39:38 -0500
-Message-ID: <20071121073938.GB10742@sigill.intra.peff.net>
-References: <20071120111317.GA4120@sigill.intra.peff.net> <20071120111801.GA7814@sigill.intra.peff.net> <7v1wakhxh4.fsf@gitster.siamese.dyndns.org> <20071121073332.GA10244@sigill.intra.peff.net> <7vwsscgie2.fsf@gitster.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [WIP PATCH] Add 'git fast-export', the sister of 'git fast-import'
+Date: Wed, 21 Nov 2007 08:44:22 +0100
+Message-ID: <4743E1D6.4010308@viscovery.net>
+References: <Pine.LNX.4.64.0711210336210.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 21 08:40:01 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 21 08:44:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IukBi-00081m-Lb
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 08:39:59 +0100
+	id 1IukGI-0000qW-It
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 08:44:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756689AbXKUHjl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 02:39:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756537AbXKUHjl
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 02:39:41 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2735 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752597AbXKUHjk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 02:39:40 -0500
-Received: (qmail 4924 invoked by uid 111); 21 Nov 2007 07:39:39 -0000
-Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 21 Nov 2007 02:39:39 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Nov 2007 02:39:38 -0500
-Content-Disposition: inline
-In-Reply-To: <7vwsscgie2.fsf@gitster.siamese.dyndns.org>
+	id S1756735AbXKUHoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 02:44:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756270AbXKUHoZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 02:44:25 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:58306 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755525AbXKUHoY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 02:44:24 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IukFN-0003ZR-0u; Wed, 21 Nov 2007 08:43:45 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 251C96EF; Wed, 21 Nov 2007 08:44:22 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <Pine.LNX.4.64.0711210336210.27959@racer.site>
+X-Spam-Score: 0.2 (/)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65614>
 
-On Tue, Nov 20, 2007 at 11:36:05PM -0800, Junio C Hamano wrote:
+Johannes Schindelin schrieb:
+> 	Oh, and it relies on "int" being castable to void * and vice 
+> 	versa.  Is anybody aware of a platform where this can lead to
+> 	problems?
 
-> Heh, at least I've privately queued it at the tip of
-> jk/send-pack for review but not merged it to 'next' yet, after
-> fixing it up (the last round I also fixed up so that was partly
-> why I noticed -- the patch did not apply).
+Win64?
 
-OK, good. I should have noticed because I also ran across the same patch
-failure when I did a rebase earlier today, but I didn't consider that
-the mistake had slipped out of my repo. :) Sorry for the confusion.
-
-> The idea feels sound, and code under cursory look was fine.
-
-I think it is probably worth applying then. It is slightly more useful
-to the user, and I haven't been able to see any downside.
-
--Peff
+-- Hannes
