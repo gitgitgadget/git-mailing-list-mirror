@@ -1,95 +1,65 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [PATCH] Fix start_command closing cmd->out/in regardless of cmd->close_out/in
-Date: Wed, 21 Nov 2007 10:38:33 +0800
-Message-ID: <46dff0320711201838g5affba6bo21a8c837b0bef681@mail.gmail.com>
-References: <1195503174-29387-1-git-send-email-pkufranky@gmail.com>
-	 <474308A5.8070301@viscovery.net>
+From: "Shun Kei Leung" <kevinlsk@gmail.com>
+Subject: [PATCH] git-p4: Fix typo in --detect-labels
+Date: Wed, 21 Nov 2007 11:01:19 +0800
+Message-ID: <e66701d40711201901n712e17e6x6018a4dc16e75cea@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Nov 21 03:38:58 2007
+Cc: "Junio C Hamano" <gitster@pobox.com>, shausman@trolltech.com
+To: "Git ML" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 21 04:01:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IufUO-0001Z3-7j
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 03:38:56 +0100
+	id 1IufqO-0006OC-Sk
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 04:01:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751779AbXKUCig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2007 21:38:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751672AbXKUCig
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 21:38:36 -0500
-Received: from py-out-1112.google.com ([64.233.166.181]:42788 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750914AbXKUCif (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2007 21:38:35 -0500
-Received: by py-out-1112.google.com with SMTP id u77so6907436pyb
-        for <git@vger.kernel.org>; Tue, 20 Nov 2007 18:38:34 -0800 (PST)
+	id S1751904AbXKUDBW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2007 22:01:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbXKUDBV
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 22:01:21 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:61373 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750719AbXKUDBU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2007 22:01:20 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so17851ugc
+        for <git@vger.kernel.org>; Tue, 20 Nov 2007 19:01:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=leWjX2LjewvfatrkwRP2bAz+7CCHde5MUbzz3hhQRQo=;
-        b=RSs/am5t/H5Vf167BLE81kzPOaKBNL0YwdhEwSQUJG6bKQ8GxheodTrlOsqEUMY5Fss7NkXTSWBOtjRR2QhkZo2p4J0kb0OQiRbB1SODrPss30P5n/bqjl0Nx7pur4MoJMQVZhYy49w6GB02/GqG73UppGuYXwFnVImx09OuIIc=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=D9vxfeYGXA+7apoV9iGbg1k2VMsESeuwI0zbtG/DsZs=;
+        b=UyfJ4C72yEszoIxXtZ+ZBnvsd+EWEwucTvnj42bvb/KQotaC4rJeqjaCH/8vfjgcPrA3P6Lm+PhAPxtYBHzmmI8rjzuMAY26OpnXa0UqN1K1ybwIg1RBOqSjgl4qPh/Ru5aFzkkoqPUBJ6LqNPXrdVZ+e1x7QPA0kuXyPhwGWxg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AhilZzBlgCWbY/YPlshyNv+eotnGUc7agXymUZzgePR0T6f4xLOisOM+o5DFrvADRB89m5mQMTWb1jIUtzrmvztTr3dfhsZ3HHGRXxQ6TrX3Ay6ExsLMoa4o4DwBHefGG1JPqnTPSpaKDhrYwqQs7M5kJ5CB71HXFPBi3SSFsUU=
-Received: by 10.64.203.4 with SMTP id a4mr15690773qbg.1195612713490;
-        Tue, 20 Nov 2007 18:38:33 -0800 (PST)
-Received: by 10.35.108.1 with HTTP; Tue, 20 Nov 2007 18:38:33 -0800 (PST)
-In-Reply-To: <474308A5.8070301@viscovery.net>
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=IPVzx/8Mt6rqXJ7eP5bmFbhZJg3irY/L8wzFlRre5tJ2yHYSlTtQyEDOcgv8N1SVDPTgiJH5povDTsn4BpdbdQ3k7F024wsRe7OdQZjEN+wCO8igPd+M549SZiBjXa7Y0nrF6LwuCaiSWoPCxl5tQZS7mJRmyypHQ7AqTqST0yQ=
+Received: by 10.78.181.13 with SMTP id d13mr7660024huf.1195614079132;
+        Tue, 20 Nov 2007 19:01:19 -0800 (PST)
+Received: by 10.78.43.4 with HTTP; Tue, 20 Nov 2007 19:01:19 -0800 (PST)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65586>
 
-On Nov 21, 2007 12:17 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Ping Yin schrieb:
-> > This patch disables the auto closing behavious of start_command
-> > and corrects all codes which depend on this kind of behaviour.
->
-> I've thought about this a bit more, and I think that it is better to leave
-> this auto-closing behavior unchanged and change your usage of this feature,
-> like so:
->
-> > +static void wt_status_print_submodule_summary(struct wt_status *s)
-> > +{
-> > +       struct child_process sm_summary;
-> > +       memset(&sm_summary, 0, sizeof(sm_summary));
-> > +       ...
-> > +       sm_summary.out = fileno(s->fp);
->
->         fflush(s->fp);
->         sm_summary.out = dup(fileno(s->fp));    /* run_command closes it */
->
-> > +       ...
-> > +       run_command(&sm_summary);
-> > +}
->
-> This way the change is more local without affecting well-tested other callers.
->
+Signed-off-by: Kevin Leung <kevinlsk@gmail.com>
+---
+ contrib/fast-import/git-p4 |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-This way works, but it is a tricky one, not a natural or graceful one.
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 65c57ac..66b79b6 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -1026,7 +1026,7 @@ class P4Sync(Command):
 
-> Furthermore, I don't think that it's correct to just set the .close_in or
-> .close_out flags. This will close the fd only in finish_command(), which can
-> be too late: Think again of a writable pipe end that remains open and keeps
-> the reader waiting for input that is not going to happen.
+         l = p4CmdList("labels %s..." % ' '.join (self.depotPaths))
+         if len(l) > 0 and not self.silent:
+-            print "Finding files belonging to labels in %s" % `self.depotPath`
++            print "Finding files belonging to labels in %s" % `self.depotPaths`
 
-This may happen. However, i have scanned all the git codes using the
-auto closing behaviour and i don't discover the problem you mentioned.
-So i think it deserves to correct the misbehaviour after carefully
-testing. And we can make a clarification for that if necessary.
-
->
-> -- Hannes
->
->
-
-
-
+         for output in l:
+             label = output["label"]
 -- 
-Ping Yin
+1.5.3.6.5.g154c7
