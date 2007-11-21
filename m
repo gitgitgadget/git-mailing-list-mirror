@@ -1,98 +1,73 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: t9106 failure, bisect weirdness
-Date: Wed, 21 Nov 2007 01:10:01 -0800
-Message-ID: <20071121091001.GA23266@soma>
-References: <20071119230601.GA15624@net-ronin.org> <200711200552.27001.chriscool@tuxfamily.org> <20071120061314.GA21819@net-ronin.org> <200711210508.27455.chriscool@tuxfamily.org> <20071121045638.GA9184@net-ronin.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix start_command closing cmd->out/in regardless of cmd->close_out/in
+Date: Wed, 21 Nov 2007 01:11:00 -0800
+Message-ID: <7vmyt8gdzv.fsf@gitster.siamese.dyndns.org>
+References: <1195503174-29387-1-git-send-email-pkufranky@gmail.com>
+	<474308A5.8070301@viscovery.net>
+	<46dff0320711201838g5affba6bo21a8c837b0bef681@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: carbonated beverage <ramune@net-ronin.org>
-X-From: git-owner@vger.kernel.org Wed Nov 21 10:10:25 2007
+Cc: "Johannes Sixt" <j.sixt@viscovery.net>, git@vger.kernel.org
+To: "Ping Yin" <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 21 10:11:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IulbE-0006YU-Mg
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 10:10:25 +0100
+	id 1IulcG-0006rG-97
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 10:11:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752222AbXKUJKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 04:10:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750959AbXKUJKF
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 04:10:05 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:36401 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751198AbXKUJKD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 04:10:03 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id A24137DC0FE;
-	Wed, 21 Nov 2007 01:10:01 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20071121045638.GA9184@net-ronin.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751646AbXKUJLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 04:11:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752350AbXKUJLK
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 04:11:10 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:36835 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750959AbXKUJLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 04:11:08 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id CB99A2F2;
+	Wed, 21 Nov 2007 04:11:27 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 4EF20962CE;
+	Wed, 21 Nov 2007 04:11:24 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65621>
 
-Hi, thanks for the heads up, Christian
+"Ping Yin" <pkufranky@gmail.com> writes:
 
-carbonated beverage <ramune@net-ronin.org> wrote:
-> > Ok thanks for doing that too.
-> > Could you also look at the "file" when the test succeed and when it does not 
-> > and send us both versions and a diff between them (if it's not too big).
-> 
-> Size-wise, they're tiny -- though there's a lot of lines.
-> 
-> The diff:
-> 
-> ramune/lycaeum:t: diff -u works.t fails.t 
-> --- works.t     2007-11-20 21:54:29.000000000 -0700
-> +++ fails.t     2007-11-20 21:54:39.000000000 -0700
-> @@ -55,9 +55,9 @@
->  55
->  56
->  57
-> -5588
-> +58
->  59
->  60
-> -6611
-> +61
->  62
->  63
+> On Nov 21, 2007 12:17 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> ...
+>> This way the change is more local without affecting well-tested other callers.
+>
+> This way works, but it is a tricky one, not a natural or graceful one.
 
-Ah, these changes should've been made on the svn side.  But I'm betting
-a race condition appears on faster computers (which we've seen before in
-other tests).
+I do not know about "natural".  That largely would depend on
+where one starts thinking about the issues from.
 
-I can't reproduce it at all on any of my boxes, but does the following
-one-liner fix it consistently?
+But I think an API definition that says "These fds are closed
+after the call, so if you are going to use them, you can dup()
+them beforehand" is equally valid, and I suspect that forgetting
+to dup() is easier to detect than forgetting to close() --- you
+will notice the former mistake immediately because your read and
+write say "oops, nobody on the other end" but the latter mistake
+will result in a hung process.  And for that reason, I think it
+can be called more "graceful".  So ...
 
-Thanks,
+>> Furthermore, I don't think that it's correct to just set the .close_in or
+>> .close_out flags. This will close the fd only in finish_command(), which can
+>> be too late: Think again of a writable pipe end that remains open and keeps
+>> the reader waiting for input that is not going to happen.
+>
+> This may happen. However, i have scanned all the git codes using the
+> auto closing behaviour and i don't discover the problem you mentioned.
+> So i think it deserves to correct the misbehaviour after carefully
+> testing. And we can make a clarification for that if necessary.
 
-From: Eric Wong <normalperson@yhbt.net>
-Date: Wed, 21 Nov 2007 00:57:33 -0800
-Subject: [PATCH] t9106: fix a race condition that caused svn to miss modifications
-
-carbonated beverage noticed this test was occasionally failing.
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- t/t9106-git-svn-dcommit-clobber-series.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/t/t9106-git-svn-dcommit-clobber-series.sh b/t/t9106-git-svn-dcommit-clobber-series.sh
-index d59acc8..7452546 100755
---- a/t/t9106-git-svn-dcommit-clobber-series.sh
-+++ b/t/t9106-git-svn-dcommit-clobber-series.sh
-@@ -22,6 +22,7 @@ test_expect_success '(supposedly) non-conflicting change from SVN' "
- 	cd tmp &&
- 		perl -i -p -e 's/^58\$/5588/' file &&
- 		perl -i -p -e 's/^61\$/6611/' file &&
-+		poke file &&
- 		test x\"\`sed -n -e 58p < file\`\" = x5588 &&
- 		test x\"\`sed -n -e 61p < file\`\" = x6611 &&
- 		svn commit -m '58 => 5588, 61 => 6611' &&
--- 
-Eric Wong
+... I do not necessarily agree that your patch is correcting the
+misbehaviour.
