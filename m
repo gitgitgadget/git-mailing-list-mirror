@@ -1,82 +1,114 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] autoconf: Add tests for memmem, strtoumax and mkdtemp functions
-Date: Wed, 21 Nov 2007 19:47:50 +0100
-Message-ID: <200711211947.50661.jnareb@gmail.com>
-References: <200711191947.05960.jnareb@gmail.com> <20071121065858.GU14735@spearce.org>
+From: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+Subject: [PATCH] builtin-commit: Include the diff in the commit message when verbose.
+Date: Wed, 21 Nov 2007 14:10:34 -0500
+Message-ID: <1195672234-3919-1-git-send-email-krh@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Nov 21 19:48:16 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Nov 21 20:18:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuucR-0001yU-26
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 19:48:15 +0100
+	id 1Iuv5e-00063L-9z
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 20:18:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752060AbXKUSr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 13:47:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751821AbXKUSr5
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 13:47:57 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:12481 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751930AbXKUSr4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 13:47:56 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so2211030nfb
-        for <git@vger.kernel.org>; Wed, 21 Nov 2007 10:47:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=GfObD7ZzTIEKJ3xKB5jNtBJX7/gR84O8JtWwJbW+yO0=;
-        b=k+lK+S+dkEJBry5yJstreGrXEp/zUZkjXnCzT4d0UgWFJW1u54BMJzkatt9e3LuZH+B1F3GjB7p105l3RjAfXbxuQHp/GwDIPQZ/MeRZYEuzJLiYYz36cCX9w7gBE8s9XBEGTUqgJlnKutPQERhhwSDgiXQ3roP/nbRYsNc4hDU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=SbX0BqtC8aiCXxA0cOxCbnX66ZJm5cmC7GCPHzQ2ZN8kR9V2VHC7lEl/E/MEaPoaWl9YdFd+SmDO+h9s2CeBg05jdEFLvqDVCpF0x+enm/AmhCMCyReNxJWHweaIYMp5QY2Yf1nH3JwKEgkwoj/hbcT5Mib/0nYuKryLogcn9s8=
-Received: by 10.82.112.3 with SMTP id k3mr21724305buc.1195670873499;
-        Wed, 21 Nov 2007 10:47:53 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.255.19])
-        by mx.google.com with ESMTPS id 22sm31661fkr.2007.11.21.10.47.50
-        (version=SSLv3 cipher=OTHER);
-        Wed, 21 Nov 2007 10:47:51 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20071121065858.GU14735@spearce.org>
-Content-Disposition: inline
+	id S1752122AbXKUTRJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Nov 2007 14:17:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752085AbXKUTRI
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 14:17:08 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:38117 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752072AbXKUTRG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 14:17:06 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lALJAfbE010742;
+	Wed, 21 Nov 2007 14:10:41 -0500
+Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lALJAdUV002541;
+	Wed, 21 Nov 2007 14:10:40 -0500
+Received: from localhost.localdomain (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id lALJAdF3012043;
+	Wed, 21 Nov 2007 14:10:39 -0500
+X-Mailer: git-send-email 1.5.3.6.1865.g65bc6-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65691>
 
-Shawn O. Pearce wrote:
-> Jakub Narebski <jnareb@gmail.com> wrote:
->> By the way, do you have idea how to test for the following
->> in configure.ac:
->> 
->> * Define NO_PREAD if you have a problem with pread() system call (e.g.
->>   cygwin.dll before v1.5.22).
->> 
->>   - what is the problem? how to detect it?
-> 
-> This also appears to be broken on HP-UX (e.g. we need to set
-> NO_PREAD there).  Thiago on IRC talked about this the other day
-> when he was trying to build git on a bunch of different systems.
-> 
-> Unfortunately this may just need to be an OS based test.  The code
-> compiles just fine but when index-pack tries to use pread to walk
-> back through the deltas and generate their SHA-1s it barfs without
-> an error code.  I suspect the failure is pread claiming it put the
-> data into the user buffer but not actually doing so, which causes
-> zlib's inflate() to then see data corruption.
+run_diff_index() and the entire diff machinery is hard coded to output
+to stdout, so just redirect that and restore it when done.
 
-Can you write a short program which demonstrates this error (either
-fails with some error code, or produces wrong output)? That would be
-enough for configure.ac (see for example NO_C99_FORMAT in configure.ac)
+Signed-off-by: Kristian H=C3=B8gsberg <krh@redhat.com>
+---
+ builtin-commit.c |   24 +++++++++++++++++++++++-
+ 1 files changed, 23 insertions(+), 1 deletions(-)
 
-Unless this is Schroedinger bug...
-
--- 
-Jakub Narebski
-Poland
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 446a252..d5b8479 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -277,6 +277,7 @@ static char *prepare_index(const char **files, cons=
+t char *prefix)
+ static int run_status(FILE *fp, const char *index_file, const char *pr=
+efix)
+ {
+ 	struct wt_status s;
++	int saved_stdout;
+=20
+ 	wt_status_prepare(&s);
+ 	s.prefix =3D prefix;
+@@ -290,8 +291,23 @@ static int run_status(FILE *fp, const char *index_=
+file, const char *prefix)
+ 	s.index_file =3D index_file;
+ 	s.fp =3D fp;
+=20
++	fflush(fp);
++
++	/* Sigh, the entire diff machinery is hardcoded to output to
++	 * stdout.  Do the dup-dance...*/
++	saved_stdout =3D dup(STDOUT_FILENO);
++	if (saved_stdout < 0 ||	dup2(fileno(fp), STDOUT_FILENO) < 0)
++		die("couldn't redirect stdout\n");
++
+ 	wt_status_print(&s);
+=20
++	fflush(fp);
++	fflush(stdout);
++
++	if (dup2(saved_stdout, STDOUT_FILENO) < 0)
++		die("couldn't restore stdout\n");
++	close(saved_stdout);
++
+ 	return s.commitable;
+ }
+=20
+@@ -661,7 +677,7 @@ int cmd_commit(int argc, const char **argv, const c=
+har *prefix)
+ 	int header_len;
+ 	struct strbuf sb;
+ 	const char *index_file, *reflog_msg;
+-	char *nl;
++	char *nl, *p;
+ 	unsigned char commit_sha1[20];
+ 	struct ref_lock *ref_lock;
+=20
+@@ -757,6 +773,12 @@ int cmd_commit(int argc, const char **argv, const =
+char *prefix)
+ 		rollback_index_files();
+ 		exit(1);
+ 	}
++
++	/* Truncate the message just before the diff, if any. */
++	p =3D strstr(sb.buf, "\ndiff --git a/");
++	if (p !=3D NULL)
++		strbuf_setlen(&sb, p - sb.buf);
++
+ 	stripspace(&sb, 1);
+ 	if (sb.len < header_len || message_is_empty(&sb, header_len)) {
+ 		rollback_index_files();
+--=20
+1.5.3.4.206.g58ba4
