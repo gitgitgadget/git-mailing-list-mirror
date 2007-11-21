@@ -1,63 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] Teach git-add--interactive to accept a file path to patch
-Date: Wed, 21 Nov 2007 12:40:47 -0800
-Message-ID: <7vejejfi28.fsf@gitster.siamese.dyndns.org>
-References: <1195648601-21736-1-git-send-email-win@wincent.com>
-	<1195648601-21736-2-git-send-email-win@wincent.com>
-	<1195648601-21736-3-git-send-email-win@wincent.com>
-	<20071121152118.GG24108@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git in a Nutshell guide
+Date: Wed, 21 Nov 2007 22:32:33 +0100
+Message-ID: <200711212232.33791.jnareb@gmail.com>
+References: <1195477504.8093.15.camel@localhost> <fhvs95$5qk$1@ger.gmane.org> <20071121194507.GA3569@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 21 21:41:50 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Wed Nov 21 22:33:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuwOM-0005Nw-40
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 21:41:50 +0100
+	id 1IuxCG-0008G6-Ko
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 22:33:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756429AbXKUUk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 15:40:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756405AbXKUUk4
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 15:40:56 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:54446 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756292AbXKUUkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 15:40:55 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 3D9CC2F0;
-	Wed, 21 Nov 2007 15:41:16 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id B68A398123;
-	Wed, 21 Nov 2007 15:41:11 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752832AbXKUVci convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Nov 2007 16:32:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbXKUVci
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 16:32:38 -0500
+Received: from el-out-1112.google.com ([209.85.162.177]:41768 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752832AbXKUVch (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 16:32:37 -0500
+Received: by el-out-1112.google.com with SMTP id v27so993047ele
+        for <git@vger.kernel.org>; Wed, 21 Nov 2007 13:32:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=FbskjBGOm2MSw/8en2p9/0s3aHa/WVBG41qRDOdpyTQ=;
+        b=lHE9jT2E41lbbds020Vb2qv8qrKmRyFiVf+h/2fS17YEvlRFMkUDBz84tRn2dwbYHvrsx8O5PhZSCLiC/MItcSndwya1FNN6X9WVE8NpYtt7d49pok6UQuAAbS/R5nR90AXgwTAYF6OAoQ8OSqyNtFFgT+fxRgfnEMbunVums2k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=DstzimedrW/qgEO95qCylZVCrgf5vO7WDCnE6erP+B6UXTaI9QuF3QYn0p0t1YNaor9L41KUhOeY9YsRdgFEp7QKkRT26Fq5M2ecEW009+lau8nav3JLlQ6FMdh16GL2JXTqLeVCzboKK8ZWi02f+mu/LmqRgKNjQokkqYmlIXw=
+Received: by 10.78.200.20 with SMTP id x20mr8950630huf.1195680755635;
+        Wed, 21 Nov 2007 13:32:35 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.255.19])
+        by mx.google.com with ESMTPS id e9sm400094muf.2007.11.21.13.32.33
+        (version=SSLv3 cipher=OTHER);
+        Wed, 21 Nov 2007 13:32:34 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20071121194507.GA3569@efreet.light.src>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65706>
 
-Jeff King <peff@peff.net> writes:
+Dnia =B6roda 21. listopada 2007 20:45, Jan Hudec napisa=B3:
+> On Wed, Nov 21, 2007 at 00:57:28 +0100, Jakub Narebski wrote:
 
-> ...
-> On top of that, it would be great to be able to do something like
->
->   git-add -i *.c
->
-> and just get prompted for changed files (right now, you only get
-> prompted for changed files, but unchanged files seem to print a spurious
-> newline).
->
-> And at any rate, this would require fixing 3/4 to handle the multiple
-> files from git-add.
->
-> What do you think?
+>>  2. Git has some historical cruft, including the fact that it began =
+as
+>>     series of low level tools (plumbing) and became proper SCM (acqu=
+ired
+>>     proper porcelain) later, what can be even now seen in documentat=
+ion...
 
-If we are to add path limited behaviour, I think it should also
-grok "git-add -i sub/dir/".  IOW, you would want to have the
-same path selection semantics as git-add without the
-"interactive" bit.
+What I meant here that some of important documentation can be only
+found in plumbing commands man pages.
+
+>>  3. Explanation of some features (like object model) would be much e=
+asier
+>>     with some graphics (diagrams etc.), but chosen documentation for=
+mat,
+>>     AsciiDoc, doesn't make it easy...
+>=20
+> I dare to disagree here. Asciidoc supports generating image tags for
+> respective output formats and it really does not look hard. We could =
+have
+> PNGs and if we wanted higher press quality even SVG or EPS and conver=
+t them
+> to PNGs for the HTML version (and use EPS for latex output).
+
+The problem is that 1) language used to generate images must be easy
+to understand and readable in text form (so sources are enough to
+understand); 2) one of the main formats is manpage (although that would
+not matter for "Git Guide" / "The Git Book").
+
+Should we choose PIC? Or perhaps DOT? I can write little MetaPost, but
+I don't think that would be good format for git diagrams, even if it=20
+can be converted to PDF, SVG and PNG.
+
+--=20
+Jakub Narebski
+Poland
