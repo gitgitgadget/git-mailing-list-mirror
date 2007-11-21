@@ -1,70 +1,84 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Wishlist for a bundle-only transport mode
-Date: Wed, 21 Nov 2007 15:54:05 +0100
-Message-ID: <8aa486160711210654p357ccd87i4809e0cda9471303@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [WIP PATCH] Add 'git fast-export', the sister of 'git fast-import'
+Date: Wed, 21 Nov 2007 16:09:15 +0100
+Message-ID: <47444A1B.4000907@op5.se>
+References: <Pine.LNX.4.64.0711210336210.27959@racer.site> <4743E1D6.4010308@viscovery.net> <Pine.LNX.4.64.0711211209080.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 21 15:54:32 2007
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 21 16:10:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuqyD-00079m-5t
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 15:54:29 +0100
+	id 1IurCx-0005Gq-Dy
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 16:09:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756123AbXKUOyK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 09:54:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755804AbXKUOyJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 09:54:09 -0500
-Received: from rn-out-0910.google.com ([64.233.170.186]:55497 "EHLO
-	rn-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755310AbXKUOyH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 09:54:07 -0500
-Received: by rn-out-0102.google.com with SMTP id s46so3524754rnb
-        for <git@vger.kernel.org>; Wed, 21 Nov 2007 06:54:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=QkX4310Yq7DrLxC8HzsSbkwD5FE7/lVTb9jgAXUOC0I=;
-        b=XJHEyt6dzuCyoEju+D99VHz9cYPDDfMQr5WoiBY7DiyFvqygnfV8a+IrxgBs69pzMhZC9aOJz4Jt+wgYqn2rgm2XMUoM/Wgfjeq69oOTWZNSWlNPIC5/TWqd9eXkv8dUufK3dGJq/NjwrwFPugGqvG3XT6ILKt05BSdF6gaFPCY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=FWl+KtfQ3d7wNVJkQaudDMAM7TtHrgRtR9T9vsazdGk0Bj/cylwA7gzWhwY6Zxa11ej1MZOQUX+HlYh4spTn2jtwjz8Bi3vDH2mMN37p5+BFQdAbLk9ITKLZ35oUY6+z7brLPQgaAAE2fC7BVar0GtTW6yuL6jo7PdNwD/CUlg8=
-Received: by 10.150.201.13 with SMTP id y13mr1301652ybf.1195656845565;
-        Wed, 21 Nov 2007 06:54:05 -0800 (PST)
-Received: by 10.150.199.9 with HTTP; Wed, 21 Nov 2007 06:54:05 -0800 (PST)
-Content-Disposition: inline
+	id S1755683AbXKUPJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 10:09:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755622AbXKUPJX
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 10:09:23 -0500
+Received: from mail.op5.se ([193.201.96.20]:44597 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753804AbXKUPJX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 10:09:23 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 1387B1F08033;
+	Wed, 21 Nov 2007 16:09:21 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id r2GpTzmosm4A; Wed, 21 Nov 2007 16:09:19 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id C32F61F08025;
+	Wed, 21 Nov 2007 16:09:18 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <Pine.LNX.4.64.0711211209080.27959@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65660>
 
-Hi *,
+Johannes Schindelin wrote:
+> 
+> P.S.: I'll try to read up on ptrint_t, as suggested by Shawn.
 
-  I have to work in a bundle-only mode, but there are some problems
-with it, namely:
+I can't find a reference to ptrint_t anywhere on either my system,
+and the 10 first hits on Google finds it on typedef lines, most
+commonly like this:
 
-1) git-clone does not accept a bundle file, even if git-fetch does.
-I've made a patch to use git-fetch in git-clone for this.
+	typedef unsigned long ptrint_t;
 
-2) The bundles created with "git bundle" does not record the HEAD,
-they resolve the symbolic name to a branch name.
 
-3) I can "git fetch" a bundle but I cannot "git push" a bundle, so if I have:
+I think ptrdiff_t is more portable. Here's the relevant entry
+about ptrdiff_t from /usr/include/obstack.h on my system:
 
-[remote "bundle"]
-  url = /file/to/bundle
-  fetch = "+refs/heads/*:refs/remotes/bundle/*"
+---%<---%<---%<---
+/* We need the type of a pointer subtraction.  If __PTRDIFF_TYPE__ is
+   defined, as with GNU C, use that; that way we don't pollute the
+   namespace with <stddef.h>'s symbols.  Otherwise, include <stddef.h>
+   and use ptrdiff_t.  */
 
-$ git push bundle
+#ifdef __PTRDIFF_TYPE__
+# define PTR_INT_TYPE __PTRDIFF_TYPE__
+#else
+# include <stddef.h>
+# define PTR_INT_TYPE ptrdiff_t
+#endif
+---%<---%<---%<---
 
-would create a bundle in /file/to/bundle with the same branches as a
-normal git push, but considering the remote branches as the local
-remotes/bundle/*
+MySQL seems to have botched that one though. It has this instead:
 
-Thank you
+	typedef long          my_ptrdiff_t;
 
-Santi
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
