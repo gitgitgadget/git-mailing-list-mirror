@@ -1,76 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: [RFC] use typechange as rename source
-Date: Wed, 21 Nov 2007 12:12:36 -0500
-Message-ID: <20071121171235.GA32233@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Wishlist for a bundle-only transport mode
+Date: Wed, 21 Nov 2007 18:06:55 +0100
+Organization: At home
+Message-ID: <fi1ojd$pva$1@ger.gmane.org>
+References: <8aa486160711210654p357ccd87i4809e0cda9471303@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 21 18:13:54 2007
+X-From: git-owner@vger.kernel.org Wed Nov 21 18:14:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iut8z-0002g1-W5
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 18:13:46 +0100
+	id 1Iut9d-0002xR-MG
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 18:14:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751672AbXKURMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 12:12:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752686AbXKURMj
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 12:12:39 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3918 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751634AbXKURMi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 12:12:38 -0500
-Received: (qmail 16130 invoked by uid 111); 21 Nov 2007 17:12:37 -0000
-Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 21 Nov 2007 12:12:37 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Nov 2007 12:12:36 -0500
-Content-Disposition: inline
+	id S1752387AbXKUROF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Nov 2007 12:14:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752101AbXKUROF
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 12:14:05 -0500
+Received: from main.gmane.org ([80.91.229.2]:49130 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751808AbXKUROD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 12:14:03 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Iut7O-0006KD-Qk
+	for git@vger.kernel.org; Wed, 21 Nov 2007 17:12:06 +0000
+Received: from abxf19.neoplus.adsl.tpnet.pl ([83.8.255.19])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 21 Nov 2007 17:12:06 +0000
+Received: from jnareb by abxf19.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 21 Nov 2007 17:12:06 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abxf19.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65685>
 
-Today in one of my repositories I did something like this:
+[Cc: Santi B=E9jar <sbejar@gmail.com>, git@vger.kernel.org]
 
-  $ mv foo bar
-  $ ln -s bar foo
-  $ git add .
+Santi B=E9jar wrote:
 
-and I expected git-status to claim:
+> 1) git-clone does not accept a bundle file, even if git-fetch does.
+> I've made a patch to use git-fetch in git-clone for this.
 
-  typechange: foo
-  renamed:    foo -> bar
+[...]=20
+> 3) I can "git fetch" a bundle but I cannot "git push" a bundle
 
-but it didn't find the rename (without -C) because the path 'foo' still
-exists. So there is a disconnect in what git and I think of as "exists".
-Should typechanges make a file eligible as a rename src?
+We would also need "git ls-remote <bundle>" and "git fsck <bundle>"
+to demote git-bundle to porcelain status :-)
 
-A quickie patch to implement this is:
-
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index f9ebea5..5a34e8a 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -417,6 +417,10 @@ void diffcore_rename(struct diff_options *options)
- 				p->one->rename_used++;
- 			register_rename_src(p->one, p->score);
- 		}
-+		else if (DIFF_PAIR_TYPE_CHANGED(p)) {
-+			p->one->rename_used++;
-+			register_rename_src(p->one, p->score);
-+		}
- 		else if (detect_rename == DIFF_DETECT_COPY) {
- 			/*
- 			 * Increment the "rename_used" score by
-
-There are a few add-on questions:
-
-  - should typechanges in both directions be used, or just file ->
-    symlink?
-
-  - this actually produces a 'copied' status rather than a 'renamed'
-    since the 'foo' entry does still exist. Is this reasonable?
-
--Peff
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
