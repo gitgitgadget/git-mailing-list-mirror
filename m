@@ -1,59 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] avoid "defined but not used" warning for fetch_objs_via_walker
-Date: Tue, 20 Nov 2007 23:10:53 -0800
-Message-ID: <7v63zwhy4i.fsf@gitster.siamese.dyndns.org>
-References: <20071118081722.GA31563@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] Revert "t5516: test update of local refs on push"
+Date: Wed, 21 Nov 2007 02:19:34 -0500
+Message-ID: <20071121071934.GA10112@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 21 08:11:51 2007
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 21 08:19:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IujkU-0001DK-5K
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 08:11:50 +0100
+	id 1IujsI-00035L-VW
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 08:19:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754354AbXKUHLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 02:11:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755204AbXKUHLA
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 02:11:00 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:57065 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754354AbXKUHK7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 02:10:59 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 05D302EF;
-	Wed, 21 Nov 2007 02:11:20 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 8890294B72;
-	Wed, 21 Nov 2007 02:11:16 -0500 (EST)
-In-Reply-To: <20071118081722.GA31563@sigill.intra.peff.net> (Jeff King's
-	message of "Sun, 18 Nov 2007 03:17:23 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753399AbXKUHTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 02:19:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754211AbXKUHTi
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 02:19:38 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3874 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752334AbXKUHTh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 02:19:37 -0500
+Received: (qmail 4716 invoked by uid 111); 21 Nov 2007 07:19:36 -0000
+Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 21 Nov 2007 02:19:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Nov 2007 02:19:34 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65607>
 
-Jeff King <peff@peff.net> writes:
+This reverts commit 09fba7a59d38d1cafaf33eadaf1d409c4113b30c.
 
-> Because this function is static and used only by the
-> http-walker, when NO_CURL is defined, gcc emits a "defined
-> but not used" warning.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> On master. I like to compile with -Werror to make sure I don't miss
-> warnings as the compile scrolls by.
->
-> This fix feels a little wrong, since the function isn't specific to http
-> support, but hopefully the comment should be obvious if we ever add
-> another similar commit walker that needs it.
+These tests are superseded by the ones in t5404 (added in
+6fa92bf3 and 8736a848), which are more extensive and better
+organized.
 
-Yeah, while I share your -Werror desire it sure feels a bit
-dirty.  As it does not look like we will be taking any new
-walkers, I think your patch is reasonable, though.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+When Alex introduced t5404, I had the feeling I had written similar
+tests before, but I failed to find them. I think starting t5404 was a
+much more sensible organization, especially since these two tests don't
+follow the style of the rest of t5516 very well.
+
+ t/t5516-fetch-push.sh |   28 ----------------------------
+ 1 files changed, 0 insertions(+), 28 deletions(-)
+
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 86f9b53..4fbd5b1 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -254,32 +254,4 @@ test_expect_success 'push with dry-run' '
+ 	check_push_result $old_commit heads/master
+ '
+ 
+-test_expect_success 'push updates local refs' '
+-
+-	rm -rf parent child &&
+-	mkdir parent && cd parent && git init &&
+-		echo one >foo && git add foo && git commit -m one &&
+-	cd .. &&
+-	git clone parent child && cd child &&
+-		echo two >foo && git commit -a -m two &&
+-		git push &&
+-	test $(git rev-parse master) = $(git rev-parse remotes/origin/master)
+-
+-'
+-
+-test_expect_success 'push does not update local refs on failure' '
+-
+-	rm -rf parent child &&
+-	mkdir parent && cd parent && git init &&
+-		echo one >foo && git add foo && git commit -m one &&
+-		echo exit 1 >.git/hooks/pre-receive &&
+-		chmod +x .git/hooks/pre-receive &&
+-	cd .. &&
+-	git clone parent child && cd child &&
+-		echo two >foo && git commit -a -m two || exit 1
+-		git push && exit 1
+-	test $(git rev-parse master) != $(git rev-parse remotes/origin/master)
+-
+-'
+-
+ test_done
+-- 
+1.5.3.6.1786.g2e199
