@@ -1,111 +1,138 @@
-From: Jon Jensen <jon@endpoint.com>
-Subject: [PATCH] When re-initializing, set shared permissions on all directories.
-Date: Tue, 20 Nov 2007 20:48:58 -0700 (MST)
-Message-ID: <Pine.LNX.4.64.0711202045140.4046@ybpnyubfg.ybpnyqbznva>
+From: carbonated beverage <ramune@net-ronin.org>
+Subject: Re: t9106 failure, bisect weirdness
+Date: Tue, 20 Nov 2007 20:56:38 -0800
+Message-ID: <20071121045638.GA9184@net-ronin.org>
+References: <20071119230601.GA15624@net-ronin.org>
+ <200711200552.27001.chriscool@tuxfamily.org>
+ <20071120061314.GA21819@net-ronin.org>
+ <200711210508.27455.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 21 05:24:04 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Nov 21 05:58:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iuh7z-0007Dv-6Y
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 05:23:55 +0100
+	id 1Iuhey-00061r-Cg
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 05:58:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752847AbXKUEXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2007 23:23:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752779AbXKUEXi
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 23:23:38 -0500
-Received: from sb3.endpoint.com ([64.34.193.88]:43165 "EHLO mail.endcrypt.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752616AbXKUEXh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2007 23:23:37 -0500
-X-Greylist: delayed 2076 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Nov 2007 23:23:37 EST
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.endcrypt.com (Postfix) with ESMTP id 5FB6729AACB
-	for <git@vger.kernel.org>; Wed, 21 Nov 2007 03:49:00 +0000 (UTC)
+	id S1752623AbXKUE5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2007 23:57:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752515AbXKUE5E
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 23:57:04 -0500
+Received: from idcmail-mo1so.shaw.ca ([24.71.223.10]:42432 "EHLO
+	pd3mo1so.prod.shaw.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751342AbXKUE5D (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2007 23:57:03 -0500
+Received: from pd3mr5so.prod.shaw.ca (pd3mr5so-qfe3.prod.shaw.ca [10.0.141.12])
+ by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
+ with ESMTP id <0JRU008T4B2GAPB0@l-daemon> for git@vger.kernel.org; Tue,
+ 20 Nov 2007 21:56:40 -0700 (MST)
+Received: from pn2ml10so.prod.shaw.ca ([10.0.121.80])
+ by pd3mr5so.prod.shaw.ca (Sun Java System Messaging Server 6.2-7.05 (built Sep
+ 5 2006)) with ESMTP id <0JRU00JBCB2GX850@pd3mr5so.prod.shaw.ca> for
+ git@vger.kernel.org; Tue, 20 Nov 2007 21:56:40 -0700 (MST)
+Received: from prophet.net-ronin.org ([70.67.106.153])
+ by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
+ with ESMTP id <0JRU00CSYB2FPA50@l-daemon> for git@vger.kernel.org; Tue,
+ 20 Nov 2007 21:56:39 -0700 (MST)
+Received: from ramune by prophet.net-ronin.org with local (Exim 4.50)
+	id 1Iuhde-0002OM-99; Tue, 20 Nov 2007 20:56:38 -0800
+In-reply-to: <200711210508.27455.chriscool@tuxfamily.org>
+Content-disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65592>
 
-Hi.
+> Ok thanks for doing that too.
+> Could you also look at the "file" when the test succeed and when it does not 
+> and send us both versions and a diff between them (if it's not too big).
 
-Below is a small patch to make git-init --shared change permissions not 
-just of .git/refs/ but of the other directories too.
+Size-wise, they're tiny -- though there's a lot of lines.
 
-Also a documentation patch for git-init, though after reading discussion 
-in the list archives from a few weeks ago, I realize people may not be 
-interested in documentation that shows explicit UNIX commands that may not 
-apply or could be considered pedantic. Let me know if there's a better way 
-I can approach this.
+The diff:
 
-Thanks,
-Jon
+ramune/lycaeum:t: diff -u works.t fails.t 
+--- works.t     2007-11-20 21:54:29.000000000 -0700
++++ fails.t     2007-11-20 21:54:39.000000000 -0700
+@@ -55,9 +55,9 @@
+ 55
+ 56
+ 57
+-5588
++58
+ 59
+ 60
+-6611
++61
+ 62
+ 63
 
+And the full (working) file:
 
---
-From b2895649165d7e6c4bcbe6484d66c84ea7124bd9 Mon Sep 17 00:00:00 2001
-From: Jon Jensen <jon@endpoint.com>
-Date: Tue, 20 Nov 2007 20:01:14 -0700
-Subject: [PATCH] When re-initializing, set shared permissions on all directories.
-
-Before this patch, when re-initializing an existing repository e.g.
-as --shared=group, only .git/refs/ was set chmod g+ws. Now the
-other directories get that too.
-
-This is probably only helpful when not much has been done with the
-repository yet, since it doesn't include subdirectories and files,
-so add an example to the documentation to point the way for people
-to finish the job.
----
-  Documentation/git-init.txt |   13 +++++++++++++
-  builtin-init-db.c          |    8 +++++++-
-  2 files changed, 20 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index 07484a4..c4a4757 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -101,6 +101,19 @@ $ git-add .     <2>
-  <2> add all existing file to the index
-
-
-+Adjust an existing git repository to work as if it had been created with git init --shared::
-++
-+----------------
-+$ GIT_DIR=/path/to/my/.git git-init --shared  <1>
-+$ chgrp -R mygroup /path/to/my/.git  <2>
-+$ find /path/to/my/.git -type d -exec chmod g+ws {} \;  <3>
-+----------------
-++
-+<1> adjust configuration for shared repository
-+<2> correct group ownership of any existing directories and files; needed if group shared by users is different than the group ownership of repository files
-+<3> make all directories set group ownership of newly created files correctly in the future
-+
-+
-  Author
-  ------
-  Written by Linus Torvalds <torvalds@osdl.org>
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index 763fa55..d16efa5 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -24,7 +24,13 @@ static void safe_create_dir(const char *dir, int share)
-  			exit(1);
-  		}
-  	}
--	else if (share && adjust_shared_perm(dir))
-+
-+    /*
-+     * If the directory already existed, we may still need
-+     * to adjust permissions if this is a reinitialization
-+     * for a shared repository.
-+     */
-+	if (share && adjust_shared_perm(dir))
-  		die("Could not make %s writable by group\n", dir);
-  }
-
--- 
-1.5.3.6.737.gb2895
+1
+2
+3
+4444
+5
+6
+7777
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+5588
+59
+60
+6611
+62
+63
