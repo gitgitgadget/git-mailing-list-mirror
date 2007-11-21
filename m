@@ -1,64 +1,55 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: [PATCH 2/4] Teach git-add--interactive to accept a file path to patch
-Date: Wed, 21 Nov 2007 13:36:39 +0100
-Message-ID: <1195648601-21736-3-git-send-email-win@wincent.com>
-References: <1195648601-21736-1-git-send-email-win@wincent.com>
- <1195648601-21736-2-git-send-email-win@wincent.com>
-Cc: gitster@pobox.com, Wincent Colaiuta <win@wincent.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 21 13:38:39 2007
+From: Geert Bosch <bosch@adacore.com>
+Subject: Re: [WIP PATCH] Add 'git fast-export', the sister of 'git fast-import'
+Date: Wed, 21 Nov 2007 07:43:43 -0500
+Message-ID: <2348F06A-F9A2-4A8F-8501-D0B696F34388@adacore.com>
+References: <Pine.LNX.4.64.0711210336210.27959@racer.site>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 21 13:44:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iuoqk-00039d-Ep
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 13:38:38 +0100
+	id 1Iuovz-0004xr-3n
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 13:44:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756876AbXKUMiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 07:38:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756696AbXKUMiU
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 07:38:20 -0500
-Received: from wincent.com ([72.3.236.74]:54663 "EHLO s69819.wincent.com"
+	id S1754166AbXKUMnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 07:43:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753698AbXKUMnq
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 07:43:46 -0500
+Received: from rock.gnat.com ([205.232.38.15]:35120 "EHLO rock.gnat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756648AbXKUMiT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 07:38:19 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lALCagcl013817;
-	Wed, 21 Nov 2007 06:36:46 -0600
-X-Mailer: git-send-email 1.5.3.6.862.g369c8
-In-Reply-To: <1195648601-21736-2-git-send-email-win@wincent.com>
+	id S1753189AbXKUMnp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 07:43:45 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by filtered-rock.gnat.com (Postfix) with ESMTP id 8FFF22A9661;
+	Wed, 21 Nov 2007 07:43:44 -0500 (EST)
+Received: from rock.gnat.com ([127.0.0.1])
+	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id cRtOnhHolQEI; Wed, 21 Nov 2007 07:43:44 -0500 (EST)
+Received: from [172.16.1.98] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rock.gnat.com (Postfix) with ESMTP id 4F7892A966C;
+	Wed, 21 Nov 2007 07:43:44 -0500 (EST)
+In-Reply-To: <Pine.LNX.4.64.0711210336210.27959@racer.site>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65641>
 
-If supplied a single file path parameter the git-add--interactive script
-now bypasses the command loop and jumps straight to the patch subcommand
-using the passed path. After returning from the subcommand the main
-command loop is entered. If a non-resolvable path is supplied the
-operation is a no-op and the command loop is entered.
 
-Signed-off-by: Wincent Colaiuta <win@wincent.com>
----
- git-add--interactive.perl |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+On Nov 20, 2007, at 22:40, Johannes Schindelin wrote:
+> 	Oh, and it relies on "int" being castable to void * and vice
+> 	versa.  Is anybody aware of a platform where this can lead to
+> 	problems?
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index fb1e92a..8f21c03 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -803,6 +803,11 @@ sub main_loop {
- 	}
- }
- 
-+die "add --interactive may take only 1 optional parameter" if ($#ARGV > 0);
- refresh();
-+if ($#ARGV == 0) {
-+	patch_update_file($ARGV[0]);
-+}
- status_cmd();
- main_loop();
-+
--- 
-1.5.3.5.737.gdee1b
+Like any 64-bit system? int is 32 bit and void * is 64.
+So, casting a pointer to an int drops half the bits.
+When you convert it back it will point to a funny place...
+
+   -Geert
