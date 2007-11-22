@@ -1,108 +1,138 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: Wishlist for a bundle-only transport mode
-Date: Thu, 22 Nov 2007 10:42:42 +0100
-Message-ID: <8aa486160711220142w25e9c9b6vbafa34a287dde7eb@mail.gmail.com>
-References: <8aa486160711210654p357ccd87i4809e0cda9471303@mail.gmail.com>
-	 <200711211752.40264.jnareb@gmail.com>
-	 <Pine.LNX.4.64.0711211658510.27959@racer.site>
-	 <200711211811.34391.jnareb@gmail.com>
-	 <Pine.LNX.4.64.0711211719330.27959@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add path-limiting to git-add--interactive
+Date: Thu, 22 Nov 2007 01:45:48 -0800
+Message-ID: <7vd4u27gvn.fsf@gitster.siamese.dyndns.org>
+References: <7vk5obb09a.fsf@gitster.siamese.dyndns.org>
+	<1195695384-41329-1-git-send-email-win@wincent.com>
+	<7vpry27id0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 22 10:43:02 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, peff@peff.net
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 10:46:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv8aM-0002iM-1M
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 10:43:02 +0100
+	id 1Iv8dS-0003dJ-7s
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 10:46:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751495AbXKVJmo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 04:42:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751489AbXKVJmo
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 04:42:44 -0500
-Received: from rn-out-0910.google.com ([64.233.170.191]:15450 "EHLO
-	rn-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751429AbXKVJmn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 04:42:43 -0500
-Received: by rn-out-0102.google.com with SMTP id s46so3892850rnb
-        for <git@vger.kernel.org>; Thu, 22 Nov 2007 01:42:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=uBwtFSNEingNDWw8kTb6EhYzUmd34cz7oRd3+H39bVo=;
-        b=V4TNGmNimxJ3D1UYrj/yvtYIc5OVFPCzUyfKihWPikfJMku0kagaL6bpbkzkiAFFeZbxNBlWTS7JTSppJbfc1C0HcYNhc48Mj/IpamocCA7SE/vTay7l2idHZAaklN8xTJGxOK9zY2STo5VB5XJPwLHr1z2zghsjvUmk6uTTMAY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Q/E1jDxMHvLlEJqNToFP/bcfvqkVnKaIG5KCr2d0JYcJ+S6co3497pnVeTN+lWrsjgfsCGEAR5FlTkU6WsrCtBPGyjSHLVLAxzbtr9x0zJ///5d8zXdYu7aXjlIoOJyox0ILS76J4KHOlqdrv6CubtNYyQXktcQBzA0E4yBfJcA=
-Received: by 10.150.49.15 with SMTP id w15mr1564409ybw.1195724562438;
-        Thu, 22 Nov 2007 01:42:42 -0800 (PST)
-Received: by 10.150.199.9 with HTTP; Thu, 22 Nov 2007 01:42:42 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0711211719330.27959@racer.site>
-Content-Disposition: inline
+	id S1751506AbXKVJp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 04:45:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751489AbXKVJp4
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 04:45:56 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:36574 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751304AbXKVJpz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 04:45:55 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 45DB72F0;
+	Thu, 22 Nov 2007 04:46:16 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 6A767977BD;
+	Thu, 22 Nov 2007 04:46:12 -0500 (EST)
+In-Reply-To: <7vpry27id0.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 22 Nov 2007 01:13:47 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65765>
 
-On Nov 21, 2007 6:26 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Wincent Colaiuta <win@wincent.com> writes:
 >
-> On Wed, 21 Nov 2007, Jakub Narebski wrote:
+>> @@ -56,9 +56,14 @@ sub list_modified {
+>>  	my ($only) = @_;
+>>  	my (%data, @return);
+>>  	my ($add, $del, $adddel, $file);
+>> +	my @tracked = grep {
+>> +		defined run_cmd_pipe(qw(git ls-files
+>> +			                --exclude-standard --), $_)
+>> +	} @ARGV;
+>> +	return if $#tracked == -1 && $#ARGV != -1;
 >
-> > Johannes Schindelin wrote:
-> > > On Wed, 21 Nov 2007, Jakub Narebski wrote:
-> > >
-> > >> That has the disadvantage of pushing to bundle when you make an error
-> > >> in the lastpart of path to existing repository.
-> > >
-> > > As I wrote in another reply, I would not allow overwriting an existing
-> > > file.
-> >
-> > > Specifying a non-existing file should be good enough.
-> >
-> > What I meant here that if you do "git push /some/path/to/rpeo.git", with
-> > mistake in the last part of path to repository, you would end up with a
-> > bundle, and you would have to really watch what happened to catch the
-> > error.
+> Eek.  why?
 >
-> I use tab completion all the time, so this would not happen to me.  IMHO
-> that is a lesser issue than to introduce a "protocol".
+> Did you mean to say:
 >
-> > I'd rather use "git push bundle:///some/path/to/bundle" or "git push
-> > --bundle bundlename" to catch errors better.
-
-I would vote for the later, and a way to configure this in the config.
-
-> >
-> > Besides it should be IMHO be possible to overwrite bundle if you are
-> > doing fast-forward push...
+>     my @tracked = run_cmd_pipe(gw(git ls-files --exclude-standard --) @ARGV);
 >
-> Not as far as I can see.  A push there would see what the bundle has
-> already, and put them into the new bundle as _prerequisites_.  So the
-> bundle would lose information.
+> It would also make sense to use --error-unmatch and perhaps --with-tree=HEAD
+> like git-commit.sh does.
 
-I prefer not to overwrite an existing bundle.
+Actually, the ls-files need to be chomped, but I'd prefer to
+run -z form of the command and split with NUL.  Does run_cmd_pipe()
+crap^Wstuff support that?
 
->
-> BTW this was my gripe (that I decided not to make public earlier) with
-> Santi's proposal to begin with: a push would not have any way to specify
-> what the other side has already.  So I think "git push <bundle>" is the
-> wrong way of creating a bundle.
+On top of:
 
-Sorry but I do not understand this. I think this two lines could be equivalent:
+ * refactor patch_update_cmd,
+ * teach builtin-add to pass multiple paths,
+ * add path-limiting to git-add--interacgtive (with an obvious
+   suggested above),
 
-git push --bundle bundle.bdl "refs/heads/master:refs/remotes/bundle/master"
-git bundle create bundle.bdl refs/heads/master ^refs/remotes/bundle/master
+the attached patch teaches [p]atch subcommand to take multiple
+selections.  With these, you can do:
 
->
-> Except if we add some cunning strategy not to overwrite, ever, but to
-> create <bundle>.<n> with an incrementing <n>.  But that might be too much.
+	$ git add -i 'u*.h'
+	What now> p
+                   staged     unstaged path
+          1:    unchanged        +1/-0 unpack-trees.h
+          2:    unchanged        +1/-0 utf8.h
+        Patch update>> *
+        diff --git a/unpack-trees.h b/unpack-trees.h
+	...
+        Stage this hunk [y/n/a/d/?]? y
+        ...
+	diff --git a/utf8.h b/utf8.h
+        ...
 
-That make sense.
+-- >8 --
+git-add -i: allow multiple selection in [p]atch subcommand
 
-Santi
+This allows more than one files from the list to be chosen from
+the patch subcommand instead of going through the file one by
+one.
+
+This also updates the "list-and-choose" UI for usability.  When
+the prompt ends with ">>", if you type '*' to choose all
+choices, the prompt immediately returns the choice without
+requiring an extra empty line to confirm the selection.
+
+---
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 9236ffc..372dc2c 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -256,7 +256,7 @@ sub list_and_choose {
+ 				$chosen[$i] = $choose;
+ 			}
+ 		}
+-		last if ($opts->{IMMEDIATE});
++		last if ($opts->{IMMEDIATE} || $line eq '*');
+ 	}
+ 	for ($i = 0; $i < @stuff; $i++) {
+ 		if ($chosen[$i]) {
+@@ -563,12 +563,12 @@ sub patch_update_cmd {
+ 	@mods = grep { !($_->{BINARY}) } @mods;
+ 	return if (!@mods);
+ 
+-	my ($it) = list_and_choose({ PROMPT => 'Patch update',
+-				     SINGLETON => 1,
+-				     IMMEDIATE => 1,
+-				     HEADER => $status_head, },
+-				   @mods);
+-	patch_update_file($it->{VALUE}) if ($it);
++	my (@them) = list_and_choose({ PROMPT => 'Patch update',
++				       HEADER => $status_head, },
++				     @mods);
++	for (@them) {
++		patch_update_file($_->{VALUE});
++	}
+ }
+ 
+ sub patch_update_file {
