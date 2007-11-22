@@ -1,49 +1,62 @@
-From: Jonathan del Strother <maillist@steelskies.com>
-Subject: gitk's copy pasteboard doesn't persist after it quits
-Date: Thu, 22 Nov 2007 11:44:16 +0000
-Message-ID: <DFBFC631-01BF-4D2D-BCF3-3FC376479CB2@steelskies.com>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 22 12:44:41 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase -i: move help to end of todo file
+Date: Thu, 22 Nov 2007 03:46:57 -0800
+Message-ID: <7vbq9m5wpa.fsf@gitster.siamese.dyndns.org>
+References: <7vlk8q7hzg.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0711221113360.27959@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Nov 22 12:47:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvAU4-0006cT-3f
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 12:44:40 +0100
+	id 1IvAWj-0007Ps-4m
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 12:47:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752133AbXKVLoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 06:44:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbXKVLoT
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 06:44:19 -0500
-Received: from smtp1.betherenow.co.uk ([87.194.0.68]:59216 "EHLO
-	smtp1.bethere.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751643AbXKVLoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 06:44:18 -0500
-Received: from [192.168.1.67] (87-194-43-188.bethere.co.uk [87.194.43.188])
-	by smtp1.bethere.co.uk (Postfix) with SMTP id 8DFED984D7
-	for <git@vger.kernel.org>; Thu, 22 Nov 2007 11:44:16 +0000 (GMT)
-X-Mailer: Apple Mail (2.915)
+	id S1752170AbXKVLrH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 06:47:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752158AbXKVLrG
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 06:47:06 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:40273 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752128AbXKVLrF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 06:47:05 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id D41CF2EF;
+	Thu, 22 Nov 2007 06:47:24 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 70716979B9;
+	Thu, 22 Nov 2007 06:47:21 -0500 (EST)
+In-Reply-To: <Pine.LNX.4.64.0711221113360.27959@racer.site> (Johannes
+	Schindelin's message of "Thu, 22 Nov 2007 11:15:51 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65808>
 
-On OS X, if I load gitk, copy a sha1, then quit, the sha1 isn't put  
-into the system-wide pasteboard.  It's definitely copied - I can paste  
-it back into the sha1 field - but it seems to be some sort of local  
-pasteboard that's specific to gitk
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-If I switch to another app, the sha1 is stored in the pasteboard  
-correctly, and I can then quit gitk and still have it available.  I'm  
-guessing that gitk (or Tcl/Tk) is syncing with the system-wide  
-pasteboard on focus change, but not on quit.
+> 	How about this?  I am hesitant to remove _everything_, since quite 
+> 	a few people seem to be allergic to man pages, so they fire up 
+> 	rebase -i without any clue.
 
-I'm using the version of gitk in 388afe7881b, and Tcl 8.4.7
+Oh, I wouldn't dream of suggesting complete removal of the help
+text, but leaving the single line at the beginning is not an
+improvement.  What's on that single line is not particularly
+useful but that is a separate issue.
 
+Moving everything down will hurt ONLY when (1) the rebase is
+about a large series (more than 24 commits in vt100) AND (2) the
+user hasn't run "rebase -i" before and does not know that there
+is a reminder insn at the end.  Now is it likely for a newbie to
+run "rebase -i" with 20-30 commits and that invocation is his
+first "rebase -i" invocation in his life?
 
-Any suggestions on fixing / working around this?
-
-Jon
+The new help line at the end is helpful, by the way.  I always
+had "Huh?"  moment, and did ^Z followed by kill %% instead.
