@@ -1,70 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git in a Nutshell guide
-Date: Thu, 22 Nov 2007 15:24:23 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0711221522540.4725@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <1195477504.8093.15.camel@localhost>  <fhsc7b$k4g$1@ger.gmane.org>
- <1195737303.19260.27.camel@localhost>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: [PATCH] git-gui: fix a typo in lib/commit.tcl
+Date: Thu, 22 Nov 2007 16:20:08 +0100
+Message-ID: <200711221620.08347.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Jonas Juselius <jonas@iki.fi>
-X-From: git-owner@vger.kernel.org Thu Nov 22 15:24:54 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Nov 22 16:15:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvCz1-00058q-DN
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 15:24:47 +0100
+	id 1IvDlh-0000E2-TZ
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 16:15:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752126AbXKVOYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 09:24:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752156AbXKVOYa
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 09:24:30 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52295 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751676AbXKVOY3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 09:24:29 -0500
-Received: (qmail invoked by alias); 22 Nov 2007 14:24:27 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp006) with SMTP; 22 Nov 2007 15:24:27 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/yE3cL9pPye8ezNVxXLXAvVPXaHUNVRYG9IX1Wqb
-	ejS4l+vVqqL+Dm
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <1195737303.19260.27.camel@localhost>
-X-Y-GMX-Trusted: 0
+	id S1751654AbXKVPOs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 10:14:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbXKVPOs
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 10:14:48 -0500
+Received: from slim-3c.inet.it ([213.92.5.125]:61590 "EHLO slim-3c.inet.it"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751056AbXKVPOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 10:14:47 -0500
+Received: from host225-56-static.104-80-b.business.telecomitalia.it ([::ffff:80.104.56.225]) by slim-3c.inet.it via I-SMTP-5.4.4-547
+	id ::ffff:80.104.56.225+WI725J3yBQv; Thu, 22 Nov 2007 16:14:43 +0100
+User-Agent: KMail/1.9.7
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65827>
 
-Hi,
+Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+---
+ lib/commit.tcl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-On Thu, 22 Nov 2007, Jonas Juselius wrote:
-
-> Suppose I have been working on some topic branch for a while and been 
-> overly trigger happy, i.e. I have produced a ridiculous number of 
-> commits along the way. At some point when I'm done I want to publish my 
-> changes, but doing so would create an insanely obese history full of 
-> near nonsense commits. What I want to do is to slim down the commit log 
-> into pieces that actually makes sense. What is the preferred (or best, 
-> most convenient) way of doing this? The way I have done this previously 
-> is essentially:
-> 
-> 1.  git branch -m mytopic tmp_mytopic  # rename
-> 2.  git branch mytopci tmp_mytpoic~42  # go back in history
-> Loop:
-> 3.1 git log; git diff; git annotate...
-> 3.2 git diff tmp_mytopic~42..tmp_mytopic~33 | git-apply
-> 3.3 git commit -m "sane commit message" -a
-> 4.  git branch -d tmp_mytopic
-> 
-> If I need to reorder commits I can first use git-rebase -i to get
-> everything streamlined. There must be a better way of doing this, right?
-
-Yes, you can squash commits into previous commits with rebase -i.  Just 
-replace the second "pick" command (and if you want to squash more than 
-two, the later commands, too) with "squash".
-
-Hth,
-Dscho
+diff --git a/lib/commit.tcl b/lib/commit.tcl
+index 5723812..e62201a 100644
+--- a/lib/commit.tcl
++++ b/lib/commit.tcl
+@@ -184,7 +184,7 @@ You must stage at least 1 file before you can commit.
+ 
+ A good commit message has the following format:
+ 
+-- First line: Describe in one sentance what you did.
++- First line: Describe in one sentence what you did.
+ - Second line: Blank
+ - Remaining lines: Describe why this change is good.
+ }
+-- 
+1.5.3.5
