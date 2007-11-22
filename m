@@ -1,88 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] Teach git-add--interactive to accept a file path to patch
-Date: Thu, 22 Nov 2007 11:29:46 -0800
-Message-ID: <7vsl2y3wph.fsf@gitster.siamese.dyndns.org>
-References: <1195648601-21736-1-git-send-email-win@wincent.com>
-	<1195648601-21736-2-git-send-email-win@wincent.com>
-	<1195648601-21736-3-git-send-email-win@wincent.com>
-	<20071121152118.GG24108@sigill.intra.peff.net>
-	<7vejejfi28.fsf@gitster.siamese.dyndns.org>
-	<C6E820C8-91E9-48B2-9219-377CA83163A7@wincent.com>
-	<7vk5obb09a.fsf@gitster.siamese.dyndns.org>
-	<20071122091356.GD7153@sigill.intra.peff.net>
-	<7v8x4q7gns.fsf@gitster.siamese.dyndns.org>
-	<887C3CB1-D21B-4143-8D4E-BF37709FA102@wincent.com>
-	<7vlk8q5xj4.fsf@gitster.siamese.dyndns.org>
-	<FDAFAD8C-8FF5-4DD7-AC5E-BA39790281A4@wincent.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Avoid recalculating filename string pointer.
+Date: Thu, 22 Nov 2007 20:54:57 +0100
+Organization: glandium.org
+Message-ID: <20071122195457.GB19675@glandium.org>
+References: <b8bf37780711211659i65a99493te3e3d5cee008ae7d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 20:30:12 2007
+Cc: gitster@pobox.com, Git Mailing List <git@vger.kernel.org>
+To: =?iso-8859-15?Q?Andr=E9?= Goddard Rosa <andre.goddard@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 20:55:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvHkZ-0007TU-Ef
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 20:30:11 +0100
+	id 1IvI9O-0008EH-M1
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 20:55:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752404AbXKVT3y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2007 14:29:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752334AbXKVT3y
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 14:29:54 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:37633 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752027AbXKVT3x convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2007 14:29:53 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 51D322EF;
-	Thu, 22 Nov 2007 14:30:14 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id C7E5798948;
-	Thu, 22 Nov 2007 14:30:10 -0500 (EST)
-In-Reply-To: <FDAFAD8C-8FF5-4DD7-AC5E-BA39790281A4@wincent.com> (Wincent
-	Colaiuta's message of "Thu, 22 Nov 2007 14:34:14 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754433AbXKVTzC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2007 14:55:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754012AbXKVTzB
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 14:55:01 -0500
+Received: from [80.12.242.17] ([80.12.242.17]:20310 "EHLO smtp19.orange.fr"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752691AbXKVTzA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 14:55:00 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf1907.orange.fr (SMTP Server) with ESMTP id 883D61C0009B
+	for <git@vger.kernel.org>; Thu, 22 Nov 2007 20:54:58 +0100 (CET)
+Received: from namakemono.glandium.org (APuteaux-153-1-91-30.w86-217.abo.wanadoo.fr [86.217.53.30])
+	by mwinf1907.orange.fr (SMTP Server) with ESMTP id 5DBC21C00081;
+	Thu, 22 Nov 2007 20:54:58 +0100 (CET)
+X-ME-UUID: 20071122195458384.5DBC21C00081@mwinf1907.orange.fr
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1IvI8X-0005gU-PG; Thu, 22 Nov 2007 20:54:57 +0100
+Content-Disposition: inline
+In-Reply-To: <b8bf37780711211659i65a99493te3e3d5cee008ae7d@mail.gmail.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65840>
 
-Wincent Colaiuta <win@wincent.com> writes:
+On Wed, Nov 21, 2007 at 10:59:41PM -0200, Andr=E9 Goddard Rosa wrote:
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -2304,11 +2304,13 @@ int main(int argc, const char **argv)
+>  		else if (!prefixcmp(a, "--export-marks=3D"))
+>  			mark_file =3D a + 15;
+>  		else if (!prefixcmp(a, "--export-pack-edges=3D")) {
+> +			char *filename =3D a + 20;
+> +
+>  			if (pack_edges)
+>  				fclose(pack_edges);
+> -			pack_edges =3D fopen(a + 20, "a");
+> +			pack_edges =3D fopen(filename, "a");
+>  			if (!pack_edges)
+> -				die("Cannot open %s: %s", a + 20, strerror(errno));
+> +				die("Cannot open %s: %s", filename, strerror(errno));
+>  		} else if (!strcmp(a, "--force"))
+>  			force_update =3D 1;
+>  		else if (!strcmp(a, "--quiet"))
 
-> El 22/11/2007, a las 12:29, Junio C Hamano escribi=C3=B3:
->
->> By the way, the arguments on the command line to git commands
->> after "--" are generally pathspecs, iow, patterns to specify
->> groups of files.  Please do not introduce unnecessary
->> inconsistencies to the UI by requiring them to be exact pathname
->> only in this particular mode of the command and nowhere else.
->
-> Well, I it wasn't my intention to introduce any such requirement. The
-> path parameters get passed in and eventually handed over unmodified t=
-o:
->
-> 	git diff-files -p --
+Normally, the compiler takes care of such optimizations. It actually
+takes care of it much better than you can do yourself, and doing it
+yourself can even sometimes generate less optimized code because it
+gets in the compiler optimizations'way.
 
-What I was referring to was this in your original:
-
->> +	my @tracked =3D grep {
->> +		defined run_cmd_pipe(qw(git ls-files
->> +			                --exclude-standard --), $_)
->> +	} @ARGV;
-
-It picks elements from @ARGV that ls-files says "Ok" back, not
-the expanded result from ls-files, and @tracked elements are
-used later as filenames.  Which means you are expecting @ARGV to
-contain only concrete filenames, not pathspec.
-
-> Or if we add some kind of "--patch" switch, instead do:
->
-> 	git add -i --patch foo
-
-You do not need both "-i" and "--patch", do you?  Plain git-add
-does not take --patch anyway so it can pass --patch to the
-underlying interactive one.
+Mike
