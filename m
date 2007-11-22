@@ -1,96 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Fix "quote" misconversion for rewrite diff output.
-Date: Thu, 22 Nov 2007 00:36:38 -0800
-Message-ID: <7v4pfe8ynd.fsf@gitster.siamese.dyndns.org>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [StGit PATCH] Added test case for stg refresh
+Date: Thu, 22 Nov 2007 09:38:26 +0100
+Message-ID: <87pry2u131.fsf@lysator.liu.se>
+References: <87tznfvqb4.fsf@lysator.liu.se> <87oddnvpzf.fsf@virtutech.se>
+	<20071121231553.GA19422@diana.vm.bytemark.co.uk>
+	<b0943d9e0711211531v2f7b9c0bl99033c0bd58971c7@mail.gmail.com>
+	<871waivhgq.fsf@virtutech.se>
+	<b0943d9e0711220015r64d1a5c2y25dfa44610864c99@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 22 09:37:14 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Karl =?utf-8?Q?Hasselstr=C3=B6?= =?utf-8?Q?m?= 
+	<kha@treskal.com>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 09:38:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv7YW-0008Vt-5H
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 09:37:04 +0100
+	id 1Iv7a3-0000bn-0w
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 09:38:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751244AbXKVIgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 03:36:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751214AbXKVIgq
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 03:36:46 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:45707 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750696AbXKVIgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 03:36:45 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 1310E2EF;
-	Thu, 22 Nov 2007 03:37:04 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	id S1750959AbXKVIiV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2007 03:38:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751214AbXKVIiV
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 03:38:21 -0500
+Received: from mail.lysator.liu.se ([130.236.254.3]:44926 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750953AbXKVIiU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2007 03:38:20 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id 4BAD7200A236;
+	Thu, 22 Nov 2007 09:38:18 +0100 (CET)
+Received: from mail.lysator.liu.se ([127.0.0.1])
+	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 21548-01-68; Thu, 22 Nov 2007 09:38:18 +0100 (CET)
+Received: from krank (c83-253-242-75.bredband.comhem.se [83.253.242.75])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 5E485976A4;
-	Thu, 22 Nov 2007 03:37:02 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	by mail.lysator.liu.se (Postfix) with ESMTP id 0297A200A230;
+	Thu, 22 Nov 2007 09:38:18 +0100 (CET)
+Received: by krank (Postfix, from userid 1000)
+	id 221D07B406A; Thu, 22 Nov 2007 09:38:26 +0100 (CET)
+In-Reply-To: <b0943d9e0711220015r64d1a5c2y25dfa44610864c99@mail.gmail.com> (Catalin Marinas's message of "Thu\, 22 Nov 2007 08\:15\:57 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65756>
 
-663af3422a648e87945e4d8c0cc3e13671f2bbde (Full rework of
-quote_c_style and write_name_quoted.) mistakenly used puts()
-when writing out a fixed string when it did not want to add a
-terminating LF.
+"Catalin Marinas" <catalin.marinas@gmail.com> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c                  |    2 +-
- t/t4022-diff-rewrite.sh |   26 ++++++++++++++++++++++++++
- 2 files changed, 27 insertions(+), 1 deletions(-)
- create mode 100755 t/t4022-diff-rewrite.sh
+> On 22/11/2007, David K=C3=A5gedal <davidk@lysator.liu.se> wrote:
+>> "Catalin Marinas" <catalin.marinas@gmail.com> writes:
+>> > I noticed the weirdness few days ago and fixed it in
+>> > e8813959aa3a7c41ffef61d06068b10519bd4830 (though no test caught it=
+).
+>> > Do you still see problems after this commit?
+>>
+>> The problem I see is that there still is no test case. That is bad a=
+nd
+>> means that it could break again tomorrow without anyone noticing.
+>>
+>> Luckily, I just wrote one for you :-)
+>
+> Thanks :-). We are still far from testing all the possible
+> combinations. Is there a way to do code coverage in Python?
 
-diff --git a/diff.c b/diff.c
-index b08d28a..6b54959 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2716,7 +2716,7 @@ static void diff_summary(struct diff_filepair *p)
- 		break;
- 	default:
- 		if (p->score) {
--			puts(" rewrite ");
-+			fputs(" rewrite ", stdout);
- 			write_name_quoted(p->two->path, stdout, ' ');
- 			printf("(%d%%)\n", similarity_index(p));
- 		}
-diff --git a/t/t4022-diff-rewrite.sh b/t/t4022-diff-rewrite.sh
-new file mode 100755
-index 0000000..6de4acb
---- /dev/null
-+++ b/t/t4022-diff-rewrite.sh
-@@ -0,0 +1,26 @@
-+#!/bin/sh
-+
-+test_description='rewrite diff'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+
-+	cat ../../COPYING >test &&
-+	git add test &&
-+	tr 'a-zA-Z' 'n-za-mN-ZA-M' <../../COPYING >test
-+
-+'
-+
-+test_expect_success 'detect rewrite' '
-+
-+	actual=$(git diff-files -B --summary test) &&
-+	expr "$actual" : " rewrite test ([0-9]*%)$" || {
-+		echo "Eh? <<$actual>>"
-+		false
-+	}
-+
-+'
-+
-+test_done
-+
--- 
-1.5.3.6.1929.g388a
+Being far from testing everything doesn't mean that you can't start
+adding tests for the things you know have a tendency to break. And for
+the things that you are going to refactor. And as regression tests
+when you fix a bug. A test suite can be built up by adding small parts
+at a time.
+
+But no, I don't know of any useful code coverage tool for python, but
+I haven't really looked.
+
+--=20
+David K=C3=A5gedal
