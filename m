@@ -1,62 +1,71 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Temporary directories getting errantly added into trees
-Date: Thu, 22 Nov 2007 11:30:40 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711221129170.27959@racer.site>
-References: <4744FCD9.7020102@vilain.net>  <Pine.LNX.4.64.0711221052280.27959@racer.site>
- <46a038f90711220301o1cbb16b7g79eea541f8ca5e58@mail.gmail.com>
+Date: Thu, 22 Nov 2007 11:32:55 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711221130510.27959@racer.site>
+References: <4744FCD9.7020102@vilain.net> <Pine.LNX.4.64.0711221052280.27959@racer.site>
+ <20071122111600.GF10389@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Sam Vilain <sam@vilain.net>, Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 12:31:08 2007
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 22 12:33:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvAGs-000248-GL
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 12:31:02 +0100
+	id 1IvAJ3-0002q5-Ig
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 12:33:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751930AbXKVLap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 06:30:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751780AbXKVLap
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 06:30:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59854 "HELO mail.gmx.net"
+	id S1751787AbXKVLdA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 06:33:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751905AbXKVLdA
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 06:33:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44200 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751676AbXKVLao (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 06:30:44 -0500
-Received: (qmail invoked by alias); 22 Nov 2007 11:30:42 -0000
+	id S1751719AbXKVLdA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 06:33:00 -0500
+Received: (qmail invoked by alias); 22 Nov 2007 11:32:58 -0000
 Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp051) with SMTP; 22 Nov 2007 12:30:42 +0100
+  by mail.gmx.net (mp020) with SMTP; 22 Nov 2007 12:32:58 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Yi3hCKe2Y+wToTAHsAljzujOK+Vqgfj4gm5D7f0
-	h/UB2YHRRH0Fd3
+X-Provags-ID: V01U2FsdGVkX19lEhJYUS1lPovqatx2H6ranwBJYb4QBNeK9BLmut
+	oJdItAi7WFjOLj
 X-X-Sender: gene099@racer.site
-In-Reply-To: <46a038f90711220301o1cbb16b7g79eea541f8ca5e58@mail.gmail.com>
+In-Reply-To: <20071122111600.GF10389@sigill.intra.peff.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65801>
 
-Hi,
+Hi.
 
-On Fri, 23 Nov 2007, Martin Langhoff wrote:
+On Thu, 22 Nov 2007, Jeff King wrote:
 
-> On Nov 22, 2007 11:55 PM, Johannes Schindelin
+> On Thu, Nov 22, 2007 at 10:55:00AM +0000, Johannes Schindelin wrote:
 > 
-> > ... And indeed, I see no reason why a tool should access .dotest, 
-> > except for accessing .dotest/patch, and then it will be very obvious 
-> > where it fails.
+> > Yes, I know, existing tools could rely on the location.  But then, I 
+> > do not think that tools should be allowed to be _that_ married to 
+> > particular implementations.  And indeed, I see no reason why a tool 
+> > should access .dotest, except for accessing .dotest/patch, and then it 
+> > will be very obvious where it fails.
 > 
-> when it comes to .dotest/patch, it must be reasonably accessible. When 
-> git-am refuses to apply a patch, and I am resolving things by hand, I 
-> need it pretty handy. I also sometimes edit .dotest/msg-clean.
+> Another reason might be something like:
+> 
+>   test -d .dotest && die "rebase or am already in progress"
+> 
+> which some of the git tools do, and which third party scripts might care 
+> about.
 
-Maybe install a .dotest/ symlink for a few "git eons", i.e. some 6 months?
+Yep, for example this nice bash-completion addendum which changes the 
+prompt according to the current repository's state.
 
-Although this will not work on Windows, I see not much problems in it, 
-since Windows users are not big in scripting (at least the git 
-type) anyway.
+I hope that a symlink .dotest -> .git/rebase (as I suggested in a reply to 
+Martin) would help that, but in the long run I'd appreciate losing even 
+that.
 
 Ciao,
 Dscho
+
+P.S.: note that even a symlink would already help the situation described 
+by Sam.
