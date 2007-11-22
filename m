@@ -1,68 +1,49 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Adjust t3404 to ignore empty lines in the todo file
-Date: Thu, 22 Nov 2007 11:41:27 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711221139490.27959@racer.site>
-References: <7vlk8q7hzg.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0711221113360.27959@racer.site>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 12:41:50 2007
+From: Jonathan del Strother <maillist@steelskies.com>
+Subject: gitk's copy pasteboard doesn't persist after it quits
+Date: Thu, 22 Nov 2007 11:44:16 +0000
+Message-ID: <DFBFC631-01BF-4D2D-BCF3-3FC376479CB2@steelskies.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 22 12:44:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvARK-0005ru-1Q
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 12:41:50 +0100
+	id 1IvAU4-0006cT-3f
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 12:44:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752107AbXKVLld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 06:41:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752092AbXKVLld
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 06:41:33 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53361 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751266AbXKVLlc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 06:41:32 -0500
-Received: (qmail invoked by alias); 22 Nov 2007 11:41:30 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp038) with SMTP; 22 Nov 2007 12:41:30 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/e5eYhUZfeORh5hfLiGl1mziuqxs6N5ZNyc3i2wx
-	iyKV83J8QboPZc
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0711221113360.27959@racer.site>
-X-Y-GMX-Trusted: 0
+	id S1752133AbXKVLoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 06:44:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbXKVLoT
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 06:44:19 -0500
+Received: from smtp1.betherenow.co.uk ([87.194.0.68]:59216 "EHLO
+	smtp1.bethere.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751643AbXKVLoS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 06:44:18 -0500
+Received: from [192.168.1.67] (87-194-43-188.bethere.co.uk [87.194.43.188])
+	by smtp1.bethere.co.uk (Postfix) with SMTP id 8DFED984D7
+	for <git@vger.kernel.org>; Thu, 22 Nov 2007 11:44:16 +0000 (GMT)
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65807>
+
+On OS X, if I load gitk, copy a sha1, then quit, the sha1 isn't put  
+into the system-wide pasteboard.  It's definitely copied - I can paste  
+it back into the sha1 field - but it seems to be some sort of local  
+pasteboard that's specific to gitk
+
+If I switch to another app, the sha1 is stored in the pasteboard  
+correctly, and I can then quit gitk and still have it available.  I'm  
+guessing that gitk (or Tcl/Tk) is syncing with the system-wide  
+pasteboard on focus change, but not on quit.
+
+I'm using the version of gitk in 388afe7881b, and Tcl 8.4.7
 
 
----
+Any suggestions on fixing / working around this?
 
-	... and this fixes the tests again.  I changed the single "#"
-	line after the commits to an empty line, since it made things
-	more readable to this developer.  The test expected "#", though.
-
-	Please amend.
-
- t/t3404-rebase-interactive.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index f1039d1..907c7f9 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -149,7 +149,8 @@ test_expect_success 'stop on conflicting pick' '
- 	diff -u expect .git/.dotest-merge/patch &&
- 	diff -u expect2 file1 &&
- 	test 4 = $(grep -v "^#" < .git/.dotest-merge/done | wc -l) &&
--	test 0 = $(grep -v "^#" < .git/.dotest-merge/git-rebase-todo | wc -l)
-+	test 0 = $(grep -ve "^#" -e "^$" < .git/.dotest-merge/git-rebase-todo |
-+		wc -l)
- '
- 
- test_expect_success 'abort' '
--- 
-1.5.3.6.1977.g54d30
+Jon
