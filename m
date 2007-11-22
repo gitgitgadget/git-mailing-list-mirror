@@ -1,119 +1,59 @@
-From: Dan Zwell <dzwell@zwell.net>
-Subject: [PATCH 3/5] Added config_default($key, $default) to Git.pm
-Date: Thu, 22 Nov 2007 04:55:52 -0600
-Message-ID: <20071122045552.30ca55c2@paradox.zwell.net>
-References: <47112491.8070309@gmail.com>
-	<20071015034338.GA4844@coredump.intra.peff.net>
-	<20071016194709.3c1cb3a8@danzwell.com>
-	<20071017015152.GN13801@spearce.org>
-	<20071022164048.71a3dceb@danzwell.com>
-	<20071023042702.GB28312@coredump.intra.peff.net>
-	<20071023035221.66ea537f@danzwell.com>
-	<20071102224100.71665182@paradox.zwell.net>
-	<20071104045735.GA12359@segfault.peff.net>
-	<7v640ivagv.fsf@gitster.siamese.dyndns.org>
-	<20071104054305.GA13929@sigill.intra.peff.net>
-	<20071110180109.34febc3f@paradox.zwell.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/4] Teach git-add--interactive to accept a file path
+	to patch
+Date: Thu, 22 Nov 2007 06:24:06 -0500
+Message-ID: <20071122112406.GA12913@sigill.intra.peff.net>
+References: <1195648601-21736-1-git-send-email-win@wincent.com> <1195648601-21736-2-git-send-email-win@wincent.com> <1195648601-21736-3-git-send-email-win@wincent.com> <20071121152118.GG24108@sigill.intra.peff.net> <7vejejfi28.fsf@gitster.siamese.dyndns.org> <C6E820C8-91E9-48B2-9219-377CA83163A7@wincent.com> <7vk5obb09a.fsf@gitster.siamese.dyndns.org> <20071122091356.GD7153@sigill.intra.peff.net> <7v8x4q7gns.fsf@gitster.siamese.dyndns.org> <887C3CB1-D21B-4143-8D4E-BF37709FA102@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	Jonathan del Strother <maillist@steelskies.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 22 12:24:31 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 12:24:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvAAW-0008U8-68
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 12:24:28 +0100
+	id 1IvAAV-0008U8-HM
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 12:24:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752013AbXKVLYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 06:24:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751787AbXKVLYL
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 06:24:11 -0500
-Received: from gateway03.websitewelcome.com ([69.93.37.21]:60661 "HELO
-	gateway03.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752002AbXKVLYJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2007 06:24:09 -0500
-X-Greylist: delayed 1744 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Nov 2007 06:24:09 EST
-Received: (qmail 29279 invoked from network); 22 Nov 2007 10:56:31 -0000
-Received: from gator290.hostgator.com (74.53.26.226)
-  by gateway03.websitewelcome.com with SMTP; 22 Nov 2007 10:56:31 -0000
-Received: from [143.44.70.185] (port=40113 helo=paradox.zwell.net)
-	by gator290.hostgator.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <dzwell@zwell.net>)
-	id 1Iv9j5-0000BS-VO; Thu, 22 Nov 2007 04:56:08 -0600
-In-Reply-To: <20071110180109.34febc3f@paradox.zwell.net>
-X-Mailer: Claws Mail 3.0.2 (GTK+ 2.12.1; x86_64-pc-linux-gnu)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator290.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - zwell.net
+	id S1752004AbXKVLYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 06:24:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751787AbXKVLYJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 06:24:09 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2620 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751993AbXKVLYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 06:24:08 -0500
+Received: (qmail 22658 invoked by uid 111); 22 Nov 2007 11:24:07 -0000
+Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 22 Nov 2007 06:24:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Nov 2007 06:24:06 -0500
+Content-Disposition: inline
+In-Reply-To: <887C3CB1-D21B-4143-8D4E-BF37709FA102@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65798>
 
-Method returns a configuration value if defined, or the default
-value that was passed in, otherwise.
+On Thu, Nov 22, 2007 at 11:44:54AM +0100, Wincent Colaiuta wrote:
 
-The main purpose of this method is to allow the empty string to
-be a valid configuration option, and to replace the following
-construct:
+> So I don't think the proposal to add "-p" (jump to "patch" subcommand) and 
+> "-a" (jump to "add untracked" subcommand) are a very good idea, seeing as we 
+> already have builtin-add for adding entire files.
 
-$val = $repo->config('my.key') || $default_val
+I agree that "git-add -i untracked_file" is a bit useless. I think it
+might be more useful if you could split the one giant hunk (which
+git-add--interactive does not currently allow) into smaller hunks, and
+then just add parts of them (so conceptually treat it like it had been a
+tracked file with empty contents, and go to the patch menu). Of course,
+there is currently no way to usefully split a hunk that has consecutive
+added lines, so that would have to be figured out, too.
 
-Signed-off-by: Dan Zwell <dzwell@zwell.net>
----
- perl/Git.pm |   28 ++++++++++++++++++++++++++++
- 1 files changed, 28 insertions(+), 0 deletions(-)
+So I think it is not so much "this other thing is useful right now" as
+"do we want to paint ourselves in a corner for making it (or other
+things) useful later on?" And assuming that having arguments means
+"start the patch menu on these files" doesn't leave room for changes
+later.
 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 6603762..7327300 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -549,6 +549,34 @@ sub config_bool {
- 	};
- }
- 
-+=item config_default ( VARIABLE, DEFAULT )
-+
-+Fetches a configuration option C<VARIABLE>, returning its
-+value if it is defined (it is valid to return the empty string,
-+if that is its value). Otherwise, C<DEFAULT>, a default
-+value, is returned. This method may be a replacement for
-+
-+	my $value = $repo->config('my.key') || 'default val';
-+
-+in situations where the empty string is an acceptable return value.
-+This method may also be called in a vector context, when expecting
-+multivars.
-+
-+	my @value = $repo->config_default('my.multivar', \@default_vals);
-+
-+=cut
-+
-+sub config_default {
-+	my ($self, $var, $default) = @_;
-+	if (wantarray) {
-+		my @value = $self->config($var);
-+		return @value ? @value : @$default;
-+	}
-+	else {
-+		my $value = $self->config($var);
-+		return (defined $value) ? $value : $default;
-+	}
-+}
- 
- =item ident ( TYPE | IDENTSTR )
- 
--- 
-1.5.3.5.565.gf0b83-dirty
+-Peff
