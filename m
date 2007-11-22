@@ -1,60 +1,51 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] Replace setenv(GIT_DIR_ENVIRONMENT, ...) with set_git_dir()
-Date: Wed, 21 Nov 2007 18:34:42 -0800
-Message-ID: <7v63zv9fel.fsf@gitster.siamese.dyndns.org>
-References: <11956768414090-git-send-email-prohaska@zib.de>
-	<11956768412804-git-send-email-prohaska@zib.de>
-	<11956768413887-git-send-email-prohaska@zib.de>
-	<11956768412755-git-send-email-prohaska@zib.de>
-	<Pine.LNX.4.64.0711220121560.27959@racer.site>
+From: "David D. Kilzer" <ddkilzer@kilzer.net>
+Subject: Re: [PATCH 2/3 v3] git-svn info: implement info command
+Date: Wed, 21 Nov 2007 19:16:21 -0800 (PST)
+Message-ID: <900537.19467.qm@web52411.mail.re2.yahoo.com>
+References: <20071122014038.GA25341@soma>
+Reply-To: ddkilzer@kilzer.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
-	Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 22 03:35:46 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Nov 22 04:16:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv1uo-0006qc-PA
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 03:35:43 +0100
+	id 1Iv2YU-0007Bu-MS
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 04:16:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751506AbXKVCe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 21:34:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751616AbXKVCe4
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 21:34:56 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:58391 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751003AbXKVCez (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 21:34:55 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 69F6F2EF;
-	Wed, 21 Nov 2007 21:35:14 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id DD2309868D;
-	Wed, 21 Nov 2007 21:35:09 -0500 (EST)
-In-Reply-To: <Pine.LNX.4.64.0711220121560.27959@racer.site> (Johannes
-	Schindelin's message of "Thu, 22 Nov 2007 01:22:38 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752210AbXKVDQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 22:16:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752141AbXKVDQX
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 22:16:23 -0500
+Received: from web52411.mail.re2.yahoo.com ([206.190.48.174]:38406 "HELO
+	web52411.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751780AbXKVDQX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Nov 2007 22:16:23 -0500
+Received: (qmail 19716 invoked by uid 60001); 22 Nov 2007 03:16:21 -0000
+X-YMail-OSG: _wHcFvgVM1krEuY5eYRGQCfBKzUGiOb4dja3_PFSees3fgduGzyvtlSKZgga3SnAoIPJlg--
+Received: from [24.7.124.164] by web52411.mail.re2.yahoo.com via HTTP; Wed, 21 Nov 2007 19:16:21 PST
+X-RocketYMMF: ddkilzer
+In-Reply-To: <20071122014038.GA25341@soma>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65737>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Eric Wong <normalperson@yhbt.net> wrote:
+> When running from a top-level directory with no arguments, the first
+> line of git-ls-tree was being read.  This allowed the test case to pass
+> because ls-tree sorts the output and 'directory' just happened to
+> be up top; so we were getting the 040000 mode from the 'directory'
+> tree and not the top-level tree.
+> 
+> The below test should fix it for the trivial case I have.
 
-> Hi,
->
-> On Wed, 21 Nov 2007, Steffen Prohaska wrote:
->
->> We have a function set_git_dir().  So let's use it, instead of setting 
->> the evironment directly.
->
-> Does this not have a fundamental issue?  When you call other git programs 
-> with run_command(), you _need_ GIT_DIR to be set, no?
+Acked-by: David D. Kilzer <ddkilzer@kilzer.net>
 
-It is much worse.  set_git_dir() does not just setenv() but does
-setup_git_env() as well.
+Looks good!  Thanks!
+
+Dave
