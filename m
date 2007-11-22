@@ -1,84 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Wishlist for a bundle-only transport mode
-Date: Thu, 22 Nov 2007 02:02:09 -0800
-Message-ID: <7v4pfe7g4e.fsf@gitster.siamese.dyndns.org>
-References: <8aa486160711210654p357ccd87i4809e0cda9471303@mail.gmail.com>
-	<200711211752.40264.jnareb@gmail.com>
-	<Pine.LNX.4.64.0711211658510.27959@racer.site>
-	<200711211811.34391.jnareb@gmail.com>
-	<Pine.LNX.4.64.0711211719330.27959@racer.site>
-	<8aa486160711220142w25e9c9b6vbafa34a287dde7eb@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH] Authenticate only once in git-send-email
+Date: Thu, 22 Nov 2007 11:07:25 +0100
+Message-ID: <C0E02CFE-F6E6-4902-8BA1-D6AC02F1C04F@wincent.com>
+References: <1195648505-21653-1-git-send-email-win@wincent.com> <7vwssa7jii.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 11:02:39 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 11:08:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv8tJ-00009y-Fm
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 11:02:37 +0100
+	id 1Iv8yq-0001sa-Ij
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 11:08:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751778AbXKVKCU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2007 05:02:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751767AbXKVKCT
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 05:02:19 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:60637 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751742AbXKVKCT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2007 05:02:19 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id B4A0A2EF;
-	Thu, 22 Nov 2007 05:02:39 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 30150965F8;
-	Thu, 22 Nov 2007 05:02:34 -0500 (EST)
-In-Reply-To: <8aa486160711220142w25e9c9b6vbafa34a287dde7eb@mail.gmail.com>
-	(Santi =?utf-8?Q?B=C3=A9jar's?= message of "Thu, 22 Nov 2007 10:42:42
- +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751053AbXKVKHm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2007 05:07:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751011AbXKVKHm
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 05:07:42 -0500
+Received: from wincent.com ([72.3.236.74]:57146 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751073AbXKVKHk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2007 05:07:40 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAMA7QaM009952;
+	Thu, 22 Nov 2007 04:07:27 -0600
+In-Reply-To: <7vwssa7jii.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65770>
 
-"Santi B=C3=A9jar" <sbejar@gmail.com> writes:
+El 22/11/2007, a las 9:48, Junio C Hamano escribi=F3:
 
-> Sorry but I do not understand this. I think this two lines could be e=
-quivalent:
+> Wincent Colaiuta <win@wincent.com> writes:
 >
-> git push --bundle bundle.bdl "refs/heads/master:refs/remotes/bundle/m=
-aster"
-> git bundle create bundle.bdl refs/heads/master ^refs/remotes/bundle/m=
-aster
+>> This commit teaches git-send-email to authenticate once and only =20
+>> once at
+>> the beginning of the series.
+>
+> Ok.  What does $smtp->auth() return?  Presumably a true value,
 
-Interesting.
+True on success, false on failure.
 
-	$ git push $something ours:theirs
+> but I do not find it the best coding style to hide a call made
+> primarily for its effects not for its return value behind a
+> conditional assignment to a boolean.  Eek.
+>
+>> 		if ((defined $smtp_authuser) && (defined $smtp_authpass)) {
+>> -			$smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp-=20
+>> >message;
+>> +			$auth ||=3D $smtp->auth( $smtp_authuser, $smtp_authpass ) or die=
+ =20
+>> $smtp->message;
+>> 		}
+>
+> Perhaps something along the lines of...
+>
+>> 		if ((defined $smtp_authuser) && (defined $smtp_authpass)) {
+>> 			$smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp-=20
+>> >message;
+>> +			undef $smtp_authpass;
+>> 		}
+>
+> ... or using a separate boolean variable "my $auth_happened"
+> may be more appropriate.
 
-has defined semantics for any value of $something.
+Of the alternatives you suggest, I think an "$auth_happened" or =20
+"$auth_done" flag is probably the nicest/cleanest.
 
- * give $something objects it lacks, so that the object $ours
-   become complete in there;
+> But I am just saying this; I do not care _too_ deeply about it.
+> Will apply as-is.
 
- * set the ref in $theirs to point at the object $ours.
+Yes, I don't really care either. My reasoning for doing it the way I =20
+did is that I'm not much of a Perl hacker so I basically wanted to =20
+make the change as minimally invasive as possible (in this case =20
+prepending "$auth ||=3D "). But above all, all that I really care about=
+ =20
+is that the problem gets fixed.
 
-So "git push bundle.bdl refspec" should:
-
- * First read bundle.bdl, to find out what objects it gives to
-   the recipients;
-
- * Add missing objects to it to make it up to date wrt "ours",
-   iow, fetching from the updated bundle would now give "ours";
-
- * Record the object "ours" as "theirs" ref, iow, listing
-   the updated bundle would show "theis" ref pointing at that
-   object.
-
-If bundle.bdl does not exist yet, it is like pushing into a
-freshly initialized empty repository.
+Cheers,
+Wincent
