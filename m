@@ -1,204 +1,82 @@
-From: "=?UTF-8?Q?Andr=C3=A9_Goddard_Rosa?=" <andre.goddard@gmail.com>
-Subject: Re: [PATCH] Fix segmentation fault when user doesn't have access permission to the repository.
-Date: Thu, 22 Nov 2007 20:27:59 -0200
-Message-ID: <b8bf37780711221427q5dda709dt38ce1837c0e56c1f@mail.gmail.com>
-References: <b8bf37780711211659i4d621533o6a3b97349bb75f8c@mail.gmail.com>
-	 <20071122160959.GA3411@steel.home>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/5] Let git-add--interactive read colors from
+	configuration
+Date: Thu, 22 Nov 2007 17:30:50 -0500
+Message-ID: <20071122223050.GC3620@sigill.intra.peff.net>
+References: <20071023042702.GB28312@coredump.intra.peff.net> <20071023035221.66ea537f@danzwell.com> <20071102224100.71665182@paradox.zwell.net> <20071104045735.GA12359@segfault.peff.net> <7v640ivagv.fsf@gitster.siamese.dyndns.org> <20071104054305.GA13929@sigill.intra.peff.net> <20071110180109.34febc3f@paradox.zwell.net> <20071122045606.0232fc2d@paradox.zwell.net> <20071122121836.GG12913@sigill.intra.peff.net> <7v63zu3r7h.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_28249_22900505.1195770479526"
-Cc: gitster@pobox.com, "Git Mailing List" <git@vger.kernel.org>
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 23:28:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Dan Zwell <dzwell@zwell.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Wincent Colaiuta <win@wincent.com>,
+	Jonathan del Strother <maillist@steelskies.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 23:31:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvKX1-0004d9-RV
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 23:28:24 +0100
+	id 1IvKZi-0005Yx-2O
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 23:31:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753120AbXKVW2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 17:28:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753141AbXKVW2E
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 17:28:04 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:43716 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752979AbXKVW2B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 17:28:01 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so2571798nfb
-        for <git@vger.kernel.org>; Thu, 22 Nov 2007 14:27:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        bh=J9bdhRtGbh5QGl6ZaF2cuhX4Q0Jk/BG37W3pidYLUzI=;
-        b=ckR8hLbK4Nk7R5gNjUhsPDvkPipYE0rM8S6C0nkM1loF2hMA0/8QeuMdRreQferHF9I7+hwnZuSXTViliJlWIeVCBQV+o0XoAUC/Et5cNYrkPKnvow+LoQJnVKUxY0HvVoxDcdA2/P6xQiOA/JA3ECZOVl1ymnJbMhs797DuEEQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=ncBgdripqAFaagIgMu2fMhj57gfcpl6Z1FexNPRrsWt1qp6qbjZevjBRLLWCEhQQBmQhv9thjpTPVmgNHquG4zjaChLbEu1MoBNlPjSR3/+W7Bcru6r4FGFJLxz08XEfhprjKwa1JY5O77a//eK3VBrxMv5O93WF+24uFLOiJIQ=
-Received: by 10.78.138.14 with SMTP id l14mr10421953hud.1195770479544;
-        Thu, 22 Nov 2007 14:27:59 -0800 (PST)
-Received: by 10.78.120.18 with HTTP; Thu, 22 Nov 2007 14:27:59 -0800 (PST)
-In-Reply-To: <20071122160959.GA3411@steel.home>
+	id S1753001AbXKVWax (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 17:30:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753149AbXKVWaw
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 17:30:52 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1899 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752882AbXKVWaw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 17:30:52 -0500
+Received: (qmail 26754 invoked by uid 111); 22 Nov 2007 22:30:50 -0000
+Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 22 Nov 2007 17:30:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Nov 2007 17:30:50 -0500
+Content-Disposition: inline
+In-Reply-To: <7v63zu3r7h.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65855>
 
-------=_Part_28249_22900505.1195770479526
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Content-Disposition: inline
+On Thu, Nov 22, 2007 at 01:28:34PM -0800, Junio C Hamano wrote:
 
-T24gTm92IDIyLCAyMDA3IDI6MDkgUE0sIEFsZXggUmllc2VuIDxyYWEubGttbEBnbWFpbC5jb20+
-IHdyb3RlOgo+IEFuZHLDqSBHb2RkYXJkIFJvc2EsIFRodSwgTm92IDIyLCAyMDA3IDAxOjU5OjAw
-ICswMTAwOgo+ID4gQEAgLTQ4Nyw4ICs0OTAsMTMgQEAgc3RhdGljIGludCBkb19mZXRjaChzdHJ1
-Y3QgdHJhbnNwb3J0ICp0cmFuc3BvcnQsCj4gPiAgICAgICAgICAgICAgIGRpZSgiRG9uJ3Qga25v
-dyBob3cgdG8gZmV0Y2ggZnJvbSAlcyIsIHRyYW5zcG9ydC0+dXJsKTsKPiA+Cj4gPiAgICAgICAv
-KiBpZiBub3QgYXBwZW5kaW5nLCB0cnVuY2F0ZSBGRVRDSF9IRUFEICovCj4gPiAtICAgICBpZiAo
-IWFwcGVuZCkKPiA+IC0gICAgICAgICAgICAgZmNsb3NlKGZvcGVuKGdpdF9wYXRoKCJGRVRDSF9I
-RUFEIiksICJ3IikpOwo+ID4gKyAgICAgaWYgKCFhcHBlbmQpIHsKPiA+ICsgICAgICAgICAgICAg
-Y2hhciAqZmlsZW5hbWUgPSBnaXRfcGF0aCgiRkVUQ0hfSEVBRCIpOwo+ID4gKyAgICAgICAgICAg
-ICBpbnQgZmQgPSBmb3BlbihmaWxlbmFtZSwgInciKTsKPgo+IFRoaXMgc2hvdWxkIGhhdmUgYmVl
-biAiRklMRSAqZnAiLCBub3QgImludCBmZCIuCj4KCkhpLCBBbGV4IQoKTWFueSB0aGFua3MsIHlv
-dSdyZSByaWdodC4KCkkgdGVzdGVkIGl0IGhlcmUgYmVmb3JlIHBvc3RpbmcgYnV0IGx1Y2tseSAo
-b3Igbm90LCBhcyBJIGRpZG4ndCBjYXRjaAp0aGlzIHdoZW4gY29tcGlsaW5nKSBpdCB3b3JrZWQs
-CmFzIGEgcG9pbnRlciBoYXZlIHRoZSBzaXplb2YoaW50KSBpbiBteSB4ODYgcGxhdGZvcm0uID46
-fAoKV291bGQgeW91IHBsZWFzZSBjb21tZW50IG9uIHRoZSBhdHRhY2hlZCBwYXRjaCBhbmQgc2Vl
-IGlmIGl0J3Mgb2s/CgpGcm9tIGRiYWRjNTIxM2I5OTU3ZmI1NzVjNmRhODUyOGU1ZGQ3YTNmMWY0
-M2UgTW9uIFNlcCAxNyAwMDowMDowMCAyMDAxCkZyb206ID0/dXRmLTg/cT9BbmRyPUMzPUE5PTIw
-R29kZGFyZD0yMFJvc2E/PSA8YW5kcmUuZ29kZGFyZEBnbWFpbC5jb20+CkRhdGU6IFRodSwgMjIg
-Tm92IDIwMDcgMjA6MjI6MjMgLTAyMDAKU3ViamVjdDogW1BBVENIXSBGaXggc2VnbWVudGF0aW9u
-IGZhdWx0IHdoZW4gdXNlciBkb2Vzbid0IGhhdmUgYWNjZXNzCiBwZXJtaXNzaW9uIHRvIHRoZSBy
-ZXBvc2l0b3J5LgpNSU1FLVZlcnNpb246IDEuMApDb250ZW50LVR5cGU6IHRleHQvcGxhaW47IGNo
-YXJzZXQ9dXRmLTgKQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogOGJpdAoKU2lnbmVkLW9mZi1i
-eTogQW5kcsOpIEdvZGRhcmQgUm9zYSA8YW5kcmUuZ29kZGFyZEBnbWFpbC5jb20+Ci0tLQogYnVp
-bHRpbi1mZXRjaC0tdG9vbC5jIHwgICAxMiArKysrKysrKysrLS0KIGJ1aWx0aW4tZmV0Y2guYyAg
-ICAgICB8ICAgMjEgKysrKysrKysrKysrKysrKy0tLS0tCiAyIGZpbGVzIGNoYW5nZWQsIDI2IGlu
-c2VydGlvbnMoKyksIDcgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvYnVpbHRpbi1mZXRjaC0t
-dG9vbC5jIGIvYnVpbHRpbi1mZXRjaC0tdG9vbC5jCmluZGV4IGVkNjA4NDcuLjc0NjBhYjcgMTAw
-NjQ0Ci0tLSBhL2J1aWx0aW4tZmV0Y2gtLXRvb2wuYworKysgYi9idWlsdGluLWZldGNoLS10b29s
-LmMKQEAgLTUxMSwxMCArNTExLDE0IEBAIGludCBjbWRfZmV0Y2hfX3Rvb2woaW50IGFyZ2MsIGNv
-bnN0IGNoYXIgKiphcmd2LApjb25zdCBjaGFyICpwcmVmaXgpCiAJaWYgKCFzdHJjbXAoImFwcGVu
-ZC1mZXRjaC1oZWFkIiwgYXJndlsxXSkpIHsKIAkJaW50IHJlc3VsdDsKIAkJRklMRSAqZnA7CisJ
-CWNoYXIgKmZpbGVuYW1lOwoKIAkJaWYgKGFyZ2MgIT0gOCkKIAkJCXJldHVybiBlcnJvcigiYXBw
-ZW5kLWZldGNoLWhlYWQgdGFrZXMgNiBhcmdzIik7Ci0JCWZwID0gZm9wZW4oZ2l0X3BhdGgoIkZF
-VENIX0hFQUQiKSwgImEiKTsKKwkJZmlsZW5hbWUgPSBnaXRfcGF0aCgiRkVUQ0hfSEVBRCIpOwor
-CQlmcCA9IGZvcGVuKGZpbGVuYW1lLCAiYSIpOworCQlpZiAoIWZwKQorCQkJcmV0dXJuIGVycm9y
-KCJjYW5ub3Qgb3BlbiAlczogJXNcbiIsIGZpbGVuYW1lLCBzdHJlcnJvcihlcnJubykpOwogCQly
-ZXN1bHQgPSBhcHBlbmRfZmV0Y2hfaGVhZChmcCwgYXJndlsyXSwgYXJndlszXSwKIAkJCQkJICAg
-YXJndls0XSwgYXJndls1XSwKIAkJCQkJICAgYXJndls2XSwgISFhcmd2WzddWzBdLApAQCAtNTI1
-LDEwICs1MjksMTQgQEAgaW50IGNtZF9mZXRjaF9fdG9vbChpbnQgYXJnYywgY29uc3QgY2hhciAq
-KmFyZ3YsCmNvbnN0IGNoYXIgKnByZWZpeCkKIAlpZiAoIXN0cmNtcCgibmF0aXZlLXN0b3JlIiwg
-YXJndlsxXSkpIHsKIAkJaW50IHJlc3VsdDsKIAkJRklMRSAqZnA7CisJCWNoYXIgKmZpbGVuYW1l
-OwoKIAkJaWYgKGFyZ2MgIT0gNSkKIAkJCXJldHVybiBlcnJvcigiZmV0Y2gtbmF0aXZlLXN0b3Jl
-IHRha2VzIDMgYXJncyIpOwotCQlmcCA9IGZvcGVuKGdpdF9wYXRoKCJGRVRDSF9IRUFEIiksICJh
-Iik7CisJCWZpbGVuYW1lID0gZ2l0X3BhdGgoIkZFVENIX0hFQUQiKTsKKwkJZnAgPSBmb3Blbihm
-aWxlbmFtZSwgImEiKTsKKwkJaWYgKCFmcCkKKwkJCXJldHVybiBlcnJvcigiY2Fubm90IG9wZW4g
-JXM6ICVzXG4iLCBmaWxlbmFtZSwgc3RyZXJyb3IoZXJybm8pKTsKIAkJcmVzdWx0ID0gZmV0Y2hf
-bmF0aXZlX3N0b3JlKGZwLCBhcmd2WzJdLCBhcmd2WzNdLCBhcmd2WzRdLAogCQkJCQkgICAgdmVy
-Ym9zZSwgZm9yY2UpOwogCQlmY2xvc2UoZnApOwpkaWZmIC0tZ2l0IGEvYnVpbHRpbi1mZXRjaC5j
-IGIvYnVpbHRpbi1mZXRjaC5jCmluZGV4IGJlOWUzZWEuLjg0YzhlZDQgMTAwNjQ0Ci0tLSBhL2J1
-aWx0aW4tZmV0Y2guYworKysgYi9idWlsdGluLWZldGNoLmMKQEAgLTI1NSw3ICsyNTUsNyBAQCBz
-dGF0aWMgaW50IHVwZGF0ZV9sb2NhbF9yZWYoc3RydWN0IHJlZiAqcmVmLAogCX0KIH0KCi1zdGF0
-aWMgdm9pZCBzdG9yZV91cGRhdGVkX3JlZnMoY29uc3QgY2hhciAqdXJsLCBzdHJ1Y3QgcmVmICpy
-ZWZfbWFwKQorc3RhdGljIGludCBzdG9yZV91cGRhdGVkX3JlZnMoY29uc3QgY2hhciAqdXJsLCBz
-dHJ1Y3QgcmVmICpyZWZfbWFwKQogewogCUZJTEUgKmZwOwogCXN0cnVjdCBjb21taXQgKmNvbW1p
-dDsKQEAgLTI2Myw4ICsyNjMsMTMgQEAgc3RhdGljIHZvaWQgc3RvcmVfdXBkYXRlZF9yZWZzKGNv
-bnN0IGNoYXIgKnVybCwKc3RydWN0IHJlZiAqcmVmX21hcCkKIAljaGFyIG5vdGVbMTAyNF07CiAJ
-Y29uc3QgY2hhciAqd2hhdCwgKmtpbmQ7CiAJc3RydWN0IHJlZiAqcm07CisJY2hhciAqZmlsZW5h
-bWUgPSBnaXRfcGF0aCgiRkVUQ0hfSEVBRCIpOwoKLQlmcCA9IGZvcGVuKGdpdF9wYXRoKCJGRVRD
-SF9IRUFEIiksICJhIik7CisJZnAgPSBmb3BlbihmaWxlbmFtZSwgImEiKTsKKwlpZiAoIWZwKSB7
-CisJCWVycm9yKCJjYW5ub3Qgb3BlbiAlczogJXNcbiIsIGZpbGVuYW1lLCBzdHJlcnJvcihlcnJu
-bykpOworCQlyZXR1cm4gMTsKKwl9CiAJZm9yIChybSA9IHJlZl9tYXA7IHJtOyBybSA9IHJtLT5u
-ZXh0KSB7CiAJCXN0cnVjdCByZWYgKnJlZiA9IE5VTEw7CgpAQCAtMzM1LDYgKzM0MCw3IEBAIHN0
-YXRpYyB2b2lkIHN0b3JlX3VwZGF0ZWRfcmVmcyhjb25zdCBjaGFyICp1cmwsCnN0cnVjdCByZWYg
-KnJlZl9tYXApCiAJCX0KIAl9CiAJZmNsb3NlKGZwKTsKKwlyZXR1cm4gMDsKIH0KCiAvKgpAQCAt
-NDA0LDcgKzQxMCw3IEBAIHN0YXRpYyBpbnQgZmV0Y2hfcmVmcyhzdHJ1Y3QgdHJhbnNwb3J0ICp0
-cmFuc3BvcnQsCnN0cnVjdCByZWYgKnJlZl9tYXApCiAJaWYgKHJldCkKIAkJcmV0ID0gdHJhbnNw
-b3J0X2ZldGNoX3JlZnModHJhbnNwb3J0LCByZWZfbWFwKTsKIAlpZiAoIXJldCkKLQkJc3RvcmVf
-dXBkYXRlZF9yZWZzKHRyYW5zcG9ydC0+dXJsLCByZWZfbWFwKTsKKwkJcmV0IHw9IHN0b3JlX3Vw
-ZGF0ZWRfcmVmcyh0cmFuc3BvcnQtPnVybCwgcmVmX21hcCk7CiAJdHJhbnNwb3J0X3VubG9ja19w
-YWNrKHRyYW5zcG9ydCk7CiAJcmV0dXJuIHJldDsKIH0KQEAgLTQ4Nyw4ICs0OTMsMTMgQEAgc3Rh
-dGljIGludCBkb19mZXRjaChzdHJ1Y3QgdHJhbnNwb3J0ICp0cmFuc3BvcnQsCiAJCWRpZSgiRG9u
-J3Qga25vdyBob3cgdG8gZmV0Y2ggZnJvbSAlcyIsIHRyYW5zcG9ydC0+dXJsKTsKCiAJLyogaWYg
-bm90IGFwcGVuZGluZywgdHJ1bmNhdGUgRkVUQ0hfSEVBRCAqLwotCWlmICghYXBwZW5kKQotCQlm
-Y2xvc2UoZm9wZW4oZ2l0X3BhdGgoIkZFVENIX0hFQUQiKSwgInciKSk7CisJaWYgKCFhcHBlbmQp
-IHsKKwkJY2hhciAqZmlsZW5hbWUgPSBnaXRfcGF0aCgiRkVUQ0hfSEVBRCIpOworCQlGSUxFICpm
-cCA9IGZvcGVuKGZpbGVuYW1lLCAidyIpOworCQlpZiAoIWZwKQorCQkJcmV0dXJuIGVycm9yKCJj
-YW5ub3Qgb3BlbiAlczogJXNcbiIsIGZpbGVuYW1lLCBzdHJlcnJvcihlcnJubykpOworCQlmY2xv
-c2UoZnApOworCX0KCiAJcmVmX21hcCA9IGdldF9yZWZfbWFwKHRyYW5zcG9ydCwgcmVmcywgcmVm
-X2NvdW50LCB0YWdzLCAmYXV0b3RhZ3MpOwoKLS0gCjEuNS4zLjYuODYxLmdkNzk0LWRpcnR5Cg==
-------=_Part_28249_22900505.1195770479526
-Content-Type: text/x-patch;
- name=0001-Fix-segmentation-fault-when-user-doesn-t-have-access.patch
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_f9buojc90
-Content-Disposition: attachment;
- filename=0001-Fix-segmentation-fault-when-user-doesn-t-have-access.patch
+> I think the "config_bool with default" also makes sense but it
+> needs to be coded a bit carefully.  Issues to consider:
 
-RnJvbSBkYmFkYzUyMTNiOTk1N2ZiNTc1YzZkYTg1MjhlNWRkN2EzZjFmNDNlIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiA9P3V0Zi04P3E/QW5kcj1DMz1BOT0yMEdvZGRhcmQ9MjBSb3Nh
-Pz0gPGFuZHJlLmdvZGRhcmRAZ21haWwuY29tPgpEYXRlOiBUaHUsIDIyIE5vdiAyMDA3IDIwOjIy
-OjIzIC0wMjAwClN1YmplY3Q6IFtQQVRDSF0gRml4IHNlZ21lbnRhdGlvbiBmYXVsdCB3aGVuIHVz
-ZXIgZG9lc24ndCBoYXZlIGFjY2VzcwogcGVybWlzc2lvbiB0byB0aGUgcmVwb3NpdG9yeS4KTUlN
-RS1WZXJzaW9uOiAxLjAKQ29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBjaGFyc2V0PXV0Zi04CkNv
-bnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IDhiaXQKClNpZ25lZC1vZmYtYnk6IEFuZHLDqSBHb2Rk
-YXJkIFJvc2EgPGFuZHJlLmdvZGRhcmRAZ21haWwuY29tPgotLS0KIGJ1aWx0aW4tZmV0Y2gtLXRv
-b2wuYyB8ICAgMTIgKysrKysrKysrKy0tCiBidWlsdGluLWZldGNoLmMgICAgICAgfCAgIDIxICsr
-KysrKysrKysrKysrKystLS0tLQogMiBmaWxlcyBjaGFuZ2VkLCAyNiBpbnNlcnRpb25zKCspLCA3
-IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2J1aWx0aW4tZmV0Y2gtLXRvb2wuYyBiL2J1aWx0
-aW4tZmV0Y2gtLXRvb2wuYwppbmRleCBlZDYwODQ3Li43NDYwYWI3IDEwMDY0NAotLS0gYS9idWls
-dGluLWZldGNoLS10b29sLmMKKysrIGIvYnVpbHRpbi1mZXRjaC0tdG9vbC5jCkBAIC01MTEsMTAg
-KzUxMSwxNCBAQCBpbnQgY21kX2ZldGNoX190b29sKGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJn
-diwgY29uc3QgY2hhciAqcHJlZml4KQogCWlmICghc3RyY21wKCJhcHBlbmQtZmV0Y2gtaGVhZCIs
-IGFyZ3ZbMV0pKSB7CiAJCWludCByZXN1bHQ7CiAJCUZJTEUgKmZwOworCQljaGFyICpmaWxlbmFt
-ZTsKIAogCQlpZiAoYXJnYyAhPSA4KQogCQkJcmV0dXJuIGVycm9yKCJhcHBlbmQtZmV0Y2gtaGVh
-ZCB0YWtlcyA2IGFyZ3MiKTsKLQkJZnAgPSBmb3BlbihnaXRfcGF0aCgiRkVUQ0hfSEVBRCIpLCAi
-YSIpOworCQlmaWxlbmFtZSA9IGdpdF9wYXRoKCJGRVRDSF9IRUFEIik7CisJCWZwID0gZm9wZW4o
-ZmlsZW5hbWUsICJhIik7CisJCWlmICghZnApCisJCQlyZXR1cm4gZXJyb3IoImNhbm5vdCBvcGVu
-ICVzOiAlc1xuIiwgZmlsZW5hbWUsIHN0cmVycm9yKGVycm5vKSk7CiAJCXJlc3VsdCA9IGFwcGVu
-ZF9mZXRjaF9oZWFkKGZwLCBhcmd2WzJdLCBhcmd2WzNdLAogCQkJCQkgICBhcmd2WzRdLCBhcmd2
-WzVdLAogCQkJCQkgICBhcmd2WzZdLCAhIWFyZ3ZbN11bMF0sCkBAIC01MjUsMTAgKzUyOSwxNCBA
-QCBpbnQgY21kX2ZldGNoX190b29sKGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwgY29uc3Qg
-Y2hhciAqcHJlZml4KQogCWlmICghc3RyY21wKCJuYXRpdmUtc3RvcmUiLCBhcmd2WzFdKSkgewog
-CQlpbnQgcmVzdWx0OwogCQlGSUxFICpmcDsKKwkJY2hhciAqZmlsZW5hbWU7CiAKIAkJaWYgKGFy
-Z2MgIT0gNSkKIAkJCXJldHVybiBlcnJvcigiZmV0Y2gtbmF0aXZlLXN0b3JlIHRha2VzIDMgYXJn
-cyIpOwotCQlmcCA9IGZvcGVuKGdpdF9wYXRoKCJGRVRDSF9IRUFEIiksICJhIik7CisJCWZpbGVu
-YW1lID0gZ2l0X3BhdGgoIkZFVENIX0hFQUQiKTsKKwkJZnAgPSBmb3BlbihmaWxlbmFtZSwgImEi
-KTsKKwkJaWYgKCFmcCkKKwkJCXJldHVybiBlcnJvcigiY2Fubm90IG9wZW4gJXM6ICVzXG4iLCBm
-aWxlbmFtZSwgc3RyZXJyb3IoZXJybm8pKTsKIAkJcmVzdWx0ID0gZmV0Y2hfbmF0aXZlX3N0b3Jl
-KGZwLCBhcmd2WzJdLCBhcmd2WzNdLCBhcmd2WzRdLAogCQkJCQkgICAgdmVyYm9zZSwgZm9yY2Up
-OwogCQlmY2xvc2UoZnApOwpkaWZmIC0tZ2l0IGEvYnVpbHRpbi1mZXRjaC5jIGIvYnVpbHRpbi1m
-ZXRjaC5jCmluZGV4IGJlOWUzZWEuLjg0YzhlZDQgMTAwNjQ0Ci0tLSBhL2J1aWx0aW4tZmV0Y2gu
-YworKysgYi9idWlsdGluLWZldGNoLmMKQEAgLTI1NSw3ICsyNTUsNyBAQCBzdGF0aWMgaW50IHVw
-ZGF0ZV9sb2NhbF9yZWYoc3RydWN0IHJlZiAqcmVmLAogCX0KIH0KIAotc3RhdGljIHZvaWQgc3Rv
-cmVfdXBkYXRlZF9yZWZzKGNvbnN0IGNoYXIgKnVybCwgc3RydWN0IHJlZiAqcmVmX21hcCkKK3N0
-YXRpYyBpbnQgc3RvcmVfdXBkYXRlZF9yZWZzKGNvbnN0IGNoYXIgKnVybCwgc3RydWN0IHJlZiAq
-cmVmX21hcCkKIHsKIAlGSUxFICpmcDsKIAlzdHJ1Y3QgY29tbWl0ICpjb21taXQ7CkBAIC0yNjMs
-OCArMjYzLDEzIEBAIHN0YXRpYyB2b2lkIHN0b3JlX3VwZGF0ZWRfcmVmcyhjb25zdCBjaGFyICp1
-cmwsIHN0cnVjdCByZWYgKnJlZl9tYXApCiAJY2hhciBub3RlWzEwMjRdOwogCWNvbnN0IGNoYXIg
-KndoYXQsICpraW5kOwogCXN0cnVjdCByZWYgKnJtOworCWNoYXIgKmZpbGVuYW1lID0gZ2l0X3Bh
-dGgoIkZFVENIX0hFQUQiKTsKIAotCWZwID0gZm9wZW4oZ2l0X3BhdGgoIkZFVENIX0hFQUQiKSwg
-ImEiKTsKKwlmcCA9IGZvcGVuKGZpbGVuYW1lLCAiYSIpOworCWlmICghZnApIHsKKwkJZXJyb3Io
-ImNhbm5vdCBvcGVuICVzOiAlc1xuIiwgZmlsZW5hbWUsIHN0cmVycm9yKGVycm5vKSk7CisJCXJl
-dHVybiAxOworCX0KIAlmb3IgKHJtID0gcmVmX21hcDsgcm07IHJtID0gcm0tPm5leHQpIHsKIAkJ
-c3RydWN0IHJlZiAqcmVmID0gTlVMTDsKIApAQCAtMzM1LDYgKzM0MCw3IEBAIHN0YXRpYyB2b2lk
-IHN0b3JlX3VwZGF0ZWRfcmVmcyhjb25zdCBjaGFyICp1cmwsIHN0cnVjdCByZWYgKnJlZl9tYXAp
-CiAJCX0KIAl9CiAJZmNsb3NlKGZwKTsKKwlyZXR1cm4gMDsKIH0KIAogLyoKQEAgLTQwNCw3ICs0
-MTAsNyBAQCBzdGF0aWMgaW50IGZldGNoX3JlZnMoc3RydWN0IHRyYW5zcG9ydCAqdHJhbnNwb3J0
-LCBzdHJ1Y3QgcmVmICpyZWZfbWFwKQogCWlmIChyZXQpCiAJCXJldCA9IHRyYW5zcG9ydF9mZXRj
-aF9yZWZzKHRyYW5zcG9ydCwgcmVmX21hcCk7CiAJaWYgKCFyZXQpCi0JCXN0b3JlX3VwZGF0ZWRf
-cmVmcyh0cmFuc3BvcnQtPnVybCwgcmVmX21hcCk7CisJCXJldCB8PSBzdG9yZV91cGRhdGVkX3Jl
-ZnModHJhbnNwb3J0LT51cmwsIHJlZl9tYXApOwogCXRyYW5zcG9ydF91bmxvY2tfcGFjayh0cmFu
-c3BvcnQpOwogCXJldHVybiByZXQ7CiB9CkBAIC00ODcsOCArNDkzLDEzIEBAIHN0YXRpYyBpbnQg
-ZG9fZmV0Y2goc3RydWN0IHRyYW5zcG9ydCAqdHJhbnNwb3J0LAogCQlkaWUoIkRvbid0IGtub3cg
-aG93IHRvIGZldGNoIGZyb20gJXMiLCB0cmFuc3BvcnQtPnVybCk7CiAKIAkvKiBpZiBub3QgYXBw
-ZW5kaW5nLCB0cnVuY2F0ZSBGRVRDSF9IRUFEICovCi0JaWYgKCFhcHBlbmQpCi0JCWZjbG9zZShm
-b3BlbihnaXRfcGF0aCgiRkVUQ0hfSEVBRCIpLCAidyIpKTsKKwlpZiAoIWFwcGVuZCkgeworCQlj
-aGFyICpmaWxlbmFtZSA9IGdpdF9wYXRoKCJGRVRDSF9IRUFEIik7CisJCUZJTEUgKmZwID0gZm9w
-ZW4oZmlsZW5hbWUsICJ3Iik7CisJCWlmICghZnApCisJCQlyZXR1cm4gZXJyb3IoImNhbm5vdCBv
-cGVuICVzOiAlc1xuIiwgZmlsZW5hbWUsIHN0cmVycm9yKGVycm5vKSk7CisJCWZjbG9zZShmcCk7
-CisJfQogCiAJcmVmX21hcCA9IGdldF9yZWZfbWFwKHRyYW5zcG9ydCwgcmVmcywgcmVmX2NvdW50
-LCB0YWdzLCAmYXV0b3RhZ3MpOwogCi0tIAoxLjUuMy42Ljg2MS5nZDc5NC1kaXJ0eQoK
-------=_Part_28249_22900505.1195770479526--
+Yes. It is not strictly necessary for this patch series, but I think it
+is nice to stake out a claim on the third argument of config_* functions
+for consistency sake. But perhaps in the name of avoiding regression, it
+should come later, when somebody actually wants to use it.
+
+>  (1) Non default form "$r->config_bool('key')" should keep the
+>      original semantics; missing key in the configuration is the
+>      same as false (i.e. "undef" in scalar, () in list context).
+
+Yes, this is obviously the most important thing.
+
+>  (2) What should be the second parameter in the form to default
+>      to true?  '1'?  'true'?  Any kind of "true" value in Perl
+>      should be accepted?
+> 
+>  (3) Same question as (2) but for defaulting to false.  Any kind
+>      of "false"?
+
+Hmm. I am tempted to say "yes, any true or any false value" in that the
+point of config_* is to convert git config values to native perl
+representations. OTOH, the moral equivalent of
+
+  config_color('my.key', 'bold red');
+
+is probably more appropriately
+
+  config_bool('my.key', 'true');
+
+so I am fine doing it that way, as well (though I think it makes us
+duplicate the "translate these strings into bools" code into perl).
+
+-Peff
