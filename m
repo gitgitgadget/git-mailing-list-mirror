@@ -1,87 +1,93 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: [PATCH] Add path-limiting to git-add--interactive
-Date: Thu, 22 Nov 2007 02:36:24 +0100
-Message-ID: <1195695384-41329-1-git-send-email-win@wincent.com>
-References: <7vk5obb09a.fsf@gitster.siamese.dyndns.org>
-Cc: gitster@pobox.com, peff@peff.net,
-	Wincent Colaiuta <win@wincent.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 22 02:36:55 2007
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 2/3 v3] git-svn info: implement info command
+Date: Wed, 21 Nov 2007 17:40:38 -0800
+Message-ID: <20071122014038.GA25341@soma>
+References: <1195675039-26746-1-git-send-email-ddkilzer@kilzer.net> <1195675039-26746-2-git-send-email-ddkilzer@kilzer.net> <1195675039-26746-3-git-send-email-ddkilzer@kilzer.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "David D. Kilzer" <ddkilzer@kilzer.net>
+X-From: git-owner@vger.kernel.org Thu Nov 22 02:40:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv0zu-0001sB-VQ
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 02:36:55 +0100
+	id 1Iv13p-0002mU-9o
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 02:40:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752736AbXKVBgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 20:36:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbXKVBgg
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 20:36:36 -0500
-Received: from wincent.com ([72.3.236.74]:56274 "EHLO s69819.wincent.com"
+	id S1752611AbXKVBkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 20:40:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752334AbXKVBkk
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 20:40:40 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:37038 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752672AbXKVBgf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 20:36:35 -0500
+	id S1751403AbXKVBkj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 20:40:39 -0500
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAM1aOL6032216;
-	Wed, 21 Nov 2007 19:36:26 -0600
-X-Mailer: git-send-email 1.5.3.6.870.g8799-dirty
-In-Reply-To: <7vk5obb09a.fsf@gitster.siamese.dyndns.org>
+	by hand.yhbt.net (Postfix) with ESMTP id 0A2DC7DC0FE;
+	Wed, 21 Nov 2007 17:40:39 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1195675039-26746-3-git-send-email-ddkilzer@kilzer.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65731>
 
-Implement Junio's suggestion that git-add--interactive should reproduce the
-path-limiting semantics of non-interactive git-add.
+"David D. Kilzer" <ddkilzer@kilzer.net> wrote:
+> Implement "git-svn info" for files and directories based on the
+> "svn info" command.  Note that the -r/--revision argument is not
+> supported yet.
+> 
+> Added 18 tests in t/t9119-git-svn-info.sh.
 
-In otherwords, if "git add -i" (unrestricted) shows paths from a set A,
-"git add -i paths..." should show paths from a subset of the set A and that
-subset should be defined with the existing ls-files pathspec semantics.
+Eric Wong <normalperson@yhbt.net> wrote:
+> I'm having a problem with [2/3] currently:
+> 
+> $file_type not being detected correctly when running "git svn info"
+> on the top-level directory with no arguments.  It's opening the
+> directory and trying to md5 it here:
+> 
+> 		} else {
+> 			open FILE, "<", $path or die $!;
+> 			$checksum = Git::SVN::Util::md5sum(\*FILE);
+> 			close FILE or die $!;
+> 		}
+> 
+>
 
-Signed-off-by: Wincent Colaiuta <win@wincent.com>
----
- git-add--interactive.perl |   11 ++++++++---
- 1 files changed, 8 insertions(+), 3 deletions(-)
+When running from a top-level directory with no arguments, the first
+line of git-ls-tree was being read.  This allowed the test case to pass
+because ls-tree sorts the output and 'directory' just happened to
+be up top; so we were getting the 040000 mode from the 'directory'
+tree and not the top-level tree.
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 2bba07d..a5a07bc 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -37,7 +37,7 @@ sub list_untracked {
- 		chomp $_;
- 		$_;
- 	}
--	run_cmd_pipe(qw(git ls-files --others --exclude-standard --), @_);
-+	run_cmd_pipe(qw(git ls-files --others --exclude-standard --), @ARGV);
- }
+The below test should fix it for the trivial case I have.
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 62801c8..7d86870 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1165,6 +1165,7 @@ sub linearize_history {
  
- my $status_fmt = '%12s %12s %s';
-@@ -56,9 +56,14 @@ sub list_modified {
- 	my ($only) = @_;
- 	my (%data, @return);
- 	my ($add, $del, $adddel, $file);
-+	my @tracked = grep {
-+		defined run_cmd_pipe(qw(git ls-files
-+			                --exclude-standard --), $_)
-+	} @ARGV;
-+	return if $#tracked == -1 && $#ARGV != -1;
+ sub find_file_type_and_diff_status {
+ 	my ($path) = @_;
++	return ('dir', '') if $path eq '.';
  
- 	for (run_cmd_pipe(qw(git diff-index --cached
--			     --numstat --summary HEAD))) {
-+			     --numstat --summary HEAD --), @tracked)) {
- 		if (($add, $del, $file) =
- 		    /^([-\d]+)	([-\d]+)	(.*)/) {
- 			my ($change, $bin);
-@@ -81,7 +86,7 @@ sub list_modified {
- 		}
- 	}
- 
--	for (run_cmd_pipe(qw(git diff-files --numstat --summary))) {
-+	for (run_cmd_pipe(qw(git diff-files --numstat --summary --), @tracked)) {
- 		if (($add, $del, $file) =
- 		    /^([-\d]+)	([-\d]+)	(.*)/) {
- 			if (!exists $data{$file}) {
+ 	my $diff_output =
+ 	    command_oneline(qw(diff --cached --name-status --), $path) || "";
+diff --git a/t/t9119-git-svn-info.sh b/t/t9119-git-svn-info.sh
+index e81457f..439bd93 100644
+--- a/t/t9119-git-svn-info.sh
++++ b/t/t9119-git-svn-info.sh
+@@ -19,6 +19,7 @@ ptouch() {
+ test_expect_success 'setup repository and import' "
+ 	mkdir info &&
+ 	cd info &&
++		echo FIRST > A &&
+ 		echo one > file &&
+ 		ln -s file symlink-file &&
+ 		mkdir directory &&
+
 -- 
-1.5.3.6.870.g8799-dirty
+Eric Wong
