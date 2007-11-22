@@ -1,48 +1,48 @@
 From: "=?UTF-8?Q?Andr=C3=A9_Goddard_Rosa?=" <andre.goddard@gmail.com>
-Subject: [PATCH] Avoid recalculating filename string pointer.
-Date: Wed, 21 Nov 2007 22:59:41 -0200
-Message-ID: <b8bf37780711211659i65a99493te3e3d5cee008ae7d@mail.gmail.com>
+Subject: [PATCH] Simplify the code and avoid an attribution.
+Date: Wed, 21 Nov 2007 23:00:02 -0200
+Message-ID: <b8bf37780711211700m1aa32006t6302f134f9c3fb7e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed; 
-	boundary="----=_Part_25924_2932386.1195693181377"
+	boundary="----=_Part_25926_4956583.1195693202682"
 Cc: "Git Mailing List" <git@vger.kernel.org>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Nov 22 02:00:02 2007
+X-From: git-owner@vger.kernel.org Thu Nov 22 02:00:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv0QD-0001r2-JI
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 02:00:02 +0100
+	id 1Iv0Qb-0001z8-FX
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 02:00:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753024AbXKVA7o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 19:59:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752773AbXKVA7o
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 19:59:44 -0500
-Received: from wr-out-0506.google.com ([64.233.184.234]:11698 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752595AbXKVA7n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 19:59:43 -0500
-Received: by wr-out-0506.google.com with SMTP id c49so1587933wra
-        for <git@vger.kernel.org>; Wed, 21 Nov 2007 16:59:42 -0800 (PST)
+	id S1753346AbXKVBAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 20:00:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753356AbXKVBAH
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 20:00:07 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:42719 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753171AbXKVBAF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 20:00:05 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so227935ugc
+        for <git@vger.kernel.org>; Wed, 21 Nov 2007 17:00:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
+        d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        bh=c+Gbiiec6tX8LM/XP/Qplnhn3n4Num4iiNHjtzJAQEA=;
-        b=POgwn9+0tdA2ekXykAAZG9KX9nGiK9oYTHN4G20Xylmet6UrG/lW1pkxBoDxypOzha+lFfjI/MYyOq8fBvDkfyVrTHzeuutDxCkOl920bzhDOAnrbYmkCg47EBGy/sS1rman/sy8F9iVkenb+XBtngrqYNX+X7j1m40x+fYTXes=
+        bh=T002pCZ9lRD/JkPOxrJfhpJcFDvq8TbnmSYeNdyFpzI=;
+        b=lyPJISI5U+Pd9IP3iVg/stJwJJ6u6iwMD4YMj0EfE3JZcNZ/VexXLBK/BpzhJvW5WJT6CcjtAX1WIf97zXcTV/8HEfduxlEQcdXmFNrPnZP7hOmBg3ythJBJiPLpMrOduN2yJkKHphYJfUi8Nb2Vz48657FNTicCPSbxT9cpNOY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
+        d=gmail.com; s=gamma;
         h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=Vxt207X6zDRY0z9ayd8bg4MBrmfQSwmERxTY0kZAYAwM+CFJuZcHOE1lqQUQfDiRA1YCo+59TD+nOT0i/2Uy9Affz2YKZtFgxIipk6VqTiixfhdqBjrbuvGXrykAIZVgX/uAtRJDm0NprRFC0liqA+dyVA4EmEJ9gjgdcTS1yy8=
-Received: by 10.78.150.7 with SMTP id x7mr9089245hud.1195693181424;
-        Wed, 21 Nov 2007 16:59:41 -0800 (PST)
-Received: by 10.78.120.18 with HTTP; Wed, 21 Nov 2007 16:59:41 -0800 (PST)
+        b=ZLD/35W3Lcj574jWfzuq1fEjUYEqI07z8CudxIm0gTiRbIj23QNjYz40RTk3ene4Lm4ozGcC/uPgURvUUSPqLrLkH5k8Ht9JHURgbHy2cjK/MDrgZi0oWhz+T9ZVGmLaLkE/5FJy4X9Hihpc9yaVloGbqtQbJusECAKLy1usHTg=
+Received: by 10.78.204.7 with SMTP id b7mr1474181hug.1195693202686;
+        Wed, 21 Nov 2007 17:00:02 -0800 (PST)
+Received: by 10.78.120.18 with HTTP; Wed, 21 Nov 2007 17:00:02 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65726>
 
-------=_Part_25924_2932386.1195693181377
+------=_Part_25926_4956583.1195693202682
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Content-Disposition: inline
@@ -54,64 +54,119 @@ only for review, probably it is mangled.
     Please use the attached patch if you agree with it. Sorry about
 sending it attached.
 
->From b6b05d9f8d8e053df4e971cd229e03b778c4d163 Mon Sep 17 00:00:00 2001
+>From cd0cc6995684e2801011910735146052e5b59ccc Mon Sep 17 00:00:00 2001
 From: Andre Goddard Rosa <andre.goddard@gmail.com>
-Date: Tue, 27 Nov 2007 10:17:54 -0200
-Subject: [PATCH] Avoid recalculating filename string pointer.
+Date: Tue, 27 Nov 2007 10:22:46 -0200
+Subject: [PATCH] Simplify the code and avoid an attribution.
 
 Signed-off-by: Andre Goddard Rosa <andre.goddard@gmail.com>
 ---
- fast-import.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+ config.c          |   19 ++++++++++---------
+ mailmap.c         |    2 +-
+ xdiff-interface.c |    2 +-
+ 3 files changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index 98c2bd5..2d262eb 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2304,11 +2304,13 @@ int main(int argc, const char **argv)
- 		else if (!prefixcmp(a, "--export-marks="))
- 			mark_file = a + 15;
- 		else if (!prefixcmp(a, "--export-pack-edges=")) {
-+			char *filename = a + 20;
+diff --git a/config.c b/config.c
+index 56e99fc..7c9fcdd 100644
+--- a/config.c
++++ b/config.c
+@@ -447,15 +447,16 @@ int git_config_from_file(config_fn_t fn, const
+char *filename)
+ 	int ret;
+ 	FILE *f = fopen(filename, "r");
+
+-	ret = -1;
+-	if (f) {
+-		config_file = f;
+-		config_file_name = filename;
+-		config_linenr = 1;
+-		ret = git_parse_file(fn);
+-		fclose(f);
+-		config_file_name = NULL;
+-	}
++	if (!f)
++		return -1;
 +
- 			if (pack_edges)
- 				fclose(pack_edges);
--			pack_edges = fopen(a + 20, "a");
-+			pack_edges = fopen(filename, "a");
- 			if (!pack_edges)
--				die("Cannot open %s: %s", a + 20, strerror(errno));
-+				die("Cannot open %s: %s", filename, strerror(errno));
- 		} else if (!strcmp(a, "--force"))
- 			force_update = 1;
- 		else if (!strcmp(a, "--quiet"))
++	config_file = f;
++	config_file_name = filename;
++	config_linenr = 1;
++	ret = git_parse_file(fn);
++	fclose(f);
++	config_file_name = NULL;
++
+ 	return ret;
+ }
+
+diff --git a/mailmap.c b/mailmap.c
+index 8714167..0c13ecd 100644
+--- a/mailmap.c
++++ b/mailmap.c
+@@ -7,7 +7,7 @@ int read_mailmap(struct path_list *map, const char
+*filename, char **repo_abbrev
+ 	char buffer[1024];
+ 	FILE *f = fopen(filename, "r");
+
+-	if (f == NULL)
++	if (!f)
+ 		return 1;
+ 	while (fgets(buffer, sizeof(buffer), f) != NULL) {
+ 		char *end_of_name, *left_bracket, *right_bracket;
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index be866d1..9dd1f3b 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -111,7 +111,7 @@ int read_mmfile(mmfile_t *ptr, const char *filename)
+
+ 	if (stat(filename, &st))
+ 		return error("Could not stat %s", filename);
+-	if ((f = fopen(filename, "rb")) == NULL)
++	if (!(f = fopen(filename, "rb")))
+ 		return error("Could not open %s", filename);
+ 	sz = xsize_t(st.st_size);
+ 	ptr->ptr = xmalloc(sz);
 -- 
 1.5.3.6.861.gd794-dirty
 
-------=_Part_25924_2932386.1195693181377
+------=_Part_25926_4956583.1195693202682
 Content-Type: text/x-patch;
- name=0003-Avoid-recalculating-filename-string-pointer.patch
+ name=0004-Simplify-the-code-and-avoid-an-attribution.patch
 Content-Transfer-Encoding: base64
-X-Attachment-Id: f_f9akp7470
+X-Attachment-Id: f_f9akrmyt0
 Content-Disposition: attachment;
- filename=0003-Avoid-recalculating-filename-string-pointer.patch
+ filename=0004-Simplify-the-code-and-avoid-an-attribution.patch
 
-RnJvbSBiNmIwNWQ5ZjhkOGUwNTNkZjRlOTcxY2QyMjllMDNiNzc4YzRkMTYzIE1vbiBTZXAgMTcg
+RnJvbSBjZDBjYzY5OTU2ODRlMjgwMTAxMTkxMDczNTE0NjA1MmU1YjU5Y2NjIE1vbiBTZXAgMTcg
 MDA6MDA6MDAgMjAwMQpGcm9tOiBBbmRyZSBHb2RkYXJkIFJvc2EgPGFuZHJlLmdvZGRhcmRAZ21h
-aWwuY29tPgpEYXRlOiBUdWUsIDI3IE5vdiAyMDA3IDEwOjE3OjU0IC0wMjAwClN1YmplY3Q6IFtQ
-QVRDSF0gQXZvaWQgcmVjYWxjdWxhdGluZyBmaWxlbmFtZSBzdHJpbmcgcG9pbnRlci4KClNpZ25l
-ZC1vZmYtYnk6IEFuZHJlIEdvZGRhcmQgUm9zYSA8YW5kcmUuZ29kZGFyZEBnbWFpbC5jb20+Ci0t
-LQogZmFzdC1pbXBvcnQuYyB8ICAgIDYgKysrKy0tCiAxIGZpbGVzIGNoYW5nZWQsIDQgaW5zZXJ0
-aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9mYXN0LWltcG9ydC5jIGIvZmFz
-dC1pbXBvcnQuYwppbmRleCA5OGMyYmQ1Li4yZDI2MmViIDEwMDY0NAotLS0gYS9mYXN0LWltcG9y
-dC5jCisrKyBiL2Zhc3QtaW1wb3J0LmMKQEAgLTIzMDQsMTEgKzIzMDQsMTMgQEAgaW50IG1haW4o
-aW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2KQogCQllbHNlIGlmICghcHJlZml4Y21wKGEsICIt
-LWV4cG9ydC1tYXJrcz0iKSkKIAkJCW1hcmtfZmlsZSA9IGEgKyAxNTsKIAkJZWxzZSBpZiAoIXBy
-ZWZpeGNtcChhLCAiLS1leHBvcnQtcGFjay1lZGdlcz0iKSkgeworCQkJY2hhciAqZmlsZW5hbWUg
-PSBhICsgMjA7CisKIAkJCWlmIChwYWNrX2VkZ2VzKQogCQkJCWZjbG9zZShwYWNrX2VkZ2VzKTsK
-LQkJCXBhY2tfZWRnZXMgPSBmb3BlbihhICsgMjAsICJhIik7CisJCQlwYWNrX2VkZ2VzID0gZm9w
-ZW4oZmlsZW5hbWUsICJhIik7CiAJCQlpZiAoIXBhY2tfZWRnZXMpCi0JCQkJZGllKCJDYW5ub3Qg
-b3BlbiAlczogJXMiLCBhICsgMjAsIHN0cmVycm9yKGVycm5vKSk7CisJCQkJZGllKCJDYW5ub3Qg
-b3BlbiAlczogJXMiLCBmaWxlbmFtZSwgc3RyZXJyb3IoZXJybm8pKTsKIAkJfSBlbHNlIGlmICgh
-c3RyY21wKGEsICItLWZvcmNlIikpCiAJCQlmb3JjZV91cGRhdGUgPSAxOwogCQllbHNlIGlmICgh
-c3RyY21wKGEsICItLXF1aWV0IikpCi0tIAoxLjUuMy42Ljg2MS5nZDc5NC1kaXJ0eQoK
-------=_Part_25924_2932386.1195693181377--
+aWwuY29tPgpEYXRlOiBUdWUsIDI3IE5vdiAyMDA3IDEwOjIyOjQ2IC0wMjAwClN1YmplY3Q6IFtQ
+QVRDSF0gU2ltcGxpZnkgdGhlIGNvZGUgYW5kIGF2b2lkIGFuIGF0dHJpYnV0aW9uLgoKU2lnbmVk
+LW9mZi1ieTogQW5kcmUgR29kZGFyZCBSb3NhIDxhbmRyZS5nb2RkYXJkQGdtYWlsLmNvbT4KLS0t
+CiBjb25maWcuYyAgICAgICAgICB8ICAgMTkgKysrKysrKysrKy0tLS0tLS0tLQogbWFpbG1hcC5j
+ICAgICAgICAgfCAgICAyICstCiB4ZGlmZi1pbnRlcmZhY2UuYyB8ICAgIDIgKy0KIDMgZmlsZXMg
+Y2hhbmdlZCwgMTIgaW5zZXJ0aW9ucygrKSwgMTEgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEv
+Y29uZmlnLmMgYi9jb25maWcuYwppbmRleCA1NmU5OWZjLi43YzlmY2RkIDEwMDY0NAotLS0gYS9j
+b25maWcuYworKysgYi9jb25maWcuYwpAQCAtNDQ3LDE1ICs0NDcsMTYgQEAgaW50IGdpdF9jb25m
+aWdfZnJvbV9maWxlKGNvbmZpZ19mbl90IGZuLCBjb25zdCBjaGFyICpmaWxlbmFtZSkKIAlpbnQg
+cmV0OwogCUZJTEUgKmYgPSBmb3BlbihmaWxlbmFtZSwgInIiKTsKIAotCXJldCA9IC0xOwotCWlm
+IChmKSB7Ci0JCWNvbmZpZ19maWxlID0gZjsKLQkJY29uZmlnX2ZpbGVfbmFtZSA9IGZpbGVuYW1l
+OwotCQljb25maWdfbGluZW5yID0gMTsKLQkJcmV0ID0gZ2l0X3BhcnNlX2ZpbGUoZm4pOwotCQlm
+Y2xvc2UoZik7Ci0JCWNvbmZpZ19maWxlX25hbWUgPSBOVUxMOwotCX0KKwlpZiAoIWYpCisJCXJl
+dHVybiAtMTsKKworCWNvbmZpZ19maWxlID0gZjsKKwljb25maWdfZmlsZV9uYW1lID0gZmlsZW5h
+bWU7CisJY29uZmlnX2xpbmVuciA9IDE7CisJcmV0ID0gZ2l0X3BhcnNlX2ZpbGUoZm4pOworCWZj
+bG9zZShmKTsKKwljb25maWdfZmlsZV9uYW1lID0gTlVMTDsKKwogCXJldHVybiByZXQ7CiB9CiAK
+ZGlmZiAtLWdpdCBhL21haWxtYXAuYyBiL21haWxtYXAuYwppbmRleCA4NzE0MTY3Li4wYzEzZWNk
+IDEwMDY0NAotLS0gYS9tYWlsbWFwLmMKKysrIGIvbWFpbG1hcC5jCkBAIC03LDcgKzcsNyBAQCBp
+bnQgcmVhZF9tYWlsbWFwKHN0cnVjdCBwYXRoX2xpc3QgKm1hcCwgY29uc3QgY2hhciAqZmlsZW5h
+bWUsIGNoYXIgKipyZXBvX2FiYnJldgogCWNoYXIgYnVmZmVyWzEwMjRdOwogCUZJTEUgKmYgPSBm
+b3BlbihmaWxlbmFtZSwgInIiKTsKIAotCWlmIChmID09IE5VTEwpCisJaWYgKCFmKQogCQlyZXR1
+cm4gMTsKIAl3aGlsZSAoZmdldHMoYnVmZmVyLCBzaXplb2YoYnVmZmVyKSwgZikgIT0gTlVMTCkg
+ewogCQljaGFyICplbmRfb2ZfbmFtZSwgKmxlZnRfYnJhY2tldCwgKnJpZ2h0X2JyYWNrZXQ7CmRp
+ZmYgLS1naXQgYS94ZGlmZi1pbnRlcmZhY2UuYyBiL3hkaWZmLWludGVyZmFjZS5jCmluZGV4IGJl
+ODY2ZDEuLjlkZDFmM2IgMTAwNjQ0Ci0tLSBhL3hkaWZmLWludGVyZmFjZS5jCisrKyBiL3hkaWZm
+LWludGVyZmFjZS5jCkBAIC0xMTEsNyArMTExLDcgQEAgaW50IHJlYWRfbW1maWxlKG1tZmlsZV90
+ICpwdHIsIGNvbnN0IGNoYXIgKmZpbGVuYW1lKQogCiAJaWYgKHN0YXQoZmlsZW5hbWUsICZzdCkp
+CiAJCXJldHVybiBlcnJvcigiQ291bGQgbm90IHN0YXQgJXMiLCBmaWxlbmFtZSk7Ci0JaWYgKChm
+ID0gZm9wZW4oZmlsZW5hbWUsICJyYiIpKSA9PSBOVUxMKQorCWlmICghKGYgPSBmb3BlbihmaWxl
+bmFtZSwgInJiIikpKQogCQlyZXR1cm4gZXJyb3IoIkNvdWxkIG5vdCBvcGVuICVzIiwgZmlsZW5h
+bWUpOwogCXN6ID0geHNpemVfdChzdC5zdF9zaXplKTsKIAlwdHItPnB0ciA9IHhtYWxsb2Moc3op
+OwotLSAKMS41LjMuNi44NjEuZ2Q3OTQtZGlydHkKCg==
+------=_Part_25926_4956583.1195693202682--
