@@ -1,94 +1,127 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 5/5] Added diff hunk coloring to git-add--interactive
-Date: Thu, 22 Nov 2007 07:25:41 -0500
-Message-ID: <20071122122540.GH12913@sigill.intra.peff.net>
-References: <20071017015152.GN13801@spearce.org> <20071022164048.71a3dceb@danzwell.com> <20071023042702.GB28312@coredump.intra.peff.net> <20071023035221.66ea537f@danzwell.com> <20071102224100.71665182@paradox.zwell.net> <20071104045735.GA12359@segfault.peff.net> <7v640ivagv.fsf@gitster.siamese.dyndns.org> <20071104054305.GA13929@sigill.intra.peff.net> <20071110180109.34febc3f@paradox.zwell.net> <20071122045624.405e2b2b@paradox.zwell.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rebase -i: move help to end of todo file
+Date: Thu, 22 Nov 2007 12:30:10 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711221225570.27959@racer.site>
+References: <7vlk8q7hzg.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0711221113360.27959@racer.site> <7vbq9m5wpa.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	Jonathan del Strother <maillist@steelskies.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Dan Zwell <dzwell@zwell.net>
-X-From: git-owner@vger.kernel.org Thu Nov 22 13:26:43 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 13:30:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvB85-0003OJ-S5
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 13:26:02 +0100
+	id 1IvBCT-0005Bv-Ss
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 13:30:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751905AbXKVMZo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 07:25:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752019AbXKVMZn
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 07:25:43 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2634 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751633AbXKVMZn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 07:25:43 -0500
-Received: (qmail 23563 invoked by uid 111); 22 Nov 2007 12:25:41 -0000
-Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 22 Nov 2007 07:25:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Nov 2007 07:25:41 -0500
-Content-Disposition: inline
-In-Reply-To: <20071122045624.405e2b2b@paradox.zwell.net>
+	id S1751266AbXKVMaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 07:30:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752060AbXKVMaP
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 07:30:15 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39930 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750719AbXKVMaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 07:30:14 -0500
+Received: (qmail invoked by alias); 22 Nov 2007 12:30:12 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp056) with SMTP; 22 Nov 2007 13:30:12 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18KwZY5Q4EK1fmSnp71lCB0JatZa60VUAYf8KZOB0
+	43l2oStuxmVCib
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vbq9m5wpa.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65818>
 
-On Thu, Nov 22, 2007 at 04:56:24AM -0600, Dan Zwell wrote:
+Hi,
 
-> -		else { # set up colors
-> -			# Grab the 3 main colors in git color string format, with sane
-> -			# (visible) defaults:
-> -			$prompt_color = Git::color_to_ansi_code(
-> -				scalar $repo->config_default('color.interactive.prompt',
-> -					'bold blue'));
+On Thu, 22 Nov 2007, Junio C Hamano wrote:
 
-These were just added in the last patch. I know sometimes it is worth
-showing the progression of work as the patches go, but in this case, I
-think it is simpler for the reviewers if the first patch which adds a
-chunk of code does it in the final way (even if you need to just say "I
-did it this way because there will be reasons later on.").
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > 	How about this?  I am hesitant to remove _everything_, since quite 
+> > 	a few people seem to be allergic to man pages, so they fire up 
+> > 	rebase -i without any clue.
+> 
+> Oh, I wouldn't dream of suggesting complete removal of the help
+> text, 
 
-> +	sub get_color {
-> +		my ($key, $default) = @_;
-> +		return Git::color_to_ansi_code(
-> +			scalar $repo->config_default($key, $default));
-> +	}
+I meant to "move" everything.  Sorry.
 
-Ah, so you agree that this is a good route. I think this should probably
-be Git::config_color.
+> but leaving the single line at the beginning is not an improvement.  
+> What's on that single line is not particularly useful but that is a 
+> separate issue.
 
-There is also a subtle issue, which is that it pulls the "$repo"
-variable from the outer lexical scope (as Git::config_color, it would
-take it as the first parameter).
+Okay, so you'd like this better?
 
-> +		$prompt_color = get_color('color.interactive.prompt', 'bold blue');
-> +		$header_color = get_color('color.interactive.header', 'bold');
-> +		$help_color = get_color('color.interactive.help', 'red bold');
-> +		$normal_color = Git::color_to_ansi_code('normal');
+-- snipsnap --
+[PATCH] rebase -i: move help to end of todo file
 
-Yeah, much nicer to read.
+Many editors start in the first line, so the 9-line help text was an
+annoyance.  So move it to the end.
 
-> +	if ($diff_use_color) {
-> +		$new_color = get_color('color.diff.new', 'green');
-> +		$old_color = get_color('color.diff.old', 'red');
-> +		$fraginfo_color = get_color('color.diff.frag', 'cyan');
-> +		$metainfo_color = get_color('color.diff.meta', 'bold');
-> +		$normal_color = Git::color_to_ansi_code('normal');
-> +		# Not implemented:
-> +		#$whitespace_color = get_color('color.diff.whitespace',
-> +			#'normal red');
+Requested by Junio.
 
-Unfortunately, there is a historical wart that probably still needs
-supporting, which is that the original names were diff.color.*. Or have
-we officially removed support for that yet?
+While at it, add a hint how to abort the rebase.
 
--Peff
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ git-rebase--interactive.sh    |   14 ++++++++------
+ t/t3404-rebase-interactive.sh |    3 ++-
+ 2 files changed, 10 insertions(+), 7 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index a6dc72a..58fde89 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -479,8 +479,13 @@ do
+ 		SHORTUPSTREAM=$(git rev-parse --short $UPSTREAM)
+ 		SHORTHEAD=$(git rev-parse --short $HEAD)
+ 		SHORTONTO=$(git rev-parse --short $ONTO)
+-		cat > "$TODO" << EOF
+-# Rebasing $SHORTUPSTREAM..$SHORTHEAD onto $SHORTONTO
++		git rev-list $MERGES_OPTION --pretty=oneline --abbrev-commit \
++			--abbrev=7 --reverse --left-right --cherry-pick \
++			$UPSTREAM...$HEAD | \
++			sed -n "s/^>/pick /p" > "$TODO"
++		cat >> "$TODO" << EOF
++
++# Rebase $SHORTUPSTREAM..$SHORTHEAD onto $SHORTONTO
+ #
+ # Commands:
+ #  pick = use commit
+@@ -488,12 +493,9 @@ do
+ #  squash = use commit, but meld into previous commit
+ #
+ # If you remove a line here THAT COMMIT WILL BE LOST.
++# However, if you remove everything, the rebase will be aborted.
+ #
+ EOF
+-		git rev-list $MERGES_OPTION --pretty=oneline --abbrev-commit \
+-			--abbrev=7 --reverse --left-right --cherry-pick \
+-			$UPSTREAM...$HEAD | \
+-			sed -n "s/^>/pick /p" >> "$TODO"
+ 
+ 		has_action "$TODO" ||
+ 			die_abort "Nothing to do"
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index f1039d1..907c7f9 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -149,7 +149,8 @@ test_expect_success 'stop on conflicting pick' '
+ 	diff -u expect .git/.dotest-merge/patch &&
+ 	diff -u expect2 file1 &&
+ 	test 4 = $(grep -v "^#" < .git/.dotest-merge/done | wc -l) &&
+-	test 0 = $(grep -v "^#" < .git/.dotest-merge/git-rebase-todo | wc -l)
++	test 0 = $(grep -ve "^#" -e "^$" < .git/.dotest-merge/git-rebase-todo |
++		wc -l)
+ '
+ 
+ test_expect_success 'abort' '
+-- 
+1.5.3.6.1977.g54d30
