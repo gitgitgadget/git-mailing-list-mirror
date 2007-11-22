@@ -1,89 +1,91 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: Adding push configuration to .git/config
-Date: Thu, 22 Nov 2007 19:22:05 +0100
-Message-ID: <D77878D1-127E-4B0C-99DF-D344845B76B0@zib.de>
-References: <20071121105517.GA11875@denkbrett.schottelius.org> <7vabp79hjt.fsf@gitster.siamese.dyndns.org> <C297CFC3-8DD0-4EEE-8FD3-BF997F6E269A@zib.de> <7vd4u28z90.fsf@gitster.siamese.dyndns.org> <7E8CB606-6CBD-4736-A2CB-0A1E1BD219D3@zib.de> <Pine.LNX.4.64.0711221120300.27959@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nico -telmich- Schottelius <nico-linux-git@schottelius.org>,
-	git@vger.kernel.org
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] builtin-commit: Include the diff in the commit message when verbose.
+Date: Thu, 22 Nov 2007 11:14:29 -0800
+Message-ID: <7vzlx63xey.fsf@gitster.siamese.dyndns.org>
+References: <1195700089-8326-1-git-send-email-krh@redhat.com>
+	<Pine.LNX.4.64.0711221049350.27959@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>,
+	gitster@pobox.com, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 22 19:21:47 2007
+X-From: git-owner@vger.kernel.org Thu Nov 22 20:15:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvGgF-0007Y0-B6
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 19:21:39 +0100
+	id 1IvHVq-0001hP-T7
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 20:14:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752268AbXKVSVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 13:21:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752210AbXKVSVU
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 13:21:20 -0500
-Received: from mailer.zib.de ([130.73.108.11]:56671 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752015AbXKVSVT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 13:21:19 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAMIKrRq006618;
-	Thu, 22 Nov 2007 19:20:53 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAMIKq3j014228
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 22 Nov 2007 19:20:52 +0100 (MET)
-In-Reply-To: <Pine.LNX.4.64.0711221120300.27959@racer.site>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752305AbXKVTOj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2007 14:14:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752232AbXKVTOj
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 14:14:39 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:39080 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752128AbXKVTOi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2007 14:14:38 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id DF1B72F9;
+	Thu, 22 Nov 2007 14:14:58 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 4C2C498908;
+	Thu, 22 Nov 2007 14:14:54 -0500 (EST)
+In-Reply-To: <Pine.LNX.4.64.0711221049350.27959@racer.site> (Johannes
+	Schindelin's message of "Thu, 22 Nov 2007 10:52:04 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65835>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Nov 22, 2007, at 12:23 PM, Johannes Schindelin wrote:
+> On Wed, 21 Nov 2007, Kristian H=C3=B8gsberg wrote:
+>
+>> +
+>> +	/* Truncate the message just before the diff, if any. */
+>> +	p =3D strstr(sb.buf, "\ndiff --git a/");
+>> +	if (p !=3D NULL)
+>> +		strbuf_setlen(&sb, p - sb.buf);
+>> +
+>
+> Is this related to the change in wt_status?  If so, wouldn't we want =
+to=20
+> suppress the diff, instead of generating it, and then killing it late=
+r?
 
-> I have to say that I slowly grow an antipathy for "git push" without
-> parameters.  _All_ of the confusions with push that I saw stem from  
-> being
-> too lazy to say where and what you want to push.  (Okay, there is this
-> other thing where people say "git push origin master:master" and I  
-> still
-> do not know where they got _that_ from.)
+This corresponds to the sed script near l.545 in git-commit.sh.
 
+I've been wondering if it would be better not to have this logic
+but instead "git commit -v" to show the diff text prefixed with
+'# ' to make it a proper comment, by the way.
 
-I don't agree.  "git push" should support good defaults. At
-some point you make the decision to publish, and you use
-"git push" for this.  If you have a reasonably stable environment
-there will be a good default, what publishing means.
+> Besides, you'd want to leave the \n there: strbuf_setlen(&sb, p + 1 -=
+=20
+> sb.buf);
 
-Obviously users should think before they "git push".  They know
-that they are publishing, and they (hopefully) understand
-that they can't easily undo this operation.  But I believe
-people who used any version control system before know that.
-It's the same for every system.  If you publish, others can
-get your source, and this can't easily be reverted.
+Yup.
 
-But people are lazy, and having a good default is what they
-expect from a good tool.  The default should be safe, and
-reliably do something useful.  A good default can safe you
-from typing errors.  But the default should not do too much,
-and should not do unexpected things; at least not until you
-explicitly configured.
+>> +	/* Sigh, the entire diff machinery is hardcoded to output to
+>> +	 * stdout.  Do the dup-dance...*/
+>
+> I wonder how much effort it would be to change that.  Not that it wou=
+ld=20
+> help too much, since we want the output in a strbuf anyway.
 
-You know that I believe the current default is not such a
-choice.  Pushing matching branches sooner or later triggers
-annoying errors if used with a shared remote repository.
-But this is how the default is; and I'll live with it.
+The codepath is preparing COMMIT_EDITMSG file for the user to
+edit (or to the standard output, if this is "git status -v").
 
-At least it saves me time.  I learnt to ignore the error
-messages.  And we now have '--dry-run'.  So I can quickly
-check what will happen.
+I do not know about "strbuf" part; resulting patch text could be
+large and in most cases the callers would rather flush it to
+outside (either pipe or file) as soon as possible than having to
+keep it all in core.
 
-But, I strongly believe that a tool that expects users to
-type the current branch and the default remote each time;
-just for publishing some changes to the default location,
-is not what users want.
-
-	Steffen
+I was trying to do the stdout -> FILE *fp conversion of diff.c
+last night but dropped it halfway, after finding one puts()
+misconversion and fixing it.  The changes should mostly be
+straightforward but the result felt ugly.
