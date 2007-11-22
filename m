@@ -1,105 +1,67 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: [PATCH 3/4] Teach builtin-add to pass multiple paths to git-add--interactive
-Date: Thu, 22 Nov 2007 01:02:52 +0100
-Message-ID: <1195689773-28601-4-git-send-email-win@wincent.com>
-References: <C6E820C8-91E9-48B2-9219-377CA83163A7@wincent.com>
- <1195689773-28601-1-git-send-email-win@wincent.com>
- <1195689773-28601-2-git-send-email-win@wincent.com>
- <1195689773-28601-3-git-send-email-win@wincent.com>
-Cc: gitster@pobox.com, peff@peff.net,
-	Wincent Colaiuta <win@wincent.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 22 01:04:08 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] Teach git-add--interactive to accept a file path to patch
+Date: Wed, 21 Nov 2007 16:18:57 -0800
+Message-ID: <7vk5obb09a.fsf@gitster.siamese.dyndns.org>
+References: <1195648601-21736-1-git-send-email-win@wincent.com>
+	<1195648601-21736-2-git-send-email-win@wincent.com>
+	<1195648601-21736-3-git-send-email-win@wincent.com>
+	<20071121152118.GG24108@sigill.intra.peff.net>
+	<7vejejfi28.fsf@gitster.siamese.dyndns.org>
+	<C6E820C8-91E9-48B2-9219-377CA83163A7@wincent.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 01:19:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuzXz-0004Wi-Oz
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 01:04:00 +0100
+	id 1Iuzmv-0000Gd-R6
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 01:19:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754247AbXKVADo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 19:03:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754335AbXKVADo
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 19:03:44 -0500
-Received: from wincent.com ([72.3.236.74]:56123 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754247AbXKVADn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 19:03:43 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAM02s0W030459;
-	Wed, 21 Nov 2007 18:03:00 -0600
-X-Mailer: git-send-email 1.5.3.6.862.g369c8
-In-Reply-To: <1195689773-28601-3-git-send-email-win@wincent.com>
+	id S1753525AbXKVATG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 19:19:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753481AbXKVATG
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 19:19:06 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:56251 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753525AbXKVATF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 19:19:05 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id B023D2EF;
+	Wed, 21 Nov 2007 19:19:24 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 35AD39859B;
+	Wed, 21 Nov 2007 19:19:21 -0500 (EST)
+In-Reply-To: <C6E820C8-91E9-48B2-9219-377CA83163A7@wincent.com> (Wincent
+	Colaiuta's message of "Wed, 21 Nov 2007 23:44:33 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65721>
 
-Instead of just accepting a single file parameter, git-add now accepts
-any number of path parameters, fowarding them to git-add--interactive.
+Wincent Colaiuta <win@wincent.com> writes:
 
-Signed-off-by: Wincent Colaiuta <win@wincent.com>
----
- builtin-add.c |   23 +++++++++++++----------
- commit.h      |    2 +-
- 2 files changed, 14 insertions(+), 11 deletions(-)
+> - Junio, do you mean to suggest with your comment that when passing
+> untracked files either directly or indirectly (ie. when passing a dir
+> containing untracked files) that they should be added (ie. invoked the
+> "add untracked" subcommand) in addition to running the "patch"
+> subcommand on the changed files?
 
-diff --git a/builtin-add.c b/builtin-add.c
-index 278c02e..13f27e8 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -135,11 +135,17 @@ static void refresh(int verbose, const char **pathspec)
-         free(seen);
- }
- 
--int interactive_add(const char *path)
-+int interactive_add(const char **argv, int argc)
- {
--	const char *argv[3] = { "add--interactive", path, NULL };
--
--	return run_command_v_opt(argv, RUN_GIT_CMD);
-+	int status;
-+	const char **args = xmalloc(sizeof(const char *) * (argc + 1));
-+	args[0] = "add--interactive";
-+	memcpy((void *)args + sizeof(const char *), argv, sizeof(const char *) * argc);
-+	args[argc + 1] = NULL;
-+
-+	status = run_command_v_opt(args, RUN_GIT_CMD);
-+	free(args);
-+	return status;
- }
- 
- static struct lock_file lock_file;
-@@ -170,13 +176,10 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, builtin_add_options,
- 			  builtin_add_usage, 0);
- 	if (add_interactive) {
--		if (argc > 1)
--			die("add --interactive may take only 1 optional "
--			    "parameter");
--		else if (argc == 1)
--			exit(interactive_add(argv[0]));
-+		if (argc > 0)
-+			exit(interactive_add(argv, argc));
- 		else
--			exit(interactive_add(NULL));
-+			exit(interactive_add(NULL, 0));
- 	}
- 
- 	git_config(git_default_config);
-diff --git a/commit.h b/commit.h
-index 03a6ec5..3a398fc 100644
---- a/commit.h
-+++ b/commit.h
-@@ -113,7 +113,7 @@ extern struct commit_list *get_shallow_commits(struct object_array *heads,
- 
- int in_merge_bases(struct commit *, struct commit **, int);
- 
--extern int interactive_add(const char *path);
-+extern int interactive_add(const char **argv, int argc);
- extern void add_files_to_cache(int verbose, const char *prefix, const char **files);
- extern int rerere(void);
- 
--- 
-1.5.3.6.867.g539b6-dirty
+What I meant was that if "git add -i" (unrestricted) shows paths
+from a set A, "git add -i paths..." should show paths from a
+subset of the set A and that subset should be defined with the
+existing ls-files pathspec semantics.
+
+For example, if "(a)dd untracked" subcommand shows all untracked
+files when "add -i" was invoked without paths limitation, the
+restricted form "add -i paths..." would show only untracked paths
+that match the given set of patterns.  If "(p)atch" subcommand
+shows all modified tracked files when "add -i" was invoked
+without paths limitation, the restricted form "add -i paths..."
+would show only such modified tracked files whose names match
+the given set of patterns.
