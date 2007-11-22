@@ -1,67 +1,307 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] Teach git-add--interactive to accept a file path to patch
-Date: Wed, 21 Nov 2007 16:18:57 -0800
-Message-ID: <7vk5obb09a.fsf@gitster.siamese.dyndns.org>
-References: <1195648601-21736-1-git-send-email-win@wincent.com>
-	<1195648601-21736-2-git-send-email-win@wincent.com>
-	<1195648601-21736-3-git-send-email-win@wincent.com>
-	<20071121152118.GG24108@sigill.intra.peff.net>
-	<7vejejfi28.fsf@gitster.siamese.dyndns.org>
-	<C6E820C8-91E9-48B2-9219-377CA83163A7@wincent.com>
+Subject: Addendum to "MaintNotes"
+Date: Wed, 21 Nov 2007 16:32:55 -0800
+Message-ID: <7vhcjf9l1k.fsf@gitster.siamese.dyndns.org>
+References: <46dff0320711210511g7d9febf5k47b082cc13bb905a@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 01:19:27 2007
+Cc: "Ping Yin" <pkufranky@gmail.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 22 01:33:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iuzmv-0000Gd-R6
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 01:19:26 +0100
+	id 1Iv00q-0003va-Eo
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 01:33:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753525AbXKVATG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 19:19:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753481AbXKVATG
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 19:19:06 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:56251 "EHLO
+	id S1756057AbXKVAdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 19:33:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754575AbXKVAdF
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 19:33:05 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:60462 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753525AbXKVATF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 19:19:05 -0500
+	with ESMTP id S1755203AbXKVAdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 19:33:01 -0500
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id B023D2EF;
-	Wed, 21 Nov 2007 19:19:24 -0500 (EST)
+	by sceptre.pobox.com (Postfix) with ESMTP id 61B722EF;
+	Wed, 21 Nov 2007 19:33:22 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 35AD39859B;
-	Wed, 21 Nov 2007 19:19:21 -0500 (EST)
-In-Reply-To: <C6E820C8-91E9-48B2-9219-377CA83163A7@wincent.com> (Wincent
-	Colaiuta's message of "Wed, 21 Nov 2007 23:44:33 +0100")
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 462479833A;
+	Wed, 21 Nov 2007 19:33:19 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65722>
 
-Wincent Colaiuta <win@wincent.com> writes:
+The maintainer's git time is spent on three activities.
 
-> - Junio, do you mean to suggest with your comment that when passing
-> untracked files either directly or indirectly (ie. when passing a dir
-> containing untracked files) that they should be added (ie. invoked the
-> "add untracked" subcommand) in addition to running the "patch"
-> subcommand on the changed files?
+ - Communication (60%)
 
-What I meant was that if "git add -i" (unrestricted) shows paths
-from a set A, "git add -i paths..." should show paths from a
-subset of the set A and that subset should be defined with the
-existing ls-files pathspec semantics.
+   Mailing list discussions on general design, fielding user
+   questions, diagnosing bug reports; reviewing, commenting on,
+   suggesting alternatives to, and rejecting patches.
 
-For example, if "(a)dd untracked" subcommand shows all untracked
-files when "add -i" was invoked without paths limitation, the
-restricted form "add -i paths..." would show only untracked paths
-that match the given set of patterns.  If "(p)atch" subcommand
-shows all modified tracked files when "add -i" was invoked
-without paths limitation, the restricted form "add -i paths..."
-would show only such modified tracked files whose names match
-the given set of patterns.
+ - Integration (30%)
+
+   Applying new patches from the contributors while spotting and
+   correcting minor mistakes, shuffling the integration and
+   testing branches, pushing the results out, cutting the
+   release, and making announcements.
+
+ - Own development (10%)
+
+   Scratching my own itch and sending proposed patch series out.
+
+The policy on Integration is informally mentioned in "A Note
+from the maintainer" message, which is periodically posted to
+this mailing list after each feature release is made.
+
+The policy.
+
+ - Feature releases are numbered as vX.Y.Z and are meant to
+   contain bugfixes and enhancements in any area, including
+   functionality, performance and usability, without regression.
+
+ - Maintenance releases are numbered as vX.Y.Z.W and are meant
+   to contain only bugfixes for the corresponding vX.Y.Z feature
+   release and earlier maintenance releases vX.Y.Z.V (V < W).
+
+ - 'master' branch is used to prepare for the next feature
+   release. In other words, at some point, the tip of 'master'
+   branch is tagged with vX.Y.Z.
+
+ - 'maint' branch is used to prepare for the next maintenance
+   release.  After the feature release vX.Y.Z is made, the tip
+   of 'maint' branch is set to that release, and bugfixes will
+   accumulate on the branch, and at some point, the tip of the
+   branch is tagged with vX.Y.Z.1, vX.Y.Z.2, and so on.
+
+ - 'next' branch is used to publish changes (both enhancements
+   and fixes) that (1) have worthwhile goal, (2) are in a fairly
+   good shape suitable for everyday use, (3) but have not yet
+   demonstrated to be regression free.  New changes are tested
+   in 'next' before merged to 'master'.
+
+ - 'pu' branch is used to publish other proposed changes that do
+   not yet pass the criteria set for 'next'.
+
+ - The tips of 'master', 'maint' and 'next' branches will always
+   fast forward, to allow people to build their own
+   customization on top of them.
+
+ - Usually 'master' contains all of 'maint', 'next' contains all
+   of 'master' and 'pu' contains all of 'next'.
+
+ - The tip of 'master' is meant to be more stable than any
+   tagged releases, and the users are encouraged to follow it.
+
+ - The 'next' branch is where new action takes place, and the
+   users are encouraged to test it so that regressions and bugs
+   are found before new topics are merged to 'master'.
+
+
+A typical git day for the maintainer implements the above policy
+by doing the following:
+
+ - Scan mailing list and #git channel log.  Respond with review
+   comments, suggestions etc.  Kibitz.  Collect potentially
+   usable patches from the mailing list.  Patches about a single
+   topic go to one mailbox (I read my mail in Gnus, and type
+   \C-o to save/append messages in files in mbox format).
+
+ - Review the patches in the saved mailboxes.  Edit proposed log
+   message for typofixes and clarifications, and add Acks
+   collected from the list.  Edit patch to incorporate "Oops,
+   that should have been like this" fixes from the discussion.
+
+ - Classify the collected patches and handle 'master' and
+   'maint' updates:
+
+   - Obviously correct fixes that pertain to the tip of 'maint'
+     are directly applied to 'maint'.
+
+   - Obviously correct fixes that pertain to the tip of 'master'
+     are directly applied to 'master'.
+
+   This step is done with "git am".
+
+     $ git checkout maint    ;# or "git checkout maint"
+     $ git am -3 -s mailbox
+     $ make test
+
+ - Merge downwards (maint->master):
+
+     $ git checkout master
+     $ git merge maint
+     $ make test
+
+ - Review the last issue of "What's cooking" message, review the
+   topics scheduled for merging upwards (topic->master and
+   topic->maint), and merge.
+
+     $ git checkout master    ;# or "git checkout maint"
+     $ git merge ai/topic     ;# or "git merge ai/maint-topic"
+     $ git log -p ORIG_HEAD.. ;# final review
+     $ git diff ORIG_HEAD..   ;# final review
+     $ make test              ;# final review
+     $ git branch -d ai/topic ;# or "git branch -d ai/maint-topic"
+
+ - Merge downwards (maint->master) if needed:
+
+     $ git checkout master
+     $ git merge maint
+     $ make test
+
+ - Merge downwards (master->next) if needed:
+
+     $ git checkout next
+     $ git merge master
+     $ make test
+
+ - Handle the remaining patches:
+
+   - Anything unobvious that is applicable to 'master' (in other
+     words, does not depend on anything that is still in 'next'
+     and not in 'master') is applied to a new topic branch that
+     is forked from the tip of 'master'.  This includes both
+     enhancements and unobvious fixes to 'master'.  A topic
+     branch is named as ai/topic where "ai" is typically
+     author's initial and "topic" is a descriptive name of the
+     topic (in other words, "what's the series is about").
+
+   - An unobvious fix meant for 'maint' is applied to a new
+     topic branch that is forked from the tip of 'maint'.  The
+     topic is named as ai/maint-topic.
+
+   - Changes that pertain to an existing topic are applied to
+     the branch, but:
+
+     - obviously correct ones are applied first;
+
+     - questionable ones are discarded or applied to near the tip;
+
+   - Replacement patches to an existing topic are accepted only
+     for commits not in 'next'.
+
+   The above except the "replacement" are all done with:
+
+     $ git am -3 -s mailbox
+
+   while patch replacement is often done by:
+
+     $ git format-patch ai/topic~$n..ai/topic ;# export existing
+
+   then replace some parts with the new patch, and reapplying:
+
+     $ git reset --hard ai/topic~$n
+     $ git am -3 -s 000*.txt
+
+   The full test suite is always run for 'maint' and 'master'
+   after patch application; for topic branches the tests are run
+   as time permits.
+
+ - Update "What's cooking" message to review the updates to
+   existing topics, newly added topics and graduated topics.
+
+   This step is helped with Meta/UWC script.
+
+ - Merge topics to 'next'.  For each branch whose tip is not
+   merged to 'next', one of three things can happen:
+
+   - The commits are all next-worthy; merge the topic to next:
+
+     $ git checkout next
+     $ git merge ai/topic     ;# or "git merge ai/maint-topic"
+     $ make test
+
+   - The new parts are of mixed quality, but earlier ones are
+     next-worthy; merge the early parts to next:
+ 
+     $ git checkout next
+     $ git merge ai/topic~2   ;# the tip two are dubious
+     $ make test
+
+   - Nothing is next-worthy; do not do anything.
+
+ - Rebase topics that do not have any commit in next yet.  This
+   step is optional but sometimes is worth doing when an old
+   series that is not in next can take advantage of low-level
+   framework change that is merged to 'master' already.
+
+     $ git rebase master ai/topic
+
+   This step is helped with Meta/git-topic.perl script to
+   identify which topic is rebaseable.  There also is a
+   pre-rebase hook to make sure that topics that are already in
+   'next' are not rebased beyond the merged commit.
+
+ - Rebuild "pu" to merge the tips of topics not in 'next'.
+
+     $ git checkout pu
+     $ git reset --hard next
+     $ git merge ai/topic     ;# repeat for all remaining topics
+     $ make test
+
+   This step is helped with Meta/PU script
+
+ - Push four integration branches to a private repository at
+   k.org and run "make test" on all of them.
+
+ - Push four integration branches to /pub/scm/git/git.git at
+   k.org.  This triggers its post-update hook which:
+
+    (1) runs "git pull" in $HOME/git-doc/ repository to pull
+        'master' just pushed out;
+
+    (2) runs "make doc" in $HOME/git-doc/, install the generated
+        documentation in staging areas, which are separate
+        repositories that have html and man branches checked
+        out.
+
+    (3) runs "git commit" in the staging areas, and run "git
+        push" back to /pub/scm/git/git.git/ to update the html
+        and man branches.
+
+    (4) installs generated documentation to /pub/software/scm/git/docs/
+        to be viewed from http://www.kernel.org/
+
+ - Fetch html and man branches back from k.org, and push four
+   integration branches and the two documentation branches to
+   repo.or.cz
+
+
+Some observations to be made.
+
+ * Each topic is tested individually, and also together with
+   other topics cooking in 'next'.  Until it matures, none part
+   of it is merged to 'master'.
+
+ * A topic already in 'next' can get fixes while still in
+   'next'.  Such a topic will have many merges to 'next' (in
+   other words, "git log --first-parent next" will show many
+   "Merge ai/topic to next" for the same topic.
+
+ * An unobvious fix for 'maint' is cooked in 'next' and then
+   merged to 'master' to make extra sure it is Ok and then
+   merged to 'maint'.
+
+ * Even when 'next' becomes empty (in other words, all topics
+   prove stable and are merged to 'master' and "git diff master
+   next" shows empty), it has tons of merge commits that will
+   never be in 'master'.
+
+ * In principle, "git log --first-parent master..next" should
+   show nothing but merges (in practice, there are fixup commits
+   and reverts that are not merges).
+
+ * Commits near the tip of a topic branch that are not in 'next'
+   are fair game to be discarded, replaced or rewritten.
+   Commits already merged to 'next' will not be.
+
+ * Being in the 'next' branch is not a guarantee for a topic to
+   be included in the next feature release.  Being in the
+   'master' branch typically is.
