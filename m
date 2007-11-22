@@ -1,77 +1,61 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] builtin-commit: Include the diff in the commit message
- when verbose.
-Date: Thu, 22 Nov 2007 10:52:04 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711221049350.27959@racer.site>
-References: <1195700089-8326-1-git-send-email-krh@redhat.com>
+Subject: Re: Temporary directories getting errantly added into trees
+Date: Thu, 22 Nov 2007 10:55:00 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711221052280.27959@racer.site>
+References: <4744FCD9.7020102@vilain.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811741-689189565-1195728724=:27959"
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 11:52:32 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Thu Nov 22 11:55:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv9fY-0006jn-1G
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 11:52:28 +0100
+	id 1Iv9iP-0007eN-CW
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 11:55:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751011AbXKVKwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 05:52:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751506AbXKVKwJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 05:52:09 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55237 "HELO mail.gmx.net"
+	id S1752081AbXKVKzH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 05:55:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbXKVKzH
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 05:55:07 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41441 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750696AbXKVKwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 05:52:08 -0500
-Received: (qmail invoked by alias); 22 Nov 2007 10:52:06 -0000
+	id S1751604AbXKVKzE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 05:55:04 -0500
+Received: (qmail invoked by alias); 22 Nov 2007 10:55:02 -0000
 Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp045) with SMTP; 22 Nov 2007 11:52:06 +0100
+  by mail.gmx.net (mp047) with SMTP; 22 Nov 2007 11:55:02 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18RVpxhrbcRiixVarQbLcpdCfA/keFWgh37z49uj1
-	dopiMJEv8DDotx
+X-Provags-ID: V01U2FsdGVkX1+DgPtmHXSD4EsCsxi0XZcWEP6PlSE0/qK4jGPmF0
+	P4aKwBQcrU/l8e
 X-X-Sender: gene099@racer.site
-In-Reply-To: <1195700089-8326-1-git-send-email-krh@redhat.com>
+In-Reply-To: <4744FCD9.7020102@vilain.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65781>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
----1463811741-689189565-1195728724=:27959
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65782>
 
 Hi,
 
-On Wed, 21 Nov 2007, Kristian Høgsberg wrote:
+On Thu, 22 Nov 2007, Sam Vilain wrote:
 
-> @@ -758,6 +758,12 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  		rollback_index_files();
->  		exit(1);
->  	}
-> +
-> +	/* Truncate the message just before the diff, if any. */
-> +	p = strstr(sb.buf, "\ndiff --git a/");
-> +	if (p != NULL)
-> +		strbuf_setlen(&sb, p - sb.buf);
-> +
+> I just got through a rather nasty debugging session with git-rebase, 
+> which relies on a .dotest directory.  Turns out that .dotest was 
+> accidentally added to the tree in the history of the commit that was 
+> being rebased onto.
 
-Is this related to the change in wt_status?  If so, wouldn't we want to 
-suppress the diff, instead of generating it, and then killing it later?
+While we're at it, could we change the name so that it is .git/rebase, and 
+not .dotest or .git/.dotest-merge?
 
-Besides, you'd want to leave the \n there: strbuf_setlen(&sb, p + 1 - 
-sb.buf);
+Yes, I know, existing tools could rely on the location.  But then, I do 
+not think that tools should be allowed to be _that_ married to particular 
+implementations.  And indeed, I see no reason why a tool should access 
+.dotest, except for accessing .dotest/patch, and then it will be very 
+obvious where it fails.
 
-> +	/* Sigh, the entire diff machinery is hardcoded to output to
-> +	 * stdout.  Do the dup-dance...*/
-
-I wonder how much effort it would be to change that.  Not that it would 
-help too much, since we want the output in a strbuf anyway.
+But I don't know about QGit, StGit, etc...
 
 Ciao,
 Dscho
----1463811741-689189565-1195728724=:27959--
