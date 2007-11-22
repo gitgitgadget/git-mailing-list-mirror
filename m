@@ -1,93 +1,100 @@
-From: Dan Zwell <dzwell@zwell.net>
-Subject: [PATCH 0/5] Colors for git-add--interactive
-Date: Thu, 22 Nov 2007 04:54:37 -0600
-Message-ID: <20071122045437.46ee4638@paradox.zwell.net>
-References: <47112491.8070309@gmail.com>
-	<20071015034338.GA4844@coredump.intra.peff.net>
-	<20071016194709.3c1cb3a8@danzwell.com>
-	<20071017015152.GN13801@spearce.org>
-	<20071022164048.71a3dceb@danzwell.com>
-	<20071023042702.GB28312@coredump.intra.peff.net>
-	<20071023035221.66ea537f@danzwell.com>
-	<20071102224100.71665182@paradox.zwell.net>
-	<20071104045735.GA12359@segfault.peff.net>
-	<7v640ivagv.fsf@gitster.siamese.dyndns.org>
-	<20071104054305.GA13929@sigill.intra.peff.net>
-	<20071110180109.34febc3f@paradox.zwell.net>
+From: jhud7196@artax.karlin.mff.cuni.cz
+Subject: Re: Git in a Nutshell guide
+Date: Thu, 22 Nov 2007 17:37:14 +0100 (CET)
+Message-ID: <60224.194.138.12.144.1195749434.squirrel@artax.karlin.mff.cuni.cz>
+References: <1195477504.8093.15.camel@localhost> <fhvs95$5qk$1@ger.gmane.org>
+    <20071121194507.GA3569@efreet.light.src>
+    <200711212232.33791.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan del Strother <maillist@steelskies.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Dan Zwell <dzwell@zwell.net>
-X-From: git-owner@vger.kernel.org Thu Nov 22 17:26:47 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 17:56:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvEt0-000592-Ox
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 17:26:43 +0100
+	id 1IvFM2-0000oW-KH
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 17:56:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751463AbXKVQ0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 11:26:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751702AbXKVQ0X
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 11:26:23 -0500
-Received: from gateway04.websitewelcome.com ([69.93.154.2]:50322 "HELO
-	gateway04.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751053AbXKVQ0W (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2007 11:26:22 -0500
-X-Greylist: delayed 19877 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Nov 2007 11:26:21 EST
-Received: (qmail 12685 invoked from network); 22 Nov 2007 10:55:26 -0000
-Received: from gator290.hostgator.com (74.53.26.226)
-  by gateway04.websitewelcome.com with SMTP; 22 Nov 2007 10:55:26 -0000
-Received: from [143.44.70.185] (port=40107 helo=paradox.zwell.net)
-	by gator290.hostgator.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <dzwell@zwell.net>)
-	id 1Iv9hx-0006fx-UB; Thu, 22 Nov 2007 04:54:58 -0600
-In-Reply-To: <20071110180109.34febc3f@paradox.zwell.net>
-X-Mailer: Claws Mail 3.0.2 (GTK+ 2.12.1; x86_64-pc-linux-gnu)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator290.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - zwell.net
+	id S1751687AbXKVQ4Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2007 11:56:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751624AbXKVQ4X
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 11:56:23 -0500
+Received: from artax.karlin.mff.cuni.cz ([195.113.31.125]:35485 "EHLO
+	artax.karlin.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750984AbXKVQ4X (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 11:56:23 -0500
+X-Greylist: delayed 1147 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Nov 2007 11:56:22 EST
+Received: from artax.karlin.mff.cuni.cz (localhost [127.0.0.1])
+	by artax.karlin.mff.cuni.cz (Postfix) with ESMTP id 95E9A140186;
+	Thu, 22 Nov 2007 17:37:14 +0100 (CET)
+Received: from 194.138.12.144
+        (SquirrelMail authenticated user jhud7196)
+        by artax.karlin.mff.cuni.cz with HTTP;
+        Thu, 22 Nov 2007 17:37:14 +0100 (CET)
+In-Reply-To: <200711212232.33791.jnareb@gmail.com>
+User-Agent: SquirrelMail/1.4.9a
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65831>
 
-There are several changes since the last iteration of the
-"colors for git-add--interactive" patch set:
+> Dnia =B6roda 21. listopada 2007 20:45, Jan Hudec napisa=B3:
+>> On Wed, Nov 21, 2007 at 00:57:28 +0100, Jakub Narebski wrote:
+>
+>>>  2. Git has some historical cruft, including the fact that it began=
+ as
+>>>     series of low level tools (plumbing) and became proper SCM
+>>> (acquired
+>>>     proper porcelain) later, what can be even now seen in
+>>> documentation...
+>
+> What I meant here that some of important documentation can be only
+> found in plumbing commands man pages.
 
-- Added parentheses around arguments to all user-defined functions.
-- Reading the configuration is done in a more organized, robust, and
-cleaner way.
-- Fixed bug where color keys could inappropriately match ("colored"
-should not match "red", for example).
-- Users can now set a particular color key to the empty string, and
-this is equivalent to setting it to "normal". (This is the behavior
-exhibited by git-diff.)
-- Color configuration information is case insensitive.
-- Added warnings when color configuration keys contain invalid tokens.
-- Refactored a few variables for stylistic reasons.
+Yes, that's true. And does indeed make /writing/ the book harder, becau=
+se
+the information is harder to compile. Fortunately it should not make it
+so much harder to read.
 
+>>>  3. Explanation of some features (like object model) would be much
+>>> easier
+>>>     with some graphics (diagrams etc.), but chosen documentation
+>>> format,
+>>>     AsciiDoc, doesn't make it easy...
+>>
+>> I dare to disagree here. Asciidoc supports generating image tags for
+>> respective output formats and it really does not look hard. We could
+>> have
+>> PNGs and if we wanted higher press quality even SVG or EPS and conve=
+rt
+>> them
+>> to PNGs for the HTML version (and use EPS for latex output).
+>
+> The problem is that 1) language used to generate images must be easy
+> to understand and readable in text form (so sources are enough to
+> understand); 2) one of the main formats is manpage (although that wou=
+ld
+> not matter for "Git Guide" / "The Git Book").
 
-Issues:
+Ad 1), I don't think we have to generate the images. For most images
+it is easier to just draw them in a vector image editor.
 
-- Does not always properly color the output of git-diff --cc, because
-  the diff-coloring regular expressions do not match every diff line.
-  I'm not sure that git-add--interactive normally gets used in the same
-situations as git-diff --cc. They don't seem to work well, together,
-from the little that I tested (without the color patches applied).
-There are a few solutions, but I haven't thought of one that's both
-reliable and clean. My impression is that diff --cc is called any time
-that HEAD has two parents. Is this correct?
+As you say, 2) does not matter for "Git Guide"/"The Git Book". The man
+pages will have to do without graphics or with Ascii-art replacements.
 
-Dan
+> Should we choose PIC? Or perhaps DOT? I can write little MetaPost, bu=
+t
+> I don't think that would be good format for git diagrams, even if it
+> can be converted to PDF, SVG and PNG.
+
+I'd use DOT for things that can be done with it (ie. visualizing
+histories) and just hand-draw the rest in SVG (prefered) or PNG
+(for illustrations).
+
+--
+                                               Jan Hudec <bulb@ucw.cz>
