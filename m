@@ -1,69 +1,76 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH] Added test case for stg refresh
-Date: Thu, 22 Nov 2007 08:15:57 +0000
-Message-ID: <b0943d9e0711220015r64d1a5c2y25dfa44610864c99@mail.gmail.com>
-References: <87tznfvqb4.fsf@lysator.liu.se> <87oddnvpzf.fsf@virtutech.se>
-	 <20071121231553.GA19422@diana.vm.bytemark.co.uk>
-	 <b0943d9e0711211531v2f7b9c0bl99033c0bd58971c7@mail.gmail.com>
-	 <871waivhgq.fsf@virtutech.se>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Git Screencast ?
+Date: Thu, 22 Nov 2007 09:23:09 +0100
+Message-ID: <47453C6D.1080403@op5.se>
+References: <fi1a9f$30q$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Thu Nov 22 09:16:22 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael Donaghy <mike@mikedonaghy.org>
+X-From: git-owner@vger.kernel.org Thu Nov 22 09:23:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv7ER-0002Zv-1a
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 09:16:19 +0100
+	id 1Iv7LW-0004a3-05
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 09:23:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750920AbXKVIP7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2007 03:15:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751551AbXKVIP7
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 03:15:59 -0500
-Received: from rv-out-0910.google.com ([209.85.198.185]:7806 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750841AbXKVIP6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2007 03:15:58 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2312399rvb
-        for <git@vger.kernel.org>; Thu, 22 Nov 2007 00:15:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=+oxj0r12LIC9ec8qJFPk2RZ7aBwWPROJgyIq1s/r5/w=;
-        b=CQ+quBj8TEnWekPxNzmUnB25cN+1BEmkbK79nFv0qrnJ/MhPs35yBrfWV8kQzQiWa6yGEJ6sujvDwZMne9AB5x2obPa8eFEBgw9VbKNiXVolGTYfvn5wv0gxEg+hQBN3/Lw/mmFeVAKB8BpxGUJvOpHe5HQbnhJiZ9HbiZbYnts=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Nb0X/ppWm1cbdGr3tw7UJDsl9/eoMMcp3lYVuxAApQIpXD+4CsbwosQXe+ThmVzpOxgYvNnmVk6E30FA8FS+SwB9hw3Lqc51l1X88u+TqT3WQSbqAtVzQCoTcJ4RNKAL6iO01rsAA0yVSsNnI7+Gm9cqRGcrJIp49lVOuvAQuj8=
-Received: by 10.140.251.1 with SMTP id y1mr3798999rvh.1195719357888;
-        Thu, 22 Nov 2007 00:15:57 -0800 (PST)
-Received: by 10.141.170.11 with HTTP; Thu, 22 Nov 2007 00:15:57 -0800 (PST)
-In-Reply-To: <871waivhgq.fsf@virtutech.se>
-Content-Disposition: inline
+	id S1751182AbXKVIXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 03:23:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751195AbXKVIXS
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 03:23:18 -0500
+Received: from mail.op5.se ([193.201.96.20]:34212 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750971AbXKVIXS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 03:23:18 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id EBB901F08050;
+	Thu, 22 Nov 2007 09:23:16 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id uua37R0r7Cvv; Thu, 22 Nov 2007 09:23:15 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id B5E3F1F0803B;
+	Thu, 22 Nov 2007 09:23:14 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <fi1a9f$30q$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65750>
 
-On 22/11/2007, David K=E5gedal <davidk@lysator.liu.se> wrote:
-> "Catalin Marinas" <catalin.marinas@gmail.com> writes:
-> > I noticed the weirdness few days ago and fixed it in
-> > e8813959aa3a7c41ffef61d06068b10519bd4830 (though no test caught it)=
-=2E
-> > Do you still see problems after this commit?
->
-> The problem I see is that there still is no test case. That is bad an=
-d
-> means that it could break again tomorrow without anyone noticing.
->
-> Luckily, I just wrote one for you :-)
+Michael Donaghy wrote:
+> I am a new user of git and SCMs in general , I have learned a lot from 
+> the docs , irc and just using it , but there are just some concepts that 
+> hare hard to grasp , I am a very visual persion (probably like a lot of 
+> you :) ) , is there a screencast of git somewhere (for free) that can 
+> demonstrate some of the advanced features of git...
+> (Also...I have seen both Randal (Schwartz) and Linus' (you better know 
+> his last name) presentations at google on git , in which they explain 
+> the ideas behind git more than the actual usage,
+> 
 
-Thanks :-). We are still far from testing all the possible
-combinations. Is there a way to do code coverage in Python?
+The thing that helped me and my co-workers the most was running through
+the steps of the tutorial, but stopping every time something wasn't
+absolutely crystal clear and doing gitk or qgit (I prefer qgit, since
+it seems to display things more consistently and also loads faster).
 
---=20
-Catalin
+That primarily helped us get branches under control. We came from a
+CVS world and never had any branches, as none of us had time or energy
+to figure out how to merge them back together using those crippled scm's.
+
+I noticed Johannes Gilger already sent you the link to git-for-scientists
+thing which is also a really good aid, especially when you've read the
+tutorial and some of the less tech-oriented docs.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
