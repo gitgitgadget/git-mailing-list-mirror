@@ -1,82 +1,69 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [StGit PATCH] Added test case for stg refresh
-Date: Thu, 22 Nov 2007 09:38:26 +0100
-Message-ID: <87pry2u131.fsf@lysator.liu.se>
-References: <87tznfvqb4.fsf@lysator.liu.se> <87oddnvpzf.fsf@virtutech.se>
-	<20071121231553.GA19422@diana.vm.bytemark.co.uk>
-	<b0943d9e0711211531v2f7b9c0bl99033c0bd58971c7@mail.gmail.com>
-	<871waivhgq.fsf@virtutech.se>
-	<b0943d9e0711220015r64d1a5c2y25dfa44610864c99@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Authenticate only once in git-send-email
+Date: Thu, 22 Nov 2007 00:48:53 -0800
+Message-ID: <7vwssa7jii.fsf@gitster.siamese.dyndns.org>
+References: <1195648505-21653-1-git-send-email-win@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Karl =?utf-8?Q?Hasselstr=C3=B6?= =?utf-8?Q?m?= 
-	<kha@treskal.com>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 09:38:39 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 09:49:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv7a3-0000bn-0w
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 09:38:39 +0100
+	id 1Iv7kL-0003ak-UW
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 09:49:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750959AbXKVIiV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2007 03:38:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751214AbXKVIiV
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 03:38:21 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:44926 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750953AbXKVIiU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2007 03:38:20 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 4BAD7200A236;
-	Thu, 22 Nov 2007 09:38:18 +0100 (CET)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 21548-01-68; Thu, 22 Nov 2007 09:38:18 +0100 (CET)
-Received: from krank (c83-253-242-75.bredband.comhem.se [83.253.242.75])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S1751675AbXKVIs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 03:48:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751670AbXKVIs7
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 03:48:59 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:36491 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751639AbXKVIs6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 03:48:58 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 558472EF;
+	Thu, 22 Nov 2007 03:49:19 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 0297A200A230;
-	Thu, 22 Nov 2007 09:38:18 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id 221D07B406A; Thu, 22 Nov 2007 09:38:26 +0100 (CET)
-In-Reply-To: <b0943d9e0711220015r64d1a5c2y25dfa44610864c99@mail.gmail.com> (Catalin Marinas's message of "Thu\, 22 Nov 2007 08\:15\:57 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id D1E2F95534;
+	Thu, 22 Nov 2007 03:49:16 -0500 (EST)
+In-Reply-To: <1195648505-21653-1-git-send-email-win@wincent.com> (Wincent
+	Colaiuta's message of "Wed, 21 Nov 2007 13:35:05 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65757>
 
-"Catalin Marinas" <catalin.marinas@gmail.com> writes:
+Wincent Colaiuta <win@wincent.com> writes:
 
-> On 22/11/2007, David K=C3=A5gedal <davidk@lysator.liu.se> wrote:
->> "Catalin Marinas" <catalin.marinas@gmail.com> writes:
->> > I noticed the weirdness few days ago and fixed it in
->> > e8813959aa3a7c41ffef61d06068b10519bd4830 (though no test caught it=
-).
->> > Do you still see problems after this commit?
->>
->> The problem I see is that there still is no test case. That is bad a=
-nd
->> means that it could break again tomorrow without anyone noticing.
->>
->> Luckily, I just wrote one for you :-)
->
-> Thanks :-). We are still far from testing all the possible
-> combinations. Is there a way to do code coverage in Python?
+> This commit teaches git-send-email to authenticate once and only once at
+> the beginning of the series.
 
-Being far from testing everything doesn't mean that you can't start
-adding tests for the things you know have a tendency to break. And for
-the things that you are going to refactor. And as regression tests
-when you fix a bug. A test suite can be built up by adding small parts
-at a time.
+Ok.  What does $smtp->auth() return?  Presumably a true value,
+but I do not find it the best coding style to hide a call made
+primarily for its effects not for its return value behind a
+conditional assignment to a boolean.  Eek.
 
-But no, I don't know of any useful code coverage tool for python, but
-I haven't really looked.
+>  		if ((defined $smtp_authuser) && (defined $smtp_authpass)) {
+> -			$smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp->message;
+> +			$auth ||= $smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp->message;
+>  		}
 
---=20
-David K=C3=A5gedal
+Perhaps something along the lines of...
+
+>  		if ((defined $smtp_authuser) && (defined $smtp_authpass)) {
+> 			$smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp->message;
+> +			undef $smtp_authpass;
+>  		}
+
+... or using a separate boolean variable "my $auth_happened"
+may be more appropriate.
+
+But I am just saying this; I do not care _too_ deeply about it.
+Will apply as-is.
+ 
