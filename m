@@ -1,69 +1,71 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 2/3 v3] git-svn info: implement info command
-Date: Wed, 21 Nov 2007 20:17:53 -0800
-Message-ID: <20071122041753.GC30134@soma>
-References: <20071122014038.GA25341@soma> <900537.19467.qm@web52411.mail.re2.yahoo.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "David D. Kilzer" <ddkilzer@kilzer.net>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 05:18:14 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH 3/3] Replace setenv(GIT_DIR_ENVIRONMENT, ...) with set_git_dir()
+Date: Thu, 22 Nov 2007 07:13:50 +0100
+Message-ID: <C50619A0-4A67-4968-8431-D7A685F723B7@zib.de>
+References: <11956768414090-git-send-email-prohaska@zib.de> <11956768412804-git-send-email-prohaska@zib.de> <11956768413887-git-send-email-prohaska@zib.de> <11956768412755-git-send-email-prohaska@zib.de> <Pine.LNX.4.64.0711220121560.27959@racer.site> <7v63zv9fel.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 07:13:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv3W0-0003DW-V6
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 05:18:13 +0100
+	id 1Iv5JA-0000Sw-No
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 07:13:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753063AbXKVERz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 23:17:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752885AbXKVERz
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 23:17:55 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:37137 "EHLO hand.yhbt.net"
+	id S1751342AbXKVGMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 01:12:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbXKVGMn
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 01:12:43 -0500
+Received: from mailer.zib.de ([130.73.108.11]:51045 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752718AbXKVERy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 23:17:54 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 065677DC0FE;
-	Wed, 21 Nov 2007 20:17:53 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <900537.19467.qm@web52411.mail.re2.yahoo.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751304AbXKVGMn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 01:12:43 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAM6CbjW025324;
+	Thu, 22 Nov 2007 07:12:38 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db1bcfd.pool.einsundeins.de [77.177.188.253])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAM6CaJX016383
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 22 Nov 2007 07:12:36 +0100 (MET)
+In-Reply-To: <7v63zv9fel.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65742>
 
-"David D. Kilzer" <ddkilzer@kilzer.net> wrote:
-> Eric Wong <normalperson@yhbt.net> wrote:
-> > When running from a top-level directory with no arguments, the first
-> > line of git-ls-tree was being read.  This allowed the test case to pass
-> > because ls-tree sorts the output and 'directory' just happened to
-> > be up top; so we were getting the 040000 mode from the 'directory'
-> > tree and not the top-level tree.
-> > 
-> > The below test should fix it for the trivial case I have.
-> 
-> Acked-by: David D. Kilzer <ddkilzer@kilzer.net>
-> 
-> Looks good!  Thanks!
 
-Ok, I've folded that into your [2/3] and pushed everything (and an
-earlier fix) out to
+On Nov 22, 2007, at 3:34 AM, Junio C Hamano wrote:
 
-	git://git.bogomips.org/git-svn.git
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>> Hi,
+>>
+>> On Wed, 21 Nov 2007, Steffen Prohaska wrote:
+>>
+>>> We have a function set_git_dir().  So let's use it, instead of  
+>>> setting
+>>> the evironment directly.
+>>
+>> Does this not have a fundamental issue?  When you call other git  
+>> programs
+>> with run_command(), you _need_ GIT_DIR to be set, no?
+>
+> It is much worse.  set_git_dir() does not just setenv() but does
+> setup_git_env() as well.
 
-David D. Kilzer (3):
-      git-svn: extract reusable code into utility functions
-      git-svn info: implement info command
-      git-svn: info --url [path]
+What do your comments mean?
 
-Eric Wong (2):
-      t9106: fix a race condition that caused svn to miss modifications
-      git-svn: allow `info' command to work offline
+My understanding is that set_git_dir() sets the environment and
+then calls setup_git_env() to cache all pointers.  This call
+updates dangling pointer if they have been cached earlier.
 
-Junio, please pull, thanks.
+But maybe there is a hidden secret that I don't see.
 
--- 
-Eric Wong
+	Steffen
