@@ -1,100 +1,72 @@
 From: jhud7196@artax.karlin.mff.cuni.cz
 Subject: Re: Git in a Nutshell guide
-Date: Thu, 22 Nov 2007 17:37:14 +0100 (CET)
-Message-ID: <60224.194.138.12.144.1195749434.squirrel@artax.karlin.mff.cuni.cz>
-References: <1195477504.8093.15.camel@localhost> <fhvs95$5qk$1@ger.gmane.org>
-    <20071121194507.GA3569@efreet.light.src>
-    <200711212232.33791.jnareb@gmail.com>
+Date: Thu, 22 Nov 2007 17:57:10 +0100 (CET)
+Message-ID: <47297.194.138.12.144.1195750630.squirrel@artax.karlin.mff.cuni.cz>
+References: <1195477504.8093.15.camel@localhost> <fhsc7b$k4g$1@ger.gmane.org>
+    <1195737303.19260.27.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 17:56:44 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "Jonas Juselius" <jonas@iki.fi>
+X-From: git-owner@vger.kernel.org Thu Nov 22 17:57:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvFM2-0000oW-KH
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 17:56:43 +0100
+	id 1IvFMv-00017v-Cb
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 17:57:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751687AbXKVQ4Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2007 11:56:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751624AbXKVQ4X
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 11:56:23 -0500
-Received: from artax.karlin.mff.cuni.cz ([195.113.31.125]:35485 "EHLO
+	id S1751747AbXKVQ5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 11:57:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751624AbXKVQ5T
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 11:57:19 -0500
+Received: from artax.karlin.mff.cuni.cz ([195.113.31.125]:45287 "EHLO
 	artax.karlin.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750984AbXKVQ4X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 11:56:23 -0500
-X-Greylist: delayed 1147 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Nov 2007 11:56:22 EST
+	with ESMTP id S1751409AbXKVQ5T (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 11:57:19 -0500
 Received: from artax.karlin.mff.cuni.cz (localhost [127.0.0.1])
-	by artax.karlin.mff.cuni.cz (Postfix) with ESMTP id 95E9A140186;
-	Thu, 22 Nov 2007 17:37:14 +0100 (CET)
+	by artax.karlin.mff.cuni.cz (Postfix) with ESMTP id 3EF1798052;
+	Thu, 22 Nov 2007 17:57:10 +0100 (CET)
 Received: from 194.138.12.144
         (SquirrelMail authenticated user jhud7196)
         by artax.karlin.mff.cuni.cz with HTTP;
-        Thu, 22 Nov 2007 17:37:14 +0100 (CET)
-In-Reply-To: <200711212232.33791.jnareb@gmail.com>
+        Thu, 22 Nov 2007 17:57:10 +0100 (CET)
+In-Reply-To: <1195737303.19260.27.camel@localhost>
 User-Agent: SquirrelMail/1.4.9a
 X-Priority: 3 (Normal)
 Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65832>
 
-> Dnia =B6roda 21. listopada 2007 20:45, Jan Hudec napisa=B3:
->> On Wed, Nov 21, 2007 at 00:57:28 +0100, Jakub Narebski wrote:
+> I'm planning to write a section in the "Nutshell guide" on rewriting
+> history and rebasing. I have a question related to rewriting history. As
+> usual, I'll assume that the part of the history I'm mucking with has not
+> been pushed or pulled by anyone.
+> Suppose I have been working on some topic branch for a while and been
+> overly trigger happy, i.e. I have produced a ridiculous number of
+> commits along the way. At some point when I'm done I want to publish my
+> changes, but doing so would create an insanely obese history full of
+> near nonsense commits. What I want to do is to slim down the commit log
+> into pieces that actually makes sense. What is the preferred (or best,
+> most convenient) way of doing this? The way I have done this previously
+> is essentially:
 >
->>>  2. Git has some historical cruft, including the fact that it began=
- as
->>>     series of low level tools (plumbing) and became proper SCM
->>> (acquired
->>>     proper porcelain) later, what can be even now seen in
->>> documentation...
+> 1.  git branch -m mytopic tmp_mytopic  # rename
+> 2.  git branch mytopci tmp_mytpoic~42  # go back in history
+> Loop:
+> 3.1 git log; git diff; git annotate...
+> 3.2 git diff tmp_mytopic~42..tmp_mytopic~33 | git-apply
+> 3.3 git commit -m "sane commit message" -a
+> 4.  git branch -d tmp_mytopic
 >
-> What I meant here that some of important documentation can be only
-> found in plumbing commands man pages.
+> If I need to reorder commits I can first use git-rebase -i to get
+> everything streamlined. There must be a better way of doing this, right?
 
-Yes, that's true. And does indeed make /writing/ the book harder, becau=
-se
-the information is harder to compile. Fortunately it should not make it
-so much harder to read.
-
->>>  3. Explanation of some features (like object model) would be much
->>> easier
->>>     with some graphics (diagrams etc.), but chosen documentation
->>> format,
->>>     AsciiDoc, doesn't make it easy...
->>
->> I dare to disagree here. Asciidoc supports generating image tags for
->> respective output formats and it really does not look hard. We could
->> have
->> PNGs and if we wanted higher press quality even SVG or EPS and conve=
-rt
->> them
->> to PNGs for the HTML version (and use EPS for latex output).
->
-> The problem is that 1) language used to generate images must be easy
-> to understand and readable in text form (so sources are enough to
-> understand); 2) one of the main formats is manpage (although that wou=
-ld
-> not matter for "Git Guide" / "The Git Book").
-
-Ad 1), I don't think we have to generate the images. For most images
-it is easier to just draw them in a vector image editor.
-
-As you say, 2) does not matter for "Git Guide"/"The Git Book". The man
-pages will have to do without graphics or with Ascii-art replacements.
-
-> Should we choose PIC? Or perhaps DOT? I can write little MetaPost, bu=
-t
-> I don't think that would be good format for git diagrams, even if it
-> can be converted to PDF, SVG and PNG.
-
-I'd use DOT for things that can be done with it (ie. visualizing
-histories) and just hand-draw the rest in SVG (prefered) or PNG
-(for illustrations).
+IIRC rebase -i is also capable of merging the commits. So you can use it
+for the whole thing.
 
 --
-                                               Jan Hudec <bulb@ucw.cz>
+                                              Jan Hudec <bulb@ucw.cz>
