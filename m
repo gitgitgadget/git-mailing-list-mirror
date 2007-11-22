@@ -1,71 +1,101 @@
 From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 3/3] Replace setenv(GIT_DIR_ENVIRONMENT, ...) with set_git_dir()
-Date: Thu, 22 Nov 2007 07:13:50 +0100
-Message-ID: <C50619A0-4A67-4968-8431-D7A685F723B7@zib.de>
-References: <11956768414090-git-send-email-prohaska@zib.de> <11956768412804-git-send-email-prohaska@zib.de> <11956768413887-git-send-email-prohaska@zib.de> <11956768412755-git-send-email-prohaska@zib.de> <Pine.LNX.4.64.0711220121560.27959@racer.site> <7v63zv9fel.fsf@gitster.siamese.dyndns.org>
+Subject: Re: Adding push configuration to .git/config
+Date: Thu, 22 Nov 2007 08:08:35 +0100
+Message-ID: <C297CFC3-8DD0-4EEE-8FD3-BF997F6E269A@zib.de>
+References: <20071121105517.GA11875@denkbrett.schottelius.org> <7vabp79hjt.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
+Cc: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 07:13:06 2007
+X-From: git-owner@vger.kernel.org Thu Nov 22 08:09:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv5JA-0000Sw-No
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 07:13:05 +0100
+	id 1Iv6BS-00032t-4Z
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 08:09:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751342AbXKVGMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 01:12:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbXKVGMn
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 01:12:43 -0500
-Received: from mailer.zib.de ([130.73.108.11]:51045 "EHLO mailer.zib.de"
+	id S1751053AbXKVHIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 02:08:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751162AbXKVHIu
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 02:08:50 -0500
+Received: from mailer.zib.de ([130.73.108.11]:55967 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751304AbXKVGMn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 01:12:43 -0500
+	id S1750840AbXKVHIu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 02:08:50 -0500
 Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAM6CbjW025324;
-	Thu, 22 Nov 2007 07:12:38 +0100 (CET)
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAM77Mqr000153;
+	Thu, 22 Nov 2007 08:07:22 +0100 (CET)
 Received: from [192.168.178.21] (brln-4db1bcfd.pool.einsundeins.de [77.177.188.253])
 	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAM6CaJX016383
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAM77Li8028072
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 22 Nov 2007 07:12:36 +0100 (MET)
-In-Reply-To: <7v63zv9fel.fsf@gitster.siamese.dyndns.org>
+	Thu, 22 Nov 2007 08:07:21 +0100 (MET)
+In-Reply-To: <7vabp79hjt.fsf@gitster.siamese.dyndns.org>
 X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65743>
 
 
-On Nov 22, 2007, at 3:34 AM, Junio C Hamano wrote:
+On Nov 22, 2007, at 2:48 AM, Junio C Hamano wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
+> writes:
 >
->> Hi,
+>> Nice would be
 >>
->> On Wed, 21 Nov 2007, Steffen Prohaska wrote:
+>> [branch "master"]
+>>    remote-push          = origin
+>>    remote-push-merge    = another_branch
 >>
->>> We have a function set_git_dir().  So let's use it, instead of  
->>> setting
->>> the evironment directly.
+>> And thus perhaps also changing the existing specs:
 >>
->> Does this not have a fundamental issue?  When you call other git  
->> programs
->> with run_command(), you _need_ GIT_DIR to be set, no?
+>>    remote = ... to remote-fetch = ...
+>>    merge = ... to remote-fetch-merge =
 >
-> It is much worse.  set_git_dir() does not just setenv() but does
-> setup_git_env() as well.
+> I do not think doing this is worth it, not because I think a
+> single branch.$name.remote should be good enough for everybody,
+> but because once you need a separate remote each for fetching
+> and pushing, there is no reason to say one per direction is
+> enough.
+>
+> An alternative could be to split [remote "name"] url into two
+> variants, fetch-url and push-url.  While fetching by default
+> from two places without telling from which one does not make any
+> sense, pushing by default to two different places is quite a
+> normal thing to do, and we already do support more than one url
+> entries in [remote "name"] section used for pushing.
+>
+> If we were to do this, it might also make sense to rename the
+> word 'origin' we use for the default remote name to 'default' or
+> something.  People with shared repository workflow would fetch
+> from one repository and push back to the same repository, so the
+> distinction would not matter, but for others who need something
+> like you suggest, the default repository for fetching and
+> pushing are different, and while you may still consider where
+> you fetch from your 'origin', where you push into is not your
+> 'origin' anymore.
 
-What do your comments mean?
+I like this idea.
 
-My understanding is that set_git_dir() sets the environment and
-then calls setup_git_env() to cache all pointers.  This call
-updates dangling pointer if they have been cached earlier.
+But in addition, we should have a branch.$name.push line that
+can contain a remote head to push to.  This can be used to
+manage push's default on a per-branch basis.  So, different
+branches can have different default refspecs, even when they
+refer to the same remote.
 
-But maybe there is a hidden secret that I don't see.
+The default remote of "git push" is either origin, or it is
+specified in the branch configuration.  The following rules
+would then be used to find the refspecs to push.  The first
+rule that matches wins:
+1) Command line overrides (e.g. "--all", "--current").
+2) Check if branch.$name.push entry is available.
+    (Would we allow multiple entries?)
+3) Check if remote.$remotename.push entries are available.
+4) Use default rule, which pushes matching branches.
 
 	Steffen
