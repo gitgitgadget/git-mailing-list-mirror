@@ -1,168 +1,80 @@
-From: Thomas Harning <harningt@gmail.com>
-Subject: [PATCH] Converted git-merge-ours.sh -> builtin-merge-ours.c
-Date: Thu, 22 Nov 2007 15:19:40 -0500
-Message-ID: <4745E45C.7@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Avoid recalculating filename string pointer.
+Date: Thu, 22 Nov 2007 12:21:04 -0800
+Message-ID: <7voddm3ubz.fsf@gitster.siamese.dyndns.org>
+References: <b8bf37780711211659i65a99493te3e3d5cee008ae7d@mail.gmail.com>
+	<20071122195457.GB19675@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, thomas.harning@trustbearer.com
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Nov 22 21:19:48 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?Q?Andr=C3=A9?= Goddard Rosa <andre.goddard@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Nov 22 21:21:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvIWS-00016C-Uw
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 21:19:41 +0100
+	id 1IvIYY-0001xU-UK
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 21:21:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751745AbXKVUTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 15:19:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbXKVUTT
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 15:19:19 -0500
-Received: from an-out-0708.google.com ([209.85.132.245]:5689 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751639AbXKVUTS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 15:19:18 -0500
-Received: by an-out-0708.google.com with SMTP id d31so614846and
-        for <git@vger.kernel.org>; Thu, 22 Nov 2007 12:19:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        bh=TVo5hewQebCtXKlNqCRXeU/yLLcmXTad3BUkPwtyT/8=;
-        b=iWFf2pm53Kpjez4QMk1AXZ2TomLoh4eihIQIzMJm8UL8geos4x1Wke/U8ZJDxrSNTJBHF3Uz3WmndRKkEimGAVqRAtjLUfMOQnT9XV8aLhzXLGr5HG8sw3Y7dV/p3Bn+6LPAvV//OnUWnN9NPaEDENigIfuHk7cCQmON7Ore+nc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=fHlHrsthfxEVtPQNbp+TfRwlGXshQlzyikBRtOKrWWXuIv0EiIp7p2hGv9Ryxot4fwVqGEd8IeprFHL9plDGQTt562a59ufNVXVcFAztnlRGglRNHvIj5nECb8zUcG//oyVocvcjB9eZVpg6YibzBMil6+WPElKDSD/p+yQQQyg=
-Received: by 10.100.214.15 with SMTP id m15mr4896865ang.1195762757624;
-        Thu, 22 Nov 2007 12:19:17 -0800 (PST)
-Received: from ?192.168.1.104? ( [68.159.147.149])
-        by mx.google.com with ESMTPS id p27sm2163003ele.2007.11.22.12.19.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 22 Nov 2007 12:19:16 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.4 (X11/20070604)
+	id S1752202AbXKVUVR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Nov 2007 15:21:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752292AbXKVUVR
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 15:21:17 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:35115 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752193AbXKVUVQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Nov 2007 15:21:16 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 612452EF;
+	Thu, 22 Nov 2007 15:21:36 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id CEED1989A3;
+	Thu, 22 Nov 2007 15:21:32 -0500 (EST)
+In-Reply-To: <20071122195457.GB19675@glandium.org> (Mike Hommey's message of
+	"Thu, 22 Nov 2007 20:54:57 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65843>
 
-Here's a simple patch to make git-merge-ours.sh into a builtin.
+Mike Hommey <mh@glandium.org> writes:
 
-I figure this would be a simple way of getting in the git-development flow.
+> On Wed, Nov 21, 2007 at 10:59:41PM -0200, Andr=C3=A9 Goddard Rosa wro=
+te:
+>> --- a/fast-import.c
+>> +++ b/fast-import.c
+>> @@ -2304,11 +2304,13 @@ int main(int argc, const char **argv)
+>>  		else if (!prefixcmp(a, "--export-marks=3D"))
+>>  			mark_file =3D a + 15;
+>>  		else if (!prefixcmp(a, "--export-pack-edges=3D")) {
+>> +			char *filename =3D a + 20;
+>> +
+>>  			if (pack_edges)
+>>  				fclose(pack_edges);
+>> -			pack_edges =3D fopen(a + 20, "a");
+>> +			pack_edges =3D fopen(filename, "a");
+>>  			if (!pack_edges)
+>> -				die("Cannot open %s: %s", a + 20, strerror(errno));
+>> +				die("Cannot open %s: %s", filename, strerror(errno));
+>>  		} else if (!strcmp(a, "--force"))
+>>  			force_update =3D 1;
+>>  		else if (!strcmp(a, "--quiet"))
+>
+> Normally, the compiler takes care of such optimizations. It actually
+> takes care of it much better than you can do yourself, and doing it
+> yourself can even sometimes generate less optimized code because it
+> gets in the compiler optimizations'way.
 
-Signed-off-by: Thomas Harning Jr <harningt@gmail.com>
----
- Makefile             |    3 ++-
- builtin-merge-ours.c |   32 ++++++++++++++++++++++++++++++++
- builtin.h            |    1 +
- git-merge-ours.sh    |   14 --------------
- git.c                |    1 +
- 5 files changed, 36 insertions(+), 15 deletions(-)
- create mode 100644 builtin-merge-ours.c
- delete mode 100755 git-merge-ours.sh
+True, but I think another point of the patch is to address the
+risk of two instances of "+ 20" going out of sync if/when the
+option parsing is updated.
 
-diff --git a/Makefile b/Makefile
-index cabde81..7a0ee78 100644
---- a/Makefile
-+++ b/Makefile
-@@ -221,7 +221,7 @@ SCRIPT_SH = \
- 	git-sh-setup.sh \
- 	git-am.sh \
- 	git-merge.sh git-merge-stupid.sh git-merge-octopus.sh \
--	git-merge-resolve.sh git-merge-ours.sh \
-+	git-merge-resolve.sh \
- 	git-lost-found.sh git-quiltimport.sh git-submodule.sh \
- 	git-filter-branch.sh \
- 	git-stash.sh
-@@ -353,6 +353,7 @@ BUILTIN_OBJS = \
- 	builtin-mailsplit.o \
- 	builtin-merge-base.o \
- 	builtin-merge-file.o \
-+	builtin-merge-ours.o \
- 	builtin-mv.o \
- 	builtin-name-rev.o \
- 	builtin-pack-objects.o \
-diff --git a/builtin-merge-ours.c b/builtin-merge-ours.c
-new file mode 100644
-index 0000000..fbfe183
---- /dev/null
-+++ b/builtin-merge-ours.c
-@@ -0,0 +1,32 @@
-+/*
-+ * Implementation of git-merge-ours.sh as builtin
-+ * 
-+ * Copyright (c) 2007 Thomas Harning Jr
-+ * Original:
-+ * Original Copyright (c) 2005 Junio C Hamano
-+ *
-+ * Pretend we resolved the heads, but declare our tree trumps everybody else.
-+ */
-+#include "git-compat-util.h"
-+#include "builtin.h"
-+
-+int cmd_merge_ours(int argc, const char **argv, const char *prefix)
-+{
-+	const char *nargv[] = {
-+		"diff-index",
-+		"--quiet",
-+		"--cached",
-+		"HEAD",
-+		NULL
-+	};
-+	int i;
-+
-+	int ret = cmd_diff_index(4, nargv, prefix);
-+	printf("GOT: %i\n", ret);
-+	/* We need to exit with 2 if the index does not match our HEAD tree,
-+	 * because the current index is what we will be committing as the
-+	 * merge result.
-+	 */
-+	if(ret) ret = 2;
-+	return ret;
-+}
-diff --git a/builtin.h b/builtin.h
-index 9a6213a..bcb54aa 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -51,6 +51,7 @@ extern int cmd_ls_tree(int argc, const char **argv, const char *prefix);
- extern int cmd_mailinfo(int argc, const char **argv, const char *prefix);
- extern int cmd_mailsplit(int argc, const char **argv, const char *prefix);
- extern int cmd_merge_base(int argc, const char **argv, const char *prefix);
-+extern int cmd_merge_ours(int argc, const char **argv, const char *prefix);
- extern int cmd_merge_file(int argc, const char **argv, const char *prefix);
- extern int cmd_mv(int argc, const char **argv, const char *prefix);
- extern int cmd_name_rev(int argc, const char **argv, const char *prefix);
-diff --git a/git-merge-ours.sh b/git-merge-ours.sh
-deleted file mode 100755
-index c81a790..0000000
---- a/git-merge-ours.sh
-+++ /dev/null
-@@ -1,14 +0,0 @@
--#!/bin/sh
--#
--# Copyright (c) 2005 Junio C Hamano
--#
--# Pretend we resolved the heads, but declare our tree trumps everybody else.
--#
--
--# We need to exit with 2 if the index does not match our HEAD tree,
--# because the current index is what we will be committing as the
--# merge result.
--
--git diff-index --quiet --cached HEAD || exit 2
--
--exit 0
-diff --git a/git.c b/git.c
-index 7604319..80c2f14 100644
---- a/git.c
-+++ b/git.c
-@@ -325,6 +325,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "mailsplit", cmd_mailsplit },
- 		{ "merge-base", cmd_merge_base, RUN_SETUP },
- 		{ "merge-file", cmd_merge_file },
-+		{ "merge-ours", cmd_merge_ours, RUN_SETUP },
- 		{ "mv", cmd_mv, RUN_SETUP | NEED_WORK_TREE },
- 		{ "name-rev", cmd_name_rev, RUN_SETUP },
- 		{ "pack-objects", cmd_pack_objects, RUN_SETUP },
--- 
-1.5.3.6.861.gd794
+Not that I think Andr=C3=A9 meant the patch as defensive coding (the
+subject suggests it was meant to be a micro-optimization), nor
+this is the good way to address that risk factor (parse-options
+may be a better match for it).
