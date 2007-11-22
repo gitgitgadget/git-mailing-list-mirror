@@ -1,53 +1,55 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Addendum to "MaintNotes"
-Date: Thu, 22 Nov 2007 05:36:00 -0500
-Message-ID: <20071122103600.GA10389@sigill.intra.peff.net>
-References: <46dff0320711210511g7d9febf5k47b082cc13bb905a@mail.gmail.com> <7vhcjf9l1k.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] Suppress spurious linefeeds in git-add--interactive
+Date: Thu, 22 Nov 2007 02:38:01 -0800
+Message-ID: <7vzlx65zw6.fsf@gitster.siamese.dyndns.org>
+References: <C6E820C8-91E9-48B2-9219-377CA83163A7@wincent.com>
+	<1195689773-28601-1-git-send-email-win@wincent.com>
+	<1195689773-28601-2-git-send-email-win@wincent.com>
+	<20071122085919.GB7153@sigill.intra.peff.net>
+	<B649FFCA-C85F-4BB4-884A-525676ABCA9B@wincent.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Ping Yin <pkufranky@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 11:36:27 2007
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 11:38:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv9Py-00020J-Jm
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 11:36:23 +0100
+	id 1Iv9S0-0002f5-8o
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 11:38:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751970AbXKVKgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 05:36:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751960AbXKVKgE
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 05:36:04 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1791 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751917AbXKVKgD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 05:36:03 -0500
-Received: (qmail 21787 invoked by uid 111); 22 Nov 2007 10:36:00 -0000
-Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 22 Nov 2007 05:36:00 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Nov 2007 05:36:00 -0500
-Content-Disposition: inline
-In-Reply-To: <7vhcjf9l1k.fsf@gitster.siamese.dyndns.org>
+	id S1751073AbXKVKiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 05:38:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751011AbXKVKiJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 05:38:09 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:33042 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750696AbXKVKiI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 05:38:08 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 0A7162F9;
+	Thu, 22 Nov 2007 05:38:29 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 8E10096657;
+	Thu, 22 Nov 2007 05:38:24 -0500 (EST)
+In-Reply-To: <B649FFCA-C85F-4BB4-884A-525676ABCA9B@wincent.com> (Wincent
+	Colaiuta's message of "Thu, 22 Nov 2007 11:18:27 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65775>
 
-Thanks for writing this, Junio. It is always interesting to see git
-workflows discussed in detail, and yours is more interesting than most.
+Wincent Colaiuta <win@wincent.com> writes:
 
-On Wed, Nov 21, 2007 at 04:32:55PM -0800, Junio C Hamano wrote:
+> No, I agree with you; it does read nicer. I'm not a real Perl  
+> programmer, so everything I do I have to do it with a copy of  
+> "Programming Perl" next to me to find out how to do things. It's handy  
+> to have advice from people more familiar with the idioms. Will  
+> incorporate something like this into the series:
 
->    - Obviously correct fixes that pertain to the tip of 'master'
->      are directly applied to 'master'.
-> 
->    This step is done with "git am".
-> 
->      $ git checkout maint    ;# or "git checkout maint"
-
-One of those "maints" should probably be "master".
-
--Peff
+I took the liberty of rewriting them and will push out on pu
+shortly hopefully before I go to bed.
