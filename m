@@ -1,172 +1,148 @@
 From: "=?UTF-8?Q?Andr=C3=A9_Goddard_Rosa?=" <andre.goddard@gmail.com>
-Subject: [PATCH] Simplify the code and avoid an attribution.
-Date: Wed, 21 Nov 2007 23:00:02 -0200
-Message-ID: <b8bf37780711211700m1aa32006t6302f134f9c3fb7e@mail.gmail.com>
+Subject: [PATCH] Print the real filename whose opening failed.
+Date: Wed, 21 Nov 2007 23:00:22 -0200
+Message-ID: <b8bf37780711211700g48a738b1xa147d1e7000ee76@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed; 
-	boundary="----=_Part_25926_4956583.1195693202682"
+	boundary="----=_Part_25928_18808672.1195693222253"
 Cc: "Git Mailing List" <git@vger.kernel.org>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Nov 22 02:00:31 2007
+X-From: git-owner@vger.kernel.org Thu Nov 22 02:00:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv0Qb-0001z8-FX
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 02:00:26 +0100
+	id 1Iv0Qs-000254-AF
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 02:00:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753346AbXKVBAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 20:00:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753356AbXKVBAH
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 20:00:07 -0500
+	id S1751654AbXKVBAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 20:00:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753356AbXKVBAY
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 20:00:24 -0500
 Received: from ug-out-1314.google.com ([66.249.92.173]:42719 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753171AbXKVBAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 20:00:05 -0500
+	with ESMTP id S1751540AbXKVBAX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 20:00:23 -0500
 Received: by ug-out-1314.google.com with SMTP id z38so227935ugc
-        for <git@vger.kernel.org>; Wed, 21 Nov 2007 17:00:03 -0800 (PST)
+        for <git@vger.kernel.org>; Wed, 21 Nov 2007 17:00:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        bh=T002pCZ9lRD/JkPOxrJfhpJcFDvq8TbnmSYeNdyFpzI=;
-        b=lyPJISI5U+Pd9IP3iVg/stJwJJ6u6iwMD4YMj0EfE3JZcNZ/VexXLBK/BpzhJvW5WJT6CcjtAX1WIf97zXcTV/8HEfduxlEQcdXmFNrPnZP7hOmBg3ythJBJiPLpMrOduN2yJkKHphYJfUi8Nb2Vz48657FNTicCPSbxT9cpNOY=
+        bh=b2D3dBYedq9zSt7suLbUMrORLnM3X1ePWGX5AupeGNY=;
+        b=Lf10VzANm+qISMvBw2EH/swn9szKuVvWXpSINUhWnjHbuxOM6i4SDlbtnEOiEIc2njUTg/+Ojd9wcuhXAqHLpujYo0uJsxA3KYSwiztRJpdU0vveoxlhRm0wpGwtI/Jt5nor5icbD8l2o+1KNpUedVwOBtbnzDtvJqYMWb9RmpQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=ZLD/35W3Lcj574jWfzuq1fEjUYEqI07z8CudxIm0gTiRbIj23QNjYz40RTk3ene4Lm4ozGcC/uPgURvUUSPqLrLkH5k8Ht9JHURgbHy2cjK/MDrgZi0oWhz+T9ZVGmLaLkE/5FJy4X9Hihpc9yaVloGbqtQbJusECAKLy1usHTg=
-Received: by 10.78.204.7 with SMTP id b7mr1474181hug.1195693202686;
-        Wed, 21 Nov 2007 17:00:02 -0800 (PST)
-Received: by 10.78.120.18 with HTTP; Wed, 21 Nov 2007 17:00:02 -0800 (PST)
+        b=tYBxGwed7Ok5i4OGBqMkslMuh/wWab1uBYc9HlvDVc5yKepSIaJUwvpYyQDc47S6YHfPkNmvq03Ia5lzz5z4FEO4d5BTq1z2VzOjF9+EfPKl/eIaQVW2Oxodw87pzx7FtJybt8j1UsxOE8kOnxYRf4wnvaFQGt77x+H5EtZDtZA=
+Received: by 10.78.201.10 with SMTP id y10mr9120048huf.1195693222268;
+        Wed, 21 Nov 2007 17:00:22 -0800 (PST)
+Received: by 10.78.120.18 with HTTP; Wed, 21 Nov 2007 17:00:22 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65727>
 
-------=_Part_25926_4956583.1195693202682
+------=_Part_25928_18808672.1195693222253
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: base64
 Content-Disposition: inline
 
-Hi, all!
-
-    Please cc: me as I'm not subscribed. I'm sending the patch inline
-only for review, probably it is mangled.
-    Please use the attached patch if you agree with it. Sorry about
-sending it attached.
-
->From cd0cc6995684e2801011910735146052e5b59ccc Mon Sep 17 00:00:00 2001
-From: Andre Goddard Rosa <andre.goddard@gmail.com>
-Date: Tue, 27 Nov 2007 10:22:46 -0200
-Subject: [PATCH] Simplify the code and avoid an attribution.
-
-Signed-off-by: Andre Goddard Rosa <andre.goddard@gmail.com>
----
- config.c          |   19 ++++++++++---------
- mailmap.c         |    2 +-
- xdiff-interface.c |    2 +-
- 3 files changed, 12 insertions(+), 11 deletions(-)
-
-diff --git a/config.c b/config.c
-index 56e99fc..7c9fcdd 100644
---- a/config.c
-+++ b/config.c
-@@ -447,15 +447,16 @@ int git_config_from_file(config_fn_t fn, const
-char *filename)
- 	int ret;
- 	FILE *f = fopen(filename, "r");
-
--	ret = -1;
--	if (f) {
--		config_file = f;
--		config_file_name = filename;
--		config_linenr = 1;
--		ret = git_parse_file(fn);
--		fclose(f);
--		config_file_name = NULL;
--	}
-+	if (!f)
-+		return -1;
-+
-+	config_file = f;
-+	config_file_name = filename;
-+	config_linenr = 1;
-+	ret = git_parse_file(fn);
-+	fclose(f);
-+	config_file_name = NULL;
-+
- 	return ret;
- }
-
-diff --git a/mailmap.c b/mailmap.c
-index 8714167..0c13ecd 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -7,7 +7,7 @@ int read_mailmap(struct path_list *map, const char
-*filename, char **repo_abbrev
- 	char buffer[1024];
- 	FILE *f = fopen(filename, "r");
-
--	if (f == NULL)
-+	if (!f)
- 		return 1;
- 	while (fgets(buffer, sizeof(buffer), f) != NULL) {
- 		char *end_of_name, *left_bracket, *right_bracket;
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index be866d1..9dd1f3b 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -111,7 +111,7 @@ int read_mmfile(mmfile_t *ptr, const char *filename)
-
- 	if (stat(filename, &st))
- 		return error("Could not stat %s", filename);
--	if ((f = fopen(filename, "rb")) == NULL)
-+	if (!(f = fopen(filename, "rb")))
- 		return error("Could not open %s", filename);
- 	sz = xsize_t(st.st_size);
- 	ptr->ptr = xmalloc(sz);
--- 
-1.5.3.6.861.gd794-dirty
-
-------=_Part_25926_4956583.1195693202682
+SGksIGFsbCEKCiAgICBQbGVhc2UgY2M6IG1lIGFzIEknbSBub3Qgc3Vic2NyaWJlZC4gSSdtIHNl
+bmRpbmcgdGhlIHBhdGNoIGlubGluZQpvbmx5IGZvciByZXZpZXcsIHByb2JhYmx5IGl0IGlzIG1h
+bmdsZWQuCiAgICBQbGVhc2UgdXNlIHRoZSBhdHRhY2hlZCBwYXRjaCBpZiB5b3UgYWdyZWUgd2l0
+aCBpdC4gU29ycnkgYWJvdXQKc2VuZGluZyBpdCBhdHRhY2hlZC4KCkZyb20gODhiN2JkODczYjk3
+YmQ4MWU4NTQ4MjdjOWNkOGYzYzMwNmQzYzNhZiBNb24gU2VwIDE3IDAwOjAwOjAwIDIwMDEKRnJv
+bTogPT91dGYtOD9xP0FuZHI9QzM9QTk9MjBHb2RkYXJkPTIwUm9zYT89IDxhbmRyZS5nb2RkYXJk
+QGdtYWlsLmNvbT4KRGF0ZTogV2VkLCAyMSBOb3YgMjAwNyAxODo1OToxNCAtMDIwMApTdWJqZWN0
+OiBbUEFUQ0hdIFByaW50IHRoZSByZWFsIGZpbGVuYW1lIHdob3NlIG9wZW5pbmcgZmFpbGVkLgpN
+SU1FLVZlcnNpb246IDEuMApDb250ZW50LVR5cGU6IHRleHQvcGxhaW47IGNoYXJzZXQ9dXRmLTgK
+Q29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogOGJpdAoKU2lnbmVkLW9mZi1ieTogQW5kcsOpIEdv
+ZGRhcmQgUm9zYSA8YW5kcmUuZ29kZGFyZEBnbWFpbC5jb20+Ci0tLQogaHR0cC1wdXNoLmMgICB8
+ICAgIDQgKystLQogaHR0cC13YWxrZXIuYyB8ICAgIDQgKystLQogc2VydmVyLWluZm8uYyB8ICAg
+IDIgKy0KIDMgZmlsZXMgY2hhbmdlZCwgNSBpbnNlcnRpb25zKCspLCA1IGRlbGV0aW9ucygtKQoK
+ZGlmZiAtLWdpdCBhL2h0dHAtcHVzaC5jIGIvaHR0cC1wdXNoLmMKaW5kZXggOTMxNDYyMS4uZTY3
+NWNhNiAxMDA2NDQKLS0tIGEvaHR0cC1wdXNoLmMKKysrIGIvaHR0cC1wdXNoLmMKQEAgLTQzMyw3
+ICs0MzMsNyBAQCBzdGF0aWMgdm9pZCBzdGFydF9mZXRjaF9wYWNrZWQoc3RydWN0CnRyYW5zZmVy
+X3JlcXVlc3QgKnJlcXVlc3QpCiAJcGFja2ZpbGUgPSBmb3BlbihyZXF1ZXN0LT50bXBmaWxlLCAi
+YSIpOwogCWlmICghcGFja2ZpbGUpIHsKIAkJZnByaW50ZihzdGRlcnIsICJVbmFibGUgdG8gb3Bl
+biBsb2NhbCBmaWxlICVzIGZvciBwYWNrIiwKLQkJCWZpbGVuYW1lKTsKKwkJCXJlcXVlc3QtPnRt
+cGZpbGUpOwogCQlyZW1vdGUtPmNhbl91cGRhdGVfaW5mb19yZWZzID0gMDsKIAkJZnJlZSh1cmwp
+OwogCQlyZXR1cm47CkBAIC05NDEsNyArOTQxLDcgQEAgc3RhdGljIGludCBmZXRjaF9pbmRleCh1
+bnNpZ25lZCBjaGFyICpzaGExKQogCWluZGV4ZmlsZSA9IGZvcGVuKHRtcGZpbGUsICJhIik7CiAJ
+aWYgKCFpbmRleGZpbGUpCiAJCXJldHVybiBlcnJvcigiVW5hYmxlIHRvIG9wZW4gbG9jYWwgZmls
+ZSAlcyBmb3IgcGFjayBpbmRleCIsCi0JCQkgICAgIGZpbGVuYW1lKTsKKwkJCSAgICAgdG1wZmls
+ZSk7CgogCXNsb3QgPSBnZXRfYWN0aXZlX3Nsb3QoKTsKIAlzbG90LT5yZXN1bHRzID0gJnJlc3Vs
+dHM7CmRpZmYgLS1naXQgYS9odHRwLXdhbGtlci5jIGIvaHR0cC13YWxrZXIuYwppbmRleCA0NDRh
+ZWJmLi5hM2ZiNTk2IDEwMDY0NAotLS0gYS9odHRwLXdhbGtlci5jCisrKyBiL2h0dHAtd2Fsa2Vy
+LmMKQEAgLTQwNSw3ICs0MDUsNyBAQCBzdGF0aWMgaW50IGZldGNoX2luZGV4KHN0cnVjdCB3YWxr
+ZXIgKndhbGtlciwKc3RydWN0IGFsdF9iYXNlICpyZXBvLCB1bnNpZ25lZCBjaAogCWluZGV4Zmls
+ZSA9IGZvcGVuKHRtcGZpbGUsICJhIik7CiAJaWYgKCFpbmRleGZpbGUpCiAJCXJldHVybiBlcnJv
+cigiVW5hYmxlIHRvIG9wZW4gbG9jYWwgZmlsZSAlcyBmb3IgcGFjayBpbmRleCIsCi0JCQkgICAg
+IGZpbGVuYW1lKTsKKwkJCSAgICAgdG1wZmlsZSk7CgogCXNsb3QgPSBnZXRfYWN0aXZlX3Nsb3Qo
+KTsKIAlzbG90LT5yZXN1bHRzID0gJnJlc3VsdHM7CkBAIC03NzAsNyArNzcwLDcgQEAgc3RhdGlj
+IGludCBmZXRjaF9wYWNrKHN0cnVjdCB3YWxrZXIgKndhbGtlciwKc3RydWN0IGFsdF9iYXNlICpy
+ZXBvLCB1bnNpZ25lZCBjaGEKIAlwYWNrZmlsZSA9IGZvcGVuKHRtcGZpbGUsICJhIik7CiAJaWYg
+KCFwYWNrZmlsZSkKIAkJcmV0dXJuIGVycm9yKCJVbmFibGUgdG8gb3BlbiBsb2NhbCBmaWxlICVz
+IGZvciBwYWNrIiwKLQkJCSAgICAgZmlsZW5hbWUpOworCQkJICAgICB0bXBmaWxlKTsKCiAJc2xv
+dCA9IGdldF9hY3RpdmVfc2xvdCgpOwogCXNsb3QtPnJlc3VsdHMgPSAmcmVzdWx0czsKZGlmZiAt
+LWdpdCBhL3NlcnZlci1pbmZvLmMgYi9zZXJ2ZXItaW5mby5jCmluZGV4IDBkMTMxMmMuLmEwNTFl
+NDkgMTAwNjQ0Ci0tLSBhL3NlcnZlci1pbmZvLmMKKysrIGIvc2VydmVyLWluZm8uYwpAQCAtMzUs
+NyArMzUsNyBAQCBzdGF0aWMgaW50IHVwZGF0ZV9pbmZvX3JlZnMoaW50IGZvcmNlKQogCXNhZmVf
+Y3JlYXRlX2xlYWRpbmdfZGlyZWN0b3JpZXMocGF0aDApOwogCWluZm9fcmVmX2ZwID0gZm9wZW4o
+cGF0aDEsICJ3Iik7CiAJaWYgKCFpbmZvX3JlZl9mcCkKLQkJcmV0dXJuIGVycm9yKCJ1bmFibGUg
+dG8gdXBkYXRlICVzIiwgcGF0aDApOworCQlyZXR1cm4gZXJyb3IoInVuYWJsZSB0byB1cGRhdGUg
+JXMiLCBwYXRoMSk7CiAJZm9yX2VhY2hfcmVmKGFkZF9pbmZvX3JlZiwgTlVMTCk7CiAJZmNsb3Nl
+KGluZm9fcmVmX2ZwKTsKIAlhZGp1c3Rfc2hhcmVkX3Blcm0ocGF0aDEpOwotLSAKMS41LjMuNi44
+NjEuZ2Q3OTQtZGlydHkK
+------=_Part_25928_18808672.1195693222253
 Content-Type: text/x-patch;
- name=0004-Simplify-the-code-and-avoid-an-attribution.patch
+ name=0005-Print-the-real-filename-whose-opening-failed.patch
 Content-Transfer-Encoding: base64
-X-Attachment-Id: f_f9akrmyt0
+X-Attachment-Id: f_f9aks9ew0
 Content-Disposition: attachment;
- filename=0004-Simplify-the-code-and-avoid-an-attribution.patch
+ filename=0005-Print-the-real-filename-whose-opening-failed.patch
 
-RnJvbSBjZDBjYzY5OTU2ODRlMjgwMTAxMTkxMDczNTE0NjA1MmU1YjU5Y2NjIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbmRyZSBHb2RkYXJkIFJvc2EgPGFuZHJlLmdvZGRhcmRAZ21h
-aWwuY29tPgpEYXRlOiBUdWUsIDI3IE5vdiAyMDA3IDEwOjIyOjQ2IC0wMjAwClN1YmplY3Q6IFtQ
-QVRDSF0gU2ltcGxpZnkgdGhlIGNvZGUgYW5kIGF2b2lkIGFuIGF0dHJpYnV0aW9uLgoKU2lnbmVk
-LW9mZi1ieTogQW5kcmUgR29kZGFyZCBSb3NhIDxhbmRyZS5nb2RkYXJkQGdtYWlsLmNvbT4KLS0t
-CiBjb25maWcuYyAgICAgICAgICB8ICAgMTkgKysrKysrKysrKy0tLS0tLS0tLQogbWFpbG1hcC5j
-ICAgICAgICAgfCAgICAyICstCiB4ZGlmZi1pbnRlcmZhY2UuYyB8ICAgIDIgKy0KIDMgZmlsZXMg
-Y2hhbmdlZCwgMTIgaW5zZXJ0aW9ucygrKSwgMTEgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEv
-Y29uZmlnLmMgYi9jb25maWcuYwppbmRleCA1NmU5OWZjLi43YzlmY2RkIDEwMDY0NAotLS0gYS9j
-b25maWcuYworKysgYi9jb25maWcuYwpAQCAtNDQ3LDE1ICs0NDcsMTYgQEAgaW50IGdpdF9jb25m
-aWdfZnJvbV9maWxlKGNvbmZpZ19mbl90IGZuLCBjb25zdCBjaGFyICpmaWxlbmFtZSkKIAlpbnQg
-cmV0OwogCUZJTEUgKmYgPSBmb3BlbihmaWxlbmFtZSwgInIiKTsKIAotCXJldCA9IC0xOwotCWlm
-IChmKSB7Ci0JCWNvbmZpZ19maWxlID0gZjsKLQkJY29uZmlnX2ZpbGVfbmFtZSA9IGZpbGVuYW1l
-OwotCQljb25maWdfbGluZW5yID0gMTsKLQkJcmV0ID0gZ2l0X3BhcnNlX2ZpbGUoZm4pOwotCQlm
-Y2xvc2UoZik7Ci0JCWNvbmZpZ19maWxlX25hbWUgPSBOVUxMOwotCX0KKwlpZiAoIWYpCisJCXJl
-dHVybiAtMTsKKworCWNvbmZpZ19maWxlID0gZjsKKwljb25maWdfZmlsZV9uYW1lID0gZmlsZW5h
-bWU7CisJY29uZmlnX2xpbmVuciA9IDE7CisJcmV0ID0gZ2l0X3BhcnNlX2ZpbGUoZm4pOworCWZj
-bG9zZShmKTsKKwljb25maWdfZmlsZV9uYW1lID0gTlVMTDsKKwogCXJldHVybiByZXQ7CiB9CiAK
-ZGlmZiAtLWdpdCBhL21haWxtYXAuYyBiL21haWxtYXAuYwppbmRleCA4NzE0MTY3Li4wYzEzZWNk
-IDEwMDY0NAotLS0gYS9tYWlsbWFwLmMKKysrIGIvbWFpbG1hcC5jCkBAIC03LDcgKzcsNyBAQCBp
-bnQgcmVhZF9tYWlsbWFwKHN0cnVjdCBwYXRoX2xpc3QgKm1hcCwgY29uc3QgY2hhciAqZmlsZW5h
-bWUsIGNoYXIgKipyZXBvX2FiYnJldgogCWNoYXIgYnVmZmVyWzEwMjRdOwogCUZJTEUgKmYgPSBm
-b3BlbihmaWxlbmFtZSwgInIiKTsKIAotCWlmIChmID09IE5VTEwpCisJaWYgKCFmKQogCQlyZXR1
-cm4gMTsKIAl3aGlsZSAoZmdldHMoYnVmZmVyLCBzaXplb2YoYnVmZmVyKSwgZikgIT0gTlVMTCkg
-ewogCQljaGFyICplbmRfb2ZfbmFtZSwgKmxlZnRfYnJhY2tldCwgKnJpZ2h0X2JyYWNrZXQ7CmRp
-ZmYgLS1naXQgYS94ZGlmZi1pbnRlcmZhY2UuYyBiL3hkaWZmLWludGVyZmFjZS5jCmluZGV4IGJl
-ODY2ZDEuLjlkZDFmM2IgMTAwNjQ0Ci0tLSBhL3hkaWZmLWludGVyZmFjZS5jCisrKyBiL3hkaWZm
-LWludGVyZmFjZS5jCkBAIC0xMTEsNyArMTExLDcgQEAgaW50IHJlYWRfbW1maWxlKG1tZmlsZV90
-ICpwdHIsIGNvbnN0IGNoYXIgKmZpbGVuYW1lKQogCiAJaWYgKHN0YXQoZmlsZW5hbWUsICZzdCkp
-CiAJCXJldHVybiBlcnJvcigiQ291bGQgbm90IHN0YXQgJXMiLCBmaWxlbmFtZSk7Ci0JaWYgKChm
-ID0gZm9wZW4oZmlsZW5hbWUsICJyYiIpKSA9PSBOVUxMKQorCWlmICghKGYgPSBmb3BlbihmaWxl
-bmFtZSwgInJiIikpKQogCQlyZXR1cm4gZXJyb3IoIkNvdWxkIG5vdCBvcGVuICVzIiwgZmlsZW5h
-bWUpOwogCXN6ID0geHNpemVfdChzdC5zdF9zaXplKTsKIAlwdHItPnB0ciA9IHhtYWxsb2Moc3op
-OwotLSAKMS41LjMuNi44NjEuZ2Q3OTQtZGlydHkKCg==
-------=_Part_25926_4956583.1195693202682--
+RnJvbSA4OGI3YmQ4NzNiOTdiZDgxZTg1NDgyN2M5Y2Q4ZjNjMzA2ZDNjM2FmIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiA9P3V0Zi04P3E/QW5kcj1DMz1BOT0yMEdvZGRhcmQ9MjBSb3Nh
+Pz0gPGFuZHJlLmdvZGRhcmRAZ21haWwuY29tPgpEYXRlOiBXZWQsIDIxIE5vdiAyMDA3IDE4OjU5
+OjE0IC0wMjAwClN1YmplY3Q6IFtQQVRDSF0gUHJpbnQgdGhlIHJlYWwgZmlsZW5hbWUgd2hvc2Ug
+b3BlbmluZyBmYWlsZWQuCk1JTUUtVmVyc2lvbjogMS4wCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFp
+bjsgY2hhcnNldD11dGYtOApDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiA4Yml0CgpTaWduZWQt
+b2ZmLWJ5OiBBbmRyw6kgR29kZGFyZCBSb3NhIDxhbmRyZS5nb2RkYXJkQGdtYWlsLmNvbT4KLS0t
+CiBodHRwLXB1c2guYyAgIHwgICAgNCArKy0tCiBodHRwLXdhbGtlci5jIHwgICAgNCArKy0tCiBz
+ZXJ2ZXItaW5mby5jIHwgICAgMiArLQogMyBmaWxlcyBjaGFuZ2VkLCA1IGluc2VydGlvbnMoKyks
+IDUgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvaHR0cC1wdXNoLmMgYi9odHRwLXB1c2guYwpp
+bmRleCA5MzE0NjIxLi5lNjc1Y2E2IDEwMDY0NAotLS0gYS9odHRwLXB1c2guYworKysgYi9odHRw
+LXB1c2guYwpAQCAtNDMzLDcgKzQzMyw3IEBAIHN0YXRpYyB2b2lkIHN0YXJ0X2ZldGNoX3BhY2tl
+ZChzdHJ1Y3QgdHJhbnNmZXJfcmVxdWVzdCAqcmVxdWVzdCkKIAlwYWNrZmlsZSA9IGZvcGVuKHJl
+cXVlc3QtPnRtcGZpbGUsICJhIik7CiAJaWYgKCFwYWNrZmlsZSkgewogCQlmcHJpbnRmKHN0ZGVy
+ciwgIlVuYWJsZSB0byBvcGVuIGxvY2FsIGZpbGUgJXMgZm9yIHBhY2siLAotCQkJZmlsZW5hbWUp
+OworCQkJcmVxdWVzdC0+dG1wZmlsZSk7CiAJCXJlbW90ZS0+Y2FuX3VwZGF0ZV9pbmZvX3JlZnMg
+PSAwOwogCQlmcmVlKHVybCk7CiAJCXJldHVybjsKQEAgLTk0MSw3ICs5NDEsNyBAQCBzdGF0aWMg
+aW50IGZldGNoX2luZGV4KHVuc2lnbmVkIGNoYXIgKnNoYTEpCiAJaW5kZXhmaWxlID0gZm9wZW4o
+dG1wZmlsZSwgImEiKTsKIAlpZiAoIWluZGV4ZmlsZSkKIAkJcmV0dXJuIGVycm9yKCJVbmFibGUg
+dG8gb3BlbiBsb2NhbCBmaWxlICVzIGZvciBwYWNrIGluZGV4IiwKLQkJCSAgICAgZmlsZW5hbWUp
+OworCQkJICAgICB0bXBmaWxlKTsKIAogCXNsb3QgPSBnZXRfYWN0aXZlX3Nsb3QoKTsKIAlzbG90
+LT5yZXN1bHRzID0gJnJlc3VsdHM7CmRpZmYgLS1naXQgYS9odHRwLXdhbGtlci5jIGIvaHR0cC13
+YWxrZXIuYwppbmRleCA0NDRhZWJmLi5hM2ZiNTk2IDEwMDY0NAotLS0gYS9odHRwLXdhbGtlci5j
+CisrKyBiL2h0dHAtd2Fsa2VyLmMKQEAgLTQwNSw3ICs0MDUsNyBAQCBzdGF0aWMgaW50IGZldGNo
+X2luZGV4KHN0cnVjdCB3YWxrZXIgKndhbGtlciwgc3RydWN0IGFsdF9iYXNlICpyZXBvLCB1bnNp
+Z25lZCBjaAogCWluZGV4ZmlsZSA9IGZvcGVuKHRtcGZpbGUsICJhIik7CiAJaWYgKCFpbmRleGZp
+bGUpCiAJCXJldHVybiBlcnJvcigiVW5hYmxlIHRvIG9wZW4gbG9jYWwgZmlsZSAlcyBmb3IgcGFj
+ayBpbmRleCIsCi0JCQkgICAgIGZpbGVuYW1lKTsKKwkJCSAgICAgdG1wZmlsZSk7CiAKIAlzbG90
+ID0gZ2V0X2FjdGl2ZV9zbG90KCk7CiAJc2xvdC0+cmVzdWx0cyA9ICZyZXN1bHRzOwpAQCAtNzcw
+LDcgKzc3MCw3IEBAIHN0YXRpYyBpbnQgZmV0Y2hfcGFjayhzdHJ1Y3Qgd2Fsa2VyICp3YWxrZXIs
+IHN0cnVjdCBhbHRfYmFzZSAqcmVwbywgdW5zaWduZWQgY2hhCiAJcGFja2ZpbGUgPSBmb3Blbih0
+bXBmaWxlLCAiYSIpOwogCWlmICghcGFja2ZpbGUpCiAJCXJldHVybiBlcnJvcigiVW5hYmxlIHRv
+IG9wZW4gbG9jYWwgZmlsZSAlcyBmb3IgcGFjayIsCi0JCQkgICAgIGZpbGVuYW1lKTsKKwkJCSAg
+ICAgdG1wZmlsZSk7CiAKIAlzbG90ID0gZ2V0X2FjdGl2ZV9zbG90KCk7CiAJc2xvdC0+cmVzdWx0
+cyA9ICZyZXN1bHRzOwpkaWZmIC0tZ2l0IGEvc2VydmVyLWluZm8uYyBiL3NlcnZlci1pbmZvLmMK
+aW5kZXggMGQxMzEyYy4uYTA1MWU0OSAxMDA2NDQKLS0tIGEvc2VydmVyLWluZm8uYworKysgYi9z
+ZXJ2ZXItaW5mby5jCkBAIC0zNSw3ICszNSw3IEBAIHN0YXRpYyBpbnQgdXBkYXRlX2luZm9fcmVm
+cyhpbnQgZm9yY2UpCiAJc2FmZV9jcmVhdGVfbGVhZGluZ19kaXJlY3RvcmllcyhwYXRoMCk7CiAJ
+aW5mb19yZWZfZnAgPSBmb3BlbihwYXRoMSwgInciKTsKIAlpZiAoIWluZm9fcmVmX2ZwKQotCQly
+ZXR1cm4gZXJyb3IoInVuYWJsZSB0byB1cGRhdGUgJXMiLCBwYXRoMCk7CisJCXJldHVybiBlcnJv
+cigidW5hYmxlIHRvIHVwZGF0ZSAlcyIsIHBhdGgxKTsKIAlmb3JfZWFjaF9yZWYoYWRkX2luZm9f
+cmVmLCBOVUxMKTsKIAlmY2xvc2UoaW5mb19yZWZfZnApOwogCWFkanVzdF9zaGFyZWRfcGVybShw
+YXRoMSk7Ci0tIAoxLjUuMy42Ljg2MS5nZDc5NC1kaXJ0eQoK
+------=_Part_25928_18808672.1195693222253--
