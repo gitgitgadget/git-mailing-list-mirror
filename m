@@ -1,62 +1,62 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 3/3] Replace setenv(GIT_DIR_ENVIRONMENT, ...) with set_git_dir()
-Date: Thu, 22 Nov 2007 08:29:29 +0100
-Message-ID: <47452FD9.9000501@viscovery.net>
-References: <11956768414090-git-send-email-prohaska@zib.de>	<11956768412804-git-send-email-prohaska@zib.de>	<11956768413887-git-send-email-prohaska@zib.de>	<11956768412755-git-send-email-prohaska@zib.de>	<Pine.LNX.4.64.0711220121560.27959@racer.site> <7v63zv9fel.fsf@gitster.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Temporary directories getting errantly added into trees
+Date: Wed, 21 Nov 2007 23:30:59 -0800
+Message-ID: <20071122073059.GA28197@soma>
+References: <4744FCD9.7020102@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
-	Dmitry Kakurin <Dmitry.Kakurin@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 08:29:52 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Thu Nov 22 08:31:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv6VT-0007ZZ-Mm
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 08:29:52 +0100
+	id 1Iv6Ws-0007wJ-2M
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 08:31:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751639AbXKVH3e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 02:29:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751528AbXKVH3e
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 02:29:34 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:31828 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751279AbXKVH3d (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 02:29:33 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Iv6UV-0000yo-HY; Thu, 22 Nov 2007 08:28:51 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 640544E4; Thu, 22 Nov 2007 08:29:29 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7v63zv9fel.fsf@gitster.siamese.dyndns.org>
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1751073AbXKVHbB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 02:31:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751350AbXKVHbB
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 02:31:01 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:37232 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750971AbXKVHbA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 02:31:00 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 0DD797DC0FE;
+	Wed, 21 Nov 2007 23:30:59 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4744FCD9.7020102@vilain.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65745>
 
-Junio C Hamano schrieb:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Sam Vilain <sam@vilain.net> wrote:
+> I just got through a rather nasty debugging session with git-rebase,
+> which relies on a .dotest directory.  Turns out that .dotest was
+> accidentally added to the tree in the history of the commit that was
+> being rebased onto.
+
+Hi Sam,
+
+Ouch
+
+> There are a lot of temporary files like that made by various scripts -
+> eg, git-filter-branch makes .git-rewrite, etc.
 > 
->> Hi,
->>
->> On Wed, 21 Nov 2007, Steffen Prohaska wrote:
->>
->>> We have a function set_git_dir().  So let's use it, instead of setting 
->>> the evironment directly.
->> Does this not have a fundamental issue?  When you call other git programs 
->> with run_command(), you _need_ GIT_DIR to be set, no?
-> 
-> It is much worse.  set_git_dir() does not just setenv() but does
-> setup_git_env() as well.
+> I think it would be a good thing for all if you had to work very hard to
+> put files like this in the tree, or perhaps it would be better to go
+> through and make all the tools that create these temporary directories
+> create them under .git instead.
 
-I don't see what's wrong with that. Could you please explain?
+Polluting the working tree is definitely a bad thing to do IMNSHO.
 
--- Hannes
+git-rebase --merge already puts its temporary directory inside
+.git/.dotest-merge.  I hoped to set an example with that and
+get more tools to do the same; but it hasn't happened yet...
+
+-- 
+Eric Wong
