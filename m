@@ -1,121 +1,104 @@
-From: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-Subject: [PATCH v2] builtin-commit: Include the diff in the commit message when verbose.
-Date: Wed, 21 Nov 2007 21:54:49 -0500
-Message-ID: <1195700089-8326-1-git-send-email-krh@redhat.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH 4/3] git-svn: allow `info' command to work offline
+Date: Wed, 21 Nov 2007 18:23:43 -0800
+Message-ID: <20071122022343.GA9992@soma>
+References: <1195675039-26746-1-git-send-email-ddkilzer@kilzer.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Nov 22 03:09:28 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "David D. Kilzer" <ddkilzer@kilzer.net>
+X-From: git-owner@vger.kernel.org Thu Nov 22 03:24:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv1VO-0000kO-9u
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 03:09:26 +0100
+	id 1Iv1jY-0004JA-Hf
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 03:24:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753822AbXKVCJE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Nov 2007 21:09:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753535AbXKVCJD
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 21:09:03 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:56508 "EHLO mx1.redhat.com"
+	id S1753962AbXKVCXq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 21:23:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753936AbXKVCXq
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 21:23:46 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:37069 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753383AbXKVCJB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 21:09:01 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lAM28xcq032384;
-	Wed, 21 Nov 2007 21:08:59 -0500
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lAM28xHI017043;
-	Wed, 21 Nov 2007 21:08:59 -0500
-Received: from localhost.localdomain (sebastian-int.corp.redhat.com [172.16.52.221])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lAM28weK007884;
-	Wed, 21 Nov 2007 21:08:58 -0500
-X-Mailer: git-send-email 1.5.3.6.1993.gf154-dirty
+	id S1753852AbXKVCXp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 21:23:45 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 2D2E97DC0FE;
+	Wed, 21 Nov 2007 18:23:44 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1195675039-26746-1-git-send-email-ddkilzer@kilzer.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65735>
 
-run_diff_index() and the entire diff machinery is hard coded to output
-to stdout, so just redirect that and restore it when done.
+Cache the repository root whenever we connect to the repository.
+This will allow us to notice URL changes if the user changes the
+URL in .git/config, too.
 
-Signed-off-by: Kristian H=C3=B8gsberg <krh@redhat.com>
+If the repository is no longer accessible, or if `git svn info'
+is the first and only command run; then '(offline)' will be
+displayed for "Repository Root:" in the output.
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
 
-Thinking about this, the dup-dance really belongs in wt-status.c since
-that interface promises that it can redirect to a FILE *.  Also the
-fflush()'es in the earlier patch could go wrong if stdout ends up flush=
-ing
-during run_diff_index() and fp has unflushed data.
+ David:
 
- builtin-commit.c |    8 +++++++-
- wt-status.c      |   16 ++++++++++++++++
- 2 files changed, 23 insertions(+), 1 deletions(-)
+ I'll apply this once you've verified my fix to 1/3 is correct behavior,
+ too.
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index e8893f8..39764ae 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -662,7 +662,7 @@ int cmd_commit(int argc, const char **argv, const c=
-har *prefix)
- 	int header_len;
- 	struct strbuf sb;
- 	const char *index_file, *reflog_msg;
--	char *nl;
-+	char *nl, *p;
- 	unsigned char commit_sha1[20];
- 	struct ref_lock *ref_lock;
-=20
-@@ -758,6 +758,12 @@ int cmd_commit(int argc, const char **argv, const =
-char *prefix)
- 		rollback_index_files();
- 		exit(1);
- 	}
-+
-+	/* Truncate the message just before the diff, if any. */
-+	p =3D strstr(sb.buf, "\ndiff --git a/");
-+	if (p !=3D NULL)
-+		strbuf_setlen(&sb, p - sb.buf);
-+
- 	stripspace(&sb, 1);
- 	if (sb.len < header_len || message_is_empty(&sb, header_len)) {
- 		rollback_index_files();
-diff --git a/wt-status.c b/wt-status.c
-index d3c10b8..0e0439f 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -315,12 +315,28 @@ static void wt_status_print_untracked(struct wt_s=
-tatus *s)
- static void wt_status_print_verbose(struct wt_status *s)
- {
- 	struct rev_info rev;
-+	int saved_stdout;
-+
-+	fflush(s->fp);
-+
-+	/* Sigh, the entire diff machinery is hardcoded to output to
-+	 * stdout.  Do the dup-dance...*/
-+	saved_stdout =3D dup(STDOUT_FILENO);
-+	if (saved_stdout < 0 ||dup2(fileno(s->fp), STDOUT_FILENO) < 0)
-+		die("couldn't redirect stdout\n");
-+
- 	init_revisions(&rev, NULL);
- 	setup_revisions(0, NULL, &rev, s->reference);
- 	rev.diffopt.output_format |=3D DIFF_FORMAT_PATCH;
- 	rev.diffopt.detect_rename =3D 1;
- 	wt_read_cache(s);
- 	run_diff_index(&rev, 1);
-+
-+	fflush(stdout);
-+
-+	if (dup2(saved_stdout, STDOUT_FILENO) < 0)
-+		die("couldn't restore stdout\n");
-+	close(saved_stdout);
+ git-svn.perl |   26 +++++++++++++++++++++++---
+ 1 files changed, 23 insertions(+), 3 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 7d86870..43e1591 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -782,9 +782,14 @@ sub cmd_info {
+ 	$result .= "Name: " . basename($path) . "\n" if $file_type ne "dir";
+ 	$result .= "URL: " . $full_url . "\n";
+ 
+-	my $repos_root = $gs->ra->{repos_root};
+-	Git::SVN::remove_username($repos_root);
+-	$result .= "Repository Root: $repos_root\n";
++	eval {
++		my $repos_root = $gs->repos_root;
++		Git::SVN::remove_username($repos_root);
++		$result .= "Repository Root: $repos_root\n";
++	};
++	if ($@) {
++		$result .= "Repository Root: (offline)\n";
++	}
+ 	$result .= "Repository UUID: $uuid\n" unless $diff_status eq "A";
+ 	$result .= "Revision: " . ($diff_status eq "A" ? 0 : $rev) . "\n";
+ 
+@@ -1773,9 +1778,24 @@ sub ra_uuid {
+ 	$self->{ra_uuid};
  }
-=20
- void wt_status_print(struct wt_status *s)
---=20
-1.5.3.4
+ 
++sub _set_repos_root {
++	my ($self, $repos_root) = @_;
++	my $k = "svn-remote.$self->{repo_id}.reposRoot";
++	$repos_root ||= $self->ra->{repos_root};
++	tmp_config($k, $repos_root);
++	$repos_root;
++}
++
++sub repos_root {
++	my ($self) = @_;
++	my $k = "svn-remote.$self->{repo_id}.reposRoot";
++	eval { tmp_config('--get', $k) } || $self->_set_repos_root;
++}
++
+ sub ra {
+ 	my ($self) = shift;
+ 	my $ra = Git::SVN::Ra->new($self->{url});
++	$self->_set_repos_root($ra->{repos_root});
+ 	if ($self->use_svm_props && !$self->{svm}) {
+ 		if ($self->no_metadata) {
+ 			die "Can't have both 'noMetadata' and ",
+-- 
+Eric Wong
