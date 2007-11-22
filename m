@@ -1,58 +1,58 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Temporary directories getting errantly added into trees
-Date: Thu, 22 Nov 2007 16:51:53 +1300
-Message-ID: <4744FCD9.7020102@vilain.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 4/3] git-svn: allow `info' command to work offline
+Date: Wed, 21 Nov 2007 19:56:05 -0800
+Message-ID: <20071122035605.GB30134@soma>
+References: <1195675039-26746-1-git-send-email-ddkilzer@kilzer.net> <20071122022343.GA9992@soma> <4744F66D.7030007@apple.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 22 04:53:19 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "David D. Kilzer" <ddkilzer@kilzer.net>, git@vger.kernel.org
+To: Adam Roben <aroben@apple.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 04:56:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv37u-0006cT-Vl
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 04:53:19 +0100
+	id 1Iv3B3-0007F1-Us
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 04:56:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752553AbXKVDwE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 22:52:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752543AbXKVDwD
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 22:52:03 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:46038 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752493AbXKVDwB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 22:52:01 -0500
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 4359127C105; Thu, 22 Nov 2007 16:51:59 +1300 (NZDT)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id C3E8927C0F8;
-	Thu, 22 Nov 2007 16:51:55 +1300 (NZDT)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1753430AbXKVD4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 22:56:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753347AbXKVD4J
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 22:56:09 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:37124 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753294AbXKVD4G (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 22:56:06 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 413BB7DC0FE;
+	Wed, 21 Nov 2007 19:56:06 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4744F66D.7030007@apple.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65740>
 
-I just got through a rather nasty debugging session with git-rebase,
-which relies on a .dotest directory.  Turns out that .dotest was
-accidentally added to the tree in the history of the commit that was
-being rebased onto.
+Adam Roben <aroben@apple.com> wrote:
+> Eric Wong wrote:
+> >+	my $k = "svn-remote.$self->{repo_id}.reposRoot";
+> >  
+> 
+> "repoRoot" seems slightly more intuitive than "reposRoot", given that 
+> "repository" is normally abbreviated as "repo".
 
-There are a lot of temporary files like that made by various scripts -
-eg, git-filter-branch makes .git-rewrite, etc.
+>From a git-only point of view, yes.  But it's repos_root everywhere
+inside git-svn because SVN uses "*_repos_root" for their API.
+This is inside the hidden metadata file that users
+shouldn't have to touch anyways.
 
-I think it would be a good thing for all if you had to work very hard to
-put files like this in the tree, or perhaps it would be better to go
-through and make all the tools that create these temporary directories
-create them under .git instead.
+On a side note:
 
-Thoughts/comments?
-Sam.
+I personally *hate* camelCase names (or worse, alllowercase), but
+git config doesn't allow underscores in config keys for some
+strange reason (especially strange since most of the git and Linux
+source code use snake_case...)
+
+-- 
+Eric Wong
