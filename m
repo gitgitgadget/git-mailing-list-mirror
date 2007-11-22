@@ -1,138 +1,67 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add path-limiting to git-add--interactive
-Date: Thu, 22 Nov 2007 01:45:48 -0800
-Message-ID: <7vd4u27gvn.fsf@gitster.siamese.dyndns.org>
-References: <7vk5obb09a.fsf@gitster.siamese.dyndns.org>
-	<1195695384-41329-1-git-send-email-win@wincent.com>
-	<7vpry27id0.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH 2/4] Teach git-add--interactive to accept a file path to patch
+Date: Thu, 22 Nov 2007 01:50:31 -0800
+Message-ID: <7v8x4q7gns.fsf@gitster.siamese.dyndns.org>
+References: <1195648601-21736-1-git-send-email-win@wincent.com>
+	<1195648601-21736-2-git-send-email-win@wincent.com>
+	<1195648601-21736-3-git-send-email-win@wincent.com>
+	<20071121152118.GG24108@sigill.intra.peff.net>
+	<7vejejfi28.fsf@gitster.siamese.dyndns.org>
+	<C6E820C8-91E9-48B2-9219-377CA83163A7@wincent.com>
+	<7vk5obb09a.fsf@gitster.siamese.dyndns.org>
+	<20071122091356.GD7153@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, peff@peff.net
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Thu Nov 22 10:46:14 2007
+Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 22 10:50:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iv8dS-0003dJ-7s
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 10:46:14 +0100
+	id 1Iv8hz-00055k-C7
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 10:50:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751506AbXKVJp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 04:45:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751489AbXKVJp4
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 04:45:56 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:36574 "EHLO
+	id S1751597AbXKVJuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 04:50:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751528AbXKVJuh
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 04:50:37 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:57040 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751304AbXKVJpz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 04:45:55 -0500
+	with ESMTP id S1751260AbXKVJuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 04:50:37 -0500
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 45DB72F0;
-	Thu, 22 Nov 2007 04:46:16 -0500 (EST)
+	by sceptre.pobox.com (Postfix) with ESMTP id 20C602EF;
+	Thu, 22 Nov 2007 04:50:58 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 6A767977BD;
-	Thu, 22 Nov 2007 04:46:12 -0500 (EST)
-In-Reply-To: <7vpry27id0.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 22 Nov 2007 01:13:47 -0800")
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 9CEE3977CC;
+	Thu, 22 Nov 2007 04:50:54 -0500 (EST)
+In-Reply-To: <20071122091356.GD7153@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 22 Nov 2007 04:13:57 -0500")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65766>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Wincent Colaiuta <win@wincent.com> writes:
+> On Wed, Nov 21, 2007 at 04:18:57PM -0800, Junio C Hamano wrote:
 >
->> @@ -56,9 +56,14 @@ sub list_modified {
->>  	my ($only) = @_;
->>  	my (%data, @return);
->>  	my ($add, $del, $adddel, $file);
->> +	my @tracked = grep {
->> +		defined run_cmd_pipe(qw(git ls-files
->> +			                --exclude-standard --), $_)
->> +	} @ARGV;
->> +	return if $#tracked == -1 && $#ARGV != -1;
+>> What I meant was that if "git add -i" (unrestricted) shows paths
+>> from a set A, "git add -i paths..." should show paths from a
+>> subset of the set A and that subset should be defined with the
+>> existing ls-files pathspec semantics.
 >
-> Eek.  why?
->
-> Did you mean to say:
->
->     my @tracked = run_cmd_pipe(gw(git ls-files --exclude-standard --) @ARGV);
->
-> It would also make sense to use --error-unmatch and perhaps --with-tree=HEAD
-> like git-commit.sh does.
+> Ah, I think that is definitely the right behavior. But it does raise one
+> more question: is going right into the 'add hunk' interface the correct
+> behavior, or is that an orthogonal issue?
 
-Actually, the ls-files need to be chomped, but I'd prefer to
-run -z form of the command and split with NUL.  Does run_cmd_pipe()
-crap^Wstuff support that?
+I am moderately negative about "paths imply jump to patch
+subcommand".  An option to git-add--interactive that tells which
+subcommand to initially choose is probably acceptable, though.
 
-On top of:
-
- * refactor patch_update_cmd,
- * teach builtin-add to pass multiple paths,
- * add path-limiting to git-add--interacgtive (with an obvious
-   suggested above),
-
-the attached patch teaches [p]atch subcommand to take multiple
-selections.  With these, you can do:
-
-	$ git add -i 'u*.h'
-	What now> p
-                   staged     unstaged path
-          1:    unchanged        +1/-0 unpack-trees.h
-          2:    unchanged        +1/-0 utf8.h
-        Patch update>> *
-        diff --git a/unpack-trees.h b/unpack-trees.h
-	...
-        Stage this hunk [y/n/a/d/?]? y
-        ...
-	diff --git a/utf8.h b/utf8.h
-        ...
-
--- >8 --
-git-add -i: allow multiple selection in [p]atch subcommand
-
-This allows more than one files from the list to be chosen from
-the patch subcommand instead of going through the file one by
-one.
-
-This also updates the "list-and-choose" UI for usability.  When
-the prompt ends with ">>", if you type '*' to choose all
-choices, the prompt immediately returns the choice without
-requiring an extra empty line to confirm the selection.
-
----
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 9236ffc..372dc2c 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -256,7 +256,7 @@ sub list_and_choose {
- 				$chosen[$i] = $choose;
- 			}
- 		}
--		last if ($opts->{IMMEDIATE});
-+		last if ($opts->{IMMEDIATE} || $line eq '*');
- 	}
- 	for ($i = 0; $i < @stuff; $i++) {
- 		if ($chosen[$i]) {
-@@ -563,12 +563,12 @@ sub patch_update_cmd {
- 	@mods = grep { !($_->{BINARY}) } @mods;
- 	return if (!@mods);
- 
--	my ($it) = list_and_choose({ PROMPT => 'Patch update',
--				     SINGLETON => 1,
--				     IMMEDIATE => 1,
--				     HEADER => $status_head, },
--				   @mods);
--	patch_update_file($it->{VALUE}) if ($it);
-+	my (@them) = list_and_choose({ PROMPT => 'Patch update',
-+				       HEADER => $status_head, },
-+				     @mods);
-+	for (@them) {
-+		patch_update_file($_->{VALUE});
-+	}
- }
- 
- sub patch_update_file {
+Would the patch I just sent out (you need to assemble the parts)
+make things easier?
