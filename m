@@ -1,75 +1,113 @@
-From: Johannes Gilger <heipei@hackvalue.de>
-Subject: Re: Git Screencast ?
-Date: Fri, 23 Nov 2007 11:14:27 +0100
-Message-ID: <20071123101426.GA15902@dualtron.vpn.rwth-aachen.de>
-References: <fi1a9f$30q$1@ger.gmane.org> <47453C6D.1080403@op5.se> <fi5bet$brl$1@ger.gmane.org>
-Reply-To: Johannes Gilger <heipei@hackvalue.de>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: Wishlist for a bundle-only transport mode
+Date: Fri, 23 Nov 2007 11:13:55 +0100
+Message-ID: <8aa486160711230213q6038037epe2cbd0240db8b612@mail.gmail.com>
+References: <8aa486160711210654p357ccd87i4809e0cda9471303@mail.gmail.com>
+	 <8aa486160711220142w25e9c9b6vbafa34a287dde7eb@mail.gmail.com>
+	 <7v4pfe7g4e.fsf@gitster.siamese.dyndns.org>
+	 <200711231018.49322.jnareb@gmail.com>
+	 <7vejehux3y.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Cc: git@vger.kernel.org
-To: Michael Donaghy <mike@mikedonaghy.org>
-X-From: git-owner@vger.kernel.org Fri Nov 23 11:13:37 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jakub Narebski" <jnareb@gmail.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 23 11:14:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvVXT-0001x2-9l
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 11:13:35 +0100
+	id 1IvVY7-0002A4-Go
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 11:14:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755125AbXKWKNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2007 05:13:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755074AbXKWKNQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 05:13:16 -0500
-Received: from avalon.gnuzifer.de ([85.10.199.84]:43269 "EHLO
-	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754867AbXKWKNP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2007 05:13:15 -0500
-Received: from 0-031.vpn.rwth-aachen.de ([134.130.240.31]:45675 helo=localhost)
-	by avalon.gnuzifer.de with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <heipei@hackvalue.de>)
-	id 1IvVX5-0007fj-SZ; Fri, 23 Nov 2007 11:13:12 +0100
+	id S1755236AbXKWKN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2007 05:13:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754835AbXKWKN5
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 05:13:57 -0500
+Received: from rn-out-0910.google.com ([64.233.170.185]:49697 "EHLO
+	rn-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755154AbXKWKN4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2007 05:13:56 -0500
+Received: by rn-out-0102.google.com with SMTP id s46so4179541rnb
+        for <git@vger.kernel.org>; Fri, 23 Nov 2007 02:13:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=1FAeUXeUaZMw7Ed9aHVqmIuKRb6AfoP7f+2mkWAJ2FA=;
+        b=TA7HmnNFxiRFWs351O8NryeWhfPJyII7E9hoygOzu2+iBjHpyvIYj7N1bYLFdaVg3W1uYKtlDh8b51shwFcB4gALVgzGJQJwCXo8FK+CxVkCzUl8M5YUrKN0QhZsNoRGTnP6A8PNtuphWqBa7XOo69JilImNSaO0A56yhtofqwQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Q6Hjd3Ob5Im37UYHUKuV4SI+s4JTK9T7RT5xB/8fHIJ+w+lBZBsDKvKwZ47CynS6LxTulGdCROtYjSz/c7feFAMXC7F+7+vq0abuwCb7Nd8obz/CBHWdF9pdCvJKqaCXKzPeA5hyQBaQrMWApUcTnj+8Su7iWMhYaH0Esmi9dzc=
+Received: by 10.150.154.6 with SMTP id b6mr1814774ybe.1195812835345;
+        Fri, 23 Nov 2007 02:13:55 -0800 (PST)
+Received: by 10.150.199.9 with HTTP; Fri, 23 Nov 2007 02:13:55 -0800 (PST)
+In-Reply-To: <7vejehux3y.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <fi5bet$brl$1@ger.gmane.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-SA-Exim-Connect-IP: 134.130.240.31
-X-SA-Exim-Mail-From: heipei@hackvalue.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65890>
 
-On 22/11/07 20:47, Michael Donaghy wrote:
-> Yes thank you , although a screen cast would still be ideal , the 
-> documentation is very good,
-> also , what do you think of git-gui ? , I think it is the best one
+On Nov 23, 2007 10:31 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> I was disagreeing with Santi's "'push --bundle' and 'bundle
+> create' can be equivalent".  They can't be, as "push" is always
+> "update" and never "create".  So I do not quite get your "But for
+> that I think"; I think you are just agreeing with me.
+>
+> Even if we taught "push" to create (which I doubt would happen
+> due to its security and administrative implications), it would
+> not make the two any closer to being equivalent.  For them to
+> become equivalent, we would need to have "push" unlearn how to
+> update, which would never happen ;-).
+>
 
-Hi Michael,
+OK. So git push will never understand bundles.
 
-I think you're trying to hide the complexity of git. The problem with 
-graphical tools is that they hide complexity from the user, which in 
-some cases is only possibly/good if the user has understood the 
-underlying principles already. Also I think that there are many things 
-which can be done much quicker using a command-line than any gui (as all 
-of the people here will agree). Git is not Time-Machine (this thing from 
-Apple). It is also no good idea to try to view git from a svn's point of 
-view, or try to compare commands. It took me a while to get over that 
-and accept that git is different. I was frustated (and still am 
-sometimes) but i finally understood the whole concept.
+My motivation was to have a similar workflow with bundles as with
+pushes, or at least as similar as possible. So another possible
+workflow would be with a:
 
-About screencasts: I haven't watched that many screencasts in general, 
-but I can hardly imagine that they are better way of teaching things 
-than reading a manual. Watching someone type in commands, hitting 
-"Pause", then trying it myself doesn't seem more intuitive to me than 
-just reading a manual and typing the commands given in regular 
-intervals. Maybe someone can enlighten me about the use of screencasts 
-(in a command-line environment).
+git bundle push [<bundle> [<refspec>]]
 
-Greetings,
-Jojo
+that creates a bundle
 
--- 
-Johannes Gilger <heipei@hackvalue.de>
-http://hackvalue.de/heipei/
-GPG-Key: 0x42F6DE81
-GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
+# Have a project with different branches (master, next, pu)
+$ git bundle push bundle.bdl
+# would create a complete bundle.bdl with all the local branches (with HEAD)
+
+# You send it to the other person and he does:
+$ git clone bundle.bdl project
+$ cat .git/config
+...
+[remote "origin"]
+        url = /path/to/bundle.bdl
+        fetch = +refs/heads/*:refs/remotes/origin/*
+
+# He makes changes, commits and so on and then he wants to send to back a bundle
+$ git bundle push [<remote>]
+# This creates an incremental bundle with the local branches (with
+HEAD) as specified
+# by remote.<remote>.* (possibly with an implicit "push" line
+"refs/heads/*:refs/heads/*"
+# And considering the remotes/origin/* as the bases for the bundle
+
+# Then I got it and do a:
+$ git remote add bundle /path/to/bundle
+$ git fetch
+
+# Now maybe I just want to send him the master branch
+$ git bundle push origin master:master
+
+# If I want to send him a complete bundle
+$ git bundle push
+
+The important part, for me, is to keep remote tracking branches to
+know the bases for the next bundle. It does not matter if it is "git
+push", "git bundle push", "git push --bundle", "git bundle update",
+...
+
+Santi
