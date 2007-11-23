@@ -1,82 +1,70 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: git --prune --aggresive
-Date: Fri, 23 Nov 2007 12:15:50 +0100
-Message-ID: <vpq3auxxleh.fsf@bauges.imag.fr>
-References: <200711231058.46578.jnareb@gmail.com>
-	<200711231108.16676.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Wishlist for a bundle-only transport mode
+Date: Fri, 23 Nov 2007 12:18:30 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711231132120.27959@racer.site>
+References: <8aa486160711210654p357ccd87i4809e0cda9471303@mail.gmail.com> 
+ <8aa486160711220142w25e9c9b6vbafa34a287dde7eb@mail.gmail.com> 
+ <7v4pfe7g4e.fsf@gitster.siamese.dyndns.org>  <200711231018.49322.jnareb@gmail.com>
+  <7vejehux3y.fsf@gitster.siamese.dyndns.org>
+ <8aa486160711230213q6038037epe2cbd0240db8b612@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 23 12:17:10 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 23 13:19:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvWWy-0005Gi-77
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 12:17:08 +0100
+	id 1IvXVB-0001M4-NC
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 13:19:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755036AbXKWLQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2007 06:16:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754816AbXKWLQv
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 06:16:51 -0500
-Received: from imag.imag.fr ([129.88.30.1]:50246 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753537AbXKWLQu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2007 06:16:50 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lANBFqmD002757
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 23 Nov 2007 12:15:52 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IvWVi-0000I8-H4; Fri, 23 Nov 2007 12:15:50 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IvWVi-0000t6-Er; Fri, 23 Nov 2007 12:15:50 +0100
-In-Reply-To: <200711231108.16676.jnareb@gmail.com> (Jakub Narebski's message of "Fri\, 23 Nov 2007 11\:08\:16 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 23 Nov 2007 12:15:52 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1756875AbXKWMSi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2007 07:18:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755852AbXKWMSi
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 07:18:38 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53508 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755600AbXKWMSh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2007 07:18:37 -0500
+Received: (qmail invoked by alias); 23 Nov 2007 12:18:35 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp016) with SMTP; 23 Nov 2007 13:18:35 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/8Li5x9lf8wi7HDHCw1bwafJiQIOiu9cMspmKy7a
+	Fq5ZTVTArepKah
+X-X-Sender: gene099@racer.site
+In-Reply-To: <8aa486160711230213q6038037epe2cbd0240db8b612@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65895>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hi,
 
-> Jakub Narebski wrote:
->
->> 2396:[gitweb/web@git]# git gc --aggresive --prune
->> usage: git-gc [--prune] [--aggressive]
->> 2397:[gitweb/web@git]# git gc --prune --aggresive
->> usage: git-gc [--prune] [--aggressive]
->> 2398:[gitweb/web@git]# git --version
->> git version 1.5.3.5
->> 
->> Either usage string should be fixed, as it suggests that you can specify 
->> both --aggresive and --prune, or git-gc should.
->
-> I'm very sorry, my mistake: --aggresive instead of --aggressive.
-> Please disregard this message...
+On Fri, 23 Nov 2007, Santi B?jar wrote:
 
-Now, for the cool thing: with the latest git, I get the following.
+> My motivation was to have a similar workflow with bundles as with 
+> pushes, or at least as similar as possible. So another possible workflow 
+> would be with a:
+> 
+> git bundle push [<bundle> [<refspec>]]
+> 
+> that creates a bundle
 
-$ git gc --aggresive --prune 
-error: unknown option `aggresive'       <----- this is what you wanted.
-usage: git-gc [options]
+What about
 
-    --prune               prune unreferenced objects
-    --aggressive          be more thorough (increased runtime)
-    --auto                enable auto-gc mode
+	git bundle create retort.bundle --all \
+		--not $(git ls-remote the-other.bundle | cut -c1-40)
 
-$ _
+Hmm?
 
-Thanks, parse_options.[ch]!
+If you need that quite often, it should not be hard at all for you to add 
+an option to the "create" named "--haves-from=<bundle>".
 
--- 
-Matthieu
+But I'd rather script it.
+
+Ciao,
+Dscho
