@@ -1,84 +1,81 @@
-From: Sam Vilain <sam.vilain@catalyst.net.nz>
-Subject: Re: [PATCH] Allow HTTP proxy to be overridden in config
-Date: Fri, 23 Nov 2007 16:35:44 +1300
-Organization: Catalyst IT (NZ) Ltd
-Message-ID: <47464A90.4030509@catalyst.net.nz>
-References: <1195776420-22075-1-git-send-email-sam.vilain@catalyst.net.nz> <7voddl24b7.fsf@gitster.siamese.dyndns.org>
+From: Dan Zwell <dzwell@gmail.com>
+Subject: Re: [PATCH 2/5] Don't return 'undef' in case called in a vector context.
+Date: Thu, 22 Nov 2007 22:15:50 -0600
+Message-ID: <474653F6.2060803@zwell.net>
+References: <47112491.8070309@gmail.com>	<20071015034338.GA4844@coredump.intra.peff.net>	<20071016194709.3c1cb3a8@danzwell.com>	<20071017015152.GN13801@spearce.org>	<20071022164048.71a3dceb@danzwell.com>	<20071023042702.GB28312@coredump.intra.peff.net>	<20071023035221.66ea537f@danzwell.com>	<20071102224100.71665182@paradox.zwell.net>	<20071104045735.GA12359@segfault.peff.net>	<7v640ivagv.fsf@gitster.siamese.dyndns.org>	<20071104054305.GA13929@sigill.intra.peff.net>	<20071110180109.34febc3f@paradox.zwell.net>	<20071122045534.435f01bb@paradox.zwell.net> <7vd4u23rpg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, francois@debian.org
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Wincent Colaiuta <win@wincent.com>,
+	Jonathan del Strother <maillist@steelskies.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	Jakub Narebski <jnareb@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 23 05:06:49 2007
+X-From: git-owner@vger.kernel.org Fri Nov 23 05:16:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvPoV-0004Ke-Je
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 05:06:48 +0100
+	id 1IvPxt-00061w-0r
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 05:16:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753252AbXKWEGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 23:06:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753032AbXKWEG3
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 23:06:29 -0500
-Received: from godel.catalyst.net.nz ([202.78.240.40]:39254 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752081AbXKWEG3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 23:06:29 -0500
-X-Greylist: delayed 1814 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Nov 2007 23:06:28 EST
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=[192.168.2.22])
-	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <sam.vilain@catalyst.net.nz>)
-	id 1IvPKT-0006L4-Gf; Fri, 23 Nov 2007 16:35:45 +1300
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <7voddl24b7.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.94.2.0
+	id S1753655AbXKWEQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 23:16:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753618AbXKWEQL
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 23:16:11 -0500
+Received: from py-out-1112.google.com ([64.233.166.180]:42991 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753218AbXKWEQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 23:16:09 -0500
+Received: by py-out-1112.google.com with SMTP id u77so8271256pyb
+        for <git@vger.kernel.org>; Thu, 22 Nov 2007 20:16:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        bh=ec+iBiZmHG8NDTicsnCsMS+0fOq6gn7ng5KTZCn01rQ=;
+        b=gOC4LCkuGoWfLNWpvAQq637dpeAdJH4U5aNV/vpnvYnUbhgSZx3lk6cTZLAiCxKb17ho+OIIwGEoaQtIQiCZyHYWPyoQTNzow9FtgpZgUjZjlz/4oMlC2ISKvP02pCSMKVfqy1SgsuxbfZxX/Av1ZU6ahuLkyuCP2vC4Lp1Ejow=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=H3s4LdE1U2/WLdrPuzI+FdNwfDOzbD86UdyDiGp1RpMH/Zesh1e0A3udvQRAUUsVwJPqpPYT9+G25U6cSQuTqY8dMxNXCpooLScCrix0SHPIFZLR9SxpJCV6mSV7St/68SbxhB+xYHSSDvB1dTZzM/GDsse974jDPBLnO1HzDWw=
+Received: by 10.35.68.3 with SMTP id v3mr11232772pyk.1195791368800;
+        Thu, 22 Nov 2007 20:16:08 -0800 (PST)
+Received: from ?143.44.70.185? ( [143.44.70.185])
+        by mx.google.com with ESMTPS id v15sm3846720pyh.2007.11.22.20.16.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 22 Nov 2007 20:16:08 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071121)
+In-Reply-To: <7vd4u23rpg.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65871>
 
 Junio C Hamano wrote:
->> The http_proxy / HTTPS_PROXY variables used by curl to control
->> proxying may not be suitable for git.  Allow the user to override them
->> in the configuration file.
->> ---
->>   In particular, privoxy will block directories called /ad/ ... d'oh!
->> +++ b/Documentation/config.txt
->> +http.proxy::
->> +	Override the HTTP proxy, normally configured using the 'http_proxy'
->> +	environment variable (see gitlink:curl[1]).
+> Dan Zwell <dzwell@zwell.net> writes:
 > 
-> This may work around the issue you cited, but it makes me wonder
-> if it is a road to insanity.  Does the curl library expect that
-> (1) each and every HTTP talking application that uses the
-> library offer this kind of knob for its users to tweak, and (2)
-> users set the knob for each and every one of such application?
+>> diff --git a/perl/Git.pm b/perl/Git.pm
+>> index dca92c8..6603762 100644
+>> --- a/perl/Git.pm
+>> +++ b/perl/Git.pm
+>> @@ -508,7 +508,7 @@ sub config {
+>>  		my $E = shift;
+>>  		if ($E->value() == 1) {
+>>  			# Key not found.
+>> -			return undef;
+>> +			return;
+>>  		} else {
+>>  			throw $E;
+>>  		}
+> 
+> Shouldn't the same fix made to config_bool as well?
+> 
 
-This is true.  However I still think that it is a useful feature for
-many users, with few side effects.  If nothing else the bit on the man
-page will prompt them to think, "oh, I should set that in the environment".
+I didn't realize it at the time, but yes, config_bool needs this (though 
+the only time config_bool is evaluated in a list context should be when 
+it is evaluated as an argument to another function). I'll make the change.
 
-> I would say if privoxy cannot be tweaked to allow /ad/ in chosen
-> context (e.g. /ad/ in general is rejected but /objects/ad/ is
-> Ok), that is what needs to be fixed.
-> Or it would be the use of such a broken proxy by the user.  That
-> can be fixed and much easily.
-
-Yes - but consider the dilemma of the user.  They've apt-get installed
-this privoxy thing and figured out how to set their applications to use
-it.  Now, it doesn't work and they think it is the proxy in the way, and
-they've no idea that they might be able to reconfigure it.  This way
-they can tell git to bypass it.
-
-I don't know, I see your point and pretty much agree with it.  It just
-seems like something that might come in handy (as well as be another
-vector for something you need to check when you get HTTP fetch issues -
-so maybe a command-line option would be better).
-
-Actually something that would really have helped is more documentation
-of the various GIT_CURL_* environment variables available for debugging.
--- 
-Sam Vilain, Chief Yak Shaver, Catalyst IT (NZ) Ltd.
-phone: +64 4 499 2267        PGP ID: 0x66B25843
+Dan
