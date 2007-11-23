@@ -1,65 +1,51 @@
-From: "Christian MICHON" <christian.michon@gmail.com>
-Subject: how to change/fake the time for next commit ?
-Date: Fri, 23 Nov 2007 01:29:45 +0100
-Message-ID: <46d6db660711221629j5d294a5dp4771778e38b14962@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: how to change/fake the time for next commit ?
+Date: Fri, 23 Nov 2007 00:34:36 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711230032320.27959@racer.site>
+References: <46d6db660711221629j5d294a5dp4771778e38b14962@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 23 01:30:07 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git <git@vger.kernel.org>
+To: Christian MICHON <christian.michon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 23 01:35:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvMQo-0000eS-2A
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 01:30:06 +0100
+	id 1IvMVu-0002Et-Uh
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 01:35:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751989AbXKWA3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 19:29:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751965AbXKWA3s
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 19:29:48 -0500
-Received: from wa-out-1112.google.com ([209.85.146.180]:19429 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751832AbXKWA3r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 19:29:47 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so3323939wah
-        for <git@vger.kernel.org>; Thu, 22 Nov 2007 16:29:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=2yTGNVIPBrEt24yq4jG+G9mFKdLagagRKbcV6z4IxJ4=;
-        b=oxh/QWQhqJg0rSVoBeJmCGNuOoHyK+HVJn3m8gi1bG3SEpkkOJXd/MHhbi6MxxciJGNHjGblgQLwYyPC8nvR0ddCTO00Z/aXPfikZHo/IZPhMy88k/Yn4kv6Vy2IaaBAzP4lATPH29ck47DgrcG6H3wyrcQKdksD1mtaURSqbJU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=CUzPQOEBmfQKJGCviM6ow9y4S/6eMA0oy8CDSx2zgPS38miX/fdtDa1DCl4ZUsOP4/Sl7ChEHPWShJkkTqv5PfCyGN58+dceY0TFftQKbIP8hCa/6+rQfFgAp93UkLue+zkj9Jp88VXSXgcR6bLsM4NXntp3I6MAGIhyZ03oZFs=
-Received: by 10.115.22.1 with SMTP id z1mr881883wai.1195777785948;
-        Thu, 22 Nov 2007 16:29:45 -0800 (PST)
-Received: by 10.115.18.10 with HTTP; Thu, 22 Nov 2007 16:29:45 -0800 (PST)
-Content-Disposition: inline
+	id S1752102AbXKWAem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 19:34:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752072AbXKWAem
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 19:34:42 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48981 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752042AbXKWAel (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 19:34:41 -0500
+Received: (qmail invoked by alias); 23 Nov 2007 00:34:39 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp001) with SMTP; 23 Nov 2007 01:34:39 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19SPvJZyqFSutggc2FeIve8fVEu17UZWwKg93fo2P
+	5ylFwJPOsAcwyD
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46d6db660711221629j5d294a5dp4771778e38b14962@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65862>
 
-Hi Git list,
+Hi,
 
-I'd like to recreate a git repo with kernel version, using exclusively
-tar.bz2 files.
+On Fri, 23 Nov 2007, Christian MICHON wrote:
 
-I already did such approach in the past by script, but usually the
-dates of commit are the timestamps of current tar imports. I'd like
-the date of commit to match any date I would give (without changing
-the time on my linux system): the date I would give would be (of
-course) the date of the released version.
+> I already did such approach in the past by script, but usually the
+> dates of commit are the timestamps of current tar imports.
 
-example: date of 2.6.23.8 release was 2007-11-16 18:16 UTC, so if I
-import linux-2.6.23.8.tar.bz2 into a dedicated "2.6.23.8" branch, I'd
-like the commit to have "2007-11-16 18:16 UTC" as date.
+Have you tried setting the environment variables GIT_COMMITTER_DATE and 
+GIT_AUTHOR_DATE before committing?
 
-Is there a way to do this, by plumbing or porcelain ?
-
--- 
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
+Hth,
+Dscho
