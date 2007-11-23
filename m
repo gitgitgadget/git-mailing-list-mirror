@@ -1,63 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (topics)
-Date: Fri, 23 Nov 2007 13:23:44 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711231319220.27959@racer.site>
-References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org>
- <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org>
- <7vir4d40sw.fsf@gitster.siamese.dyndns.org> <7vwsso3poo.fsf@gitster.siamese.dyndns.org>
- <7vfxz89x9q.fsf@gitster.siamese.dyndns.org> <7vabpctx3b.fsf@gitster.siamese.dyndns.org>
- <7vsl30eyuk.fsf@gitster.siamese.dyndns.org> <7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
- <20071123103003.GB6754@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 23 14:24:16 2007
+From: David Symonds <dsymonds@gmail.com>
+Subject: [PATCH] Mention that git-rm can be an appropriate resolution as well as git-add.
+Date: Sat, 24 Nov 2007 00:38:50 +1100
+Message-ID: <11958251302874-git-send-email-dsymonds@gmail.com>
+Cc: git@vger.kernel.org, David Symonds <dsymonds@gmail.com>
+To: Junio Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 23 14:39:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvYVw-0007dS-07
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 14:24:12 +0100
+	id 1IvYkX-00057v-TX
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 14:39:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753631AbXKWNXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2007 08:23:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752493AbXKWNXw
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 08:23:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56622 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752141AbXKWNXv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2007 08:23:51 -0500
-Received: (qmail invoked by alias); 23 Nov 2007 13:23:49 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp054) with SMTP; 23 Nov 2007 14:23:49 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19jXdYPSH9jRVVKMGZ+dhHaB4GXGvxoZd2Q3Paxoe
-	WFvv0iLwKGOpt7
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071123103003.GB6754@sigill.intra.peff.net>
-X-Y-GMX-Trusted: 0
+	id S1755827AbXKWNi7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2007 08:38:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755624AbXKWNi7
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 08:38:59 -0500
+Received: from ipmail05.adl2.internode.on.net ([203.16.214.145]:22462 "EHLO
+	ipmail05.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753252AbXKWNi6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Nov 2007 08:38:58 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah4FAI1mRkd5LDXQ/2dsb2JhbACBWw
+X-IronPort-AV: E=Sophos;i="4.21,456,1188743400"; 
+   d="scan'208";a="528407"
+Received: from ppp121-44-53-208.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.53.208])
+  by ipmail05.adl2.internode.on.net with ESMTP; 24 Nov 2007 00:08:56 +1030
+X-Mailer: git-send-email 1.5.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65899>
 
-Hi,
+Especially when using git-cherry-pick, removing files that are unmerged can be
+a logical action. This patch merely changes the informative text to be less
+confusing.
 
-On Fri, 23 Nov 2007, Jeff King wrote:
+Signed-off-by: David Symonds <dsymonds@gmail.com>
+---
+ builtin-revert.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> On Fri, Nov 23, 2007 at 12:48:25AM -0800, Junio C Hamano wrote:
-> 
-> > * jk/send-pack (Tue Nov 20 06:18:01 2007 -0500) 29 commits
-> >  + send-pack: cluster ref status reporting
-> 
-> Did we decide that printing the "maybe you need to pull" hint is not 
-> worth doing?
-
-Maybe we could change the (non-fast forward) message into (non-fast 
-forward; need to pull?).
-
-Just an idea.
-
-Ciao,
-Dscho
+diff --git a/builtin-revert.c b/builtin-revert.c
+index 365b330..d9ed40d 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -366,7 +366,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 			die ("Error wrapping up %s", defmsg);
+ 		fprintf(stderr, "Automatic %s failed.  "
+ 			"After resolving the conflicts,\n"
+-			"mark the corrected paths with 'git add <paths>' "
++			"mark the corrected paths with 'git add <paths>' or 'git rm <paths>' "
+ 			"and commit the result.\n", me);
+ 		if (action == CHERRY_PICK) {
+ 			fprintf(stderr, "When commiting, use the option "
+-- 
+1.5.3.1
