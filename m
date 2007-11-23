@@ -1,74 +1,82 @@
-From: Michael Donaghy <mike@mikedonaghy.org>
-Subject: Re: Git Screencast ?
-Date: Thu, 22 Nov 2007 20:47:07 -0500
-Message-ID: <fi5bet$brl$1@ger.gmane.org>
-References: <fi1a9f$30q$1@ger.gmane.org> <47453C6D.1080403@op5.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [WIP PATCH] Add 'git fast-export', the sister of 'git fast-import'
+Date: Fri, 23 Nov 2007 02:11:05 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711230149430.27959@racer.site>
+References: <Pine.LNX.4.64.0711210336210.27959@racer.site>  <fi5743$32p$1@ger.gmane.org>
+  <Pine.LNX.4.64.0711230050270.27959@racer.site>
+ <f329bf540711221723g2754ce03r4da6d429c45668c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 23 02:47:54 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: hanwen@xs4all.nl
+X-From: git-owner@vger.kernel.org Fri Nov 23 03:11:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvNe4-0005Y8-Nk
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 02:47:53 +0100
+	id 1IvO0v-00039T-WB
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 03:11:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752408AbXKWBrf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 20:47:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752346AbXKWBrf
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 20:47:35 -0500
-Received: from main.gmane.org ([80.91.229.2]:58711 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752107AbXKWBre (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 20:47:34 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IvNdY-0006wO-La
-	for git@vger.kernel.org; Fri, 23 Nov 2007 01:47:20 +0000
-Received: from dt050nf4.tampabay.res.rr.com ([24.92.13.244])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 23 Nov 2007 01:47:20 +0000
-Received: from mike by dt050nf4.tampabay.res.rr.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 23 Nov 2007 01:47:20 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dt050nf4.tampabay.res.rr.com
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <47453C6D.1080403@op5.se>
+	id S1752292AbXKWCLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 21:11:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752232AbXKWCLL
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 21:11:11 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46494 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752072AbXKWCLK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 21:11:10 -0500
+Received: (qmail invoked by alias); 23 Nov 2007 02:11:08 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp016) with SMTP; 23 Nov 2007 03:11:08 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+mNa5vy+qmVYC27k+r9/7umXENHhZdpTmTFv20iS
+	TX/MznnBOsnQ40
+X-X-Sender: gene099@racer.site
+In-Reply-To: <f329bf540711221723g2754ce03r4da6d429c45668c@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65869>
 
-Andreas Ericsson wrote:
-> Michael Donaghy wrote:
->> I am a new user of git and SCMs in general , I have learned a lot from 
->> the docs , irc and just using it , but there are just some concepts 
->> that hare hard to grasp , I am a very visual persion (probably like a 
->> lot of you :) ) , is there a screencast of git somewhere (for free) 
->> that can demonstrate some of the advanced features of git...
->> (Also...I have seen both Randal (Schwartz) and Linus' (you better know 
->> his last name) presentations at google on git , in which they explain 
->> the ideas behind git more than the actual usage,
->>
-> 
-> The thing that helped me and my co-workers the most was running through
-> the steps of the tutorial, but stopping every time something wasn't
-> absolutely crystal clear and doing gitk or qgit (I prefer qgit, since
-> it seems to display things more consistently and also loads faster).
-> 
-> That primarily helped us get branches under control. We came from a
-> CVS world and never had any branches, as none of us had time or energy
-> to figure out how to merge them back together using those crippled scm's.
-> 
-> I noticed Johannes Gilger already sent you the link to git-for-scientists
-> thing which is also a really good aid, especially when you've read the
-> tutorial and some of the less tech-oriented docs.
-> 
+Hi,
 
-Yes thank you , although a screen cast would still be ideal , the 
-documentation is very good,
-also , what do you think of git-gui ? , I think it is the best one
+On Thu, 22 Nov 2007, Han-Wen Nienhuys wrote:
+
+> Maybe I'm misunderstanding you, but fast-export just does not seem a 
+> mirror of fast-import; perhaps you can name it 'dump-all' or something?
+
+It is a mirror.  It does not necessarily dump all.
+
+> > Maybe you want to specify if all blobs should be output first, and 
+> > then the commits?  Or files should be used?  But all of these things 
+> > seem to be useless to me.
+> 
+> No, I want the program to wait for me to tell it what 
+> blobs/commits/trees I want. The commit I want to see secondly may depend 
+> on the output I read in the first request blob. Right now, for each data 
+> dependency I have to start a new git process.
+
+It does not seem like you want a mirror of fast-import, but rather a 
+driver.  You might be happy to hear that you can do that already.  Today.
+However, you probably want to query different programs about certain 
+states of the repository.  This will not change.
+
+> > > Besides being a nuisance, I actually run git on NFS, and every git 
+> > > process has to go to NFS a couple times to retrieve the same 
+> > > information. This has a noticeable performance impact.
+> >
+> > Why don't you just work on a local clone?  If it is really performance 
+> > critical, and I/O is an issue, you are better off working in a tmpfs.
+> 
+> In a company setting, NFS is the easiest way to share information with 
+> colleagues without breaking access control and making our security staff 
+> nervous.  It's also snapshotted and backed up automatically.
+
+So?
+
+How does that prevent you from following my suggestion to do the intensive 
+tasks locally, and push when you finished?
+
+Ciao,
+Dscho
