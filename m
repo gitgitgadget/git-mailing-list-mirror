@@ -1,113 +1,69 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: Wishlist for a bundle-only transport mode
-Date: Fri, 23 Nov 2007 11:13:55 +0100
-Message-ID: <8aa486160711230213q6038037epe2cbd0240db8b612@mail.gmail.com>
-References: <8aa486160711210654p357ccd87i4809e0cda9471303@mail.gmail.com>
-	 <8aa486160711220142w25e9c9b6vbafa34a287dde7eb@mail.gmail.com>
-	 <7v4pfe7g4e.fsf@gitster.siamese.dyndns.org>
-	 <200711231018.49322.jnareb@gmail.com>
-	 <7vejehux3y.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 5/5] Added diff hunk coloring to git-add--interactive
+Date: Fri, 23 Nov 2007 05:21:57 -0500
+Message-ID: <20071123102156.GA6754@sigill.intra.peff.net>
+References: <20071023042702.GB28312@coredump.intra.peff.net> <20071023035221.66ea537f@danzwell.com> <20071102224100.71665182@paradox.zwell.net> <20071104045735.GA12359@segfault.peff.net> <7v640ivagv.fsf@gitster.siamese.dyndns.org> <20071104054305.GA13929@sigill.intra.peff.net> <20071110180109.34febc3f@paradox.zwell.net> <20071122045624.405e2b2b@paradox.zwell.net> <20071122122540.GH12913@sigill.intra.peff.net> <7v1wai3qrw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 23 11:14:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Dan Zwell <dzwell@zwell.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Wincent Colaiuta <win@wincent.com>,
+	Jonathan del Strother <maillist@steelskies.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 23 11:22:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvVY7-0002A4-Go
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 11:14:15 +0100
+	id 1IvVfx-00054f-RH
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 11:22:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755236AbXKWKN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2007 05:13:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754835AbXKWKN5
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 05:13:57 -0500
-Received: from rn-out-0910.google.com ([64.233.170.185]:49697 "EHLO
-	rn-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755154AbXKWKN4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2007 05:13:56 -0500
-Received: by rn-out-0102.google.com with SMTP id s46so4179541rnb
-        for <git@vger.kernel.org>; Fri, 23 Nov 2007 02:13:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=1FAeUXeUaZMw7Ed9aHVqmIuKRb6AfoP7f+2mkWAJ2FA=;
-        b=TA7HmnNFxiRFWs351O8NryeWhfPJyII7E9hoygOzu2+iBjHpyvIYj7N1bYLFdaVg3W1uYKtlDh8b51shwFcB4gALVgzGJQJwCXo8FK+CxVkCzUl8M5YUrKN0QhZsNoRGTnP6A8PNtuphWqBa7XOo69JilImNSaO0A56yhtofqwQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Q6Hjd3Ob5Im37UYHUKuV4SI+s4JTK9T7RT5xB/8fHIJ+w+lBZBsDKvKwZ47CynS6LxTulGdCROtYjSz/c7feFAMXC7F+7+vq0abuwCb7Nd8obz/CBHWdF9pdCvJKqaCXKzPeA5hyQBaQrMWApUcTnj+8Su7iWMhYaH0Esmi9dzc=
-Received: by 10.150.154.6 with SMTP id b6mr1814774ybe.1195812835345;
-        Fri, 23 Nov 2007 02:13:55 -0800 (PST)
-Received: by 10.150.199.9 with HTTP; Fri, 23 Nov 2007 02:13:55 -0800 (PST)
-In-Reply-To: <7vejehux3y.fsf@gitster.siamese.dyndns.org>
+	id S1755521AbXKWKWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2007 05:22:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755195AbXKWKWD
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 05:22:03 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3396 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753187AbXKWKWA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2007 05:22:00 -0500
+Received: (qmail 30214 invoked by uid 111); 23 Nov 2007 10:21:59 -0000
+Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 23 Nov 2007 05:21:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Nov 2007 05:21:57 -0500
 Content-Disposition: inline
+In-Reply-To: <7v1wai3qrw.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65891>
 
-On Nov 23, 2007 10:31 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> I was disagreeing with Santi's "'push --bundle' and 'bundle
-> create' can be equivalent".  They can't be, as "push" is always
-> "update" and never "create".  So I do not quite get your "But for
-> that I think"; I think you are just agreeing with me.
->
-> Even if we taught "push" to create (which I doubt would happen
-> due to its security and administrative implications), it would
-> not make the two any closer to being equivalent.  For them to
-> become equivalent, we would need to have "push" unlearn how to
-> update, which would never happen ;-).
->
+On Thu, Nov 22, 2007 at 01:37:55PM -0800, Junio C Hamano wrote:
 
-OK. So git push will never understand bundles.
+> > Unfortunately, there is a historical wart that probably still needs
+> > supporting, which is that the original names were diff.color.*. Or have
+> > we officially removed support for that yet?
+> 
+> Neither officially or unofficially yet, but we can start the
+> process of making it official with an early announcement.  I do
+> not think we would hurt people as long as a long enough advance
+> notice is given.
 
-My motivation was to have a similar workflow with bundles as with
-pushes, or at least as similar as possible. So another possible
-workflow would be with a:
+Andy Parkins added color.* (and removed documentation for *.color)
+almost a year ago (in a159ca0c). But I don't think there has been an
+official deprecation notice.
 
-git bundle push [<bundle> [<refspec>]]
+> I however am wondering if we need to have so many "enable color
+> support" switches.  color.status, color.diff, and now yet
+> another color.interactive?  Who sets color.status and/or
+> color.interactive to auto without setting color.diff to auto as
+> well?
 
-that creates a bundle
+Yes, I have often thought this, as well, and a "color.all" would
+probably be convenient.
 
-# Have a project with different branches (master, next, pu)
-$ git bundle push bundle.bdl
-# would create a complete bundle.bdl with all the local branches (with HEAD)
-
-# You send it to the other person and he does:
-$ git clone bundle.bdl project
-$ cat .git/config
-...
-[remote "origin"]
-        url = /path/to/bundle.bdl
-        fetch = +refs/heads/*:refs/remotes/origin/*
-
-# He makes changes, commits and so on and then he wants to send to back a bundle
-$ git bundle push [<remote>]
-# This creates an incremental bundle with the local branches (with
-HEAD) as specified
-# by remote.<remote>.* (possibly with an implicit "push" line
-"refs/heads/*:refs/heads/*"
-# And considering the remotes/origin/* as the bases for the bundle
-
-# Then I got it and do a:
-$ git remote add bundle /path/to/bundle
-$ git fetch
-
-# Now maybe I just want to send him the master branch
-$ git bundle push origin master:master
-
-# If I want to send him a complete bundle
-$ git bundle push
-
-The important part, for me, is to keep remote tracking branches to
-know the bases for the next bundle. It does not matter if it is "git
-push", "git bundle push", "git push --bundle", "git bundle update",
-...
-
-Santi
+-Peff
