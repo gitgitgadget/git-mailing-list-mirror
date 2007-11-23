@@ -1,61 +1,60 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Temporary directories getting errantly added into trees
-Date: Fri, 23 Nov 2007 15:44:14 +0100
-Message-ID: <e5bfff550711230644o3dd069b7r8346b95e79ff5c@mail.gmail.com>
-References: <4744FCD9.7020102@vilain.net>
-	 <Pine.LNX.4.64.0711221052280.27959@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Wishlist for a bundle-only transport mode
+Date: Fri, 23 Nov 2007 07:06:57 -0800
+Message-ID: <7vabp5uhke.fsf@gitster.siamese.dyndns.org>
+References: <8aa486160711210654p357ccd87i4809e0cda9471303@mail.gmail.com>
+	<8aa486160711220142w25e9c9b6vbafa34a287dde7eb@mail.gmail.com>
+	<7v4pfe7g4e.fsf@gitster.siamese.dyndns.org>
+	<200711231018.49322.jnareb@gmail.com>
+	<7vejehux3y.fsf@gitster.siamese.dyndns.org>
+	<8aa486160711230213q6038037epe2cbd0240db8b612@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Sam Vilain" <sam@vilain.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Nov 23 15:44:34 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Jakub Narebski" <jnareb@gmail.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 23 16:07:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvZlh-0004qe-R7
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 15:44:34 +0100
+	id 1Iva7v-0005EU-VB
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 16:07:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756102AbXKWOoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2007 09:44:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756062AbXKWOoQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 09:44:16 -0500
-Received: from rv-out-0910.google.com ([209.85.198.190]:53158 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756029AbXKWOoP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2007 09:44:15 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2658384rvb
-        for <git@vger.kernel.org>; Fri, 23 Nov 2007 06:44:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=+jtALj1LXYFNAdToZirp5dLO5xxaYnEwbVQTfb5Oafw=;
-        b=ha9KQyOMvlpWVzyFZWIO2w+BmzqIhwxSyY/tvi4VxqBG0shTA0dnNvXFM0BXfPfdANmymUqeu8EaNpyFhOhBToLFMEbXTLwnWuET52GE2lfG1zhf+uNN5dT9Tkrfev4nhMjea2heaNLf2rRqd3DPiMRNzJobl3DVWMV9xHC/W1c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=te0C9ILv2Ny5IRksIonznp7YNlk9tzbNK9QGSyCenymBeR+adIOz3koCFSJIc07RLDtY82ATt1JKoWrUMvnR5MC60AFf22mOIg/9ood6dUD6AROKJQQ+E2VMipeVK3YehnTX/nGgcorv9khfjt120vT/B9yksfsJFadNhxHH7MU=
-Received: by 10.141.116.16 with SMTP id t16mr3970407rvm.1195829054574;
-        Fri, 23 Nov 2007 06:44:14 -0800 (PST)
-Received: by 10.140.185.19 with HTTP; Fri, 23 Nov 2007 06:44:14 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0711221052280.27959@racer.site>
-Content-Disposition: inline
+	id S1753090AbXKWPHJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Nov 2007 10:07:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755914AbXKWPHI
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 10:07:08 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:42417 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753090AbXKWPHH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Nov 2007 10:07:07 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id C89042EF;
+	Fri, 23 Nov 2007 10:07:27 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 2C05998CF7;
+	Fri, 23 Nov 2007 10:07:22 -0500 (EST)
+In-Reply-To: <8aa486160711230213q6038037epe2cbd0240db8b612@mail.gmail.com>
+	(Santi =?utf-8?Q?B=C3=A9jar's?= message of "Fri, 23 Nov 2007 11:13:55
+ +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65902>
 
-On Nov 22, 2007 11:55 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> But I don't know about QGit, StGit, etc...
->
+"Santi B=C3=A9jar" <sbejar@gmail.com> writes:
 
-QGit does not rely on .dotest or any other temporary file produced by git
+> OK. So git push will never understand bundles.
 
-Interface with git is only through git commands.
+Why not?  Because you will not code it?
 
-Thanks
-Marco
+I am not opposed to the notion of "pushing to a bundle to
+update it."  I am just saying that "pushing to create" only for
+bundle and not regular repository is very inconsistent.
