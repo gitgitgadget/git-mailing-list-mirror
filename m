@@ -1,122 +1,80 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH v2] git-add--interactive pathspec and patch additions
-Date: Fri, 23 Nov 2007 23:20:50 +0100
-Message-ID: <499E75F1-88A3-411C-8B38-68D43307794D@wincent.com>
-References: <1195845650-85962-1-git-send-email-win@wincent.com> <7vk5o8smaf.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, peff@peff.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 23 23:21:41 2007
+From: Michael Donaghy <mike@mikedonaghy.org>
+Subject: Re: Git Screencast ?
+Date: Fri, 23 Nov 2007 18:18:51 -0500
+Message-ID: <fi7n4u$3kc$1@ger.gmane.org>
+References: <fi1a9f$30q$1@ger.gmane.org> <47453C6D.1080403@op5.se> <fi5bet$brl$1@ger.gmane.org> <20071123101426.GA15902@dualtron.vpn.rwth-aachen.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 24 00:19:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ivgtx-0007tQ-R8
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 23:21:34 +0100
+	id 1IvhoM-0007OH-9f
+	for gcvg-git-2@gmane.org; Sat, 24 Nov 2007 00:19:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752761AbXKWWVM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Nov 2007 17:21:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752139AbXKWWVM
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 17:21:12 -0500
-Received: from wincent.com ([72.3.236.74]:60988 "EHLO s69819.wincent.com"
+	id S1750982AbXKWXT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2007 18:19:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750995AbXKWXT2
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 18:19:28 -0500
+Received: from main.gmane.org ([80.91.229.2]:49299 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752761AbXKWWVL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Nov 2007 17:21:11 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lANMKpV0022546;
-	Fri, 23 Nov 2007 16:20:52 -0600
-In-Reply-To: <7vk5o8smaf.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.915)
+	id S1750847AbXKWXT1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2007 18:19:27 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Ivhnk-0004nY-Gm
+	for git@vger.kernel.org; Fri, 23 Nov 2007 23:19:12 +0000
+Received: from dt050nf4.tampabay.res.rr.com ([24.92.13.244])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Nov 2007 23:19:12 +0000
+Received: from mike by dt050nf4.tampabay.res.rr.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Nov 2007 23:19:12 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dt050nf4.tampabay.res.rr.com
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <20071123101426.GA15902@dualtron.vpn.rwth-aachen.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65931>
 
-El 23/11/2007, a las 22:07, Junio C Hamano escribi=F3:
+Johannes Gilger wrote:
+> On 22/11/07 20:47, Michael Donaghy wrote:
+>> Yes thank you , although a screen cast would still be ideal , the 
+>> documentation is very good,
+>> also , what do you think of git-gui ? , I think it is the best one
+> 
+> Hi Michael,
+> 
+> I think you're trying to hide the complexity of git. The problem with 
+> graphical tools is that they hide complexity from the user, which in 
+> some cases is only possibly/good if the user has understood the 
+> underlying principles already. Also I think that there are many things 
+> which can be done much quicker using a command-line than any gui (as all 
+> of the people here will agree). Git is not Time-Machine (this thing from 
+> Apple). It is also no good idea to try to view git from a svn's point of 
+> view, or try to compare commands. It took me a while to get over that 
+> and accept that git is different. I was frustated (and still am 
+> sometimes) but i finally understood the whole concept.
+> 
+> About screencasts: I haven't watched that many screencasts in general, 
+> but I can hardly imagine that they are better way of teaching things 
+> than reading a manual. Watching someone type in commands, hitting 
+> "Pause", then trying it myself doesn't seem more intuitive to me than 
+> just reading a manual and typing the commands given in regular 
+> intervals. Maybe someone can enlighten me about the use of screencasts 
+> (in a command-line environment).
+> 
+> Greetings,
+> Jojo
+> 
 
-> Wincent Colaiuta <win@wincent.com> writes:
->
->> The series implements these changes in seven steps that apply on =20
->> top of
->> "master"; these patches are rebased/squashed ones which *replace* th=
-e
->> ones sent the other day:
->
-> That's very unfortunate, as some already usable bits from the
-> series are already in 'next'.
-
-Well, no problem, I'll redo this tomorrow if I can get some free time. =
-=20
-Otherwise it will have to wait to Monday.
-
->>    1. Add -q/--quiet switch to git-ls-files
->>
->> Needed because run_cmd_pipe() doesn't propagate the child exit statu=
-s
->> and system() likes to be chatty on the standard out. Of the possible
->> workarounds adding this switch seems to be the cleanest and most
->> portable.
->
-> I do not like this very much.  If it is a problem that
-> run_cmd_pipe() does not properly signal you an error, wouldn't
-> it be much better to fix _that_ problem?  That way we do not
-> have to add kludge to all commands we need to run and get the
-> exit status out of.
-
-The problem is that run_cmd_pipe has two code paths, one for Windows =20
-and one for all the rest.
-
-I could "fix" the non-Windows path by reading in all the command input =
-=20
-at once and explicitly doing a close() before returning. In that case =20
-I believe that the exit status would be correctly set before the =20
-function returns. The Windows code path, however, I am reluctant to =20
-touch as I don't know its behaviour and can't test it.
-
-The other alternative was to use qx() or backticks, but then I would =20
-have to start worrying about sanitizing paths and once again because =20
-of the dual-platform issues I was hesitant to do that. And how do you =20
-redirect to /dev/null on Windows?
-
-In any case, I actually *like* the addition of -q to git-ls-files. I =20
-can see some places in the codebase (look in git-commit.sh, for =20
-instance) where git-ls-files is run and the output is thrown away =20
-(redirected to /dev/null) because it's not at all interesting to the =20
-caller. It seems that there is a real use case there which amounts to =20
-"just tell me whether these pathspecs are valid or not, I don't care =20
-about any of the rest".
-
->>    6. Add "--patch" option to git-add--interactive
->>    7. Teach builtin-add to handle "--patch" option
->
-> These should be straightforward, but use of Getopt::Long feels
-> way overkill for an internal command like add--interactive which
-> is called by only a very limited known callers (exactly one).
->
-> If we assume "a single caller", we probably can do without 1 and
-> 4, by making the caller in builtin-add to validate the list of
-> pathspecs, reusing the code for "ls-files --error-unmatch",
-> before calling the external helper "add--interactive".
-
-Well, you're probably right. I was thinking, "just in case we ever =20
-need to add more options"; but it may be that we never do, and perhaps =
-=20
-git-add--interactive will become builtin one day anyway.
-
-> There are functions refactored as part of the builtin-commit
-> series to be usable from outside "ls-files", and you can build a
-> imple function called from interactive_add(ac, av) using them:
->
-> static int validate_pathspec(const char *prefix, const char **pattern=
-)
-
-Ok, thanks for the tip, Junio. Like I said, will look at this either =20
-tomorrow or Monday and get something posted that applies on top of =20
-"next".
-
-Cheers,
-Wincent
+I don't know , maybe I learn differently , but
+ >'Watching someone type in commands, hitting  "Pause", then trying it
+ > myself'
+is intuitive for me :)
