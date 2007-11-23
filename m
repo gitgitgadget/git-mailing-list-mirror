@@ -1,82 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [WIP PATCH] Add 'git fast-export', the sister of 'git fast-import'
-Date: Fri, 23 Nov 2007 02:11:05 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711230149430.27959@racer.site>
-References: <Pine.LNX.4.64.0711210336210.27959@racer.site>  <fi5743$32p$1@ger.gmane.org>
-  <Pine.LNX.4.64.0711230050270.27959@racer.site>
- <f329bf540711221723g2754ce03r4da6d429c45668c@mail.gmail.com>
+From: Sam Vilain <sam.vilain@catalyst.net.nz>
+Subject: Re: [PATCH] Allow HTTP proxy to be overridden in config
+Date: Fri, 23 Nov 2007 16:35:44 +1300
+Organization: Catalyst IT (NZ) Ltd
+Message-ID: <47464A90.4030509@catalyst.net.nz>
+References: <1195776420-22075-1-git-send-email-sam.vilain@catalyst.net.nz> <7voddl24b7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: hanwen@xs4all.nl
-X-From: git-owner@vger.kernel.org Fri Nov 23 03:11:31 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, francois@debian.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 23 05:06:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvO0v-00039T-WB
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 03:11:30 +0100
+	id 1IvPoV-0004Ke-Je
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 05:06:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752292AbXKWCLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 21:11:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752232AbXKWCLL
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 21:11:11 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46494 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752072AbXKWCLK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 21:11:10 -0500
-Received: (qmail invoked by alias); 23 Nov 2007 02:11:08 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp016) with SMTP; 23 Nov 2007 03:11:08 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+mNa5vy+qmVYC27k+r9/7umXENHhZdpTmTFv20iS
-	TX/MznnBOsnQ40
-X-X-Sender: gene099@racer.site
-In-Reply-To: <f329bf540711221723g2754ce03r4da6d429c45668c@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1753252AbXKWEGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 23:06:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753032AbXKWEG3
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 23:06:29 -0500
+Received: from godel.catalyst.net.nz ([202.78.240.40]:39254 "EHLO
+	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752081AbXKWEG3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 23:06:29 -0500
+X-Greylist: delayed 1814 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Nov 2007 23:06:28 EST
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=[192.168.2.22])
+	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <sam.vilain@catalyst.net.nz>)
+	id 1IvPKT-0006L4-Gf; Fri, 23 Nov 2007 16:35:45 +1300
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <7voddl24b7.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65870>
 
-Hi,
-
-On Thu, 22 Nov 2007, Han-Wen Nienhuys wrote:
-
-> Maybe I'm misunderstanding you, but fast-export just does not seem a 
-> mirror of fast-import; perhaps you can name it 'dump-all' or something?
-
-It is a mirror.  It does not necessarily dump all.
-
-> > Maybe you want to specify if all blobs should be output first, and 
-> > then the commits?  Or files should be used?  But all of these things 
-> > seem to be useless to me.
+Junio C Hamano wrote:
+>> The http_proxy / HTTPS_PROXY variables used by curl to control
+>> proxying may not be suitable for git.  Allow the user to override them
+>> in the configuration file.
+>> ---
+>>   In particular, privoxy will block directories called /ad/ ... d'oh!
+>> +++ b/Documentation/config.txt
+>> +http.proxy::
+>> +	Override the HTTP proxy, normally configured using the 'http_proxy'
+>> +	environment variable (see gitlink:curl[1]).
 > 
-> No, I want the program to wait for me to tell it what 
-> blobs/commits/trees I want. The commit I want to see secondly may depend 
-> on the output I read in the first request blob. Right now, for each data 
-> dependency I have to start a new git process.
+> This may work around the issue you cited, but it makes me wonder
+> if it is a road to insanity.  Does the curl library expect that
+> (1) each and every HTTP talking application that uses the
+> library offer this kind of knob for its users to tweak, and (2)
+> users set the knob for each and every one of such application?
 
-It does not seem like you want a mirror of fast-import, but rather a 
-driver.  You might be happy to hear that you can do that already.  Today.
-However, you probably want to query different programs about certain 
-states of the repository.  This will not change.
+This is true.  However I still think that it is a useful feature for
+many users, with few side effects.  If nothing else the bit on the man
+page will prompt them to think, "oh, I should set that in the environment".
 
-> > > Besides being a nuisance, I actually run git on NFS, and every git 
-> > > process has to go to NFS a couple times to retrieve the same 
-> > > information. This has a noticeable performance impact.
-> >
-> > Why don't you just work on a local clone?  If it is really performance 
-> > critical, and I/O is an issue, you are better off working in a tmpfs.
-> 
-> In a company setting, NFS is the easiest way to share information with 
-> colleagues without breaking access control and making our security staff 
-> nervous.  It's also snapshotted and backed up automatically.
+> I would say if privoxy cannot be tweaked to allow /ad/ in chosen
+> context (e.g. /ad/ in general is rejected but /objects/ad/ is
+> Ok), that is what needs to be fixed.
+> Or it would be the use of such a broken proxy by the user.  That
+> can be fixed and much easily.
 
-So?
+Yes - but consider the dilemma of the user.  They've apt-get installed
+this privoxy thing and figured out how to set their applications to use
+it.  Now, it doesn't work and they think it is the proxy in the way, and
+they've no idea that they might be able to reconfigure it.  This way
+they can tell git to bypass it.
 
-How does that prevent you from following my suggestion to do the intensive 
-tasks locally, and push when you finished?
+I don't know, I see your point and pretty much agree with it.  It just
+seems like something that might come in handy (as well as be another
+vector for something you need to check when you get HTTP fetch issues -
+so maybe a command-line option would be better).
 
-Ciao,
-Dscho
+Actually something that would really have helped is more documentation
+of the various GIT_CURL_* environment variables available for debugging.
+-- 
+Sam Vilain, Chief Yak Shaver, Catalyst IT (NZ) Ltd.
+phone: +64 4 499 2267        PGP ID: 0x66B25843
