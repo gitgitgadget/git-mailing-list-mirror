@@ -1,111 +1,73 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Re: [PATCH] Don't add To: recipients to the Cc: header
-Date: Fri, 23 Nov 2007 23:18:03 +0300
-Message-ID: <87hcjcra10.fsf@osv.gnss.ru>
-References: <1195470026-7389-1-git-send-email-ask@develooper.com>
-	<7vr6ill5f1.fsf@gitster.siamese.dyndns.org>
-	<7A3DDFA5-085D-4D92-BE96-A405FF1FB029@develooper.com>
-	<7v8x4slovk.fsf@gitster.siamese.dyndns.org>
-	<87ejekzpx3.fsf@osv.gnss.ru>
-	<7vr6ikk6rf.fsf@gitster.siamese.dyndns.org>
-	<87lk8orgpm.fsf@osv.gnss.ru>
-	<7vejegu4in.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] Remove git-status from list of scripts as it is builtin
+Date: Fri, 23 Nov 2007 15:35:08 -0500
+Message-ID: <20071123203508.GA6797@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ask =?utf-8?Q?Bj=C3=B8rn?= Hansen <ask@develooper.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 23 21:18:53 2007
+X-From: git-owner@vger.kernel.org Fri Nov 23 21:35:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvezD-0002TT-PL
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 21:18:52 +0100
+	id 1IvfFP-0008HA-8x
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 21:35:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757348AbXKWUSd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2007 15:18:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757347AbXKWUSd
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 15:18:33 -0500
-Received: from javad.com ([216.122.176.236]:2638 "EHLO javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757337AbXKWUSc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2007 15:18:32 -0500
-Received: from osv ([87.236.81.130])
-	by javad.com (8.11.6/8.11.0) with ESMTP id lANKI9H73345;
-	Fri, 23 Nov 2007 20:18:10 GMT
-	(envelope-from s.organov@javad.com)
-Received: from osv by osv with local (Exim 4.63)
-	(envelope-from <s.organov@javad.com>)
-	id 1IveyR-0005L0-HI; Fri, 23 Nov 2007 23:18:03 +0300
-In-Reply-To: <7vejegu4in.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 23 Nov 2007 11\:48\:48 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1755109AbXKWUfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2007 15:35:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755048AbXKWUfO
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 15:35:14 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:57246 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754857AbXKWUfN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2007 15:35:13 -0500
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IvfEs-00030H-04; Fri, 23 Nov 2007 15:35:02 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 555E020FBD9; Fri, 23 Nov 2007 15:35:08 -0500 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65923>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Now that git-status is builtin on Cygwin this compiles as
+git-status.exe.  We cannot continue to include git-status
+as a Makefile target as it will never be built.
 
-> Sergei Organov <osv@javad.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Sergei Organov <osv@javad.com> writes:
->>>
->>>> Junio C Hamano <gitster@pobox.com> writes:
->>>> [...]
->>>>> Oops, forgot to say "no need to resend".  I asked only because I
->>>>> wanted an independent datapoint for Emacs diff mode breakage.
->>>>
->>>> I bet I can damage any patch using any editor ;)
->>>>
->>>> More interesting is what version of Emacs it was?
->>>
->>> To be fair and honest, I do not think there is a simple fix for
->>> this, although it probably is possible to fix it.
->>>
->>> What is causing the "breakage" is the fact that format-patch
->>> output ends with the signature delimiter line "^-- $" that
->>> immediately follows the patch text.
->>
->> Exactly. What causes breakage is the fact that the '-' character (as
->> well as '+', ' ', '!', '#', and '\'), being the first symbol of a line
->> has special meaning in the diff format.
->
-> That is correct only if they appear inside a hunk.  The number
-> of preimage and postimage lines in a hunk is recorded on the
-> hunk header line --- tools are given enough information to tell
-> a line that begins with a SP (or '+' or '-') outside a patch
-> from another such line that is inside the patch.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
 
-Yeah, it's one valid interpretation. Here is another one:
+ I apologize if this is a dupe; I haven't had a chance to read
+ the list traffic to see what has been posted and what hasn't.
+ I'll be offline for the next few days so I figured I should get
+ this out there now, just in case anyone else might run into the
+ same problem I did.
 
-  "The chunk range for the original should be the sum of all contextual
-  and deletion (including changed) chunk lines. The chunk range for the
-  new file should be a sum of all contextual and addition (including
-  changed) chunk lines. If chunk size information does not correspond
-  with the number of lines in the hunk, then the diff could be
-  considered invalid and be rejected."
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-taken from here: <http://www.answers.com/topic/diff?cat=technology>
-
-The above implies that a tool should be able to determine the "end of
-hunk" without using the hunk header information. This is rather hard to
-do with current format-patch output, and it's impossible to do if there
-are no "unchanged context" lines at all (i.e., format-patch -U0).
-
-> The diff editing mode of Emacs, at least the version that caused
-> this issue, however did not make use of that information.
-> That's the breakage.  Not format-patch output.
-
-IMHO it's rather useless to argue about it without strict definition of
-correct format of a patch (do you have one?). However, it's easy to add
-an empty line for format-patch and very difficult, if not impossible,
-for Emacs to handle this without such a line.
-
-Therefore I repeat my question: are there any objections to add such an
-empty line by format-patch?
-
+diff --git a/Makefile b/Makefile
+index 313f9a2..a5a40ce 100644
+--- a/Makefile
++++ b/Makefile
+@@ -233,7 +233,7 @@ SCRIPT_PERL = \
+ 
+ SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
+ 	  $(patsubst %.perl,%,$(SCRIPT_PERL)) \
+-	  git-status git-instaweb
++	  git-instaweb
+ 
+ # ... and all the rest that could be moved out of bindir to gitexecdir
+ PROGRAMS = \
 -- 
-Sergei.
+1.5.3.6.1936.gc44a9
