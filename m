@@ -1,70 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Tweak git-quiltimport to allow more flexible series format
-Date: Thu, 22 Nov 2007 15:43:53 -0800
-Message-ID: <7vsl2x26di.fsf@gitster.siamese.dyndns.org>
-References: <20071122134849.GB6240@localhost.sw.ru>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, adobriyan@gmail.com
-To: Alexey Dobriyan <adobriyan@sw.ru>
-X-From: git-owner@vger.kernel.org Fri Nov 23 00:44:25 2007
+From: Sam Vilain <sam.vilain@catalyst.net.nz>
+Subject: [PATCH] Allow HTTP proxy to be overridden in config
+Date: Fri, 23 Nov 2007 13:07:00 +1300
+Message-ID: <1195776420-22075-1-git-send-email-sam.vilain@catalyst.net.nz>
+Cc: git@vger.kernel.org, francois@debian.org,
+	Sam Vilain <sam.vilain@catalyst.net.nz>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 23 01:10:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvLiX-0003c8-BF
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 00:44:21 +0100
+	id 1IvM85-000354-0a
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 01:10:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751867AbXKVXoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 18:44:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751646AbXKVXoB
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 18:44:01 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:51123 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751403AbXKVXoA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 18:44:00 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id B27BA2EF;
-	Thu, 22 Nov 2007 18:44:20 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 3760398B06;
-	Thu, 22 Nov 2007 18:44:17 -0500 (EST)
-In-Reply-To: <20071122134849.GB6240@localhost.sw.ru> (Alexey Dobriyan's
-	message of "Thu, 22 Nov 2007 16:48:49 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751260AbXKWAHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 19:07:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbXKWAHT
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 19:07:19 -0500
+Received: from godel.catalyst.net.nz ([202.78.240.40]:54020 "EHLO
+	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751002AbXKWAHS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 19:07:18 -0500
+Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=wilber.wgtn.cat-it.co.nz)
+	by mail1.catalyst.net.nz with esmtp (Exim 4.63)
+	(envelope-from <samv@wilber.wgtn.cat-it.co.nz>)
+	id 1IvM4S-0008VW-E8; Fri, 23 Nov 2007 13:07:00 +1300
+Received: by wilber.wgtn.cat-it.co.nz (Postfix, from userid 1000)
+	id 632B420058; Fri, 23 Nov 2007 13:07:00 +1300 (NZDT)
+X-Mailer: git-send-email 1.5.3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65858>
 
-Alexey Dobriyan <adobriyan@sw.ru> writes:
+The http_proxy / HTTPS_PROXY variables used by curl to control
+proxying may not be suitable for git.  Allow the user to override them
+in the configuration file.
+---
+  In particular, privoxy will block directories called /ad/ ... d'oh!
 
-> Make quiltimport also understand comments following patch name.
->
-> Signed-off-by: Alexey Dobriyan <adobriyan@sw.ru>
-> ---
->
->  git-quiltimport.sh |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> --- a/git-quiltimport.sh
-> +++ b/git-quiltimport.sh
-> @@ -63,7 +63,7 @@ tmp_info="$tmp_dir/info"
->  commit=$(git rev-parse HEAD)
->  
->  mkdir $tmp_dir || exit 2
-> -for patch_name in $(grep -v '^#' < "$QUILT_PATCHES/series" ); do
-> +for patch_name in $(sed -e 's/#.*//' < "$QUILT_PATCHES/series" ); do
->  	if ! [ -f "$QUILT_PATCHES/$patch_name" ] ; then
->  		echo "$patch_name doesn't exist. Skipping."
->  		continue
+ Documentation/config.txt |    4 ++++
+ http.c                   |   11 +++++++++++
+ 2 files changed, 15 insertions(+), 0 deletions(-)
 
-Is this consistent with the way quilt groks the series file?
-
-IOW, does quilt forbid patchfile whose name contains a hash, and
-anything after a hash on the line is taken as comment?
-
-Can a line in a quilt series file name more than one patchfile?
-If so, are they whitespace separated?
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 7ee97df..859a7f3 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -515,6 +515,10 @@ specified as 'gitcvs.<access_method>.<varname>' (where 'access_method'
+ is one of "ext" and "pserver") to make them apply only for the given
+ access method.
+ 
++http.proxy::
++	Override the HTTP proxy, normally configured using the 'http_proxy'
++	environment variable (see gitlink:curl[1]).
++
+ http.sslVerify::
+ 	Whether to verify the SSL certificate when fetching or pushing
+ 	over HTTPS. Can be overridden by the 'GIT_SSL_NO_VERIFY' environment
+diff --git a/http.c b/http.c
+index c6fb8ac..8f60d89 100644
+--- a/http.c
++++ b/http.c
+@@ -24,6 +24,7 @@ char *ssl_cainfo = NULL;
+ long curl_low_speed_limit = -1;
+ long curl_low_speed_time = -1;
+ int curl_ftp_no_epsv = 0;
++char *curl_http_proxy = NULL;
+ 
+ struct curl_slist *pragma_header;
+ 
+@@ -160,6 +161,13 @@ static int http_options(const char *var, const char *value)
+ 		curl_ftp_no_epsv = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp("http.proxy", var)) {
++		if (curl_http_proxy == NULL) {
++			curl_http_proxy = xmalloc(strlen(value)+1);
++			strcpy(curl_http_proxy, value);
++		}
++		return 0;
++	}
+ 
+ 	/* Fall back on the default ones */
+ 	return git_default_config(var, value);
+@@ -205,6 +213,9 @@ static CURL* get_curl_handle(void)
+ 	if (curl_ftp_no_epsv)
+ 		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0);
+ 
++	if (curl_http_proxy)
++		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
++
+ 	return result;
+ }
+ 
+-- 
+1.5.3.5
