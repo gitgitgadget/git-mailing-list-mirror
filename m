@@ -1,98 +1,76 @@
-From: Sam Vilain <sam.vilain@catalyst.net.nz>
-Subject: [PATCH] Allow HTTP proxy to be overridden in config
-Date: Fri, 23 Nov 2007 13:07:00 +1300
-Message-ID: <1195776420-22075-1-git-send-email-sam.vilain@catalyst.net.nz>
-Cc: git@vger.kernel.org, francois@debian.org,
-	Sam Vilain <sam.vilain@catalyst.net.nz>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 23 01:10:47 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] git checkout's reflog: even when detaching the HEAD, say
+ from where
+Date: Fri, 23 Nov 2007 00:20:35 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711230020080.27959@racer.site>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Nov 23 01:21:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvM85-000354-0a
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 01:10:45 +0100
+	id 1IvMIU-0006Oa-TI
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 01:21:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751260AbXKWAHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 19:07:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbXKWAHT
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 19:07:19 -0500
-Received: from godel.catalyst.net.nz ([202.78.240.40]:54020 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751002AbXKWAHS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 19:07:18 -0500
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=wilber.wgtn.cat-it.co.nz)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.63)
-	(envelope-from <samv@wilber.wgtn.cat-it.co.nz>)
-	id 1IvM4S-0008VW-E8; Fri, 23 Nov 2007 13:07:00 +1300
-Received: by wilber.wgtn.cat-it.co.nz (Postfix, from userid 1000)
-	id 632B420058; Fri, 23 Nov 2007 13:07:00 +1300 (NZDT)
-X-Mailer: git-send-email 1.5.3.5
+	id S1751506AbXKWAVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 19:21:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751409AbXKWAVM
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 19:21:12 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38056 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751266AbXKWAVL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 19:21:11 -0500
+Received: (qmail invoked by alias); 23 Nov 2007 00:21:08 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp001) with SMTP; 23 Nov 2007 01:21:08 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/9w01mY9D9q1HmXq2Bb+HMB1ufTCDUExwqwhZ68w
+	pXPKTVMzmdgDui
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65859>
 
-The http_proxy / HTTPS_PROXY variables used by curl to control
-proxying may not be suitable for git.  Allow the user to override them
-in the configuration file.
+
+When checking out another ref, the reflogs already record from which
+branch you switched.  Do that also when switching to a detached HEAD.
+
+While at it, record also when coming _from_ a detached HEAD.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
-  In particular, privoxy will block directories called /ad/ ... d'oh!
 
- Documentation/config.txt |    4 ++++
- http.c                   |   11 +++++++++++
- 2 files changed, 15 insertions(+), 0 deletions(-)
+	Yeah, took me a long time to take care of this issue.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 7ee97df..859a7f3 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -515,6 +515,10 @@ specified as 'gitcvs.<access_method>.<varname>' (where 'access_method'
- is one of "ext" and "pserver") to make them apply only for the given
- access method.
- 
-+http.proxy::
-+	Override the HTTP proxy, normally configured using the 'http_proxy'
-+	environment variable (see gitlink:curl[1]).
-+
- http.sslVerify::
- 	Whether to verify the SSL certificate when fetching or pushing
- 	over HTTPS. Can be overridden by the 'GIT_SSL_NO_VERIFY' environment
-diff --git a/http.c b/http.c
-index c6fb8ac..8f60d89 100644
---- a/http.c
-+++ b/http.c
-@@ -24,6 +24,7 @@ char *ssl_cainfo = NULL;
- long curl_low_speed_limit = -1;
- long curl_low_speed_time = -1;
- int curl_ftp_no_epsv = 0;
-+char *curl_http_proxy = NULL;
- 
- struct curl_slist *pragma_header;
- 
-@@ -160,6 +161,13 @@ static int http_options(const char *var, const char *value)
- 		curl_ftp_no_epsv = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp("http.proxy", var)) {
-+		if (curl_http_proxy == NULL) {
-+			curl_http_proxy = xmalloc(strlen(value)+1);
-+			strcpy(curl_http_proxy, value);
-+		}
-+		return 0;
-+	}
- 
- 	/* Fall back on the default ones */
- 	return git_default_config(var, value);
-@@ -205,6 +213,9 @@ static CURL* get_curl_handle(void)
- 	if (curl_ftp_no_epsv)
- 		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0);
- 
-+	if (curl_http_proxy)
-+		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
-+
- 	return result;
- }
- 
+ git-checkout.sh |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/git-checkout.sh b/git-checkout.sh
+index aa724ac..5dc8ddb 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -266,7 +266,7 @@ if [ "$?" -eq 0 ]; then
+ 	if test -n "$branch"
+ 	then
+ 		old_branch_name=`expr "z$oldbranch" : 'zrefs/heads/\(.*\)'`
+-		GIT_DIR="$GIT_DIR" git symbolic-ref -m "checkout: moving from $old_branch_name to $branch" HEAD "refs/heads/$branch"
++		GIT_DIR="$GIT_DIR" git symbolic-ref -m "checkout: moving from ${old_branch_name:-$old} to $branch" HEAD "refs/heads/$branch"
+ 		if test -n "$quiet"
+ 		then
+ 			true	# nothing
+@@ -278,7 +278,8 @@ if [ "$?" -eq 0 ]; then
+ 		fi
+ 	elif test -n "$detached"
+ 	then
+-		git update-ref --no-deref -m "checkout: moving to $arg" HEAD "$detached" ||
++		old_branch_name=`expr "z$oldbranch" : 'zrefs/heads/\(.*\)'`
++		git update-ref --no-deref -m "checkout: moving from ${old_branch_name:-$old} to $arg" HEAD "$detached" ||
+ 			die "Cannot detach HEAD"
+ 		if test -n "$detach_warn"
+ 		then
 -- 
-1.5.3.5
+1.5.3.6.1977.g54d30
