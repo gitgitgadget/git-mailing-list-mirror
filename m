@@ -1,69 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git --prune --aggresive
-Date: Fri, 23 Nov 2007 11:08:16 +0100
-Message-ID: <200711231108.16676.jnareb@gmail.com>
-References: <200711231058.46578.jnareb@gmail.com>
+From: Johannes Gilger <heipei@hackvalue.de>
+Subject: Re: Git Screencast ?
+Date: Fri, 23 Nov 2007 11:14:27 +0100
+Message-ID: <20071123101426.GA15902@dualtron.vpn.rwth-aachen.de>
+References: <fi1a9f$30q$1@ger.gmane.org> <47453C6D.1080403@op5.se> <fi5bet$brl$1@ger.gmane.org>
+Reply-To: Johannes Gilger <heipei@hackvalue.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 23 11:08:44 2007
+Content-Type: text/plain; charset=iso-8859-15
+Cc: git@vger.kernel.org
+To: Michael Donaghy <mike@mikedonaghy.org>
+X-From: git-owner@vger.kernel.org Fri Nov 23 11:13:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvVSk-0000Ph-Ts
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 11:08:43 +0100
+	id 1IvVXT-0001x2-9l
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 11:13:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753559AbXKWKIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2007 05:08:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753537AbXKWKIY
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 05:08:24 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:57847 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753519AbXKWKIX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Nov 2007 05:08:23 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so476506ugc
-        for <git@vger.kernel.org>; Fri, 23 Nov 2007 02:08:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=3pjxkSKhNAC/2x7KkKKvJuJP3SEz7PPL9cP1VofWlnc=;
-        b=dAMlUHcFMDAjx7tLr6x52K3lrYkLn4ILNlUIuCfhagwFmtBqrbvKP4IWtXqUFO6PzrGyyhezmJndAQmL+jn5YD6STNgkd3LUA7nMvwsm9W5ji8DgKR3skyvTt+t9cPNaZWUMJWTYgYCx8WegwmzAqUKBubqBkaTV7N8Yla2/oQM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=mzdF4/e/M2jt3eUYh5QnMthVmHYOw22TxHUHN3r9U+pfEaaoyZtRUtl0zBhgcZuWDGW1Y6AHR/T9xL8MvaCnus8zElrG2HFEr/F7FAwe47qbolUPhaHJY8dmJ0L4tvSiSoW1T/WskcWeeaXMCSFIkeEF4ThWR7hjoOW41hO6id4=
-Received: by 10.86.68.20 with SMTP id q20mr411448fga.1195812500241;
-        Fri, 23 Nov 2007 02:08:20 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.249.172])
-        by mx.google.com with ESMTPS id l12sm386375fgb.2007.11.23.02.08.18
-        (version=SSLv3 cipher=OTHER);
-        Fri, 23 Nov 2007 02:08:19 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200711231058.46578.jnareb@gmail.com>
+	id S1755125AbXKWKNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2007 05:13:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755074AbXKWKNQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 05:13:16 -0500
+Received: from avalon.gnuzifer.de ([85.10.199.84]:43269 "EHLO
+	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754867AbXKWKNP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2007 05:13:15 -0500
+Received: from 0-031.vpn.rwth-aachen.de ([134.130.240.31]:45675 helo=localhost)
+	by avalon.gnuzifer.de with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <heipei@hackvalue.de>)
+	id 1IvVX5-0007fj-SZ; Fri, 23 Nov 2007 11:13:12 +0100
 Content-Disposition: inline
+In-Reply-To: <fi5bet$brl$1@ger.gmane.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-SA-Exim-Connect-IP: 134.130.240.31
+X-SA-Exim-Mail-From: heipei@hackvalue.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65889>
 
-Jakub Narebski wrote:
+On 22/11/07 20:47, Michael Donaghy wrote:
+> Yes thank you , although a screen cast would still be ideal , the 
+> documentation is very good,
+> also , what do you think of git-gui ? , I think it is the best one
 
-> 2396:[gitweb/web@git]# git gc --aggresive --prune
-> usage: git-gc [--prune] [--aggressive]
-> 2397:[gitweb/web@git]# git gc --prune --aggresive
-> usage: git-gc [--prune] [--aggressive]
-> 2398:[gitweb/web@git]# git --version
-> git version 1.5.3.5
-> 
-> Either usage string should be fixed, as it suggests that you can specify 
-> both --aggresive and --prune, or git-gc should.
+Hi Michael,
 
-I'm very sorry, my mistake: --aggresive instead of --aggressive.
-Please disregard this message...
+I think you're trying to hide the complexity of git. The problem with 
+graphical tools is that they hide complexity from the user, which in 
+some cases is only possibly/good if the user has understood the 
+underlying principles already. Also I think that there are many things 
+which can be done much quicker using a command-line than any gui (as all 
+of the people here will agree). Git is not Time-Machine (this thing from 
+Apple). It is also no good idea to try to view git from a svn's point of 
+view, or try to compare commands. It took me a while to get over that 
+and accept that git is different. I was frustated (and still am 
+sometimes) but i finally understood the whole concept.
+
+About screencasts: I haven't watched that many screencasts in general, 
+but I can hardly imagine that they are better way of teaching things 
+than reading a manual. Watching someone type in commands, hitting 
+"Pause", then trying it myself doesn't seem more intuitive to me than 
+just reading a manual and typing the commands given in regular 
+intervals. Maybe someone can enlighten me about the use of screencasts 
+(in a command-line environment).
+
+Greetings,
+Jojo
 
 -- 
-Jakub Narebski
-Poland
+Johannes Gilger <heipei@hackvalue.de>
+http://hackvalue.de/heipei/
+GPG-Key: 0x42F6DE81
+GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
