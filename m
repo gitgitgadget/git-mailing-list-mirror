@@ -1,56 +1,82 @@
-From: David Symonds <dsymonds@gmail.com>
-Subject: [PATCH] Update RelNotes for 1.5.4 to reflect change in git-status output.
-Date: Fri, 23 Nov 2007 22:13:23 +1100
-Message-ID: <1195816403642-git-send-email-dsymonds@gmail.com>
-Cc: git@vger.kernel.org, David Symonds <dsymonds@gmail.com>
-To: Junio Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 23 12:13:54 2007
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: git --prune --aggresive
+Date: Fri, 23 Nov 2007 12:15:50 +0100
+Message-ID: <vpq3auxxleh.fsf@bauges.imag.fr>
+References: <200711231058.46578.jnareb@gmail.com>
+	<200711231108.16676.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 23 12:17:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvWTm-00049K-84
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 12:13:50 +0100
+	id 1IvWWy-0005Gi-77
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 12:17:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755484AbXKWLNb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Nov 2007 06:13:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755467AbXKWLNb
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 06:13:31 -0500
-Received: from ipmail05.adl2.internode.on.net ([203.16.214.145]:7765 "EHLO
-	ipmail05.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755236AbXKWLNa (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Nov 2007 06:13:30 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah4FAJtDRkd5LDXQ/2dsb2JhbACBWw
-X-IronPort-AV: E=Sophos;i="4.21,456,1188743400"; 
-   d="scan'208";a="447039"
-Received: from ppp121-44-53-208.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.53.208])
-  by ipmail05.adl2.internode.on.net with ESMTP; 23 Nov 2007 21:43:28 +1030
-X-Mailer: git-send-email 1.5.3.1
+	id S1755036AbXKWLQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Nov 2007 06:16:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754816AbXKWLQv
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Nov 2007 06:16:51 -0500
+Received: from imag.imag.fr ([129.88.30.1]:50246 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753537AbXKWLQu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Nov 2007 06:16:50 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lANBFqmD002757
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 23 Nov 2007 12:15:52 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IvWVi-0000I8-H4; Fri, 23 Nov 2007 12:15:50 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IvWVi-0000t6-Er; Fri, 23 Nov 2007 12:15:50 +0100
+In-Reply-To: <200711231108.16676.jnareb@gmail.com> (Jakub Narebski's message of "Fri\, 23 Nov 2007 11\:08\:16 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 23 Nov 2007 12:15:52 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65894>
 
-Signed-off-by: David Symonds <dsymonds@gmail.com>
----
- Documentation/RelNotes-1.5.4.txt |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
+Jakub Narebski <jnareb@gmail.com> writes:
 
-diff --git a/Documentation/RelNotes-1.5.4.txt b/Documentation/RelNotes-1.5.4.txt
-index a4a2a7f..70d1d6c 100644
---- a/Documentation/RelNotes-1.5.4.txt
-+++ b/Documentation/RelNotes-1.5.4.txt
-@@ -86,6 +86,10 @@ Updates since v1.5.3
-    to allow checking out a path outside the current directory
-    without cd'ing up.
- 
-+ * "git status" from a subdirectory now shows relative paths
-+   which makes copy-and-pasting for git-checkout/git-add/git-rm
-+   easier.
-+
-  * Output processing for '--pretty=format:<user format>' has
-    been optimized.
- 
+> Jakub Narebski wrote:
+>
+>> 2396:[gitweb/web@git]# git gc --aggresive --prune
+>> usage: git-gc [--prune] [--aggressive]
+>> 2397:[gitweb/web@git]# git gc --prune --aggresive
+>> usage: git-gc [--prune] [--aggressive]
+>> 2398:[gitweb/web@git]# git --version
+>> git version 1.5.3.5
+>> 
+>> Either usage string should be fixed, as it suggests that you can specify 
+>> both --aggresive and --prune, or git-gc should.
+>
+> I'm very sorry, my mistake: --aggresive instead of --aggressive.
+> Please disregard this message...
+
+Now, for the cool thing: with the latest git, I get the following.
+
+$ git gc --aggresive --prune 
+error: unknown option `aggresive'       <----- this is what you wanted.
+usage: git-gc [options]
+
+    --prune               prune unreferenced objects
+    --aggressive          be more thorough (increased runtime)
+    --auto                enable auto-gc mode
+
+$ _
+
+Thanks, parse_options.[ch]!
+
 -- 
-1.5.3.1
+Matthieu
