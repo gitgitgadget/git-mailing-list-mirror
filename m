@@ -1,76 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] git checkout's reflog: even when detaching the HEAD, say
- from where
-Date: Fri, 23 Nov 2007 00:20:35 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711230020080.27959@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Allow HTTP proxy to be overridden in config
+Date: Thu, 22 Nov 2007 16:28:28 -0800
+Message-ID: <7voddl24b7.fsf@gitster.siamese.dyndns.org>
+References: <1195776420-22075-1-git-send-email-sam.vilain@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Nov 23 01:21:32 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, francois@debian.org
+To: Sam Vilain <sam.vilain@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Fri Nov 23 01:28:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvMIU-0006Oa-TI
-	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 01:21:31 +0100
+	id 1IvMPd-0000IF-30
+	for gcvg-git-2@gmane.org; Fri, 23 Nov 2007 01:28:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751506AbXKWAVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Nov 2007 19:21:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751409AbXKWAVM
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 19:21:12 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38056 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751266AbXKWAVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Nov 2007 19:21:11 -0500
-Received: (qmail invoked by alias); 23 Nov 2007 00:21:08 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp001) with SMTP; 23 Nov 2007 01:21:08 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/9w01mY9D9q1HmXq2Bb+HMB1ufTCDUExwqwhZ68w
-	pXPKTVMzmdgDui
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1751930AbXKWA2f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Nov 2007 19:28:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751832AbXKWA2f
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Nov 2007 19:28:35 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:48310 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750984AbXKWA2e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Nov 2007 19:28:34 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 9874E2EF;
+	Thu, 22 Nov 2007 19:28:55 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 21A4498B52;
+	Thu, 22 Nov 2007 19:28:52 -0500 (EST)
+In-Reply-To: <1195776420-22075-1-git-send-email-sam.vilain@catalyst.net.nz>
+	(Sam Vilain's message of "Fri, 23 Nov 2007 13:07:00 +1300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65860>
 
+Sam Vilain <sam.vilain@catalyst.net.nz> writes:
 
-When checking out another ref, the reflogs already record from which
-branch you switched.  Do that also when switching to a detached HEAD.
+> The http_proxy / HTTPS_PROXY variables used by curl to control
+> proxying may not be suitable for git.  Allow the user to override them
+> in the configuration file.
+> ---
+>   In particular, privoxy will block directories called /ad/ ... d'oh!
 
-While at it, record also when coming _from_ a detached HEAD.
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 7ee97df..859a7f3 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -515,6 +515,10 @@ specified as 'gitcvs.<access_method>.<varname>' (where 'access_method'
+>  is one of "ext" and "pserver") to make them apply only for the given
+>  access method.
+>  
+> +http.proxy::
+> +	Override the HTTP proxy, normally configured using the 'http_proxy'
+> +	environment variable (see gitlink:curl[1]).
+> +
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+This may work around the issue you cited, but it makes me wonder
+if it is a road to insanity.  Does the curl library expect that
+(1) each and every HTTP talking application that uses the
+library offer this kind of knob for its users to tweak, and (2)
+users set the knob for each and every one of such application?
 
-	Yeah, took me a long time to take care of this issue.
+I would say if privoxy cannot be tweaked to allow /ad/ in chosen
+context (e.g. /ad/ in general is rejected but /objects/ad/ is
+Ok), that is what needs to be fixed.
 
- git-checkout.sh |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/git-checkout.sh b/git-checkout.sh
-index aa724ac..5dc8ddb 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -266,7 +266,7 @@ if [ "$?" -eq 0 ]; then
- 	if test -n "$branch"
- 	then
- 		old_branch_name=`expr "z$oldbranch" : 'zrefs/heads/\(.*\)'`
--		GIT_DIR="$GIT_DIR" git symbolic-ref -m "checkout: moving from $old_branch_name to $branch" HEAD "refs/heads/$branch"
-+		GIT_DIR="$GIT_DIR" git symbolic-ref -m "checkout: moving from ${old_branch_name:-$old} to $branch" HEAD "refs/heads/$branch"
- 		if test -n "$quiet"
- 		then
- 			true	# nothing
-@@ -278,7 +278,8 @@ if [ "$?" -eq 0 ]; then
- 		fi
- 	elif test -n "$detached"
- 	then
--		git update-ref --no-deref -m "checkout: moving to $arg" HEAD "$detached" ||
-+		old_branch_name=`expr "z$oldbranch" : 'zrefs/heads/\(.*\)'`
-+		git update-ref --no-deref -m "checkout: moving from ${old_branch_name:-$old} to $arg" HEAD "$detached" ||
- 			die "Cannot detach HEAD"
- 		if test -n "$detach_warn"
- 		then
--- 
-1.5.3.6.1977.g54d30
+Or it would be the use of such a broken proxy by the user.  That
+can be fixed and much easily.
