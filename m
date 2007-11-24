@@ -1,76 +1,61 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: QGit: Shrink used memory with custom git log format
-Date: Sat, 24 Nov 2007 09:14:42 +0100
-Message-ID: <e5bfff550711240014n78f24b46qf012957d92b1a8e1@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH] git-help: add new options -w (for web) and -i (for info)
+Date: Sat, 24 Nov 2007 09:52:04 +0100
+Organization: At home
+Message-ID: <fi8onk$4ga$1@ger.gmane.org>
+References: <20071124051650.07fd275f.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Nov 24 09:15:03 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 24 09:52:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IvqAJ-0001u1-2k
-	for gcvg-git-2@gmane.org; Sat, 24 Nov 2007 09:15:03 +0100
+	id 1Ivqkk-0001yM-AD
+	for gcvg-git-2@gmane.org; Sat, 24 Nov 2007 09:52:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751607AbXKXIOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Nov 2007 03:14:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751330AbXKXIOn
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Nov 2007 03:14:43 -0500
-Received: from rv-out-0910.google.com ([209.85.198.187]:49685 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751269AbXKXIOm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Nov 2007 03:14:42 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so51905rvb
-        for <git@vger.kernel.org>; Sat, 24 Nov 2007 00:14:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=/y6J/Prq+N+VNcwwDpVL2S6mIT8zI3IDMYWYKFgqgdc=;
-        b=I2CnN0y2JqSn9cGfnlBmsp/KQcy3Bpvw0T1nAzmdtRc4aoQJW60ih82Dbv3hd9hkfTng/tOEs18bwc9EX7SkF1/M0+6EuDzPasCbvN8u3qTLSO5Y6B5+yF7F/38FMSI9z0K37IcH8qpMixUsSKgPqsaTYchx2lSxqX4xRmY0Lbw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=AhvqvH2IZ7y1R4YFtnA2qUGEjf1ONR9Az9rbnSAOArkDuVKSuodLDnUNpjqD6LcDekatbMK0gajvoSHvROY3GKSFKhEpackWDVrQ5R4lazr6meRK85VA9EHvHERTR/oN1rgxSBQZ5utOUvxxfLXJOHLmSMDiys1/UpoILZck1nw=
-Received: by 10.141.171.6 with SMTP id y6mr92234rvo.1195892082076;
-        Sat, 24 Nov 2007 00:14:42 -0800 (PST)
-Received: by 10.140.185.19 with HTTP; Sat, 24 Nov 2007 00:14:42 -0800 (PST)
-Content-Disposition: inline
+	id S1752222AbXKXIwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Nov 2007 03:52:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752188AbXKXIwY
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Nov 2007 03:52:24 -0500
+Received: from main.gmane.org ([80.91.229.2]:34179 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752122AbXKXIwX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Nov 2007 03:52:23 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IvqkL-0001Rq-AJ
+	for git@vger.kernel.org; Sat, 24 Nov 2007 08:52:17 +0000
+Received: from abvy15.neoplus.adsl.tpnet.pl ([83.8.222.15])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 24 Nov 2007 08:52:17 +0000
+Received: from jnareb by abvy15.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 24 Nov 2007 08:52:17 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvy15.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65939>
 
-Hi all,
+[Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org]
 
-   I have pushed a patch series to
+Christian Couder wrote:
 
-git://git.kernel.org/pub/scm/qgit/qgit4.git
+> This currently works only if the HTML versions of the man page
+> have been installed in "PREFIX/share/doc/git-doc", so new target
+> to do that is added to "Documentation/Makefile".
 
-that changes the format of git log used to read data from a git repository.
+git-core RPM (th git one) installs HTML version of manpages to
+/usr/share/doc/git-core-$version/
 
-Now instead of --pretty=raw a custom made --pretty=format is given,
-this shrinks loaded data of 30% (17MB less on Linux tree) and gives a
-good speed up when you are low on memory (especially on big repos)
-
-Next step _would_ be to load log message body on demand (another 50%
-reduction) but this has two drawbacks:
-
-(1) Text search/filter on log message would be broken
-
-(2) Slower to browse through revisions because for each revision an
-additional git-rev-list /git-log command should be executed to read
-the body
-
-The second point is worsted by the fact that it is not possible to
-keep a command running and "open" like as example git-diff-tree
---stdin and feed with additional revision's sha when needed. Avoiding
-the burden to startup a new process each time to read a new log
-message given an sha would let the answer much more quick especially
-on lesser OS's
-
-Indeed there is a git-rev-list --stdin option but with different
-behaviour from git-diff-tree --stdin and not suitable for this.
-
-Marco
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
