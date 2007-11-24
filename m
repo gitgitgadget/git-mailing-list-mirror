@@ -1,130 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] Move pathspec validation into interactive_add
-Date: Sat, 24 Nov 2007 14:34:36 -0800
-Message-ID: <7vtznbp91f.fsf@gitster.siamese.dyndns.org>
-References: <7vk5o8smaf.fsf@gitster.siamese.dyndns.org>
-	<1195908922-88023-1-git-send-email-win@wincent.com>
-	<1195908922-88023-2-git-send-email-win@wincent.com>
-	<1195908922-88023-3-git-send-email-win@wincent.com>
-	<7vir3rqwts.fsf@gitster.siamese.dyndns.org>
-	<4D81F973-8951-458A-958D-E24C826CA548@wincent.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, peff@peff.net
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Sat Nov 24 23:35:31 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC/PATCH (homepage)] Add links to binaries for MS Windows (Cygwin, msysGit)
+Date: Sat, 24 Nov 2007 23:47:31 +0100
+Message-ID: <1195944451-10587-1-git-send-email-jnareb@gmail.com>
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Sat Nov 24 23:49:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iw3aZ-0003Hi-I4
-	for gcvg-git-2@gmane.org; Sat, 24 Nov 2007 23:35:03 +0100
+	id 1Iw3n1-0007JD-8t
+	for gcvg-git-2@gmane.org; Sat, 24 Nov 2007 23:47:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752662AbXKXWeo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Nov 2007 17:34:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752684AbXKXWeo
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Nov 2007 17:34:44 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:36117 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752662AbXKXWen convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Nov 2007 17:34:43 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id C7EFE2EF;
-	Sat, 24 Nov 2007 17:35:04 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 1025C995E9;
-	Sat, 24 Nov 2007 17:35:00 -0500 (EST)
-In-Reply-To: <4D81F973-8951-458A-958D-E24C826CA548@wincent.com> (Wincent
-	Colaiuta's message of "Sat, 24 Nov 2007 22:50:10 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752684AbXKXWrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Nov 2007 17:47:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752677AbXKXWrf
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Nov 2007 17:47:35 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:4966 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752662AbXKXWrf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Nov 2007 17:47:35 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so227812nfb
+        for <git@vger.kernel.org>; Sat, 24 Nov 2007 14:47:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=nZvjGzCkqQ8CPF4PQVuPiutaSoRPpa2ehl79B6rlY6A=;
+        b=QjmwA+5JjcPHSAmS7zn6InTBZhIrckq+kVIBG3U+mMr8ZsT2tLFzAxecxKgaJdMyZdjZAeY/6OK9SE9oFpNqJkc0YczFEpqHRQYBDoD8gruHi6ZTDSYhc2nTNCdO9kpn+jwhZUqLDXwvWTUEFJxd6h9HwEeVJoutrRTKsj5ANY0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=jaRy+RwMOht6ra3oDgO5OQcAmJR3xJq0zSYM0olV1hpAmV3A3DxjbCbmDJ82wnzANlLzjmlcnW5IprQWRPCYH89GPuVhz+ItaYcIZcsE8vqSf9ySP4yg3+1LzwTcZ3ZnOxK5NFYhatUOo1IxdWNEb9OiPPIS6/5LNhGQx4bMqKA=
+Received: by 10.86.91.12 with SMTP id o12mr913497fgb.1195944453670;
+        Sat, 24 Nov 2007 14:47:33 -0800 (PST)
+Received: from roke.D-201 ( [83.8.240.234])
+        by mx.google.com with ESMTPS id v23sm50097fkd.2007.11.24.14.47.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 24 Nov 2007 14:47:32 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lAOMlXT1010602;
+	Sat, 24 Nov 2007 23:47:33 +0100
+Received: (from jnareb@localhost)
+	by roke.D-201 (8.13.4/8.13.4/Submit) id lAOMlVKC010601;
+	Sat, 24 Nov 2007 23:47:31 +0100
+X-Mailer: git-send-email 1.5.3.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65965>
 
-Wincent Colaiuta <win@wincent.com> writes:
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ index.html |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
 
-> El 24/11/2007, a las 20:15, Junio C Hamano escribi=C3=B3:
->
->> Wincent Colaiuta <win@wincent.com> writes:
->>
->>> Instead of throwing away the return status of pathspec_match() I am
->>> keeping it, and any successful match breaks out of the loop early.
->>
->> Leaving it early before checking if all the given pathspecs are
->> used defeats the whole "error-unmatch" business, doesn't it?
->
-> No, I probably didn't explain that clearly enough... If you look at
-> the patch, I break out of the *inner* loop the first time a particula=
-r
-> pattern matches. Then I move on to the next pattern, and any single
-> invalid pattern will be enough to provide the "error-unmatch"
-> indication.
-
-Heh, I missed that the code was doing something so stupid ;-).
-
-The helper function pathspec_match() takes a single path and a
-set of pathspecs (NULL terminated), and says if the path is
-covered with that set, while recording which one of the
-pathspecs caused the match in the ps_matched array.
-
-You are checking first with the full set of patterns, then the
-full set minus the first pattern, and then the full set minus
-the first two patterns, and so on.  No wonder it is inefficient.
-
-Why are you trying to micro-optimize this part in the first
-place?  Have you benchmarked and determined that iterating over
-full cache is the bottleneck?
-
-In order to prove that there is a pathspec (or more) that does
-not match anything in the cache, you need to interate over the
-whole cache at least once.  The only case you can short-cut is
-when you can tell that all of them have been used before you
-iterated over all cache entries.
-
-So lose that silly outer loop, and replace the inner function
-with something like this:
-
-        static int validate_pathspec(const char *prefix, const char **p=
-attern)
-        {
-                int i, ret =3D 0, num_patterns;
-                char *m;
-
-                if (!pattern || !*pattern)
-                        return 0;
-
-                for (num_patterns =3D 0; pattern[num_patterns]; num_pat=
-terns++)
-                        ;
-                m =3D xcalloc(1, num_patterns + 1);
-                for (i =3D 0; i < active_nr; i++) {
-                        struct cache_entry *ce =3D active_cache[i];
-
-                        if (pathspec_match(pattern, m, ce->name, 0)) {
-                                /*
-                                 * You could micro optimize by leaving
-                                 * the loop early when you notice that =
-all
-				 * patterns are used.
-				 *
-                                 * if (strlen(m) =3D=3D num_patterns)
-                                 * 	goto ok;
-				 *
-                                 */=20
-				; /* nothing */
-			}
-                }
-                report_path_error(m, pattern, prefix ? strlen(prefix) :=
- 0);
-        ok:
-                free(m);
-                return ret;
-        }
-
-My gut feeling is that the micro-optimization is not worth it here, but
-I didn't try.  I think without the micro-optimization the above is the
-same as I gave you earlier.
+diff --git a/index.html b/index.html
+index 29fa0b1..142bd46 100644
+--- a/index.html
++++ b/index.html
+@@ -236,6 +236,16 @@ You can also use one of many <a href="http://www.kernel.org/mirrors/">kernel.org
+ <td><a href="http://packages.debian.org/unstable/devel/git-core">http://packages.debian.org/unstable/devel/git-core</a></td>
+ </tr>
+ 
++<tr>
++<td rowspan="2">Win</td>
++<td><a href="http://www.cygwin.com/">Cygwin</a></td>
++<td><a href="http://www.cygwin.com/setup.exe">http://www.cygwin.com/setup.exe</a></td>
++</tr>
++<tr class="odd">
++<td><a href="http://code.google.com/p/msysgit/">msysGit</a></td>
++<td><a href="http://code.google.com/p/msysgit/downloads/list">http://code.google.com/p/msysgit/downloads/list</a></td>
++</tr>
++
+ </table>
+ 
+ <h3>Development snapshots</h3>
+-- 
+1.5.3.6
