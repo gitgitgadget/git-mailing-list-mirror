@@ -1,91 +1,92 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [RFC] best way to show diff of commit
-Date: Sun, 25 Nov 2007 23:31:50 +0100
-Message-ID: <20071125223150.GD21121@artemis.corp>
-References: <20071125211831.GA21121@artemis.corp> <20071125212748.GB23820@fieldses.org> <20071125220902.GB21121@artemis.corp> <7vfxyuj70i.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 25 Nov 2007 14:42:08 -0800
+Message-ID: <7v63zqj6bj.fsf@gitster.siamese.dyndns.org>
+References: <7vwsso3poo.fsf@gitster.siamese.dyndns.org>
+	<7vfxz89x9q.fsf@gitster.siamese.dyndns.org>
+	<7vabpctx3b.fsf@gitster.siamese.dyndns.org>
+	<7vsl30eyuk.fsf@gitster.siamese.dyndns.org>
+	<7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
+	<20071123103003.GB6754@sigill.intra.peff.net>
+	<Pine.LNX.4.64.0711231319220.27959@racer.site>
+	<20071124113814.GA17861@sigill.intra.peff.net>
+	<alpine.LFD.0.99999.0711241042011.9605@xanadu.home>
+	<7vtznbqx2w.fsf@gitster.siamese.dyndns.org>
+	<20071125215128.GC23820@fieldses.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="HWvPVVuAAfuRc6SZ";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Git ML <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 25 23:32:16 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Sun Nov 25 23:42:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwQ1P-0008SG-1F
-	for gcvg-git-2@gmane.org; Sun, 25 Nov 2007 23:32:15 +0100
+	id 1IwQBS-0002p5-Vu
+	for gcvg-git-2@gmane.org; Sun, 25 Nov 2007 23:42:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756539AbXKYWb5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Nov 2007 17:31:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756369AbXKYWb4
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 17:31:56 -0500
-Received: from pan.madism.org ([88.191.52.104]:41566 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753100AbXKYWb4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2007 17:31:56 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 2E0182C2F7;
-	Sun, 25 Nov 2007 23:31:55 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 1556B490B7F; Sun, 25 Nov 2007 23:31:50 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Git ML <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <7vfxyuj70i.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1757633AbXKYWmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Nov 2007 17:42:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757525AbXKYWmT
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 17:42:19 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:60834 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757420AbXKYWmR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Nov 2007 17:42:17 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 816122F0;
+	Sun, 25 Nov 2007 17:42:38 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id D1D9D998FF;
+	Sun, 25 Nov 2007 17:42:31 -0500 (EST)
+In-Reply-To: <20071125215128.GC23820@fieldses.org> (J. Bruce Fields's message
+	of "Sun, 25 Nov 2007 21:51:28 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66022>
 
+"J. Bruce Fields" <bfields@fieldses.org> writes:
 
---HWvPVVuAAfuRc6SZ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Anyway, here's a first draft.
+>
+> --b.
+>
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+> index 8355cce..7544715 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> ...
+> +Normally whenever a branch head in a public repository is modified, it
+> +is modified to point to a descendent of the commit that it pointed to
+> +before.  By forcing a push in this situation, you break that convention.
+> +(See <<problems-with-rewriting-history>>).
+> +
+> +Nevertheless, this is a common practice for people that need a simple
+> +way to publish a work-in-progress patch series, and it is an acceptable
+> +compromise as long as you warn other developers that this is how you
+> +intend to manage the branch.
 
-On Sun, Nov 25, 2007 at 10:27:09PM +0000, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> >   Hmm it doesn't because I would have to call git commit -v each time I
-> > commit and well I _like_ having the status better. And moreover I want
-> > the diff to go in a separated buffer too.
->=20
-> I've never felt it a problem while editing the log message in Emacs.
->=20
-> Don't enhanced vi implementations let you split the same buffer into
-> two allowing you to view different portions of it these days?
+Note that modern git allows repository owners to forbid such a forced
+non fast forward push at the receiving end.  In such a case, you cannot
+even force a push.
 
-  Well, maybe I could write my plugin so that it cuts the diff out from
-the main buffer indeed, though I will have to learn using git commit -v
-instead of git commit :P
+Instead, you would need to fetch the current branch tip from the remote
+and merge it into the branch you were tring to push, possibly using the
+"ours" merge strategy, before pushing it again.  Use of "ours" merge in
+such a case:
 
-  That and the fact that the syntax colorization of the diff doesn't
-work, but it's probably not up to git to fix that.
+ - makes the next fetch by other people properly fast-forwarding;
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+ - records your admission of guilt: "I screwed up the last push and
+   this is a replacement --- this is what I really should have pushed
+   the last time".
 
---HWvPVVuAAfuRc6SZ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHSffWvGr7W6HudhwRAigDAJ91TKFog/etZOCONxX9GdJafEpQSgCggOOW
-cwBYoZdIODrmGtxBRXDfNYk=
-=aJp5
------END PGP SIGNATURE-----
-
---HWvPVVuAAfuRc6SZ--
+ - makes the resulting tree exactly the same as what you tried to push
+   unsuccessfully.  This is a valid substitute to a forced push in that
+   it reverts the mistakes _you_ made with the previous push.
