@@ -1,42 +1,69 @@
-From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
-Subject: Backing git repos to tape?
-Date: Sun, 25 Nov 2007 11:58:41 +0100
-Message-ID: <027601c82f52$2433fdf0$5267a8c0@Jocke>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Backing git repos to tape?
+Date: Sun, 25 Nov 2007 12:05:08 +0100
+Organization: At home
+Message-ID: <fibkt4$q6g$1@ger.gmane.org>
+References: <027601c82f52$2433fdf0$5267a8c0@Jocke>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Nov 25 11:59:08 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 25 12:06:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwFCd-0004zx-8R
-	for gcvg-git-2@gmane.org; Sun, 25 Nov 2007 11:59:07 +0100
+	id 1IwFJ0-0006HZ-Uh
+	for gcvg-git-2@gmane.org; Sun, 25 Nov 2007 12:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752336AbXKYK6s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Nov 2007 05:58:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752273AbXKYK6r
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 05:58:47 -0500
-Received: from mail.transmode.se ([83.241.175.147]:53906 "EHLO
-	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752032AbXKYK6r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2007 05:58:47 -0500
-Received: from Jocke ([84.217.8.168]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
-	 Sun, 25 Nov 2007 11:58:44 +0100
-X-Mailer: Microsoft Office Outlook 11
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
-thread-index: AcgvUiPeX8Ot9ZYXSV+igB35RiPYYw==
-X-OriginalArrivalTime: 25 Nov 2007 10:58:44.0117 (UTC) FILETIME=[2563A450:01C82F52]
+	id S1752678AbXKYLFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Nov 2007 06:05:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752644AbXKYLFZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 06:05:25 -0500
+Received: from main.gmane.org ([80.91.229.2]:57781 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752556AbXKYLFY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Nov 2007 06:05:24 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IwFIa-0006Gy-Vv
+	for git@vger.kernel.org; Sun, 25 Nov 2007 11:05:16 +0000
+Received: from abwq234.neoplus.adsl.tpnet.pl ([83.8.240.234])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 25 Nov 2007 11:05:16 +0000
+Received: from jnareb by abwq234.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 25 Nov 2007 11:05:16 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abwq234.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65967>
 
-Is there a preferred way to do the above?
+[Cc: Joakim Tjernlund <joakim.tjernlund@transmode.se>, git@vger.kernel.org]
 
-To do a full backup I could just copy the whole repo, but how
-do I do inrecmental backups(and restore)?
+Joakim Tjernlund wrote:
 
- Jocke 
+> Is there a preferred way to do the above?
+> 
+> To do a full backup I could just copy the whole repo, but how
+> do I do inrecmental backups(and restore)?
+
+Try git-bundle. There were in the mailing list archive the recipe
+on how to do an "incremental" bundle...
+
+...ahh, there it is, by Johannes "Dscho" Schindelin:
+
+        git bundle create retort.bundle --all \
+                --not $(git ls-remote the-other.bundle | cut -c1-40)
+
+Message-ID: <Pine.LNX.4.64.0711231132120.27959@racer.site>
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
