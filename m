@@ -1,113 +1,165 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Backing git repos to tape?
-Date: Sun, 25 Nov 2007 13:00:06 +0100
-Message-ID: <200711251300.06575.jnareb@gmail.com>
-References: <027601c82f52$2433fdf0$5267a8c0@Jocke> <fibkt4$q6g$1@ger.gmane.org> <028101c82f58$0e26f200$5267a8c0@Jocke>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
-X-From: git-owner@vger.kernel.org Sun Nov 25 13:00:34 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: [PATCH 2/3] Move pathspec validation into interactive_add
+Date: Sun, 25 Nov 2007 14:15:41 +0100
+Message-ID: <1195996542-86074-3-git-send-email-win@wincent.com>
+References: <1195996542-86074-1-git-send-email-win@wincent.com>
+ <1195996542-86074-2-git-send-email-win@wincent.com>
+Cc: gitster@pobox.com, peff@peff.net,
+	Wincent Colaiuta <win@wincent.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 25 14:16:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwGA5-0000cx-Bt
-	for gcvg-git-2@gmane.org; Sun, 25 Nov 2007 13:00:33 +0100
+	id 1IwHLM-0004BD-Kx
+	for gcvg-git-2@gmane.org; Sun, 25 Nov 2007 14:16:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752741AbXKYMAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Nov 2007 07:00:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752707AbXKYMAN
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 07:00:13 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:9150 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752644AbXKYMAL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2007 07:00:11 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so350050nfb
-        for <git@vger.kernel.org>; Sun, 25 Nov 2007 04:00:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=RRMbv2aUkVeB5SSZm/HHxuHbpvFeEDHqkQYKuJtm6lU=;
-        b=NYgejfE5/Vcl5Jp6/Fw1TbcvOiblBeMKfcjDSl93+01kR/f0/8u9YufaI+ZKsQCwFv4Cq7u2UcpWFsFV0y3xptsmeDf6nSaQEESIdA6tcEh33b8sHKMhC/HrPFroKtkKVEbKQVxLvXBNF3Pm+EO7xwNgdY/tII2GSh+LRKi6p5g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=IxiGQyblc0DUrivR2gt07a7B6TMlRPn6hvSDkJeAjnkl2dhXSzm3lEYzP/N4cgWW73Gg1UxuJ3uqqp+o6jqZh7JYcbCHMBVjkM/qGnheNKUdsoHWtFVgkIWA7Obe30UUFFeVrT4KiAPFE0yDEKku2+Ggf2qnhubQLZIs0rok3Tw=
-Received: by 10.86.58.3 with SMTP id g3mr1502661fga.1195992009534;
-        Sun, 25 Nov 2007 04:00:09 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.240.234])
-        by mx.google.com with ESMTPS id 4sm270690fgg.2007.11.25.04.00.07
-        (version=SSLv3 cipher=OTHER);
-        Sun, 25 Nov 2007 04:00:08 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <028101c82f58$0e26f200$5267a8c0@Jocke>
-Content-Disposition: inline
+	id S1752971AbXKYNP7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Nov 2007 08:15:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752942AbXKYNP7
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 08:15:59 -0500
+Received: from wincent.com ([72.3.236.74]:36256 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752905AbXKYNP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Nov 2007 08:15:58 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAPDFhQU012499;
+	Sun, 25 Nov 2007 07:15:48 -0600
+X-Mailer: git-send-email 1.5.3.6.1994.g0a56
+In-Reply-To: <1195996542-86074-2-git-send-email-win@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65969>
 
-On Sun, 25 Nov 2007, Joakim Tjernlund wrote:
-> Joakim Tjernlund wrote: 
->> Jakub Narebski wrote:
->>> Joakim Tjernlund wrote:
->>> 
->>>> Is there a preferred way to do the above?
->>>> 
->>>> To do a full backup I could just copy the whole repo, but how
->>>> do I do inrecmental backups(and restore)?
->>> 
->>> Try git-bundle. There were in the mailing list archive the recipe
->>> on how to do an "incremental" bundle...
->>> 
->>> ..ahh, there it is, by Johannes "Dscho" Schindelin:
->>> 
->>>         git bundle create retort.bundle --all \
->>>                 --not $(git ls-remote the-other.bundle | cut -c1-40)
->> 
->> Thanks, will look into git bundle
+Simplify git-add--interactive by moving the pathspec validation into the
+interactive_add() function of builtin-add. We can do this because
+builtin-add is the only caller of git-add--interactive.
 
-Please note however thatgit-bundle was created for easy and efficient
-off-line (sneakernet) transport, not for backups of repositories.
+The validate_pathspec() function added by this commit is based on a
+sample posted to the mailing list by Junio Hamano.
 
-Nevertheless it might be a good tool to use.
+Signed-off-by: Wincent Colaiuta <win@wincent.com>
+---
+ builtin-add.c             |   33 +++++++++++++++++++++++++++++----
+ builtin-commit.c          |    2 +-
+ commit.h                  |    2 +-
+ git-add--interactive.perl |   12 ++----------
+ 4 files changed, 33 insertions(+), 16 deletions(-)
+
+diff --git a/builtin-add.c b/builtin-add.c
+index dd895df..870f4a1 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -135,12 +135,37 @@ static void refresh(int verbose, const char **pathspec)
+         free(seen);
+ }
  
-> Just did a
->   git ls-remote ./.
-> in my linux repo and got a lot of ^{} in the printout.
-> What do the ^{} mean?
->  
-> ...
-> 0b8bc8b91cf6befea20fe78b90367ca7b61cfa0d        refs/tags/v2.6.23
-> 7d57c74238cdf570bca20b711b2c0b31a553c1e5        refs/tags/v2.6.23-rc1
-> f695baf2df9e0413d3521661070103711545207a        refs/tags/v2.6.23-rc1^{}
-[...]
-
-----
-git-rev-parse(1):
-
-SPECIFYING REVISIONS
---------------------
-
-A revision parameter typically, but not necessarily, names a
-commit object.  They use what is called an 'extended SHA1'
-syntax.  Here are various ways to spell object names.
-
-[...]
-
-* A suffix '^' followed by an empty brace pair
-  (e.g. `v0.99.8^{}`) means the object could be a tag,
-  and dereference the tag recursively until a non-tag object is
-  found.
-
-----
-
-refs/tags/v2.6.23-rc1 is a ref which points to a _tag object_ 7d57c742...,
-which in turn points to commit f695baf2...
-
+-int interactive_add(int argc, const char **argv)
++static int validate_pathspec(const char *prefix, const char **patterns)
++{
++	int i, ret = 0;
++	char *m;
++	if (!patterns || !*patterns)
++		return 0;
++	if (read_cache() < 0)
++		die("index file corrupt");
++	(void)get_pathspec(prefix, patterns);
++	for (i = 0; patterns[i]; i++)
++		;
++	m = xcalloc(1, i);
++	for (i = 0; i < active_nr; i++) {
++		struct cache_entry *ce = active_cache[i];
++		(void)pathspec_match(patterns, m, ce->name, 0);
++	}
++	ret = report_path_error(m, patterns, prefix ? strlen(prefix) : 0);
++	free(m);
++	return ret;
++}
++
++int interactive_add(const char *prefix, int argc, const char **argv)
+ {
+ 	int status;
+-	const char **args = xmalloc(sizeof(const char *) * (argc + 1));
++	const char **args;
++	if ((status = validate_pathspec(prefix, argv)))
++		return status;
++	args = xmalloc(sizeof(const char *) * (argc + 2));
+ 	args[0] = "add--interactive";
+-	memcpy((void *)args + sizeof(const char *), argv, sizeof(const char *) * argc);
++	memcpy((void *)args + sizeof(const char *),
++	    argv, sizeof(const char *) * argc);
+ 	args[argc + 1] = NULL;
+ 
+ 	status = run_command_v_opt(args, RUN_GIT_CMD);
+@@ -176,7 +201,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, builtin_add_options,
+ 			  builtin_add_usage, 0);
+ 	if (add_interactive)
+-		exit(interactive_add(argc, argv));
++		exit(interactive_add(prefix, argc, argv));
+ 
+ 	git_config(git_default_config);
+ 
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 5d27102..95d1c0d 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -165,7 +165,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
+ 	const char **pathspec = NULL;
+ 
+ 	if (interactive) {
+-		interactive_add(argc, argv);
++		interactive_add(prefix, argc, argv);
+ 		commit_style = COMMIT_AS_IS;
+ 		return get_index_file();
+ 	}
+diff --git a/commit.h b/commit.h
+index 9f0765b..dc6fe31 100644
+--- a/commit.h
++++ b/commit.h
+@@ -113,7 +113,7 @@ extern struct commit_list *get_shallow_commits(struct object_array *heads,
+ 
+ int in_merge_bases(struct commit *, struct commit **, int);
+ 
+-extern int interactive_add(int argc, const char **argv);
++extern int interactive_add(const char *prefix, int argc, const char **argv);
+ extern int rerere(void);
+ 
+ static inline int single_parent(struct commit *commit)
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 15b2c9f..381bcbe 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -56,17 +56,9 @@ sub list_modified {
+ 	my ($only) = @_;
+ 	my (%data, @return);
+ 	my ($add, $del, $adddel, $file);
+-	my @tracked = ();
+-
+-	if (@ARGV) {
+-		@tracked = map {
+-			chomp $_; $_;
+-		} run_cmd_pipe(qw(git ls-files --exclude-standard --), @ARGV);
+-		return if (!@tracked);
+-	}
+ 
+ 	for (run_cmd_pipe(qw(git diff-index --cached
+-			     --numstat --summary HEAD --), @tracked)) {
++			     --numstat --summary HEAD --), @ARGV)) {
+ 		if (($add, $del, $file) =
+ 		    /^([-\d]+)	([-\d]+)	(.*)/) {
+ 			my ($change, $bin);
+@@ -89,7 +81,7 @@ sub list_modified {
+ 		}
+ 	}
+ 
+-	for (run_cmd_pipe(qw(git diff-files --numstat --summary --), @tracked)) {
++	for (run_cmd_pipe(qw(git diff-files --numstat --summary --), @ARGV)) {
+ 		if (($add, $del, $file) =
+ 		    /^([-\d]+)	([-\d]+)	(.*)/) {
+ 			if (!exists $data{$file}) {
 -- 
-Jakub Narebski
-Poland
+1.5.3.6.1994.g38001
