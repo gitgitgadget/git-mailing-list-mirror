@@ -1,7 +1,7 @@
 From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 05/10] Add "stg coalesce"
-Date: Sun, 25 Nov 2007 21:51:25 +0100
-Message-ID: <20071125205125.7823.47538.stgit@yoghurt>
+Subject: [StGit PATCH 10/10] Convert "stg uncommit" to the new infrastructure
+Date: Sun, 25 Nov 2007 21:51:58 +0100
+Message-ID: <20071125205158.7823.37687.stgit@yoghurt>
 References: <20071125203717.7823.70046.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -9,245 +9,182 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org,
 	David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 25 21:52:37 2007
+X-From: git-owner@vger.kernel.org Sun Nov 25 21:52:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwOSw-0003t1-Kv
-	for gcvg-git-2@gmane.org; Sun, 25 Nov 2007 21:52:35 +0100
+	id 1IwOSy-0003t1-LD
+	for gcvg-git-2@gmane.org; Sun, 25 Nov 2007 21:52:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756690AbXKYUvu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Nov 2007 15:51:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756689AbXKYUvu
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 15:51:50 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3579 "EHLO
+	id S1756739AbXKYUwG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Nov 2007 15:52:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756737AbXKYUwE
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 15:52:04 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3590 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756645AbXKYUvs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2007 15:51:48 -0500
+	with ESMTP id S1756689AbXKYUwD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Nov 2007 15:52:03 -0500
 Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
 	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1IwORp-0007aL-00; Sun, 25 Nov 2007 20:51:25 +0000
+	id 1IwOSN-0007cX-00; Sun, 25 Nov 2007 20:51:59 +0000
 In-Reply-To: <20071125203717.7823.70046.stgit@yoghurt>
 User-Agent: StGIT/0.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66002>
-
-It coalesces two or more consecutive applied patches, with no need to
-touch index/worktree, and no possibiliy of conflicts.
-
-=46uture improvements could relax the "consecutive" and "applied"
-restrictions, by building a new chain of commits just like "stg push"
-will do once it's been converted to the new infrastructure.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66003>
 
 Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
 ---
 
- contrib/stgit-completion.bash |    2 +
- stgit/commands/coalesce.py    |   84 +++++++++++++++++++++++++++++++++=
-++++++++
- stgit/main.py                 |    2 +
- stgit/utils.py                |   11 +++++
- t/t2600-coalesce.sh           |   31 +++++++++++++++
- 5 files changed, 130 insertions(+), 0 deletions(-)
- create mode 100644 stgit/commands/coalesce.py
- create mode 100755 t/t2600-coalesce.sh
+ stgit/commands/uncommit.py |   79 +++++++++++++++++++-----------------=
+--------
+ 1 files changed, 34 insertions(+), 45 deletions(-)
 
 
-diff --git a/contrib/stgit-completion.bash b/contrib/stgit-completion.b=
-ash
-index b3b23d4..b02eb64 100644
---- a/contrib/stgit-completion.bash
-+++ b/contrib/stgit-completion.bash
-@@ -18,6 +18,7 @@ _stg_commands=3D"
-     diff
-     clean
-     clone
-+    coalesce
-     commit
-     cp
-     edit
-@@ -238,6 +239,7 @@ _stg ()
-         # repository commands
-         id)     _stg_patches $command _all_patches ;;
-         # stack commands
-+        coalesce) _stg_patches $command _applied_patches ;;
-         float)  _stg_patches $command _all_patches ;;
-         goto)   _stg_patches $command _all_other_patches ;;
-         hide)   _stg_patches $command _unapplied_patches ;;
-diff --git a/stgit/commands/coalesce.py b/stgit/commands/coalesce.py
-new file mode 100644
-index 0000000..c4c1cf8
---- /dev/null
-+++ b/stgit/commands/coalesce.py
-@@ -0,0 +1,84 @@
-+# -*- coding: utf-8 -*-
-+
-+__copyright__ =3D """
-+Copyright (C) 2007, Karl Hasselstr=C3=B6m <kha@treskal.com>
-+
-+This program is free software; you can redistribute it and/or modify
-+it under the terms of the GNU General Public License version 2 as
-+published by the Free Software Foundation.
-+
-+This program is distributed in the hope that it will be useful,
-+but WITHOUT ANY WARRANTY; without even the implied warranty of
-+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+GNU General Public License for more details.
-+
-+You should have received a copy of the GNU General Public License
-+along with this program; if not, write to the Free Software
-+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 US=
+diff --git a/stgit/commands/uncommit.py b/stgit/commands/uncommit.py
+index ba3448f..8422952 100644
+--- a/stgit/commands/uncommit.py
++++ b/stgit/commands/uncommit.py
+@@ -17,13 +17,11 @@ along with this program; if not, write to the Free =
+Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 US=
 A
-+"""
-+
-+from optparse import make_option
-+from stgit.out import *
-+from stgit import utils
-+from stgit.commands import common
-+from stgit.lib import git, transaction
-+
-+help =3D 'coalesce two or more patches into one'
-+usage =3D """%prog [options] <patches>
-+
-+Coalesce two or more patches, creating one big patch that contains all
-+their changes. The patches must all be applied, and must be
-+consecutive."""
-+
-+directory =3D common.DirectoryHasRepositoryLib()
-+options =3D [make_option('-n', '--name', help =3D 'name of coalesced p=
-atch'),
-+           make_option('-m', '--message',
-+                       help =3D 'commit message of coalesced patch')]
-+
-+def _coalesce(stack, name, msg, patches):
-+    applied =3D stack.patchorder.applied
-+
-+    # Make sure the patches are consecutive.
-+    applied_ix =3D dict((applied[i], i) for i in xrange(len(applied)))
-+    ixes =3D list(sorted(applied_ix[p] for p in patches))
-+    i0, i1 =3D ixes[0], ixes[-1]
-+    if i1 - i0 + 1 !=3D len(patches):
-+        raise common.CmdException('The patches must be consecutive')
-+
-+    # Make a commit for the coalesced patch.
-+    def bad_name(pn):
-+        return pn not in patches and stack.patches.exists(pn)
-+    if name and bad_name(name):
-+        raise common.CmdException('Patch name "%s" already taken')
-+    ps =3D [stack.patches.get(pn) for pn in applied[i0:i1+1]]
-+    if msg =3D=3D None:
-+        msg =3D '\n\n'.join('%s\n\n%s' % (p.name.ljust(70, '-'),
-+                                        p.commit.data.message)
-+                          for p in ps)
-+        msg =3D utils.edit_string(msg, '.stgit-coalesce.txt').strip()
-+    if not name:
-+        name =3D utils.make_patch_name(msg, bad_name)
-+    cd =3D git.Commitdata(tree =3D ps[-1].commit.data.tree,
-+                        parents =3D ps[0].commit.data.parents, message=
- =3D msg)
-+
-+    # Rewrite refs.
-+    trans =3D transaction.StackTransaction(stack, 'stg coalesce')
-+    for pn in applied[i0:i1+1]:
-+        trans.patches[pn] =3D None
-+    parent =3D trans.patches[name] =3D stack.repository.commit(cd)
-+    trans.applied =3D applied[:i0]
-+    trans.applied.append(name)
-+    for pn in applied[i1+1:]:
-+        p =3D stack.patches.get(pn)
-+        parent =3D trans.patches[pn] =3D stack.repository.commit(
-+            p.commit.data.set_parent(parent))
-+        trans.applied.append(pn)
-+    trans.run()
-+
-+def func(parser, options, args):
-+    stack =3D directory.repository.current_stack
-+    applied =3D set(stack.patchorder.applied)
-+    patches =3D set(common.parse_patches(args, list(stack.patchorder.a=
-pplied)))
-+    if len(patches) < 2:
-+        raise common.CmdException('Need at least two patches')
-+    _coalesce(stack, options.name, options.message, patches)
-diff --git a/stgit/main.py b/stgit/main.py
-index deaac91..384803b 100644
---- a/stgit/main.py
-+++ b/stgit/main.py
-@@ -64,6 +64,7 @@ commands =3D Commands({
-     'diff':             'diff',
-     'clean':            'clean',
-     'clone':            'clone',
-+    'coalesce':         'coalesce',
-     'commit':           'commit',
-     'edit':             'edit',
-     'export':           'export',
-@@ -108,6 +109,7 @@ stackcommands =3D (
-     'applied',
-     'branch',
-     'clean',
-+    'coalesce',
-     'commit',
-     'float',
-     'goto',
-diff --git a/stgit/utils.py b/stgit/utils.py
-index b3f6232..688276c 100644
---- a/stgit/utils.py
-+++ b/stgit/utils.py
-@@ -189,6 +189,17 @@ def call_editor(filename):
-         raise EditorException, 'editor failed, exit code: %d' % err
-     out.done()
+ """
 =20
-+def edit_string(s, filename):
-+    f =3D file(filename, 'w')
-+    f.write(s)
-+    f.close()
-+    call_editor(filename)
-+    f =3D file(filename)
-+    s =3D f.read()
-+    f.close()
-+    os.remove(filename)
-+    return s
+-import sys, os
+-from optparse import OptionParser, make_option
+-
+-from stgit.commands.common import *
+-from stgit.utils import *
++from optparse import make_option
++from stgit.commands import common
++from stgit.lib import transaction
+ from stgit.out import *
+-from stgit import stack, git
++from stgit import utils
+=20
+ help =3D 'turn regular GIT commits into StGIT patches'
+ usage =3D """%prog [<patchnames>] | -n NUM [<prefix>]] | -t <committis=
+h> [-x]
+@@ -48,7 +46,7 @@ given commit should be uncommitted.
+ Only commits with exactly one parent can be uncommitted; in other
+ words, you can't uncommit a merge."""
+=20
+-directory =3D DirectoryGotoToplevel()
++directory =3D common.DirectoryHasRepositoryLib()
+ options =3D [make_option('-n', '--number', type =3D 'int',
+                        help =3D 'uncommit the specified number of comm=
+its'),
+            make_option('-t', '--to',
+@@ -60,19 +58,18 @@ options =3D [make_option('-n', '--number', type =3D=
+ 'int',
+ def func(parser, options, args):
+     """Uncommit a number of patches.
+     """
++    stack =3D directory.repository.current_stack
+     if options.to:
+         if options.number:
+             parser.error('cannot give both --to and --number')
+         if len(args) !=3D 0:
+             parser.error('cannot specify patch name with --to')
+         patch_nr =3D patchnames =3D None
+-        to_commit =3D git_id(crt_series, options.to)
++        to_commit =3D stack.repository.rev_parse(options.to)
+     elif options.number:
+         if options.number <=3D 0:
+             parser.error('invalid value passed to --number')
+-
+         patch_nr =3D options.number
+-
+         if len(args) =3D=3D 0:
+             patchnames =3D None
+         elif len(args) =3D=3D 1:
+@@ -88,53 +85,45 @@ def func(parser, options, args):
+         patchnames =3D args
+         patch_nr =3D len(patchnames)
+=20
+-    if crt_series.get_protected():
+-        raise CmdException, \
+-              'This branch is protected. Uncommit is not permitted'
+-
+-    def get_commit(commit_id):
+-        commit =3D git.Commit(commit_id)
+-        try:
+-            parent, =3D commit.get_parents()
+-        except ValueError:
+-            raise CmdException('Commit %s does not have exactly one pa=
+rent'
+-                               % commit_id)
+-        return (commit, commit_id, parent)
+-
+     commits =3D []
+-    next_commit =3D crt_series.get_base()
++    next_commit =3D stack.base
+     if patch_nr:
+         out.start('Uncommitting %d patches' % patch_nr)
+         for i in xrange(patch_nr):
+-            commit, commit_id, parent =3D get_commit(next_commit)
+-            commits.append((commit, commit_id, parent))
+-            next_commit =3D parent
++            commits.append(next_commit)
++            next_commit =3D next_commit.data.parent
+     else:
+         if options.exclusive:
+             out.start('Uncommitting to %s (exclusive)' % to_commit)
+         else:
+             out.start('Uncommitting to %s' % to_commit)
+         while True:
+-            commit, commit_id, parent =3D get_commit(next_commit)
+-            if commit_id =3D=3D to_commit:
++            if next_commit =3D=3D to_commit:
+                 if not options.exclusive:
+-                    commits.append((commit, commit_id, parent))
++                    commits.append(next_commit)
+                 break
+-            commits.append((commit, commit_id, parent))
+-            next_commit =3D parent
++            commits.append(next_commit)
++            next_commit =3D next_commit.data.parent
+         patch_nr =3D len(commits)
+=20
+-    for (commit, commit_id, parent), patchname in \
+-        zip(commits, patchnames or [None for i in xrange(len(commits))=
+]):
+-        author_name, author_email, author_date =3D \
+-                     name_email_date(commit.get_author())
+-        crt_series.new_patch(patchname,
+-                             can_edit =3D False, before_existing =3D T=
+rue,
+-                             commit =3D False,
+-                             top =3D commit_id, bottom =3D parent,
+-                             message =3D commit.get_log(),
+-                             author_name =3D author_name,
+-                             author_email =3D author_email,
+-                             author_date =3D author_date)
+-
++    taken_names =3D set(stack.patchorder.applied + stack.patchorder.un=
+applied)
++    if patchnames:
++        for pn in patchnames:
++            if pn in taken_names:
++                raise common.CmdException('Patch name "%s" already tak=
+en' % pn)
++            taken_names.add(pn)
++    else:
++        patchnames =3D []
++        for c in reversed(commits):
++            pn =3D utils.make_patch_name(c.data.message,
++                                       lambda pn: pn in taken_names)
++            patchnames.append(pn)
++            taken_names.add(pn)
++        patchnames.reverse()
 +
- def patch_name_from_msg(msg):
-     """Return a string to be used as a patch name. This is generated
-     from the top line of the string passed as argument."""
-diff --git a/t/t2600-coalesce.sh b/t/t2600-coalesce.sh
-new file mode 100755
-index 0000000..f13a309
---- /dev/null
-+++ b/t/t2600-coalesce.sh
-@@ -0,0 +1,31 @@
-+#!/bin/sh
-+
-+test_description=3D'Run "stg coalesce"'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'Initialize StGit stack' '
-+    stg init &&
-+    for i in 0 1 2 3; do
-+        stg new p$i -m "foo $i" &&
-+        echo "foo $i" >> foo.txt &&
-+        git add foo.txt &&
-+        stg refresh
-+    done
-+'
-+
-+test_expect_success 'Coalesce some patches' '
-+    [ "$(echo $(stg applied))" =3D "p0 p1 p2 p3" ] &&
-+    [ "$(echo $(stg unapplied))" =3D "" ] &&
-+    stg coalesce --name=3Dq0 --message=3D"wee woo" p1 p2 &&
-+    [ "$(echo $(stg applied))" =3D "p0 q0 p3" ] &&
-+    [ "$(echo $(stg unapplied))" =3D "" ]
-+'
-+
-+test_expect_success 'Coalesce at stack top' '
-+    stg coalesce --name=3Dq1 --message=3D"wee woo wham" q0 p3 &&
-+    [ "$(echo $(stg applied))" =3D "p0 q1" ] &&
-+    [ "$(echo $(stg unapplied))" =3D "" ]
-+'
-+
-+test_done
++    trans =3D transaction.StackTransaction(stack, 'stg uncommit')
++    for commit, pn in zip(commits, patchnames):
++        trans.patches[pn] =3D commit
++    trans.applied =3D list(reversed(patchnames)) + trans.applied
++    trans.run()
+     out.done()
