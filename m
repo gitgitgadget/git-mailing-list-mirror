@@ -1,49 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Resend Trivial PATCH] For the sake of correctness, fix file descriptor leak.
-Date: Sun, 25 Nov 2007 14:29:07 -0800
-Message-ID: <7vbq9ij6x8.fsf@gitster.siamese.dyndns.org>
-References: <b8bf37780711211659v4fbd5936t29d0a0a2ff84f4b@mail.gmail.com>
-	<b8bf37780711251337q41e02304q8fd2654b1e83201@mail.gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [RFC] best way to show diff of commit
+Date: Sun, 25 Nov 2007 23:31:50 +0100
+Message-ID: <20071125223150.GD21121@artemis.corp>
+References: <20071125211831.GA21121@artemis.corp> <20071125212748.GB23820@fieldses.org> <20071125220902.GB21121@artemis.corp> <7vfxyuj70i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: =?utf-8?Q?Andr=C3=A9_Goddard_Rosa?= <andre.goddard@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 25 23:29:42 2007
+Content-Type: multipart/signed; boundary="HWvPVVuAAfuRc6SZ";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Git ML <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 25 23:32:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwPyu-0007jh-AN
-	for gcvg-git-2@gmane.org; Sun, 25 Nov 2007 23:29:40 +0100
+	id 1IwQ1P-0008SG-1F
+	for gcvg-git-2@gmane.org; Sun, 25 Nov 2007 23:32:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756432AbXKYW3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Nov 2007 17:29:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756377AbXKYW3P
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 17:29:15 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:55163 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754363AbXKYW3O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2007 17:29:14 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id D371B2F9;
-	Sun, 25 Nov 2007 17:29:35 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 7FA9099BA0;
-	Sun, 25 Nov 2007 17:29:33 -0500 (EST)
-In-Reply-To: <b8bf37780711251337q41e02304q8fd2654b1e83201@mail.gmail.com>
-	(=?utf-8?Q?Andr=C3=A9?= Goddard Rosa's message of "Sun, 25 Nov 2007
- 19:37:05 -0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756539AbXKYWb5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Nov 2007 17:31:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756369AbXKYWb4
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 17:31:56 -0500
+Received: from pan.madism.org ([88.191.52.104]:41566 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753100AbXKYWb4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Nov 2007 17:31:56 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 2E0182C2F7;
+	Sun, 25 Nov 2007 23:31:55 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 1556B490B7F; Sun, 25 Nov 2007 23:31:50 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Git ML <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <7vfxyuj70i.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66021>
 
-The codepath you are touching will exit immediately after an error
-return; I do not feel much urgency to it, although I do not think the
-patch would _hurt_.
 
-Please follow the established convention for patch submission (see
-patches on the list from other people as examples).
+--HWvPVVuAAfuRc6SZ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, Nov 25, 2007 at 10:27:09PM +0000, Junio C Hamano wrote:
+> Pierre Habouzit <madcoder@debian.org> writes:
+>=20
+> >   Hmm it doesn't because I would have to call git commit -v each time I
+> > commit and well I _like_ having the status better. And moreover I want
+> > the diff to go in a separated buffer too.
+>=20
+> I've never felt it a problem while editing the log message in Emacs.
+>=20
+> Don't enhanced vi implementations let you split the same buffer into
+> two allowing you to view different portions of it these days?
+
+  Well, maybe I could write my plugin so that it cuts the diff out from
+the main buffer indeed, though I will have to learn using git commit -v
+instead of git commit :P
+
+  That and the fact that the syntax colorization of the diff doesn't
+work, but it's probably not up to git to fix that.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--HWvPVVuAAfuRc6SZ
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHSffWvGr7W6HudhwRAigDAJ91TKFog/etZOCONxX9GdJafEpQSgCggOOW
+cwBYoZdIODrmGtxBRXDfNYk=
+=aJp5
+-----END PGP SIGNATURE-----
+
+--HWvPVVuAAfuRc6SZ--
