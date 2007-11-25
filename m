@@ -1,64 +1,187 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: If you would write git from scratch now, what would you change?
-Date: Sun, 25 Nov 2007 22:48:27 +0100
-Message-ID: <200711252248.27904.jnareb@gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 25 Nov 2007 21:51:28 +0000
+Message-ID: <20071125215128.GC23820@fieldses.org>
+References: <7vwsso3poo.fsf@gitster.siamese.dyndns.org> <7vfxz89x9q.fsf@gitster.siamese.dyndns.org> <7vabpctx3b.fsf@gitster.siamese.dyndns.org> <7vsl30eyuk.fsf@gitster.siamese.dyndns.org> <7vve7tuz3a.fsf@gitster.siamese.dyndns.org> <20071123103003.GB6754@sigill.intra.peff.net> <Pine.LNX.4.64.0711231319220.27959@racer.site> <20071124113814.GA17861@sigill.intra.peff.net> <alpine.LFD.0.99999.0711241042011.9605@xanadu.home> <7vtznbqx2w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 25 22:48:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 25 22:52:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwPLN-0004je-3T
-	for gcvg-git-2@gmane.org; Sun, 25 Nov 2007 22:48:49 +0100
+	id 1IwPOO-0005nN-S3
+	for gcvg-git-2@gmane.org; Sun, 25 Nov 2007 22:51:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755428AbXKYVsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Nov 2007 16:48:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752905AbXKYVsa
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 16:48:30 -0500
-Received: from nf-out-0910.google.com ([64.233.182.186]:50594 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754773AbXKYVsa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2007 16:48:30 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so480088nfb
-        for <git@vger.kernel.org>; Sun, 25 Nov 2007 13:48:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=LgCAcZ8Kzaucg/lwwABR6LGIPHd3K2rj3W7Ugwa87v8=;
-        b=d4YglYSws8P6rM6WX+h/u5zTpM/hYecdG7v46UJBBEoKcVbfixxiItLOCWnk7itkE11qRY0RyKeDzHPXbEXQ4n5Zw+/PAZhSuYpR5Cl8uvyPKhsGCXLbagn6tseZ4Gxv3pAw1FqMgcc41HMP5BMZ66BTYsMvwO1h/8J96QUUcvk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=O5agNV/iU6jfmnpS4xvfaCiN4TQIYhMZs7eNiAIguzILtp4Yxqt4z87w1LOgL6cVEJutWoawtfug6fVE4QtEHZBD7TLQpF/eYZl8SZ10De3J7Et97V7cZBFyFDYaGzpsn26nky4wpTWi4WJ5dSkvE+5J9WA4q1bUy7goe1m1maM=
-Received: by 10.86.100.7 with SMTP id x7mr1948564fgb.1196027308003;
-        Sun, 25 Nov 2007 13:48:28 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.223.27])
-        by mx.google.com with ESMTPS id d6sm1357418fga.2007.11.25.13.48.26
-        (version=SSLv3 cipher=OTHER);
-        Sun, 25 Nov 2007 13:48:27 -0800 (PST)
-User-Agent: KMail/1.9.3
+	id S1755370AbXKYVvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Nov 2007 16:51:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755037AbXKYVvi
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 16:51:38 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:38822 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752905AbXKYVvi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Nov 2007 16:51:38 -0500
+Received: from bfields by fieldses.org with local (Exim 4.68)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IwPNw-0007oA-TH; Sun, 25 Nov 2007 21:51:28 +0000
 Content-Disposition: inline
+In-Reply-To: <7vtznbqx2w.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66014>
 
-If you would write git from scratch now, from the beginning, without 
-concerns for backwards compatibility, what would you change, or what 
-would you want to have changed?
+On Sat, Nov 24, 2007 at 11:09:59AM -0800, Junio C Hamano wrote:
+> Nicolas Pitre <nico@cam.org> writes:
+> > I think that would be better to append a single line at the end of the 
+> > display with a clue about what "non fast forward" means.
+> 
+> I'd agree, but having said all the above, I am not entirely
+> happy not mentioning "what next" at all.
+> 
+> There are two equally valid "what next" after your push is
+> rejected due to non-fast-forwardness.
+> 
+>  (1) You know what you are doing.
+> 
+>    - You are pushing into a "back-up" repository, not for a
+>      public consumption.
+> 
+>    - You are pushing a branch that are advertised to rebase and
+>      rewind into your own publishing repository, and other
+>      people interacting with the branch know about this.
+> 
+>    - You pushed a wrong head there very recently and are fairly
+>      confident that nobody has seen that mistake, and pushing
+>      the correct one to fix the mistake.
+> 
+>      In these cases, forcing the push is the right solution
+>      (except that the third one is dubious, because it depends
+>      heavily on the "fairly confident" part).
+> 
+>  (2) You were building on a stale head, and were indeed about to
+>      lose others' changes with a non-fast-forward push.
+> 
+>      The right solution is to rebuild what you push so that you
+>      will not lose others' changes.  Rebuilding can take two
+>      different forms:
+> 
+>    - You may want to git-fetch and rebase your work on top of
+>      others'.
+> 
+>    - You may want to git-pull, which will merge your work with
+>      what others did.
+> 
+> But of couse the above is way too long as the help text.
+> 
+> Does the user-manual talk about this?  It has a really good
+> description of how to notice when a merge is not resolved
+> automatically and what to do next ("Resolving a merge" section).
+> Perhaps we can enhance "Pushing changes to a public repository"
+> section to include "what if the push is refused" information.
 
+There's a very brief mention of this:
 
-Yes, I know, I know. "Worse is better". It is better to release early 
-and get feedback what is really needed, as opposed to what do you think 
-is needed.
+	"As with git-fetch, git-push will complain if this does not
+	result in a <<fast-forwards,fast forward>>.  Normally this is a
+	sign of something wrong.  However, if you are sure you know what
+	you're doing, you may force git-push to perform the update
+	anyway by preceding the branch name by a plus sign:
 
-I think git is a wonderful example of "evolved" software, evolving 
-practically from the very beginnings.
+But it'd probably be better to have a separate section.  That makes it
+possible to say a little more, and also gets a section called "what to
+do when a push fails" into the table of contents.
 
--- 
-Jakub Narebski
-Poland
+(Though that's a little vague--push can also fail just because you
+mispell the url or something.  A more precise reference to the
+particular error might be better, but we'll have to agree on the error
+message first....)
+
+Anyway, here's a first draft.
+
+--b.
+
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 8355cce..7544715 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1929,15 +1929,9 @@ or just
+ $ git push ssh://yourserver.com/~you/proj.git master
+ -------------------------------------------------
+ 
+-As with git-fetch, git-push will complain if this does not result in
+-a <<fast-forwards,fast forward>>.  Normally this is a sign of
+-something wrong.  However, if you are sure you know what you're
+-doing, you may force git-push to perform the update anyway by
+-proceeding the branch name by a plus sign:
+-
+--------------------------------------------------
+-$ git push ssh://yourserver.com/~you/proj.git +master
+--------------------------------------------------
++As with git-fetch, git-push will complain if this does not result in a
++<<fast-forwards,fast forward>>; see the following section for details on
++handling this case.
+ 
+ Note that the target of a "push" is normally a
+ <<def_bare_repository,bare>> repository.  You can also push to a
+@@ -1965,6 +1959,55 @@ See the explanations of the remote.<name>.url, branch.<name>.remote,
+ and remote.<name>.push options in gitlink:git-config[1] for
+ details.
+ 
++[[forcing-push]]
++What to do when a push fails
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++If the push does not result in a <<fast-forwards,fast forward>> of the
++remote branch, then it will fail with an error like:
++
++-------------------------------------------------
++error: remote 'refs/heads/master' is not an ancestor of
++ local  'refs/heads/master'.
++ Maybe you are not up-to-date and need to pull first?
++error: failed to push to 'ssh://yourserver.com/~you/proj.git'
++-------------------------------------------------
++
++The most likely reason for this is that you have replaced some of the
++history that you already pushed, so that your "master" is no longer a
++descendant of upstream's "master",  This could happen, for example, if
++you:
++
++	- use `git reset --hard` to remove already-published commits, or
++	- use `git commit --amend` to replace already-published commits
++	  (as in <<fixing-a-mistake-by-editing-history>>), or
++	- use `git rebase` to rebase any already-published commits (as
++	  in <<using-git-rebase>>).
++
++If you are sure you want to replace the branch in the public repository
++by your branch, you may force git-push to perform the update anyway by
++preceding the branch name with a plus sign:
++
++-------------------------------------------------
++$ git push ssh://yourserver.com/~you/proj.git +master
++-------------------------------------------------
++
++Normally whenever a branch head in a public repository is modified, it
++is modified to point to a descendent of the commit that it pointed to
++before.  By forcing a push in this situation, you break that convention.
++(See <<problems-with-rewriting-history>>).
++
++Nevertheless, this is a common practice for people that need a simple
++way to publish a work-in-progress patch series, and it is an acceptable
++compromise as long as you warn other developers that this is how you
++intend to manage the branch.
++
++It's also possible for a push to fail in this way when other people have
++the right to push to the same repository.  In that case, the correct
++solution is to update your work by either a pull or a fetch followed by
++a rebase; see the <<setting-up-a-shared-repository,next section>> for
++more.
++
+ [[setting-up-a-shared-repository]]
+ Setting up a shared repository
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
