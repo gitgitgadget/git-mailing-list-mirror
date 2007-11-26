@@ -1,70 +1,108 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Re: [PATCH] "git-tag -s" should create a signed annotated tag
-Date: Mon, 26 Nov 2007 05:51:47 +0100
-Message-ID: <1b46aba20711252051x5ec7398er6806f21e179583d4@mail.gmail.com>
-References: <7vprxxj4hl.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: If you would write git from scratch now, what would you change?
+Date: Sun, 25 Nov 2007 22:11:50 -0800
+Message-ID: <7vejedh6xl.fsf@gitster.siamese.dyndns.org>
+References: <200711252248.27904.jnareb@gmail.com>
+	<20071125222314.GC21121@artemis.corp>
+	<20071126012837.GA5402@dervierte>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 05:52:10 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 07:12:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwVx3-0002JY-JO
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 05:52:10 +0100
+	id 1IwXCe-0007Cp-4g
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 07:12:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756031AbXKZEvt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Nov 2007 23:51:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756044AbXKZEvt
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 23:51:49 -0500
-Received: from rn-out-0910.google.com ([64.233.170.189]:4870 "EHLO
-	rn-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752090AbXKZEvt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2007 23:51:49 -0500
-Received: by rn-out-0102.google.com with SMTP id s46so164464rnb
-        for <git@vger.kernel.org>; Sun, 25 Nov 2007 20:51:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=N9uWFMVnCT2wSnJrKxUGMTAR3R37txRUUwH6wYpNTlk=;
-        b=F3qDQZ2okQy9RI9itnUiPlu5x0n4Tv6zelcD1Sts28YecOrPuJf8w63ZWTPExkU6TpAqe215gFvm3G/SIs9FTqRzFyecDSnqQkudSNgsVF1X/muXe0eUYlnih+uoVoeJGTeWXc1vSFRTMqdGUkVGimNbDCIhs8rCB0F5r+Q2FM8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=sWnnqa9NbsVeAtDPR7UKiXQ5ykKuJzM0HSYPDKnZ2uZBJwIJ9CboFK+1cGVFjnRkGCCVayRNxoQsBryTRgcNkanMFkO3BaD1YPYDpJKjmh5MvyJiv3d839eU8WDCh1Ak+EaIPEbMmPqkQciYOZu8YptXODPPB8WA85C4ozi/GYE=
-Received: by 10.142.230.11 with SMTP id c11mr187494wfh.1196052707196;
-        Sun, 25 Nov 2007 20:51:47 -0800 (PST)
-Received: by 10.142.99.13 with HTTP; Sun, 25 Nov 2007 20:51:47 -0800 (PST)
-In-Reply-To: <7vprxxj4hl.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751161AbXKZGMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 01:12:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751605AbXKZGMA
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 01:12:00 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:36382 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751016AbXKZGL7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 01:11:59 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id F23942F0;
+	Mon, 26 Nov 2007 01:12:18 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 56F0F97DAA;
+	Mon, 26 Nov 2007 01:12:14 -0500 (EST)
+In-Reply-To: <20071126012837.GA5402@dervierte> (Steven Walter's message of
+	"Sun, 25 Nov 2007 20:28:37 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66046>
 
-On Nov 26, 2007 12:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> The earlier patch 396865859918e9c7bf8ce74aae137c57da134610 (Make
-> builtin-tag.c use parse_options.) broke "git-tag -s".
+Steven Walter <stevenrwalter@gmail.com> writes:
+
+> Heartily seconded.  I think checkout is the most egregrious of the
+> three.  git-checkout can be used to:
 >
->  * It's _very_ disturbing that the testsuite did not catch this
->    breakage, even though I though we had a very detailed coverage for
->    "git tag" when it was rewritten in C.
+>     * Switch branches
+>     * Create a branch
+>     * Change the state of all files to a particular commit
+>     * Change the state of a particular file to that of the index
+>     * Change the state of a particular file (and index) to a particular
+>       commit
 
-Yes, you're right, "-s" without -m or -F is creating lightweight tags
-in my proposal.
+Come on.  The second one is just to give a short-hand side-effet for
+commonly used operation and you do not have to use it nor learn it.
 
-I think it is due to the absence of tests checking the "editor" option, that is,
-calls without -m or -F options to provide the message, since the tests are using
-only those and they are enabling automatically the creation of annotated tags.
+Also, you have written the last three in a more confusing way than it is
+necessary.  They are all the same thing but with variations --- your way
+of writing them is like enumerating "change the state of files whose
+name starts with A", "change the state of files whose name starts with
+B", etc. as if they are distinctly different and confusing operations.
 
-I need to think in adding tests replacing the editor with a custom command
-to check also the correct behaviour of git-tag when the EDITOR and/or
-the other variables are set.
+Let's clear the confusion.  Although it is not bad like the above
+"random 5 different operations", checkout does serve 2 quite different
+purposes:
 
-At the end, I've learned that it's better to test a little of every feature than
-test completely only a few of them.
+ (1) checkout a revision.
 
-Thank you.
+     This primarily affects the notion of where your HEAD is.  Is it
+     pointing at a branch, or detached at a particular commit?  In
+     either case, the objective from the user's point of view here is "I
+     want to change on which commit and/or branch I'd build the next
+     commit, if I were to issue git-commit command".
+
+     "I started modifying but realized that I wanted to build not on top
+     of master but a separate topic", is a typical use case, and this
+     form will let you take your local changes with you exactly for this
+     reason.
+
+     Obviously when people say "I checkout this commit", they mean the
+     state of the work tree and they mean the whole tree.  It is
+     hopefully clear that is what you are doing from the fact that you
+     do not give any pathspec to the command to trigger this mode of
+     operation.
+
+ (2) checkout selected paths out of a commit (or the index).
+
+     "I screwed up.  I want to start over modifications to these files
+     from the state of the previous commit (or the last state I
+     staged)." is a typical use case for this mode.  For this reason,
+     the named paths are updated in the work tree and the work tree and
+     the index are made to match.
+
+     Again, it hopefully is clear enough that you need to give some
+     pathspec to it for the operation to make sense, if you understand
+     the purpose of the command.  Like "." to mean the whole tree, "*.c"
+     to mean all C files, or "directory/" to mean everything underneath
+     it.
+
+So yes, it does two quite different things, and that's mostly because
+the verb "to check out" has overloaded meanings.
+
+Hopefully it is clear which one you are using by thinking about the
+reason WHY you are "checking out", and by looking at the way you form
+the command line.
