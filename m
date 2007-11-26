@@ -1,58 +1,138 @@
-From: Benoit Sigoure <tsuna@lrde.epita.fr>
-Subject: Re: Rebase/cherry-picking idea
-Date: Mon, 26 Nov 2007 13:39:42 +0100
-Message-ID: <B14406EA-E1E8-4737-8FCE-853A3BBBE34C@lrde.epita.fr>
-References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com> <C3971B37-F75A-40EE-B30A-E88E5DAFAD55@lrde.epita.fr> <D21294CA-6FD0-40F5-B0D6-5155865DA69A@wincent.com> <CDF48716-F198-4B33-A5F5-8A2DE1F177EB@wincent.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 13:40:10 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add 'git fast-export', the sister of 'git fast-import'
+Date: Mon, 26 Nov 2007 12:39:49 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711261236280.27959@racer.site>
+References: <Pine.LNX.4.64.0711252236350.4725@wbgn129.biozentrum.uni-wuerzburg.de>
+ <7vbq9hiz6a.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 13:40:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwdFx-0003n1-06
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 13:40:09 +0100
+	id 1IwdGD-0003rn-N3
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 13:40:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752724AbXKZMjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 07:39:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752731AbXKZMju
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 07:39:50 -0500
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:51586 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750957AbXKZMju (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 07:39:50 -0500
-Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <tsuna@lrde.epita.fr>)
-	id 1IwdFd-0000gW-6Z; Mon, 26 Nov 2007 13:39:49 +0100
-In-Reply-To: <CDF48716-F198-4B33-A5F5-8A2DE1F177EB@wincent.com>
-X-Gpgmail-State: !signed
-X-Mailer: Apple Mail (2.752.3)
+	id S1752853AbXKZMkF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 07:40:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752824AbXKZMkF
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 07:40:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38438 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752804AbXKZMkD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 07:40:03 -0500
+Received: (qmail invoked by alias); 26 Nov 2007 12:39:59 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp049) with SMTP; 26 Nov 2007 13:39:59 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX198NhtuSrJ8hk5IgfsitnmTiDinayEjhi9BoaItZD
+	OdwGu5mcnEHQ20
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vbq9hiz6a.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66067>
 
-On Nov 26, 2007, at 1:34 PM, Wincent Colaiuta wrote:
+Hi,
 
-> How about something like this? It would obviously be nice if we  
-> could avoid adding another option to builtin-revert; perhaps when/ 
-> if git-rebase becomes a builtin we can avoid that. The other  
-> alternative, and probably one I like I bit more, would be to auto- 
-> detect that a rebase is in progress by looking inside the GIT_DIR,  
-> although that would also alter the behaviour of manual invocations  
-> of git-revert and git-cherry-pick during an interactive rebase (do  
-> people actually do that?). What do you think?
+On Sun, 25 Nov 2007, Junio C Hamano wrote:
 
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
+> > new file mode 100644
+> > index 0000000..073ff7f
+> > --- /dev/null
+> > +++ b/Documentation/git-fast-export.txt
+> > ...
+> > +DESCRIPTION
+> > +-----------
+> > +This program dumps the given revisions in a form suitable to be piped
+> > +into gitlink:git-fast-import[1].
+> > +
+> > +You can use it as a human readable bundle replacement (see
+> > +gitlink:git-bundle[1]), or as a kind of an interactive
+> > +gitlink:git-filter-branch[1].
+> > +
+> > +
+> > +OPTIONS
+> > +-------
+> > +--progress=<n>::
+> > +	Insert 'progress' statements every <n> objects, to be shown by
+> > +	gitlink:git-fast-import[1] during import.
+> > +
+> > +--signed-tags=(ignore|warn|strip|abort)::
+> > +	Specify how to handle signed tags.  Since any transformation
+> > +	after the export can change the tag names (which can also happen
+> > +	when excluding revisions) the signatures will not match.
+> > ++
+> > +When asking to 'abort' (which is the default), this program will die
+> > +when encountering a signed tag.  With 'strip', the tags will be made
+> > +unsigned, with 'ignore', they will be silently ignored (i.e. not exported)
+> > +and with 'warn', they will be exported, but you will see a warning.
+> 
+> I am not sure if abort should be the default.
 
-Hmm yeah, I agree that it's a little bit of a dirty workaround but,  
-as you pointed out, until rebase is builtinified, this looks like the  
-best/easiest alternative.
+I tried to be conservative.
 
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
+> If a straight dump-restore is made without rewriting, the result will be 
+> identical to the original, right?
+
+Yep.
+
+> The reason I mention a straight dump-restore is because ...
+> 
+> > +$ git fast-export master~5..master |
+> > +	sed "s|refs/heads/master|refs/heads/other|" |
+> > +	git fast-import
+> 
+> ... I find this a quite unrealistic example to assume that the data
+> stream does not have some string and convert blindly without parsing.
+
+That's what the warning after the example is about.  For quick and dirty 
+operations, it is quite adequate.
+
+Besides, I have the feeling that some people are more comfortable dumping 
+the whole repository into a file, editing it, and fast-importing it.  That 
+is what I referred to when I said "think of it as kind of an interactive 
+filter-branch".
+
+> On the other hand, we _could_ also have a separate filter that works on 
+> input stream for fast-import, but that filter should know what the 
+> fast-import input stream looks like (a simple sed does not cut it).
+
+I agree that for most serious operations sed is not good enough.
+
+> So unless the future direction is to deprecate filter-branch and replace 
+> it with such a fast-import based filter in between fast-export and 
+> fast-import, I think the use of fast-export is to make verbatim copy 
+> without munging the contents, which leads me to think --signed-tag 
+> option should default to "export it as-is".
+> 
+> ... which seem to be missing from the available values to the option.
+
+You mean something like "--signed-tag=warn 2> /dev/null"?  How about a 
+"--signed-tag=quiet" mode?
+
+> > diff --git a/builtin-fast-export.c b/builtin-fast-export.c
+> > new file mode 100755
+> > index 0000000..48d0c54
+> > --- /dev/null
+> > +++ b/builtin-fast-export.c
+> > ...
+> > +/*
+> > + * TODO:
+> > + * - tags (--signed-tags=(ignore|warn|strip|abort)
+> > + */
+> 
+> This comment is stale?
+
+Correct.
+
+Ciao,
+Dscho
