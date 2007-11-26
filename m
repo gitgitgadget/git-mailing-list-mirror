@@ -1,78 +1,76 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [RFC/PATCH] Making ce_path_match() more useful by accepting
-	globs
-Date: Mon, 26 Nov 2007 20:56:59 +0100
-Message-ID: <20071126195659.GC3675@steel.home>
-References: <7vsl2ujc6x.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: If you would write git from scratch now, what would you change?
+Date: Mon, 26 Nov 2007 20:57:50 +0100
+Message-ID: <20071126195750.GD25784@efreet.light.src>
+References: <200711252248.27904.jnareb@gmail.com> <858x4l2apc.fsf@lola.goethe.zz> <alpine.LFD.0.99999.0711261417580.9605@xanadu.home> <854pf8243i.fsf@lola.goethe.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 20:57:35 2007
+Cc: Nicolas Pitre <nico@cam.org>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Nov 26 20:58:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iwk56-0006LI-Rm
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 20:57:25 +0100
+	id 1Iwk67-0006j7-VZ
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 20:58:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754451AbXKZT5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 14:57:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754417AbXKZT5E
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 14:57:04 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:56604 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753947AbXKZT5B (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 14:57:01 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBg79ik=
-Received: from tigra.home (Fcbf4.f.strato-dslnet.de [195.4.203.244])
-	by post.webmailer.de (mrclete mo32) (RZmta 14.3)
-	with ESMTP id V0025fjAQFTrwW ; Mon, 26 Nov 2007 20:56:59 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id C661E277AE;
-	Mon, 26 Nov 2007 20:56:59 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id A8AB256D22; Mon, 26 Nov 2007 20:56:59 +0100 (CET)
+	id S1755812AbXKZT6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 14:58:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754758AbXKZT6G
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 14:58:06 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:32984 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755404AbXKZT6E (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 14:58:04 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id E094E76DA0;
+	Mon, 26 Nov 2007 20:58:01 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id HRTJNpthvT67; Mon, 26 Nov 2007 20:57:58 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 23AF476D94;
+	Mon, 26 Nov 2007 20:57:55 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1Iwk5W-0006u1-VR; Mon, 26 Nov 2007 20:57:50 +0100
 Content-Disposition: inline
-In-Reply-To: <7vsl2ujc6x.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+In-Reply-To: <854pf8243i.fsf@lola.goethe.zz>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66105>
 
-Junio C Hamano, Sun, Nov 25, 2007 21:35:18 +0100:
-> Currently, these do not work:
+On Mon, Nov 26, 2007 at 20:34:25 +0100, David Kastrup wrote:
+> Nicolas Pitre <nico@cam.org> writes:
+> > On Mon, 26 Nov 2007, David Kastrup wrote:
+> >> Get rid of plumbing at the command line level.
+> >
+> > We can't get rid of plumbing.
 > 
->    git diff-files 't/*.sh'
->    git diff-index HEAD 'xdiff/*.c'
->    git update-index -g 'Documentation/howto/*.txt'
-> 
-> This is because ce_path_match(), the underlying function that is used to
-> see if a cache entry matches the set of pathspecs, only understands
-> leading directory match.
-> 
-> This teaches ce_path_match() to use the match_pathspec() used in
-> git-ls-files, which knows about glob patterns.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 
->  [SORRY FOR A RESEND -- I screwed up the To: field of the previous message]
-> 
->  * Having two different behaviours of pathspec matching has been
->    bothering me for quite some time.  The changes here look trivially
->    correct and the result passes all the tests, but this is quite close
->    to the core part of the system, and would benefit greatly from extra
->    set of eyes.
+> What about "at the command line level" did you not understand?
 
-How about doing the same what was done with recursive directory
-walker (no, I'm not confusing pathname filters with paths)? Always
-have the glob expansion for porcelain (git-diff, git-log, git-show),
-and add a command-line option to activate for plumbing?
+Which part of we neither can nor want did you not understant?
 
-(Well, the oldtimers as yourself will probably find it hard to
-separate git-diff-tree from git-diff).
+The availability of plumbing is really big part of a reason why git is so
+good and has so many scripts and tool built on top of it. Bzr and hg boast
+with their ability to add plugins, but git ability to use plumbing simply
+beats that hands down, because the plugins are python-only and writing them
+requires understanding the internal API, while git plumbing can be used from
+any language and can usually be understood by running it interactively a few
+times.
+
+That's why we don't want (and really can't because there is a huge amount of
+code in various languages using it) to get rid of plumbing at the command
+level. What we may do is hide it from the casual user.
+
+To do that, we'd want to get rid of the git-* commands and links in bin
+(remove the builtins altogether and move the non-builtin to libexec -- that
+seems to be the plan for 1.6 or 1.7 already) and than hiding the plumbing
+from --help and completion hides it from the user.
+
+-- 
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
