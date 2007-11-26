@@ -1,102 +1,103 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: If you would write git from scratch now, what would you change?
-Date: Mon, 26 Nov 2007 20:34:55 +0100
-Message-ID: <20071126193455.GC25784@efreet.light.src>
-References: <200711252248.27904.jnareb@gmail.com> <fiet88$68n$1@ger.gmane.org> <2A34D324-48A4-49EF-9D4E-5B9469A0791D@lrde.epita.fr> <20071126185600.GA25784@efreet.light.src> <85prxw253u.fsf@lola.goethe.zz>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [RFC] Making ce_path_match() more useful by accepting globs
+Date: Mon, 26 Nov 2007 20:38:13 +0100
+Message-ID: <20071126193813.GB3675@steel.home>
+References: <7vr6ienqxr.fsf@gitster.siamese.dyndns.org> <20071126001114.GA10286@steel.home> <7vlk8lj1b7.fsf@gitster.siamese.dyndns.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="vEao7xgI/oilGqZ+"
-Cc: Benoit Sigoure <tsuna@lrde.epita.fr>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Nov 26 20:36:10 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 20:38:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwjkK-0005aZ-F0
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 20:35:56 +0100
+	id 1Iwjmw-0006eZ-3m
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 20:38:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753169AbXKZTfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 14:35:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754153AbXKZTfE
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 14:35:04 -0500
-Received: from ns1.bluetone.cz ([212.158.128.13]:45582 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754134AbXKZTfB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 14:35:01 -0500
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id DBC5357635;
-	Mon, 26 Nov 2007 20:34:59 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id jN0dz+0Dxwtd; Mon, 26 Nov 2007 20:34:57 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 6AD1E57295;
-	Mon, 26 Nov 2007 20:34:57 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IwjjL-0006rJ-5Y; Mon, 26 Nov 2007 20:34:55 +0100
+	id S1754342AbXKZTiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 14:38:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754329AbXKZTiT
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 14:38:19 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:61102 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754303AbXKZTiS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 14:38:18 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBg79ik=
+Received: from tigra.home (Fcbf4.f.strato-dslnet.de [195.4.203.244])
+	by post.webmailer.de (fruni mo48) (RZmta 14.3)
+	with ESMTP id R0034djAQFuEQU ; Mon, 26 Nov 2007 20:38:14 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 234A4277AE;
+	Mon, 26 Nov 2007 20:38:14 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id F023756D22; Mon, 26 Nov 2007 20:38:13 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <85prxw253u.fsf@lola.goethe.zz>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <7vlk8lj1b7.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66101>
 
-
---vEao7xgI/oilGqZ+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Nov 26, 2007 at 20:12:37 +0100, David Kastrup wrote:
-> Jan Hudec <bulb@ucw.cz> writes:
->=20
-> > On Mon, Nov 26, 2007 at 18:10:10 +0100, Benoit Sigoure wrote:
-> >> On Nov 26, 2007, at 5:46 PM, Andy Parkins wrote:
-> >> While we're discussing bad names, as someone already pointed out, I ag=
-ree=20
-> >> it's sad that "git push" is almost always understood as being the oppo=
-site=20
-> >> of "git pull".
+Junio C Hamano, Mon, Nov 26, 2007 01:30:20 +0100:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+> 
+> > Junio C Hamano, Sun, Nov 25, 2007 19:03:12 +0100:
+> >> Currently ce_path_match() only uses "the leading directory" match, and
+> >> does not understand file globs.  These do not work:
+> >> 
+> >>    git diff-files 't/*.sh'
+> >>    git diff-index HEAD 'xdiff/*.c'
+> >>    git update-index -g 'Documentation/howto/*.txt'
 > >
-> > Well, it is an oposite of pull. Compared to it, it is limited in that i=
-t will
-> > not do a merge and on the other hand extended to *also* be an oposite of
-> > fetch, but still oposite of pull is push.
->=20
-> With the same reasoning the opposite of a duck is a lobster, since a
-> lobster has not only fewer wings, but also more legs.
+> > How should my scripts handle files with "*" in names?
+> 
+> We DO NOT CARE.
+> 
+> Why?
+> 
+> How would you handle such files from the command line session without
+> git?  "ls such-*-a-file" will also show such-silly-a-file as well.
 
-No.
+It will break existing setups. Something like
 
-The basic pull/push actions are:
+    #!/bin/bash
 
-git pull: Bring the remote ref value here.
-git push: Put the local ref value there.
+    git diff-files --quiet -- "$@" || do_something
 
-Are those not oposites?
+will behave differently
 
-Than each command has it's different features on top of this -- pull merges
-and push can push multiple refs -- but in the basic operation they are
-oposites.
+> IOW, the user is shooting in the foot --- and at that point I am not all
+> that interested in helping him.
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+What with? What's wrong with a name like "M*A*S*H" in your personal IMDB?
 
---vEao7xgI/oilGqZ+
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+> Having said that, I would think that quoting the meta from fnmatch(3)
+> like this:
+> 
+> 	git ls-files 'such-\*-a-file'
+> 
+> would work fine, just like
+> 
+> 	ls such-\*-a-file
+> 
+> would.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+An existing system will still be broken.
 
-iD8DBQFHSx/fRel1vVwhjGURAlroAJ0aG38OHcjepLiuAMHAV/T5u1KW3ACdGdIU
-6GrG9yulibgWqvfxNv29QZA=
-=AV6T
------END PGP SIGNATURE-----
+> If "ls such-*-a-file" reports only one file,
+> 
+> 	git ls-files 'such-*-a-file'
+> 
+> would also report that file as well.
+> 
+> So in practice I do not see a problem.
 
---vEao7xgI/oilGqZ+--
+I think I do. There is NO way to pass the filenames to git plumbing
+(only the diff-, or is git update-index --stdin -z also subject to
+glob expansion?) without being sure they are exactly they were on
+filesystem. Quoting is just PITA for scripting.
