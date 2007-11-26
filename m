@@ -1,94 +1,71 @@
-From: Benoit Sigoure <tsuna@lrde.epita.fr>
-Subject: Re: Rebase/cherry-picking idea
-Date: Mon, 26 Nov 2007 10:32:38 +0100
-Message-ID: <C3971B37-F75A-40EE-B30A-E88E5DAFAD55@lrde.epita.fr>
-References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-31-866510145"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 10:33:15 2007
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Make builtin-commit.c export GIT_INDEX_FILE for launch_editor as well.
+Date: Mon, 26 Nov 2007 10:38:51 +0100
+Message-ID: <20071126093851.GA30655@artemis.corp>
+References: <20071125211831.GA21121@artemis.corp> <20071126002519.GA11133@efreet.light.src> <20071126084731.GB23373@artemis.corp> <20071126085927.GC23373@artemis.corp>
+Mime-Version: 1.0
+Content-Type: multipart/signed; boundary="2fHTh5uZTiUOsy+g";
+	protocol="application/pgp-signature"; micalg=SHA1
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 26 10:39:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwaKz-00027Y-5S
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 10:33:09 +0100
+	id 1IwaQp-0003e3-H6
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 10:39:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753431AbXKZJcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 04:32:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753830AbXKZJcu
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 04:32:50 -0500
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:50400 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752330AbXKZJct (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 04:32:49 -0500
-Received: from quanta.tsunanet.net ([82.229.223.213])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <tsuna@lrde.epita.fr>)
-	id 1IwaKe-0003sm-40; Mon, 26 Nov 2007 10:32:48 +0100
-In-Reply-To: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S1753225AbXKZJix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 04:38:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753399AbXKZJiw
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 04:38:52 -0500
+Received: from pan.madism.org ([88.191.52.104]:35213 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753028AbXKZJiw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 04:38:52 -0500
+Received: from madism.org (unknown [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 83A0426AE5
+	for <git@vger.kernel.org>; Mon, 26 Nov 2007 10:38:51 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 2C4DF4CDC; Mon, 26 Nov 2007 10:38:51 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Git ML <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20071126085927.GC23373@artemis.corp>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66061>
-
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-31-866510145
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-
-On Nov 26, 2007, at 10:02 AM, Wincent Colaiuta wrote:
-
-> In using "git-rebase --interactive" to re-order commits you  
-> occasionally get conflicts and will see a message like this:
->
-> 	When commiting, use the option '-c %s' to retain authorship and  
-> message
->
-> I was thinking that it might be nice to stash away this commit id  
-> somewhere in GIT_DIR so that the user didn't have to explicitly  
-> remember it, and add a new switch to git-commit that could be used  
-> to automatically use that stashed commit id, something like:
->
-> 	git commit --retain
->
-> Although I most often see this kind of message in interactive  
-> rebasing, the message is generated in builtin-revert.c when cherry- 
-> picking, so you can also see it in any other situation where you're  
-> cherry picking and there's a conflict.
->
-> What do people think? Would this be a nice usability improvement?  
-> Or is it adding clutter?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66062>
 
 
-I'm not sure but I think this message is just some unwanted  
-(misleading) noise, since when you rebase, once you solve the  
-conflicts, you git-rebase --continue, you don't git-commit.
+--2fHTh5uZTiUOsy+g
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
+  and here's the updated git.vim:
+http://www.vim.org/scripts/script.php?script_id=3D1934
 
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-
---Apple-Mail-31-866510145
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
+--2fHTh5uZTiUOsy+g
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQFHSpK2wwE67wC8PUkRAoyTAKDARgRqa7BPNOaeVSZ/K0XrVCCbnQCgnwD+
-j+y6deKSLMUR+kcCNMVUv9c=
-=LnJb
+iD8DBQBHSpQrvGr7W6HudhwRAu/RAJ9EXHYsYKdVVItMJFqIE0OUBbo4SwCeK97b
+oBJdQds/qjeGjyvT8FmLrnM=
+=CHGo
 -----END PGP SIGNATURE-----
 
---Apple-Mail-31-866510145--
+--2fHTh5uZTiUOsy+g--
