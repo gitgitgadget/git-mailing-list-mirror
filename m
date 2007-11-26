@@ -1,100 +1,76 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 26 Nov 2007 15:25:36 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0711261511240.9605@xanadu.home>
-References: <7vabpctx3b.fsf@gitster.siamese.dyndns.org>
- <7vsl30eyuk.fsf@gitster.siamese.dyndns.org>
- <7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
- <20071123103003.GB6754@sigill.intra.peff.net>
- <Pine.LNX.4.64.0711231319220.27959@racer.site>
- <20071124113814.GA17861@sigill.intra.peff.net>
- <alpine.LFD.0.99999.0711241042011.9605@xanadu.home>
- <7vtznbqx2w.fsf@gitster.siamese.dyndns.org>
- <20071125215128.GC23820@fieldses.org>
- <alpine.LFD.0.99999.0711252029020.9605@xanadu.home>
- <20071126041521.GA21120@fieldses.org>
- <alpine.LFD.0.99999.0711252324360.9605@xanadu.home>
- <fie23u$5tc$1@ger.gmane.org>
- <alpine.LFD.0.99999.0711261358410.9605@xanadu.home>
- <85lk8k24ju.fsf@lola.goethe.zz>
+From: Michael Poole <mdpoole@troilus.org>
+Subject: Re: If you would write git from scratch now, what would you change?
+Date: Mon, 26 Nov 2007 15:31:19 -0500
+Message-ID: <87oddgzr3c.fsf@graviton.dyn.troilus.org>
+References: <200711252248.27904.jnareb@gmail.com> <fiet88$68n$1@ger.gmane.org>
+	<2A34D324-48A4-49EF-9D4E-5B9469A0791D@lrde.epita.fr>
+	<20071126185600.GA25784@efreet.light.src>
+	<85prxw253u.fsf@lola.goethe.zz>
+	<20071126193455.GC25784@efreet.light.src>
+	<87ve7ozsz8.fsf@graviton.dyn.troilus.org>
+	<20071126200913.GE25784@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Nov 26 21:25:59 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: David Kastrup <dak@gnu.org>, Benoit Sigoure <tsuna@lrde.epita.fr>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Mon Nov 26 21:31:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwkWj-000052-IJ
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 21:25:57 +0100
+	id 1IwkcE-0002HA-V0
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 21:31:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752499AbXKZUZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 15:25:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753607AbXKZUZi
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 15:25:38 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:50466 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751596AbXKZUZh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 15:25:37 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JS400F35REO9R90@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 26 Nov 2007 15:25:37 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <85lk8k24ju.fsf@lola.goethe.zz>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1754752AbXKZUbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 15:31:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754733AbXKZUbU
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 15:31:20 -0500
+Received: from 24-75-174-210-st.chvlva.adelphia.net ([24.75.174.210]:39670
+	"EHLO sanosuke.troilus.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753893AbXKZUbT (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Nov 2007 15:31:19 -0500
+Received: by sanosuke.troilus.org (Postfix, from userid 1000)
+	id 4FE9489C05C; Mon, 26 Nov 2007 15:31:19 -0500 (EST)
+In-Reply-To: <20071126200913.GE25784@efreet.light.src> (Jan Hudec's message of "Mon\, 26 Nov 2007 21\:09\:13 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66113>
 
-On Mon, 26 Nov 2007, David Kastrup wrote:
+Jan Hudec writes:
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > [ I get really really annoyed when your replies to me aren't directly 
-> >   addressed to me, Jakub.  Told you so repeatedly in the past as well.
-> >   Why are you the only one on this list apparently not able to use a 
-> >   proper email setup? ]
-> 
-> X-Injected-Via-Gmane: http://gmane.org/
-> 
-> And Jakub by far is not the only one using gmane for reading and writing
-> to the list.
+> On Mon, Nov 26, 2007 at 14:50:35 -0500, Michael Poole wrote:
+>> Jan Hudec writes:
+>> 
+>> > The basic pull/push actions are:
+>> >
+>> > git pull: Bring the remote ref value here.
+>> > git push: Put the local ref value there.
+>> >
+>> > Are those not oposites?
+>> >
+>> > Than each command has it's different features on top of this -- pull merges
+>> > and push can push multiple refs -- but in the basic operation they are
+>> > oposites.
+>> 
+>> I think that is in absolute agreement with David: Ducks swim on the
+>> surface of the water and lobsters swim underneath.  Why consider the
+>> different features on top of where they swim?
+>> 
+>> The thing about git-pull that surprises so many users is the merge.
+>> There's a separate command to do that step, and git-pull had a fairly
+>> good excuse to do the merge before git's 1.5.x remote system was in
+>> place, but now the only really defensible reason for its behavior is
+>> history.
+>
+> When I first looked at hg -- and that was long before I looked at git --
+> I was surprised that their pull did NOT merge and you had to do a separate
+> step. Partly because doing those two steps is quite common.
 
-It is strange, though, that Jakub is the only one I've noticed who isn't 
-able to do me the courtesy of addressing me directly when replying to 
-me.
+Frequency of use is a good argument for having one command that does
+both.  It is not a good argument that "fetch, then merge" should be
+called "pull" or is the opposite of "push".
 
-> I am reading and writing on a number of mailing lists with either
-> explicit or implicit gateways to news servers.  But the git mailing list
-> is the only one where I ever encountered a semi-permanent stream of
-> (sometimes quite rude) complaints because people insist on getting
-> replies at least twice: once by the mailing list, and once by personal
-> Email.  In contrast to claims made here, it is _not_ common netiquette
-> to create extra personal copies.
-
-We must not live in the same virtual world then.  This _is_ common 
-netiquette in the Linux world.
-
-I get over 500 emails a day.  I can thread them just like a news 
-reader would do.  But I do sort them in different folders as well.  My 
-most important folder contains emails directly sent to me, or on which 
-I'm CC'd.  The other folders might get completely ignored when I'm too 
-busy, or threads quickly purged out.
-
->  In fact, for articles sent through
-> Usenet servers, it is generally considered an _annoyance_ to include
-> unannounced "courtesy copies" since replies to them will not usually
-> reach the list and will require redoing.
-
-This is a mailing list and not a news group.  I don't care if you use a 
-newsgroup gateway if it isn't broken.  As it is, gmane is broken as far 
-as I'm concerned.
-
-So please complain to gmane or change your setup.
-
-
-Nicolas
+Michael Poole
