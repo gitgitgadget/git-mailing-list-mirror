@@ -1,117 +1,120 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: [PATCH] Replace misleading message during interactive rebasing
-Date: Mon, 26 Nov 2007 22:18:11 +0100
-Message-ID: <1196111891-18518-1-git-send-email-win@wincent.com>
-Cc: gitster@pobox.com, tsuna@lrde.epita.fr, j.sixt@viscovery.net,
-	Johannes.Schindelin@gmx.de, mcostalba@gmail.com,
-	Wincent Colaiuta <win@wincent.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 26 22:24:53 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: If you would write git from scratch now, what would you change?
+Date: Mon, 26 Nov 2007 13:24:22 -0800
+Message-ID: <7vhcj8g0op.fsf@gitster.siamese.dyndns.org>
+References: <200711252248.27904.jnareb@gmail.com>
+	<858x4l2apc.fsf@lola.goethe.zz>
+	<alpine.LFD.0.99999.0711261417580.9605@xanadu.home>
+	<854pf8243i.fsf@lola.goethe.zz>
+	<20071126195750.GD25784@efreet.light.src>
+	<AA5ECB69-3F77-483E-AD19-04A5515779B3@wincent.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jan Hudec <bulb@ucw.cz>, David Kastrup <dak@gnu.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 22:25:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwlRc-0004hn-I5
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 22:24:44 +0100
+	id 1IwlRq-0004pX-Uw
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 22:24:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754285AbXKZVY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 16:24:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754158AbXKZVY0
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 16:24:26 -0500
-Received: from wincent.com ([72.3.236.74]:39718 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754005AbXKZVYZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 16:24:25 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAQLIC4Q018261;
-	Mon, 26 Nov 2007 15:18:13 -0600
-X-Mailer: git-send-email 1.5.3.6.953.gdffc
+	id S1754319AbXKZVYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 16:24:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754721AbXKZVYd
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 16:24:33 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:36633 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754353AbXKZVYc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 16:24:32 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 09C6F2F0;
+	Mon, 26 Nov 2007 16:24:53 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 3EFF4990D3;
+	Mon, 26 Nov 2007 16:24:46 -0500 (EST)
+In-Reply-To: <AA5ECB69-3F77-483E-AD19-04A5515779B3@wincent.com> (Wincent
+	Colaiuta's message of "Mon, 26 Nov 2007 21:45:16 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66127>
 
-git-rebase--interactive uses git-cherry-pick under the covers to reorder
-commits, which in turn means that in the event of a conflict a message
-will be shown advising the user to commit the results and use the -c
-switch to retain authorship after fixing the conflict.
+Wincent Colaiuta <win@wincent.com> writes:
 
-The message is misleading because what the user really needs to do is
-run "git rebase --continue"; the committing is handled by git-rebase
-and the authorship of the commit message is retained automatically.
+> For the benefit of newcomers, I just wish the plumbing was kept a  
+> little bit out of sight. You know, porcelain in /usr/bin and plumbing  
+> in /usr/libexec or other such place.
+>
+> It's fine once you've learnt your workflows and know the 10 or 15 Git  
+> tools that you'll be using day-to-day; but for people who are just  
+> starting off this can be a little bit intimidating:
+>
+> $ git-<tab>
+> Display all 146 possibilities? (y or n)
 
-We solve this problem by using an environment variable to communicate
-to git-cherry-pick that rebasing is underway and replace the misleading
-error message with a more helpful one.
+I'd agree to that but I've always considered this an issue for distros.
+We've supported an ability for them to specify a gitexecdir separate
+from /usr/bin in our Makefile for almost two years.
 
-Signed-off-by: Wincent Colaiuta <win@wincent.com>
----
+The tab completion for bash and zsh would also help you here, but I see
+there are quite a few commands that should not be there, and it's time
+to clean it up.
 
-This applies on top of "master".
+	$ git <tab>
+        add                   fetch                 push
+        am                    filter-branch         rebase
+        annotate              format-patch          rebase--interactive
+        apply                 fsck                  relink
+        archive               gc                    remote
+        bisect                get-tar-commit-id     repack
+        blame                 grep                  request-pull
+        branch                gui                   reset
+        bundle                imap-send             resolve
+        checkout              init                  revert
+        checkout-index        instaweb              rm
+        cherry                less                  send-email
+        cherry-pick           lg                    shortlog
+        citool                log                   show
+        clean                 lost-found            show-branch
+        clone                 ls-files              show-ref
+        co                    ls-remote             stash
+        commit                ls-tree               status
+        config                merge                 submodule
+        convert-objects       mergetool             svnimport
+        count-objects         mv                    tag
+        describe              name-rev              var
+        diff                  pickaxe               verify-pack
+        diff-stages           pull                  whatchanged
 
-The question of whether the environment variable should have a leading
-underscore came up on the mailing list. I don't really care at all either
-way, I'd just like to see the misleading message go away. I'll leave it
-up to others to decide.
+Perhaps this list can be a starting point...
 
-Another thing to decide is whether the help text should be more than
-just "run 'git rebase --continue'", but should mention
-"git rebase --abort" as well. Junio, please feel free to modify the
-patch if you think it would be appropriate.
+ contrib/completion/git-completion.bash |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
- builtin-revert.c           |    8 +++++---
- git-rebase--interactive.sh |    2 ++
- 2 files changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/builtin-revert.c b/builtin-revert.c
-index a0586f9..5a57574 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -229,7 +229,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 	unsigned char head[20];
- 	struct commit *base, *next, *parent;
- 	int i;
--	char *oneline, *reencoded_message = NULL;
-+	char *oneline, *reencoded_message = NULL, *help_message;
- 	const char *message, *encoding;
- 	const char *defmsg = xstrdup(git_path("MERGE_MSG"));
- 
-@@ -352,11 +352,13 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 		}
- 		if (close(msg_fd) || commit_lock_file(&msg_file) < 0)
- 			die ("Error wrapping up %s", defmsg);
-+		help_message = getenv("_GIT_CHERRY_PICK_HELP");
- 		fprintf(stderr, "Automatic %s failed.  "
- 			"After resolving the conflicts,\n"
- 			"mark the corrected paths with 'git add <paths>' "
--			"and commit the result.\n", me);
--		if (action == CHERRY_PICK) {
-+			"and %s.\n", me,
-+			help_message ? help_message : "commit the result");
-+		if (action == CHERRY_PICK && !help_message) {
- 			fprintf(stderr, "When commiting, use the option "
- 				"'-c %s' to retain authorship and message.\n",
- 				find_unique_abbrev(commit->object.sha1,
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index bf44b6a..e5f9810 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -117,6 +117,7 @@ pick_one () {
- 		sha1=$(git rev-parse --short $sha1)
- 		output warn Fast forward to $sha1
- 	else
-+		export _GIT_CHERRY_PICK_HELP="run 'git rebase --continue'"
- 		output git cherry-pick "$@"
- 	fi
- }
-@@ -187,6 +188,7 @@ pick_one_preserving_merges () {
- 			fi
- 			;;
- 		*)
-+			export _GIT_CHERRY_PICK_HELP="run 'git rebase --continue'"
- 			output git cherry-pick "$@" ||
- 				die_with_patch $sha1 "Could not pick $sha1"
- 			;;
--- 
-1.5.3.6.952.g84ef
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index cad842a..1bba68b 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -359,6 +359,15 @@ __git_commands ()
+ 		upload-pack)      : plumbing;;
+ 		write-tree)       : plumbing;;
+ 		verify-tag)       : plumbing;;
++		annotate)         : use blame;;
++		checkout-index)   : plumbing;;
++		diff-stages)      : plumbing;;
++		get-tar-commit-id) : plumbing;;
++		lost-found)       : deprecated;;
++		rebase--interactive) : plumbing;;
++		relink)           : obsolete;;
++		whatchanged)      : plumbing;;
++		verify-pack)      : plumbing;;
+ 		*) echo $i;;
+ 		esac
+ 	done
