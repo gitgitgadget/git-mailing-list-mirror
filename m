@@ -1,88 +1,117 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 26 Nov 2007 22:22:46 +0100
-Message-ID: <85sl2sya55.fsf@lola.goethe.zz>
-References: <7vabpctx3b.fsf@gitster.siamese.dyndns.org>
-	<7vsl30eyuk.fsf@gitster.siamese.dyndns.org>
-	<7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
-	<20071123103003.GB6754@sigill.intra.peff.net>
-	<Pine.LNX.4.64.0711231319220.27959@racer.site>
-	<20071124113814.GA17861@sigill.intra.peff.net>
-	<alpine.LFD.0.99999.0711241042011.9605@xanadu.home>
-	<7vtznbqx2w.fsf@gitster.siamese.dyndns.org>
-	<20071125215128.GC23820@fieldses.org>
-	<alpine.LFD.0.99999.0711252029020.9605@xanadu.home>
-	<20071126041521.GA21120@fieldses.org>
-	<alpine.LFD.0.99999.0711252324360.9605@xanadu.home>
-	<fie23u$5tc$1@ger.gmane.org>
-	<alpine.LFD.0.99999.0711261358410.9605@xanadu.home>
-	<85lk8k24ju.fsf@lola.goethe.zz>
-	<alpine.LFD.0.99999.0711261511240.9605@xanadu.home>
-	<85hcj8zqfm.fsf@lola.goethe.zz>
-	<alpine.LFD.0.99999.0711261601240.9605@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Nov 26 22:23:20 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: [PATCH] Replace misleading message during interactive rebasing
+Date: Mon, 26 Nov 2007 22:18:11 +0100
+Message-ID: <1196111891-18518-1-git-send-email-win@wincent.com>
+Cc: gitster@pobox.com, tsuna@lrde.epita.fr, j.sixt@viscovery.net,
+	Johannes.Schindelin@gmx.de, mcostalba@gmail.com,
+	Wincent Colaiuta <win@wincent.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 26 22:24:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwlQ4-00048R-25
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 22:23:08 +0100
+	id 1IwlRc-0004hn-I5
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 22:24:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751936AbXKZVWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 16:22:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753858AbXKZVWt
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 16:22:49 -0500
-Received: from mail-in-03.arcor-online.net ([151.189.21.43]:56611 "EHLO
-	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751643AbXKZVWs (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Nov 2007 16:22:48 -0500
-Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 4181127A54A;
-	Mon, 26 Nov 2007 22:22:46 +0100 (CET)
-Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
-	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id 35035ABE89;
-	Mon, 26 Nov 2007 22:22:46 +0100 (CET)
-Received: from lola.goethe.zz (dslb-084-061-029-090.pools.arcor-ip.net [84.61.29.90])
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id DE5A929D4E3;
-	Mon, 26 Nov 2007 22:22:32 +0100 (CET)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 49CE11C4D3AA; Mon, 26 Nov 2007 22:22:46 +0100 (CET)
-In-Reply-To: <alpine.LFD.0.99999.0711261601240.9605@xanadu.home> (Nicolas
-	Pitre's message of "Mon, 26 Nov 2007 16:09:58 -0500 (EST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4928/Mon Nov 26 19:10:39 2007 on mail-in-13.arcor-online.net
-X-Virus-Status: Clean
+	id S1754285AbXKZVY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 16:24:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754158AbXKZVY0
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 16:24:26 -0500
+Received: from wincent.com ([72.3.236.74]:39718 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754005AbXKZVYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 16:24:25 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAQLIC4Q018261;
+	Mon, 26 Nov 2007 15:18:13 -0600
+X-Mailer: git-send-email 1.5.3.6.953.gdffc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66126>
 
-Nicolas Pitre <nico@cam.org> writes:
+git-rebase--interactive uses git-cherry-pick under the covers to reorder
+commits, which in turn means that in the event of a conflict a message
+will be shown advising the user to commit the results and use the -c
+switch to retain authorship after fixing the conflict.
 
-> Please figure out an alternative to gmane on your own, or ask those
-> who apparently get it to work properly.  I'm sure you're bright enough
-> to find a way.
+The message is misleading because what the user really needs to do is
+run "git rebase --continue"; the committing is handled by git-rebase
+and the authorship of the commit message is retained automatically.
 
-Without so much as a bounce message or delivery report, there is nothing
-to apply one's brightness to.
+We solve this problem by using an environment variable to communicate
+to git-cherry-pick that rebasing is underway and replace the misleading
+error message with a more helpful one.
 
-Since the git mailing list is the only mailing list that censors my work
-account in that manner, it is obviously set up in a way different from
-most other mailing lists.
+Signed-off-by: Wincent Colaiuta <win@wincent.com>
+---
 
-Not being a list moderator and not getting any bounce notification,
-there is nothing I can use for figuring out what makes the git mailing
-list different from others.
+This applies on top of "master".
 
-And the gratuitous hostility easily evoked towards anybody experiencing
-problems with either the list or other aspects concerning git is really
-something I have not experienced in any other developer circle.
+The question of whether the environment variable should have a leading
+underscore came up on the mailing list. I don't really care at all either
+way, I'd just like to see the misleading message go away. I'll leave it
+up to others to decide.
 
-And I am quite an oldtimer concerning both mailing lists and Usenet.
+Another thing to decide is whether the help text should be more than
+just "run 'git rebase --continue'", but should mention
+"git rebase --abort" as well. Junio, please feel free to modify the
+patch if you think it would be appropriate.
 
+ builtin-revert.c           |    8 +++++---
+ git-rebase--interactive.sh |    2 ++
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-revert.c b/builtin-revert.c
+index a0586f9..5a57574 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -229,7 +229,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 	unsigned char head[20];
+ 	struct commit *base, *next, *parent;
+ 	int i;
+-	char *oneline, *reencoded_message = NULL;
++	char *oneline, *reencoded_message = NULL, *help_message;
+ 	const char *message, *encoding;
+ 	const char *defmsg = xstrdup(git_path("MERGE_MSG"));
+ 
+@@ -352,11 +352,13 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 		}
+ 		if (close(msg_fd) || commit_lock_file(&msg_file) < 0)
+ 			die ("Error wrapping up %s", defmsg);
++		help_message = getenv("_GIT_CHERRY_PICK_HELP");
+ 		fprintf(stderr, "Automatic %s failed.  "
+ 			"After resolving the conflicts,\n"
+ 			"mark the corrected paths with 'git add <paths>' "
+-			"and commit the result.\n", me);
+-		if (action == CHERRY_PICK) {
++			"and %s.\n", me,
++			help_message ? help_message : "commit the result");
++		if (action == CHERRY_PICK && !help_message) {
+ 			fprintf(stderr, "When commiting, use the option "
+ 				"'-c %s' to retain authorship and message.\n",
+ 				find_unique_abbrev(commit->object.sha1,
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index bf44b6a..e5f9810 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -117,6 +117,7 @@ pick_one () {
+ 		sha1=$(git rev-parse --short $sha1)
+ 		output warn Fast forward to $sha1
+ 	else
++		export _GIT_CHERRY_PICK_HELP="run 'git rebase --continue'"
+ 		output git cherry-pick "$@"
+ 	fi
+ }
+@@ -187,6 +188,7 @@ pick_one_preserving_merges () {
+ 			fi
+ 			;;
+ 		*)
++			export _GIT_CHERRY_PICK_HELP="run 'git rebase --continue'"
+ 			output git cherry-pick "$@" ||
+ 				die_with_patch $sha1 "Could not pick $sha1"
+ 			;;
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+1.5.3.6.952.g84ef
