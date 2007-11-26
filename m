@@ -1,66 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Don't add To: recipients to the Cc: header
-Date: Mon, 26 Nov 2007 08:53:09 -0800
-Message-ID: <7v3autgd8q.fsf@gitster.siamese.dyndns.org>
-References: <1195470026-7389-1-git-send-email-ask@develooper.com>
-	<7vr6ill5f1.fsf@gitster.siamese.dyndns.org>
-	<7A3DDFA5-085D-4D92-BE96-A405FF1FB029@develooper.com>
-	<7v8x4slovk.fsf@gitster.siamese.dyndns.org>
-	<87ejekzpx3.fsf@osv.gnss.ru>
-	<7vr6ikk6rf.fsf@gitster.siamese.dyndns.org>
-	<87lk8orgpm.fsf@osv.gnss.ru>
-	<7vejegu4in.fsf@gitster.siamese.dyndns.org>
-	<87hcjcra10.fsf@osv.gnss.ru>
-	<7vejegsejz.fsf@gitster.siamese.dyndns.org>
-	<87wss5p177.fsf@osv.gnss.ru>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ask =?utf-8?Q?Bj=C3=B8rn?= Hansen <ask@develooper.com>,
-	git@vger.kernel.org
-To: Sergei Organov <osv@javad.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 17:56:32 2007
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: Re: If you would write git from scratch now, what would you change?
+Date: Mon, 26 Nov 2007 18:10:10 +0100
+Message-ID: <2A34D324-48A4-49EF-9D4E-5B9469A0791D@lrde.epita.fr>
+References: <200711252248.27904.jnareb@gmail.com> <fiet88$68n$1@ger.gmane.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 18:11:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwhFb-0000jq-E8
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 17:56:03 +0100
+	id 1IwhTj-0007Ir-8E
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 18:10:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759329AbXKZQxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 11:53:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758214AbXKZQxS
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 11:53:18 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:57871 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757282AbXKZQxR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 11:53:17 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 77CC62EF;
-	Mon, 26 Nov 2007 11:53:37 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id EE61699F0C;
-	Mon, 26 Nov 2007 11:53:33 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753568AbXKZRKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 12:10:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752900AbXKZRKU
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 12:10:20 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:43391 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752800AbXKZRKT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 12:10:19 -0500
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IwhTN-0008SU-EC; Mon, 26 Nov 2007 18:10:17 +0100
+In-Reply-To: <fiet88$68n$1@ger.gmane.org>
+X-Gpgmail-State: !signed
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66085>
 
-Sergei Organov <osv@javad.com> writes:
+On Nov 26, 2007, at 5:46 PM, Andy Parkins wrote:
 
->> GNU folks even managed to insert text that allows a completely empty
->> line (not a line with a single SP on it) to express a context line
->> that is empty, which means...
->
-> Really? That's a surprise for me. What I can tell for sure, Emacs' diff
-> mode doesn't support this, as it does interpret plain empty line as a
-> hunk delimiter, at least in Emacs 22.1.
+>  - libgit would have come first
 
-See b507b465f7831612b9d9fc643e3e5218b64e5bfa (git-apply: prepare for
-upcoming GNU diff -u format change).  Around the time that eventually
-lead to this commit (mid October 2006) there was a discussion on this
-mailing list on the issue, too.  I do not doubt you checked with your
-version of Emacs diff mode that it does not support this yet, but it's
-only prudent to assume that a new version someday will.
+I warmly second that.
+
+>  - "git revert" should be called "git invert"
+>  - "git revert" would (maybe) be "git reset"
+
+But here, I have to disagree.  Why would you want to call "git- 
+revert" "git-reset"?
+
+I know it's annoying that commands with the same name do different  
+things in SVN/CVS but I don't think it's a reason to necessarily  
+adapt to them.  There are plenty of misnomers already anyway  
+(checkout, commit, add).
+
+While we're discussing bad names, as someone already pointed out, I  
+agree it's sad that "git push" is almost always understood as being  
+the opposite of "git pull".
+
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
