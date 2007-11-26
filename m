@@ -1,76 +1,85 @@
-From: Michael Poole <mdpoole@troilus.org>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: If you would write git from scratch now, what would you change?
-Date: Mon, 26 Nov 2007 15:31:19 -0500
-Message-ID: <87oddgzr3c.fsf@graviton.dyn.troilus.org>
-References: <200711252248.27904.jnareb@gmail.com> <fiet88$68n$1@ger.gmane.org>
-	<2A34D324-48A4-49EF-9D4E-5B9469A0791D@lrde.epita.fr>
-	<20071126185600.GA25784@efreet.light.src>
-	<85prxw253u.fsf@lola.goethe.zz>
-	<20071126193455.GC25784@efreet.light.src>
-	<87ve7ozsz8.fsf@graviton.dyn.troilus.org>
-	<20071126200913.GE25784@efreet.light.src>
+Date: Mon, 26 Nov 2007 21:35:56 +0100
+Message-ID: <85prxwzqvn.fsf@lola.goethe.zz>
+References: <200711252248.27904.jnareb@gmail.com>
+	<858x4l2apc.fsf@lola.goethe.zz>
+	<alpine.LFD.0.99999.0711261417580.9605@xanadu.home>
+	<854pf8243i.fsf@lola.goethe.zz>
+	<20071126195750.GD25784@efreet.light.src>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>, Benoit Sigoure <tsuna@lrde.epita.fr>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Cc: Nicolas Pitre <nico@cam.org>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
 To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Mon Nov 26 21:31:41 2007
+X-From: git-owner@vger.kernel.org Mon Nov 26 21:36:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwkcE-0002HA-V0
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 21:31:39 +0100
+	id 1Iwkh1-00042z-Nx
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 21:36:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754752AbXKZUbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 15:31:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754733AbXKZUbU
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 15:31:20 -0500
-Received: from 24-75-174-210-st.chvlva.adelphia.net ([24.75.174.210]:39670
-	"EHLO sanosuke.troilus.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753893AbXKZUbT (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Nov 2007 15:31:19 -0500
-Received: by sanosuke.troilus.org (Postfix, from userid 1000)
-	id 4FE9489C05C; Mon, 26 Nov 2007 15:31:19 -0500 (EST)
-In-Reply-To: <20071126200913.GE25784@efreet.light.src> (Jan Hudec's message of "Mon\, 26 Nov 2007 21\:09\:13 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1752499AbXKZUfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 15:35:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755536AbXKZUfy
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 15:35:54 -0500
+Received: from mail-in-02.arcor-online.net ([151.189.21.42]:43771 "EHLO
+	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755372AbXKZUfx (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Nov 2007 15:35:53 -0500
+Received: from mail-in-10-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
+	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 69CC132F249;
+	Mon, 26 Nov 2007 21:35:51 +0100 (CET)
+Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
+	by mail-in-10-z2.arcor-online.net (Postfix) with ESMTP id 56E7E23D2E4;
+	Mon, 26 Nov 2007 21:35:51 +0100 (CET)
+Received: from lola.goethe.zz (dslb-084-061-029-090.pools.arcor-ip.net [84.61.29.90])
+	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 2DFD82A2AE9;
+	Mon, 26 Nov 2007 21:35:41 +0100 (CET)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 7577E1C4D3AA; Mon, 26 Nov 2007 21:35:56 +0100 (CET)
+In-Reply-To: <20071126195750.GD25784@efreet.light.src> (Jan Hudec's message of
+	"Mon, 26 Nov 2007 20:57:50 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4928/Mon Nov 26 19:10:39 2007 on mail-in-07.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66114>
 
-Jan Hudec writes:
+Jan Hudec <bulb@ucw.cz> writes:
 
-> On Mon, Nov 26, 2007 at 14:50:35 -0500, Michael Poole wrote:
->> Jan Hudec writes:
->> 
->> > The basic pull/push actions are:
+> On Mon, Nov 26, 2007 at 20:34:25 +0100, David Kastrup wrote:
+>> Nicolas Pitre <nico@cam.org> writes:
+>> > On Mon, 26 Nov 2007, David Kastrup wrote:
+>> >> Get rid of plumbing at the command line level.
 >> >
->> > git pull: Bring the remote ref value here.
->> > git push: Put the local ref value there.
->> >
->> > Are those not oposites?
->> >
->> > Than each command has it's different features on top of this -- pull merges
->> > and push can push multiple refs -- but in the basic operation they are
->> > oposites.
+>> > We can't get rid of plumbing.
 >> 
->> I think that is in absolute agreement with David: Ducks swim on the
->> surface of the water and lobsters swim underneath.  Why consider the
->> different features on top of where they swim?
->> 
->> The thing about git-pull that surprises so many users is the merge.
->> There's a separate command to do that step, and git-pull had a fairly
->> good excuse to do the merge before git's 1.5.x remote system was in
->> place, but now the only really defensible reason for its behavior is
->> history.
+>> What about "at the command line level" did you not understand?
 >
-> When I first looked at hg -- and that was long before I looked at git --
-> I was surprised that their pull did NOT merge and you had to do a separate
-> step. Partly because doing those two steps is quite common.
+> Which part of we neither can nor want did you not understant?
+>
+> The availability of plumbing is really big part of a reason why git is
+> so good and has so many scripts and tool built on top of it.
 
-Frequency of use is a good argument for having one command that does
-both.  It is not a good argument that "fetch, then merge" should be
-called "pull" or is the opposite of "push".
+Which is the reason I proposed making the plumbing available at a
+scripting level, not at the command line level.
 
-Michael Poole
+The actual trend we are getting nowadays is locking the porcelaine,
+previously available as shell scripts, down into C code, _without_
+making use of a reasonable plumbing layer suitable for any scripting at
+all.
+
+So the git community at the same time praises shell scripting and
+simultanouesly replaces it without even using the available plumbing,
+_and_ claims that _both_, exclusive and incompatible approaches, are the
+perfect solution.  At the same time.  While fighting the shell
+portability fight continuously, on Unix as well as Windows.
+
+I may have a big mouth, but swallowing all of this at once is beyond me.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
