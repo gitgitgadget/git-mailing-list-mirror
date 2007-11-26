@@ -1,65 +1,78 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Rebase/cherry-picking idea
-Date: Mon, 26 Nov 2007 20:12:20 +0100
-Message-ID: <e5bfff550711261112s182d9aa8x79e2fc1a0521f2c7@mail.gmail.com>
-References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com>
-	 <C3971B37-F75A-40EE-B30A-E88E5DAFAD55@lrde.epita.fr>
-	 <D21294CA-6FD0-40F5-B0D6-5155865DA69A@wincent.com>
-	 <CDF48716-F198-4B33-A5F5-8A2DE1F177EB@wincent.com>
-	 <474AC136.8060906@viscovery.net>
-	 <7vy7ckgbpf.fsf@gitster.siamese.dyndns.org>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: If you would write git from scratch now, what would you change?
+Date: Mon, 26 Nov 2007 11:18:41 -0800
+Message-ID: <56b7f5510711261118m7a402beah5d9cb75c1ad10b43@mail.gmail.com>
+References: <200711252248.27904.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Sixt" <j.sixt@viscovery.net>,
-	"Wincent Colaiuta" <win@wincent.com>,
-	"Benoit Sigoure" <tsuna@lrde.epita.fr>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 20:12:48 2007
+Cc: git@vger.kernel.org, danahow@gmail.com
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 20:19:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwjNr-0005aR-Tb
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 20:12:44 +0100
+	id 1IwjU4-0007uw-NV
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 20:19:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753480AbXKZTM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 14:12:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753352AbXKZTMZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 14:12:25 -0500
-Received: from rv-out-0910.google.com ([209.85.198.188]:39082 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753269AbXKZTMZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 14:12:25 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so629252rvb
-        for <git@vger.kernel.org>; Mon, 26 Nov 2007 11:12:20 -0800 (PST)
+	id S1755808AbXKZTSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 14:18:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755805AbXKZTSp
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 14:18:45 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:5795 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755762AbXKZTSn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 14:18:43 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so1000496ugc
+        for <git@vger.kernel.org>; Mon, 26 Nov 2007 11:18:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=vX5lwYipRnYLubAtXpWa9UwLxLttVy4Gm4ts3dov4g8=;
-        b=XlITyiWK7wrGc2v2PfF3Rg8wboEhHw39Bjt3caaOOYRuOIhKupmcSFEHsiiQ8tW6tLpA9t8Zw2cyV7OlQcNtB4W1atJKGaZxjtRBWYt/8IrWHwk8VwwGnwa5dh2joRHMhYslPcCSW+SFlQdGgyqtOnfoT7HtKtFBasNuXWWB6jc=
+        bh=LqsgECny6iVWP6OPJz4LZ2j2s/tQovJjIEHVcmDJOlo=;
+        b=lgUlTvKxMJka6vp7Peubb40+x3EUUqnNSb1rAH8thoqVrPmQK21GPvZKSwxiaSjwz0+LGGkbpJrfMw7H6ffxvKFkQ6ozIrBw6L+PK9ySCC4z9Np8z+FUSOKwokKH8SrLb5lFuQCRAKFTVXim9BqLrh2Zy9+xgCWPatbnKi1BS44=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MOsSgAjfRr9G4hUJXaa7VzIMeRCxTgygnH9A+qoBtj58NSXK4JG6gxdc5goNFMs5eT4gfRCtB5H9O2IZWurxmQvvTFEcuca59aiab65AQvr3W4PgMfwqDwBRVEJNKh8yDAuGiQ8Yza+VDCNIKn+8lnjXdswvFErHiDk6u03LK3I=
-Received: by 10.140.207.3 with SMTP id e3mr1371813rvg.1196104340318;
-        Mon, 26 Nov 2007 11:12:20 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Mon, 26 Nov 2007 11:12:20 -0800 (PST)
-In-Reply-To: <7vy7ckgbpf.fsf@gitster.siamese.dyndns.org>
+        b=Gyk6cOeojU2NbkpMUXOsaW65T2tivF2l6RGMiD0irlvGy5oZ7myNBAiRD6ZqzgFzUtK+adHfse/O/+UF7txtomut5vpEs3+SU/5EjLRsyCw0b7bDf1YVJDlfdUQ20PrPrsBj2dJ3LEYYWV8SQn+GnFWzreaiOdAMBqrpGCiPv+0=
+Received: by 10.78.180.18 with SMTP id c18mr3381067huf.1196104721832;
+        Mon, 26 Nov 2007 11:18:41 -0800 (PST)
+Received: by 10.78.177.20 with HTTP; Mon, 26 Nov 2007 11:18:41 -0800 (PST)
+In-Reply-To: <200711252248.27904.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66094>
 
-On Nov 26, 2007 6:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> (e.g. GIT_INDEX_FILE, GIT_AUTHOR_NAME).  Does any third party tool like
-> qgit already use GITHEAD_${objectname} and/or GIT_REFLOG_ACTION?
->
+On Nov 25, 2007 1:48 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> If you would write git from scratch now, from the beginning, without
+> concerns for backwards compatibility, what would you change, or what
+> would you want to have changed?
 
-No, it doesn't.
+Currently data can be quickly copied from pack to pack,
+but data cannot be quickly copied blob->pack or pack->blob
+(there was an alternate blob format that supported this,
+ but it was deprecated).  Using the pack format for blobs
+would fix this.  It would also mean blobs wouldn't need to
+be uncompressed to get the blob type or size I believe.
 
-Thanks for asking ;-)
+So far this has prevented me from deploying git here
+(and is half the reason I have not been active recently).
+Currently we use p4 and we have large files.
+When a large file is checked in (submitted),
+it is compressed *once* and sent over the network --
+these are the only delays that end-users experience.
 
-Marco
+The equivalent operation in git would require the creation of
+the blob,  and then of a temporary pack to send to the server.
+This requires 3 calls to zlib for each blob,  which for very
+large files is not acceptable at my site.
+
+Yes,  git has much better features.
+But 80%+ of my workgroup will not use them,
+and only notice that git is "slower".
+
+Thanks,
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
