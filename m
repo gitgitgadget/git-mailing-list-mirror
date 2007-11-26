@@ -1,105 +1,142 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 27 Nov 2007 00:05:27 +0100
-Message-ID: <85bq9gy5e0.fsf@lola.goethe.zz>
-References: <7vabpctx3b.fsf@gitster.siamese.dyndns.org>
-	<7vsl30eyuk.fsf@gitster.siamese.dyndns.org>
-	<7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
-	<20071123103003.GB6754@sigill.intra.peff.net>
-	<Pine.LNX.4.64.0711231319220.27959@racer.site>
-	<20071124113814.GA17861@sigill.intra.peff.net>
-	<alpine.LFD.0.99999.0711241042011.9605@xanadu.home>
-	<7vtznbqx2w.fsf@gitster.siamese.dyndns.org>
-	<20071125215128.GC23820@fieldses.org>
-	<alpine.LFD.0.99999.0711252029020.9605@xanadu.home>
-	<20071126041521.GA21120@fieldses.org>
-	<alpine.LFD.0.99999.0711252324360.9605@xanadu.home>
-	<fie23u$5tc$1@ger.gmane.org>
-	<alpine.LFD.0.99999.0711261358410.9605@xanadu.home>
-	<85lk8k24ju.fsf@lola.goethe.zz>
-	<alpine.LFD.0.99999.0711261511240.9605@xanadu.home>
-	<85hcj8zqfm.fsf@lola.goethe.zz>
-	<alpine.LFD.0.99999.0711261601240.9605@xanadu.home>
-	<85sl2sya55.fsf@lola.goethe.zz>
-	<alpine.LFD.0.99999.0711261649000.9605@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Nov 27 00:05:48 2007
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Make Git accept absolute path names for files within the work tree
+Date: Tue, 27 Nov 2007 00:18:29 +0100
+Message-ID: <1196119109-27483-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Nov 27 00:16:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iwn1C-0000Vn-L9
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 00:05:47 +0100
+	id 1IwnBz-0004QW-Nf
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 00:16:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755194AbXKZXFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 18:05:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754515AbXKZXFP
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 18:05:15 -0500
-Received: from fencepost.gnu.org ([140.186.70.10]:51788 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754066AbXKZXFN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 18:05:13 -0500
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1Iwn0p-00073o-KM; Mon, 26 Nov 2007 18:05:11 -0500
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 807141C4D3AA; Tue, 27 Nov 2007 00:05:27 +0100 (CET)
-In-Reply-To: <alpine.LFD.0.99999.0711261649000.9605@xanadu.home> (Nicolas
-	Pitre's message of "Mon, 26 Nov 2007 17:02:37 -0500 (EST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+	id S1756074AbXKZXQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 18:16:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753976AbXKZXQY
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 18:16:24 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:25052 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753783AbXKZXQX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 18:16:23 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 1169914743E1;
+	Tue, 27 Nov 2007 00:07:05 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 21774-07; Tue, 27 Nov 2007 00:07:05 +0100 (CET)
+Received: from lathund.dewire.com (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 98E8314743E0;
+	Tue, 27 Nov 2007 00:07:05 +0100 (CET)
+Received: by lathund.dewire.com (Postfix, from userid 500)
+	id 919562A4A5; Tue, 27 Nov 2007 00:18:29 +0100 (CET)
+X-Mailer: git-send-email 1.5.3.5.1.gb2df9
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66144>
 
-Nicolas Pitre <nico@cam.org> writes:
+This patch makes it possible to drag files and directories from
+a graphical browser and drop them onto a shell and feed them
+to common git operations without editing away the path to the
+root of the work tree.
 
-> On Mon, 26 Nov 2007, David Kastrup wrote:
->
->> Without so much as a bounce message or delivery report, there is nothing
->> to apply one's brightness to.
->
-> Maybe you could try firing up your web browser and directing it at 
-> http://vger.kernel.org, just in case there might be a web page set up 
-> there with some clues.  Hey, there is actually a web page there.
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ setup.c               |   16 ++++++++++++++
+ t/t3904-abspatharg.sh |   53 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 69 insertions(+), 0 deletions(-)
+ create mode 100755 t/t3904-abspatharg.sh
 
-I really _love_ how the default response on this list for any problem is
-to treat one as an idiot and openly show one's contempt.  The
-information about subscribing to the mailing list can be found at the
-Git home page at <URL:http://git.or.cz/#community>.  It does not mention
-anything like a mailing list home page.  Only the archives are
-mentioned, and those contain no pointer whatsoever.  It does remind me
-of the late Douglas Adams' Hitchhiker's guide to the galaxy:
+Was it this simple?
 
-    `...You hadn't exactly gone out of your way to call attention to
-    them had you? I mean like actually telling anyone or anything.'
-    `But the plans were on display...'
-    `On display? I eventually had to go down to the cellar to find
-     them.'
-    `That's the display department.'
-    `With a torch.'
-    `Ah, well the lights had probably gone.'
-    `So had the stairs.'
-    `But look you found the notice didn't you?'
-    `Yes,' said Arthur, `yes I did. It was on display in the bottom of a
-     locked filing cabinet stuck in a disused lavatory with a sign on the
-     door saying "Beware of The Leopard".'
-
-Anyway, with your pointer I might be able to work through the stuff and
-figure out what makes vger so unique here as a mailing list host.
-
-On the other hand: why bother participating in a community that turns
-openly hostile whenever one experiences problems?  Where is the fun in
-that?  That one will at one point of time be in the situation to lambast
-others for their shortcomings, and feel that one is entirely in-style
-doing so here?
-
-Is it really impossible to proffer any information without a denigrating
-sneer?
-
+diff --git a/setup.c b/setup.c
+index 43cd3f9..9b3a9ff 100644
+--- a/setup.c
++++ b/setup.c
+@@ -6,6 +6,22 @@ static int inside_work_tree = -1;
+ 
+ const char *prefix_path(const char *prefix, int len, const char *path)
+ {
++	if (is_absolute_path(path)) {
++		const char *work_tree = get_git_work_tree();
++		int n = strlen(work_tree);
++		if (!strncmp(path, work_tree, n) && (path[n] == '/' || !path[n])) {
++			if (path[n])
++				path += 1;
++			path += n;
++			if (prefix && !strncmp(path, prefix, len - 1)) {
++			    if (path[len - 1] == '/')
++				    path += len;
++			    else
++				    if (!path[len - 1])
++					    path += len - 1;
++			}
++		}
++	}
+ 	const char *orig = path;
+ 	for (;;) {
+ 		char c;
+diff --git a/t/t3904-abspatharg.sh b/t/t3904-abspatharg.sh
+new file mode 100755
+index 0000000..aa47602
+--- /dev/null
++++ b/t/t3904-abspatharg.sh
+@@ -0,0 +1,53 @@
++#!/bin/sh
++#
++# Copyright (C) 2007 Robin Rosenberg
++#
++
++test_description='Test absolute filename arguments to various git
++commands.  Absolute arguments pointing to a location within the git
++work tree should behave the same as relative arguments.  '
++
++. ./test-lib.sh
++
++test_expect_success 'add files using absolute path names' '
++echo a >afile &&
++echo b >bfile &&
++git-add afile &&
++git-add $(pwd)/bfile &&
++test "afile bfile" = "$(echo $(git ls-files))"
++mkdir x &&
++cd x &&
++echo c >cfile &&
++echo d >dfile &&
++git-add cfile &&
++git-add $(pwd) &&
++cd .. &&
++test "afile bfile x/cfile x/dfile" = "$(echo $(git ls-files))" &&
++test "$(echo $(git ls-files x))" = "$(echo $(git ls-files $(pwd)/x))"
++'
++
++test_expect_success 'commit using absolute path names' '
++git commit -m "foo" &&
++echo aa >>bfile &&
++git commit -m "bb" $(pwd)/bfile
++'
++
++test_expect_success 'log using absolute path names' '
++git log afile >f1.txt &&
++git log $(pwd)/afile >f2.txt &&
++diff f1.txt f2.txt
++'
++
++test_expect_success 'blame using absolute path names' '
++git blame afile >f1.txt &&
++git blame $(pwd)/afile >f2.txt &&
++diff f1.txt f2.txt
++'
++
++test_expect_success 'diff using absolute path names' '
++git diff HEAD^ -- $(pwd)/afile >f1.txt &&
++git diff HEAD^ -- afile >f2.txt &&
++diff f1.txt f2.txt
++'
++
++test_done
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+1.5.3.5.1.gb2df9
