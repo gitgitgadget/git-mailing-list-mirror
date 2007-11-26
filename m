@@ -1,109 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 26 Nov 2007 22:14:53 +0100
-Message-ID: <200711262214.54291.jnareb@gmail.com>
-References: <7vabpctx3b.fsf@gitster.siamese.dyndns.org> <85lk8k24ju.fsf@lola.goethe.zz> <alpine.LFD.0.99999.0711261511240.9605@xanadu.home>
+Date: Mon, 26 Nov 2007 22:22:46 +0100
+Message-ID: <85sl2sya55.fsf@lola.goethe.zz>
+References: <7vabpctx3b.fsf@gitster.siamese.dyndns.org>
+	<7vsl30eyuk.fsf@gitster.siamese.dyndns.org>
+	<7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
+	<20071123103003.GB6754@sigill.intra.peff.net>
+	<Pine.LNX.4.64.0711231319220.27959@racer.site>
+	<20071124113814.GA17861@sigill.intra.peff.net>
+	<alpine.LFD.0.99999.0711241042011.9605@xanadu.home>
+	<7vtznbqx2w.fsf@gitster.siamese.dyndns.org>
+	<20071125215128.GC23820@fieldses.org>
+	<alpine.LFD.0.99999.0711252029020.9605@xanadu.home>
+	<20071126041521.GA21120@fieldses.org>
+	<alpine.LFD.0.99999.0711252324360.9605@xanadu.home>
+	<fie23u$5tc$1@ger.gmane.org>
+	<alpine.LFD.0.99999.0711261358410.9605@xanadu.home>
+	<85lk8k24ju.fsf@lola.goethe.zz>
+	<alpine.LFD.0.99999.0711261511240.9605@xanadu.home>
+	<85hcj8zqfm.fsf@lola.goethe.zz>
+	<alpine.LFD.0.99999.0711261601240.9605@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Nov 26 22:15:29 2007
+X-From: git-owner@vger.kernel.org Mon Nov 26 22:23:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwlIU-00014s-PU
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 22:15:19 +0100
+	id 1IwlQ4-00048R-25
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 22:23:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752541AbXKZVPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 16:15:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752518AbXKZVPA
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 16:15:00 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:24938 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752499AbXKZVO7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 16:14:59 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so882510nfb
-        for <git@vger.kernel.org>; Mon, 26 Nov 2007 13:14:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=qu+gzQT27NxAXbhCHjtEjhTHfz030jxZURhw2F1RFoU=;
-        b=bDu+zBx8hNbmnOJ+sYz++ozfY5UneBQCqKSZkAbqT2wjaVVdi5Sz23mrGohsa4eXgTblm0aoAqbRP0N9StYIghzP4h3cRh61lFD4EwtDsh0vxP6Vr6VZ9nbFy+sG4RDl967Vqqsnz1pUf3sZ4sISDaOsQjhRVMRCHLce2YzwF0g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=MJBRpgPX2RSVgFlOqPqo6kNIbU6IhQzJol0ZKyPSHmokwSwM/bH7YqU+TETe7LyGMTTMcnjGjeNNDiV1hYBxMByfolXTeqoYCU8YWtRo0kNntCPoEz5LdDRrkYoFfS4RJ5Nr/ZhO1AYO6shROUqnXvVhRDPE8WqOWxaLcgZq/jE=
-Received: by 10.86.84.5 with SMTP id h5mr3079225fgb.1196111697210;
-        Mon, 26 Nov 2007 13:14:57 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.221.183])
-        by mx.google.com with ESMTPS id 3sm2721725fge.2007.11.26.13.14.54
-        (version=SSLv3 cipher=OTHER);
-        Mon, 26 Nov 2007 13:14:55 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.LFD.0.99999.0711261511240.9605@xanadu.home>
-Content-Disposition: inline
+	id S1751936AbXKZVWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 16:22:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753858AbXKZVWt
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 16:22:49 -0500
+Received: from mail-in-03.arcor-online.net ([151.189.21.43]:56611 "EHLO
+	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751643AbXKZVWs (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Nov 2007 16:22:48 -0500
+Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 4181127A54A;
+	Mon, 26 Nov 2007 22:22:46 +0100 (CET)
+Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
+	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id 35035ABE89;
+	Mon, 26 Nov 2007 22:22:46 +0100 (CET)
+Received: from lola.goethe.zz (dslb-084-061-029-090.pools.arcor-ip.net [84.61.29.90])
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id DE5A929D4E3;
+	Mon, 26 Nov 2007 22:22:32 +0100 (CET)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 49CE11C4D3AA; Mon, 26 Nov 2007 22:22:46 +0100 (CET)
+In-Reply-To: <alpine.LFD.0.99999.0711261601240.9605@xanadu.home> (Nicolas
+	Pitre's message of "Mon, 26 Nov 2007 16:09:58 -0500 (EST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4928/Mon Nov 26 19:10:39 2007 on mail-in-13.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66125>
 
-Nicolas Pitre wrote:
-> On Mon, 26 Nov 2007, David Kastrup wrote:
-> 
->> Nicolas Pitre <nico@cam.org> writes:
->> 
->>> [ I get really really annoyed when your replies to me aren't directly 
->>>   addressed to me, Jakub.  Told you so repeatedly in the past as well.
->>>   Why are you the only one on this list apparently not able to use a 
->>>   proper email setup? ]
+Nicolas Pitre <nico@cam.org> writes:
 
-It is about proper _newsreader_ setup, in fact...
+> Please figure out an alternative to gmane on your own, or ask those
+> who apparently get it to work properly.  I'm sure you're bright enough
+> to find a way.
 
->> X-Injected-Via-Gmane: http://gmane.org/
->> 
->> And Jakub by far is not the only one using gmane for reading and writing
->> to the list.
-> 
-> It is strange, though, that Jakub is the only one I've noticed who isn't 
-> able to do me the courtesy of addressing me directly when replying to 
-> me.
+Without so much as a bounce message or delivery report, there is nothing
+to apply one's brightness to.
 
-My responding [sometimes] only to list is combination of several
-issues.
+Since the git mailing list is the only mailing list that censors my work
+account in that manner, it is obviously set up in a way different from
+most other mailing lists.
 
-First, newsreader I use, namely KNode 0.10.2 in Kontact 1.2.3 from
-KDE 3.5.3 does not make it easy. By default it replies only to list
-unless Mail-Reply-To header is used (which shouldn't IIRC). I have
-to click reply by e-mail button to send reply via email... and it
-adds only last author, from  From header. The rest I have to add by
-hand.
+Not being a list moderator and not getting any bounce notification,
+there is nothing I can use for figuring out what makes the git mailing
+list different from others.
 
-Second, something is rotten^W broken between GMane and VGER; if I add
-git email address to the list of addresses to send to, VGER rejects and
-refuses to send to git mailing list. I have to send also to newsgroup
-(gmane.comp.version-control.git) to send to all git mailing list. Now
-it looks like two mails are actually send: one to CC'ed addresses, one
-to git mailing list, and sometimes people when replying me forget to
-reply also to git mailing list.
+And the gratuitous hostility easily evoked towards anybody experiencing
+problems with either the list or other aspects concerning git is really
+something I have not experienced in any other developer circle.
 
-So third, when I don't think I have something significant to contribute,
-and I don't necessary expect answer, I send email only to git mailing
-list (news message only to GMane newsgroup coupled with git mailing
-list, actually).
-
-
-Sure, one of solutions would be for me to change newsreader, for example
-to Gnus (as people using Gnus doesn't seem to have the same problem
-I have), but I think you do know that it is not easy to change habits.
-
-[cut]
-
-Nevertheless, mails are sent to git mailing list, so they should go
-to you too.
+And I am quite an oldtimer concerning both mailing lists and Usenet.
 
 -- 
-Jakub Narebski
-Poland
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
