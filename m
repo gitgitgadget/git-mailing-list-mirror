@@ -1,81 +1,84 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: If you would write git from scratch now, what would you change?
-Date: Mon, 26 Nov 2007 17:03:37 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0711261703050.9605@xanadu.home>
-References: <200711252248.27904.jnareb@gmail.com>
- <858x4l2apc.fsf@lola.goethe.zz>
- <alpine.LFD.0.99999.0711261417580.9605@xanadu.home>
- <854pf8243i.fsf@lola.goethe.zz> <20071126195750.GD25784@efreet.light.src>
- <AA5ECB69-3F77-483E-AD19-04A5515779B3@wincent.com>
- <7vhcj8g0op.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.0.99999.0711261631170.9605@xanadu.home>
- <7v3ausfzmh.fsf@gitster.siamese.dyndns.org>
+From: Pascal Obry <pascal.obry@wanadoo.fr>
+Subject: [PATCH] Use --no-color option on git log commands.
+Date: Mon, 26 Nov 2007 23:04:28 +0100
+Organization: Home
+Message-ID: <474B42EC.1000408@wanadoo.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Wincent Colaiuta <win@wincent.com>, Jan Hudec <bulb@ucw.cz>,
-	David Kastrup <dak@gnu.org>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 23:04:08 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 26 23:04:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iwm3Z-0002Xz-Lt
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 23:03:58 +0100
+	id 1Iwm4S-0002rd-OT
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 23:04:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754628AbXKZWDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 17:03:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754762AbXKZWDj
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 17:03:39 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:60308 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754009AbXKZWDi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 17:03:38 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JS400LB1VY2Y2F0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 26 Nov 2007 17:03:38 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7v3ausfzmh.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1754762AbXKZWEe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 17:04:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755381AbXKZWEe
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 17:04:34 -0500
+Received: from smtp28.orange.fr ([80.12.242.100]:41103 "EHLO smtp28.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753560AbXKZWEd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 17:04:33 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2807.orange.fr (SMTP Server) with ESMTP id B47AA80000B0
+	for <git@vger.kernel.org>; Mon, 26 Nov 2007 23:04:31 +0100 (CET)
+Received: from [192.168.0.100] (AVelizy-151-1-61-188.w82-124.abo.wanadoo.fr [82.124.127.188])
+	by mwinf2807.orange.fr (SMTP Server) with ESMTP id 80DD580000AE
+	for <git@vger.kernel.org>; Mon, 26 Nov 2007 23:04:31 +0100 (CET)
+X-ME-UUID: 20071126220431527.80DD580000AE@mwinf2807.orange.fr
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66139>
-
-On Mon, 26 Nov 2007, Junio C Hamano wrote:
-
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > On Mon, 26 Nov 2007, Junio C Hamano wrote:
-> >
-> >> Wincent Colaiuta <win@wincent.com> writes:
-> >> 
-> >> > For the benefit of newcomers, I just wish the plumbing was kept a  
-> >> > little bit out of sight. You know, porcelain in /usr/bin and plumbing  
-> >> > in /usr/libexec or other such place.
-> >> >
-> >> > It's fine once you've learnt your workflows and know the 10 or 15 Git  
-> >> > tools that you'll be using day-to-day; but for people who are just  
-> >> > starting off this can be a little bit intimidating:
-> >> >
-> >> > $ git-<tab>
-> >> > Display all 146 possibilities? (y or n)
-> >> 
-> >> I'd agree to that but I've always considered this an issue for distros.
-> >> We've supported an ability for them to specify a gitexecdir separate
-> >> from /usr/bin in our Makefile for almost two years.
-> >
-> > Would probably be a good thing to start enforcing that by default. It's 
-> > easier to follow such policies when they're coordinated from the project 
-> > origin.
-> 
-> Not really.  The project origin ships the Makefile to install under
-> $HOME, but I do not see any distros following that.
-
-What about the default RPM spec file?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66140>
 
 
-Nicolas
+When colors are activated on the repository the git log output
+will contain control characters to set/reset the colors. This
+makes list_stash() fails as the sed regular expression does not
+match the color control characters. Also use --no-color when
+computing the head on create_stash() procedure.
+---
+ git-stash.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-stash.sh b/git-stash.sh
+index 534eb16..cde9767 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -37,7 +37,7 @@ create_stash () {
+        # state of the base commit
+        if b_commit=$(git rev-parse --verify HEAD)
+        then
+-               head=$(git log --abbrev-commit --pretty=oneline -n 1 HEAD)
++               head=$(git log --no-color --abbrev-commit
+--pretty=oneline -n 1 HEAD)
+        else
+                die "You do not have the initial commit yet"
+        fi
+@@ -108,7 +108,7 @@ have_stash () {
+
+ list_stash () {
+        have_stash || return 0
+-       git log --pretty=oneline -g "$@" $ref_stash |
++       git log --no-color --pretty=oneline -g "$@" $ref_stash |
+        sed -n -e 's/^[.0-9a-f]* refs\///p'
+ }
+
+--
+1.5.3.6.959.g1ab5
+
+-- 
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
