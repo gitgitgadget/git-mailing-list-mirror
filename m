@@ -1,118 +1,89 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: [PATCH v2] builtin-commit: Include the diff in the commit
-	message when verbose.
-Date: Mon, 26 Nov 2007 10:21:15 -0500
-Message-ID: <1196090475.2875.10.camel@hinata.boston.redhat.com>
-References: <1195700089-8326-1-git-send-email-krh@redhat.com>
-	 <Pine.LNX.4.64.0711221049350.27959@racer.site>
-	 <7vzlx63xey.fsf@gitster.siamese.dyndns.org>
+From: "Carlos Rica" <jasampler@gmail.com>
+Subject: Re: If you would write git from scratch now, what would you change?
+Date: Mon, 26 Nov 2007 16:32:29 +0100
+Message-ID: <1b46aba20711260732v297c5c35kbd007b9f13f351ff@mail.gmail.com>
+References: <200711252248.27904.jnareb@gmail.com>
+	 <20071125222314.GC21121@artemis.corp>
+	 <20071126012837.GA5402@dervierte>
+	 <7vejedh6xl.fsf@gitster.siamese.dyndns.org> <474A698A.70100@apple.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 16:29:49 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Steven Walter" <stevenrwalter@gmail.com>,
+	"Pierre Habouzit" <madcoder@debian.org>,
+	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "Adam Roben" <aroben@apple.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 16:33:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iwftq-0004hJ-3W
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 16:29:30 +0100
+	id 1IwfxM-0006GB-5p
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 16:33:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751409AbXKZP3L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Nov 2007 10:29:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750959AbXKZP3K
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 10:29:10 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:40902 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750716AbXKZP3J (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 10:29:09 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lAQFLVd3012718;
-	Mon, 26 Nov 2007 10:21:31 -0500
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lAQFLMOk003928;
-	Mon, 26 Nov 2007 10:21:30 -0500
-Received: from [192.168.1.100] (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lAQFLKV1003461;
-	Mon, 26 Nov 2007 10:21:20 -0500
-In-Reply-To: <7vzlx63xey.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
+	id S1752750AbXKZPcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 10:32:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752655AbXKZPcc
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 10:32:32 -0500
+Received: from wr-out-0506.google.com ([64.233.184.234]:29459 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752586AbXKZPcb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 10:32:31 -0500
+Received: by wr-out-0506.google.com with SMTP id c49so498205wra
+        for <git@vger.kernel.org>; Mon, 26 Nov 2007 07:32:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=9fDxFmGpR5OaJSsrU/sUaA18PMF9wKya57r4JAVjf/A=;
+        b=DSN8YI5NtYjVlZ/OWU75t0x5NUuhBuwO3sek8QnDDSVJPxrsP3STQMrjM3t3jwrISEwtVixrcy0wKYa3+1kPZwDzFHBTBmBqLfquYqDVKiY1xJB8olcV05YLOdEZNYHFDwbck71PerZc3WcL9Mo7AQdBDsRQJsLD2wdr0oAH1PM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Bm1kcIOZIaeuuB1Gl8HGX+8V7kMTMpORiUB2VCx20Hv5nAIzdqkNDIyODNJsbN+9b+hnL4tr4ELwBL5SU/EuAmfdnQDHszGOykbjImZVwOlNVi2YMCDGpMuytnbHh9LIz5H2GxM+Nh2rWoCW+qJeDm5fOZMPEM7N4mn6iCnxFqA=
+Received: by 10.142.203.13 with SMTP id a13mr367493wfg.1196091149186;
+        Mon, 26 Nov 2007 07:32:29 -0800 (PST)
+Received: by 10.142.99.13 with HTTP; Mon, 26 Nov 2007 07:32:29 -0800 (PST)
+In-Reply-To: <474A698A.70100@apple.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66077>
 
-
-On Thu, 2007-11-22 at 11:14 -0800, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->=20
-> > On Wed, 21 Nov 2007, Kristian H=C3=B8gsberg wrote:
+On Nov 26, 2007 7:36 AM, Adam Roben <aroben@apple.com> wrote:
+> Junio C Hamano wrote:
+> > Steven Walter <stevenrwalter@gmail.com> writes:
+> > Let's clear the confusion.  Although it is not bad like the above
+> > "random 5 different operations", checkout does serve 2 quite different
+> > purposes:
 > >
-> >> +
-> >> +	/* Truncate the message just before the diff, if any. */
-> >> +	p =3D strstr(sb.buf, "\ndiff --git a/");
-> >> +	if (p !=3D NULL)
-> >> +		strbuf_setlen(&sb, p - sb.buf);
-> >> +
+> >  (1) checkout a revision.
+> >  (2) checkout selected paths out of a commit (or the index).
 > >
-> > Is this related to the change in wt_status?  If so, wouldn't we wan=
-t to=20
-> > suppress the diff, instead of generating it, and then killing it la=
-ter?
->=20
-> This corresponds to the sed script near l.545 in git-commit.sh.
->=20
-> I've been wondering if it would be better not to have this logic
-> but instead "git commit -v" to show the diff text prefixed with
-> '# ' to make it a proper comment, by the way.
+>
+> Given the above, I'd argue that it serves 3 purposes:
+>
+>    (1) check out a revision
+>    (2) check out selected paths out of a commit (or the index)
+>    (3) start working on a new branch
+>
+> It's true that (1) and (3) are very closely related, but I think in the
+> minds of many git users (particularly new ones) they are distinct.
 
-Yeah, that would be nicer... I think the best way to do this is to do a
-formatting callback for the diff machinery as Jeff suggests, which can
-then prefix '# ' and write it to a FILE *.
+I think this is mostly due to the idea of a branch as a separated box
+(like a directory) instead of a line of development like the notion which
+comes from thinking in a branch as the place where HEAD is pointing to.
 
-> > Besides, you'd want to leave the \n there: strbuf_setlen(&sb, p + 1=
- -=20
-> > sb.buf);
->=20
-> Yup.
+Personally, it is always difficult for me to understand git as a whole,
+because I'm not sure what is the common use case for each command in
+the most-usual-way-of-doing-the-things when using git, despite of having
+long and complete documentation for each individual command. The question
+is if we can give the power of git to their users in the same way they think,
+or how git could be able to teach their users to think in the way it works.
 
-Right, off-by-one.  Effectively it doesn't make a difference, since
-there will always be a comment line above the diff,  When stripspace
-removes the comments it fixes up the end-of-line problem.  Patch below.
+An idea would be to study (and document) the most successful
+use cases that git supports and check if it is already providing
+unique and/or clear commands for them.
 
-cheers,
-Kristian
-
-
->From 58eac54a00d3eb6a311c6fb4faa67eb831c60e01 Mon Sep 17 00:00:00 2001
-=46rom: =3D?utf-8?q?Kristian=3D20H=3DC3=3DB8gsberg?=3D <krh@redhat.com>
-Date: Mon, 26 Nov 2007 10:16:08 -0500
-Subject: [PATCH] Fix off-by-one error when truncating the diff out of t=
-he commit message.
-MIME-Version: 1.0
-Content-Type: text/plain; charset=3Dutf-8
-Content-Transfer-Encoding: 8bit
-
-Signed-off-by: Kristian H=C3=B8gsberg <krh@redhat.com>
----
- builtin-commit.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 45e51b1..330f778 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -762,7 +762,7 @@ int cmd_commit(int argc, const char **argv, const c=
-har *prefix)
- 	/* Truncate the message just before the diff, if any. */
- 	p =3D strstr(sb.buf, "\ndiff --git a/");
- 	if (p !=3D NULL)
--		strbuf_setlen(&sb, p - sb.buf);
-+		strbuf_setlen(&sb, p - sb.buf + 1);
-=20
- 	stripspace(&sb, 1);
- 	if (sb.len < header_len || message_is_empty(&sb, header_len)) {
---=20
-1.5.3.4.206.g58ba4
+--Carlos
