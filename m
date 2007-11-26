@@ -1,66 +1,65 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: If you would write git from scratch now, what would you change?
-Date: Mon, 26 Nov 2007 20:12:37 +0100
-Message-ID: <85prxw253u.fsf@lola.goethe.zz>
-References: <200711252248.27904.jnareb@gmail.com> <fiet88$68n$1@ger.gmane.org>
-	<2A34D324-48A4-49EF-9D4E-5B9469A0791D@lrde.epita.fr>
-	<20071126185600.GA25784@efreet.light.src>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Rebase/cherry-picking idea
+Date: Mon, 26 Nov 2007 20:12:20 +0100
+Message-ID: <e5bfff550711261112s182d9aa8x79e2fc1a0521f2c7@mail.gmail.com>
+References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com>
+	 <C3971B37-F75A-40EE-B30A-E88E5DAFAD55@lrde.epita.fr>
+	 <D21294CA-6FD0-40F5-B0D6-5155865DA69A@wincent.com>
+	 <CDF48716-F198-4B33-A5F5-8A2DE1F177EB@wincent.com>
+	 <474AC136.8060906@viscovery.net>
+	 <7vy7ckgbpf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Benoit Sigoure <tsuna@lrde.epita.fr>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Mon Nov 26 20:12:45 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Sixt" <j.sixt@viscovery.net>,
+	"Wincent Colaiuta" <win@wincent.com>,
+	"Benoit Sigoure" <tsuna@lrde.epita.fr>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 20:12:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwjNs-0005aR-I6
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 20:12:45 +0100
+	id 1IwjNr-0005aR-Tb
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 20:12:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753638AbXKZTM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 14:12:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753588AbXKZTM2
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 14:12:28 -0500
-Received: from mail-in-16.arcor-online.net ([151.189.21.56]:44068 "EHLO
-	mail-in-16.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753352AbXKZTM1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Nov 2007 14:12:27 -0500
-Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
-	by mail-in-16.arcor-online.net (Postfix) with ESMTP id 52D8B1A452B;
-	Mon, 26 Nov 2007 20:12:26 +0100 (CET)
-Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
-	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 254F32BEB68;
-	Mon, 26 Nov 2007 20:12:26 +0100 (CET)
-Received: from lola.goethe.zz (dslb-084-061-029-090.pools.arcor-ip.net [84.61.29.90])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id E5A642A2AE7;
-	Mon, 26 Nov 2007 20:12:25 +0100 (CET)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 6095D1C4D3AA; Mon, 26 Nov 2007 20:12:37 +0100 (CET)
-In-Reply-To: <20071126185600.GA25784@efreet.light.src> (Jan Hudec's message of
-	"Mon, 26 Nov 2007 19:56:00 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4928/Mon Nov 26 19:10:39 2007 on mail-in-07.arcor-online.net
-X-Virus-Status: Clean
+	id S1753480AbXKZTM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 14:12:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753352AbXKZTMZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 14:12:25 -0500
+Received: from rv-out-0910.google.com ([209.85.198.188]:39082 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753269AbXKZTMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 14:12:25 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so629252rvb
+        for <git@vger.kernel.org>; Mon, 26 Nov 2007 11:12:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=vX5lwYipRnYLubAtXpWa9UwLxLttVy4Gm4ts3dov4g8=;
+        b=XlITyiWK7wrGc2v2PfF3Rg8wboEhHw39Bjt3caaOOYRuOIhKupmcSFEHsiiQ8tW6tLpA9t8Zw2cyV7OlQcNtB4W1atJKGaZxjtRBWYt/8IrWHwk8VwwGnwa5dh2joRHMhYslPcCSW+SFlQdGgyqtOnfoT7HtKtFBasNuXWWB6jc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=MOsSgAjfRr9G4hUJXaa7VzIMeRCxTgygnH9A+qoBtj58NSXK4JG6gxdc5goNFMs5eT4gfRCtB5H9O2IZWurxmQvvTFEcuca59aiab65AQvr3W4PgMfwqDwBRVEJNKh8yDAuGiQ8Yza+VDCNIKn+8lnjXdswvFErHiDk6u03LK3I=
+Received: by 10.140.207.3 with SMTP id e3mr1371813rvg.1196104340318;
+        Mon, 26 Nov 2007 11:12:20 -0800 (PST)
+Received: by 10.141.76.1 with HTTP; Mon, 26 Nov 2007 11:12:20 -0800 (PST)
+In-Reply-To: <7vy7ckgbpf.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66093>
 
-Jan Hudec <bulb@ucw.cz> writes:
-
-> On Mon, Nov 26, 2007 at 18:10:10 +0100, Benoit Sigoure wrote:
->> On Nov 26, 2007, at 5:46 PM, Andy Parkins wrote:
->> While we're discussing bad names, as someone already pointed out, I agree 
->> it's sad that "git push" is almost always understood as being the opposite 
->> of "git pull".
+On Nov 26, 2007 6:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> (e.g. GIT_INDEX_FILE, GIT_AUTHOR_NAME).  Does any third party tool like
+> qgit already use GITHEAD_${objectname} and/or GIT_REFLOG_ACTION?
 >
-> Well, it is an oposite of pull. Compared to it, it is limited in that it will
-> not do a merge and on the other hand extended to *also* be an oposite of
-> fetch, but still oposite of pull is push.
 
-With the same reasoning the opposite of a duck is a lobster, since a
-lobster has not only fewer wings, but also more legs.
+No, it doesn't.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Thanks for asking ;-)
+
+Marco
