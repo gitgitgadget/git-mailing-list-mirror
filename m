@@ -1,78 +1,94 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 26 Nov 2007 10:09:01 +0100
-Message-ID: <474A8D2D.6010800@op5.se>
-References: <7vabpctx3b.fsf@gitster.siamese.dyndns.org> <7vsl30eyuk.fsf@gitster.siamese.dyndns.org> <7vve7tuz3a.fsf@gitster.siamese.dyndns.org> <20071123103003.GB6754@sigill.intra.peff.net> <Pine.LNX.4.64.0711231319220.27959@racer.site> <20071124113814.GA17861@sigill.intra.peff.net> <alpine.LFD.0.99999.0711241042011.9605@xanadu.home> <7vtznbqx2w.fsf@gitster.siamese.dyndns.org> <20071125215128.GC23820@fieldses.org> <alpine.LFD.0.99999.0711252029020.9605@xanadu.home> <20071126041521.GA21120@fieldses.org> <alpine.LFD.0.99999.0711252324360.9605@xanadu.home> <fie23u$5tc$1@ger.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: Re: Rebase/cherry-picking idea
+Date: Mon, 26 Nov 2007 10:32:38 +0100
+Message-ID: <C3971B37-F75A-40EE-B30A-E88E5DAFAD55@lrde.epita.fr>
+References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-31-866510145"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 10:09:38 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 10:33:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwZy9-0004Vp-8s
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 10:09:33 +0100
+	id 1IwaKz-00027Y-5S
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 10:33:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753892AbXKZJJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 04:09:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753991AbXKZJJN
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 04:09:13 -0500
-Received: from mail.op5.se ([193.201.96.20]:45250 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753622AbXKZJJM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 04:09:12 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id D38C01F08104;
-	Mon, 26 Nov 2007 10:09:10 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VEJ75D-CVeWy; Mon, 26 Nov 2007 10:09:04 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 69DB11F080F5;
-	Mon, 26 Nov 2007 10:09:04 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <fie23u$5tc$1@ger.gmane.org>
+	id S1753431AbXKZJcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 04:32:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753830AbXKZJcu
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 04:32:50 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:50400 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752330AbXKZJct (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 04:32:49 -0500
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IwaKe-0003sm-40; Mon, 26 Nov 2007 10:32:48 +0100
+In-Reply-To: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66061>
 
-Jakub Narebski wrote:
-> Nicolas Pitre wrote:
-> 
->> On Mon, 26 Nov 2007, J. Bruce Fields wrote:
->>
->>> I do find that trying to work on top of a constantly rebased branch is
->>> annoying no matter how I do it.  So I sometimes wonder if we shouldn't
->>> instead be finding ways to avoid the practice.
->> I don't think it can't be avoided in many cases.  Some stuff gets 
->> rebased because it has to be refined before it is merged in a more 
->> stable and more "official" repository.  Working on top of a rebased 
->> branch could be much easier if there was a dedicated command to perform 
->> the local rebase of one's work after a fetch, just like the pull command 
->> does a merge after a fetch, at which point both work flows would be 
->> almost equivalent wrt ease of use.
-> 
-> There was idea of 'rebase' merge strategy (which was in some form
-> implemented once under another name: check archives if you want).
-> And there is an idea of --rebase switch git git-pull.
-> 
-> What is left is the implementation ;-)
-> 
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-31-866510145
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-"git pull --rebase" already has an implementation. Dscho cooked one up
-which I've been using since then. It works nicely.
+On Nov 26, 2007, at 10:02 AM, Wincent Colaiuta wrote:
+
+> In using "git-rebase --interactive" to re-order commits you  
+> occasionally get conflicts and will see a message like this:
+>
+> 	When commiting, use the option '-c %s' to retain authorship and  
+> message
+>
+> I was thinking that it might be nice to stash away this commit id  
+> somewhere in GIT_DIR so that the user didn't have to explicitly  
+> remember it, and add a new switch to git-commit that could be used  
+> to automatically use that stashed commit id, something like:
+>
+> 	git commit --retain
+>
+> Although I most often see this kind of message in interactive  
+> rebasing, the message is generated in builtin-revert.c when cherry- 
+> picking, so you can also see it in any other situation where you're  
+> cherry picking and there's a conflict.
+>
+> What do people think? Would this be a nice usability improvement?  
+> Or is it adding clutter?
+
+
+I'm not sure but I think this message is just some unwanted  
+(misleading) noise, since when you rebase, once you solve the  
+conflicts, you git-rebase --continue, you don't git-commit.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-31-866510145
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHSpK2wwE67wC8PUkRAoyTAKDARgRqa7BPNOaeVSZ/K0XrVCCbnQCgnwD+
+j+y6deKSLMUR+kcCNMVUv9c=
+=LnJb
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-31-866510145--
