@@ -1,68 +1,107 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Use is_absolute_path() in diff-lib.c, lockfile.c, setup.c,
- trace.c
-Date: Mon, 26 Nov 2007 08:45:21 +0100
-Message-ID: <474A7991.5010202@viscovery.net>
-References: <11960297431954-git-send-email-prohaska@zib.de>
+From: "Ollie Wild" <aaw@google.com>
+Subject: Re: git-svn fetch failure: index.lock file exists
+Date: Sun, 25 Nov 2007 23:59:46 -0800
+Message-ID: <65dd6fd50711252359y301aa775mc60cadbc59b682d0@mail.gmail.com>
+References: <65dd6fd50711151607x50639232w6d79322129c3d82@mail.gmail.com>
+	 <20071117211549.GC31598@mayonaise>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Nov 26 08:45:50 2007
+To: "Eric Wong" <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Nov 26 09:00:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwYf6-0001BV-LA
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 08:45:49 +0100
+	id 1IwYt4-0004AM-TZ
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 09:00:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754181AbXKZHpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 02:45:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753028AbXKZHpa
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 02:45:30 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:50150 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753997AbXKZHp3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 02:45:29 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IwYe1-0001EV-Ab; Mon, 26 Nov 2007 08:44:46 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 1D7486B7; Mon, 26 Nov 2007 08:45:22 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <11960297431954-git-send-email-prohaska@zib.de>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753276AbXKZH7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 02:59:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753268AbXKZH7z
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 02:59:55 -0500
+Received: from smtp-out.google.com ([216.239.33.17]:21649 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752810AbXKZH7y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 02:59:54 -0500
+Received: from zps37.corp.google.com (zps37.corp.google.com [172.25.146.37])
+	by smtp-out.google.com with ESMTP id lAQ7xlsH028168
+	for <git@vger.kernel.org>; Mon, 26 Nov 2007 07:59:48 GMT
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=received:message-id:date:from:to:subject:cc:in-reply-to:
+	mime-version:content-type:content-transfer-encoding:
+	content-disposition:references;
+	b=JpT8/rmA9ZQoQTbO/6iwLcOOXMazZp6Y6iakXD1IpWi0NNmX9WmbtzD177GRcN7PK
+	wMRDfB+7tY/XhUtPRjV/A==
+Received: from py-out-1112.google.com (pyia29.prod.google.com [10.34.253.29])
+	by zps37.corp.google.com with ESMTP id lAQ7xA1I006879
+	for <git@vger.kernel.org>; Sun, 25 Nov 2007 23:59:46 -0800
+Received: by py-out-1112.google.com with SMTP id a29so1431277pyi
+        for <git@vger.kernel.org>; Sun, 25 Nov 2007 23:59:46 -0800 (PST)
+Received: by 10.35.91.1 with SMTP id t1mr3016346pyl.1196063986532;
+        Sun, 25 Nov 2007 23:59:46 -0800 (PST)
+Received: by 10.35.106.4 with HTTP; Sun, 25 Nov 2007 23:59:46 -0800 (PST)
+In-Reply-To: <20071117211549.GC31598@mayonaise>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66051>
 
-Steffen Prohaska schrieb:
-> Using the helper function to test for absolute paths makes porting easier.
+Thanks, Eric.  I managed to get things working before your response
+which means that (a) I'm a bit fuzzy on what I did and (b) I didn't
+record all the various messages that might be useful for debugging.
 
-The patch looks good.
+I ended up having to delete the entire .git/svn/libbid-last-merge
+directory, as the fetch failed even with the lockfile removed.  After
+that, git-svn fetch retrieved a lot of old changes which had already
+been synched before but seems to have gotten itself back into a
+consistent state.
 
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -59,7 +59,7 @@ const char *prefix_path(const char *prefix, int len, const char *path)
->  const char *prefix_filename(const char *pfx, int pfx_len, const char *arg)
->  {
->  	static char path[PATH_MAX];
-> -	if (!pfx || !*pfx || arg[0] == '/')
-> +	if (!pfx || !*pfx || is_absolute_path(arg))
->  		return arg;
->  	memcpy(path, pfx, pfx_len);
->  	strcpy(path + pfx_len, arg);
+As for whether or not I interrupted  a previous fetch, it's possible,
+but I don't remember doing so.  I'd been doing mostly rebases against
+the trunk, though, so any corruption could have occurred some time
+back.
 
-This instance, however, will be reworked for Windows anyway because we must 
-do '\\' to '/' conversion even if the path is absolute (and, hence, we 
-cannot just return the input).
+If I run into any more problems, I'll let you know and provide more
+detailed feedback about the types of errors I'm seeing and the steps
+required to correct it.  Otherwise, I'll chalk this up to a one-off
+failure due to a poorly timed interrupt.
 
-But disregarding this note, the change makes the code more readable, IMO, so 
-I'm all for it.
+Ollie
 
--- Hannes
+On Nov 17, 2007 1:15 PM, Eric Wong <normalperson@yhbt.net> wrote:
+>
+> Ollie Wild <aaw@google.com> wrote:
+> > Hi,
+> >
+> > I've been using git-svn for a while now to work on gcc.  Last night, I did a
+> >
+> >   git svn fetch
+> >
+> > and got the following failure:
+> >
+> >   Found possible branch point: svn+ssh://aaw@gcc.gnu.org/svn/gcc/trunk =>
+> >       svn+ssh://aaw@gcc.gnu.org/svn/gcc/tags/libbid-last-merge, 128810
+> >   Found branch parent: (tags/libbid-last-merge)
+> >       789aa951bbc6a49f791bf5109136335fc33222c5
+> >   fatal: unable to create
+> > '.git/svn/tags/libbid-last-merge/index.lock': File exists
+> >   read-tree 789aa951bbc6a49f791bf5109136335fc33222c5:
+> >       command returned error: 128
+> >
+> > Naively, it looks to me like I've just got a stale lock file from a
+> > previous run.  However, I have no idea what the correct recovery
+> > strategy is.  Can I just delete the lock file?  Do I need to do some
+> > sort of data validation?
+> >
+> > I'm using git version 1.5.2.5 with subversion version 1.4.5 (r25188).
+>
+> Did you interrupt git-svn in a previous run?  But you should be able to
+> just remove it; git-svn should verify that the index is in a consistent
+> state before it attempts to fetch again.
+>
+> --
+> Eric Wong
+>
