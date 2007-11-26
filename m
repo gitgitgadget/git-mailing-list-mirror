@@ -1,86 +1,66 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 26 Nov 2007 14:11:17 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0711261358410.9605@xanadu.home>
-References: <7vabpctx3b.fsf@gitster.siamese.dyndns.org>
- <7vsl30eyuk.fsf@gitster.siamese.dyndns.org>
- <7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
- <20071123103003.GB6754@sigill.intra.peff.net>
- <Pine.LNX.4.64.0711231319220.27959@racer.site>
- <20071124113814.GA17861@sigill.intra.peff.net>
- <alpine.LFD.0.99999.0711241042011.9605@xanadu.home>
- <7vtznbqx2w.fsf@gitster.siamese.dyndns.org>
- <20071125215128.GC23820@fieldses.org>
- <alpine.LFD.0.99999.0711252029020.9605@xanadu.home>
- <20071126041521.GA21120@fieldses.org>
- <alpine.LFD.0.99999.0711252324360.9605@xanadu.home>
- <fie23u$5tc$1@ger.gmane.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: If you would write git from scratch now, what would you change?
+Date: Mon, 26 Nov 2007 20:12:37 +0100
+Message-ID: <85prxw253u.fsf@lola.goethe.zz>
+References: <200711252248.27904.jnareb@gmail.com> <fiet88$68n$1@ger.gmane.org>
+	<2A34D324-48A4-49EF-9D4E-5B9469A0791D@lrde.epita.fr>
+	<20071126185600.GA25784@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 20:11:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Benoit Sigoure <tsuna@lrde.epita.fr>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Mon Nov 26 20:12:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwjMq-0005AJ-0S
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 20:11:40 +0100
+	id 1IwjNs-0005aR-I6
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 20:12:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753280AbXKZTLU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 14:11:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752800AbXKZTLU
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 14:11:20 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:10155 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753234AbXKZTLT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 14:11:19 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JS400505NYT7KC0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 26 Nov 2007 14:11:17 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <fie23u$5tc$1@ger.gmane.org>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1753638AbXKZTM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 14:12:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753588AbXKZTM2
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 14:12:28 -0500
+Received: from mail-in-16.arcor-online.net ([151.189.21.56]:44068 "EHLO
+	mail-in-16.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753352AbXKZTM1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Nov 2007 14:12:27 -0500
+Received: from mail-in-01-z2.arcor-online.net (mail-in-01-z2.arcor-online.net [151.189.8.13])
+	by mail-in-16.arcor-online.net (Postfix) with ESMTP id 52D8B1A452B;
+	Mon, 26 Nov 2007 20:12:26 +0100 (CET)
+Received: from mail-in-07.arcor-online.net (mail-in-07.arcor-online.net [151.189.21.47])
+	by mail-in-01-z2.arcor-online.net (Postfix) with ESMTP id 254F32BEB68;
+	Mon, 26 Nov 2007 20:12:26 +0100 (CET)
+Received: from lola.goethe.zz (dslb-084-061-029-090.pools.arcor-ip.net [84.61.29.90])
+	by mail-in-07.arcor-online.net (Postfix) with ESMTP id E5A642A2AE7;
+	Mon, 26 Nov 2007 20:12:25 +0100 (CET)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 6095D1C4D3AA; Mon, 26 Nov 2007 20:12:37 +0100 (CET)
+In-Reply-To: <20071126185600.GA25784@efreet.light.src> (Jan Hudec's message of
+	"Mon, 26 Nov 2007 19:56:00 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4928/Mon Nov 26 19:10:39 2007 on mail-in-07.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66092>
 
+Jan Hudec <bulb@ucw.cz> writes:
 
-[ I get really really annoyed when your replies to me aren't directly 
-  addressed to me, Jakub.  Told you so repeatedly in the past as well.
-  Why are you the only one on this list apparently not able to use a 
-  proper email setup? ]
+> On Mon, Nov 26, 2007 at 18:10:10 +0100, Benoit Sigoure wrote:
+>> On Nov 26, 2007, at 5:46 PM, Andy Parkins wrote:
+>> While we're discussing bad names, as someone already pointed out, I agree 
+>> it's sad that "git push" is almost always understood as being the opposite 
+>> of "git pull".
+>
+> Well, it is an oposite of pull. Compared to it, it is limited in that it will
+> not do a merge and on the other hand extended to *also* be an oposite of
+> fetch, but still oposite of pull is push.
 
-On Mon, 26 Nov 2007, Jakub Narebski wrote:
+With the same reasoning the opposite of a duck is a lobster, since a
+lobster has not only fewer wings, but also more legs.
 
-> Nicolas Pitre wrote:
-> 
-> > Some stuff gets rebased because it has to be refined before it is 
-> > merged in a more stable and more "official" repository.  Working on 
-> > top of a rebased branch could be much easier if there was a 
-> > dedicated command to perform the local rebase of one's work after a 
-> > fetch, just like the pull command does a merge after a fetch, at 
-> > which point both work flows would be almost equivalent wrt ease of 
-> > use.
-> 
-> There was idea of 'rebase' merge strategy (which was in some form
-> implemented once under another name: check archives if you want).
-> And there is an idea of --rebase switch git git-pull.
-> 
-> What is left is the implementation ;-)
-
-I thought that had been implemented already.  But in fact I had forgot 
-about it altogether.
-
-It shouldn't be much complicated than:
-
-	git fetch ${remote} && \
-	git rebase --onto ${remote} ${remote}"@{1}" ${local}
-
-given that ${remote} did actually change during the fetch.
-
-
-Nicolas
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
