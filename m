@@ -1,104 +1,61 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [RFC] best way to show diff of commit
-Date: Mon, 26 Nov 2007 00:47:20 +0100
-Message-ID: <20071125234719.GF21121@artemis.corp>
-References: <20071125211831.GA21121@artemis.corp> <20071125212748.GB23820@fieldses.org> <20071125220902.GB21121@artemis.corp> <7vfxyuj70i.fsf@gitster.siamese.dyndns.org> <20071125223150.GD21121@artemis.corp> <7v1waej5ub.fsf@gitster.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [RFC] Making ce_path_match() more useful by accepting globs
+Date: Mon, 26 Nov 2007 01:11:14 +0100
+Message-ID: <20071126001114.GA10286@steel.home>
+References: <7vr6ienqxr.fsf@gitster.siamese.dyndns.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="65ImJOski3p8EhYV";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Git ML <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 00:47:44 2007
+X-From: git-owner@vger.kernel.org Mon Nov 26 01:11:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwRCR-0002gt-3h
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 00:47:43 +0100
+	id 1IwRZc-0008WQ-Kg
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 01:11:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757090AbXKYXrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Nov 2007 18:47:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756976AbXKYXrY
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 18:47:24 -0500
-Received: from pan.madism.org ([88.191.52.104]:40827 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754508AbXKYXrW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Nov 2007 18:47:22 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id B0D082C430;
-	Mon, 26 Nov 2007 00:47:21 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 66C3B2A3B; Mon, 26 Nov 2007 00:47:20 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Git ML <git@vger.kernel.org>
+	id S1755909AbXKZALW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Nov 2007 19:11:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755867AbXKZALW
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Nov 2007 19:11:22 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:62671 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754676AbXKZALV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Nov 2007 19:11:21 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBg79ik=
+Received: from tigra.home (Fcbf4.f.strato-dslnet.de [195.4.203.244])
+	by post.webmailer.de (klopstock mo54) (RZmta 14.3)
+	with ESMTP id N002e2jAPJwpdE ; Mon, 26 Nov 2007 01:11:15 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 33E42277AE;
+	Mon, 26 Nov 2007 01:11:15 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id BD07056D22; Mon, 26 Nov 2007 01:11:14 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <7v1waej5ub.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <7vr6ienqxr.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66029>
 
+Junio C Hamano, Sun, Nov 25, 2007 19:03:12 +0100:
+> Currently ce_path_match() only uses "the leading directory" match, and
+> does not understand file globs.  These do not work:
+> 
+>    git diff-files 't/*.sh'
+>    git diff-index HEAD 'xdiff/*.c'
+>    git update-index -g 'Documentation/howto/*.txt'
 
---65ImJOski3p8EhYV
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+How should my scripts handle files with "*" in names?
+Maybe before the proposed change we should make all plumbing accept
+"--stdin" (which does not expand globs)?
 
-On Sun, Nov 25, 2007 at 10:52:28PM +0000, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> > On Sun, Nov 25, 2007 at 10:27:09PM +0000, Junio C Hamano wrote:
-> >> Pierre Habouzit <madcoder@debian.org> writes:
-> >>=20
-> >> >   Hmm it doesn't because I would have to call git commit -v each tim=
-e I
-> >> > commit and well I _like_ having the status better. And moreover I wa=
-nt
-> >> > the diff to go in a separated buffer too.
-> >>=20
-> >> I've never felt it a problem while editing the log message in Emacs.
-> >>=20
-> >> Don't enhanced vi implementations let you split the same buffer into
-> >> two allowing you to view different portions of it these days?
-> >
-> >   Well, maybe I could write my plugin so that it cuts the diff out from
-> > the main buffer indeed, though I will have to learn using git commit -v
-> > instead of git commit :P
-> >
-> >   That and the fact that the syntax colorization of the diff doesn't
-> > work, but it's probably not up to git to fix that.
->=20
-> Or you can use pre-commit hook (which will be run with GIT_INDEX_FILE
-> set to the index file used for the commit) to generate the diff in a
-> separate file, and set EDITOR (or GIT_EDITOR) to a script around vim to
-> open the given COMMIT_EDITMSG as well as that file you create.
+P.S. you have something broken in your mailer:
 
-  *ha* _that_ sounds more like the kind of things I was lurking for.
-Sounds like a plan thanks :)
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---65ImJOski3p8EhYV
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHSgmHvGr7W6HudhwRAlKJAJ9AW9cMhfk475euPb8/bLT5MjxkfACfVKoz
-QfVPOSUIf4a07JVPMJAlIII=
-=45eN
------END PGP SIGNATURE-----
-
---65ImJOski3p8EhYV--
+    To: Linus@sceptre.sasl.smtp.pobox.com,
+	    "Torvalds <torvalds"@linux-fundation.org
