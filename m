@@ -1,97 +1,110 @@
-From: Adam Roben <aroben@apple.com>
-Subject: Re: If you would write git from scratch now, what would you change?
-Date: Sun, 25 Nov 2007 22:36:58 -0800
-Message-ID: <474A698A.70100@apple.com>
-References: <200711252248.27904.jnareb@gmail.com>
- <20071125222314.GC21121@artemis.corp> <20071126012837.GA5402@dervierte>
- <7vejedh6xl.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: Steven Walter <stevenrwalter@gmail.com>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH] Use is_absolute_path() in diff-lib.c, lockfile.c, setup.c, trace.c
+Date: Mon, 26 Nov 2007 07:45:55 +0100
+Message-ID: <F8F93DBB-F0F5-440A-BA0C-434422C8122A@zib.de>
+References: <11960297431954-git-send-email-prohaska@zib.de> <7vy7clhd9z.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 07:37:24 2007
+X-From: git-owner@vger.kernel.org Mon Nov 26 07:45:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwXat-0004BL-Ka
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 07:37:24 +0100
+	id 1IwXiQ-0005wy-UX
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 07:45:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752672AbXKZGhB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 01:37:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752671AbXKZGhB
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 01:37:01 -0500
-Received: from mail-out3.apple.com ([17.254.13.22]:49596 "EHLO
-	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752607AbXKZGhA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 01:37:00 -0500
-Received: from relay13.apple.com (relay13.apple.com [17.128.113.29])
-	by mail-out3.apple.com (Postfix) with ESMTP id E203E1971073
-	for <git@vger.kernel.org>; Sun, 25 Nov 2007 22:36:59 -0800 (PST)
-Received: from relay13.apple.com (unknown [127.0.0.1])
-	by relay13.apple.com (Symantec Mail Security) with ESMTP id C94DD28052
-	for <git@vger.kernel.org>; Sun, 25 Nov 2007 22:36:59 -0800 (PST)
-X-AuditID: 1180711d-9d2b7bb0000008bf-71-474a698b37ab
-Received: from et.apple.com (et.apple.com [17.151.62.12])
-	by relay13.apple.com (Apple SCV relay) with ESMTP id A8CBC2804F
-	for <git@vger.kernel.org>; Sun, 25 Nov 2007 22:36:59 -0800 (PST)
-Received: from [10.0.1.200] ([67.160.250.192])
- by et.apple.com (Sun Java System Messaging Server 6.2-8.04 (built Feb 28
- 2007)) with ESMTPSA id <0JS300D4NP1ND000@et.apple.com> for
- git@vger.kernel.org; Sun, 25 Nov 2007 22:36:59 -0800 (PST)
-In-reply-to: <7vejedh6xl.fsf@gitster.siamese.dyndns.org>
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-X-Brightmail-Tracker: AAAAAA==
+	id S1752731AbXKZGot (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 01:44:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752703AbXKZGot
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 01:44:49 -0500
+Received: from mailer.zib.de ([130.73.108.11]:52052 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752671AbXKZGos (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 01:44:48 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAQ6iixS020126;
+	Mon, 26 Nov 2007 07:44:44 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db1a9f4.pool.einsundeins.de [77.177.169.244])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAQ6ihNO009745
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Mon, 26 Nov 2007 07:44:44 +0100 (MET)
+In-Reply-To: <7vy7clhd9z.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66049>
 
-Junio C Hamano wrote:
-> Steven Walter <stevenrwalter@gmail.com> writes:
->   
->> Heartily seconded.  I think checkout is the most egregrious of the
->> three.  git-checkout can be used to:
+
+On Nov 26, 2007, at 4:54 AM, Junio C Hamano wrote:
+
+> Steffen Prohaska <prohaska@zib.de> writes:
+>
+>> Using the helper function to test for absolute paths makes porting  
+>> easier.
+>
+> These probably make sense.  I obviously do not see any downside  
+> from the
+> POSIX side, and can imagine that treating "C:\" prefix as "absolute
+> paths" at these four places will not have any ill effect on the  
+> Windows
+> side (IOW, the codepaths that follow these four places seem to do a
+> sensible thing even if the "absolute path" prefix is not a single '/',
+> but would work fine as-is).
+>
+> I am a bit surprised that there are only four places you needed to
+> touch, though.
+
+Yes, I was a bit surprised, too.  I used grep to find these places.
+Maybe my regular expression was not good enough.  On the other side,
+is_absolute_path() is already used at 11 places before this patch.
+I also cross checked with the msysgit code base.  It does not use
+is_absolute_path() at more places.
+
+
+>> BTW, what happend to the msysgit related patches:
 >>
->>     * Switch branches
->>     * Create a branch
->>     * Change the state of all files to a particular commit
->>     * Change the state of a particular file to that of the index
->>     * Change the state of a particular file (and index) to a particular
->>       commit
->>     
+>> [PATCH 1/3] sha1_file.c: Fix size_t related printf format warnings
+>> [PATCH 2/3] builtin-init-db: use get_git_dir() instead of getenv()
+>>
+>> I never received comments about them, nor do I find them on pu.
 >
-> Come on.  The second one is just to give a short-hand side-effet for
-> commonly used operation and you do not have to use it nor learn it.
->   
+> Lack of comments was probably due to mixture of bad timing and general
+> lack of interests.  Many people are busy working on their turkeys than
+> hacking this time of the year ;-)
 
-I think the overwhelming majority of git users learn `git checkout -b`. 
-The cases where you do want to switch to a branch you just created seem 
-far more common than the cases where you don't (particularly for new 
-users), which is the whole reason the -b option exists in the first 
-place. So I don't think it's reasonable to say "you can choose not to be 
-confused by ignoring this incredibly useful command."
+Yeah, list traffic was quiet low.
 
-> Let's clear the confusion.  Although it is not bad like the above
-> "random 5 different operations", checkout does serve 2 quite different
-> purposes:
+
+> I am reluctant to queue msysgit/gitwin related patches without seeing
+> positive comments from other people involved on the Windows side,  
+> unless
+> they are trivial and obvious improvements.
 >
->  (1) checkout a revision.
->  (2) checkout selected paths out of a commit (or the index).
->   
+>  * [1/3] seems without harm but on the other hand does not seem so
+>    urgent either.
 
-Given the above, I'd argue that it serves 3 purposes:
+I did not find a simpler way to achieve a compile free warning on
+mingw, without introducing more complex ifdefs.  I'm currently trying
+to reduce the differences between git.git, mingw, and msysgit.
 
-   (1) check out a revision
-   (2) check out selected paths out of a commit (or the index)
-   (3) start working on a new branch
 
-It's true that (1) and (3) are very closely related, but I think in the 
-minds of many git users (particularly new ones) they are distinct. (2) 
-really seems the most out of place here, and has the most potential for 
-finding a new home (perhaps within git-reset).
+>  * [2/3] may introduce chicken-and-egg problem (use of get_git_dir()
+>    inside git-init feels quite iffy, as it calls setup_git_env(),  
+> which
+>    does repository discovery), without an obvious and clear advantage.
 
--Adam
+I see.  I'll rethink 2/3 and 3/3.  Either I come up with more
+convincing arguments or I'll try if the changes can be reverted
+in the msysgit code base.
+
+
+> For these reasons, both of them disqualify from being trivial and
+> obvious improvements, so I did not pick them up unilaterally before
+> seeing positive comments from other people.
+
+	Steffen
