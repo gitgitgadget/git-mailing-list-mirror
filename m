@@ -1,109 +1,100 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: If you would write git from scratch now, what would you change?
-Date: Mon, 26 Nov 2007 12:17:21 -0800
-Message-ID: <56b7f5510711261217h56214321xb7acd9851b677dd6@mail.gmail.com>
-References: <200711252248.27904.jnareb@gmail.com>
-	 <56b7f5510711261118m7a402beah5d9cb75c1ad10b43@mail.gmail.com>
-	 <alpine.LFD.0.99999.0711261433210.9605@xanadu.home>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Mon, 26 Nov 2007 15:25:36 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0711261511240.9605@xanadu.home>
+References: <7vabpctx3b.fsf@gitster.siamese.dyndns.org>
+ <7vsl30eyuk.fsf@gitster.siamese.dyndns.org>
+ <7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
+ <20071123103003.GB6754@sigill.intra.peff.net>
+ <Pine.LNX.4.64.0711231319220.27959@racer.site>
+ <20071124113814.GA17861@sigill.intra.peff.net>
+ <alpine.LFD.0.99999.0711241042011.9605@xanadu.home>
+ <7vtznbqx2w.fsf@gitster.siamese.dyndns.org>
+ <20071125215128.GC23820@fieldses.org>
+ <alpine.LFD.0.99999.0711252029020.9605@xanadu.home>
+ <20071126041521.GA21120@fieldses.org>
+ <alpine.LFD.0.99999.0711252324360.9605@xanadu.home>
+ <fie23u$5tc$1@ger.gmane.org>
+ <alpine.LFD.0.99999.0711261358410.9605@xanadu.home>
+ <85lk8k24ju.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
-	danahow@gmail.com
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Nov 26 21:24:39 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Nov 26 21:25:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwkVR-00084P-6N
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 21:24:37 +0100
+	id 1IwkWj-000052-IJ
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 21:25:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753162AbXKZUYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 15:24:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752499AbXKZUYL
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 15:24:11 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:63197 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752078AbXKZUYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 15:24:10 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so865671nfb
-        for <git@vger.kernel.org>; Mon, 26 Nov 2007 12:24:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=IICva7SjBswnycCtsKX03MOLruaA5H10GUJwW+u7wPA=;
-        b=mmg+kpY2GJjuUJ4K0+sckW3y6GEdFJSq8N7piOU5R2jkqaQYiOqPe4SHer/HF/L8ZRTUeUGvVEomNQPdpStZJsrNukS+UsVs8GNZmY3JGDgg7U9e5jAycRIYM8vNxlHGkcavlTcQSf52pz91xRcjvUztd15fDkZHdxUKmTTHRqE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qrrzjG0XHFY7hZoehfn2CoXRW3i3QKfM7zKoS5brDANGaiFwbxXB3RctJH614b6M8W3L4eZXcqX0T4GZsQ/Yy2Oth1BI0bXOjfE4xhN53vMPosU45RHCC6WHsZQc8YOXZDK/VmiiWWo8GFEMZ4AbmKrQuYQvXUgl7WuBgfwaLdc=
-Received: by 10.78.190.10 with SMTP id n10mr3461937huf.1196108241526;
-        Mon, 26 Nov 2007 12:17:21 -0800 (PST)
-Received: by 10.78.177.20 with HTTP; Mon, 26 Nov 2007 12:17:21 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.99999.0711261433210.9605@xanadu.home>
-Content-Disposition: inline
+	id S1752499AbXKZUZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 15:25:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753607AbXKZUZi
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 15:25:38 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:50466 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751596AbXKZUZh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 15:25:37 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JS400F35REO9R90@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 26 Nov 2007 15:25:37 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <85lk8k24ju.fsf@lola.goethe.zz>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66112>
 
-On Nov 26, 2007 11:52 AM, Nicolas Pitre <nico@cam.org> wrote:
-> On Mon, 26 Nov 2007, Dana How wrote:
-> > Currently data can be quickly copied from pack to pack,
-> > but data cannot be quickly copied blob->pack or pack->blob
-> I don't see why you would need the pack->blob copy normally.
-True,  but that doesn't change the main point.
+On Mon, 26 Nov 2007, David Kastrup wrote:
 
-> > (there was an alternate blob format that supported this,
-> >  but it was deprecated).  Using the pack format for blobs
-> > would fix this.
->
-> Then you can do just that for big enough blobs where "big enough" is
-> configurable: encapsulate them in a pack instead of a loose object.
-> Problem solved.  Sure you'll end up with a bunch of packs containing
-> only one blob object, but given that those blobs are so large to be a
-> problem in your work flow when written out as loose objects, then they
-> certainly must be few enough not to cause an explosion in the number of
-> packs.
-Are you suggesting that "git add" create a new pack containing
-one blob when the blob is big enough?  Re-using (part of) the pack format
-in a blob (or maybe only some blobs) seems like less code change.
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > [ I get really really annoyed when your replies to me aren't directly 
+> >   addressed to me, Jakub.  Told you so repeatedly in the past as well.
+> >   Why are you the only one on this list apparently not able to use a 
+> >   proper email setup? ]
+> 
+> X-Injected-Via-Gmane: http://gmane.org/
+> 
+> And Jakub by far is not the only one using gmane for reading and writing
+> to the list.
 
-> > It would also mean blobs wouldn't need to
-> > be uncompressed to get the blob type or size I believe.
->
-> They already don't.
-It looks like sha1_file.c:parse_sha1_header() works on a buffer
-filled in by sha1_file.c:unpack_sha1_header() by calling inflate(), right?
+It is strange, though, that Jakub is the only one I've noticed who isn't 
+able to do me the courtesy of addressing me directly when replying to 
+me.
 
-It is true you don't have to uncompress the *entire* blob.
+> I am reading and writing on a number of mailing lists with either
+> explicit or implicit gateways to news servers.  But the git mailing list
+> is the only one where I ever encountered a semi-permanent stream of
+> (sometimes quite rude) complaints because people insist on getting
+> replies at least twice: once by the mailing list, and once by personal
+> Email.  In contrast to claims made here, it is _not_ common netiquette
+> to create extra personal copies.
 
-> > The equivalent operation in git would require the creation of
-> > the blob,  and then of a temporary pack to send to the server.
-> > This requires 3 calls to zlib for each blob,  which for very
-> > large files is not acceptable at my site.
->
-> I currently count 2 calls to zlib, not 3.
-I count 3:
+We must not live in the same virtual world then.  This _is_ common 
+netiquette in the Linux world.
 
-Call 1: git-add calls zlib to make the blob.
+I get over 500 emails a day.  I can thread them just like a news 
+reader would do.  But I do sort them in different folders as well.  My 
+most important folder contains emails directly sent to me, or on which 
+I'm CC'd.  The other folders might get completely ignored when I'm too 
+busy, or threads quickly purged out.
 
-Call 2: builtin-pack-objects.c:write_one() calls sha1_file.c:read_sha1_file()
-calls :unpack_sha1_file() calls :unpack_sha1_{header,rest}() calls
-inflate() to get the data from the blob into a buffer.
+>  In fact, for articles sent through
+> Usenet servers, it is generally considered an _annoyance_ to include
+> unannounced "courtesy copies" since replies to them will not usually
+> reach the list and will require redoing.
 
-Call 3: Then write_one() calls deflate to make the new buffer
-to write into the pack.  This is all under the "if (!to_reuse) {" path,
-which is active when packing a blob.
+This is a mailing list and not a news group.  I don't care if you use a 
+newsgroup gateway if it isn't broken.  As it is, gmane is broken as far 
+as I'm concerned.
 
-Remember,  I'm comparing "p4 submit file" to
-"git add file"/"git commit"/"git push",  which is the comparison
-the users will be making.
+So please complain to gmane or change your setup.
 
-On the other hand,  I'm looking at code from June;
-but I haven't noticed big changes since then on the list.
 
-Calls 2 and 3 go away if the blob and pack formats were more similar.
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+Nicolas
