@@ -1,88 +1,105 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: If you would write git from scratch now, what would you change?
-Date: Mon, 26 Nov 2007 17:22:38 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0711261712400.9605@xanadu.home>
-References: <200711252248.27904.jnareb@gmail.com>
- <56b7f5510711261118m7a402beah5d9cb75c1ad10b43@mail.gmail.com>
- <alpine.LFD.0.99999.0711261433210.9605@xanadu.home>
- <56b7f5510711261217h56214321xb7acd9851b677dd6@mail.gmail.com>
- <alpine.LFD.0.99999.0711261529080.9605@xanadu.home>
- <56b7f5510711261402s35b77879xdcb2492ea14a1791@mail.gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 27 Nov 2007 00:05:27 +0100
+Message-ID: <85bq9gy5e0.fsf@lola.goethe.zz>
+References: <7vabpctx3b.fsf@gitster.siamese.dyndns.org>
+	<7vsl30eyuk.fsf@gitster.siamese.dyndns.org>
+	<7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
+	<20071123103003.GB6754@sigill.intra.peff.net>
+	<Pine.LNX.4.64.0711231319220.27959@racer.site>
+	<20071124113814.GA17861@sigill.intra.peff.net>
+	<alpine.LFD.0.99999.0711241042011.9605@xanadu.home>
+	<7vtznbqx2w.fsf@gitster.siamese.dyndns.org>
+	<20071125215128.GC23820@fieldses.org>
+	<alpine.LFD.0.99999.0711252029020.9605@xanadu.home>
+	<20071126041521.GA21120@fieldses.org>
+	<alpine.LFD.0.99999.0711252324360.9605@xanadu.home>
+	<fie23u$5tc$1@ger.gmane.org>
+	<alpine.LFD.0.99999.0711261358410.9605@xanadu.home>
+	<85lk8k24ju.fsf@lola.goethe.zz>
+	<alpine.LFD.0.99999.0711261511240.9605@xanadu.home>
+	<85hcj8zqfm.fsf@lola.goethe.zz>
+	<alpine.LFD.0.99999.0711261601240.9605@xanadu.home>
+	<85sl2sya55.fsf@lola.goethe.zz>
+	<alpine.LFD.0.99999.0711261649000.9605@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 23:34:12 2007
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Nov 27 00:05:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwmWY-00056A-Hd
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 23:33:54 +0100
+	id 1Iwn1C-0000Vn-L9
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 00:05:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755194AbXKZWde (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 17:33:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755277AbXKZWde
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 17:33:34 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:16015 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755107AbXKZWdd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 17:33:33 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JS400L3AWTPY2H0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 26 Nov 2007 17:22:37 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <56b7f5510711261402s35b77879xdcb2492ea14a1791@mail.gmail.com>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1755194AbXKZXFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 18:05:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754515AbXKZXFP
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 18:05:15 -0500
+Received: from fencepost.gnu.org ([140.186.70.10]:51788 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754066AbXKZXFN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 18:05:13 -0500
+Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
+	by fencepost.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <dak@gnu.org>)
+	id 1Iwn0p-00073o-KM; Mon, 26 Nov 2007 18:05:11 -0500
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 807141C4D3AA; Tue, 27 Nov 2007 00:05:27 +0100 (CET)
+In-Reply-To: <alpine.LFD.0.99999.0711261649000.9605@xanadu.home> (Nicolas
+	Pitre's message of "Mon, 26 Nov 2007 17:02:37 -0500 (EST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66143>
 
-On Mon, 26 Nov 2007, Dana How wrote:
+Nicolas Pitre <nico@cam.org> writes:
 
-> On Nov 26, 2007 12:55 PM, Nicolas Pitre <nico@cam.org> wrote:
-> > On Mon, 26 Nov 2007, Dana How wrote:
-> > > On Nov 26, 2007 11:52 AM, Nicolas Pitre <nico@cam.org> wrote:
-> > > > On Mon, 26 Nov 2007, Dana How wrote:
-> > > > Then you can do just that for big enough blobs where "big enough" is
-> > > > configurable: encapsulate them in a pack instead of a loose object.
-> > > > Problem solved.  Sure you'll end up with a bunch of packs containing
-> > > > only one blob object, but given that those blobs are so large to be a
-> > > > problem in your work flow when written out as loose objects, then they
-> > > > certainly must be few enough not to cause an explosion in the number of
-> > > > packs.
-> > > Are you suggesting that "git add" create a new pack containing
-> > > one blob when the blob is big enough?
-> > Exactly.
-> I will think about your suggestion
-> (and the number of packs that might result),
-> but I confess I am surprised by it.
-> 
-> When I proposed automatically extracting large blobs from source
-> packs when creating a new pack under a blob size limit while
-> pack-objects was running,  you objected on the grounds that
-> pack-objects only creates packs and should not create blobs
-> (this proposal had other problems too,  but this is the one you didn't like).
-> 
-> Now it's OK for git-add to sometimes create packs instead of blobs?
-> I would not have predicted that!
+> On Mon, 26 Nov 2007, David Kastrup wrote:
+>
+>> Without so much as a bounce message or delivery report, there is nothing
+>> to apply one's brightness to.
+>
+> Maybe you could try firing up your web browser and directing it at 
+> http://vger.kernel.org, just in case there might be a web page set up 
+> there with some clues.  Hey, there is actually a web page there.
 
-Going back to loose objects from packs is indeed something I object to 
-if it becomes part of a work flow.  Objects should move from the loose 
-space towards the packed space and not the other way around.  Sure there 
-is fetch.unpackLimit, but with the auto-repack recently added to Git 
-this variable could probably be set even lower.
+I really _love_ how the default response on this list for any problem is
+to treat one as an idiot and openly show one's contempt.  The
+information about subscribing to the mailing list can be found at the
+Git home page at <URL:http://git.or.cz/#community>.  It does not mention
+anything like a mailing list home page.  Only the archives are
+mentioned, and those contain no pointer whatsoever.  It does remind me
+of the late Douglas Adams' Hitchhiker's guide to the galaxy:
 
-But having a pack created for huge blobs up front has many advantages, 
-the most obvious is the fact that later repack can combine and/or send 
-those single-blob packs with almost no cost.
+    `...You hadn't exactly gone out of your way to call attention to
+    them had you? I mean like actually telling anyone or anything.'
+    `But the plans were on display...'
+    `On display? I eventually had to go down to the cellar to find
+     them.'
+    `That's the display department.'
+    `With a torch.'
+    `Ah, well the lights had probably gone.'
+    `So had the stairs.'
+    `But look you found the notice didn't you?'
+    `Yes,' said Arthur, `yes I did. It was on display in the bottom of a
+     locked filing cabinet stuck in a disused lavatory with a sign on the
+     door saying "Beware of The Leopard".'
 
-Loose objects are meant to be blazingly fast to create.  Once repacked 
-they have no advantage being loose again.  Obviously when your blob is 
-huge you won't benefit much from a loose object.
+Anyway, with your pointer I might be able to work through the stuff and
+figure out what makes vger so unique here as a mailing list host.
 
+On the other hand: why bother participating in a community that turns
+openly hostile whenever one experiences problems?  Where is the fun in
+that?  That one will at one point of time be in the situation to lambast
+others for their shortcomings, and feel that one is entirely in-style
+doing so here?
 
-Nicolas
+Is it really impossible to proffer any information without a denigrating
+sneer?
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
