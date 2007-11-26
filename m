@@ -1,67 +1,76 @@
-From: "Christian MICHON" <christian.michon@gmail.com>
-Subject: Re: Git Screencast ?
-Date: Tue, 27 Nov 2007 00:25:03 +0100
-Message-ID: <46d6db660711261525h9ff124fnd0a937114bb9ee85@mail.gmail.com>
-References: <fi1a9f$30q$1@ger.gmane.org> <86bq9n4469.fsf@blue.stonehenge.com>
-	 <d411cc4a0711211603o525a25c4i3e04d0319e68204f@mail.gmail.com>
-	 <d411cc4a0711261333p4c99f447k81c3833cd679e551@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Mon, 26 Nov 2007 18:28:43 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0711261817450.9605@xanadu.home>
+References: <7vabpctx3b.fsf@gitster.siamese.dyndns.org>
+ <7vsl30eyuk.fsf@gitster.siamese.dyndns.org>
+ <7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
+ <20071123103003.GB6754@sigill.intra.peff.net>
+ <Pine.LNX.4.64.0711231319220.27959@racer.site>
+ <20071124113814.GA17861@sigill.intra.peff.net>
+ <alpine.LFD.0.99999.0711241042011.9605@xanadu.home>
+ <7vtznbqx2w.fsf@gitster.siamese.dyndns.org>
+ <20071125215128.GC23820@fieldses.org>
+ <alpine.LFD.0.99999.0711252029020.9605@xanadu.home>
+ <20071126041521.GA21120@fieldses.org>
+ <alpine.LFD.0.99999.0711252324360.9605@xanadu.home>
+ <fie23u$5tc$1@ger.gmane.org>
+ <alpine.LFD.0.99999.0711261358410.9605@xanadu.home>
+ <85lk8k24ju.fsf@lola.goethe.zz>
+ <alpine.LFD.0.99999.0711261511240.9605@xanadu.home>
+ <85hcj8zqfm.fsf@lola.goethe.zz>
+ <alpine.LFD.0.99999.0711261601240.9605@xanadu.home>
+ <85sl2sya55.fsf@lola.goethe.zz>
+ <alpine.LFD.0.99999.0711261649000.9605@xanadu.home>
+ <85bq9gy5e0.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Scott Chacon" <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 00:25:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Nov 27 00:29:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwnKP-0007DH-25
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 00:25:25 +0100
+	id 1IwnNw-000061-KM
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 00:29:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756160AbXKZXZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 18:25:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756117AbXKZXZF
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 18:25:05 -0500
-Received: from wa-out-1112.google.com ([209.85.146.180]:63895 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755155AbXKZXZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 18:25:03 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so994958wah
-        for <git@vger.kernel.org>; Mon, 26 Nov 2007 15:25:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=qZudBAhRHJa427hjpVVUjEQ/NE4+NlhZ42bTtn+xc3g=;
-        b=k/CQQghce/H2z4oXdQaFsRMTmRhx3Vk5SL9BB2sLlZL6QpikD6XhIvrR6fiPizKbaRzmXPxmEHvcdxyYqSmVP3GidkONekgZLz0Ci6gUFeMH+GF4zt4iMrPySGRLc0L/px0xACQHFXkehhUcFfKUUzxTrO+ML3HdFy0Q8QZdieY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YWJTQH6Iiwv2+9h1xb5A3g6X3jVWCV6fJjdl6AXaQ4CCjROK4cAm0qDdsFkmumW3V+2N6K4UMB7ushEcYgzqy5IymYwMXsDDj4PVCvpn2dxo4HavJLBAm4MtWtF4ph7wK8Ue//Nv5NhYp6S9coLiY61K5aD12co76NzyRI+0EIo=
-Received: by 10.114.157.1 with SMTP id f1mr914622wae.1196119503251;
-        Mon, 26 Nov 2007 15:25:03 -0800 (PST)
-Received: by 10.115.18.10 with HTTP; Mon, 26 Nov 2007 15:25:03 -0800 (PST)
-In-Reply-To: <d411cc4a0711261333p4c99f447k81c3833cd679e551@mail.gmail.com>
-Content-Disposition: inline
+	id S1756833AbXKZX2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 18:28:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756895AbXKZX2p
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 18:28:45 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:33200 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756537AbXKZX2p (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 18:28:45 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JS400HJMZVV38M0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 26 Nov 2007 18:28:44 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <85bq9gy5e0.fsf@lola.goethe.zz>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66146>
 
-On Nov 26, 2007 10:33 PM, Scott Chacon <schacon@gmail.com> wrote:
-> I've created a screencast on using Git to manage and deploy Rails
-> applications.  It's not purely about Git - goes into some Rails and
-> Capistrano usage, but there is a good amount of practical git workflow
-> - pushing, pulling, branching, etc.  It's free, too.  You can
-> watch/download it here:
->
-> http://jointheconversation.org/railsgit
->
+On Tue, 27 Nov 2007, David Kastrup wrote:
 
-nice :)
+> On the other hand: why bother participating in a community that turns
+> openly hostile whenever one experiences problems?  Where is the fun in
+> that?  That one will at one point of time be in the situation to lambast
+> others for their shortcomings, and feel that one is entirely in-style
+> doing so here?
 
-it's very useful...
+David, honestly, my problem with you is that you seem to be the only one 
+having such relational problems around here, and instead of doing some 
+homework and obvious guessing on your own to save everyone's nerves, you 
+instead write dissertations about the list hostility, etc.  Which in 
+turns will obviously earn you more hostilities.
 
--- 
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
+Please get a grip.
+
+
+Nicolas
