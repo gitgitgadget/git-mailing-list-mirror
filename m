@@ -1,71 +1,80 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: If you would write git from scratch now, what would you change?
-Date: Mon, 26 Nov 2007 16:46:00 +0000
-Message-ID: <fiet88$68n$1@ger.gmane.org>
-References: <200711252248.27904.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [WIP PATCH] Add 'git fast-export', the sister of 'git fast-import'
+Date: Mon, 26 Nov 2007 16:47:30 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711261646170.27959@racer.site>
+References: <Pine.LNX.4.64.0711210336210.27959@racer.site> <fi5743$32p$1@ger.gmane.org>
+ <Pine.LNX.4.64.0711230050270.27959@racer.site>
+ <f329bf540711221723g2754ce03r4da6d429c45668c@mail.gmail.com>
+ <Pine.LNX.4.64.0711230149430.27959@racer.site> <20071123205958.GC14735@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 26 17:47:48 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: hanwen@xs4all.nl, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Nov 26 17:53:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iwh7b-00053N-K1
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 17:47:48 +0100
+	id 1IwhCF-0007Pw-9q
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 17:52:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757321AbXKZQqa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 11:46:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757305AbXKZQqa
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 11:46:30 -0500
-Received: from main.gmane.org ([80.91.229.2]:35671 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757277AbXKZQq2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 11:46:28 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Iwh6E-0003qx-5o
-	for git@vger.kernel.org; Mon, 26 Nov 2007 16:46:22 +0000
-Received: from 194.70.53.227 ([194.70.53.227])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 26 Nov 2007 16:46:22 +0000
-Received: from andyparkins by 194.70.53.227 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 26 Nov 2007 16:46:22 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 194.70.53.227
-User-Agent: KNode/0.10.5
+	id S1758055AbXKZQrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 11:47:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758042AbXKZQrf
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 11:47:35 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48469 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758029AbXKZQre (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 11:47:34 -0500
+Received: (qmail invoked by alias); 26 Nov 2007 16:47:31 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp021) with SMTP; 26 Nov 2007 17:47:31 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX180UfE7Hqc0BZik/HHQKQrKMb45eEbqzMHm2gyLfq
+	XiOMNyZSercllH
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071123205958.GC14735@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66081>
 
-Jakub Narebski wrote:
+Hi,
 
-> If you would write git from scratch now, from the beginning, without
-> concerns for backwards compatibility, what would you change, or what
-> would you want to have changed?
+On Fri, 23 Nov 2007, Shawn O. Pearce wrote:
 
-Erm... (it's much harder to come with lists like these lately :-))
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > On Thu, 22 Nov 2007, Han-Wen Nienhuys wrote:
+> > 
+> > > > Maybe you want to specify if all blobs should be output first, and 
+> > > > then the commits?  Or files should be used?  But all of these things 
+> > > > seem to be useless to me.
+> > > 
+> > > No, I want the program to wait for me to tell it what 
+> > > blobs/commits/trees I want. The commit I want to see secondly may depend 
+> > > on the output I read in the first request blob. Right now, for each data 
+> > > dependency I have to start a new git process.
+> > 
+> > It does not seem like you want a mirror of fast-import, but rather a 
+> > driver.  You might be happy to hear that you can do that already.  Today.
+> > However, you probably want to query different programs about certain 
+> > states of the repository.  This will not change.
+> > 
+> > > > > Besides being a nuisance, I actually run git on NFS, and every git 
+> > > > > process has to go to NFS a couple times to retrieve the same 
+> > > > > information. This has a noticeable performance impact.
+> 
+> I have been considering creating a "git-gui daemon" process that links 
+> to libgit.a and can be driven bidirectionally through its stdin/stdout.  
+> Based on git-fast-export, sorta.  But I haven't even started it...
+> 
+> But the idea is sort of what Han-Wen wants.  Why should I fork rev-parse 
+> to get a ref value?  Or update-ref to change one?
 
- - "index", "cached" and "stage" are a definite source of confusion
- - "git add" and "git rm" would be nicer as "git stage" and "git unstage"
-   (or something similar)
- - libgit would have come first
- - "git revert" should be called "git invert"
- - "git revert" would (maybe) be "git reset"
- - "git clone" wouldn't exist
- - "git-gui" would be written in Qt (ducks)
- - git-apply et al wouldn't be a disaster when the log message contains a   
-   diff (change to git diff format?)
- - empty directories in the repository (ducks again)
+I was thinking about this a little bit more.  But I cannot think of a 
+really versatile way of enhancing fast-export enough to be of use there.  
+Well, if not doing something with SWIG, that is ;-)
 
-
-
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Ciao,
+Dscho
