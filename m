@@ -1,37 +1,37 @@
 From: Pierre Habouzit <madcoder@debian.org>
 Subject: Re: [RFC] best way to show diff of commit
-Date: Mon, 26 Nov 2007 09:42:39 +0100
-Message-ID: <20071126084239.GA23373@artemis.corp>
+Date: Mon, 26 Nov 2007 09:47:31 +0100
+Message-ID: <20071126084731.GB23373@artemis.corp>
 References: <20071125211831.GA21121@artemis.corp> <20071126002519.GA11133@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="LQksG6bCIzRHxTLp";
+Content-Type: multipart/signed; boundary="BwCQnh7xodEAoBMC";
 	protocol="application/pgp-signature"; micalg=SHA1
 Cc: Git ML <git@vger.kernel.org>,
 	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
 To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Mon Nov 26 09:43:10 2007
+X-From: git-owner@vger.kernel.org Mon Nov 26 09:48:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwZYU-0005gp-1Q
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 09:43:02 +0100
+	id 1IwZdT-0007F5-KL
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 09:48:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753567AbXKZImn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 03:42:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753028AbXKZImn
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 03:42:43 -0500
-Received: from pan.madism.org ([88.191.52.104]:60359 "EHLO hermes.madism.org"
+	id S1755020AbXKZIrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 03:47:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754709AbXKZIrd
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 03:47:33 -0500
+Received: from pan.madism.org ([88.191.52.104]:40304 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752267AbXKZImm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 03:42:42 -0500
+	id S1753777AbXKZIrc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 03:47:32 -0500
 Received: from madism.org (unknown [81.57.219.236])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id C4078EE;
-	Mon, 26 Nov 2007 09:42:40 +0100 (CET)
+	by hermes.madism.org (Postfix) with ESMTP id 97189EE;
+	Mon, 26 Nov 2007 09:47:31 +0100 (CET)
 Received: by madism.org (Postfix, from userid 1000)
-	id 8A8822E33; Mon, 26 Nov 2007 09:42:39 +0100 (CET)
+	id 407CD48BD32; Mon, 26 Nov 2007 09:47:31 +0100 (CET)
 Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
 	Jan Hudec <bulb@ucw.cz>, Git ML <git@vger.kernel.org>,
 	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
@@ -42,130 +42,20 @@ User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66055>
 
 
---LQksG6bCIzRHxTLp
+--BwCQnh7xodEAoBMC
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
 On Mon, Nov 26, 2007 at 12:25:19AM +0000, Jan Hudec wrote:
-> On Sun, Nov 25, 2007 at 22:18:31 +0100, Pierre Habouzit wrote:
-> >   My question is: what do you think is the best way to do that, and
-> > where ?
->=20
-> Are you talking about the ftplugins/git.vim script from vim-scripts packa=
-ge,
-> right?
+> Hm, looking at the builtin-commit.c that is currently cooking in next, it
+> does not seem to be the case there. It probably should, so the editor can
+> inspect what will be commited.
 
-  Yes, its author.
-
-> All it needs to do is call 'git diff --cached'. The below patch seems to =
-work
-> here (tried commit, commit -a, commit --amend, commit -a --amend and comm=
-it
-> from subdirectory and they seemed to all work).
-
-  Damn if that's so simple, I really feel like a big fool now.
-
-> >   [0] the issue with this approach is that it's completely broken in
-> >       amending mode (does not shows the proper thing), and the generated
->=20
-> I didn't find any issue with amending mode (showed incremental diff for me
-> all right). The problem was when a file was being touched by the commit b=
-ut
-> work tree had unstaged changes. Such changes were shown when they shouldn=
-'t.
-
-  Yep, that's the point.
-
-> >       diffs aren't excellent, because as an editor plugin, it's hard to
-> >       treat renames and copies easily, so I generate really really nasty
-> >       diffs in that case too.
->=20
-> With --cached, detecting copies is just a matter of adding -C. In the pat=
-ch
-> below I added only one -C, but it should probably be user-configurable to=
- use
-> no, one or two (equivalent of --find-copies-harder).
-
-  Sure, I'll do that obviously.
-
-  Thanks a lot for the tip.
->=20
-> --=20
-> 						 Jan 'Bulb' Hudec <bulb@ucw.cz>
->=20
-> ---8<---
-> --- vim-scripts/ftplugin/git.vim.orig	2007-07-24 09:46:19.000000000 +0200
-> +++ vim-scripts/ftplugin/git.vim	2007-11-26 01:01:59.000000000 +0100
-> @@ -14,41 +14,6 @@
->  "{{{ function Git_diff_windows
-> =20
->  function! Git_diff_windows(vertsplit, auto)
-> -    let i =3D 0
-> -    let list_of_files =3D ''
-> -
-> -    " drop everything until '#  (will commit)' and the next empty line
-> -    while i <=3D line('$')
-> -        let line =3D getline(i)
-> -        if line =3D=3D '# Changes to be committed:'
-> -            let i =3D i + 3
-> -            break
-> -        endif
-> -
-> -        let i =3D i + 1
-> -    endwhile
-> -
-> -    " read file names until we have EOF or an empty line
-> -    while i <=3D line('$')
-> -        let line =3D getline(i)
-> -        if line =3D~ '^#\s*[a-z ]*:.*->.*$'
-> -            let file =3D substitute(line, '^#[^:]*:.*->\s*\(.*\)\s*$', '=
-\1', '')
-> -            let list_of_files =3D list_of_files . ' '.file
-> -            let file =3D substitute(line, '^#[^:]*:\s*\(.*\)\s*->.*$', '=
-\1', '')
-> -            let list_of_files =3D list_of_files . ' '.file
-> -        elseif line =3D~ '^#\s*[a-z ]*:'
-> -            let file =3D substitute(line, '^#[^:]*:\s*\(.*\)\s*$', '\1',=
- '')
-> -            let list_of_files =3D list_of_files . ' '.file
-> -        elseif line =3D~ '^#\s*$'
-> -            break
-> -        endif
-> -
-> -        let i =3D i + 1
-> -    endwhile
-> -
-> -    if list_of_files =3D=3D ""
-> -        return
-> -    endif
-> =20
->      if a:vertsplit
->          rightbelow vnew
-> @@ -56,15 +21,8 @@
->          rightbelow new
->      endif
->      silent! setlocal ft=3Ddiff previewwindow bufhidden=3Ddelete nobackup=
- noswf nobuflisted nowrap buftype=3Dnofile
-> -    let gitDir =3D system('git rev-parse --git-dir 2>/dev/null')
-> -    let gitDir =3D substitute(gitDir, '.git\n', '', '')
-> -    let wd =3D getcwd()
-> -    if gitDir !=3D ''
-> -        exe 'cd '.gitDir
-> -    endif
-> -    exe 'normal :r!LANG=3DC git diff HEAD -- ' . list_of_files . "\n1Gdd"
-> -    exe 'normal :r!LANG=3DC git diff --stat HEAD -- ' . list_of_files . =
-"\no\<esc>1GddO\<esc>"
-> -    exe 'cd '.wd
-> +    exe "normal :r!LANG=3DC git diff --cached -C\n1Gdd"
-> +    exe "normal :r!LANG=3DC git diff --stat --cached -C\no\<esc>1GddO\<e=
-sc>"
->      setlocal nomodifiable
->      noremap <buffer> q :bw<cr>
->      if a:auto
+  I confirm that it's broken now, but that it works at the top of main.
 
 --=20
 =C2=B7O=C2=B7  Pierre Habouzit
@@ -173,16 +63,16 @@ sc>"
 n.org
 OOO                                                http://www.madism.org
 
---LQksG6bCIzRHxTLp
+--BwCQnh7xodEAoBMC
 Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQBHSob/vGr7W6HudhwRAj5jAJ9Ww4RRCi/A/ArowUfOw3bLYPEfjwCfcusq
-+kWm8vIS2ek6nkDrQhul1/w=
-=o0rX
+iD8DBQBHSogjvGr7W6HudhwRAhbYAJ9mZqXDjh1eAE7Om9ZlwpvdK+vpRQCfXuO7
+2kIzQvsQe13gf8XMXKhoVts=
+=CGtC
 -----END PGP SIGNATURE-----
 
---LQksG6bCIzRHxTLp--
+--BwCQnh7xodEAoBMC--
