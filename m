@@ -1,112 +1,79 @@
-From: Wincent Colaiuta <win@wincent.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Rebase/cherry-picking idea
-Date: Mon, 26 Nov 2007 14:15:29 +0100
-Message-ID: <451492C9-F3EA-4C37-A1AD-59FC72E0A0A2@wincent.com>
-References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com> <C3971B37-F75A-40EE-B30A-E88E5DAFAD55@lrde.epita.fr> <D21294CA-6FD0-40F5-B0D6-5155865DA69A@wincent.com> <CDF48716-F198-4B33-A5F5-8A2DE1F177EB@wincent.com> <474AC136.8060906@viscovery.net>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Benoit Sigoure <tsuna@lrde.epita.fr>,
+Date: Mon, 26 Nov 2007 13:26:43 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711261325440.27959@racer.site>
+References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com>
+ <C3971B37-F75A-40EE-B30A-E88E5DAFAD55@lrde.epita.fr>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Wincent Colaiuta <win@wincent.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Nov 26 14:16:01 2007
+To: Benoit Sigoure <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 26 14:27:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwdoX-0006c7-Ty
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 14:15:54 +0100
+	id 1IwdzY-0001pP-1C
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 14:27:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752804AbXKZNPf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Nov 2007 08:15:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752731AbXKZNPf
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 08:15:35 -0500
-Received: from wincent.com ([72.3.236.74]:38552 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752724AbXKZNPe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Nov 2007 08:15:34 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAQDFUq5006764;
-	Mon, 26 Nov 2007 07:15:31 -0600
-In-Reply-To: <474AC136.8060906@viscovery.net>
-X-Mailer: Apple Mail (2.915)
+	id S1752897AbXKZN05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 08:26:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752862AbXKZN04
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 08:26:56 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56665 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752855AbXKZN04 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 08:26:56 -0500
+Received: (qmail invoked by alias); 26 Nov 2007 13:26:54 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp056) with SMTP; 26 Nov 2007 14:26:54 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18aNaMnlbwabcj7S8wetCLtDZ6wv2EyiBWTL0qRLu
+	G/RIHE3hx6mOnw
+X-X-Sender: gene099@racer.site
+In-Reply-To: <C3971B37-F75A-40EE-B30A-E88E5DAFAD55@lrde.epita.fr>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66072>
 
-El 26/11/2007, a las 13:51, Johannes Sixt escribi=F3:
+Hi,
 
-> Wincent Colaiuta schrieb:
->> El 26/11/2007, a las 12:27, Wincent Colaiuta escribi=F3:
->>> So I think that misleading noise needs to be suppressed or =20
->>> reworded when rebasing. Will look into it.
->> How about something like this? It would obviously be nice if we =20
->> could avoid adding another option to builtin-revert; perhaps when/=20
->> if git-rebase becomes a builtin we can avoid that. The other =20
->> alternative, and probably one I like I bit more, would be to auto-=20
->> detect that a rebase is in progress by looking inside the GIT_DIR, =20
->> although that would also alter the behaviour of manual invocations =20
->> of git-revert and git-cherry-pick during an interactive rebase (do =20
->> people actually do that?). What do you think?
->
-> Introduce an environment variable _GIT_CHERRY_PICK_HELP (note the =20
-> leading underscore), which git-rebase sets; if it's set, git-cherry-=20
-> pick uses that text instead of the usual one.
+On Mon, 26 Nov 2007, Benoit Sigoure wrote:
 
-Good idea, quite a bit less cruddy:
+> On Nov 26, 2007, at 10:02 AM, Wincent Colaiuta wrote:
+> 
+> > In using "git-rebase --interactive" to re-order commits you occasionally get
+> > conflicts and will see a message like this:
+> > 
+> > 	When commiting, use the option '-c %s' to retain authorship and
+> > message
+> > 
+> > I was thinking that it might be nice to stash away this commit id somewhere
+> > in GIT_DIR so that the user didn't have to explicitly remember it, and add a
+> > new switch to git-commit that could be used to automatically use that
+> > stashed commit id, something like:
+> > 
+> > 	git commit --retain
+> > 
+> > Although I most often see this kind of message in interactive rebasing, the
+> > message is generated in builtin-revert.c when cherry-picking, so you can
+> > also see it in any other situation where you're cherry picking and there's a
+> > conflict.
+> > 
+> > What do people think? Would this be a nice usability improvement? Or is it
+> > adding clutter?
+> 
+> 
+> I'm not sure but I think this message is just some unwanted (misleading)
+> noise, since when you rebase, once you solve the conflicts, you git-rebase
+> --continue, you don't git-commit.
 
-diff --git a/builtin-revert.c b/builtin-revert.c
-index a0586f9..5a57574 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -229,7 +229,7 @@ static int revert_or_cherry_pick(int argc, const =20
-char **argv)
-  	unsigned char head[20];
-  	struct commit *base, *next, *parent;
-  	int i;
--	char *oneline, *reencoded_message =3D NULL;
-+	char *oneline, *reencoded_message =3D NULL, *help_message;
-  	const char *message, *encoding;
-  	const char *defmsg =3D xstrdup(git_path("MERGE_MSG"));
+Yep.  It is on my TODO list since a long time, but I am just as glad 
+somebody else is doing it.  But I have to agree with Hannes that using an 
+environment variable is cleaner, more elegant and shorter.
 
-@@ -352,11 +352,13 @@ static int revert_or_cherry_pick(int argc, const =
-=20
-char **argv)
-  		}
-  		if (close(msg_fd) || commit_lock_file(&msg_file) < 0)
-  			die ("Error wrapping up %s", defmsg);
-+		help_message =3D getenv("_GIT_CHERRY_PICK_HELP");
-  		fprintf(stderr, "Automatic %s failed.  "
-  			"After resolving the conflicts,\n"
-  			"mark the corrected paths with 'git add <paths>' "
--			"and commit the result.\n", me);
--		if (action =3D=3D CHERRY_PICK) {
-+			"and %s.\n", me,
-+			help_message ? help_message : "commit the result");
-+		if (action =3D=3D CHERRY_PICK && !help_message) {
-  			fprintf(stderr, "When commiting, use the option "
-  				"'-c %s' to retain authorship and message.\n",
-  				find_unique_abbrev(commit->object.sha1,
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index bf44b6a..e5f9810 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -117,6 +117,7 @@ pick_one () {
-  		sha1=3D$(git rev-parse --short $sha1)
-  		output warn Fast forward to $sha1
-  	else
-+		export _GIT_CHERRY_PICK_HELP=3D"run 'git rebase --continue'"
-  		output git cherry-pick "$@"
-  	fi
-  }
-@@ -187,6 +188,7 @@ pick_one_preserving_merges () {
-  			fi
-  			;;
-  		*)
-+			export _GIT_CHERRY_PICK_HELP=3D"run 'git rebase --continue'"
-  			output git cherry-pick "$@" ||
-  				die_with_patch $sha1 "Could not pick $sha1"
-  			;;
+Ciao,
+Dscho
