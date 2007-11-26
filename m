@@ -1,110 +1,68 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] Use is_absolute_path() in diff-lib.c, lockfile.c, setup.c, trace.c
-Date: Mon, 26 Nov 2007 07:45:55 +0100
-Message-ID: <F8F93DBB-F0F5-440A-BA0C-434422C8122A@zib.de>
-References: <11960297431954-git-send-email-prohaska@zib.de> <7vy7clhd9z.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Use is_absolute_path() in diff-lib.c, lockfile.c, setup.c,
+ trace.c
+Date: Mon, 26 Nov 2007 08:45:21 +0100
+Message-ID: <474A7991.5010202@viscovery.net>
+References: <11960297431954-git-send-email-prohaska@zib.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 07:45:11 2007
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Nov 26 08:45:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwXiQ-0005wy-UX
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 07:45:11 +0100
+	id 1IwYf6-0001BV-LA
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 08:45:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731AbXKZGot (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 01:44:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752703AbXKZGot
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 01:44:49 -0500
-Received: from mailer.zib.de ([130.73.108.11]:52052 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752671AbXKZGos (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 01:44:48 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAQ6iixS020126;
-	Mon, 26 Nov 2007 07:44:44 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db1a9f4.pool.einsundeins.de [77.177.169.244])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAQ6ihNO009745
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 26 Nov 2007 07:44:44 +0100 (MET)
-In-Reply-To: <7vy7clhd9z.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1754181AbXKZHpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 02:45:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753028AbXKZHpa
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 02:45:30 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:50150 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753997AbXKZHp3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 02:45:29 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IwYe1-0001EV-Ab; Mon, 26 Nov 2007 08:44:46 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 1D7486B7; Mon, 26 Nov 2007 08:45:22 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <11960297431954-git-send-email-prohaska@zib.de>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66050>
 
+Steffen Prohaska schrieb:
+> Using the helper function to test for absolute paths makes porting easier.
 
-On Nov 26, 2007, at 4:54 AM, Junio C Hamano wrote:
+The patch looks good.
 
-> Steffen Prohaska <prohaska@zib.de> writes:
->
->> Using the helper function to test for absolute paths makes porting  
->> easier.
->
-> These probably make sense.  I obviously do not see any downside  
-> from the
-> POSIX side, and can imagine that treating "C:\" prefix as "absolute
-> paths" at these four places will not have any ill effect on the  
-> Windows
-> side (IOW, the codepaths that follow these four places seem to do a
-> sensible thing even if the "absolute path" prefix is not a single '/',
-> but would work fine as-is).
->
-> I am a bit surprised that there are only four places you needed to
-> touch, though.
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -59,7 +59,7 @@ const char *prefix_path(const char *prefix, int len, const char *path)
+>  const char *prefix_filename(const char *pfx, int pfx_len, const char *arg)
+>  {
+>  	static char path[PATH_MAX];
+> -	if (!pfx || !*pfx || arg[0] == '/')
+> +	if (!pfx || !*pfx || is_absolute_path(arg))
+>  		return arg;
+>  	memcpy(path, pfx, pfx_len);
+>  	strcpy(path + pfx_len, arg);
 
-Yes, I was a bit surprised, too.  I used grep to find these places.
-Maybe my regular expression was not good enough.  On the other side,
-is_absolute_path() is already used at 11 places before this patch.
-I also cross checked with the msysgit code base.  It does not use
-is_absolute_path() at more places.
+This instance, however, will be reworked for Windows anyway because we must 
+do '\\' to '/' conversion even if the path is absolute (and, hence, we 
+cannot just return the input).
 
+But disregarding this note, the change makes the code more readable, IMO, so 
+I'm all for it.
 
->> BTW, what happend to the msysgit related patches:
->>
->> [PATCH 1/3] sha1_file.c: Fix size_t related printf format warnings
->> [PATCH 2/3] builtin-init-db: use get_git_dir() instead of getenv()
->>
->> I never received comments about them, nor do I find them on pu.
->
-> Lack of comments was probably due to mixture of bad timing and general
-> lack of interests.  Many people are busy working on their turkeys than
-> hacking this time of the year ;-)
-
-Yeah, list traffic was quiet low.
-
-
-> I am reluctant to queue msysgit/gitwin related patches without seeing
-> positive comments from other people involved on the Windows side,  
-> unless
-> they are trivial and obvious improvements.
->
->  * [1/3] seems without harm but on the other hand does not seem so
->    urgent either.
-
-I did not find a simpler way to achieve a compile free warning on
-mingw, without introducing more complex ifdefs.  I'm currently trying
-to reduce the differences between git.git, mingw, and msysgit.
-
-
->  * [2/3] may introduce chicken-and-egg problem (use of get_git_dir()
->    inside git-init feels quite iffy, as it calls setup_git_env(),  
-> which
->    does repository discovery), without an obvious and clear advantage.
-
-I see.  I'll rethink 2/3 and 3/3.  Either I come up with more
-convincing arguments or I'll try if the changes can be reverted
-in the msysgit code base.
-
-
-> For these reasons, both of them disqualify from being trivial and
-> obvious improvements, so I did not pick them up unilaterally before
-> seeing positive comments from other people.
-
-	Steffen
+-- Hannes
