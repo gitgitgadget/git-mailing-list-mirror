@@ -1,103 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Use --no-color option on git log commands.
-Date: Mon, 26 Nov 2007 14:30:28 -0800
-Message-ID: <7vr6icej23.fsf@gitster.siamese.dyndns.org>
-References: <474B42EC.1000408@wanadoo.fr>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: If you would write git from scratch now, what would you change?
+Date: Mon, 26 Nov 2007 17:22:38 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0711261712400.9605@xanadu.home>
+References: <200711252248.27904.jnareb@gmail.com>
+ <56b7f5510711261118m7a402beah5d9cb75c1ad10b43@mail.gmail.com>
+ <alpine.LFD.0.99999.0711261433210.9605@xanadu.home>
+ <56b7f5510711261217h56214321xb7acd9851b677dd6@mail.gmail.com>
+ <alpine.LFD.0.99999.0711261529080.9605@xanadu.home>
+ <56b7f5510711261402s35b77879xdcb2492ea14a1791@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Pascal Obry <pascal.obry@wanadoo.fr>
-X-From: git-owner@vger.kernel.org Mon Nov 26 23:30:56 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 23:34:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwmTc-000426-J5
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 23:30:53 +0100
+	id 1IwmWY-00056A-Hd
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 23:33:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755632AbXKZWae (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 17:30:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755129AbXKZWae
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 17:30:34 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:51333 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755030AbXKZWad (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 17:30:33 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 55F4E2F0;
-	Mon, 26 Nov 2007 17:30:54 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id C2B129A17F;
-	Mon, 26 Nov 2007 17:30:51 -0500 (EST)
-In-Reply-To: <474B42EC.1000408@wanadoo.fr> (Pascal Obry's message of "Mon, 26
-	Nov 2007 23:04:28 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755194AbXKZWde (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 17:33:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755277AbXKZWde
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 17:33:34 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:16015 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755107AbXKZWdd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 17:33:33 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JS400L3AWTPY2H0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 26 Nov 2007 17:22:37 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <56b7f5510711261402s35b77879xdcb2492ea14a1791@mail.gmail.com>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66142>
 
-Pascal Obry <pascal.obry@wanadoo.fr> writes:
+On Mon, 26 Nov 2007, Dana How wrote:
 
-> When colors are activated on the repository the git log output
-> will contain control characters to set/reset the colors.
+> On Nov 26, 2007 12:55 PM, Nicolas Pitre <nico@cam.org> wrote:
+> > On Mon, 26 Nov 2007, Dana How wrote:
+> > > On Nov 26, 2007 11:52 AM, Nicolas Pitre <nico@cam.org> wrote:
+> > > > On Mon, 26 Nov 2007, Dana How wrote:
+> > > > Then you can do just that for big enough blobs where "big enough" is
+> > > > configurable: encapsulate them in a pack instead of a loose object.
+> > > > Problem solved.  Sure you'll end up with a bunch of packs containing
+> > > > only one blob object, but given that those blobs are so large to be a
+> > > > problem in your work flow when written out as loose objects, then they
+> > > > certainly must be few enough not to cause an explosion in the number of
+> > > > packs.
+> > > Are you suggesting that "git add" create a new pack containing
+> > > one blob when the blob is big enough?
+> > Exactly.
+> I will think about your suggestion
+> (and the number of packs that might result),
+> but I confess I am surprised by it.
+> 
+> When I proposed automatically extracting large blobs from source
+> packs when creating a new pack under a blob size limit while
+> pack-objects was running,  you objected on the grounds that
+> pack-objects only creates packs and should not create blobs
+> (this proposal had other problems too,  but this is the one you didn't like).
+> 
+> Now it's OK for git-add to sometimes create packs instead of blobs?
+> I would not have predicted that!
 
-The patch is good as belt-and-suspender, thanks.
+Going back to loose objects from packs is indeed something I object to 
+if it becomes part of a work flow.  Objects should move from the loose 
+space towards the packed space and not the other way around.  Sure there 
+is fetch.unpackLimit, but with the auto-repack recently added to Git 
+this variable could probably be set even lower.
 
-But I suspect that we should make 'true' to mean 'auto' someday in
-git_config_colorbool().  Crazy people can set 'always' if they really
-wanted to, but most normal people would not want color unless the output
-goes to the terminal, I would think.
+But having a pack created for huge blobs up front has many advantages, 
+the most obvious is the fact that later repack can combine and/or send 
+those single-blob packs with almost no cost.
 
-Something like this, perhaps...
+Loose objects are meant to be blazingly fast to create.  Once repacked 
+they have no advantage being loose again.  Obviously when your blob is 
+huge you won't benefit much from a loose object.
 
----
- color.c |   25 ++++++++++++-------------
- 1 files changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/color.c b/color.c
-index 09d82ee..060d3cf 100644
---- a/color.c
-+++ b/color.c
-@@ -118,21 +118,24 @@ bad:
- 
- int git_config_colorbool(const char *var, const char *value)
- {
--	if (!value)
--		return 1;
--	if (!strcasecmp(value, "auto")) {
--		if (isatty(1) || (pager_in_use && pager_use_color)) {
--			char *term = getenv("TERM");
--			if (term && strcmp(term, "dumb"))
--				return 1;
--		}
--		return 0;
--	}
--	if (!strcasecmp(value, "never"))
-- 		return 0;
--	if (!strcasecmp(value, "always"))
--		return 1;
--	return git_config_bool(var, value);
-+	if (value) {
-+		if (!strcasecmp(value, "never"))
-+			return 0;
-+		if (!strcasecmp(value, "always"))
-+			return 1;
-+		if (!strcasecmp(value, "auto"))
-+			goto auto;
-+ 	}
-+	if (!git_config_bool(var, value))
-+ 		return 0;
-+auto:
-+	/* any normal truth value defaults to 'auto' */
-+	if (isatty(1) || (pager_in_use && pager_use_color)) {
-+		char *term = getenv("TERM");
-+		if (term && strcmp(term, "dumb"))
-+			return 1;
-+	}
-+	return 0;
- }
- 
- static int color_vprintf(const char *color, const char *fmt,
+Nicolas
