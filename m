@@ -1,7 +1,7 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 26 Nov 2007 12:40:49 -0800
-Message-ID: <7voddgg2pa.fsf@gitster.siamese.dyndns.org>
+Date: Mon, 26 Nov 2007 21:45:33 +0100
+Message-ID: <85hcj8zqfm.fsf@lola.goethe.zz>
 References: <7vabpctx3b.fsf@gitster.siamese.dyndns.org>
 	<7vsl30eyuk.fsf@gitster.siamese.dyndns.org>
 	<7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
@@ -20,50 +20,76 @@ References: <7vabpctx3b.fsf@gitster.siamese.dyndns.org>
 	<alpine.LFD.0.99999.0711261511240.9605@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Nov 26 21:41:34 2007
+X-From: git-owner@vger.kernel.org Mon Nov 26 21:45:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iwkle-0005kS-Iv
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 21:41:23 +0100
+	id 1Iwkpp-0007AK-OJ
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 21:45:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754865AbXKZUk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 15:40:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754727AbXKZUk6
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 15:40:58 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:39703 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754699AbXKZUk5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 15:40:57 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 21B742F9;
-	Mon, 26 Nov 2007 15:41:18 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 9CE7199F58;
-	Mon, 26 Nov 2007 15:41:13 -0500 (EST)
+	id S1754725AbXKZUpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 15:45:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754680AbXKZUpW
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 15:45:22 -0500
+Received: from mail-in-01.arcor-online.net ([151.189.21.41]:56405 "EHLO
+	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753283AbXKZUpV (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Nov 2007 15:45:21 -0500
+Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 1029C15B9ED;
+	Mon, 26 Nov 2007 21:45:20 +0100 (CET)
+Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
+	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id E65D4ABE9F;
+	Mon, 26 Nov 2007 21:45:19 +0100 (CET)
+Received: from lola.goethe.zz (dslb-084-061-029-090.pools.arcor-ip.net [84.61.29.90])
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id B321529D4EB;
+	Mon, 26 Nov 2007 21:45:19 +0100 (CET)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 0D4A51C4D3AA; Mon, 26 Nov 2007 21:45:32 +0100 (CET)
 In-Reply-To: <alpine.LFD.0.99999.0711261511240.9605@xanadu.home> (Nicolas
 	Pitre's message of "Mon, 26 Nov 2007 15:25:36 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4928/Mon Nov 26 19:10:39 2007 on mail-in-13.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66118>
 
 Nicolas Pitre <nico@cam.org> writes:
 
->> Nicolas Pitre <nico@cam.org> writes:
->> 
-> This is a mailing list and not a news group.  I don't care if you use a 
-> newsgroup gateway if it isn't broken.  As it is, gmane is broken as far 
-> as I'm concerned.
+> On Mon, 26 Nov 2007, David Kastrup wrote:
 >
+>>  In fact, for articles sent through Usenet servers, it is generally
+>> considered an _annoyance_ to include unannounced "courtesy copies"
+>> since replies to them will not usually reach the list and will
+>> require redoing.
+>
+> This is a mailing list and not a news group.  I don't care if you use
+> a newsgroup gateway if it isn't broken.  As it is, gmane is broken as
+> far as I'm concerned.
+
+A gateway should not be sending to anything but the mailing list
+address.  It is not a mail multiplicator.
+
 > So please complain to gmane or change your setup.
 
-Don't blame gmane, please.  I picked this message up in gmane and I am
-responding to you in my newsreader.
+I already explained: the git mailing list is set up in a manner that
+will block mail from some accounts of mine without notice or error
+report.
+
+If there is general consensus on the list that news gateways are not
+compatible with the mailing list policies, please report this to gmane,
+and gmane will switch the list off-line.
+
+I have no idea why anybody would think this an improvement, but given
+the amount of flak I already got for daring to use gmane, it will
+probably improve the atmosphere on the list if people like me are locked
+out completely from participation rather than their usage of gmane be
+lambasted time and again.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
