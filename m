@@ -1,126 +1,120 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Jan Hudec <bulb@ucw.cz>
 Subject: Re: If you would write git from scratch now, what would you change?
-Date: Mon, 26 Nov 2007 15:55:43 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0711261529080.9605@xanadu.home>
-References: <200711252248.27904.jnareb@gmail.com>
- <56b7f5510711261118m7a402beah5d9cb75c1ad10b43@mail.gmail.com>
- <alpine.LFD.0.99999.0711261433210.9605@xanadu.home>
- <56b7f5510711261217h56214321xb7acd9851b677dd6@mail.gmail.com>
+Date: Mon, 26 Nov 2007 22:00:06 +0100
+Message-ID: <20071126210006.GG25784@efreet.light.src>
+References: <200711252248.27904.jnareb@gmail.com> <858x4l2apc.fsf@lola.goethe.zz> <alpine.LFD.0.99999.0711261417580.9605@xanadu.home> <854pf8243i.fsf@lola.goethe.zz> <20071126195750.GD25784@efreet.light.src> <85prxwzqvn.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 26 21:56:51 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Bqc0IY4JZZt50bUr"
+Cc: Nicolas Pitre <nico@cam.org>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Nov 26 22:00:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iwl0S-0002l2-Ea
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 21:56:40 +0100
+	id 1Iwl4F-00044a-NE
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 22:00:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755270AbXKZUzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 15:55:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754685AbXKZUzp
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 15:55:45 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:17031 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755270AbXKZUzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 15:55:44 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JS400J11SSVKTD0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 26 Nov 2007 15:55:44 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <56b7f5510711261217h56214321xb7acd9851b677dd6@mail.gmail.com>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1756089AbXKZVAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 16:00:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755955AbXKZVAP
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 16:00:15 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:49375 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755589AbXKZVAN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 16:00:13 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 3ECA85777F;
+	Mon, 26 Nov 2007 22:00:12 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id mW+Ul23bDY-K; Mon, 26 Nov 2007 22:00:09 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 82FBC5770F;
+	Mon, 26 Nov 2007 22:00:08 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1Iwl3m-00071H-Qq; Mon, 26 Nov 2007 22:00:06 +0100
+Content-Disposition: inline
+In-Reply-To: <85prxwzqvn.fsf@lola.goethe.zz>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66122>
 
-On Mon, 26 Nov 2007, Dana How wrote:
 
-> On Nov 26, 2007 11:52 AM, Nicolas Pitre <nico@cam.org> wrote:
-> > On Mon, 26 Nov 2007, Dana How wrote:
-> > > Currently data can be quickly copied from pack to pack,
-> > > but data cannot be quickly copied blob->pack or pack->blob
-> > I don't see why you would need the pack->blob copy normally.
-> True,  but that doesn't change the main point.
+--Bqc0IY4JZZt50bUr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sure, but let's not go overboard either.
-
-> > > (there was an alternate blob format that supported this,
-> > >  but it was deprecated).  Using the pack format for blobs
-> > > would fix this.
+On Mon, Nov 26, 2007 at 21:35:56 +0100, David Kastrup wrote:
+> Jan Hudec <bulb@ucw.cz> writes:
+>=20
+> > On Mon, Nov 26, 2007 at 20:34:25 +0100, David Kastrup wrote:
+> >> Nicolas Pitre <nico@cam.org> writes:
+> >> > On Mon, 26 Nov 2007, David Kastrup wrote:
+> >> >> Get rid of plumbing at the command line level.
+> >> >
+> >> > We can't get rid of plumbing.
+> >>=20
+> >> What about "at the command line level" did you not understand?
 > >
-> > Then you can do just that for big enough blobs where "big enough" is
-> > configurable: encapsulate them in a pack instead of a loose object.
-> > Problem solved.  Sure you'll end up with a bunch of packs containing
-> > only one blob object, but given that those blobs are so large to be a
-> > problem in your work flow when written out as loose objects, then they
-> > certainly must be few enough not to cause an explosion in the number of
-> > packs.
-> Are you suggesting that "git add" create a new pack containing
-> one blob when the blob is big enough?
-
-Exactly.
-
-> Re-using (part of) the pack format
-> in a blob (or maybe only some blobs) seems like less code change.
-
-Don't know what you mean exactly here, but what I mean is to do 
-something as simple as:
-
-	pretend_sha1_file(...);
-	add_object_entry(...);
-	write_pack_file();
-
-when the buffer to make a blob from is larger than a configured 
-treshold.
-
-> > > It would also mean blobs wouldn't need to
-> > > be uncompressed to get the blob type or size I believe.
+> > Which part of we neither can nor want did you not understant?
 > >
-> > They already don't.
-> It looks like sha1_file.c:parse_sha1_header() works on a buffer
-> filled in by sha1_file.c:unpack_sha1_header() by calling inflate(), right?
-> 
-> It is true you don't have to uncompress the *entire* blob.
+> > The availability of plumbing is really big part of a reason why git is
+> > so good and has so many scripts and tool built on top of it.
+>=20
+> Which is the reason I proposed making the plumbing available at a
+> scripting level, not at the command line level.
 
-Right.  Only the first 16 bytes or so need to be uncompressed.
+But scripting in the first place means *SHELL* scripting. Or you normally u=
+se
+Lua command line for your daily work?
 
-> > > The equivalent operation in git would require the creation of
-> > > the blob,  and then of a temporary pack to send to the server.
-> > > This requires 3 calls to zlib for each blob,  which for very
-> > > large files is not acceptable at my site.
-> >
-> > I currently count 2 calls to zlib, not 3.
-> I count 3:
-> 
-> Call 1: git-add calls zlib to make the blob.
-> 
-> Call 2: builtin-pack-objects.c:write_one() calls sha1_file.c:read_sha1_file()
-> calls :unpack_sha1_file() calls :unpack_sha1_{header,rest}() calls
-> inflate() to get the data from the blob into a buffer.
-> 
-> Call 3: Then write_one() calls deflate to make the new buffer
-> to write into the pack.  This is all under the "if (!to_reuse) {" path,
-> which is active when packing a blob.
+> The actual trend we are getting nowadays is locking the porcelaine,
+> previously available as shell scripts, down into C code, _without_
+> making use of a reasonable plumbing layer suitable for any scripting at
+> all.
 
-Oh, you're right.  Somehow I didn't count the needed decompression.
+For myself I would say I don't think C is an appropriate tool for the job. =
+It
+is nice when you need to optimize things to the last instruction, but for my
+taste it's unwieldy for the high-level stuff.
 
-> Remember,  I'm comparing "p4 submit file" to
-> "git add file"/"git commit"/"git push",  which is the comparison
-> the users will be making.
-> 
-> On the other hand,  I'm looking at code from June;
-> but I haven't noticed big changes since then on the list.
-> 
-> Calls 2 and 3 go away if the blob and pack formats were more similar.
+> So the git community at the same time praises shell scripting and
+> simultanouesly replaces it without even using the available plumbing,
+> _and_ claims that _both_, exclusive and incompatible approaches, are the
+> perfect solution.  At the same time.  While fighting the shell
+> portability fight continuously, on Unix as well as Windows.
 
-... which my suggestion should provide with a minimum of changes, maybe 
-less than 10 lines of code.
+Well, the builtins *do* use the plumbing. They just use the C functions
+without using streams and forks. Isn't that what you wanted?
 
+But the key reason for keeping the plumbing around is prototyping and
+especially tailoring. Junio has many scripts (you can look at them in the
+todo branch in git repo) to support his particular workflow and plumbing is
+useful there. And shell is really the right tool for such things.
 
-Nicolas
+> I may have a big mouth, but swallowing all of this at once is beyond me.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--Bqc0IY4JZZt50bUr
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHSzPWRel1vVwhjGURAsgvAJ4hMEJRgWqgLa+xgGWnEAG7EwuNzgCg7thF
+gCAnEk5/ZiXyM76dosCSndg=
+=xl5D
+-----END PGP SIGNATURE-----
+
+--Bqc0IY4JZZt50bUr--
