@@ -1,61 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: If you would write git from scratch now, what would you change?
-Date: Mon, 26 Nov 2007 21:40:49 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711262140170.27959@racer.site>
-References: <200711252248.27904.jnareb@gmail.com> <858x4l2apc.fsf@lola.goethe.zz>
+Date: Mon, 26 Nov 2007 16:35:18 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0711261631170.9605@xanadu.home>
+References: <200711252248.27904.jnareb@gmail.com>
+ <858x4l2apc.fsf@lola.goethe.zz>
  <alpine.LFD.0.99999.0711261417580.9605@xanadu.home>
- <Pine.LNX.4.64.0711262124411.27959@racer.site> <alpine.LFD.0.99999.0711261635570.9605@xanadu.home>
+ <854pf8243i.fsf@lola.goethe.zz> <20071126195750.GD25784@efreet.light.src>
+ <AA5ECB69-3F77-483E-AD19-04A5515779B3@wincent.com>
+ <7vhcj8g0op.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Nov 26 22:41:26 2007
+Content-Transfer-Encoding: 7BIT
+Cc: Wincent Colaiuta <win@wincent.com>, Jan Hudec <bulb@ucw.cz>,
+	David Kastrup <dak@gnu.org>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 22:43:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwlhW-0002Q6-W0
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 22:41:11 +0100
+	id 1IwlkB-0003Rk-7Y
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 22:43:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754215AbXKZVkw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 16:40:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754169AbXKZVkw
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 16:40:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58054 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754158AbXKZVkw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 16:40:52 -0500
-Received: (qmail invoked by alias); 26 Nov 2007 21:40:50 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp051) with SMTP; 26 Nov 2007 22:40:50 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18kpZI4KYYkSYnMg2J8895a+ooApocIcQFGNCeVyk
-	sgzcvDKXdSRJMa
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.0.99999.0711261635570.9605@xanadu.home>
-X-Y-GMX-Trusted: 0
+	id S1754785AbXKZVnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 16:43:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753341AbXKZVnT
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 16:43:19 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:9048 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754756AbXKZVnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 16:43:19 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JS400HK2UMU3S41@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 26 Nov 2007 16:35:20 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7vhcj8g0op.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66134>
 
-Hi,
+On Mon, 26 Nov 2007, Junio C Hamano wrote:
 
-On Mon, 26 Nov 2007, Nicolas Pitre wrote:
-
-> On Mon, 26 Nov 2007, Johannes Schindelin wrote:
+> Wincent Colaiuta <win@wincent.com> writes:
 > 
-> > I agree, but that's not even the complete truth.  Git would be not 
-> > even half as useful as it is without its scriptability.
+> > For the benefit of newcomers, I just wish the plumbing was kept a  
+> > little bit out of sight. You know, porcelain in /usr/bin and plumbing  
+> > in /usr/libexec or other such place.
+> >
+> > It's fine once you've learnt your workflows and know the 10 or 15 Git  
+> > tools that you'll be using day-to-day; but for people who are just  
+> > starting off this can be a little bit intimidating:
+> >
+> > $ git-<tab>
+> > Display all 146 possibilities? (y or n)
 > 
-> Sure, but this is missing the point.
-> 
-> The issue at hand is about the fact that way too many Git commands are 
-> to be found in the default command path.  Diverging on whether or not 
-> plumbing is useful is the wrong question.
+> I'd agree to that but I've always considered this an issue for distros.
+> We've supported an ability for them to specify a gitexecdir separate
+> from /usr/bin in our Makefile for almost two years.
 
-Ah, thanks.  I use a spam filter here, so I did not get the complete 
-context.
+Would probably be a good thing to start enforcing that by default. It's 
+easier to follow such policies when they're coordinated from the project 
+origin.
 
-Sorry,
-Dscho
+
+Nicolas
