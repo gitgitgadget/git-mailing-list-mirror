@@ -1,63 +1,82 @@
-From: Michael Poole <mdpoole@troilus.org>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: If you would write git from scratch now, what would you change?
-Date: Mon, 26 Nov 2007 14:50:35 -0500
-Message-ID: <87ve7ozsz8.fsf@graviton.dyn.troilus.org>
-References: <200711252248.27904.jnareb@gmail.com> <fiet88$68n$1@ger.gmane.org>
-	<2A34D324-48A4-49EF-9D4E-5B9469A0791D@lrde.epita.fr>
-	<20071126185600.GA25784@efreet.light.src>
-	<85prxw253u.fsf@lola.goethe.zz>
-	<20071126193455.GC25784@efreet.light.src>
+Date: Mon, 26 Nov 2007 14:52:05 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0711261433210.9605@xanadu.home>
+References: <200711252248.27904.jnareb@gmail.com>
+ <56b7f5510711261118m7a402beah5d9cb75c1ad10b43@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>, Benoit Sigoure <tsuna@lrde.epita.fr>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Mon Nov 26 20:51:11 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 20:52:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iwjyp-0003Ka-OT
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 20:50:56 +0100
+	id 1Iwk0K-0003zj-LI
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 20:52:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753607AbXKZTug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 14:50:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753570AbXKZTug
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 14:50:36 -0500
-Received: from 24-75-174-210-st.chvlva.adelphia.net ([24.75.174.210]:32872
-	"EHLO sanosuke.troilus.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753204AbXKZTug (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Nov 2007 14:50:36 -0500
-Received: by sanosuke.troilus.org (Postfix, from userid 1000)
-	id E93C789C128; Mon, 26 Nov 2007 14:50:35 -0500 (EST)
-In-Reply-To: <20071126193455.GC25784@efreet.light.src> (Jan Hudec's message of "Mon\, 26 Nov 2007 20\:34\:55 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1754181AbXKZTwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 14:52:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754162AbXKZTwI
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 14:52:08 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:26597 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754087AbXKZTwF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 14:52:05 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JS400A46PUTRZ10@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 26 Nov 2007 14:52:05 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <56b7f5510711261118m7a402beah5d9cb75c1ad10b43@mail.gmail.com>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66103>
 
-Jan Hudec writes:
+On Mon, 26 Nov 2007, Dana How wrote:
 
-> The basic pull/push actions are:
->
-> git pull: Bring the remote ref value here.
-> git push: Put the local ref value there.
->
-> Are those not oposites?
->
-> Than each command has it's different features on top of this -- pull merges
-> and push can push multiple refs -- but in the basic operation they are
-> oposites.
+> Currently data can be quickly copied from pack to pack,
+> but data cannot be quickly copied blob->pack or pack->blob
 
-I think that is in absolute agreement with David: Ducks swim on the
-surface of the water and lobsters swim underneath.  Why consider the
-different features on top of where they swim?
+I don't see why you would need the pack->blob copy normally.
 
-The thing about git-pull that surprises so many users is the merge.
-There's a separate command to do that step, and git-pull had a fairly
-good excuse to do the merge before git's 1.5.x remote system was in
-place, but now the only really defensible reason for its behavior is
-history.
+> (there was an alternate blob format that supported this,
+>  but it was deprecated).  Using the pack format for blobs
+> would fix this.
 
-Michael Poole
+Then you can do just that for big enough blobs where "big enough" is 
+configurable: encapsulate them in a pack instead of a loose object.  
+Problem solved.  Sure you'll end up with a bunch of packs containing 
+only one blob object, but given that those blobs are so large to be a 
+problem in your work flow when written out as loose objects, then they 
+certainly must be few enough not to cause an explosion in the number of 
+packs.
+
+> It would also mean blobs wouldn't need to
+> be uncompressed to get the blob type or size I believe.
+
+They already don't.
+
+> So far this has prevented me from deploying git here
+> (and is half the reason I have not been active recently).
+> Currently we use p4 and we have large files.
+> When a large file is checked in (submitted),
+> it is compressed *once* and sent over the network --
+> these are the only delays that end-users experience.
+> 
+> The equivalent operation in git would require the creation of
+> the blob,  and then of a temporary pack to send to the server.
+> This requires 3 calls to zlib for each blob,  which for very
+> large files is not acceptable at my site.
+
+I currently count 2 calls to zlib, not 3.  And with big blobs as packs, 
+as suggested above then you'd have only one call when actually staging 
+their content.  This should be really straight forward to implement 
+given that pack-objects is already a built-in.
+
+
+Nicolas
