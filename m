@@ -1,118 +1,120 @@
-From: Jan Hudec <bulb@ucw.cz>
+From: "Dana How" <danahow@gmail.com>
 Subject: Re: If you would write git from scratch now, what would you change?
-Date: Mon, 26 Nov 2007 21:36:54 +0100
-Message-ID: <20071126203654.GF25784@efreet.light.src>
-References: <200711252248.27904.jnareb@gmail.com> <858x4l2apc.fsf@lola.goethe.zz> <20071126192703.GB25784@efreet.light.src> <FF804F69-3EEC-4FED-AE92-18C4F5B3645F@lrde.epita.fr>
+Date: Mon, 26 Nov 2007 12:36:27 -0800
+Message-ID: <56b7f5510711261236n732d56dci6335541391e1e137@mail.gmail.com>
+References: <200711252248.27904.jnareb@gmail.com>
+	 <56b7f5510711261118m7a402beah5d9cb75c1ad10b43@mail.gmail.com>
+	 <200711262117.56326.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+SfteS7bOf3dGlBC"
-Cc: David Kastrup <dak@gnu.org>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Benoit Sigoure <tsuna@lrde.epita.fr>
-X-From: git-owner@vger.kernel.org Mon Nov 26 21:37:30 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Nicolas Pitre" <nico@cam.org>,
+	danahow@gmail.com
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 26 21:37:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iwkhr-0004Kp-R3
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 21:37:28 +0100
+	id 1Iwkhr-0004Kp-69
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 21:37:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754823AbXKZUhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 15:37:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754818AbXKZUhG
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 15:37:06 -0500
-Received: from ns1.bluetone.cz ([212.158.128.13]:59207 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753559AbXKZUhE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 15:37:04 -0500
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 6316057425;
-	Mon, 26 Nov 2007 21:37:02 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id dYehk42-B+BW; Mon, 26 Nov 2007 21:36:59 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id EF752574FB;
-	Mon, 26 Nov 2007 21:36:57 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IwkhK-0006yi-Hx; Mon, 26 Nov 2007 21:36:54 +0100
+	id S1753591AbXKZUgd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 15:36:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754818AbXKZUgd
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 15:36:33 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:23738 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753204AbXKZUgc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 15:36:32 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so871396nfb
+        for <git@vger.kernel.org>; Mon, 26 Nov 2007 12:36:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=30Ggb2ct2l+lratzMXsHTNJr73zc9/WoWHbUuXxI1b0=;
+        b=OIfP3Tpswum0FplzNbPiGmVuzQ+FgS9R3fb15Er40zdnUyQwO3FAxTL5cXw2eXARfc0EJPntS8po0ibSHIqzm21Vrn1cC2NWs8oeaiamXhfikTlIU3KrO1/niFqYzm9fG/FChN6Q3mi8Q/Q0UPs+2909Vn5zUIaHFNnzHMov/f0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WdNinIcUhivyvYhwMaCCqn4HYFYCDccafmdPVugpwKh1SktMJRalVQUURqAF1f0MHUiPbCLa+6mPQV/mlQUPJ0rKC1KcmCG6AKPtuvaMF4jQizf3PTA6iigdhVZ+027gATdAam5tRt43ts8+H7IYxbX9beKavu8mNWQSG1KYqV4=
+Received: by 10.78.137.7 with SMTP id k7mr3485754hud.1196109388065;
+        Mon, 26 Nov 2007 12:36:28 -0800 (PST)
+Received: by 10.78.177.20 with HTTP; Mon, 26 Nov 2007 12:36:27 -0800 (PST)
+In-Reply-To: <200711262117.56326.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <FF804F69-3EEC-4FED-AE92-18C4F5B3645F@lrde.epita.fr>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66116>
 
-
---+SfteS7bOf3dGlBC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Nov 26, 2007 at 21:11:41 +0100, Benoit Sigoure wrote:
-> On Nov 26, 2007, at 8:27 PM, Jan Hudec wrote:
+On Nov 26, 2007 12:17 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Mon, 26 Nov 2007, Dana How wrote:
+> > On Nov 25, 2007 1:48 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> >
+> > > If you would write git from scratch now, from the beginning, without
+> > > concerns for backwards compatibility, what would you change, or what
+> > > would you want to have changed?
+> >
+> > Currently data can be quickly copied from pack to pack,
+> > but data cannot be quickly copied blob->pack or pack->blob
+> > (there was an alternate blob format that supported this,
+> >  but it was deprecated).  Using the pack format for blobs
+> > would fix this.  It would also mean blobs wouldn't need to
+> > be uncompressed to get the blob type or size I believe.
 >
->> On Mon, Nov 26, 2007 at 18:11:43 +0100, David Kastrup wrote:
->>> Jakub Narebski <jnareb@gmail.com> writes:
->>>
->>>> If you would write git from scratch now, from the beginning, without
->>>> concerns for backwards compatibility, what would you change, or what
->>>> would you want to have changed?
->>>
->>> Get rid of plumbing at the command line level.  It is confusing to
->>
->> No, please. It's extremely useful. It should be a bit more hidden, but=
-=20
->> it's
->> a big advantage of git that the plumbing is available.
->>
->>> users, and command line arguments, exec calls and I/O streams are not
->>> efficient and reasonably typed mechanisms for the kind of operations
->>> done in plumbing.  Instead using a good extensible portable scripting
->>> language (I consider Lua quite suitable in that regard, but it is
->>> conceivable that something with a native list type supporting easy
->>> sorts, merges and selections could be more efficient) and implementing
->>> plumbing in that or in C would have been preferable for creating the
->>> porcelain.
->>
->> POSIX shell is really the best extensible portable scripting language
->> available for the job. Because the whipuptitude is the most important
->> property and shell is simply best at one-liners. And since you use it
->> for regular work (running editor, compiler, git porcelain), it is the
->> obvious choice for whiping up a short function.
+> Could you do some benchmark for repository with your large objects
+> as loose objects created with and without core.legacyHeaders (created
+> with git pre 1.5.3), and as single blob packs, perhaps kept, with
+> _undocumented_ (except for RelNotes) gitattribute delta unset for
+> those files?
+First of all,  this is a very reasonable request and what I should be doing.
+Unfortunately,  I only have the cycles at the moment to point out this
+issue,  which appears to be a problem from my perspective.
+
+Currently,
+a user who wants to publish some (large) files does the following:
+git add (calls deflate)
+git commit
+git push (builds a pack to stdout, calling inflate and deflate on each blob).
+
+So if the blob and pack formats were more similar (different blob format,
+big blobs are singleton packs, etc) the zlib calls in git push go away.
+The deflate call could be sped up by using 1 for compression level,
+but it still takes time.
+
+Another "solution" is to make each workgroup member's .git/objects
+be a symlink to a tree with a lot of sticky bits and do some scripting.
+(This means "git push" doesn't push any data and only alters stuff
+ in .git/refs/heads on the server.)
+I'm not entirely enthusiastic about this,  and when I mentioned it a while
+ago it did cause some retching...
+
+> From Documentation/RelNotes-1.5.3:
 >
-> Perl seems pretty portable.  If we had a decent, complete libgit, it woul=
-d=20
-> be easy to create bindings for various languages and script Git in other=
-=20
-> languages than Shell script.
+>   - We used to have core.legacyheaders configuration, when
+>     set to false, allowed git to write loose objects in a format
+>     that mimicks the format used by objects stored in packs.  It
+>     turns out that this was not so useful.  Although we will
+>     continue to read objects written in that format, we do not
+>     honor that configuration anymore and create loose objects in
+>     the legacy/traditional format.
+>
+>   - "pack-objects" honors "delta" attribute set in
+>     .gitattributes.  It does not attempt to deltify blobs that
+>     come from paths with delta attribute set to false.
+>
+>   - diff-delta code that is used for packing has been improved
+>     to work better on big files.
+>
+> The last part is thanks to your comments, complaints and efforts, Dana.
+Yes,  there have been some very useful improvements recently.
 
-Perl might be good for the lower level stuff (and is indeed used for that in
-git a lot), but most useful tools on top of git gather few bigish bits
-(contents of whole files and such) and pass them to some application. And
-this is what shell is really good at.
+However,  I didn't actually push for the first "-" you list;
+I was pushing for the "mimic" option even then
+but some argument was presented to me against it,
+to which I had no counter-argument until I understood git better later.
 
-So yes, more direct interfaces for various languages would certainly be goo=
-d,
-but it would never be a full replacement for the process interface. It is
-most generic and for many hacks the easiest thing to use.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---+SfteS7bOf3dGlBC
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHSy5mRel1vVwhjGURAiK4AJ92U3/lodTZCUmaaW4AJcyFPm6QrwCfY3jh
-Yy9P0gKWK+G0kY5kBXl+lu0=
-=3fry
------END PGP SIGNATURE-----
-
---+SfteS7bOf3dGlBC--
+Thanks,
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
