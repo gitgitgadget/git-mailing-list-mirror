@@ -1,65 +1,61 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: If you would write git from scratch now, what would you change?
-Date: Mon, 26 Nov 2007 16:39:23 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0711261635570.9605@xanadu.home>
-References: <200711252248.27904.jnareb@gmail.com>
- <858x4l2apc.fsf@lola.goethe.zz>
+Date: Mon, 26 Nov 2007 21:40:49 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711262140170.27959@racer.site>
+References: <200711252248.27904.jnareb@gmail.com> <858x4l2apc.fsf@lola.goethe.zz>
  <alpine.LFD.0.99999.0711261417580.9605@xanadu.home>
- <Pine.LNX.4.64.0711262124411.27959@racer.site>
+ <Pine.LNX.4.64.0711262124411.27959@racer.site> <alpine.LFD.0.99999.0711261635570.9605@xanadu.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
 Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 26 22:39:44 2007
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Nov 26 22:41:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iwlg7-0001sf-Ht
-	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 22:39:43 +0100
+	id 1IwlhW-0002Q6-W0
+	for gcvg-git-2@gmane.org; Mon, 26 Nov 2007 22:41:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754192AbXKZVjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 16:39:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754158AbXKZVjZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 16:39:25 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:55157 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754095AbXKZVjY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 16:39:24 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JS400ANYUTNRZD0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 26 Nov 2007 16:39:23 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <Pine.LNX.4.64.0711262124411.27959@racer.site>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1754215AbXKZVkw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 16:40:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754169AbXKZVkw
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 16:40:52 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58054 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754158AbXKZVkw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 16:40:52 -0500
+Received: (qmail invoked by alias); 26 Nov 2007 21:40:50 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp051) with SMTP; 26 Nov 2007 22:40:50 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18kpZI4KYYkSYnMg2J8895a+ooApocIcQFGNCeVyk
+	sgzcvDKXdSRJMa
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.0.99999.0711261635570.9605@xanadu.home>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66133>
 
-On Mon, 26 Nov 2007, Johannes Schindelin wrote:
+Hi,
 
-> Hi,
+On Mon, 26 Nov 2007, Nicolas Pitre wrote:
+
+> On Mon, 26 Nov 2007, Johannes Schindelin wrote:
 > 
-> On Mon, 26 Nov 2007, Nicolas Pitre wrote:
+> > I agree, but that's not even the complete truth.  Git would be not 
+> > even half as useful as it is without its scriptability.
 > 
-> > On Mon, 26 Nov 2007, David Kastrup wrote:
-> > 
-> > > Get rid of plumbing at the command line level.
-> > 
-> > We can't get rid of plumbing.  It is part of Git probably forever and is 
-> > really really convenient for scripting in any language you want.
+> Sure, but this is missing the point.
 > 
-> I agree, but that's not even the complete truth.  Git would be not even 
-> half as useful as it is without its scriptability.
+> The issue at hand is about the fact that way too many Git commands are 
+> to be found in the default command path.  Diverging on whether or not 
+> plumbing is useful is the wrong question.
 
-Sure, but this is missing the point.
+Ah, thanks.  I use a spam filter here, so I did not get the complete 
+context.
 
-The issue at hand is about the fact that way too many Git commands are 
-to be found in the default command path.  Diverging on whether or not 
-plumbing is useful is the wrong question.
-
-
-Nicolas
+Sorry,
+Dscho
