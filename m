@@ -1,69 +1,80 @@
-From: "Patrick Aljord" <patcito@gmail.com>
-Subject: Re: Git Screencast ?
-Date: Tue, 27 Nov 2007 15:18:22 +0100
-Message-ID: <6b6419750711270618j35432bd7p47bbdfe5aa8f12bd@mail.gmail.com>
-References: <fi1a9f$30q$1@ger.gmane.org> <86bq9n4469.fsf@blue.stonehenge.com>
-	 <d411cc4a0711211603o525a25c4i3e04d0319e68204f@mail.gmail.com>
-	 <d411cc4a0711261333p4c99f447k81c3833cd679e551@mail.gmail.com>
-	 <6b6419750711270602q53e2c51dr7046aca1417c801a@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 27 Nov 2007 09:29:21 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0711270917580.9605@xanadu.home>
+References: <200711270622.lAR6MFXQ010010@mi0.bluebottle.com>
+ <Pine.LNX.4.64.0711271109130.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "git list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 27 15:19:16 2007
+Content-Type: multipart/mixed; boundary="Boundary_(ID_q51Tbf/zG2kVoDZcertsfw)"
+Cc: =?ISO-2022-JP?Q?=1B$B$i$$$7$J$J$3=1B=28J?= <nanako3@bluebottle.com>,
+	Andreas Ericsson <ae@op5.se>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Nov 27 15:29:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix1Gu-0007Ba-Hy
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 15:18:44 +0100
+	id 1Ix1RX-0003EE-Oy
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 15:29:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754685AbXK0OSZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 09:18:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754562AbXK0OSZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 09:18:25 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:12377 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753936AbXK0OSY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 09:18:24 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so963955nfb
-        for <git@vger.kernel.org>; Tue, 27 Nov 2007 06:18:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=fkQsAQtlF843MxmzvAzJspu6qau78NDYvdj7H6kWhsQ=;
-        b=Lrxxewfz7lz+tNSadH6lv0o8MacD8hSMAFbUcTG1IDcaHtCZn7cpt/Q1QYH06Db/IXblMeZsUe68RRYjH/UUGSyw51Zo+9yHRtoipe3biAvr3Eyf834vsBMsQWP9WTVhxNKuRizYepf6SSWJvxs8WzaDbve9xwOiDKrA4A0JGhw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=c9sObfAX1FUU4TrQ7JyctnExvdROfH46BKNbowcZKO988Nz/HXo6jNhFlrWGq74olnVtxmTgsOsY9pMTaCjVJN1o6Mqn86TeQc1XuBB23GHd2GBFAS1Dyc98EvbHqN1we9pu73iZaUEmm8TpgHFR8W9CsAWZcttDJ+5TzBTOEaM=
-Received: by 10.82.108.9 with SMTP id g9mr9839120buc.1196173102929;
-        Tue, 27 Nov 2007 06:18:22 -0800 (PST)
-Received: by 10.82.184.13 with HTTP; Tue, 27 Nov 2007 06:18:22 -0800 (PST)
-In-Reply-To: <6b6419750711270602q53e2c51dr7046aca1417c801a@mail.gmail.com>
-Content-Disposition: inline
+	id S1754805AbXK0O3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 09:29:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754867AbXK0O3X
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 09:29:23 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:43625 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754355AbXK0O3W (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 09:29:22 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JS6005TC5KXGZ90@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 27 Nov 2007 09:29:22 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <Pine.LNX.4.64.0711271109130.27959@racer.site>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66216>
 
-On Nov 27, 2007 3:02 PM, Patrick Aljord <patcito@gmail.com> wrote:
-> > http://jointheconversation.org/railsgit
-> >
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I think you can just use 'git-init' now no need for git-init-db.
+--Boundary_(ID_q51Tbf/zG2kVoDZcertsfw)
+Content-type: TEXT/PLAIN; charset=ISO-2022-JP
+Content-transfer-encoding: 7BIT
 
-also once you've created your remote bare git rep, you don't need to
-use scp, you can just do:
-$ git-push --all git://server/remote.git
+On Tue, 27 Nov 2007, Johannes Schindelin wrote:
 
-and to push there automatically:
-$ git remote add origin ssh://server/remote.git
-$ git config branch.master.remote origin
-$ git config branch.master.merge refs/heads/master
-$ git fetch
-$ git merge master
+> Hi,
+> 
+> On Tue, 27 Nov 2007, しらいしななこ wrote:
+> 
+> > Was it coded poorly, buggy or were there some other issues?
+> 
+> It is very well possible that it was coded poorly ;-)
+> 
+> The main reason, I believe, was that some old-timers who know the 
+> implications said that it would encourage a wrong workflow.  One thing 
+> that could go possibly wrong, for example, is to rebase commits that you 
+> already published.
 
-also for adding new files, rather than doing "git add file1 file2
-file3  etc" I just do "git add ." and put in .gitignore all the files
-that I don't want to commit but I don't know if that's recommended :)
+Being much more involved in the maintenance of a published Git tree 
+lately, I must disagree with the "wrong workflow" statement.  Until the 
+stuff I maintain is finally merged upstream, I have to constantly 
+amend/replace/fold/split random commits in my repo to follow the review 
+cycles involved.  yet I have to publish the result to let others base 
+their work on top of my latest tree.  A fetch+rebase is the only option 
+for those following my tree, and I made it clear that they have to 
+rebase after a fetch because I constantly rebase commits that I have 
+already published myself.
+
+And in this case, constant rebasing is a perfectly fine work flow to me. 
+Otherwise I might just use Git as a glorified tarball downloader and use 
+quilt on top, but this is somehow not as appealing.
+
+
+Nicolas
+
+--Boundary_(ID_q51Tbf/zG2kVoDZcertsfw)--
