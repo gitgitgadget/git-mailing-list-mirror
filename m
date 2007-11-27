@@ -1,75 +1,67 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Replace misleading message during interactive rebasing
-Date: Tue, 27 Nov 2007 09:49:04 +0100
-Message-ID: <13E55438-D62B-4C92-892F-43773902E734@wincent.com>
-References: <1196111891-18518-1-git-send-email-win@wincent.com> <474BD5CA.7050407@viscovery.net>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 27 Nov 2007 09:52:18 +0100
+Message-ID: <200711270952.18541.jnareb@gmail.com>
+References: <200711270622.lAR6MFXR010010@mi0.bluebottle.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com, tsuna@lrde.epita.fr,
-	Johannes.Schindelin@gmx.de, mcostalba@gmail.com
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Nov 27 09:49:41 2007
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+To: =?utf-8?b?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>
+X-From: git-owner@vger.kernel.org Tue Nov 27 09:52:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iww8S-0001pC-SP
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 09:49:41 +0100
+	id 1IwwBR-0002w2-KX
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 09:52:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753026AbXK0ItX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Nov 2007 03:49:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751559AbXK0ItW
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 03:49:22 -0500
-Received: from wincent.com ([72.3.236.74]:40978 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751300AbXK0ItW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Nov 2007 03:49:22 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAR8n55e029927;
-	Tue, 27 Nov 2007 02:49:06 -0600
-In-Reply-To: <474BD5CA.7050407@viscovery.net>
-X-Mailer: Apple Mail (2.915)
+	id S1752659AbXK0Iw1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Nov 2007 03:52:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752340AbXK0Iw1
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 03:52:27 -0500
+Received: from wr-out-0506.google.com ([64.233.184.234]:11114 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750716AbXK0Iw0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 03:52:26 -0500
+Received: by wr-out-0506.google.com with SMTP id c49so787709wra
+        for <git@vger.kernel.org>; Tue, 27 Nov 2007 00:52:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=l/emXQsST8gDDikxR8OpwdOuv0xxwZJmR102mHfWXQ8=;
+        b=sGvUfqrXZfUoL+C7kdtyRx951dGNDYlDTP+of2ofvWsYPRSpGS6ub/qh1fNBOUhxnRwAe8PEQLKxnWTO+IHh0j2dShhRlard3qkVcbR9zp/WjoJCkKujrrM+SkEG1xNo3Tvylno+vdNHB89jx5D25WEIKPhg3Q6Km4G2bgr8fRU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=jj5p3uq5ZfSW8mIGLM3cFSfVlymzMLk+1i+YiuAhMvEniMH2UYiotdKkrbxwdjpY6sEO5uRQ4w3cBnieT/A6SZ24jZS2kqHm7aWw3bOBNV8UOzos8QmGzqyJc2YduHamnGSqMvVJQuBvtvBUtRHzE+/q6hArRa2TYAdJNpc0c2s=
+Received: by 10.86.81.8 with SMTP id e8mr2054965fgb.1196153544370;
+        Tue, 27 Nov 2007 00:52:24 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.221.183])
+        by mx.google.com with ESMTPS id l19sm3349761fgb.2007.11.27.00.52.21
+        (version=SSLv3 cipher=OTHER);
+        Tue, 27 Nov 2007 00:52:22 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200711270622.lAR6MFXR010010@mi0.bluebottle.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66175>
 
-El 27/11/2007, a las 9:31, Johannes Sixt escribi=F3:
+On Tue, 27 Nov 2007, =E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=
+=AA=E3=81=93 (Nanako Shiraishi) napisa=C5=82:
+> Quoting Andreas Ericsson <ae@op5.se>:
+>=20
+>> "git pull --rebase" already has an implementation. Dscho cooked one =
+up
+>> which I've been using since then. It works nicely.
+>=20
+> What is the reason that the option was not added to the official git?
+> Was it coded poorly, buggy or were there some other issues?=20
 
-> Wincent Colaiuta schrieb:
->> +		export _GIT_CHERRY_PICK_HELP=3D"run 'git rebase --continue'"
->
-> Isn't this a bashism? Should be:
->
-> 		_GIT_CHERRY_PICK_HELP=3D"run 'git rebase --continue'"
-> 		export _GIT_CHERRY_PICK_HELP
->
-> (and the second instance of this as well, of course)
+There was no main (feature) git release since?
 
-I wondered that myself before submitting the patch, but then saw that =20
-the same pattern was used at other places as well:
-
-git-clone.sh:
-
-W=3D$(cd "$GIT_WORK_TREE" && pwd) && export GIT_WORK_TREE=3D"$W"
-
-git-filter-branch.sh:
-
-export GIT_INDEX_FILE=3D"$(pwd)/../index"
-export GIT_COMMIT=3D$commit
-export GIT_COMMIT=3D"$sha1"
-
-git-quiltimport.sh:
-
-export GIT_AUTHOR_NAME=3D$(sed -ne 's/Author: //p' "$tmp_info")
-export GIT_AUTHOR_EMAIL=3D$(sed -ne 's/Email: //p' "$tmp_info")
-export GIT_AUTHOR_DATE=3D$(sed -ne 's/Date: //p' "$tmp_info")
-export SUBJECT=3D$(sed -ne 's/Subject: //p' "$tmp_info")
-
-So if this is a problem, those sites will need to be changed as well.
-
-Cheers,
-Wincent
+--=20
+Jakub Narebski
+Poland
