@@ -1,80 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] builtin-commit: add --cached to operate only on index
-Date: Tue, 27 Nov 2007 11:18:38 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711271115300.27959@racer.site>
-References: <81b0412b0711270254i58be4d2fi5021767d99fcb753@mail.gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: git bug/feature request
+Date: Tue, 27 Nov 2007 12:21:35 +0100
+Message-ID: <81b0412b0711270321q6f70554at177ade878448b9fc@mail.gmail.com>
+References: <200711271127.41161.gapon007@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?Kristian_H=C3=B8gsberg?= <krh@redhat.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 12:19:07 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: gapon <gapon007@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 27 12:22:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwyT2-0004c7-NF
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 12:19:05 +0100
+	id 1IwyVp-0005ck-PK
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 12:21:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754508AbXK0LSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 06:18:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754263AbXK0LSp
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 06:18:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56318 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753836AbXK0LSo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 06:18:44 -0500
-Received: (qmail invoked by alias); 27 Nov 2007 11:18:42 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp003) with SMTP; 27 Nov 2007 12:18:42 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19hnyYGmU1hbxqA3Op+hAUS5jbVuty0hiv+CNdccc
-	hCwW/FeQUrjljj
-X-X-Sender: gene099@racer.site
-In-Reply-To: <81b0412b0711270254i58be4d2fi5021767d99fcb753@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1754263AbXK0LVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 06:21:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754002AbXK0LVj
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 06:21:39 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:33135 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753588AbXK0LVi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 06:21:38 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so907279nfb
+        for <git@vger.kernel.org>; Tue, 27 Nov 2007 03:21:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=eF1/I1CxNPJkdfuupG0eiquFftKttaac75Xww9wbXBk=;
+        b=MpZIWFzVcD1eZRnz8VIfCUDzShtQ5bKMulsOZB2uQQdLgtTp9UCKwp9bGJZCTBNS1TTkCKoHMkM53WXn2ISPLEcwRmwmc75Cc9eO9eMxd97Kho6jmg7V6HeJUjUC6dle9M3g38PAn71GyewfQVMtjYbpPjaMRcZeT2vQX2SAYwY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bQdEuZBCohgzjFPO3h3884PnA0g0Tc5CZ9NWlv3d1L54GC35+0RdzxCGTwNOApaxs2MjqkC6GpfNjeZ6Sm8i1eGdgdvGz0BO/1qmgRerPgYqJd6sk61R3f7xejy/MWjoGssMoMwe2QSbbD19Aavb/aXdO8G/3EwMlmU7lmJH2lY=
+Received: by 10.78.118.5 with SMTP id q5mr4028152huc.1196162496030;
+        Tue, 27 Nov 2007 03:21:36 -0800 (PST)
+Received: by 10.78.120.4 with HTTP; Tue, 27 Nov 2007 03:21:35 -0800 (PST)
+In-Reply-To: <200711271127.41161.gapon007@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66188>
 
-Hi,
+On 27/11/2007, gapon <gapon007@gmail.com> wrote:
+> hi all,
+> first of all i don't know if there's a bugzilla or something similar for git -
+> i have found just this email (on http://git.or.cz/ webpage).
+>
+> i have discovered "weird" behaviour of git in this scenario*:
+> - user A is working in repo A
+> - user B clones repo A
+> - user B makes some changes, commits, pushes
+> - user A makes some changes, git status (no info about new commit in his repo
+> from user B but it's probably ok i'd say - but some of my files are marked as
+> changed and already added to index  but i haven't changed them - that's
+> confusing, isn't it?)
+> - user A can commit his changes => shouldn't be there any info/message/warning
+> displayed? it would be helpful to have here some info about "foreign commit"
+> in the repo or something like this
 
-[commenting on the patch is a little cumbersome when the mailer does not 
-quote it for you...]
+If you share a repository with someone else, you better use different
+branches. What's happened is that user B changed the branch the
+user A was working on (strictly speaking, the B-user changed the
+reference A-user used as HEAD at the moment).
 
-On Tue, 27 Nov 2007, Alex Riesen wrote:
+Just have the B-user push his/hers changes on something else,
+not the master of the parent repository. For instance, B-user can
+add a "push"-line to his origin remote which redirects its pushes
+somewhere else:
 
-@@ -550,6 +557,8 @@ static int parse_and_validate_options(int argc, const char *argv[])
-                        free(enc);
-        }
+  git config remote.origin.push 'refs/heads/*:refs/heads/B-user/*'
 
-+       if (all)
-+               cached_only = 0;
-        if (!!also + !!only + !!all + !!interactive > 1)
-                die("Only one of --include/--only/--all/--interactive can be used.");
-        if (argc == 0 && (also || (only && !amend)))
-
-
-
-My reply> I would rather add another !!cached_only to the existing if().
-
-
-
-@@ -678,7 +688,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
-        }
-
-        if (!prepare_log_message(index_file, prefix) && !in_merge) {
--               run_status(stdout, index_file, prefix);
-+               if (!cached_only)
-+                       run_status(stdout, index_file, prefix);
-                rollback_index_files();
-                unlink(commit_editmsg);
-                return 1;
-
-
-My reply> Would it not make more sense to avoid run_status() when no_edit?
-
-My reply> Ciao,
-My reply> Dscho
+Or just use a dedicated shared repo where no one works in.
+See also Documentation/config.txt, and the man page of git-push.
