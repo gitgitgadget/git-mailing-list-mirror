@@ -1,60 +1,62 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] builtin-commit: add --cached to operate only on index
-Date: Tue, 27 Nov 2007 12:35:33 +0100
-Message-ID: <474C0105.3010908@viscovery.net>
-References: <81b0412b0711270254i58be4d2fi5021767d99fcb753@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: If you would write git from scratch now, what would you change?
+Date: Tue, 27 Nov 2007 11:39:32 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711271136050.27959@racer.site>
+References: <200711252248.27904.jnareb@gmail.com> <fiet88$68n$1@ger.gmane.org>
+ <e5bfff550711261125i92fb057i85d7217b18cd495d@mail.gmail.com>
+ <20071127012013.GG14735@spearce.org> <fifstd$ilj$1@ger.gmane.org>
+ <20071127015833.GL14735@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?ISO-8859-15?Q?Kristi?= =?ISO-8859-15?Q?an_H=F8gsberg?= 
-	<krh@redhat.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 12:36:03 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Nov 27 12:39:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwyjN-0001dY-FA
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 12:35:57 +0100
+	id 1IwynE-0002lX-RY
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 12:39:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754666AbXK0Lfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 06:35:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754586AbXK0Lfh
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 06:35:37 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:16952 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753113AbXK0Lfh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 06:35:37 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IwyiJ-0000pF-LO; Tue, 27 Nov 2007 12:34:51 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 2A0EA6EF; Tue, 27 Nov 2007 12:35:33 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <81b0412b0711270254i58be4d2fi5021767d99fcb753@mail.gmail.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1754170AbXK0Lji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 06:39:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753656AbXK0Lji
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 06:39:38 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35543 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753436AbXK0Lji (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 06:39:38 -0500
+Received: (qmail invoked by alias); 27 Nov 2007 11:39:36 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp045) with SMTP; 27 Nov 2007 12:39:36 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Lo2gcN6xL1wnYGZJXSgqDO91fZLPlujvQ5SHdwW
+	4UzgkKTnpm76vt
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071127015833.GL14735@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66194>
 
-Alex Riesen schrieb:
-> The option is to enable operation exclusively on the index, without touching
-> working tree. Besides speeding up commit process on performance-challenged
-> platforms it also has to ensure that the index is commited exactly how
-> user sees it.
+Hi,
 
-Huh?
+On Mon, 26 Nov 2007, Shawn O. Pearce wrote:
 
-Doesn't git-commit operate only on the index, unless you pass it extra 
-arguments?
+> Actually I might revisit this XUL concept using an HTTP server and AJAX.  
+> I could actually link the damn HTTP server against libgit.a (Junio will 
+> hate me).  If the server dies XUL can notice it and simply restart it.
 
-What am I missing?
+But if you can restart the HTTP server via XUL, you can start other git 
+programs directly.
 
--- Hannes
+What you'd have to do is (urgh) write a wrapper via start_command() 
+which would recognize that the second process die()d.
+
+All in all, I think if you want to switch from Tcl/Tk to another language 
+for git-gui, for the sake of attracting more developers, it might be wiser 
+to go Java than XUL.
+
+Ciao,
+Dscho
