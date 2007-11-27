@@ -1,58 +1,52 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] setup_git_directory: Setup cwd properly if worktree is
- found
-Date: Tue, 27 Nov 2007 14:46:39 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711271446080.27959@racer.site>
-References: <20071112112408.GA5420@laptop>  <Pine.LNX.4.64.0711121139010.4362@racer.site>
-  <fcaeb9bf0711120413w180c07e1qbf1b186753593d7@mail.gmail.com> 
- <Pine.LNX.4.64.0711121224430.4362@racer.site>
- <fcaeb9bf0711270612p52ce20eaue39eac1d529c3fd3@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [WIP PATCH] Add 'git fast-export', the sister of 'git fast-import'
+Date: Tue, 27 Nov 2007 15:51:03 +0100
+Message-ID: <20071127145103.GA30020@diana.vm.bytemark.co.uk>
+References: <Pine.LNX.4.64.0711210336210.27959@racer.site> <fi5743$32p$1@ger.gmane.org> <Pine.LNX.4.64.0711230050270.27959@racer.site> <f329bf540711221723g2754ce03r4da6d429c45668c@mail.gmail.com> <Pine.LNX.4.64.0711230149430.27959@racer.site> <20071123205958.GC14735@spearce.org> <20071125170019.GB25800@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0711261647400.27959@racer.site> <20071127101614.GB26072@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0711271123360.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 15:47:22 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, hanwen@xs4all.nl,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Nov 27 15:51:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix1iM-0001aO-Ko
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 15:47:07 +0100
+	id 1Ix1mm-0003Pr-5G
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 15:51:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755136AbXK0Oqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 09:46:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755091AbXK0Oqs
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 09:46:48 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50223 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753113AbXK0Oqr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 09:46:47 -0500
-Received: (qmail invoked by alias); 27 Nov 2007 14:46:45 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp049) with SMTP; 27 Nov 2007 15:46:45 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+J3kESePuJ4rLYZ1C4uWxmMN4ajvTkHKFVuMt/8p
-	JTBqEZ70aDGnyK
-X-X-Sender: gene099@racer.site
-In-Reply-To: <fcaeb9bf0711270612p52ce20eaue39eac1d529c3fd3@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1757941AbXK0OvT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Nov 2007 09:51:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757926AbXK0OvT
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 09:51:19 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1970 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757888AbXK0OvR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 09:51:17 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Ix1mB-0007qQ-00; Tue, 27 Nov 2007 14:51:03 +0000
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0711271123360.27959@racer.site>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66221>
 
-Hi,
+On 2007-11-27 11:25:47 +0000, Johannes Schindelin wrote:
 
-On Tue, 27 Nov 2007, Nguyen Thai Ngoc Duy wrote:
+> Ah, so you would like something like "git --interactive"? This is
+> indeed a completely different scope than the fast-export thingie,
 
-> Question time. setup_git_directory_gently() can be happy even if there 
-> is no repository. Now if we move version check into setup_..._gently and 
-> it finds git program is too old to handle the repository, what would we 
-> do? die() like in check_repository_format() or tell the caller there is 
-> no repository?
+Yes. Or rather, I _think_ that's what I want. The only numbers I have
+is that StGit makes a number of trivial git calls that right now take
+on the order of 10 ms apiece, so the first step in this direction
+would be to build a simple prototype just to see what kind of speed-up
+one could expect (both in the git calls, and in StGit overall).
 
-In the interest of least surprise, die().
-
-Ciao,
-Dscho
- 
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
