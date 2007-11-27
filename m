@@ -1,147 +1,63 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [PATCH] Make Git accept absolute path names for files within the work tree
-Date: Wed, 28 Nov 2007 00:24:07 +0100
-Message-ID: <1196205847-22968-1-git-send-email-robin.rosenberg@dewire.com>
-References: <7vmyt0edso.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Nov 28 00:22:34 2007
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Rollback of git commands
+Date: Tue, 27 Nov 2007 18:23:35 -0500
+Message-ID: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 28 00:24:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix9l5-000331-8s
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 00:22:27 +0100
+	id 1Ix9mv-0003am-Uk
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 00:24:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760767AbXK0XWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 18:22:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760765AbXK0XWD
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 18:22:03 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:13088 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1760761AbXK0XWB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 18:22:01 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id CC9F98027FA;
-	Wed, 28 Nov 2007 00:12:42 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 05130-04; Wed, 28 Nov 2007 00:12:42 +0100 (CET)
-Received: from lathund.dewire.com (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 6D4F2800783;
-	Wed, 28 Nov 2007 00:12:42 +0100 (CET)
-Received: by lathund.dewire.com (Postfix, from userid 500)
-	id E4ED828FFC; Wed, 28 Nov 2007 00:24:07 +0100 (CET)
-X-Mailer: git-send-email 1.5.3.5.1.gb2df9
-In-Reply-To: <7vmyt0edso.fsf@gitster.siamese.dyndns.org>
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1755764AbXK0XXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 18:23:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756157AbXK0XXh
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 18:23:37 -0500
+Received: from rv-out-0910.google.com ([209.85.198.187]:23365 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755764AbXK0XXg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 18:23:36 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so1049762rvb
+        for <git@vger.kernel.org>; Tue, 27 Nov 2007 15:23:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=HkxwnsqN4P6ZvJCRGbg9F24XMSUYb+Pwpe+BCTwPRfc=;
+        b=lsZ99nh5e1PbV1YzoGb1LbXBFX+dQ8F4fuQ+JOFHHJngNGeiVhZLNdOUXICKOa1UuZZIYYiFlzJ685ZfoRn0VgnFrjOpGXeD6TPjoH6TeTZ6soTfLJR4XcLPZEmf8U1tpvQZbxXuIF4CERy/+cBNczMx9MnofY9yddQ3jYfU5YY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=j0xbqD1Fcays46xSKykAmfgsnFUVpsdyR2UOyrT9g6QkesIOHly4FNVmuE/tufUdyZ9lT/JQadOmRJcFPrEI9uCjgTzkbESMNgeTeztEo2p+vTMGF4p81yhHqBon50NX81Atjd0Nu5HiPIqlBrQod4wyQpC8eHkYteY7A7B/XLA=
+Received: by 10.115.59.4 with SMTP id m4mr265952wak.1196205815430;
+        Tue, 27 Nov 2007 15:23:35 -0800 (PST)
+Received: by 10.114.160.3 with HTTP; Tue, 27 Nov 2007 15:23:35 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66273>
 
-This patch makes it possible to drag files and directories from
-a graphical browser and drop them onto a shell and feed them
-to common git operations without editing away the path to the
-root of the work tree.
+Could a rollback log be implemented in git? It would make things way
+easier when you screw something up.You'd only roll back things that
+impacted the object store, not things like checkout.
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- setup.c               |   19 +++++++++++++++++
- t/t3904-abspatharg.sh |   55 +++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 74 insertions(+), 0 deletions(-)
- create mode 100755 t/t3904-abspatharg.sh
+stg is also starting to store significant state in the .git directory.
+It may be better to move this state into a git object. That would
+allow the state history to be tracked and rollback be implemented.
 
-diff --git a/setup.c b/setup.c
-index f512ea0..ffc30bf 100644
---- a/setup.c
-+++ b/setup.c
-@@ -7,6 +7,25 @@ static int inside_work_tree = -1;
- const char *prefix_path(const char *prefix, int len, const char *path)
- {
- 	const char *orig = path;
-+	const char *work_tree = get_git_work_tree();
-+	if (is_absolute_path(path) && work_tree) {
-+		int n = strlen(work_tree);
-+		if (!strncmp(path, work_tree, n) && (path[n] == '/' || !path[n])) {
-+			if (path[n])
-+				path += n + 1;
-+			else
-+				path += n;
-+
-+			if (prefix && !strncmp(path, prefix, len - 1)) {
-+				if (path[len - 1] == '/')
-+					path += len;
-+				else
-+					if (!path[len - 1])
-+						path += len - 1;
-+			}
-+		}
-+	}
-+
- 	for (;;) {
- 		char c;
- 		if (*path != '.')
-diff --git a/t/t3904-abspatharg.sh b/t/t3904-abspatharg.sh
-new file mode 100755
-index 0000000..cd4a52e
---- /dev/null
-+++ b/t/t3904-abspatharg.sh
-@@ -0,0 +1,55 @@
-+#!/bin/sh
-+#
-+# Copyright (C) 2007 Robin Rosenberg
-+#
-+
-+test_description='Test absolute filename arguments to various git
-+commands.  Absolute arguments pointing to a location within the git
-+work tree should behave the same as relative arguments.  '
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'add files using absolute path names' '
-+echo a >afile &&
-+echo b >bfile &&
-+git-add afile &&
-+git-add "$(pwd)/bfile" &&
-+test "afile bfile" = "$(echo $(git ls-files))"
-+mkdir x &&
-+cd x &&
-+echo c >cfile &&
-+echo d >dfile &&
-+git-add cfile &&
-+git-add "$(pwd)" &&
-+cd .. &&
-+test "afile bfile x/cfile x/dfile" = "$(echo $(git ls-files))" &&
-+git ls-files x >f1 &&
-+git ls-files "$(pwd)/x" >f2 &&
-+diff f1 f2
-+'
-+
-+test_expect_success 'commit using absolute path names' '
-+git commit -m "foo" &&
-+echo aa >>bfile &&
-+git commit -m "bb" "$(pwd)/bfile"
-+'
-+
-+test_expect_success 'log using absolute path names' '
-+git log afile >f1.txt &&
-+git log "$(pwd)/afile" >f2.txt &&
-+diff f1.txt f2.txt
-+'
-+
-+test_expect_success 'blame using absolute path names' '
-+git blame afile >f1.txt &&
-+git blame "$(pwd)/afile" >f2.txt &&
-+diff f1.txt f2.txt
-+'
-+
-+test_expect_success 'diff using absolute path names' '
-+git diff HEAD^ -- "$(pwd)/afile" >f1.txt &&
-+git diff HEAD^ -- afile >f2.txt &&
-+diff f1.txt f2.txt
-+'
-+
-+test_done
+The same logic can be applied to moving all tracking information in
+the .git directory into objects. You then just need to track a single
+SHA1 pointing to the .git config info in the object db.
+
+Rollback in the object store is simple, just move the SHA1 in the
+config files back to where it was before the action was done. What we
+are missing is a way to rollback the config files.
+
 -- 
-1.5.3.5.1.gb2df9
+Jon Smirl
+jonsmirl@gmail.com
