@@ -1,84 +1,97 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: If you would write git from scratch now, what would you change?
-Date: Tue, 27 Nov 2007 15:11:39 +0100
-Message-ID: <474C259B.1000705@op5.se>
-References: <200711252248.27904.jnareb@gmail.com> <858x4l2apc.fsf@lola.goethe.zz> <alpine.LFD.0.99999.0711261417580.9605@xanadu.home>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH] setup_git_directory: Setup cwd properly if worktree is found
+Date: Tue, 27 Nov 2007 21:12:27 +0700
+Message-ID: <fcaeb9bf0711270612p52ce20eaue39eac1d529c3fd3@mail.gmail.com>
+References: <20071112112408.GA5420@laptop>
+	 <Pine.LNX.4.64.0711121139010.4362@racer.site>
+	 <fcaeb9bf0711120413w180c07e1qbf1b186753593d7@mail.gmail.com>
+	 <Pine.LNX.4.64.0711121224430.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: David Kastrup <dak@gnu.org>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Nov 27 15:12:11 2007
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Nov 27 15:13:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix1AV-0004Xs-8E
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 15:12:07 +0100
+	id 1Ix1BG-0004py-V1
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 15:12:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754225AbXK0OLr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 09:11:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753570AbXK0OLr
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 09:11:47 -0500
-Received: from mail.op5.se ([193.201.96.20]:49351 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753596AbXK0OLq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 09:11:46 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 6E3191F0803A;
-	Tue, 27 Nov 2007 15:11:45 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id MF4+hKRJKiyh; Tue, 27 Nov 2007 15:11:42 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 181B81F08037;
-	Tue, 27 Nov 2007 15:11:42 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <alpine.LFD.0.99999.0711261417580.9605@xanadu.home>
+	id S1754476AbXK0OMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 09:12:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754295AbXK0OMg
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 09:12:36 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:1720 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754099AbXK0OMf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 09:12:35 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so961911nfb
+        for <git@vger.kernel.org>; Tue, 27 Nov 2007 06:12:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=58sWmEjnCiLqdavwTK1UoRDIg80FkxzTb48ZnEAsHsI=;
+        b=k/gHfq3VkaWal5ir1O4gWsGjcdw1x7s6U7oJPr2fnhqNIut1Vd4R/NdMkLjy6XIis4SfMVWmIENZdTvrX+JQEDdeBuT9eWZfIpTBnjtROwNSLkcU0N1wqctXYU45N/duelsvBPZ1advUkr8bjbZhWDp8RUAgU+JDCIKTG+VLmG4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HnRBU9l8cQgBKNJT5JEwdQsKQ1fBWo0RnegjRHqJP6LD6xvMEPmF1rQmVFrDYe2szx/lpVZVzzwiUKrrKfiqHbjAmG2FIu8Btl5mHX2SzCX6QeqJGAebyGOZEpLBI2EyhSAsW/kVn9/LdhfMgzjN5VsxZQrCoHjJGPjUOsL5ry4=
+Received: by 10.86.76.16 with SMTP id y16mr3861881fga.1196172747697;
+        Tue, 27 Nov 2007 06:12:27 -0800 (PST)
+Received: by 10.86.83.6 with HTTP; Tue, 27 Nov 2007 06:12:27 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0711121224430.4362@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66213>
 
-Nicolas Pitre wrote:
-> On Mon, 26 Nov 2007, David Kastrup wrote:
-> 
->> Get rid of plumbing at the command line level.
-> 
-> We can't get rid of plumbing.  It is part of Git probably forever and is 
-> really really convenient for scripting in any language you want.  
-> 
-> The only valid argument IMHO is the way too large number of Git commands 
-> directly available from the cmdline.
-> 
-> The solution: make purely plumbing commands _not_ directly available 
-> from the command line. Instead, they can be available through 'git 
-> lowlevel <blah>' instead of 'git <blah>' and only 'git lowlevel' would 
-> stand in your shell default path.
-> 
-> Such a scheme can be implemented in parallel with the current one for a 
-> release while the direct plumbing commands are deprecated in order to 
-> give script authors a transition period to fix their code.
-> 
+On Nov 12, 2007 7:31 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Mon, 12 Nov 2007, Nguyen Thai Ngoc Duy wrote:
+>
+> > On Nov 12, 2007 6:57 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > > But what about setup_git_directory_gently()?  If the working tree is
+> > > overridden by the config, this function is still bogus, right?
+> >
+> > Hmm.. thinking a little bit more. I guess you're right because
+> > GIT_WORK_TREE takes precedence over core.worktree. Maybe some more bits
+> > for check_repository_format_version(). Tough decision because, from the
+> > value of inside_work_tree, we don't know if we can safely skip
+> > overriding inside_work_tree.
+>
+> I was thinking about adding check_repository_format_version() and a check
+> for inside_work_tree < 0 with obvious handling in two places, probably as
+> a function:  first, when we have a gitdirenv but no work_tree_env, and
+> second, at the end of _gently() when we found a git dir but only if
+> work_tree_env was not set.
+>
+> > > As far as I see, setup_git_directory_gently() only works correctly
+> > > when core.worktree is _not_ set, unless GIT_WORK_TREE is set (which is
+> > > supposed to override the config setting).  Note: I treat GIT_WORK_TREE
+> > > the same as --work-tree, since at that time they are identical.
+> > >
+> > > Maybe the config stuff has to move into _gently()?
+> >
+> > Well, it could be a bit more complicated because you need to know
+> > GIT_DIR first before reading config. I'd rather not move as _gently()
+> > is complicated already.
+>
+> AFAICT it is not a question of complexity, but of correctness.  Wouldn't
+> you agree that the prefix _gently() returns is wrong if we don't fix it?
+>
+> Besides, it might be needed anyway if we are serious about the version
+> check.  This check, however, would have to be done _whenever_ we found a
+> git directory, not only when work_tree_env is NULL.
 
-The "git-cmd" form of writing commands was deemed obsolete round about
-the time git.sh was rewritten in C. There's just no reason for it
-anymore.
-
-It's unfortunate that git-sh-setup makes it equally valid for scripts to
-use either form, as we can never get rid of the dashed form when so many
-scripts in the core distribution uses it.
-
-Ah well.
-
+Question time. setup_git_directory_gently() can be happy even if there
+is no repository. Now if we move version check into setup_..._gently
+and it finds git program is too old to handle the repository, what
+would we do? die() like in check_repository_format() or tell the
+caller there is no repository?
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Duy
