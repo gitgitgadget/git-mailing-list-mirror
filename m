@@ -1,73 +1,88 @@
-From: gapon <gapon007@gmail.com>
-Subject: git bug/feature request
-Date: Tue, 27 Nov 2007 11:27:41 +0100
-Message-ID: <200711271127.41161.gapon007@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: QGit: Shrink used memory with custom git log format
+Date: Tue, 27 Nov 2007 10:48:00 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711271045430.27959@racer.site>
+References: <e5bfff550711240014n78f24b46qf012957d92b1a8e1@mail.gmail.com>
+ <20071127015248.GK14735@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 27 11:28:23 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Marco Costalba <mcostalba@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Nov 27 11:48:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iwxfi-00062Y-Dl
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 11:28:06 +0100
+	id 1IwxzQ-0003k5-Kt
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 11:48:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753662AbXK0K1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 05:27:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754207AbXK0K1r
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 05:27:47 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:33174 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750808AbXK0K1q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 05:27:46 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so1200345ugc
-        for <git@vger.kernel.org>; Tue, 27 Nov 2007 02:27:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=Ge9+apuY6EJFPj5p9qfW1cWusNFDwt15Jar44tAYtDg=;
-        b=EoXgksWqCWDxz9XBOxqiiENzChRF3ocA1Y5QrNQkOvu7x7b35Gvn8oBh+cFh39DlIqQjv62MJ5+HT+hzHp28bybAGwbQjY6atf8Pd70v25H4hqgcdtafRKvBS2PFRSQTE3dQ6p9Dpu+80vV6iyoHA2KoCDbQJ7PXJLUp9TBWI9I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=tw33RggrLaiyLGkKeQo72s+z+png3msmgvlh3jJ1Uo3YuXZHNnvh4aQ8BZp3OedkLDkNINTWjM+dorM539DMUNbRfLKBWGbzEeTJ+FYQqoRKCEIK8y2lxafje5hLcxSBO6iElKew/Rf6tBFCcsmoD2dEpng7s1kOxwxACvcWRqg=
-Received: by 10.66.220.17 with SMTP id s17mr874538ugg.1196159265031;
-        Tue, 27 Nov 2007 02:27:45 -0800 (PST)
-Received: from dhcp-eprg06-20-185.czech.sun.com ( [192.9.112.196])
-        by mx.google.com with ESMTPS id e32sm4240619fke.2007.11.27.02.27.43
-        (version=SSLv3 cipher=OTHER);
-        Tue, 27 Nov 2007 02:27:44 -0800 (PST)
-User-Agent: KMail/1.9.7
-Content-Disposition: inline
+	id S1753195AbXK0KsJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 05:48:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752683AbXK0KsI
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 05:48:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51878 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752372AbXK0KsH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 05:48:07 -0500
+Received: (qmail invoked by alias); 27 Nov 2007 10:48:04 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp037) with SMTP; 27 Nov 2007 11:48:04 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+g3LgpE3Kg6I95+M0QwXTSUCvtVZ49nQ5RlwmZDv
+	f23ryENSTi1iT5
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071127015248.GK14735@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66182>
 
-hi all,
-first of all i don't know if there's a bugzilla or something similar for git - 
-i have found just this email (on http://git.or.cz/ webpage).
+Hi,
 
-i have discovered "weird" behaviour of git in this scenario*:
-- user A is working in repo A
-- user B clones repo A
-- user B makes some changes, commits, pushes
-- user A makes some changes, git status (no info about new commit in his repo 
-from user B but it's probably ok i'd say - but some of my files are marked as 
-changed and already added to index  but i haven't changed them - that's 
-confusing, isn't it?)
-- user A can commit his changes => shouldn't be there any info/message/warning 
-displayed? it would be helpful to have here some info about "foreign commit" 
-in the repo or something like this
+On Mon, 26 Nov 2007, Shawn O. Pearce wrote:
 
-hmm?
+> Marco Costalba <mcostalba@gmail.com> wrote:
+> > Now instead of --pretty=raw a custom made --pretty=format is given,
+> > this shrinks loaded data of 30% (17MB less on Linux tree) and gives a
+> > good speed up when you are low on memory (especially on big repos)
+> > 
+> > Next step _would_ be to load log message body on demand (another 50%
+> > reduction) but this has two drawbacks:
+> > 
+> > (1) Text search/filter on log message would be broken
+> > 
+> > (2) Slower to browse through revisions because for each revision an
+> > additional git-rev-list /git-log command should be executed to read
+> > the body
+> > 
+> > The second point is worsted by the fact that it is not possible to
+> > keep a command running and "open" like as example git-diff-tree
+> > --stdin and feed with additional revision's sha when needed. Avoiding
+> > the burden to startup a new process each time to read a new log
+> > message given an sha would let the answer much more quick especially
+> > on lesser OS's
+> > 
+> > Indeed there is a git-rev-list --stdin option but with different
+> > behaviour from git-diff-tree --stdin and not suitable for this.
+> 
+> There was a proposed patch for git-cat-file that would let you run
+> it in a --stdin mode; the git-svn folks wanted this to speed up
+> fetching raw objects from the repository.  That may help as you
+> could get commit bodies (in raw format - not reencoded format!)
+> quite efficiently.
+> 
+> Otherwise I think what you really want here is a libgit that you can
+> link into your process and that can efficiently inflate an object
+> on demand for you.  Like the work Luiz was working on this past
+> summer for GSOC.  Lots of downsides to that current tree though...
+> like die() kills the GUI...
 
-thanks for git, it's simply the best one!
-gapon
+But then, die() calls die_routine, which you can override.  And C++ has 
+this funny exception mechanism which just begs to be used here.  The only 
+thing you need to add is a way to flush all singletons like the object 
+array.
 
-* yes, i know that this scenario is "incorrect" but... it's possible and 
-therefore i think it should be somehow handled - i tried a similar one with 
-hg and bzr and i like their behaviour more
+Ciao,
+Dscho
