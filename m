@@ -1,93 +1,65 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 27 Nov 2007 10:08:29 -0500
-Message-ID: <20071127150829.GB3853@fieldses.org>
-References: <200711270622.lAR6MFXQ010010@mi0.bluebottle.com> <Pine.LNX.4.64.0711271109130.27959@racer.site> <alpine.LFD.0.99999.0711270917580.9605@xanadu.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [WIP PATCH] Add 'git fast-export', the sister of 'git fast-import'
+Date: Tue, 27 Nov 2007 15:10:41 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711271510090.27959@racer.site>
+References: <Pine.LNX.4.64.0711210336210.27959@racer.site> <fi5743$32p$1@ger.gmane.org>
+ <Pine.LNX.4.64.0711230050270.27959@racer.site>
+ <f329bf540711221723g2754ce03r4da6d429c45668c@mail.gmail.com>
+ <Pine.LNX.4.64.0711230149430.27959@racer.site> <20071123205958.GC14735@spearce.org>
+ <20071125170019.GB25800@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0711261647400.27959@racer.site>
+ <20071127101614.GB26072@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0711271123360.27959@racer.site>
+ <20071127145103.GA30020@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?utf-8?B?44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Nov 27 16:09:48 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, hanwen@xs4all.nl,
+	git@vger.kernel.org
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Nov 27 16:11:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix242-00027m-KU
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 16:09:31 +0100
+	id 1Ix25b-0002kL-DM
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 16:11:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756105AbXK0PIt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Nov 2007 10:08:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755910AbXK0PIt
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 10:08:49 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:38848 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755332AbXK0PIs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 10:08:48 -0500
-Received: from bfields by fieldses.org with local (Exim 4.68)
-	(envelope-from <bfields@fieldses.org>)
-	id 1Ix233-0002kc-6U; Tue, 27 Nov 2007 10:08:29 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.99999.0711270917580.9605@xanadu.home>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1755497AbXK0PKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 10:10:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755486AbXK0PKs
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 10:10:48 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35877 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755354AbXK0PKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 10:10:47 -0500
+Received: (qmail invoked by alias); 27 Nov 2007 15:10:45 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp043) with SMTP; 27 Nov 2007 16:10:45 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/PbdxJmHXPpV35thMW2qADnewgnUDF09g5dioHT2
+	6a01Rnn82+sonm
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071127145103.GA30020@diana.vm.bytemark.co.uk>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66224>
 
-On Tue, Nov 27, 2007 at 09:29:21AM -0500, Nicolas Pitre wrote:
-> On Tue, 27 Nov 2007, Johannes Schindelin wrote:
->=20
-> > Hi,
-> >=20
-> > On Tue, 27 Nov 2007, =E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=
-=81=AA=E3=81=93 wrote:
-> >=20
-> > > Was it coded poorly, buggy or were there some other issues?
-> >=20
-> > It is very well possible that it was coded poorly ;-)
-> >=20
-> > The main reason, I believe, was that some old-timers who know the=20
-> > implications said that it would encourage a wrong workflow.  One th=
-ing=20
-> > that could go possibly wrong, for example, is to rebase commits tha=
-t you=20
-> > already published.
->=20
-> Being much more involved in the maintenance of a published Git tree=20
-> lately, I must disagree with the "wrong workflow" statement.  Until t=
-he=20
-> stuff I maintain is finally merged upstream, I have to constantly=20
-> amend/replace/fold/split random commits in my repo to follow the revi=
-ew=20
-> cycles involved.  yet I have to publish the result to let others base=
-=20
-> their work on top of my latest tree.  A fetch+rebase is the only opti=
-on=20
-> for those following my tree, and I made it clear that they have to=20
-> rebase after a fetch because I constantly rebase commits that I have=20
-> already published myself.
+Hi,
 
-Right.  But a rebase "merge strategy" doesn't work for those people,
-because it's not possible in general for their git to know exactly whic=
-h
-part is their work (which needs to be rebased) and which is your old
-work (which should be discarded).  Manual inspection is required.
+On Tue, 27 Nov 2007, Karl Hasselstr?m wrote:
 
-> And in this case, constant rebasing is a perfectly fine work flow to =
-me.=20
+> On 2007-11-27 11:25:47 +0000, Johannes Schindelin wrote:
+> 
+> > Ah, so you would like something like "git --interactive"? This is 
+> > indeed a completely different scope than the fast-export thingie,
+> 
+> Yes. Or rather, I _think_ that's what I want. The only numbers I have is 
+> that StGit makes a number of trivial git calls that right now take on 
+> the order of 10 ms apiece, so the first step in this direction would be 
+> to build a simple prototype just to see what kind of speed-up one could 
+> expect (both in the git calls, and in StGit overall).
 
-Again, if you have people basing work on top of yours, I think the best
-option may really be to add a merge commit on top of each new version o=
-f
-the series with first parent the new series and second parent the
-previous history.
+I'd rather see you using libgit-thin's Python binding.
 
-That way the history does have the information necessary to rebase thei=
-r
-work automatically.
-
---b.
+Ciao,
+Dscho
