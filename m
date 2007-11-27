@@ -1,80 +1,73 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 27 Nov 2007 09:29:21 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0711270917580.9605@xanadu.home>
-References: <200711270622.lAR6MFXQ010010@mi0.bluebottle.com>
- <Pine.LNX.4.64.0711271109130.27959@racer.site>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: git bug/feature request
+Date: Tue, 27 Nov 2007 15:35:19 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0711271531110.1011@ds9.cixit.se>
+References: <200711271127.41161.gapon007@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_q51Tbf/zG2kVoDZcertsfw)"
-Cc: =?ISO-2022-JP?Q?=1B$B$i$$$7$J$J$3=1B=28J?= <nanako3@bluebottle.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Nov 27 15:29:55 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: gapon <gapon007@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 27 15:36:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix1RX-0003EE-Oy
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 15:29:44 +0100
+	id 1Ix1Xb-0005jb-VR
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 15:36:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754805AbXK0O3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 09:29:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754867AbXK0O3X
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 09:29:23 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:43625 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754355AbXK0O3W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 09:29:22 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JS6005TC5KXGZ90@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 27 Nov 2007 09:29:22 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <Pine.LNX.4.64.0711271109130.27959@racer.site>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1752456AbXK0Of1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 09:35:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754562AbXK0Of0
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 09:35:26 -0500
+Received: from ds9.cixit.se ([193.15.169.228]:60034 "EHLO ds9.cixit.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752372AbXK0OfZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 09:35:25 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id lAREZKnQ016641
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Nov 2007 15:35:20 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id lAREZJhP016635;
+	Tue, 27 Nov 2007 15:35:20 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <200711271127.41161.gapon007@gmail.com>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Tue, 27 Nov 2007 15:35:20 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66217>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+gapon:
 
---Boundary_(ID_q51Tbf/zG2kVoDZcertsfw)
-Content-type: TEXT/PLAIN; charset=ISO-2022-JP
-Content-transfer-encoding: 7BIT
+> i have discovered "weird" behaviour of git in this scenario*:
 
-On Tue, 27 Nov 2007, Johannes Schindelin wrote:
+Yeah, I have run into it several times myself, and that is being both
+user A and B at the same time. The problem seems to be that git allows
+you to push into a repository which has a check-out, causing it to
+change states in a subtle way. That's just plain broken.
 
-> Hi,
-> 
-> On Tue, 27 Nov 2007, しらいしななこ wrote:
-> 
-> > Was it coded poorly, buggy or were there some other issues?
-> 
-> It is very well possible that it was coded poorly ;-)
-> 
-> The main reason, I believe, was that some old-timers who know the 
-> implications said that it would encourage a wrong workflow.  One thing 
-> that could go possibly wrong, for example, is to rebase commits that you 
-> already published.
+Git should either handle it somehow (perhaps by forcing the push into a
+new branch, which the pushee needs name), or just plainly refuse to
+push into a repository with a check-out.
 
-Being much more involved in the maintenance of a published Git tree 
-lately, I must disagree with the "wrong workflow" statement.  Until the 
-stuff I maintain is finally merged upstream, I have to constantly 
-amend/replace/fold/split random commits in my repo to follow the review 
-cycles involved.  yet I have to publish the result to let others base 
-their work on top of my latest tree.  A fetch+rebase is the only option 
-for those following my tree, and I made it clear that they have to 
-rebase after a fetch because I constantly rebase commits that I have 
-already published myself.
+I have learned to work around this problem by always pulling between my
+repositories, not pulling. I could probably have worked around it by
+having a master repository that is bare, but I have found that
+difficult because I am tracking an upstream non-Git repository, so to
+push and pull changes from that, I need a repository where I can have a
+check-out.
 
-And in this case, constant rebasing is a perfectly fine work flow to me. 
-Otherwise I might just use Git as a glorified tarball downloader and use 
-quilt on top, but this is somehow not as appealing.
+> * yes, i know that this scenario is "incorrect" but... it's possible
+> and therefore i think it should be somehow handled - i tried a
+> similar one with hg and bzr and i like their behaviour more
 
+Yeah. It's even more irritating that recovering from the error state is
+difficult as well.
 
-Nicolas
-
---Boundary_(ID_q51Tbf/zG2kVoDZcertsfw)--
+-- 
+\\// Peter - http://www.softwolves.pp.se/
