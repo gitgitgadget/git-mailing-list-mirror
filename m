@@ -1,89 +1,149 @@
-From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWk=?= Ngoc Duy <pclouds@gmail.com>
-Subject: [PATCH] Move all dashed form git commands to libexecdir
-Date: Tue, 27 Nov 2007 23:04:23 +0700
-Message-ID: <20071127160423.GA22807@laptop>
-References: <20071127150229.GA14859@laptop>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 27 Nov 2007 11:14:47 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0711271047590.9605@xanadu.home>
+References: <200711270622.lAR6MFXQ010010@mi0.bluebottle.com>
+ <Pine.LNX.4.64.0711271109130.27959@racer.site>
+ <alpine.LFD.0.99999.0711270917580.9605@xanadu.home>
+ <20071127150829.GB3853@fieldses.org>
+ <alpine.LFD.0.99999.0711271013310.9605@xanadu.home>
+ <20071127153411.GA11731@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 27 17:06:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?ISO-2022-JP?Q?=1B$B$i$$$7$J$J$3=1B=28J?= <nanako3@bluebottle.com>,
+	Andreas Ericsson <ae@op5.se>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Tue Nov 27 17:15:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix2vw-0000ug-AB
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 17:05:40 +0100
+	id 1Ix35Z-0005RM-21
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 17:15:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758193AbXK0QEt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Nov 2007 11:04:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758088AbXK0QEs
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 11:04:48 -0500
-Received: from an-out-0708.google.com ([209.85.132.241]:28437 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758006AbXK0QEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 11:04:47 -0500
-Received: by an-out-0708.google.com with SMTP id d31so219354and
-        for <git@vger.kernel.org>; Tue, 27 Nov 2007 08:04:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
-        bh=gRD+VY+NoFB1PqbaCIkKeg1yzIBSSS6cUfzpYvMD4Zk=;
-        b=LodrZQdmRA1WaqS027q2RYOIxUCi0TZrWkYuYlzsldAV/X51+67FT1SacUmGUH0ao+qIYACRngTHwUrDsMY2YEgGtUZtrNd/f0yvdUZv2Ek/J5X6A+O1I4/OAXqhbXMh356we5OSqHT75XolFM4BLZr819KQwAEexNsxM513oyE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:date:from:to:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
-        b=IrnA1Jq+FQvGEkyBYGpFwZeCuSF5n7GQ58Uw4T3ZPNkqzqlKfOo2UioNLevOVbP8tMMRyXy6q0yYVkyK+SKqqFrSUpqa4n2IULbpMszQLiwPH/8AAWsXRGz0sG3iFN5klK8Km3ffZAJKibohgK3whaeVbiKlm5jnl6e2eyso7DU=
-Received: by 10.100.252.16 with SMTP id z16mr6810177anh.1196179486243;
-        Tue, 27 Nov 2007 08:04:46 -0800 (PST)
-Received: from pclouds@gmail.com ( [117.5.1.249])
-        by mx.google.com with ESMTPS id b7sm777648ana.2007.11.27.08.04.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 27 Nov 2007 08:04:45 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 27 Nov 2007 23:04:23 +0700
-Content-Disposition: inline
-In-Reply-To: <20071127150229.GA14859@laptop>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1754859AbXK0QOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 11:14:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756395AbXK0QOt
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 11:14:49 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:48196 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754355AbXK0QOs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 11:14:48 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JS600J2EAGN89B0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 27 Nov 2007 11:14:48 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20071127153411.GA11731@fieldses.org>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66234>
+
+On Tue, 27 Nov 2007, J. Bruce Fields wrote:
+
+> On Tue, Nov 27, 2007 at 10:19:53AM -0500, Nicolas Pitre wrote:
+> > On Tue, 27 Nov 2007, J. Bruce Fields wrote:
+> > 
+> > > On Tue, Nov 27, 2007 at 09:29:21AM -0500, Nicolas Pitre wrote:
+> > > > Being much more involved in the maintenance of a published Git tree 
+> > > > lately, I must disagree with the "wrong workflow" statement.  Until the 
+> > > > stuff I maintain is finally merged upstream, I have to constantly 
+> > > > amend/replace/fold/split random commits in my repo to follow the review 
+> > > > cycles involved.  yet I have to publish the result to let others base 
+> > > > their work on top of my latest tree.  A fetch+rebase is the only option 
+> > > > for those following my tree, and I made it clear that they have to 
+> > > > rebase after a fetch because I constantly rebase commits that I have 
+> > > > already published myself.
+> > > 
+> > > Right.  But a rebase "merge strategy" doesn't work for those people,
+> > > because it's not possible in general for their git to know exactly which
+> > > part is their work (which needs to be rebased) and which is your old
+> > > work (which should be discarded).  Manual inspection is required.
+> > 
+> > I don't follow.
+> > 
+> > Their work is always origin/master@{1}..HEAD after origin/master has 
+> > been updated through a fetch, and it needs to be rebased on 
+> > origin/master.
+> 
+> No, their work isn't always based on origin/master@{1}.  Often they've
+> got more than one project going.  If they try
+> 
+> 	git checkout project-1
+> 	git pull -s rebase
+> 	git checkout project-2
+> 	git pull -s rebase
+> 
+> what's going to happen?  What if project-2 has been on the back burner
+> for a few months and they're just getting around to rebasing it now?
+
+I don't see the problem.  They'll just have a possibly harder rebase due 
+to increased chances for conflicts than if they rebased more often, but 
+that's to be expected even with a merge.
+
+> What if their various projects are based on different upstream branches,
+> but the fetch done by git-pull updates them all at once?
+>  What if they
+> did a git fetch earlier just to peek at current development and are only
+> now getting around to updating their own branches?
+
+You are not _forced_ to use origin/master@{1} in that case -- I used 
+that notation only to illustrate the concept in Git terms.  What I tell 
+people to do is to tag their new base after the rebase is done, and to 
+use that tag after the next fetch to rebase again.
+
+I honnestly don't use such a tag myself because I think I know what I'm 
+doing when using Git, and therefore I know when origin/master@{1} refers 
+to what I really want.  But the point is that either that usage of 
+origin/master@{1}, or a dedicated tag, or whatever other means to 
+retrieve the previous base, could be handled implicitly by the porcelain 
+and the user wouldn't have to care as much.
+
+Thinking about it, there should be a way to find the proper base even 
+without explicitly recording it with a tag.  If it isn't 
+origin/master@{1}, it has to be the first of origin/master@{n} for
+n = [1, ...] reachable from the local work branch before rebasing.
+
+> And I don't think any of those are crazy corner cases; I know at least
+> that I do all of those things.
+
+Sure.  In which case you certainly fall into the "know what you're 
+doing" category too and certainly can find your way towards the proper 
+base ref to use.  But again I think that can be automated.
+
+> > > Again, if you have people basing work on top of yours, I think the best
+> > > option may really be to add a merge commit on top of each new version of
+> > > the series with first parent the new series and second parent the
+> > > previous history.
+> > > 
+> > > That way the history does have the information necessary to rebase their
+> > > work automatically.
+> > 
+> > And my repo will then be full of clutter which no one upstream will ever 
+> > accept to merge.  Can't do that.
+> 
+> No, it's no problem--you just submit branch^.  You probably want to give
+> it a throw-away name for the purpose of the request-pull message, e.g.:
+> 
+> 	git branch for-linus HEAD^
+> 	git push my-pub-repo for-linus
+> 
+> then delete for-linus after you see it merged.
+> 
+> But use for-linus only for that, and advertise "branch" as the base
+> people should be using for ongoing development.
+> 
+> I don't know, maybe it's too complicated.  But I think it's the only way
+> to get a really robust automated process for the people basing work on
+> your branch.
+
+It just looks too twisted for my taste when proper automatic rebase 
+without extra artifacts should be possible.
 
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Both configure and make-only ways should work now
-
- Makefile      |    2 +-
- config.mak.in |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 313f9a2..377d7be 100644
---- a/Makefile
-+++ b/Makefile
-@@ -154,7 +154,7 @@ STRIP ?=3D strip
-=20
- prefix =3D $(HOME)
- bindir =3D $(prefix)/bin
--gitexecdir =3D $(bindir)
-+gitexecdir =3D $(prefix)/libexec/git-core
- sharedir =3D $(prefix)/share
- template_dir =3D $(sharedir)/git-core/templates
- ifeq ($(prefix),/usr)
-diff --git a/config.mak.in b/config.mak.in
-index 11d256e..1db0338 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -11,7 +11,7 @@ TCLTK_PATH =3D @TCLTK_PATH@
- prefix =3D @prefix@
- exec_prefix =3D @exec_prefix@
- bindir =3D @bindir@
--#gitexecdir =3D @libexecdir@/git-core/
-+gitexecdir =3D @libexecdir@/git-core/
- datarootdir =3D @datarootdir@
- template_dir =3D @datadir@/git-core/templates/
-=20
---=20
-1.5.3.GIT
+Nicolas
