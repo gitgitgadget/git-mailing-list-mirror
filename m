@@ -1,63 +1,77 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Rollback of git commands
-Date: Tue, 27 Nov 2007 18:23:35 -0500
-Message-ID: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Add 'git fast-export', the sister of 'git fast-import'
+Date: Wed, 28 Nov 2007 00:40:30 +0100
+Organization: At home
+Message-ID: <fii9ta$b2j$1@ger.gmane.org>
+References: <Pine.LNX.4.64.0711252236350.4725@wbgn129.biozentrum.uni-wuerzburg.de> <20071127020842.GN14735@spearce.org> <Pine.LNX.4.64.0711271127440.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 28 00:24:24 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 28 00:41:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix9mv-0003am-Uk
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 00:24:22 +0100
+	id 1IxA3I-0000CK-BA
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 00:41:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755764AbXK0XXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 18:23:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756157AbXK0XXh
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 18:23:37 -0500
-Received: from rv-out-0910.google.com ([209.85.198.187]:23365 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755764AbXK0XXg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 18:23:36 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1049762rvb
-        for <git@vger.kernel.org>; Tue, 27 Nov 2007 15:23:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=HkxwnsqN4P6ZvJCRGbg9F24XMSUYb+Pwpe+BCTwPRfc=;
-        b=lsZ99nh5e1PbV1YzoGb1LbXBFX+dQ8F4fuQ+JOFHHJngNGeiVhZLNdOUXICKOa1UuZZIYYiFlzJ685ZfoRn0VgnFrjOpGXeD6TPjoH6TeTZ6soTfLJR4XcLPZEmf8U1tpvQZbxXuIF4CERy/+cBNczMx9MnofY9yddQ3jYfU5YY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=j0xbqD1Fcays46xSKykAmfgsnFUVpsdyR2UOyrT9g6QkesIOHly4FNVmuE/tufUdyZ9lT/JQadOmRJcFPrEI9uCjgTzkbESMNgeTeztEo2p+vTMGF4p81yhHqBon50NX81Atjd0Nu5HiPIqlBrQod4wyQpC8eHkYteY7A7B/XLA=
-Received: by 10.115.59.4 with SMTP id m4mr265952wak.1196205815430;
-        Tue, 27 Nov 2007 15:23:35 -0800 (PST)
-Received: by 10.114.160.3 with HTTP; Tue, 27 Nov 2007 15:23:35 -0800 (PST)
-Content-Disposition: inline
+	id S1757819AbXK0Xk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 18:40:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757032AbXK0Xk5
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 18:40:57 -0500
+Received: from main.gmane.org ([80.91.229.2]:50941 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753479AbXK0Xk4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 18:40:56 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IxA2j-00010B-Uh
+	for git@vger.kernel.org; Tue, 27 Nov 2007 23:40:41 +0000
+Received: from abvx114.neoplus.adsl.tpnet.pl ([83.8.221.114])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Nov 2007 23:40:41 +0000
+Received: from jnareb by abvx114.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Nov 2007 23:40:41 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvx114.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66274>
 
-Could a rollback log be implemented in git? It would make things way
-easier when you screw something up.You'd only roll back things that
-impacted the object store, not things like checkout.
+Johannes Schindelin wrote:
 
-stg is also starting to store significant state in the .git directory.
-It may be better to move this state into a git object. That would
-allow the state history to be tracked and rollback be implemented.
+> On Mon, 26 Nov 2007, Shawn O. Pearce wrote:
 
-The same logic can be applied to moving all tracking information in
-the .git directory into objects. You then just need to track a single
-SHA1 pointing to the .git config info in the object db.
+>> I think this should be prefixed by fast-import patch to teach it 
+>> something like "encoding N" as a subcommand of commit, so that you can 
+>> feed data in a non UTF-8 encoding and get it to include the proper 
+>> encoding header in the commit object it creates.  That way a pipeline 
+>> like the above really does create a duplicate repository, with the same 
+>> commit SHA-1s, even if the commits weren't in UTF-8.
+> 
+> IMHO it's not worth that hassle.  People who want to use fast-import 
+> usually want something fast which works, and not bother with specifying 
+> encodings.
 
-Rollback in the object store is simple, just move the SHA1 in the
-config files back to where it was before the action was done. What we
-are missing is a way to rollback the config files.
+Well, when I am converting some repository which uses legacy encoding
+(not utf-8), I'd like to use this git feature of specifying encoding;
+actually, to be generic, it could be any header which would be added to
+all created commit objects.
+
+Yes, I could reencode commit messages...
+
+
+P.S. One nice use of proposed (at one time) 'note' header would be to
+save revision identifier from the version control system you import
+(CVS revision number, Subversion sequential revision number, etc.).
 
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
