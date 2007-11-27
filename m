@@ -1,81 +1,101 @@
-From: Jing Xue <jingxue@digizenstudio.com>
-Subject: Re: If you would write git from scratch now, what would you
-	change?
-Date: Tue, 27 Nov 2007 12:33:46 -0500
-Message-ID: <20071127123346.o2e0jb9hc4k40w8o@intranet.digizenstudio.com>
-References: <200711252248.27904.jnareb@gmail.com>
-	<fiet88$68n$1@ger.gmane.org>
+From: "Medve Emilian" <Emilian.Medve@freescale.com>
+Subject: RE: [PATCH] Remove git-status from list of scripts as it is builtin
+Date: Tue, 27 Nov 2007 10:00:50 -0700
+Message-ID: <598D5675D34BE349929AF5EDE9B03E2701827FEA@az33exm24.fsl.freescale.net>
+References: <20071123203508.GA6797@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
-	charset=UTF-8;
-	DelSp="Yes";
-	format="flowed"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 18:35:15 2007
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 27 18:45:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix4Ku-0006VT-0d
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 18:35:04 +0100
+	id 1Ix4V2-0002i0-2N
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 18:45:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757104AbXK0Reo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 12:34:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756565AbXK0Reo
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 12:34:44 -0500
-Received: from k2smtpout06-02.prod.mesa1.secureserver.net ([64.202.189.103]:43141
-	"HELO k2smtpout06-02.prod.mesa1.secureserver.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756091AbXK0Ren (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 12:34:43 -0500
-Received: (qmail 14608 invoked from network); 27 Nov 2007 17:33:47 -0000
-Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
-  by k2smtpout06-02.prod.mesa1.secureserver.net (64.202.189.103) with ESMTP; 27 Nov 2007 17:33:47 -0000
-Received: from localhost (unknown [127.0.0.1])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 93C9210007A;
-	Tue, 27 Nov 2007 17:33:47 +0000 (UTC)
-Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
-	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KjyS+vdHfrFr; Tue, 27 Nov 2007 12:33:47 -0500 (EST)
-Received: by ip-72-167-33-213.ip.secureserver.net (Postfix, from userid 48)
-	id 04184100A5E; Tue, 27 Nov 2007 12:33:46 -0500 (EST)
-Received: from mailrelay2.private.geico.com (mailrelay2.private.geico.com
-	[205.143.204.198]) by intranet.digizenstudio.com (Horde MIME library) with
-	HTTP; Tue, 27 Nov 2007 12:33:46 -0500
-In-Reply-To: <fiet88$68n$1@ger.gmane.org>
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
+	id S1757073AbXK0RpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 12:45:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756781AbXK0RpL
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 12:45:11 -0500
+Received: from de01egw02.freescale.net ([192.88.165.103]:37620 "EHLO
+	de01egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756565AbXK0RpK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Nov 2007 12:45:10 -0500
+Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
+	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id lARHhKiG012438
+	for <git@vger.kernel.org>; Tue, 27 Nov 2007 10:45:06 -0700 (MST)
+Received: from az33exm24.fsl.freescale.net (az33exm24.am.freescale.net [10.64.32.14])
+	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id lARH0rOa018158
+	for <git@vger.kernel.org>; Tue, 27 Nov 2007 11:00:53 -0600 (CST)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <20071123203508.GA6797@spearce.org>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [PATCH] Remove git-status from list of scripts as it is builtin
+thread-index: AcguEGQmvi7rJ2qQRWej63wetkDPkgDBpNGg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66248>
+
+Hi Shawn,
 
 
-Quoting Andy Parkins <andyparkins@gmail.com>:
+That does the trick. Thanks.
 
->  - "index", "cached" and "stage" are a definite source of confusion
 
-Hear, hear.
+Cheers,
+Emil.
 
->  - "git add" and "git rm" would be nicer as "git stage" and "git unstage"
->    (or something similar)
 
-Not sure it would be that easy. (As I have just learned recently) "git  
-rm" is the opposite of "git add" _only_ in the case of  
-files-not-previously-tracked. And the opposite of "git add <file>" for  
-files-already-being-tracked is "git reset HEAD -- <file>", which is  
-probably where you were going with "git unstage" 8-) .
-
->  - libgit would have come first
->  - "git revert" should be called "git invert"
->  - "git revert" would (maybe) be "git reset"
->  - "git clone" wouldn't exist
-
-Why?  AFAIC, git clone works out quite well - both functionality and  
-naming wise.
-
-Cheers.
--- 
-Jing Xue
+> -----Original Message-----
+> From: git-owner@vger.kernel.org 
+> [mailto:git-owner@vger.kernel.org] On Behalf Of Shawn O. Pearce
+> Sent: Friday, November 23, 2007 2:35 PM
+> To: Junio C Hamano
+> Cc: git@vger.kernel.org
+> Subject: [PATCH] Remove git-status from list of scripts as it 
+> is builtin
+> 
+> Now that git-status is builtin on Cygwin this compiles as
+> git-status.exe.  We cannot continue to include git-status
+> as a Makefile target as it will never be built.
+> 
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> ---
+> 
+>  I apologize if this is a dupe; I haven't had a chance to read
+>  the list traffic to see what has been posted and what hasn't.
+>  I'll be offline for the next few days so I figured I should get
+>  this out there now, just in case anyone else might run into the
+>  same problem I did.
+> 
+>  Makefile |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index 313f9a2..a5a40ce 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -233,7 +233,7 @@ SCRIPT_PERL = \
+>  
+>  SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
+>  	  $(patsubst %.perl,%,$(SCRIPT_PERL)) \
+> -	  git-status git-instaweb
+> +	  git-instaweb
+>  
+>  # ... and all the rest that could be moved out of bindir to 
+> gitexecdir
+>  PROGRAMS = \
+> -- 
+> 1.5.3.6.1936.gc44a9
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
