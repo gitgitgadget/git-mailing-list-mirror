@@ -1,115 +1,83 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 27 Nov 2007 16:18:02 +0100
-Message-ID: <474C352A.2080708@op5.se>
-References: <200711270622.lAR6MFXQ010010@mi0.bluebottle.com> <Pine.LNX.4.64.0711271109130.27959@racer.site> <474C1F80.5060404@op5.se> <Pine.LNX.4.64.0711271352050.27959@racer.site>
+Date: Tue, 27 Nov 2007 10:19:53 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0711271013310.9605@xanadu.home>
+References: <200711270622.lAR6MFXQ010010@mi0.bluebottle.com>
+ <Pine.LNX.4.64.0711271109130.27959@racer.site>
+ <alpine.LFD.0.99999.0711270917580.9605@xanadu.home>
+ <20071127150829.GB3853@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?ISO-2022-JP?Q?=1B$B$i$$$7$J$J$3=1B=28J?= <nanako3@bluebottle.com>,
+	Andreas Ericsson <ae@op5.se>,
 	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Nov 27 16:18:48 2007
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Tue Nov 27 16:20:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix2Ck-0005lc-JG
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 16:18:31 +0100
+	id 1Ix2EY-0006Zt-Ps
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 16:20:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755636AbXK0PSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 10:18:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755901AbXK0PSK
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 10:18:10 -0500
-Received: from mail.op5.se ([193.201.96.20]:33512 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755616AbXK0PSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 10:18:09 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id F22061F0803C;
-	Tue, 27 Nov 2007 16:18:07 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id YGRtFpiq9CFQ; Tue, 27 Nov 2007 16:18:07 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id D75E21F08037;
-	Tue, 27 Nov 2007 16:18:05 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <Pine.LNX.4.64.0711271352050.27959@racer.site>
+	id S1756567AbXK0PT4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 10:19:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756664AbXK0PT4
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 10:19:56 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:54061 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756317AbXK0PTz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 10:19:55 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JS600L0H7X5U1K0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 27 Nov 2007 10:19:54 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20071127150829.GB3853@fieldses.org>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66228>
 
-Johannes Schindelin wrote:
-> Hi,
+On Tue, 27 Nov 2007, J. Bruce Fields wrote:
+
+> On Tue, Nov 27, 2007 at 09:29:21AM -0500, Nicolas Pitre wrote:
+> > Being much more involved in the maintenance of a published Git tree 
+> > lately, I must disagree with the "wrong workflow" statement.  Until the 
+> > stuff I maintain is finally merged upstream, I have to constantly 
+> > amend/replace/fold/split random commits in my repo to follow the review 
+> > cycles involved.  yet I have to publish the result to let others base 
+> > their work on top of my latest tree.  A fetch+rebase is the only option 
+> > for those following my tree, and I made it clear that they have to 
+> > rebase after a fetch because I constantly rebase commits that I have 
+> > already published myself.
 > 
-> On Tue, 27 Nov 2007, Andreas Ericsson wrote:
+> Right.  But a rebase "merge strategy" doesn't work for those people,
+> because it's not possible in general for their git to know exactly which
+> part is their work (which needs to be rebased) and which is your old
+> work (which should be discarded).  Manual inspection is required.
+
+I don't follow.
+
+Their work is always origin/master@{1}..HEAD after origin/master has 
+been updated through a fetch, and it needs to be rebased on 
+origin/master.
+
+> > And in this case, constant rebasing is a perfectly fine work flow to me. 
 > 
->> Johannes Schindelin wrote:
->>
->>>  One thing that could go possibly wrong, for example, is to rebase 
->>> commits that you already published.
->> For the vast majority of git users, that's a non-issue as "published" is 
->> usually defined as "pushed to the publicly advertised watering hole".
+> Again, if you have people basing work on top of yours, I think the best
+> option may really be to add a merge commit on top of each new version of
+> the series with first parent the new series and second parent the
+> previous history.
 > 
-> No.  This is only the "vast majority of git users told by their peers to 
-> use a central repository".
-> 
+> That way the history does have the information necessary to rebase their
+> work automatically.
+
+And my repo will then be full of clutter which no one upstream will ever 
+accept to merge.  Can't do that.
 
 
-Let me rephrase.
-For any project large enough to want to attract random hackers, there
-will always be a single repository considered the public "master repo".
-For such projects code is most likely considered "published" when the
-code hits that repository (or some middle-stage on its way to it).
-
-It has to do with communication and convenience. When the code reaches
-that master repo it's no longer easy to communicate the fact that it
-has been rebased to everyone it's been published to.
-
-
-> Just because you use git like cvs does not mean that you "use git".
-> 
-
-I suppose Junio and Linus don't "use git" either then, as they're both
-in control of at least one such "master repo" each. Ah well. At least
-I'm in good company.
-
-
->> Yes, I'm aware that git is distributed. That doesn't mean that it's not 
->> convenient to have one single place where all code meant to be released 
->> eventually ends up.
-> 
-> It may be convenient for you.  I do not like it.
-
-
-It's not only convenient for me. It's convenient for the tens of thousands
-of people working on the Linux kernel to have a single place to go to for
-that one repository that somehow fathers all the tarballs.
-
-So long as it's a small group of developers working on something, it's
-obviously not necessary to provide such a place, but when you want to
-attract the huge anonymous coders that you've never spoken to, you need
-a single place to post the latest and greatest.
-
-
->  Yes, I even made the 
-> mistake with msysGit.  In the end, it would have been much more 
-> intelligent to set up a repository which others would have had to fork 
-> from.
-> 
-
-So? Any new developer wanting to work on it will still try to locate
-the public copy of the "master repo" to start their fork from.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Nicolas
