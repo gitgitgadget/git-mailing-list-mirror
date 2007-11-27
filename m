@@ -1,57 +1,44 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: git bug/feature request
-Date: Tue, 27 Nov 2007 17:36:12 +0100
-Message-ID: <81b0412b0711270836g775796c0mfeb76191dc78762d@mail.gmail.com>
-References: <200711271127.41161.gapon007@gmail.com>
-	 <200711271231.51270.gapon007@gmail.com>
-	 <81b0412b0711270503s7e69be3bn151cfa58b8067f35@mail.gmail.com>
-	 <200711271445.47695.gapon007@gmail.com>
+From: Emanuele Giaquinta <e.giaquinta@glauco.it>
+Subject: git-cvsimport bug
+Date: Tue, 27 Nov 2007 16:01:36 +0100
+Message-ID: <20071127150136.GA50697@orion.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gapon <gapon007@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 17:37:18 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 27 17:37:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix3QP-0006J2-FH
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 17:36:41 +0100
+	id 1Ix3R2-0006ac-MK
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 17:37:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755426AbXK0QgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 11:36:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754929AbXK0QgU
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 11:36:20 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:40113 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751261AbXK0QgT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 11:36:19 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1021238nfb
-        for <git@vger.kernel.org>; Tue, 27 Nov 2007 08:36:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=VVvxwjVXXL6K5yRyK5t3/LCbzN44kdc90XJeGH/DL+M=;
-        b=KbkuPBT1IARkrMBvyj2fFQTYNIp8v7gnXuqAyalIdBCRaN59fhKMA54YMKDN+kLQoXyfUMdzODoMkohE4Xy3RTHCPV0tkFHrJsytvp3ITF936YbzXKkUeeDqCHdBWPs7cRph1BvtBXcKu1BLNqwDt2XBempHJ1Z0Se96WjDmfN8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jKgXcwy0paQI9XVmkPK8sNwtg0Q6uDt3DI62dXVHRmYiw6M+MNNOEwFDCDfPf9mMB+BSU9q6eF0qqS0jWrv46/sXx52YZCtw5yhMylTcfwk9J3ahrvYZa5Nrv3wNNYyLilgUcftwd3N3FEi8c8CsZ3Gh8k/W8j/tCvfD/Vp96zw=
-Received: by 10.78.21.7 with SMTP id 7mr4493022huu.1196181372073;
-        Tue, 27 Nov 2007 08:36:12 -0800 (PST)
-Received: by 10.78.120.4 with HTTP; Tue, 27 Nov 2007 08:36:12 -0800 (PST)
-In-Reply-To: <200711271445.47695.gapon007@gmail.com>
+	id S1755878AbXK0QhA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 11:37:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755819AbXK0QhA
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 11:37:00 -0500
+Received: from 62-101-89-40.ip.fastwebnet.it ([62.101.89.40]:4343 "HELO
+	mx0.glauco.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1755516AbXK0Qg7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 11:36:59 -0500
+X-Greylist: delayed 5689 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Nov 2007 11:36:59 EST
+Received: FROM pcnmail BY mx0.glauco.it ; Tue Nov 27 16:02:04 2007 +0100
+Received: FROM localhost ([87.6.101.174]) BY pcnmail WITH ESMTP ; Tue, 27 Nov 2007 16:02:02 +0100
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66238>
 
-On 27/11/2007, gapon <gapon007@gmail.com> wrote:
-> > Well... It is known problem, for one. That user B of yours, did he just
-> > cloned user A's repo?
->
-> yes, i can paste here all the scenario step by step if you want
+Hi,
 
-No, thanks. It is easy to reproduce
+a call to git-cvsimport after a 'git-pack-refs --all' seems to mess up
+the origin branch, because the first new change is committed with no
+parent (git-cvsimport reports 'Parent ID (empty)').
+It does not happen if I disable loose refs pruning with --no-prune. A
+tiny test repo you can use to reproduce the problem is
+mextli.tomaw.net/~exg/lzf.tar. Is it expected?
+
+Thanks,
+
+Emanuele Giaquinta
