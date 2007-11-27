@@ -1,52 +1,78 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [WIP PATCH] Add 'git fast-export', the sister of 'git fast-import'
-Date: Tue, 27 Nov 2007 15:51:03 +0100
-Message-ID: <20071127145103.GA30020@diana.vm.bytemark.co.uk>
-References: <Pine.LNX.4.64.0711210336210.27959@racer.site> <fi5743$32p$1@ger.gmane.org> <Pine.LNX.4.64.0711230050270.27959@racer.site> <f329bf540711221723g2754ce03r4da6d429c45668c@mail.gmail.com> <Pine.LNX.4.64.0711230149430.27959@racer.site> <20071123205958.GC14735@spearce.org> <20071125170019.GB25800@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0711261647400.27959@racer.site> <20071127101614.GB26072@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0711271123360.27959@racer.site>
+From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: [PATCH RFC] Move all dashed form git commands to libexecdir
+Date: Tue, 27 Nov 2007 22:02:29 +0700
+Message-ID: <20071127150229.GA14859@laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, hanwen@xs4all.nl,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Nov 27 15:51:55 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 27 16:03:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix1mm-0003Pr-5G
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 15:51:40 +0100
+	id 1Ix1xk-0007uW-Jy
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 16:03:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757941AbXK0OvT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Nov 2007 09:51:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757926AbXK0OvT
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 09:51:19 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1970 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757888AbXK0OvR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 09:51:17 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Ix1mB-0007qQ-00; Tue, 27 Nov 2007 14:51:03 +0000
+	id S1754731AbXK0PCl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Nov 2007 10:02:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752478AbXK0PCl
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 10:02:41 -0500
+Received: from an-out-0708.google.com ([209.85.132.241]:52672 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752893AbXK0PCk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 10:02:40 -0500
+Received: by an-out-0708.google.com with SMTP id d31so212969and
+        for <git@vger.kernel.org>; Tue, 27 Nov 2007 07:02:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
+        bh=wwRiroShaGjWGGqne/aGJ6+CLXm1l+FNbuaqwqCxFlQ=;
+        b=k57ci1Mc+MVQtuCIKku59rM9Hx12iALeQp6eqPC6BpIFUVtyivEFx24HkSn2II0M6ggUlSMOAaLR7IPaBh/0+QjLLvEw2FrPWzZptux8xwTf7KZYGIZJMkrl2zcDI/zhkQS2LVAN/cgyOrlYx/nmKTWx9KWXD0F51ucw1qOugJI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
+        b=jmPodqe+cP9i/J/i10rApAuptECA+bj33jGAAq13WuaPrZuj0yGFX1afn4o56RHLMNriNyKVcqeNSoOdZSfnk37g4/j8OHuf2P9i1WmxXccjFP7f8cpOighMLlUe4UPbR5fM+2gG6kezQCIHoCIfv+1YFTQwmDBQuPqcbgc8a4Y=
+Received: by 10.100.249.9 with SMTP id w9mr6680548anh.1196175759749;
+        Tue, 27 Nov 2007 07:02:39 -0800 (PST)
+Received: from pclouds@gmail.com ( [117.5.1.249])
+        by mx.google.com with ESMTPS id d24sm4082804and.2007.11.27.07.02.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 27 Nov 2007 07:02:39 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 27 Nov 2007 22:02:29 +0700
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711271123360.27959@racer.site>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66222>
 
-On 2007-11-27 11:25:47 +0000, Johannes Schindelin wrote:
 
-> Ah, so you would like something like "git --interactive"? This is
-> indeed a completely different scope than the fast-export thingie,
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ We have talked about it for quite some time now. How about
+ making it happen? I won't miss dashed form commands much :)
 
-Yes. Or rather, I _think_ that's what I want. The only numbers I have
-is that StGit makes a number of trivial git calls that right now take
-on the order of 10 ms apiece, so the first step in this direction
-would be to build a simple prototype just to see what kind of speed-up
-one could expect (both in the git calls, and in StGit overall).
+ A compromised approach could be keeping porcelain commands
+ in bindir, only plumbings are moved to libexecdir. That would
+ be less shock than this.
 
+ config.mak.in |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/config.mak.in b/config.mak.in
+index 11d256e..1db0338 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -11,7 +11,7 @@ TCLTK_PATH =3D @TCLTK_PATH@
+ prefix =3D @prefix@
+ exec_prefix =3D @exec_prefix@
+ bindir =3D @bindir@
+-#gitexecdir =3D @libexecdir@/git-core/
++gitexecdir =3D @libexecdir@/git-core/
+ datarootdir =3D @datarootdir@
+ template_dir =3D @datadir@/git-core/templates/
+=20
 --=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+1.5.3.GIT
