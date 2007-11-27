@@ -1,39 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Rebase/cherry-picking idea
-Date: Mon, 26 Nov 2007 20:08:01 -0500
-Message-ID: <20071127010801.GF14735@spearce.org>
-References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com> <C3971B37-F75A-40EE-B30A-E88E5DAFAD55@lrde.epita.fr> <D21294CA-6FD0-40F5-B0D6-5155865DA69A@wincent.com> <CDF48716-F198-4B33-A5F5-8A2DE1F177EB@wincent.com> <474AC136.8060906@viscovery.net> <7vy7ckgbpf.fsf@gitster.siamese.dyndns.org>
+Subject: Re: If you would write git from scratch now, what would you change?
+Date: Mon, 26 Nov 2007 20:20:13 -0500
+Message-ID: <20071127012013.GG14735@spearce.org>
+References: <200711252248.27904.jnareb@gmail.com> <fiet88$68n$1@ger.gmane.org> <e5bfff550711261125i92fb057i85d7217b18cd495d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Wincent Colaiuta <win@wincent.com>,
-	Benoit Sigoure <tsuna@lrde.epita.fr>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 02:08:29 2007
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 27 02:20:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iwow8-0004S9-SA
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 02:08:29 +0100
+	id 1Iwp7u-0007dw-94
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 02:20:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754818AbXK0BIK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 20:08:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754433AbXK0BIJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 20:08:09 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:41532 "EHLO
+	id S1754685AbXK0BUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 20:20:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754724AbXK0BUT
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 20:20:19 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:42099 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754586AbXK0BII (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 20:08:08 -0500
+	with ESMTP id S1754207AbXK0BUR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 20:20:17 -0500
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1IwovZ-0004ll-2S; Mon, 26 Nov 2007 20:07:53 -0500
+	id 1Iwp7N-0007HN-3g; Mon, 26 Nov 2007 20:20:05 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id D171220FBAE; Mon, 26 Nov 2007 20:08:01 -0500 (EST)
+	id F1B1A20FBAE; Mon, 26 Nov 2007 20:20:13 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <7vy7ckgbpf.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <e5bfff550711261125i92fb057i85d7217b18cd495d@mail.gmail.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -43,29 +40,53 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66151>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> I would not object to renaming all of them to have the leading
-> underscore, though.  That would make it clear that they are very
-> different from ordinary environment variables for the user to set
-> (e.g. GIT_INDEX_FILE, GIT_AUTHOR_NAME).  Does any third party tool like
-> qgit already use GITHEAD_${objectname} and/or GIT_REFLOG_ACTION?
+Marco Costalba <mcostalba@gmail.com> wrote:
+> On Nov 26, 2007 5:46 PM, Andy Parkins <andyparkins@gmail.com> wrote:
+> > Jakub Narebski wrote:
+> >
+> > > If you would write git from scratch now, from the beginning, without
+> > > concerns for backwards compatibility, what would you change, or what
+> > > would you want to have changed?
+> >
+> >  - "git-gui" would be written in Qt (ducks)
+> 
+> But...wait...Qt would require...(I'm scared to say!)... that awful,
+> painful, hopeless thing called C++. Probably you didn't mean what you
+> said ;-)
 
-git-gui apparently doesn't use either name right now.  It avoids
-needing to use GIT_REFLOG_ACTION by invoking only plumbing, except
-in the case of git-merge, where it invokes git-merge and thus avoids
-the need to set GITHEAD_* to get conflict markers right when the
-recursive strategy gets used.
+Heh.
 
-I had started to replace git-merge in Tcl and have git-gui directly
-invoke merge-recursive but I haven't gotten around to really
-doing that.
+I'll never port git-gui to Qt.  Because of that awful, painful
+thing called C++ that it uses.  I despise C++.  No, please don't
+start a C++ language war again on the list.  :-)
 
-So I guess we could rename those two "internal" environment variables
-to use a leading _ to make them different from "user level" variables,
-but why change them now?  I really don't see a compelling reason to
-break that part of the "API" between porcelain/plumbing.
+
+I recently considered porting git-gui to XUL, as nobody has ever
+said "Firefox isn't native enough on my OS!".  It also (maybe) has
+the benefit of having a large developer base (everyone and their
+dog has coded in HTML and Javascript before, except maybe Linus).
+
+But XUL doesn't support launching a process and connecting pipes
+to its stdin and stdout.  I started to try and create an XPCOM
+extension to provide that functionality from NSPR and started to
+run into major problems compiling the XPCOM plugin, getting the
+necessary interfaces implemented, etc.
+
+In the end I was able to recreate the bulk of the main git-gui UI in
+XUL in just an hour or so, but spent days trying to just do a basic
+thing like "git diff-index --cached -z HEAD" and consume the result.
+I never even got that to work so I just gave up on the idea.
+
+
+So git-gui is in Tcl/Tk for the long-term.  However I'm going
+to try and port git-gui over to the Tcl/Tk 8.5 "tiles" extension
+(if it is available on your system) so we can get better looking
+native widgets.  I'll still fall back to the old style widgets for
+Tcl/Tk 8.4 so existing users aren't forced to upgrade to 8.5 just
+to use the latest git-gui.  (But really, 8.5 isn't that hard to
+build and install...)
 
 -- 
 Shawn.
