@@ -1,72 +1,59 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: If you would write git from scratch now, what would you change?
-Date: Tue, 27 Nov 2007 01:12:10 -0500
-Message-ID: <20071127061210.GP14735@spearce.org>
-References: <200711252248.27904.jnareb@gmail.com> <20071127014804.GJ14735@spearce.org> <alpine.LFD.0.99999.0711262346410.9605@xanadu.home> <56b7f5510711262159x2e1fd4fdw8e914cb4a22376a1@mail.gmail.com>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 27 Nov 2007 15:21:44 +0900
+Message-ID: <200711270622.lAR6MFXQ010010@mi0.bluebottle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nicolas Pitre <nico@cam.org>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 07:12:37 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Nov 27 07:22:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwtgS-00068U-B8
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 07:12:36 +0100
+	id 1IwtqA-000823-Sm
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 07:22:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750936AbXK0GMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 01:12:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750817AbXK0GMS
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 01:12:18 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:52320 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750799AbXK0GMR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 01:12:17 -0500
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Iwtg6-00053I-As; Tue, 27 Nov 2007 01:12:14 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 84D8B20FBAE; Tue, 27 Nov 2007 01:12:10 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <56b7f5510711262159x2e1fd4fdw8e914cb4a22376a1@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751438AbXK0GWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 01:22:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbXK0GWQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 01:22:16 -0500
+Received: from mi0.bluebottle.com ([206.188.25.15]:50441 "EHLO
+	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750714AbXK0GWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 01:22:16 -0500
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id lAR6MFXQ010010
+	for <git@vger.kernel.org>; Mon, 26 Nov 2007 22:22:15 -0800
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:cc:date:subject:mime-version:
+	content-type:content-transfer-encoding:x-trusted-delivery;
+	b=DooURqbFWfIyQ3ek/Ac0GV66fslAU6AS/EkwAxSr2Lm6eS9QgAL6O9/lmVo4TftoX
+	wvBf5gdhceMu9R9yx6+lJZkBjhXJ90klcsNLjetFR2/9hdI7oQ/Opq80JR6yKPU
+Received: from nanako3.mail.bluebottle.com ([212.62.97.21])
+	(authenticated bits=0)
+	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id lAR6LusV024649
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 26 Nov 2007 22:22:06 -0800
+X-Trusted-Delivery: <7b0c75e38dd9fb89e94e0d3fe233575b>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66170>
 
-Dana How <danahow@gmail.com> wrote:
-> On Nov 26, 2007 8:58 PM, Nicolas Pitre <nico@cam.org> wrote:
-> >
-> > It is a bit cumbersome indeed, but I'm afraid we're really stuck with it
-> > since every object SHA1 depends on that format.
-> 
-> Yes,  now I remember: this was the same argument you used to
-> convince me that losing the "new" (deprecated) loose format was OK.
-> 
-> However,  if we changed
-> WRITE(DEFLATE(SHA1("$type $size\0$data")))
-> (where SHA1(x) = x but has the side-effect of updating the SHA-1)
-> to
-> WRITE($pack_style_object_header)
-> SHA1("$type $size\0")
-> WRITE(DEFLATE(SHA1($data)))
-> then the SHA-1 result is the same but we get the pack-style header,
-> and blobs can be sucked straight into packs when not deltified.
-> The SHA-1 result is still usable at the end to rename the temporary
-> loose object file
-> (and put it in the correct xx subdirectory).
+Quoting Andreas Ericsson <ae@op5.se>:
 
-Hah.  That's exactly what the "new" (deprecated) format was, and what
-its code for creating such objects looked like in sha1_file.c. :-)
- 
+> "git pull --rebase" already has an implementation. Dscho cooked one up
+> which I've been using since then. It works nicely.
+
+What is the reason that the option was not added to the official git?  Was it coded poorly, buggy or were there some other issues?
+
 -- 
-Shawn.
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
+
+----------------------------------------------------------------------
+Find out how you can get spam free email.
+http://www.bluebottle.com/tag/3
