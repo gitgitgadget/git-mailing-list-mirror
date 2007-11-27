@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: If you would write git from scratch now, what would you change?
-Date: Mon, 26 Nov 2007 20:48:04 -0500
-Message-ID: <20071127014804.GJ14735@spearce.org>
-References: <200711252248.27904.jnareb@gmail.com>
+Subject: Re: QGit: Shrink used memory with custom git log format
+Date: Mon, 26 Nov 2007 20:52:48 -0500
+Message-ID: <20071127015248.GK14735@spearce.org>
+References: <e5bfff550711240014n78f24b46qf012957d92b1a8e1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 02:48:31 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 27 02:53:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwpYq-00069b-SF
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 02:48:29 +0100
+	id 1IwpdO-0007IY-OQ
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 02:53:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753351AbXK0BsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Nov 2007 20:48:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752252AbXK0BsJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 20:48:09 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:43268 "EHLO
+	id S1753397AbXK0Bwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Nov 2007 20:52:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753390AbXK0Bww
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Nov 2007 20:52:52 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:43546 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752893AbXK0BsI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Nov 2007 20:48:08 -0500
+	with ESMTP id S1753283AbXK0Bww (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Nov 2007 20:52:52 -0500
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1IwpYJ-0003kX-Mm; Mon, 26 Nov 2007 20:47:55 -0500
+	id 1Iwpct-00043y-Q5; Mon, 26 Nov 2007 20:52:39 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B785920FBAE; Mon, 26 Nov 2007 20:48:04 -0500 (EST)
+	id E1DE620FBAE; Mon, 26 Nov 2007 20:52:48 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <200711252248.27904.jnareb@gmail.com>
+In-Reply-To: <e5bfff550711240014n78f24b46qf012957d92b1a8e1@mail.gmail.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,95 +40,43 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66156>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> If you would write git from scratch now, from the beginning, without 
-> concerns for backwards compatibility, what would you change, or what 
-> would you want to have changed?
+Marco Costalba <mcostalba@gmail.com> wrote:
+> Now instead of --pretty=raw a custom made --pretty=format is given,
+> this shrinks loaded data of 30% (17MB less on Linux tree) and gives a
+> good speed up when you are low on memory (especially on big repos)
+> 
+> Next step _would_ be to load log message body on demand (another 50%
+> reduction) but this has two drawbacks:
+> 
+> (1) Text search/filter on log message would be broken
+> 
+> (2) Slower to browse through revisions because for each revision an
+> additional git-rev-list /git-log command should be executed to read
+> the body
+> 
+> The second point is worsted by the fact that it is not possible to
+> keep a command running and "open" like as example git-diff-tree
+> --stdin and feed with additional revision's sha when needed. Avoiding
+> the burden to startup a new process each time to read a new log
+> message given an sha would let the answer much more quick especially
+> on lesser OS's
+> 
+> Indeed there is a git-rev-list --stdin option but with different
+> behaviour from git-diff-tree --stdin and not suitable for this.
 
-- Sort tree entries by name, *not* by name+type
+There was a proposed patch for git-cat-file that would let you run
+it in a --stdin mode; the git-svn folks wanted this to speed up
+fetching raw objects from the repository.  That may help as you
+could get commit bodies (in raw format - not reencoded format!)
+quite efficiently.
 
-  This has got to be my biggest gripe with Git.  I think Linus really
-  screwed the pooch with this.  We've talked it over a few times
-  on the list and he and I have just agreed to disagree on this.
-
-  Ask any database person and they'll tell you how wrong the
-  current tree ordering is.  Or they are nuts and don't get
-  the concept of data integrity.
-
-  Linus' excuse is that the current ordering makes working with
-  the flat index faster as its just one index file.  That doesn't
-  mean that the flat index file can't contain tree information.
-  Like it does in say that new fangled cache-tree extension.  :-)
-
-  This particular "design decision" has brought all sorts of bugs
-  into the system, like the D/F merge conflict issues, and even one
-  from Linus himself when he first introduced the submodule support.
-  Lets not even talk about ugly that made things in jgit.
-
-
-- Loose objects storage is difficult to work with
-
-  The standard loose object format of DEFLATE("$type $size\0$data")
-  makes it harder to work with as you need to inflate at least
-  part of the object just to see what the hell it is or how big
-  its final output buffer needs to be.
-
-  It also makes it very hard to stream into a packfile if you have
-  determined its not worth creating a delta for the object (or no
-  suitable delta base is available).
-
-  The new (now deprecated) loose object format that was based on
-  the packfile header format simplified this and made it much
-  easier to work with.
-
-
-- No proper libgit
-
-  Already been stated but we don't have a great library and we
-  don't have a good way to build one right now either.  A lot of
-  our internal code assumes die() will abort the process.  That's a
-  very bad assumption to be making inside of a library.
-
-
-- Binary packed-refs representation
-
-  I probably wouldn't have done an ASCII based packed-refs file,
-  or heck, even loose refs.  I probably would have just gone with
-  a binary file that we wholesale rewrite every time there is any
-  sort of ref update.
-
-  We already do this with the index.  So every time we update a
-  file path we are rewriting the entire index.  And we update
-  file paths a heck of a lot more often than we update branch
-  heads.  Or tags.
-
-  But tools like for-each-ref get invoked heavily, and fast access
-  to the ref database is important to overall performance.
-
-
-- No GIT_OBJECT_DIRECTORY vs. GIT_DIR distinction
-
-  This is causing problems with $GIT_DIR/objects/info/alternates
-  and then try to repack repositories.  Not having the ref space of
-  the alternates and/or borrowers considered during repacking can
-  cause all sorts of fun breakage that may be hard to recover from.
-  Plus it means you have to do funny "refs/forkee" hacks just to
-  avoid pushing unnecessary objects over the wire when the other
-  end is borrowing objects.
-
-  I probably would have had the object directory unified with its
-  ref database, so that they cannot be accessed individually.
-
-
-All of the above is written with 20/20 hindsight and all that.
-
-Looking back (and knowing myself well) I think the only item I
-would have gotten right if I had written Git from scratch is the
-first one above (the tree entry ordering).  I probably would have
-done something equally "as bad" as what we have today for all of
-the others...
+Otherwise I think what you really want here is a libgit that you can
+link into your process and that can efficiently inflate an object
+on demand for you.  Like the work Luiz was working on this past
+summer for GSOC.  Lots of downsides to that current tree though...
+like die() kills the GUI...
 
 -- 
 Shawn.
