@@ -1,61 +1,64 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH] git-gui: Improve the application icon on Windows.
-Date: Tue, 27 Nov 2007 21:47:22 +0100
-Message-ID: <200711272147.22511.johannes.sixt@telecom.at>
-References: <1196177124-13601-1-git-send-email-johannes.sixt@telecom.at> <Pine.LNX.4.64.0711271539310.27959@racer.site>
+From: David Brown <git@davidb.org>
+Subject: Re: Removing old data without disturbing tree?
+Date: Tue, 27 Nov 2007 13:10:06 -0800
+Message-ID: <20071127211006.GA22242@old.davidb.org>
+References: <20071127193955.GA16585@old.davidb.org> <alpine.LFD.0.99999.0711271459520.9605@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Nov 27 21:47:52 2007
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Cc: Git <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Nov 27 22:11:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix7LU-0007pI-HA
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 21:47:52 +0100
+	id 1Ix7hM-0000ul-KY
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 22:10:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756430AbXK0Ur0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 15:47:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756062AbXK0Ur0
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 15:47:26 -0500
-Received: from smtp5.srv.eunet.at ([193.154.160.227]:53842 "EHLO
-	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756025AbXK0UrZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 15:47:25 -0500
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp5.srv.eunet.at (Postfix) with ESMTP id 7AD2D13A987;
-	Tue, 27 Nov 2007 21:47:23 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 3D7D54AA1E;
-	Tue, 27 Nov 2007 21:47:23 +0100 (CET)
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.64.0711271539310.27959@racer.site>
+	id S1759123AbXK0VKJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 16:10:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754516AbXK0VKI
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 16:10:08 -0500
+Received: from mail.davidb.org ([66.93.32.219]:55924 "EHLO mail.davidb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758690AbXK0VKH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 16:10:07 -0500
+Received: from davidb by mail.davidb.org with local (Exim 4.68 #1 (Debian))
+	id 1Ix7h0-0005pG-Hq; Tue, 27 Nov 2007 13:10:06 -0800
+Mail-Followup-To: Nicolas Pitre <nico@cam.org>, Git <git@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.99999.0711271459520.9605@xanadu.home>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66260>
 
-On Tuesday 27 November 2007 16:40, Johannes Schindelin wrote:
-> Hi,
+On Tue, Nov 27, 2007 at 03:06:45PM -0500, Nicolas Pitre wrote:
+>On Tue, 27 Nov 2007, David Brown wrote:
 >
-> On Tue, 27 Nov 2007, Johannes Sixt wrote:
-> > Previusly, there was only a 16x16 image, which looked very distorted.
-> > Here we add a 32x32 version, and also make the image sharper.
-> >
-> > Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
-> > ---
-> > 	I'm by far not an artist, but improving the previous version
-> > 	was not difficult at all. ;)
+>> An upstream tree I'm mirroring with git-p4 has decided to start checking
+>> in large tarballs (150MB) periodically.  It's basically a prebuild version
+>> of some firmware needed to run the rest of the software.
+>> 
+>> Git doesn't seem to have any problem with these tarballs (and is using a
+>> lot less space than P4), but I have a feeling we might start running into
+>> problems when things get real big.  Does anyone have experience with packs
+>> growing beyong several GB?
 >
-> Why did you not just use the svg contained in msysGit?
+>It should just work.  It was tested with artificial data sets but that's 
+>about it.
+>
+>Now if those tarballs are actually multiple revisions of the same 
+>package, you might consider storing them uncompressed and let Git delta 
+>compress them against each other which will produce an even more 
+>significant space saving.
 
-Because I cannot find one?
+I did manage to talk them into leaving them uncompressed.  But, they are
+large, and don't seem to delta compress all that well.  Maybe as more come,
+the compression will be better.
 
-$ GIT_PAGER=cat git grep -i svg 4msysgit/devel
-4msysgit/devel:attr.c:   * attributes, e.g. "*.svg      merge=special-...
+I guess this will be a good test case...  It will probably take months or
+even a year or so for the repo to get up to several GB.
 
--- Hannes
+David
