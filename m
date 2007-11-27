@@ -1,94 +1,118 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: If you would write git from scratch now, what would you change?
-Date: Wed, 28 Nov 2007 00:56:57 +0100
-Message-ID: <20071127235657.GC9174@efreet.light.src>
-References: <200711252248.27904.jnareb@gmail.com> <fiet88$68n$1@ger.gmane.org> <e5bfff550711261125i92fb057i85d7217b18cd495d@mail.gmail.com> <figlf6$d48$1@ger.gmane.org> <e5bfff550711270515t2a7bc80ege92442c30bf6aebe@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC] git-gui USer's Survey 2007 (was: If you would write git from scratch now, what would you change?)
+Date: Wed, 28 Nov 2007 00:59:41 +0100
+Organization: At home
+Message-ID: <fiib19$dj6$1@ger.gmane.org>
+References: <200711252248.27904.jnareb@gmail.com> <fiet88$68n$1@ger.gmane.org> <e5bfff550711261125i92fb057i85d7217b18cd495d@mail.gmail.com> <20071127012013.GG14735@spearce.org> <fifstd$ilj$1@ger.gmane.org> <20071127015833.GL14735@spearce.org> <Pine.LNX.4.64.0711271136050.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="zCKi3GIZzVBPywwA"
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 00:57:33 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 28 01:00:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxAIx-0005L7-PL
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 00:57:28 +0100
+	id 1IxALy-0006Dq-Sa
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 01:00:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757468AbXK0X5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 18:57:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757710AbXK0X5H
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 18:57:07 -0500
-Received: from ns1.bluetone.cz ([212.158.128.13]:60042 "EHLO ns1.bluetone.cz"
+	id S1759703AbXK0X7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 18:59:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755982AbXK0X7x
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 18:59:53 -0500
+Received: from main.gmane.org ([80.91.229.2]:36590 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754762AbXK0X5G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 18:57:06 -0500
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id A5D1D572C4;
-	Wed, 28 Nov 2007 00:57:03 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id zW1eL7e04ZR5; Wed, 28 Nov 2007 00:57:01 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 3DADD5727C;
-	Wed, 28 Nov 2007 00:57:00 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IxAIU-0003Pm-0P; Wed, 28 Nov 2007 00:56:58 +0100
-Content-Disposition: inline
-In-Reply-To: <e5bfff550711270515t2a7bc80ege92442c30bf6aebe@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1759930AbXK0X7w (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 18:59:52 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IxAL9-0004NE-QQ
+	for git@vger.kernel.org; Tue, 27 Nov 2007 23:59:43 +0000
+Received: from abvx114.neoplus.adsl.tpnet.pl ([83.8.221.114])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Nov 2007 23:59:43 +0000
+Received: from jnareb by abvx114.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Nov 2007 23:59:43 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvx114.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66276>
 
+Johannes Schindelin wrote:
 
---zCKi3GIZzVBPywwA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Mon, 26 Nov 2007, Shawn O. Pearce wrote:
+> 
+>> Actually I might revisit this XUL concept using an HTTP server and AJAX.  
+>> I could actually link the damn HTTP server against libgit.a (Junio will 
+>> hate me).  If the server dies XUL can notice it and simply restart it.
+> 
+> But if you can restart the HTTP server via XUL, you can start other git 
+> programs directly.
+> 
+> What you'd have to do is (urgh) write a wrapper via start_command() 
+> which would recognize that the second process die()d.
+> 
+> All in all, I think if you want to switch from Tcl/Tk to another language 
+> for git-gui, for the sake of attracting more developers, it might be wiser 
+> to go Java than XUL.
 
-On Tue, Nov 27, 2007 at 14:15:21 +0100, Marco Costalba wrote:
-> On Nov 27, 2007 9:45 AM, Andy Parkins <andyparkins@gmail.com> wrote:
-> > Marco Costalba wrote:
-> >
-> > > But...wait...Qt would require...(I'm scared to say!)... that awful,
-> > > painful, hopeless thing called C++. Probably you didn't mean what you
-> > > said ;-)
-> >
-> > Actually although I like C++, that's not the reason, the reason is that=
- Qt
-> > is a significantly (IMHO) better toolkit than Tk.  It's more cross plat=
-form
-> > and looks a lot nicer.  The fact that it's C++ is neither here nor ther=
-e.
-> >
->=20
-> Actually there exist a Python bindings for Qt if you prefer.
+Wont we get with the same problems as egit/jgit?
 
-I tried to write something in them and got a bit burned. Qt has it's
-idea of memory management (delete children with parent) and the bindings
-don't protect from accessing pointers to objects deleted this way, which can
-cause rather hard to debug crashes.=20
+----
+This is proposed set of questions for git-gui mini survey...
 
-Gtk seems to be much better for use from various scripting languages.
+1. What language and what toolkit should git-gui be written in?
+   (single choice)
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+   a. Tcl/Tk    (current implementation)
+   b. C++/Qt
+   c. C/GTK+
+   d. Python    (native)
+   e. Python/PyQt
+   f. Python/PyGTK
+   g. Ruby
+   h. Java/Swing
+   i. Java/SWT
+   j. XUL+JavaScript+CSS/XULRunner
+   k. other
+   l. no opinion
 
---zCKi3GIZzVBPywwA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+2. If you have chosen "other" in question above, what language and
+   toolkit should it be? C/XForms? C#/Mono? C/wxWidgets? XAML+Silverlight?
+   GTK2-Perl? C/OpenGL? ;-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+3. Do you contribute to git-gui?
+   Yes/No
 
-iD8DBQFHTK7JRel1vVwhjGURArjjAJwM1N3zfnL/c0xNVzWUgSzevjqkwwCgnHvs
-HACSMUb43cjHEGdmNWatCN0=
-=Ny/0
------END PGP SIGNATURE-----
+4. If git-gui would use other language/toolkit, would you contribute?
+   Yes/No
 
---zCKi3GIZzVBPywwA--
+5. What languages and what toolkits you are proficient with (to send
+   patches)? 
+   (multiple choice)
+
+   a. Tcl/Tk    (current implementation)
+   b. C++/Qt
+   c. C/GTK+
+   d. Python    (native)
+   e. Python/PyQt
+   f. Python/PyGTK
+   g. Ruby
+   h. Java/Swing
+   i. Java/SWT
+   j. XUL+JavaScript+CSS/XULRunner
+   k. other
+   l. N/A
+
+6. What other?
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
