@@ -1,64 +1,70 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Do not generate full commit log message if it not
-	going to be used
-Date: Tue, 27 Nov 2007 22:47:13 +0100
-Message-ID: <20071127214713.GB3156@steel.home>
-References: <81b0412b0711270254i58be4d2fi5021767d99fcb753@mail.gmail.com> <474C0105.3010908@viscovery.net> <81b0412b0711270448s6534a849u86bcb161d4d7b3fe@mail.gmail.com> <7vfxyrd2x2.fsf@gitster.siamese.dyndns.org> <81b0412b0711271018m6419b076n269a0175494fac84@mail.gmail.com> <20071127214425.GA3156@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Kristian =?iso-8859-15?Q?H=F8gsberg?= <krh@redhat.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 27 22:47:38 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH] git-gui: Improve the application icon on Windows.
+Date: Tue, 27 Nov 2007 23:09:14 +0100
+Message-ID: <A7DA7B28-E67A-47FC-AE8D-C277ECA60FAC@zib.de>
+References: <1196177124-13601-1-git-send-email-johannes.sixt@telecom.at> <Pine.LNX.4.64.0711271539310.27959@racer.site> <200711272147.22511.johannes.sixt@telecom.at>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Tue Nov 27 23:08:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix8HJ-0007gF-Ow
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 22:47:38 +0100
+	id 1Ix8bo-0000p3-Vg
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 23:08:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757713AbXK0VrS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 16:47:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757624AbXK0VrS
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 16:47:18 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:30618 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757348AbXK0VrR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 16:47:17 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBg79ik=
-Received: from tigra.home (Fcbf4.f.strato-dslnet.de [195.4.203.244])
-	by post.webmailer.de (fruni mo60) (RZmta 14.3)
-	with ESMTP id x003a0jARJtang ; Tue, 27 Nov 2007 22:47:13 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 5A38D277AE;
-	Tue, 27 Nov 2007 22:47:13 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 3B8A456D22; Tue, 27 Nov 2007 22:47:13 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20071127214425.GA3156@steel.home>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+	id S1758746AbXK0WIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 17:08:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758692AbXK0WIX
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 17:08:23 -0500
+Received: from mailer.zib.de ([130.73.108.11]:38861 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758588AbXK0WIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 17:08:22 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lARM83Nx028394;
+	Tue, 27 Nov 2007 23:08:03 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db1bb7f.pool.einsundeins.de [77.177.187.127])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lARM82d8015353
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Tue, 27 Nov 2007 23:08:03 +0100 (MET)
+In-Reply-To: <200711272147.22511.johannes.sixt@telecom.at>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66266>
 
-Alex Riesen, Tue, Nov 27, 2007 22:44:25 +0100:
-> --- a/builtin-commit.c
-> +++ b/builtin-commit.c
-> @@ -367,6 +367,30 @@ static int prepare_log_message(const char *index_file, const char *prefix)
->  
->  	strbuf_release(&sb);
->  
-> +	if (no_edit) {
-> +		static const char *argv[] = { NULL, "HEAD", NULL };
-> +		struct rev_info rev;
-> +		unsigned char sha1[40];
-> +		int is_initial;
 
-is_initial is left over from "development process". Well, from
-stealing out of wt-status.c
+On Nov 27, 2007, at 9:47 PM, Johannes Sixt wrote:
+
+> On Tuesday 27 November 2007 16:40, Johannes Schindelin wrote:
+>> Hi,
+>>
+>> On Tue, 27 Nov 2007, Johannes Sixt wrote:
+>>> Previusly, there was only a 16x16 image, which looked very  
+>>> distorted.
+>>> Here we add a 32x32 version, and also make the image sharper.
+>>>
+>>> Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+>>> ---
+>>> 	I'm by far not an artist, but improving the previous version
+>>> 	was not difficult at all. ;)
+>>
+>> Why did you not just use the svg contained in msysGit?
+>
+> Because I cannot find one?
+>
+> $ GIT_PAGER=cat git grep -i svg 4msysgit/devel
+> 4msysgit/devel:attr.c:   * attributes, e.g. "*.svg       
+> merge=special-...
+
+
+http://msysgit.googlecode.com/files/gitlogo.svg
+
+	Steffen
