@@ -1,73 +1,70 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: stgit: lost all my patches again
-Date: Tue, 27 Nov 2007 18:12:49 -0500
-Message-ID: <9e4733910711271512g790364e0ka4839b2be9fd4935@mail.gmail.com>
-References: <9e4733910711271417l32ed9a77p9915aa34a780665b@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH] Make Git accept absolute path names for files within the work tree
+Date: Wed, 28 Nov 2007 00:20:56 +0100
+Message-ID: <200711280020.57042.robin.rosenberg@dewire.com>
+References: <1196119109-27483-1-git-send-email-robin.rosenberg@dewire.com> <7vmyt0edso.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 28 00:13:21 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 00:19:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix9c8-0008Hf-48
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 00:13:12 +0100
+	id 1Ix9ht-0001vq-L1
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 00:19:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752777AbXK0XMw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 18:12:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755186AbXK0XMv
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 18:12:51 -0500
-Received: from rv-out-0910.google.com ([209.85.198.189]:4378 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752777AbXK0XMu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 18:12:50 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1047379rvb
-        for <git@vger.kernel.org>; Tue, 27 Nov 2007 15:12:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=RuUpW2kK5chmkEv/EwF2+zfIJKqeYsl+DwiyI+MOWRI=;
-        b=vvvmpC2xkWUwOWnwwEPuSAUdiFiUX1kti9hJBbVHEidaK0QR+vt9rnG2OdaV6YzDGDYdQ4ZM0qV+UG24nj9adwBGetQiEfM8xroZXqI94K1GePJeIT/VRe4WRfog6CKx3x1iiYo51wrCQAV9AV8kjy8r3JGitKwG0puZ9oRiI6I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Wfz5H67sqc2O9q6F1dGjlQTkfGuVV+7xNv79wmzvJZeYSDaxsAgTUOxbERHeZnAgBCiaduea2HATTeiHhIWQ5OJZK7DRlrVAnmXC/1XUvOa85TPT2XKG3ToiJ3DgujY+9hcxF0o6MH40kIwL491FTb11jM9h7ASyZ6zoqUv9kQ4=
-Received: by 10.114.177.1 with SMTP id z1mr37016wae.1196205169073;
-        Tue, 27 Nov 2007 15:12:49 -0800 (PST)
-Received: by 10.114.160.3 with HTTP; Tue, 27 Nov 2007 15:12:49 -0800 (PST)
-In-Reply-To: <9e4733910711271417l32ed9a77p9915aa34a780665b@mail.gmail.com>
+	id S1753843AbXK0XSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 18:18:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753245AbXK0XSv
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 18:18:51 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:13043 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752434AbXK0XSu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 18:18:50 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id AFC208027FA;
+	Wed, 28 Nov 2007 00:09:32 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 05130-02; Wed, 28 Nov 2007 00:09:32 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 55B78800783;
+	Wed, 28 Nov 2007 00:09:32 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vmyt0edso.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66271>
 
-On 11/27/07, Jon Smirl <jonsmirl@gmail.com> wrote:
-> My fingers are too trained in doing "git rebase linus/master" instead
-> of "stg rebase linus/master". This has resulting in me losing my patch
-> stack again. I updated stg to the current version and tried "stg
-> repair"  put all my patches are still empty.
->
-> What's the easiest way to recover?
+tisdag 27 november 2007 skrev Junio C Hamano:
+> Robin Rosenberg <robin.rosenberg@dewire.com> writes:
+[...]
+> >  	const char *orig = path;
+> 
+> Decl after statement.
+Stupid C..
+> 
+> I do not think there is fundamental reason to object to this change, as
+> long as the prefixing is done to the path that is trying to name a path
+> in the working tree.
+> 
+> Also some codepath that does not require any work tree may want to call
+> prefix_path().  I do not know what would happen in such a case.
+ok, I'll add a test for whether we have a work tree.
 
-I recovered, which wasn't too bad since I had exported the stack about
-an hour earlier. I played around trying to recover the tree for a
-while and then gave up and whacked it. I used my export and then I
-extracted the last hours worth of changes from the old tree.
+> Although I didn't look at all the callers, I think the caller from
+> config.c is not talking about a path in the work tree, and not all users
+> of config.c need to have work-tree.
 
-As Jakub pointed out to me "git reset --hard $(cat
-.git/patches/<branch>/orig-base)" would have recovered from the rebase
-command. But I had already typed 'stg repair' which compounded the
-mess.
+Oh dear. That wasn't on master when I looked. That one seems to be the only "other"
+use and it is wrapped inside an if (!absolute_path()) tests so my magic does not conflict
+there.
 
-> Can we add a check in "git rebase" so that it will refuse to run if
-> stg is active?
-
-This is way too easy to do. One simple mistype of 'git' for 'stg' and
-you're in a mess.
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
+-- robin
