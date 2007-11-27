@@ -1,64 +1,61 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: stgit: lost all my patches again
-Date: Tue, 27 Nov 2007 23:24:02 +0100
-Organization: At home
-Message-ID: <fii5dv$qc4$1@ger.gmane.org>
-References: <9e4733910711271417l32ed9a77p9915aa34a780665b@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH] Make Git accept absolute path names for files within the work tree
+Date: Wed, 28 Nov 2007 00:14:53 +0100
+Message-ID: <200711280014.55114.robin.rosenberg@dewire.com>
+References: <1196119109-27483-1-git-send-email-robin.rosenberg@dewire.com> <474BD90C.5020102@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 27 23:24:42 2007
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Nov 28 00:13:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ix8r0-0006yc-KY
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 23:24:31 +0100
+	id 1Ix9c7-0008Hf-Ff
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 00:13:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752162AbXK0WYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 17:24:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752082AbXK0WYL
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 17:24:11 -0500
-Received: from main.gmane.org ([80.91.229.2]:47459 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751907AbXK0WYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 17:24:10 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Ix8qb-0002Yf-79
-	for git@vger.kernel.org; Tue, 27 Nov 2007 22:24:05 +0000
-Received: from abvx114.neoplus.adsl.tpnet.pl ([83.8.221.114])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 27 Nov 2007 22:24:05 +0000
-Received: from jnareb by abvx114.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 27 Nov 2007 22:24:05 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abvx114.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1755697AbXK0XMu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 18:12:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752588AbXK0XMu
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 18:12:50 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:12880 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753170AbXK0XMt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 18:12:49 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 42F748026F5;
+	Wed, 28 Nov 2007 00:03:31 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 05022-03; Wed, 28 Nov 2007 00:03:30 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id D242E800199;
+	Wed, 28 Nov 2007 00:03:30 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <474BD90C.5020102@viscovery.net>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66269>
 
-Jon Smirl wrote:
-
-> My fingers are too trained in doing "git rebase linus/master" instead
-> of "stg rebase linus/master". This has resulting in me losing my patch
-> stack again. I updated stg to the current version and tried "stg
-> repair"  put all my patches are still empty.
+tisdag 27 november 2007 skrev Johannes Sixt:
+> Robin Rosenberg schrieb:
+> > +test_expect_success 'add files using absolute path names' '
+> > +echo a >afile &&
+> > +echo b >bfile &&
+> > +git-add afile &&
+> > +git-add $(pwd)/bfile &&
 > 
-> What's the easiest way to recover?
+> Please use "$(pwd)/bfile" (d-quotes) throughout. Otherwise the test would 
+> fail if conducted in a directory with spaces.
 
-git reset --hard $(cat .git/patches/<branch>/orig-base)
+AFAIK, None of the tests works in directories with spaces. But I'll fix it, just in case, so 
+noone can blame /me/ for the tests breaking in /my home/. I cannot verify it because
+the testing infrastructure breaks before the actual tests start executing.
 
-or perhaps "git reset --hard ORIG_HEAD"; with new rebase working on
-detached head "git reset --hard @{1}".
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+-- robin
