@@ -1,92 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [WIP PATCH] Add 'git fast-export', the sister of 'git fast-import'
-Date: Tue, 27 Nov 2007 11:25:47 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711271123360.27959@racer.site>
-References: <Pine.LNX.4.64.0711210336210.27959@racer.site> <fi5743$32p$1@ger.gmane.org>
- <Pine.LNX.4.64.0711230050270.27959@racer.site>
- <f329bf540711221723g2754ce03r4da6d429c45668c@mail.gmail.com>
- <Pine.LNX.4.64.0711230149430.27959@racer.site> <20071123205958.GC14735@spearce.org>
- <20071125170019.GB25800@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0711261647400.27959@racer.site>
- <20071127101614.GB26072@diana.vm.bytemark.co.uk>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git bug/feature request
+Date: Tue, 27 Nov 2007 12:30:16 +0100
+Organization: At home
+Message-ID: <figv47$926$1@ger.gmane.org>
+References: <200711271127.41161.gapon007@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, hanwen@xs4all.nl,
-	git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Nov 27 12:26:22 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 27 12:31:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IwyZw-00078H-Sg
-	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 12:26:13 +0100
+	id 1Iwyeq-0000Kf-J8
+	for gcvg-git-2@gmane.org; Tue, 27 Nov 2007 12:31:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752558AbXK0LZy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 06:25:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751282AbXK0LZy
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 06:25:54 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46445 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751261AbXK0LZx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 06:25:53 -0500
-Received: (qmail invoked by alias); 27 Nov 2007 11:25:51 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp007) with SMTP; 27 Nov 2007 12:25:51 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18WkjAb6ogWwqLziSNrHDZUUKatFlFpZ1CuGLAt+q
-	ll7TWYd+CsrbUw
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071127101614.GB26072@diana.vm.bytemark.co.uk>
-X-Y-GMX-Trusted: 0
+	id S1755104AbXK0Lay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 06:30:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755216AbXK0Lay
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 06:30:54 -0500
+Received: from main.gmane.org ([80.91.229.2]:41532 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755104AbXK0Lax (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 06:30:53 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IwyeC-0002hx-K2
+	for git@vger.kernel.org; Tue, 27 Nov 2007 11:30:36 +0000
+Received: from abvx183.neoplus.adsl.tpnet.pl ([83.8.221.183])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Nov 2007 11:30:36 +0000
+Received: from jnareb by abvx183.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Nov 2007 11:30:36 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvx183.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66190>
 
-Hi,
+gapon wrote:
 
-On Tue, 27 Nov 2007, Karl Hasselstr?m wrote:
+> hi all,
+> first of all i don't know if there's a bugzilla or something similar
+> for git - i have found just this email (on http://git.or.cz/ webpage).
 
-> On 2007-11-26 16:48:14 +0000, Johannes Schindelin wrote:
-> 
-> > On Sun, 25 Nov 2007, Karl Hasselstr?m wrote:
-> >
-> > > On 2007-11-23 15:59:58 -0500, Shawn O. Pearce wrote:
-> > >
-> > > > I have been considering creating a "git-gui daemon" process that 
-> > > > links to libgit.a and can be driven bidirectionally through its 
-> > > > stdin/stdout. Based on git-fast-export, sorta. But I haven't even 
-> > > > started it...
-> > > >
-> > > > But the idea is sort of what Han-Wen wants. Why should I fork 
-> > > > rev-parse to get a ref value? Or update-ref to change one?
-> > >
-> > > Obviously, something like this would be very valuable for StGit as 
-> > > well.
-> >
-> > Could you be a little more specific _what_ you want to do, and _how_ 
-> > this could be done with fast-export | fast-import?
-> 
-> Currently, a single StGit command can result in quite a few invocations 
-> of git-cat-file, for example, each of which forks off a new process. If 
-> it could start just one daemon such as Shawn proposed, and feed it 
-> simple questions and commands about blobs, trees, commits, and refs, 
-> that would probably be quite a lot faster.
-> 
-> From what I understand, this is not something that would fit a 
-> fast-export | fast-import pipeline. Which is why I didn't take the time 
-> to elaborate on (or indeed find out) exactly which commands StGit would 
-> like such a daemon to support.
-> 
-> By the way: one command one _would_ likely want in the daemon is "list 
-> modified files". Being long-lived (not when driven by StGit, perhaps, 
-> but definitely when driven by git-gui or qgit), the daemon would be able 
-> to use inotify for that.
+There isn't any bug tracker for git. Use git mailing list for bug
+reports and feature requests.
 
-Ah, so you would like something like "git --interactive"?  This is indeed 
-a completely different scope than the fast-export thingie, which is meant 
-as kind of a mysqldump tool.  Indeed, you could use it even as a (kind of 
-a) stash of the repo instead of the working tree.
+> i have discovered "weird" behaviour of git in this scenario*:
+> - user A is working in repo A
+> - user B clones repo A
+> - user B makes some changes, commits, pushes
 
-Ciao,
-Dscho
+Do not push into checked out branch!
+
+> - user A makes some changes, git status (no info about new commit
+>   in his repo from user B but it's probably ok i'd say - but some
+>   of my files are marked as changed and already added to index
+>   but i haven't changed them - that's confusing, isn't it?)
+> - user A can commit his changes => shouldn't be there any
+>   info/message/warning displayed? it would be helpful to have
+>   here some info about "foreign commit" in the repo or something
+>   like this 
+
+Perhaps there should. There was some idea and even preliminary
+implementation of BASE check, but IIRC it was deemed too complicated,
+and encouraging wrong workflow.
+
+Besides, even with the check, pushing into checked out branch can quite
+easily lead either to loosing (or at least vanishing) some history,
+or problems with pushing.
+
+> * yes, i know that this scenario is "incorrect" but... it's possible and 
+>   therefore i think it should be somehow handled - i tried a similar one
+>   with hg and bzr and i like their behaviour more
+
+IIRC we strongly discourage in documentation to push into checked out
+branch. Either use bare repository for communication (it allows for
+example for got for "ideal patch series" by rewriting history _before
+publishing (pushing)_ and for communication with more than one
+chosen developer), or push into _remotes_, not into heads.
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
