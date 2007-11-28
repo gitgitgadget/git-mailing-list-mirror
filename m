@@ -1,70 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Replace instances of export VAR=VAL with VAR=VAL; export VAR
-Date: Wed, 28 Nov 2007 14:48:15 -0800
-Message-ID: <7vve7m2dhs.fsf@gitster.siamese.dyndns.org>
-References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com>
-	<C3971B37-F75A-40EE-B30A-E88E5DAFAD55@lrde.epita.fr>
-	<D21294CA-6FD0-40F5-B0D6-5155865DA69A@wincent.com>
-	<CDF48716-F198-4B33-A5F5-8A2DE1F177EB@wincent.com>
-	<474AC136.8060906@viscovery.net>
-	<451492C9-F3EA-4C37-A1AD-59FC72E0A0A2@wincent.com>
-	<Pine.LNX.4.64.0711261340470.27959@racer.site>
-	<97F6E8DE-4022-4458-B6A9-C644A6EDC1E3@wincent.com>
-	<7vir3m94ku.fsf@gitster.siamese.dyndns.org>
-	<50645A3B-C5F0-4A99-A2B8-AD9251024244@wincent.com>
-	<7v1waa7lcv.fsf@gitster.siamese.dyndns.org>
-	<1570EAD5-9F47-4105-B3DA-49CA6FA57369@wincent.com>
-	<Pine.LNX.4.64.0711281355460.27959@racer.site>
-	<474D7956.8050401@viscovery.net>
-	<Pine.LNX.4.64.0711281428180.27959@racer.site>
-	<474D7D92.2000106@viscovery.net>
-	<7vr6ia5hoi.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0711281903330.27959@racer.site>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Rollback of git commands
+Date: Wed, 28 Nov 2007 17:48:50 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0711281702140.5349@iabervon.org>
+References: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com> 
+ <7vmyszb39s.fsf@gitster.siamese.dyndns.org> 
+ <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com> 
+ <20071128092234.GA12977@diana.vm.bytemark.co.uk>
+ <9e4733910711280713n6b439866m55bea4824efd959@mail.gmail.com>
+ <Pine.LNX.4.64.0711281600320.5349@iabervon.org> <795F24E6-9145-4007-95EB-DB63D9F6295A@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Wincent Colaiuta <win@wincent.com>,
-	Benoit Sigoure <tsuna@lrde.epita.fr>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	=?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 28 23:48:44 2007
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 23:49:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxVhz-0006nd-Ee
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 23:48:43 +0100
+	id 1IxViS-0006yA-UG
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 23:49:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757899AbXK1WsY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 17:48:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758026AbXK1WsY
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 17:48:24 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:59480 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757808AbXK1WsX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 17:48:23 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 8709D2FB;
-	Wed, 28 Nov 2007 17:48:44 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id EBD8B9ACE4;
-	Wed, 28 Nov 2007 17:48:38 -0500 (EST)
-In-Reply-To: <Pine.LNX.4.64.0711281903330.27959@racer.site> (Johannes
-	Schindelin's message of "Wed, 28 Nov 2007 19:03:52 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756573AbXK1Wsw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 17:48:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757468AbXK1Wsw
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 17:48:52 -0500
+Received: from iabervon.org ([66.92.72.58]:42461 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755761AbXK1Wsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 17:48:52 -0500
+Received: (qmail 6931 invoked by uid 1000); 28 Nov 2007 22:48:50 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 28 Nov 2007 22:48:50 -0000
+In-Reply-To: <795F24E6-9145-4007-95EB-DB63D9F6295A@midwinter.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66450>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, 28 Nov 2007, Steven Grimm wrote:
 
->> Is there a particular reason to force linebreak when a semicolon would
->> do?
->
-> D'oh.  Of course.  You want me to resend?
+> On Nov 28, 2007, at 1:47 PM, Daniel Barkalow wrote:
+> >(That is, "git rebase -i" seems
+> >to work fine for making changes to a single logical patch series, all of
+> >whose patches are prepared locally and aren't independantly named in some
+> >particular fashion; the things that aren't handled are "I need to replace
+> >the pull of netdev.git with a new pull of netdev.git" or "I need to
+> >replace '[PATCH] fix-the-frobnozzle-gadget' with
+> >'[PATCH v2] fix-the-frobnozzle-gadget'.)
+> 
+> I use rebase -i for that last case and it works fine -- I mark the appropriate
+> commit as "edit" in the patch list and the rebase stops there, at which point
+> I can update the patch in any way I see fit: tweak it a bit, replace it with a
+> different change entirely, change the commit message, etc. What's missing from
+> rebase -i in that respect? I guess it's not as easy to script for automated
+> patch replacement.
 
-Semicolon I can handle but you seem to have local changes to filter
-branch.
+Just that you have to find the patch yourself and replace it; if you're 
+doing this a lot, you'll want to say "here's a new version of 
+fix-the-frobnozzle-gadget, do the right thing". Also, for series items 
+that are pulling some remote tree, you want it to remember the info, so 
+you can just say "pull git-netdev" and have it fetch the latest from the 
+appropriate remote and replace the merge commit with a new merge commit.
+
+I think that people in this role using quilt do it by: "quilt pop -a; 
+replace the patch file without looking at the series file; quilt push 
+-a"; in the (hopefully) common case, you don't have to worry about any of 
+the details, which is why the task remains tractable.
+
+	-Daniel
+*This .sig left intentionally blank*
