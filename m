@@ -1,76 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: QGit: Shrink used memory with custom git log format
-Date: Wed, 28 Nov 2007 12:01:36 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711281200070.27959@racer.site>
-References: <e5bfff550711240014n78f24b46qf012957d92b1a8e1@mail.gmail.com>
- <20071127015248.GK14735@spearce.org> <Pine.LNX.4.64.0711271045430.27959@racer.site>
- <20071127191915.GB9174@efreet.light.src>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Allow update hooks to update refs on their own
+Date: Tue, 27 Nov 2007 22:25:32 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0711272143470.5349@iabervon.org>
+References: <20071127211730.GA11861@midwinter.com> <7v4pf7b20b.fsf@gitster.siamese.dyndns.org>
+ <49EB8C6F-8100-48C1-BB2D-A8F6023BACAD@midwinter.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Marco Costalba <mcostalba@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed Nov 28 13:02:07 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 13:14:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
+Received: from mail-forward.uio.no ([129.240.10.42])
+	by dough.gmane.org with esmtp (Exim 4.50)
+	id 1IxKwu-0004me-9z
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 12:19:24 +0100
+Received: from mail-mx8.uio.no ([129.240.10.38])
+	by pat.uio.no with esmtp (Exim 4.67)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1IxDfV-0000Ah-Jf
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 04:32:57 +0100
 Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxLcD-0005bX-Am
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 13:02:05 +0100
+	by mail-mx8.uio.no with esmtp (Exim 4.67)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1IxDfM-0006Hn-Uh
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 04:32:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755997AbXK1MBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 07:01:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755327AbXK1MBq
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 07:01:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55047 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754929AbXK1MBp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 07:01:45 -0500
-Received: (qmail invoked by alias); 28 Nov 2007 12:01:43 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp030) with SMTP; 28 Nov 2007 13:01:43 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ZX7ZR8nlZp/CCl4Mn35RcY+BB3PAecnWHOPru99
-	SGo/g2lcbnr/RF
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071127191915.GB9174@efreet.light.src>
-X-Y-GMX-Trusted: 0
+	id S1754408AbXK1DZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 22:25:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754514AbXK1DZg
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 22:25:36 -0500
+Received: from iabervon.org ([66.92.72.58]:51597 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753629AbXK1DZf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 22:25:35 -0500
+Received: (qmail 23097 invoked by uid 1000); 28 Nov 2007 03:25:32 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 28 Nov 2007 03:25:32 -0000
+In-Reply-To: <49EB8C6F-8100-48C1-BB2D-A8F6023BACAD@midwinter.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66293>
+X-UiO-ClamAV-Virus: No
+X-UiO-Spam-info: not spam, SpamAssassin (score=-5.5, required=5.0, autolearn=disabled, AWL=1.514,RCVD_IN_DNSWL_MED=-4,UIO_VGER=-3)
+X-UiO-Scanned: 2A7B1E5DD375F048F667BED6686C900BB94EFBAF
+X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -54 maxlevel 200 minaction 2 bait 0 mail/h: 16 total 723743 max/h 813 blacklist 0 greylist 0 ratelimit 0
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66294>
 
-Hi,
+On Tue, 27 Nov 2007, Steven Grimm wrote:
 
-On Tue, 27 Nov 2007, Jan Hudec wrote:
-
-> On Tue, Nov 27, 2007 at 10:48:00 +0000, Johannes Schindelin wrote:
-> > On Mon, 26 Nov 2007, Shawn O. Pearce wrote:
-> > > [...]
-> > > Otherwise I think what you really want here is a libgit that you can
-> > > link into your process and that can efficiently inflate an object
-> > > on demand for you.  Like the work Luiz was working on this past
-> > > summer for GSOC.  Lots of downsides to that current tree though...
-> > > like die() kills the GUI...
-> > 
-> > But then, die() calls die_routine, which you can override.  And C++ has 
-> > this funny exception mechanism which just begs to be used here.  The only 
-> > thing you need to add is a way to flush all singletons like the object 
-> > array.
+> On Nov 27, 2007, at 5:19 PM, Junio C Hamano wrote:
 > 
-> Unfortunately, exceptions won't really work. Why? Because to use 
-> exceptions, you need to have an exception-safe code. That is the code 
-> needs to free any allocated resources when it's aborted by exception. 
-> And git code is not exceptions safe. Given the lack of destructors in C, 
-> it means registering all resource allocation in some kind of pool, so 
-> they can be freed en masse in case of failure. Than you can also use 
-> longjmp for die (for C they really behave the same).
+> >How does this interact with the "pretend to have fetched back
+> >immediately" supported by modern git-push?
+> 
+> 
+> That continues to fire, but it updates the local tracking ref to point to the
+> SHA1 that was pushed, which isn't the actual remote ref. So you have to do a
+> real fetch to get the local tracking ref pointed to the right place. In other
+> words, that feature doesn't do any good in this context, but it doesn't really
+> hurt anything either.
+> 
+> It would of course be better if git-push could notice that it needs to do an
+> actual fetch. I think it'd be sufficient to transmit the final remote ref SHA1
+> back to git-push, and if it doesn't match what was pushed, that's a sign that
+> a fetch is needed. But that change wouldn't be mutually exclusive with this
+> patch, I believe.
 
-Sorry, I just assumed that you can read my mind (or alternatively remember 
-what I suggested a few months ago, namely to "override" xmalloc(), 
-xcalloc(), xrealloc() and xfree() (probably you need to create the 
-latter)).
+Couldn't you do this with a status message? ("ok <refname> changed by 
+hook" or something.)
 
-Ciao,
-Dscho
+I disagree that the feature doesn't do any good; it records that the state 
+of the remote is at least as new as the local state, so you can tell 
+without a network connection that you don't have any local changes you 
+haven't sent off.
+
+	-Daniel
+*This .sig left intentionally blank*
