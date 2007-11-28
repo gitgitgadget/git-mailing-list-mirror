@@ -1,101 +1,53 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH v2] Teach 'git pull' about --rebase
-Date: Wed, 28 Nov 2007 17:33:39 -0500
-Message-ID: <20071128223339.GF7376@fieldses.org>
-References: <Pine.LNX.4.64.0710260007450.4362@racer.site> <7v3avy21il.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0710261047450.4362@racer.site> <7v3aurcjpq.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711281307420.27959@racer.site> <27E5EF3C-19EF-441C-BB12-0F5B29BEAEDB@midwinter.com> <Pine.LNX.4.64.0711282039430.27959@racer.site> <8c5c35580711281310h8764a33pba48e65010abf859@mail.gmail.com> <7vhcj63uhw.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711282156520.27959@racer.site>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Allow update hooks to update refs on their own
+Date: Wed, 28 Nov 2007 17:37:20 -0500
+Message-ID: <20071128223720.GA13298@coredump.intra.peff.net>
+References: <7vmysy5h5k.fsf@gitster.siamese.dyndns.org> <20071128194159.GA25977@midwinter.com> <20071128194919.GC11396@coredump.intra.peff.net> <7vprxu3urt.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
-	Steven Grimm <koreth@midwinter.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 28 23:34:43 2007
+Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 23:37:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxVUR-0001XR-6t
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 23:34:43 +0100
+	id 1IxVXM-0002YV-4U
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 23:37:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760637AbXK1WeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 17:34:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754839AbXK1WeU
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 17:34:20 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:34645 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760480AbXK1WeT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 17:34:19 -0500
-Received: from bfields by fieldses.org with local (Exim 4.68)
-	(envelope-from <bfields@fieldses.org>)
-	id 1IxVTP-00078G-Gt; Wed, 28 Nov 2007 17:33:39 -0500
+	id S1755761AbXK1WhY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 17:37:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754357AbXK1WhY
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 17:37:24 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2062 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753385AbXK1WhX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 17:37:23 -0500
+Received: (qmail 14746 invoked by uid 111); 28 Nov 2007 22:37:22 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 28 Nov 2007 17:37:22 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Nov 2007 17:37:20 -0500
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711282156520.27959@racer.site>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <7vprxu3urt.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66444>
 
-On Wed, Nov 28, 2007 at 09:58:52PM +0000, Johannes Schindelin wrote:
-> Hi,
+On Wed, Nov 28, 2007 at 01:49:42PM -0800, Junio C Hamano wrote:
+
+> > Hrm, this is going to have nasty conflicts with 'next', which already
+> > does the remote ref matching. I think the best way to implement this
+> > would probably be on top of the jk/send-pack topic in next, and add a
+> > new REF_STATUS_REMOTE_CHANGED status type.
 > 
-> On Wed, 28 Nov 2007, Junio C Hamano wrote:
-> 
-> > "Lars Hjemli" <hjemli@gmail.com> writes:
-> > 
-> > > On 11/28/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > >> On Wed, 28 Nov 2007, Steven Grimm wrote:
-> > >> > I wonder if this shouldn't be branch.<name>.pulltype or something like
-> > >> > that, so we can represent more than just "rebase or not." Values could
-> > >> > be "rebase", "merge" (the default) and maybe even "manual" to specify
-> > >> > that git-pull should neither merge nor rebase a particular branch even
-> > >> > if it matches a wildcard refspec.
-> > >>
-> > >> I am not convinced that this is a good thing... We already have
-> > >> branch.<name>.mergeOptions for proper merges, and I want to make clear
-> > >> that this is about rebase, and not about merge.
-> > >
-> > > Maybe branch.<name>.pullOptions ?
-> > 
-> > Maybe not make this part of git-pull at all?  merge and rebase have
-> > totally different impact on the resulting history, so perhaps a separate
-> > command that is a shorthand for "git fetch && git rebase" may help
-> > unconfuse the users.
-> 
-> Not so sure about that.  We already have too many commands, according to 
-> some outspoken people, and this would add to it.
+> I think Jeff is referring to sp/refspec-match (605b4978).
 
-What they're really complaining about is the size and complexity of the
-interface, and the lack of a clearly identified subset for them to learn
-first.
+No, I was actually referring to the jk/send-pack topic. I had thought it
+graduated to master, but since Steven's work was based on a much older
+version (e.g., with send-pack.c rather than builtin-send-pack.c), I
+assumed it had not graduated and didn't confirm.
 
-This has so far mainly manifested itself in complaints about the number
-of commands, because that's currently where a lot of our complexity is.
-But they *will* complain about proliferation of commandline switches and
-config options too.  (I've heard complaints about the number of switches
-required on the average cvs commandline, for example.)
+So let me amend my comment to "base this on a more recent master...".
 
-We're stuck expanding the interface here, whether we expand it by
-another command or another commandline switch.
-
-So, how do you decide whether to make it a new command or not?
-
-	- Look at existing documentation that talks about pull: if that
-	  documentation will still apply to the new pull, that weighs
-	  for keeping it the same command.  If theat documentation would
-	  apply only without having a certain config value set, then I
-	  think it's better as a separate command.
-
-	- Will this make it more or less simple to identify the subset
-	  of the git syntax that a user will have to do a given job?  If
-	  there are jobs for which someone might only ever need the new
-	  fetch+rebase, or for which they would only ever need the
-	  traditional pull, then I think it would keep the two separate,
-	  to make it easier for a learner to skip over information about
-	  the one they're not using.
-
-I've got no proposal for an alternate name.  All that comes to mind is
-the portmanteau "freebase", which is terrible....
-
---b.
+-Peff
