@@ -1,88 +1,69 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Rollback of git commands
-Date: Wed, 28 Nov 2007 10:58:14 -0500
-Message-ID: <9e4733910711280758x38ca3cdau4e62bfe8776e5c0d@mail.gmail.com>
-References: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com>
-	 <7vmyszb39s.fsf@gitster.siamese.dyndns.org>
-	 <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com>
-	 <BAYC1-PASMTP02DBA3FB25E09FE45F0BF2AE770@CEZ.ICE>
-	 <9e4733910711272037r2ce3ed01y31ec8531f5803efe@mail.gmail.com>
-	 <alpine.LFD.0.99999.0711280951150.9605@xanadu.home>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Allow update hooks to update refs on their own
+Date: Wed, 28 Nov 2007 11:10:34 -0500
+Message-ID: <20071128161033.GA20308@coredump.intra.peff.net>
+References: <20071127211730.GA11861@midwinter.com> <7v4pf7b20b.fsf@gitster.siamese.dyndns.org> <49EB8C6F-8100-48C1-BB2D-A8F6023BACAD@midwinter.com> <Pine.LNX.4.64.0711272143470.5349@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Sean <seanlkml@sympatico.ca>, "Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Nov 28 16:58:57 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Nov 28 17:21:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
+Received: from mail-forward.uio.no ([129.240.10.42])
+	by dough.gmane.org with esmtp (Exim 4.50)
+	id 1IxPfB-0001pu-EZ
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 17:21:25 +0100
+Received: from mail-mx9.uio.no ([129.240.10.39])
+	by pat.uio.no with esmtp (Exim 4.67)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1IxPVw-0001NP-80
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 17:11:52 +0100
 Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxPJN-0007TH-RQ
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 16:58:54 +0100
+	by mail-mx9.uio.no with esmtp (Exim 4.67)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1IxPVn-0004lB-Q6
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 17:11:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759084AbXK1P6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 10:58:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754717AbXK1P6Q
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 10:58:16 -0500
-Received: from rv-out-0910.google.com ([209.85.198.188]:8865 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759084AbXK1P6P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 10:58:15 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1252737rvb
-        for <git@vger.kernel.org>; Wed, 28 Nov 2007 07:58:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ZAQiGSTbxEvTGduaxQspq3m/BIfWCreXtRO3nQdTgxI=;
-        b=feZTPawqKGX0aEzv2ga1ho7HXnrS8VSUJ8iOf65H3pIFpWXpELpyv2MbKxlAmZywIRHPeDcwLTFD/kkNhLb2u1BoO2alpEO5CXH7lyuBcR2F4iKZfsOLJvMjIogMoG809UvEXkYdV4BXV7bKBlTJWyBnl9mi8ynUluxXvVJSUts=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JLyD1OUanUophYrpjy6MXnOhqXu4rzlMJV8hdeah2bDzczRoSA+4jkTwmPzPWoab90RaKM+EM+/hrGk3zpc8WC4XkmX+rhGGoMCPgzt0RRdEpzFknM9PEh+RYYYaxZ6hMmTiSosPV0N+YdJzAsUObabivB3GCi1dlET8o6yya2k=
-Received: by 10.140.82.40 with SMTP id f40mr2639993rvb.1196265494825;
-        Wed, 28 Nov 2007 07:58:14 -0800 (PST)
-Received: by 10.114.160.3 with HTTP; Wed, 28 Nov 2007 07:58:14 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.99999.0711280951150.9605@xanadu.home>
+	id S1756317AbXK1QKh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 11:10:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755349AbXK1QKh
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 11:10:37 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1472 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754763AbXK1QKg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 11:10:36 -0500
+Received: (qmail 11692 invoked by uid 111); 28 Nov 2007 16:10:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 28 Nov 2007 11:10:35 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Nov 2007 11:10:34 -0500
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0711272143470.5349@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66364>
+X-UiO-ClamAV-Virus: No
+X-UiO-Spam-info: not spam, SpamAssassin (score=-7.0, required=5.0, autolearn=disabled, RCVD_IN_DNSWL_MED=-4,UIO_VGER=-3)
+X-UiO-Scanned: 0670901383C81F5FFBCBCD4F486E2FBD5C02A73C
+X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -69 maxlevel 200 minaction 2 bait 0 mail/h: 45 total 725230 max/h 813 blacklist 0 greylist 0 ratelimit 0
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66365>
 
-On 11/28/07, Nicolas Pitre <nico@cam.org> wrote:
-> On Tue, 27 Nov 2007, Jon Smirl wrote:
->
-> > Of course you've never screwed up a repository using git commands,
-> > right? I've messed up plenty. A good way to mess up a repo is to get
-> > the data in .git/* out of sync with what is in the repo. I'm getting
-> > good enough with git that I can fix most mess up with a few edits, but
-> > it took me two years to get to that point. Rolling back to a check
-> > point is way easier. User error and a command failing are both equally
-> > valid ways to mess up a repo.
->
-> The reflog contains all your check points, for every modifications you
-> make, even the stupid ones.  You should look at it.
+On Tue, Nov 27, 2007 at 10:25:32PM -0500, Daniel Barkalow wrote:
 
-The state contained in the other config files in .git/* is not getting
-check pointed. I can use reflog to move my branch heads around. But
-doing that does not undo the changes to the state recorded in .git/*.
-After the error I encountered  I moved my branch head back, but the
-state stgit had stored in .git/* was out of sync with where the branch
-had been moved to.
+> > It would of course be better if git-push could notice that it needs
+> > to do an actual fetch. I think it'd be sufficient to transmit the
+> > final remote ref SHA1 back to git-push, and if it doesn't match what
+> > was pushed, that's a sign that a fetch is needed. But that change
+> > wouldn't be mutually exclusive with this patch, I believe.
+> 
+> Couldn't you do this with a status message? ("ok <refname> changed by 
+> hook" or something.)
 
+Having just touched this code, I believe the answer is yes. receive-pack
+has always sent just "ok <refname>\n", so we could start interpreting
+anything after the <refname> bit freely (I think "ok <refname>
+changed-to <hash>" is even more informative, but perhaps not useful
+given that the sender probably doesn't have that commit object).
 
->
->
-> Nicolas
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
+-Peff
