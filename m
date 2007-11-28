@@ -1,74 +1,56 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Rollback of git commands
-Date: Wed, 28 Nov 2007 17:48:50 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0711281702140.5349@iabervon.org>
-References: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com> 
- <7vmyszb39s.fsf@gitster.siamese.dyndns.org> 
- <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com> 
- <20071128092234.GA12977@diana.vm.bytemark.co.uk>
- <9e4733910711280713n6b439866m55bea4824efd959@mail.gmail.com>
- <Pine.LNX.4.64.0711281600320.5349@iabervon.org> <795F24E6-9145-4007-95EB-DB63D9F6295A@midwinter.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] cvsimport: use show-ref to support packed refs
+Date: Wed, 28 Nov 2007 17:52:29 -0500
+Message-ID: <20071128225229.GA13836@coredump.intra.peff.net>
+References: <20071128185504.GA11236@coredump.intra.peff.net> <20071128185611.GB11320@coredump.intra.peff.net> <Pine.LNX.4.64.0711281916140.27959@racer.site> <20071128194423.GB11396@coredump.intra.peff.net> <7v4pf63t7y.fsf@gitster.siamese.dyndns.org> <20071128224313.GB13298@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	=?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 23:49:14 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Emanuele Giaquinta <e.giaquinta@glauco.it>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 23:52:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxViS-0006yA-UG
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 23:49:13 +0100
+	id 1IxVm1-0008Us-IY
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 23:52:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756573AbXK1Wsw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 17:48:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757468AbXK1Wsw
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 17:48:52 -0500
-Received: from iabervon.org ([66.92.72.58]:42461 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755761AbXK1Wsw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 17:48:52 -0500
-Received: (qmail 6931 invoked by uid 1000); 28 Nov 2007 22:48:50 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 28 Nov 2007 22:48:50 -0000
-In-Reply-To: <795F24E6-9145-4007-95EB-DB63D9F6295A@midwinter.com>
+	id S1760123AbXK1Wwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 17:52:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758359AbXK1Wwc
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 17:52:32 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3753 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759935AbXK1Wwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 17:52:31 -0500
+Received: (qmail 14927 invoked by uid 111); 28 Nov 2007 22:52:30 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 28 Nov 2007 17:52:30 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Nov 2007 17:52:29 -0500
+Content-Disposition: inline
+In-Reply-To: <20071128224313.GB13298@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66451>
 
-On Wed, 28 Nov 2007, Steven Grimm wrote:
+On Wed, Nov 28, 2007 at 05:43:13PM -0500, Jeff King wrote:
 
-> On Nov 28, 2007, at 1:47 PM, Daniel Barkalow wrote:
-> >(That is, "git rebase -i" seems
-> >to work fine for making changes to a single logical patch series, all of
-> >whose patches are prepared locally and aren't independantly named in some
-> >particular fashion; the things that aren't handled are "I need to replace
-> >the pull of netdev.git with a new pull of netdev.git" or "I need to
-> >replace '[PATCH] fix-the-frobnozzle-gadget' with
-> >'[PATCH v2] fix-the-frobnozzle-gadget'.)
+> > 	sub get_headref {
+> >         	my ($it) = (@_);
+> >                 my $r = `git-rev-parse --verify "refs/$it"`;
+> > 		return undef unless $? == 0;
+> > 		chomp $r;
+> > 		return $r;
+> > 	}
 > 
-> I use rebase -i for that last case and it works fine -- I mark the appropriate
-> commit as "edit" in the patch list and the rebase stops there, at which point
-> I can update the patch in any way I see fit: tweak it a bit, replace it with a
-> different change entirely, change the commit message, etc. What's missing from
-> rebase -i in that respect? I guess it's not as easy to script for automated
-> patch replacement.
+> I have no comment on which is the best command to use (you would know
+> much better than I), but adding "refs/" is wrong.
 
-Just that you have to find the patch yourself and replace it; if you're 
-doing this a lot, you'll want to say "here's a new version of 
-fix-the-frobnozzle-gadget, do the right thing". Also, for series items 
-that are pulling some remote tree, you want it to remember the info, so 
-you can just say "pull git-netdev" and have it fetch the latest from the 
-appropriate remote and replace the merge commit with a new merge commit.
+BTW, one bad thing about the new get_headref compared to the original is
+that it does not distinguish very well between "ref does not exist" and
+"an error occurred." Is there a lookup command that makes such a
+distinction possible?
 
-I think that people in this role using quilt do it by: "quilt pop -a; 
-replace the patch file without looking at the series file; quilt push 
--a"; in the (hopefully) common case, you don't have to worry about any of 
-the details, which is why the task remains tractable.
-
-	-Daniel
-*This .sig left intentionally blank*
+-Peff
