@@ -1,109 +1,186 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: stgit: lost all my patches again
-Date: Wed, 28 Nov 2007 17:04:10 +0100
-Message-ID: <20071128160410.GB19302@diana.vm.bytemark.co.uk>
-References: <9e4733910711271417l32ed9a77p9915aa34a780665b@mail.gmail.com> <9e4733910711271512g790364e0ka4839b2be9fd4935@mail.gmail.com> <20071128093403.GB12977@diana.vm.bytemark.co.uk> <9e4733910711280706j45fe9c17t928396eb8e1de8bf@mail.gmail.com>
+From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: [PATCH 1/2] Move all dashed-form commands to libexecdir
+Date: Wed, 28 Nov 2007 23:21:57 +0700
+Message-ID: <20071128162157.GA5386@laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 17:27:23 2007
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 28 17:22:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
-Received: from mail-forward.uio.no ([129.240.10.42])
-	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1IxPfL-0001uZ-Ni
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 17:21:35 +0100
-Received: from mail-mx9.uio.no ([129.240.10.39])
-	by pat.uio.no with esmtp (Exim 4.67)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1IxPV5-0000co-Pe
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 17:10:59 +0100
 Received: from vger.kernel.org ([209.132.176.167])
-	by mail-mx9.uio.no with esmtp (Exim 4.67)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1IxPUr-0004lB-7w
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 17:10:59 +0100
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1IxPgE-0007br-Jt
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 17:22:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757713AbXK1QEQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Nov 2007 11:04:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757568AbXK1QEQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 11:04:16 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1650 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757486AbXK1QEP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 11:04:15 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IxPOU-0005CO-00; Wed, 28 Nov 2007 16:04:10 +0000
+	id S1758020AbXK1QWK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Nov 2007 11:22:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757908AbXK1QWJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 11:22:09 -0500
+Received: from an-out-0708.google.com ([209.85.132.251]:53407 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752478AbXK1QWI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 11:22:08 -0500
+Received: by an-out-0708.google.com with SMTP id d31so310818and
+        for <git@vger.kernel.org>; Wed, 28 Nov 2007 08:22:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
+        bh=AjJzXxxPqsUNYck3hGoHWHEbPKIYHTiRgA83+IghHrU=;
+        b=Znvba3AqjCoqjs3iuAobRtNHqLnek2PRIUKUwDsUhDjtFoyCfa2ZLzPI/HELgZnVCgZ7iy3FgVlyKR++vW158jPcGSZJu0EqlpEHbA+me69A741WTOd0pEC2eTJz+AKuR+Oh0E/mHW2EQy4XyN9Cxq24VCje90odpn26Quq+T3E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
+        b=N2tpmOO64gwxGAQW6n73VPY8Afx858mL+dtdOPK81t4PqqpwIANFKyBrYjKW0SWUeTnqZh/+CGd9I7BXv0DOrmtVbiVR08bSXn5OmhdADTU5mm1XjbOf67LrreTxzIkuLsbvaFlyBo0b/fokmuwYrR9BQpI224Dn4gqYDNG9Zgw=
+Received: by 10.101.70.5 with SMTP id x5mr9366506ank.1196266924760;
+        Wed, 28 Nov 2007 08:22:04 -0800 (PST)
+Received: from pclouds@gmail.com ( [117.5.1.8])
+        by mx.google.com with ESMTPS id b7sm291455ana.2007.11.28.08.21.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 28 Nov 2007 08:22:03 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 28 Nov 2007 23:21:57 +0700
 Content-Disposition: inline
-In-Reply-To: <9e4733910711280706j45fe9c17t928396eb8e1de8bf@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-UiO-ClamAV-Virus: No
-X-UiO-Spam-info: not spam, SpamAssassin (score=-7.0, required=5.0, autolearn=disabled, RCVD_IN_DNSWL_MED=-4,UIO_VGER=-3)
-X-UiO-Scanned: 967113978FC0E0E8F06D854B6842889BC0E79772
-X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -69 maxlevel 200 minaction 2 bait 0 mail/h: 39 total 725224 max/h 813 blacklist 0 greylist 0 ratelimit 0
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66370>
 
-On 2007-11-28 10:06:57 -0500, Jon Smirl wrote:
 
-> I did this:
-> all pataches were applied
-> git rebase
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Third version. Changes include
+  - warn users if they have old commands in bindir
+  - update git.spec.in (I did not use, but rpm2targz output seemed
+    correct)
 
-At this point, a simple "git reset --hard HEAD@{1}" should have fixed
-the problem. Not much use knowing that now, I know, but still ... :-)
+ Makefile      |    3 ++-
+ check_bindir  |   13 +++++++++++++
+ config.mak.in |    2 +-
+ git.spec.in   |   13 +++++++------
+ 4 files changed, 23 insertions(+), 8 deletions(-)
+ create mode 100755 check_bindir
 
-> stg repair -- partial repair, some patches empty, half are pushed
-
-Modulo any bugs, this should have adjusted the appliedness of your
-patches to match the new HEAD (patches are applied iff they are
-reachable from HEAD) and made patches of any non-patch commits sitting
-between a patch and HEAD. Nothing else. In particular, it doesn't
-change your existing patches or change HEAD, so those empty patches
-were empty even before the repair. (Modulo any bugs, of course, but
-that kind of bug seems really unlikely.)
-
-> moved HEAD back in front of rebase
-> stg repair - it show all my patches as popped,
-
-That sounds OK. You reset HEAD to a commit early enough in history
-that no patches are reachable from it.
-
-> but when I started doing command it complain that some commits that
-> stg needed were not there.
-
-That sounds seriously broken. What exactly was the complaint? Missing
-commit objects?
-
-> The complaint was caused by the first repair. The first repair
-> altered some of the stg state to point at commits past the rebase.
-
-Yes. It would have made patches out of some of the rebased commits, in
-order to give you a consistent state. For example, assume you started
-with the following situation:
-
-(cN are commits, pN are commits that are also StGit patches)
-
-   ...---c0---c1---p0---p1---p2---p3---p4:HEAD
-
-You git-rebase, causing a situation like this:
-
-   ...---c0---c1---p0---p1---p2---p3---p4
-                         \
-                          c2---c3---c4---c5---c6---c7---c8:HEAD
-
-"stg repair" at this point will see that p2..p4 should be unapplied
-since they aren't reachable from HEAD, and c2..c8 need to be made
-patches since they are on top of p1.
-
-Generally, what you want to do is to git-reset to the commit you want
-HEAD to be, and _then_ run stg repair.
-
+diff --git a/Makefile b/Makefile
+index 313f9a2..3cf791f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -154,7 +154,7 @@ STRIP ?=3D strip
+=20
+ prefix =3D $(HOME)
+ bindir =3D $(prefix)/bin
+-gitexecdir =3D $(bindir)
++gitexecdir =3D $(prefix)/libexec/git-core
+ sharedir =3D $(prefix)/share
+ template_dir =3D $(sharedir)/git-core/templates
+ ifeq ($(prefix),/usr)
+@@ -1034,6 +1034,7 @@ endif
+ ifneq (,$X)
+ 	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_PROGRAMS) $(BUILT_INS=
+) git$X)), $(RM) '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p';)
+ endif
++	./check_bindir 'z$(bindir_SQ)' 'z$(gitexecdir_SQ)' '$(DESTDIR_SQ)$(bi=
+ndir_SQ)/git-shell$X'
+=20
+ install-doc:
+ 	$(MAKE) -C Documentation install
+diff --git a/check_bindir b/check_bindir
+new file mode 100755
+index 0000000..a1c4c3e
+--- /dev/null
++++ b/check_bindir
+@@ -0,0 +1,13 @@
++#!/bin/sh
++bindir=3D"$1"
++gitexecdir=3D"$2"
++gitcmd=3D"$3"
++if test "$bindir" !=3D "$gitexecdir" -a -x "$gitcmd"
++then
++	echo
++	echo "!! You have installed git-* commands to new gitexecdir."
++	echo "!! Old version git-* commands still remain in bindir."
++	echo "!! Mixing two versions of Git will lead to problems."
++	echo "!! Please remove old version commands in bindir now."
++	echo
++fi
+diff --git a/config.mak.in b/config.mak.in
+index 11d256e..1db0338 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -11,7 +11,7 @@ TCLTK_PATH =3D @TCLTK_PATH@
+ prefix =3D @prefix@
+ exec_prefix =3D @exec_prefix@
+ bindir =3D @bindir@
+-#gitexecdir =3D @libexecdir@/git-core/
++gitexecdir =3D @libexecdir@/git-core/
+ datarootdir =3D @datarootdir@
+ template_dir =3D @datadir@/git-core/templates/
+=20
+diff --git a/git.spec.in b/git.spec.in
+index bdb293d..b6637a7 100644
+--- a/git.spec.in
++++ b/git.spec.in
+@@ -105,6 +105,7 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -empty -e=
+xec rm -f {} ';'
+ find $RPM_BUILD_ROOT -type f -name perllocal.pod -exec rm -f {} ';'
+=20
+ (find $RPM_BUILD_ROOT%{_bindir} -type f | grep -vE "archimport|svn|cvs=
+|email|gitk|git-gui|git-citool" | sed -e s@^$RPM_BUILD_ROOT@@)         =
+      > bin-man-doc-files
++(find $RPM_BUILD_ROOT%{_libexecdir}/git-core -type f | grep -vE "archi=
+mport|svn|cvs|email|gitk|git-gui|git-citool" | sed -e s@^$RPM_BUILD_ROO=
+T@@)               >> bin-man-doc-files
+ (find $RPM_BUILD_ROOT%{perl_vendorlib} -type f | sed -e s@^$RPM_BUILD_=
+ROOT@@) >> perl-files
+ %if %{!?_without_docs:1}0
+ (find $RPM_BUILD_ROOT%{_mandir} $RPM_BUILD_ROOT/Documentation -type f =
+| grep -vE "archimport|svn|git-cvs|email|gitk|git-gui|git-citool" | sed=
+ -e s@^$RPM_BUILD_ROOT@@ -e 's/$/*/' ) >> bin-man-doc-files
+@@ -120,7 +121,7 @@ rm -rf $RPM_BUILD_ROOT
+=20
+ %files svn
+ %defattr(-,root,root)
+-%{_bindir}/*svn*
++%{_libexecdir}/git-core/*svn*
+ %doc Documentation/*svn*.txt
+ %{!?_without_docs: %{_mandir}/man1/*svn*.1*}
+ %{!?_without_docs: %doc Documentation/*svn*.html }
+@@ -128,28 +129,28 @@ rm -rf $RPM_BUILD_ROOT
+ %files cvs
+ %defattr(-,root,root)
+ %doc Documentation/*git-cvs*.txt
+-%{_bindir}/*cvs*
++%{_libexecdir}/git-core/*cvs*
+ %{!?_without_docs: %{_mandir}/man1/*cvs*.1*}
+ %{!?_without_docs: %doc Documentation/*git-cvs*.html }
+=20
+ %files arch
+ %defattr(-,root,root)
+ %doc Documentation/git-archimport.txt
+-%{_bindir}/git-archimport
++%{_libexecdir}/git-core/git-archimport
+ %{!?_without_docs: %{_mandir}/man1/git-archimport.1*}
+ %{!?_without_docs: %doc Documentation/git-archimport.html }
+=20
+ %files email
+ %defattr(-,root,root)
+ %doc Documentation/*email*.txt
+-%{_bindir}/*email*
++%{_libexecdir}/git-core/*email*
+ %{!?_without_docs: %{_mandir}/man1/*email*.1*}
+ %{!?_without_docs: %doc Documentation/*email*.html }
+=20
+ %files gui
+ %defattr(-,root,root)
+-%{_bindir}/git-gui
+-%{_bindir}/git-citool
++%{_libexecdir}/git-core/git-gui
++%{_libexecdir}/git-core/git-citool
+ %{_datadir}/git-gui/
+ %{!?_without_docs: %{_mandir}/man1/git-gui.1*}
+ %{!?_without_docs: %doc Documentation/git-gui.html}
 --=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+1.5.3.6.2041.g106f-dirty
