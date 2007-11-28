@@ -1,128 +1,95 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Do not generate full commit log message if it not going
- to be used
-Date: Wed, 28 Nov 2007 21:43:12 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711282140470.27959@racer.site>
-References: <81b0412b0711270254i58be4d2fi5021767d99fcb753@mail.gmail.com>
- <474C0105.3010908@viscovery.net> <81b0412b0711270448s6534a849u86bcb161d4d7b3fe@mail.gmail.com>
- <7vfxyrd2x2.fsf@gitster.siamese.dyndns.org>
- <81b0412b0711271018m6419b076n269a0175494fac84@mail.gmail.com>
- <20071127214425.GA3156@steel.home> <Pine.LNX.4.64.0711281211130.27959@racer.site>
- <20071128211059.GA3173@steel.home>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Rollback of git commands
+Date: Wed, 28 Nov 2007 16:47:22 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0711281600320.5349@iabervon.org>
+References: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com> 
+ <7vmyszb39s.fsf@gitster.siamese.dyndns.org> 
+ <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com> 
+ <20071128092234.GA12977@diana.vm.bytemark.co.uk>
+ <9e4733910711280713n6b439866m55bea4824efd959@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
+Cc: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	Kristian =?iso-8859-15?Q?H=F8gsberg?= <krh@redhat.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 22:43:53 2007
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 22:47:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxUh4-0004Xu-LC
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 22:43:43 +0100
+	id 1IxUl3-0006TV-3t
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 22:47:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755079AbXK1VnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 16:43:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754357AbXK1VnX
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 16:43:23 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55488 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754725AbXK1VnW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 16:43:22 -0500
-Received: (qmail invoked by alias); 28 Nov 2007 21:43:19 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp019) with SMTP; 28 Nov 2007 22:43:19 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/kvulLgprkmvIhBXj71N1s83Ok2DoOv1jh8t1V7B
-	jJtIHN9TwGK6Qz
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071128211059.GA3173@steel.home>
-X-Y-GMX-Trusted: 0
+	id S1756949AbXK1VrY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 16:47:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755573AbXK1VrY
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 16:47:24 -0500
+Received: from iabervon.org ([66.92.72.58]:52815 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754218AbXK1VrX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 16:47:23 -0500
+Received: (qmail 5168 invoked by uid 1000); 28 Nov 2007 21:47:22 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 28 Nov 2007 21:47:22 -0000
+In-Reply-To: <9e4733910711280713n6b439866m55bea4824efd959@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66430>
 
-Hi,
+On Wed, 28 Nov 2007, Jon Smirl wrote:
 
-On Wed, 28 Nov 2007, Alex Riesen wrote:
-
-> Johannes Schindelin, Wed, Nov 28, 2007 13:18:10 +0100:
-> > On Tue, 27 Nov 2007, Alex Riesen wrote:
-> > 
-> > > Could not stop myself. Hopefully didn't beat anyone to it :)
-> > > Almost all code shamelessly stolen from builtin-diff-index.c.
-> > 
-> > Then I have to wonder if it would not be a better idea to refactor the 
-> > code, so that other people do not have to steal the code again, but are 
-> > able to reuse it ;-)
+> all my patches applied
+> git rebase
+> cursing.... I immediately knew what I had done
+> update stg and install it
+> stg repair
+> four of my 15 patches tried to apply, I received messages that there
+> were all empty
+> most stg commands won't work, they complain that the commit references
+> in the stg .git/* state are not correct.
 > 
-> Not sure it will be worth the effort. It is really short.
+> I then proceed to manually attempt repair.
 
-Okay.
+This sounds like the content of the applied patches got pulled into the 
+non-stgit history of the branch it's working on, sort of like a stg commit 
+except that stgit didn't know you'd done it. Then cleaning everything up 
+from stgit's perspective caused all of those patches to become empty, 
+since they were already applied in the base.
 
-> > > Preprocessor trickery in DIFF_OPT_* macros is disgusting, it breaks Vim 
-> > > word completion and trying to use many flags in one expression looks 
-> > > just ugly.
-> > 
-> > How does it break Vim word completion?  And why should something like
-> > 
-> > 		DIFF_OPT_SET(&rev.diffopt, QUIET | EXIT_WITH_STATUS);
-> > 
-> > look ugly?  I find it highly readable.
-> 
-> Oh, this would look ok. It just wont compile: DIFF_OPT_SET prepends
-> second argument with DIFF_OPT_:
-> 
-> #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
-> #define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
-> #define DIFF_OPT_CLR(opts, flag)    ((opts)->flags &= ~DIFF_OPT_##flag)
+I think fundamental issue you're having is that stgit is implementing the 
+functionality of quilt using git's engine, not providing a version control 
+system for patch series, which is what you really want. I've actually been 
+working on a design for a git builtin for the idea that the patch series 
+is your work product, and you want to version control that (additionally, 
+you want to use git's engine to help with working on the series and 
+represent it).
 
-Ouch.  Sorry for suggesting it when I clearly had no clue.
+Out of curiousity, are you using stgit as an integrator (with your work 
+being keeping a collection of patches produced separately up-to-date) or 
+as a patch developer (with your work being producing a state containing a 
+single large new feature while maintaining this change as a series of 
+self-contained patches)? I've been thinking primarily about the integrator 
+task, in part because I've found it easy enough to do the developer task 
+without anything other than current git. (That is, "git rebase -i" seems 
+to work fine for making changes to a single logical patch series, all of 
+whose patches are prepared locally and aren't independantly named in some 
+particular fashion; the things that aren't handled are "I need to replace 
+the pull of netdev.git with a new pull of netdev.git" or "I need to 
+replace '[PATCH] fix-the-frobnozzle-gadget' with 
+'[PATCH v2] fix-the-frobnozzle-gadget'.)
 
-> > > +	if (no_edit) {
-> > > +		static const char *argv[] = { NULL, "HEAD", NULL };
-> > > +		struct rev_info rev;
-> > > +		unsigned char sha1[40];
-> > > +		int is_initial;
-> > > +
-> > > +		fclose(fp);
-> > > +
-> > > +		if (!active_nr && read_cache() < 0)
-> > > +			die("Cannot read index");
-> > > +
-> > > +		if (get_sha1("HEAD", sha1) != 0)
-> > > +			return !!active_nr;
-> > 
-> > Don't want to be anal here, but are there possibly reasons (read "possible 
-> > errors") other than an empty repo where this triggers?
-> 
-> Definitely. I just don't know. OTOH, I can only return "committable" or 
-> "not committable".
+The developer assist I'd actually like to see is: "I've got a single 
+commit on top of a series of commits on top of an upstream commit; I want 
+to distribute the changes made in the final commit to points in the series 
+where the code that gets replaced (or context that gets inserted into) in 
+the final commit gets introduced, with interactive stuff for sticking 
+other hunks into particular commits or into new commits at some point in 
+the series." That is, I want to do my revision of a patch series on the 
+final commit of the series, and then have these changes distributed to the 
+appropriate points, rather than doing work on intermediate states (unless 
+what I'm fixing is stub code that gets replaced again in a later patch).
 
-I guess it is good enough.  Just wanted to point out that this can fail if 
-.git/HEAD is not readable.
-
-> > Besides, would this not be more elegant as
-> > 
-> > 		setup_revisions(0, NULL, &rev, "HEAD");
-> 
-> Hmm... And I was so puzzled as to what that "def" argument could
-> possibly mean... Still am, in fact. But it works.
-
-It is the mechanism which makes "git log" default to "git log HEAD".
-
-> > Other than that (including my remark about refactoring that piece of 
-> > code), I like it.
-> 
-> Me too: I have *extensively* tested it today and a commit on the
-> 2.6GHz/2Gb/SATA windows machine is almost as fast as on my linux
-> laptop now (Centrino/1.2GHz downclocked to 800MHz/384Mb/IDE).
-
-Yes, I suspected something like this would happen.
-
-Ciao,
-Dscho
+	-Daniel
+*This .sig left intentionally blank*
