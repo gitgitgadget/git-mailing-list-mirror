@@ -1,83 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] Teach 'git pull' about --rebase
-Date: Wed, 28 Nov 2007 21:58:52 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711282156520.27959@racer.site>
-References: <Pine.LNX.4.64.0710252351130.4362@racer.site>
- <alpine.LFD.0.999.0710251602160.30120@woody.linux-foundation.org>
- <Pine.LNX.4.64.0710260007450.4362@racer.site> <7v3avy21il.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0710261047450.4362@racer.site> <7v3aurcjpq.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0711281307420.27959@racer.site> <27E5EF3C-19EF-441C-BB12-0F5B29BEAEDB@midwinter.com>
- <Pine.LNX.4.64.0711282039430.27959@racer.site>
- <8c5c35580711281310h8764a33pba48e65010abf859@mail.gmail.com>
- <7vhcj63uhw.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Lars Hjemli <hjemli@gmail.com>,
-	Steven Grimm <koreth@midwinter.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 22:59:24 2007
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: Rollback of git commands
+Date: Wed, 28 Nov 2007 13:58:59 -0800
+Message-ID: <795F24E6-9145-4007-95EB-DB63D9F6295A@midwinter.com>
+References: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com>  <7vmyszb39s.fsf@gitster.siamese.dyndns.org>  <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com>  <20071128092234.GA12977@diana.vm.bytemark.co.uk> <9e4733910711280713n6b439866m55bea4824efd959@mail.gmail.com> <Pine.LNX.4.64.0711281600320.5349@iabervon.org>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	=?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Nov 28 22:59:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxUwF-0003go-Ny
+	id 1IxUwG-0003go-CS
 	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 22:59:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756322AbXK1V7E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 16:59:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756082AbXK1V7E
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 16:59:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43428 "HELO mail.gmx.net"
+	id S1756649AbXK1V7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 16:59:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756360AbXK1V7F
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 16:59:05 -0500
+Received: from tater.midwinter.com ([216.32.86.90]:59192 "HELO midwinter.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755166AbXK1V7C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 16:59:02 -0500
-Received: (qmail invoked by alias); 28 Nov 2007 21:59:00 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp001) with SMTP; 28 Nov 2007 22:59:00 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Thcgq0z8T6XHBsBsefEQOP6fnK4zKRZnlOo2ihb
-	n642dggsd3NpOI
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vhcj63uhw.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1755966AbXK1V7D (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 16:59:03 -0500
+Received: (qmail 2393 invoked from network); 28 Nov 2007 21:59:01 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=X4XSQrx1e1WL1MEMXd034DT0j6q8Asj+fIInyM5QGH4pZrd8mRS29n8gcym69Yxd  ;
+Received: from localhost (127.0.0.1)
+  by localhost with SMTP; 28 Nov 2007 21:59:01 -0000
+In-Reply-To: <Pine.LNX.4.64.0711281600320.5349@iabervon.org>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66434>
 
-Hi,
+On Nov 28, 2007, at 1:47 PM, Daniel Barkalow wrote:
+> (That is, "git rebase -i" seems
+> to work fine for making changes to a single logical patch series,  
+> all of
+> whose patches are prepared locally and aren't independantly named in  
+> some
+> particular fashion; the things that aren't handled are "I need to  
+> replace
+> the pull of netdev.git with a new pull of netdev.git" or "I need to
+> replace '[PATCH] fix-the-frobnozzle-gadget' with
+> '[PATCH v2] fix-the-frobnozzle-gadget'.)
 
-On Wed, 28 Nov 2007, Junio C Hamano wrote:
+I use rebase -i for that last case and it works fine -- I mark the  
+appropriate commit as "edit" in the patch list and the rebase stops  
+there, at which point I can update the patch in any way I see fit:  
+tweak it a bit, replace it with a different change entirely, change  
+the commit message, etc. What's missing from rebase -i in that  
+respect? I guess it's not as easy to script for automated patch  
+replacement.
 
-> "Lars Hjemli" <hjemli@gmail.com> writes:
-> 
-> > On 11/28/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> >> On Wed, 28 Nov 2007, Steven Grimm wrote:
-> >> > I wonder if this shouldn't be branch.<name>.pulltype or something like
-> >> > that, so we can represent more than just "rebase or not." Values could
-> >> > be "rebase", "merge" (the default) and maybe even "manual" to specify
-> >> > that git-pull should neither merge nor rebase a particular branch even
-> >> > if it matches a wildcard refspec.
-> >>
-> >> I am not convinced that this is a good thing... We already have
-> >> branch.<name>.mergeOptions for proper merges, and I want to make clear
-> >> that this is about rebase, and not about merge.
-> >
-> > Maybe branch.<name>.pullOptions ?
-> 
-> Maybe not make this part of git-pull at all?  merge and rebase have
-> totally different impact on the resulting history, so perhaps a separate
-> command that is a shorthand for "git fetch && git rebase" may help
-> unconfuse the users.
-
-Not so sure about that.  We already have too many commands, according to 
-some outspoken people, and this would add to it.
-
-Besides, the operation "pull" is about getting remote changes incorporated 
-in your current branch.  IMHO "pull = fetch + merge" is only a technical 
-detail, and we should not be bound by it too much.
-
-Ciao,
-Dscho
+-Steve
