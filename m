@@ -1,55 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] cvsimport: use show-ref to support packed refs
-Date: Wed, 28 Nov 2007 20:37:48 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711282037100.27959@racer.site>
-References: <20071128185504.GA11236@coredump.intra.peff.net>
- <20071128185611.GB11320@coredump.intra.peff.net> <Pine.LNX.4.64.0711281916140.27959@racer.site>
- <20071128194423.GB11396@coredump.intra.peff.net>
+From: Johannes Gilger <heipei@hackvalue.de>
+Subject: Re: The 5th issue of the msysGit Herald
+Date: Wed, 28 Nov 2007 21:40:46 +0100
+Message-ID: <20071128204043.GA23630@dualtron.vpn.rwth-aachen.de>
+References: <Pine.LNX.4.64.0711130312180.4362@racer.site> <fhcat4$ef$1@ger.gmane.org> <7v7ikmt1md.fsf@gitster.siamese.dyndns.org> <200711132020.59578.jnareb@gmail.com> <Pine.LNX.4.64.0711281632510.1706@kaos.quantumfyre.co.uk>
+Reply-To: Johannes Gilger <heipei@hackvalue.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Emanuele Giaquinta <e.giaquinta@glauco.it>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Nov 28 21:38:27 2007
+Content-Type: text/plain; charset=iso-8859-15
+Cc: git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Wed Nov 28 21:41:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxTfo-0000FX-Ct
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 21:38:20 +0100
+	id 1IxTic-0001Yn-OS
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 21:41:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756269AbXK1Uh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 15:37:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755699AbXK1Uh6
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 15:37:58 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54192 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753385AbXK1Uh6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 15:37:58 -0500
-Received: (qmail invoked by alias); 28 Nov 2007 20:37:56 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp050) with SMTP; 28 Nov 2007 21:37:56 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18RrKIt09ARlKVE3y47ZWqxs+AGpYQSgIwLN5Z7aZ
-	8Hm7m4RLTZVOW+
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071128194423.GB11396@coredump.intra.peff.net>
-X-Y-GMX-Trusted: 0
+	id S1756832AbXK1Ukz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 15:40:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756804AbXK1Ukz
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 15:40:55 -0500
+Received: from avalon.gnuzifer.de ([85.10.199.84]:52134 "EHLO
+	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756800AbXK1Uky (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 15:40:54 -0500
+Received: from 0-146.vpn.rwth-aachen.de ([134.130.240.146]:39040 helo=localhost)
+	by avalon.gnuzifer.de with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <heipei@hackvalue.de>)
+	id 1IxTiF-0005ZT-Hv; Wed, 28 Nov 2007 21:40:52 +0100
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0711281632510.1706@kaos.quantumfyre.co.uk>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-SA-Exim-Connect-IP: 134.130.240.146
+X-SA-Exim-Mail-From: heipei@hackvalue.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66424>
 
-Hi,
-
-On Wed, 28 Nov 2007, Jeff King wrote:
-
-> Since get_headref is useful in contexts where "$remote" is not always
-> prepended (see patch 3/3), I think the best solution is:
+On 28/11/07 16:33, Julian Phillips wrote:
+> Something like this perhaps?
 >
-> [PATCH prefixing the argument to get_headref() with "$remote/"]
+> http://gitrss.q42.co.uk/
 
-Yes, I think so, too.
+Hi Julian,
 
-Thanks,
-Dscho
+somehow the feed does not work for me at all. It is not displayed 
+correctly in the firefox feed-preview or in google reader. Not correctly 
+here meaning: no linebreaks.
+
+Greetings,
+Jojo
+
+-- 
+Johannes Gilger <heipei@hackvalue.de>
+http://hackvalue.de/heipei/
+GPG-Key: 0x42F6DE81
+GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
