@@ -1,57 +1,64 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: StGit hooks
-Date: Wed, 28 Nov 2007 16:40:59 +0100
-Message-ID: <20071128154059.GA19302@diana.vm.bytemark.co.uk>
-References: <9e4733910711271512g790364e0ka4839b2be9fd4935@mail.gmail.com> <20071128093403.GB12977@diana.vm.bytemark.co.uk> <20071128101718.GA13940@diana.vm.bytemark.co.uk> <474D5482.5020609@op5.se> <20071128121905.GA15953@diana.vm.bytemark.co.uk> <474D69A7.6020404@op5.se> <20071128132605.GB15953@diana.vm.bytemark.co.uk> <474D7710.4090303@op5.se> <9e4733910711280653q119f2c2n173eaebdda6cd774@mail.gmail.com> <474D8205.8030401@op5.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git guidance
+Date: Wed, 28 Nov 2007 15:46:35 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711281545170.27959@racer.site>
+References: <20071127235237.GF15227@1wt.eu> <200711281549.02663.a1426z@gawab.com>
+ <474D70DD.4020601@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Nov 28 16:41:39 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Al Boldi <a1426z@gawab.com>, git@vger.kernel.org
+To: Rogan Dawes <lists@dawes.za.net>
+X-From: git-owner@vger.kernel.org Wed Nov 28 16:47:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxP2Y-0007Qw-Cx
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 16:41:30 +0100
+	id 1IxP7w-0001fk-5H
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 16:47:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756704AbXK1PlI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Nov 2007 10:41:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756615AbXK1PlH
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 10:41:07 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4399 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756404AbXK1PlH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 10:41:07 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IxP23-00053M-00; Wed, 28 Nov 2007 15:40:59 +0000
-Content-Disposition: inline
-In-Reply-To: <474D8205.8030401@op5.se>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1756817AbXK1Pqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 10:46:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756950AbXK1Pqq
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 10:46:46 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54958 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755594AbXK1Pqo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 10:46:44 -0500
+Received: (qmail invoked by alias); 28 Nov 2007 15:46:42 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp058) with SMTP; 28 Nov 2007 16:46:42 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+H8VYOKRaHDe8mLGKF44kMsTdcbcsAnqz/ZtEaWk
+	pmYMQ8opqRBAfg
+X-X-Sender: gene099@racer.site
+In-Reply-To: <474D70DD.4020601@dawes.za.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66356>
 
-On 2007-11-28 15:58:13 +0100, Andreas Ericsson wrote:
+Hi,
 
-> Jon Smirl wrote:
+On Wed, 28 Nov 2007, Rogan Dawes wrote:
+
+> Al Boldi wrote:
 >
-> > I would expect 'stg init' to switch the branch to using the stgit
-> > hooks and only those hooks. Branches that were not inited would
-> > continue to use the user hooks. I don't have any user hooks, but
-> > this is what I would expect to happen.
->
-> Obviously the stgit-installed hook will have to check if the branch
-> the user is operating on is managed by stgit before it prevents git
-> rebase (or whatever it's supposed to do).
+> > Willy Tarreau wrote:
+> >
+> > > It should not turn into an endless thread led by people who want to 
+> > > redefine GIT's roadmap, but experience sharing helps a lot with GIT.
+> > 
+> > Well, now that you mentioned it, if there is one thing I dislike, it's 
+> > for version control to start mutilating your sources.  Version Control 
+> > should be completely transparent.  GIT isn't.
+> 
+> Care to explain? Git is quite happy handling arbitrary binary content, 
+> so I find it difficult to believe that it is changing your source code 
+> in strange ways.
 
-Yes. The point is, hooks are per repository, not per branch. So
-there's no concept of "replacing the hooks for just this one branch".
+It is nice of you to ask him to explain: Unless this handwaving claim is 
+substantiated, it is quite hard to argue with.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Ciao,
+Dscho
