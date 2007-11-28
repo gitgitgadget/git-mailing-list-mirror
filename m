@@ -1,94 +1,109 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: stgit: lost all my patches again
-Date: Wed, 28 Nov 2007 17:41:13 +0100
-Message-ID: <20071128164113.GA20749@diana.vm.bytemark.co.uk>
-References: <9e4733910711271417l32ed9a77p9915aa34a780665b@mail.gmail.com> <9e4733910711271512g790364e0ka4839b2be9fd4935@mail.gmail.com> <20071128093403.GB12977@diana.vm.bytemark.co.uk> <9e4733910711280706j45fe9c17t928396eb8e1de8bf@mail.gmail.com> <20071128160410.GB19302@diana.vm.bytemark.co.uk> <9e4733910711280821s3872eff5m95073ca6b1b8a689@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Rollback of git commands
+Date: Wed, 28 Nov 2007 11:46:48 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0711281141150.9605@xanadu.home>
+References: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com>
+ <7vmyszb39s.fsf@gitster.siamese.dyndns.org>
+ <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com>
+ <BAYC1-PASMTP02DBA3FB25E09FE45F0BF2AE770@CEZ.ICE>
+ <9e4733910711272037r2ce3ed01y31ec8531f5803efe@mail.gmail.com>
+ <alpine.LFD.0.99999.0711280951150.9605@xanadu.home>
+ <9e4733910711280758x38ca3cdau4e62bfe8776e5c0d@mail.gmail.com>
+ <alpine.LFD.0.99999.0711281125320.9605@xanadu.home>
+ <9e4733910711280837o43003e93p470bb403e6bdd3bb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Sean <seanlkml@sympatico.ca>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 17:42:08 2007
+X-From: git-owner@vger.kernel.org Wed Nov 28 17:47:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxPyl-0008P2-Ei
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 17:41:39 +0100
+	id 1IxQ4O-0002cg-H1
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 17:47:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759710AbXK1QlT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Nov 2007 11:41:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760031AbXK1QlS
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 11:41:18 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3049 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759679AbXK1QlS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 11:41:18 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IxPyL-0005RN-00; Wed, 28 Nov 2007 16:41:13 +0000
-Content-Disposition: inline
-In-Reply-To: <9e4733910711280821s3872eff5m95073ca6b1b8a689@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1761171AbXK1Qqv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 11:46:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761082AbXK1Qqv
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 11:46:51 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:23204 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757238AbXK1Qqu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 11:46:50 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JS8000RG6M0TF30@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 28 Nov 2007 11:46:49 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <9e4733910711280837o43003e93p470bb403e6bdd3bb@mail.gmail.com>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66378>
 
-On 2007-11-28 11:21:05 -0500, Jon Smirl wrote:
+On Wed, 28 Nov 2007, Jon Smirl wrote:
 
-> On 11/28/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > On 2007-11-28 10:06:57 -0500, Jon Smirl wrote:
+> On 11/28/07, Nicolas Pitre <nico@cam.org> wrote:
+> > On Wed, 28 Nov 2007, Jon Smirl wrote:
 > >
-> > > stg repair -- partial repair, some patches empty, half are pushed
+> > > On 11/28/07, Nicolas Pitre <nico@cam.org> wrote:
+> > > > On Tue, 27 Nov 2007, Jon Smirl wrote:
+> > > >
+> > > > > Of course you've never screwed up a repository using git commands,
+> > > > > right? I've messed up plenty. A good way to mess up a repo is to get
+> > > > > the data in .git/* out of sync with what is in the repo. I'm getting
+> > > > > good enough with git that I can fix most mess up with a few edits, but
+> > > > > it took me two years to get to that point. Rolling back to a check
+> > > > > point is way easier. User error and a command failing are both equally
+> > > > > valid ways to mess up a repo.
+> > > >
+> > > > The reflog contains all your check points, for every modifications you
+> > > > make, even the stupid ones.  You should look at it.
+> > >
+> > > The state contained in the other config files in .git/* is not getting
+> > > check pointed. I can use reflog to move my branch heads around. But
+> > > doing that does not undo the changes to the state recorded in .git/*.
+> > > After the error I encountered  I moved my branch head back, but the
+> > > state stgit had stored in .git/* was out of sync with where the branch
+> > > had been moved to.
 > >
-> > Modulo any bugs, this should have adjusted the appliedness of your
-> > patches to match the new HEAD (patches are applied iff they are
-> > reachable from HEAD) and made patches of any non-patch commits
-> > sitting between a patch and HEAD. Nothing else. In particular, it
-> > doesn't change your existing patches or change HEAD, so those
-> > empty patches were empty even before the repair. (Modulo any bugs,
-> > of course, but that kind of bug seems really unlikely.)
->
-> I don't know exactly what is going one, but all of my patches are in
-> commits in front of the rebase. I believe when they were applied
-> again, git detected that the changes were already in the tree and
-> that why the patches are empty. Normally stg would have popped all
-> my patches before doing the rebase.
+> > It's up to stgit to version control its state then.  It may even use a
+> > reflog for it.  All the machinery is there already.
+> 
+> Git has state in .git/* too, shouldn't it be version controlling it
+> too? If git was version controlling the state in .git/* you'd have
+> checkpoints with the ability to roll back.
 
-Ah, yes, if you "stg push" after the repair, that's what you can
-expect to happen. And once you've done that, it gets a little messier
-to recover. (Basically, what you'd do is delete the messed-up patches,
-git-reset to where you were before the git-rebase, and then "stg
-uncommit".)
+Well, the .git directory contains data to identify what is actually 
+version controlled.  If you start versioning the data used to implement 
+the versioning, don't you get into endless recursion here?
 
-> I have messed the branch up doing manual recover, but the conditions
-> are easy enough to recreate.
 
-So I guess "stg repair" is working as intended, and what needs
-changing is its documentation: point out in greater detail that you
-should
+Nicolas
 
-  1. Figure out where you _want_ HEAD to be.
 
-  2. git-reset your way there.
 
-  3. Run stg repair if necessary. (And if you just reset back to where
-     StGit thinks you are, you don't need to. But it's safe to run
-     repair in that case too -- it'll just do nothing.)
 
-In that order.
+> 
+> 
+> >
+> >
+> > Nicolas
+> > -
+> > To unsubscribe from this list: send the line "unsubscribe git" in
+> > the body of a message to majordomo@vger.kernel.org
+> > More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> >
+> 
+> 
+> -- 
+> Jon Smirl
+> jonsmirl@gmail.com
+> 
 
-The only thing repair does is fix up StGit's metadata to match what
-HEAD is right now. If HEAD isn't what you want it to be, then you want
-to fix that first. In particular, to just go back to where you were
-the last time StGit heard from you, do
 
-  $ git reset --hard $(stg id $(stg top))
-
-We need a proper manual to explain this in. :-)
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Nicolas
