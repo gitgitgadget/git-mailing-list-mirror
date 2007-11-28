@@ -1,59 +1,55 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [PATCH v2] Teach 'git pull' about --rebase
-Date: Wed, 28 Nov 2007 12:35:57 -0800
-Message-ID: <27E5EF3C-19EF-441C-BB12-0F5B29BEAEDB@midwinter.com>
-References: <Pine.LNX.4.64.0710252351130.4362@racer.site> <alpine.LFD.0.999.0710251602160.30120@woody.linux-foundation.org> <Pine.LNX.4.64.0710260007450.4362@racer.site> <7v3avy21il.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0710261047450.4362@racer.site> <7v3aurcjpq.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711281307420.27959@racer.site>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/3] cvsimport: use show-ref to support packed refs
+Date: Wed, 28 Nov 2007 20:37:48 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711282037100.27959@racer.site>
+References: <20071128185504.GA11236@coredump.intra.peff.net>
+ <20071128185611.GB11320@coredump.intra.peff.net> <Pine.LNX.4.64.0711281916140.27959@racer.site>
+ <20071128194423.GB11396@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 28 21:36:47 2007
+	Emanuele Giaquinta <e.giaquinta@glauco.it>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 28 21:38:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxTdx-0007p6-Nv
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 21:36:26 +0100
+	id 1IxTfo-0000FX-Ct
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 21:38:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757641AbXK1UgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 15:36:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754364AbXK1UgA
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 15:36:00 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:38619 "HELO midwinter.com"
+	id S1756269AbXK1Uh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 15:37:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755699AbXK1Uh6
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 15:37:58 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54192 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754167AbXK1Uf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 15:35:59 -0500
-Received: (qmail 29626 invoked from network); 28 Nov 2007 20:35:59 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=N9VH/IXuC87iON6U4fYbn89kyW1SjG1+fr/59sQ1x0SZgSj2mgmgJamsv3ZOow5W  ;
-Received: from localhost (127.0.0.1)
-  by localhost with SMTP; 28 Nov 2007 20:35:59 -0000
-In-Reply-To: <Pine.LNX.4.64.0711281307420.27959@racer.site>
-X-Mailer: Apple Mail (2.915)
+	id S1753385AbXK1Uh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 15:37:58 -0500
+Received: (qmail invoked by alias); 28 Nov 2007 20:37:56 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp050) with SMTP; 28 Nov 2007 21:37:56 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18RrKIt09ARlKVE3y47ZWqxs+AGpYQSgIwLN5Z7aZ
+	8Hm7m4RLTZVOW+
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071128194423.GB11396@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66423>
 
-On Nov 28, 2007, at 5:11 AM, Johannes Schindelin wrote:
-> As a convenience, you can set the default behavior for a branch by
-> defining the config variable branch.<name>.rebase, which is
-> interpreted as a bool.  This setting can be overridden on the command
-> line by --rebase and --no-rebase.
+Hi,
 
-I wonder if this shouldn't be branch.<name>.pulltype or something like  
-that, so we can represent more than just "rebase or not." Values could  
-be "rebase", "merge" (the default) and maybe even "manual" to specify  
-that git-pull should neither merge nor rebase a particular branch even  
-if it matches a wildcard refspec.
+On Wed, 28 Nov 2007, Jeff King wrote:
 
-Not too sure about that last suggestion but it seems like there might  
-be other settings than "rebase" and "merge" in the future even if  
-that's not one of them.
+> Since get_headref is useful in contexts where "$remote" is not always
+> prepended (see patch 3/3), I think the best solution is:
+>
+> [PATCH prefixing the argument to get_headref() with "$remote/"]
 
--Steve
+Yes, I think so, too.
+
+Thanks,
+Dscho
