@@ -1,83 +1,64 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Wed, 28 Nov 2007 01:07:31 +0100
-Message-ID: <20071128000731.GD9174@efreet.light.src>
-References: <20071127150229.GA14859@laptop> <20071127160423.GA22807@laptop> <Pine.LNX.4.64.0711271617350.27959@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Teach 'git pull' the '--rebase' option
+Date: Tue, 27 Nov 2007 16:11:29 -0800
+Message-ID: <7v3aurcjpq.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0710252351130.4362@racer.site>
+	<alpine.LFD.0.999.0710251602160.30120@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0710260007450.4362@racer.site>
+	<7v3avy21il.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0710261047450.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ylS2wUBXLOxYXZFQ"
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWk=?= Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 28 01:08:07 2007
+X-From: git-owner@vger.kernel.org Wed Nov 28 01:12:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxATB-0008TC-Os
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 01:08:02 +0100
+	id 1IxAWw-00019H-UE
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 01:11:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753859AbXK1AHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 19:07:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753245AbXK1AHm
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 19:07:42 -0500
-Received: from ns1.bluetone.cz ([212.158.128.13]:41092 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752132AbXK1AHl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 19:07:41 -0500
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id A15B2572C4;
-	Wed, 28 Nov 2007 01:07:40 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id XGeYNlDl8C1D; Wed, 28 Nov 2007 01:07:37 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 637D657336;
-	Wed, 28 Nov 2007 01:07:36 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IxASh-0003RI-UN; Wed, 28 Nov 2007 01:07:31 +0100
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711271617350.27959@racer.site>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1757979AbXK1ALg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 19:11:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758171AbXK1ALg
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 19:11:36 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:52601 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757048AbXK1ALf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Nov 2007 19:11:35 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 6D3782EF;
+	Tue, 27 Nov 2007 19:11:56 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id EDCC79A61B;
+	Tue, 27 Nov 2007 19:11:52 -0500 (EST)
+In-Reply-To: <Pine.LNX.4.64.0710261047450.4362@racer.site> (Johannes
+	Schindelin's message of "Fri, 26 Oct 2007 10:52:26 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66278>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---ylS2wUBXLOxYXZFQ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> ...
+> I do not want to go into _that_ many details here, since the place to look 
+> for it is git-rebase.txt.  Probably I should have done that in the first 
+> place.
+>
+> So how about this instead:
+>
+> \--rebase::
+>         Instead of a merge, perform a rebase after fetching.
+>         *NOTE:* This is a potentially _dangerous_ mode of operation.  
+> 	It rewrites history, which does not bode well when you
+> 	published that history already.  Do _not_ use this option
+> 	unless you have	read gitlink:git-rebase[1] carefully.
+>
+> Hmm?
 
-On Tue, Nov 27, 2007 at 16:18:01 +0000, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Tue, 27 Nov 2007, Nguy=E1=BB=85n Th=C3=A1i Ngoc Duy wrote:
->=20
-> >  Both configure and make-only ways should work now
->=20
-> I thought your plan was to put the non-porcelain into the libexecdir only?
-
-I had the impression that deprecating the dash notation for /all/ use was
-approved some time ago. Though I don't want to search through the list
-archives this late in the night to check it.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---ylS2wUBXLOxYXZFQ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHTLFDRel1vVwhjGURAm4rAJ9KqHl0WbbsaxrpbdXzoQVoHi4VYQCgv+Cp
-EPSqtKdvhehZuKChTabFP94=
-=IFWu
------END PGP SIGNATURE-----
-
---ylS2wUBXLOxYXZFQ--
+Okay.
