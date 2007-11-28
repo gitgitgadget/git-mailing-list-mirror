@@ -1,80 +1,100 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: The 5th issue of the msysGit Herald
-Date: Wed, 28 Nov 2007 16:33:40 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711281632510.1706@kaos.quantumfyre.co.uk>
-References: <Pine.LNX.4.64.0711130312180.4362@racer.site> <fhcat4$ef$1@ger.gmane.org>
- <7v7ikmt1md.fsf@gitster.siamese.dyndns.org> <200711132020.59578.jnareb@gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Rollback of git commands
+Date: Wed, 28 Nov 2007 11:37:38 -0500
+Message-ID: <9e4733910711280837o43003e93p470bb403e6bdd3bb@mail.gmail.com>
+References: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com>
+	 <7vmyszb39s.fsf@gitster.siamese.dyndns.org>
+	 <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com>
+	 <BAYC1-PASMTP02DBA3FB25E09FE45F0BF2AE770@CEZ.ICE>
+	 <9e4733910711272037r2ce3ed01y31ec8531f5803efe@mail.gmail.com>
+	 <alpine.LFD.0.99999.0711280951150.9605@xanadu.home>
+	 <9e4733910711280758x38ca3cdau4e62bfe8776e5c0d@mail.gmail.com>
+	 <alpine.LFD.0.99999.0711281125320.9605@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 17:34:15 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Sean <seanlkml@sympatico.ca>, "Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Nov 28 17:38:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxPra-0004sy-6c
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 17:34:14 +0100
+	id 1IxPvI-0006hZ-UP
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 17:38:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759547AbXK1Qdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 11:33:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759496AbXK1Qdx
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 11:33:53 -0500
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:59535 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759490AbXK1Qdw (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Nov 2007 11:33:52 -0500
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 67F47C646F
-	for <git@vger.kernel.org>; Wed, 28 Nov 2007 16:33:51 +0000 (GMT)
-Received: (qmail 18304 invoked by uid 103); 28 Nov 2007 16:33:40 +0000
-Received: from 192.168.0.4 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91.2/4934. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.4):. 
- Processed in 0.03412 secs); 28 Nov 2007 16:33:40 -0000
-Received: from elfhelm.quantumfyre.co.uk (HELO kaos.quantumfyre.co.uk) (192.168.0.4)
-  by neutron.datavampyre.co.uk with SMTP; 28 Nov 2007 16:33:40 +0000
-X-X-Sender: jp3@kaos.quantumfyre.co.uk
-In-Reply-To: <200711132020.59578.jnareb@gmail.com>
+	id S1759788AbXK1Qhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 11:37:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759519AbXK1Qhk
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 11:37:40 -0500
+Received: from wa-out-1112.google.com ([209.85.146.182]:45760 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759494AbXK1Qhj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 11:37:39 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1804775wah
+        for <git@vger.kernel.org>; Wed, 28 Nov 2007 08:37:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=wMzJTnU/jCtyjDNeGzlYLiXRy8hs0ZLy/cpwYXkMTro=;
+        b=KFQ+9eWdpkP5i2esWjlkoQrXbd01wcDx2gVpnPYBa7kvygAjMzynApBhwR95UFmW48iO0lMS0zqI/BtGoTYbqZkuI1XQOZWIV7GfilbgpJTFg3eIydKL0JmXv8uROyG0dVeIlFb9MqXIhybsD+4RxMO++nVhxgqnztWYO0eSve4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=f6JByeET1sg+gMgaYImhTguTA4FYfRnQumNS9Pb7rOIdiIi7neJ2c+EQ50jivcEVcn+8fnhK5x/dtxcXkecHvUIVhANRizpcIP/oN1wDgBTz2Rq5gAqKkz1rRpdRTDMQHC2u/jPRuRaT0ZKSKZ7dVTP4MWAnQIHJqdRtoFdKMcU=
+Received: by 10.115.54.1 with SMTP id g1mr680849wak.1196267858787;
+        Wed, 28 Nov 2007 08:37:38 -0800 (PST)
+Received: by 10.114.160.3 with HTTP; Wed, 28 Nov 2007 08:37:38 -0800 (PST)
+In-Reply-To: <alpine.LFD.0.99999.0711281125320.9605@xanadu.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66376>
 
-On Tue, 13 Nov 2007, Jakub Narebski wrote:
-
-> Junio C Hamano wrote:
->> Jakub Narebski <jnareb@gmail.com> writes:
->>
->>> Perhaps it is time for git to have besides Git Homepage and Git Wiki also
->>> Git Blog or Git Feed (with announcements, what's in... and herald). What do
->>> you think?
->>
->> I miss the "Kernel Traffic" (and its cousin, the unfortunate
->> first and only issue of "Git Traffic").
->>
->> If you are stepping up as the chief "Git Traffic" editor (with
->> help from others), I'd imagine it would be greatly appreciated
->> by the community.
->>
->> I certainly would.
+On 11/28/07, Nicolas Pitre <nico@cam.org> wrote:
+> On Wed, 28 Nov 2007, Jon Smirl wrote:
 >
-> ...and a buckefull of time, please...
+> > On 11/28/07, Nicolas Pitre <nico@cam.org> wrote:
+> > > On Tue, 27 Nov 2007, Jon Smirl wrote:
+> > >
+> > > > Of course you've never screwed up a repository using git commands,
+> > > > right? I've messed up plenty. A good way to mess up a repo is to get
+> > > > the data in .git/* out of sync with what is in the repo. I'm getting
+> > > > good enough with git that I can fix most mess up with a few edits, but
+> > > > it took me two years to get to that point. Rolling back to a check
+> > > > point is way easier. User error and a command failing are both equally
+> > > > valid ways to mess up a repo.
+> > >
+> > > The reflog contains all your check points, for every modifications you
+> > > make, even the stupid ones.  You should look at it.
+> >
+> > The state contained in the other config files in .git/* is not getting
+> > check pointed. I can use reflog to move my branch heads around. But
+> > doing that does not undo the changes to the state recorded in .git/*.
+> > After the error I encountered  I moved my branch head back, but the
+> > state stgit had stored in .git/* was out of sync with where the branch
+> > had been moved to.
 >
-> What I meant to have on blog, or rather in feed was those "What's in...",
-> "What's cooking...", "[ANNOUNCE]..." and "msysGit Herald" posts, not
-> git traffic digest. Because while I think first can be automated and
-> does not need manual intervention, doing the digest... well...
+> It's up to stgit to version control its state then.  It may even use a
+> reflog for it.  All the machinery is there already.
 
-Something like this perhaps?
+Git has state in .git/* too, shouldn't it be version controlling it
+too? If git was version controlling the state in .git/* you'd have
+checkpoints with the ability to roll back.
 
-http://gitrss.q42.co.uk/
+
+>
+>
+> Nicolas
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+
 
 -- 
-Julian
-
-  ---
-Consensus Terrorism:
- 	The process that decides in-office attitudes and behavior.
- 		-- Douglas Coupland, "Generation X: Tales for an Accelerated
- 		   Culture"
+Jon Smirl
+jonsmirl@gmail.com
