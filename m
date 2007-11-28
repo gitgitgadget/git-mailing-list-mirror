@@ -1,99 +1,62 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: Cover grafting in the Git User's Manual
-Date: Wed, 28 Nov 2007 19:42:28 +0100
-Message-ID: <20071128184228.GB4461@xp.machine.xx>
-References: <87ejeateka.fsf@pike.pond.sub.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Rebase/cherry-picking idea
+Date: Wed, 28 Nov 2007 10:44:39 -0800
+Message-ID: <7vve7m5hwo.fsf@gitster.siamese.dyndns.org>
+References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com>
+	<C3971B37-F75A-40EE-B30A-E88E5DAFAD55@lrde.epita.fr>
+	<D21294CA-6FD0-40F5-B0D6-5155865DA69A@wincent.com>
+	<CDF48716-F198-4B33-A5F5-8A2DE1F177EB@wincent.com>
+	<474AC136.8060906@viscovery.net>
+	<451492C9-F3EA-4C37-A1AD-59FC72E0A0A2@wincent.com>
+	<Pine.LNX.4.64.0711261340470.27959@racer.site>
+	<97F6E8DE-4022-4458-B6A9-C644A6EDC1E3@wincent.com>
+	<7vir3m94ku.fsf@gitster.siamese.dyndns.org>
+	<50645A3B-C5F0-4A99-A2B8-AD9251024244@wincent.com>
+	<7v1waa7lcv.fsf@gitster.siamese.dyndns.org>
+	<1570EAD5-9F47-4105-B3DA-49CA6FA57369@wincent.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Markus Armbruster <armbru@redhat.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 19:43:00 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Benoit Sigoure <tsuna@lrde.epita.fr>,
+	Git Mailing List <git@vger.kernel.org>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 19:46:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxRs5-0007CJ-2L
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 19:42:53 +0100
+	id 1IxRuH-0008EP-L7
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 19:45:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753351AbXK1Sme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 13:42:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752891AbXK1Sme
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 13:42:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40480 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751274AbXK1Smd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 13:42:33 -0500
-Received: (qmail invoked by alias); 28 Nov 2007 18:42:31 -0000
-Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
-  by mail.gmx.net (mp024) with SMTP; 28 Nov 2007 19:42:31 +0100
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1/IgiAYoiTIyrFjtsQUNwxkNaDSuew8hHiu7tuvIf
-	oeYW8d1+OLuKRd
-Content-Disposition: inline
-In-Reply-To: <87ejeateka.fsf@pike.pond.sub.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Y-GMX-Trusted: 0
+	id S1750917AbXK1Sou (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 13:44:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750787AbXK1Sou
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 13:44:50 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:39218 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750741AbXK1Sou (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 13:44:50 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 4E9A6324;
+	Wed, 28 Nov 2007 13:45:10 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id BA80E9AB43;
+	Wed, 28 Nov 2007 13:45:03 -0500 (EST)
+In-Reply-To: <1570EAD5-9F47-4105-B3DA-49CA6FA57369@wincent.com> (Wincent
+	Colaiuta's message of "Wed, 28 Nov 2007 11:04:58 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66403>
 
-On Wed, Nov 28, 2007 at 07:23:01PM +0100, Markus Armbruster wrote:
-> The only mention of grafting in the manual is in the glossary:
-> 
->     Grafts enables two otherwise different lines of development to
->     be joined together by recording fake ancestry information for
->     commits. This way you can make git pretend the set of parents
->     a commit has is different from what was recorded when the
->     commit was created. Configured via the .git/info/grafts file.
-> 
-> I believe it would be useful to cover this better, perhaps in chapter
-> 5. Rewriting history and maintaining patch series.  It certainly would
-> have saved me a few hours of digging.  I already understood enough of
-> git to *know* that what I wanted must be possible (supply missing
-> parents of merges in a repository imported with parsecvs), but I
-> didn't know the magic keyword was graft.  I managed to figure it out
-> >from the glossary, git-filter-branch(1) and GitWiki's GraftPoint page.
-> 
-> I'm neither writer nor git expert, but here's my try anyway:
-> 
-> Rewriting ancestry with grafts
-> 
-> Grafts enables two otherwise different lines of development to be
-> joined together by recording fake ancestry information for commits.
-> This way you can make git pretend the set of parents a commit has is
-> different from what was recorded when the commit was created.
-> 
-> Why would you want to do that?  Say, you imported a repository from an
-> SCM that doesn't record merges properly, e.g. CVS.  Grafts let you add
-> the missing parents to the merge commits.  Or you switched your
-> project to git by populating a new repository with current sources,
-> and later decide you want more history.  Committing old versions is
-> easy enough, but you also need to graft a parent to your original root
-> commit.
-> 
-> Graft points are configured via the .git/info/grafts file.  It has one
-> record per line describing a commit and its fake parents by listing
-> object names separated by a space and terminated by a newline.
-> 
->     <commit sha1> <parent sha1> [<parent sha1>]*
-> 
-> A graft point does not actually change its commit.  Nothing can.  What
-> can be done is rewriting the commit and its descendants.
-> git-filter-branch does that:
-> 
->     $ cat .git/info/grafts
->     db5a561750ae87615719ae409d1f50c9dfc3fa71 08f2fa81d104b937c1f24c68f56e9d5039356764 8c231303bb995cbfdfd1c434a59a7c96ea2f0251
->     git-filter-branch HEAD ^08f2fa81d104b937c1f24c68f56e9d5039356764 ^8c231303bb995cbfdfd1c434a59a7c96ea2f0251
-> 
-> This rewrites history between head and the graft-point to include the
-> grafted parents.
+Wincent Colaiuta <win@wincent.com> writes:
 
-Did I overlook something or isn't
+> I'm still a little concerned that nobody commented when I pointed out
+> that export VAR=VAL is used elsewhere in Git, especially in git-
+> clone.sh, which is very commonly-used porcelain. Is it a problem?
 
-     git-filter-branch HEAD ^db5a561750ae87615719ae409d1f50c9dfc3fa71
-
-what you are looking for? Only db5a56 could get rewritten and obviously
-all the commits having it as a parent.
-
--Peter
+We are waiting to find out, aren't we, after having the discussion.
