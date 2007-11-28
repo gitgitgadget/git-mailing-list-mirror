@@ -1,79 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Replace instances of export VAR=VAL with VAR=VAL; export VAR
-Date: Wed, 28 Nov 2007 10:49:33 -0800
-Message-ID: <7vr6ia5hoi.fsf@gitster.siamese.dyndns.org>
-References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com>
-	<C3971B37-F75A-40EE-B30A-E88E5DAFAD55@lrde.epita.fr>
-	<D21294CA-6FD0-40F5-B0D6-5155865DA69A@wincent.com>
-	<CDF48716-F198-4B33-A5F5-8A2DE1F177EB@wincent.com>
-	<474AC136.8060906@viscovery.net>
-	<451492C9-F3EA-4C37-A1AD-59FC72E0A0A2@wincent.com>
-	<Pine.LNX.4.64.0711261340470.27959@racer.site>
-	<97F6E8DE-4022-4458-B6A9-C644A6EDC1E3@wincent.com>
-	<7vir3m94ku.fsf@gitster.siamese.dyndns.org>
-	<50645A3B-C5F0-4A99-A2B8-AD9251024244@wincent.com>
-	<7v1waa7lcv.fsf@gitster.siamese.dyndns.org>
-	<1570EAD5-9F47-4105-B3DA-49CA6FA57369@wincent.com>
-	<Pine.LNX.4.64.0711281355460.27959@racer.site>
-	<474D7956.8050401@viscovery.net>
-	<Pine.LNX.4.64.0711281428180.27959@racer.site>
-	<474D7D92.2000106@viscovery.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Rollback of git commands
+Date: Wed, 28 Nov 2007 13:52:12 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0711281349180.9605@xanadu.home>
+References: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com>
+ <7vmyszb39s.fsf@gitster.siamese.dyndns.org>
+ <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com>
+ <9e4733910711271749q1b96bfe9i60e43619c89234b9@mail.gmail.com>
+ <ee77f5c20711271757h724d5fcep38f3c2354c54f20b@mail.gmail.com>
+ <20071128165033.GA31218@elte.hu> <87lk8imcxv.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Wincent Colaiuta <win@wincent.com>,
-	Benoit Sigoure <tsuna@lrde.epita.fr>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Ingo Molnar <mingo@elte.hu>, David Symonds <dsymonds@gmail.com>,
+	Jon Smirl <jonsmirl@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Nov 28 19:50:21 2007
+To: Sergei Organov <osv@javad.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 19:52:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxRz8-0002Zw-7s
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 19:50:10 +0100
+	id 1IxS1V-0003lB-5B
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 19:52:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757043AbXK1Str (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 13:49:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756954AbXK1Stq
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 13:49:46 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:48430 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756627AbXK1Stp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 13:49:45 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 7001D2F0;
-	Wed, 28 Nov 2007 13:50:06 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id CDE199AB6D;
-	Wed, 28 Nov 2007 13:50:00 -0500 (EST)
-In-Reply-To: <474D7D92.2000106@viscovery.net> (Johannes Sixt's message of
-	"Wed, 28 Nov 2007 15:39:14 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754577AbXK1SwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 13:52:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752891AbXK1SwO
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 13:52:14 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:15327 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754210AbXK1SwN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 13:52:13 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JS800580CF07EM0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 28 Nov 2007 13:52:12 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <87lk8imcxv.fsf@osv.gnss.ru>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66405>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+On Wed, 28 Nov 2007, Sergei Organov wrote:
 
-> Johannes Schindelin schrieb:
-> ...
->>> Recently there was a report that \n in the substitution side of s/// is not
->>> supported by all seds :-(
->>
->> Okay, how about replacing the line with
->>
->> +			s/.*/GIT_'$uid'_NAME='\''&'\''\
->> +export GIT_'$uid'_NAME/p
->>
->> Hmm?  (It works here.)
->
-> This looks good. The other case I'm refering to was also solved in this way.
+> Ingo Molnar <mingo@elte.hu> writes:
+> 
+> > well, it would/could be the normal undo/redo semantics of editors: you 
+> > can undo-redo in a linear history fashion, in an unlimited way, but the 
+> > moment you modify any past point of history then the redo future is 
+> > overriden. (but the 'past' up to that point is still recorded and 
+> > available)
+> 
+> Or it could be Emacs-like: 'undo' is just another operation that is a
+> subject for further undo's ;) Then there is no need for 'redo', and no
+> need to override either the future or the past.
 
-That looks ugly to me.
+The reflog does just that in fact, when it records your 'git reset' 
+operations.
 
-Is there a particular reason to force linebreak when a semicolon would
-do?
+> Besides this obvious technical superiority will help to maintain git's 
+> reputation of being hard to grok ;)
+
+Sure!  ;)
+
+
+Nicolas
