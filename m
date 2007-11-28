@@ -1,70 +1,153 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Rollback of git commands
-Date: Wed, 28 Nov 2007 13:52:12 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0711281349180.9605@xanadu.home>
-References: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com>
- <7vmyszb39s.fsf@gitster.siamese.dyndns.org>
- <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com>
- <9e4733910711271749q1b96bfe9i60e43619c89234b9@mail.gmail.com>
- <ee77f5c20711271757h724d5fcep38f3c2354c54f20b@mail.gmail.com>
- <20071128165033.GA31218@elte.hu> <87lk8imcxv.fsf@osv.gnss.ru>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/3] Add basic cvsimport tests
+Date: Wed, 28 Nov 2007 13:55:46 -0500
+Message-ID: <20071128185546.GA11320@coredump.intra.peff.net>
+References: <20071128185504.GA11236@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Ingo Molnar <mingo@elte.hu>, David Symonds <dsymonds@gmail.com>,
-	Jon Smirl <jonsmirl@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Sergei Organov <osv@javad.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 19:52:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Emanuele Giaquinta <e.giaquinta@glauco.it>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 19:56:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxS1V-0003lB-5B
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 19:52:37 +0100
+	id 1IxS50-0005N8-BA
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 19:56:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754577AbXK1SwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 13:52:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752891AbXK1SwO
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 13:52:14 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:15327 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754210AbXK1SwN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 13:52:13 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JS800580CF07EM0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 28 Nov 2007 13:52:12 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <87lk8imcxv.fsf@osv.gnss.ru>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1754839AbXK1Szt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 13:55:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751012AbXK1Szt
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 13:55:49 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3689 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754646AbXK1Szs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 13:55:48 -0500
+Received: (qmail 13183 invoked by uid 111); 28 Nov 2007 18:55:47 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 28 Nov 2007 13:55:47 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Nov 2007 13:55:46 -0500
+Content-Disposition: inline
+In-Reply-To: <20071128185504.GA11236@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66406>
 
-On Wed, 28 Nov 2007, Sergei Organov wrote:
+We weren't even testing basic things before, so let's at
+least try importing and updating a trivial repository, which
+will catch total breakage.
 
-> Ingo Molnar <mingo@elte.hu> writes:
-> 
-> > well, it would/could be the normal undo/redo semantics of editors: you 
-> > can undo-redo in a linear history fashion, in an unlimited way, but the 
-> > moment you modify any past point of history then the redo future is 
-> > overriden. (but the 'past' up to that point is still recorded and 
-> > available)
-> 
-> Or it could be Emacs-like: 'undo' is just another operation that is a
-> subject for further undo's ;) Then there is no need for 'redo', and no
-> need to override either the future or the past.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t9600-cvsimport.sh |   99 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 99 insertions(+), 0 deletions(-)
+ create mode 100755 t/t9600-cvsimport.sh
 
-The reflog does just that in fact, when it records your 'git reset' 
-operations.
-
-> Besides this obvious technical superiority will help to maintain git's 
-> reputation of being hard to grok ;)
-
-Sure!  ;)
-
-
-Nicolas
+diff --git a/t/t9600-cvsimport.sh b/t/t9600-cvsimport.sh
+new file mode 100755
+index 0000000..1ee06bb
+--- /dev/null
++++ b/t/t9600-cvsimport.sh
+@@ -0,0 +1,99 @@
++#!/bin/sh
++
++test_description='git-cvsimport basic tests'
++. ./test-lib.sh
++
++if ! ( type cvs && type cvsps ) >/dev/null 2>&1
++then
++	test_expect_success 'skipping cvsimport tests, cvs/cvsps not found' ''
++	test_done
++	exit
++fi
++
++CVSROOT=$(pwd)/cvsroot
++export CVSROOT
++# for clean cvsps cache
++HOME=$(pwd)
++export HOME
++
++test_expect_success 'setup cvsroot' 'cvs init'
++
++test_expect_success 'setup a cvs module' '
++
++	mkdir $CVSROOT/module &&
++	cvs co -d module-cvs module &&
++	cd module-cvs &&
++	cat <<EOF >o_fortuna &&
++O Fortuna
++velut luna
++statu variabilis,
++
++semper crescis
++aut decrescis;
++vita detestabilis
++
++nunc obdurat
++et tunc curat
++ludo mentis aciem,
++
++egestatem,
++potestatem
++dissolvit ut glaciem.
++EOF
++	cvs add o_fortuna &&
++	cat <<EOF >message &&
++add "O Fortuna" lyrics
++
++These public domain lyrics make an excellent sample text.
++EOF
++	cvs commit -F message &&
++	cd ..
++'
++
++test_expect_success 'import a trivial module' '
++
++	git cvsimport -a -z 0 -C module-git module &&
++	git diff module-cvs/o_fortuna module-git/o_fortuna
++
++'
++
++test_expect_success 'update cvs module' '
++
++	cd module-cvs &&
++	cat <<EOF >o_fortuna &&
++O Fortune,
++like the moon
++you are changeable,
++
++ever waxing
++and waning;
++hateful life
++
++first oppresses
++and then soothes
++as fancy takes it;
++
++poverty
++and power
++it melts them like ice.
++EOF
++	cat <<EOF >message &&
++translate to English
++
++My Latin is terrible.
++EOF
++	cvs commit -F message &&
++	cd ..
++'
++
++test_expect_success 'update git module' '
++
++	cd module-git &&
++	git cvsimport -a -z 0 module &&
++	git merge origin &&
++	cd .. &&
++	git diff module-cvs/o_fortuna module-git/o_fortuna
++
++'
++
++test_done
+-- 
+1.5.3.6.2039.g0495
