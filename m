@@ -1,90 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Allow update hooks to update refs on their own
-Date: Tue, 27 Nov 2007 19:49:31 -0800
-Message-ID: <7vzlwz9ghg.fsf@gitster.siamese.dyndns.org>
-References: <20071127211730.GA11861@midwinter.com>
-	<7v4pf7b20b.fsf@gitster.siamese.dyndns.org>
-	<49EB8C6F-8100-48C1-BB2D-A8F6023BACAD@midwinter.com>
-	<Pine.LNX.4.64.0711272143470.5349@iabervon.org>
+From: "Sean" <seanlkml@sympatico.ca>
+Subject: Re: Rollback of git commands
+Date: Tue, 27 Nov 2007 22:55:05 -0500 (EST)
+Message-ID: <BAYC1-PASMTP02DBA3FB25E09FE45F0BF2AE770@CEZ.ICE>
+References: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com> 
+    <7vmyszb39s.fsf@gitster.siamese.dyndns.org>
+    <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Nov 28 13:19:55 2007
+Content-Type: text/plain;charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Jon Smirl" <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 13:21:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from mail-forward.uio.no ([129.240.10.42])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1IxKwl-0004fR-99
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 12:19:15 +0100
+	id 1IxKwj-0004hu-0n
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 12:19:13 +0100
 Received: from mail-mx9.uio.no ([129.240.10.39])
 	by pat.uio.no with esmtp (Exim 4.67)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1IxDzE-0000L8-Ss
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 04:53:20 +0100
+	id 1IxE5f-00076e-Kq
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 04:59:59 +0100
 Received: from vger.kernel.org ([209.132.176.167])
 	by mail-mx9.uio.no with esmtp (Exim 4.67)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1IxDy1-0002Yp-1g
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 04:52:13 +0100
+	id 1IxE4Z-0002Yp-1o
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 04:58:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751175AbXK1Dtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 22:49:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751082AbXK1Dtk
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 22:49:40 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:50820 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751079AbXK1Dtk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 22:49:40 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 504C62EF;
-	Tue, 27 Nov 2007 22:49:59 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 56F249A963;
-	Tue, 27 Nov 2007 22:49:55 -0500 (EST)
-In-Reply-To: <Pine.LNX.4.64.0711272143470.5349@iabervon.org> (Daniel
-	Barkalow's message of "Tue, 27 Nov 2007 22:25:32 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751936AbXK1DzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Nov 2007 22:55:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751761AbXK1DzP
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 22:55:15 -0500
+Received: from bay0-omc2-s12.bay0.hotmail.com ([65.54.246.148]:33057 "EHLO
+	bay0-omc2-s12.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751438AbXK1DzN (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Nov 2007 22:55:13 -0500
+Received: from BAYC1-PASMTP02 ([65.54.191.162]) by bay0-omc2-s12.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 27 Nov 2007 19:55:12 -0800
+X-Originating-IP: [74.15.76.104]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([74.15.76.104]) by BAYC1-PASMTP02.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Tue, 27 Nov 2007 19:55:11 -0800
+Received: from apache by linux1.attic.local with local (Exim 4.43)
+	id 1IxE0v-00052R-DL; Tue, 27 Nov 2007 22:55:05 -0500
+Received: from 10.10.10.27
+        (SquirrelMail authenticated user sean)
+        by linux1 with HTTP;
+        Tue, 27 Nov 2007 22:55:05 -0500 (EST)
+In-Reply-To: <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com>
+User-Agent: SquirrelMail/1.4.4-2
+X-Priority: 3 (Normal)
+Importance: Normal
+X-OriginalArrivalTime: 28 Nov 2007 03:55:12.0097 (UTC) FILETIME=[79E25D10:01C83172]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 X-UiO-ClamAV-Virus: No
-X-UiO-Spam-info: not spam, SpamAssassin (score=-4.8, required=5.0, autolearn=disabled, AWL=2.229,RCVD_IN_DNSWL_MED=-4,UIO_VGER=-3)
-X-UiO-Scanned: 473121C33CFA2077BB9AE1380CAEC1A41E444383
-X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -47 maxlevel 200 minaction 2 bait 0 mail/h: 34 total 723761 max/h 813 blacklist 0 greylist 0 ratelimit 0
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66296>
+X-UiO-Spam-info: not spam, SpamAssassin (score=-5.5, required=5.0, autolearn=disabled, MSGID_FROM_MTA_HEADER=1.495,RCVD_IN_DNSWL_MED=-4,UIO_VGER=-3)
+X-UiO-Scanned: E60CA7B74C080595516AF9E8CD00B2CB5B6AC744
+X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -54 maxlevel 200 minaction 2 bait 0 mail/h: 40 total 723767 max/h 813 blacklist 0 greylist 0 ratelimit 0
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66297>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On Tue, November 27, 2007 8:33 pm, Jon Smirl said:
 
-> On Tue, 27 Nov 2007, Steven Grimm wrote:
->
->> On Nov 27, 2007, at 5:19 PM, Junio C Hamano wrote:
->> 
->> >How does this interact with the "pretend to have fetched back
->> >immediately" supported by modern git-push?
->> 
->> 
->> That continues to fire, but it updates the local tracking ref to point to the
->> SHA1 that was pushed, which isn't the actual remote ref. So you have to do a
->> real fetch to get the local tracking ref pointed to the right place. In other
->> words, that feature doesn't do any good in this context, but it doesn't really
->> hurt anything either.
->> 
->> It would of course be better if git-push could notice that it needs to do an
->> actual fetch. I think it'd be sufficient to transmit the final remote ref SHA1
->> back to git-push, and if it doesn't match what was pushed, that's a sign that
->> a fetch is needed. But that change wouldn't be mutually exclusive with this
->> patch, I believe.
->
-> Couldn't you do this with a status message? ("ok <refname> changed by 
-> hook" or something.)
->
-> I disagree that the feature doesn't do any good; it records that the state 
-> of the remote is at least as new as the local state, so you can tell 
-> without a network connection that you don't have any local changes you 
-> haven't sent off.
+Hi Jon,
 
-Yeah, and I am wondering why update hook needs to be changed for this.
-Didn't we introduce post-receive exactly for this sort of thing?
+> I'm only looking for a command that would rollback the effect of
+> changes to the object store (you don't have to remove the objects).
+> Losing complex staging would be ok since it can be recreated.
+>
+> Let's take my recent problem as an example. I typed 'git rebase
+> linus/master' instead of 'stg rebase linus/master'. Then I typed 'stg
+> repair'. The repair failed and left me in a mess. Both of these are
+> easy to rollback except for the fact that stg has stored a bunch of
+> state in .git/*.
+>
+> After doing the commands I located my last commit before the rebase
+> and edited master back to  it. But my system was still messed up since
+> moving master got me out of sync with the state stg stored in .git/*.
+> The 'stg repair' command had changed the stored state.
+
+ From your description is seems that Git proper was able to handle the
+situation just fine.   It sounds instead like you're describing a problem
+with Stg where it became confused without a way to restore _its_ meta
+data.  There's not much Git itself can do to help in this situation
+unless Stg stores all of its meta-data as standard Git objects, rather
+than just using the .git directory.
+
+Sean
