@@ -1,112 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] filter-branch: fix dirty way to provide the helpers to commit
- filters
-Date: Wed, 28 Nov 2007 15:50:38 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711281549550.27959@racer.site>
+From: jhud7196@artax.karlin.mff.cuni.cz
+Subject: Re: QGit: Shrink used memory with custom git log format
+Date: Wed, 28 Nov 2007 16:53:25 +0100 (CET)
+Message-ID: <57101.194.138.12.144.1196265205.squirrel@artax.karlin.mff.cuni.cz>
+References: <e5bfff550711240014n78f24b46qf012957d92b1a8e1@mail.gmail.com>
+    <20071127015248.GK14735@spearce.org>
+    <Pine.LNX.4.64.0711271045430.27959@racer.site>
+    <20071127191915.GB9174@efreet.light.src>
+    <Pine.LNX.4.64.0711281200070.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Nov 28 16:51:14 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Marco Costalba" <mcostalba@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 28 16:53:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxPBs-0003eN-B0
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 16:51:08 +0100
+	id 1IxPET-0004ym-9F
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 16:53:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757607AbXK1Pus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 10:50:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757548AbXK1Pur
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 10:50:47 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50126 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757202AbXK1Pur (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 10:50:47 -0500
-Received: (qmail invoked by alias); 28 Nov 2007 15:50:44 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp007) with SMTP; 28 Nov 2007 16:50:44 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19jxL1lQ3ljhOpxT8ELu/VB3Pc4lI2X7DQLAIoo3p
-	s7EAd/jsrGk87U
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1758714AbXK1Px1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 10:53:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751719AbXK1Px1
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 10:53:27 -0500
+Received: from artax.karlin.mff.cuni.cz ([195.113.31.125]:50159 "EHLO
+	artax.karlin.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754685AbXK1Px0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 10:53:26 -0500
+Received: from artax.karlin.mff.cuni.cz (localhost [127.0.0.1])
+	by artax.karlin.mff.cuni.cz (Postfix) with ESMTP id 88A08980E8;
+	Wed, 28 Nov 2007 16:53:25 +0100 (CET)
+Received: from 194.138.12.144
+        (SquirrelMail authenticated user jhud7196)
+        by artax.karlin.mff.cuni.cz with HTTP;
+        Wed, 28 Nov 2007 16:53:25 +0100 (CET)
+In-Reply-To: <Pine.LNX.4.64.0711281200070.27959@racer.site>
+User-Agent: SquirrelMail/1.4.9a
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66361>
 
+> Hi,
+>
+> On Tue, 27 Nov 2007, Jan Hudec wrote:
+>
+>> On Tue, Nov 27, 2007 at 10:48:00 +0000, Johannes Schindelin wrote:
+>> > On Mon, 26 Nov 2007, Shawn O. Pearce wrote:
+>> > > [...]
+>> > > Otherwise I think what you really want here is a libgit that you can
+>> > > link into your process and that can efficiently inflate an object
+>> > > on demand for you.  Like the work Luiz was working on this past
+>> > > summer for GSOC.  Lots of downsides to that current tree though...
+>> > > like die() kills the GUI...
+>> >
+>> > But then, die() calls die_routine, which you can override.  And C++
+>> has
+>> > this funny exception mechanism which just begs to be used here.  The
+>> only
+>> > thing you need to add is a way to flush all singletons like the object
+>> > array.
+>>
+>> Unfortunately, exceptions won't really work. Why? Because to use
+>> exceptions, you need to have an exception-safe code. That is the code
+>> needs to free any allocated resources when it's aborted by exception.
+>> And git code is not exceptions safe. Given the lack of destructors in C,
+>> it means registering all resource allocation in some kind of pool, so
+>> they can be freed en masse in case of failure. Than you can also use
+>> longjmp for die (for C they really behave the same).
+>
+> Sorry, I just assumed that you can read my mind (or alternatively remember
+> what I suggested a few months ago, namely to "override" xmalloc(),
+> xcalloc(), xrealloc() and xfree() (probably you need to create the
+> latter)).
 
-The helper functions 'map' and 'skip_commit' were provided to commit
-filters by sourcing filter-branch itself.  This was done with a certain
-environment variable set to indicate that only the functions should be
-defined, and the script should return then.
+That sounds like the easiest (but not necessarily easy) direction towards
+the goal. Thread-local or global (I don't think git is currently reentrant
+anyway) would do. Also filehanles would have to be taken care of and
+everything checked for using malloc, calloc, strdup and other libc
+functions directly.
 
-This was really hacky, and it did not work all that well, since the
-full path to git-filter-branch was not known at all times.
+Than die could longjmp out to a specified buffer and could be safely
+overriden to throw exception for C++ apps.
 
-Avoid that by putting the functions into a variable, and eval'ing
-that variable.  The commit filter gets these functions by prepending
-the variable to the specified commands.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-
-	Frankly, I have no idea why this worked, but it did.  However,
-	we had to replace the spawnvpe() function in msysGit with a
-	custom version (thanks Hannes!) to avoid cmd windows popping up
-	all over the place, and the method to source the first part of
-	the script back in commit filters failed.
-
-	Independently, I think that this version is nicer.
-
- git-filter-branch.sh |   14 ++++++++------
- 1 files changed, 8 insertions(+), 6 deletions(-)
-
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index c9f515d..19cab5a 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -8,6 +8,9 @@
- # a new branch. You can specify a number of filters to modify the commits,
- # files and trees.
- 
-+# The following functions will also be available in the commit filter:
-+
-+functions=$(cat << \EOF
- warn () {
-         echo "$*" >&2
- }
-@@ -46,6 +49,10 @@ die()
- 	echo "$*" >&2
- 	exit 1
- }
-+EOF
-+)
-+
-+eval "$functions"
- 
- # When piped a commit, output a script to set the ident of either
- # "author" or "committer
-@@ -80,11 +87,6 @@ set_ident () {
- 	echo "[ -n \"\$GIT_${uid}_NAME\" ] || export GIT_${uid}_NAME=\"\${GIT_${uid}_EMAIL%%@*}\""
- }
- 
--# This script can be sourced by the commit filter to get the functions
--test "a$SOURCE_FUNCTIONS" = a1 && return
--this_script="$(cd "$(dirname "$0")"; pwd)"/$(basename "$0")
--export this_script
--
- USAGE="[--env-filter <command>] [--tree-filter <command>] \
- [--index-filter <command>] [--parent-filter <command>] \
- [--msg-filter <command>] [--commit-filter <command>] \
-@@ -156,7 +158,7 @@ do
- 		filter_msg="$OPTARG"
- 		;;
- 	--commit-filter)
--		filter_commit='SOURCE_FUNCTIONS=1 . "$this_script";'" $OPTARG"
-+		filter_commit="$functions; $OPTARG"
- 		;;
- 	--tag-name-filter)
- 		filter_tag_name="$OPTARG"
--- 
-1.5.3.6.2065.gd47ac
+--
+                                         - Jan Hudec <bulb@ucw.cz>
