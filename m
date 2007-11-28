@@ -1,83 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git guidance
-Date: Wed, 28 Nov 2007 18:14:59 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711281811500.27959@racer.site>
-References: <20071127235237.GF15227@1wt.eu> <474D70DD.4020601@dawes.za.net>
- <Pine.LNX.4.64.0711281545170.27959@racer.site> <200711282014.27299.a1426z@gawab.com>
+From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+Subject: [PATCH] Document all help keys in "git add -i" patch mode.
+Date: Wed, 28 Nov 2007 19:21:42 +0100
+Organization: Department of Numerical Simulation, University of Bonn
+Message-ID: <20071128182142.GE26591@ins.uni-bonn.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Rogan Dawes <lists@dawes.za.net>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-To: Al Boldi <a1426z@gawab.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 19:15:51 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 28 19:22:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxRRn-0002ia-OK
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 19:15:44 +0100
+	id 1IxRXx-0005pt-UX
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 19:22:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754695AbXK1SPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 13:15:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754209AbXK1SPM
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 13:15:12 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46587 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751441AbXK1SPK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 13:15:10 -0500
-Received: (qmail invoked by alias); 28 Nov 2007 18:15:07 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp015) with SMTP; 28 Nov 2007 19:15:07 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Qpz9ARkpQo3EcPXigJNuAOXLE6TqWotqqC0+E3x
-	wuYhv9CQHvJXyX
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200711282014.27299.a1426z@gawab.com>
-X-Y-GMX-Trusted: 0
+	id S1752346AbXK1SVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 13:21:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788AbXK1SVq
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 13:21:46 -0500
+Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:40081 "EHLO
+	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751381AbXK1SVp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 13:21:45 -0500
+Received: from ins.uni-bonn.de (gibraltar [192.168.193.254])
+	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id BC80E400002A1
+	for <git@vger.kernel.org>; Wed, 28 Nov 2007 19:21:43 +0100 (CET)
+Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17 (2007-11-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66397>
 
-Hi,
+---
+ Documentation/git-add.txt |    2 ++
+ git-add--interactive.perl |    1 +
+ 2 files changed, 3 insertions(+), 0 deletions(-)
 
-On Wed, 28 Nov 2007, Al Boldi wrote:
-
-> git@vger sometimes bounces, so let's leave lkml as backup.
-
-Fair enough.
-
-> Johannes Schindelin wrote:
-> > On Wed, 28 Nov 2007, Rogan Dawes wrote:
-> > > Al Boldi wrote:
-> > > > Willy Tarreau wrote:
-> > > > > It should not turn into an endless thread led by people who want 
-> > > > > to redefine GIT's roadmap, but experience sharing helps a lot 
-> > > > > with GIT.
-> > > >
-> > > > Well, now that you mentioned it, if there is one thing I dislike, 
-> > > > it's for version control to start mutilating your sources.  
-> > > > Version Control should be completely transparent.  GIT isn't.
-> > >
-> > > Care to explain? Git is quite happy handling arbitrary binary 
-> > > content, so I find it difficult to believe that it is changing your 
-> > > source code in strange ways.
-> >
-> > It is nice of you to ask him to explain: Unless this handwaving claim 
-> > is substantiated, it is quite hard to argue with.
-> 
-> Sure, the problem with GIT is that it stores the sources inside a 
-> backend container that is only accessible via GIT; iow, you can't 
-> retrieve your sources directly / transparently.
-
-That is a very funny way to define a "transparent SCM".  Are you 
-complaining about SQL servers being "not transparent"?
-
-By that definition, no SCM, not even CVS, is transparent.  Nothing short 
-of unpacked directories of all versions (wasting a lot of disk space) 
-would.
-
-IOW the issue you raised is a non-issue.
-
-Ciao,
-Dscho
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 63829d9..f4aad90 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -210,6 +210,8 @@ patch::
+        k - do not decide on this hunk now, and view the previous
+            undecided hunk
+        K - do not decide on this hunk now, and view the previous hunk
++       s - split the current hunk into smaller hunks
++       ? - print help
+ +
+ After deciding the fate for all hunks, if there is any hunk
+ that was chosen, the index is updated with the selected hunks.
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index fb1e92a..613cf3c 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -551,6 +551,7 @@ J - leave this hunk undecided, see next hunk
+ k - leave this hunk undecided, see previous undecided hunk
+ K - leave this hunk undecided, see previous hunk
+ s - split the current hunk into smaller hunks
++? - print help
+ EOF
+ }
+ 
+-- 
+1.5.3.6.959.g1ab5
