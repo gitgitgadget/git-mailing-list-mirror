@@ -1,62 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Allow update hooks to update refs on their own
-Date: Wed, 28 Nov 2007 13:49:42 -0800
-Message-ID: <7vprxu3urt.fsf@gitster.siamese.dyndns.org>
-References: <7vmysy5h5k.fsf@gitster.siamese.dyndns.org>
-	<20071128194159.GA25977@midwinter.com>
-	<20071128194919.GC11396@coredump.intra.peff.net>
+Subject: Re: [PATCH v2] Teach 'git pull' about --rebase
+Date: Wed, 28 Nov 2007 13:55:39 -0800
+Message-ID: <7vhcj63uhw.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0710252351130.4362@racer.site>
+	<alpine.LFD.0.999.0710251602160.30120@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0710260007450.4362@racer.site>
+	<7v3avy21il.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0710261047450.4362@racer.site>
+	<7v3aurcjpq.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0711281307420.27959@racer.site>
+	<27E5EF3C-19EF-441C-BB12-0F5B29BEAEDB@midwinter.com>
+	<Pine.LNX.4.64.0711282039430.27959@racer.site>
+	<8c5c35580711281310h8764a33pba48e65010abf859@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 22:50:35 2007
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Steven Grimm" <koreth@midwinter.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Lars Hjemli" <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 22:56:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxUnL-0007fD-RQ
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 22:50:12 +0100
+	id 1IxUt7-0002De-8k
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 22:56:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757449AbXK1Vtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 16:49:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757269AbXK1Vtu
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 16:49:50 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:38148 "EHLO
+	id S1754391AbXK1Vzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 16:55:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754717AbXK1Vzt
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 16:55:49 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:53455 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756872AbXK1Vtu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 16:49:50 -0500
+	with ESMTP id S1754228AbXK1Vzs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 16:55:48 -0500
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id ED81C2F9;
-	Wed, 28 Nov 2007 16:50:10 -0500 (EST)
+	by sceptre.pobox.com (Postfix) with ESMTP id 0C7F02FB;
+	Wed, 28 Nov 2007 16:56:10 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 6D4809ACB5;
-	Wed, 28 Nov 2007 16:50:06 -0500 (EST)
-In-Reply-To: <20071128194919.GC11396@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 28 Nov 2007 14:49:19 -0500")
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 623FF9ABBA;
+	Wed, 28 Nov 2007 16:56:03 -0500 (EST)
+In-Reply-To: <8c5c35580711281310h8764a33pba48e65010abf859@mail.gmail.com>
+	(Lars Hjemli's message of "Wed, 28 Nov 2007 22:10:34 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66432>
 
-Jeff King <peff@peff.net> writes:
+"Lars Hjemli" <hjemli@gmail.com> writes:
 
-> Hrm, this is going to have nasty conflicts with 'next', which already
-> does the remote ref matching. I think the best way to implement this
-> would probably be on top of the jk/send-pack topic in next, and add a
-> new REF_STATUS_REMOTE_CHANGED status type.
+> On 11/28/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> On Wed, 28 Nov 2007, Steven Grimm wrote:
+>> > I wonder if this shouldn't be branch.<name>.pulltype or something like
+>> > that, so we can represent more than just "rebase or not." Values could
+>> > be "rebase", "merge" (the default) and maybe even "manual" to specify
+>> > that git-pull should neither merge nor rebase a particular branch even
+>> > if it matches a wildcard refspec.
+>>
+>> I am not convinced that this is a good thing... We already have
+>> branch.<name>.mergeOptions for proper merges, and I want to make clear
+>> that this is about rebase, and not about merge.
+>
+> Maybe branch.<name>.pullOptions ?
 
-I think Jeff is referring to sp/refspec-match (605b4978).
-
-I still have doubts about having this in the update hook, as the hook is
-about accepting or refusing and has never been about rewriting.
-
-If the implementation of the svn hook were to check if you can rebase
-cleanly in the update hook without actually rewriting the refs, and then
-to perform the real update of the refs in post-receive or post-update
-hook, that would feel much cleaner.  But the end result would be the
-same as you rewrote the refs inside the update hook like your patch
-does, so maybe I am worrying about conceptual cleanliness too much,
-needlessly.
+Maybe not make this part of git-pull at all?  merge and rebase have
+totally different impact on the resulting history, so perhaps a separate
+command that is a shorthand for "git fetch && git rebase" may help
+unconfuse the users.
