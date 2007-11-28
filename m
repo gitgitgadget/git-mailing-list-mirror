@@ -1,104 +1,78 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Rollback of git commands
-Date: Tue, 27 Nov 2007 20:33:27 -0500
-Message-ID: <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com>
-References: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com>
-	 <7vmyszb39s.fsf@gitster.siamese.dyndns.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: StGit hooks
+Date: Wed, 28 Nov 2007 11:17:18 +0100
+Message-ID: <20071128101718.GA13940@diana.vm.bytemark.co.uk>
+References: <9e4733910711271417l32ed9a77p9915aa34a780665b@mail.gmail.com> <9e4733910711271512g790364e0ka4839b2be9fd4935@mail.gmail.com> <20071128093403.GB12977@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 02:33:46 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 11:50:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
+Received: from [129.240.10.42] (helo=mail-forward.uio.no)
+	by dough.gmane.org with esmtp (Exim 4.50)
+	id 1IxKJ1-0000u0-0Y
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 11:38:11 +0100
+Received: from mail-mx2.uio.no ([129.240.10.30])
+	by pat.uio.no with esmtp (Exim 4.67)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1IxK5G-0007oD-79
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 11:23:58 +0100
 Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxBoA-0006fv-4d
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 02:33:46 +0100
+	by mail-mx2.uio.no with esmtp (Exim 4.67)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1IxK51-0001WZ-BU
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 11:23:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760725AbXK1Bd3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Nov 2007 20:33:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760236AbXK1Bd3
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 20:33:29 -0500
-Received: from wa-out-1112.google.com ([209.85.146.176]:32322 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754786AbXK1Bd2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Nov 2007 20:33:28 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1527739wah
-        for <git@vger.kernel.org>; Tue, 27 Nov 2007 17:33:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=8SIMUweNF9yBXRiYc/gDtydp8Ufci8WZcz6CdBMCpsM=;
-        b=mUFgx7lVSRFencaLZiZZ1JtFQX6Dmrl7BSDCjbVlVMYrATVkxg5G+4jkVVM5U8z2UIRD59JQUxr801sONKPdlfIx+t7RvcjZHZxKMZhpEeiJBtDgjV511vzViYbDed2a0astT5UeqWpxWik2kVC7bbXx1n2caFHjxWuT9tYJ2ag=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=oTrZ4Sy5hHhn4VpxSvISpEjX0YnQAcLE2sj70fLG2LRvZbVljIKHXr3/ZooUceHn91NCkYrn14CFeDAx58ZOzJ1oZH6kKV4LO02IKwCL6nJ6IVvnjntmKys53MyBgJnvc7g02RN3s8EVDgH2DB1RDrPOXrs5Ku/Lxt9XjJ2aPS0=
-Received: by 10.115.47.1 with SMTP id z1mr267839waj.1196213607727;
-        Tue, 27 Nov 2007 17:33:27 -0800 (PST)
-Received: by 10.114.160.3 with HTTP; Tue, 27 Nov 2007 17:33:27 -0800 (PST)
-In-Reply-To: <7vmyszb39s.fsf@gitster.siamese.dyndns.org>
+	id S1756649AbXK1KRa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Nov 2007 05:17:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756676AbXK1KRa
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 05:17:30 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4173 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755028AbXK1KRa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 05:17:30 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IxJyo-0003h9-00; Wed, 28 Nov 2007 10:17:18 +0000
 Content-Disposition: inline
+In-Reply-To: <20071128093403.GB12977@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66283>
+X-UiO-ClamAV-Virus: No
+X-UiO-Spam-info: not spam, SpamAssassin (score=-7.0, required=5.0, autolearn=disabled, RCVD_IN_DNSWL_MED=-4,UIO_VGER=-3)
+X-UiO-Scanned: 5FED6B8F6154B98905BD2E49478528AD0F2C7B9C
+X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -69 maxlevel 200 minaction 2 bait 0 mail/h: 73 total 724375 max/h 813 blacklist 0 greylist 0 ratelimit 0
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66284>
 
-On 11/27/07, Junio C Hamano <gitster@pobox.com> wrote:
-> "Jon Smirl" <jonsmirl@gmail.com> writes:
->
-> > Could a rollback log be implemented in git? It would make things way
-> > easier when you screw something up. You'd only roll back things that
-> > impacted the object store, not things like checkout.
->
-> The object store is append only, and if you disregard SHA-1 collisions,
-> I do not think there is much you can gain from being able to roll back
-> only object store.
->
-> For example, you would want to be able to roll back where your 'master'
-> branch was pointing at before you started that botched operation.  That
-> is not in the object store at all (we have reflogs for that).
->
-> Another example, you might have done quite an elaborate interactive add
-> to stage only some changes to a path, but then accidentally said "git
-> add" that path to stage the whole thing.  You may say "oops, that state
-> was only in the index and now it is lost."  The blob that records the
-> staged content _DOES_ exist in the object store in such a case so it is
-> not lost --- there is nothing to roll back.  What you lost is a pointer
-> into the object store (we do not have anything like reflog for
-> individual index entry --- not that I would suggest adding one).
->
-> Creating a blob that records all of .git/config, output from
-> for-each-ref, output from "symbolic-ref HEAD" and output from ls-files
-> -s every time you run _any_ git operation, and restore the state when
-> you want to, would conceptually work, as you suggest, but I am not sure
-> how practical it would be, performancewise, spacewise, and
-> semanticswise.
+On 2007-11-28 10:34:03 +0100, Karl Hasselstr=F6m wrote:
 
-I'm only looking for a command that would rollback the effect of
-changes to the object store (you don't have to remove the objects).
-Losing complex staging would be ok since it can be recreated.
+> It would also be convenient with a post-commit hook that turns new
+> commits into patches automatically. And gives "git commit --amend"
+> the semantics of "stg refresh".
 
-Let's take my recent problem as an example. I typed 'git rebase
-linus/master' instead of 'stg rebase linus/master'. Then I typed 'stg
-repair'. The repair failed and left me in a mess. Both of these are
-easy to rollback except for the fact that stg has stored a bunch of
-state in .git/*.
+Hmm, so what I'd want for this is a hook that gets called every time a
+branch ref is updated (after the update), preferably with the ref name
+and its old and new values as arguments (but as long as I get the ref
+name, I guess I could just ask git for the sha1s?). Is there such a
+hook? I poked around a bit, but couldn't find any.
 
-After doing the commands I located my last commit before the rebase
-and edited master back to  it. But my system was still messed up since
-moving master got me out of sync with the state stg stored in .git/*.
-The 'stg repair' command had changed the stored state.
+=46or extra points, I'd like to know what operation caused the ref
+update. I'd want to do different things depending on whether the user
+did a "commit" or "commit --amend", for example. I could use a
+heuristic, but I'd rather not if there's a way to know for sure. (Hmm.
+It looks like the reflog messages could be used here. Are they stable
+enough?)
 
-Instead lets store the contents of .git/* (minus the data itself) as
-objects. Then commit a new object after each command. Now rollback can
-be accomplished by walking back this chain off commits. Rollback would
-wipe out any staging, and effectively reset the working tree to match
-the point rolled back to. I don't think we need to capture the entire
-state of 'ls-file -s' to achieve this.
+Also, if StGit is to set up hooks automatically (commit hooks,
+pre-rebase hooks, whatever), it'd be nice to not have to worry about
+overwriting any existing hooks the user might have. But git currently
+allows only one hook script per hook, right?
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
