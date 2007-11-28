@@ -1,67 +1,118 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git-cvsimport bug
-Date: Wed, 28 Nov 2007 13:55:04 -0500
-Message-ID: <20071128185504.GA11236@coredump.intra.peff.net>
-References: <20071127150136.GA50697@orion.lan> <20071128165746.GC20308@coredump.intra.peff.net>
+Subject: [PATCH 2/3] cvsimport: use show-ref to support packed refs
+Date: Wed, 28 Nov 2007 13:56:11 -0500
+Message-ID: <20071128185611.GB11320@coredump.intra.peff.net>
+References: <20071128185504.GA11236@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Emanuele Giaquinta <e.giaquinta@glauco.it>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 19:56:18 2007
+X-From: git-owner@vger.kernel.org Wed Nov 28 19:56:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxS4z-0005N8-LN
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 19:56:14 +0100
+	id 1IxS5U-0005Zi-Jw
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 19:56:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757841AbXK1SzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 13:55:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757875AbXK1SzI
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 13:55:08 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3683 "EHLO
+	id S1754656AbXK1S4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 13:56:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbXK1S4O
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 13:56:14 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3691 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757940AbXK1SzG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 13:55:06 -0500
-Received: (qmail 13162 invoked by uid 111); 28 Nov 2007 18:55:05 -0000
+	id S1754604AbXK1S4N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 13:56:13 -0500
+Received: (qmail 13204 invoked by uid 111); 28 Nov 2007 18:56:12 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 28 Nov 2007 13:55:05 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Nov 2007 13:55:04 -0500
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 28 Nov 2007 13:56:12 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Nov 2007 13:56:11 -0500
 Content-Disposition: inline
-In-Reply-To: <20071128165746.GC20308@coredump.intra.peff.net>
+In-Reply-To: <20071128185504.GA11236@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66408>
 
-On Wed, Nov 28, 2007 at 11:57:46AM -0500, Jeff King wrote:
+Previously, if refs were packed, git-cvsimport would assume
+that particular refs did not exist. This could lead to, for
+example, overwriting previous 'origin' commits that were
+packed.
 
-> Some of git-cvsimport is quite old, and it accesses the ref files
-> directly. It should be fairly easy to fix; I will post a patch in a few
-> minutes.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ git-cvsimport.perl   |   24 +++++++++---------------
+ t/t9600-cvsimport.sh |    2 ++
+ 2 files changed, 11 insertions(+), 15 deletions(-)
 
-The patch series is:
-
-  1/3: Add basic cvsimport tests
-
-       We had no tests before, so this at least gives a sanity check. I
-       added a t9600 series, though perhaps the cvs-related tests
-       (cvsserver and exportcommit) should collapse to a single t9[0-9]*
-       series.
-
-  2/3: cvsimport: use show-ref to support packed refs
-
-       This fix is hopefully obvious, and the included test fails
-       without it (and this should probably fix Emanuele's problem).
-
-  3/3: cvsimport: miscellaneous packed-ref fixes
-
-       This fixes all of the packed-ref problem spots I could find.
-       However, I have no tests that show the problems or that verify
-       that the fixes are sane. So apply with caution.
-
-       Probably cvsimport would benefit greatly from a conversion to
-       Git.pm, but that is likely to involve a lot of rewriting, and I
-       have neither the time nor the inclination for that right now.
-
--Peff
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index efa6a0c..b852f2f 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -527,18 +527,12 @@ sub is_sha1 {
+ 	return $s =~ /^[a-f0-9]{40}$/;
+ }
+ 
+-sub get_headref ($$) {
+-    my $name    = shift;
+-    my $git_dir = shift;
+-
+-    my $f = "$git_dir/$remote/$name";
+-    if (open(my $fh, $f)) {
+-	    chomp(my $r = <$fh>);
+-	    is_sha1($r) or die "Cannot get head id for $name ($r): $!";
+-	    return $r;
+-    }
+-    die "unable to open $f: $!" unless $! == POSIX::ENOENT;
+-    return undef;
++sub get_headref ($) {
++	my $name = shift;
++	my $r = `git show-ref -s '$name'`;
++	return undef unless $? == 0;
++	chomp $r;
++	return $r;
+ }
+ 
+ -d $git_tree
+@@ -698,7 +692,7 @@ my (@old,@new,@skipped,%ignorebranch);
+ $ignorebranch{'#CVSPS_NO_BRANCH'} = 1;
+ 
+ sub commit {
+-	if ($branch eq $opt_o && !$index{branch} && !get_headref($branch, $git_dir)) {
++	if ($branch eq $opt_o && !$index{branch} && !get_headref($branch)) {
+ 	    # looks like an initial commit
+ 	    # use the index primed by git-init
+ 	    $ENV{GIT_INDEX_FILE} = "$git_dir/index";
+@@ -722,7 +716,7 @@ sub commit {
+ 	update_index(@old, @new);
+ 	@old = @new = ();
+ 	my $tree = write_tree();
+-	my $parent = get_headref($last_branch, $git_dir);
++	my $parent = get_headref($last_branch);
+ 	print "Parent ID " . ($parent ? $parent : "(empty)") . "\n" if $opt_v;
+ 
+ 	my @commit_args;
+@@ -733,7 +727,7 @@ sub commit {
+ 	foreach my $rx (@mergerx) {
+ 		next unless $logmsg =~ $rx && $1;
+ 		my $mparent = $1 eq 'HEAD' ? $opt_o : $1;
+-		if (my $sha1 = get_headref($mparent, $git_dir)) {
++		if (my $sha1 = get_headref($mparent)) {
+ 			push @commit_args, '-p', $mparent;
+ 			print "Merge parent branch: $mparent\n" if $opt_v;
+ 		}
+diff --git a/t/t9600-cvsimport.sh b/t/t9600-cvsimport.sh
+index 1ee06bb..3338d44 100755
+--- a/t/t9600-cvsimport.sh
++++ b/t/t9600-cvsimport.sh
+@@ -57,6 +57,8 @@ test_expect_success 'import a trivial module' '
+ 
+ '
+ 
++test_expect_success 'pack refs' 'cd module-git && git gc && cd ..'
++
+ test_expect_success 'update cvs module' '
+ 
+ 	cd module-cvs &&
+-- 
+1.5.3.6.2039.g0495
