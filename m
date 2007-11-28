@@ -1,113 +1,87 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: StGit hooks
-Date: Wed, 28 Nov 2007 15:11:28 +0100
-Message-ID: <474D7710.4090303@op5.se>
-References: <9e4733910711271417l32ed9a77p9915aa34a780665b@mail.gmail.com> <9e4733910711271512g790364e0ka4839b2be9fd4935@mail.gmail.com> <20071128093403.GB12977@diana.vm.bytemark.co.uk> <20071128101718.GA13940@diana.vm.bytemark.co.uk> <474D5482.5020609@op5.se> <20071128121905.GA15953@diana.vm.bytemark.co.uk> <474D69A7.6020404@op5.se> <20071128132605.GB15953@diana.vm.bytemark.co.uk>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH] Replace instances of export VAR=VAL with VAR=VAL; export VAR
+Date: Wed, 28 Nov 2007 21:19:05 +0700
+Message-ID: <fcaeb9bf0711280619j3479ea6csa74f4b0d907f2a65@mail.gmail.com>
+References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com>
+	 <474AC136.8060906@viscovery.net>
+	 <451492C9-F3EA-4C37-A1AD-59FC72E0A0A2@wincent.com>
+	 <Pine.LNX.4.64.0711261340470.27959@racer.site>
+	 <97F6E8DE-4022-4458-B6A9-C644A6EDC1E3@wincent.com>
+	 <7vir3m94ku.fsf@gitster.siamese.dyndns.org>
+	 <50645A3B-C5F0-4A99-A2B8-AD9251024244@wincent.com>
+	 <7v1waa7lcv.fsf@gitster.siamese.dyndns.org>
+	 <1570EAD5-9F47-4105-B3DA-49CA6FA57369@wincent.com>
+	 <Pine.LNX.4.64.0711281355460.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 15:12:26 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Wincent Colaiuta" <win@wincent.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Sixt" <j.sixt@viscovery.net>,
+	"Benoit Sigoure" <tsuna@lrde.epita.fr>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 28 15:19:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxNeK-0008M8-Cr
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 15:12:24 +0100
+	id 1IxNlC-0002xh-HZ
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 15:19:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760231AbXK1OLh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Nov 2007 09:11:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759316AbXK1OLh
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 09:11:37 -0500
-Received: from mail.op5.se ([193.201.96.20]:58603 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754516AbXK1OLg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 09:11:36 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 4ADDE1F08053;
-	Wed, 28 Nov 2007 15:11:34 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tTOxXn9-h6tq; Wed, 28 Nov 2007 15:11:33 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 29AAE1F08052;
-	Wed, 28 Nov 2007 15:11:31 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <20071128132605.GB15953@diana.vm.bytemark.co.uk>
+	id S1752160AbXK1OTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 09:19:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754618AbXK1OTJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 09:19:09 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:51821 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752930AbXK1OTH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 09:19:07 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1409345nfb
+        for <git@vger.kernel.org>; Wed, 28 Nov 2007 06:19:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=W2fX+Lc15bGlrhWkbZjKkRt0BLl8T+UPwUX59ycEiGc=;
+        b=eOT7rI2eJ3OzfGDhkOYiqT1SjSw+5/TRrd8VqCkCWxpq8QG1KFECfbgtde/5oXzEes26o1zvzeQq8dA6xmG05+xqlFSyxkCuL2+iZTknFnjow0/mXCzBXjtVLHY2UCGtz5bEpXotqTOr2vA4IfbZ8ytlZiD/Q6yby6KMmJDigO4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=BF8JVvSirXOtaI3aj/fyKMoXFmm519wiWEw4EZFAdrG90+VJZLlg9nITHhlFdar5BbpfBW+DfRj6mhaxbx+uOOqHMq1EX1fLD1To95H0TWXteHqLKErm5fQ2vC8K/jfzbZPRIH5L2AtC6AcdfgdqWPQi0Hvvv1d2/QFKXK8U/pE=
+Received: by 10.86.65.11 with SMTP id n11mr5013590fga.1196259545848;
+        Wed, 28 Nov 2007 06:19:05 -0800 (PST)
+Received: by 10.86.83.6 with HTTP; Wed, 28 Nov 2007 06:19:05 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0711281355460.27959@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66340>
 
-Karl Hasselstr=F6m wrote:
-> On 2007-11-28 14:14:15 +0100, Andreas Ericsson wrote:
->=20
->> Karl Hasselstr=F6m wrote:
->>
->>> On 2007-11-28 12:44:02 +0100, Andreas Ericsson wrote:
->>>
->>>> Karl Hasselstr=F6m wrote:
->>>>
->>>>> Also, if StGit is to set up hooks automatically (commit hooks,
->>>>> pre-rebase hooks, whatever), it'd be nice to not have to worry
->>>>> about overwriting any existing hooks the user might have. But
->>>>> git currently allows only one hook script per hook, right?
->>>> Yes, but you can obviously call any number of scripts and
->>>> programs from within the hook that git executes.
->>> That doesn't help here, however, since the user and not StGit
->>> "owns" the "top-level" hook. StGit would have to rely on the user
->>> having installed a specific kind of multiplexer as a hook script
->>> (e.g. one that executes everything under .git/hooks/$hook.d/). Or
->>> it would have to install it itself, and hope that moving any
->>> existing hook to the subdirectory where the multiplexer looks for
->>> hooks doesn't break anything. Both solutions are problematic.
->> The user-defined hook can be kept in the hooks directory too. It
->> just needs to be named in such a way that git will never have a hook
->> named like that. For that reason, I think it would be easiest to
->> just agree for the git core to never call any hooks prefixed with
->> "stgit" or some such. I think the odds for it happening by chance
->> are remote, to say the least.
->=20
-> You've lost me. :-/
->=20
-> Take the pre-commit hook as an example. git will call
-> ".git/hooks/pre-commit" when interesting stuff happens. Now StGit
-> wants to install its pre-commit hook in an existing repository, and
-> finds that there already is a file called ".git/hooks/pre-commit".
-> What should it do?
->=20
+On Nov 28, 2007 8:57 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> It might be POSIX, but there are shells that do not like the
+> expression 'export VAR=VAL'.  To be on the safe side, rewrite them
+> into 'VAR=VAL' and 'export VAR'.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>
+>         On Wed, 28 Nov 2007, Wincent Colaiuta wrote:
+>
+>         > I'm still a little concerned that nobody commented when I
+>         > pointed out that export VAR=VAL is used elsewhere in Git,
+>         > especially in git-clone.sh, which is very commonly-used
+>         > porcelain. Is it a problem?
+>
+>         How's that for a comment?
+>
+>  git-clone.sh         |    2 +-
+>  git-filter-branch.sh |   20 ++++++++++++--------
+>  git-quiltimport.sh   |   10 ++++++----
+>  3 files changed, 19 insertions(+), 13 deletions(-)
 
-Move the existing hook to ".git/hooks/stgit-moved.pre-commit". So
-long as the hook doesn't care what its named (which would only matter
-in the insane case where the repository has a single hook with a lot
-of links going to it), this will work with relative paths that worked
-earlier.
+Why leave test scripts behind?
 
-> It could move ".git/hooks/pre-commit" to
-> ".git/hooks/pre-commit.d/user_hook", install its own hook in
-> ".git/hooks/pre-commit.d/stgit_hook", and install a multiplexer at
-> ".git/hooks/pre-commit". But that makes some assumptions, e.g. that
-> the user's hook can handle being moved, and that the user is fine wit=
-h
-> this.
->=20
-> I don't see a good way around this other than having git mandate the
-> multiplexing scheme.
->=20
-
-Multiplexing the execution of those hooks would be a very bad idea
-indeed, but that's a different issue.
-
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+-- 
+Duy
