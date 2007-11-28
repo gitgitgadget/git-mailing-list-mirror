@@ -1,86 +1,140 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Allow update hooks to update refs on their own
-Date: Wed, 28 Nov 2007 15:42:03 -0800
-Message-ID: <7vve7m0wfo.fsf@gitster.siamese.dyndns.org>
-References: <C1321BD5-8F6B-47F9-9BDB-C2BF819D6F17@midwinter.com>
-	<20071128221403.GA3256@midwinter.com>
-	<20071128230355.GB13964@coredump.intra.peff.net>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Rollback of git commands
+Date: Wed, 28 Nov 2007 18:42:56 -0500
+Message-ID: <9e4733910711281542r5b1e5dd9o68ff8565f9000453@mail.gmail.com>
+References: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com>
+	 <7vmyszb39s.fsf@gitster.siamese.dyndns.org>
+	 <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com>
+	 <20071128092234.GA12977@diana.vm.bytemark.co.uk>
+	 <9e4733910711280713n6b439866m55bea4824efd959@mail.gmail.com>
+	 <Pine.LNX.4.64.0711281600320.5349@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 29 00:42:35 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Daniel Barkalow" <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Thu Nov 29 00:43:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxWY3-0001Nq-D1
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 00:42:31 +0100
+	id 1IxWYp-0001dj-5F
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 00:43:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756573AbXK1XmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 18:42:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757547AbXK1XmM
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 18:42:12 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:35609 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757536AbXK1XmJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 18:42:09 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 0B7A92EF;
-	Wed, 28 Nov 2007 18:42:31 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 7A3759AA39;
-	Wed, 28 Nov 2007 18:42:27 -0500 (EST)
-In-Reply-To: <20071128230355.GB13964@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 28 Nov 2007 18:03:55 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757715AbXK1Xm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 18:42:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757366AbXK1Xm6
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 18:42:58 -0500
+Received: from wa-out-1112.google.com ([209.85.146.181]:3277 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756579AbXK1Xm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 18:42:57 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1972366wah
+        for <git@vger.kernel.org>; Wed, 28 Nov 2007 15:42:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=szqkqybW+r4kM2ReR5EXM6jLAM2U+Bv2Ya1rpQ1+kPA=;
+        b=cKBdoM3IAE0Two6mtetmKDehmo95PERlnKyWiiXzZq1PN1YpubSRFx75wOk+pNen9nQTukE4E8t6A1bcsFkrMzBLugN8LUDC8Fp5o04vJQ/BZUQMEVGVppDjzwKlVVI9emYG+i8G2BHOXUM4qcX34qLoPfnayOmwgjqzIPhKIlQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=xVVD9HfgGUbbVCMBoMcBu1rsHVhBQvPM6GjF6qrkjB0Wbc+bVI6FRKQYa2JSV+c/Ho4yE6l3uVuALD4bSu/ZkdZHhKvFmnEzHbjjFFzlv2BfK5ge0Zu/qX2vH2lNwhtAQpEb0J7A0S+ZobsWq6+bGmaW/oC64vHIeiA/CYe42LA=
+Received: by 10.115.54.1 with SMTP id g1mr97511wak.1196293376838;
+        Wed, 28 Nov 2007 15:42:56 -0800 (PST)
+Received: by 10.114.160.3 with HTTP; Wed, 28 Nov 2007 15:42:56 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0711281600320.5349@iabervon.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66465>
 
-Jeff King <peff@peff.net> writes:
-
-> On Wed, Nov 28, 2007 at 02:14:03PM -0800, Steven Grimm wrote:
+On 11/28/07, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> On Wed, 28 Nov 2007, Jon Smirl wrote:
 >
->> @@ -177,7 +179,16 @@ static int receive_status(int in, struct ref *refs)
->>  
->>  		line[strlen(line)-1] = '\0';
->>  		refname = line + 3;
->> -		msg = strchr(refname, ' ');
->> +		newsha1_hex = strchr(refname, ' ');
->> +		if (newsha1_hex) {
->> +			*newsha1_hex++ = '\0';
->> +			if (get_sha1_hex(newsha1_hex, newsha1)) {
->> +				fprintf(stderr, "protocol error: bad sha1 %s\n",
->> +					newsha1_hex);
->> +				newsha1_hex = NULL;
->> +			}
->> +		}
->> +		msg = strchr(newsha1_hex, ' ');
->>  		if (msg)
->>  			*msg++ = '\0';
+> > all my patches applied
+> > git rebase
+> > cursing.... I immediately knew what I had done
+> > update stg and install it
+> > stg repair
+> > four of my 15 patches tried to apply, I received messages that there
+> > were all empty
+> > most stg commands won't work, they complain that the commit references
+> > in the stg .git/* state are not correct.
+> >
+> > I then proceed to manually attempt repair.
 >
-> Doesn't this always put the first "word" of a response into newsha1_hex?
-> We want to do this only for 'ok' responses; 'ng' responses are already
-> using that space as part of the error message.
+> This sounds like the content of the applied patches got pulled into the
+> non-stgit history of the branch it's working on, sort of like a stg commit
+> except that stgit didn't know you'd done it. Then cleaning everything up
+> from stgit's perspective caused all of those patches to become empty,
+> since they were already applied in the base.
+>
+> I think fundamental issue you're having is that stgit is implementing the
+> functionality of quilt using git's engine, not providing a version control
+> system for patch series, which is what you really want. I've actually been
+> working on a design for a git builtin for the idea that the patch series
+> is your work product, and you want to version control that (additionally,
+> you want to use git's engine to help with working on the series and
+> represent it).
+>
+> Out of curiousity, are you using stgit as an integrator (with your work
+> being keeping a collection of patches produced separately up-to-date) or
+> as a patch developer (with your work being producing a state containing a
+> single large new feature while maintaining this change as a series of
+> self-contained patches)? I've been thinking primarily about the integrator
+> task, in part because I've found it easy enough to do the developer task
+> without anything other than current git. (That is, "git rebase -i" seems
+> to work fine for making changes to a single logical patch series, all of
+> whose patches are prepared locally and aren't independantly named in some
+> particular fashion; the things that aren't handled are "I need to replace
+> the pull of netdev.git with a new pull of netdev.git" or "I need to
+> replace '[PATCH] fix-the-frobnozzle-gadget' with
+> '[PATCH v2] fix-the-frobnozzle-gadget'.)
 
-I do not think reporting back the rewritten object name makes much sense
-nor adds any value; it won't be useful information until you fetch the
-object.
+I'm a patch developer. You need to change the patches continuously to
+track feedback on the lkml type lists. You also have to rebase in
+order to keep tracking head. Other people often work on the same
+things and this triggers merges against the pending patches.
 
-I do not think reporting back _anything_ other than "ok" adds much value
-at all.  Sure, if the update hook did something funky you would get such
-a report, but the situation is not any different if some warm body is
-sitting on the other end and building on top of what you pushed
-immediately he sees any push into the repository, and in such a case
-your git-push would not get any such reporting anyway.
+Another class of problem is that I can write code a lot faster than I
+can get it into the kernel. Currently I have 14 pending PPC patches
+that I'm maintaining while I try and get a core change into the i2c
+subsystem. All of the other patches depend on the core i2c patch.
 
-We do not even have to worry about this reporting at all if we do not
-allow munging the refs in the update hook.  In a sense, this patch is
-creating a problem that does not need to be solved.  Perhaps modifying
-update hook to allow so makes it possible to munge refs while holding a
-lock, but is it really worth this hassle?  Isn't there a better way, I
-wonder?
+Of course the version of the i2c patch that finally gets accepted will
+probably cause me to have to rework the whole patch stack again.
+
+stgit is what you need for this work flow. It lets me easily rebase or
+edit specific patches. It also lets me easily maintain private debug
+patches that I can apply as needed.
+
+I'd just like for stgit to become a core part of git so that is can be
+made more bullet proof. I'm losing my patch stack every couple of
+weeks. It's normally a "user error" but it is way to easy to make
+these user errors.
+
+
+>
+> The developer assist I'd actually like to see is: "I've got a single
+> commit on top of a series of commits on top of an upstream commit; I want
+> to distribute the changes made in the final commit to points in the series
+> where the code that gets replaced (or context that gets inserted into) in
+> the final commit gets introduced, with interactive stuff for sticking
+> other hunks into particular commits or into new commits at some point in
+> the series." That is, I want to do my revision of a patch series on the
+> final commit of the series, and then have these changes distributed to the
+> appropriate points, rather than doing work on intermediate states (unless
+> what I'm fixing is stub code that gets replaced again in a later patch).
+>
+>         -Daniel
+> *This .sig left intentionally blank*
+>
+
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
