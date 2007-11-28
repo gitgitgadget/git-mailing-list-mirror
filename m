@@ -1,112 +1,106 @@
-From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [PATCH] Do check_repository_format() early
-Date: Wed, 28 Nov 2007 23:58:37 +0700
-Message-ID: <20071128165837.GA5903@laptop>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Rollback of git commands
+Date: Wed, 28 Nov 2007 12:03:28 -0500
+Message-ID: <9e4733910711280903w26e9821ah17db9ad468dea460@mail.gmail.com>
+References: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com>
+	 <7vmyszb39s.fsf@gitster.siamese.dyndns.org>
+	 <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com>
+	 <BAYC1-PASMTP02DBA3FB25E09FE45F0BF2AE770@CEZ.ICE>
+	 <9e4733910711272037r2ce3ed01y31ec8531f5803efe@mail.gmail.com>
+	 <alpine.LFD.0.99999.0711280951150.9605@xanadu.home>
+	 <9e4733910711280758x38ca3cdau4e62bfe8776e5c0d@mail.gmail.com>
+	 <alpine.LFD.0.99999.0711281125320.9605@xanadu.home>
+	 <9e4733910711280837o43003e93p470bb403e6bdd3bb@mail.gmail.com>
+	 <alpine.LFD.0.99999.0711281141150.9605@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 28 17:59:38 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Sean <seanlkml@sympatico.ca>, "Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Nov 28 18:04:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxQFa-0008IR-Ta
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 17:59:03 +0100
+	id 1IxQKC-0002F1-Kx
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 18:03:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761497AbXK1Q6o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Nov 2007 11:58:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757148AbXK1Q6o
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 11:58:44 -0500
-Received: from an-out-0708.google.com ([209.85.132.242]:46987 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756704AbXK1Q6n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 11:58:43 -0500
-Received: by an-out-0708.google.com with SMTP id d31so313766and
-        for <git@vger.kernel.org>; Wed, 28 Nov 2007 08:58:42 -0800 (PST)
+	id S1759947AbXK1RDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 12:03:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759835AbXK1RDc
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 12:03:32 -0500
+Received: from nz-out-0506.google.com ([64.233.162.227]:38787 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757607AbXK1RDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 12:03:30 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so1141361nze
+        for <git@vger.kernel.org>; Wed, 28 Nov 2007 09:03:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
-        bh=68AemYiaRIlLlW+svMyAldBeRDW5pdOA7Lce0GUABdw=;
-        b=CP5peh+Ls1ZCWGh9ZjBwI8Eyi8Nc3d5NppzZ59iQAgmnkmfp/GgNMXPwS+5tFtU3yr6Ov977WMjwhz+CKe6q3ckEnwAfROtMlPcDY754susxU8yykUhDm9FgR8U+ydMlwN4iHcK/lgRGJwg+rHiR9Kt7kCcIqkUkd0SUji6T2oM=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=awqsu8UCzt7q3ChS2dXb9SAGCPVRRDofn4rjWX5il5w=;
+        b=WTvqf/oPPgLQQFUfJBvwOy9gubYLH/1fYjdbKG/ERGJtBRLAfGzLUlKJIqoI55ayVxWj0Wx+/gxDgzrxI6p9xkuf3wrxblDGWzYYpAFUCNhLAoQv4LKv2OIviy0xmT4TA7PMaJ6Dp7NPHMVcl6lxt8DX5BFMt2kOvh1yvDxaW+c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=received:date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
-        b=DD5MPG3sNZWL1Glad8rj1gI0ooGtNTe4l0dAJqDzko1FG9+HNI77HLf0Lrmvbycy5hUJs0Ad5duGJTDt3H7b8//DKHT4WHDBp3F/rMoAi4gqHw4Py5ldQSXOkIJELZIGerZTSfc+3iVLoVzWHneAMYYbG0u0t8BC2RzwC//b26M=
-Received: by 10.101.71.16 with SMTP id y16mr9415114ank.1196269122753;
-        Wed, 28 Nov 2007 08:58:42 -0800 (PST)
-Received: from pclouds@gmail.com ( [117.5.1.8])
-        by mx.google.com with ESMTPS id b19sm2119414ana.2007.11.28.08.58.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 28 Nov 2007 08:58:41 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 28 Nov 2007 23:58:37 +0700
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=U3eKeUh5bk5LWKHaie4AnMegefELVfK1a8KVeU+6dulz8yTY1flmOwijrmjJE+wA6i+D5hW+CfJL/y4yn1/9kz3N/Nc85xgBNNIcwjaAuIFUS7Y93LCuded/TfqWt7yCRrldnKcUAQRQvrtkIctPVjKfvJSjT5a62H8XWmGl/bE=
+Received: by 10.114.103.1 with SMTP id a1mr283073wac.1196269408891;
+        Wed, 28 Nov 2007 09:03:28 -0800 (PST)
+Received: by 10.114.160.3 with HTTP; Wed, 28 Nov 2007 09:03:28 -0800 (PST)
+In-Reply-To: <alpine.LFD.0.99999.0711281141150.9605@xanadu.home>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66384>
 
-Repository version check is only performed when
-setup_git_directory() is called. This makes sure
-setup_git_directory_gently() does the check too.
+On 11/28/07, Nicolas Pitre <nico@cam.org> wrote:
+> On Wed, 28 Nov 2007, Jon Smirl wrote:
+>
+> > On 11/28/07, Nicolas Pitre <nico@cam.org> wrote:
+> > > On Wed, 28 Nov 2007, Jon Smirl wrote:
+> > >
+> > > > On 11/28/07, Nicolas Pitre <nico@cam.org> wrote:
+> > > > > On Tue, 27 Nov 2007, Jon Smirl wrote:
+> > > > >
+> > > > > > Of course you've never screwed up a repository using git commands,
+> > > > > > right? I've messed up plenty. A good way to mess up a repo is to get
+> > > > > > the data in .git/* out of sync with what is in the repo. I'm getting
+> > > > > > good enough with git that I can fix most mess up with a few edits, but
+> > > > > > it took me two years to get to that point. Rolling back to a check
+> > > > > > point is way easier. User error and a command failing are both equally
+> > > > > > valid ways to mess up a repo.
+> > > > >
+> > > > > The reflog contains all your check points, for every modifications you
+> > > > > make, even the stupid ones.  You should look at it.
+> > > >
+> > > > The state contained in the other config files in .git/* is not getting
+> > > > check pointed. I can use reflog to move my branch heads around. But
+> > > > doing that does not undo the changes to the state recorded in .git/*.
+> > > > After the error I encountered  I moved my branch head back, but the
+> > > > state stgit had stored in .git/* was out of sync with where the branch
+> > > > had been moved to.
+> > >
+> > > It's up to stgit to version control its state then.  It may even use a
+> > > reflog for it.  All the machinery is there already.
+> >
+> > Git has state in .git/* too, shouldn't it be version controlling it
+> > too? If git was version controlling the state in .git/* you'd have
+> > checkpoints with the ability to roll back.
+>
+> Well, the .git directory contains data to identify what is actually
+> version controlled.  If you start versioning the data used to implement
+> the versioning, don't you get into endless recursion here?
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- My worktree work still not done yet, so push this first.
+You would end up with a single non-version controlled sha pointer that
+would need to be stored externally.  That pointer would be the
+beginning of the rollback log. It's just a normal commit chain.
 
- setup.c |   12 +++++++++---
- 1 files changed, 9 insertions(+), 3 deletions(-)
+In a totally version controlled system. .git/* would only contain
+objects and the one pointer to the current state of the system.
 
-diff --git a/setup.c b/setup.c
-index faf4137..19a8a77 100644
---- a/setup.c
-+++ b/setup.c
-@@ -246,8 +246,13 @@ const char *setup_git_directory_gently(int *nongit=
-_ok)
- 			static char buffer[1024 + 1];
- 			const char *retval;
-=20
--			if (!work_tree_env)
--				return set_work_tree(gitdirenv);
-+			if (!work_tree_env) {
-+				retval =3D set_work_tree(gitdirenv);
-+				/* config may override worktree */
-+				check_repository_format();
-+				return retval;
-+			}
-+			check_repository_format();
- 			retval =3D get_relative_cwd(buffer, sizeof(buffer) - 1,
- 					get_git_work_tree());
- 			if (!retval || !*retval)
-@@ -287,6 +292,7 @@ const char *setup_git_directory_gently(int *nongit_=
-ok)
- 			if (!work_tree_env)
- 				inside_work_tree =3D 0;
- 			setenv(GIT_DIR_ENVIRONMENT, ".", 1);
-+			check_repository_format();
- 			return NULL;
- 		}
- 		chdir("..");
-@@ -307,6 +313,7 @@ const char *setup_git_directory_gently(int *nongit_=
-ok)
- 	if (!work_tree_env)
- 		inside_work_tree =3D 1;
- 	git_work_tree_cfg =3D xstrndup(cwd, offset);
-+	check_repository_format();
- 	if (offset =3D=3D len)
- 		return NULL;
-=20
-@@ -367,7 +374,6 @@ int check_repository_format(void)
- const char *setup_git_directory(void)
- {
- 	const char *retval =3D setup_git_directory_gently(NULL);
--	check_repository_format();
-=20
- 	/* If the work tree is not the default one, recompute prefix */
- 	if (inside_work_tree < 0) {
---=20
-1.5.3.6.2041.g106f-dirty
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
