@@ -1,85 +1,83 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: Rebase/cherry-picking idea
-Date: Wed, 28 Nov 2007 09:52:08 +0100
-Message-ID: <50645A3B-C5F0-4A99-A2B8-AD9251024244@wincent.com>
-References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com> <C3971B37-F75A-40EE-B30A-E88E5DAFAD55@lrde.epita.fr> <D21294CA-6FD0-40F5-B0D6-5155865DA69A@wincent.com> <CDF48716-F198-4B33-A5F5-8A2DE1F177EB@wincent.com> <474AC136.8060906@viscovery.net> <451492C9-F3EA-4C37-A1AD-59FC72E0A0A2@wincent.com> <Pine.LNX.4.64.0711261340470.27959@racer.site> <97F6E8DE-4022-4458-B6A9-C644A6EDC1E3@wincent.com> <7vir3m94ku.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Use --no-color option on git log commands.
+Date: Tue, 27 Nov 2007 20:45:02 -0800
+Message-ID: <7vr6ib9dwx.fsf@gitster.siamese.dyndns.org>
+References: <474B42EC.1000408@wanadoo.fr>
+	<7vr6icej23.fsf@gitster.siamese.dyndns.org>
+	<474C60FA.4040302@wanadoo.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Benoit Sigoure <tsuna@lrde.epita.fr>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 14:38:28 2007
+Cc: git list <git@vger.kernel.org>
+To: Pascal Obry <pascal.obry@wanadoo.fr>
+X-From: git-owner@vger.kernel.org Wed Nov 28 14:42:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from mail-forward.uio.no ([129.240.10.42])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1IxKuf-000418-Tn
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 12:17:05 +0100
-Received: from mail-mx8.uio.no ([129.240.10.38])
+	id 1IxKuW-0003xn-Gd
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 12:16:56 +0100
+Received: from mail-mx4.uio.no ([129.240.10.45])
 	by pat.uio.no with esmtp (Exim 4.67)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1IxIjZ-0001UG-3x
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 09:57:29 +0100
+	id 1IxEsq-0006kI-T3
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 05:50:48 +0100
 Received: from vger.kernel.org ([209.132.176.167])
-	by mail-mx8.uio.no with esmtp (Exim 4.67)
+	by mail-mx4.uio.no with esmtp (Exim 4.67)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1IxIjQ-0003wr-JZ
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 09:57:28 +0100
+	id 1IxEsh-0001hB-T8
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 05:50:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752478AbXK1IwW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Nov 2007 03:52:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752722AbXK1IwW
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 03:52:22 -0500
-Received: from wincent.com ([72.3.236.74]:44332 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752369AbXK1IwV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Nov 2007 03:52:21 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAS8q9qc032332;
-	Wed, 28 Nov 2007 02:52:10 -0600
-In-Reply-To: <7vir3m94ku.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.915)
+	id S1753756AbXK1EpO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Nov 2007 23:45:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753845AbXK1EpO
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Nov 2007 23:45:14 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:55327 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753706AbXK1EpN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Nov 2007 23:45:13 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 740562F0;
+	Tue, 27 Nov 2007 23:45:34 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 0CD619A9C8;
+	Tue, 27 Nov 2007 23:45:31 -0500 (EST)
+In-Reply-To: <474C60FA.4040302@wanadoo.fr> (Pascal Obry's message of "Tue, 27
+	Nov 2007 19:24:58 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 X-UiO-ClamAV-Virus: No
-X-UiO-Spam-info: not spam, SpamAssassin (score=-3.8, required=5.0, autolearn=disabled, AWL=3.163,RCVD_IN_DNSWL_MED=-4,UIO_VGER=-3)
-X-UiO-Scanned: 4908B2017303774CE6EEC978888917D1B21B27FC
-X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -37 maxlevel 200 minaction 2 bait 0 mail/h: 95 total 724166 max/h 813 blacklist 0 greylist 0 ratelimit 0
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66333>
+X-UiO-Spam-info: not spam, SpamAssassin (score=-6.4, required=5.0, autolearn=disabled, AWL=0.602,RCVD_IN_DNSWL_MED=-4,UIO_VGER=-3)
+X-UiO-Scanned: 84B55E8F5B1A1FA6AE1D84C6C4578A15E566A41B
+X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -63 maxlevel 200 minaction 2 bait 0 mail/h: 52 total 723819 max/h 813 blacklist 0 greylist 0 ratelimit 0
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66334>
 
-El 28/11/2007, a las 9:06, Junio C Hamano escribi=F3:
+Pascal Obry <pascal.obry@wanadoo.fr> writes:
 
->> Once I get a clear idea of what kind of change is likely to actually
->> get accepted I'll submit a proper patch.
+> Junio C Hamano a =C3=A9crit :
+>> The patch is good as belt-and-suspender, thanks.
 >
-> Too often, people disappear with a patch that is basically good but =20
-> has
-> room for improvements this way.  I really do not have time nor =20
-> bandwidth
-> to keep bugging them for updates, and often end up cleaning up on my =
-=20
-> own
-> instead.
+> Ok.
+>
+>> But I suspect that we should make 'true' to mean 'auto' someday in
+>> git_config_colorbool().  Crazy people can set 'always' if they reall=
+y
+>> wanted to, but most normal people would not want color unless the ou=
+tput
+>> goes to the terminal, I would think.
+>
+> I definitely agree. I add it set to true, using auto instead I do not
+> have the problem. Anyway I still think that it is good to apply my pa=
+tch
+> to completely avoid such issues.
 
-The problem in this case was that my patch didn't receive any =20
-meaningful feedback (ie. suggestions for improvement), only a lot of =20
-bikeshed stuff about whether the environment variable should have an =20
-underscore prefix or not, whether or not I should use "export FOO=3D...=
-" =20
-or not etc. So I didn't know what was necessary in order to get it =20
-accepted.
+Yes, that is what I said.
 
-> This is such a patch, and without acks or comments, it is also very
-> likely to be lost.
+Except that the patch is severely whitespace damaged, and the message
+lack a sign-off.
 
-Ok, please disregard the resend that I just posted a few minutes ago =20
-(hadn't seen your new patch yet).
-
-Cheers,
-Wincent
+I fixed them up by hand, so no need to resend.
