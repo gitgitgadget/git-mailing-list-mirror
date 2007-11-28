@@ -1,59 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Rollback of git commands
-Date: Wed, 28 Nov 2007 11:28:32 -0500
-Message-ID: <20071128162832.GA890@coredump.intra.peff.net>
-References: <9e4733910711271523p3be94010jac9c79e6b95f010d@mail.gmail.com> <7vmyszb39s.fsf@gitster.siamese.dyndns.org> <9e4733910711271733r6f280618pbb14095aebba3309@mail.gmail.com> <9e4733910711271749q1b96bfe9i60e43619c89234b9@mail.gmail.com> <3AAC5548-A9AC-4236-B1F7-5CFDE11B52C4@adacore.com> <20071128162002.GB20308@coredump.intra.peff.net> <9e4733910711280823q5fa14120scb6371a1465efca5@mail.gmail.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: The 5th issue of the msysGit Herald
+Date: Wed, 28 Nov 2007 16:33:40 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711281632510.1706@kaos.quantumfyre.co.uk>
+References: <Pine.LNX.4.64.0711130312180.4362@racer.site> <fhcat4$ef$1@ger.gmane.org>
+ <7v7ikmt1md.fsf@gitster.siamese.dyndns.org> <200711132020.59578.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Geert Bosch <bosch@adacore.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 17:29:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 17:34:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxPmQ-0002Vg-BF
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 17:28:54 +0100
+	id 1IxPra-0004sy-6c
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 17:34:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759269AbXK1Q2f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 11:28:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759054AbXK1Q2f
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 11:28:35 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2957 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758816AbXK1Q2f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 11:28:35 -0500
-Received: (qmail 11894 invoked by uid 111); 28 Nov 2007 16:28:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 28 Nov 2007 11:28:33 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Nov 2007 11:28:32 -0500
-Content-Disposition: inline
-In-Reply-To: <9e4733910711280823q5fa14120scb6371a1465efca5@mail.gmail.com>
+	id S1759547AbXK1Qdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 11:33:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759496AbXK1Qdx
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 11:33:53 -0500
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:59535 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759490AbXK1Qdw (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Nov 2007 11:33:52 -0500
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 67F47C646F
+	for <git@vger.kernel.org>; Wed, 28 Nov 2007 16:33:51 +0000 (GMT)
+Received: (qmail 18304 invoked by uid 103); 28 Nov 2007 16:33:40 +0000
+Received: from 192.168.0.4 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.91.2/4934. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.4):. 
+ Processed in 0.03412 secs); 28 Nov 2007 16:33:40 -0000
+Received: from elfhelm.quantumfyre.co.uk (HELO kaos.quantumfyre.co.uk) (192.168.0.4)
+  by neutron.datavampyre.co.uk with SMTP; 28 Nov 2007 16:33:40 +0000
+X-X-Sender: jp3@kaos.quantumfyre.co.uk
+In-Reply-To: <200711132020.59578.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66375>
 
-On Wed, Nov 28, 2007 at 11:23:30AM -0500, Jon Smirl wrote:
+On Tue, 13 Nov 2007, Jakub Narebski wrote:
 
-> > Assuming that they also retain the "having an object implies having all
-> > of the objects it points to" property, then it makes it hard to talk
-> > about subsets or single refs. If I fetch from you and you communicate
-> > your repo state as some hash, then I am stuck getting _all_ of your
-> > refs to complete this property.
-> 
-> push/pull would still work at the branch level. The local state
-> tracking objects wouldn't be exchanged.
+> Junio C Hamano wrote:
+>> Jakub Narebski <jnareb@gmail.com> writes:
+>>
+>>> Perhaps it is time for git to have besides Git Homepage and Git Wiki also
+>>> Git Blog or Git Feed (with announcements, what's in... and herald). What do
+>>> you think?
+>>
+>> I miss the "Kernel Traffic" (and its cousin, the unfortunate
+>> first and only issue of "Git Traffic").
+>>
+>> If you are stepping up as the chief "Git Traffic" editor (with
+>> help from others), I'd imagine it would be greatly appreciated
+>> by the community.
+>>
+>> I certainly would.
+>
+> ...and a buckefull of time, please...
+>
+> What I meant to have on blog, or rather in feed was those "What's in...",
+> "What's cooking...", "[ANNOUNCE]..." and "msysGit Herald" posts, not
+> git traffic digest. Because while I think first can be automated and
+> does not need manual intervention, doing the digest... well...
 
-Fair enough.
+Something like this perhaps?
 
-My spider sense still tingles about this, and I have the feeling that
-you might run into weird merge problems when two refs are updated
-simultaneously. I guess that shouldn't happen since you will write out
-the complete "here are the refs" after every operation, leaving no room
-for simultaneous updates, but I haven't given it enough thought to be
-sure there aren't funny corner cases.
+http://gitrss.q42.co.uk/
 
--Peff
+-- 
+Julian
+
+  ---
+Consensus Terrorism:
+ 	The process that decides in-office attitudes and behavior.
+ 		-- Douglas Coupland, "Generation X: Tales for an Accelerated
+ 		   Culture"
