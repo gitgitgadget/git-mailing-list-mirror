@@ -1,60 +1,67 @@
-From: Johannes Gilger <heipei@hackvalue.de>
-Subject: Re: The 5th issue of the msysGit Herald
-Date: Wed, 28 Nov 2007 21:40:46 +0100
-Message-ID: <20071128204043.GA23630@dualtron.vpn.rwth-aachen.de>
-References: <Pine.LNX.4.64.0711130312180.4362@racer.site> <fhcat4$ef$1@ger.gmane.org> <7v7ikmt1md.fsf@gitster.siamese.dyndns.org> <200711132020.59578.jnareb@gmail.com> <Pine.LNX.4.64.0711281632510.1706@kaos.quantumfyre.co.uk>
-Reply-To: Johannes Gilger <heipei@hackvalue.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] Teach 'git pull' about --rebase
+Date: Wed, 28 Nov 2007 20:40:48 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711282039430.27959@racer.site>
+References: <Pine.LNX.4.64.0710252351130.4362@racer.site>
+ <alpine.LFD.0.999.0710251602160.30120@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0710260007450.4362@racer.site> <7v3avy21il.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0710261047450.4362@racer.site> <7v3aurcjpq.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0711281307420.27959@racer.site> <27E5EF3C-19EF-441C-BB12-0F5B29BEAEDB@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Cc: git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Wed Nov 28 21:41:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Wed Nov 28 21:41:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxTic-0001Yn-OS
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 21:41:15 +0100
+	id 1IxTiu-0001ii-Sv
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 21:41:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756832AbXK1Ukz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 15:40:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756804AbXK1Ukz
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 15:40:55 -0500
-Received: from avalon.gnuzifer.de ([85.10.199.84]:52134 "EHLO
-	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756800AbXK1Uky (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 15:40:54 -0500
-Received: from 0-146.vpn.rwth-aachen.de ([134.130.240.146]:39040 helo=localhost)
-	by avalon.gnuzifer.de with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <heipei@hackvalue.de>)
-	id 1IxTiF-0005ZT-Hv; Wed, 28 Nov 2007 21:40:52 +0100
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711281632510.1706@kaos.quantumfyre.co.uk>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-SA-Exim-Connect-IP: 134.130.240.146
-X-SA-Exim-Mail-From: heipei@hackvalue.de
+	id S1756956AbXK1UlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 15:41:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756829AbXK1UlD
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 15:41:03 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56634 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756804AbXK1UlC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 15:41:02 -0500
+Received: (qmail invoked by alias); 28 Nov 2007 20:41:00 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp011) with SMTP; 28 Nov 2007 21:41:00 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19xKiYW63Jx7lFvF/wYbyi9+g/JI/7TWaOznEEtw+
+	p1XiHKdT6v9fce
+X-X-Sender: gene099@racer.site
+In-Reply-To: <27E5EF3C-19EF-441C-BB12-0F5B29BEAEDB@midwinter.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66425>
 
-On 28/11/07 16:33, Julian Phillips wrote:
-> Something like this perhaps?
->
-> http://gitrss.q42.co.uk/
+Hi,
 
-Hi Julian,
+On Wed, 28 Nov 2007, Steven Grimm wrote:
 
-somehow the feed does not work for me at all. It is not displayed 
-correctly in the firefox feed-preview or in google reader. Not correctly 
-here meaning: no linebreaks.
+> On Nov 28, 2007, at 5:11 AM, Johannes Schindelin wrote:
+> > As a convenience, you can set the default behavior for a branch by 
+> > defining the config variable branch.<name>.rebase, which is 
+> > interpreted as a bool.  This setting can be overridden on the command 
+> > line by --rebase and --no-rebase.
+> 
+> I wonder if this shouldn't be branch.<name>.pulltype or something like 
+> that, so we can represent more than just "rebase or not." Values could 
+> be "rebase", "merge" (the default) and maybe even "manual" to specify 
+> that git-pull should neither merge nor rebase a particular branch even 
+> if it matches a wildcard refspec.
 
-Greetings,
-Jojo
+I am not convinced that this is a good thing... We already have 
+branch.<name>.mergeOptions for proper merges, and I want to make clear 
+that this is about rebase, and not about merge.
 
--- 
-Johannes Gilger <heipei@hackvalue.de>
-http://hackvalue.de/heipei/
-GPG-Key: 0x42F6DE81
-GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
+Ciao,
+Dscho
