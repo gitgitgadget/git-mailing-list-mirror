@@ -1,72 +1,73 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: The 5th issue of the msysGit Herald
-Date: Wed, 28 Nov 2007 23:02:27 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711282255020.27147@reaper.quantumfyre.co.uk>
-References: <Pine.LNX.4.64.0711130312180.4362@racer.site> <fhcat4$ef$1@ger.gmane.org>
- <7v7ikmt1md.fsf@gitster.siamese.dyndns.org> <200711132020.59578.jnareb@gmail.com>
- <Pine.LNX.4.64.0711281632510.1706@kaos.quantumfyre.co.uk>
- <20071128204043.GA23630@dualtron.vpn.rwth-aachen.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] Replace instances of export VAR=VAL with VAR=VAL;
+	export VAR
+Date: Wed, 28 Nov 2007 18:02:03 -0500
+Message-ID: <20071128230203.GA13964@coredump.intra.peff.net>
+References: <7v1waa7lcv.fsf@gitster.siamese.dyndns.org> <1570EAD5-9F47-4105-B3DA-49CA6FA57369@wincent.com> <Pine.LNX.4.64.0711281355460.27959@racer.site> <474D7956.8050401@viscovery.net> <Pine.LNX.4.64.0711281428180.27959@racer.site> <474D7D92.2000106@viscovery.net> <Pine.LNX.4.64.0711281552440.27959@racer.site> <85ve7m8iix.fsf@lola.goethe.zz> <7vzlwy2dkm.fsf@gitster.siamese.dyndns.org> <85sl2q6kyu.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Johannes Gilger <heipei@hackvalue.de>
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Wincent Colaiuta <win@wincent.com>,
+	Benoit Sigoure <tsuna@lrde.epita.fr>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
 X-From: git-owner@vger.kernel.org Thu Nov 29 00:02:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxVvg-00040r-6H
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 00:02:52 +0100
+	id 1IxVvf-00040r-HY
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 00:02:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754429AbXK1XCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 18:02:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754737AbXK1XCa
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 18:02:30 -0500
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:42921 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754383AbXK1XCa (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Nov 2007 18:02:30 -0500
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id AACABC610C
-	for <git@vger.kernel.org>; Wed, 28 Nov 2007 23:02:28 +0000 (GMT)
-Received: (qmail 4209 invoked by uid 103); 28 Nov 2007 23:02:28 +0000
-Received: from 212.159.54.234 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91.2/4934. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(212.159.54.234):. 
- Processed in 0.031404 secs); 28 Nov 2007 23:02:28 -0000
-Received: from darkphoton.datavampyre.co.uk (212.159.54.234)
-  by neutron.datavampyre.co.uk with SMTP; 28 Nov 2007 23:02:28 +0000
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <20071128204043.GA23630@dualtron.vpn.rwth-aachen.de>
+	id S1754725AbXK1XCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 18:02:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754383AbXK1XCJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 18:02:09 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4288 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752478AbXK1XCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 18:02:08 -0500
+Received: (qmail 15000 invoked by uid 111); 28 Nov 2007 23:02:04 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 28 Nov 2007 18:02:04 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Nov 2007 18:02:03 -0500
+Content-Disposition: inline
+In-Reply-To: <85sl2q6kyu.fsf@lola.goethe.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66454>
 
-On Wed, 28 Nov 2007, Johannes Gilger wrote:
+On Wed, Nov 28, 2007 at 11:53:13PM +0100, David Kastrup wrote:
 
-> On 28/11/07 16:33, Julian Phillips wrote:
->> Something like this perhaps?
->>
->> http://gitrss.q42.co.uk/
->
-> Hi Julian,
->
-> somehow the feed does not work for me at all. It is not displayed
-> correctly in the firefox feed-preview or in google reader. Not correctly
-> here meaning: no linebreaks.
+> dak@lola:~$ ash
+> $ export JUNK=woozle
+> $ sh -c 'echo $JUNK'
+> woozle
+> $ exit
+> dak@lola:~$ dash
+> $ export JUNK=woozle
+> $ sh -c 'echo $JUNK'
+> woozle
+> $ exit
+> 
+> What problem are we talking about exactly, and with what shell?
 
-Ah, yes.  Sorry.
+$ uname -sr
+FreeBSD 6.1-RELEASE-p17-jc1
+$ /bin/sh
+$ FOO='with spaces'
+$ echo $FOO
+with spaces
+$ OK=$FOO; export OK
+$ sh -c 'echo $OK'
+with spaces
+$ export BAD=$FOO
+$ sh -c 'echo $BAD'
+with
+$ echo $BAD
+with
 
-Hopefully it should now display correctly, seems to work in firefox, ie7 
-and safari.
-
--- 
-Julian
-
-  ---
-You'll always be,
-What you always were,
-Which has nothing to do with,
-All to do, with her.
- 		-- Company
+-Peff
