@@ -1,79 +1,80 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: StGit hooks
-Date: Wed, 28 Nov 2007 18:06:36 +0100
-Message-ID: <474DA01C.8010901@op5.se>
-References: <9e4733910711271512g790364e0ka4839b2be9fd4935@mail.gmail.com> <20071128093403.GB12977@diana.vm.bytemark.co.uk> <20071128101718.GA13940@diana.vm.bytemark.co.uk> <474D5482.5020609@op5.se> <20071128121905.GA15953@diana.vm.bytemark.co.uk> <474D69A7.6020404@op5.se> <20071128132605.GB15953@diana.vm.bytemark.co.uk> <474D7710.4090303@op5.se> <9e4733910711280653q119f2c2n173eaebdda6cd774@mail.gmail.com> <474D8205.8030401@op5.se> <20071128154059.GA19302@diana.vm.bytemark.co.uk>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH] Do check_repository_format() early
+Date: Thu, 29 Nov 2007 00:10:58 +0700
+Message-ID: <fcaeb9bf0711280910x40fecdd5mf6d86e4a9b656d01@mail.gmail.com>
+References: <20071128165837.GA5903@laptop>
+	 <Pine.LNX.4.64.0711281703470.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Nov 28 18:07:04 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 28 18:11:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxQNJ-0003hL-SZ
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 18:07:02 +0100
+	id 1IxQRW-0005sc-2h
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 18:11:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756989AbXK1RGm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Nov 2007 12:06:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755933AbXK1RGm
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 12:06:42 -0500
-Received: from mail.op5.se ([193.201.96.20]:50328 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754717AbXK1RGl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 12:06:41 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 20B661F0805C;
-	Wed, 28 Nov 2007 18:06:40 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id i+WfmLYvGbDW; Wed, 28 Nov 2007 18:06:39 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id F28171F0805E;
-	Wed, 28 Nov 2007 18:06:38 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <20071128154059.GA19302@diana.vm.bytemark.co.uk>
+	id S1759675AbXK1RLB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 12:11:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759536AbXK1RLB
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 12:11:01 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:58906 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759269AbXK1RLA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 12:11:00 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1472965nfb
+        for <git@vger.kernel.org>; Wed, 28 Nov 2007 09:10:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=w0OfMs1/yV+Z7s9ncPBqiRLgN6wubLxhVGYb8BqmRWU=;
+        b=TlIZfskYFpHyBY0jGElmRM5Y1YdkWl5FAJuHItUXBu0h7kj0hbaXUQYJ4EPEc4NRr/I6f4y2tZM/4ukQyE3MXtf20X8MdOHkMlKdSpArq7Sx08WRPGk2pqEk25CXtdSBCxn5lVMQmozhPm8RPM//Ga/X5z2vRURZSCGLhM5tXiw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Jh3ZKfzgdgcpA01bNQ3p1K3ePqUHvuGVZ1Gjk6e/fLAbpLAgLp0aN1rVv/+hdefjE+/ZqfdVFlYQPq/yKjyAIvw/cjKnvUFy9r4+5fIaUUd9B3Kik54Gf27HC2+N5tZ+JxO2AJZEWOBzqsxvKA79KGmHv4V07Q6WGhnv2GfggU0=
+Received: by 10.86.79.19 with SMTP id c19mr5161953fgb.1196269858683;
+        Wed, 28 Nov 2007 09:10:58 -0800 (PST)
+Received: by 10.86.83.6 with HTTP; Wed, 28 Nov 2007 09:10:58 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0711281703470.27959@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66388>
 
-Karl Hasselstr=F6m wrote:
-> On 2007-11-28 15:58:13 +0100, Andreas Ericsson wrote:
->=20
->> Jon Smirl wrote:
->>
->>> I would expect 'stg init' to switch the branch to using the stgit
->>> hooks and only those hooks. Branches that were not inited would
->>> continue to use the user hooks. I don't have any user hooks, but
->>> this is what I would expect to happen.
->> Obviously the stgit-installed hook will have to check if the branch
->> the user is operating on is managed by stgit before it prevents git
->> rebase (or whatever it's supposed to do).
->=20
-> Yes. The point is, hooks are per repository, not per branch. So
-> there's no concept of "replacing the hooks for just this one branch".
->=20
+On Nov 29, 2007 12:05 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Wed, 28 Nov 2007, Nguyen Thai Ngoc Duy wrote:
+>
+> > @@ -246,8 +246,13 @@ const char *setup_git_directory_gently(int *nongit_ok)
+> >                       static char buffer[1024 + 1];
+> >                       const char *retval;
+> >
+> > -                     if (!work_tree_env)
+> > -                             return set_work_tree(gitdirenv);
+> > +                     if (!work_tree_env) {
+> > +                             retval = set_work_tree(gitdirenv);
+> > +                             /* config may override worktree */
+> > +                             check_repository_format();
+> > +                             return retval;
+> > +                     }
+> > +                     check_repository_format();
+>
+> Why not move this check before the if?  Other than that, ACK.
 
-True, but there are ways of figuring out which branch you're on, using
-the arguments passed to the hook.
+If so it would be called twice if work_tree_env is not set.
 
-The rebase hook (which is where this discussion started) gets the
-branches passed to "git rebase" as arguments. Figuring out if either
-of those branches are actually under stgit control shouldn't be overly
-tricky for one so familiar with stgit as yourself.
+> Ciao,
+> Dscho
+>
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+
+
+-- 
+Duy
