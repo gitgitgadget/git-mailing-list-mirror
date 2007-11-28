@@ -1,87 +1,63 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH] Replace instances of export VAR=VAL with VAR=VAL; export VAR
-Date: Wed, 28 Nov 2007 21:19:05 +0700
-Message-ID: <fcaeb9bf0711280619j3479ea6csa74f4b0d907f2a65@mail.gmail.com>
-References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com>
-	 <474AC136.8060906@viscovery.net>
-	 <451492C9-F3EA-4C37-A1AD-59FC72E0A0A2@wincent.com>
-	 <Pine.LNX.4.64.0711261340470.27959@racer.site>
-	 <97F6E8DE-4022-4458-B6A9-C644A6EDC1E3@wincent.com>
-	 <7vir3m94ku.fsf@gitster.siamese.dyndns.org>
-	 <50645A3B-C5F0-4A99-A2B8-AD9251024244@wincent.com>
-	 <7v1waa7lcv.fsf@gitster.siamese.dyndns.org>
-	 <1570EAD5-9F47-4105-B3DA-49CA6FA57369@wincent.com>
-	 <Pine.LNX.4.64.0711281355460.27959@racer.site>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Replace instances of export VAR=VAL with VAR=VAL; export
+ VAR
+Date: Wed, 28 Nov 2007 15:21:10 +0100
+Message-ID: <474D7956.8050401@viscovery.net>
+References: <109026BC-408F-451A-8F7C-A4012DD8DBDF@wincent.com> <C3971B37-F75A-40EE-B30A-E88E5DAFAD55@lrde.epita.fr> <D21294CA-6FD0-40F5-B0D6-5155865DA69A@wincent.com> <CDF48716-F198-4B33-A5F5-8A2DE1F177EB@wincent.com> <474AC136.8060906@viscovery.net> <451492C9-F3EA-4C37-A1AD-59FC72E0A0A2@wincent.com> <Pine.LNX.4.64.0711261340470.27959@racer.site> <97F6E8DE-4022-4458-B6A9-C644A6EDC1E3@wincent.com> <7vir3m94ku.fsf@gitster.siamese.dyndns.org> <50645A3B-C5F0-4A99-A2B8-AD9251024244@wincent.com> <7v1waa7lcv.fsf@gitster.siamese.dyndns.org> <1570EAD5-9F47-4105-B3DA-49CA6FA57369@wincent.com> <Pine.LNX.4.64.0711281355460.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Wincent Colaiuta" <win@wincent.com>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Sixt" <j.sixt@viscovery.net>,
-	"Benoit Sigoure" <tsuna@lrde.epita.fr>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 28 15:19:31 2007
+Cc: Wincent Colaiuta <win@wincent.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Benoit Sigoure <tsuna@lrde.epita.fr>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 28 15:21:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxNlC-0002xh-HZ
-	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 15:19:30 +0100
+	id 1IxNnD-0003v6-Sj
+	for gcvg-git-2@gmane.org; Wed, 28 Nov 2007 15:21:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752160AbXK1OTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 09:19:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754618AbXK1OTJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 09:19:09 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:51821 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752930AbXK1OTH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 09:19:07 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1409345nfb
-        for <git@vger.kernel.org>; Wed, 28 Nov 2007 06:19:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=W2fX+Lc15bGlrhWkbZjKkRt0BLl8T+UPwUX59ycEiGc=;
-        b=eOT7rI2eJ3OzfGDhkOYiqT1SjSw+5/TRrd8VqCkCWxpq8QG1KFECfbgtde/5oXzEes26o1zvzeQq8dA6xmG05+xqlFSyxkCuL2+iZTknFnjow0/mXCzBXjtVLHY2UCGtz5bEpXotqTOr2vA4IfbZ8ytlZiD/Q6yby6KMmJDigO4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BF8JVvSirXOtaI3aj/fyKMoXFmm519wiWEw4EZFAdrG90+VJZLlg9nITHhlFdar5BbpfBW+DfRj6mhaxbx+uOOqHMq1EX1fLD1To95H0TWXteHqLKErm5fQ2vC8K/jfzbZPRIH5L2AtC6AcdfgdqWPQi0Hvvv1d2/QFKXK8U/pE=
-Received: by 10.86.65.11 with SMTP id n11mr5013590fga.1196259545848;
-        Wed, 28 Nov 2007 06:19:05 -0800 (PST)
-Received: by 10.86.83.6 with HTTP; Wed, 28 Nov 2007 06:19:05 -0800 (PST)
+	id S1755102AbXK1OVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 09:21:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755041AbXK1OVP
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 09:21:15 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:27918 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754786AbXK1OVP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 09:21:15 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IxNm8-0007ZL-Dz; Wed, 28 Nov 2007 15:20:28 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id C6D244E4; Wed, 28 Nov 2007 15:21:10 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
 In-Reply-To: <Pine.LNX.4.64.0711281355460.27959@racer.site>
-Content-Disposition: inline
+X-Spam-Score: 1.2 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3, UPPERCASE_25_50=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66341>
 
-On Nov 28, 2007 8:57 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
-> It might be POSIX, but there are shells that do not like the
-> expression 'export VAR=VAL'.  To be on the safe side, rewrite them
-> into 'VAR=VAL' and 'export VAR'.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->
->         On Wed, 28 Nov 2007, Wincent Colaiuta wrote:
->
->         > I'm still a little concerned that nobody commented when I
->         > pointed out that export VAR=VAL is used elsewhere in Git,
->         > especially in git-clone.sh, which is very commonly-used
->         > porcelain. Is it a problem?
->
->         How's that for a comment?
->
->  git-clone.sh         |    2 +-
->  git-filter-branch.sh |   20 ++++++++++++--------
->  git-quiltimport.sh   |   10 ++++++----
->  3 files changed, 19 insertions(+), 13 deletions(-)
+Johannes Schindelin schrieb:
+> -			s/.*/export GIT_'$uid'_NAME='\''&'\''/p
+> +			s/.*/GIT_'$uid'_NAME='\''&'\''\nexport GIT_'$uid'_NAME/p
 
-Why leave test scripts behind?
+Recently there was a report that \n in the substitution side of s/// is not 
+supported by all seds :-(
 
--- 
-Duy
+> -	export GIT_AUTHOR_NAME=$(sed -ne 's/Author: //p' "$tmp_info")
+> -	export GIT_AUTHOR_EMAIL=$(sed -ne 's/Email: //p' "$tmp_info")
+> +	GIT_AUTHOR_NAME=$(sed -ne 's/Author: //p' "$tmp_info")
+> +	GIT_AUTHOR_EMAIL=$(sed -ne 's/Email: //p' "$tmp_info")
+> +	export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
+
+This even fixes a bug: ash supports export VAR=VAL, but *does* word-split 
+VAL if it is not quoted.
+
+-- Hannes
