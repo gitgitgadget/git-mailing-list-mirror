@@ -1,105 +1,102 @@
-From: Markus Armbruster <armbru@redhat.com>
-Subject: Re: Cover grafting in the Git User's Manual
-Date: Thu, 29 Nov 2007 14:20:32 +0100
-Message-ID: <87bq9drxwf.fsf@pike.pond.sub.org>
-References: <87ejeateka.fsf@pike.pond.sub.org>
-	<20071128184228.GB4461@xp.machine.xx>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
+Date: Thu, 29 Nov 2007 09:09:42 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0711290905510.9605@xanadu.home>
+References: <20071127150229.GA14859@laptop> <20071127160423.GA22807@laptop>
+ <Pine.LNX.4.64.0711271617350.27959@racer.site>
+ <20071128000731.GD9174@efreet.light.src>
+ <7v8x4jb295.fsf@gitster.siamese.dyndns.org>
+ <fcaeb9bf0711280036p33583824ge59af93bbe3f0a78@mail.gmail.com>
+ <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org>
+ <fcaeb9bf0711281917p56cc4228m6c401286439e2a34@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 29 14:21:07 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, Jan Hudec <bulb@ucw.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 29 15:10:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxjKB-0000LA-Qo
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 14:21:04 +0100
+	id 1Ixk5u-0003qq-Kt
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 15:10:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755488AbXK2NUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 08:20:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754610AbXK2NUj
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 08:20:39 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:36666 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755230AbXK2NUi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 08:20:38 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lATDKZP2014028;
-	Thu, 29 Nov 2007 08:20:35 -0500
-Received: from pike.pond.sub.org (vpn-4-9.str.redhat.com [10.32.4.9])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lATDKY65031155;
-	Thu, 29 Nov 2007 08:20:34 -0500
-Received: by pike.pond.sub.org (Postfix, from userid 1000)
-	id 08C1490066; Thu, 29 Nov 2007 14:20:33 +0100 (CET)
-In-Reply-To: <20071128184228.GB4461@xp.machine.xx> (Peter Baumann's message of "Wed\, 28 Nov 2007 19\:42\:28 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1759918AbXK2OKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 09:10:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757326AbXK2OKA
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 09:10:00 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:8895 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756801AbXK2OJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 09:09:59 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JS900KPUU06ULB0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 29 Nov 2007 09:09:42 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <fcaeb9bf0711281917p56cc4228m6c401286439e2a34@mail.gmail.com>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66533>
 
-Peter Baumann <waste.manager@gmx.de> writes:
+On Thu, 29 Nov 2007, Nguyen Thai Ngoc Duy wrote:
 
-> On Wed, Nov 28, 2007 at 07:23:01PM +0100, Markus Armbruster wrote:
->> The only mention of grafting in the manual is in the glossary:
->> 
->>     Grafts enables two otherwise different lines of development to
->>     be joined together by recording fake ancestry information for
->>     commits. This way you can make git pretend the set of parents
->>     a commit has is different from what was recorded when the
->>     commit was created. Configured via the .git/info/grafts file.
->> 
->> I believe it would be useful to cover this better, perhaps in chapter
->> 5. Rewriting history and maintaining patch series.  It certainly would
->> have saved me a few hours of digging.  I already understood enough of
->> git to *know* that what I wanted must be possible (supply missing
->> parents of merges in a repository imported with parsecvs), but I
->> didn't know the magic keyword was graft.  I managed to figure it out
->> >from the glossary, git-filter-branch(1) and GitWiki's GraftPoint page.
->> 
->> I'm neither writer nor git expert, but here's my try anyway:
->> 
->> Rewriting ancestry with grafts
->> 
->> Grafts enables two otherwise different lines of development to be
->> joined together by recording fake ancestry information for commits.
->> This way you can make git pretend the set of parents a commit has is
->> different from what was recorded when the commit was created.
->> 
->> Why would you want to do that?  Say, you imported a repository from an
->> SCM that doesn't record merges properly, e.g. CVS.  Grafts let you add
->> the missing parents to the merge commits.  Or you switched your
->> project to git by populating a new repository with current sources,
->> and later decide you want more history.  Committing old versions is
->> easy enough, but you also need to graft a parent to your original root
->> commit.
->> 
->> Graft points are configured via the .git/info/grafts file.  It has one
->> record per line describing a commit and its fake parents by listing
->> object names separated by a space and terminated by a newline.
->> 
->>     <commit sha1> <parent sha1> [<parent sha1>]*
->> 
->> A graft point does not actually change its commit.  Nothing can.  What
->> can be done is rewriting the commit and its descendants.
->> git-filter-branch does that:
->> 
->>     $ cat .git/info/grafts
->>     db5a561750ae87615719ae409d1f50c9dfc3fa71 08f2fa81d104b937c1f24c68f56e9d5039356764 8c231303bb995cbfdfd1c434a59a7c96ea2f0251
->>     git-filter-branch HEAD ^08f2fa81d104b937c1f24c68f56e9d5039356764 ^8c231303bb995cbfdfd1c434a59a7c96ea2f0251
->> 
->> This rewrites history between head and the graft-point to include the
->> grafted parents.
->
-> Did I overlook something or isn't
->
->      git-filter-branch HEAD ^db5a561750ae87615719ae409d1f50c9dfc3fa71
->
-> what you are looking for? Only db5a56 could get rewritten and obviously
-> all the commits having it as a parent.
->
-> -Peter
+> On Nov 29, 2007 6:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+> >
+> > > On Nov 28, 2007 8:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> > >> In case somebody is thinking about 36e5e70e0f40 (Start deprecating
+> > >> "git-command" in favor of "git command"), that is a somewhat different
+> > >> issue.  What Linus suggested is not installing git-foo link for built-in
+> > >> commands _anywhere_ on the filesystem.  Not just "out of user's PATH".
+> > >> That is not deprecating dash form but removing the support for it.  We
+> > >> need to give ample time for users to adjust to such a change.
+> > >
+> > > A little note on this one. I've been using git without builtin links
+> > > for a while with my git-box port. There are still some builtin fixups
+> > > needed. And because execv_git_cmd() always uses dash form, so it's
+> > > impossible to use vanilla git without builtin links.
+> >
+> > Thanks for a heads up.
+> >
+> > Would people agree with a rough roadmap like this?
+> >
+> >  - v1.5.4 will ship with gitexecdir=$(bindir) in Makefile.  But the
+> >    release notes for the version will warn users that:
+> >
+> >    (1) using git-foo from the command line, and
+> >
+> >    (2) using git-foo from your scripts without first prepending the
+> >        return value of "git --exec-path" to the PATH
+> >
+> >    is now officially deprecated (it has been deprecated for a long time
+> >    since January 2006, v1.2.0~149) and upcoming v1.5.5 will ship with
+> >    the default configuration that does not install git-foo form in
+> >    user's PATH.
+> >
+> >  - Post v1.5.4, start cooking gitexecdir=$(libexecdir)/git-core, aiming
+> >    for inclusion in v1.5.5, perhaps in Mar-Feb 2008 timeframe.
+> >
+> >  - The release notes for v1.5.5 will warn users that git-foo will be
+> >    removed in v1.6.0 for many commands and it will be merely an accident
+> >    if some of them still work.
+> >
+> >  - Post v1.5.5, start cooking the change that does not install hardlinks
+> >    for built-in commands, aiming for inclusion in v1.6.0, by the end of
+> >    2008.
+> 
+> There won't be a stage when only porcelain git-foos are in $(bindir)?
+> I could stop working on the relevant patch then.
 
-That rewrites all commits reachable from HEAD that are not reachable
-from db5a56.  In particular, it doesn't rewrite db5a56, does it?
+Well, I personally found your effort really nice.  I think Junio is 
+overly cautious in this case, and I would prefer to see the number of 
+git commands in the default path drop rather sooner than later.
+
+
+Nicolas
