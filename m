@@ -1,59 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] use typechange as rename source
-Date: Wed, 28 Nov 2007 16:02:49 -0800
-Message-ID: <7vir3l2a1i.fsf@gitster.siamese.dyndns.org>
-References: <20071121171235.GA32233@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
+Date: Thu, 29 Nov 2007 01:14:16 +0100
+Organization: At home
+Message-ID: <fil08l$u1n$1@ger.gmane.org>
+References: <20071127150229.GA14859@laptop> <20071127160423.GA22807@laptop> <Pine.LNX.4.64.0711271617350.27959@racer.site> <20071128000731.GD9174@efreet.light.src> <7v8x4jb295.fsf@gitster.siamese.dyndns.org> <fcaeb9bf0711280036p33583824ge59af93bbe3f0a78@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 29 01:03:18 2007
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 29 01:15:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxWs9-0007xc-TS
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 01:03:18 +0100
+	id 1IxX3T-0002y9-Ad
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 01:14:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758116AbXK2AC4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 19:02:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758280AbXK2ACz
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 19:02:55 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:54749 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757805AbXK2ACy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 19:02:54 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 11AB72EF;
-	Wed, 28 Nov 2007 19:03:15 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 9E6739AAD1;
-	Wed, 28 Nov 2007 19:03:12 -0500 (EST)
-In-Reply-To: <20071121171235.GA32233@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 21 Nov 2007 12:12:36 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756936AbXK2AOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 19:14:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756245AbXK2AOh
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 19:14:37 -0500
+Received: from main.gmane.org ([80.91.229.2]:50192 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755547AbXK2AOg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 19:14:36 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IxX2v-0001BE-CW
+	for git@vger.kernel.org; Thu, 29 Nov 2007 00:14:25 +0000
+Received: from abvr156.neoplus.adsl.tpnet.pl ([83.8.215.156])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Nov 2007 00:14:25 +0000
+Received: from jnareb by abvr156.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 29 Nov 2007 00:14:25 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvr156.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66473>
 
-Jeff King <peff@peff.net> writes:
+Nguyen Thai Ngoc Duy wrote:
 
-> There are a few add-on questions:
->
->   - should typechanges in both directions be used, or just file ->
->     symlink?
->
->   - this actually produces a 'copied' status rather than a 'renamed'
->     since the 'foo' entry does still exist. Is this reasonable?
+> On Nov 28, 2007 8:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> In case somebody is thinking about 36e5e70e0f40 (Start deprecating
+>> "git-command" in favor of "git command"), that is a somewhat different
+>> issue.  What Linus suggested is not installing git-foo link for built-in
+>> commands _anywhere_ on the filesystem.  Not just "out of user's PATH".
+>> That is not deprecating dash form but removing the support for it.  We
+>> need to give ample time for users to adjust to such a change.
+> 
+> A little note on this one. I've been using git without builtin links
+> for a while with my git-box port. There are still some builtin fixups
+> needed. And because execv_git_cmd() always uses dash form, so it's
+> impossible to use vanilla git without builtin links.
 
-I do not think this is a risky change; it won't add too many rename
-sources we did not consider traditionally (typechanges are usually rare
-event anyway).
+By the way, what is the status of your git-box port?
 
-You are copying the source to elsewhere and then completely rewriting it
-(even making it into a different type), so I do not think 'copied' is so
-unreasonable.  An alternative would be to say you renamed it and then
-created something totally different, which would also be reasonable.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
