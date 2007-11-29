@@ -1,102 +1,88 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: What's cooking in git.git (topics)
-Date: Thu, 29 Nov 2007 09:24:12 +0100
-Message-ID: <200711290924.12508.johan@herland.net>
-References: <200711270622.lAR6MFXQ010010@mi0.bluebottle.com>
- <alpine.LFD.0.99999.0711271155250.9605@xanadu.home>
- <7vlk8hzx0g.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH v2] Teach 'git pull' about --rebase
+Date: Thu, 29 Nov 2007 09:36:00 +0100
+Message-ID: <474E79F0.4080101@op5.se>
+References: <7v3avy21il.fsf@gitster.siamese.dyndns.org>	<Pine.LNX.4.64.0710261047450.4362@racer.site>	<7v3aurcjpq.fsf@gitster.siamese.dyndns.org>	<Pine.LNX.4.64.0711281307420.27959@racer.site>	<27E5EF3C-19EF-441C-BB12-0F5B29BEAEDB@midwinter.com>	<Pine.LNX.4.64.0711282039430.27959@racer.site>	<8c5c35580711281310h8764a33pba48e65010abf859@mail.gmail.com>	<7vhcj63uhw.fsf@gitster.siamese.dyndns.org>	<Pine.LNX.4.64.0711282156520.27959@racer.site>	<20071128223339.GF7376@fieldses.org>	<20071128224717.GG7376@fieldses.org>	<Pine.LNX.4.64.0711282309030.27959@racer.site> <7v1waa2bfi.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>,
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	"J. Bruce Fields" <bfields@fieldses.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?=
-	 =?utf-8?q?_?= <nanako3@bluebottle.com>,
-	Andreas Ericsson <ae@op5.se>, Jakub Narebski <jnareb@gmail.com>
+	Lars Hjemli <hjemli@gmail.com>,
+	Steven Grimm <koreth@midwinter.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 09:25:18 2007
+X-From: git-owner@vger.kernel.org Thu Nov 29 09:36:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ixehq-00023k-9a
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 09:25:10 +0100
+	id 1Ixesm-0004fA-C6
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 09:36:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754775AbXK2IYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 03:24:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754170AbXK2IYr
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 03:24:47 -0500
-Received: from smtp.getmail.no ([84.208.20.33]:34694 "EHLO smtp.getmail.no"
+	id S1754823AbXK2IgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 03:36:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754587AbXK2IgH
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 03:36:07 -0500
+Received: from mail.op5.se ([193.201.96.20]:58232 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754158AbXK2IYq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 03:24:46 -0500
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JS900D0JE18FW00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Thu, 29 Nov 2007 09:24:44 +0100 (CET)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JS900ICOE0DJU40@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Thu, 29 Nov 2007 09:24:13 +0100 (CET)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JS900C9RE0D83B0@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Thu, 29 Nov 2007 09:24:13 +0100 (CET)
-In-reply-to: <7vlk8hzx0g.fsf@gitster.siamese.dyndns.org>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
+	id S1751451AbXK2IgG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 03:36:06 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id AC3E81F08070;
+	Thu, 29 Nov 2007 09:36:04 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id g-BhyAPV7Twe; Thu, 29 Nov 2007 09:36:03 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 2F5251F08004;
+	Thu, 29 Nov 2007 09:36:03 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <7v1waa2bfi.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66518>
 
-On Thursday 29 November 2007, Junio C Hamano wrote:
-> Nicolas Pitre <nico@cam.org> writes:
-> > ...  In all the tutorials for $job I've done so 
-> > far, I simply never talk about pull nor clone, but rather about init, 
-> > "git remote", fetch and merge, with explicit and meaningful branch 
-> > names.  I think that basic commands, even if there is a bit more of 
-> > them, make Git easier to learn and understand than talking about those 
-> > magic meta commands hiding the truth away.
+Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> That's actually a quite interesting approach for teaching.
+>> So my rationale was: if we already have an existing framework to integrate 
+>> remote changes with our current branch, why not just go ahead and use it?  
+>> That's the reason BTW why I originally wanted a "rebase" merge stragegy.  
+>> Even if it is not technically a merge.
+>>
+>> I really rather have no user-friendly support for fetch+rebase (and utter 
+>> a friendly, but loud curse everytime I made a "git pull" by mistake) than 
+>> yet another command.
 > 
-> The original "tutorial" (now core-tutorial) was similar in spirit; it
-> built the user experience by starting at sequence of low level commands,
-> and then finally said "since this is so often used combination, there is
-> a short-hand for it that does all".  I think the approach would work
-> quite well for people who want to use the tool with deep understanding.
+> I suspect that people who do not like the two modes of checkout will
+> certainly not appreciate the overloading two behaviours to create
+> different kind of histories and two different ways to continue when the
+> integration do not go smoothly upon conflicts these two behaviours have.
 > 
-> However, I am not so sure about people who just want canned set of
-> instructions and follow them blindly to get their work done.  And I do
-> not think the latter classes of users are necessarily wrong.
+> However, I agree very much with an earlier comment made by Daniel about
+> our UI being task oriented instead of being command oriented, and I
+> actually consider it a good thing.  So it does not bother me too much
+> that "git pull --rebase" has a quite different workflow from the regular
+> "merge" kind of pull.
 > 
-> Such a canned set of instructions would (if the project that supplies
-> the cheat-sheet encourages merges instead of rebases) talk about "clone
-> then commit then push then pull and repeat", without mentioning what
-> pull does is fetch+merge nor what fetch means and what merge means, and
-> that would let people get started without deeper understanding.
+> So let's queue "pull --rebase" and see what happens.
 > 
-> But the lack of deeper understanding would hurt them in the longer run
-> (e.g. "my push was rejected with something called non-fast-forward ---
-> what does that mean and what would I do now?").  
 
-What about ending the cheat-sheet with a big fat link to a FAQ? The FAQ 
-answers common questions like the above (resulting from the cheat-sheet 
-glossing over the details) with links to appropriate sections in the more 
-thorough introduction (core-tutorial), explaining what's _really_ going on.
-
-Just a thought.
-
-
-Have fun! :)
-
-...Johan
+I've used the --rebase option to git pull, explained it to my co-workers
+and also made sure they're using a version of git that has it. So far
+there hasn't been a single complaint about "git pull" being any harder
+to grok.
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
