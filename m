@@ -1,62 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Thu, 29 Nov 2007 00:01:26 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711290000430.27959@racer.site>
-References: <20071127150229.GA14859@laptop> <20071127160423.GA22807@laptop>
- <Pine.LNX.4.64.0711271617350.27959@racer.site> <20071128000731.GD9174@efreet.light.src>
- <7v8x4jb295.fsf@gitster.siamese.dyndns.org>
- <fcaeb9bf0711280036p33583824ge59af93bbe3f0a78@mail.gmail.com>
- <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711282334250.27959@racer.site>
- <7vr6ia0w4i.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] use typechange as rename source
+Date: Wed, 28 Nov 2007 16:02:49 -0800
+Message-ID: <7vir3l2a1i.fsf@gitster.siamese.dyndns.org>
+References: <20071121171235.GA32233@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, Jan Hudec <bulb@ucw.cz>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 01:02:00 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 29 01:03:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxWqq-0007ZA-MI
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 01:01:57 +0100
+	id 1IxWs9-0007xc-TS
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 01:03:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757821AbXK2ABi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 19:01:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757756AbXK2ABi
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 19:01:38 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33291 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751007AbXK2ABh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 19:01:37 -0500
-Received: (qmail invoked by alias); 29 Nov 2007 00:01:35 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp057) with SMTP; 29 Nov 2007 01:01:35 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+PLb9xCuSPhSzI/CXDHXWCfZZq7FkpPeR3OYcTh2
-	6x6DbRbWVJ8NKQ
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vr6ia0w4i.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1758116AbXK2AC4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 19:02:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758280AbXK2ACz
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 19:02:55 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:54749 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757805AbXK2ACy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 19:02:54 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 11AB72EF;
+	Wed, 28 Nov 2007 19:03:15 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 9E6739AAD1;
+	Wed, 28 Nov 2007 19:03:12 -0500 (EST)
+In-Reply-To: <20071121171235.GA32233@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 21 Nov 2007 12:12:36 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66472>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-On Wed, 28 Nov 2007, Junio C Hamano wrote:
+> There are a few add-on questions:
+>
+>   - should typechanges in both directions be used, or just file ->
+>     symlink?
+>
+>   - this actually produces a 'copied' status rather than a 'renamed'
+>     since the 'foo' entry does still exist. Is this reasonable?
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > The fundamental problem is that we cannot move 
-> > handle_internal_command() into libgit.a, because it has pointers to 
-> > all builtin cmd_*() functions.
-> 
-> What's wrong with having cmd_* functions in the library to begin with?
+I do not think this is a risky change; it won't add too many rename
+sources we did not consider traditionally (typechanges are usually rare
+event anyway).
 
-I was considering it not desirable (after all, the library is meant to 
-have common functions in it), but you're right...
-
-Ciao,
-Dscho
+You are copying the source to elsewhere and then completely rewriting it
+(even making it into a different type), so I do not think 'copied' is so
+unreasonable.  An alternative would be to say you renamed it and then
+created something totally different, which would also be reasonable.
