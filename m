@@ -1,59 +1,55 @@
-From: Romain Francoise <romain@orebokech.com>
-Subject: git-fetch ansi control sequences
-Date: Thu, 29 Nov 2007 21:10:19 +0100
-Organization: orebokech dot com
-Message-ID: <87prxs6ces.fsf@elegiac.orebokech.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 29 21:21:21 2007
+From: Kumar Gala <galak@kernel.crashing.org>
+Subject: Re: problem with git detecting proper renames
+Date: Thu, 29 Nov 2007 14:27:59 -0600
+Message-ID: <41CB0B7D-5AC1-4703-BA99-21622A410F93@kernel.crashing.org>
+References: <Pine.LNX.4.64.0711291050440.1711@blarg.am.freescale.net> <alpine.LFD.0.9999.0711290934260.8458@woody.linux-foundation.org> <28BD703B-24D3-41D6-8360-240A884B1305@kernel.crashing.org> <alpine.LFD.0.9999.0711291122050.8458@woody.linux-foundation.org>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Nov 29 21:28:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxpsY-0008UA-C6
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 21:20:58 +0100
+	id 1Ixpzo-0003ZL-Kd
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 21:28:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934030AbXK2UUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 15:20:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934024AbXK2UUK
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 15:20:10 -0500
-Received: from main.gmane.org ([80.91.229.2]:58825 "EHLO ciao.gmane.org"
+	id S932650AbXK2U2H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 15:28:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760953AbXK2U2H
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 15:28:07 -0500
+Received: from gate.crashing.org ([63.228.1.57]:47347 "EHLO gate.crashing.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934019AbXK2UUH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 15:20:07 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1Ixpre-0004pr-7R
-	for git@vger.kernel.org; Thu, 29 Nov 2007 20:20:02 +0000
-Received: from home.orebokech.com ([82.67.41.165])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Nov 2007 20:20:02 +0000
-Received: from romain by home.orebokech.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Nov 2007 20:20:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: home.orebokech.com
-X-Face: }9mYu,e_@+e!`Z-P5kVXa3\_b:hdJ"B)ww[&=b<2=awG:GOIM</2q'*t@MNa)R`k0h1KbUu "Ek%gXCQA(?k=Uf9}qgF_x#7/+Ql\R!NJ9[Z[ky\CTYI<H(kc][?[m%*rsf!OG11|f&H[VgX;),"!N JG6IziY\~""3M
-Cancel-Lock: sha1:ofN03TSmFljv70wNKLR+bL5uwuU=
+	id S1758598AbXK2U2F (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 15:28:05 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gate.crashing.org (8.13.8/8.13.8) with ESMTP id lATKRxZB004078;
+	Thu, 29 Nov 2007 14:28:00 -0600
+In-Reply-To: <alpine.LFD.0.9999.0711291122050.8458@woody.linux-foundation.org>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66561>
 
-Running 'git fetch' in a dumb terminal (like an Emacs shell buffer)
-now outputs raw control sequences, which isn't particularly pretty:
+> This is why I'd like to have a real-life example. I can change the
+> heuristics, and I even know what are likely to be better heuristics,  
+> but I
+> still want to actually see and play with an example so that when I  
+> send
+> Junio a patch, I can explain it and say I've tested it with something
+> real..
 
-| remote: Generating pack...^[[K
-| remote: Done counting 4044 objects.^[[K
-| remote: Result has 2577 objects.^[[K
-| remote: Deltifying 2577 objects...^[[K
-| remote:
-| remote: Total 2577 (delta 2150), reused 2457 (delta 2044)^[[K
+Ok, here's the tree:
 
-It would be easy to make recv_sideband() check if the terminal is
-dumb, but I have a feeling that the sideband code shouldn't have to
-know about such things, being rather generic.
+         git.kernel.org:/pub/scm/boot/u-boot/galak/u-boot.git linus_git
 
-What do people think?
+and the commit that is doing the file movement is:
+
+ba30ae3cc2e92d4b2362fbc01bedb659615e123e
+
+let me know if there is anything else you need.
+
+- k
