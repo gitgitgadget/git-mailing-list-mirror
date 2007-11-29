@@ -1,70 +1,51 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Thu, 29 Nov 2007 15:30:05 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org>
-References: <20071127160423.GA22807@laptop> <Pine.LNX.4.64.0711271617350.27959@racer.site> <20071128000731.GD9174@efreet.light.src> <7v8x4jb295.fsf@gitster.siamese.dyndns.org> <fcaeb9bf0711280036p33583824ge59af93bbe3f0a78@mail.gmail.com>
- <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org> <20071129150849.GA32296@coredump.intra.peff.net> <fcaeb9bf0711291205h125dadbbp8e8ae392e9b5b751@mail.gmail.com> <20071129211409.GA16625@sigill.intra.peff.net> <Pine.LNX.4.64.0711292218240.27959@racer.site>
- <20071129231444.GA9616@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Fix a pathological case in git detecting proper renames
+Date: Thu, 29 Nov 2007 18:52:53 -0500
+Message-ID: <20071129235253.GA10261@coredump.intra.peff.net>
+References: <Pine.LNX.4.64.0711291050440.1711@blarg.am.freescale.net> <alpine.LFD.0.9999.0711290934260.8458@woody.linux-foundation.org> <28BD703B-24D3-41D6-8360-240A884B1305@kernel.crashing.org> <alpine.LFD.0.9999.0711291122050.8458@woody.linux-foundation.org> <41CB0B7D-5AC1-4703-BA99-21622A410F93@kernel.crashing.org> <alpine.LFD.0.9999.0711291303000.8458@woody.linux-foundation.org> <alpine.LFD.0.9999.0711291442300.8458@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Jan Hudec <bulb@ucw.cz>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 30 00:32:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Kumar Gala <galak@kernel.crashing.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Nov 30 00:53:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ixsrg-0000OL-JR
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 00:32:17 +0100
+	id 1IxtC0-00072S-L2
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 00:53:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934485AbXK2Xbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 18:31:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934483AbXK2Xbc
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 18:31:32 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:35436 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934476AbXK2Xbb (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Nov 2007 18:31:31 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lATNU5l4020705
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 29 Nov 2007 15:30:11 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lATNU5Ew012849;
-	Thu, 29 Nov 2007 15:30:05 -0800
-In-Reply-To: <20071129231444.GA9616@coredump.intra.peff.net>
-X-Spam-Status: No, hits=-4.727 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1763541AbXK2Xw5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 18:52:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763539AbXK2Xw5
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 18:52:57 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3590 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1763429AbXK2Xw4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 18:52:56 -0500
+Received: (qmail 30032 invoked by uid 111); 29 Nov 2007 23:52:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 29 Nov 2007 18:52:54 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Nov 2007 18:52:53 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.9999.0711291442300.8458@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66572>
 
+On Thu, Nov 29, 2007 at 03:03:06PM -0800, Linus Torvalds wrote:
 
+> This would probably become easier to do with the linear-time hash-based 
+> similarity engine (the stuff Jeff King was working on), but the way the 
+> code is currently structured - with no incremental rename detection at 
+> all, and with all the scoring in one global table - it's pretty painful.
 
-On Thu, 29 Nov 2007, Jeff King wrote:
-> 
-> Yes, I am fine with the user having to go to extra lengths to use the
-> dash forms (like adding $(libexecdir) to their path), which I think
-> should address your consistency concern.
+I think it will get worse, because you are simultaneously calculating
+all of the similarity scores bit by bit rather than doing a loop. Though
+perhaps you mean at the end you will end up with a list of src/dst pairs
+sorted by score, and you can loop over that.
 
-I agree. If we actually start moving the subcommands into a separate 
-directory, I suspect scripts will be fixed up soon enough. Of course 
-people *can* do it by just adding the path, but more likely, we'll just 
-see people start doign "git xyz" instead of "git-xyz".
-
-And from a consistency standpoint, that would be a *good* thing. There are 
-many reasons why the git-xyz format *cannot* be the "consistent" form
-(ranging from the flags like --bare and -p to just aliases), so 
-encouraging people to move to "git xyz" is just a good idea.
-
-Yeah, yeah, the man-pages need the "git-xyz" form, but on the other hand, 
-rather than "man git-xyz", you can just do "git help xyz" instead, and now 
-you're consistently avoiding the dash again!
-
-			Linus
+-Peff
