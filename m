@@ -1,86 +1,65 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [PATCH] Make Git accept absolute path names for files within the work tree
-Date: Thu, 29 Nov 2007 02:15:33 +0100
-Message-ID: <200711290215.34237.robin.rosenberg@dewire.com>
-References: <7vmyt0edso.fsf@gitster.siamese.dyndns.org> <1196205847-22968-1-git-send-email-robin.rosenberg@dewire.com> <7vmysy7oav.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Wed, 28 Nov 2007 17:26:14 -0800
+Message-ID: <7vbq9dzvt5.fsf@gitster.siamese.dyndns.org>
+References: <200711270622.lAR6MFXQ010010@mi0.bluebottle.com>
+	<Pine.LNX.4.64.0711271109130.27959@racer.site>
+	<alpine.LFD.0.99999.0711270917580.9605@xanadu.home>
+	<20071127150829.GB3853@fieldses.org>
+	<alpine.LFD.0.99999.0711271013310.9605@xanadu.home>
+	<20071127153411.GA11731@fieldses.org>
+	<alpine.LFD.0.99999.0711271047590.9605@xanadu.home>
+	<20071127164243.GE11731@fieldses.org>
+	<alpine.LFD.0.99999.0711271155250.9605@xanadu.home>
+	<7vlk8hzx0g.fsf@gitster.siamese.dyndns.org>
+	<20071129010606.GA5856@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 02:14:06 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
+	Andreas Ericsson <ae@op5.se>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Thu Nov 29 02:26:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxXye-0003UB-1l
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 02:14:04 +0100
+	id 1IxYAz-0006ni-9X
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 02:26:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761544AbXK2BN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 20:13:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761586AbXK2BNZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 20:13:25 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:2309 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1761061AbXK2BNY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 20:13:24 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 8718314744E0;
-	Thu, 29 Nov 2007 02:04:05 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 20248-10; Thu, 29 Nov 2007 02:04:05 +0100 (CET)
-Received: from [10.9.0.5] (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 1BEC6A149A4;
-	Thu, 29 Nov 2007 02:04:05 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <7vmysy7oav.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1755340AbXK2B00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 20:26:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754884AbXK2B00
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 20:26:26 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:41940 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751930AbXK2B0Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 20:26:25 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 2EF432F0;
+	Wed, 28 Nov 2007 20:26:46 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 7CC709AE21;
+	Wed, 28 Nov 2007 20:26:38 -0500 (EST)
+In-Reply-To: <20071129010606.GA5856@fieldses.org> (J. Bruce Fields's message
+	of "Wed, 28 Nov 2007 20:06:06 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66489>
 
-onsdag 28 november 2007 skrev Junio C Hamano:
-> This looks somewhat tighter than the previous one, but still made me
-> worried if the caller of prefix_path() has run the setup sequence enough
-> so that calling get_git_work_tree() is safe, so I ended up auditing the
-> callpath.  At least, I do not want to see that unconditional call to
-> get_git_work_tree() when we do not need to do this "ah prefix got an
-> unusual absolute path" stuff.
-> 
->  * builtin-init-db.c uses prefix_path() to find where the template is
->    (this is mingw fallout change); in general, I do not think we would
->    want to trigger repository nor worktree discovery inside init-db,
->    although I suspect this particular callpath could be made Ok (because
->    it is taken only when template_dir is not absolute) if you do not
->    unconditionally call get_git_work_tree() in prefix_path().
-> 
->  * config.c uses prefix_path() to find the ETC_GITCONFIG that is not
->    absolute (again, mingw fallout).  When git_config() is called, we
->    already should have discovered repository but worktree may not have
->    been found yet (config.worktree can be used to specify where it is,
->    so you have a chicken and egg problem).  Again, this particular
->    callpath happens to be Ok because this is used only for non-absolute
->    path, but that is a bit subtle.
+"J. Bruce Fields" <bfields@fieldses.org> writes:
 
-I wonder if this usage in config and initdb is what prefix_path() was intended for.  The
-interface is declared in cache.h and there are error conditions like '%s is outside repository'.
+> Yeah.  I considered doing the above some time ago and ran into some
+> differences between git-clone and "git init && git remote add && git
+> fetch"--I think it may have just been that the latter didn't guess the
+> HEAD in the same way.  That's fixed now, right?
 
-Maybe we should have a boolean indicating whether the arguments refer to filespecs
-or not to make this clear or rewite the mingw fallouts in some other way.
-
->  * get_pathspec() uses prefix_path() for obvious reasons, and the prefix
->    it gets must have been discovered by finding out where the worktree
->    is, so by definition that one is safe.
-> 
-> Everybody else you would get from "git grep prefix_path" are after the
-> proper setup, so they should all be safe. 
-
-Thanks for looking at the usages. I'll come up with some more tests too, though writing
-negative tests sometimes is a challenge. Tests all to easily fail for the wrong reason which
-is bad when we expect them to fail for the right reason.
-
--- robin
+"git remote add" by itself does not talk with remote, so unless you let
+it do the initial fetch it is not fixable (and no, "git remote add -f"
+currently does not do the guesswork either).
