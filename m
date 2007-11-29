@@ -1,120 +1,189 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Some git performance measurements..
-Date: Wed, 28 Nov 2007 18:49:04 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0711281747450.8458@woody.linux-foundation.org>
+Subject: Re: Some git performance measurements..
+Date: Wed, 28 Nov 2007 19:14:50 -0800 (PST)
+Message-ID: <alpine.LFD.0.9999.0711281852160.8458@woody.linux-foundation.org>
+References: <alpine.LFD.0.9999.0711281747450.8458@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 29 03:49:30 2007
+X-From: git-owner@vger.kernel.org Thu Nov 29 04:15:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxZSy-0006uP-Gg
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 03:49:28 +0100
+	id 1IxZsN-00050x-B9
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 04:15:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754320AbXK2CtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 21:49:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753560AbXK2CtI
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 21:49:08 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:43059 "EHLO
+	id S1757378AbXK2DPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 22:15:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757308AbXK2DPX
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 22:15:23 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:49211 "EHLO
 	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751719AbXK2CtH (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Nov 2007 21:49:07 -0500
+	by vger.kernel.org with ESMTP id S1754839AbXK2DPW (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Nov 2007 22:15:22 -0500
 Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAT2n52A028373
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAT3EpTa029220
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 28 Nov 2007 18:49:06 -0800
+	for <git@vger.kernel.org>; Wed, 28 Nov 2007 19:14:52 -0800
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAT2n4kj032169
-	for <git@vger.kernel.org>; Wed, 28 Nov 2007 18:49:04 -0800
-X-Spam-Status: No, hits=-2.727 required=5 tests=AWL,BAYES_00
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAT3EoCn000715
+	for <git@vger.kernel.org>; Wed, 28 Nov 2007 19:14:50 -0800
+In-Reply-To: <alpine.LFD.0.9999.0711281747450.8458@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-2.569 required=5 tests=AWL,BAYES_00,SARE_MILLIONSOF
 X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
 X-MIMEDefang-Filter: lf$Revision: 1.188 $
 X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66495>
 
 
-So, today, I finally started looking a bit at one of the only remaining 
-performance issues that I'm aware of: git behaviour under cold-cache and 
-particularly with a slow laptop harddisk isn't as nice as I wish it should 
-be.
 
-Sadly, one big reason for performance downsides is actually hard to 
-measure: since we mmap() all the really critical data structures (the 
-pack-file index and data), it doesn't show up really well in any of the 
-otherwise really useful performance tools (eg strace and ltrace), because 
-the bulk of the time is actually spent not in libraries or in system 
-calls, but simply on regular instructions that take a page fault.
+On Wed, 28 Nov 2007, Linus Torvalds wrote:
+> 
+> Sadly, one big reason for performance downsides is actually hard to 
+> measure: since we mmap() all the really critical data structures (the 
+> pack-file index and data), it doesn't show up really well in any of the 
+> otherwise really useful performance tools (eg strace and ltrace), because 
+> the bulk of the time is actually spent not in libraries or in system 
+> calls, but simply on regular instructions that take a page fault.
 
-Not a lot that I see we can do about that, unless we can make the 
-pack-files even denser.
+Side note: while the ".gitignore" issue actually overshadowed everything 
+else for things like "git checkout" and "git merge", I do have some traces 
+for page faults too. They're kind of interesting, but actually show that 
+we do reasonably well in this area - certainly much better than if we 
+tried to keep things in multiple independent files.
 
-But one very interesting thing I did notice: some loads open the 
-".gitignore" files *way* too much. Even in cases where we really don't 
-care. And when the caches are cold, that's actually very expensive, even 
-if - and perhaps _especially_when_ - the file doesn't exist at all (ie 
-some filesystems that don't use hashes will look through the whole 
-directory before they see that it's empty).
+The pack-files (both index and data) are accessed somewhat randomly, but 
+there is still enough locality that doing read-ahead and clustering really 
+does help.
 
-An example of totally unnecessary .gitignore files is what a plain "git 
-checkout" with no arguments ends up doing:
+So while "git checkout" actually end up reading a lot of git "tree" 
+objects (as many tree objects as there are .gitignore files that we try to 
+open unnecessarily!), we actually spend a *lot* less time on the pack-file 
+operations than we do on trying to do the futile ".gitignore" opens in 
+every directory. 
 
-	git read-tree -m -u --exclude-per-directory=.gitignore HEAD HEAD
+If somebody cares, I do have the page fault traces on those things for the 
+same "git checkout" that had the horrid .gitignore behaviour. What's 
+interesting is:
 
-which is *really* quite expensive, and a lot of the cost is trying to open 
-a .gitignore file in each subdirectory that are never even used.
+ - the pack-file really does get accessed in nice increasing patterns for 
+   the top-of-tree. So the fact that we sort objects "topologically" does 
+   actually seem to work pretty well (yeah, it was obvious, but it's nice 
+   to have a real page fault trace that shows the effect!)
 
-Just to give a feel for *how* expensive that stupid .gitignore thing is, 
-here's a pretty telling comparison of using --exclude-per-directory and 
-not using it:
+   The accesses seemed to be *totally* ordered. There were obvously gaps 
+   (ie they weren't *dense*, since we only looked at one version of the 
+   trees in "git checkout"), but at the same time, it certainly wasn't 
+   random or causing any horrible seeking back-and-forth.
 
-With totally pointless --exclude-per-directory (aka "git checkout"):
+ - we're *reasonably* dense in pack-file accesses. Not wonderful, but not 
+   horrible. That in turn means that read-ahead kicks in and works ok. The 
+   pattern for the pack-file hat I caught looks like this (the format is 
+   "pageindex: cycles-to-fill-in-kernel"):
 
-	[torvalds@woody linux]$ time git read-tree -m -u --exclude-per-directory=.gitignore HEAD HEAD
-	real    0m13.475s
-	user    0m0.108s
-	sys     0m0.228s
+	6810: 15202545
+	6811: 353
+	6812: 267
+	6813: 476
+	6814: 559
+	6826: 1086510
+	6878: 13948057
+	6894: 9756446
+	6896: 300
+	6899: 307
+	6903: 319
+	6907: 293
+	6910: 666120
+	6912: 401
+	6913: 330
+	6916: 401
+	6918: 303
+	6919: 330
+	6931: 784373
+	6943: 405
+	6944: 187
+	6945: 315
+	...
 
-Without:
+   and here you can see that read-ahead works fine about 60% of the time,
+   with most pages taking just 300-500 CPU cycles (no actual IO, of 
+   course!) to find/lookup, but then when there are discontinuities we 
+   have the cost of the real IO, and the cost for those obviously then 
+   jumps into the tens of millions of cycles (ie we're talking 
+   several milliseconds).
 
-	[torvalds@woody linux]$ time git read-tree -m -u HEAD HEAD
-	real    0m5.923s
-	user    0m0.100s
-	sys     0m0.044s
+ - the index accesses are much more "random": the initial 256-way fan-out 
+   followed by the binary search causes the access patterns to look very 
+   different:
 
-now, I'm not all that happy about that latter six-second time either, but 
-both of the above numbers were done with completely cold caches (ie after 
-having done a "echo 3 > /proc/sys/vm/drop_caches" as root).
+	0: 28367707
+	136: 18867574
+	140: 221280
+	141: 745890
+	142: 284427
+	143: 338
+	381: 9787459
+	377: 394
+	375: 255
+	376: 248
+	3344: 29885989
+	3347: 334
+	3346: 255
+	3684: 7251911
+	1055: 12954064
+	1052: 386
+	1050: 251
+	1049: 240
+	1947: 10501455
+	1944: 382
+	1946: 262
 
-With hot caches, both of the numbers are under a tenth of a second (in 
-fact, they are very close: 0.092s and 0.096s respectively), but the 
-cold-cache case really shows just how horrible it is to (try to) open many 
-files.
+   where it doesn't even read-ahead at all in the beginning (because it 
+   looks entirely random), but the kernel eventually *does* actually go 
+   into read-ahead mode pretty soon simply because once it gets into the 
+   binary search thing, the data entries are close enough to be in 
+   adjacent pages, and it all looks ok.
 
-Doing an open (or an lstat) on individual files will be a totally 
-synchronous operation, with no room for read-ahead etc, so even if your 
-disk in *theory* gets 80MB/s off the platter, when you do an open() or 
-lstat(), you're basically doing three or four small data-dependent IO 
-operations, and as a result even a fast disk will take almost a hundredth 
-of a second per open/lstat operation.
+   As a result, by the end of the run, all the index file pages have been 
+   cached, and we're getting uniformly low numbers (ie in the hundreds of 
+   cycles, not millions):
 
-Less than a hundredth of a second may not sound much, but when we have 
-1700+ directories in the kernel trees, doing that for each possible 
-.gitignore file is really really expensive!
+	...
+	490: 810
+	489: 352
+	488: 334
+	2254: 907
+	91: 484
+	3580: 776
+	962: 806
+	522: 761
+	2494: 514
+	805: 653
+	177: 495
+	176: 375
+	2861: 439
+	649: 660
+	648: 518
+	...
 
-(Doing an "lstat()" of each file is much cheaper in comparison, because at 
-least you'll get several director entries and probably a few related 
-inodes with each IO. But opening just _one_ file per directory like the 
-.gitignore code does, really kills your IO throughput)
+   so the pack index file access patterns are much less predictable, but 
+   since the pack index is so dense and relatively small, that doesn't end 
+   up being a problem in the long run, and only in the beginning do we pay 
+   a highish cost for having to read it into memory.
 
-Now, timings like these are why I'm looking forward to SSD's. They may 
-have the same throughput as a disk, but they can do thousands of dependent 
-IOPS, and help latency-bound cases like this by an order of magnitude. But 
-when we're doing those .gitignore file reads totally unnecassarily, that 
-just hurts..
+In other words: we do ok. I think we could do better (and an SSD would 
+certainly help, since we're never going to do long and 100% contiguous 
+IO), but I was expecting to see *big* trouble, and it really wasn't that 
+horrid.
+
+That said, I think there's something subtly wrong in our pack-file 
+sorting, and it should be more contiguous when we just do tree object 
+accesses on the top commit. I was really hoping that all the top-level 
+trees should be written entirely together, but I wonder if the "write out 
+deltas first" thing causes us to have those big gaps in between.
 
 			Linus
