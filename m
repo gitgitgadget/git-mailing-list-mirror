@@ -1,81 +1,167 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git guidance
-Date: Thu, 29 Nov 2007 08:19:58 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0711290810170.8458@woody.linux-foundation.org>
-References: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com>
+From: Kumar Gala <galak@kernel.crashing.org>
+Subject: problem with git detecting proper renames
+Date: Thu, 29 Nov 2007 10:57:24 -0600 (CST)
+Message-ID: <Pine.LNX.4.64.0711291050440.1711@blarg.am.freescale.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Al Boldi <a1426z@gawab.com>, linux-kernel@vger.kernel.org,
-	git@vger.kernel.org
-To: Jing Xue <jingxue@digizenstudio.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 17:21:34 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 29 17:59:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ixm8p-0004RF-1a
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 17:21:31 +0100
+	id 1IxmjJ-0005UI-9o
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 17:59:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759050AbXK2QUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 11:20:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932183AbXK2QUc
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 11:20:32 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:57709 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758976AbXK2QUa (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Nov 2007 11:20:30 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lATGJwh8032212
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 29 Nov 2007 08:19:59 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lATGJwuv028307;
-	Thu, 29 Nov 2007 08:19:58 -0800
-In-Reply-To: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com>
-X-Spam-Status: No, hits=-2.688 required=5 tests=AWL,BAYES_00,TW_VC
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1758562AbXK2Q6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 11:58:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757600AbXK2Q6v
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 11:58:51 -0500
+Received: from gate.crashing.org ([63.228.1.57]:48416 "EHLO gate.crashing.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755992AbXK2Q6v (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 11:58:51 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gate.crashing.org (8.13.8/8.13.8) with ESMTP id lATGwnFO026217
+	for <git@vger.kernel.org>; Thu, 29 Nov 2007 10:58:50 -0600
+X-X-Sender: galak@blarg.am.freescale.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66546>
 
+I was wondering if there was a way to ensure that git tracks renames
+properly (or maybe its reporting them properly).
 
+I did some git-mv and got the following:
 
-On Thu, 29 Nov 2007, Jing Xue wrote:
-> 
-> By the way, the only SCM I have worked with that tries to mount its
-> repository (or a view on top of it) as a file system is ClearCase with
-> its dynamic views. And, between the buggy file system implementation,
-> the intrusion on workflow, and the lack of scalability, at least in
-> the organization I worked for, it turned out to be a horrible,
-> horrible, horrible idea.
+the problem is git seems confused about what file was associated with its
+source.
 
-Doing a read-only mount setup tends to be pretty easy, but it's largely 
-pointless except for specialty uses. Ie it's obviously not useful for 
-actual *development*, but it can be useful for some other cases.
+For example:
+.../mpc8541cds => freescale/mpc8555cds}/init.S
 
-For example, a read-only revctrl filesystem can be a _very_ useful thing 
-for test-farms, where you may have hundreds of clients that run tests on 
-possibly different versions at the same time. In situations like that, the 
-read-only mount can actually often be done as a user-space NFS server on 
-some machine.
+thanks
 
-The advantage is that you don't need to export close to infinite amounts 
-of versions from a "real" filesystem, or make the clients have their own 
-copies. And if you do it as a user-space NFS server (or samba, for that 
-matter), it's even portable, unlike many other approaches. The read-only 
-part also makes 99% of all the complexity go away, and it turns out to be 
-a fairly easy exercise to do.
+- k
 
-So I don't think the filesystem approach is _wrong_ per se. But yes, doing 
-it read-write is almost invariably a big mistake. On operatign systems 
-that support a "union mount" approach, it's likely much better to have a 
-read-only revctl thing, and then over-mount a regular filesystem on top of 
-it.
+---
 
-Trying to make it read-write from the revctl engine standpoint is almost 
-certainly totally insane.
+(the following is the results of a git-format-patch after the git-mv)
 
-				Linus
+ Makefile                                           |    6 +-
+ board/cds/mpc8548cds/Makefile                      |   60 -----
+ board/cds/mpc8555cds/Makefile                      |   60 -----
+ board/cds/mpc8555cds/init.S                        |  255 --------------------
+ board/cds/mpc8555cds/u-boot.lds                    |  150 ------------
+ board/{cds => freescale}/common/cadmus.c           |    0
+ board/{cds => freescale}/common/cadmus.h           |    0
+ board/{cds => freescale}/common/eeprom.c           |    0
+ board/{cds => freescale}/common/eeprom.h           |    0
+ board/{cds => freescale}/common/ft_board.c         |    0
+ board/{cds => freescale}/common/via.c              |    0
+ board/{cds => freescale}/common/via.h              |    0
+ board/{cds => freescale}/mpc8541cds/Makefile       |    0
+ board/{cds => freescale}/mpc8541cds/config.mk      |    0
+ board/{cds => freescale}/mpc8541cds/init.S         |    0
+ board/{cds => freescale}/mpc8541cds/mpc8541cds.c   |    0
+ board/{cds => freescale}/mpc8541cds/u-boot.lds     |    4 +-
+ .../mpc8541cds => freescale/mpc8548cds}/Makefile   |    0
+ board/{cds => freescale}/mpc8548cds/config.mk      |    0
+ board/{cds => freescale}/mpc8548cds/init.S         |    0
+ board/{cds => freescale}/mpc8548cds/mpc8548cds.c   |    0
+ board/{cds => freescale}/mpc8548cds/u-boot.lds     |    4 +-
+ .../mpc8541cds => freescale/mpc8555cds}/Makefile   |    0
+ board/{cds => freescale}/mpc8555cds/config.mk      |    0
+ .../mpc8541cds => freescale/mpc8555cds}/init.S     |    0
+ board/{cds => freescale}/mpc8555cds/mpc8555cds.c   |    0
+ .../mpc8541cds => freescale/mpc8555cds}/u-boot.lds |    4 +-
+ 27 files changed, 9 insertions(+), 534 deletions(-)
+ delete mode 100644 board/cds/mpc8548cds/Makefile
+ delete mode 100644 board/cds/mpc8555cds/Makefile
+ delete mode 100644 board/cds/mpc8555cds/init.S
+ delete mode 100644 board/cds/mpc8555cds/u-boot.lds
+ rename board/{cds => freescale}/common/cadmus.c (100%)
+ rename board/{cds => freescale}/common/cadmus.h (100%)
+ rename board/{cds => freescale}/common/eeprom.c (100%)
+ rename board/{cds => freescale}/common/eeprom.h (100%)
+ rename board/{cds => freescale}/common/ft_board.c (100%)
+ rename board/{cds => freescale}/common/via.c (100%)
+ rename board/{cds => freescale}/common/via.h (100%)
+ copy board/{cds => freescale}/mpc8541cds/Makefile (100%)
+ rename board/{cds => freescale}/mpc8541cds/config.mk (100%)
+ copy board/{cds => freescale}/mpc8541cds/init.S (100%)
+ rename board/{cds => freescale}/mpc8541cds/mpc8541cds.c (100%)
+ copy board/{cds => freescale}/mpc8541cds/u-boot.lds (97%)
+ copy board/{cds/mpc8541cds => freescale/mpc8548cds}/Makefile (100%)
+ rename board/{cds => freescale}/mpc8548cds/config.mk (100%)
+ rename board/{cds => freescale}/mpc8548cds/init.S (100%)
+ rename board/{cds => freescale}/mpc8548cds/mpc8548cds.c (100%)
+ rename board/{cds => freescale}/mpc8548cds/u-boot.lds (97%)
+ rename board/{cds/mpc8541cds => freescale/mpc8555cds}/Makefile (100%)
+ rename board/{cds => freescale}/mpc8555cds/config.mk (100%)
+ rename board/{cds/mpc8541cds => freescale/mpc8555cds}/init.S (100%)
+ rename board/{cds => freescale}/mpc8555cds/mpc8555cds.c (100%)
+ rename board/{cds/mpc8541cds => freescale/mpc8555cds}/u-boot.lds (97%)
+
+diff --git a/Makefile b/Makefile
+index 92632b9..a0f35df 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1945,7 +1945,7 @@ MPC8541CDS_config:	unconfig
+ 		echo "#define CONFIG_LEGACY" >>$(obj)include/config.h ; \
+ 		echo "... legacy" ; \
+ 	fi
+-	@$(MKCONFIG) -a MPC8541CDS ppc mpc85xx mpc8541cds cds
++	@$(MKCONFIG) -a MPC8541CDS ppc mpc85xx mpc8541cds freescale
+
+ MPC8544DS_config:	unconfig
+ 	@$(MKCONFIG) $(@:_config=) ppc mpc85xx mpc8544ds freescale
+@@ -1958,7 +1958,7 @@ MPC8548CDS_config:	unconfig
+ 		echo "#define CONFIG_LEGACY" >>$(obj)include/config.h ; \
+ 		echo "... legacy" ; \
+ 	fi
+-	@$(MKCONFIG) -a MPC8548CDS ppc mpc85xx mpc8548cds cds
++	@$(MKCONFIG) -a MPC8548CDS ppc mpc85xx mpc8548cds freescale
+
+ MPC8555CDS_legacy_config \
+ MPC8555CDS_config:	unconfig
+@@ -1968,7 +1968,7 @@ MPC8555CDS_config:	unconfig
+ 		echo "#define CONFIG_LEGACY" >>$(obj)include/config.h ; \
+ 		echo "... legacy" ; \
+ 	fi
+-	@$(MKCONFIG) -a MPC8555CDS ppc mpc85xx mpc8555cds cds
++	@$(MKCONFIG) -a MPC8555CDS ppc mpc85xx mpc8555cds freescale
+
+ MPC8568MDS_config:	unconfig
+ 	@$(MKCONFIG) $(@:_config=) ppc mpc85xx mpc8568mds freescale
+
+[snip]
+
+diff --git a/board/cds/mpc8541cds/u-boot.lds b/board/freescale/mpc8555cds/u-boot.lds
+similarity index 97%
+rename from board/cds/mpc8541cds/u-boot.lds
+rename to board/freescale/mpc8555cds/u-boot.lds
+index 7a5daef..df21ea8 100644
+--- a/board/cds/mpc8541cds/u-boot.lds
++++ b/board/freescale/mpc8555cds/u-boot.lds
+@@ -34,7 +34,7 @@ SECTIONS
+   .bootpg 0xFFFFF000 :
+   {
+     cpu/mpc85xx/start.o	(.bootpg)
+-    board/cds/mpc8541cds/init.o (.bootpg)
++    board/freescale/mpc8555cds/init.o (.bootpg)
+   } = 0xffff
+
+   /* Read-only sections, merged into text segment: */
+@@ -64,7 +64,7 @@ SECTIONS
+   .text      :
+   {
+     cpu/mpc85xx/start.o	(.text)
+-    board/cds/mpc8541cds/init.o (.text)
++    board/freescale/mpc8555cds/init.o (.text)
+     cpu/mpc85xx/traps.o (.text)
+     cpu/mpc85xx/interrupts.o (.text)
+     cpu/mpc85xx/cpu_init.o (.text)
+-- 
+1.5.3.4
