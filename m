@@ -1,63 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Some git performance measurements..
-Date: Wed, 28 Nov 2007 21:17:09 -0800
-Message-ID: <7vr6i9y6ju.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.0.9999.0711281747450.8458@woody.linux-foundation.org>
+From: Al Boldi <a1426z@gawab.com>
+Subject: Re: git guidance
+Date: Thu, 29 Nov 2007 08:27:04 +0300
+Message-ID: <200711290827.04950.a1426z@gawab.com>
+References: <20071127235237.GF15227@1wt.eu> <Pine.LNX.4.64.0711281811500.27959@racer.site> <200711282130.12864.a1426z@gawab.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Nov 29 06:17:42 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 29 06:28:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxbmN-0004pb-Of
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 06:17:40 +0100
+	id 1IxbwO-0006hl-Bz
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 06:28:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751324AbXK2FRR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 00:17:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbXK2FRR
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 00:17:17 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:37092 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751071AbXK2FRQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 00:17:16 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 939302EF;
-	Thu, 29 Nov 2007 00:17:37 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 1413897EAC;
-	Thu, 29 Nov 2007 00:17:34 -0500 (EST)
-In-Reply-To: <alpine.LFD.0.9999.0711281747450.8458@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Wed, 28 Nov 2007 18:49:04 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751451AbXK2F1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 00:27:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbXK2F1j
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 00:27:39 -0500
+Received: from [212.12.190.53] ([212.12.190.53]:33766 "EHLO raad.intranet"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750857AbXK2F1i (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 00:27:38 -0500
+Received: from localhost ([10.0.0.111])
+	by raad.intranet (8.8.7/8.8.7) with ESMTP id IAA13125;
+	Thu, 29 Nov 2007 08:27:15 +0300
+User-Agent: KMail/1.5
+In-Reply-To: <200711282130.12864.a1426z@gawab.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66504>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Jakub Narebski wrote:
+> Al Boldi wrote:
+> > Johannes Schindelin wrote:
+> >> By that definition, no SCM, not even CVS, is transparent.  Nothing
+> >> short of unpacked directories of all versions (wasting a lot of disk
+> >> space) would.
+> >
+> > Who said anything about unpacking?
+> >
+> > I'm talking about GIT transparently serving a Virtual Version Control
+> > dir to be mounted on the client.
+>
+> Are you talking about something like (in alpha IIRC) gitfs?
+>
+>   http://www.sfgoth.com/~mitch/linux/gitfs/
 
-> Less than a hundredth of a second may not sound much, but when we have 
-> 1700+ directories in the kernel trees, doing that for each possible 
-> .gitignore file is really really expensive!
+This looks like a good start.
 
-The only thing that wants to use excluded() in the unpack_trees()
-codepath is the code to allow overwriting an existing, untracked file in
-verify_absent().  When we find an untracked file at the same path as we
-are just trying to check out a file, we allow overwriting it only if
-that file is "ignored".
+> Besides, you can always use "git show <revision>:<file>". For example
+> gitweb (and I think other web interfaces) can show any version of a file
+> or a directory, accessing only repository.
 
-But the way the unpack_trees_rec() and the gitignore handling in dir.c
-are structured currently means we do push/pop exclude-per-directory
-stack as we enter and leave a new subdirectory.  We do not do this
-lazily on demand.
+Sure, browsing is the easy part, but Version Control starts when things 
+become writable.
 
-The newer gitattributes subsystem maintains a similar per-directory data
-structure but this is purely done on-demand; until somebody asks "what
-are the attrs for this path", we do not read .gitattributes file.  We
-should be able to restructure exclude-per-directory code in a similar
-way.
+
+Thanks for the link!
+
+--
+Al
