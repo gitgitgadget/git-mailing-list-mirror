@@ -1,70 +1,61 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Add "--expire <time>" option to 'git prune'
-Date: Thu, 29 Nov 2007 15:35:22 +0100
-Message-ID: <474ECE2A.9050700@viscovery.net>
-References: <200711181225.52288.johannes.sixt@telecom.at> <7v3av3wg7h.fsf@gitster.siamese.dyndns.org> <200711182101.53936.johannes.sixt@telecom.at> <7v7ikfuxfk.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711290340470.27959@racer.site> <7vaboxy3va.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711291146090.27959@racer.site> <Pine.LNX.4.64.0711291419350.27959@racer.site>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Highlight keyboard shortcuts in git-add--interactive
+Date: Thu, 29 Nov 2007 09:51:39 -0500
+Message-ID: <20071129145139.GC32670@coredump.intra.peff.net>
+References: <7vmysx2ac8.fsf@gitster.siamese.dyndns.org> <1196337638-45972-1-git-send-email-win@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	pasky@suse.cz
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 29 15:35:58 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, dzwell@gmail.com,
+	Matthieu.Moy@imag.fr
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Nov 29 15:52:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxkUX-0006AY-6x
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 15:35:49 +0100
+	id 1IxkkF-0004is-Bw
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 15:52:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932080AbXK2Of3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 09:35:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762158AbXK2Of2
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 09:35:28 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:26208 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760266AbXK2Of2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 09:35:28 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IxkTP-0005la-1m; Thu, 29 Nov 2007 15:34:39 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 2627F546; Thu, 29 Nov 2007 15:35:22 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <Pine.LNX.4.64.0711291419350.27959@racer.site>
-X-Spam-Score: 0.2 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2
+	id S1756230AbXK2Ovm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 09:51:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756168AbXK2Ovm
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 09:51:42 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2517 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755992AbXK2Ovm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 09:51:42 -0500
+Received: (qmail 19683 invoked by uid 111); 29 Nov 2007 14:51:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 29 Nov 2007 09:51:40 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Nov 2007 09:51:39 -0500
+Content-Disposition: inline
+In-Reply-To: <1196337638-45972-1-git-send-email-win@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66538>
 
-Johannes Schindelin schrieb:
-> +test_expect_success 'prune --expire' '
-> +
-> +	BLOB=$(echo aleph | git hash-object -w --stdin) &&
-> +	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
-> +	test 20 = $(git count-objects | sed "s/ .*//") &&
-> +	test -f $BLOB_FILE &&
-> +	git reset --hard &&
+On Thu, Nov 29, 2007 at 01:00:38PM +0100, Wincent Colaiuta wrote:
 
-Here you could throw in:
+> A new function is added to detect the shortest unique prefix and this
+> is used to decide what to highlight. Highlighting is also applied when
+> choosing files.
 
-	git prune --expire=1.hour.ago &&
-	test 20 = $(git count-objects | sed "s/ .*//") &&
-	test -f $BLOB_FILE &&
+I think this is very nicely implemented.
 
-to test that the object is not pruned (and the alternate --expire syntax).
+Acked-by: Jeff King <peff@peff.net>
 
-> +	if touch -d "Jan 1 1970" $BLOB_FILE
-> +	then
-> +		git prune --expire 1.day &&
-> +		test 19 = $(git count-objects | sed "s/ .*//") &&
-> +		! test -f $BLOB_FILE
-> +	else
-> +		say "Skipping test due to non-working touch -d"
-> +	fi
+> +# returns an array of tuples (prefix, remainder)
+> +sub find_unique_prefixes {
+> +	my @stuff = @_;
 
--- Hannes
+I know we generally use this more C-ish argument convention to document
+"here are the arguments to this function", but it does actually make a
+copy of the @_ array (and using @_ implies a potentially large number of
+arguments).
+
+It probably doesn't matter here, though, since add--interactive is not
+performance critical, and you probably can't have more than a few dozen
+entries before it becomes unreadable anyway.
+
+-Peff
