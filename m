@@ -1,178 +1,164 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: add support for pulling author from From: and Signed-off-by:
-Date: Wed, 28 Nov 2007 23:55:33 -0800
-Message-ID: <20071129075533.GC32277@soma>
-References: <1195739082.0@pinky>
+Subject: Re: [PATCH] git-svn: Remove unnecessary Git::SVN::Util package
+Date: Thu, 29 Nov 2007 00:01:26 -0800
+Message-ID: <20071129080126.GD32277@soma>
+References: <2CB65B86-3BEF-46C2-86F8-EFAB2AE6D353@develooper.com> <1195759080-20132-1-git-send-email-ddkilzer@kilzer.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andy Whitcroft <apw@shadowen.org>
-X-From: git-owner@vger.kernel.org Thu Nov 29 08:55:55 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: ask@develooper.com, git@vger.kernel.org
+To: "David D. Kilzer" <ddkilzer@kilzer.net>
+X-From: git-owner@vger.kernel.org Thu Nov 29 09:01:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxeFV-0003es-O7
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 08:55:54 +0100
+	id 1IxeLC-00054G-Sr
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 09:01:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755343AbXK2Hzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 02:55:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755123AbXK2Hzf
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 02:55:35 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:42619 "EHLO hand.yhbt.net"
+	id S1755176AbXK2IB2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Nov 2007 03:01:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755166AbXK2IB2
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 03:01:28 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:42627 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755007AbXK2Hze (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 02:55:34 -0500
+	id S1754619AbXK2IB1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 03:01:27 -0500
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id C938E7DC109;
-	Wed, 28 Nov 2007 23:55:33 -0800 (PST)
+	by hand.yhbt.net (Postfix) with ESMTP id 8052B7DC10A;
+	Thu, 29 Nov 2007 00:01:26 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <1195739082.0@pinky>
+In-Reply-To: <1195759080-20132-1-git-send-email-ddkilzer@kilzer.net>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66514>
 
-Andy Whitcroft <apw@shadowen.org> wrote:
-> 
-> Add support for pulling the real author of a commit from the From:
-> and first Signed-off-by: fields of the SVN commit message.
-> 
-> Signed-off-by: Andy Whitcroft <apw@shadowen.org>
+"David D. Kilzer" <ddkilzer@kilzer.net> wrote:
+> Digest::MD5 is loaded regardless of the package in which it's
+> declared, so move its 'use' statement and the md5sum() function
+> into the main package.
+>=20
+> Signed-off-by: David D. Kilzer <ddkilzer@kilzer.net>
 
-A minor whitespace fix with an Acked patch below.  Thanks.
+Acked-by: Eric Wong <normalperson@yhbt.net>
 
 > ---
->  git-svn.perl |   36 +++++++++++++++++++++++++++++-------
->  1 files changed, 29 insertions(+), 7 deletions(-)
+>=20
+> Ask Bj=F8rn Hansen <ask@develooper.com> wrote:
+> > On Nov 21, 2007, at 11:57, David D. Kilzer wrote:
+> > > Created new Git::SVN::Util package with an md5sum() function.  A
+> > > new package was created so that Digest::MD5 did not have to be
+> > > loaded in the main package.
+> > Huh?  It's all in the same file anyway, so what difference does it
+> > make?
+>=20
+> None!
+
+I have floated the idea of splitting git-svn into several files to make
+it easier to maintain and navigate.  However, I'm not looking foward to
+doing a install system for that...
+
+Maybe it'll just cat all the files together during build and
+still install as one file... *shrug*
+
+>  git-svn.perl |   23 +++++++++--------------
+>  1 files changed, 9 insertions(+), 14 deletions(-)
+>=20
 > diff --git a/git-svn.perl b/git-svn.perl
-> index 5b1deea..a99982d 100755
-> @@ -2165,7 +2173,16 @@ sub make_log_entry {
->  	$log_entry{log} .= "\n";
->  	my $author = $log_entry{author} = check_author($log_entry{author});
->  	my ($name, $email) = defined $::users{$author} ? @{$::users{$author}}
-> -	                                               : ($author, undef);
-> +						       : ($author, undef);
-> +
-> +	my ($commit_name, $commit_email) = ($name, $email);
-> +	if ($_use_log_author) {
-> +		if ($log_entry{log} =~ /From:\s+(.*?)\s+<(.*)>\s*\n/) {
-> +			($name, $email) = ($1, $2);
-> +        	} elsif ($log_entry{log} =~ /Signed-off-by:\s+(.*?)\s+<(.*)>\s*\n/) {
-> +			($name, $email) = ($1, $2);
-> +		}
-> +	}
->  	if (defined $headrev && $self->use_svm_props) {
->  		if ($self->rewrite_root) {
->  			die "Can't have both 'useSvmProps' and 'rewriteRoot' ",
+> index 62801c8..17d3020 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -35,6 +35,7 @@ push @Git::SVN::Ra::ISA, 'SVN::Ra';
+>  push @SVN::Git::Editor::ISA, 'SVN::Delta::Editor';
+>  push @SVN::Git::Fetcher::ISA, 'SVN::Delta::Editor';
+>  use Carp qw/croak/;
+> +use Digest::MD5;
+>  use IO::File qw//;
+>  use File::Basename qw/dirname basename/;
+>  use File::Path qw/mkpath/;
+> @@ -48,8 +49,7 @@ BEGIN {
+>  	foreach (qw/command command_oneline command_noisy command_output_pi=
+pe
+>  	            command_input_pipe command_close_pipe/) {
+>  		for my $package ( qw(SVN::Git::Editor SVN::Git::Fetcher
+> -			Git::SVN::Migration Git::SVN::Log Git::SVN
+> -			Git::SVN::Util),
+> +			Git::SVN::Migration Git::SVN::Log Git::SVN),
+>  			__PACKAGE__) {
+>  			*{"${package}::$_"} =3D \&{"Git::$_"};
+>  		}
+> @@ -835,19 +835,19 @@ sub cmd_info {
+>  			    command_output_pipe(qw(cat-file blob), "HEAD:$path");
+>  			if ($file_type eq "link") {
+>  				my $file_name =3D <$fh>;
+> -				$checksum =3D Git::SVN::Util::md5sum("link $file_name");
+> +				$checksum =3D md5sum("link $file_name");
+>  			} else {
+> -				$checksum =3D Git::SVN::Util::md5sum($fh);
+> +				$checksum =3D md5sum($fh);
+>  			}
+>  			command_close_pipe($fh, $ctx);
+>  		} elsif ($file_type eq "link") {
+>  			my $file_name =3D
+>  			    command(qw(cat-file blob), "HEAD:$path");
+>  			$checksum =3D
+> -			    Git::SVN::Util::md5sum("link " . $file_name);
+> +			    md5sum("link " . $file_name);
+>  		} else {
+>  			open FILE, "<", $path or die $!;
+> -			$checksum =3D Git::SVN::Util::md5sum(\*FILE);
+> +			$checksum =3D md5sum(\*FILE);
+>  			close FILE or die $!;
+>  		}
+>  		$result .=3D "Checksum: " . $checksum . "\n";
+> @@ -1187,11 +1187,6 @@ sub find_file_type_and_diff_status {
+>  	return ("file", $diff_status);
+>  }
+> =20
+> -package Git::SVN::Util;
+> -use strict;
+> -use warnings;
+> -use Digest::MD5;
+> -
+>  sub md5sum {
+>  	my $arg =3D shift;
+>  	my $ref =3D ref $arg;
+> @@ -2926,7 +2921,7 @@ sub apply_textdelta {
+> =20
+>  		if (defined $exp) {
+>  			seek $base, 0, 0 or croak $!;
+> -			my $got =3D Git::SVN::Util::md5sum($base);
+> +			my $got =3D ::md5sum($base);
+>  			die "Checksum mismatch: $fb->{path} $fb->{blob}\n",
+>  			    "expected: $exp\n",
+>  			    "     got: $got\n" if ($got ne $exp);
+> @@ -2945,7 +2940,7 @@ sub close_file {
+>  	if (my $fh =3D $fb->{fh}) {
+>  		if (defined $exp) {
+>  			seek($fh, 0, 0) or croak $!;
+> -			my $got =3D Git::SVN::Util::md5sum($fh);
+> +			my $got =3D ::md5sum($fh);
+>  			if ($got ne $exp) {
+>  				die "Checksum mismatch: $path\n",
+>  				    "expected: $exp\n    got: $got\n";
+> @@ -3300,7 +3295,7 @@ sub chg_file {
+>  	$fh->flush =3D=3D 0 or croak $!;
+>  	seek $fh, 0, 0 or croak $!;
+> =20
+> -	my $exp =3D Git::SVN::Util::md5sum($fh);
+> +	my $exp =3D ::md5sum($fh);
+>  	seek $fh, 0, 0 or croak $!;
+> =20
+>  	my $pool =3D SVN::Pool->new;
+> --=20
+> 1.5.3.4
+>=20
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
->From 40fb9135d644f3a1fc47ae9b94ad62ec52b1234b Mon Sep 17 00:00:00 2001
-From: Andy Whitcroft <apw@shadowen.org>
-Date: Thu, 22 Nov 2007 13:44:42 +0000
-Subject: [PATCH] git-svn: add support for pulling author from From: and Signed-off-by:
-
-Add support for pulling the real author of a commit from the From:
-and first Signed-off-by: fields of the SVN commit message.
-
-Signed-off-by: Andy Whitcroft <apw@shadowen.org>
-Acked-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl |   37 ++++++++++++++++++++++++++++++-------
- 1 files changed, 30 insertions(+), 7 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 640a45a..61f0c1a 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -81,6 +81,7 @@ my %fc_opts = ( 'follow-parent|follow!' => \$Git::SVN::_follow_parent,
- 		'quiet|q' => \$_q,
- 		'repack-flags|repack-args|repack-opts=s' =>
- 		   \$Git::SVN::_repack_flags,
-+		'use-log-author' => \$Git::SVN::_use_log_author,
- 		%remote_opts );
- 
- my ($_trunk, $_tags, $_branches, $_stdlayout);
-@@ -1220,7 +1221,8 @@ use strict;
- use warnings;
- use vars qw/$default_repo_id $default_ref_id $_no_metadata $_follow_parent
-             $_repack $_repack_flags $_use_svm_props $_head
--            $_use_svnsync_props $no_reuse_existing $_minimize_url/;
-+            $_use_svnsync_props $no_reuse_existing $_minimize_url
-+	    $_use_log_author/;
- use Carp qw/croak/;
- use File::Path qw/mkpath/;
- use File::Copy qw/copy/;
-@@ -2060,11 +2062,17 @@ sub do_git_commit {
- 		croak "$log_entry->{revision} = $c already exists! ",
- 		      "Why are we refetching it?\n";
- 	}
--	$ENV{GIT_AUTHOR_NAME} = $ENV{GIT_COMMITTER_NAME} = $log_entry->{name};
--	$ENV{GIT_AUTHOR_EMAIL} = $ENV{GIT_COMMITTER_EMAIL} =
--	                                                  $log_entry->{email};
-+	$ENV{GIT_AUTHOR_NAME} = $log_entry->{name};
-+	$ENV{GIT_AUTHOR_EMAIL} = $log_entry->{email};
- 	$ENV{GIT_AUTHOR_DATE} = $ENV{GIT_COMMITTER_DATE} = $log_entry->{date};
- 
-+	$ENV{GIT_COMMITTER_NAME} = (defined $log_entry->{commit_name})
-+						? $log_entry->{commit_name}
-+						: $log_entry->{name};
-+	$ENV{GIT_COMMITTER_EMAIL} = (defined $log_entry->{commit_email})
-+						? $log_entry->{commit_email}
-+						: $log_entry->{email};
-+
- 	my $tree = $log_entry->{tree};
- 	if (!defined $tree) {
- 		$tree = $self->tmp_index_do(sub {
-@@ -2352,7 +2360,17 @@ sub make_log_entry {
- 	$log_entry{log} .= "\n";
- 	my $author = $log_entry{author} = check_author($log_entry{author});
- 	my ($name, $email) = defined $::users{$author} ? @{$::users{$author}}
--	                                               : ($author, undef);
-+						       : ($author, undef);
-+
-+	my ($commit_name, $commit_email) = ($name, $email);
-+	if ($_use_log_author) {
-+		if ($log_entry{log} =~ /From:\s+(.*?)\s+<(.*)>\s*\n/) {
-+			($name, $email) = ($1, $2);
-+		} elsif ($log_entry{log} =~
-+		                      /Signed-off-by:\s+(.*?)\s+<(.*)>\s*\n/) {
-+			($name, $email) = ($1, $2);
-+		}
-+	}
- 	if (defined $headrev && $self->use_svm_props) {
- 		if ($self->rewrite_root) {
- 			die "Can't have both 'useSvmProps' and 'rewriteRoot' ",
-@@ -2375,23 +2393,28 @@ sub make_log_entry {
- 		remove_username($full_url);
- 		$log_entry{metadata} = "$full_url\@$r $uuid";
- 		$log_entry{svm_revision} = $r;
--		$email ||= "$author\@$uuid"
-+		$email ||= "$author\@$uuid";
-+		$commit_email ||= "$author\@$uuid";
- 	} elsif ($self->use_svnsync_props) {
- 		my $full_url = $self->svnsync->{url};
- 		$full_url .= "/$self->{path}" if length $self->{path};
- 		remove_username($full_url);
- 		my $uuid = $self->svnsync->{uuid};
- 		$log_entry{metadata} = "$full_url\@$rev $uuid";
--		$email ||= "$author\@$uuid"
-+		$email ||= "$author\@$uuid";
-+		$commit_email ||= "$author\@$uuid";
- 	} else {
- 		my $url = $self->metadata_url;
- 		remove_username($url);
- 		$log_entry{metadata} = "$url\@$rev " .
- 		                       $self->ra->get_uuid;
- 		$email ||= "$author\@" . $self->ra->get_uuid;
-+		$commit_email ||= "$author\@" . $self->ra->get_uuid;
- 	}
- 	$log_entry{name} = $name;
- 	$log_entry{email} = $email;
-+	$log_entry{commit_name} = $commit_name;
-+	$log_entry{commit_email} = $commit_email;
- 	\%log_entry;
- }
- 
--- 
+--=20
 Eric Wong
