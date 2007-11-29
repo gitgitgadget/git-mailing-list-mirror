@@ -1,194 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2] Add "--expire <time>" option to 'git prune'
-Date: Thu, 29 Nov 2007 15:22:02 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711291519030.27959@racer.site>
-References: <200711181225.52288.johannes.sixt@telecom.at>
- <7v3av3wg7h.fsf@gitster.siamese.dyndns.org> <200711182101.53936.johannes.sixt@telecom.at>
- <7v7ikfuxfk.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711290340470.27959@racer.site>
- <7vaboxy3va.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711291146090.27959@racer.site>
- <Pine.LNX.4.64.0711291419350.27959@racer.site> <474ECE2A.9050700@viscovery.net>
+From: Jing Xue <jingxue@digizenstudio.com>
+Subject: Re: git guidance
+Date: Thu, 29 Nov 2007 10:52:20 -0500
+Message-ID: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	pasky@suse.cz
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Nov 29 16:22:48 2007
+Content-Type: text/plain;
+	charset=UTF-8;
+	DelSp="Yes";
+	format="flowed"
+Content-Transfer-Encoding: 7bit
+Cc: linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: Al Boldi <a1426z@gawab.com>
+X-From: git-owner@vger.kernel.org Thu Nov 29 16:52:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxlDp-000228-5F
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 16:22:37 +0100
+	id 1Ixlgx-0007AQ-3i
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 16:52:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756089AbXK2PWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 10:22:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755992AbXK2PWP
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 10:22:15 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38213 "HELO mail.gmx.net"
+	id S1757003AbXK2PwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 10:52:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756854AbXK2PwX
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 10:52:23 -0500
+Received: from k2smtpout03-02.prod.mesa1.secureserver.net ([64.202.189.172]:39352
+	"HELO k2smtpout03-02.prod.mesa1.secureserver.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755230AbXK2PWO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 10:22:14 -0500
-Received: (qmail invoked by alias); 29 Nov 2007 15:22:13 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp034) with SMTP; 29 Nov 2007 16:22:13 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19L9JQlCNtLgHnql/INIpZcX1j42bCpqSruATsqP/
-	6MBmds6j69ICIH
-X-X-Sender: gene099@racer.site
-In-Reply-To: <474ECE2A.9050700@viscovery.net>
-X-Y-GMX-Trusted: 0
+	id S1755917AbXK2PwW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 10:52:22 -0500
+Received: (qmail 14917 invoked from network); 29 Nov 2007 15:52:21 -0000
+Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
+  by k2smtpout03-02.prod.mesa1.secureserver.net (64.202.189.172) with ESMTP; 29 Nov 2007 15:52:21 -0000
+Received: from localhost (unknown [127.0.0.1])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 87F7F100A37;
+	Thu, 29 Nov 2007 15:52:21 +0000 (UTC)
+Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
+	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qjF2DGIgCWRB; Thu, 29 Nov 2007 10:52:20 -0500 (EST)
+Received: by ip-72-167-33-213.ip.secureserver.net (Postfix, from userid 48)
+	id C7D19100A8F; Thu, 29 Nov 2007 10:52:20 -0500 (EST)
+Received: from mailrelay2.private.geico.com (mailrelay2.private.geico.com
+	[205.143.204.198]) by intranet.digizenstudio.com (Horde MIME library) with
+	HTTP; Thu, 29 Nov 2007 10:52:20 -0500
+Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66542>
 
 
-Earlier, 'git prune' would prune all loose unreachable objects.
-This could be quite dangerous, as the objects could be used in
-an ongoing operation.
+Quoting Al Boldi <a1426z@gawab.com>:
 
-This patch adds a mode to expire only loose, unreachable objects
-which are older than a certain time.  For example, by
+> Sure, browsing is the easy part, but Version Control starts when things
+> become writable.
 
-	git prune --expire 14.days
+But how is that supposed to work?  What happens when you make some
+changes to a file and save it?  Do you want the "git file system" to
+commit it right aways or wait until you to issue a "commit" command?
+The first behavior would obviously be wrong, and the second would make
+the "file system" not operationally transparent anyways. Right?
 
-you can prune only those objects which are loose, unreachable
-and older than 14 days (and thus probably outdated).
+By the way, the only SCM I have worked with that tries to mount its
+repository (or a view on top of it) as a file system is ClearCase with
+its dynamic views. And, between the buggy file system implementation,
+the intrusion on workflow, and the lack of scalability, at least in
+the organization I worked for, it turned out to be a horrible,
+horrible, horrible idea.
 
-The implementation uses st.st_mtime rather than st.st_ctime,
-because it can be tested better, using 'touch -d <time>' (and
-omitting the test when the platform does not support that
-command line switch).
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-
-	On Thu, 29 Nov 2007, Johannes Sixt wrote:
-
-	> Johannes Schindelin schrieb:
-	> > +test_expect_success 'prune --expire' '
-	> > +
-	> > +	BLOB=$(echo aleph | git hash-object -w --stdin) &&
-	> > +	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
-	> > +	test 20 = $(git count-objects | sed "s/ .*//") &&
-	> > +	test -f $BLOB_FILE &&
-	> > +	git reset --hard &&
-	> 
-	> Here you could throw in:
-	> 
-	> 	git prune --expire=1.hour.ago &&
-	> 	test 20 = $(git count-objects | sed "s/ .*//") &&
-	> 	test -f $BLOB_FILE &&
-	> 
-	> to test that the object is not pruned (and the alternate 
-	> --expire syntax).
-
-	Good idea!
-
- Documentation/git-prune.txt |    5 ++++-
- builtin-prune.c             |   21 ++++++++++++++++++++-
- t/t1410-reflog.sh           |   21 +++++++++++++++++++++
- 3 files changed, 45 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-prune.txt b/Documentation/git-prune.txt
-index 0ace233..9835bdb 100644
---- a/Documentation/git-prune.txt
-+++ b/Documentation/git-prune.txt
-@@ -8,7 +8,7 @@ git-prune - Prune all unreachable objects from the object database
- 
- SYNOPSIS
- --------
--'git-prune' [-n] [--] [<head>...]
-+'git-prune' [-n] [--expire <expire>] [--] [<head>...]
- 
- DESCRIPTION
- -----------
-@@ -31,6 +31,9 @@ OPTIONS
- \--::
- 	Do not interpret any more arguments as options.
- 
-+\--expire <time>::
-+	Only expire loose objects older than <time>.
-+
- <head>...::
- 	In addition to objects
- 	reachable from any of our references, keep objects
-diff --git a/builtin-prune.c b/builtin-prune.c
-index 44df59e..b5e7684 100644
---- a/builtin-prune.c
-+++ b/builtin-prune.c
-@@ -7,15 +7,24 @@
- 
- static const char prune_usage[] = "git-prune [-n]";
- static int show_only;
-+static unsigned long expire;
- 
- static int prune_object(char *path, const char *filename, const unsigned char *sha1)
- {
-+	const char *fullpath = mkpath("%s/%s", path, filename);
-+	if (expire) {
-+		struct stat st;
-+		if (lstat(fullpath, &st))
-+			return error("Could not stat '%s'", fullpath);
-+		if (st.st_mtime > expire)
-+			return 0;
-+	}
- 	if (show_only) {
- 		enum object_type type = sha1_object_info(sha1, NULL);
- 		printf("%s %s\n", sha1_to_hex(sha1),
- 		       (type > 0) ? typename(type) : "unknown");
- 	} else
--		unlink(mkpath("%s/%s", path, filename));
-+		unlink(fullpath);
- 	return 0;
- }
- 
-@@ -85,6 +94,16 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 			show_only = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--expire")) {
-+			if (++i < argc) {
-+				expire = approxidate(argv[i]);
-+				continue;
-+			}
-+		}
-+		else if (!prefixcmp(arg, "--expire=")) {
-+			expire = approxidate(arg + 9);
-+			continue;
-+		}
- 		usage(prune_usage);
- 	}
- 
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index 12a53ed..3924dc4 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -201,4 +201,25 @@ test_expect_success 'delete' '
- 	! grep dragon < output
- '
- 
-+test_expect_success 'prune --expire' '
-+
-+	BLOB=$(echo aleph | git hash-object -w --stdin) &&
-+	BLOB_FILE=.git/objects/$(echo $BLOB | sed "s/^../&\//") &&
-+	test 20 = $(git count-objects | sed "s/ .*//") &&
-+	test -f $BLOB_FILE &&
-+	git reset --hard &&
-+	git prune --expire=1.hour.ago &&
-+	test 20 = $(git count-objects | sed "s/ .*//") &&
-+	test -f $BLOB_FILE &&
-+	if touch -d "Jan 1 1970" $BLOB_FILE
-+	then
-+		git prune --expire 1.day &&
-+		test 19 = $(git count-objects | sed "s/ .*//") &&
-+		! test -f $BLOB_FILE
-+	else
-+		say "Skipping test due to non-working touch -d"
-+	fi
-+
-+'
-+
- test_done
+Cheers.
 -- 
-1.5.3.6.2088.g8c260
+Jing Xue
