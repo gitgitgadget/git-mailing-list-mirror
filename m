@@ -1,68 +1,86 @@
-From: Al Boldi <a1426z@gawab.com>
-Subject: Re: git guidance
-Date: Thu, 29 Nov 2007 08:27:04 +0300
-Message-ID: <200711290827.04950.a1426z@gawab.com>
-References: <20071127235237.GF15227@1wt.eu> <Pine.LNX.4.64.0711281811500.27959@racer.site> <200711282130.12864.a1426z@gawab.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] Teach repack to optionally retain otherwise lost objects
+Date: Wed, 28 Nov 2007 22:15:05 -0800
+Message-ID: <7vaboxy3va.fsf@gitster.siamese.dyndns.org>
+References: <200711181225.52288.johannes.sixt@telecom.at>
+	<7v3av3wg7h.fsf@gitster.siamese.dyndns.org>
+	<200711182101.53936.johannes.sixt@telecom.at>
+	<7v7ikfuxfk.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0711290340470.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 29 06:28:01 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Nov 29 07:15:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxbwO-0006hl-Bz
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 06:28:00 +0100
+	id 1IxcgP-0007h5-8S
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 07:15:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbXK2F1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 00:27:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbXK2F1j
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 00:27:39 -0500
-Received: from [212.12.190.53] ([212.12.190.53]:33766 "EHLO raad.intranet"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750857AbXK2F1i (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 00:27:38 -0500
-Received: from localhost ([10.0.0.111])
-	by raad.intranet (8.8.7/8.8.7) with ESMTP id IAA13125;
-	Thu, 29 Nov 2007 08:27:15 +0300
-User-Agent: KMail/1.5
-In-Reply-To: <200711282130.12864.a1426z@gawab.com>
-Content-Disposition: inline
+	id S1751356AbXK2GPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 01:15:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbXK2GPN
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 01:15:13 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:42151 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751277AbXK2GPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 01:15:11 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 7F6012EF;
+	Thu, 29 Nov 2007 01:15:32 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id EB09F98F42;
+	Thu, 29 Nov 2007 01:15:28 -0500 (EST)
+In-Reply-To: <Pine.LNX.4.64.0711290340470.27959@racer.site> (Johannes
+	Schindelin's message of "Thu, 29 Nov 2007 03:41:42 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66505>
 
-Jakub Narebski wrote:
-> Al Boldi wrote:
-> > Johannes Schindelin wrote:
-> >> By that definition, no SCM, not even CVS, is transparent.  Nothing
-> >> short of unpacked directories of all versions (wasting a lot of disk
-> >> space) would.
-> >
-> > Who said anything about unpacking?
-> >
-> > I'm talking about GIT transparently serving a Virtual Version Control
-> > dir to be mounted on the client.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> 	Besides, a completely different idea just struck me: before
+> 	repacking, .git/objects/pack/* could be _hard linked_ to the
+> 	forkee's object stores.  Then nothing in git-repack's code
+> 	needs to be changed.
 >
-> Are you talking about something like (in alpha IIRC) gitfs?
->
->   http://www.sfgoth.com/~mitch/linux/gitfs/
+> 	Oh, well.  I just wasted 1.5 hours.
 
-This looks like a good start.
+Your 1.5 hours was spent wisely to come up with that idea ;-).
 
-> Besides, you can always use "git show <revision>:<file>". For example
-> gitweb (and I think other web interfaces) can show any version of a file
-> or a directory, accessing only repository.
+To make sure I understand your idea correctly, the procedure to repack a
+repository in a fork-friendly way is:
 
-Sure, browsing is the easy part, but Version Control starts when things 
-become writable.
+ (1) find the project directly forked from you;
 
+ (2) hardlink all packs under your object store to their object store;
 
-Thanks for the link!
+ (3) repack -a -l and prune.
 
---
-Al
+I think that would work as long as you do the above as a unit and handle
+one repository at a time.  Otherwise I think you risk losing necessary
+objects when hierarchical forks are involved.  E.g.  if you have a
+project X that has a fork Y which in turn has fork Z.
+
+	* Step 1 is run for X, Y and Z.
+        * Step 2 is run for Y and Z.
+        * Step 3 is run for Z.
+
+At this point, Z is still borrowing objects from Y and X through Y, and
+it will not keep objects it is borrowing from X through Y.  Then if the
+procedure is intermixed like this, a bad thing happens.
+
+	* Step 2 is run for X.
+	* Step 3 is run for Y.
+	* Step 3 is run for X.
+
+Step 3 for Y would lose objects Y was borrowing from X that were not
+used by Y itself.  At this point, Z is still usable as the objects it is
+borrowing from X though Y have not been pruned from X.  But Step 3 for X
+will lose them, rendering Z unusable.
