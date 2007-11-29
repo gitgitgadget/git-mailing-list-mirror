@@ -1,112 +1,79 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: Cover grafting in the Git User's Manual
-Date: Thu, 29 Nov 2007 19:10:02 +0100
-Message-ID: <20071129181002.GA13114@xp.machine.xx>
-References: <87ejeateka.fsf@pike.pond.sub.org> <20071128184228.GB4461@xp.machine.xx> <87bq9drxwf.fsf@pike.pond.sub.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Some git performance measurements..
+Date: Thu, 29 Nov 2007 13:52:55 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0711291333460.9605@xanadu.home>
+References: <alpine.LFD.0.9999.0711281747450.8458@woody.linux-foundation.org>
+ <alpine.LFD.0.9999.0711281852160.8458@woody.linux-foundation.org>
+ <alpine.LFD.0.99999.0711282244190.9605@xanadu.home>
+ <alpine.LFD.0.9999.0711282022470.8458@woody.linux-foundation.org>
+ <alpine.LFD.0.99999.0711291208060.9605@xanadu.home>
+ <alpine.LFD.0.9999.0711290945060.8458@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Markus Armbruster <armbru@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 19:10:47 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Nov 29 19:53:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxnqZ-0003jd-57
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 19:10:47 +0100
+	id 1IxoVk-0005PE-GE
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 19:53:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932283AbXK2SKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 13:10:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932191AbXK2SKN
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 13:10:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44916 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1763046AbXK2SKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 13:10:11 -0500
-Received: (qmail invoked by alias); 29 Nov 2007 18:10:09 -0000
-Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
-  by mail.gmx.net (mp055) with SMTP; 29 Nov 2007 19:10:09 +0100
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX187yQQ5FD871VOaEM1fFSHcRRz6n+nBMlnYW9cOZh
-	2SPziR71hP+tX3
-Content-Disposition: inline
-In-Reply-To: <87bq9drxwf.fsf@pike.pond.sub.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Y-GMX-Trusted: 0
+	id S1759161AbXK2Sw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 13:52:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761305AbXK2Sw6
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 13:52:58 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:26534 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759084AbXK2Sw5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 13:52:57 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JSA00CGB74893D0@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 29 Nov 2007 13:52:56 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <alpine.LFD.0.9999.0711290945060.8458@woody.linux-foundation.org>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66552>
 
-On Thu, Nov 29, 2007 at 02:20:32PM +0100, Markus Armbruster wrote:
-> Peter Baumann <waste.manager@gmx.de> writes:
+On Thu, 29 Nov 2007, Linus Torvalds wrote:
+
 > 
-> > On Wed, Nov 28, 2007 at 07:23:01PM +0100, Markus Armbruster wrote:
-> >> The only mention of grafting in the manual is in the glossary:
-> >> 
-> >>     Grafts enables two otherwise different lines of development to
-> >>     be joined together by recording fake ancestry information for
-> >>     commits. This way you can make git pretend the set of parents
-> >>     a commit has is different from what was recorded when the
-> >>     commit was created. Configured via the .git/info/grafts file.
-> >> 
-> >> I believe it would be useful to cover this better, perhaps in chapter
-> >> 5. Rewriting history and maintaining patch series.  It certainly would
-> >> have saved me a few hours of digging.  I already understood enough of
-> >> git to *know* that what I wanted must be possible (supply missing
-> >> parents of merges in a repository imported with parsecvs), but I
-> >> didn't know the magic keyword was graft.  I managed to figure it out
-> >> >from the glossary, git-filter-branch(1) and GitWiki's GraftPoint page.
-> >> 
-> >> I'm neither writer nor git expert, but here's my try anyway:
-> >> 
-> >> Rewriting ancestry with grafts
-> >> 
-> >> Grafts enables two otherwise different lines of development to be
-> >> joined together by recording fake ancestry information for commits.
-> >> This way you can make git pretend the set of parents a commit has is
-> >> different from what was recorded when the commit was created.
-> >> 
-> >> Why would you want to do that?  Say, you imported a repository from an
-> >> SCM that doesn't record merges properly, e.g. CVS.  Grafts let you add
-> >> the missing parents to the merge commits.  Or you switched your
-> >> project to git by populating a new repository with current sources,
-> >> and later decide you want more history.  Committing old versions is
-> >> easy enough, but you also need to graft a parent to your original root
-> >> commit.
-> >> 
-> >> Graft points are configured via the .git/info/grafts file.  It has one
-> >> record per line describing a commit and its fake parents by listing
-> >> object names separated by a space and terminated by a newline.
-> >> 
-> >>     <commit sha1> <parent sha1> [<parent sha1>]*
-> >> 
-> >> A graft point does not actually change its commit.  Nothing can.  What
-> >> can be done is rewriting the commit and its descendants.
-> >> git-filter-branch does that:
-> >> 
-> >>     $ cat .git/info/grafts
-> >>     db5a561750ae87615719ae409d1f50c9dfc3fa71 08f2fa81d104b937c1f24c68f56e9d5039356764 8c231303bb995cbfdfd1c434a59a7c96ea2f0251
-> >>     git-filter-branch HEAD ^08f2fa81d104b937c1f24c68f56e9d5039356764 ^8c231303bb995cbfdfd1c434a59a7c96ea2f0251
-> >> 
-> >> This rewrites history between head and the graft-point to include the
-> >> grafted parents.
-> >
-> > Did I overlook something or isn't
-> >
-> >      git-filter-branch HEAD ^db5a561750ae87615719ae409d1f50c9dfc3fa71
-> >
-> > what you are looking for? Only db5a56 could get rewritten and obviously
-> > all the commits having it as a parent.
-> >
-> > -Peter
 > 
-> That rewrites all commits reachable from HEAD that are not reachable
-> >from db5a56.  In particular, it doesn't rewrite db5a56, does it?
+> On Thu, 29 Nov 2007, Nicolas Pitre wrote:
+> > 
+> > Well, see below for the patch that actually split the pack data into 
+> > objects of the same type.  Doing that "git checkout" on the kernel tree 
+> > did improve things for me although not spectacularly.
+> 
+> Umm. See my earlier numbers. For "git checkout" with cold cache, the 
+> *bulk* of the time is actually the ".gitignore" file lookups, so if you 
+> see a three-second improvement out of 17s, it may not look spectacular, 
+> but considering that probably 10s of those 17s were something *else* going 
+> on, I suspect that if you really did just a plain "git checkout", you 
+> actually *do* have a spectacular improvement of roughly 7s -> 4s!
+> 
+> Try with
+> 
+> 	time git read-tree -m -u HEAD HEAD > /dev/null
+> 
+> instead.
 
-Uh. You are right. I *meant*
+Oh!  OK then.
 
-	git filter-branch HEAD ^db5a561750ae87615719ae409d1f50c9dfc3fa71^
+Current, cold cache:		5.248s
+Current, warm cache:		0.185s
+
+Patched, cold cache:		3.337s
+Patched, warm cache:		0.183s
+
+So yes, the improvement is more significant then, although the cold 
+cache timings vary quite a lot between successive tries.
 
 
--Peter
+Nicolas
