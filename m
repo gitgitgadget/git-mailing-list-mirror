@@ -1,176 +1,81 @@
-From: "Kelvie Wong" <kelvie@ieee.org>
-Subject: Re: git-svn rebase issues (the commiter gets changed)
-Date: Thu, 29 Nov 2007 08:16:32 -0800
-Message-ID: <94ccbe710711290816t7a6ba9b1o8f37ecf583305a51@mail.gmail.com>
-References: <94ccbe710711220815j663d22e0v3c744244d0a87b66@mail.gmail.com>
-	 <20071129075205.GB32277@soma>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git guidance
+Date: Thu, 29 Nov 2007 08:19:58 -0800 (PST)
+Message-ID: <alpine.LFD.0.9999.0711290810170.8458@woody.linux-foundation.org>
+References: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Eric Wong" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Nov 29 17:16:55 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Al Boldi <a1426z@gawab.com>, linux-kernel@vger.kernel.org,
+	git@vger.kernel.org
+To: Jing Xue <jingxue@digizenstudio.com>
+X-From: git-owner@vger.kernel.org Thu Nov 29 17:21:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ixm4L-0002Ac-Uo
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 17:16:54 +0100
+	id 1Ixm8p-0004RF-1a
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 17:21:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759369AbXK2QQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 11:16:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759057AbXK2QQe
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 11:16:34 -0500
-Received: from nz-out-0506.google.com ([64.233.162.235]:32068 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758744AbXK2QQd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 11:16:33 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so1491490nze
-        for <git@vger.kernel.org>; Thu, 29 Nov 2007 08:16:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=ySqKDdkVXdHQIgInj4KYjTVTscI8X5M2qleyN2o5QTc=;
-        b=K0Hr0CRyUSG4cNIfP5s+yDbzOUkPxhihAPaAF2uPymG2qR29moznCvZktcVFqvT4sPUj5eW1Do/Fj0Dto24DZL00nE9QwxqfL0OAJ/iXPHi+04OiDFKDpZimZAHu+VSznJD3amM1uB2C8D6BacuwZThd1rna4UJjkNlLEbOEYsA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=teCFjBAtve6EpVzdm6Ucyiy7pqRUGG1FahNjbrcu2Rr+IEGuaB7OEpdvXFM6JyV9sY8T4cnB+slFndv8UaGZi/v8PA4P90VNizvsVJ6QiKN3OVScdi7vwwgF0Bs3v384hhRNv/JHHs/DVcgiu8EsbRd7zCyVukvCAM0psqQrVZM=
-Received: by 10.115.60.1 with SMTP id n1mr156837wak.1196352992200;
-        Thu, 29 Nov 2007 08:16:32 -0800 (PST)
-Received: by 10.114.149.15 with HTTP; Thu, 29 Nov 2007 08:16:32 -0800 (PST)
-In-Reply-To: <20071129075205.GB32277@soma>
-Content-Disposition: inline
-X-Google-Sender-Auth: cb99a38ebc20cc1c
+	id S1759050AbXK2QUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 11:20:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932183AbXK2QUc
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 11:20:32 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:57709 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758976AbXK2QUa (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Nov 2007 11:20:30 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lATGJwh8032212
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 29 Nov 2007 08:19:59 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lATGJwuv028307;
+	Thu, 29 Nov 2007 08:19:58 -0800
+In-Reply-To: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com>
+X-Spam-Status: No, hits=-2.688 required=5 tests=AWL,BAYES_00,TW_VC
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66545>
 
-On Nov 28, 2007 11:52 PM, Eric Wong <normalperson@yhbt.net> wrote:
-> Kelvie Wong <kelvie@ieee.org> wrote:
-> > When using git-svn rebase (I'm not sure if this happens with a regular
-> > rebase as well, I use use git-svn primarily at work), the following
-> > oddity happens:
-> >
-> > kelvie@mudd (working) qt $ git-cat-file commit
-> > c27e6207c9078d4225288d55454d6577f0135c16
-> > tree 13d9ef9cc67f5e6381d7697e5794c0ab5f72c729
-> > parent b9eb187d3029c5f9a816cb8f5473d9b239952d53
-> > author kwong <kwong@e2d93294-a71b-0410-9dca-e2ea525a67c9> 1195596864 +0000
-> > committer cscrimgeour
-> > <cscrimgeour@e2d93294-a71b-0410-9dca-e2ea525a67c9> 1195691944 +0000
->
-> This is strange.  Does this commit end below? or did you truncate
-> the git-svn-id: line from this message?
->
 
-This is one of my local commits, not yet commited to the SVN repo.
-I've talked on IRC, and it seems I'm not the only one that has this
-problem.  I have heard that the committer timestamp of _all_ rebased
-local commits gets changed to the last SVN commit (made by someone
-else), but the committer doesn't get changed (except in the first
-commit rebased after SVN).
 
-> >
-> > Qt/FME Extensions: QFMEDialog/QFMEWizard -> Windows only, for now
-> >
-> > This is also a reapplication of r39657, which got rolled back.
-> >
-> > These have dependencies on QWinWidget (which is a part of the MFC/Qt Migration
-> > Solution), and thus, it does not build without it.
-> > <kw>
-> > kelvie@mudd (working) qt $ git-cat-file commit
-> > 7075991c67c6d409ec2315dfeef6f45dd328485b
-> > tree 13d9ef9cc67f5e6381d7697e5794c0ab5f72c729
-> > parent b9eb187d3029c5f9a816cb8f5473d9b239952d53
-> > author kwong <kwong@e2d93294-a71b-0410-9dca-e2ea525a67c9> 1195596864 +0000
-> > committer Kelvie Wong <Kelvie.Wong@safe.com> 1195747291 +0000
->
-> This commit hasn't made it into SVN, yet, right?  If so, then that's
-> alright.
->
-> >
-> > Qt/FME Extensions: QFMEDialog/QFMEWizard -> Windows only, for now
-> >
-> > This is also a reapplication of r39657, which got rolled back.
-> >
-> > These have dependencies on QWinWidget (which is a part of the MFC/Qt Migration
-> > Solution), and thus, it does not build without it.
-> > <kw>
-> >
-> >
-> > These are both the exact same commit (the tree, parent, and author are
-> > equivalent).
-> >
-> > Sometimes (not always), the committer in a commit changes to be the
-> > committer of the parent (svn) commit.  This only happens to the
-> > commits whose parent is the SVN commit.  In the above example,
-> > cscrimgeour is a SVN user, who obviously could not have changed my
-> > code; the proper commit is the one at the bottom.
-> >
-> > Both of these are the first local commit that I have rebased onto SVN.
->
-> Did you get these commits by cherry-picking (or format-patch + am)
-> from another SVN branch?  Have these commits been made to SVN already?
->
+On Thu, 29 Nov 2007, Jing Xue wrote:
+> 
+> By the way, the only SCM I have worked with that tries to mount its
+> repository (or a view on top of it) as a file system is ClearCase with
+> its dynamic views. And, between the buggy file system implementation,
+> the intrusion on workflow, and the lack of scalability, at least in
+> the organization I worked for, it turned out to be a horrible,
+> horrible, horrible idea.
 
-It's a commit I made directly.
+Doing a read-only mount setup tends to be pretty easy, but it's largely 
+pointless except for specialty uses. Ie it's obviously not useful for 
+actual *development*, but it can be useful for some other cases.
 
-> `gitk --reflog --all' may reveal some answers or clarify
-> things for you (assuming you have reflogs enabled in .git/config).
->
-> Rebase (all forms of it) *does* rewrite committer info, but how you got
-> cscrimgeour in there is very strange to me.
->
-> --
-> Eric Wong
->
+For example, a read-only revctrl filesystem can be a _very_ useful thing 
+for test-farms, where you may have hundreds of clients that run tests on 
+possibly different versions at the same time. In situations like that, the 
+read-only mount can actually often be done as a user-space NFS server on 
+some machine.
 
-Just did it again this morning, with a clean test branch:
+The advantage is that you don't need to export close to infinite amounts 
+of versions from a "real" filesystem, or make the clients have their own 
+copies. And if you do it as a user-space NFS server (or samba, for that 
+matter), it's even portable, unlike many other approaches. The read-only 
+part also makes 99% of all the complexity go away, and it turns out to be 
+a fairly easy exercise to do.
 
-kelvie@mudd (text-edit) qt $ git checkout -b test git-svn
-Switched to a new branch "test"
-kelvie@mudd (test) qt $ touch test
-kelvie@mudd (test) qt $ git add test
-kelvie@mudd (test) qt $ git commit -a -m 'Test!'
-Created commit 05c4016: Test!
- 0 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 apps/qt/test
-kelvie@mudd (test) qt $ git-cat-file commit HEAD
-tree 867c0aa4c814542f0752b5d4c85fc96ba2279aac
-parent 831ffbf25057ed30274d4216269c572cfce12184
-author Kelvie Wong <Kelvie.Wong@safe.com> 1196352603 -0800
-committer Kelvie Wong <Kelvie.Wong@safe.com> 1196352603 -0800
+So I don't think the filesystem approach is _wrong_ per se. But yes, doing 
+it read-write is almost invariably a big mistake. On operatign systems 
+that support a "union mount" approach, it's likely much better to have a 
+read-only revctl thing, and then over-mount a regular filesystem on top of 
+it.
 
-Test!
-kelvie@mudd (test) qt $ git svn rebase
-<snip>
-HEAD is now at 7319c2a... (svn commit message)
-kelvie@mudd (test) qt $ git-cat-file commit HEAD
-tree 4edacbd41af76ac243099467b33350887c0fb03d
-parent 7319c2a810554aab25a688bcc2b16fc60529b59d
-author Kelvie Wong <Kelvie.Wong@safe.com> 1196352603 -0800
-committer ogibbins <ogibbins@e2d93294-a71b-0410-9dca-e2ea525a67c9>
-1196346907 +0000
+Trying to make it read-write from the revctl engine standpoint is almost 
+certainly totally insane.
 
-Test!
-kelvie@mudd (test) qt $ git --version
-git version 1.5.3.6.736.gb7f30
-
-And again, the committer of a local commit gets changed.
-
-Now, this part is more interesting:
-
-kelvie@mudd (test) qt $ git checkout working
-Switched to branch "working"
-kelvie@mudd (working) qt $ git svn rebase
-<no fetch, just a checkout and rebase>
-
-And when I cat-file the commit, this time it's preserved.  Wild guess
-here (this behaviour seems kind of inconsistent), but it has to do
-with the transition between fetch and rebase?  Or is this a bug in
-git-rebase somewhere?
-
--- 
-Kelvie Wong
+				Linus
