@@ -1,79 +1,62 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH v2] Teach 'git pull' about --rebase
-Date: Wed, 28 Nov 2007 18:56:33 -0500
-Message-ID: <20071128235633.GI7376@fieldses.org>
-References: <Pine.LNX.4.64.0711281307420.27959@racer.site> <27E5EF3C-19EF-441C-BB12-0F5B29BEAEDB@midwinter.com> <Pine.LNX.4.64.0711282039430.27959@racer.site> <8c5c35580711281310h8764a33pba48e65010abf859@mail.gmail.com> <7vhcj63uhw.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711282156520.27959@racer.site> <20071128223339.GF7376@fieldses.org> <20071128224717.GG7376@fieldses.org> <Pine.LNX.4.64.0711282309030.27959@racer.site> <7v1waa2bfi.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
+Date: Thu, 29 Nov 2007 00:01:26 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711290000430.27959@racer.site>
+References: <20071127150229.GA14859@laptop> <20071127160423.GA22807@laptop>
+ <Pine.LNX.4.64.0711271617350.27959@racer.site> <20071128000731.GD9174@efreet.light.src>
+ <7v8x4jb295.fsf@gitster.siamese.dyndns.org>
+ <fcaeb9bf0711280036p33583824ge59af93bbe3f0a78@mail.gmail.com>
+ <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711282334250.27959@racer.site>
+ <7vr6ia0w4i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Lars Hjemli <hjemli@gmail.com>,
-	Steven Grimm <koreth@midwinter.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, Jan Hudec <bulb@ucw.cz>,
 	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 00:57:07 2007
+X-From: git-owner@vger.kernel.org Thu Nov 29 01:02:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxWm7-0005vv-Nb
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 00:57:04 +0100
+	id 1IxWqq-0007ZA-MI
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 01:01:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757908AbXK1X4n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Nov 2007 18:56:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757821AbXK1X4n
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 18:56:43 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:39420 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755372AbXK1X4m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Nov 2007 18:56:42 -0500
-Received: from bfields by fieldses.org with local (Exim 4.68)
-	(envelope-from <bfields@fieldses.org>)
-	id 1IxWld-0000Hw-7N; Wed, 28 Nov 2007 18:56:33 -0500
-Content-Disposition: inline
-In-Reply-To: <7v1waa2bfi.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1757821AbXK2ABi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Nov 2007 19:01:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757756AbXK2ABi
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Nov 2007 19:01:38 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33291 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751007AbXK2ABh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Nov 2007 19:01:37 -0500
+Received: (qmail invoked by alias); 29 Nov 2007 00:01:35 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp057) with SMTP; 29 Nov 2007 01:01:35 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+PLb9xCuSPhSzI/CXDHXWCfZZq7FkpPeR3OYcTh2
+	6x6DbRbWVJ8NKQ
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vr6ia0w4i.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66471>
 
-On Wed, Nov 28, 2007 at 03:32:49PM -0800, Junio C Hamano wrote:
+Hi,
+
+On Wed, 28 Nov 2007, Junio C Hamano wrote:
+
 > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > So my rationale was: if we already have an existing framework to integrate 
-> > remote changes with our current branch, why not just go ahead and use it?  
-> > That's the reason BTW why I originally wanted a "rebase" merge stragegy.  
-> > Even if it is not technically a merge.
-> >
-> > I really rather have no user-friendly support for fetch+rebase (and utter 
-> > a friendly, but loud curse everytime I made a "git pull" by mistake) than 
-> > yet another command.
+> > The fundamental problem is that we cannot move 
+> > handle_internal_command() into libgit.a, because it has pointers to 
+> > all builtin cmd_*() functions.
 > 
-> I suspect that people who do not like the two modes of checkout will
-> certainly not appreciate the overloading two behaviours to create
-> different kind of histories and two different ways to continue when the
-> integration do not go smoothly upon conflicts these two behaviours have.
-> 
-> However, I agree very much with an earlier comment made by Daniel about
-> our UI being task oriented instead of being command oriented, and I
-> actually consider it a good thing.  So it does not bother me too much
-> that "git pull --rebase" has a quite different workflow from the regular
-> "merge" kind of pull.
-> 
-> So let's queue "pull --rebase" and see what happens.
+> What's wrong with having cmd_* functions in the library to begin with?
 
-What I'm really most worried about isn't the commandline switch but the
-config option--it makes the same commandlines silently behave in very
-different ways.
+I was considering it not desirable (after all, the library is meant to 
+have common functions in it), but you're right...
 
-I really don't want every tutorial that mentions "git pull" to have to
-say "the following applies only if git.<current-branch>.rebase is
-false".  And it'll be either that or risk having a lot of people saying
-"I typed in exactly that commandline, but this happened....".
-
-A default to "false" does at least require positive acknowledgement, but
-if this is expected to be used by newbies, they're going to be told to
-set that config before they understand the difference it makes.
-
---b.
+Ciao,
+Dscho
