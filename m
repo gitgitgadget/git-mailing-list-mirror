@@ -1,199 +1,223 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Fix a pathological case in git detecting proper renames
-Date: Thu, 29 Nov 2007 13:30:13 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0711291303000.8458@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0711291050440.1711@blarg.am.freescale.net> <alpine.LFD.0.9999.0711290934260.8458@woody.linux-foundation.org> <28BD703B-24D3-41D6-8360-240A884B1305@kernel.crashing.org> <alpine.LFD.0.9999.0711291122050.8458@woody.linux-foundation.org>
- <41CB0B7D-5AC1-4703-BA99-21622A410F93@kernel.crashing.org>
+From: Christoph <christoph.duelli@gmx.de>
+Subject: importing bk into git
+Date: Thu, 29 Nov 2007 22:32:03 +0100
+Message-ID: <200711292232.03352.christoph.duelli@gmx.de>
+Reply-To: christoph.duelli@gmx.de
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Kumar Gala <galak@kernel.crashing.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 22:31:05 2007
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_T/yTH96EsQ6GJKh"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 29 22:32:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxqyH-0003Vb-QL
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 22:30:58 +0100
+	id 1Ixqzl-00047N-L1
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 22:32:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762313AbXK2Vai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 16:30:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762088AbXK2Vai
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 16:30:38 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:41540 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1762288AbXK2Vag (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Nov 2007 16:30:36 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lATLUD8p016372
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 29 Nov 2007 13:30:14 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lATLUDH3008269;
-	Thu, 29 Nov 2007 13:30:13 -0800
-In-Reply-To: <41CB0B7D-5AC1-4703-BA99-21622A410F93@kernel.crashing.org>
-X-Spam-Status: No, hits=-2.427 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_46
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1761197AbXK2VcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 16:32:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757832AbXK2VcJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 16:32:09 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59975 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754102AbXK2VcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 16:32:07 -0500
+Received: (qmail invoked by alias); 29 Nov 2007 21:32:04 -0000
+Received: from dslb-088-065-133-246.pools.arcor-ip.net (EHLO dslb-088-065-133-246.pools.arcor-ip.net) [88.65.133.246]
+  by mail.gmx.net (mp008) with SMTP; 29 Nov 2007 22:32:04 +0100
+X-Authenticated: #2486746
+X-Provags-ID: V01U2FsdGVkX1+kEyl0w6ikk+xcQ77DnWJJdDVT4meI3Paoj5ute+
+	kS9JAMTt1syVbY
+User-Agent: KMail/1.9.6 (enterprise 20070904.708012)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66565>
+
+--Boundary-00=_T/yTH96EsQ6GJKh
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+I am trying to import a BitKeeper repo into a (new) git repo.
+
+I am trying with the script bk2git.py that I found on the web.
+This does not quite work - I fear script is no longer working with the current 
+git release. (I am using the current git release.)
+
+If I have understood the script correctly, it does repeated bk checkouts and 
+imports the updates the git repo diff of the (next) checkout etc.
+
+It seems this script tries to do so by settings environment vars
+GIT_OBJECT_DIRECTORY and GIT_INDEX_FILE
+to point at the git repo.
+
+The bk checkout are done at a temp. dir (tmp_dir).
+
+
+The following lines fail
+  os.system("cd %s; git-ls-files --deleted | xargs 
+git-update-cache --remove" % tmp_dir)
+
+with: fatal: Not a git repository
+xargs: git-update-cache: No such file or directory
+
+The problem seems to be that the script cd's into the temp dir (which is not a 
+git repo) and the git-ls-files fails to find a git repo there.
+I think the issue might be that an earlier version of git was perhaps able to 
+find the repo by means of the env. vars mentioned above.
+
+Any idea if/how I can fix this?
+Thanks for any ideas and best regards
+
+Christoph
+(Sorry, my python and git skills are so far very limited.)
+
+PS: I have attached the script I downloaded from the net.
+-- 
+FORTUNE'S PARTY TIPS		#14
+
+Tired of finding that other people are helping themselves to your good
+liquor at BYOB parties?  Take along a candle, which you insert and
+light after you've opened the bottle.  No one ever expects anything
+drinkable to be in a bottle which has a candle stuck in its neck.
+
+--Boundary-00=_T/yTH96EsQ6GJKh
+Content-Type: application/x-python;
+  name="bk2git.py"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="bk2git.py"
+
+# just a small script to convert a bk-repo to git.
+
+import os
+import time
+
+# start with some config...
+bk_dir = "/home/andersg/xmms2"
+git_dir = "/home/andersg/xmms2.git"
+tmp_dir = "/tmp/xmms2-export"
+
+#bk only have "email" not full name.
+committers = {
+    "andersg@0x63.nu": "Anders Gustafsson",
+    "andersg@chernushka.(none)": "Anders Gustafsson",
+    "andersg@genesis.xmms.se": "Anders Gustafsson",
+    "andersg@netintact.se": "Anders Gustafsson",
+    "andersg@xmms.org": "Anders Gustafsson",
+    "blow@hal.(none)": "Anders Gustafsson",
+    "cmorgan@captainmorgan.(none)": "Chris Morgan",
+    "daniel@nittionio.nu": "Daniel Svensson",
+    "eleusis@eleusis.f2o.org": "Sham Chukoury",
+    "jlt_speex@shamrock.dyndns.org": "Jens Taprogge",
+    "jlt_xmms2@shamrock.dyndns.org": "Jens Taprogge",
+    "lindgren@debian.(none)": "Michael Lindgren",
+    "lindgren@debian.as": "Michael Lindgren",
+    "ln@maggie.taprogge.wh": "Jens Taprogge",
+    "ln@shamrock.dyndns.org": "Jens Taprogge",
+    "nano@insomnia.(none)": "Daniel Svensson",
+    "nano@insomnia.nittionio.nu": "Daniel Svensson",
+    "nano@neurozine.(none)": "Daniel Svensson",
+    "nano@nittionio.nu": "Daniel Svensson",
+    "nano@purgatory.lan": "Daniel Svensson",
+    "olle@xmms.org": "Olle Hallnas",
+    "peter@data.netintact.se": "Peter Alm",
+    "peter@dumburk.ithora.nu": "Peter Alm",
+    "softchill@blacky.sympatico.ca": "Kristian Benoit",
+    "tbe@bernhard.hemma.tobbe.nu": "Tobias Bengtsson",
+    "thomas@xmms.org": "Thomas Nilsson",
+    "tilman@code-monkey.de": "Tilman Sauerbeck",
+    "tru@arclight.local": "Tobias Rundstrom",
+    "tru@burnout.home.ithora.nu": "Tobias Rundstrom",
+    "tru@darkangel.(none)": "Tobias Rundstrom",
+    "tru@electronaut.(none)": "Tobias Rundstrom",
+    "tru@electronaut.tobi.debian.as": "Tobias Rundstrom",
+    "tru@forsaken.debian.as": "Tobias Rundstrom",
+    "tru@nellie.tobi.nu": "Tobias Rundstrom",
+    "tru@netintact.se": "Tobias Rundstrom",
+    "tru@purgatory.guldkusten.com": "Tobias Rundstrom",
+    "tru@shift.local": "Tobias Rundstrom",
+    "tru@solitude.debian.as": "Tobias Rundstrom",
+    "tru@worf.(none)": "Tobias Rundstrom",
+    "tru@xmms.org": "Tobias Rundstrom",
+    }
 
 
 
-Kumar Gala had a case in the u-boot archive with multiple renames of files 
-with identical contents, and git would turn those into multiple "copy" 
-operations of one of the sources, and just deleting the other sources.
 
-This patch makes the git exact rename detection prefer to spread out the 
-renames over the multiple sources, rather than do multiple copies of one 
-source.
+f = os.popen("cd %s; bk prs -d':REV:\\t:PARENT:\\t:MPARENT:\\t\\n' ChangeSet" % bk_dir)
+f.readline()
+parents={}
+for rev in f:
+    [n,p] = rev.rstrip().split("\t",1)
+    parents[n] = p.split("\t")
 
-NOTE! The changes are a bit larger than required, because I also renamed 
-the variables named "one" and "two" to "target" and "source" respectively. 
-That makes the logic easier to follow, especially as the "one" was 
-illogically the target and not the soruce, for purely historical reasons 
-(this piece of code used to traverse over sources and targets in the wrong 
-order, and when we fixed that, we didn't fix the names back then. So I 
-fixed them now).
+os.putenv("GIT_OBJECT_DIRECTORY","%s/objects/" % git_dir)
+os.putenv("GIT_INDEX_FILE","%s/index" % git_dir)
 
-The important part of this change is just the trivial score calculations 
-for when files have identical contents:
+os.system("mkdir %s; cd %s; git-init-db" % (git_dir, git_dir))
 
-	/* Give higher scores to sources that haven't been used already */
-	score = !source->rename_used;
-	score += basename_same(source, target);
 
-and when we have multiple choices we'll now pick the choice that gets the 
-best rename score, rather than only looking at whether the basename 
-matched.
+unknown = {}
 
-It's worth noting a few gotchas:
+def get_name(email):
+    if committers.has_key(email):
+        return committers[email]
+    unknown[email] = True
+    return ""
 
- - this scoring is currently only done for the "exact match" case. 
+def git_commit(rev, p):
+    os.system("cd %s; git-ls-files --deleted | xargs git-update-cache --remove" % tmp_dir)
+    os.system("cd %s; git-ls-files --others | xargs git-update-cache --add" % tmp_dir)
+    os.system("cd %s; git-ls-files -z | xargs -0 git-update-cache" % tmp_dir)
+    treeid = os.popen("git-write-tree").read().rstrip()
+    print "wrote tree as %s" % treeid
+    os.system("rm -Rf %s" % tmp_dir)
 
-   In particular, in Kumar's example, even after this patch, the inexact
-   match case is still done as a copy+delete rather than as two renames:
+    bk_info = os.popen("cd %s; bk prs -r%s -d':KEY:\\n:UTC:\\n:USER:@:HOST:\\n$each(:C:){:C\\n}\\n' ChangeSet | sed 1d" % (bk_dir, rev)).read()
 
-	 delete mode 100644 board/cds/mpc8555cds/u-boot.lds
-	 copy board/{cds => freescale}/mpc8541cds/u-boot.lds (97%)
-	 rename board/{cds/mpc8541cds => freescale/mpc8555cds}/u-boot.lds (97%)
+    [key, date, user, comments] = bk_info.split("\n", 3)
+    f = file("/tmp/git-comments","w")
+    f.write(comments)
+    f.write("\nBK KEY: %s\n" % key)
+    f.close()
+    os.putenv("GIT_AUTHOR_DATE", str(int(time.mktime(time.strptime(date+" UTC", "%Y%m%d%H%M%S %Z")))))
+    os.putenv("GIT_AUTHOR_EMAIL", user)
+    os.putenv("GIT_AUTHOR_NAME", get_name(user))
+    os.putenv("GIT_COMMITTER_EMAIL", user)
+    os.putenv("GIT_COMMITTER_NAME", get_name(user))
+    
+    commitid = os.popen("git-commit-tree %s %s < /tmp/git-comments" % (treeid, " ".join(["-p "+a for a in p]))).read().rstrip()
+    print "committed %s as %s" % (rev, commitid)
+    return commitid
 
-   because apparently the "cds/mpc8541cds/u-boot.lds" copy looked 
-   a bit more similar to both end results. That said, I *suspect* we just 
-   have the exact same issue there - the similarity analysis just gave 
-   identical (or at least very _close_ to identical) similarity points, 
-   and we do not have any logic to prefer multiple renames over a 
-   copy/delete there.
+os.system("mkdir %s; touch %s/initial" % (tmp_dir, tmp_dir))
+resolved = {'1.1': git_commit("1.1",[])}
 
-   That is a separate patch.
+def res(ver):
+    if resolved.has_key(ver):
+        return
+    
+    for v in parents[ver]:
+        res(v)
+    os.system("cd %s; bk export -r%s %s" % (bk_dir, ver, tmp_dir))
+    resolved[ver] = git_commit(ver, [resolved[v] for v in parents[ver]])
+    return resolved[ver]
 
- - When you have identical contents and identical basenames, the actual 
-   entry that is chosen is still picked fairly "at random" for the first 
-   one (but the subsequent ones will prefer entries that haven't already 
-   been used).
+tot = os.popen("cd %s; bk prs -r+ -d':REV:' ChangeSet | tail -n 1" % bk_dir).read()
+print "Exporting bitkeeper up to version %s" % tot
 
-   It's not actually really random, in that it actually depends on the
-   relative alphabetical order of the files (which in turn will have 
-   impacted the order that the entries got hashed!), so it gives 
-   consistent results that can be explained. But I wanted to point it out 
-   as an issue for when anybody actually does cross-renames.
+HEAD = res(tot)
+print "HEAD: %s" % HEAD
+os.mkdir("%s/refs" % git_dir)
+os.mkdir("%s/refs/tags" % git_dir)
+os.mkdir("%s/refs/heads" % git_dir)
+file("%s/refs/heads/master" % git_dir,"w").write(HEAD + "\n")
+os.symlink("refs/heads/master", "%s/HEAD" % git_dir)
+print unknown.keys()
 
-   In Kumar's case the choice is the right one (and for a single normal 
-   directory rename it should always be, since the relative alphabetical 
-   sorting of the files will be identical), and we now get:
-
-	 rename board/{cds => freescale}/mpc8541cds/init.S (100%)
-	 rename board/{cds => freescale}/mpc8548cds/init.S (100%)
-
-   which is the "expected" answer. However, it might still be better to 
-   change the pedantic "exact same basename" on/off choice into a more 
-   graduated "how similar are the pathnames" scoring situation, in order 
-   to be more likely to get the exact rename choice that people *expect* 
-   to see, rather than other alternatives that may *technically* be 
-   equally good, but are surprising to a human.
-
-It's also unclear whether we should consider "basenames are equal" or 
-"have already used this as a source" to be more important. This gives them 
-equal weight, but I suspect we might want to just multiple the "basenames 
-are equal" weight by two, or something, to prefer equal basenames even if 
-that causes a copy/delete pair. I dunno.
-
-Anyway, what I'm just saying in a really long-winded manner is that I 
-think this is right as-is, but it's not the complete solution, and it may 
-want some further tweaking in the future.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
-
-On Thu, 29 Nov 2007, Kumar Gala wrote:
-> 
-> let me know if there is anything else you need.
-
-No, this was all right, and I've already got a patch ready for you to try.
-
-So this patch actually does do what you want (for the exact renames, if 
-not for the u-boot.lds file), but I wanted to just point out that we will 
-almost certainly at least want to extend it to the inexact rename 
-detection logic too, _and_ we may well want to make the "score" 
-calculation a bit more involved depending on the actual filename, rather 
-than just depend on the equality of the basename.
-
-		Linus
-
----
- diffcore-rename.c |   25 ++++++++++++++++---------
- 1 files changed, 16 insertions(+), 9 deletions(-)
-
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index f9ebea5..f64294e 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -244,28 +244,35 @@ static int find_identical_files(struct file_similarity *src,
- 	 * Walk over all the destinations ...
- 	 */
- 	do {
--		struct diff_filespec *one = dst->filespec;
-+		struct diff_filespec *target = dst->filespec;
- 		struct file_similarity *p, *best;
--		int i = 100;
-+		int i = 100, best_score = -1;
- 
- 		/*
- 		 * .. to find the best source match
- 		 */
- 		best = NULL;
- 		for (p = src; p; p = p->next) {
--			struct diff_filespec *two = p->filespec;
-+			int score;
-+			struct diff_filespec *source = p->filespec;
- 
- 			/* False hash collission? */
--			if (hashcmp(one->sha1, two->sha1))
-+			if (hashcmp(source->sha1, target->sha1))
- 				continue;
- 			/* Non-regular files? If so, the modes must match! */
--			if (!S_ISREG(one->mode) || !S_ISREG(two->mode)) {
--				if (one->mode != two->mode)
-+			if (!S_ISREG(source->mode) || !S_ISREG(target->mode)) {
-+				if (source->mode != target->mode)
- 					continue;
- 			}
--			best = p;
--			if (basename_same(one, two))
--				break;
-+			/* Give higher scores to sources that haven't been used already */
-+			score = !source->rename_used;
-+			score += basename_same(source, target);
-+			if (score > best_score) {
-+				best = p;
-+				best_score = score;
-+				if (score == 2)
-+					break;
-+			}
- 
- 			/* Too many identical alternatives? Pick one */
- 			if (!--i)
+--Boundary-00=_T/yTH96EsQ6GJKh--
