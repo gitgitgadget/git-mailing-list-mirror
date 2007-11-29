@@ -1,92 +1,68 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Thu, 29 Nov 2007 12:47:58 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0711291236260.9605@xanadu.home>
-References: <200711270622.lAR6MFXQ010010@mi0.bluebottle.com>
- <Pine.LNX.4.64.0711271109130.27959@racer.site>
- <alpine.LFD.0.99999.0711270917580.9605@xanadu.home>
- <20071127150829.GB3853@fieldses.org>
- <alpine.LFD.0.99999.0711271013310.9605@xanadu.home>
- <20071127153411.GA11731@fieldses.org>
- <alpine.LFD.0.99999.0711271047590.9605@xanadu.home>
- <20071127164243.GE11731@fieldses.org>
- <alpine.LFD.0.99999.0711271155250.9605@xanadu.home>
- <7vlk8hzx0g.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Some git performance measurements..
+Date: Thu, 29 Nov 2007 09:48:19 -0800 (PST)
+Message-ID: <alpine.LFD.0.9999.0711290945060.8458@woody.linux-foundation.org>
+References: <alpine.LFD.0.9999.0711281747450.8458@woody.linux-foundation.org> <alpine.LFD.0.9999.0711281852160.8458@woody.linux-foundation.org> <alpine.LFD.0.99999.0711282244190.9605@xanadu.home> <alpine.LFD.0.9999.0711282022470.8458@woody.linux-foundation.org>
+ <alpine.LFD.0.99999.0711291208060.9605@xanadu.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?ISO-2022-JP?Q?=1B$B$7$i$$$7$J$J$3=1B=28J?= 
-	<nanako3@bluebottle.com>, Andreas Ericsson <ae@op5.se>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 18:48:47 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Nov 29 18:50:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxnUw-0002tb-Vx
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 18:48:27 +0100
+	id 1IxnWJ-0003Yb-0M
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 18:49:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932189AbXK2RsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 12:48:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932070AbXK2RsE
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 12:48:04 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:55945 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932084AbXK2RsC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 12:48:02 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSA00IO643Y6BM0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 29 Nov 2007 12:48:01 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vlk8hzx0g.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S932128AbXK2RtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 12:49:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761132AbXK2RtI
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 12:49:08 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:56376 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760357AbXK2RtG (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Nov 2007 12:49:06 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lATHmKwY004443
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 29 Nov 2007 09:48:21 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lATHmJxf031981;
+	Thu, 29 Nov 2007 09:48:19 -0800
+In-Reply-To: <alpine.LFD.0.99999.0711291208060.9605@xanadu.home>
+X-Spam-Status: No, hits=-2.727 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66550>
 
-On Wed, 28 Nov 2007, Junio C Hamano wrote:
 
-> Nicolas Pitre <nico@cam.org> writes:
+
+On Thu, 29 Nov 2007, Nicolas Pitre wrote:
 > 
-> > ...  In all the tutorials for $job I've done so 
-> > far, I simply never talk about pull nor clone, but rather about init, 
-> > "git remote", fetch and merge, with explicit and meaningful branch 
-> > names.  I think that basic commands, even if there is a bit more of 
-> > them, make Git easier to learn and understand than talking about those 
-> > magic meta commands hiding the truth away.
-> 
-> That's actually a quite interesting approach for teaching.
-> 
-> The original "tutorial" (now core-tutorial) was similar in spirit; it
-> built the user experience by starting at sequence of low level commands,
-> and then finally said "since this is so often used combination, there is
-> a short-hand for it that does all".  I think the approach would work
-> quite well for people who want to use the tool with deep understanding.
-> 
-> However, I am not so sure about people who just want canned set of
-> instructions and follow them blindly to get their work done.  And I do
-> not think the latter classes of users are necessarily wrong.
-> 
-> Such a canned set of instructions would (if the project that supplies
-> the cheat-sheet encourages merges instead of rebases) talk about "clone
-> then commit then push then pull and repeat", without mentioning what
-> pull does is fetch+merge nor what fetch means and what merge means, and
-> that would let people get started without deeper understanding.
+> Well, see below for the patch that actually split the pack data into 
+> objects of the same type.  Doing that "git checkout" on the kernel tree 
+> did improve things for me although not spectacularly.
 
-Sure.  However the people for whom I produced the cheat-sheet have to 
-deal with the repo I maintain, which has multiple branches already, and 
-using an explicit "git remote add" allows for better names than the 
-default "origin".  Right there they become aware of the easy branching 
-possibilities of Git.
+Umm. See my earlier numbers. For "git checkout" with cold cache, the 
+*bulk* of the time is actually the ".gitignore" file lookups, so if you 
+see a three-second improvement out of 17s, it may not look spectacular, 
+but considering that probably 10s of those 17s were something *else* going 
+on, I suspect that if you really did just a plain "git checkout", you 
+actually *do* have a spectacular improvement of roughly 7s -> 4s!
 
-And with a constantly rewritten history in that repo, they have to 
-rebase after every fetch and there is no released Git version with a 
-short-hand for fetch+rebase.
+Try with
 
+	time git read-tree -m -u HEAD HEAD > /dev/null
 
-Nicolas
+instead.
+
+But if that is what you already did, then yeah, the performance 
+improvement for cold-cache wasn't as big as I was hoping for.
+
+		Linus
