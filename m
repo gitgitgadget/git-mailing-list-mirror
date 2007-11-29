@@ -1,59 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add "--expire <time>" option to 'git prune'
-Date: Thu, 29 Nov 2007 12:06:07 -0800
-Message-ID: <7vlk8gvmts.fsf@gitster.siamese.dyndns.org>
-References: <200711181225.52288.johannes.sixt@telecom.at>
-	<7v3av3wg7h.fsf@gitster.siamese.dyndns.org>
-	<200711182101.53936.johannes.sixt@telecom.at>
-	<7v7ikfuxfk.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0711290340470.27959@racer.site>
-	<7vaboxy3va.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0711291146090.27959@racer.site>
-	<Pine.LNX.4.64.0711291419350.27959@racer.site>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Adding Git to Better SCM Initiative : Comparison
+Date: Thu, 29 Nov 2007 21:07:10 +0100
+Message-ID: <20071129200710.GA3314@steel.home>
+References: <200711282339.59938.jnareb@gmail.com> <200711290326.13822.jnareb@gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
-	pasky@suse.cz
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 29 21:07:42 2007
+Cc: git@vger.kernel.org,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 29 21:08:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxpfM-0002h0-Jx
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 21:07:21 +0100
+	id 1IxpgT-0003BP-IK
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 21:08:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759338AbXK2UGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 15:06:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757721AbXK2UGb
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 15:06:31 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:49936 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932121AbXK2UGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 15:06:30 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 2AC942EF;
-	Thu, 29 Nov 2007 15:06:50 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id E77B09B17D;
-	Thu, 29 Nov 2007 15:06:43 -0500 (EST)
-In-Reply-To: <Pine.LNX.4.64.0711291419350.27959@racer.site> (Johannes
-	Schindelin's message of "Thu, 29 Nov 2007 14:21:23 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932239AbXK2UHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 15:07:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762894AbXK2UHU
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 15:07:20 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:33235 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762849AbXK2UHS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 15:07:18 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTub
+Received: from tigra.home (Fca01.f.strato-dslnet.de [195.4.202.1])
+	by post.webmailer.de (klopstock mo32) (RZmta 14.3)
+	with ESMTP id V00249jATI2iNR ; Thu, 29 Nov 2007 21:07:11 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id EB7C1277AE;
+	Thu, 29 Nov 2007 21:07:10 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id B0ABB56D22; Thu, 29 Nov 2007 21:07:10 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <200711290326.13822.jnareb@gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66559>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jakub Narebski, Thu, Nov 29, 2007 03:26:12 +0100:
+> +                <s id="git">
+> +                    Medium. There's Git User's Manual, manpages, some
+> +                    technical documentation and some howtos.  All
+> +                    documentation is also available online in HTML format;
+> +                    there is additional information (including beginnings
+> +                    of FAQ) on git wiki.
+> +                    Nevertheles one of complaints in surveys is insufficient
 
-> The implementation uses st.st_mtime rather than st.st_ctime,
-> because it can be tested better, using 'touch -d <time>' (and
-> omitting the test when the platform does not support that
-> command line switch).
+"Nevertheless" (two "s").
 
-But I think you can use more portable -t for setting mtime to
-1970/01/01, but I had a feeling that earlier we were bitten by
-non-portability of "touch" and introduced test-chmtime.
+BTW, I wouldn't call the level of documentation "Medium" when compared
+to any commercial SCM. How can they earn more than "a little", when
+compared to any opensource program?
+
+> @@ -894,6 +938,14 @@ TODO:
+>                      to install the subversion perl bindings and a few modules
+>                      from CPAN.
+>                  </s>
+> +                <s id="git">
+> +                    TO DO. RPMs and deb packages for Linux. msysGit and
+> +                    Cygwin for Win32 - Git requires POSIX shell, Perl,
+> +                    and POSIX utilities for some commands (builtin).
+
+I read this as: "Git requires all these programs for builtin
+commands". Which is a bit confusing. Just drop "(builtin)"?
+
+> +                    Autoconf to generate Makefile configuration; ready
+> +                    generic configuration for many OS. Compiling docs
+> +                    requires asciidoc and xmlto toolchain, but prebuild.
+
+"prebuilt" (with "t"). Maybe remove ", but prebuilt" completely?
+
+> @@ -1106,6 +1165,10 @@ TODO:
+>                      There exists some HTTP-functionality, but it is quite
+>                      limited.
+>                  </s>
+> +                <s id="git">
+> +                    Good.  Uses HTTPS (with WebDAV) or ssh for push,
+> +                    HTTP, FTP, ssh or custom protocol for fetch.
+> +                </s>
+
+You forgot bundles (aka SneakerNet).
+Again, compared to everyone else it is "vastly superior" :)
+
+>                  <s id="mercurial">
+>                      Excellent.  Uses HTTP or ssh.  Remote access also
+>                      works safely without locks over read-only network
+> @@ -1203,6 +1266,10 @@ TODO:
+>                      Very good. Supports many UNIXes, Mac OS X, and Windows,
+>                      and is written in a portable language.
+>                  </s>
+> +                <s id="git">TO DO.
+> +                    Good.  Portable across all POSIX systems.
+> +                    There exists Win32 binary using MinGW.
+> +                </s>
+
+"binaries": MinGW and Cygwin. And it is definitely "excellent" by the
+standards of the site.
