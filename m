@@ -1,72 +1,68 @@
-From: Jing Xue <jingxue@digizenstudio.com>
-Subject: Re: git guidance
-Date: Thu, 29 Nov 2007 10:52:20 -0500
-Message-ID: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add "--expire <time>" option to 'git prune'
+Date: Thu, 29 Nov 2007 16:13:47 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711291613260.27959@racer.site>
+References: <200711181225.52288.johannes.sixt@telecom.at>
+ <7v3av3wg7h.fsf@gitster.siamese.dyndns.org> <200711182101.53936.johannes.sixt@telecom.at>
+ <7v7ikfuxfk.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711290340470.27959@racer.site>
+ <7vaboxy3va.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711291146090.27959@racer.site>
+ <Pine.LNX.4.64.0711291419350.27959@racer.site> <20071129151211.GB32296@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset=UTF-8;
-	DelSp="Yes";
-	format="flowed"
-Content-Transfer-Encoding: 7bit
-Cc: linux-kernel@vger.kernel.org, git@vger.kernel.org
-To: Al Boldi <a1426z@gawab.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 16:52:47 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org,
+	pasky@suse.cz
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 29 17:14:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ixlgx-0007AQ-3i
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 16:52:43 +0100
+	id 1Ixm2A-00011b-IQ
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 17:14:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757003AbXK2PwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 10:52:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756854AbXK2PwX
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 10:52:23 -0500
-Received: from k2smtpout03-02.prod.mesa1.secureserver.net ([64.202.189.172]:39352
-	"HELO k2smtpout03-02.prod.mesa1.secureserver.net"
+	id S1758497AbXK2QOA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 11:14:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758144AbXK2QOA
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 11:14:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57021 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755917AbXK2PwW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 10:52:22 -0500
-Received: (qmail 14917 invoked from network); 29 Nov 2007 15:52:21 -0000
-Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
-  by k2smtpout03-02.prod.mesa1.secureserver.net (64.202.189.172) with ESMTP; 29 Nov 2007 15:52:21 -0000
-Received: from localhost (unknown [127.0.0.1])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 87F7F100A37;
-	Thu, 29 Nov 2007 15:52:21 +0000 (UTC)
-Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
-	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qjF2DGIgCWRB; Thu, 29 Nov 2007 10:52:20 -0500 (EST)
-Received: by ip-72-167-33-213.ip.secureserver.net (Postfix, from userid 48)
-	id C7D19100A8F; Thu, 29 Nov 2007 10:52:20 -0500 (EST)
-Received: from mailrelay2.private.geico.com (mailrelay2.private.geico.com
-	[205.143.204.198]) by intranet.digizenstudio.com (Horde MIME library) with
-	HTTP; Thu, 29 Nov 2007 10:52:20 -0500
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
+	id S1751440AbXK2QN7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 11:13:59 -0500
+Received: (qmail invoked by alias); 29 Nov 2007 16:13:57 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp057) with SMTP; 29 Nov 2007 17:13:57 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/bNANtqO3bdBym9WrmtIzXXxEtXaEH/pBjT0KIiM
+	fyZotetlVpyiJ4
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071129151211.GB32296@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66543>
 
+Hi,
 
-Quoting Al Boldi <a1426z@gawab.com>:
+On Thu, 29 Nov 2007, Jeff King wrote:
 
-> Sure, browsing is the easy part, but Version Control starts when things
-> become writable.
+> On Thu, Nov 29, 2007 at 02:21:23PM +0000, Johannes Schindelin wrote:
+> 
+> > This patch adds a mode to expire only loose, unreachable objects
+> > which are older than a certain time.  For example, by
+> > 
+> > 	git prune --expire 14.days
+> > 
+> > you can prune only those objects which are loose, unreachable
+> > and older than 14 days (and thus probably outdated).
+> 
+> Does this now make git-prune safe for automatic running?
+> 
+> I suppose you could still be actively manipulating refs that point to
+> very old objects.
 
-But how is that supposed to work?  What happens when you make some
-changes to a file and save it?  Do you want the "git file system" to
-commit it right aways or wait until you to issue a "commit" command?
-The first behavior would obviously be wrong, and the second would make
-the "file system" not operationally transparent anyways. Right?
+That's why I want to have it configurable from git-gc.
 
-By the way, the only SCM I have worked with that tries to mount its
-repository (or a view on top of it) as a file system is ClearCase with
-its dynamic views. And, between the buggy file system implementation,
-the intrusion on workflow, and the lack of scalability, at least in
-the organization I worked for, it turned out to be a horrible,
-horrible, horrible idea.
-
-Cheers.
--- 
-Jing Xue
+Ciao,
+Dscho
