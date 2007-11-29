@@ -1,76 +1,56 @@
-From: Kumar Gala <galak@kernel.crashing.org>
-Subject: Re: problem with git detecting proper renames
-Date: Thu, 29 Nov 2007 13:32:47 -0600
-Message-ID: <AE325F31-6EDD-4A79-B5EF-5F1D4EBCDBDB@kernel.crashing.org>
-References: <Pine.LNX.4.64.0711291050440.1711@blarg.am.freescale.net> <alpine.LFD.0.9999.0711290934260.8458@woody.linux-foundation.org> <28BD703B-24D3-41D6-8360-240A884B1305@kernel.crashing.org> <alpine.LFD.0.9999.0711291122050.8458@woody.linux-foundation.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Nov 29 20:33:19 2007
+From: Steven Grimm <koreth@midwinter.com>
+Subject: [PATCH] git-svn: Don't create a "master" branch every time rebase is run
+Date: Thu, 29 Nov 2007 11:54:39 -0800
+Message-ID: <20071129195439.GA22630@midwinter.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 29 20:55:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ixp8K-0005Li-GI
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 20:33:12 +0100
+	id 1IxpTQ-0005zG-On
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 20:55:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932153AbXK2Tcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 14:32:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761136AbXK2Tcx
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 14:32:53 -0500
-Received: from gate.crashing.org ([63.228.1.57]:54398 "EHLO gate.crashing.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758001AbXK2Tcw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 14:32:52 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gate.crashing.org (8.13.8/8.13.8) with ESMTP id lATJWlLf001381;
-	Thu, 29 Nov 2007 13:32:48 -0600
-In-Reply-To: <alpine.LFD.0.9999.0711291122050.8458@woody.linux-foundation.org>
-X-Mailer: Apple Mail (2.915)
+	id S932214AbXK2Tyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 14:54:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759873AbXK2Tyk
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 14:54:40 -0500
+Received: from tater.midwinter.com ([216.32.86.90]:37705 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759739AbXK2Tyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 14:54:39 -0500
+Received: (qmail 22684 invoked by uid 1001); 29 Nov 2007 19:54:39 -0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66556>
 
+If you run "git-svn rebase" while sitting on a topic branch, there is
+no need to create a "master" branch if one didn't exist already. The
+branch was created implicitly by the automatic checkout after fetching,
+which in the case of rebase isn't actually necessary anyway.
 
-On Nov 29, 2007, at 1:27 PM, Linus Torvalds wrote:
+Signed-off-by: Steven Grimm <koreth@midwinter.com>
+---
+ git-svn.perl |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
->
->
-> On Thu, 29 Nov 2007, Kumar Gala wrote:
->>
->> In the case of multiple identical matches can we look at the file  
->> name as a
->> possible heuristic?
->
-> We already do. But we only do the base-name part and check it for
-> exactness, since moving across directories is very common, and we
-> explicitly want to pick up files that have the same base name.
->
-> However, in your case, not only did you have the same content, you  
-> had the
-> same basename too! So git considered your renames to be totally  
-> identical
-> wrt scoring with the current heuristics, and just picked one source at
-> random.
->
-> And the current heuristics don't even have any "if you already found a
-> rename, avoid picking the same one twice", so it would pick the *same*
-> source both times, which is why it looked like "two copies and one
-> delete".
->
-> This is why I'd like to have a real-life example. I can change the
-> heuristics, and I even know what are likely to be better heuristics,  
-> but I
-> still want to actually see and play with an example so that when I  
-> send
-> Junio a patch, I can explain it and say I've tested it with something
-> real..
-
-Ok, this is a real example from the u-boot tree.  If you give me a  
-little while I can point you at a kernel.org git tree that showed this  
-issue.
-
-- k
+diff --git a/git-svn.perl b/git-svn.perl
+index 43e1591..d483e6b 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -545,6 +545,8 @@ sub cmd_rebase {
+ 		exit 1;
+ 	}
+ 	unless ($_local) {
++		# rebase will checkout for us, so no need to do it explicitly
++		$_no_checkout = 'true';
+ 		$_fetch_all ? $gs->fetch_all : $gs->fetch;
+ 	}
+ 	command_noisy(rebase_cmd(), $gs->refname);
+-- 
+1.5.3.6.960.g49661
