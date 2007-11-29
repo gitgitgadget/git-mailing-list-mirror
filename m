@@ -1,107 +1,112 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [PATCH v3] Allow update hooks to update refs on their own
-Date: Wed, 28 Nov 2007 22:44:59 -0800
-Message-ID: <35C5BEA0-0D6C-4D2E-85E7-1B78FB0BEADA@midwinter.com>
-References: <C1321BD5-8F6B-47F9-9BDB-C2BF819D6F17@midwinter.com> <20071128221403.GA3256@midwinter.com> <20071128230355.GB13964@coredump.intra.peff.net> <7vve7m0wfo.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 07:45:35 2007
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [RFC] git-gui USer's Survey 2007 (was: If you would write git
+	from scratch now, what would you change?)
+Date: Thu, 29 Nov 2007 07:57:06 +0100
+Message-ID: <20071129065706.GA24070@efreet.light.src>
+References: <fiet88$68n$1@ger.gmane.org> <e5bfff550711261125i92fb057i85d7217b18cd495d@mail.gmail.com> <20071127012013.GG14735@spearce.org> <fifstd$ilj$1@ger.gmane.org> <20071127015833.GL14735@spearce.org> <Pine.LNX.4.64.0711271136050.27959@racer.site> <fiib19$dj6$1@ger.gmane.org> <Pine.LNX.4.64.0711281225150.27959@racer.site> <20071128232523.GE9174@efreet.light.src> <Pine.LNX.4.64.0711282345500.27959@racer.site>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="cWoXeonUoKmBZSoM"
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Nov 29 07:58:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ixd9Q-0005QG-8j
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 07:45:32 +0100
+	id 1IxdLe-0007zY-2z
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 07:58:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752722AbXK2GpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 01:45:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752512AbXK2GpF
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 01:45:05 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:32924 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751277AbXK2GpD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 01:45:03 -0500
-Received: (qmail 1734 invoked from network); 29 Nov 2007 06:45:01 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=bP/f06QJF9/xbY4Upzs7oE0eDeWhXJ2IkL1H3Jnuu4SKXx+J0NYxpSuxy4eMXhaz  ;
-Received: from localhost (127.0.0.1)
-  by localhost with SMTP; 29 Nov 2007 06:45:01 -0000
-In-Reply-To: <7vve7m0wfo.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.915)
+	id S1752856AbXK2G5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 01:57:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752617AbXK2G5s
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 01:57:48 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:55678 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752512AbXK2G5r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 01:57:47 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id CD6DE5757D;
+	Thu, 29 Nov 2007 07:57:24 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id Vd1M-36URQkf; Thu, 29 Nov 2007 07:57:21 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id CF8115756C;
+	Thu, 29 Nov 2007 07:57:12 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1IxdKc-0006Mn-W8; Thu, 29 Nov 2007 07:57:07 +0100
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0711282345500.27959@racer.site>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66507>
 
-On Nov 28, 2007, at 3:42 PM, Junio C Hamano wrote:
-> I do not think reporting back the rewritten object name makes much  
-> sense
-> nor adds any value; it won't be useful information until you fetch the
-> object.
 
-Right, this was mostly in anticipation of doing an automatic fetch, so  
-that I would avoid fetching anything but the rewritten revisions; if I  
-just fetched the remote ref as normal, then I'd potentially pick up  
-unrelated changes that happened to hit just after my pack was  
-accepted, which wouldn't maintain the "update the tracking ref to  
-point to what I just pushed" semantics.
+--cWoXeonUoKmBZSoM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Since it sounds like that's a nonstarter, I agree this part of the  
-patch isn't useful.
+On Wed, Nov 28, 2007 at 23:48:12 +0000, Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Thu, 29 Nov 2007, Jan Hudec wrote:
+>=20
+> > On Wed, Nov 28, 2007 at 12:32:10 +0000, Johannes Schindelin wrote:
+> > > On Wed, 28 Nov 2007, Jakub Narebski wrote:
+> > > > 4. If git-gui would use other language/toolkit, would you=20
+> > > > contribute?
+> > > >    Yes/No
+> > >=20
+> > > Yes, as long as it is a language/toolkit that is available on all=20
+> > > platforms that I (have to) work.  That pretty much excludes C# and=20
+> > > Python as a language.
+> >=20
+> > Out of interest, where does neither of those two work and Qt and tcl/tk=
+ do?
+> > Mono and python both seem to be quite portable.
+>=20
+> IRIX (an ancient one).
+>=20
+> Besides, Mono is darned slow.  Even Tcl/Tk is faster.
 
-> I do not think reporting back _anything_ other than "ok" adds much  
-> value
-> at all.  Sure, if the update hook did something funky you would get  
-> such
-> a report, but the situation is not any different if some warm body is
-> sitting on the other end and building on top of what you pushed
-> immediately he sees any push into the repository, and in such a case
-> your git-push would not get any such reporting anyway.
+On the shootout Mono seems to be an order of magnitude faster in most tests.
+But maybe they are performing very poorly on some strange platform where th=
+ey
+don't have JIT.
 
-I disagree that it's the same. In this case the updated ref happens as  
-a component of the push operation (which of course includes running  
-update hooks and at the very least looking at their exit codes to see  
-if a change should be rejected), not as a result of some other process  
-that happens to occur at nearly the same time. Reporting back the new  
-ref, at the very least, tells you that it's not useful to update the  
-tracking ref since it's 100% guaranteed to be wrong by the time the  
-push finishes.
+> Furthermore, my complaint was not about a platform where neither C# nor=
+=20
+> Python work.  That is irrelevant.  If you have one platform where only on=
+e=20
+> works, and another platform where only the other works, you cannot have a=
+=20
+> single program for both platforms.  Right?
 
-> We do not even have to worry about this reporting at all if we do not
-> allow munging the refs in the update hook.  In a sense, this patch is
-> creating a problem that does not need to be solved.  Perhaps modifying
-> update hook to allow so makes it possible to munge refs while  
-> holding a
-> lock, but is it really worth this hassle?  Isn't there a better way, I
-> wonder?
+Right.
 
-If there is, I'm happy to hear it; for me this patch is a means, not  
-an end. What I actually want is to be able to have a particular set of  
-branches in a particular git repository be as-transparent-as-possible  
-conduits to corresponding branches in an svn repository.
+I probably shouldn't be surprised that mono does not work on older unices,
+but I am a bit surprised python does not.
 
-I arrived at this approach by following this train of thought:
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
 
-1. The update hook is the only hook that allows me to reject the push,  
-which I need to do if svn refuses to accept the change.
-2. To tell whether svn accepts a change, I need to run git-svn  
-dcommit; thanks to #1, I need to do that from inside the update hook.
-3. When I commit, git-svn needs to track that the git revision now  
-corresponds to an svn revision. It does that by modifying the commit  
-message to add its git-svn-id: line.
-4. Modifying the commit comment causes the revision's SHA1 to change.
-5. Out-of-the-box push thinks a push has failed if the ref's SHA1  
-changes in the update hook.
-6. Therefore push needs to be modified to not do that.
+--cWoXeonUoKmBZSoM
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-If any one of #1-5 wasn't true or was solvable in a different way,  
-then #6 wouldn't be needed. For example, if git-svn kept its mapping  
-of git revisions to svn revisions somewhere else it could leave the  
-commit messages untouched, meaning the SHA1s wouldn't change.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
--Steve
+iD8DBQFHTmLCRel1vVwhjGURAsdmAKDLX4IqrRLc+zHsAw6m0KtV7qyCIwCgxnXa
+BG5hdiwxqkyEichobvY1esk=
+=2+I2
+-----END PGP SIGNATURE-----
+
+--cWoXeonUoKmBZSoM--
