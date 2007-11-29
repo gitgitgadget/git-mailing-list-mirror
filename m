@@ -1,57 +1,61 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] scripts: do not get confused with HEAD in work tree
-Date: Thu, 29 Nov 2007 08:02:57 +0100
-Organization: glandium.org
-Message-ID: <20071129070257.GB5144@glandium.org>
-References: <7vbq9d29h3.fsf@gitster.siamese.dyndns.org>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: Adding Git to Better SCM Initiative : Comparison
+Date: Thu, 29 Nov 2007 08:17:05 +0100
+Message-ID: <20071129071705.GB24070@efreet.light.src>
+References: <200711282339.59938.jnareb@gmail.com> <200711290248.23239.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 08:03:22 2007
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Nov 29 08:17:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxdQf-0000cs-Kp
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 08:03:22 +0100
+	id 1IxdeV-0003zm-5Y
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 08:17:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751931AbXK2HDB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 02:03:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751987AbXK2HDA
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 02:03:00 -0500
-Received: from smtp28.orange.fr ([80.12.242.100]:61376 "EHLO smtp28.orange.fr"
+	id S1752918AbXK2HRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 02:17:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752745AbXK2HRS
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 02:17:18 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:44918 "EHLO ns1.bluetone.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751719AbXK2HDA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 02:03:00 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2808.orange.fr (SMTP Server) with ESMTP id 3F31580000B7
-	for <git@vger.kernel.org>; Thu, 29 Nov 2007 08:02:58 +0100 (CET)
-Received: from namakemono.glandium.org (APuteaux-153-1-85-180.w86-205.abo.wanadoo.fr [86.205.43.180])
-	by mwinf2808.orange.fr (SMTP Server) with ESMTP id 25F5380000B2;
-	Thu, 29 Nov 2007 08:02:58 +0100 (CET)
-X-ME-UUID: 20071129070258155.25F5380000B2@mwinf2808.orange.fr
-Received: from mh by namakemono.glandium.org with local (Exim 4.68)
-	(envelope-from <mh@glandium.org>)
-	id 1IxdQH-0001pf-NC; Thu, 29 Nov 2007 08:02:57 +0100
+	id S1752648AbXK2HRR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 02:17:17 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 8950A572FD;
+	Thu, 29 Nov 2007 08:17:14 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id 09QKUa20i251; Thu, 29 Nov 2007 08:17:08 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 3F0D557621;
+	Thu, 29 Nov 2007 08:17:05 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1Ixddx-0006PM-2p; Thu, 29 Nov 2007 08:17:05 +0100
 Content-Disposition: inline
-In-Reply-To: <7vbq9d29h3.fsf@gitster.siamese.dyndns.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+In-Reply-To: <200711290248.23239.robin.rosenberg.lists@dewire.com>
 User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66509>
 
-On Wed, Nov 28, 2007 at 04:15:04PM -0800, Junio C Hamano wrote:
-> When you have a file called HEAD in your work tree, many commands that
-> our scripts feed "HEAD" to would complain about the rev vs path
-> ambiguity.  A solution is to form command line more carefully by
-> appending -- to them, which makes it clear that we mean HEAD rev not
-> HEAD file.
+On Thu, Nov 29, 2007 at 02:48:22 +0100, Robin Rosenberg wrote:
+> I did start doing this so here's my version (pre-msysgit). Please try to bring up the defintion
+> of "atomic" again with the author. I did complain a little but nothing happened. The issue is
+> that Clearcase is listed as having "atomic" commits which is not true for any usable definition
+> of atomic in SCM context. With the definition in use there I think CVS should be considered
+> having atomic commits too, at least I've never seen a half-committed file there.
 
-Shouldn't this be done for anything else, then ? You could have a file
-with the same name as a branch and have some commands using branch names
-fail too.
+Actually, I did. Or rather, I did see a commit, that didn't make it to the
+server, but the client thought it did!
 
-Mike
+Maybe instead of asking the author to change the definition of atomic, ask
+him to add an item for whole-tree commits. That more precisely describes what
+is the point.
+
+-- 
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
