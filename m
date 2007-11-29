@@ -1,99 +1,70 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC] Teach repack to optionally retain otherwise lost
- objects
-Date: Thu, 29 Nov 2007 11:57:26 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711291146090.27959@racer.site>
-References: <200711181225.52288.johannes.sixt@telecom.at>
- <7v3av3wg7h.fsf@gitster.siamese.dyndns.org> <200711182101.53936.johannes.sixt@telecom.at>
- <7v7ikfuxfk.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711290340470.27959@racer.site>
- <7vaboxy3va.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [RFC] git-gui USer's Survey 2007 (was: If you would write git
+ from scratch now, what would you change?)
+Date: Thu, 29 Nov 2007 12:01:47 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711291200000.27959@racer.site>
+References: <fiet88$68n$1@ger.gmane.org> <e5bfff550711261125i92fb057i85d7217b18cd495d@mail.gmail.com>
+ <20071127012013.GG14735@spearce.org> <fifstd$ilj$1@ger.gmane.org>
+ <20071127015833.GL14735@spearce.org> <Pine.LNX.4.64.0711271136050.27959@racer.site>
+ <fiib19$dj6$1@ger.gmane.org> <Pine.LNX.4.64.0711281225150.27959@racer.site>
+ <20071128232523.GE9174@efreet.light.src> <Pine.LNX.4.64.0711282345500.27959@racer.site>
+ <20071129065706.GA24070@efreet.light.src>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 29 12:58:08 2007
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Thu Nov 29 13:03:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ixi1q-00009h-UK
-	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 12:58:03 +0100
+	id 1Ixi7S-0002WG-J0
+	for gcvg-git-2@gmane.org; Thu, 29 Nov 2007 13:03:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761484AbXK2L5m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 06:57:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762399AbXK2L5m
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 06:57:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35985 "HELO mail.gmx.net"
+	id S1763121AbXK2MCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 07:02:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762941AbXK2MCA
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 07:02:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41936 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754610AbXK2L5l (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 06:57:41 -0500
-Received: (qmail invoked by alias); 29 Nov 2007 11:57:38 -0000
+	id S1763119AbXK2MB6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 07:01:58 -0500
+Received: (qmail invoked by alias); 29 Nov 2007 12:01:57 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp043) with SMTP; 29 Nov 2007 12:57:38 +0100
+  by mail.gmx.net (mp048) with SMTP; 29 Nov 2007 13:01:57 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ML3orOYBMcxjCKaKHxFV7vVrsO0vrJL0J3PNHpr
-	7NX4482E1cfL34
+X-Provags-ID: V01U2FsdGVkX1+CNoRlWGuCcuagQJXXhNTywqpzine9J99kWJlitE
+	LY0vS2DqbR+u5x
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7vaboxy3va.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <20071129065706.GA24070@efreet.light.src>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66528>
 
 Hi,
 
-On Wed, 28 Nov 2007, Junio C Hamano wrote:
+On Thu, 29 Nov 2007, Jan Hudec wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Wed, Nov 28, 2007 at 23:48:12 +0000, Johannes Schindelin wrote:
+>
+> > Furthermore, my complaint was not about a platform where neither C# 
+> > nor Python work.  That is irrelevant.  If you have one platform where 
+> > only one works, and another platform where only the other works, you 
+> > cannot have a single program for both platforms.  Right?
 > 
-> > 	Besides, a completely different idea just struck me: before
-> > 	repacking, .git/objects/pack/* could be _hard linked_ to the
-> > 	forkee's object stores.  Then nothing in git-repack's code
-> > 	needs to be changed.
-> >
-> > 	Oh, well.  I just wasted 1.5 hours.
+> Right.
 > 
-> Your 1.5 hours was spent wisely to come up with that idea ;-).
+> I probably shouldn't be surprised that mono does not work on older unices,
+> but I am a bit surprised python does not.
 
-Thanks ;-)
+*Sigh* I managed again to make myself misunderstood.
 
-> To make sure I understand your idea correctly, the procedure to repack a 
-> repository in a fork-friendly way is:
-> 
->  (1) find the project directly forked from you;
-> 
->  (2) hardlink all packs under your object store to their object store;
-> 
->  (3) repack -a -l and prune.
+Even if newer Python does not easily compile on that IRIX, I have an old 
+Python there (2.2).  But I don't have any Python on MSys.  (Yes, there is 
+a _MinGW_ port, but no _MSys_ one.)  So for me, Python is out.
 
-Yep.
-
-> I think that would work as long as you do the above as a unit and handle
-> one repository at a time.
-
-Exactly.  See
-
-http://repo.or.cz/w/repo.git?a=commitdiff;h=fba501deabd349afbe3b8bf89f385889889e04ac
-
-for a tired proposal.
-
-Note that "prune" is not (yet) an option, since it could possibly destroy 
-objects which are needed in an ongoing push operation.
-
-However, we could do exactly the same as with reflogs: introduce a grace 
-period (with loose objects, we can use the ctime...)
-
-> Otherwise I think you risk losing necessary objects when hierarchical 
-> forks are involved.  E.g.  if you have a project X that has a fork Y 
-> which in turn has fork Z.
-
-Well, in theory you could also iterate over all projects and hard link the 
-packs/objects of their alternates, and _then_ iterate and repack.  But it 
-is simpler and more obvious in the case of repo.or.cz to do all in one 
-iteration, because we can order the repository names easily so that 
-forkees come first, _and_ we have an easy way to find out what are the 
-forks of a project.
-
-Ciao,
+Hth,
 Dscho
