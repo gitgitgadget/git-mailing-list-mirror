@@ -1,103 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Fri, 30 Nov 2007 00:54:26 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711300053260.27959@racer.site>
-References: <20071127160423.GA22807@laptop> <Pine.LNX.4.64.0711271617350.27959@racer.site>
- <20071128000731.GD9174@efreet.light.src> <7v8x4jb295.fsf@gitster.siamese.dyndns.org>
- <fcaeb9bf0711280036p33583824ge59af93bbe3f0a78@mail.gmail.com>
- <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org> <20071129150849.GA32296@coredump.intra.peff.net>
- <fcaeb9bf0711291205h125dadbbp8e8ae392e9b5b751@mail.gmail.com>
- <20071129211409.GA16625@sigill.intra.peff.net> <Pine.LNX.4.64.0711292218240.27959@racer.site>
- <20071129231444.GA9616@coredump.intra.peff.net>
- <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org>
- <7veje8twt2.fsf@gitster.siamese.dyndns.org> <474F5E90.9040505@gmail.com>
+Date: Thu, 29 Nov 2007 19:58:52 -0500
+Message-ID: <20071130005852.GA12224@coredump.intra.peff.net>
+References: <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org> <20071129150849.GA32296@coredump.intra.peff.net> <fcaeb9bf0711291205h125dadbbp8e8ae392e9b5b751@mail.gmail.com> <20071129211409.GA16625@sigill.intra.peff.net> <Pine.LNX.4.64.0711292218240.27959@racer.site> <20071129231444.GA9616@coredump.intra.peff.net> <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org> <7veje8twt2.fsf@gitster.siamese.dyndns.org> <20071130003512.GB11683@coredump.intra.peff.net> <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Jeff King <peff@peff.net>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
-To: A Large Angry SCM <gitzilla@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 30 01:55:03 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 30 01:59:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ixu9l-0007Ze-9C
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 01:55:01 +0100
+	id 1IxuDr-0000Dn-1u
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 01:59:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932905AbXK3Aym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 19:54:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932741AbXK3Aym
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 19:54:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39068 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932752AbXK3Ayl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 19:54:41 -0500
-Received: (qmail invoked by alias); 30 Nov 2007 00:54:38 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp007) with SMTP; 30 Nov 2007 01:54:38 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX181bZgCBdI15YjSaM4BHyNjf7CcOlRSS1yT6Wz7UC
-	1Lo9BoUpciDyFs
-X-X-Sender: gene099@racer.site
-In-Reply-To: <474F5E90.9040505@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S932741AbXK3A64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 19:58:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932188AbXK3A64
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 19:58:56 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2172 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759614AbXK3A6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 19:58:55 -0500
+Received: (qmail 30685 invoked by uid 111); 30 Nov 2007 00:58:53 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 29 Nov 2007 19:58:53 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Nov 2007 19:58:52 -0500
+Content-Disposition: inline
+In-Reply-To: <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66586>
 
-Hi,
+On Thu, Nov 29, 2007 at 04:49:26PM -0800, Junio C Hamano wrote:
 
-On Thu, 29 Nov 2007, A Large Angry SCM wrote:
+> I understand your point was primarily "git-a<tab>".  I think it has been
+> solved for bash and zsh but not for other shells.  I think possible and
+> sensible avenues are (1) punt -- cvs, svn nor hg people do not seem to
+> have problem with it, or (2) implement completion in your other favorite
+> shells.
 
-> Junio C Hamano wrote:
-> [...]
-> > Ok.  So here is a revised roadmap that a panda brain (that is not so
-> > well working today due to fever) came up.
-> > 
-> >  - v1.5.4 will ship with gitexecdir=$(bindir) in Makefile.  But the
-> >    release notes for the version will warn users that:
-> > 
-> >    (1) using git-foo from the command line, and
-> > 
-> >    (2) using git-foo from your scripts without first prepending the
-> >        return value of "git --exec-path" to the PATH
-> > 
-> >    is now officially deprecated (it has been deprecated for a long time
-> >    since January 2006, v1.2.0~149) and upcoming v1.5.5 will ship with
-> >    the default configuration that does not install git-foo form in
-> >    user's PATH.
-> > 
-> >    If further will warn users that git-foo form will be removed in
-> >    v1.5.6 for many commands and it will be merely an accident if some of
-> >    them still work after that.
-> > 
-> >  - Post v1.5.4, start cooking gitexecdir=$(libexecdir)/git-core, aiming
-> >    for inclusion in v1.5.5, perhaps in Feb-Mar 2008 timeframe.  This
-> >    will also affect the sample RPM spec and resulting RPM binary
-> >    packages I will place on k.org, and I'll ask Gerrit to do the same on
-> >    Debian side.  The official binary packaging of individual distros are
-> >    not under my control, but if there is a handy list of people I can
-> >    send this notice to for other distros, that would help this process.
-> > 
-> >  - The release notes for v1.5.5 will warn users again that git-foo will
-> >    be removed in v1.5.6 for many commands and it will be merely an
-> >    accident if some of them still work.
-> > 
-> >  - Post v1.5.5, start cooking the change that does not install hardlinks
-> >    for built-in commands, aiming for inclusion in v1.5.6, in May-Jun
-> >    2008 timeframe.
+My point is that (2) is already implemented for every program (shell or
+no) which understands filename completion, and there is a proposal for
+taking it away. I would consider that, except I haven't see any claimed
+advantages except that the hardlinks are awful under Windows.
+
+I am proposing to have those dashed forms on platforms where it makes
+sense, but to treat them as second-class citizens (by putting them in
+$(libexecdir), which will address consistency problems.
+
+> And I think the following from Linus makes sense.
 > 
-> Again, there needs to remain support in the Makefile to install the "dashed"
-> versions of the commands for those that want it; and be able to set
-> gitexecdir=$(binder) without editing the Makefile.
+> > And from a consistency standpoint, that would be a *good* thing. There are 
+> > many reasons why the git-xyz format *cannot* be the "consistent" form
+> > (ranging from the flags like --bare and -p to just aliases), so 
+> > encouraging people to move to "git xyz" is just a good idea.
+> >
+> > Yeah, yeah, the man-pages need the "git-xyz" form, but on the other hand, 
+> > rather than "man git-xyz", you can just do "git help xyz" instead, and now 
+> > you're consistently avoiding the dash again!
+> 
+> but I am feeling quite feverish today so I may be missing something
+> obvious.
 
-Umm.  Why?  If there is no compelling reason (and you named none, but 
-there were quite a few reasons against it), why should the Makefile 
-support the dash form after 1.5.6?
+I thought Linus' point was that moving the subcommands was sufficient
+for dealing with the consistency issue (i.e., all scripts would move to
+"git foo" and only those people who really wanted to would put the
+dashed forms in their path). From the same email you quoted, but just
+above:
 
-Ciao,
-Dscho
+> On Thu, 29 Nov 2007, Jeff King wrote:
+> >
+> > Yes, I am fine with the user having to go to extra lengths to use the
+> > dash forms (like adding $(libexecdir) to their path), which I think
+> > should address your consistency concern.
+> 
+> I agree. If we actually start moving the subcommands into a separate
+> directory, I suspect scripts will be fixed up soon enough. Of course
+> people *can* do it by just adding the path, but more likely, we'll just
+> see people start doign "git xyz" instead of "git-xyz".
+
+But now we are arguing about what Linus meant like it is scripture. ;)
+
+-Peff
