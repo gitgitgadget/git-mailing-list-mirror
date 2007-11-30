@@ -1,61 +1,44 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Fri, 30 Nov 2007 13:37:55 -0500
-Message-ID: <20071130183755.GA29382@sigill.intra.peff.net>
-References: <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org> <20071130005852.GA12224@coredump.intra.peff.net> <alpine.LFD.0.9999.0711291821220.8458@woody.linux-foundation.org> <5E2A9E2B-8B9A-46B0-99D0-DB3798F10119@zib.de> <20071130151223.GB22095@coredump.intra.peff.net> <8aa486160711300728x70f591f1hf8884a78f2b15806@mail.gmail.com> <20071130152942.GA22489@coredump.intra.peff.net> <alpine.LFD.0.9999.0711300745330.8458@woody.linux-foundation.org> <20071130162257.GA22882@coredump.intra.peff.net> <Pine.LNX.4.64.0711301828050.27959@racer.site>
+From: Emanuele Giaquinta <e.giaquinta@glauco.it>
+Subject: Re: git-cvsimport bug
+Date: Fri, 30 Nov 2007 19:41:23 +0100
+Message-ID: <20071130184123.GA75770@orion.lan>
+References: <20071127150136.GA50697@orion.lan> <20071128165746.GC20308@coredump.intra.peff.net> <20071128185504.GA11236@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Santi B?jar <sbejar@gmail.com>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Nov 30 19:38:33 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 30 19:42:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyAkk-0007Dw-Vt
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 19:38:19 +0100
+	id 1IyAp9-0000dI-EZ
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 19:42:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932068AbXK3Sh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2007 13:37:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761724AbXK3Sh6
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 13:37:58 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3371 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761365AbXK3Sh6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2007 13:37:58 -0500
-Received: (qmail 4375 invoked by uid 111); 30 Nov 2007 18:37:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 30 Nov 2007 13:37:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Nov 2007 13:37:55 -0500
+	id S1764076AbXK3Sme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2007 13:42:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764262AbXK3Smd
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 13:42:33 -0500
+Received: from 62-101-89-40.ip.fastwebnet.it ([62.101.89.40]:2749 "HELO
+	mx0.glauco.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1763135AbXK3Sma (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2007 13:42:30 -0500
+Received: FROM pcnmail BY mx0.glauco.it ; Fri Nov 30 19:42:24 2007 +0100
+Received: FROM localhost ([79.2.28.128]) BY pcnmail WITH ESMTP ; Fri, 30 Nov 2007 19:42:23 +0100
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711301828050.27959@racer.site>
+In-Reply-To: <20071128185504.GA11236@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66657>
 
-On Fri, Nov 30, 2007 at 06:28:50PM +0000, Johannes Schindelin wrote:
+On Wed, Nov 28, 2007 at 01:55:04PM -0500, Jeff King wrote:
 
-> > @@ -162,6 +169,8 @@ static int handle_alias(int *argcp, const char ***argv)
-> >  
-> >  	alias_command = (*argv)[0];
-> >  	git_config(git_alias_config);
-> > +	if (!alias_string)
-> > +		alias_string = builtin_alias(alias_command);
-> >  	if (alias_string) {
-> >  		if (alias_string[0] == '!') {
-> >  			if (*argcp > 1) {
+>   2/3: cvsimport: use show-ref to support packed refs
 > 
-> Didn't you mean to put this _before_ the git_config() call?  As you wrote 
-> it, the "soft" alias overrides the user-specified one.
+>        This fix is hopefully obvious, and the included test fails
+>        without it (and this should probably fix Emanuele's problem).
 
-No. The "if (!alias_string)" means we only do the lookup if no user
-alias was found. Try it.
+It does, thanks!
 
--Peff
+Emanuele
