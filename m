@@ -1,76 +1,143 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: Some git performance measurements..
-Date: Fri, 30 Nov 2007 07:11:35 +0100
-Message-ID: <B161871F-E812-44B4-A699-44341B5783D3@zib.de>
-References: <alpine.LFD.0.9999.0711281747450.8458@woody.linux-foundation.org> <alpine.LFD.0.9999.0711281852160.8458@woody.linux-foundation.org> <alpine.LFD.0.99999.0711282244190.9605@xanadu.home> <alpine.LFD.0.9999.0711282022470.8458@woody.linux-foundation.org> <alpine.LFD.0.99999.0711291208060.9605@xanadu.home> <finmvm$da8$1@ger.gmane.org> <alpine.LFD.0.9999.0711291812530.8458@woody.linux-foundation.org> <alpine.LFD.0.99999.0711292131350.9605@xanadu.home>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Nov 30 07:12:12 2007
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH] Make "stg repair" help text more helpful
+Date: Fri, 30 Nov 2007 07:35:50 +0100
+Message-ID: <20071130063516.27500.85249.stgit@yoghurt>
+References: <20071128164113.GA20749@diana.vm.bytemark.co.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jon Smirl <jonsmirl@gmail.com>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 30 07:36:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ixz6c-0003M3-Nl
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 07:12:07 +0100
+	id 1IxzU9-0007cQ-6o
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 07:36:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750907AbXK3GLp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2007 01:11:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751457AbXK3GLp
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 01:11:45 -0500
-Received: from mailer.zib.de ([130.73.108.11]:39042 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750844AbXK3GLo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2007 01:11:44 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAU6ASax020339;
-	Fri, 30 Nov 2007 07:10:29 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db83fde.pool.einsundeins.de [77.184.63.222])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAU6AONA023921
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 30 Nov 2007 07:10:28 +0100 (MET)
-In-Reply-To: <alpine.LFD.0.99999.0711292131350.9605@xanadu.home>
-X-Mailer: Apple Mail (2.752.3)
+	id S1754287AbXK3GgF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Nov 2007 01:36:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754375AbXK3GgE
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 01:36:04 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1046 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754256AbXK3GgD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2007 01:36:03 -0500
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1IxzTd-0005BO-00; Fri, 30 Nov 2007 06:35:54 +0000
+In-Reply-To: <20071128164113.GA20749@diana.vm.bytemark.co.uk>
+User-Agent: StGIT/0.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66618>
+
+Specifically, point out that if messing up the branch with git
+commands was a mistake, the user should run "git reset", not "stg
+repair".
+
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+
+---
+
+Is this an improvement?
+
+ stgit/commands/common.py |    4 +--
+ stgit/commands/repair.py |   63 ++++++++++++++++++++++++++++----------=
+--------
+ 2 files changed, 41 insertions(+), 26 deletions(-)
 
 
-On Nov 30, 2007, at 3:40 AM, Nicolas Pitre wrote:
-
-> On Thu, 29 Nov 2007, Linus Torvalds wrote:
->
->> On Fri, 30 Nov 2007, Jakub Narebski wrote:
->>>
->>> Isn't there a better way to do this sorting? What is needed here is
->>> (stable) _bucket_ sort / _pigeonhole_ sort (or counting sort), which
->>> is O(n); quicksort is perhaps simpler to use, but I'm not sure if
->>> faster in this situation.
->
-> That particular sort takes under a second here with the Linux repo.
-> Pretty insignificant compared to the time required to repack.
-
-
-Brian Downing measured horrid performance of qsort on Windows
-2000 [1].  qsort seems to show worst case behaviour.
-
-This resulted in a patch replacing Window's qsort implementation
-for the mingw port [2].
-
-[1] http://thread.gmane.org/gmane.comp.version-control.msysgit/1084
-[2] http://thread.gmane.org/gmane.comp.version-control.msysgit/1086
-
-
-Avoiding qsort would even be better.  I'm not sure, though,
-if the particular qsort call that triggered the current
-discussion, is the very same qsort call that Brian was hit by.
-I'm only claiming that in general avoiding qsort on Windows
-is a good idea.
-
-	Steffen
+diff --git a/stgit/commands/common.py b/stgit/commands/common.py
+index 6318cdd..bf804e6 100644
+--- a/stgit/commands/common.py
++++ b/stgit/commands/common.py
+@@ -114,8 +114,8 @@ def check_head_top_equal(crt_series):
+     if not crt_series.head_top_equal():
+         raise CmdException(
+ """HEAD and top are not the same. This can happen if you
+-   modify a branch with git. The "repair" command can
+-   fix this situation.""")
++   modify a branch with git. "stg repair --help" explains
++   more about what to do next.""")
+=20
+ def check_conflicts():
+     if os.path.exists(os.path.join(basedir.get(), 'conflicts')):
+diff --git a/stgit/commands/repair.py b/stgit/commands/repair.py
+index c36db07..aa34792 100644
+--- a/stgit/commands/repair.py
++++ b/stgit/commands/repair.py
+@@ -26,32 +26,47 @@ from stgit.out import *
+ from stgit.run import *
+ from stgit import stack, git
+=20
+-help =3D 'StGit-ify any git commits made on top of your StGit stack'
++help =3D 'Fix StGit metadata if branch was modified with git commands'
+ usage =3D """%prog [options]
+=20
+-"repair" will repair three kinds of inconsistencies in your StGit
+-stack, all of them caused by using plain git commands on the branch:
+-
+-  1. If you have made regular git commits on top of your stack of
+-     StGit patches, "repair" converts them to StGit patches,
+-     preserving their contents.
+-
+-  2. Merge commits cannot become patches; if you have committed a
+-     merge on top of your stack, "repair" will simply mark all
+-     patches below the merge unapplied, since they are no longer
+-     reachable. If this is not what you want, use "git reset" to get
+-     rid of the merge and run "repair" again.
+-
+-  3. The applied patches are supposed to be precisely those that are
+-     reachable from the branch head. If you have used e.g. "git reset"
+-     to move the head, some applied patches may no longer be
+-     reachable, and some unapplied patches may have become reachable.
+-     "repair" will correct the appliedness of such patches.
+-
+-Note that these are "inconsistencies", not "errors"; furthermore,
+-"repair" will repair them reliably. As long as you are satisfied
+-with the way "repair" handles them, you have no reason to avoid
+-causing them in the first place if that is convenient for you."""
++If you modify an StGit stack (branch) with some git commands -- such
++as commit, pull, merge, and rebase -- you will leave the StGit
++metadata in an inconsistent state. In that situation, you have two
++options:
++
++  1. Use "git reset" or similar to undo the effect of the git
++     command(s).
++
++  2. Use "stg repair". This will fix up the StGit metadata to
++     accomodate the modifications to the branch. Specifically, it will
++     do the following:
++
++       * If you have made regular git commits on top of your stack of
++         StGit patches, "stg repair" makes new StGit patches out of
++         them, preserving their contents.
++
++       * However, merge commits cannot become patches; if you have
++         committed a merge on top of your stack, "repair" will simply
++         mark all patches below the merge unapplied, since they are no
++         longer reachable. If this is not what you want, use "git
++         reset" to get rid of the merge and run "stg repair" again.
++
++       * The applied patches are supposed to be precisely those that
++         are reachable from the branch head. If you have used e.g.
++         "git reset" to move the head, some applied patches may no
++         longer be reachable, and some unapplied patches may have
++         become reachable. "stg repair" will correct the appliedness
++         of such patches.
++
++     "stg repair" will fix these inconsistencies reliably, so as long
++     as you like what it does, you have no reason to avoid causing
++     them in the first place. For example, you might find it
++     convenient to make commits with a graphical tool and then have
++     "stg repair" make proper patches of the commits.
++
++NOTE: If using git commands on the stack was a mistake, running "stg
++repair" is _not_ what you want. In that case, what you want is option
++(1) above."""
+=20
+ directory =3D DirectoryGotoToplevel()
+ options =3D []
