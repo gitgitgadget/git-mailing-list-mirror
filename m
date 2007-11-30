@@ -1,93 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Fri, 30 Nov 2007 11:22:58 -0500
-Message-ID: <20071130162257.GA22882@coredump.intra.peff.net>
-References: <7veje8twt2.fsf@gitster.siamese.dyndns.org> <20071130003512.GB11683@coredump.intra.peff.net> <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org> <20071130005852.GA12224@coredump.intra.peff.net> <alpine.LFD.0.9999.0711291821220.8458@woody.linux-foundation.org> <5E2A9E2B-8B9A-46B0-99D0-DB3798F10119@zib.de> <20071130151223.GB22095@coredump.intra.peff.net> <8aa486160711300728x70f591f1hf8884a78f2b15806@mail.gmail.com> <20071130152942.GA22489@coredump.intra.peff.net> <alpine.LFD.0.9999.0711300745330.8458@woody.linux-foundation.org>
+From: Bill Priest <priestwilliaml@yahoo.com>
+Subject: Re: can't commit files that have been git add'ed because "fatal: you need to resolve your current index first"
+Date: Fri, 30 Nov 2007 08:32:17 -0800 (PST)
+Message-ID: <379331.84167.qm@web55014.mail.re4.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Santi B?jar <sbejar@gmail.com>, Steffen Prohaska <prohaska@zib.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Nov 30 17:23:39 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 30 17:33:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iy8eD-0000UA-JT
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 17:23:26 +0100
+	id 1Iy8n9-0004pf-Ev
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 17:32:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762436AbXK3QXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2007 11:23:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762526AbXK3QXE
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 11:23:04 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1879 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762436AbXK3QXB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2007 11:23:01 -0500
-Received: (qmail 3546 invoked by uid 111); 30 Nov 2007 16:22:59 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 30 Nov 2007 11:22:59 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Nov 2007 11:22:58 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0711300745330.8458@woody.linux-foundation.org>
+	id S934349AbXK3QcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2007 11:32:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934267AbXK3QcT
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 11:32:19 -0500
+Received: from web55014.mail.re4.yahoo.com ([206.190.58.148]:22087 "HELO
+	web55014.mail.re4.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S934260AbXK3QcS (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Nov 2007 11:32:18 -0500
+Received: (qmail 84514 invoked by uid 60001); 30 Nov 2007 16:32:17 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=hwkJzrahqxbyVj7eKgFXGReUDhqF3jtj0vrfdeC20YDkyLBS1uslTAWqGIBERkqgCZS3lUscqis6juPeO2BixdAQEgi2MHwTZX/roZjwjEyzc9Ybirn32T/wBjFBbruXdk4LzvRnSLDqoszyKCAqarvHrD2G962zuGdXI7yErhQ=;
+X-YMail-OSG: sQYMK8IVM1mc7TfnkFjcZNXXh6GyiYNgZpm91IiYfDDTA90jIX_pS94CxKhY2AMcLpMu1CKJjnhgGvDKQKMfzCXCcecbfu.O7Xhfgsu8JrW0Ry2lVGc-
+Received: from [64.243.89.222] by web55014.mail.re4.yahoo.com via HTTP; Fri, 30 Nov 2007 08:32:17 PST
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66649>
 
-On Fri, Nov 30, 2007 at 07:50:47AM -0800, Linus Torvalds wrote:
+On Wed, 28 Nov 2007 12:08:40 -0800
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> Well, different people will want different viewers *anyway* (ie some will 
-> prefer qgit etc), so how about making "git view" be something that 
-> literally acts as a built-in alias that just defaults to running gitk (if 
-> for no other reason than the fact that gitk is the one that ships with 
-> git, and simply has most users).
+> You can still do that by hand, by doing something
+like:
+> 
+> 	$ git merge --squash A
+>         $ resolve only partly
+>         $ git commit -m 'Prepare to merge A'
+>         $ git reset --hard
+>         $ git merge A
+> 	$ resolve the rest
+>         $ git commit -m 'Fully merged A'
+> 
+> For such a multi-step merge to make sense, the
+change between B---M
+> should make sense by itself for people who have to
+read such a history
+> later.  Such a half-a-squash-merge may probably not
+make sense by itself
+> in most cases, so I suspect the above workflow would
+not be useful in
+> general.
+> 
 
-I think that is a good idea, and here's a patch.
+Junio,
+	I resolved all the merges and then committed
+different files as groups to make it easy to
+cherry-pick after this merge.  Does this "mess up" the
+merge info?  What does the "git reset --hard" do after
+the commit (I'm assuming it throws away the
+non-resolved changes not committed)?  But from my
+experience git wouldn't let me do the commit above it
+w/o first fixing the conflicts.
 
--- >8 --
-Support builtin aliases
+	Am I mis-interpreting your example or are you saying
+that you think git would let me do the commit w/o
+resolving all conflicts?
 
-Builtin aliases are "default" alias values that can be
-overridden by user-configured aliases.
+Bill
 
-For example, the first such alias is "view", an alias for
-gitk. A user with no further configuration can run
-"git view" to use gitk. However, they can also set the
-config option "alias.view" to "!tig" to run tig.
----
- git.c |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
 
-diff --git a/git.c b/git.c
-index f220284..95296aa 100644
---- a/git.c
-+++ b/git.c
-@@ -151,6 +151,13 @@ static int split_cmdline(char *cmdline, const char ***argv)
- 	return count;
- }
- 
-+static char *builtin_alias(const char *cmd)
-+{
-+	if (!strcmp(cmd, "view"))
-+		return xstrdup("!gitk");
-+	return NULL;
-+}
-+
- static int handle_alias(int *argcp, const char ***argv)
- {
- 	int nongit = 0, envchanged = 0, ret = 0, saved_errno = errno;
-@@ -162,6 +169,8 @@ static int handle_alias(int *argcp, const char ***argv)
- 
- 	alias_command = (*argv)[0];
- 	git_config(git_alias_config);
-+	if (!alias_string)
-+		alias_string = builtin_alias(alias_command);
- 	if (alias_string) {
- 		if (alias_string[0] == '!') {
- 			if (*argcp > 1) {
--- 
-1.5.3.6.2064.g2e22f-dirty
+
+      ____________________________________________________________________________________
+Get easy, one-click access to your favorites. 
+Make Yahoo! your homepage.
+http://www.yahoo.com/r/hs 
