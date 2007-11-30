@@ -1,99 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Fix a pathological case in git detecting proper renames
-Date: Thu, 29 Nov 2007 16:40:21 -0800
-Message-ID: <7v4pf4tvka.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0711291050440.1711@blarg.am.freescale.net>
-	<alpine.LFD.0.9999.0711290934260.8458@woody.linux-foundation.org>
-	<28BD703B-24D3-41D6-8360-240A884B1305@kernel.crashing.org>
-	<alpine.LFD.0.9999.0711291122050.8458@woody.linux-foundation.org>
-	<41CB0B7D-5AC1-4703-BA99-21622A410F93@kernel.crashing.org>
-	<alpine.LFD.0.9999.0711291303000.8458@woody.linux-foundation.org>
-	<alpine.LFD.0.9999.0711291442300.8458@woody.linux-foundation.org>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
+Date: Fri, 30 Nov 2007 07:40:27 +0700
+Message-ID: <fcaeb9bf0711291640p52cb46fdo97e286e34c4e0527@mail.gmail.com>
+References: <20071127160423.GA22807@laptop>
+	 <fcaeb9bf0711280036p33583824ge59af93bbe3f0a78@mail.gmail.com>
+	 <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org>
+	 <20071129150849.GA32296@coredump.intra.peff.net>
+	 <fcaeb9bf0711291205h125dadbbp8e8ae392e9b5b751@mail.gmail.com>
+	 <20071129211409.GA16625@sigill.intra.peff.net>
+	 <Pine.LNX.4.64.0711292218240.27959@racer.site>
+	 <20071129231444.GA9616@coredump.intra.peff.net>
+	 <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org>
+	 <7veje8twt2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kumar Gala <galak@kernel.crashing.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Nov 30 01:40:48 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Jeff King" <peff@peff.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Jan Hudec" <bulb@ucw.cz>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 30 01:40:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ixtvy-0003wy-VK
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 01:40:47 +0100
+	id 1Ixtw7-0003yL-J3
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 01:40:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932699AbXK3Ak2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 19:40:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761644AbXK3Ak2
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 19:40:28 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:40395 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761539AbXK3Ak1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 19:40:27 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 3F0A92F0;
-	Thu, 29 Nov 2007 19:40:48 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id A202E9B075;
-	Thu, 29 Nov 2007 19:40:44 -0500 (EST)
-In-Reply-To: <alpine.LFD.0.9999.0711291442300.8458@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Thu, 29 Nov 2007 15:03:06 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1762104AbXK3Ake (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 19:40:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762013AbXK3Akc
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 19:40:32 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:52644 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761644AbXK3Akb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 19:40:31 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so2061914nfb
+        for <git@vger.kernel.org>; Thu, 29 Nov 2007 16:40:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=A1HxUI0GCRlE3mT1Rs8jRbis4d3xMm1Svk+IQcAYRWo=;
+        b=DnbqYtWWZSwbVa7uCWchkXmQPelr5mClKNAMxf6k3cWr/lPncHYPppkZZuOSLrgt6s6tmuREt/YxwSbxusyKqKDZ1/a+0d+hnpaVeQWYv9comE+a/e74lvqroVMqNcn1fngN2XgdLU4EWUg5wM2AzUqF2IAhtsFpUvSERKTwt9k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SfUOE8YENE8s+F8tGvmtwUb3wnAduFW1gTx4+b2mNhlrBZhfo4Tcie+aTlXV99Yaw4zaeLSOqhKMHFZft4Z167STzN5y+T4fOqMgZe0qpArDYSG+pcuuQkvYv3dEcgsVFw844ZBGH1e1JEZHZPoxi/3U5vP+tvaDnSAzO1waDuQ=
+Received: by 10.86.77.5 with SMTP id z5mr6674332fga.1196383227712;
+        Thu, 29 Nov 2007 16:40:27 -0800 (PST)
+Received: by 10.86.83.6 with HTTP; Thu, 29 Nov 2007 16:40:27 -0800 (PST)
+In-Reply-To: <7veje8twt2.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66579>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Nov 30, 2007 7:13 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>  - Post v1.5.4, start cooking gitexecdir=$(libexecdir)/git-core, aiming
+>    for inclusion in v1.5.5, perhaps in Feb-Mar 2008 timeframe.  This
+>    will also affect the sample RPM spec and resulting RPM binary
+>    packages I will place on k.org, and I'll ask Gerrit to do the same on
+>    Debian side.  The official binary packaging of individual distros are
+>    not under my control, but if there is a handy list of people I can
+>    send this notice to for other distros, that would help this process.
 
-> For the fuzzy rename detection, we generate the full score matrix, and 
-> sort it by the score, up front. So all the scoring - and more importantly, 
-> all the sorting - has actually been done before we actually start looking 
-> at *any* renames at all, so we cannot easily do the same thing I did for 
-> the exact renames, namely to take into account _earlier_ renames in the 
-> scoring. Because those earlier renames have simply not been done when the 
-> score is calculated.
+You can find Gentoo maintainers here:
 
-I think I've mentioned this before, but another thing we may want to do
-is to give similarity boost to a src-dst pair if other files in the same
-src directory are found to be renamed to the same dst directory.  That
-is, if you have the same contents in the preimage at A/init.S and B/init.S,
-and a similar contents appear in C/init.S in the postimage, instead of
-randomly picking A/init.S over B/init.S as the source, we can notice
-that A/Makefile was moved to C/Makefile (but B/Makefile was sufficiently
-different from A/Makefile in the preimage), and favor A/init.S over
-B/init.S as the rename source of C/init.S.
+http://sources.gentoo.org/viewcvs.py/gentoo-x86/dev-util/git/metadata.xml?rev=1.6&view=markup
 
-About the code structure, I think the very early draft of rename
-detector did not do the full matrix, but iterated over dst to see if
-there is a good src for it, picked the best src that is above the
-threshold, and went on to next dst, like this:
-
-	for (dst in dst candidates) {
-        	best_src = NULL;
-                best_score = minimum_score;
-                for (src in src candidates) {
-                	score = similarity(dst, src);
-                        if (score > best_score)
-                            best_src = src;
-		}
-		if (best_src) {
-			match dst with src;
-		}
-	}
-
-This was restructured in the current "full matrix first" form before the
-rename detection logic first hit your tree, and I do not think it was
-shown in the field to perform worse than the full matrix version.
-
-We could do the current full matrix that does not take basename
-similarity nor what other renames were detected first, and then use that
-matrix result in order to primarily define the order of dst candidates
-to process and run the above loop.  At that point, similarity between
-dst and src does not need to be recomputed fully (the matrix would
-record it).  Instead, we can tweak it to take other renames that already
-have been detected (this includes "this src has already been used", and
-"somebody nearby moved to the same directory") and basename similarity
-to affect which possible src candidate to choose for each dst.
+-- 
+Duy
