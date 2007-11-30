@@ -1,70 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Thu, 29 Nov 2007 20:25:36 -0500
-Message-ID: <20071130012536.GA12615@coredump.intra.peff.net>
-References: <fcaeb9bf0711291205h125dadbbp8e8ae392e9b5b751@mail.gmail.com> <20071129211409.GA16625@sigill.intra.peff.net> <Pine.LNX.4.64.0711292218240.27959@racer.site> <20071129231444.GA9616@coredump.intra.peff.net> <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org> <7veje8twt2.fsf@gitster.siamese.dyndns.org> <20071130003512.GB11683@coredump.intra.peff.net> <alpine.LFD.0.99999.0711291950590.9605@xanadu.home> <20071130010055.GB12224@coredump.intra.peff.net> <alpine.LFD.0.99999.0711292013580.9605@xanadu.home>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Adding Git to Better SCM Initiative : Comparison
+Date: Fri, 30 Nov 2007 02:26:54 +0100
+Message-ID: <200711300226.54338.johan@herland.net>
+References: <200711282339.59938.jnareb@gmail.com>
+ <20071129200710.GA3314@steel.home> <200711300118.28145.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Nov 30 02:26:09 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 30 02:27:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ixudk-0007JT-J7
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 02:26:01 +0100
+	id 1Ixuez-0007eI-HA
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 02:27:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933384AbXK3BZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 20:25:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933223AbXK3BZl
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 20:25:41 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1790 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933001AbXK3BZk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 20:25:40 -0500
-Received: (qmail 31016 invoked by uid 111); 30 Nov 2007 01:25:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 29 Nov 2007 20:25:38 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Nov 2007 20:25:36 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.99999.0711292013580.9605@xanadu.home>
+	id S933565AbXK3B06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 20:26:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933556AbXK3B06
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 20:26:58 -0500
+Received: from smtp.getmail.no ([84.208.20.33]:44113 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933223AbXK3B05 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 20:26:57 -0500
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JSA00K01PCW0Z00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 30 Nov 2007 02:26:56 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JSA00C6PPCU0M30@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 30 Nov 2007 02:26:54 +0100 (CET)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JSA00995PCU8T10@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 30 Nov 2007 02:26:54 +0100 (CET)
+In-reply-to: <200711300118.28145.jnareb@gmail.com>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66597>
 
-On Thu, Nov 29, 2007 at 08:19:38PM -0500, Nicolas Pitre wrote:
-
-> > In principle, yes, though one man's porcelain is another man's plumbing,
-> > so determining the correct set is hard (and why bother if they are all
-> > hidden from mere mortals, anyway?).
+On Friday 30 November 2007, Jakub Narebski wrote:
+> On Thu, 29 Nov 2007, Alex Riesen wrote:
+> > Jakub Narebski, Thu, Nov 29, 2007 03:26:12 +0100:
 > 
-> That would be a good reason not to bother determining which set to 
-> preserve and remove them all then.
+> >> +                <s id="git">
+> >> +                    Medium. There's Git User's Manual, manpages, some
+> >> +                    technical documentation and some howtos.  All
+> >> +                    documentation is also available online in HTML format;
+> >> +                    there is additional information (including beginnings
+> >> +                    of FAQ) on git wiki.
+> >> +                    Nevertheles one of complaints in surveys is insufficient
+> > 
+> > "Nevertheless" (two "s").
+> > 
+> > BTW, I wouldn't call the level of documentation "Medium" when compared
+> > to any commercial SCM. How can they earn more than "a little", when
+> > compared to any opensource program?
+> 
+> Source code is not [user level] documentation.
+> 
+> But perhaps it should be "Good" instead of "Medium", although I think
+> not "Excellent".
 
-It clearly argues for putting all in the same boat, yes (but obviously
-we disagree on which boat).
+If we try to compare ourselves to what's closest, i.e. Mercurial, I would
+say that Git's documentation is probably on par with what Mercurial has to
+offer. Their "Documentation" entry in the comparison is as follows:
 
-> Sure you'll miss the dashed form for, say, one week? After that your 
-> fingers should be retrained.
+"Very good. There's an overview and tutorial on the web site, and integrated
+help for every command."
 
-Perhaps, although that doesn't address my other point, about non-bash
-program in the world which already does filename completion (in my case,
-I am specifically thinking about vim's ":r!", but surely emacs users
-must have a similar issue).
+I say we go for something similar.
 
-But that is just talking about the disadvantages; you can argue that
-they are small, but they are clearly non-zero. More importantly, what
-are the _advantages_ of removing the hardlinks (and if you haven't read
-the other message I just sent you, I am talking not about putting
-hardlinks into a non-PATH directory, but about removing them entirely
-once they are already in that alternate directory)? If there aren't any
-advantages, or they are also small, then it makes sense to keep the
-hardlinks.
 
--Peff
+Have fun!
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
