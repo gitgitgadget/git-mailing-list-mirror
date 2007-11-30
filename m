@@ -1,87 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Fri, 30 Nov 2007 13:35:00 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711301334500.27959@racer.site>
-References: <20071127150229.GA14859@laptop>  <Pine.LNX.4.64.0711271617350.27959@racer.site>
-  <20071128000731.GD9174@efreet.light.src>  <7v8x4jb295.fsf@gitster.siamese.dyndns.org>
-  <fcaeb9bf0711280036p33583824ge59af93bbe3f0a78@mail.gmail.com> 
- <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org> 
- <fcaeb9bf0711281917p56cc4228m6c401286439e2a34@mail.gmail.com> 
- <alpine.LFD.0.99999.0711290905510.9605@xanadu.home> 
- <7vd4tsvfvk.fsf@gitster.siamese.dyndns.org>  <DB613F3E-85CC-4AF0-928C-4F4E4C8E9FB8@orakel.ntnu.no>
- <fcaeb9bf0711300419i9cf70eo9f96e3a5e3f44585@mail.gmail.com>
+Date: Fri, 30 Nov 2007 10:09:48 -0500
+Message-ID: <20071130150948.GA22095@coredump.intra.peff.net>
+References: <Pine.LNX.4.64.0711292218240.27959@racer.site> <20071129231444.GA9616@coredump.intra.peff.net> <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org> <7veje8twt2.fsf@gitster.siamese.dyndns.org> <20071130003512.GB11683@coredump.intra.peff.net> <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org> <20071130005852.GA12224@coredump.intra.peff.net> <alpine.LFD.0.99999.0711292004340.9605@xanadu.home> <20071130011748.GC11683@coredump.intra.peff.net> <474FB938.3040209@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Eyvind Bernhardsen <eyvind-git-list@orakel.ntnu.no>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@cam.org>, Jan Hudec <bulb@ucw.cz>,
-	git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 30 14:35:45 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Fri Nov 30 16:10:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iy61v-0002oS-OH
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 14:35:44 +0100
+	id 1Iy7VN-0001ak-DJ
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 16:10:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756234AbXK3NfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2007 08:35:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755238AbXK3NfU
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 08:35:20 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35329 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752242AbXK3NfS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2007 08:35:18 -0500
-Received: (qmail invoked by alias); 30 Nov 2007 13:35:15 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp030) with SMTP; 30 Nov 2007 14:35:15 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19PLE1SzohP9Hx2CgOK2WvtUDRfXp5tiKVz3ugQwm
-	0vFuL+cwbWyHag
-X-X-Sender: gene099@racer.site
-In-Reply-To: <fcaeb9bf0711300419i9cf70eo9f96e3a5e3f44585@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1759679AbXK3PJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2007 10:09:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758650AbXK3PJx
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 10:09:53 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4000 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751325AbXK3PJx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2007 10:09:53 -0500
+Received: (qmail 2835 invoked by uid 111); 30 Nov 2007 15:09:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 30 Nov 2007 10:09:49 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Nov 2007 10:09:48 -0500
+Content-Disposition: inline
+In-Reply-To: <474FB938.3040209@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66643>
 
-Hi,
+On Fri, Nov 30, 2007 at 08:18:16AM +0100, Andreas Ericsson wrote:
 
-On Fri, 30 Nov 2007, Nguyen Thai Ngoc Duy wrote:
+>> The only reason I have heard to remove them entirely is that Windows
+>> doesn't properly support hardlinks, which I addressed in my other mails
+>> (and to which I have seen no rebuttal).
+>>
+> It would provide a ui inconsistency between platforms. Several people
+> pointed that out. It's decidedly a Bad Thing.
 
-> On Nov 30, 2007 6:28 PM, Eyvind Bernhardsen
-> <eyvind-git-list@orakel.ntnu.no> wrote:
-> > On 29. nov. 2007, at 23.36, Junio C Hamano wrote:
-> >
-> > [...]
-> >
-> > > If people are really serious about reducing the number of commands in
-> > > the path, I would expect fixes and bugreports saying "I am setting
-> > > gitexecdir different from bindir in _my_ installation when I build
-> > > git,
-> > > and here are the things that does not work if I do so".  Within the
-> > > span
-> > > of more than 20 months (77cb17e9 introduced gitexecdir in Jan 2006), I
-> > > do not think there was a single such report or patch, other than the
-> > > message from Nguyen that started this thread.
-> >
-> > I'm setting gitexecdir different from bindir in my installation, and
-> > here are the things that don't work:
-> >
-> > - When pushing to my system over ssh, git-receive-pack and git-upload-
-> > pack are expected to be in $PATH.  I resolved the problem by putting
-> > symlinks in /usr/local/bin.
-> >
-> > I haven't seen any other problems, but then again, I only use git
-> > plumbing commands and my own scripts.
-> 
-> You remind me my experience of making every external C-based command
-> builtin. There is another case: git-merge. It calls  something like
-> git-merge-$strategy.
+Which, as I said, I have already addressed (and which Linus has also
+expanded upon in this thread). Since those hardlinks would be hidden
+from users who did not go to some trouble to find them, there will not
+be inconsistency problems. Scripts will have to either go to some effort
+to change their PATH, or simply use the correct form, and I expect them
+to do the latter.
 
-Good catch!
-
-Ciao,
-Dscho
+-Peff
