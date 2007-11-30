@@ -1,79 +1,85 @@
-From: Michael Witten <mfwitten@MIT.EDU>
-Subject: Re: [PATCH] git-cvsserver runs hooks/post-receive
-Date: Thu, 29 Nov 2007 23:06:31 -0500
-Message-ID: <7F81126E-5A76-40CA-94BF-82B46C57AFF6@mit.edu>
-References: <1195809174-28142-1-git-send-email-mfwitten@mit.edu> <7v3aup291c.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 30 05:13:00 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Some git performance measurements..
+Date: Thu, 29 Nov 2007 21:00:21 -0800
+Message-ID: <7v3auos4yi.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.0.9999.0711281747450.8458@woody.linux-foundation.org>
+	<alpine.LFD.0.9999.0711281852160.8458@woody.linux-foundation.org>
+	<alpine.LFD.0.99999.0711282244190.9605@xanadu.home>
+	<alpine.LFD.0.9999.0711282022470.8458@woody.linux-foundation.org>
+	<alpine.LFD.0.99999.0711291208060.9605@xanadu.home>
+	<alpine.LFD.0.9999.0711290945060.8458@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Nov 30 06:00:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxxFL-0007Ay-GJ
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 05:12:59 +0100
+	id 1Ixxze-0007qm-Lq
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 06:00:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762607AbXK3EMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 23:12:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762768AbXK3EMa
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 23:12:30 -0500
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:50301 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1762418AbXK3EM3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Nov 2007 23:12:29 -0500
-X-Greylist: delayed 345 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Nov 2007 23:12:29 EST
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id lAU46XiB015363;
-	Thu, 29 Nov 2007 23:06:33 -0500 (EST)
-Received: from [18.239.5.240] (MACGREGOR-TWO-FORTY.MIT.EDU [18.239.5.240])
-	(authenticated bits=0)
-        (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id lAU46VKV028198
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Thu, 29 Nov 2007 23:06:32 -0500 (EST)
-In-Reply-To: <7v3aup291c.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.752.2)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1750733AbXK3FA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2007 00:00:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750726AbXK3FA2
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 00:00:28 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:44787 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750695AbXK3FA1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2007 00:00:27 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 674252FA;
+	Fri, 30 Nov 2007 00:00:48 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id CC3FF95C55;
+	Fri, 30 Nov 2007 00:00:44 -0500 (EST)
+In-Reply-To: <alpine.LFD.0.9999.0711290945060.8458@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Thu, 29 Nov 2007 09:48:19 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66613>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-On 28 Nov 2007, at 7:24:31 PM, Junio C Hamano wrote:
+> Umm. See my earlier numbers. For "git checkout" with cold cache, the 
+> *bulk* of the time is actually the ".gitignore" file lookups, so if you 
+> see a three-second improvement out of 17s, it may not look spectacular, 
+> but considering that probably 10s of those 17s were something *else* going 
+> on, I suspect that if you really did just a plain "git checkout", you 
+> actually *do* have a spectacular improvement of roughly 7s -> 4s!
 
-> Michael Witten <mfwitten@mit.edu> writes:
->
->> git-cvsserver just did the following:
->>     (1) run hooks/update
->>     (2) commit if hooks/update passed
->>
->> This commit simply adds:
->>     (3) run hooks/post-receive
->>
->> Also, there are a few grammar cleanups and
->> consistency improvements.
->
-> I gave only a very cursory look; looks Ok to me.  This makes me wonder
-> if post-update wants to run as well.
+I am hoping that "probably 10s of those 17s" can actually be measured
+with the patch I sent out last night.  Has anybody took a look at it?
 
-Seems like post-receive is supposed to supersede post-update anyhow,
-so might as well leave post-update out at this point?
+Partitioning the pack data by object type shifts the tradeoffs from the
+current "the data in the same tree are mostly together, except commits
+are treated differently because rev walk is done quite often" layout.
+Because we do not ever look at blob objects while pruning the history
+(unless the -Spickaxe option is used, I think), partitioned layout would
+optimize ancestry walking even more than the current packfile layout.
 
-In any case, I haven't taken a thorough look at how git-cvsserver works,
-but it seems to duplicate a lot of git-receive-pack.
+On the other hand, any operation that wants to look at the contents are
+penalized.  A two-tree diff that inspects the contents (e.g. fuzzy
+renames and pickaxe) needs to read from the tree section to find which
+blob to compare with which other blob, and and then needs to seek to the
+blob section to actually read the contents, while the current layout
+tends to group both trees and blobs that belong to the same tree
+together.  It is natural that blame is penalized by the new layout,
+mostly because it needs to grab two blobs to compare from parent-child
+pair, but also because it needs to find two-tree diffs for parent-child
+pair it traverses whenever it needs to follow across renames (that is,
+when it sees there is no corresponding path in the parent).  I would
+expect to see similar slowdown from grep which wants to inspect blobs
+that are in the same tree.
 
-How about turning git-cvsserver into a true middleman, so that it  
-constructs
-a 'temporary git working tree' and then does a real git-push into the  
-final
-git repository.
-
-Because git-cvsserver would be using git-send-pack to do the pushing,  
-it could
-push to yet another server. How cool is that!
+When I do archaeology, I think I often run blame first to see which
+change made the block of text into the current shape first, and then run
+a path limited "git log -p" either starting or ending at that revision.
+In that workflow, the initial blame may get slower with the new layout,
+but I suspect it would help by speeding up the latter "git log -p" step.
