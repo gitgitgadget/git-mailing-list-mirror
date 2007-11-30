@@ -1,88 +1,60 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Some git performance measurements..
-Date: Fri, 30 Nov 2007 01:54:13 +0100
-Organization: At home
-Message-ID: <finmvm$da8$1@ger.gmane.org>
-References: <alpine.LFD.0.9999.0711281747450.8458@woody.linux-foundation.org> <alpine.LFD.0.9999.0711281852160.8458@woody.linux-foundation.org> <alpine.LFD.0.99999.0711282244190.9605@xanadu.home> <alpine.LFD.0.9999.0711282022470.8458@woody.linux-foundation.org> <alpine.LFD.0.99999.0711291208060.9605@xanadu.home>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
+Date: Thu, 29 Nov 2007 20:00:55 -0500
+Message-ID: <20071130010055.GB12224@coredump.intra.peff.net>
+References: <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org> <20071129150849.GA32296@coredump.intra.peff.net> <fcaeb9bf0711291205h125dadbbp8e8ae392e9b5b751@mail.gmail.com> <20071129211409.GA16625@sigill.intra.peff.net> <Pine.LNX.4.64.0711292218240.27959@racer.site> <20071129231444.GA9616@coredump.intra.peff.net> <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org> <7veje8twt2.fsf@gitster.siamese.dyndns.org> <20071130003512.GB11683@coredump.intra.peff.net> <alpine.LFD.0.99999.0711291950590.9605@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 30 02:01:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Nov 30 02:01:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxuFS-0000t3-HW
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 02:00:54 +0100
+	id 1IxuFs-0000zw-Fk
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 02:01:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934257AbXK3BAe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Nov 2007 20:00:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934242AbXK3BAe
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 20:00:34 -0500
-Received: from main.gmane.org ([80.91.229.2]:52161 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934226AbXK3BAb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 20:00:31 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IxuD0-0003PK-JJ
-	for git@vger.kernel.org; Fri, 30 Nov 2007 00:58:22 +0000
-Received: from abvh222.neoplus.adsl.tpnet.pl ([83.8.205.222])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 30 Nov 2007 00:58:22 +0000
-Received: from jnareb by abvh222.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 30 Nov 2007 00:58:22 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abvh222.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S934301AbXK3BBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 20:01:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934324AbXK3BA7
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 20:00:59 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2763 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934314AbXK3BA5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 20:00:57 -0500
+Received: (qmail 30723 invoked by uid 111); 30 Nov 2007 01:00:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 29 Nov 2007 20:00:56 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Nov 2007 20:00:55 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.99999.0711291950590.9605@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66588>
 
-<opublikowany i wys=B3any>
+On Thu, Nov 29, 2007 at 07:52:01PM -0500, Nicolas Pitre wrote:
 
-[Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>,=20
- Linus Torvalds <torvalds@linux-foundation.org>]
+> > I am still against this step, for the reasons mentioned in the mails
+> > leading up to the one you just quoted. I am fine with "does not install
+> > hardlinks for builtin-commands on systems that don't support hardlinks"
+> > (and of course all such hardlinks are in $(libexecdir)/git-core at this
+> > point).
+> 
+> But only for porcelain, right?  You certainly don't need the dashed form 
+> of plumbing commands?
 
-Nicolas Pitre wrote:
+In principle, yes, though one man's porcelain is another man's plumbing,
+so determining the correct set is hard (and why bother if they are all
+hidden from mere mortals, anyway?).
 
-> Well, see below for the patch that actually split the pack data into=20
-> objects of the same type.  Doing that "git checkout" on the kernel tr=
-ee=20
-> did improve things for me although not spectacularly.
+Perhaps because I am actively working on git, I tend to use a fair
+number of plumbing commands for under-the-hood inspection and
+experimentation.
 
-> +static int sort_by_type(const void *_a, const void *_b)
-> +{
-> +     const struct object_entry *a =3D *(struct object_entry **)_a;
-> +     const struct object_entry *b =3D *(struct object_entry **)_b;
-> +
-> +     /*
-> +      * Preserve recency order for objects of the same type  and reu=
-sed deltas.
-> +      */
-> +     if(a->type =3D=3D OBJ_REF_DELTA || a->type =3D=3D OBJ_OFS_DELTA=
- ||
-> +        b->type =3D=3D OBJ_REF_DELTA || b->type =3D=3D OBJ_OFS_DELTA=
- ||
-> +        a->type =3D=3D b->type)
-> +             return (a < b) ? -1 : 1;
-> +     return a->type - b->type;
-> +}
-
-> +     qsort(sorted_by_type, nr_objects, sizeof(*sorted_by_type), sort=
-_by_type);
-
-Isn't there a better way to do this sorting? What is needed here is
-(stable) _bucket_ sort / _pigeonhole_ sort (or counting sort), which
-is O(n); quicksort is perhaps simpler to use, but I'm not sure if
-faster in this situation.
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+-Peff
