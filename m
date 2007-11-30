@@ -1,72 +1,87 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] git-cvsserver runs hooks/post-receive
-Date: Fri, 30 Nov 2007 14:24:27 +0100
-Message-ID: <47500F0B.10300@viscovery.net>
-References: <1195809174-28142-1-git-send-email-mfwitten@mit.edu> <7v3aup291c.fsf@gitster.siamese.dyndns.org> <7F81126E-5A76-40CA-94BF-82B46C57AFF6@mit.edu> <Pine.LNX.4.64.0711301202230.27959@racer.site> <BDA3CE08-FFA4-4D84-A2FC-5810AAA6EEAB@MIT.EDU>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
+Date: Fri, 30 Nov 2007 13:35:00 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711301334500.27959@racer.site>
+References: <20071127150229.GA14859@laptop>  <Pine.LNX.4.64.0711271617350.27959@racer.site>
+  <20071128000731.GD9174@efreet.light.src>  <7v8x4jb295.fsf@gitster.siamese.dyndns.org>
+  <fcaeb9bf0711280036p33583824ge59af93bbe3f0a78@mail.gmail.com> 
+ <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org> 
+ <fcaeb9bf0711281917p56cc4228m6c401286439e2a34@mail.gmail.com> 
+ <alpine.LFD.0.99999.0711290905510.9605@xanadu.home> 
+ <7vd4tsvfvk.fsf@gitster.siamese.dyndns.org>  <DB613F3E-85CC-4AF0-928C-4F4E4C8E9FB8@orakel.ntnu.no>
+ <fcaeb9bf0711300419i9cf70eo9f96e3a5e3f44585@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Michael Witten <mfwitten@MIT.EDU>
-X-From: git-owner@vger.kernel.org Fri Nov 30 14:25:01 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Eyvind Bernhardsen <eyvind-git-list@orakel.ntnu.no>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@cam.org>, Jan Hudec <bulb@ucw.cz>,
+	git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 30 14:35:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iy5rS-0006r3-9j
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 14:24:54 +0100
+	id 1Iy61v-0002oS-OH
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 14:35:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754256AbXK3NYe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2007 08:24:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751457AbXK3NYe
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 08:24:34 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:51469 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751133AbXK3NYd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2007 08:24:33 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Iy5qL-0003t3-Gu; Fri, 30 Nov 2007 14:23:45 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 2D72D54D; Fri, 30 Nov 2007 14:24:27 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <BDA3CE08-FFA4-4D84-A2FC-5810AAA6EEAB@MIT.EDU>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1756234AbXK3NfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2007 08:35:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755238AbXK3NfU
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 08:35:20 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35329 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752242AbXK3NfS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2007 08:35:18 -0500
+Received: (qmail invoked by alias); 30 Nov 2007 13:35:15 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp030) with SMTP; 30 Nov 2007 14:35:15 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19PLE1SzohP9Hx2CgOK2WvtUDRfXp5tiKVz3ugQwm
+	0vFuL+cwbWyHag
+X-X-Sender: gene099@racer.site
+In-Reply-To: <fcaeb9bf0711300419i9cf70eo9f96e3a5e3f44585@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66642>
 
-Michael Witten schrieb:
-> On 30 Nov 2007, at 7:03:15 AM, Johannes Schindelin wrote:
->> On Thu, 29 Nov 2007, Michael Witten wrote:
->>> How about turning git-cvsserver into a true middleman, so that it
->>> constructs a 'temporary git working tree' and then does a real git-push
->>> into the final git repository.
->>
->> That would yield a horrible performance.
->>
->> Would be opposed, if a regular cvsserver user,
-> 
-> How come?
-> 
-> git-cvsserver it seems already does just that!
-> The difference is that it puts objects in place
-> by hand, requiring the code to mirror hook calls
-> anyway.
-> 
-> I'm simply proposing that the code be reworked,
-> so that cvs commits actually become git pushes,
-> so that all future changes to the pushing mechanism
-> are automatically handled.
+Hi,
 
-But in order push something, you must first have the commit in a repository. 
-How would git-cvsserver do that? For example, by putting objects in place by 
-hand. You gain nothing, except that it would push instead of call the hooks 
-directly.
+On Fri, 30 Nov 2007, Nguyen Thai Ngoc Duy wrote:
 
--- Hannes
+> On Nov 30, 2007 6:28 PM, Eyvind Bernhardsen
+> <eyvind-git-list@orakel.ntnu.no> wrote:
+> > On 29. nov. 2007, at 23.36, Junio C Hamano wrote:
+> >
+> > [...]
+> >
+> > > If people are really serious about reducing the number of commands in
+> > > the path, I would expect fixes and bugreports saying "I am setting
+> > > gitexecdir different from bindir in _my_ installation when I build
+> > > git,
+> > > and here are the things that does not work if I do so".  Within the
+> > > span
+> > > of more than 20 months (77cb17e9 introduced gitexecdir in Jan 2006), I
+> > > do not think there was a single such report or patch, other than the
+> > > message from Nguyen that started this thread.
+> >
+> > I'm setting gitexecdir different from bindir in my installation, and
+> > here are the things that don't work:
+> >
+> > - When pushing to my system over ssh, git-receive-pack and git-upload-
+> > pack are expected to be in $PATH.  I resolved the problem by putting
+> > symlinks in /usr/local/bin.
+> >
+> > I haven't seen any other problems, but then again, I only use git
+> > plumbing commands and my own scripts.
+> 
+> You remind me my experience of making every external C-based command
+> builtin. There is another case: git-merge. It calls  something like
+> git-merge-$strategy.
+
+Good catch!
+
+Ciao,
+Dscho
