@@ -1,67 +1,76 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Thu, 29 Nov 2007 21:23:11 -0500
-Message-ID: <474F740F.1000008@gmail.com>
-References: <Pine.LNX.4.64.0711292218240.27959@racer.site> <20071129231444.GA9616@coredump.intra.peff.net> <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org> <7veje8twt2.fsf@gitster.siamese.dyndns.org> <20071130003512.GB11683@coredump.intra.peff.net> <alpine.LFD.0.99999.0711291950590.9605@xanadu.home> <20071130010055.GB12224@coredump.intra.peff.net> <alpine.LFD.0.99999.0711292013580.9605@xanadu.home> <20071130012536.GA12615@coredump.intra.peff.net> <alpine.LFD.0.99999.0711292029420.9605@xanadu.home> <20071130015315.GA13369@coredump.intra.peff.net>
-Reply-To: gitzilla@gmail.com
+Date: Thu, 29 Nov 2007 21:27:19 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0711292124430.9605@xanadu.home>
+References: <20071127160423.GA22807@laptop>
+ <Pine.LNX.4.64.0711271617350.27959@racer.site>
+ <20071128000731.GD9174@efreet.light.src>
+ <7v8x4jb295.fsf@gitster.siamese.dyndns.org>
+ <fcaeb9bf0711280036p33583824ge59af93bbe3f0a78@mail.gmail.com>
+ <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org>
+ <20071129150849.GA32296@coredump.intra.peff.net>
+ <fcaeb9bf0711291205h125dadbbp8e8ae392e9b5b751@mail.gmail.com>
+ <20071129211409.GA16625@sigill.intra.peff.net>
+ <Pine.LNX.4.64.0711292218240.27959@racer.site>
+ <20071129231444.GA9616@coredump.intra.peff.net>
+ <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org>
+ <7veje8twt2.fsf@gitster.siamese.dyndns.org> <474F5E90.9040505@gmail.com>
+ <alpine.LFD.0.99999.0711291959510.9605@xanadu.home>
+ <474F72B7.9000305@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jeff King <peff@peff.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Nov 30 03:23:39 2007
+To: A Large Angry SCM <gitzilla@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 30 03:27:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxvXV-0003zq-8o
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 03:23:37 +0100
+	id 1IxvbR-0004pq-Ck
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 03:27:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758497AbXK3CXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 21:23:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758224AbXK3CXR
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 21:23:17 -0500
-Received: from wr-out-0506.google.com ([64.233.184.226]:33635 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756159AbXK3CXQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 21:23:16 -0500
-Received: by wr-out-0506.google.com with SMTP id c49so1821684wra
-        for <git@vger.kernel.org>; Thu, 29 Nov 2007 18:23:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        bh=3OuTeflFPEd4XZOjOJ3olQoPM1VPgLJse01BYg//OH0=;
-        b=uvZAtXPGLaXoIE7layAkekXHweKGC8wwAvofQ626Tup0QQAo6aEIY5XrvN/mbRcspwLXAauX9nEiginPBcvmFOPyffk6yJctoLQwnkHszN6rtu+nWqCp2EE6NMP83iswqVH4XCM1302kQ1YPXKfwVNfbquzYRRVRNsxB5Is2Gnk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=hlMGdd8eN2GUKCNP/6/wqQ6HtJ9/m0QkQZ8a0Pwha/aVfmJYAXYjBRVrBXRvFwyfWHsaEj9rO44jX3aZJT3nYjtTeHaDyIcVJxhd/O6UMaE660NIjRgppuu6vIENImMECFCUOgBBbjt2A+QhThR5NZZHkWs/6U0mXcv/f9Ahcoo=
-Received: by 10.100.171.10 with SMTP id t10mr13071785ane.1196389395775;
-        Thu, 29 Nov 2007 18:23:15 -0800 (PST)
-Received: from ?10.0.0.6? ( [66.177.19.100])
-        by mx.google.com with ESMTPS id g3sm3608099wra.2007.11.29.18.23.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 29 Nov 2007 18:23:14 -0800 (PST)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
-In-Reply-To: <20071130015315.GA13369@coredump.intra.peff.net>
+	id S1761197AbXK3C1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 21:27:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758144AbXK3C1W
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 21:27:22 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:56975 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753853AbXK3C1V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 21:27:21 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JSA00CB5S5JNVU0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 29 Nov 2007 21:27:20 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <474F72B7.9000305@gmail.com>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66606>
 
-Jeff King wrote:
-> On Thu, Nov 29, 2007 at 08:33:39PM -0500, Nicolas Pitre wrote:
-> 
->> So what you want is for the dashed hardlinks to exist _inside_ the 
->> libexec directory, even if most people won't "see" them due to that 
->> libexec directory not being in the shell path, right?
->>
->> If that is what you mean then I personally don't care at all.
-> 
-> That is exactly what I mean.
+On Thu, 29 Nov 2007, A Large Angry SCM wrote:
 
-And that also works for me when I set libexec=$(bindir).
+> Nicolas Pitre wrote:
+> > On Thu, 29 Nov 2007, A Large Angry SCM wrote:
+> > 
+> > > Again, there needs to remain support in the Makefile to install the
+> > > "dashed"
+> > > versions of the commands for those that want it; and be able to set
+> > > gitexecdir=$(binder) without editing the Makefile.
+> > 
+> > Well, if you want a "non standard" installation, maybe you just can edit a
+> > line or two in the Makefile?
+> 
+> Why do you object to a "install-dashed" Makefile target?
+
+As long as it is not the default I don't object.
+
+
+Nicolas
