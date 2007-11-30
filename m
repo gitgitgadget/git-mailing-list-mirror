@@ -1,71 +1,91 @@
-From: "Paul Sadauskas" <psadauskas@gmail.com>
-Subject: Converting a directory to submodule
-Date: Fri, 30 Nov 2007 10:53:04 -0700
-Message-ID: <ef2da8950711300953y374c38c4y42de42d9298391a7@mail.gmail.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: git bug/feature request
+Date: Fri, 30 Nov 2007 19:21:21 +0100
+Message-ID: <20071130182121.GC30048@efreet.light.src>
+References: <200711271127.41161.gapon007@gmail.com> <figv47$926$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 30 18:53:31 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Q68bSM7Ycu6FN28Q"
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 30 19:21:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyA3N-0005nz-7t
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 18:53:29 +0100
+	id 1IyAUk-0000WZ-TO
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 19:21:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759631AbXK3RxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2007 12:53:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758230AbXK3RxJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 12:53:09 -0500
-Received: from py-out-1112.google.com ([64.233.166.182]:12111 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756693AbXK3RxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2007 12:53:07 -0500
-Received: by py-out-1112.google.com with SMTP id u77so4503788pyb
-        for <git@vger.kernel.org>; Fri, 30 Nov 2007 09:53:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=i/VVR/YRBMZPeWSw1EgnyjnAK5l5Jbam5ywXTuv1GEg=;
-        b=BLtiYyNTUJl82CUHd4kkAKdDEbzAGNZVQjDL+bT8RSIFpIvNENalVZuLt+Md7PKnEUOPEGEC/vmA4rYO43nvfMYKwzuUZFSfZI/rOovfbuSujPwKW58e4AnXK/Su8VFFyqhUzk6cQhUZ6MJgyN10UHvWNfyJ0tS3LkUOGd1qUHo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Sayrxkm4gkoexqMtKUequjBlJpMWxrxOGazf4cOfHXGXgyu6pJXg21A2nOEGezySiCutQM+mm93X1DirTGqQhBpm+Jpm7rM/bNRjvwFFv6nzXY9wKs5GGffxFAkjWcKFsJygt+T5NNOnNeVrsQbHvPOzcGUSSbJSwugyRIfV4Aw=
-Received: by 10.65.23.7 with SMTP id a7mr4990961qbj.1196445184661;
-        Fri, 30 Nov 2007 09:53:04 -0800 (PST)
-Received: by 10.65.239.2 with HTTP; Fri, 30 Nov 2007 09:53:04 -0800 (PST)
+	id S1762842AbXK3SV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2007 13:21:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761587AbXK3SV2
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 13:21:28 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:58361 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760622AbXK3SV1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2007 13:21:27 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 91B3F578AC;
+	Fri, 30 Nov 2007 19:21:26 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id SCeMcx1TsRyq; Fri, 30 Nov 2007 19:21:24 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 2FC21575AA;
+	Fri, 30 Nov 2007 19:21:24 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1IyAUL-0003Uh-Oo; Fri, 30 Nov 2007 19:21:21 +0100
 Content-Disposition: inline
+In-Reply-To: <figv47$926$1@ger.gmane.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66652>
 
-Dear list,
 
-I'm having some trouble when I change an existing directory in a
-project into a submodule. After pushing this change to the origin, I
-can no longer pull into any other projects. I can, however, clone the
-origin without problems.
+--Q68bSM7Ycu6FN28Q
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-These are the steps I take to change the dir into a submod:
+On Tue, Nov 27, 2007 at 12:30:16 +0100, Jakub Narebski wrote:
+> gapon wrote:
+>=20
+> > hi all,
+> > first of all i don't know if there's a bugzilla or something similar
+> > for git - i have found just this email (on http://git.or.cz/ webpage).
+>=20
+> There isn't any bug tracker for git. Use git mailing list for bug
+> reports and feature requests.
+>=20
+> > i have discovered "weird" behaviour of git in this scenario*:
+> > - user A is working in repo A
+> > - user B clones repo A
+> > - user B makes some changes, commits, pushes
+>=20
+> Do not push into checked out branch!
 
-rm -rf /submod
-git commit -a
-git submodule add git://abc/submod submod
-git commit
-git push
+Push is the only non-local operation, that could break the checked out stat=
+e,
+right? Than it should be possible to add a check that a push is trying to
+change the checked-out ref and detach the HEAD if so.
 
-But then attempting to pull this anywhere else results in a
-half-completed pull, and dies with the error:
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
 
-fatal: cannot read object bb138891993fdeb3dbfcb41fe8c2a4693676f8fe
-'submod~564e58282ce575db34b6f249a42b1ea59f56efd3'
-Merge with strategy recursive failed.
+--Q68bSM7Ycu6FN28Q
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-Like I said, though, a fresh clone works fine. Am I doing something
-wrong in my push, or is this a bug?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-Thanks,
-Paul Sadauskas
+iD8DBQFHUFShRel1vVwhjGURAmKtAJ9jZVTEGRs86z6gbzgU/Ifel9ZvowCglH1P
+VOuz3BdIho9hkTQ6mAtMmJc=
+=h8zA
+-----END PGP SIGNATURE-----
+
+--Q68bSM7Ycu6FN28Q--
