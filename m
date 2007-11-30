@@ -1,90 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Thu, 29 Nov 2007 19:58:52 -0500
-Message-ID: <20071130005852.GA12224@coredump.intra.peff.net>
-References: <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org> <20071129150849.GA32296@coredump.intra.peff.net> <fcaeb9bf0711291205h125dadbbp8e8ae392e9b5b751@mail.gmail.com> <20071129211409.GA16625@sigill.intra.peff.net> <Pine.LNX.4.64.0711292218240.27959@racer.site> <20071129231444.GA9616@coredump.intra.peff.net> <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org> <7veje8twt2.fsf@gitster.siamese.dyndns.org> <20071130003512.GB11683@coredump.intra.peff.net> <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Some git performance measurements..
+Date: Fri, 30 Nov 2007 01:54:13 +0100
+Organization: At home
+Message-ID: <finmvm$da8$1@ger.gmane.org>
+References: <alpine.LFD.0.9999.0711281747450.8458@woody.linux-foundation.org> <alpine.LFD.0.9999.0711281852160.8458@woody.linux-foundation.org> <alpine.LFD.0.99999.0711282244190.9605@xanadu.home> <alpine.LFD.0.9999.0711282022470.8458@woody.linux-foundation.org> <alpine.LFD.0.99999.0711291208060.9605@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 30 01:59:15 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 30 02:01:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IxuDr-0000Dn-1u
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 01:59:15 +0100
+	id 1IxuFS-0000t3-HW
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 02:00:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932741AbXK3A64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 19:58:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932188AbXK3A64
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 19:58:56 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2172 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759614AbXK3A6z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 19:58:55 -0500
-Received: (qmail 30685 invoked by uid 111); 30 Nov 2007 00:58:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 29 Nov 2007 19:58:53 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 29 Nov 2007 19:58:52 -0500
-Content-Disposition: inline
-In-Reply-To: <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org>
+	id S934257AbXK3BAe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Nov 2007 20:00:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934242AbXK3BAe
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 20:00:34 -0500
+Received: from main.gmane.org ([80.91.229.2]:52161 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934226AbXK3BAb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Nov 2007 20:00:31 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IxuD0-0003PK-JJ
+	for git@vger.kernel.org; Fri, 30 Nov 2007 00:58:22 +0000
+Received: from abvh222.neoplus.adsl.tpnet.pl ([83.8.205.222])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Nov 2007 00:58:22 +0000
+Received: from jnareb by abvh222.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 30 Nov 2007 00:58:22 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvh222.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66587>
 
-On Thu, Nov 29, 2007 at 04:49:26PM -0800, Junio C Hamano wrote:
+<opublikowany i wys=B3any>
 
-> I understand your point was primarily "git-a<tab>".  I think it has been
-> solved for bash and zsh but not for other shells.  I think possible and
-> sensible avenues are (1) punt -- cvs, svn nor hg people do not seem to
-> have problem with it, or (2) implement completion in your other favorite
-> shells.
+[Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>,=20
+ Linus Torvalds <torvalds@linux-foundation.org>]
 
-My point is that (2) is already implemented for every program (shell or
-no) which understands filename completion, and there is a proposal for
-taking it away. I would consider that, except I haven't see any claimed
-advantages except that the hardlinks are awful under Windows.
+Nicolas Pitre wrote:
 
-I am proposing to have those dashed forms on platforms where it makes
-sense, but to treat them as second-class citizens (by putting them in
-$(libexecdir), which will address consistency problems.
+> Well, see below for the patch that actually split the pack data into=20
+> objects of the same type.  Doing that "git checkout" on the kernel tr=
+ee=20
+> did improve things for me although not spectacularly.
 
-> And I think the following from Linus makes sense.
-> 
-> > And from a consistency standpoint, that would be a *good* thing. There are 
-> > many reasons why the git-xyz format *cannot* be the "consistent" form
-> > (ranging from the flags like --bare and -p to just aliases), so 
-> > encouraging people to move to "git xyz" is just a good idea.
-> >
-> > Yeah, yeah, the man-pages need the "git-xyz" form, but on the other hand, 
-> > rather than "man git-xyz", you can just do "git help xyz" instead, and now 
-> > you're consistently avoiding the dash again!
-> 
-> but I am feeling quite feverish today so I may be missing something
-> obvious.
+> +static int sort_by_type(const void *_a, const void *_b)
+> +{
+> +     const struct object_entry *a =3D *(struct object_entry **)_a;
+> +     const struct object_entry *b =3D *(struct object_entry **)_b;
+> +
+> +     /*
+> +      * Preserve recency order for objects of the same type  and reu=
+sed deltas.
+> +      */
+> +     if(a->type =3D=3D OBJ_REF_DELTA || a->type =3D=3D OBJ_OFS_DELTA=
+ ||
+> +        b->type =3D=3D OBJ_REF_DELTA || b->type =3D=3D OBJ_OFS_DELTA=
+ ||
+> +        a->type =3D=3D b->type)
+> +             return (a < b) ? -1 : 1;
+> +     return a->type - b->type;
+> +}
 
-I thought Linus' point was that moving the subcommands was sufficient
-for dealing with the consistency issue (i.e., all scripts would move to
-"git foo" and only those people who really wanted to would put the
-dashed forms in their path). From the same email you quoted, but just
-above:
+> +     qsort(sorted_by_type, nr_objects, sizeof(*sorted_by_type), sort=
+_by_type);
 
-> On Thu, 29 Nov 2007, Jeff King wrote:
-> >
-> > Yes, I am fine with the user having to go to extra lengths to use the
-> > dash forms (like adding $(libexecdir) to their path), which I think
-> > should address your consistency concern.
-> 
-> I agree. If we actually start moving the subcommands into a separate
-> directory, I suspect scripts will be fixed up soon enough. Of course
-> people *can* do it by just adding the path, but more likely, we'll just
-> see people start doign "git xyz" instead of "git-xyz".
+Isn't there a better way to do this sorting? What is needed here is
+(stable) _bucket_ sort / _pigeonhole_ sort (or counting sort), which
+is O(n); quicksort is perhaps simpler to use, but I'm not sure if
+faster in this situation.
 
-But now we are arguing about what Linus meant like it is scripture. ;)
-
--Peff
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
