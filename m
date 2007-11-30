@@ -1,88 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] transport.c: call dash-less form of receive-pack and
- upload-pack on remote
-Date: Fri, 30 Nov 2007 12:08:20 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711301207020.27959@racer.site>
-References: <20071127150229.GA14859@laptop> <20071127160423.GA22807@laptop>
- <Pine.LNX.4.64.0711271617350.27959@racer.site> <20071128000731.GD9174@efreet.light.src>
- <7v8x4jb295.fsf@gitster.siamese.dyndns.org>
- <fcaeb9bf0711280036p33583824ge59af93bbe3f0a78@mail.gmail.com>
- <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org>
- <fcaeb9bf0711281917p56cc4228m6c401286439e2a34@mail.gmail.com>
- <alpine.LFD.0.99999.0711290905510.9605@xanadu.home> <7vd4tsvfvk.fsf@gitster.siamese.dyndns.org>
- <DB613F3E-85CC-4AF0-928C-4F4E4C8E9FB8@orakel.ntnu.no>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
+From: Eyvind Bernhardsen <eyvind-git-list@orakel.ntnu.no>
+Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
+Date: Fri, 30 Nov 2007 12:28:18 +0100
+Message-ID: <DB613F3E-85CC-4AF0-928C-4F4E4C8E9FB8@orakel.ntnu.no>
+References: <20071127150229.GA14859@laptop> <20071127160423.GA22807@laptop> <Pine.LNX.4.64.0711271617350.27959@racer.site> <20071128000731.GD9174@efreet.light.src> <7v8x4jb295.fsf@gitster.siamese.dyndns.org> <fcaeb9bf0711280036p33583824ge59af93bbe3f0a78@mail.gmail.com> <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org> <fcaeb9bf0711281917p56cc4228m6c401286439e2a34@mail.gmail.com> <alpine.LFD.0.99999.0711290905510.9605@xanadu.home> <7vd4tsvfvk.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
-To: Eyvind Bernhardsen <eyvind-git-list@orakel.ntnu.no>
-X-From: git-owner@vger.kernel.org Fri Nov 30 13:09:01 2007
+	Jan Hudec <bulb@ucw.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 30 13:09:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iy4g0-0001e4-KL
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 13:09:01 +0100
+	id 1Iy4gU-0001r7-Sp
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 13:09:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754098AbXK3MIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2007 07:08:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754126AbXK3MIh
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 07:08:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46215 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754098AbXK3MIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2007 07:08:36 -0500
-Received: (qmail invoked by alias); 30 Nov 2007 12:08:34 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp012) with SMTP; 30 Nov 2007 13:08:34 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/IIVd0ia/IeQCZtR9c8Whs3I9ea8iumMqXekDqp/
-	ibXvWzmDfdkR7m
-X-X-Sender: gene099@racer.site
-In-Reply-To: <DB613F3E-85CC-4AF0-928C-4F4E4C8E9FB8@orakel.ntnu.no>
-X-Y-GMX-Trusted: 0
+	id S1761477AbXK3MI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2007 07:08:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759160AbXK3MI5
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 07:08:57 -0500
+Received: from 97.84-49-228.nextgentel.com ([84.49.228.97]:54027 "EHLO
+	eyvind.bernhardsens.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762217AbXK3MI4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2007 07:08:56 -0500
+X-Greylist: delayed 2412 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Nov 2007 07:08:55 EST
+Received: from [192.168.2.243] (pat-gw.osl.fast.no [217.144.235.5])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by eyvind.bernhardsens.net (Postfix) with ESMTP id C8A5C62A3CA;
+	Fri, 30 Nov 2007 12:28:39 +0100 (CET)
+In-Reply-To: <7vd4tsvfvk.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66637>
 
+On 29. nov. 2007, at 23.36, Junio C Hamano wrote:
 
-Since we plan to move the dash-form (git-<whatever>) into an execdir, it
-make sense to prepare our git protocol users for it.
+[...]
 
-Noticed by Eyvind Bernhardsen.
+> If people are really serious about reducing the number of commands in
+> the path, I would expect fixes and bugreports saying "I am setting
+> gitexecdir different from bindir in _my_ installation when I build  
+> git,
+> and here are the things that does not work if I do so".  Within the  
+> span
+> of more than 20 months (77cb17e9 introduced gitexecdir in Jan 2006), I
+> do not think there was a single such report or patch, other than the
+> message from Nguyen that started this thread.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+I'm setting gitexecdir different from bindir in my installation, and  
+here are the things that don't work:
 
-	On Fri, 30 Nov 2007, Eyvind Bernhardsen wrote:
+- When pushing to my system over ssh, git-receive-pack and git-upload- 
+pack are expected to be in $PATH.  I resolved the problem by putting  
+symlinks in /usr/local/bin.
 
-	> - When pushing to my system over ssh, git-receive-pack and
-	> git-upload-pack are expected to be in $PATH.  I resolved the 
-	> problem by putting symlinks in /usr/local/bin.
+I haven't seen any other problems, but then again, I only use git  
+plumbing commands and my own scripts.
 
-	How about this?  (I only compile-tested it...)
-
- transport.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/transport.c b/transport.c
-index 50db980..7bd0846 100644
---- a/transport.c
-+++ b/transport.c
-@@ -736,10 +736,10 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 		ret->disconnect = disconnect_git;
- 
- 		data->thin = 1;
--		data->uploadpack = "git-upload-pack";
-+		data->uploadpack = "git upload-pack";
- 		if (remote && remote->uploadpack)
- 			data->uploadpack = remote->uploadpack;
--		data->receivepack = "git-receive-pack";
-+		data->receivepack = "git receive-pack";
- 		if (remote && remote->receivepack)
- 			data->receivepack = remote->receivepack;
- 	}
--- 
-1.5.3.6.2088.g8c260
+Eyvind
