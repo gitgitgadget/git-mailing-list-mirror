@@ -1,120 +1,92 @@
-From: =?us-ascii?Q?=3D=3Futf-8=3Fq=3FR=3DC3=3DA9mi=3D20Vanicat=3F=3D?= 
-	<vanicat@debian.org>
-Subject: [PATCH] Adding menu for Emacs git.el
-Date: Fri, 30 Nov 2007 20:29:08 +0100
-Message-ID: <87mysvfr7e.dlv@vanicat.homelinux.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
+Date: Fri, 30 Nov 2007 12:01:13 -0800
+Message-ID: <7vve7jqz92.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0711292218240.27959@racer.site>
+	<20071129231444.GA9616@coredump.intra.peff.net>
+	<alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org>
+	<7veje8twt2.fsf@gitster.siamese.dyndns.org>
+	<20071130003512.GB11683@coredump.intra.peff.net>
+	<7vzlwwsgkp.fsf@gitster.siamese.dyndns.org>
+	<20071130005852.GA12224@coredump.intra.peff.net>
+	<alpine.LFD.0.99999.0711292004340.9605@xanadu.home>
+	<20071130011748.GC11683@coredump.intra.peff.net>
+	<474FB938.3040209@op5.se>
+	<20071130150948.GA22095@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alexandre Julliard <julliard@winehq.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 30 20:51:05 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 30 21:01:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyBt2-0003r7-Uv
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 20:50:57 +0100
+	id 1IyC3X-0007lt-3E
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 21:01:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752972AbXK3Tuh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Nov 2007 14:50:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753205AbXK3Tuh
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 14:50:37 -0500
-Received: from sp604005mt.neufgp.fr ([84.96.92.11]:40111 "EHLO smtp.Neuf.fr"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752420AbXK3Tug convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Nov 2007 14:50:36 -0500
-Received: from vanicat.homelinux.org ([77.198.160.187])
- by sp604005mt.gpm.neuf.ld
- (Sun Java System Messaging Server 6.2-5.05 (built Feb 16 2006))
- with ESMTP id <0JSC00HA94G6H750@sp604005mt.gpm.neuf.ld> for
- git@vger.kernel.org; Fri, 30 Nov 2007 20:50:31 +0100 (CET)
-Received: from moi by vanicat.homelinux.org with local (Exim 4.68)
-	(envelope-from <remi.vanicat@laposte.net>)	id 1IyBsb-0006yd-I2; Fri,
- 30 Nov 2007 20:50:29 +0100
-From: Remi Vanicat <vanicat@debian.org>
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: remi.vanicat@laposte.net
-X-SA-Exim-Scanned: No (on vanicat.homelinux.org); SAEximRunCond expanded to
- false
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1753836AbXK3UB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2007 15:01:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753372AbXK3UB0
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 15:01:26 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:44543 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753718AbXK3UBZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2007 15:01:25 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id EBFA52F9;
+	Fri, 30 Nov 2007 15:01:45 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 2B2DD9B3FC;
+	Fri, 30 Nov 2007 15:01:37 -0500 (EST)
+In-Reply-To: <20071130150948.GA22095@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 30 Nov 2007 10:09:48 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66659>
 
-Adding three menu to the git-status-mode of git.el : One for marking
-and unmarking, one for every thing you need when you have a conflict,
-and a last one for all the rest.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: R=C3=A9mi Vanicat <vanicat@debian.org>
----
-This use easymenu.
+> On Fri, Nov 30, 2007 at 08:18:16AM +0100, Andreas Ericsson wrote:
+> ...
+>> It would provide a ui inconsistency between platforms. Several people
+>> pointed that out. It's decidedly a Bad Thing.
+>
+> Which, as I said, I have already addressed (and which Linus has also
+> expanded upon in this thread). Since those hardlinks would be hidden
+> from users who did not go to some trouble to find them, there will not
+> be inconsistency problems.
 
- contrib/emacs/git.el |   46 ++++++++++++++++++++++++++++++++++++++++++=
-+++-
- 1 files changed, 45 insertions(+), 1 deletions(-)
+I already can see exchanges in the user community after such a change
+you propose would happen:
 
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index e147da0..f41b2ef 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -1297,7 +1297,51 @@ Return the list of files that haven't been handl=
-ed."
-     (define-key toggle-map "i" 'git-toggle-show-ignored)
-     (define-key toggle-map "k" 'git-toggle-show-unknown)
-     (define-key toggle-map "m" 'git-toggle-all-marks)
--    (setq git-status-mode-map map)))
-+    (setq git-status-mode-map map))
-+  (easy-menu-define git-menu-mark git-status-mode-map
-+    "Git Merge Menu"
-+    `("Merge"
-+      ["Next Unmerged File" git-next-unmerged-file t]
-+      ["Prev Unmerged File" git-prev-unmerged-file t]
-+      ["Mark as Resolved" git-resolve-file t]
-+      ["Interctive Merge File" git-find-file-imerge t]
-+      ["Diff Against Common Base File" git-diff-file-base t]
-+      ["Diff Combined" git-diff-file-combined t]
-+      ["Diff Against Merge Head" git-diff-file-merge-head t]
-+      ["Diff Against Mine" git-diff-file-mine t]
-+      ["Diff Against Other" git-diff-file-other t]))
-+  (easy-menu-define git-menu-mark git-status-mode-map
-+    "Git Mark Menu"
-+    `("Mark"
-+      ["Mark File" git-mark-file t]
-+      ["Mark All" git-mark-all t]
-+      ["Unmark File" git-unmark-file t]
-+      ["Unmark All" git-unmark-all t]
-+      ["Toggle All Mark" git-toggle-all-marks t]))
-+  (easy-menu-define git-menu git-status-mode-map
-+    "Git Menu."=20
-+    `("Git"
-+      ["Refresh" git-refresh-status t]
-+      ["Commit" git-commit-file t]
-+      "--------"
-+      ["Add File" git-add-file t]
-+      ["Revert File" git-revert-file t]
-+      ["Ignore File" git-ignore-file t]
-+      ["Remove File" git-remove-file t]
-+      "--------"
-+      ["Find File" git-find-file t]
-+      ["View File" git-view-file t]
-+      ["Diff File" git-diff-file t]
-+      ["Interctive Diff File" git-diff-file-idiff t]
-+      ["Log" git-log-file t]
-+      "--------"
-+      ["Quit" git-status-quit t]
-+      "--------"
-+      ["Show Uptodate" git-toggle-show-uptodate :style toggle :selecte=
-d git-show-uptodate]
-+      ["Toggle Show Ignored" git-toggle-show-ignored :style toggle :se=
-lected git-show-ignored]
-+      ["Toggle Show Unknown" git-toggle-show-unknown :style toggle :se=
-lected git-show-unknown]))
-+   =20
-+)
-=20
- ;; git mode should only run in the *git status* buffer
- (put 'git-status-mode 'mode-class 'special)
---=20
-1.5.3.6
+ Newbie: Ay! why doesn't git-commit work anymore?
+
+ Jeff: Stupid Junio and Linus decided that you should not use dash form
+       but say "git commit" instead.
+
+ Newbie: But my fingers are trained and I like the "git-<tab>"
+         completion.
+
+ Jeff: If you really like that, here is a hidden trick.  Add
+       /usr/libexec/git-core/ to your PATH.
+
+ Newbie: Ah, that worked, thanks.
+
+ A few days later...
+
+ Newbie: Jeff, your trick does not work for my coworker.  He also has
+         the latest git.  His installation does not even have that
+         directory!  What gives?
+
+ Jeff: Ah, sorry, that trick works for some platforms but not others.
+
+ Newbie: Stupid inconsistency.  Who suggested that?
