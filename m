@@ -1,84 +1,102 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [RFC] git-gui USer's Survey 2007 (was: If you would write git from scratch now, what would you change?)
-Date: Fri, 30 Nov 2007 19:25:27 +0100
-Message-ID: <e5bfff550711301025y21e7149bga39fa61ceef854cf@mail.gmail.com>
-References: <20071127012013.GG14735@spearce.org>
-	 <20071127015833.GL14735@spearce.org>
-	 <Pine.LNX.4.64.0711271136050.27959@racer.site>
-	 <fiib19$dj6$1@ger.gmane.org>
-	 <Pine.LNX.4.64.0711281225150.27959@racer.site>
-	 <20071128232523.GE9174@efreet.light.src>
-	 <Pine.LNX.4.64.0711282345500.27959@racer.site>
-	 <20071129065706.GA24070@efreet.light.src>
-	 <Pine.LNX.4.64.0711291200000.27959@racer.site>
-	 <20071130175018.GB30048@efreet.light.src>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
+Date: Fri, 30 Nov 2007 18:28:50 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711301828050.27959@racer.site>
+References: <7veje8twt2.fsf@gitster.siamese.dyndns.org>
+ <20071130003512.GB11683@coredump.intra.peff.net> <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org>
+ <20071130005852.GA12224@coredump.intra.peff.net>
+ <alpine.LFD.0.9999.0711291821220.8458@woody.linux-foundation.org>
+ <5E2A9E2B-8B9A-46B0-99D0-DB3798F10119@zib.de> <20071130151223.GB22095@coredump.intra.peff.net>
+ <8aa486160711300728x70f591f1hf8884a78f2b15806@mail.gmail.com>
+ <20071130152942.GA22489@coredump.intra.peff.net>
+ <alpine.LFD.0.9999.0711300745330.8458@woody.linux-foundation.org>
+ <20071130162257.GA22882@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Jakub Narebski" <jnareb@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Jan Hudec" <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Fri Nov 30 19:25:53 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Santi B?jar <sbejar@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 30 19:29:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyAYf-00022z-Ac
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 19:25:49 +0100
+	id 1IyAcF-0003U3-7Y
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 19:29:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758270AbXK3SZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2007 13:25:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758162AbXK3SZ3
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 13:25:29 -0500
-Received: from rv-out-0910.google.com ([209.85.198.190]:56610 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757587AbXK3SZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2007 13:25:28 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2002864rvb
-        for <git@vger.kernel.org>; Fri, 30 Nov 2007 10:25:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ShPQlHFi1O3OHNaQgn3L+Q4rqAKG58COZcVpiRes8cw=;
-        b=G0mnO9VHRGWVxYxzCVqlzI72mmNjY8TS1Qj985vBoQhOXNJlOe0W4bT2ieOBWh3L5C6GPBNw9+ur1A5WDdF2zI72ChdzjDmlik5io6gm7IRFTNij6U+SYkXlAegSpkQoqJZhQuw+6AQ14I4RO8CzH4PP7K8jSZlkNZDEYemaNGM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FMPZ2OKNsz5y0vS31EM11Farw0kDdevzVyiBVSSrj++HqXggB78QcRL6X9sOm/OgOtcnzCJcOotsM5hnrtehx7tTkM4bWKfLw7xtCTxZ59ixpL1rwLHcLBALAe9MxXSoJXiwME9Jpec3Zbep3NA6SP+WHFeJ73cKEosZES/2Vis=
-Received: by 10.141.98.13 with SMTP id a13mr997753rvm.1196447127957;
-        Fri, 30 Nov 2007 10:25:27 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Fri, 30 Nov 2007 10:25:27 -0800 (PST)
-In-Reply-To: <20071130175018.GB30048@efreet.light.src>
-Content-Disposition: inline
+	id S1759521AbXK3S3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2007 13:29:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759436AbXK3S3K
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 13:29:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35594 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758813AbXK3S3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2007 13:29:08 -0500
+Received: (qmail invoked by alias); 30 Nov 2007 18:29:05 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp038) with SMTP; 30 Nov 2007 19:29:05 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX195RxU/xEF5x3m3Nm7e6frQstvzhcX3YLMqGAc5G/
+	nQusJq8VoHLp/j
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071130162257.GA22882@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66654>
 
-On Nov 30, 2007 6:50 PM, Jan Hudec <bulb@ucw.cz> wrote:
->
-> Nevertheless, I actually think git-gui is quite well in Tcl/Tk and rewriting
-> it in python nor any other language would probably help it in any way.
->
+Hi,
 
-A little provocation: I've never seen in open source a discussion on
-what language to use for an application and then the development of
-the application from scratch.
+On Fri, 30 Nov 2007, Jeff King wrote:
 
-What I see daily instead is the effort of one (or a very little number
-of people) to develop something in the language he choose and then ,
-_after_ some code has been produced, the effort embraced by other
-people that join the project.
+> Support builtin aliases
+> 
+> Builtin aliases are "default" alias values that can be
+> overridden by user-configured aliases.
+> 
+> For example, the first such alias is "view", an alias for
+> gitk. A user with no further configuration can run
+> "git view" to use gitk. However, they can also set the
+> config option "alias.view" to "!tig" to run tig.
+> ---
+>  git.c |    9 +++++++++
+>  1 files changed, 9 insertions(+), 0 deletions(-)
+> 
+> diff --git a/git.c b/git.c
+> index f220284..95296aa 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -151,6 +151,13 @@ static int split_cmdline(char *cmdline, const char ***argv)
+>  	return count;
+>  }
+>  
+> +static char *builtin_alias(const char *cmd)
+> +{
+> +	if (!strcmp(cmd, "view"))
+> +		return xstrdup("!gitk");
+> +	return NULL;
+> +}
+> +
+>  static int handle_alias(int *argcp, const char ***argv)
+>  {
+>  	int nongit = 0, envchanged = 0, ret = 0, saved_errno = errno;
+> @@ -162,6 +169,8 @@ static int handle_alias(int *argcp, const char ***argv)
+>  
+>  	alias_command = (*argv)[0];
+>  	git_config(git_alias_config);
+> +	if (!alias_string)
+> +		alias_string = builtin_alias(alias_command);
+>  	if (alias_string) {
+>  		if (alias_string[0] == '!') {
+>  			if (*argcp > 1) {
 
-Some near examples? gitk, gitweb, stgit, git itself especially for
-shell parts (why shell should be a better prototyping language then
-other prototyping languages? portability? easy to learn? performance?
-library support? syntax? probably no one of the above in general
-terms).
+Didn't you mean to put this _before_ the git_config() call?  As you wrote 
+it, the "soft" alias overrides the user-specified one.
 
-I would say this thread, although very interesting from a learning
-point of view, it's a a little bit academic.
-
-
-Marco
+Ciao,
+Dscho
