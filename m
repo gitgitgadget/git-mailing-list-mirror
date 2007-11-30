@@ -1,84 +1,82 @@
-From: Bill Priest <priestwilliaml@yahoo.com>
-Subject: Re: can't commit files that have been git add'ed because "fatal: you need to resolve your current index first"
-Date: Fri, 30 Nov 2007 08:32:17 -0800 (PST)
-Message-ID: <379331.84167.qm@web55014.mail.re4.yahoo.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [RFC] git-gui USer's Survey 2007 (was: If you would write git
+	from scratch now, what would you change?)
+Date: Fri, 30 Nov 2007 18:50:18 +0100
+Message-ID: <20071130175018.GB30048@efreet.light.src>
+References: <20071127012013.GG14735@spearce.org> <fifstd$ilj$1@ger.gmane.org> <20071127015833.GL14735@spearce.org> <Pine.LNX.4.64.0711271136050.27959@racer.site> <fiib19$dj6$1@ger.gmane.org> <Pine.LNX.4.64.0711281225150.27959@racer.site> <20071128232523.GE9174@efreet.light.src> <Pine.LNX.4.64.0711282345500.27959@racer.site> <20071129065706.GA24070@efreet.light.src> <Pine.LNX.4.64.0711291200000.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 30 17:33:00 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Nov 30 18:51:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iy8n9-0004pf-Ev
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 17:32:39 +0100
+	id 1IyA0y-0004m2-Ks
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 18:51:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934349AbXK3QcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2007 11:32:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934267AbXK3QcT
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 11:32:19 -0500
-Received: from web55014.mail.re4.yahoo.com ([206.190.58.148]:22087 "HELO
-	web55014.mail.re4.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S934260AbXK3QcS (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Nov 2007 11:32:18 -0500
-Received: (qmail 84514 invoked by uid 60001); 30 Nov 2007 16:32:17 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=hwkJzrahqxbyVj7eKgFXGReUDhqF3jtj0vrfdeC20YDkyLBS1uslTAWqGIBERkqgCZS3lUscqis6juPeO2BixdAQEgi2MHwTZX/roZjwjEyzc9Ybirn32T/wBjFBbruXdk4LzvRnSLDqoszyKCAqarvHrD2G962zuGdXI7yErhQ=;
-X-YMail-OSG: sQYMK8IVM1mc7TfnkFjcZNXXh6GyiYNgZpm91IiYfDDTA90jIX_pS94CxKhY2AMcLpMu1CKJjnhgGvDKQKMfzCXCcecbfu.O7Xhfgsu8JrW0Ry2lVGc-
-Received: from [64.243.89.222] by web55014.mail.re4.yahoo.com via HTTP; Fri, 30 Nov 2007 08:32:17 PST
+	id S1759619AbXK3Ruk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2007 12:50:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758422AbXK3Ruk
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 12:50:40 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:47251 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758230AbXK3Ruj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2007 12:50:39 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 7B7865741F;
+	Fri, 30 Nov 2007 18:50:37 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id 8336t+1UsTSa; Fri, 30 Nov 2007 18:50:31 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id C9EF157723;
+	Fri, 30 Nov 2007 18:50:28 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1IyA0J-0002sw-91; Fri, 30 Nov 2007 18:50:19 +0100
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0711291200000.27959@racer.site>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66650>
 
-On Wed, 28 Nov 2007 12:08:40 -0800
-Junio C Hamano <gitster@pobox.com> wrote:
-
-> You can still do that by hand, by doing something
-like:
+On Thu, Nov 29, 2007 at 12:01:47 +0000, Johannes Schindelin wrote:
+> Hi,
 > 
-> 	$ git merge --squash A
->         $ resolve only partly
->         $ git commit -m 'Prepare to merge A'
->         $ git reset --hard
->         $ git merge A
-> 	$ resolve the rest
->         $ git commit -m 'Fully merged A'
+> On Thu, 29 Nov 2007, Jan Hudec wrote:
 > 
-> For such a multi-step merge to make sense, the
-change between B---M
-> should make sense by itself for people who have to
-read such a history
-> later.  Such a half-a-squash-merge may probably not
-make sense by itself
-> in most cases, so I suspect the above workflow would
-not be useful in
-> general.
+> > On Wed, Nov 28, 2007 at 23:48:12 +0000, Johannes Schindelin wrote:
+> >
+> > > Furthermore, my complaint was not about a platform where neither C# 
+> > > nor Python work.  That is irrelevant.  If you have one platform where 
+> > > only one works, and another platform where only the other works, you 
+> > > cannot have a single program for both platforms.  Right?
+> > 
+> > Right.
+> > 
+> > I probably shouldn't be surprised that mono does not work on older unices,
+> > but I am a bit surprised python does not.
 > 
+> *Sigh* I managed again to make myself misunderstood.
+> 
+> Even if newer Python does not easily compile on that IRIX, I have an old 
+> Python there (2.2).  But I don't have any Python on MSys.  (Yes, there is 
+> a _MinGW_ port, but no _MSys_ one.)  So for me, Python is out.
 
-Junio,
-	I resolved all the merges and then committed
-different files as groups to make it easy to
-cherry-pick after this merge.  Does this "mess up" the
-merge info?  What does the "git reset --hard" do after
-the commit (I'm assuming it throws away the
-non-resolved changes not committed)?  But from my
-experience git wouldn't let me do the commit above it
-w/o first fixing the conflicts.
+While it would be a problem, but is it really fatal? AFAIK MSys uses unixy
+paths inside the program, but accepts arguments and calls other processes
+using the windows convention, so mingw python should have no problem calling
+msys programs and vice versa. It might be more problematic to compile
+a shared module for it, but .dlls are quite well isolated, so even compiling
+a plugin linked with msys for mingw python might not be impossible.
 
-	Am I mis-interpreting your example or are you saying
-that you think git would let me do the commit w/o
-resolving all conflicts?
+Nevertheless, I actually think git-gui is quite well in Tcl/Tk and rewriting
+it in python nor any other language would probably help it in any way.
 
-Bill
-
-
-
-      ____________________________________________________________________________________
-Get easy, one-click access to your favorites. 
-Make Yahoo! your homepage.
-http://www.yahoo.com/r/hs 
+-- 
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
