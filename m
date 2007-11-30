@@ -1,73 +1,94 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Fri, 30 Nov 2007 08:32:57 +0100
-Message-ID: <BE2DD4F6-2F40-47DD-ADBF-E549EAF634C2@wincent.com>
-References: <20071127150229.GA14859@laptop> <20071127160423.GA22807@laptop> <Pine.LNX.4.64.0711271617350.27959@racer.site> <20071128000731.GD9174@efreet.light.src> <7v8x4jb295.fsf@gitster.siamese.dyndns.org> <fcaeb9bf0711280036p33583824ge59af93bbe3f0a78@mail.gmail.com> <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org> <fcaeb9bf0711281917p56cc4228m6c401286439e2a34@mail.gmail.com> <alpine.LFD.0.99999.0711290905510.9605@xanadu.home> <7vd4tsvfvk.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@cam.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jan Hudec <bulb@ucw.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 30 08:34:56 2007
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: importing bk into git
+Date: Fri, 30 Nov 2007 08:59:01 +0100
+Message-ID: <474FC2C5.8060400@op5.se>
+References: <200711292232.03352.christoph.duelli@gmx.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: christoph.duelli@gmx.de
+X-From: git-owner@vger.kernel.org Fri Nov 30 08:59:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iy0Om-0002uV-14
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 08:34:56 +0100
+	id 1Iy0mk-0000XH-O8
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 08:59:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758050AbXK3Heg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Nov 2007 02:34:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756652AbXK3Hef
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 02:34:35 -0500
-Received: from wincent.com ([72.3.236.74]:50584 "EHLO s69819.wincent.com"
+	id S932297AbXK3H7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2007 02:59:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758136AbXK3H7I
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 02:59:08 -0500
+Received: from mail.op5.se ([193.201.96.20]:48886 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754873AbXK3Hef convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Nov 2007 02:34:35 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAU7Ww8j026737;
-	Fri, 30 Nov 2007 01:32:59 -0600
-In-Reply-To: <7vd4tsvfvk.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.915)
+	id S1756978AbXK3H7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2007 02:59:06 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id E84B41F0807F;
+	Fri, 30 Nov 2007 08:59:04 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id eH1D2xT+dib3; Fri, 30 Nov 2007 08:59:03 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 49CF01F0809D;
+	Fri, 30 Nov 2007 08:59:03 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <200711292232.03352.christoph.duelli@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66623>
 
-El 29/11/2007, a las 23:36, Junio C Hamano escribi=F3:
+Christoph wrote:
+> I am trying to import a BitKeeper repo into a (new) git repo.
+> 
+> I am trying with the script bk2git.py that I found on the web.
+> This does not quite work - I fear script is no longer working with the current 
+> git release. (I am using the current git release.)
+> 
+> If I have understood the script correctly, it does repeated bk checkouts and 
+> imports the updates the git repo diff of the (next) checkout etc.
+> 
+> It seems this script tries to do so by settings environment vars
+> GIT_OBJECT_DIRECTORY and GIT_INDEX_FILE
+> to point at the git repo.
+> 
+> The bk checkout are done at a temp. dir (tmp_dir).
+> 
+> 
+> The following lines fail
+>   os.system("cd %s; git-ls-files --deleted | xargs 
+> git-update-cache --remove" % tmp_dir)
+> 
+> with: fatal: Not a git repository
+> xargs: git-update-cache: No such file or directory
+> 
 
-> If people are really serious about reducing the number of commands in
-> the path, I would expect fixes and bugreports saying "I am setting
-> gitexecdir different from bindir in _my_ installation when I build =20
-> git,
-> and here are the things that does not work if I do so".  Within the =20
-> span
-> of more than 20 months (77cb17e9 introduced gitexecdir in Jan 2006), =
-I
-> do not think there was a single such report or patch, other than the
-> message from Nguyen that started this thread.
+You may have better luck using "git update-index" instead of
+git-update-cache. If that doesn't work, try finding out which
+version of git the importer script was written against and try
+using that version of git for the import.
 
-One reason why there have been no reports is probably because 99% of =20
-people have never heard of gitexecdir nor know what it does.
+If you run into problems while using a newer git on the
+imported repository that'll be a different discussion.
 
-$ git grep gitexecdir | awk -F : '{print $1}' | uniq
-Makefile
-config.mak.in
-git-gui/Makefile
-git-gui/macosx/AppMain.tcl
-git.c
+> The problem seems to be that the script cd's into the temp dir (which is not a 
+> git repo) and the git-ls-files fails to find a git repo there.
+> I think the issue might be that an earlier version of git was perhaps able to 
+> find the repo by means of the env. vars mentioned above.
+> 
 
-Try googling for "site:git.or.cz gitexecdir"
+It should still do this, afaik, although it's probably better
+to just use GIT_DIR nowadays.
 
-Basically, seems the only way you could know about it is if you've =20
-heard it mentioned on this mailing list and decided to study the =20
-Makefile.
-
-Cheers,
-Wincent
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
