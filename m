@@ -1,92 +1,79 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Thu, 29 Nov 2007 21:55:16 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0711292142550.9605@xanadu.home>
-References: <7vfxyq2c9b.fsf@gitster.siamese.dyndns.org>
- <20071129150849.GA32296@coredump.intra.peff.net>
- <fcaeb9bf0711291205h125dadbbp8e8ae392e9b5b751@mail.gmail.com>
- <20071129211409.GA16625@sigill.intra.peff.net>
- <Pine.LNX.4.64.0711292218240.27959@racer.site>
- <20071129231444.GA9616@coredump.intra.peff.net>
- <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org>
- <7veje8twt2.fsf@gitster.siamese.dyndns.org>
- <20071130003512.GB11683@coredump.intra.peff.net>
- <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org>
- <20071130005852.GA12224@coredump.intra.peff.net>
- <alpine.LFD.0.9999.0711291821220.8458@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Nov 30 03:55:41 2007
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: [PATCH] git-cvsserver runs hooks/post-receive
+Date: Thu, 29 Nov 2007 23:06:31 -0500
+Message-ID: <7F81126E-5A76-40CA-94BF-82B46C57AFF6@mit.edu>
+References: <1195809174-28142-1-git-send-email-mfwitten@mit.edu> <7v3aup291c.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 30 05:13:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ixw2V-000243-Ec
-	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 03:55:39 +0100
+	id 1IxxFL-0007Ay-GJ
+	for gcvg-git-2@gmane.org; Fri, 30 Nov 2007 05:12:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762237AbXK3CzT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Nov 2007 21:55:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763920AbXK3CzT
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 21:55:19 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:34073 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761708AbXK3CzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Nov 2007 21:55:17 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSA00BYZTG48IF0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 29 Nov 2007 21:55:16 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LFD.0.9999.0711291821220.8458@woody.linux-foundation.org>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1762607AbXK3EMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Nov 2007 23:12:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762768AbXK3EMa
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Nov 2007 23:12:30 -0500
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:50301 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1762418AbXK3EM3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Nov 2007 23:12:29 -0500
+X-Greylist: delayed 345 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Nov 2007 23:12:29 EST
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id lAU46XiB015363;
+	Thu, 29 Nov 2007 23:06:33 -0500 (EST)
+Received: from [18.239.5.240] (MACGREGOR-TWO-FORTY.MIT.EDU [18.239.5.240])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id lAU46VKV028198
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Thu, 29 Nov 2007 23:06:32 -0500 (EST)
+In-Reply-To: <7v3aup291c.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66611>
-
-On Thu, 29 Nov 2007, Linus Torvalds wrote:
-
-> Yes. I meant that we might as well keep all the git-xyz forms around, but 
-> _only_ in the libexec directory (and make sure that the libexec directory 
-> by default is *not* a binary directory), so that they'd normally not be 
-> visible.
-> 
-> So then, people who want to use the old-fashioned git-xyz forms, because 
-> they just really hate white-space or whatever, could choose to do one of 
-> two things:
->  - either just change the default libexec directory to be the same as the 
->    binary install directory, and have all the git-xyz things in the same 
->    place they've always been.
->  - or just add $(gitlibexec) into their path.
-> 
-> but the default (which is what 99% of all people use) would be to not 
-> show them. I also think that it makes sense to avoid wasting diskspace 
-> with duplicate files, so in situations where you don't have hardlinks, 
-> just don't install the git-xyz files at all by default (and again, maybe 
-> we can have a option to the installer to do it for people who really are 
-> very attached to the git-xyz format, and prefer to waste even a lot of 
-> disk on it)
-> 
-> So I just think that the whole idiotic complaint that some people have 
-> (that whole "git-<tab><tab>" shows "Display all 144 possibilities?" and 
-> people are somehow using that as an argument that git is "complex") should 
-> be something we strive to undo. I think the complaint is insane (because 
-> the answer is "well, nobody forces you to _use_ all the power and scripts 
-> we give you!"), but still, it's a complaint, so let's just assume the user 
-> is right, and try to fix it.
-
-Absolutely!
-
-And despite Junio's appearance of some cowardliness on this issue :-)
-I think we should have this right now instead of later. Like Junio said 
-himself, this was planned for a while already, and poorly maintained 
-external scripts are already failing due to other reasons anyway.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66612>
 
 
-Nicolas
+On 28 Nov 2007, at 7:24:31 PM, Junio C Hamano wrote:
+
+> Michael Witten <mfwitten@mit.edu> writes:
+>
+>> git-cvsserver just did the following:
+>>     (1) run hooks/update
+>>     (2) commit if hooks/update passed
+>>
+>> This commit simply adds:
+>>     (3) run hooks/post-receive
+>>
+>> Also, there are a few grammar cleanups and
+>> consistency improvements.
+>
+> I gave only a very cursory look; looks Ok to me.  This makes me wonder
+> if post-update wants to run as well.
+
+Seems like post-receive is supposed to supersede post-update anyhow,
+so might as well leave post-update out at this point?
+
+In any case, I haven't taken a thorough look at how git-cvsserver works,
+but it seems to duplicate a lot of git-receive-pack.
+
+How about turning git-cvsserver into a true middleman, so that it  
+constructs
+a 'temporary git working tree' and then does a real git-push into the  
+final
+git repository.
+
+Because git-cvsserver would be using git-send-pack to do the pushing,  
+it could
+push to yet another server. How cool is that!
