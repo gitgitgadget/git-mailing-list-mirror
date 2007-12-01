@@ -1,71 +1,69 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sat, 1 Dec 2007 00:55:36 -0800
-Message-ID: <20071201085536.GA11900@muzzle>
-References: <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org> <7vir4d40sw.fsf@gitster.siamese.dyndns.org> <7vwsso3poo.fsf@gitster.siamese.dyndns.org> <7vfxz89x9q.fsf@gitster.siamese.dyndns.org> <7vabpctx3b.fsf@gitster.siamese.dyndns.org> <7vsl30eyuk.fsf@gitster.siamese.dyndns.org> <7vve7tuz3a.fsf@gitster.siamese.dyndns.org> <7v4pfakr4j.fsf@gitster.siamese.dyndns.org> <7vzlwv6sxr.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Steven Grimm <koreth@midwinter.com>
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: [PATCH] git-cvsserver runs hooks/post-receive
+Date: Sat, 1 Dec 2007 04:17:02 -0500
+Message-ID: <BFDB9A00-6E92-4880-9FE7-3D0E392D18A9@mit.edu>
+References: <1195809174-28142-1-git-send-email-mfwitten@mit.edu> <7v3aup291c.fsf@gitster.siamese.dyndns.org> <7F81126E-5A76-40CA-94BF-82B46C57AFF6@mit.edu> <7vmysv87jm.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 01 09:56:01 2007
+X-From: git-owner@vger.kernel.org Sat Dec 01 10:17:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyO8m-0006cN-HS
-	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 09:56:00 +0100
+	id 1IyOTZ-0003Yq-19
+	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 10:17:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751034AbXLAIzj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Dec 2007 03:55:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751020AbXLAIzi
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Dec 2007 03:55:38 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:44096 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750915AbXLAIzi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Dec 2007 03:55:38 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 5DF127DC0FE;
-	Sat,  1 Dec 2007 00:55:37 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vzlwv6sxr.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751259AbXLAJRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Dec 2007 04:17:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751189AbXLAJRI
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Dec 2007 04:17:08 -0500
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:42678 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751202AbXLAJRG (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Dec 2007 04:17:06 -0500
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id lB19H4qj004495;
+	Sat, 1 Dec 2007 04:17:04 -0500 (EST)
+Received: from [18.239.5.240] (MACGREGOR-TWO-FORTY.MIT.EDU [18.239.5.240])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id lB19H3gh021612
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Sat, 1 Dec 2007 04:17:03 -0500 (EST)
+In-Reply-To: <7vmysv87jm.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66706>
-
-Junio C Hamano <gitster@pobox.com> wrote:
-> * ew/svn (Thu Nov 22 13:44:42 2007 +0000) 4 commits
->  - git-svn: add support for pulling author from From: and Signed-off-
->    by:
->  - git-svn: add a show-externals command.
->  - git-svn now reads settings even if called in subdirectory
->  - git-svn: Remove unnecessary Git::SVN::Util package
-> 
-> Picked up from the list with Eric's Acks, but haven't merged, as my next
-> pull from Eric would hopefully bring them in anyway.
-
-Hi,
-
-I've pushed the following out to git://git.bogomips.org/git-svn.git ,
-along with Steven's patch:
-
-Andy Whitcroft (1):
-      git-svn: add support for pulling author from From: and Signed-off-by:
-
-David D. Kilzer (1):
-      git-svn: Remove unnecessary Git::SVN::Util package
-
-Gustaf Hendeby (1):
-      git-svn now reads settings even if called in subdirectory
-
-Steven Grimm (1):
-      git-svn: Don't create a "master" branch every time rebase is run
-
-Vineet Kumar (1):
-      git-svn: add a show-externals command.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66707>
 
 
--- 
-Eric Wong
+On 30 Nov 2007, at 9:37:01 PM, Junio C Hamano wrote:
+
+> I'll queue your patch, but I think it should be enhanced to support
+> post-update for consistency.
+
+I'll send another patch that includes support for post-update.
+
+> I'll queue your patch,
+
+Will the old patch already be in place?
+
+Also, I explicitly decided to pipe input into post-receive
+by hand rather than relying on a system() call that someone
+might exploit maliciously.
+
+Unfortunately, it turns out that open() with a pipe essentially
+invokes system(); the solution is to fork a child process and
+then to turn the child into the process with which communication
+is desired via a call to exec().
+
+Because the rest of git-cvsserver.perl uses explicit system()
+calls, I have been wondering if I am being overly cautious.
