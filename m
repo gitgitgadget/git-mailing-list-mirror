@@ -1,73 +1,54 @@
-From: Tor Myklebust <tmyklebu@csclub.uwaterloo.ca>
-Subject: Re: memmem.c improvement
-Date: Fri, 30 Nov 2007 22:07:01 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0711302151340.9426@caffeine.csclub.uwaterloo.ca>
-References: <4750AF4F.6090207@pipapo.org> <Pine.LNX.4.64.0711301954370.9426@caffeine.csclub.uwaterloo.ca>  <4750C74B.8060308@pipapo.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC] "color.diff = true" is not "always" anymore.
+Date: Fri, 30 Nov 2007 23:15:49 -0500
+Message-ID: <20071201041549.GB30725@coredump.intra.peff.net>
+References: <474B42EC.1000408@wanadoo.fr> <7vr6icej23.fsf@gitster.siamese.dyndns.org> <7vd4tuakzj.fsf_-_@gitster.siamese.dyndns.org> <20071128190439.GA11396@coredump.intra.peff.net> <7v4pf39m4j.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: libc-alpha@sourceware.org, git@vger.kernel.org
-To: Christian Thaeter <ct@pipapo.org>
-X-From: libc-alpha-return-20629-glibc-alpha=m.gmane.org@sourceware.org Sat Dec 01 04:07:31 2007
-Return-path: <libc-alpha-return-20629-glibc-alpha=m.gmane.org@sourceware.org>
-Envelope-to: glibc-alpha@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1IyIhV-0001YH-NU
-	for glibc-alpha@gmane.org; Sat, 01 Dec 2007 04:07:30 +0100
-Received: (qmail 2468 invoked by alias); 1 Dec 2007 03:07:11 -0000
-Received: (qmail 1910 invoked by uid 22791); 1 Dec 2007 03:07:10 -0000
-X-Spam-Check-By: sourceware.org
-Received: from caffeine.csclub.uwaterloo.ca (HELO caffeine.csclub.uwaterloo.ca) (129.97.134.17)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Sat, 01 Dec 2007 03:07:03 +0000
-Received: from caffeine.csclub.uwaterloo.ca (localhost [127.0.0.1]) 	by caffeine.csclub.uwaterloo.ca (Postfix) with ESMTP id D4E9C73DC2; 	Fri, 30 Nov 2007 22:07:01 -0500 (EST)
-Received: from caffeine.csclub.uwaterloo.ca (caffeine.csclub.uwaterloo.ca [129.97.134.17]) 	by caffeine.csclub.uwaterloo.ca (Postfix) with ESMTP id B1CA373DC0; 	Fri, 30 Nov 2007 22:07:01 -0500 (EST)
-In-Reply-To: <4750C74B.8060308@pipapo.org>
-X-IsSubscribed: yes
-Mailing-List: contact libc-alpha-help@sourceware.org; run by ezmlm
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 01 05:16:14 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1IyJm1-0006HH-RN
+	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 05:16:14 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754373AbXLAEPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2007 23:15:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754428AbXLAEPw
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 23:15:52 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4652 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752969AbXLAEPv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2007 23:15:51 -0500
+Received: (qmail 13839 invoked by uid 111); 1 Dec 2007 04:15:50 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 30 Nov 2007 23:15:50 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Nov 2007 23:15:49 -0500
+Content-Disposition: inline
+In-Reply-To: <7v4pf39m4j.fsf@gitster.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <libc-alpha.sourceware.org>
-List-Unsubscribe: <mailto:libc-alpha-unsubscribe-glibc-alpha=m.gmane.org@sourceware.org>
-List-Subscribe: <mailto:libc-alpha-subscribe@sourceware.org>
-List-Archive: <http://sourceware.org/ml/libc-alpha/>
-List-Post: <mailto:libc-alpha@sourceware.org>
-List-Help: <mailto:libc-alpha-help@sourceware.org>, <http://sourceware.org/ml/#faqs>
-Sender: libc-alpha-owner@sourceware.org
-Delivered-To: mailing list libc-alpha@sourceware.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66694>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66695>
 
-On Sat, 1 Dec 2007, Christian Thaeter wrote:
+On Fri, Nov 30, 2007 at 06:36:44PM -0800, Junio C Hamano wrote:
 
-> I am fully aware that this is not the best possible search algorithm.
-> It is considerably better than the actual one for 'common' data.
+> > It would be nice to have a "git config --colorbool" option, but it has
+> > the unfortunate problem that the stdout of "git config" is piped back to
+> > the caller, so the isatty check is meaningless (and the "pager in use"
+> > is similarly tricky). Perhaps it should go in Git.pm, so it at least
+> > only needs to be written once.
+> 
+> About the isatty(3) check, you do not have to use the stdout to report
+> the result, though.  IOW, you could use the exit code from the command.
 
-And not considerably worse in the worst case I could think of.  (Which was 
-my point, not that it was slow or sucked in some other way.)
+I thought about that, but it feels a little wrong since it is so unlike
+all of the other interfaces to git-config. Still, I would consider doing
+it if there weren't other issues (like knowing when a pager is in use).
+At some point it becomes more complex than simply having the 5-10 lines
+necessary to do the check in perl.
 
-> Having a string with few symbols or other corner cases needs an 
-> algorithm better suited for that task.
-
-Yes, if it's actually worth anyone's time making strstr() fast in the case 
-where the haystack has length three and the needle length two.
-
-Amusingly enough, I haven't ever seen strstr() used to do any nontrivial 
-string matching in any free software I've bothered to grep.
-
-> But well, this was just reaching a low hanging fruit.
-
-Suitably hacked, your code looks clearly correct.  But there are valid 
-reasons not to mess with the strstr() in libc (fewer for memmem()); chief 
-among them is that *if* there is an undetected bug in the code, *then* 
-lots of stuff can break.
-
-> For me it suffices and I won't put more efforts into improving or 
-> lobbying it, its just not worth it.
-
-Clearly, the tone of my email did not help convey my message.  (Perhaps I 
-should just stop trying to write words of encouragement altogether --- it 
-never goes according to plan and always seems to end in disaster.)  I do 
-commend you for submitting improvements (and this is clearly an 
-improvement); I was merely trying to point out that it will likely be an 
-uphill battle, and that certain things are either wrong or can be done 
-better than you have done.  Do go on, please!  (And I'm sorry if my 
-previous email caused you particular dismay.)
-
-Tor Myklebust
+-Peff
