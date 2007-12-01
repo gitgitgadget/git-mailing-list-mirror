@@ -1,130 +1,135 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: disambiguate heads and tags withs the same name
-Date: Sat, 1 Dec 2007 02:45:27 +0100
-Message-ID: <200712010245.29204.jnareb@gmail.com>
+From: Tor Myklebust <tmyklebu@csclub.uwaterloo.ca>
+Subject: Re: (class=ham score=-4.96032) memmem.c improvement
+Date: Fri, 30 Nov 2007 20:58:10 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0711301954370.9426@caffeine.csclub.uwaterloo.ca>
+References: <4750AF4F.6090207@pipapo.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Guillaume Seguin <guillaume@segu.in>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 01 02:48:34 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: libc-alpha@sourceware.org, git@vger.kernel.org
+To: Christian Thaeter <ct@pipapo.org>
+X-From: git-owner@vger.kernel.org Sat Dec 01 02:58:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyHT6-0002EZ-DC
-	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 02:48:32 +0100
+	id 1IyHcm-00047G-JA
+	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 02:58:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759319AbXLABrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2007 20:47:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759529AbXLABrq
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 20:47:46 -0500
-Received: from mu-out-0910.google.com ([209.85.134.189]:3106 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755085AbXLABro (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2007 20:47:44 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so385177mue
-        for <git@vger.kernel.org>; Fri, 30 Nov 2007 17:47:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=LfxRh0BN0HGTLphXcNTSgWV9mtVfYbXSAk4ZFcK3pZw=;
-        b=X8ZJzywZv2bgO9kfRoJG+qOhqYqbhy0diUQJevfnIuR6UZWEXis3N26/kLHWVtJPI/rl0ZcQkl5ji+ZVG17gdFRGWYuoRAXO1curwh1d6/ujxG1Zm+2E8GMyVBgAJggvUWJayIfSeeJ+iD161H58tJhL1BwppGE1P7rDhyHSVVU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=LzfSeLpeD+ZWuHv8D/fp0sHUew+E+mzfEa5pgsG9JirscRl50yWX8yS+NSs92GPK4ytqfCgkrJCPWquQv70e7m6JJ1DqJ/ablQVGZC1nYNyd94j4Y+pvIKwFUlvyniTS6bpB4TMi1hyRF936EP5EKbVqauN0Of1pm3nKFDbN4FI=
-Received: by 10.86.100.7 with SMTP id x7mr7832725fgb.1196473662356;
-        Fri, 30 Nov 2007 17:47:42 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.252.40])
-        by mx.google.com with ESMTPS id b17sm393284fka.2007.11.30.17.47.40
-        (version=SSLv3 cipher=OTHER);
-        Fri, 30 Nov 2007 17:47:41 -0800 (PST)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1757598AbXLAB6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2007 20:58:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757557AbXLAB6M
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 20:58:12 -0500
+Received: from caffeine.csclub.uwaterloo.ca ([129.97.134.17]:46940 "EHLO
+	caffeine.csclub.uwaterloo.ca" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757396AbXLAB6M (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Nov 2007 20:58:12 -0500
+Received: from caffeine.csclub.uwaterloo.ca (localhost [127.0.0.1])
+	by caffeine.csclub.uwaterloo.ca (Postfix) with ESMTP id 2665173DBA;
+	Fri, 30 Nov 2007 20:58:11 -0500 (EST)
+Received: from caffeine.csclub.uwaterloo.ca (caffeine.csclub.uwaterloo.ca [129.97.134.17])
+	by caffeine.csclub.uwaterloo.ca (Postfix) with ESMTP id 057D573DB9;
+	Fri, 30 Nov 2007 20:58:11 -0500 (EST)
+In-Reply-To: <4750AF4F.6090207@pipapo.org>
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66673>
 
-Avoid wrong disambiguation that would link logs/trees of tags and heads which
-share the same name to the same page, leading to a disambiguation that would
-prefer the tag, thus making it impossible to access the corresponding
-head log and tree without hacking the url by hand.
+On Sat, 1 Dec 2007, Christian Thaeter wrote:
 
-It does it by using full refname (with 'refs/heads/' or 'refs/tags/' prefix)
-instead of shortened one in the URLs in 'heads' and 'tags' tables.
+> Short story, 'memmem()' is a gnuish, nonstandard function. I wanted to 
+> provide a generic fallback in some code. So, lets borrow it somewhere 
+> else:
+>
+> First looking at git's compat/memmem.c which I found was suboptimal with 
+> roughly O(M*N) performance (albeit ok for that case since it was just a 
+> generic fallback).
+>
+> Well, second taking a look at glibc's source surprised me, there is the 
+> same code as in git. I somewhat expected a faster implementation from a 
+> generic C library.
 
-Signed-off-by: Guillaume Seguin <guillaume@segu.in>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This does exactly the same as patch send by Guillaume Seguin earlier
-  Message-ID: <1194126032.15420.4.camel@ed3n-m>
-  http://permalink.gmane.org/gmane.comp.version-control.git/63317
+I don't think anybody involved with glibc really feels like having 
+strstr() (or memmem(), for that matter) go fast.  (The grounds I heard 
+were that "applications requiring large searches are more likely to have 
+own fast string search implementations.')
 
-Original patch added 'refs/heads/' and 'refs/tags/' in git_heads_body
-and git_tags_body respectively; this one uses 'fullname' field, which
-contain refname before stripping 'refs/heads/' or 'refs/tags/'. The
-change is in git_get_heads_list and git_get_tags_list, respectively.
+> That thought and done, the code is attached to this mail. The algorithm 
+> is similar to the Rabin/Karp method for string searches but uses a 
+> weaker and simpler additive rolling hash.
 
-Original patch was either badly whitespace damaged, or GMane has
-broken 'raw' display.
+There are rolling hashes based on arithmetic in fields of order 2^k. 
+These can typically be computed using a bunch of bit-shifts and additions; 
+have you tried using one?  There are lots of irreducible polynomials over 
+Z_2 of degree k, so you can even fall back to a different one every few 
+false positives.
 
-Note that this patch does not help handcrafted URLs, and saved URLs from
-older version of gitweb.
+> The result is still somewhat like O(M+N) for most cases
 
- gitweb/gitweb.perl |   14 ++++++++------
- 1 files changed, 8 insertions(+), 6 deletions(-)
+I don't think you get linear performance in the average case.  (But I do 
+think you shave a factor of 256 off of the quadratic term.  The same 
+algorithm, where your hash function is the population count, gives a 
+collision between two random strings of length m with probability 
+sum_(i=0)^m (m choose i)^2 / 4^m, which grows like sqrt(m).  Your 
+algorithm helps this by a factor of 256.)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 491a3f4..6ff4221 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2234,6 +2234,7 @@ sub git_get_heads_list {
- 		my ($hash, $name, $title) = split(' ', $refinfo, 3);
- 		my ($committer, $epoch, $tz) =
- 			($committerinfo =~ /^(.*) ([0-9]+) (.*)$/);
-+		$ref_item{'fullname'}  = $name;
- 		$name =~ s!^refs/heads/!!;
- 
- 		$ref_item{'name'}  = $name;
-@@ -2271,6 +2272,7 @@ sub git_get_tags_list {
- 		my ($id, $type, $name, $refid, $reftype, $title) = split(' ', $refinfo, 6);
- 		my ($creator, $epoch, $tz) =
- 			($creatorinfo =~ /^(.*) ([0-9]+) (.*)$/);
-+		$ref_item{'fullname'} = $name;
- 		$name =~ s!^refs/tags/!!;
- 
- 		$ref_item{'type'} = $type;
-@@ -3691,8 +3693,8 @@ sub git_tags_body {
- 		      "<td class=\"link\">" . " | " .
- 		      $cgi->a({-href => href(action=>$tag{'reftype'}, hash=>$tag{'refid'})}, $tag{'reftype'});
- 		if ($tag{'reftype'} eq "commit") {
--			print " | " . $cgi->a({-href => href(action=>"shortlog", hash=>$tag{'name'})}, "shortlog") .
--			      " | " . $cgi->a({-href => href(action=>"log", hash=>$tag{'name'})}, "log");
-+			print " | " . $cgi->a({-href => href(action=>"shortlog", hash=>$tag{'fullname'})}, "shortlog") .
-+			      " | " . $cgi->a({-href => href(action=>"log", hash=>$tag{'fullname'})}, "log");
- 		} elsif ($tag{'reftype'} eq "blob") {
- 			print " | " . $cgi->a({-href => href(action=>"blob_plain", hash=>$tag{'refid'})}, "raw");
- 		}
-@@ -3727,13 +3729,13 @@ sub git_heads_body {
- 		$alternate ^= 1;
- 		print "<td><i>$ref{'age'}</i></td>\n" .
- 		      ($curr ? "<td class=\"current_head\">" : "<td>") .
--		      $cgi->a({-href => href(action=>"shortlog", hash=>$ref{'name'}),
-+		      $cgi->a({-href => href(action=>"shortlog", hash=>$ref{'fullname'}),
- 		               -class => "list name"},esc_html($ref{'name'})) .
- 		      "</td>\n" .
- 		      "<td class=\"link\">" .
--		      $cgi->a({-href => href(action=>"shortlog", hash=>$ref{'name'})}, "shortlog") . " | " .
--		      $cgi->a({-href => href(action=>"log", hash=>$ref{'name'})}, "log") . " | " .
--		      $cgi->a({-href => href(action=>"tree", hash=>$ref{'name'}, hash_base=>$ref{'name'})}, "tree") .
-+		      $cgi->a({-href => href(action=>"shortlog", hash=>$ref{'fullname'})}, "shortlog") . " | " .
-+		      $cgi->a({-href => href(action=>"log", hash=>$ref{'fullname'})}, "log") . " | " .
-+		      $cgi->a({-href => href(action=>"tree", hash=>$ref{'fullname'}, hash_base=>$ref{'name'})}, "tree") .
- 		      "</td>\n" .
- 		      "</tr>";
- 	}
--- 
-1.5.3.6
+> (There may be corner cases where it not that good, but its really hard 
+> to imagine those).
+
+The needle "1100110011001100...1100" and the haystack 
+"10101010101010...10" will produce quite a few false matches with your 
+hash function (simply because every substring of the haystack of the 
+appropriate length has the same hash as your needle).  (Making the needle 
+"1010101010...101100" makes it even worse.)
+
+> Anyways, it is always faster than the current implementation,
+
+Try the example above.  (Your code also needs a "return NULL;" at the end, 
+by the way.)
+
+> in my tests with common data (parsing multipart/form-data cgi responses) 
+> it yields approx 20%-100% improvements and with little artificial 
+> cheating (having strings in haystack which only differ at the last char 
+> of needle) the improvements are much better (500%, since is another 
+> complexity class). The fact is that the old implementation does a brute 
+> force search which has corner cases which are quite easy to hit 
+> (repeating symbol sequences, small set of possible symbols) while for my 
+> implementation the corner cases are much more rare and even then, it 
+> will still perform better than the old implementation.
+
+The old implementation is about 50% faster than yours in the example 
+above.
+
+> The code is not much more complex as the old one, not the original 
+> 'Rabin/Karp' algorithm because that would require a efficient modulo 
+> operation with a prime number which might be slower on some platforms 
+> (just a guess, I didn't even tried, the performance satisfies me 
+> perfectly).
+
+Karp-Rabin with hashing done mod a prime is an impractical string matching 
+algorithm.
+
+> Other search algorithms like 'Knuth/Morris/Pratt'
+
+A KMP-like algorithm can be implemented in a way that uses constant 
+additional space.  For unordered alphabets, it's called "Galil-Seiferas" 
+and for ordered alphabets the analogous algorithm is to decompose (in 
+linear time and constant space) the string into its lexicographically 
+largest suffix and some prefix.  Then you look for the suffix.  Everywhere 
+where the suffix appears and appears at least prefix-length later than the 
+last occurrence of the suffix, you check for the prefix.
+
+> or 'Boyer/More' are more complex to implement and require O(Needle) 
+> extra memory
+
+There are variants of both that require constant additional space.  (They 
+also perform way better than anything else I've seen.)
+
+> for common implementations, which reserve them for special purposes imo. 
+> I just wanted to keep it simple but still considerably better than the 
+> current one.
+
+As it happens, the extra space consumed by the KMP and suffix shift tables 
+(and the associated bad cache effects) make the usual KMP and Boyer-Moore 
+way, way slower than naive string matching on random inputs.
