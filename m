@@ -1,57 +1,73 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Try harder in parse_tag; perhaps it was given ambiguous name
-Date: Sat, 1 Dec 2007 04:06:42 +0100
-Message-ID: <200712010406.44203.jnareb@gmail.com>
-References: <200712010245.29204.jnareb@gmail.com> <200712010247.25107.jnareb@gmail.com>
+From: Tor Myklebust <tmyklebu@csclub.uwaterloo.ca>
+Subject: Re: memmem.c improvement
+Date: Fri, 30 Nov 2007 22:07:01 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0711302151340.9426@caffeine.csclub.uwaterloo.ca>
+References: <4750AF4F.6090207@pipapo.org> <Pine.LNX.4.64.0711301954370.9426@caffeine.csclub.uwaterloo.ca>  <4750C74B.8060308@pipapo.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 01 04:07:16 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyIhH-0001VD-FB
-	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 04:07:15 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758752AbXLADGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2007 22:06:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758551AbXLADGz
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 22:06:55 -0500
-Received: from mu-out-0910.google.com ([209.85.134.189]:19919 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756558AbXLADGy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2007 22:06:54 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so469439mue
-        for <git@vger.kernel.org>; Fri, 30 Nov 2007 19:06:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=gwW20poYpXjYJc/cnTBI/lchUcEcJKVy/DBKlWJZ2uE=;
-        b=fRq193lRrLow9xrHLr+oDs0KBOZ999tCv5ID1CsGg+puNyn2uoN55FTpfISEHgEbQWmzADw8hmu5eWMnuF24OSiWc1LvJRt/tY4yh6Z2lqURE9oXJYEHqEdKYvXZcjCebFlPghnIlMyyosvHt4IXqDXyH5KvZGCk6JhHxtOHBHk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Qp59VKqKXZj7UllwzdZvFfDArmSy7XnQhioqFoJUnWuJczZJqshDd+ocC2n0Du8MM9S+7JCf6mWWOrtzG/pEETtZMxpbEY+cWzgzYLLaSiqvoHHGJn2cbx7O22e8Nf5AOt+Yw6EqKop829BeRbVGnqmKeJtPbc+9g+DFn4kG3Jw=
-Received: by 10.86.72.15 with SMTP id u15mr3034814fga.1196478412528;
-        Fri, 30 Nov 2007 19:06:52 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.252.40])
-        by mx.google.com with ESMTPS id e11sm4491599fga.2007.11.30.19.06.50
-        (version=SSLv3 cipher=OTHER);
-        Fri, 30 Nov 2007 19:06:51 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200712010247.25107.jnareb@gmail.com>
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: libc-alpha@sourceware.org, git@vger.kernel.org
+To: Christian Thaeter <ct@pipapo.org>
+X-From: libc-alpha-return-20629-glibc-alpha=m.gmane.org@sourceware.org Sat Dec 01 04:07:31 2007
+Return-path: <libc-alpha-return-20629-glibc-alpha=m.gmane.org@sourceware.org>
+Envelope-to: glibc-alpha@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1IyIhV-0001YH-NU
+	for glibc-alpha@gmane.org; Sat, 01 Dec 2007 04:07:30 +0100
+Received: (qmail 2468 invoked by alias); 1 Dec 2007 03:07:11 -0000
+Received: (qmail 1910 invoked by uid 22791); 1 Dec 2007 03:07:10 -0000
+X-Spam-Check-By: sourceware.org
+Received: from caffeine.csclub.uwaterloo.ca (HELO caffeine.csclub.uwaterloo.ca) (129.97.134.17)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Sat, 01 Dec 2007 03:07:03 +0000
+Received: from caffeine.csclub.uwaterloo.ca (localhost [127.0.0.1]) 	by caffeine.csclub.uwaterloo.ca (Postfix) with ESMTP id D4E9C73DC2; 	Fri, 30 Nov 2007 22:07:01 -0500 (EST)
+Received: from caffeine.csclub.uwaterloo.ca (caffeine.csclub.uwaterloo.ca [129.97.134.17]) 	by caffeine.csclub.uwaterloo.ca (Postfix) with ESMTP id B1CA373DC0; 	Fri, 30 Nov 2007 22:07:01 -0500 (EST)
+In-Reply-To: <4750C74B.8060308@pipapo.org>
+X-IsSubscribed: yes
+Mailing-List: contact libc-alpha-help@sourceware.org; run by ezmlm
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66693>
+List-Id: <libc-alpha.sourceware.org>
+List-Unsubscribe: <mailto:libc-alpha-unsubscribe-glibc-alpha=m.gmane.org@sourceware.org>
+List-Subscribe: <mailto:libc-alpha-subscribe@sourceware.org>
+List-Archive: <http://sourceware.org/ml/libc-alpha/>
+List-Post: <mailto:libc-alpha@sourceware.org>
+List-Help: <mailto:libc-alpha-help@sourceware.org>, <http://sourceware.org/ml/#faqs>
+Sender: libc-alpha-owner@sourceware.org
+Delivered-To: mailing list libc-alpha@sourceware.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66694>
 
-This patch should be RFC.
-Sorry for missing that. 
+On Sat, 1 Dec 2007, Christian Thaeter wrote:
 
--- 
-Jakub Narebski
-Poland
+> I am fully aware that this is not the best possible search algorithm.
+> It is considerably better than the actual one for 'common' data.
+
+And not considerably worse in the worst case I could think of.  (Which was 
+my point, not that it was slow or sucked in some other way.)
+
+> Having a string with few symbols or other corner cases needs an 
+> algorithm better suited for that task.
+
+Yes, if it's actually worth anyone's time making strstr() fast in the case 
+where the haystack has length three and the needle length two.
+
+Amusingly enough, I haven't ever seen strstr() used to do any nontrivial 
+string matching in any free software I've bothered to grep.
+
+> But well, this was just reaching a low hanging fruit.
+
+Suitably hacked, your code looks clearly correct.  But there are valid 
+reasons not to mess with the strstr() in libc (fewer for memmem()); chief 
+among them is that *if* there is an undetected bug in the code, *then* 
+lots of stuff can break.
+
+> For me it suffices and I won't put more efforts into improving or 
+> lobbying it, its just not worth it.
+
+Clearly, the tone of my email did not help convey my message.  (Perhaps I 
+should just stop trying to write words of encouragement altogether --- it 
+never goes according to plan and always seems to end in disaster.)  I do 
+commend you for submitting improvements (and this is clearly an 
+improvement); I was merely trying to point out that it will likely be an 
+uphill battle, and that certain things are either wrong or can be done 
+better than you have done.  Do go on, please!  (And I'm sorry if my 
+previous email caused you particular dismay.)
+
+Tor Myklebust
