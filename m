@@ -1,69 +1,70 @@
-From: Michael Witten <mfwitten@MIT.EDU>
-Subject: Re: [PATCH] git-cvsserver runs hooks/post-receive
-Date: Sat, 1 Dec 2007 04:17:02 -0500
-Message-ID: <BFDB9A00-6E92-4880-9FE7-3D0E392D18A9@mit.edu>
-References: <1195809174-28142-1-git-send-email-mfwitten@mit.edu> <7v3aup291c.fsf@gitster.siamese.dyndns.org> <7F81126E-5A76-40CA-94BF-82B46C57AFF6@mit.edu> <7vmysv87jm.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 01 10:17:31 2007
+From: Pascal Obry <pascal.obry@gmail.com>
+Subject: [PATCH] Set OLD_ICONV on Cygwin.
+Date: Sat,  1 Dec 2007 10:49:22 +0100
+Message-ID: <1196502562-1052-1-git-send-email-pascal@obry.net>
+Cc: Pascal Obry <pascal@obry.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 01 10:49:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyOTZ-0003Yq-19
-	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 10:17:29 +0100
+	id 1IyOyv-0002TL-Jr
+	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 10:49:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751259AbXLAJRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Dec 2007 04:17:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751189AbXLAJRI
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Dec 2007 04:17:08 -0500
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:42678 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751202AbXLAJRG (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Dec 2007 04:17:06 -0500
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id lB19H4qj004495;
-	Sat, 1 Dec 2007 04:17:04 -0500 (EST)
-Received: from [18.239.5.240] (MACGREGOR-TWO-FORTY.MIT.EDU [18.239.5.240])
-	(authenticated bits=0)
-        (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id lB19H3gh021612
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 1 Dec 2007 04:17:03 -0500 (EST)
-In-Reply-To: <7vmysv87jm.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.752.2)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1751189AbXLAJtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Dec 2007 04:49:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751457AbXLAJtb
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Dec 2007 04:49:31 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:17446 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751059AbXLAJt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Dec 2007 04:49:29 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so2405759nfb
+        for <git@vger.kernel.org>; Sat, 01 Dec 2007 01:49:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:to:cc:subject:date:message-id:x-mailer:from;
+        bh=d8dcAl4Inwb1NZQLp0pFFuUUCnNqFR1DbdFvicU26l8=;
+        b=WxPc+CheLA0p+jlV9u6FyJyKruSJFlFNnPiYqZpLbgX5bbdorjoEqA//4tswlN8nTnRnXSj3dvarrUhU6jA4z5gSsXJkueSG5bw+eghExEgplmqZfW8stppYyPO6ElX4Fn6H3UfbYDvQP2z0VKBbFH4Ju8rMbfTdeV4CLz/i940=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:to:cc:subject:date:message-id:x-mailer:from;
+        b=LWUEd3IvFBqYAYHiO5Wmkuqgq2pLYbmRyBfUSqR9oG78/zgfZqtYvrL80ny8vorgC74s9wwfVyuwaRErw3NOJmeGg9FiGtYZP+kaWnR/rmgN2QnHHV5gPX4u5i3O7DhtfQv9bGzc6dALw3FEQvHgrkYAFpxFMqRjtl6T3zwYl4A=
+Received: by 10.78.81.20 with SMTP id e20mr3913686hub.1196502568022;
+        Sat, 01 Dec 2007 01:49:28 -0800 (PST)
+Received: from pascal.obry@gmail.com ( [82.124.248.33])
+        by mx.google.com with ESMTPS id g1sm19390339muf.2007.12.01.01.49.25
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 01 Dec 2007 01:49:27 -0800 (PST)
+Received: by pascal.obry@gmail.com (sSMTP sendmail emulation); Sat, 01 Dec 2007 10:49:22 +0100
+X-Mailer: git-send-email 1.5.3.6.985.g65c6a4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66708>
 
+Cygwin still has old definition for the iconv() second
+parameter. This patch fixes the last warning on Cygwin.
+This has been tested with Cygwin 1.5.24.
 
-On 30 Nov 2007, at 9:37:01 PM, Junio C Hamano wrote:
+Signed-off-by: Pascal Obry <pascal@obry.net>
+---
+ Makefile |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-> I'll queue your patch, but I think it should be enhanced to support
-> post-update for consistency.
-
-I'll send another patch that includes support for post-update.
-
-> I'll queue your patch,
-
-Will the old patch already be in place?
-
-Also, I explicitly decided to pipe input into post-receive
-by hand rather than relying on a system() call that someone
-might exploit maliciously.
-
-Unfortunately, it turns out that open() with a pipe essentially
-invokes system(); the solution is to fork a child process and
-then to turn the child into the process with which communication
-is desired via a call to exec().
-
-Because the rest of git-cvsserver.perl uses explicit system()
-calls, I have been wondering if I am being overly cautious.
+diff --git a/Makefile b/Makefile
+index e869b85..fa3398c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -446,6 +446,7 @@ ifeq ($(uname_O),Cygwin)
+ 	NEEDS_LIBICONV = YesPlease
+ 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
+ 	NO_TRUSTABLE_FILEMODE = UnfortunatelyYes
++	OLD_ICONV = UnfortunatelyYes
+ 	# There are conflicting reports about this.
+ 	# On some boxes NO_MMAP is needed, and not so elsewhere.
+ 	# Try commenting this out if you suspect MMAP is more efficient
+-- 
+1.5.3.6.985.g65c6a4
