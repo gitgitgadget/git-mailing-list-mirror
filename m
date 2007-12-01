@@ -1,92 +1,62 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH v2] Teach 'git pull' about --rebase
-Date: Sat, 1 Dec 2007 21:37:59 +0100
-Message-ID: <20071201203759.GA11710@atjola.homenet>
-References: <alpine.LFD.0.999.0710251602160.30120@woody.linux-foundation.org> <Pine.LNX.4.64.0710260007450.4362@racer.site> <7v3avy21il.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0710261047450.4362@racer.site> <7v3aurcjpq.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711281307420.27959@racer.site> <27E5EF3C-19EF-441C-BB12-0F5B29BEAEDB@midwinter.com> <Pine.LNX.4.64.0711282039430.27959@racer.site> <8c5c35580711281310h8764a33pba48e65010abf859@mail.gmail.com> <7vhcj63uhw.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
+Date: Sat, 1 Dec 2007 16:26:56 -0500
+Message-ID: <20071201212655.GA22349@coredump.intra.peff.net>
+References: <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org> <20071130005852.GA12224@coredump.intra.peff.net> <alpine.LFD.0.9999.0711291821220.8458@woody.linux-foundation.org> <5E2A9E2B-8B9A-46B0-99D0-DB3798F10119@zib.de> <20071130151223.GB22095@coredump.intra.peff.net> <8aa486160711300728x70f591f1hf8884a78f2b15806@mail.gmail.com> <20071130152942.GA22489@coredump.intra.peff.net> <alpine.LFD.0.9999.0711300745330.8458@woody.linux-foundation.org> <fcaeb9bf0711302234l32460a1fqbf9825fc8055f99d@mail.gmail.com> <7vve7i43ec.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Lars Hjemli <hjemli@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Steven Grimm <koreth@midwinter.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
+	Santi B?jar <sbejar@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 01 21:39:53 2007
+X-From: git-owner@vger.kernel.org Sat Dec 01 22:27:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyZ7p-0008Th-Sd
-	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 21:39:46 +0100
+	id 1IyZru-0005dn-9Z
+	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 22:27:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751958AbXLAUiF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Dec 2007 15:38:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751532AbXLAUiE
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Dec 2007 15:38:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43343 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751400AbXLAUiD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Dec 2007 15:38:03 -0500
-Received: (qmail invoked by alias); 01 Dec 2007 20:38:00 -0000
-Received: from i577AFD11.versanet.de (EHLO localhost) [87.122.253.17]
-  by mail.gmx.net (mp043) with SMTP; 01 Dec 2007 21:38:00 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/iqhsyJ6Li4m8rGYO6gHvsR8UhHtNLI5YNewj4ZA
-	kdLqjRQqCIqMWh
+	id S1751055AbXLAV1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Dec 2007 16:27:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751133AbXLAV1A
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Dec 2007 16:27:00 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3263 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751055AbXLAV07 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Dec 2007 16:26:59 -0500
+Received: (qmail 17098 invoked by uid 111); 1 Dec 2007 21:26:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 01 Dec 2007 16:26:57 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Dec 2007 16:26:56 -0500
 Content-Disposition: inline
-In-Reply-To: <7vhcj63uhw.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Y-GMX-Trusted: 0
+In-Reply-To: <7vve7i43ec.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66738>
 
-On 2007.11.28 13:55:39 -0800, Junio C Hamano wrote:
-> "Lars Hjemli" <hjemli@gmail.com> writes:
->=20
-> > On 11/28/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote=
-:
-> >> On Wed, 28 Nov 2007, Steven Grimm wrote:
-> >> > I wonder if this shouldn't be branch.<name>.pulltype or somethin=
-g like
-> >> > that, so we can represent more than just "rebase or not." Values=
- could
-> >> > be "rebase", "merge" (the default) and maybe even "manual" to sp=
-ecify
-> >> > that git-pull should neither merge nor rebase a particular branc=
-h even
-> >> > if it matches a wildcard refspec.
-> >>
-> >> I am not convinced that this is a good thing... We already have
-> >> branch.<name>.mergeOptions for proper merges, and I want to make c=
-lear
-> >> that this is about rebase, and not about merge.
-> >
-> > Maybe branch.<name>.pullOptions ?
->=20
-> Maybe not make this part of git-pull at all?  merge and rebase have
-> totally different impact on the resulting history, so perhaps a separ=
-ate
-> command that is a shorthand for "git fetch && git rebase" may help
-> unconfuse the users.
+On Sat, Dec 01, 2007 at 11:32:27AM -0800, Junio C Hamano wrote:
 
-Hm, why not tackle the whole thing the other way around? IMHO the
-primary action is the merge/rebase, not the fetch. So choosing which
-action you want in addition to the fetch seems a bit backwards. git-svn
-already includes a fetch from svn in its rebase operation, which is
-really handy, because you rebase quite often with that beast.
+> > We already have "git show", now we gonna get "git view", git trainers
+> > may have hard time explaining this one shows you a particular object
+> > while the other one shows you history. How about "git lshistory" (from
+> > clearcase land) or git show --history?
+> 
+> Heh, we have "bisect visualize".  How about "git visualize"?
 
-And it's likely that you want to merge with/rebase against the latest a=
-vailable
-remote commit all the time anyway and on the few(?) occassions
-where you have no connectivity, but already fetched some remote stuff
-which you want to incorporate into your local branches now, it's
-hopefully bearable to pass --no-fetch.
+Yes, in retrospect "view" is probably not the best. "lshistory" just
+looks awful, and I think it's wrong for an option to "git show" to
+change it from a terminal application into a GUI application.
 
-So how about adding --fetch/--no-fetch (maybe with a configurable
-default?) to git-merge/git-rebase and deprecate git-pull over time?
+"visualize" is actually pretty good, except that it would be painful to
+type. On the other hand, I will probably still just type "gitk". I
+actually think these sorts of aliases may be most useful for user-facing
+scripts to say "and now show the dataset in the user's graphical history
+browser of choice."
 
-Bj=F6rn
+-Peff
