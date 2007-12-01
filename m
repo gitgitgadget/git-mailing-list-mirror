@@ -1,122 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] transport.c: call dash-less form of receive-pack and upload-pack on remote
-Date: Sat, 01 Dec 2007 11:30:11 -0800
-Message-ID: <7vzlwu43i4.fsf@gitster.siamese.dyndns.org>
-References: <20071127150229.GA14859@laptop> <20071127160423.GA22807@laptop>
-	<Pine.LNX.4.64.0711271617350.27959@racer.site>
-	<20071128000731.GD9174@efreet.light.src>
-	<7v8x4jb295.fsf@gitster.siamese.dyndns.org>
-	<fcaeb9bf0711280036p33583824ge59af93bbe3f0a78@mail.gmail.com>
-	<7vfxyq2c9b.fsf@gitster.siamese.dyndns.org>
-	<fcaeb9bf0711281917p56cc4228m6c401286439e2a34@mail.gmail.com>
-	<alpine.LFD.0.99999.0711290905510.9605@xanadu.home>
-	<7vd4tsvfvk.fsf@gitster.siamese.dyndns.org>
-	<DB613F3E-85CC-4AF0-928C-4F4E4C8E9FB8@orakel.ntnu.no>
-	<Pine.LNX.4.64.0711301207020.27959@racer.site>
-	<7vlk8f9m52.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0712010959180.27959@racer.site>
+Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
+Date: Sat, 01 Dec 2007 11:32:27 -0800
+Message-ID: <7vve7i43ec.fsf@gitster.siamese.dyndns.org>
+References: <20071129231444.GA9616@coredump.intra.peff.net>
+	<20071130003512.GB11683@coredump.intra.peff.net>
+	<7vzlwwsgkp.fsf@gitster.siamese.dyndns.org>
+	<20071130005852.GA12224@coredump.intra.peff.net>
+	<alpine.LFD.0.9999.0711291821220.8458@woody.linux-foundation.org>
+	<5E2A9E2B-8B9A-46B0-99D0-DB3798F10119@zib.de>
+	<20071130151223.GB22095@coredump.intra.peff.net>
+	<8aa486160711300728x70f591f1hf8884a78f2b15806@mail.gmail.com>
+	<20071130152942.GA22489@coredump.intra.peff.net>
+	<alpine.LFD.0.9999.0711300745330.8458@woody.linux-foundation.org>
+	<fcaeb9bf0711302234l32460a1fqbf9825fc8055f99d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Eyvind Bernhardsen <eyvind-git-list@orakel.ntnu.no>,
-	Nicolas Pitre <nico@cam.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Dec 01 20:30:53 2007
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Jeff King" <peff@peff.net>, "Santi B?jar" <sbejar@gmail.com>,
+	"Steffen Prohaska" <prohaska@zib.de>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Jan Hudec" <bulb@ucw.cz>, git@vger.kernel.org
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 01 20:33:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyY33-0002Gc-LL
-	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 20:30:46 +0100
+	id 1IyY5D-0002so-RE
+	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 20:33:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753210AbXLATaY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Dec 2007 14:30:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753034AbXLATaY
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Dec 2007 14:30:24 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:50550 "EHLO
+	id S1753051AbXLATck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Dec 2007 14:32:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753034AbXLATck
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Dec 2007 14:32:40 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:40805 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752603AbXLATaW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Dec 2007 14:30:22 -0500
+	with ESMTP id S1752956AbXLATcj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Dec 2007 14:32:39 -0500
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id D49F92EF;
-	Sat,  1 Dec 2007 14:30:43 -0500 (EST)
+	by sceptre.pobox.com (Postfix) with ESMTP id 857482F2;
+	Sat,  1 Dec 2007 14:33:00 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 0B9CC9BCCD;
-	Sat,  1 Dec 2007 14:30:36 -0500 (EST)
-In-Reply-To: <Pine.LNX.4.64.0712010959180.27959@racer.site> (Johannes
-	Schindelin's message of "Sat, 1 Dec 2007 10:17:03 +0000 (GMT)")
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id A76C19BB33;
+	Sat,  1 Dec 2007 14:32:50 -0500 (EST)
+In-Reply-To: <fcaeb9bf0711302234l32460a1fqbf9825fc8055f99d@mail.gmail.com>
+	(Nguyen Thai Ngoc Duy's message of "Sat, 1 Dec 2007 13:34:30 +0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66733>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
 
->> I only eyeball-tested it and looks Okay, but that does not assure us
->> much ;-).  Is this change easy to test using local transport?
+> On Nov 30, 2007 10:50 PM, Linus Torvalds <torvalds@linux-foundation.org> wrote:
 >
-> Seems like it breaks down with git-shell.  But then, I think that we just 
-> have to fix execv_git_cmd() to call builtins via "git" instead.
+>> Well, different people will want different viewers *anyway* (ie some will
+>> prefer qgit etc), so how about making "git view" be something that
+>> literally acts as a built-in alias that just defaults to running gitk (if
+>> for no other reason than the fact that gitk is the one that ships with
+>> git, and simply has most users).
+>
+> We already have "git show", now we gonna get "git view", git trainers
+> may have hard time explaining this one shows you a particular object
+> while the other one shows you history. How about "git lshistory" (from
+> clearcase land) or git show --history?
 
-So in execv_git_cmd(), instead of doing the strbuf_addf(), we do
-something like this (and drop your patch)?
-
----
- exec_cmd.c |   34 +++++++++++++---------------------
- 1 files changed, 13 insertions(+), 21 deletions(-)
-
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 2d0a758..2920335 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -65,32 +65,24 @@ void setup_path(const char *cmd_path)
- 
- int execv_git_cmd(const char **argv)
- {
--	struct strbuf cmd;
--	const char *tmp;
--
--	strbuf_init(&cmd, 0);
--	strbuf_addf(&cmd, "git-%s", argv[0]);
--
--	/*
--	 * argv[0] must be the git command, but the argv array
--	 * belongs to the caller, and may be reused in
--	 * subsequent loop iterations. Save argv[0] and
--	 * restore it on error.
--	 */
--	tmp = argv[0];
--	argv[0] = cmd.buf;
--
--	trace_argv_printf(argv, -1, "trace: exec:");
-+	int i;
-+	const char **args;
-+
-+	for (i = 0; argv[i]; i++)
-+		;
-+	args = xcalloc(i + 1, sizeof(*args));
-+	for (i = 0; argv[i]; i++)
-+		args[i+1] = argv[i];
-+	args[0] = "git";
-+	args[i+1] = NULL;
-+	trace_argv_printf(args, -1, "trace: exec:");
- 
- 	/* execvp() can only ever return if it fails */
--	execvp(cmd.buf, (char **)argv);
-+	execvp(args[0], (char **)args);
- 
- 	trace_printf("trace: exec failed: %s\n", strerror(errno));
- 
--	argv[0] = tmp;
--
--	strbuf_release(&cmd);
--
-+	free(args);
- 	return -1;
- }
- 
+Heh, we have "bisect visualize".  How about "git visualize"?
