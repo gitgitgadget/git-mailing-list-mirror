@@ -1,60 +1,68 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: git pack-objects input list
-Date: Sat, 1 Dec 2007 23:38:49 +0100
-Organization: glandium.org
-Message-ID: <20071201223849.GA15110@glandium.org>
-References: <20071201104502.GA1457@glandium.org> <alpine.LFD.0.9999.0712010933370.8458@woody.linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 6/6] builtin-commit: Add newline when showing which commit
+ was created
+Date: Sat, 1 Dec 2007 22:41:47 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712012238510.27959@racer.site>
+References: <Pine.LNX.4.64.0711111730580.4362@racer.site>
+ <Pine.LNX.4.64.0711111736440.4362@racer.site> <20071201222106.GA27102@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Dec 01 23:39:17 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, krh@redhat.com, gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Dec 01 23:42:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyazR-0001Bw-Px
-	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 23:39:14 +0100
+	id 1Iyb2j-0002GO-LA
+	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 23:42:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751903AbXLAWix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Dec 2007 17:38:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbXLAWix
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Dec 2007 17:38:53 -0500
-Received: from smtp28.orange.fr ([80.12.242.99]:26055 "EHLO smtp28.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750720AbXLAWiw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Dec 2007 17:38:52 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2801.orange.fr (SMTP Server) with ESMTP id C6C6B7000090
-	for <git@vger.kernel.org>; Sat,  1 Dec 2007 23:38:50 +0100 (CET)
-Received: from namakemono.glandium.org (APuteaux-153-1-85-180.w86-205.abo.wanadoo.fr [86.205.43.180])
-	by mwinf2801.orange.fr (SMTP Server) with ESMTP id A0A53700008E;
-	Sat,  1 Dec 2007 23:38:50 +0100 (CET)
-X-ME-UUID: 20071201223850658.A0A53700008E@mwinf2801.orange.fr
-Received: from mh by namakemono.glandium.org with local (Exim 4.68)
-	(envelope-from <mh@glandium.org>)
-	id 1Iyaz3-0004jP-Ol; Sat, 01 Dec 2007 23:38:49 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0712010933370.8458@woody.linux-foundation.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1752022AbXLAWmS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Dec 2007 17:42:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbXLAWmS
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Dec 2007 17:42:18 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53985 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752022AbXLAWmR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Dec 2007 17:42:17 -0500
+Received: (qmail invoked by alias); 01 Dec 2007 22:42:15 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp008) with SMTP; 01 Dec 2007 23:42:15 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX198ZHAQEv18sHc/GrKDqH4HT+y65mYoEgJClmBiUf
+	tT6jv/NxWVlfay
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071201222106.GA27102@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66742>
 
-On Sat, Dec 01, 2007 at 09:49:00AM -0800, Linus Torvalds wrote:
-> Hope that clarified something.
+Hi,
 
-Thanks, that helped me understand my observations when trying to pack
-with and without file names in pack-objects input on different kind of
-datasets, where some would be best packed with and others would be without.
+On Sat, 1 Dec 2007, Jeff King wrote:
 
-I'll try to add some words about the pack-objects input format in the
-documentation. I don't know if it's worth adding information about the
-packing process itself in the manual page. Or maybe that should be added
-to a more technical document about git (a bit like "git for computer
-scientists")
+> On Sun, Nov 11, 2007 at 05:36:52PM +0000, Johannes Schindelin wrote:
+> 
+> > The function log_tree_commit() does not break the line, so we have to
+> > do it ourselves.
+> 
+> Johannes,
+> 
+> Can you explain the rationale for this change in more detail?
 
-Mike
+Basically, I ran a test case in which the shell script was different from 
+the builtin version, and this was the patch that fixed it for me.
+
+Maybe it should have been
+
+	if (log_tree_commit(&rev, commit))
+		printf("\n");
+
+at the end of print_summary() instead.  Can you try if that fixes it for 
+you?
+
+Ciao,
+Dscho
