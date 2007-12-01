@@ -1,53 +1,82 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Fri, 30 Nov 2007 23:17:47 -0500
-Message-ID: <20071201041747.GC30725@coredump.intra.peff.net>
-References: <20071130003512.GB11683@coredump.intra.peff.net> <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org> <20071130005852.GA12224@coredump.intra.peff.net> <alpine.LFD.0.99999.0711292004340.9605@xanadu.home> <20071130011748.GC11683@coredump.intra.peff.net> <474FB938.3040209@op5.se> <20071130150948.GA22095@coredump.intra.peff.net> <7vve7jqz92.fsf@gitster.siamese.dyndns.org> <20071130212500.GB25946@coredump.intra.peff.net> <7vbq9b87jb.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [RFC] use typechange as rename source
+Date: Fri, 30 Nov 2007 23:34:07 -0500
+Message-ID: <20071201043407.GD30725@coredump.intra.peff.net>
+References: <20071121171235.GA32233@sigill.intra.peff.net> <7vir3l2a1i.fsf@gitster.siamese.dyndns.org> <20071129141452.GA32670@coredump.intra.peff.net> <7vmyswsfl6.fsf@gitster.siamese.dyndns.org> <20071130015716.GA15224@coredump.intra.peff.net> <7vsl2n87jr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, Nicolas Pitre <nico@cam.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 01 05:18:10 2007
+X-From: git-owner@vger.kernel.org Sat Dec 01 05:34:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyJnt-0006bf-Hq
-	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 05:18:09 +0100
+	id 1IyK3j-0000pI-Iy
+	for gcvg-git-2@gmane.org; Sat, 01 Dec 2007 05:34:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755217AbXLAERu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Nov 2007 23:17:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755305AbXLAERu
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 23:17:50 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4655 "EHLO
+	id S1756135AbXLAEeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Nov 2007 23:34:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756085AbXLAEeL
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Nov 2007 23:34:11 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3885 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755064AbXLAERt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Nov 2007 23:17:49 -0500
-Received: (qmail 13866 invoked by uid 111); 1 Dec 2007 04:17:48 -0000
+	id S1756006AbXLAEeK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Nov 2007 23:34:10 -0500
+Received: (qmail 13898 invoked by uid 111); 1 Dec 2007 04:34:08 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 30 Nov 2007 23:17:48 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Nov 2007 23:17:47 -0500
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 30 Nov 2007 23:34:08 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Nov 2007 23:34:07 -0500
 Content-Disposition: inline
-In-Reply-To: <7vbq9b87jb.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <7vsl2n87jr.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66697>
 
-On Fri, Nov 30, 2007 at 06:37:12PM -0800, Junio C Hamano wrote:
+On Fri, Nov 30, 2007 at 06:36:56PM -0800, Junio C Hamano wrote:
 
-> side does not have such a program anywhere).  So my preference at this
-> point is to move things out of PATH first (without removing the
-> hardlinks), deal with possible fallout from that move.
+> > I have always been a bit confused about diffcore-break, so I am probably
+> > misunderstanding what you mean. But are you saying that
+> > diffcore-break.c:should_break should return 1 for typechanges?
 > 
-> And after things stablize, discuss to either remove the hardlinks from
-> all installations, or to keep them in all installations.  I do not think
-> "it's this way here but that way there" is a good thing in general.
+> What I had in mind was to do something like that in spirit, but instead
+> break such a filepair inside diffcore-rename (iow, even when the user
+> did not say -B) early on.
 
-I think that it is a sensible course of action.
+Ah, I see. BTW, I totally screwed up the tests I did earlier. Returning
+1 from should_break _does_ produce the same results for my simple case
+(copy + typechange).
+
+> But after re-reading your patch and the surrounding code, that is
+> more or less what you are doing (without actually recording the extra
+> broken pair to be merged back later).
+
+I don't think we need to, because they are never actually "broken"; we
+simply consider the source a candidate for renaming, but keep the pair
+together to note the typechange.
+
+> which is essentially doing the same thing but only for the "remove the
+> regular file" half.  One has to wonder how the lack of handling the
+> other half affects the outcome and still produce a result more intuitive
+> than the current code.
+
+AIUI, because we never broke the pair in the first place, we don't need
+to look for a source for that dest (the "add a new symlink" half). It's
+already part of the same filepair.
+
+Whether this is by design or simply a happy accident that we record both
+renames and typechanges in diff_filepairs, I'm not sure. Or perhaps I'm
+totally misunderstanding how the breaking works.
+
+> In your test case, the "new" symlink won't have any similar symlink that
+> is removed from the preimage, so registering it as a rename destination
+> would not make a difference (it will say "no match found, so create this
+> as usual"), but I am not convinced if that would work well in general.
+
+I don't know that it makes a difference. We are impacting only a
+'typechange', which implies that we have a filepair in which both p->one
+and p->two are valid; thus, the current code doesn't use it as a rename
+dst at all.
 
 -Peff
