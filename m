@@ -1,73 +1,54 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: make test failure with latest master
-Date: Sun, 02 Dec 2007 09:01:35 -0500
-Message-ID: <4752BABF.1040707@gmail.com>
-References: <4752A53E.4030000@gmail.com> <m3fxylw95y.fsf@roke.D-201>
-Reply-To: gitzilla@gmail.com
+From: "Gustaf Hendeby" <hendeby@gmail.com>
+Subject: Difference in how "git status" and "git diff --name-only" lists filenames
+Date: Sun, 2 Dec 2007 15:04:06 +0100
+Message-ID: <bf7b2dda0712020604x209d6665i9ab58b32834b2cee@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 02 15:02:02 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 02 15:04:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IypOR-00040x-9l
-	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 15:01:59 +0100
+	id 1IypQt-0004hO-4G
+	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 15:04:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753692AbXLBOBj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 09:01:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753994AbXLBOBj
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 09:01:39 -0500
-Received: from wr-out-0506.google.com ([64.233.184.226]:43042 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751048AbXLBOBi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 09:01:38 -0500
-Received: by wr-out-0506.google.com with SMTP id c49so2436895wra
-        for <git@vger.kernel.org>; Sun, 02 Dec 2007 06:01:37 -0800 (PST)
+	id S1753619AbXLBOEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 09:04:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752264AbXLBOEJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 09:04:09 -0500
+Received: from rv-out-0910.google.com ([209.85.198.191]:35938 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753219AbXLBOEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 09:04:08 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so2377104rvb
+        for <git@vger.kernel.org>; Sun, 02 Dec 2007 06:04:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        bh=A3wAesQu8dieLKEF8kdup7JihP4SK+LNkPU1skq/EdY=;
-        b=Y+HRN1YDTPL9rf/FdgK+Y7dgw134+3RG8o2A02lk8bBob38FRGnhhlZdUadLKytsM9lRoijM3y1RxuI1cXd8hXAc+/1HiRcmHZItSI83KjX50DAVMs6hYx25KGn4ZMenoQ/VsMDyWXR8yqf82UuYr3CglAl/AdKEXXaSLdw+W8U=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=YQGYNfeQ8Tx1jYOh3+POtMbUoNRyGUDYgmfess+OF2A=;
+        b=k3+tbebZnzvbL+dcDk0l9d0k9YpckFCgkILbxT74u7svn5UtH9PRYPvl6vVl00fPdlL8qT3zdkVvrZcRK+Ld/XoxVHu8X3PyxtmIyS0NZ4NhgeKd2ma0F/YqFqbd1u+QJodcTGGm1recqCELs+gr6/uxOnH3D11AH3Isq5B22ws=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=C6B26ebC7e5ruiY075u132/xAOb/jfLs1cj8X3fE7wZeIWWwYpVfSSu1Ntsz0T/MmMnBZmVXIlLQT5Xf74KTLhOxvs05JLl6+BNMtb3Bt6LMls50NGj+INCEK6RqSP3VGsyN8o3btJDc7afR1lOW/0ismzPZ6Cvqq4JzG2Cde3Y=
-Received: by 10.70.91.16 with SMTP id o16mr1612999wxb.1196604097357;
-        Sun, 02 Dec 2007 06:01:37 -0800 (PST)
-Received: from ?10.0.0.6? ( [66.177.19.100])
-        by mx.google.com with ESMTPS id h9sm14637716wxd.2007.12.02.06.01.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 02 Dec 2007 06:01:36 -0800 (PST)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
-In-Reply-To: <m3fxylw95y.fsf@roke.D-201>
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Zt4zUqT6IuYLch5cbg8KxLchMMFkMlCV+lTjKze1Ecs325krmt69+SK1PRt/A6j8e/QOY3+fpKnAvX9IAtgq25FldLb0vkKBHY1FL+aai8tbyflXj9PmZZRSq8zNJBvKFpPLWlO8GwpMYcVUYnFo1n7ipnymcP6WABdU65O1RBo=
+Received: by 10.141.205.10 with SMTP id h10mr5045841rvq.1196604246083;
+        Sun, 02 Dec 2007 06:04:06 -0800 (PST)
+Received: by 10.140.173.1 with HTTP; Sun, 2 Dec 2007 06:04:06 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66779>
 
-Jakub Narebski wrote:
-> A Large Angry SCM <gitzilla@gmail.com> writes:
-> 
->> [Resent due to incorrect list address.]
->>
->> With the latest master, 2221a6757161af1905925c405aded9ff470f70d5,
->> "make test" now fails; last successful "make test" was mid-week
->> sometime with master d25430. This is on a laptop running Suse 9.3.
->>
->>
->> *** t9600-cvsimport.sh ***
-> 
-> Trivial question: have you got cvs and cvsps installed?
-> 
+A while ago 'git status' was patched to report relative pathnames.  (I
+like that change it makes cut'n'paste easier.)  However, 'git diff
+--name-only' and 'git diff --name-status' (other commands as well),
+which gives in a sense similar output has not been changed the same
+way.  Is this intentionally, or just because no one has stepped up and
+provided a patch?  If the difference is to stay, maybe this should be
+reflected in the help texts to avoid any confusion.
 
-Yes. With the following (rpm based) versions:
-
-	cvs-1.12.12-2.1
-	cvsps-1.99-155.2
-	cvsup-16.1h-173
-	viewcvs-1.0-11
+/Gustaf
