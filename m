@@ -1,70 +1,84 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Corrupted (?) commit 6e6db85e confusing gitk
-Date: Sun, 2 Dec 2007 12:34:57 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712021229300.8458@woody.linux-foundation.org>
-References: <5F1A20CC-7427-4E7A-AB95-E89C9FA17951@zib.de> <7vir3hx70y.fsf@gitster.siamese.dyndns.org> <20071202193918.GQ6212@lavos.net>
+Date: Sun, 02 Dec 2007 12:48:22 -0800
+Message-ID: <7vmyssvn55.fsf@gitster.siamese.dyndns.org>
+References: <5F1A20CC-7427-4E7A-AB95-E89C9FA17951@zib.de>
+	<7vir3hx70y.fsf@gitster.siamese.dyndns.org>
+	<20071202193918.GQ6212@lavos.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Steffen Prohaska <prohaska@zib.de>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Steffen Prohaska <prohaska@zib.de>,
 	Git Mailing List <git@vger.kernel.org>
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Sun Dec 02 21:36:21 2007
+To: bdowning@lavos.net (Brian Downing)
+X-From: git-owner@vger.kernel.org Sun Dec 02 21:49:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyvY1-0002O6-PE
-	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 21:36:18 +0100
+	id 1IyvkA-0006FF-6f
+	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 21:48:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754351AbXLBUfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 15:35:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754470AbXLBUfU
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 15:35:20 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:59600 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754224AbXLBUfT (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Dec 2007 15:35:19 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB2KYwqs011873
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 2 Dec 2007 12:34:59 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB2KYvEt031445;
-	Sun, 2 Dec 2007 12:34:57 -0800
-In-Reply-To: <20071202193918.GQ6212@lavos.net>
-X-Spam-Status: No, hits=-2.727 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1755327AbXLBUsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 15:48:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754749AbXLBUs3
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 15:48:29 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:46290 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754565AbXLBUs3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 15:48:29 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id D275A2EF;
+	Sun,  2 Dec 2007 15:48:49 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 0D3319C22A;
+	Sun,  2 Dec 2007 15:48:45 -0500 (EST)
+In-Reply-To: <20071202193918.GQ6212@lavos.net> (Brian Downing's message of
+	"Sun, 2 Dec 2007 13:39:18 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66816>
 
+bdowning@lavos.net (Brian Downing) writes:
 
-
-On Sun, 2 Dec 2007, Brian Downing wrote:
+> It looks like the "guilty" commit that allowed this behavior was:
+>
+> commit 13208572fbe8838fd8835548d7502202d1f7b21d
+> Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Date:   Sun Nov 11 17:35:58 2007 +0000
+>
+>     builtin-commit: fix --signoff
+>
+>     The Signed-off-by: line contained a spurious timestamp.  The reason was
+>     a call to git_committer_info(1), which automatically added the
+>     timestamp.
+>
+>     Instead, fmt_ident() was taught to interpret an empty string for the
+>     date (as opposed to NULL, which still triggers the default behavior)
+>     as "do not bother with the timestamp", and builtin-commit.c uses it.
+>
+>     Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
 >
 > With the above, something like:
-> 
+>
 > echo msg | GIT_AUTHOR_DATE='' git commit-tree sha1
-> 
+>
 > will produce a broken commit without a timestamp, since fmt_ident is
 > also used for the committer and author lines.
+>
+> Personally, I think if the date_str is not NULL, it should die() on
+> anything that can't successfully be parsed as a date, rather than simply
+> falling back to the current time.  But maybe that's a bit extreme.
 
-Ouch. And I notice that fsck doesn't even warn about the resulting broken 
-commit. Partly because I was lazy, but partly because originally I was 
-thinking that maybe we'll have more header lines, so fsck basically just 
-checks the ones that git *really* cares about (parenthood and tree), and 
-the rest is not really even looked at (well, it does check that the next 
-line starts with "author", but that's it).
+Yeah, that change does look like a hack now we look at it again.  It
+would have been much cleaner to make the caller accept the default
+behaviour of fmt_ident() and strip out the part it does not want from
+the result.  That way, the damage would have been much contained.
 
-I guess the breakage is pretty benign, but this is still very wrong.
-
-Junio: that broken commit seems to be in "pu" only - we should make sure 
-that it never makes it into next or master, so that it will eventually get 
-pruned out of history.
-
-		Linus
+The next issue would be to find who could pass an empty GIT_AUTHOR_DATE
+without noticing...
