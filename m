@@ -1,74 +1,86 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: [PATCH 1/3] git-help: add -i|--info option to display info page.
-Date: Sun, 02 Dec 2007 09:54:39 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <475272CF.40602@obry.net>
-References: <20071202060740.269e54ad.chriscool@tuxfamily.org>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: Corrupted (?) commit 6e6db85e confusing gitk
+Date: Sun, 2 Dec 2007 13:39:18 -0600
+Message-ID: <20071202193918.GQ6212@lavos.net>
+References: <5F1A20CC-7427-4E7A-AB95-E89C9FA17951@zib.de> <7vir3hx70y.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Theodore Tso <tytso@mit.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>, Andreas Ericsson <ae@op5.se>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Eric Wong <normalperson@yhbt.net>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sun Dec 02 20:34:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 02 20:39:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyuaJ-0001LR-Cg
-	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 20:34:35 +0100
+	id 1IyufF-0002va-Jj
+	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 20:39:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752838AbXLBTeO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Dec 2007 14:34:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752702AbXLBTeO
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 14:34:14 -0500
-Received: from smtp20.orange.fr ([193.252.22.31]:45392 "EHLO smtp20.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752499AbXLBTeN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 14:34:13 -0500
-Received: from smtp20.orange.fr (mwinf2014 [172.22.130.42])
-	by mwinf2020.orange.fr (SMTP Server) with ESMTP id 61D041D01330
-	for <git@vger.kernel.org>; Sun,  2 Dec 2007 09:55:25 +0100 (CET)
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2014.orange.fr (SMTP Server) with ESMTP id 4C4901C000A3
-	for <git@vger.kernel.org>; Sun,  2 Dec 2007 09:54:43 +0100 (CET)
-Received: from [192.168.0.100] (AVelizy-151-1-46-33.w82-124.abo.wanadoo.fr [82.124.248.33])
-	by mwinf2014.orange.fr (SMTP Server) with ESMTP id AECED1C000A4;
-	Sun,  2 Dec 2007 09:54:42 +0100 (CET)
-X-ME-UUID: 20071202085442716.AECED1C000A4@mwinf2014.orange.fr
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <20071202060740.269e54ad.chriscool@tuxfamily.org>
-X-Enigmail-Version: 0.95.5
+	id S1752893AbXLBTjV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 14:39:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752702AbXLBTjV
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 14:39:21 -0500
+Received: from mxsf04.insightbb.com ([74.128.0.74]:57496 "EHLO
+	mxsf04.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752469AbXLBTjU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 14:39:20 -0500
+X-IronPort-AV: E=Sophos;i="4.23,241,1194238800"; 
+   d="scan'208";a="135479516"
+Received: from unknown (HELO asav02.insightbb.com) ([172.31.249.124])
+  by mxsf04.insightbb.com with ESMTP; 02 Dec 2007 14:39:19 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah4FAKOYUkdKhvkY/2dsb2JhbACBW49B
+X-IronPort-AV: E=Sophos;i="4.23,241,1194238800"; 
+   d="scan'208";a="168500452"
+Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
+  by asav02.insightbb.com with ESMTP; 02 Dec 2007 14:39:19 -0500
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id 521F1309F21; Sun,  2 Dec 2007 13:39:18 -0600 (CST)
+Content-Disposition: inline
+In-Reply-To: <7vir3hx70y.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66813>
 
-Christian Couder a =E9crit :
-> "git help --info XXX" will now call "info git-XXX".
+On Sun, Dec 02, 2007 at 10:53:33AM -0800, Junio C Hamano wrote:
+> Yeah, I was wondering what that commit that records the change older
+> than git or myself come to life ;-)
+> 
+> I did rewrite the commit a few times, and it was some interaction
+> between the built-in commit series, git-rebase -i and git-am, but I do
+> not have the details, sorry.
 
-If would be nice if this could be more generic. For example I'd like to
-use Emacs woman mode instead of info. Can't we have something like
+It looks like the "guilty" commit that allowed this behavior was:
 
-   $ git help --ext XXX
+commit 13208572fbe8838fd8835548d7502202d1f7b21d
+Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Sun Nov 11 17:35:58 2007 +0000
 
-"ext" standing for external and calling whatever command recorded into
-=2Egitconfig for example ?
+    builtin-commit: fix --signoff
 
-Pascal.
+    The Signed-off-by: line contained a spurious timestamp.  The reason was
+    a call to git_committer_info(1), which automatically added the
+    timestamp.
 
---=20
+    Instead, fmt_ident() was taught to interpret an empty string for the
+    date (as opposed to NULL, which still triggers the default behavior)
+    as "do not bother with the timestamp", and builtin-commit.c uses it.
 
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+    Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+With the above, something like:
+
+echo msg | GIT_AUTHOR_DATE='' git commit-tree sha1
+
+will produce a broken commit without a timestamp, since fmt_ident is
+also used for the committer and author lines.
+
+Personally, I think if the date_str is not NULL, it should die() on
+anything that can't successfully be parsed as a date, rather than simply
+falling back to the current time.  But maybe that's a bit extreme.
+
+-bcd
