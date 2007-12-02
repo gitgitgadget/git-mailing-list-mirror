@@ -1,81 +1,58 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Sun, 02 Dec 2007 17:56:48 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <4752E3D0.6030802@obry.net>
-References: <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org> <7veje8twt2.fsf@gitster.siamese.dyndns.org> <20071130003512.GB11683@coredump.intra.peff.net> <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org> <20071130005852.GA12224@coredump.intra.peff.net> <alpine.LFD.0.99999.0711292004340.9605@xanadu.home> <20071130011748.GC11683@coredump.intra.peff.net> <474FB938.3040209@op5.se> <20071130150948.GA22095@coredump.intra.peff.net> <7vve7jqz92.fsf@gitster.siamese.dyndns.org> <20071130212500.GB25946@coredump.intra.peff.net> <Pine.LNX.4.64.0711302306580.27959@racer.site> <FFEBE8BB-E764-4DD0-A7DC-8CC01659D9BC@wincent.com> <Pine.LNX.4.64.0712021637250.27959@racer.site>
+From: "Vegard Nossum" <vegard.nossum@gmail.com>
+Subject: git-merge --no-commit commits
+Date: Sun, 2 Dec 2007 17:57:38 +0100
+Message-ID: <19f34abd0712020857m757c57cfr358a81e47f38fac8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Wincent Colaiuta <win@wincent.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Andreas Ericsson <ae@op5.se>, Nicolas Pitre <nico@cam.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Dec 02 17:57:24 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 02 17:58:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iys88-0004tJ-HS
-	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 17:57:20 +0100
+	id 1Iys94-0005By-FI
+	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 17:58:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755553AbXLBQ45 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Dec 2007 11:56:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755508AbXLBQ45
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 11:56:57 -0500
-Received: from smtp2f.orange.fr ([80.12.242.151]:23598 "EHLO smtp2f.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755393AbXLBQ44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 11:56:56 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2f13.orange.fr (SMTP Server) with ESMTP id F007E700009E
-	for <git@vger.kernel.org>; Sun,  2 Dec 2007 17:56:53 +0100 (CET)
-Received: from [192.168.0.100] (AVelizy-151-1-88-105.w86-205.abo.wanadoo.fr [86.205.126.105])
-	by mwinf2f13.orange.fr (SMTP Server) with ESMTP id 289587000098;
-	Sun,  2 Dec 2007 17:56:53 +0100 (CET)
-X-ME-UUID: 20071202165653166.289587000098@mwinf2f13.orange.fr
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <Pine.LNX.4.64.0712021637250.27959@racer.site>
-X-Enigmail-Version: 0.95.5
+	id S1753686AbXLBQ5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 11:57:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754536AbXLBQ5j
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 11:57:39 -0500
+Received: from rv-out-0910.google.com ([209.85.198.185]:26380 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753686AbXLBQ5i (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 11:57:38 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so2404461rvb
+        for <git@vger.kernel.org>; Sun, 02 Dec 2007 08:57:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=/hNbQ48SpkmABpso596s35bWwPD4E94tm+c1szqbzMM=;
+        b=o3ro6cW1AZCAjKjw7GO7uPAq4E1f7THhgVjyw7//bayfKLV13lPoH0ISqcOgqbMrM64XPfh2KFjnAuEhB7UjM8Z0Sg6muShAkWUlho1Hloc2/ujHDAO3AUJ4+eds+Ln0rFa1NRgBoor++Y41uzPxgN6ojo1iYSeNkxpS3MknXco=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ti53GxC46y/A39cNJEya7ySbo8AfbrpcMn6FJ2aM1vWy6rfHFFUo4cGjQ8lne80z27QPmIQMVSRubi2ewUPSOn88snYYXrJRT9GplJ45bb5/5uZerS7fIfPtxBYDW5sPE3UP4CMpz3jiMnVTlCOAhFEtTDyfCqtqX0f3HD6bDGI=
+Received: by 10.140.180.42 with SMTP id c42mr960899rvf.1196614658380;
+        Sun, 02 Dec 2007 08:57:38 -0800 (PST)
+Received: by 10.141.170.18 with HTTP; Sun, 2 Dec 2007 08:57:38 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66795>
 
-Johannes Schindelin a =E9crit :
-> Okay, how many executables are there in your /usr/bin/?  Here there a=
-re=20
-> 2973.
-> Guess what.  I am not intimidated by that number.
+Hi,
 
-Good, and look in /usr/bin, all those 2973 binary are all disconnected.
+I am using git 1.5.3.4 and just did the following (v1 and v2 are
+branches; v1 is a parent of v2):
 
-Here we are speaking about a tool as a whole : Git.
+git checkout v1
+git merge --no-commit v2
 
-And I agree that hiding some of them will probably help new comers. We
-can also argue that a new comers should read some documentation :)
+It simply fast-forwarded AND committed even though I explicitly told
+it not to. What gives?
 
-After all I'm not sure what's the right move !
-
-At least let me say something constructive :) I'm a new comer to Git.
-I've read many documentations before grabbing the system and I've not
-been impressed by the number of binaries in /usr/bin... Because I've
-almost never looked there. Most of the time I'm using "git <tab>" and
-the bash completion feature is just right for me.
-
-Pascal.
-
---=20
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+Kind regards,
+Vegard Nossum
