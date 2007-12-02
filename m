@@ -1,225 +1,143 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: [PATCH v4] Allow update hooks to update refs on their own.
-Date: Sun, 2 Dec 2007 13:22:24 -0800
-Message-ID: <20071202212224.GA22117@midwinter.com>
-References: <7vr6i8sfsa.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Corrupted (?) commit 6e6db85e confusing gitk
+Date: Sun, 2 Dec 2007 13:25:12 -0800 (PST)
+Message-ID: <alpine.LFD.0.9999.0712021322580.8458@woody.linux-foundation.org>
+References: <5F1A20CC-7427-4E7A-AB95-E89C9FA17951@zib.de> <7vir3hx70y.fsf@gitster.siamese.dyndns.org> <20071202193918.GQ6212@lavos.net> <7vmyssvn55.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 02 22:22:48 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Brian Downing <bdowning@lavos.net>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 02 22:26:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IywH0-0008S7-88
-	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 22:22:46 +0100
+	id 1IywKg-0001DV-Dd
+	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 22:26:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754389AbXLBVWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 16:22:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754048AbXLBVWZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 16:22:25 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:55865 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753816AbXLBVWY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 16:22:24 -0500
-Received: (qmail 22481 invoked by uid 1001); 2 Dec 2007 21:22:24 -0000
-Content-Disposition: inline
-In-Reply-To: <7vr6i8sfsa.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1750768AbXLBV0P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 16:26:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750741AbXLBV0P
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 16:26:15 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:37513 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750713AbXLBV0O (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Dec 2007 16:26:14 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB2LPDla014421
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 2 Dec 2007 13:25:14 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB2LPC0C000643;
+	Sun, 2 Dec 2007 13:25:13 -0800
+In-Reply-To: <7vmyssvn55.fsf@gitster.siamese.dyndns.org>
+X-Spam-Status: No, hits=-2.726 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66819>
 
-This is useful in cases where a hook needs to modify an incoming commit
-in some way, e.g., fixing whitespace errors, adding an annotation to
-the commit message, noting the location of output from a profiling tool,
-or committing to an svn repository using git-svn.
 
-Signed-off-by: Steven Grimm <koreth@midwinter.com>
+
+On Sun, 2 Dec 2007, Junio C Hamano wrote:
+>
+> The next issue would be to find who could pass an empty GIT_AUTHOR_DATE
+> without noticing...
+
+In the meantime, here's a not-very-well-tested patch to fsck to at least 
+notice this.
+
+Of course, in the name of containment it would probably be even better if 
+parse_commit() did it, because then people would be unable to pull from 
+such a corrupt repository! But this would seem to be at least a slight 
+step in the right direction.
+
+		Linus
+
 ---
+ builtin-fsck.c |   57 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 55 insertions(+), 2 deletions(-)
 
-	Since Junio's main objection to this seemed to be the protocol
-	change to bypass the automatic update of the tracking ref in
-	git-send-pack, that code is gone (thus reverting this to the
-	same code change as the initial version!) and I added a section
-	to the git-send-pack manual page describing the automatic
-	tracking ref update behavior, which wasn't documented at all
-	before. Someone please review my terminology there.
-
- Documentation/git-receive-pack.txt |    8 +++-
- Documentation/git-send-pack.txt    |   16 ++++++++
- receive-pack.c                     |   70 +++++++++++++++++++++++-------------
- 3 files changed, 67 insertions(+), 27 deletions(-)
-
-diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
-index 2633d94..115ae97 100644
---- a/Documentation/git-receive-pack.txt
-+++ b/Documentation/git-receive-pack.txt
-@@ -74,8 +74,12 @@ Note that the hook is called before the refname is updated,
- so either sha1-old is 0\{40} (meaning there is no such ref yet),
- or it should match what is recorded in refname.
+diff --git a/builtin-fsck.c b/builtin-fsck.c
+index e4874f6..309212c 100644
+--- a/builtin-fsck.c
++++ b/builtin-fsck.c
+@@ -351,8 +351,48 @@ static int fsck_tree(struct tree *item)
+ 	return retval;
+ }
  
--The hook should exit with non-zero status if it wants to disallow
--updating the named ref.  Otherwise it should exit with zero.
-+The hook may optionally choose to update the ref on its own, e.g.,
-+if it needs to modify incoming revisions in some way. If it updates
-+the ref, it should exit with a status of 100.  The hook should exit
-+with a status between 1 and 99 if it wants to disallow updating the
-+named ref.  Otherwise it should exit with zero, and the ref will be
-+updated automatically.
- 
- Successful execution (a zero exit status) of this hook does not
- ensure the ref will actually be updated, it is only a prerequisite.
-diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
-index a2d9cb6..db64a1b 100644
---- a/Documentation/git-send-pack.txt
-+++ b/Documentation/git-send-pack.txt
-@@ -115,6 +115,22 @@ Optionally, a <ref> parameter can be prefixed with a plus '+' sign
- to disable the fast-forward check only on that ref.
- 
- 
-+Remote Tracking Refs
-+--------------------
++static int parse_commit_line(struct commit *commit, const char *expect, const char *buffer)
++{
++	char *end;
++	const char *p;
++	int len = strlen(expect);
++	int saw_lt = 0;
 +
-+After successfully sending a pack to the remote, 'git-send-pack'
-+updates the corresponding remote tracking ref in the local repository
-+to point to the same commit as was just sent to the remote side. In
-+most cases this eliminates the need to subsequently fetch from the
-+remote repository since there would be nothing new to fetch.
++	if (memcmp(buffer, expect, len))
++		goto bad;
++	p = (char *)buffer + len;
++	if (*p != ' ')
++		goto bad;
++	while (*++p != '>') {
++		if (*p == '<')
++			saw_lt++;
++		if (!*p)
++			goto bad;
++	}
++	if (saw_lt != 1)
++		goto bad;
++	if (*++p != ' ')
++		goto bad;
 +
-+If the remote side's update hook modifies the incoming commit
-+before applying it, the local repository's remote tracking ref will
-+point at a different commit than the corresponding remote ref (since
-+the local repository will not have a copy of the modified version).
-+In that case an explicit fetch will be required.
++	/* Date in seconds since the epoch (UTC) */
++	if (strtoul(p, &end, 10) == ULONG_MAX)
++		goto bad;
++	if (*end++ != ' ')
++		goto bad;
 +
++	/* TZ that date was done in */
++	if (strtoul(end, &end, 10) == ULONG_MAX)
++		goto bad;
++	if (*end++ != '\n')
++		goto bad;
++	return end - buffer;
++bad:
++	return objerror(&commit->object, "invalid format - missing or corrupt '%s'", expect);
++}
 +
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org>
-diff --git a/receive-pack.c b/receive-pack.c
-index fba4cf8..ca906bf 100644
---- a/receive-pack.c
-+++ b/receive-pack.c
-@@ -18,6 +18,9 @@ static int report_status;
- static char capabilities[] = " report-status delete-refs ";
- static int capabilities_sent;
- 
-+/* Update hook exit code: hook has updated ref on its own */
-+#define EXIT_CODE_REF_UPDATED 100
-+
- static int receive_pack_config(const char *var, const char *value)
+ static int fsck_commit(struct commit *commit)
  {
- 	if (strcmp(var, "receive.denynonfastforwards") == 0) {
-@@ -70,8 +73,11 @@ static struct command *commands;
- static const char pre_receive_hook[] = "hooks/pre-receive";
- static const char post_receive_hook[] = "hooks/post-receive";
++	int len;
+ 	char *buffer = commit->buffer;
+ 	unsigned char tree_sha1[20], sha1[20];
  
--static int hook_status(int code, const char *hook_name)
-+static int hook_status(int code, const char *hook_name, int ok_start)
- {
-+	if (ok_start && -code >= ok_start)
-+		return -code;
-+
- 	switch (code) {
- 	case 0:
- 		return 0;
-@@ -121,7 +127,7 @@ static int run_hook(const char *hook_name)
- 
- 	code = start_command(&proc);
- 	if (code)
--		return hook_status(code, hook_name);
-+		return hook_status(code, hook_name, 0);
- 	for (cmd = commands; cmd; cmd = cmd->next) {
- 		if (!cmd->error_string) {
- 			size_t n = snprintf(buf, sizeof(buf), "%s %s %s\n",
-@@ -132,7 +138,7 @@ static int run_hook(const char *hook_name)
- 				break;
- 		}
+@@ -370,8 +410,21 @@ static int fsck_commit(struct commit *commit)
+ 			return objerror(&commit->object, "invalid 'parent' line format - bad sha1");
+ 		buffer += 48;
  	}
--	return hook_status(finish_command(&proc), hook_name);
-+	return hook_status(finish_command(&proc), hook_name, 0);
- }
- 
- static int run_update_hook(struct command *cmd)
-@@ -155,7 +161,8 @@ static int run_update_hook(struct command *cmd)
- 	proc.no_stdin = 1;
- 	proc.stdout_to_stderr = 1;
- 
--	return hook_status(run_command(&proc), update_hook);
-+	return hook_status(run_command(&proc), update_hook,
-+			   EXIT_CODE_REF_UPDATED);
- }
- 
- static const char *update(struct command *cmd)
-@@ -194,32 +201,45 @@ static const char *update(struct command *cmd)
- 			return "non-fast forward";
- 		}
- 	}
--	if (run_update_hook(cmd)) {
--		error("hook declined to update %s", name);
--		return "hook declined";
--	}
--
--	if (is_null_sha1(new_sha1)) {
--		if (!parse_object(old_sha1)) {
--			warning ("Allowing deletion of corrupt ref.");
--			old_sha1 = NULL;
-+	switch (run_update_hook(cmd)) {
-+	case 0:
-+		if (is_null_sha1(new_sha1)) {
-+			if (!parse_object(old_sha1)) {
-+				warning ("Allowing deletion of corrupt ref.");
-+				old_sha1 = NULL;
-+			}
-+			if (delete_ref(name, old_sha1)) {
-+				error("failed to delete %s", name);
-+				return "failed to delete";
-+			}
-+			fprintf(stderr, "%s: %s -> deleted\n", name,
-+				sha1_to_hex(old_sha1));
- 		}
--		if (delete_ref(name, old_sha1)) {
--			error("failed to delete %s", name);
--			return "failed to delete";
-+		else {
-+			lock = lock_any_ref_for_update(name, old_sha1, 0);
-+			if (!lock) {
-+				error("failed to lock %s", name);
-+				return "failed to lock";
-+			}
-+			if (write_ref_sha1(lock, new_sha1, "push")) {
-+				return "failed to write"; /* error() already called */
-+			}
- 		}
- 		return NULL; /* good */
--	}
--	else {
--		lock = lock_any_ref_for_update(name, old_sha1, 0);
--		if (!lock) {
--			error("failed to lock %s", name);
--			return "failed to lock";
--		}
--		if (write_ref_sha1(lock, new_sha1, "push")) {
--			return "failed to write"; /* error() already called */
+-	if (memcmp(buffer, "author ", 7))
+-		return objerror(&commit->object, "invalid format - expected 'author' line");
 +
-+	case EXIT_CODE_REF_UPDATED:
-+		/* hook has taken care of updating ref, which means it
-+		   might be a different revision than we think. */
-+		if (! resolve_ref(name, new_sha1, 1, NULL)) {
-+			error("can't resolve ref %s after hook updated it",
-+				name);
-+			return "ref not resolvable";
- 		}
- 		return NULL; /* good */
-+
-+	default:
-+		error("hook declined to update %s", name);
-+		return "hook declined";
- 	}
- }
- 
--- 
-1.5.3.6.2040.g97735-dirty
++	/*
++	 * We check the author/committer lines for completeness.
++	 * But errors here aren't fatal to the rest of the parsing.
++	 */
++	len = parse_commit_line(commit, "author", buffer);
++	if (len >= 0) {
++		buffer += len;
++		len = parse_commit_line(commit, "committer", buffer);
++		if (len >= 0) {
++			buffer += len;
++			if (*buffer != '\n')
++				objerror(&commit->object, "invalid format - missing or corrupt end-of-headers");
++		}
++	}
+ 	free(commit->buffer);
+ 	commit->buffer = NULL;
+ 	if (!commit->tree)
