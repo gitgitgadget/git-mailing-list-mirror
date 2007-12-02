@@ -1,145 +1,148 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH resend] git-commit: clean up die messages
-Date: Sun, 2 Dec 2007 01:07:03 -0500
-Message-ID: <20071202060703.GA25371@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 02 07:07:31 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/3] Prepare execv_git_cmd() for removal of builtins from the filesystem
+Date: Sat,  1 Dec 2007 23:03:23 -0800
+Message-ID: <1196579005-5662-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 02 08:03:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyhzG-0006Di-Ow
-	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 07:07:31 +0100
+	id 1Iyirm-0005zf-Hh
+	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 08:03:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751194AbXLBGHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 01:07:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbXLBGHG
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 01:07:06 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1349 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751142AbXLBGHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 01:07:05 -0500
-Received: (qmail 18822 invoked by uid 111); 2 Dec 2007 06:07:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 02 Dec 2007 01:07:04 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Dec 2007 01:07:03 -0500
-Content-Disposition: inline
+	id S1751523AbXLBHDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 02:03:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751515AbXLBHDa
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 02:03:30 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:56656 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751472AbXLBHD3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 02:03:29 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 534552F0
+	for <git@vger.kernel.org>; Sun,  2 Dec 2007 02:03:50 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id AFE009A0F0
+	for <git@vger.kernel.org>; Sun,  2 Dec 2007 02:03:49 -0500 (EST)
+X-Mailer: git-send-email 1.5.3.6.2090.g4ece0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66763>
 
-These are three types of cleanups here:
+Currently, execv_git_cmd() always try running the dashed form, which
+means we cannot easily remove the git-foo hardlinks for built-in
+commands.  This updates the function to always exec "git foo" form, and
+makes sure "git" potty does not infinitely recurse to itself.
 
-  1. remove newline from die message (die/report adds it
-     already)
-  2. typo: s/merger/merge/
-  3. the old "* no commit message?  aborting commit." is now
-     prepended with "fatal: ", making the asterisk look a
-     little funny. Let's just remove it.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-[sorry for the resend, I totally munged Kristian's address in the first
-one].
+ exec_cmd.c |   31 ++++++++++++-------------------
+ git.c      |   32 +++++++++++++++++++++++++++++++-
+ 2 files changed, 43 insertions(+), 20 deletions(-)
 
-I actually noticed number 3, and while fixing it, saw the others. The
-wording in number 3 is a bit awkward, IMHO. I wonder if it might be
-better as something like:
-
-  fatal: aborting commit with empty message
-
- builtin-commit.c |   19 +++++++++----------
- 1 files changed, 9 insertions(+), 10 deletions(-)
-
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 0f1ae17..f6e8e44 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -336,7 +336,7 @@ static int prepare_log_message(const char *index_file, const char *prefix)
+diff --git a/exec_cmd.c b/exec_cmd.c
+index 2d0a758..10b2908 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -65,32 +65,25 @@ void setup_path(const char *cmd_path)
  
- 	fp = fopen(git_path(commit_editmsg), "w");
- 	if (fp == NULL)
--		die("could not open %s\n", git_path(commit_editmsg));
-+		die("could not open %s", git_path(commit_editmsg));
+ int execv_git_cmd(const char **argv)
+ {
+-	struct strbuf cmd;
+-	const char *tmp;
+-
+-	strbuf_init(&cmd, 0);
+-	strbuf_addf(&cmd, "git-%s", argv[0]);
++	int argc;
++	const char **nargv;
  
- 	stripspace(&sb, 0);
+-	/*
+-	 * argv[0] must be the git command, but the argv array
+-	 * belongs to the caller, and may be reused in
+-	 * subsequent loop iterations. Save argv[0] and
+-	 * restore it on error.
+-	 */
+-	tmp = argv[0];
+-	argv[0] = cmd.buf;
++	for (argc = 0; argv[argc]; argc++)
++		; /* just counting */
++	nargv = xmalloc(sizeof(*nargv) * (argc + 2));
  
-@@ -362,8 +362,7 @@ static int prepare_log_message(const char *index_file, const char *prefix)
+-	trace_argv_printf(argv, -1, "trace: exec:");
++	nargv[0] = "git";
++	for (argc = 0; argv[argc]; argc++)
++		nargv[argc + 1] = argv[argc];
++	nargv[argc + 1] = NULL;
++	trace_argv_printf(nargv, -1, "trace: exec:");
+ 
+ 	/* execvp() can only ever return if it fails */
+-	execvp(cmd.buf, (char **)argv);
++	execvp("git", (char **)nargv);
+ 
+ 	trace_printf("trace: exec failed: %s\n", strerror(errno));
+ 
+-	argv[0] = tmp;
+-
+-	strbuf_release(&cmd);
+-
++	free(nargv);
+ 	return -1;
+ }
+ 
+diff --git a/git.c b/git.c
+index 01bbbc7..d690426 100644
+--- a/git.c
++++ b/git.c
+@@ -382,6 +382,36 @@ static void handle_internal_command(int argc, const char **argv)
  	}
+ }
  
- 	if (fwrite(sb.buf, 1, sb.len, fp) < sb.len)
--		die("could not write commit template: %s\n",
--		    strerror(errno));
-+		die("could not write commit template: %s", strerror(errno));
++static void execv_dashed_external(const char **argv)
++{
++	struct strbuf cmd;
++	const char *tmp;
++
++	strbuf_init(&cmd, 0);
++	strbuf_addf(&cmd, "git-%s", argv[0]);
++
++	/*
++	 * argv[0] must be the git command, but the argv array
++	 * belongs to the caller, and may be reused in
++	 * subsequent loop iterations. Save argv[0] and
++	 * restore it on error.
++	 */
++	tmp = argv[0];
++	argv[0] = cmd.buf;
++
++	trace_argv_printf(argv, -1, "trace: exec:");
++
++	/* execvp() can only ever return if it fails */
++	execvp(cmd.buf, (char **)argv);
++
++	trace_printf("trace: exec failed: %s\n", strerror(errno));
++
++	argv[0] = tmp;
++
++	strbuf_release(&cmd);
++}
++
++
+ int main(int argc, const char **argv)
+ {
+ 	const char *cmd = argv[0] ? argv[0] : "git-help";
+@@ -445,7 +475,7 @@ int main(int argc, const char **argv)
+ 		handle_internal_command(argc, argv);
  
- 	strbuf_release(&sb);
+ 		/* .. then try the external ones */
+-		execv_git_cmd(argv);
++		execv_dashed_external(argv);
  
-@@ -470,13 +469,13 @@ static void determine_author_info(struct strbuf *sb)
- 
- 		a = strstr(use_message_buffer, "\nauthor ");
- 		if (!a)
--			die("invalid commit: %s\n", use_message);
-+			die("invalid commit: %s", use_message);
- 
- 		lb = strstr(a + 8, " <");
- 		rb = strstr(a + 8, "> ");
- 		eol = strchr(a + 8, '\n');
- 		if (!lb || !rb || !eol)
--			die("invalid commit: %s\n", use_message);
-+			die("invalid commit: %s", use_message);
- 
- 		name = xstrndup(a + 8, lb - (a + 8));
- 		email = xstrndup(lb + 2, rb - (lb + 2));
-@@ -488,7 +487,7 @@ static void determine_author_info(struct strbuf *sb)
- 		const char *rb = strchr(force_author, '>');
- 
- 		if (!lb || !rb)
--			die("malformed --author parameter\n");
-+			die("malformed --author parameter");
- 		name = xstrndup(force_author, lb - force_author);
- 		email = xstrndup(lb + 2, rb - (lb + 2));
- 	}
-@@ -518,7 +517,7 @@ static int parse_and_validate_options(int argc, const char *argv[])
- 	if (amend && initial_commit)
- 		die("You have nothing to amend.");
- 	if (amend && in_merge)
--		die("You are in the middle of a merger -- cannot amend.");
-+		die("You are in the middle of a merge -- cannot amend.");
- 
- 	if (use_message)
- 		f++;
-@@ -641,7 +640,7 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
- 
- 	commit = lookup_commit(sha1);
- 	if (!commit)
--		die("couldn't look up newly created commit\n");
-+		die("couldn't look up newly created commit");
- 	if (!commit || parse_commit(commit))
- 		die("could not parse newly created commit");
- 
-@@ -777,7 +776,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		launch_editor(git_path(commit_editmsg), &sb, env);
- 	} else if (strbuf_read_file(&sb, git_path(commit_editmsg), 0) < 0) {
- 		rollback_index_files();
--		die("could not read commit message\n");
-+		die("could not read commit message");
- 	}
- 	if (run_hook(index_file, "commit-msg", git_path(commit_editmsg))) {
- 		rollback_index_files();
-@@ -792,7 +791,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	stripspace(&sb, 1);
- 	if (sb.len < header_len || message_is_empty(&sb, header_len)) {
- 		rollback_index_files();
--		die("* no commit message?  aborting commit.");
-+		die("no commit message?  aborting commit.");
- 	}
- 	strbuf_addch(&sb, '\0');
- 	if (is_encoding_utf8(git_commit_encoding) && !is_utf8(sb.buf))
+ 		/* It could be an alias -- this works around the insanity
+ 		 * of overriding "git log" with "git show" by having
 -- 
-1.5.3.6.2092.gf4c21-dirty
+1.5.3.6.2090.g4ece0
