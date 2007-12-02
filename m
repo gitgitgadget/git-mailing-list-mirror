@@ -1,86 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] git-help: add -i|--info option to display info page.
-Date: Sun, 02 Dec 2007 01:25:42 -0800
-Message-ID: <7vodd9zbvt.fsf@gitster.siamese.dyndns.org>
-References: <20071202060740.269e54ad.chriscool@tuxfamily.org>
-	<475272CF.40602@obry.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: problems with importing from cvs archive
+Date: Sun, 02 Dec 2007 01:39:02 -0800 (PST)
+Message-ID: <m3lk8dwi4x.fsf@roke.D-201>
+References: <20071202064613.GB25351@venus>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Theodore Tso <tytso@mit.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>, Andreas Ericsson <ae@op5.se>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Eric Wong <normalperson@yhbt.net>
-To: Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Sun Dec 02 10:26:20 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Ed S. Peschko" <esp5@pge.com>
+X-From: git-owner@vger.kernel.org Sun Dec 02 10:39:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iyl5e-0003dF-U9
-	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 10:26:19 +0100
+	id 1IylIQ-00062U-HI
+	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 10:39:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751070AbXLBJZ4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Dec 2007 04:25:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750996AbXLBJZ4
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 04:25:56 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:49844 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750944AbXLBJZy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Dec 2007 04:25:54 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 8B5962EF;
-	Sun,  2 Dec 2007 04:26:15 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id E924E9B09C;
-	Sun,  2 Dec 2007 04:26:05 -0500 (EST)
-In-Reply-To: <475272CF.40602@obry.net> (Pascal Obry's message of "Sun, 02 Dec
-	2007 09:54:39 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751433AbXLBJjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 04:39:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751142AbXLBJjJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 04:39:09 -0500
+Received: from mu-out-0910.google.com ([209.85.134.187]:45548 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750954AbXLBJjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 04:39:05 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so900501mue
+        for <git@vger.kernel.org>; Sun, 02 Dec 2007 01:39:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=2Fr6rK4KbgL5cLJpPtBtaCA/Z8RX+VPSWppaW+EQ2fw=;
+        b=xXJAmDS2qtIAkH7XeWzm3Dul4k3POrBeINyvvYHvKMUEor9jbjHnQsAxOy/H7YKGsAEvYYojzFHwETMid5MqBkjQssrjpt3hG9eTgbVL1Ksp7tCNKgBoTZgVmHwrrKzdgbsLBs9i1NqC/pJk0oRxOv9MBwNu3iSQmVPAyvf2bdQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=Gl1bv44gFL8vIzlJclMSC3L2IxUqJmfXT8gBkpa7JeYtUd4ufj32N+BkNaC+daP3FyFxbZCHWXgbQozRS6PHxCUGnucIHlRWDegoZ//8y8DlFsjNOFOX8dGNT4KmM4K7zr9ogN/6jb9aXbQuRsHM4hrhh39W3FAxgS+s0BTD5T4=
+Received: by 10.86.84.5 with SMTP id h5mr9307394fgb.1196588343844;
+        Sun, 02 Dec 2007 01:39:03 -0800 (PST)
+Received: from roke.D-201 ( [83.8.251.146])
+        by mx.google.com with ESMTPS id 4sm5291120fge.2007.12.02.01.39.02
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 02 Dec 2007 01:39:03 -0800 (PST)
+Received: from roke (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lB29cu8b027018;
+	Sun, 2 Dec 2007 10:38:57 +0100
+Received: (from jnareb@localhost)
+	by roke (8.13.4/8.13.4/Submit) id lB29ctVL027015;
+	Sun, 2 Dec 2007 10:38:55 +0100
+X-Authentication-Warning: roke: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <20071202064613.GB25351@venus>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66771>
 
-Pascal Obry <pascal@obry.net> writes:
+"Ed S. Peschko" <esp5@pge.com> writes:
 
-> Christian Couder a =C3=A9crit :
->> "git help --info XXX" will now call "info git-XXX".
->
-> If would be nice if this could be more generic. For example I'd like =
-to
-> use Emacs woman mode instead of info. Can't we have something like
->
->    $ git help --ext XXX
->
-> "ext" standing for external and calling whatever command recorded int=
-o
-> .gitconfig for example ?
+> I'm trying to use git-cvsimport to import from a CVS archive, using:
+> 
+> git-cvsimport -d $CVSROOT
+> 
+> and am getting the following error:
+> 
+> 	fatal: refs/heads/origin: not a valid SHA1
+> 	fatal: master: not a valid SHA1
+> 	warning: You appear to be on a branch yet to be born
+> 	warning: Forcing checkout of HEAD
+> 	fatal: just how do you expect me to merge 0 trees?
+> 	checkout failed: 256
 
-There is a bit of conflict here.  We could do that and make the
-implementation of "ext" command responsible to transform "commit" in
+[...]
 
-	$ git help --ext commit
+> Or is this just a plain vanilla bug? 
 
-to the location of manual page (or formatted HTML page, or node in the
-info documentation).  git itself does not need to know much about where
-the help material is in such an implementation.
+I guess that you might have been bitten by (just corrected, but not in
+any released version yet) the bug in git-cvsimport (which is quite
+old, and not very well maintained) when branches are packed.
 
-But Christian's series is about making such "ext" thing easier to write=
-=2E
-No matter what kind of web browser is used, it needs to be told where
-the preformatted HTML page for git-commit command is (and it does not
-care where git-commit.1 manpage is found or what the node is called in
-git.info document).  It makes it a bit too limiting by defining -w (web=
-)
-and -i (info) upfront without offering -x (ext), but we need to start
-somewhere.
+You can either try last patch to cvsimport (it is in 'master'),
+or unpack refs using "git reset --soft HEAD" when on given packed
+branch,
 
-Having said that, I think this is a post 1.5.4 material.  Please keep
-the discussion going, so that we can have something people can agree on
-early after 1.5.4.
+-- 
+Jakub Narebski
