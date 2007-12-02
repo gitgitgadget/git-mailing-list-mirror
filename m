@@ -1,74 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Sun, 2 Dec 2007 16:39:28 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712021637250.27959@racer.site>
-References: <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org>
- <7veje8twt2.fsf@gitster.siamese.dyndns.org> <20071130003512.GB11683@coredump.intra.peff.net>
- <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org> <20071130005852.GA12224@coredump.intra.peff.net>
- <alpine.LFD.0.99999.0711292004340.9605@xanadu.home>
- <20071130011748.GC11683@coredump.intra.peff.net> <474FB938.3040209@op5.se>
- <20071130150948.GA22095@coredump.intra.peff.net> <7vve7jqz92.fsf@gitster.siamese.dyndns.org>
- <20071130212500.GB25946@coredump.intra.peff.net> <Pine.LNX.4.64.0711302306580.27959@racer.site>
- <FFEBE8BB-E764-4DD0-A7DC-8CC01659D9BC@wincent.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 6/6] builtin-commit: Add newline when showing which
+	commit was created
+Date: Sun, 2 Dec 2007 11:54:09 -0500
+Message-ID: <20071202165409.GA30998@coredump.intra.peff.net>
+References: <Pine.LNX.4.64.0711111730580.4362@racer.site> <Pine.LNX.4.64.0711111736440.4362@racer.site> <20071201222106.GA27102@coredump.intra.peff.net> <Pine.LNX.4.64.0712012238510.27959@racer.site> <20071202054030.GA393@coredump.intra.peff.net> <Pine.LNX.4.64.0712021212490.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Andreas Ericsson <ae@op5.se>, Nicolas Pitre <nico@cam.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Sun Dec 02 17:40:50 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, krh@redhat.com, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Dec 02 17:54:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iyrs1-0008M9-Sq
-	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 17:40:42 +0100
+	id 1Iys5V-00043E-7l
+	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 17:54:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754113AbXLBQkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 11:40:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788AbXLBQkE
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 11:40:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58346 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754827AbXLBQkB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 11:40:01 -0500
-Received: (qmail invoked by alias); 02 Dec 2007 16:39:58 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp057) with SMTP; 02 Dec 2007 17:39:58 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19pBDgj1XdpQJbSi4wsV/IrVk+xGiXbAenbg946Tn
-	H1L79CENY9Fi2K
-X-X-Sender: gene099@racer.site
-In-Reply-To: <FFEBE8BB-E764-4DD0-A7DC-8CC01659D9BC@wincent.com>
-X-Y-GMX-Trusted: 0
+	id S1753238AbXLBQyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 11:54:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752799AbXLBQyM
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 11:54:12 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4526 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752484AbXLBQyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 11:54:12 -0500
+Received: (qmail 21953 invoked by uid 111); 2 Dec 2007 16:54:10 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 02 Dec 2007 11:54:10 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Dec 2007 11:54:09 -0500
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0712021212490.27959@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66793>
 
-Hi,
+On Sun, Dec 02, 2007 at 12:13:07PM +0000, Johannes Schindelin wrote:
 
-On Sun, 2 Dec 2007, Wincent Colaiuta wrote:
-
-> El 1/12/2007, a las 0:10, Johannes Schindelin escribi?:
+> > It would be helpful if you could remember the test case, but perhaps
+> > that is not an option at this point.
 > 
-> > To me, it is mighty annoying anybody brings up that "144 commands" 
-> > argument Linus was referring to, and if there is _any_ way to shut up 
-> > those bikeshedders, I am all for it.
-> 
-> This is not a bikeshed argument and it is not an "idiotic complaint" (to 
-> use Linus' phrase). It is a legitimate concern and a *real* UI problem.
-> 
-> You and Linus don't care that there are 140+ Git commands and I imagine 
-> that you know exactly what each of them does.
+> IIRC it was "git commit -m bla".
 
-Okay, how many executables are there in your /usr/bin/?  Here there are 
-2973.
+I have made several attempts to reproduce the problem, looked a bit
+through the log-tree code, and checked the results of the t750* series
+of tests; but I have found nothing. I think we are better off reverting,
+which fixes every case I have seen; if the problem behavior comes back,
+we will have figured out what causes it. And if it doesn't come back,
+then the revert is the right thing. :)
 
-Guess what.  I am not intimidated by that number.
+-- >8 --
+Revert "builtin-commit: Add newline when showing which commit was created"
 
-Ciao,
-Dscho
+This reverts commit 129fa606365c172d07a5d98bea9345277f221363.
+
+We end up in most cases with an undesired extra newline. It
+is possible that there is some corner case that requires the
+newline, but there is no published test case. So let's fix
+the known problem, and we can deal with the corner case if
+and when there is a bug report.
+---
+ builtin-commit.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-commit.c b/builtin-commit.c
+index f6e8e44..118853d 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -660,7 +660,6 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+ 	printf("Created %scommit ", initial_commit ? "initial " : "");
+ 
+ 	log_tree_commit(&rev, commit);
+-	printf("\n");
+ }
+ 
+ int git_commit_config(const char *k, const char *v)
+-- 
+1.5.3.6.2094.g3713
