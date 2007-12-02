@@ -1,68 +1,75 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: v1.5.4 plans
-Date: Mon, 3 Dec 2007 10:39:59 +1100
-Message-ID: <ee77f5c20712021539r3075fc57ld6a4cec737e6043d@mail.gmail.com>
-References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: make test failure with latest master
+Date: Sun, 2 Dec 2007 23:41:10 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712022340250.27959@racer.site>
+References: <4752A53E.4030000@gmail.com> <20071202163426.GA29781@coredump.intra.peff.net>
+ <47533D75.1090002@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 03 00:40:29 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
+To: A Large Angry SCM <gitzilla@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 03 00:41:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyyQA-0006Tm-In
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 00:40:23 +0100
+	id 1IyyRe-0006xc-6b
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 00:41:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751689AbXLBXkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 18:40:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751793AbXLBXkA
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 18:40:00 -0500
-Received: from rv-out-0910.google.com ([209.85.198.190]:64393 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751644AbXLBXj7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 18:39:59 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2474973rvb
-        for <git@vger.kernel.org>; Sun, 02 Dec 2007 15:39:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=cgyrSqjRwxKQiXNFKsm/r6mXqzf9k7HVXytbE6eFK1c=;
-        b=pLt5pFzMrqvbgCtOmktRk15t2UoMHnCcGOtbEvK+SO+uUWcrzNaHa3Qz9C89MUBAasuvo2q/u2foyLF4RX1iQb6esCGCOMBtC915oGFCNyQNWNGOx3UweEKTOzDXyNBfAvySJ0cMUl9OLhzOyrTAsSJyGw2BulmTKpebnTnM9Bk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=RFbu8t5/Q3F5Be6W8kzqKjZMgTJ2yr17MDmOjLro2RhgeMiDrnEo3mSgbvNedhHvqdt9onWZbCeKO4/yEWOWQ7ktAVH9SD6qehMuvwaA9iM2pfHIbZSuNNnR4Bpt8BSIdI4JbfYqtaePaB6fHj4S+d/a0QZbVnV+KMFin5s5bqM=
-Received: by 10.141.172.6 with SMTP id z6mr5301811rvo.1196638799445;
-        Sun, 02 Dec 2007 15:39:59 -0800 (PST)
-Received: by 10.141.115.4 with HTTP; Sun, 2 Dec 2007 15:39:59 -0800 (PST)
-In-Reply-To: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751839AbXLBXle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 18:41:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751842AbXLBXle
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 18:41:34 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49291 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751531AbXLBXld (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 18:41:33 -0500
+Received: (qmail invoked by alias); 02 Dec 2007 23:41:31 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp040) with SMTP; 03 Dec 2007 00:41:31 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19WT1UAxt5WR6FUNSK5kCsN7MOWWv9XoE6GkKoJ0g
+	7T2MCOm9Rye7NP
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47533D75.1090002@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66838>
 
-On Dec 3, 2007 9:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Please do not take this as the final decision made by the Emperor, whose
-> subjects now must follow.  This is a sanity-check to see if everybody is
-> on the same page.
->
-> I am not the Emperor anyway ;-)
->
+Hi,
 
-> Topics not in 'master' yet but should be in v1.5.4
-> --------------------------------------------------
->
-> I think the following should go in, along with what we already have in
-> 'master':
+On Sun, 2 Dec 2007, A Large Angry SCM wrote:
 
-Can we add the git-status/git-checkout relative path stuff that's
-currently been sitting in 'next'? It would be a good step forward for
-usability.
+> Jeff King wrote:
+> > On Sun, Dec 02, 2007 at 07:29:50AM -0500, A Large Angry SCM wrote:
+> > 
+> > > With the latest master, 2221a6757161af1905925c405aded9ff470f70d5, "make
+> > > test" now fails; last successful "make test" was mid-week sometime with
+> > > master d25430. This is on a laptop running Suse 9.3.
+> > > 
+> > > *** t9600-cvsimport.sh ***
+> > > *   ok 1: setup cvsroot
+> > > *   ok 2: setup a cvs module
+> > > * FAIL 3: import a trivial module
+> > > 
+> > > 
+> > >                 git cvsimport -a -z 0 -C module-git module &&
+> > >                 git diff module-cvs/o_fortuna module-git/o_fortuna
+> > 
+> > Can you please try ./t9600 --verbose? Presumably cvsimport is generating
+> > some kind of error message to tell us what's going on.
+> 
+> Attached is the output of
+> 
+> 	./t9600-cvsimport.sh --verbose >/tmp/9600_out.txt 2>&1
+> 
 
+Unfortunately you attached the interesting part, so I cannot quote it 
+here.  Seems that your cvsps does not understand the "-A" option.  So it 
+looks like it is too old.
 
-Dave.
+Hth,
+Dscho
