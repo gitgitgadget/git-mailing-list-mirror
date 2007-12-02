@@ -1,67 +1,73 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Michael Gebetsroither <gebi@sbox.tugraz.at>
 Subject: Re: Corrupted (?) commit 6e6db85e confusing gitk
-Date: Sun, 2 Dec 2007 14:43:41 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712021441110.8458@woody.linux-foundation.org>
-References: <5F1A20CC-7427-4E7A-AB95-E89C9FA17951@zib.de> <7vir3hx70y.fsf@gitster.siamese.dyndns.org> <20071202193918.GQ6212@lavos.net> <7vmyssvn55.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.9999.0712021322580.8458@woody.linux-foundation.org>
- <7v1wa4vkev.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Brian Downing <bdowning@lavos.net>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 02 23:45:06 2007
+Date: Sun, 2 Dec 2007 23:59:22 +0100
+Organization: www.grml.org
+Message-ID: <fivdfu$smr$1@ger.gmane.org>
+References: <5F1A20CC-7427-4E7A-AB95-E89C9FA17951@zib.de> <7vir3hx70y.fsf@gitster.siamese.dyndns.org> <20071202193918.GQ6212@lavos.net> <7vmyssvn55.fsf@gitster.siamese.dyndns.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 03 00:02:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyxYb-0008DB-Jh
-	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 23:45:02 +0100
+	id 1Iyxpj-0004sD-7e
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 00:02:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130AbXLBWom (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 17:44:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750774AbXLBWom
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 17:44:42 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:54775 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750768AbXLBWol (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 Dec 2007 17:44:41 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB2MhgHV017654
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 2 Dec 2007 14:43:43 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB2Mhf8V003196;
-	Sun, 2 Dec 2007 14:43:42 -0800
-In-Reply-To: <7v1wa4vkev.fsf@gitster.siamese.dyndns.org>
-X-Spam-Status: No, hits=-2.726 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751408AbXLBXCW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 18:02:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751367AbXLBXCW
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 18:02:22 -0500
+Received: from main.gmane.org ([80.91.229.2]:60927 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751355AbXLBXCV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 18:02:21 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Iyxon-0006ka-SF
+	for git@vger.kernel.org; Sun, 02 Dec 2007 23:01:45 +0000
+Received: from 84.119.5.147 ([84.119.5.147])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 02 Dec 2007 23:01:45 +0000
+Received: from gebi by 84.119.5.147 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 02 Dec 2007 23:01:45 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 84.119.5.147
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66832>
 
+* Junio C Hamano <gitster@pobox.com> wrote:
 
+> Yeah, that change does look like a hack now we look at it again.  It
+> would have been much cleaner to make the caller accept the default
+> behaviour of fmt_ident() and strip out the part it does not want from
+> the result.  That way, the damage would have been much contained.
 
-On Sun, 2 Dec 2007, Junio C Hamano wrote:
-> 
-> I recall that the very initial git did not use the current format for
-> timestamp but ctime() return value
+Last hg2git from repo.or.cz does it (it uses git-fast-import).
 
-Yes, but..
+Just tried to convert lastes mercurial repos to git and the resulting
+git repos can't be displayed with gitk.
 
-> and this will also notice them (and convert-objects will be there for 
-> us).
+git fsck --full gives many "bad commit date in xxxx"
 
-.. I don't think we have actually accepted the ctime-string format since 
-switchng over, so no existing git repositories will have them. The commit 
-date parsing just does a "strtoul()" in parse_commit_date().
+% git cat-file commit f7900d59930d796c4739452cf68ca9c08a921b5d | sed
+% '/^$/,//d'
+tree 4fb3636148433dcd368fc2dfa20247cb281e2ff8
+parent 6ea0491f4ebb13003d15c6fc478d92cbe1201902
+author Mathieu Clabaut <mathieu.clabaut@gmail.com> <"Mathieu Clabaut
+<mathieu.clabaut@gmail.com>"> 1153937514 +0200
+committer Mathieu Clabaut <mathieu.clabaut@gmail.com> <"Mathieu Clabaut
+<mathieu.clabaut@gmail.com>"> 1153937514 +0200
 
-So I wouldn't expect convert-objects to be needed - or rather, it was 
-needed 2.5 _years_ ago, and we've not supported those early broken formats 
-since, afaik.
+But the new hg2git is _amazingly_ fast, converts the whole mercurial
+repos got git in just 1min :).
 
-			Linus
+cu,
+michael
+-- 
+It's already too late!
