@@ -1,89 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
-Date: Sun, 2 Dec 2007 17:23:52 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712021718460.27959@racer.site>
-References: <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org>
- <7veje8twt2.fsf@gitster.siamese.dyndns.org> <20071130003512.GB11683@coredump.intra.peff.net>
- <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org> <20071130005852.GA12224@coredump.intra.peff.net>
- <alpine.LFD.0.99999.0711292004340.9605@xanadu.home>
- <20071130011748.GC11683@coredump.intra.peff.net> <474FB938.3040209@op5.se>
- <20071130150948.GA22095@coredump.intra.peff.net> <7vve7jqz92.fsf@gitster.siamese.dyndns.org>
- <20071130212500.GB25946@coredump.intra.peff.net> <Pine.LNX.4.64.0711302306580.27959@racer.site>
- <FFEBE8BB-E764-4DD0-A7DC-8CC01659D9BC@wincent.com> <Pine.LNX.4.64.0712021637250.27959@racer.site>
- <4752E3D0.6030802@obry.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: git + unison
+Date: Sun, 02 Dec 2007 18:59:36 +0100
+Message-ID: <vpqd4tpgepj.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Wincent Colaiuta <win@wincent.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Andreas Ericsson <ae@op5.se>, Nicolas Pitre <nico@cam.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
-To: Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Sun Dec 02 18:24:38 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 02 19:00:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IysYX-000568-5C
-	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 18:24:37 +0100
+	id 1Iyt76-0007G7-CY
+	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 19:00:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751577AbXLBRYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 12:24:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751987AbXLBRYR
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 12:24:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53922 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751526AbXLBRYQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 12:24:16 -0500
-Received: (qmail invoked by alias); 02 Dec 2007 17:24:14 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp008) with SMTP; 02 Dec 2007 18:24:14 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/vDAQ6tU3vWKzz0X93t20bM9sQQcyWteh6cDkxcz
-	p84W9O4g0JCOUu
-X-X-Sender: gene099@racer.site
-In-Reply-To: <4752E3D0.6030802@obry.net>
-X-Y-GMX-Trusted: 0
+	id S1754150AbXLBR76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 12:59:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753999AbXLBR76
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 12:59:58 -0500
+Received: from imag.imag.fr ([129.88.30.1]:33198 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752484AbXLBR75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 12:59:57 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lB2HxbCW001886
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 2 Dec 2007 18:59:37 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Iyt6O-0006ZC-U0; Sun, 02 Dec 2007 18:59:36 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Iyt6O-0005La-Ra; Sun, 02 Dec 2007 18:59:36 +0100
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 02 Dec 2007 18:59:37 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66802>
 
 Hi,
 
-On Sun, 2 Dec 2007, Pascal Obry wrote:
+I'm wondering how dangerous the interaction of git with the unison
+file synchronizer[1] can be.
 
-> Johannes Schindelin a ?crit :
-> > Okay, how many executables are there in your /usr/bin/?  Here there 
-> > are 2973. Guess what.  I am not intimidated by that number.
-> 
-> Good, and look in /usr/bin, all those 2973 binary are all disconnected.
-> 
-> Here we are speaking about a tool as a whole : Git.
+Another way of asking the question can be: what's the best way to
+keep two machines with many git repositories in sync?
 
-No, we are speaking about different commands, such as commit, fetch, push, 
-etc.
+Unison is a userland application that does bi-directional
+synchronization of two directories. Typically, to keep a laptop and a
+desktop synchronized (modify a file on the desktop and another on the
+laptop, unison will copy the files). I find it very usefull to keep
+large directories containing unrelated projects (typically,
+~/teaching/, ~/research, ..., my colleagues even synchronize $HOME on
+their laptops) in sync between two machines.
 
-I refuse to believe that you cannot see the equivalence.
+Actually, git achives something similar (and lot more, of course):
+modify a file here, commit, modify another there, commit, and then
+push & pull can do the sync. I find git excellent to manage somehow
+self-contained projects (~/teaching/2007-2008/whatever-course/), but
+inappropriate for $HOME or such big containers (need to run more
+commands, disk-space overhead, ...).
 
-> I've read many documentations before grabbing the system and I've not
-> been impressed by the number of binaries in /usr/bin... Because I've
-> almost never looked there.
+So, at the moment, I have both unison and git. My fear is that unison
+touches the content of the .git/ directories. So, for example, if I
+commit on one side, and commit something else on the other side, I'll
+get unison conflicts at least on .git/refs/heads/master and
+.git/index, and resolving the conflict in favor of either side leads
+to dangling objects whith important content.
 
-Exactly my point.
+What I'm doing right now is that I try to make sure I don't run unison
+when trees have diverged, which is not really satisfactory since 1) I
+can be wrong, and a miss-synchronization could lead to data-loss, and
+2) that means not really taking advantage of unison.
 
-> Most of the time I'm using "git <tab>" and the bash completion feature 
-> is just right for me.
 
-Bash completion is really something fine.
+What about you? What do you use to synchronize your laptop and
+desktop, or home and office? Anybody using unison and git on the same
+filesystem?
 
-But even without, I do not see a problem: many cvs users used only three 
-out of 32 commands (most CVS users I personally know/knew only called add, 
-commit and update).  You could even see all 32 commands when calling the 
-clunky command line "cvs --help-commands".  I am convinced we're already 
-more user-friendly than that.
+Thanks for your hints,
 
-Ciao,
-Dscho
+-- 
+Matthieu
+
+[1] : http://www.cis.upenn.edu/~bcpierce/unison/
