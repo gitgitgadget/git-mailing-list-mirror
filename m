@@ -1,53 +1,74 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: gitk error: expected integer but got "Hamano"
-Date: Sun, 2 Dec 2007 17:41:26 +0100
-Message-ID: <FB5CFAB8-D580-4D72-A9A9-BA90ACF6F04C@zib.de>
-References: <20071202160204.GA13141@fawkes>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Jing Xue <jingxue@digizenstudio.com>
-X-From: git-owner@vger.kernel.org Sun Dec 02 17:40:45 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
+Date: Sun, 2 Dec 2007 16:39:28 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712021637250.27959@racer.site>
+References: <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org>
+ <7veje8twt2.fsf@gitster.siamese.dyndns.org> <20071130003512.GB11683@coredump.intra.peff.net>
+ <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org> <20071130005852.GA12224@coredump.intra.peff.net>
+ <alpine.LFD.0.99999.0711292004340.9605@xanadu.home>
+ <20071130011748.GC11683@coredump.intra.peff.net> <474FB938.3040209@op5.se>
+ <20071130150948.GA22095@coredump.intra.peff.net> <7vve7jqz92.fsf@gitster.siamese.dyndns.org>
+ <20071130212500.GB25946@coredump.intra.peff.net> <Pine.LNX.4.64.0711302306580.27959@racer.site>
+ <FFEBE8BB-E764-4DD0-A7DC-8CC01659D9BC@wincent.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Andreas Ericsson <ae@op5.se>, Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Sun Dec 02 17:40:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iyrs2-0008M9-HH
+	id 1Iyrs1-0008M9-Sq
 	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 17:40:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754506AbXLBQkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 11:40:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754390AbXLBQkW
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 11:40:22 -0500
-Received: from mailer.zib.de ([130.73.108.11]:59914 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751788AbXLBQkV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 11:40:21 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lB2GeHjd019744;
-	Sun, 2 Dec 2007 17:40:17 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db1a965.pool.einsundeins.de [77.177.169.101])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lB2GeG9r003661
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 2 Dec 2007 17:40:16 +0100 (MET)
-In-Reply-To: <20071202160204.GA13141@fawkes>
-X-Mailer: Apple Mail (2.752.3)
+	id S1754113AbXLBQkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 11:40:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788AbXLBQkE
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 11:40:04 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58346 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754827AbXLBQkB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 11:40:01 -0500
+Received: (qmail invoked by alias); 02 Dec 2007 16:39:58 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp057) with SMTP; 02 Dec 2007 17:39:58 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19pBDgj1XdpQJbSi4wsV/IrVk+xGiXbAenbg946Tn
+	H1L79CENY9Fi2K
+X-X-Sender: gene099@racer.site
+In-Reply-To: <FFEBE8BB-E764-4DD0-A7DC-8CC01659D9BC@wincent.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66792>
 
+Hi,
 
-On Dec 2, 2007, at 5:02 PM, Jing Xue wrote:
+On Sun, 2 Dec 2007, Wincent Colaiuta wrote:
 
->
-> I'd try to debug myself but my knowledge on tcl/tk is rather limited
-> (read: zero).
+> El 1/12/2007, a las 0:10, Johannes Schindelin escribi?:
+> 
+> > To me, it is mighty annoying anybody brings up that "144 commands" 
+> > argument Linus was referring to, and if there is _any_ way to shut up 
+> > those bikeshedders, I am all for it.
+> 
+> This is not a bikeshed argument and it is not an "idiotic complaint" (to 
+> use Linus' phrase). It is a legitimate concern and a *real* UI problem.
+> 
+> You and Linus don't care that there are 140+ Git commands and I imagine 
+> that you know exactly what each of them does.
 
-See my mail "Corrupted (?) commit 6e6db85e confusing gitk", which
-describes the reason in detail.
+Okay, how many executables are there in your /usr/bin/?  Here there are 
+2973.
 
-	Steffen
+Guess what.  I am not intimidated by that number.
+
+Ciao,
+Dscho
