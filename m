@@ -1,107 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/3] git-shell: accept "git foo" form
-Date: Sat,  1 Dec 2007 23:03:25 -0800
-Message-ID: <1196579005-5662-3-git-send-email-gitster@pobox.com>
-References: <1196579005-5662-1-git-send-email-gitster@pobox.com>
- <1196579005-5662-2-git-send-email-gitster@pobox.com>
+From: "Ed S. Peschko" <esp5@pge.com>
+Subject: problems with importing from cvs archive
+Date: Sat, 1 Dec 2007 22:46:13 -0800
+Message-ID: <20071202064613.GB25351@venus>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 02 08:04:16 2007
+X-From: git-owner@vger.kernel.org Sun Dec 02 08:40:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IyisB-00064Q-H1
-	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 08:04:15 +0100
+	id 1IyjRJ-00038m-6H
+	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 08:40:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751515AbXLBHDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 02:03:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbXLBHDg
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 02:03:36 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:56663 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751473AbXLBHDe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 02:03:34 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 154C52F0
-	for <git@vger.kernel.org>; Sun,  2 Dec 2007 02:03:56 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 884DB9A10E
-	for <git@vger.kernel.org>; Sun,  2 Dec 2007 02:03:55 -0500 (EST)
-X-Mailer: git-send-email 1.5.3.6.2090.g4ece0
-In-Reply-To: <1196579005-5662-2-git-send-email-gitster@pobox.com>
+	id S1751561AbXLBHbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 02:31:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751462AbXLBHbJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 02:31:09 -0500
+Received: from mta06.pge.com ([131.90.0.76]:57302 "EHLO mta06.pge.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751561AbXLBHbJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 02:31:09 -0500
+X-Greylist: delayed 2693 seconds by postgrey-1.27 at vger.kernel.org; Sun, 02 Dec 2007 02:31:08 EST
+Received: from mta11.comp.pge.com (mta11.comp.pge.com [10.245.211.126])
+	by mta06.pge.com (Switch-3.3.0/Switch-3.2.4) with ESMTP id lB26kDVg024692
+	for <git@vger.kernel.org>; Sat, 1 Dec 2007 22:46:13 -0800 (PST)
+Received: from mdssdr01.utility.pge.com (mdssdr01.utility.pge.com [10.244.52.48])
+	by mta11.comp.pge.com (Switch-3.3.0/Switch-3.3.0) with ESMTP id lB26kCR6022805
+	for <git@vger.kernel.org>; Sat, 1 Dec 2007 22:46:12 -0800 (PST)
+Received: (from esp5@localhost)
+	by mdssdr01.utility.pge.com (8.11.7p3+Sun/8.11.7) id lB26kDT05619
+	for git@vger.kernel.org; Sat, 1 Dec 2007 22:46:13 -0800 (PST)
+X-Authentication-Warning: mdssdr01.utility.pge.com: esp5 set sender to esp5@pge.com using -f
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66766>
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- shell.c |   26 +++++++++++++++-----------
- 1 files changed, 15 insertions(+), 11 deletions(-)
+All,
 
-diff --git a/shell.c b/shell.c
-index 9826109..729797c 100644
---- a/shell.c
-+++ b/shell.c
-@@ -19,17 +19,13 @@ static int do_generic_cmd(const char *me, char *arg)
- 	return execv_git_cmd(my_argv);
- }
+I'm trying to use git-cvsimport to import from a CVS archive, using:
+
+git-cvsimport -d $CVSROOT
+
+and am getting the following error:
+
+	fatal: refs/heads/origin: not a valid SHA1
+	fatal: master: not a valid SHA1
+	warning: You appear to be on a branch yet to be born
+	warning: Forcing checkout of HEAD
+	fatal: just how do you expect me to merge 0 trees?
+	checkout failed: 256
+
+Is git-cvsimport meant to be universal - ie: work on any given CVS worktree - or do 
+you need to prep the CVS worktree in any way in order for it to be used?
+
+Or is this just a plain vanilla bug? 
+
+Thanks,
+
+Ed
+
  
--static int do_cvs_cmd(const char *me, char *arg)
-+static int do_cvs_cmd(void)
- {
- 	const char *cvsserver_argv[3] = {
- 		"cvsserver", "server", NULL
- 	};
- 
--	if (!arg || strcmp(arg, "server"))
--		die("git-cvsserver only handles server: %s", arg);
--
- 	setup_path(NULL);
--
- 	return execv_git_cmd(cvsserver_argv);
- }
- 
-@@ -40,7 +36,6 @@ static struct commands {
- } cmd_list[] = {
- 	{ "git-receive-pack", do_generic_cmd },
- 	{ "git-upload-pack", do_generic_cmd },
--	{ "cvs", do_cvs_cmd },
- 	{ NULL },
- };
- 
-@@ -49,15 +44,24 @@ int main(int argc, char **argv)
- 	char *prog;
- 	struct commands *cmd;
- 
-+	/*
-+	 * Special hack to pretend to be a CVS server
-+	 */
- 	if (argc == 2 && !strcmp(argv[1], "cvs server"))
--		argv--;
--	/* We want to see "-c cmd args", and nothing else */
--	else if (argc != 3 || strcmp(argv[1], "-c"))
-+		exit(do_cvs_cmd());
-+
-+	/*
-+	 * We do not accept anything but "-c" followed by "cmd arg",
-+	 * where "cmd" is a very limited subset of git commands.
-+	 */
-+	if (argc != 3 || strcmp(argv[1], "-c"))
- 		die("What do you think I am? A shell?");
- 
- 	prog = argv[2];
--	argv += 2;
--	argc -= 2;
-+	if (!strncmp(prog, "git", 3) && isspace(prog[3]))
-+		/* Accept "git foo" as if the caller said "git-foo". */
-+		prog[3] = '-';
-+
- 	for (cmd = cmd_list ; cmd->name ; cmd++) {
- 		int len = strlen(cmd->name);
- 		char *arg;
--- 
-1.5.3.6.2090.g4ece0
