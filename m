@@ -1,56 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Corrupted (?) commit 6e6db85e confusing gitk
-Date: Sun, 02 Dec 2007 10:53:33 -0800
-Message-ID: <7vir3hx70y.fsf@gitster.siamese.dyndns.org>
-References: <5F1A20CC-7427-4E7A-AB95-E89C9FA17951@zib.de>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: git + unison
+Date: Sun, 2 Dec 2007 14:05:22 -0500
+Message-ID: <20071202190522.GB20822@fieldses.org>
+References: <vpqd4tpgepj.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun Dec 02 19:54:07 2007
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sun Dec 02 20:05:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iytx6-0006VO-7U
-	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 19:54:04 +0100
+	id 1Iyu8Q-00016R-H3
+	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 20:05:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752605AbXLBSxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 13:53:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752276AbXLBSxm
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 13:53:42 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:40290 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751624AbXLBSxl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 13:53:41 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 2450A2F9;
-	Sun,  2 Dec 2007 13:54:00 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 827C69C218;
-	Sun,  2 Dec 2007 13:53:57 -0500 (EST)
-In-Reply-To: <5F1A20CC-7427-4E7A-AB95-E89C9FA17951@zib.de> (Steffen Prohaska's
-	message of "Sun, 2 Dec 2007 17:06:07 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755747AbXLBTFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 14:05:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755583AbXLBTFZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 14:05:25 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:48762 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755393AbXLBTFY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 14:05:24 -0500
+Received: from bfields by fieldses.org with local (Exim 4.68)
+	(envelope-from <bfields@fieldses.org>)
+	id 1Iyu82-0006EP-Ny; Sun, 02 Dec 2007 14:05:22 -0500
+Content-Disposition: inline
+In-Reply-To: <vpqd4tpgepj.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66809>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+On Sun, Dec 02, 2007 at 06:59:36PM +0100, Matthieu Moy wrote:
+> What about you? What do you use to synchronize your laptop and
+> desktop, or home and office? Anybody using unison and git on the same
+> filesystem?
 
-> I'd like to conclude with some questions:
->  - Is this commit corrupted?
->  - How was the commit created?
->  - Should "git fsck" detect such corruption?
->  - Should gitk more gracefully handle corrupted commits?
+I just have a subdirectory of my home directory "local" that I tell
+unison not to synchronize:
 
-Yeah, I was wondering what that commit that records the change older
-than git or myself come to life ;-)
+	ignore = Path local
 
-I did rewrite the commit a few times, and it was some interaction
-between the built-in commit series, git-rebase -i and git-am, but I do
-not have the details, sorry.
+and keep all my git repos there, relying on git itself when I need to
+distribute stuff--generally all my repos are associated with public
+repos on a single (regularly backed-up) server, and I try not to let any
+work accumulate in any particular repository for long without being
+pushed to a branch in its public repo.
+
+--b.
