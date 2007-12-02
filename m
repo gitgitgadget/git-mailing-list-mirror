@@ -1,58 +1,60 @@
-From: "Vegard Nossum" <vegard.nossum@gmail.com>
-Subject: git-merge --no-commit commits
-Date: Sun, 2 Dec 2007 17:57:38 +0100
-Message-ID: <19f34abd0712020857m757c57cfr358a81e47f38fac8@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: problems with importing from cvs archive
+Date: Sun, 2 Dec 2007 12:07:41 -0500
+Message-ID: <20071202170741.GB29781@coredump.intra.peff.net>
+References: <20071202064613.GB25351@venus> <C4B8CB94-3B39-4C14-9134-DE43684A3AB7@yahoo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 02 17:58:20 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Ed S. Peschko" <esp5@pge.com>, git@vger.kernel.org
+To: =?iso-8859-1?Q?Jean-Fran=E7ois?= Veillette 
+	<jean_francois_veillette@yahoo.ca>
+X-From: git-owner@vger.kernel.org Sun Dec 02 18:08:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iys94-0005By-FI
-	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 17:58:18 +0100
+	id 1IysIY-0008KJ-NV
+	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 18:08:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753686AbXLBQ5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 11:57:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754536AbXLBQ5j
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 11:57:39 -0500
-Received: from rv-out-0910.google.com ([209.85.198.185]:26380 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753686AbXLBQ5i (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 11:57:38 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2404461rvb
-        for <git@vger.kernel.org>; Sun, 02 Dec 2007 08:57:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=/hNbQ48SpkmABpso596s35bWwPD4E94tm+c1szqbzMM=;
-        b=o3ro6cW1AZCAjKjw7GO7uPAq4E1f7THhgVjyw7//bayfKLV13lPoH0ISqcOgqbMrM64XPfh2KFjnAuEhB7UjM8Z0Sg6muShAkWUlho1Hloc2/ujHDAO3AUJ4+eds+Ln0rFa1NRgBoor++Y41uzPxgN6ojo1iYSeNkxpS3MknXco=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=ti53GxC46y/A39cNJEya7ySbo8AfbrpcMn6FJ2aM1vWy6rfHFFUo4cGjQ8lne80z27QPmIQMVSRubi2ewUPSOn88snYYXrJRT9GplJ45bb5/5uZerS7fIfPtxBYDW5sPE3UP4CMpz3jiMnVTlCOAhFEtTDyfCqtqX0f3HD6bDGI=
-Received: by 10.140.180.42 with SMTP id c42mr960899rvf.1196614658380;
-        Sun, 02 Dec 2007 08:57:38 -0800 (PST)
-Received: by 10.141.170.18 with HTTP; Sun, 2 Dec 2007 08:57:38 -0800 (PST)
+	id S1752576AbXLBRHp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 Dec 2007 12:07:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751018AbXLBRHp
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 12:07:45 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4769 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752576AbXLBRHo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 12:07:44 -0500
+Received: (qmail 22068 invoked by uid 111); 2 Dec 2007 17:07:43 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 02 Dec 2007 12:07:43 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Dec 2007 12:07:41 -0500
 Content-Disposition: inline
+In-Reply-To: <C4B8CB94-3B39-4C14-9134-DE43684A3AB7@yahoo.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66796>
 
-Hi,
+On Sun, Dec 02, 2007 at 10:14:07AM -0500, Jean-Fran=E7ois Veillette wro=
+te:
 
-I am using git 1.5.3.4 and just did the following (v1 and v2 are
-branches; v1 is a parent of v2):
+> Le 07-12-02 =E0 01:46, Ed S. Peschko a =E9crit :
+>
+>> All,
+>>
+>> I'm trying to use git-cvsimport to import from a CVS archive, using:
+>>
+>> git-cvsimport -d $CVSROOT
+>
+> I was able to go further just by adding the verbose mode ( -v ) :
+> git cvsimport -v -d ...
 
-git checkout v1
-git merge --no-commit v2
+There were some serious problems with the argument parsing of
+git-cvsimport with respect to finding the correct module from the git
+config or from your CVS working directory. This should all be fixed in
+v1.5.3.7; please let me know if you still have a problem with that
+version.
 
-It simply fast-forwarded AND committed even though I explicitly told
-it not to. What gives?
-
-Kind regards,
-Vegard Nossum
+-Peff
