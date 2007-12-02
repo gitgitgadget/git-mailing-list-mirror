@@ -1,69 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] t9600: test cvsimport from CVS working tree
-Date: Sun, 2 Dec 2007 12:22:19 -0500
-Message-ID: <20071202172219.GA7812@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Move all dashed form git commands to libexecdir
+Date: Sun, 2 Dec 2007 17:23:52 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712021718460.27959@racer.site>
+References: <alpine.LFD.0.9999.0711291527090.8458@woody.linux-foundation.org>
+ <7veje8twt2.fsf@gitster.siamese.dyndns.org> <20071130003512.GB11683@coredump.intra.peff.net>
+ <7vzlwwsgkp.fsf@gitster.siamese.dyndns.org> <20071130005852.GA12224@coredump.intra.peff.net>
+ <alpine.LFD.0.99999.0711292004340.9605@xanadu.home>
+ <20071130011748.GC11683@coredump.intra.peff.net> <474FB938.3040209@op5.se>
+ <20071130150948.GA22095@coredump.intra.peff.net> <7vve7jqz92.fsf@gitster.siamese.dyndns.org>
+ <20071130212500.GB25946@coredump.intra.peff.net> <Pine.LNX.4.64.0711302306580.27959@racer.site>
+ <FFEBE8BB-E764-4DD0-A7DC-8CC01659D9BC@wincent.com> <Pine.LNX.4.64.0712021637250.27959@racer.site>
+ <4752E3D0.6030802@obry.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 02 18:22:50 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Wincent Colaiuta <win@wincent.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Andreas Ericsson <ae@op5.se>, Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Sun Dec 02 18:24:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IysWg-0004Wr-7u
-	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 18:22:42 +0100
+	id 1IysYX-000568-5C
+	for gcvg-git-2@gmane.org; Sun, 02 Dec 2007 18:24:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754141AbXLBRWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 12:22:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753615AbXLBRWW
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 12:22:22 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3131 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752069AbXLBRWV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 12:22:21 -0500
-Received: (qmail 22199 invoked by uid 111); 2 Dec 2007 17:22:20 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 02 Dec 2007 12:22:20 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Dec 2007 12:22:19 -0500
-Content-Disposition: inline
+	id S1751577AbXLBRYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 12:24:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751987AbXLBRYR
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 12:24:17 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53922 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751526AbXLBRYQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 12:24:16 -0500
+Received: (qmail invoked by alias); 02 Dec 2007 17:24:14 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp008) with SMTP; 02 Dec 2007 18:24:14 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/vDAQ6tU3vWKzz0X93t20bM9sQQcyWteh6cDkxcz
+	p84W9O4g0JCOUu
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4752E3D0.6030802@obry.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66801>
 
-This test passes with v1.5.3.7, but not with v1.5.3.6.
+Hi,
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I wrote this to investigate a reported bug (which turned out
-to be fixed by the recent cvsimport patches). No bug to fix,
-but I think it's a good test to have in general.
+On Sun, 2 Dec 2007, Pascal Obry wrote:
 
- t/t9600-cvsimport.sh |   12 ++++++++++++
- 1 files changed, 12 insertions(+), 0 deletions(-)
+> Johannes Schindelin a ?crit :
+> > Okay, how many executables are there in your /usr/bin/?  Here there 
+> > are 2973. Guess what.  I am not intimidated by that number.
+> 
+> Good, and look in /usr/bin, all those 2973 binary are all disconnected.
+> 
+> Here we are speaking about a tool as a whole : Git.
 
-diff --git a/t/t9600-cvsimport.sh b/t/t9600-cvsimport.sh
-index 29fee2d..08f0f2a 100755
---- a/t/t9600-cvsimport.sh
-+++ b/t/t9600-cvsimport.sh
-@@ -119,4 +119,16 @@ test_expect_success 'cvsimport.module config works' '
- 
- '
- 
-+test_expect_success 'import from a CVS working tree' '
-+
-+	cvs co -d import-from-wt module &&
-+	cd import-from-wt &&
-+		git cvsimport -a -z0 &&
-+		echo 1 >expect &&
-+		git log -1 --pretty=format:%s%n >actual &&
-+		git diff actual expect &&
-+	cd ..
-+
-+'
-+
- test_done
--- 
-1.5.3.6.2094.g0ce9a-dirty
+No, we are speaking about different commands, such as commit, fetch, push, 
+etc.
+
+I refuse to believe that you cannot see the equivalence.
+
+> I've read many documentations before grabbing the system and I've not
+> been impressed by the number of binaries in /usr/bin... Because I've
+> almost never looked there.
+
+Exactly my point.
+
+> Most of the time I'm using "git <tab>" and the bash completion feature 
+> is just right for me.
+
+Bash completion is really something fine.
+
+But even without, I do not see a problem: many cvs users used only three 
+out of 32 commands (most CVS users I personally know/knew only called add, 
+commit and update).  You could even see all 32 commands when calling the 
+clunky command line "cvs --help-commands".  I am convinced we're already 
+more user-friendly than that.
+
+Ciao,
+Dscho
