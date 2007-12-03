@@ -1,80 +1,62 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] Make git status usage say git status instead of git
-	commit
-Date: Mon, 3 Dec 2007 11:21:24 +0100
-Message-ID: <20071203102124.GY31750@genesis.frugalware.org>
-References: <1196658129-16708-1-git-send-email-shawn.bohrer@gmail.com> <7vir3gqr3d.fsf@gitster.siamese.dyndns.org> <854pf0hyy3.fsf@lola.goethe.zz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-stash: Display help message if git-stash is run with
+ wrong sub-commands
+Date: Mon, 3 Dec 2007 10:25:17 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712031023480.27959@racer.site>
+References: <e66701d40712021834h64bf8d0y14f0e222d0f9a617@mail.gmail.com>
+ <20071203061617.GB1976@blorf.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="xJjS+Ds6jmpBvWv0"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Dec 03 11:21:52 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Kevin Leung <kevinlsk@gmail.com>, Git ML <git@vger.kernel.org>
+To: Wayne Davison <wayne@opencoder.net>
+X-From: git-owner@vger.kernel.org Mon Dec 03 11:26:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iz8Qv-0004aq-JT
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 11:21:50 +0100
+	id 1Iz8Uz-0005p1-Oc
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 11:26:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751876AbXLCKV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 05:21:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbXLCKV2
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 05:21:28 -0500
-Received: from virgo.iok.hu ([193.202.89.103]:28762 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751834AbXLCKV1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 05:21:27 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 992121B252B;
-	Mon,  3 Dec 2007 11:21:26 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 3CAA244660;
-	Mon,  3 Dec 2007 11:20:25 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 68698176C017; Mon,  3 Dec 2007 11:21:25 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <854pf0hyy3.fsf@lola.goethe.zz>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751937AbXLCKZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 05:25:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751927AbXLCKZl
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 05:25:41 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53154 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751912AbXLCKZk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 05:25:40 -0500
+Received: (qmail invoked by alias); 03 Dec 2007 10:25:38 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp012) with SMTP; 03 Dec 2007 11:25:38 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX185vfoEaf857X8G/GP8ALE4fJ/Hz2e678H9DylmPk
+	JOL3KVmGrA4Fsd
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071203061617.GB1976@blorf.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66901>
 
+Hi,
 
---xJjS+Ds6jmpBvWv0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Sun, 2 Dec 2007, Wayne Davison wrote:
 
-On Mon, Dec 03, 2007 at 11:09:24AM +0100, David Kastrup <dak@gnu.org> wrote:
-> Deprecating the dash form will probably mean that we need to think up
-> (and document) a rationale for
->=20
->   man git-commit
->=20
-> I actually have typed something like
->=20
->   man git commit
->=20
-> a number of times already with obvious results.  Finger memory.
+> On Mon, Dec 03, 2007 at 10:34:05AM +0800, Kevin Leung wrote:
+> > +USAGE='[  | save | list | show | apply | clear ]'
+> 
+> It seems strange to me that git stash is using sub-sub-command words 
+> instead of options.  Would it make more sense to be more like git branch 
+> and have a list be indicated by -l, etc.?
 
-that's why we have git help commit :)
+But those are not really options, are they?  They are commands, which 
+exclude each other.  And even if they are sub-sub-commands, why should we 
+not rather fix "git branch" to support a sane syntax, too?
 
-- VMiklos
+We could even put some general support into parse-options.[ch] for 
+sub-commands.
 
---xJjS+Ds6jmpBvWv0
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFHU9ike81tAgORUJYRAh0aAJ9Pama2RaStjdLDr8sfnci/M76tCACdHQgv
-grOSK9IvoCh1/cJbA2ZI/Eg=
-=ZSyo
------END PGP SIGNATURE-----
-
---xJjS+Ds6jmpBvWv0--
+Ciao,
+Dscho
