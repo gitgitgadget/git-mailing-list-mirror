@@ -1,89 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] quote_path: fix collapsing of relative paths
-Date: Mon, 3 Dec 2007 00:30:01 -0500
-Message-ID: <20071203053001.GA12696@coredump.intra.peff.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH 0/2] Fail merge gently
+Date: Mon, 3 Dec 2007 00:32:38 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0712030025032.5349@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 03 06:30:27 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Dec 03 06:33:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iz3sw-0007qC-FG
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 06:30:26 +0100
+	id 1Iz3vP-0008I5-EX
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 06:32:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751578AbXLCFaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 00:30:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751000AbXLCFaG
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 00:30:06 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1463 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750707AbXLCFaF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 00:30:05 -0500
-Received: (qmail 26142 invoked by uid 111); 3 Dec 2007 05:30:02 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 03 Dec 2007 00:30:02 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Dec 2007 00:30:01 -0500
-Content-Disposition: inline
+	id S1751149AbXLCFcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 00:32:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751203AbXLCFcj
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 00:32:39 -0500
+Received: from iabervon.org ([66.92.72.58]:46457 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751000AbXLCFcj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 00:32:39 -0500
+Received: (qmail 20072 invoked by uid 1000); 3 Dec 2007 05:32:38 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 3 Dec 2007 05:32:38 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66864>
 
-The code tries to collapse identical leading components
-between the prefix and the path. So if we're in "dir1", the
-path "dir1/file" should become just "file". However, we were
-ending up with "../dir1/file". The included test expected
-the wrong output.
+This series makes it possible to call unpack_trees() and get an error 
+result instead of having it call die(). Additionally, it allows the caller 
+to suppress error messages, in case it's just going to try something else 
+instead of actually failing. This passes all of the tests, and should 
+have no effect on existing code except for making the exit messages not 
+say "fatal:", and merge-recursive will free its tree cache before exiting, 
+and print an additional message already in the code but previously 
+inaccessible.
 
-Because the "len" parameter to quote_path can be passed in
-as -1 to indicate a NUL-terminated string, we have to
-consider that possibility in our loop conditional (but no
-additional checks are necessary, since we already check that
-prefix[off] and in[off] are identical, and that prefix[off]
-is not NUL.
+This is preliminary for builtin-checkout, which I'm partway through. I 
+think I'm down to the case where a real merge is needed for -m, but I'm 
+not sure, and I think I need to write a bunch of tests for checkout.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This behavior in git-status had been bugging me, and when I went to fix
-it, I was surprised to find code already there to do it. :) Dscho,
-please confirm that the test is in fact in error, and that I've read the
-intent of your code correctly.
+Daniel Barkalow (2):
+      Allow callers of unpack_trees() to handle failure
+      Add flag to make unpack_trees() not print errors.
 
- t/t7502-status.sh |    2 +-
- wt-status.c       |    3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ builtin-read-tree.c |    3 +-
+ unpack-trees.c      |   90 ++++++++++++++++++++++++++++++---------------------
+ unpack-trees.h      |    1 +
+ 3 files changed, 56 insertions(+), 38 deletions(-)
 
-diff --git a/t/t7502-status.sh b/t/t7502-status.sh
-index 269b334..d6ae69d 100755
---- a/t/t7502-status.sh
-+++ b/t/t7502-status.sh
-@@ -68,7 +68,7 @@ cat > expect << \EOF
- # Changed but not updated:
- #   (use "git add <file>..." to update what will be committed)
- #
--#	modified:   ../dir1/modified
-+#	modified:   modified
- #
- # Untracked files:
- #   (use "git add <file>..." to include in what will be committed)
-diff --git a/wt-status.c b/wt-status.c
-index e77120d..09666ec 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -90,7 +90,8 @@ static char *quote_path(const char *in, int len,
- 
- 	if (prefix) {
- 		int off = 0;
--		while (prefix[off] && off < len && prefix[off] == in[off])
-+		while (prefix[off] && (len < 0 || off < len)
-+				&& prefix[off] == in[off])
- 			if (prefix[off] == '/') {
- 				prefix += off + 1;
- 				in += off + 1;
--- 
-1.5.3.7.2070.g88cf2-dirty
+	-Daniel
+*This .sig left intentionally blank*
