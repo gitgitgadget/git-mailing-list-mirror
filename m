@@ -1,60 +1,58 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH v2] Teach 'git pull' about --rebase
-Date: Mon, 3 Dec 2007 14:10:21 +0100
-Message-ID: <20071203131021.GA9674@diana.vm.bytemark.co.uk>
-References: <Pine.LNX.4.64.0710260007450.4362@racer.site> <7v3avy21il.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0710261047450.4362@racer.site> <7v3aurcjpq.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711281307420.27959@racer.site> <27E5EF3C-19EF-441C-BB12-0F5B29BEAEDB@midwinter.com> <Pine.LNX.4.64.0711282039430.27959@racer.site> <8c5c35580711281310h8764a33pba48e65010abf859@mail.gmail.com> <7vhcj63uhw.fsf@gitster.siamese.dyndns.org> <20071201203759.GA11710@atjola.homenet>
+From: "Felipe Balbi" <felipebalbi@users.sourceforge.net>
+Subject: [REGRESSION ?] git-remote "--mirror" option is not integrated in 1.5.3.7
+Date: Mon, 3 Dec 2007 09:32:00 -0400
+Message-ID: <31e679430712030532p12e1f0f5x7e10bd0a1fdf9ef9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Steven Grimm <koreth@midwinter.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Dec 03 14:23:29 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 03 14:32:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzBGH-00065T-1J
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 14:23:01 +0100
+	id 1IzBPM-0000lt-8J
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 14:32:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751821AbXLCNWl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Dec 2007 08:22:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbXLCNWl
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 08:22:41 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4860 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751738AbXLCNWk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 08:22:40 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IzB41-0002Yb-00; Mon, 03 Dec 2007 13:10:21 +0000
-Mail-Followup-To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Steven Grimm <koreth@midwinter.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+	id S1751958AbXLCNcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 08:32:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751833AbXLCNcD
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 08:32:03 -0500
+Received: from wa-out-1112.google.com ([209.85.146.180]:31355 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751789AbXLCNcB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 08:32:01 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so5169804wah
+        for <git@vger.kernel.org>; Mon, 03 Dec 2007 05:32:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        bh=nZX18XHyuecpPmm46p3U7OB7mb3tKwmpj9KLtyhduzc=;
+        b=UttKj2jTUU5c65W/n+oKY3wBhzAVM/pBNvYXgfJyqYTQJCZcbDCX8q+0Nd7Ugi7JDId3SFE1LT5CicgAG0qIK3AqIjWhc7VehYJVNHmlIxZdQXBv7ki6UVqjJuSsWtytcIeczoKBUVrBDurq3Be61rqJpvXsKm0SykNTw79yL0Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=ApkHGd+OrQygR9CUbc6ScTTIQzKm4kO2YJNMzjkqJdVf+LWokuMkD156cC51fHZlE3EpfEn6u4XgRGWIfI8sSf5Wqy6imzhVK27DRJzEQu3meTc5Up2kqJkWTMYEcAQI4L/QFykzgUP0ZzKaWPFtkiNuF7uXc6AFhssMbmk6+7I=
+Received: by 10.114.120.1 with SMTP id s1mr3115721wac.1196688720485;
+        Mon, 03 Dec 2007 05:32:00 -0800 (PST)
+Received: by 10.114.57.4 with HTTP; Mon, 3 Dec 2007 05:32:00 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20071201203759.GA11710@atjola.homenet>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+X-Google-Sender-Auth: b8bed2a8c4cf1eeb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66919>
 
-On 2007-12-01 21:37:59 +0100, Bj=F6rn Steinbrink wrote:
+Hi all,
 
-> So how about adding --fetch/--no-fetch (maybe with a configurable
-> default?) to git-merge/git-rebase and deprecate git-pull over time?
+I've using git-remote --mirror mode for while right now but I saw it's
+not integrated in v.1.5.3.7, is this on purpose?
+I can still get it if I compile recent git's head
+"36863af16e91aebc87696209f4f4780cf4c4059f".
 
-=46WIW, I like this idea. rebase/merge is the complicated part of the
-operation, so the UI should focus on that. Updating or not updating
-the remote-tracking branch that is merged from/rebased on is a simple
-binary choice, so a flag is perfect.
+-- 
+Best Regards,
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Felipe Balbi
+felipebalbi@users.sourceforge.net
