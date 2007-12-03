@@ -1,122 +1,62 @@
-From: Remi Vanicat <vanicat@debian.org>
-Subject: [PATCH v3] Adding menus for Emacs git.el
-Date: Mon, 03 Dec 2007 22:06:14 +0100
-Message-ID: <87mysr32ux.dlv_-_@vanicat.homelinux.org>
-References: <87mysvfr7e.dlv@vanicat.homelinux.org>
- <87fxylos4o.fsf@wine.dyndns.org> <877ijwfh6z.dlv@vanicat.homelinux.org>
- <87ir3f4s76.fsf@wine.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: v1.5.4 plans
+Date: Mon, 03 Dec 2007 13:23:04 -0800
+Message-ID: <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org>
+References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.99999.0712031258460.9605@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Mon Dec 03 22:10:21 2007
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Dec 03 22:24:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzIYQ-00061T-9B
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 22:10:14 +0100
+	id 1IzIlg-00033P-6Z
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 22:23:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750914AbXLCVJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 16:09:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750782AbXLCVJw
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 16:09:52 -0500
-Received: from sp604003mt.neufgp.fr ([84.96.92.56]:45445 "EHLO smTp.neuf.fr"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750709AbXLCVJv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 16:09:51 -0500
-Received: from vanicat.homelinux.org ([77.198.160.187])
- by sp604003mt.gpm.neuf.ld
- (Sun Java System Messaging Server 6.2-5.05 (built Feb 16 2006))
- with ESMTP id <0JSH00EGRRYENJ10@sp604003mt.gpm.neuf.ld> for
- git@vger.kernel.org; Mon, 03 Dec 2007 22:06:30 +0100 (CET)
-Received: from moi by vanicat.homelinux.org with local (Exim 4.68)
-	(envelope-from <remi.vanicat@laposte.net>)	id 1IzIUY-00055j-3b; Mon,
- 03 Dec 2007 22:06:14 +0100
-In-reply-to: <87ir3f4s76.fsf@wine.dyndns.org>
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: remi.vanicat@laposte.net
-X-SA-Exim-Scanned: No (on vanicat.homelinux.org); SAEximRunCond expanded to
- false
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1752557AbXLCVXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 16:23:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752301AbXLCVXL
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 16:23:11 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:33502 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751081AbXLCVXK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 16:23:10 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 4992A2FA;
+	Mon,  3 Dec 2007 16:23:31 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id D4FC19C6BF;
+	Mon,  3 Dec 2007 16:23:28 -0500 (EST)
+In-Reply-To: <alpine.LFD.0.99999.0712031258460.9605@xanadu.home> (Nicolas
+	Pitre's message of "Mon, 03 Dec 2007 13:06:49 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66958>
 
-Adding three menus to the git-status-mode of git.el : One for marking
-and unmarking, one for what you do when you have a conflict, and the
-other one for all the rest.
----
-Alexandre Julliard <julliard@winehq.org> writes:
+Nicolas Pitre <nico@cam.org> writes:
 
-> Remi Vanicat <vanicat@debian.org> writes:
->> +      ["Interctive Diff File" git-diff-file-idiff t]
+> Two things I would like to see in the next version (1.5.5) as well, for 
+> which we could provide early warnings now:
 >
-> The typo is still here.
+>  - repack.usedeltabaseoffset defaulting to true
+>
+>  - pack.indexversion defaulting to 2
 
-Pff, The typo was in two place, and I forgot to check this... 
+I think the former would be sensible, the latter I fear might be a bit
+too new but I do not recall the exact version dependency.
 
-This time, I have run a spell checker on every menu entries, to be
-sure. 
- contrib/emacs/git.el |   48 ++++++++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 46 insertions(+), 2 deletions(-)
+Could you draft a patch to ReleaseNotes to explain the consequences of
+these changes using ordinary user's vocabulary, like:
 
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index e147da0..7fbea55 100644
-     (define-key toggle-map "i" 'git-toggle-show-ignored)
-     (define-key toggle-map "k" 'git-toggle-show-unknown)
-     (define-key toggle-map "m" 'git-toggle-all-marks)
--    (setq git-status-mode-map map)))
-+    (setq git-status-mode-map map))
-+  (easy-menu-define git-menu-mark git-status-mode-map
-+    "Git Merge Menu"
-+    `("Merge"
-+      ["Next Unmerged File" git-next-unmerged-file t]
-+      ["Prev Unmerged File" git-prev-unmerged-file t]
-+      ["Mark as Resolved" git-resolve-file t]
-+      ["Interactive Merge File" git-find-file-imerge t]
-+      ["Diff Against Common Base File" git-diff-file-base t]
-+      ["Diff Combined" git-diff-file-combined t]
-+      ["Diff Against Merge Head" git-diff-file-merge-head t]
-+      ["Diff Against Mine" git-diff-file-mine t]
-+      ["Diff Against Other" git-diff-file-other t]))
-+  (easy-menu-define git-menu-mark git-status-mode-map
-+    "Git Mark Menu"
-+    `("Mark"
-+      ["Mark File" git-mark-file t]
-+      ["Mark All" git-mark-all t]
-+      ["Unmark File" git-unmark-file t]
-+      ["Unmark All" git-unmark-all t]
-+      ["Toggle All Mark" git-toggle-all-marks t]))
-+  (easy-menu-define git-menu git-status-mode-map
-+    "Git Menu." 
-+    `("Git"
-+      ["Refresh" git-refresh-status t]
-+      ["Commit" git-commit-file t]
-+      "--------"
-+      ["Add File" git-add-file t]
-+      ["Revert File" git-revert-file t]
-+      ["Ignore File" git-ignore-file t]
-+      ["Remove File" git-remove-file t]
-+      "--------"
-+      ["Find File" git-find-file t]
-+      ["View File" git-view-file t]
-+      ["Diff File" git-diff-file t]
-+      ["Interactive Diff File" git-diff-file-idiff t]
-+      ["Log" git-log-file t]
-+      "--------"
-+      ["Quit" git-status-quit t]
-+      "--------"
-+      ["Show Uptodate" git-toggle-show-uptodate :style toggle :selected git-show-uptodate]
-+      ["Show Ignored" git-toggle-show-ignored :style toggle :selected git-show-ignored]
-+      ["Show Unknown" git-toggle-show-unknown :style toggle :selected git-show-unknown]))
-+    
-+)
- 
- ;; git mode should only run in the *git status* buffer
- (put 'git-status-mode 'mode-class 'special)
--- 
-1.5.3.6
+	Starting v1.5.5, repack.usedeltabaseoffset will default to true,
+	which will give denser packfile (i.e. more efficient storage).
+	The downside is that git older than version X will not be able
+	to use a repository packed using this setting.
