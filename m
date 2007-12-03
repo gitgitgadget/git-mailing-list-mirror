@@ -1,211 +1,204 @@
-From: David Kettler <David.Kettler@dsto.defence.gov.au>
-Subject: Re: importing bk into git
-Date: 03 Dec 2007 13:32:43 +1030
-Message-ID: <t1o1wa432gc.fsf@ednux512.dsto.defence.gov.au>
-References: <200711292232.03352.christoph.duelli@gmx.de>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Trace and quote with argv: get rid of unneeded count
+ argument.
+Date: Mon, 3 Dec 2007 05:51:50 +0100
+Message-ID: <20071203055150.b8d222f8.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: christoph.duelli@gmx.de
-X-From: git-owner@vger.kernel.org Mon Dec 03 05:45:48 2007
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Dec 03 05:45:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iz3Bi-0008Rr-1N
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 05:45:46 +0100
+	id 1Iz3Bi-0008Rr-Sz
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 05:45:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501AbXLCEpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 23:45:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752337AbXLCEpS
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 23:45:18 -0500
-Received: from digger1.defence.gov.au ([203.5.217.4]:59591 "EHLO
-	digger1.defence.gov.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751070AbXLCEpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 23:45:16 -0500
-X-Greylist: delayed 5533 seconds by postgrey-1.27 at vger.kernel.org; Sun, 02 Dec 2007 23:45:15 EST
-Received: from ednmsw511.dsto.defence.gov.au (ednmsw511.dsto.defence.gov.au [131.185.68.12])
-	by digger1.defence.gov.au (8.13.8/8.13.8) with ESMTP id lB33CGEA010465
-	for <git@vger.kernel.org>; Mon, 3 Dec 2007 13:42:17 +1030 (CST)
-Received: from ednex510.dsto.defence.gov.au (ednex510.dsto.defence.gov.au) by 
-    ednmsw511.dsto.defence.gov.au (Clearswift SMTPRS 5.2.9) with ESMTP id 
-    <T83ac9e351283b9440c1764@ednmsw511.dsto.defence.gov.au>; Mon, 3 Dec 
-    2007 13:32:45 +1030
-Received: from ednux512.dsto.defence.gov.au ([131.185.28.7]) by 
-    ednex510.dsto.defence.gov.au with Microsoft SMTPSVC(6.0.3790.1830); 
-    Mon, 3 Dec 2007 13:32:44 +1030
-In-Reply-To: <200711292232.03352.christoph.duelli@gmx.de>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.1
-X-OriginalArrivalTime: 03 Dec 2007 03:02:44.0608 (UTC) 
-    FILETIME=[F9E66800:01C83558]
-X-TM-AS-Product-Ver: SMEX-7.0.0.1526-5.0.1023-15582.000
-X-TM-AS-Result: No--12.917200-0.000000-1
+	id S1752593AbXLCEpY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 23:45:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752337AbXLCEpY
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 23:45:24 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:48062 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752587AbXLCEpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 23:45:21 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 2F5931AB2BA;
+	Mon,  3 Dec 2007 05:45:20 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id E75CB1AB2B2;
+	Mon,  3 Dec 2007 05:45:19 +0100 (CET)
+X-Mailer: Sylpheed 2.4.7 (GTK+ 2.12.1; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66860>
 
-G'day,
+Now that str_buf takes care of all the allocations, there is
+no more gain to pass an argument count.
 
-I modified that script to convert a number of our repositories in
-February.  The version below worked for me at the time, but I'm not
-able to test it now as our BK license has expired.  In particular I'm
-not sure if the bk_info.split line is correct; I had a reduced form of
-this line in the file which now looks obviously wrong.
+So this patch removes the "count" argument from:
+	- "sq_quote_argv"
+	- "trace_argv_printf"
+and all the callers.
 
-The script is slow; most of the time is in the bk export for every
-revision.  There are probably dumb things in there; I don't know
-python and I was just starting with git.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin-rev-parse.c |    2 +-
+ cache.h             |    2 +-
+ exec_cmd.c          |    2 +-
+ git.c               |    6 +++---
+ quote.c             |   13 +++----------
+ quote.h             |    3 +--
+ trace.c             |    4 ++--
+ 7 files changed, 12 insertions(+), 20 deletions(-)
 
-Changes from the version I downloaded from the web include:
-  - sundry changes to make it work for me
-  - separate committers file to translate user names to full names
-  - specify a git dir template
-  - copy tags from BK
-  - minimal conversion of ignore files
-  - increased recursion limit to handle large number of commits
+	I wrote to Junio:
+	> Minor nit: now that the number of arguments is known, we could perhaps use 
+	> the argument count instead of -1 in trace_argv_printf, so that it is not 
+	> computed again in quote.c:sq_quote_argv, like this:
+	>
+	>trace_argv_printf(nargv, argc + 1, "trace: exec:");
 
-I hope this is useful to someone.
+	After looking at it a little more, I think it's better to get rid of the
+	"count" argument altogether with a patch like this one.
 
-regards, David.
-
---snip,snip--
-# Convert a BK repository to GIT
-# usage: bk2git BK_REPO [GIT_REPO]
-# Single branch only.
-
-import os
-import time
-import sys
-
-sys.setrecursionlimit(10000);
-
-templates_dir = "/tmp/bk2git/templates"
-committers_file = "/tmp/bk2git/committers"
-tmp_dir = "/tmp/bk-export%d" % os.getpid()
-
-# Get repository locations.
-if len(sys.argv) < 2 or len(sys.argv) > 3:
-    print "usage: bk2git BK_REPO [GIT_REPO]"
-    sys.exit(1);
-
-bk_dir = sys.argv[1]
-if len(sys.argv) == 3:
-    git_dir = sys.argv[2]
-else:
-    git_dir = bk_dir + ".git"
-
-print "BK  " + bk_dir
-print "GIT " + git_dir
-
-
-# Get committer names.
-f = file(committers_file, "r")
-committers = {}
-for line in f:
-    [m,n] = line.split(" ",1)
-    committers[m] = n.strip();
-f.close()
-
-# Get tree of commits.
-f = os.popen("cd %s; bk prs -d':REV:\\t:PARENT:\\t:MPARENT:\\t\\n' ChangeSet" % bk_dir)
-f.readline()
-parents={}
-for rev in f:
-    [n,p] = rev.rstrip().split("\t",1)
-    parents[n] = p.split("\t")
-f.close()
-
-# Get tags.
-f = os.popen("cd %s;  bk changes -t -n -d':I:\\t:TAG:'" % bk_dir)
-tags={}
-for rev in f:
-    [n,t] = rev.rstrip().split("\t",1)
-    tags[n] = t
-f.close()
-
-# Initialize git repository.
-os.system("mkdir %s" % git_dir)
-os.chdir(git_dir)
-os.system("git --bare init --template=%s" % templates_dir)
-os.system("git-config core.bare false")
-
-unknown = {}
-def get_name(email):
-    if committers.has_key(email):
-        return committers[email]
-    unknown[email] = True
-    return "*Unknown*"
-
-def git_commit(rev, p):
-    os.chdir(tmp_dir)
-    os.symlink(git_dir, "%s/.git" % tmp_dir)
-#    os.system("pwd; ls -AlR")
-    os.system("git-ls-files -z --deleted | xargs -0 git-update-index --remove")
-    os.system("git-ls-files -z --others | xargs -0 git-update-index --add")
-    os.system("git-ls-files -z | xargs -0 git-update-index")
-    treeid = os.popen("git-write-tree").read().rstrip()
-    print "wrote tree as %s" % treeid
-    os.chdir(git_dir)
-    os.system("rm -Rf %s" % tmp_dir)
-
-    bk_info = os.popen("cd %s; bk prs -r%s -d':KEY:\\n:UTC:\\n:USER:@:HOST:\\n$each(:C:){:C\\n}\\n' ChangeSet | sed 1d" % (bk_dir, rev)).read()
-
-    [key, date, user, comments] = bk_info.split("\n", 3)
-#    [key, date, user] = bk_info.split("\n", 2)
-    [name, machine] = user.split("@", 1);
-    f = file("/tmp/git-comments","w")
-    f.write(comments)
-    f.write("BK KEY: %s\n" % key)
-    f.close()
-    sdate = str(int(time.mktime(time.strptime(date+" UTC", "%Y%m%d%H%M%S %Z"))))
-    os.putenv("GIT_AUTHOR_DATE", sdate)
-    os.putenv("GIT_AUTHOR_EMAIL", user)
-    os.putenv("GIT_AUTHOR_NAME", get_name(name))
-    os.putenv("GIT_COMMITTER_DATE", sdate)
-    os.putenv("GIT_COMMITTER_EMAIL", user)
-    os.putenv("GIT_COMMITTER_NAME", get_name(name))
-    
-    commitid = os.popen("git-commit-tree %s %s < /tmp/git-comments" % (treeid, " ".join(["-p "+a for a in p]))).read().rstrip()
-    print "committed %s as %s" % (rev, commitid)
-
-    if tags.has_key(rev):
-        os.system("git-tag %s %s" % (tags[rev], commitid))
-        print "tagged %s" % tags[rev]
-
-    return commitid
-
-os.system("mkdir %s; touch %s/initial" % (tmp_dir, tmp_dir))
-resolved = {'1.1': git_commit("1.1",[])}
-
-def res(ver):
-    if resolved.has_key(ver):
-        return
-    
-    for v in parents[ver]:
-        res(v)
-
-    os.system("cd %s; bk export -r%s %s" % (bk_dir, ver, tmp_dir))
-    ignore = "%s/.gitignore" % tmp_dir
-    os.system("cd %s; bk co -kpq -r@%s BitKeeper/etc/ignore | sed '/^BitKeeper/d;/^PENDING/d' > %s" % (bk_dir, ver, ignore))
-    os.system("test -s %s || rm %s" % (ignore, ignore))
-
-    resolved[ver] = git_commit(ver, [resolved[v] for v in parents[ver]])
-    return resolved[ver]
-
-tot = os.popen("cd %s; bk prs -r+ -d':REV:' ChangeSet | tail -n 1" % bk_dir).read()
-print "Exporting bitkeeper up to version %s" % tot
-
-HEAD = res(tot)
-print "HEAD: %s" % HEAD
-file("%s/refs/heads/master" % git_dir,"w").write(HEAD + "\n")
-os.system("git-config core.bare true")
-os.system("git gc")
-print unknown.keys()
---snip,snip--
+diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
+index d1038a0..20d1789 100644
+--- a/builtin-rev-parse.c
++++ b/builtin-rev-parse.c
+@@ -327,7 +327,7 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
+ 	                     keep_dashdash ? PARSE_OPT_KEEP_DASHDASH : 0);
+ 
+ 	strbuf_addf(&parsed, " --");
+-	sq_quote_argv(&parsed, argv, argc, 0);
++	sq_quote_argv(&parsed, argv, 0);
+ 	puts(parsed.buf);
+ 	return 0;
+ }
+diff --git a/cache.h b/cache.h
+index 4e59646..9f63199 100644
+--- a/cache.h
++++ b/cache.h
+@@ -617,7 +617,7 @@ extern void alloc_report(void);
+ 
+ /* trace.c */
+ extern void trace_printf(const char *format, ...);
+-extern void trace_argv_printf(const char **argv, int count, const char *format, ...);
++extern void trace_argv_printf(const char **argv, const char *format, ...);
+ 
+ /* convert.c */
+ /* returns 1 if *dst was used */
+diff --git a/exec_cmd.c b/exec_cmd.c
+index 2d0a758..e189cac 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -80,7 +80,7 @@ int execv_git_cmd(const char **argv)
+ 	tmp = argv[0];
+ 	argv[0] = cmd.buf;
+ 
+-	trace_argv_printf(argv, -1, "trace: exec:");
++	trace_argv_printf(argv, "trace: exec:");
+ 
+ 	/* execvp() can only ever return if it fails */
+ 	execvp(cmd.buf, (char **)argv);
+diff --git a/git.c b/git.c
+index f406c4b..c8b7e74 100644
+--- a/git.c
++++ b/git.c
+@@ -178,7 +178,7 @@ static int handle_alias(int *argcp, const char ***argv)
+ 
+ 				strbuf_init(&buf, PATH_MAX);
+ 				strbuf_addstr(&buf, alias_string);
+-				sq_quote_argv(&buf, (*argv) + 1, *argcp - 1, PATH_MAX);
++				sq_quote_argv(&buf, (*argv) + 1, PATH_MAX);
+ 				free(alias_string);
+ 				alias_string = buf.buf;
+ 			}
+@@ -207,7 +207,7 @@ static int handle_alias(int *argcp, const char ***argv)
+ 		if (!strcmp(alias_command, new_argv[0]))
+ 			die("recursive alias: %s", alias_command);
+ 
+-		trace_argv_printf(new_argv, count,
++		trace_argv_printf(new_argv,
+ 				  "trace: alias expansion: %s =>",
+ 				  alias_command);
+ 
+@@ -261,7 +261,7 @@ static int run_command(struct cmd_struct *p, int argc, const char **argv)
+ 	if (p->option & NEED_WORK_TREE)
+ 		setup_work_tree();
+ 
+-	trace_argv_printf(argv, argc, "trace: built-in: git");
++	trace_argv_printf(argv, "trace: built-in: git");
+ 
+ 	status = p->fn(argc, argv, prefix);
+ 	if (status)
+diff --git a/quote.c b/quote.c
+index 0455783..6986b44 100644
+--- a/quote.c
++++ b/quote.c
+@@ -56,20 +56,13 @@ void sq_quote_print(FILE *stream, const char *src)
+ 	fputc('\'', stream);
+ }
+ 
+-void sq_quote_argv(struct strbuf *dst, const char** argv, int count,
+-                   size_t maxlen)
++void sq_quote_argv(struct strbuf *dst, const char** argv, size_t maxlen)
+ {
+ 	int i;
+ 
+-	/* Count argv if needed. */
+-	if (count < 0) {
+-		for (count = 0; argv[count]; count++)
+-			; /* just counting */
+-	}
+-
+ 	/* Copy into destination buffer. */
+-	strbuf_grow(dst, 32 * count);
+-	for (i = 0; i < count; ++i) {
++	strbuf_grow(dst, 255);
++	for (i = 0; argv[i]; ++i) {
+ 		strbuf_addch(dst, ' ');
+ 		sq_quote_buf(dst, argv[i]);
+ 		if (maxlen && dst->len > maxlen)
+diff --git a/quote.h b/quote.h
+index 4287990..ab7596f 100644
+--- a/quote.h
++++ b/quote.h
+@@ -31,8 +31,7 @@
+ extern void sq_quote_print(FILE *stream, const char *src);
+ 
+ extern void sq_quote_buf(struct strbuf *, const char *src);
+-extern void sq_quote_argv(struct strbuf *, const char **argv, int count,
+-                          size_t maxlen);
++extern void sq_quote_argv(struct strbuf *, const char **argv, size_t maxlen);
+ 
+ /* This unwraps what sq_quote() produces in place, but returns
+  * NULL if the input does not look like what sq_quote would have
+diff --git a/trace.c b/trace.c
+index d3d1b6d..4713f91 100644
+--- a/trace.c
++++ b/trace.c
+@@ -93,7 +93,7 @@ void trace_printf(const char *fmt, ...)
+ 		close(fd);
+ }
+ 
+-void trace_argv_printf(const char **argv, int count, const char *fmt, ...)
++void trace_argv_printf(const char **argv, const char *fmt, ...)
+ {
+ 	struct strbuf buf;
+ 	va_list ap;
+@@ -117,7 +117,7 @@ void trace_argv_printf(const char **argv, int count, const char *fmt, ...)
+ 	}
+ 	strbuf_setlen(&buf, len);
+ 
+-	sq_quote_argv(&buf, argv, count, 0);
++	sq_quote_argv(&buf, argv, 0);
+ 	strbuf_addch(&buf, '\n');
+ 	write_or_whine_pipe(fd, buf.buf, buf.len, err_msg);
+ 	strbuf_release(&buf);
 -- 
-IMPORTANT: This email remains the property of the Australian Defence
-Organisation and is subject to the jurisdiction of section 70 of the
-CRIMES ACT 1914. If you have received this email in error, you are
-requested to contact the sender and delete the email.
+1.5.3.6.2115.gb9452-dirty
