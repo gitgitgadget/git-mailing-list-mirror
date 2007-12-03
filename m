@@ -1,64 +1,54 @@
-From: Pini Reznik <pinir@expand.com>
-Subject: [PATCH] Open external merge tool with original file extensions in all three files
-Date: Mon,  3 Dec 2007 17:31:14 +0200
-Message-ID: <1196695874-22567-1-git-send-email-pinir@expand.com>
-Cc: Pini Reznik <pinir@expand.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 03 17:13:48 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [REGRESSION ?] git-remote "--mirror" option is not integrated
+ in 1.5.3.7
+Date: Mon, 3 Dec 2007 16:23:23 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712031622470.27959@racer.site>
+References: <31e679430712030532p12e1f0f5x7e10bd0a1fdf9ef9@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Felipe Balbi <felipebalbi@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Mon Dec 03 17:24:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzDv2-0005nJ-9C
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 17:13:16 +0100
+	id 1IzE5X-0001wT-Cl
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 17:24:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750975AbXLCQMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 11:12:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750996AbXLCQMz
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 11:12:55 -0500
-Received: from smtp-tlv.expand.com ([192.116.193.121]:31397 "EHLO
-	smtp-tlv.expand.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750942AbXLCQMy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 11:12:54 -0500
-X-Greylist: delayed 2607 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Dec 2007 11:12:54 EST
-Received: from localhost.localdomain ([172.16.30.232]) by smtp-tlv.expand.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 3 Dec 2007 17:30:59 +0200
-X-Mailer: git-send-email 1.5.3.5
-X-OriginalArrivalTime: 03 Dec 2007 15:30:59.0093 (UTC) FILETIME=[81192C50:01C835C1]
+	id S1751191AbXLCQXq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 11:23:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbXLCQXq
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 11:23:46 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55732 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750962AbXLCQXq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 11:23:46 -0500
+Received: (qmail invoked by alias); 03 Dec 2007 16:23:43 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp048) with SMTP; 03 Dec 2007 17:23:43 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/QIT0F+mHQpSFT4zsRcmaANjbPnD1iMW2xsXVK1p
+	dkWZPzz8eRAb+e
+X-X-Sender: gene099@racer.site
+In-Reply-To: <31e679430712030532p12e1f0f5x7e10bd0a1fdf9ef9@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66923>
 
-This required to be able to use syntax highlighting in meld during conflicts resolution.
-Before this change, two merged versions of file with a conflict were open with temporal extensions .LOCAL.$$ and REMOTE.$$
-This way they were not recognized as a code files.
+Hi,
 
-Signed-off-by: Pini Reznik <pinir@expand.com>
----
- git-mergetool.sh |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
+On Mon, 3 Dec 2007, Felipe Balbi wrote:
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 5587c5e..4c15d22 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -152,10 +152,11 @@ merge_file () {
- 	exit 1
-     fi
- 
--    BACKUP="$path.BACKUP.$$"
--    LOCAL="$path.LOCAL.$$"
--    REMOTE="$path.REMOTE.$$"
--    BASE="$path.BASE.$$"
-+    extension=`echo $path | awk -F \. '{print $NF}'`
-+    BACKUP="$path.BACKUP.$$.${extension}"
-+    LOCAL="$path.LOCAL.$$.${extension}"
-+    REMOTE="$path.REMOTE.$$.${extension}"
-+    BASE="$path.BASE.$$.${extension}"
- 
-     mv -- "$path" "$BACKUP"
-     cp -- "$BACKUP" "$path"
--- 
-1.5.3.5
+> I've using git-remote --mirror mode for while right now but I saw it's 
+> not integrated in v.1.5.3.7, is this on purpose? I can still get it if I 
+> compile recent git's head "36863af16e91aebc87696209f4f4780cf4c4059f".
+
+AFAICT there are problems with --prune.  That might be a reason that it is 
+not in 1.5.3.7 (haven't checked if that's even the case, though).
+
+Ciao,
+Dscho
