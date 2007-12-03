@@ -1,94 +1,76 @@
-From: "Kelvie Wong" <kelvie@ieee.org>
-Subject: Re: git-svn: .git/svn disk usage
-Date: Sun, 2 Dec 2007 22:53:08 -0800
-Message-ID: <94ccbe710712022253t3b1834bcs9facbf34717c7faa@mail.gmail.com>
-References: <65dd6fd50712022217l5f807f31pf3f00d82c3dccf5c@mail.gmail.com>
-	 <4753A43F.9060303@obry.net> <20071203064603.GA18583@old.davidb.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: Incorrect git-blame result if I use full path to file
+Date: Mon, 3 Dec 2007 07:55:35 +0100
+Message-ID: <200712030755.37038.robin.rosenberg@dewire.com>
+References: <3665a1a00712021652tbdfe9d1tdc4575d225bfed36@mail.gmail.com> <7v4pf0sdp7.fsf@gitster.siamese.dyndns.org> <20071203024916.GA11003@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Pascal Obry" <pascal@obry.net>, "Ollie Wild" <aaw@google.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 03 07:53:34 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Anatol Pomozov <anatol.pomozov@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 03 07:54:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iz5BL-0005Xb-K0
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 07:53:32 +0100
+	id 1Iz5CD-0005hU-9R
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 07:54:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751362AbXLCGxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 01:53:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751116AbXLCGxK
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 01:53:10 -0500
-Received: from wa-out-1112.google.com ([209.85.146.179]:58482 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750944AbXLCGxJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 01:53:09 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so4897561wah
-        for <git@vger.kernel.org>; Sun, 02 Dec 2007 22:53:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=gkTA2emTgyIK4Cu6UqmUDUmnBcRJbpjJwcuyxaRxREg=;
-        b=cAH8aTUL3uRZd+DcWnpMBZEEGNXHKV8lK4vDCXYh8UzYPYNNqKj8UREuGK410Um71ofk1PLt0vj4ghzIO3VMqFG3N7txeqQXxa1w1ZXLh5Qcn8PvT+ErdzWee1QUZXHt0NSlvemWKnDNt08w1gZEyxW546Q1pIrj4drV974Pu5Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=Xqekg9bIUsZ5D12Ci2n7ZlQ93FpkXdSd8Un51Xa4r5kBYkEvzH4mrnmH95o2aDqOoH3zXXAxuHef40MsQzA3Y03J46fpVlfkpbNX3CuewlxmYw+snJd0J1Ul52gkEn1tIDbZZiuxIZF8ugutznhTe69+tZCr/94d0fqcEsCB3Zo=
-Received: by 10.114.95.1 with SMTP id s1mr2993913wab.1196664788615;
-        Sun, 02 Dec 2007 22:53:08 -0800 (PST)
-Received: by 10.114.149.15 with HTTP; Sun, 2 Dec 2007 22:53:08 -0800 (PST)
-In-Reply-To: <20071203064603.GA18583@old.davidb.org>
+	id S1751479AbXLCGyF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Dec 2007 01:54:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbXLCGyE
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 01:54:04 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:25249 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751116AbXLCGyD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 01:54:03 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 060AA802E29;
+	Mon,  3 Dec 2007 07:44:40 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 13117-07; Mon,  3 Dec 2007 07:44:39 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id A4A81802ABA;
+	Mon,  3 Dec 2007 07:44:39 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20071203024916.GA11003@coredump.intra.peff.net>
 Content-Disposition: inline
-X-Google-Sender-Auth: 944887b365d33b89
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66879>
 
-I'm going to have to say this is due to the unhandled.log as well.
+m=E5ndag 03 december 2007 skrev Jeff King:
+> On Sun, Dec 02, 2007 at 06:40:36PM -0800, Junio C Hamano wrote:
+>=20
+> > > Even more useful would be to convert
+> > > /path/to/repo/file to 'file' internally.
+> >=20
+> > ... that might help "cut & paste from file manager" people, and I t=
+hink
+> > we had comment session for such a patch recently on the list.
+> >=20
+> > Sorry, but I lost track of that the current status of that patch.  =
+Did
+> > it die?
+>=20
+> I didn't pay attention to it originally, but I assume you mean the
+> recent patch from Robin Rosenberg (cc'd). Looking it over, I see one
+> obvious omission: there is no canonicalization of the paths. IOW, I
+> think it will break in the presence of symlinks (if I specify
+> /path/to/repo/file, /path/to is a symlink to /other/path, I think the
+> worktree will end up as /other/path/repo, and fail a string compariso=
+n
+> with /path/to/repo).
 
-Just gzip -9 it (AFAIK it's not used for anything, but keep it just in case).
+No it didn't die, it's just not worked on too often. I notes, among, ot=
+her things
+that it's test cases were not correct, besides needing more tests.
 
-On Dec 2, 2007 10:46 PM, David Brown <git@davidb.org> wrote:
-> On Mon, Dec 03, 2007 at 07:37:51AM +0100, Pascal Obry wrote:
-> >Ollie,
-> >
-> >> I'm curious if other developers have run into this issue.  If so, are
-> >> there any proposals / plans for improving the storage of git-svn
-> >> metadata?
-> >
-> >Did you run "git gc" after importing code form the subversion
-> >repository? On my side I found that it has reduced drastically the size
-> >of the local Git repository.
->
-> I think the original poster is probably finding the space in the .git/svn
-> directory.  'git-svn' keeps an index file for every branch in SVN.
->
-> I suspect it does this for speed, at least on a large import, since the SVN
-> commits will come across numerically, affecting the branches out of order.
->
-> However, the index could fairly easily be extracted from git (since that is
-> what it normally does).  In this case, where all of the indexes take
-> significant space if this is worth it.
->
-> Ollie, if you look in these svn branch directories, is most of the space
-> taken up with files called 'index'?
->
-> Browsing through the few svn clones that I have, the space seems to be
-> roughly split between 'index' files and 'unhandled.log' files.
->
-> Dave
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Symlinks were not covered.
 
-
-
--- 
-Kelvie Wong
+-- robin
