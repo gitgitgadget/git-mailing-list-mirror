@@ -1,95 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: v1.5.4 plans
-Date: Sun, 02 Dec 2007 18:32:52 -0800
-Message-ID: <7vabosse23.fsf@gitster.siamese.dyndns.org>
-References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
-	<ee77f5c20712021539r3075fc57ld6a4cec737e6043d@mail.gmail.com>
+From: "Kevin Leung" <kevinlsk@gmail.com>
+Subject: [PATCH] git-stash: Display help message if git-stash is run with wrong sub-commands
+Date: Mon, 3 Dec 2007 10:34:05 +0800
+Message-ID: <e66701d40712021834h64bf8d0y14f0e222d0f9a617@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "David Symonds" <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 03 03:33:23 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git ML" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Nanako Shiraishi" <nanako3@bluebottle.com>
+X-From: git-owner@vger.kernel.org Mon Dec 03 03:34:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iz17Z-0001ks-Dk
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 03:33:21 +0100
+	id 1Iz18g-0001w5-1B
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 03:34:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751433AbXLCCdA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 21:33:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751181AbXLCCdA
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 21:33:00 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:49969 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751133AbXLCCc7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 21:32:59 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id E3F1C2EF;
-	Sun,  2 Dec 2007 21:33:18 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 64F0C9C4DE;
-	Sun,  2 Dec 2007 21:33:16 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751577AbXLCCeK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 21:34:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751531AbXLCCeJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 21:34:09 -0500
+Received: from mu-out-0910.google.com ([209.85.134.191]:28562 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751181AbXLCCeI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 21:34:08 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so419407mue
+        for <git@vger.kernel.org>; Sun, 02 Dec 2007 18:34:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=5g1AehcUHMW3IKew2GM0BXS2nICb+T8SDJC4mrdC++4=;
+        b=dt33NWO1RIjoVP7zdB67mce0C5zUMmrTXv9s9ipr38xjA4bSDZAgCWKPhTSArYkSA2n7aIUBcjJk6ZEC1/XnDSVLe4Tm84WXS9nPVeDxQFGOoiahYbUHfphIP8gp5UngQQXPQd3AJPh1JFISPaTSmiuApRufYiAgZJ9ceKpBXVg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=uYA90eHS4QFBexGWqPobOZJaIhG0PTaBifp+GIMIQ/iADEy7/SkPyyN3WI+tKynjkmaqi99SXPXVAKZRxo0b2aPcCJdTUWhonBVZ/Ok9uQVQI8OiNCq9Ss99zyLewIAveD9MI/CjSlqRkwCTJJJ8iDZZjYMHCwcMYqDStSEOW7Y=
+Received: by 10.78.172.20 with SMTP id u20mr2629359hue.1196649245568;
+        Sun, 02 Dec 2007 18:34:05 -0800 (PST)
+Received: by 10.78.46.8 with HTTP; Sun, 2 Dec 2007 18:34:05 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66849>
 
-"David Symonds" <dsymonds@gmail.com> writes:
+The current git-stash behaviour is very error prone to typos. For example,
+if you typed "git-stash llist", git-stash would think that you wanted to
+save to a stash named "llist", but in fact, you meant "git-stash list".
 
-> On Dec 3, 2007 9:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Please do not take this as the final decision made by the Emperor, whose
->> subjects now must follow.  This is a sanity-check to see if everybody is
->> on the same page.
->>
->> I am not the Emperor anyway ;-)
->>
->
->> Topics not in 'master' yet but should be in v1.5.4
->> --------------------------------------------------
->>
->> I think the following should go in, along with what we already have in
->> 'master':
->
-> Can we add the git-status/git-checkout relative path stuff that's
-> currently been sitting in 'next'? It would be a good step forward for
-> usability.
+Signed-off-by: Kevin Leung <kevinlsk@gmail.com>
+---
+ git-stash.sh |   16 +++++++++-------
+ 1 files changed, 9 insertions(+), 7 deletions(-)
 
-I think checkout from subdirectory with relative was merged on November
-18th to master, with d577bc58.  Relative path output for git-status is
-part of the "git-commit in C" series, which is planned to go in.
+diff --git a/git-stash.sh b/git-stash.sh
+index 77c9421..a17cc25 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+ # Copyright (c) 2007, Nanako Shiraishi
 
-But now you mention it, I realize that I ran "git-topic.perl" (found in
-my 'todo' branch) without "--all" option when I made that list, and I
-missed stuff fully merged to 'next'.  Sorry.
+-USAGE='[ | list | show | apply | clear]'
++USAGE='[  | save | list | show | apply | clear ]'
 
-Here is a corrected list.
-
-Topics not in 'master' yet but should be in v1.5.4
---------------------------------------------------
-
-I think the following should go in, along with what we already have in
-'master':
-
- * git-commit in C (Kristian and others)
- * git-add --patch (Wincent)
- * git-prune --expire (Dscho)
- * git-add --interactive coloring (Dan Zwell)
- * whitespace error classes in diff and patch, using gitattributes (Bruce and me)
- * cvsserver runs post-receive (Michael Witten)
- * git-rebase -i gives chance to rerere (Dscho)
- * git-rebase gives more appropriate help text (Wincent)
- * make refspec matching logic in git-push and git-fetch saner (Steffen Prohaska)
- * work-tree related minor fixes (Nguyen and Dscho)
- * allow update hook to munge commit (Steven Grimm)
- * git-fast-export (Dscho)
- * Add commitdiff to gitweb grep page (Denis Cheng)
- * "git pull --rebase" (Dscho)
- * "git config --get-color" (me)
- * "color.diff = true" means "auto" (me)
- * Rewrite "export VAR=VAL" to "VAR=VAL; export VAR" (Dscho)
- * run correct perl in Documentation (me, waiting for Merlyn)
+ SUBDIRECTORY_OK=Yes
+ . git-sh-setup
+@@ -195,6 +195,10 @@ show)
+        shift
+        show_stash "$@"
+        ;;
++save)
++       shift
++       save_stash "$@" && git-reset --hard
++       ;;
+ apply)
+        shift
+        apply_stash "$@"
+@@ -202,14 +206,12 @@ apply)
+ clear)
+        clear_stash
+        ;;
+-help | usage)
+-       usage
+-       ;;
+ *)
+-       if test $# -gt 0 && test "$1" = save
++       if test "$#" -eq "0"
+        then
+-               shift
++               save_stash && git-reset --hard
++       else
++               usage
+        fi
+-       save_stash "$*" && git-reset --hard
+        ;;
+ esac
+-- 
+1.5.3.7-dirty
