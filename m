@@ -1,54 +1,108 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [REGRESSION ?] git-remote "--mirror" option is not integrated
- in 1.5.3.7
-Date: Mon, 3 Dec 2007 16:23:23 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712031622470.27959@racer.site>
-References: <31e679430712030532p12e1f0f5x7e10bd0a1fdf9ef9@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Fix UTF Encoding issue
+Date: Mon, 3 Dec 2007 18:02:54 +0100
+Message-ID: <200712031802.55514.jnareb@gmail.com>
+References: <4753D419.80503@clearchain.com> <m3prxougmx.fsf@roke.D-201> <20071203163856.GA24269@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Felipe Balbi <felipebalbi@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Mon Dec 03 17:24:09 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ismail =?iso-8859-1?q?D=F6nmez?= <ismail@pardus.org.tr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Alexandre Julliard <julliard@winehq.org>,
+	Benjamin Close <Benjamin.Close@clearchain.com>,
+	git@vger.kernel.org,
+	Perl Unicode Mailing List <perl-unicode@perl.org>,
+	Dan Kogai <dankogai@dan.co.jp>
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Mon Dec 03 18:03:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzE5X-0001wT-Cl
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 17:24:07 +0100
+	id 1IzEha-0002B1-SQ
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 18:03:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751191AbXLCQXq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 11:23:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbXLCQXq
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 11:23:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55732 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750962AbXLCQXq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 11:23:46 -0500
-Received: (qmail invoked by alias); 03 Dec 2007 16:23:43 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp048) with SMTP; 03 Dec 2007 17:23:43 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/QIT0F+mHQpSFT4zsRcmaANjbPnD1iMW2xsXVK1p
-	dkWZPzz8eRAb+e
-X-X-Sender: gene099@racer.site
-In-Reply-To: <31e679430712030532p12e1f0f5x7e10bd0a1fdf9ef9@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1750964AbXLCRDE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Dec 2007 12:03:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbXLCRDE
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 12:03:04 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:22667 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750942AbXLCRDC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 12:03:02 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so2740310nfb
+        for <git@vger.kernel.org>; Mon, 03 Dec 2007 09:03:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=wlYQK/x/Bg5CEed9098mcS1j391IzZhFV/k0jJA0Xdw=;
+        b=qvk8ozaFOyHlnsSSqqH3o4dyzAv/5pW8clotnLVWNKoP1Qej+ciMSL5xRrpHuzJibMl5kqYVklzNmiEy5TiDDvNu45JcORQfXaPdUnw+RnXTZY2+3utD+cR+GCYbqxDFK4717KZibnxZ37ReQbpNw8JTRwKirdfZUO4ssN7IJCo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=sjeDJBPLAlRGKPsuLmRxdUnzViKKn+s8PFgt30chFjM91PqiUZ2Jcqan+tDWmcaCqhjGsv0aKt9mg32K3hUM9Tm/f8YPTonbJ5/RkQ8MX0NH2LjwZ5QfnEvGDL9v0vJ2rpIJ0seeVWlu74yT+YzQE5LNBQHnNyw7R6KCMDtahQQ=
+Received: by 10.86.26.11 with SMTP id 11mr10773571fgz.1196701380273;
+        Mon, 03 Dec 2007 09:03:00 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.225.86])
+        by mx.google.com with ESMTPS id l12sm6092858fgb.2007.12.03.09.02.56
+        (version=SSLv3 cipher=OTHER);
+        Mon, 03 Dec 2007 09:02:58 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20071203163856.GA24269@auto.tuwien.ac.at>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66924>
 
-Hi,
+On Mon, 3 Dec 2007, Martin Koegler wrote:
+> On Mon, Dec 03, 2007 at 04:06:48AM -0800, Jakub Narebski wrote:
+>> Ismail D=F6nmez <ismail@pardus.org.tr> writes:
+>>> Monday 03 December 2007 Tarihinde 12:14:43 yazm??t?:
+>>>> Benjamin Close <Benjamin.Close@clearchain.com> writes:
+>>>>> -	eval { $res =3D decode_utf8($str, Encode::FB_CROAK); };
+>>>>> -	if (defined $res) {
+>>>>> -		return $res;
+>>>>> -	} else {
+>>>>> -		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+>>>>> -	}
+>>>>> +	eval { return ($res =3D decode_utf8($str, Encode::FB_CROAK)); }=
+;
+>>>>> +	return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+>>>>>  }
+>=20
+> This version is broken on Debian sarge and etch. Feeding a UTF-8 and =
+a latin1
+> encoding of the same character sequence yields to different results.
 
-On Mon, 3 Dec 2007, Felipe Balbi wrote:
+[...]
 
-> I've using git-remote --mirror mode for while right now but I saw it's 
-> not integrated in v.1.5.3.7, is this on purpose? I can still get it if I 
-> compile recent git's head "36863af16e91aebc87696209f4f4780cf4c4059f".
+> eval { $res =3D decode_utf8(...); }
+> if ($@)=20
+>      return decode(...);
+> return $res
+>=20
+> or
+>=20
+> eval { $res =3D decode_utf8(...); }
+> if (defined $res)
+>       return $res;
+> else
+>     return decode(...);
+>=20
+> show the same (wrong) behaviour on Debian sarge. They do not always
+> decode non UTF-8 characters correctly, eg.
+> #=F6=E4=FC does not work
+> #=E4=F6=FC=E4 does work
+>=20
+> On Debian etch, both versions are working.
 
-AFAICT there are problems with --prune.  That might be a reason that it is 
-not in 1.5.3.7 (haven't checked if that's even the case, though).
+I don't know enough Perl to decide if it is a bug in gitweb usage
+of decode_utf8, if it is a bug in your version of Encode, or if it
+is bug in Encode.
 
-Ciao,
-Dscho
+Send copy of this mail to maintainers of Encode perl module.
+--=20
+Jakub Narebski
+Poland
