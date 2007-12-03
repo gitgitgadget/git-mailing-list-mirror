@@ -1,76 +1,94 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: Incorrect git-blame result if I use full path to file
-Date: Mon, 3 Dec 2007 07:55:35 +0100
-Message-ID: <200712030755.37038.robin.rosenberg@dewire.com>
-References: <3665a1a00712021652tbdfe9d1tdc4575d225bfed36@mail.gmail.com> <7v4pf0sdp7.fsf@gitster.siamese.dyndns.org> <20071203024916.GA11003@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH] git-commit: Allow to amend a merge commit that does not change the tree
+Date: Mon,  3 Dec 2007 08:24:50 +0100
+Message-ID: <1196666690-22187-1-git-send-email-johannes.sixt@telecom.at>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Anatol Pomozov <anatol.pomozov@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 03 07:54:27 2007
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <johannes.sixt@telecom.at>
+To: krh@redhat.com
+X-From: git-owner@vger.kernel.org Mon Dec 03 08:25:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iz5CD-0005hU-9R
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 07:54:25 +0100
+	id 1Iz5g7-0003Dm-Tg
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 08:25:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751479AbXLCGyF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Dec 2007 01:54:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751128AbXLCGyE
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 01:54:04 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:25249 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751116AbXLCGyD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 01:54:03 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 060AA802E29;
-	Mon,  3 Dec 2007 07:44:40 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 13117-07; Mon,  3 Dec 2007 07:44:39 +0100 (CET)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id A4A81802ABA;
-	Mon,  3 Dec 2007 07:44:39 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <20071203024916.GA11003@coredump.intra.peff.net>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1752742AbXLCHY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 02:24:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752759AbXLCHY7
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 02:24:59 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:48254 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752337AbXLCHY6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 02:24:58 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@eudaptics.com>)
+	id 1Iz5ev-0007SY-FV; Mon, 03 Dec 2007 08:24:05 +0100
+Received: from srv.linz.viscovery (srv.linz.viscovery [192.168.1.4])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 2EF306EF; Mon,  3 Dec 2007 08:24:51 +0100 (CET)
+Received: by srv.linz.viscovery (Postfix, from userid 1000)
+	id D40D7FA45; Mon,  3 Dec 2007 08:24:50 +0100 (CET)
+X-Mailer: git-send-email 1.5.3.6.969.g3cdf46
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66880>
 
-m=E5ndag 03 december 2007 skrev Jeff King:
-> On Sun, Dec 02, 2007 at 06:40:36PM -0800, Junio C Hamano wrote:
->=20
-> > > Even more useful would be to convert
-> > > /path/to/repo/file to 'file' internally.
-> >=20
-> > ... that might help "cut & paste from file manager" people, and I t=
-hink
-> > we had comment session for such a patch recently on the list.
-> >=20
-> > Sorry, but I lost track of that the current status of that patch.  =
-Did
-> > it die?
->=20
-> I didn't pay attention to it originally, but I assume you mean the
-> recent patch from Robin Rosenberg (cc'd). Looking it over, I see one
-> obvious omission: there is no canonicalization of the paths. IOW, I
-> think it will break in the presence of symlinks (if I specify
-> /path/to/repo/file, /path/to is a symlink to /other/path, I think the
-> worktree will end up as /other/path/repo, and fail a string compariso=
-n
-> with /path/to/repo).
+Normally, it should not be allowed to generate an empty commit. A merge
+commit generated with git 'merge -s ours' does not change the tree (along
+the first parent), but merges are not "empty" even if they do not change
+the tree. Hence, commit 8588452ceb7 allowed to amend a merge commit that
+does not change the tree, but 4fb5fd5d301 disallowed it again in an
+attempt to avoid that an existing commit is amended such that it becomes
+empty. With this change, a commit can be edited (create a new one or amend
+an existing one) either if there are changes or if there are at least two
+parents.
 
-No it didn't die, it's just not worked on too often. I notes, among, ot=
-her things
-that it's test cases were not correct, besides needing more tests.
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+	I need this patch because I sometimes do 'git merge -s ours' and
+	then want to change the commit message.
 
-Symlinks were not covered.
+	I haven't gotten around to write a test case for this scenario,
+	so I'm sending out the fix alone, in order to draw attention
+	to the issue and have builtin-commit fixed by its authors, if
+	necessary ;)
 
--- robin
+	Thanks,
+	-- Hannes
+
+ git-commit.sh |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/git-commit.sh b/git-commit.sh
+index 4853397..1a07278 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -515,13 +515,16 @@ else
+ 	# we need to check if there is anything to commit
+ 	run_status >/dev/null
+ fi
+-if [ "$?" != "0" -a ! -f "$GIT_DIR/MERGE_HEAD" ]
+-then
++case "$?,$PARENTS" in
++0,* | *,-p*-p*)
++	:	# ok, go ahead
++	;;
++*)
+ 	rm -f "$GIT_DIR/COMMIT_EDITMSG" "$GIT_DIR/SQUASH_MSG"
+ 	use_status_color=t
+ 	run_status
+ 	exit 1
+-fi
++esac
+ 
+ case "$no_edit" in
+ '')
+-- 
+1.5.3.6.969.g3cdf46
