@@ -1,137 +1,110 @@
-From: Sam Vilain <sam.vilain@catalyst.net.nz>
-Subject: Re: [PATCH] Allow HTTP proxy to be overridden in config
-Date: Tue, 04 Dec 2007 10:48:54 +1300
-Organization: Catalyst IT (NZ) Ltd
-Message-ID: <475479C6.3050506@catalyst.net.nz>
-References: <1195776420-22075-1-git-send-email-sam.vilain@catalyst.net.nz>	<7voddl24b7.fsf@gitster.siamese.dyndns.org>	<47464A90.4030509@catalyst.net.nz> <7vhcj387jh.fsf@gitster.siamese.dyndns.org>
+From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
+Subject: Re: Fix UTF Encoding issue
+Date: Tue, 4 Dec 2007 00:20:26 +0200
+Organization: Pardus / KDE
+Message-ID: <200712040020.26773.ismail@pardus.org.tr>
+References: <4753D419.80503@clearchain.com> <200712031802.55514.jnareb@gmail.com> <47547930.5070603@clearchain.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, francois@debian.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 03 23:01:53 2007
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_qEIVHhfBvTvQCsI"
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Martin Koegler <mkoegler@auto.tuwien.ac.at>,
+	Junio C Hamano <gitster@pobox.com>,
+	Alexandre Julliard <julliard@winehq.org>, git@vger.kernel.org,
+	Perl Unicode Mailing List <perl-unicode@perl.org>,
+	Dan Kogai <dankogai@dan.co.jp>
+To: Benjamin Close <Benjamin.Close@clearchain.com>
+X-From: git-owner@vger.kernel.org Mon Dec 03 23:20:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzJML-0000eG-Iy
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 23:01:50 +0100
+	id 1IzJdw-0007GH-NQ
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 23:20:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750975AbXLCWBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 17:01:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750954AbXLCWBa
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 17:01:30 -0500
-Received: from godel.catalyst.net.nz ([202.78.240.40]:56660 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750885AbXLCWB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 17:01:29 -0500
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=wilber.wgtn.cat-it.co.nz)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.63)
-	(envelope-from <samv@wilber.wgtn.cat-it.co.nz>)
-	id 1IzJLo-0007CE-Gt; Tue, 04 Dec 2007 11:01:16 +1300
-Received: by wilber.wgtn.cat-it.co.nz (Postfix, from userid 1000)
-	id 668251FDC0; Tue,  4 Dec 2007 11:01:16 +1300 (NZDT)
-FCC: imap://sam.vilain@mail.catalyst.net.nz/INBOX/Sent
-X-Identity-Key: id1
-X-Mozilla-Draft-Info: internal/draft; vcard=0; receipt=0; uuencode=0
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <7vhcj387jh.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.94.2.0
+	id S1751077AbXLCWTk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 17:19:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751060AbXLCWTk
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 17:19:40 -0500
+Received: from ns2.uludag.org.tr ([193.140.100.220]:54902 "EHLO uludag.org.tr"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751018AbXLCWTk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 17:19:40 -0500
+Received: from ninjamobile.local (unknown [85.102.220.209])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by uludag.org.tr (Postfix) with ESMTP id B280061D0363;
+	Tue,  4 Dec 2007 00:50:54 +0200 (EET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
+In-Reply-To: <47547930.5070603@clearchain.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66966>
 
-Junio C Hamano wrote:
-> In that sense, I think http.proxy configuration variable does not go far
-> enough, even though it might be a step in the right direction.  Perhaps
-> use your configuration variable http.proxy (or "core.environment") to
-> define the global default, with remote.$name.httpproxy to override it?
+--Boundary-00=_qEIVHhfBvTvQCsI
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Sure, why not.
+Monday 03 December 2007 Tarihinde 23:46:24 yazm=C4=B1=C5=9Ft=C4=B1:
+> Jakub Narebski wrote:
+> > On Mon, 3 Dec 2007, Martin Koegler wrote:
+> >> On Mon, Dec 03, 2007 at 04:06:48AM -0800, Jakub Narebski wrote:
+> >>> Ismail D=C3=B6nmez <ismail@pardus.org.tr> writes:
+> >>>> Monday 03 December 2007 Tarihinde 12:14:43 yazm??t?:
+> >>>>> Benjamin Close <Benjamin.Close@clearchain.com> writes:
+> >>>>>> -	eval { $res =3D decode_utf8($str, Encode::FB_CROAK); };
+> >>>>>> -	if (defined $res) {
+> >>>>>> -		return $res;
+> >>>>>> -	} else {
+> >>>>>> -		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+> >>>>>> -	}
+> >>>>>> +	eval { return ($res =3D decode_utf8($str, Encode::FB_CROAK)); };
+> >>>>>> +	return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+> >>>>>>  }
+> >>
+> >> This version is broken on Debian sarge and etch. Feeding a UTF-8 and a
+> >> latin1 encoding of the same character sequence yields to different
+> >> results.
+>
+> For the record, this was on a debian sid machine.
+>
+> #perl --version
+> This is perl, v5.8.8 built for x86_64-linux-gnu-thread-multi
+>
+> and the result of not using the original patch was:
+>
+> <h1>Software error:</h1>
+> <pre>Cannot decode string with wide characters at
+> /usr/lib/perl/5.8/Encode.pm line 166. </pre>
 
-Subject: [PATCH] Add remote.<name>.proxy
+Can you try the attached patch?
 
-As well as allowing a default proxy option, allow it to be set
-per-remote.
 
-Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
----
- Documentation/config.txt |    8 +++++++-
- remote.c                 |    2 ++
- remote.h                 |    5 +++++
- transport.c              |    3 +++
- 4 files changed, 17 insertions(+), 1 deletions(-)
+=2D-=20
+Never learn by your mistakes, if you do you may never dare to try again.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 7e6c02a..831df58 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -545,7 +545,8 @@ access method.
- 
- http.proxy::
- 	Override the HTTP proxy, normally configured using the 'http_proxy'
--	environment variable (see gitlink:curl[1]).
-+	environment variable (see gitlink:curl[1]).  This can be overridden
-+	on a per-remote basis; see remote.<name>.proxy
- 
- http.sslVerify::
- 	Whether to verify the SSL certificate when fetching or pushing
-@@ -695,6 +696,11 @@ remote.<name>.url::
- 	The URL of a remote repository.  See gitlink:git-fetch[1] or
- 	gitlink:git-push[1].
- 
-+remote.<name>.proxy::
-+	For remotes that require curl (http, https and ftp), the URL to
-+	the proxy to use for that remote.  Set to the empty string to
-+	disable proxying for that remote.
-+
- remote.<name>.fetch::
- 	The default set of "refspec" for gitlink:git-fetch[1]. See
- 	gitlink:git-fetch[1].
-diff --git a/remote.c b/remote.c
-index bec2ba1..94df314 100644
---- a/remote.c
-+++ b/remote.c
-@@ -278,6 +278,8 @@ static int handle_config(const char *key, const char *value)
- 	} else if (!strcmp(subkey, ".tagopt")) {
- 		if (!strcmp(value, "--no-tags"))
- 			remote->fetch_tags = -1;
-+	} else if (!strcmp(subkey, ".proxy")) {
-+		remote->fetch_refspec = xstrdup(value);
+--Boundary-00=_qEIVHhfBvTvQCsI
+Content-Type: text/x-diff;
+  charset="iso-8859-1";
+  name="utf8-username.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="utf8-username.patch"
+
+--- gitweb/gitweb.perl	2007-11-28 11:33:14.000000000 +0200
++++ gitweb/gitweb.perl	2007-11-28 11:33:42.000000000 +0200
+@@ -2159,7 +2159,7 @@
  	}
- 	return 0;
+ 	my $owner = $gcos;
+ 	$owner =~ s/[,;].*$//;
+-	return to_utf8($owner);
++	return $owner;
  }
-diff --git a/remote.h b/remote.h
-index 878b4ec..2268558 100644
---- a/remote.h
-+++ b/remote.h
-@@ -25,6 +25,11 @@ struct remote {
  
- 	const char *receivepack;
- 	const char *uploadpack;
-+
-+	/*
-+	 * for curl remotes only
-+	 */
-+	const char *proxy;
- };
- 
- struct remote *remote_get(const char *name);
-diff --git a/transport.c b/transport.c
-index 43b9e7c..c62ec88 100644
---- a/transport.c
-+++ b/transport.c
-@@ -463,6 +463,9 @@ static struct ref *get_refs_via_curl(const struct transport *transport)
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, refs_url);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, NULL);
-+	if (transport->remote->proxy) {
-+		curl_easy_setopt(slot->curl, CURLOPT_PROXY, transport->remote->proxy);
-+	}
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
- 		if (results.curl_result != CURLE_OK) {
--- 
-1.5.3.5
+ ## ......................................................................
+
+--Boundary-00=_qEIVHhfBvTvQCsI--
