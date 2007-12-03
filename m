@@ -1,107 +1,92 @@
-From: "Kevin Leung" <kevinlsk@gmail.com>
-Subject: Re: [PATCH] git-stash: Display help message if git-stash is run with wrong sub-commands
-Date: Mon, 3 Dec 2007 11:36:59 +0800
-Message-ID: <e66701d40712021936p10ee73ddj9696d3a8b4092127@mail.gmail.com>
-References: <e66701d40712021834h64bf8d0y14f0e222d0f9a617@mail.gmail.com>
-	 <7vwsrwqysf.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] Allow update hooks to update refs on their own.
+Date: Sun, 02 Dec 2007 19:45:23 -0800
+Message-ID: <7vr6i4qw4s.fsf@gitster.siamese.dyndns.org>
+References: <7vr6i8sfsa.fsf@gitster.siamese.dyndns.org>
+	<20071202212224.GA22117@midwinter.com>
+	<20071203021333.GC8322@coredump.intra.peff.net>
+	<7vlk8csetl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git ML" <git@vger.kernel.org>,
-	"Nanako Shiraishi" <nanako3@bluebottle.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 03 04:37:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 03 04:45:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iz27i-00052X-0n
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 04:37:34 +0100
+	id 1Iz2Fj-0006cF-4u
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 04:45:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751870AbXLCDhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 22:37:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbXLCDhF
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 22:37:05 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:65321 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751204AbXLCDhB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 22:37:01 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so2621460nfb
-        for <git@vger.kernel.org>; Sun, 02 Dec 2007 19:37:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=QeZ6gmAd3DIiMckHDu5XshShcWBiWoiZTHrMtBxnP0A=;
-        b=SfwIq31Gme3EJEqnJwzQj+oFvkxvGdc/ZPazFQCazMWBTEFSh3z+k5rYk7507KeeeWSgcQqxhLHLjovTutLUzLpexPlo3wiXp3M9nx16mpGMLWGZ0XV+t1OnUR+eMC+kg+EKQVSV9K6kz0a9pFSOwbUVeI5k7yOIxXuWQyafo7U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NpBLeQ8/zEWSRIGopv11Nddfdgfqp/AUs+ROlKFQ6WK01rN+FgcEjnT5RoVkT9XGFgMtCmc9tLZVPUErD25tKIUY7LQBTkH/iqd6H8wRIpwEDzbV11wJt8hKVhogam0r+2YjsZ2vXsrCY8Qsowxn/R/QzHq5xkJfaZkHjsDwiY8=
-Received: by 10.78.200.3 with SMTP id x3mr6799501huf.1196653019592;
-        Sun, 02 Dec 2007 19:36:59 -0800 (PST)
-Received: by 10.78.46.8 with HTTP; Sun, 2 Dec 2007 19:36:59 -0800 (PST)
-In-Reply-To: <7vwsrwqysf.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752290AbXLCDpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 22:45:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752140AbXLCDpb
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 22:45:31 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:55568 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751279AbXLCDpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 22:45:31 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id B359B2F2;
+	Sun,  2 Dec 2007 22:45:50 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 1FA809C2F9;
+	Sun,  2 Dec 2007 22:45:47 -0500 (EST)
+In-Reply-To: <7vlk8csetl.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 02 Dec 2007 18:16:22 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66854>
 
-The current git-stash behaviour is very error prone to typos. For example,
-if you typed "git-stash llist", git-stash would think that you wanted to
-save to a stash named "llist", but in fact, you meant "git-stash list".
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Kevin Leung <kevinlsk@gmail.com>
----
+> Jeff King <peff@peff.net> writes:
+>
+>> ..., but an
+>> "ok, but btw I changed your commit" status from receive-pack seems like
+>> it would be useful, for two reasons:
+>>
+>>   - it can be displayed differently, so the user is reminded to do a
+>>     fetch afterwards
+>>   - we can avoid updating the tracking ref, which makes it less likely
+>>     to result in a non-fast forward fetch next time.  For example,
+>>     consider:
+>>
+>>       1. The remote master and my origin/master are at A.
+>>       2. I make a commit B on top of A.
+>>       3. I push B to remote, who rewrites it to B' on top of A. At the
+>>          same time, I move my origin/master to B.
+>>       4. I fetch, and get non-ff going from B to B'.
+>>
+>>     If I had never written anything to my origin/master, it would be a
+>>     fast forward. And obviously git handles it just fine, but it is more
+>>     useful to the user during the next fetch to see A..B rather than
+>>     B'...B.
+>
+> Sensible argument.  I stand corrected.
 
- Thanks, Junio. It should be alright now.
+Having said that, I think the workflow that this "letting update hook
+munge" patch supports has a bit more implications for the people who
+interact with it.  The pusher will need to force fetch the result, but
+after that he needs to discard his own commit and replace it with
+whatever the hook did.  The question is how much to discard, and how to
+reconstruct the changes since the last push that was made on top of the
+commit that was pushed.
 
- git-stash.sh |   16 +++++++++-------
- 1 files changed, 9 insertions(+), 7 deletions(-)
+Maybe the push pushed out a string of five pearls and the hook may have
+rewritten only the tip, or all of them.  You may have built a few
+commits on top since then.  If what you pushed out contained merges and
+the hook rewrote it, you would need to potentially replay such a merge
+that was rewritten by the hook.
 
-diff --git a/git-stash.sh b/git-stash.sh
-index 77c9421..844a3e5 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- # Copyright (c) 2007, Nanako Shiraishi
-
--USAGE='[ | list | show | apply | clear]'
-+USAGE='[  | save | list | show | apply | clear ]'
-
- SUBDIRECTORY_OK=Yes
- . git-sh-setup
-@@ -195,6 +195,10 @@ show)
-        shift
-        show_stash "$@"
-        ;;
-+save)
-+       shift
-+       save_stash "$*" && git-reset --hard
-+       ;;
- apply)
-        shift
-        apply_stash "$@"
-@@ -202,14 +206,12 @@ apply)
- clear)
-        clear_stash
-        ;;
--help | usage)
--       usage
--       ;;
- *)
--       if test $# -gt 0 && test "$1" = save
-+       if test "$#" -eq "0"
-        then
--               shift
-+               save_stash && git-reset --hard
-+       else
-+               usage
-        fi
--       save_stash "$*" && git-reset --hard
-        ;;
- esac
--- 
-1.5.3.7-dirty
+This is all the same with a workflow that deals with a branch that is
+advertised to constantly rewound and rebased, and the common approach is
+to use "fetch + rebase" (see recent discussion between Nico and Bruce).
+So this patch is not creating a new problem (iow, I am not mentioning
+this as the reason to reject this patch), but I thought I should bring
+it up so that people know what they are doing.
