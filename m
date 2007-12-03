@@ -1,91 +1,52 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Allow HTTP proxy to be overridden in config
-Date: Mon, 03 Dec 2007 10:09:01 +0100
-Message-ID: <4753C7AD.3000406@op5.se>
-References: <1195776420-22075-1-git-send-email-sam.vilain@catalyst.net.nz>	<7voddl24b7.fsf@gitster.siamese.dyndns.org>	<47464A90.4030509@catalyst.net.nz> <7vhcj387jh.fsf@gitster.siamese.dyndns.org>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: Pack several linear commits into one
+Date: Mon, 3 Dec 2007 10:28:59 +0100
+Message-ID: <20071203092859.GA6259@xp.machine.xx>
+References: <c0d4c9e90712030106u40b871ecjd5f7b8d078c8be36@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Sam Vilain <sam.vilain@catalyst.net.nz>, git@vger.kernel.org,
-	francois@debian.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 03 10:09:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jacob Kroon <jacob.kroon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 03 10:29:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iz7Iy-0002H7-Bv
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 10:09:32 +0100
+	id 1Iz7cE-0007kS-AB
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 10:29:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751007AbXLCJJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 04:09:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751754AbXLCJJK
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 04:09:10 -0500
-Received: from mail.op5.se ([193.201.96.20]:47349 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750938AbXLCJJI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 04:09:08 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 2053C1F08012;
-	Mon,  3 Dec 2007 10:09:07 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id k4LKCJSxNEd9; Mon,  3 Dec 2007 10:09:06 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 0F2E41F0800F;
-	Mon,  3 Dec 2007 10:09:06 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <7vhcj387jh.fsf@gitster.siamese.dyndns.org>
+	id S1751467AbXLCJ3G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 04:29:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751384AbXLCJ3E
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 04:29:04 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54333 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750954AbXLCJ3D (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 04:29:03 -0500
+Received: (qmail invoked by alias); 03 Dec 2007 09:29:00 -0000
+Received: from p54AABA0D.dip0.t-ipconnect.de (EHLO localhost) [84.170.186.13]
+  by mail.gmx.net (mp058) with SMTP; 03 Dec 2007 10:29:00 +0100
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX19DiKEh6zRDaGDC1VeE1MZKVATHwcu5G2oxqbeEM1
+	3SJdJ03pAswGbv
+Content-Disposition: inline
+In-Reply-To: <c0d4c9e90712030106u40b871ecjd5f7b8d078c8be36@mail.gmail.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66893>
 
-Junio C Hamano wrote:
+On Mon, Dec 03, 2007 at 10:06:11AM +0100, Jacob Kroon wrote:
+> Hi,
 > 
-> [Footnote]
+> Is there a tool for repacking several linear commits into one single ?
 > 
-> *1* git(7) calls "git" itself as "git potty".  Is this word still used?
-> I also notice that Andreas's name is misspelled there.
+> Please CC me since I'm not a subscriber to the list.
+> 
 
+Look for git merge --squash  or  git cherry-pick --no-commit
 
-AFAIR I sort of invented that to disambiguate git-the-program from
-git-the-project while working on writing the program in C. I haven't
-heard/seen it a lot since then, except on a few occasions where it
-helped serve that same purpose.
-
-I also misspelled my own name in that patch. Perhaps it's time I
-corrected that.
-
----%<---%<---%<---
-From: Andreas Ericsson <ae@op5.se>
-Subject: [PATCH] Correct typo in Documentation/git.txt
-
-Signed-off-by: Andreas Ericsson <ae@op5.se>
----
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 9ff4659..6c98ab2 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -536,7 +536,7 @@ Authors
- -------
- * git's founding father is Linus Torvalds <torvalds@osdl.org>.
- * The current git nurse is Junio C Hamano <gitster@pobox.com>.
--* The git potty was written by Andres Ericsson <ae@op5.se>.
-+* The git potty was written by Andreas Ericsson <ae@op5.se>.
- * General upbringing is handled by the git-list <git@vger.kernel.org>.
- 
- Documentation
----%<---%<---%<---
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+-Peter
