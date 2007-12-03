@@ -1,63 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4] Allow update hooks to update refs on their own.
-Date: Mon, 3 Dec 2007 11:47:19 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712031146520.27959@racer.site>
-References: <7vr6i8sfsa.fsf@gitster.siamese.dyndns.org> <20071202212224.GA22117@midwinter.com>
- <20071203040108.GS14735@spearce.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Dec 03 12:48:07 2007
+From: Eyvind Bernhardsen <eyvind-git-list@orakel.ntnu.no>
+Subject: Re: [PATCH] Make git status usage say git status instead of git commit
+Date: Mon, 3 Dec 2007 13:04:08 +0100
+Message-ID: <116ABC64-B936-4EA3-9E8A-12FD71DDC1EA@orakel.ntnu.no>
+References: <1196658129-16708-1-git-send-email-shawn.bohrer@gmail.com> <7vir3gqr3d.fsf@gitster.siamese.dyndns.org> <854pf0hyy3.fsf@lola.goethe.zz> <877ijww0d3.fsf@mid.deneb.enyo.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Florian Weimer <fw@deneb.enyo.de>
+X-From: git-owner@vger.kernel.org Mon Dec 03 13:06:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iz9mQ-0003MS-Jd
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 12:48:07 +0100
+	id 1IzA34-0007td-1Y
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 13:05:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753232AbXLCLrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 06:47:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753344AbXLCLrq
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 06:47:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54702 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753102AbXLCLrp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 06:47:45 -0500
-Received: (qmail invoked by alias); 03 Dec 2007 11:47:43 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp058) with SMTP; 03 Dec 2007 12:47:43 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18xkBNGimUx4Mv+GHC12f3mMQ3YUyEl0XeM8Press
-	IfP4f59vd/VH7R
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071203040108.GS14735@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S1753068AbXLCMEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 07:04:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753043AbXLCMEh
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 07:04:37 -0500
+Received: from 97.84-49-228.nextgentel.com ([84.49.228.97]:62857 "EHLO
+	eyvind.bernhardsens.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752038AbXLCMEh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 07:04:37 -0500
+Received: from [192.168.2.243] (pat-gw.osl.fast.no [217.144.235.5])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by eyvind.bernhardsens.net (Postfix) with ESMTP id 87EB262B872;
+	Mon,  3 Dec 2007 13:04:34 +0100 (CET)
+In-Reply-To: <877ijww0d3.fsf@mid.deneb.enyo.de>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66914>
 
-Hi,
+On 3. des. 2007, at 11.15, Florian Weimer wrote:
 
-On Sun, 2 Dec 2007, Shawn O. Pearce wrote:
+> * David Kastrup:
+>
+>> Deprecating the dash form will probably mean that we need to think up
+>> (and document) a rationale for
+>>
+>>   man git-commit
+>>
+>> I actually have typed something like
+>>
+>>   man git commit
+>>
+>> a number of times already with obvious results.  Finger memory.
+>
+> It's also a bit strange to have a git-commit(1) manpage when there  
+> is no
+> git-commit on the path.
 
-> Steven Grimm <koreth@midwinter.com> wrote:
-> > This is useful in cases where a hook needs to modify an incoming commit
-> > in some way, e.g., fixing whitespace errors, adding an annotation to
-> > the commit message, noting the location of output from a profiling tool,
-> > or committing to an svn repository using git-svn.
-> ...
-> > +/* Update hook exit code: hook has updated ref on its own */
-> > +#define EXIT_CODE_REF_UPDATED 100
-> 
-> Hmm.  I would actually rather move the ref locking to before we run
-> the update hook, so the ref is locked *while* the hook executes.
+No stranger than having a perlfunc(1) manpage.  bash-builtins is in  
+section 7, maybe git-* should be moved there?  Of course, then git  
+wouldn't have any manpages in section 1 at all.
 
-Would that not mean that you cannot use update-ref to update the ref, 
-since that wants to use the same lock?
-
-Ciao,
-Dscho
+Eyvind
