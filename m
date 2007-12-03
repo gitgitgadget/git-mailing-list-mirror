@@ -1,65 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] xdiff-interface.c (buffer_is_binary): Remove buffer size limitation
-Date: Mon, 03 Dec 2007 15:24:44 -0800
-Message-ID: <7veje3e4zn.fsf@gitster.siamese.dyndns.org>
-References: <20071201160113.GA20849@nomad.office.altlinux.org>
-	<7vlk8e42qb.fsf@gitster.siamese.dyndns.org>
-	<20071203215007.GA14697@basalt.office.altlinux.org>
+From: Benjamin Close <Benjamin.Close@clearchain.com>
+Subject: Re: Fix UTF Encoding issue
+Date: Tue, 4 Dec 2007 09:34:34 +1030
+Message-ID: <20071203230432.GA1337@wolf.clearchain.com>
+References: <4753D419.80503@clearchain.com> <200712031802.55514.jnareb@gmail.com> <47547930.5070603@clearchain.com> <200712040020.26773.ismail@pardus.org.tr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Dmitry V. Levin" <ldv@altlinux.org>
-X-From: git-owner@vger.kernel.org Tue Dec 04 00:26:39 2007
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Martin Koegler <mkoegler@auto.tuwien.ac.at>,
+	Junio C Hamano <gitster@pobox.com>,
+	Alexandre Julliard <julliard@winehq.org>, git@vger.kernel.org,
+	Perl Unicode Mailing List <perl-unicode@perl.org>,
+	Dan Kogai <dankogai@dan.co.jp>
+To: Ismail D??nmez <ismail@pardus.org.tr>
+X-From: git-owner@vger.kernel.org Tue Dec 04 00:31:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzKfO-0005f0-87
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 00:25:34 +0100
+	id 1IzKkr-00084m-M8
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 00:31:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751133AbXLCXYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 18:24:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751296AbXLCXYu
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 18:24:50 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:38576 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751279AbXLCXYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 18:24:49 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id CDBAA2F2;
-	Mon,  3 Dec 2007 18:25:10 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 657A59C9CB;
-	Mon,  3 Dec 2007 18:25:08 -0500 (EST)
-In-Reply-To: <20071203215007.GA14697@basalt.office.altlinux.org> (Dmitry
-	V. Levin's message of "Tue, 4 Dec 2007 00:50:07 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751333AbXLCXay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 18:30:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751321AbXLCXax
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 18:30:53 -0500
+Received: from wcl.ml.unisa.edu.au ([130.220.166.5]:62174 "EHLO
+	wolf.clearchain.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751296AbXLCXax (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 18:30:53 -0500
+X-Greylist: delayed 1063 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Dec 2007 18:30:51 EST
+Received: from wolf.clearchain.com (localhost [127.0.0.1])
+	by wolf.clearchain.com (8.14.2/8.14.2) with ESMTP id lB3N4eiV001381;
+	Tue, 4 Dec 2007 09:34:40 +1030 (CST)
+	(envelope-from Benjamin.Close@clearchain.com)
+Received: (from benjsc@localhost)
+	by wolf.clearchain.com (8.14.2/8.14.2/Submit) id lB3N4YbT001380;
+	Tue, 4 Dec 2007 09:34:34 +1030 (CST)
+	(envelope-from Benjamin.Close@clearchain.com)
+X-Authentication-Warning: wolf.clearchain.com: benjsc set sender to Benjamin.Close@clearchain.com using -f
+Content-Disposition: inline
+In-Reply-To: <200712040020.26773.ismail@pardus.org.tr>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66978>
 
-"Dmitry V. Levin" <ldv@altlinux.org> writes:
+On Tue, Dec 04, 2007 at 12:20:26AM +0200, Ismail D??nmez wrote:
+> Monday 03 December 2007 Tarihinde 23:46:24 yazm????t??:
+> > Jakub Narebski wrote:
+> > > On Mon, 3 Dec 2007, Martin Koegler wrote:
+> > >> On Mon, Dec 03, 2007 at 04:06:48AM -0800, Jakub Narebski wrote:
+> > >>> Ismail D??nmez <ismail@pardus.org.tr> writes:
+> > >>>> Monday 03 December 2007 Tarihinde 12:14:43 yazm??t?:
+> > >>>>> Benjamin Close <Benjamin.Close@clearchain.com> writes:
+> > >>>>>> -	eval { $res = decode_utf8($str, Encode::FB_CROAK); };
+> > >>>>>> -	if (defined $res) {
+> > >>>>>> -		return $res;
+> > >>>>>> -	} else {
+> > >>>>>> -		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+> > >>>>>> -	}
+> > >>>>>> +	eval { return ($res = decode_utf8($str, Encode::FB_CROAK)); };
+> > >>>>>> +	return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+> > >>>>>>  }
+> > >>
+> > >> This version is broken on Debian sarge and etch. Feeding a UTF-8 and a
+> > >> latin1 encoding of the same character sequence yields to different
+> > >> results.
+> >
+> > For the record, this was on a debian sid machine.
+> >
+> > #perl --version
+> > This is perl, v5.8.8 built for x86_64-linux-gnu-thread-multi
+> >
+> > and the result of not using the original patch was:
+> >
+> > <h1>Software error:</h1>
+> > <pre>Cannot decode string with wide characters at
+> > /usr/lib/perl/5.8/Encode.pm line 166. </pre>
+> 
+> Can you try the attached patch?
 
-> On Sat, Dec 01, 2007 at 11:46:52AM -0800, Junio C Hamano wrote:
->> On Sat, Dec 01, 2007 at 07:01:13PM +0300, Dmitry V. Levin wrote:
->> 
->> > When checking buffer for NUL byte, do not limit size of buffer we check.
->> > Otherwise we break git-rebase: git-format-patch may generate output which
->> > git-mailinfo cannot handle properly.
->> 
->> I think this is tackling a valid problem but it is a wrong solution.
->> The change penalizes text changes which is the majority, just in case
->> there is an unusual change that has an embedded NUL far into the file
->> (iow, exception).
->
-> Penalizes?
-> Average file size in the linux-2.6.23.9 kernel tree is 10944 bytes,
-> FIRST_FEW_BYTES limit is 8000 bytes.
+I confirm that the patch corrects the problem.
 
-I really wish we were living in a simpler time, back when I could just
-say "we optimize for the kernel" and did not have to be worried about
-getting laughed at.
+Without it I get the Cannot decode string error. With it gitweb displays
+correctly.
+
+Cheers,
+	Benjamin
