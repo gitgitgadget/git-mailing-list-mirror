@@ -1,81 +1,95 @@
-From: Russell <russellsteicke@gmail.com>
-Subject: [PATCH] git-archimport: Don't include the first line of the tla log message if it's the same as the summary.
-Date: Mon, 3 Dec 2007 20:23:03 +0900
-Message-ID: <c1b8b6670712030323p22f4c548w9bf08f66010a7d21@mail.gmail.com>
+From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
+Subject: Re: Fix UTF Encoding issue
+Date: Mon, 3 Dec 2007 13:32:36 +0200
+Organization: Pardus / KDE
+Message-ID: <200712031332.36187.ismail@pardus.org.tr>
+References: <4753D419.80503@clearchain.com> <7v7ijwjd9o.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 03 12:23:30 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Benjamin Close <Benjamin.Close@clearchain.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 03 12:32:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iz9Ob-00057m-7N
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 12:23:29 +0100
+	id 1Iz9X6-0007Xs-BE
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 12:32:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751695AbXLCLXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 06:23:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751902AbXLCLXI
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 06:23:08 -0500
-Received: from wa-out-1112.google.com ([209.85.146.183]:55016 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751384AbXLCLXF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 06:23:05 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so5083726wah
-        for <git@vger.kernel.org>; Mon, 03 Dec 2007 03:23:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=zz38tfWztnxEFtoHCnYXRD5fjEsR3PCY3NpP3jVOaXA=;
-        b=uZUp3mwTh8ZJjU0WQZ45ySNxP90p94/ilWY5GrLGo/Ccv37OnOkGm2iftPm27zyk2Mw49ohq6ehLEoI9X/5OR8v/UA5JsWrArHOVlKzf0JsCAJ08F8pBks2XdBigU0BaAQtUiGXFjhDrT0m5lZs294SaLq1yhK9TNVkqL9vsBmY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=d96xQH5PRsE320peaPBjqqE1XVkAaD3oDjuOonn+CxqTuY9ayxofvMZSJ+uw6Al0nEWhJoj4sNXmHbrAPgnUWSBPJnK2b+2W1qWtW9FA2mIPo5GSSeHt0T9Bs3lNPwUZ9V2BdgFYJhwEdGfx602UhS0giw0txqTms3S03Lvlhn4=
-Received: by 10.114.36.1 with SMTP id j1mr3520422waj.1196680983843;
-        Mon, 03 Dec 2007 03:23:03 -0800 (PST)
-Received: by 10.115.78.5 with HTTP; Mon, 3 Dec 2007 03:23:03 -0800 (PST)
+	id S1752921AbXLCLb4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Dec 2007 06:31:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752892AbXLCLb4
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 06:31:56 -0500
+Received: from ns2.uludag.org.tr ([193.140.100.220]:36804 "EHLO uludag.org.tr"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752701AbXLCLbz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Dec 2007 06:31:55 -0500
+Received: from ninjamobile.local (unknown [85.102.220.209])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by uludag.org.tr (Postfix) with ESMTP id 6E2BD61CE61E;
+	Mon,  3 Dec 2007 13:31:46 +0200 (EET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
+In-Reply-To: <7v7ijwjd9o.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66912>
 
-I have a few gnu arch (tla) archives that I've been converting to git
-repositories.  In many of the revisions in those archives, I have used
-the ``-L msg'' flag to tla to specify the log message on the command
-line.  This results in the summary field of the revision being
-duplicated in the first line of the log message.  When I then use
-git-archimport to make a git repo with the tla history, this line
-appears twice in the git log message, which is ugly.
+Monday 03 December 2007 Tarihinde 12:14:43 yazm=C4=B1=C5=9Ft=C4=B1:
+> Benjamin Close <Benjamin.Close@clearchain.com> writes:
+> >>From 83042abf3967b455953cddeab43e33c1d59c6f03 Mon Sep 17 00:00:00 2=
+001
+> >
+> > From: Benjamin Close <Benjamin.Close@clearchain.com>
+> > Date: Sun, 2 Dec 2007 15:09:00 -0800
+> > Subject: [PATCH] Gitweb: Fix encoding to always translate rather th=
+an
+> > sometimes fail
+> >
+> > When performing the utf translation don't test if $res is defined.
+> > It appears that it is defined even when the conversion fails. This =
+causes
+> > failures on the writing of the output stream which is expecting UTF=
+=2E
+> > @@ -696,12 +696,8 @@ sub validate_refname {
+> >  sub to_utf8 {
+> >  	my $str =3D shift;
+> >  	my $res;
+> > -	eval { $res =3D decode_utf8($str, Encode::FB_CROAK); };
+> > -	if (defined $res) {
+> > -		return $res;
+> > -	} else {
+> > -		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+> > -	}
+> > +	eval { return ($res =3D decode_utf8($str, Encode::FB_CROAK)); };
+> > +	return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+> >  }
+>
+> This is funny.
+>
+> I thought the standard catch ... throw idiom in Perl was to do the ab=
+ove
+> like this:
+>
+> 	my $res;
+>         eval { $res =3D decode_utf8($str, Encode::FB_CROAK); };
+>         if ($@) {
+>         	return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+> 	}
+> 	return $res;
 
-This patch drops the first line of the log message if it is identical
-to the summary field.
+I think this is correct, but the current code in gitweb doesn't look co=
+rrect=20
+since it checks for $res and not $@.
 
----
- git-archimport.perl |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
-
-diff --git a/git-archimport.perl b/git-archimport.perl
-index 9a7a906..cdf7a11 100755
---- a/git-archimport.perl
-+++ b/git-archimport.perl
-@@ -833,6 +833,10 @@ sub parselog {
-         }
-     }
-
-+    # Drop the first line of the log if it's the same as the summary.
-+    if ($ps->{summary}->[0] eq $log->[0]) {
-+	shift @$log;
-+    }
-     # drop leading empty lines from the log message
-     while (@$log && $log->[0] eq '') {
-	shift @$log;
---
-1.5.3.7.966.g1c46-dirty
+Regards,
+ismail
 
 
--- 
-Virus found in this message.
+--=20
+Never learn by your mistakes, if you do you may never dare to try again=
+=2E
