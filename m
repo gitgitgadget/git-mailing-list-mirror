@@ -1,152 +1,147 @@
-From: Remi Vanicat <vanicat@debian.org>
-Subject: Re: [PATCH] Adding menu for Emacs git.el
-Date: Mon, 03 Dec 2007 07:03:32 +0100
-Message-ID: <877ijwfh6z.dlv@vanicat.homelinux.org>
-References: <87mysvfr7e.dlv@vanicat.homelinux.org>
- <87fxylos4o.fsf@wine.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] quote_path: fix collapsing of relative paths
+Date: Sun, 02 Dec 2007 21:56:54 -0800
+Message-ID: <7vabosqq1l.fsf@gitster.siamese.dyndns.org>
+References: <20071203053001.GA12696@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Mon Dec 03 07:04:20 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 03 07:04:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iz4Pj-0005Sp-Ko
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 07:04:20 +0100
+	id 1Iz4Pj-0005Sp-02
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 07:04:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751857AbXLCGDu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Dec 2007 01:03:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751850AbXLCGDu
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 01:03:50 -0500
-Received: from sp604001mt.neufgp.fr ([84.96.92.60]:45625 "EHLO Smtp.neuf.fr"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751479AbXLCGDt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Dec 2007 01:03:49 -0500
-Received: from vanicat.homelinux.org ([77.198.160.187])
- by sp604001mt.gpm.neuf.ld
- (Sun Java System Messaging Server 6.2-5.05 (built Feb 16 2006))
- with ESMTP id <0JSG00EY8M5XOWO1@sp604001mt.gpm.neuf.ld> for
- git@vger.kernel.org; Mon, 03 Dec 2007 07:03:33 +0100 (CET)
-Received: from moi by vanicat.homelinux.org with local (Exim 4.68)
-	(envelope-from <remi.vanicat@laposte.net>)	id 1Iz4Oy-0003xA-Oj; Mon,
- 03 Dec 2007 07:03:32 +0100
-In-reply-to: <87fxylos4o.fsf@wine.dyndns.org>
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: remi.vanicat@laposte.net
-X-SA-Exim-Scanned: No (on vanicat.homelinux.org); SAEximRunCond expanded to
- false
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1751495AbXLCF5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 00:57:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751479AbXLCF5E
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 00:57:04 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:33319 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751070AbXLCF5B (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 00:57:01 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 336322EF;
+	Mon,  3 Dec 2007 00:57:22 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 874A09A4A6;
+	Mon,  3 Dec 2007 00:57:18 -0500 (EST)
+In-Reply-To: <20071203053001.GA12696@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 3 Dec 2007 00:30:01 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66870>
 
+Jeff King <peff@peff.net> writes:
 
-Adding three menus to the git-status-mode of git.el : One for marking
-and unmarking, one for what you do when you have a conflict, and the
-other one for all the rest.
+> The code tries to collapse identical leading components
+> between the prefix and the path. So if we're in "dir1", the
+> path "dir1/file" should become just "file". However, we were
+> ending up with "../dir1/file". The included test expected
+> the wrong output.
+>
+> Because the "len" parameter to quote_path can be passed in
+> as -1 to indicate a NUL-terminated string, we have to
+> consider that possibility in our loop conditional (but no
+> additional checks are necessary, since we already check that
+> prefix[off] and in[off] are identical, and that prefix[off]
+> is not NUL.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> This behavior in git-status had been bugging me, and when I went to fix
+> it, I was surprised to find code already there to do it. :) Dscho,
+> please confirm that the test is in fact in error, and that I've read the
+> intent of your code correctly.
+>
+>  t/t7502-status.sh |    2 +-
+>  wt-status.c       |    3 ++-
+>  2 files changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t7502-status.sh b/t/t7502-status.sh
+> index 269b334..d6ae69d 100755
+> --- a/t/t7502-status.sh
+> +++ b/t/t7502-status.sh
+> @@ -68,7 +68,7 @@ cat > expect << \EOF
+>  # Changed but not updated:
+>  #   (use "git add <file>..." to update what will be committed)
+>  #
+> -#	modified:   ../dir1/modified
+> +#	modified:   modified
+>  #
+>  # Untracked files:
+>  #   (use "git add <file>..." to include in what will be committed)
+> diff --git a/wt-status.c b/wt-status.c
+> index e77120d..09666ec 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -90,7 +90,8 @@ static char *quote_path(const char *in, int len,
+>  
+>  	if (prefix) {
+>  		int off = 0;
+> -		while (prefix[off] && off < len && prefix[off] == in[off])
+> +		while (prefix[off] && (len < 0 || off < len)
+> +				&& prefix[off] == in[off])
+>  			if (prefix[off] == '/') {
+>  				prefix += off + 1;
+>  				in += off + 1;
 
-Signed-off-by: R=C3=A9mi Vanicat <vanicat@debian.org>
+Somehow I feel it would be simpler and less error prone if you atually
+count to set len to the length if you got negative.
+
+The part that follows the patch, there is a line that subtracts a small
+number (off+1) from len --- while it won't have a wraparound issue, it
+feels a bit ugly to rely on the "magic -1" value to stay "magic
+negative" if small positive integers are subtracted from it.
+
+Also the reason the updated condition to the while loop does not have to
+check NUL termination upon negative len is because both (prefix[off] !=
+NUL) and (prefix[off] == in[off]) are checked there, which some may find
+subtle.
+
+So perhaps this is easier to read?
+
 ---
+ wt-status.c |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
 
-Alexandre Julliard <julliard@winehq.org> writes:
-
-> "=3D?utf-8?q?R=3DC3=3DA9mi=3D20Vanicat?=3D" <vanicat@debian.org>, Rem=
-i Vanicat
-> <vanicat@debian.org> writes:
->
->> Adding three menu to the git-status-mode of git.el : One for marking
->> and unmarking, one for every thing you need when you have a conflict=
-,
->> and a last one for all the rest.
->>
->> Signed-off-by: R=C3=A9mi Vanicat <vanicat@debian.org>
->
-> It looks good to me. A couple of minor details:
-
-Here is the corrected patch
-[...]
-
-> BTW do you have a copyright assignment for Emacs?
-No, should I seek one ?
-
- contrib/emacs/git.el |   48 ++++++++++++++++++++++++++++++++++++++++++=
-++++--
- 1 files changed, 46 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index e147da0..1db7698 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -49,7 +49,7 @@
- (eval-when-compile (require 'cl))
- (require 'ewoc)
- (require 'log-edit)
--
-+(require 'easymenu)
-=20
- ;;;; Customizations
- ;;;; ------------------------------------------------------------
-@@ -1297,7 +1297,51 @@ Return the list of files that haven't been handl=
-ed."
-     (define-key toggle-map "i" 'git-toggle-show-ignored)
-     (define-key toggle-map "k" 'git-toggle-show-unknown)
-     (define-key toggle-map "m" 'git-toggle-all-marks)
--    (setq git-status-mode-map map)))
-+    (setq git-status-mode-map map))
-+  (easy-menu-define git-menu-mark git-status-mode-map
-+    "Git Merge Menu"
-+    `("Merge"
-+      ["Next Unmerged File" git-next-unmerged-file t]
-+      ["Prev Unmerged File" git-prev-unmerged-file t]
-+      ["Mark as Resolved" git-resolve-file t]
-+      ["Interactive Merge File" git-find-file-imerge t]
-+      ["Diff Against Common Base File" git-diff-file-base t]
-+      ["Diff Combined" git-diff-file-combined t]
-+      ["Diff Against Merge Head" git-diff-file-merge-head t]
-+      ["Diff Against Mine" git-diff-file-mine t]
-+      ["Diff Against Other" git-diff-file-other t]))
-+  (easy-menu-define git-menu-mark git-status-mode-map
-+    "Git Mark Menu"
-+    `("Mark"
-+      ["Mark File" git-mark-file t]
-+      ["Mark All" git-mark-all t]
-+      ["Unmark File" git-unmark-file t]
-+      ["Unmark All" git-unmark-all t]
-+      ["Toggle All Mark" git-toggle-all-marks t]))
-+  (easy-menu-define git-menu git-status-mode-map
-+    "Git Menu."=20
-+    `("Git"
-+      ["Refresh" git-refresh-status t]
-+      ["Commit" git-commit-file t]
-+      "--------"
-+      ["Add File" git-add-file t]
-+      ["Revert File" git-revert-file t]
-+      ["Ignore File" git-ignore-file t]
-+      ["Remove File" git-remove-file t]
-+      "--------"
-+      ["Find File" git-find-file t]
-+      ["View File" git-view-file t]
-+      ["Diff File" git-diff-file t]
-+      ["Interctive Diff File" git-diff-file-idiff t]
-+      ["Log" git-log-file t]
-+      "--------"
-+      ["Quit" git-status-quit t]
-+      "--------"
-+      ["Show Uptodate" git-toggle-show-uptodate :style toggle :selecte=
-d git-show-uptodate]
-+      ["Show Ignored" git-toggle-show-ignored :style toggle :selected =
-git-show-ignored]
-+      ["Show Unknown" git-toggle-show-unknown :style toggle :selected =
-git-show-unknown]))
-+   =20
-+)
-=20
- ;; git mode should only run in the *git status* buffer
- (put 'git-status-mode 'mode-class 'special)
---=20
-1.5.3.6
+diff --git a/wt-status.c b/wt-status.c
+index 0e0439f..52ab41c 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -82,12 +82,13 @@ static void wt_status_print_trailer(struct wt_status *s)
+ }
+ 
+ static char *quote_path(const char *in, int len,
+-		struct strbuf *out, const char *prefix)
++			struct strbuf *out, const char *prefix)
+ {
+-	if (len > 0)
+-		strbuf_grow(out, len);
+-	strbuf_setlen(out, 0);
++	if (len < 0)
++		len = strlen(in);
+ 
++	strbuf_grow(out, len);
++	strbuf_setlen(out, 0);
+ 	if (prefix) {
+ 		int off = 0;
+ 		while (prefix[off] && off < len && prefix[off] == in[off])
+@@ -104,7 +105,7 @@ static char *quote_path(const char *in, int len,
+ 				strbuf_addstr(out, "../");
+ 	}
+ 
+-	for (; (len < 0 && *in) || len > 0; in++, len--) {
++	for ( ; len > 0; in++, len--) {
+ 		int ch = *in;
+ 
+ 		switch (ch) {
