@@ -1,63 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Incorrect git-blame result if I use full path to file
-Date: Sun, 02 Dec 2007 18:40:36 -0800
-Message-ID: <7v4pf0sdp7.fsf@gitster.siamese.dyndns.org>
-References: <3665a1a00712021652tbdfe9d1tdc4575d225bfed36@mail.gmail.com>
-	<20071203022729.GD8322@coredump.intra.peff.net>
+Subject: Re: [PATCH] git-stash: Display help message if git-stash is run with wrong sub-commands
+Date: Sun, 02 Dec 2007 18:48:00 -0800
+Message-ID: <7vwsrwqysf.fsf@gitster.siamese.dyndns.org>
+References: <e66701d40712021834h64bf8d0y14f0e222d0f9a617@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Anatol Pomozov <anatol.pomozov@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 03 03:41:05 2007
+Cc: "Git ML" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Nanako Shiraishi" <nanako3@bluebottle.com>
+To: "Kevin Leung" <kevinlsk@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 03 03:48:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iz1F0-0003D0-N1
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 03:41:03 +0100
+	id 1Iz1MH-0004Qt-2X
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 03:48:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751055AbXLCCkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Dec 2007 21:40:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751008AbXLCCkm
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 21:40:42 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:35447 "EHLO
+	id S1751257AbXLCCsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Dec 2007 21:48:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751034AbXLCCsL
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Dec 2007 21:48:11 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:59245 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750768AbXLCCkm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Dec 2007 21:40:42 -0500
+	with ESMTP id S1750768AbXLCCsK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Dec 2007 21:48:10 -0500
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 9A5CD2F0;
-	Sun,  2 Dec 2007 21:41:03 -0500 (EST)
+	by sceptre.pobox.com (Postfix) with ESMTP id 624902EF;
+	Sun,  2 Dec 2007 21:48:29 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B5859C501;
-	Sun,  2 Dec 2007 21:40:59 -0500 (EST)
-In-Reply-To: <20071203022729.GD8322@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 2 Dec 2007 21:27:29 -0500")
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id C94169C563;
+	Sun,  2 Dec 2007 21:48:24 -0500 (EST)
+In-Reply-To: <e66701d40712021834h64bf8d0y14f0e222d0f9a617@mail.gmail.com>
+	(Kevin Leung's message of "Mon, 3 Dec 2007 10:34:05 +0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66851>
 
-Jeff King <peff@peff.net> writes:
+"Kevin Leung" <kevinlsk@gmail.com> writes:
 
-> IOW, it's not intended for users to use absolute paths in this way.
-> However, the results for git-blame are obviously quite confusing. It
-> might be worth fixing, but I suspect there are many more such traps
-> waiting in other commands. I wonder if it would make sense to reject
-> pathspecs starting with '/' entirely, which would at least give us a
-> saner error message (and I can't think of a time when such a pathspec
-> would be useful)?
+> The current git-stash behaviour is very error prone to typos. For example,
+> if you typed "git-stash llist", git-stash would think that you wanted to
+> save to a stash named "llist", but in fact, you meant "git-stash list".
+>
+> Signed-off-by: Kevin Leung <kevinlsk@gmail.com>
 
-All correct, except...
+Thanks.  Looks good.  except...
 
-> Even more useful would be to convert
-> /path/to/repo/file to 'file' internally.
+> @@ -195,6 +195,10 @@ show)
+>         shift
+>         show_stash "$@"
+>         ;;
+> +save)
+> +       shift
+> +       save_stash "$@" && git-reset --hard
+> +       ;;
 
-... that might help "cut & paste from file manager" people, and I think
-we had comment session for such a patch recently on the list.
+... this should be "$*" as it was originally spelled.
 
-Sorry, but I lost track of that the current status of that patch.  Did
-it die?
+Save this script in foo.sh and run "foo.sh a b c" to see what I mean.
+
+#!/bin/sh
+
+foo () {
+	msg="$1"
+	echo "Foo here <$1>"
+}
+
+foo "$@"
+foo "$*"
