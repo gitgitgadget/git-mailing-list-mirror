@@ -1,57 +1,64 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: committing only selected diff's of a file
-Date: Mon, 03 Dec 2007 17:00:26 +0100
-Message-ID: <vpqd4tnn4yt.fsf@bauges.imag.fr>
-References: <4753D465.10802@ecocode.net> <m3tzn0uj9s.fsf@roke.D-201>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Erik Colson <eco@ecocode.net>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 03 17:02:09 2007
+From: Pini Reznik <pinir@expand.com>
+Subject: [PATCH] Open external merge tool with original file extensions in all three files
+Date: Mon,  3 Dec 2007 17:31:14 +0200
+Message-ID: <1196695874-22567-1-git-send-email-pinir@expand.com>
+Cc: Pini Reznik <pinir@expand.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 03 17:13:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzDk2-0000lD-5c
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 17:01:54 +0100
+	id 1IzDv2-0005nJ-9C
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 17:13:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750896AbXLCQBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 11:01:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750806AbXLCQBd
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 11:01:33 -0500
-Received: from imag.imag.fr ([129.88.30.1]:55347 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750763AbXLCQBd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 11:01:33 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lB3G0Yub024752
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 3 Dec 2007 17:00:34 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IzDic-0004d2-Kp; Mon, 03 Dec 2007 17:00:26 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IzDic-0006ng-IU; Mon, 03 Dec 2007 17:00:26 +0100
-In-Reply-To: <m3tzn0uj9s.fsf@roke.D-201> (Jakub Narebski's message of "Mon\, 03 Dec 2007 03\:09\:41 -0800 \(PST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 03 Dec 2007 17:00:35 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1750975AbXLCQMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 11:12:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750996AbXLCQMz
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 11:12:55 -0500
+Received: from smtp-tlv.expand.com ([192.116.193.121]:31397 "EHLO
+	smtp-tlv.expand.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750942AbXLCQMy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 11:12:54 -0500
+X-Greylist: delayed 2607 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Dec 2007 11:12:54 EST
+Received: from localhost.localdomain ([172.16.30.232]) by smtp-tlv.expand.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 3 Dec 2007 17:30:59 +0200
+X-Mailer: git-send-email 1.5.3.5
+X-OriginalArrivalTime: 03 Dec 2007 15:30:59.0093 (UTC) FILETIME=[81192C50:01C835C1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66922>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+This required to be able to use syntax highlighting in meld during conflicts resolution.
+Before this change, two merged versions of file with a conflict were open with temporal extensions .LOCAL.$$ and REMOTE.$$
+This way they were not recognized as a code files.
 
-> "git gui" (the latter requires Tcl/Tk).
+Signed-off-by: Pini Reznik <pinir@expand.com>
+---
+ git-mergetool.sh |    9 +++++----
+ 1 files changed, 5 insertions(+), 4 deletions(-)
 
-... Right click on a patch hunk, "stage for commit".
-
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 5587c5e..4c15d22 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -152,10 +152,11 @@ merge_file () {
+ 	exit 1
+     fi
+ 
+-    BACKUP="$path.BACKUP.$$"
+-    LOCAL="$path.LOCAL.$$"
+-    REMOTE="$path.REMOTE.$$"
+-    BASE="$path.BASE.$$"
++    extension=`echo $path | awk -F \. '{print $NF}'`
++    BACKUP="$path.BACKUP.$$.${extension}"
++    LOCAL="$path.LOCAL.$$.${extension}"
++    REMOTE="$path.REMOTE.$$.${extension}"
++    BASE="$path.BASE.$$.${extension}"
+ 
+     mv -- "$path" "$BACKUP"
+     cp -- "$BACKUP" "$path"
 -- 
-Matthieu
+1.5.3.5
