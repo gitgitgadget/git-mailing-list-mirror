@@ -1,110 +1,122 @@
-From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
-Subject: Re: Fix UTF Encoding issue
-Date: Tue, 4 Dec 2007 00:20:26 +0200
-Organization: Pardus / KDE
-Message-ID: <200712040020.26773.ismail@pardus.org.tr>
-References: <4753D419.80503@clearchain.com> <200712031802.55514.jnareb@gmail.com> <47547930.5070603@clearchain.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] fast-export: rename the signed tag mode 'ignore' to 'verbatim'
+Date: Mon, 3 Dec 2007 22:44:39 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712032243450.27959@racer.site>
+References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
+ <ee77f5c20712021539r3075fc57ld6a4cec737e6043d@mail.gmail.com>
+ <7vabosse23.fsf@gitster.siamese.dyndns.org> <7vbq98jdy5.fsf_-_@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0712031109380.27959@racer.site> <7v1wa3iquj.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0712031838450.27959@racer.site> <7vwsrvh4vx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
-  boundary="Boundary-00=_qEIVHhfBvTvQCsI"
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Martin Koegler <mkoegler@auto.tuwien.ac.at>,
-	Junio C Hamano <gitster@pobox.com>,
-	Alexandre Julliard <julliard@winehq.org>, git@vger.kernel.org,
-	Perl Unicode Mailing List <perl-unicode@perl.org>,
-	Dan Kogai <dankogai@dan.co.jp>
-To: Benjamin Close <Benjamin.Close@clearchain.com>
-X-From: git-owner@vger.kernel.org Mon Dec 03 23:20:15 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 03 23:45:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzJdw-0007GH-NQ
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 23:20:01 +0100
+	id 1IzK2h-000842-U0
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 23:45:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751077AbXLCWTk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 17:19:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751060AbXLCWTk
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 17:19:40 -0500
-Received: from ns2.uludag.org.tr ([193.140.100.220]:54902 "EHLO uludag.org.tr"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751018AbXLCWTk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 17:19:40 -0500
-Received: from ninjamobile.local (unknown [85.102.220.209])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by uludag.org.tr (Postfix) with ESMTP id B280061D0363;
-	Tue,  4 Dec 2007 00:50:54 +0200 (EET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-In-Reply-To: <47547930.5070603@clearchain.com>
+	id S1751133AbXLCWpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 17:45:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750914AbXLCWpG
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 17:45:06 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37039 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750813AbXLCWpE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 17:45:04 -0500
+Received: (qmail invoked by alias); 03 Dec 2007 22:45:02 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp052) with SMTP; 03 Dec 2007 23:45:02 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18UO+UiJVYUCygtDMGJBfE7V+PBbMaVtPLJBsHuzK
+	9g3fYbApFhpEV3
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vwsrvh4vx.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66966>
-
---Boundary-00=_qEIVHhfBvTvQCsI
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-Monday 03 December 2007 Tarihinde 23:46:24 yazm=C4=B1=C5=9Ft=C4=B1:
-> Jakub Narebski wrote:
-> > On Mon, 3 Dec 2007, Martin Koegler wrote:
-> >> On Mon, Dec 03, 2007 at 04:06:48AM -0800, Jakub Narebski wrote:
-> >>> Ismail D=C3=B6nmez <ismail@pardus.org.tr> writes:
-> >>>> Monday 03 December 2007 Tarihinde 12:14:43 yazm??t?:
-> >>>>> Benjamin Close <Benjamin.Close@clearchain.com> writes:
-> >>>>>> -	eval { $res =3D decode_utf8($str, Encode::FB_CROAK); };
-> >>>>>> -	if (defined $res) {
-> >>>>>> -		return $res;
-> >>>>>> -	} else {
-> >>>>>> -		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
-> >>>>>> -	}
-> >>>>>> +	eval { return ($res =3D decode_utf8($str, Encode::FB_CROAK)); };
-> >>>>>> +	return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
-> >>>>>>  }
-> >>
-> >> This version is broken on Debian sarge and etch. Feeding a UTF-8 and a
-> >> latin1 encoding of the same character sequence yields to different
-> >> results.
->
-> For the record, this was on a debian sid machine.
->
-> #perl --version
-> This is perl, v5.8.8 built for x86_64-linux-gnu-thread-multi
->
-> and the result of not using the original patch was:
->
-> <h1>Software error:</h1>
-> <pre>Cannot decode string with wide characters at
-> /usr/lib/perl/5.8/Encode.pm line 166. </pre>
-
-Can you try the attached patch?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66967>
 
 
-=2D-=20
-Never learn by your mistakes, if you do you may never dare to try again.
+The name 'verbatim' describes much better what this mode does with
+signed tags.  While at it, fix the documentation what it actually
+does.
 
---Boundary-00=_qEIVHhfBvTvQCsI
-Content-Type: text/x-diff;
-  charset="iso-8859-1";
-  name="utf8-username.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename="utf8-username.patch"
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
---- gitweb/gitweb.perl	2007-11-28 11:33:14.000000000 +0200
-+++ gitweb/gitweb.perl	2007-11-28 11:33:42.000000000 +0200
-@@ -2159,7 +2159,7 @@
- 	}
- 	my $owner = $gcos;
- 	$owner =~ s/[,;].*$//;
--	return to_utf8($owner);
-+	return $owner;
- }
+	On Mon, 3 Dec 2007, Junio C Hamano wrote:
+
+	> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+	> 
+	> > But the original author already admitted that the original 
+	> > naming was stupid...
+	> 
+	> Ok, send in updates, please.
+
+	Alright...
+
+ Documentation/git-fast-export.txt |    4 ++--
+ builtin-fast-export.c             |    8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
+index 073ff7f..fd3d571 100644
+--- a/Documentation/git-fast-export.txt
++++ b/Documentation/git-fast-export.txt
+@@ -26,14 +26,14 @@ OPTIONS
+ 	Insert 'progress' statements every <n> objects, to be shown by
+ 	gitlink:git-fast-import[1] during import.
  
- ## ......................................................................
-
---Boundary-00=_qEIVHhfBvTvQCsI--
+---signed-tags=(ignore|warn|strip|abort)::
++--signed-tags=(verbatim|warn|strip|abort)::
+ 	Specify how to handle signed tags.  Since any transformation
+ 	after the export can change the tag names (which can also happen
+ 	when excluding revisions) the signatures will not match.
+ +
+ When asking to 'abort' (which is the default), this program will die
+ when encountering a signed tag.  With 'strip', the tags will be made
+-unsigned, with 'ignore', they will be silently ignored (i.e. not exported)
++unsigned, with 'verbatim', they will be silently exported
+ and with 'warn', they will be exported, but you will see a warning.
+ 
+ 
+diff --git a/builtin-fast-export.c b/builtin-fast-export.c
+index 72be45d..2136aad 100755
+--- a/builtin-fast-export.c
++++ b/builtin-fast-export.c
+@@ -23,15 +23,15 @@ static const char *fast_export_usage[] = {
+ };
+ 
+ static int progress;
+-static enum { IGNORE, WARN, STRIP, ABORT } signed_tag_mode = ABORT;
++static enum { VERBATIM, WARN, STRIP, ABORT } signed_tag_mode = ABORT;
+ 
+ static int parse_opt_signed_tag_mode(const struct option *opt,
+ 				     const char *arg, int unset)
+ {
+ 	if (unset || !strcmp(arg, "abort"))
+ 		signed_tag_mode = ABORT;
+-	else if (!strcmp(arg, "ignore"))
+-		signed_tag_mode = IGNORE;
++	else if (!strcmp(arg, "verbatim") || !strcmp(arg, "ignore"))
++		signed_tag_mode = VERBATIM;
+ 	else if (!strcmp(arg, "warn"))
+ 		signed_tag_mode = WARN;
+ 	else if (!strcmp(arg, "strip"))
+@@ -270,7 +270,7 @@ static void handle_tag(const char *name, struct tag *tag)
+ 				warning ("Exporting signed tag %s",
+ 					 sha1_to_hex(tag->object.sha1));
+ 				/* fallthru */
+-			case IGNORE:
++			case VERBATIM:
+ 				break;
+ 			case STRIP:
+ 				message_size = signature + 1 - message;
+-- 
+1.5.3.7.2120.g1a32
