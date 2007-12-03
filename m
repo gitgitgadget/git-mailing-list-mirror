@@ -1,301 +1,332 @@
-From: David Voit <david.voit@gmail.com>
-Subject: Re: git-svn: .git/svn disk usage
-Date: Mon, 3 Dec 2007 18:51:44 +0000 (UTC)
-Message-ID: <loom.20071203T182924-435@post.gmane.org>
-References: <65dd6fd50712022217l5f807f31pf3f00d82c3dccf5c@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Adding Git to Better SCM Initiative : Comparison
+Date: Mon, 3 Dec 2007 20:57:14 +0100
+Message-ID: <200712032057.15296.jnareb@gmail.com>
+References: <200711282339.59938.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 03 20:01:15 2007
+X-From: git-owner@vger.kernel.org Mon Dec 03 20:57:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzGXQ-0007Ok-HL
-	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 20:01:04 +0100
+	id 1IzHQH-00047d-1a
+	for gcvg-git-2@gmane.org; Mon, 03 Dec 2007 20:57:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753761AbXLCTAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 14:00:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbXLCTAO
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 14:00:14 -0500
-Received: from main.gmane.org ([80.91.229.2]:36238 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753750AbXLCTAM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 14:00:12 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IzGWQ-0002PI-7O
-	for git@vger.kernel.org; Mon, 03 Dec 2007 19:00:02 +0000
-Received: from rx0660.cip.uni-regensburg.de ([132.199.235.98])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Dec 2007 19:00:02 +0000
-Received: from david.voit by rx0660.cip.uni-regensburg.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 Dec 2007 19:00:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 132.199.235.98 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.13pre) Gecko/20070505 (Debian-1.8.0.14~pre071019b-0etch1) Epiphany/2.14)
+	id S1753302AbXLCT5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 14:57:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753173AbXLCT5W
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 14:57:22 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:8596 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752846AbXLCT5V (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 14:57:21 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so2770884nfb
+        for <git@vger.kernel.org>; Mon, 03 Dec 2007 11:57:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=n+hhj0FDGJaE+OLW2YEw+1VW6k0V1fqKMl6FKbAIpFI=;
+        b=Tw/ypi2EIEwElPbPHxXLUTa8ComHV0vkx37aDF65VlmwnRGIgt4t/Ga+Gc5ZMsUUmjU0BL09Hen+ZcKME/ChUI9qJyn/RXh0OwxSHUOd0kx2NQx232MW+1LOjSIcpuCN46lJXs8n8r6NBQr7MYPvzSk1K2D+efc9/N65YFI+ssI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Xa0OlWfQI2btXVTGSDBKQ8IeNEWQmjNXgF6fjkT/xpTAQYZ2I8Bg0pZAxf0HP+NDqfo9e5SE6x5uaSgQ0qki2WIF6qHVDYolgbVO13n7rN9SENZ9KLJec4DvGs8nNUiOCpc6U/wcTa7cuyBTFftjtkZI12JXLPQQ2D+seiZkLd8=
+Received: by 10.86.89.4 with SMTP id m4mr605722fgb.1196711839205;
+        Mon, 03 Dec 2007 11:57:19 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.225.86])
+        by mx.google.com with ESMTPS id d6sm12365660fga.2007.12.03.11.57.16
+        (version=SSLv3 cipher=OTHER);
+        Mon, 03 Dec 2007 11:57:17 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200711282339.59938.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66950>
 
-Ollie Wild <aaw <at> google.com> writes:
+Below there is email I want to send to Shlomi Fish to have him include
+GIT in "Better SCM Initiative : Comparison page".
 
-> 
-> Hi,
-> 
-> I've been using git-svn to mirror the gcc repository at
-> svn://gcc.gnu.org/svn/gcc.  Recently, I noticed that my .git directory
-> is consuming 11GB of disk space.  Digging further, I discovered that
-> 9.8GB of this is attributable to the .git/svn directory (which
-> includes 200 branches and 2,588 tags).  Given that my .git/objects
-> directory is 652MB, it seems that it ought to be possible to store
-> this information in a more compact form.
-> 
-> I'm curious if other developers have run into this issue.  If so, are
-> there any proposals / plans for improving the storage of git-svn
-> metadata?
-> 
-> Thanks,
-> Ollie
-> 
+Please check it and send comments and corrections. TIA.
 
-Hi all,
+-- >8 --
+I have noticed that your SCM comparison at "Better SCM Initiative" website
+  http://better-scm.berlios.de/comparison/comparison.html
+misses GIT, version control system which is used to manage Linux kernel.
 
-I've seen the same effect, so i tried to reduce the size of the revdb and made a
-new format:
-First, in the bin files the sha1 are stored as hexvalues not as ascii, this
-reduces the a single sha1 from 41 bytes to 20.
-Second, only save the non-zero commits, thats what the idx are used for.
-A idx file has three 32bit integers per entry.
-The first integer represents the first zero svn revision, the second the last
-zero revision and the last integer is the position of the next non-zero revision
-in the bin.
+GIT was created by Linus Torvalds in response to the change of BitKeeper 
+licensing, as a tool to manage Linux kernel sources.  It is based on 
+three years of Linus experience with BitKeeper, and inspired by 
+Monotone architecture.  It was designed for Linux kernel, and is used
+by various projects, including X.Org, various Freedesktop projects, WINE,
+OLPC (One Laptop Per Child), Samba.
 
-Example:
-Revision 0-373006 are zero revision and 373007 is the first actualy used revision
-and 373008-373623 are again zero revisions
-the idx has the following content:
-0 373006 0
-373007 373007 1
+<blurb src="http://git-scm.org">
+Git  is  a  popular  version control system designed to handle very large projects
+with  speed  and  efficiency;  it is used mainly for various open source projects,
+most notably the Linux kernel.
 
-and the bin only saves
-59037b8043268c9ca0d87ba86519ed0b5358c8a1
-eef3f7e25993a46e3c4242aa502d93e909b08c57
+Git  falls in the category of distributed source code management tools, similar to
+e.g.  GNU  Arch  or  Monotone  (or  BitKeeper in the proprietary world). Every Git
+working  directory  is  a  full-fledged  repository  with  full  revision tracking
+capabilities, not dependent on network access or a central server.
 
-The format currently used produce a 373624*41bytes large file.
+Git is an Open Source project covered by the GNU General Public License v2. It was
+originally  written  by  Linus  Torvalds  and  is  currently maintained by Junio C
+Hamano.
+</blurb>
 
-Used on a git-svn clone here, i get:
-The results are:
-old:
-1,1G    hadoop (1004M   svn/)
-new:
-47M     hadoop (5,9M    svn/)
+Below there is patch to the sources for the site.
 
-in detail:
+BTW. when asking about updating GIT info for comparison, please CC
+git mailing list, git@vger.kernel.org
 
-.git/svn/trunk:
-old:
--rw-r--r-- 1 david david 24M 2007-11-29 10:26
-.rev_db.13f79535-47bb-0310-9956-ffa450edef68
--rw-r--r-- 1 david david 75K 2007-11-29 10:26
-.rev_db.7fecf15c-03ad-4724-994c-e980afa7160c
-new:
--rw-r--r-- 1 david david 32K 2007-12-03 18:40
-revdb-13f79535-47bb-0310-9956-ffa450edef68.bin
--rw-r--r-- 1 david david 18K 2007-12-03 18:40
-revdb-13f79535-47bb-0310-9956-ffa450edef68.idx
--rw-r--r-- 1 david david  32K 2007-12-03 18:44
-revdb-7fecf15c-03ad-4724-994c-e980afa7160c.bin
--rw-r--r-- 1 david david 2,0K 2007-12-03 18:44
-revdb-7fecf15c-03ad-4724-994c-e980afa7160c.idx
-
-Here a example sourcecode to test this idea:
-
-I try to integrate this in git-svn this week.
-
-NOTE: I'm not a perl hacker, so use at your own risk.
-
-Bye David
-ps.: I'm not a member of this list please reply directly to me.
-
-migrate.pl:
-$uuid = "7fecf15c-03ad-4724-994c-e980afa7160c";
-
-open (NONZERO, '.rev_db.'.$uuid);
-open (IDX, '>revdb-'.$uuid.'.idx');
-open (BIN, '>revdb-'.$uuid.'.bin');
-
-$first_zero = 0;
-$pos = 0;
-$rev = 0;
-
-while ($sha1 = <NONZERO>) {
-
-chomp($sha1);
-
-if ($sha1 ne ("0" x 40))
-{
-        print BIN pack("H40", $sha1);
-
-        if ($first_zero != $rev)
-        {
-                print IDX pack("N N N", $first_zero, ($rev-1), $pos);
-        }
-
-        $first_zero=$rev+1;
-        $pos++;
-}
-
-$rev++;
-
-}
-
-close(BIN);
-close(IDX);
-close(NONZERO);
-
-parse.pl:
-use strict;
-use Fcntl;
-
-my(@index, $buf, $i);
-my($uuid) = "13f79535-47bb-0310-9956-ffa450edef68";
-my($db_path) = "revdb-$uuid.bin";
-
-sysopen(IDX, "revdb-$uuid.idx", O_RDONLY);
-
-while (sysread(IDX, $buf, 12)) {
-   my($minrev, $maxrev, $pos) = unpack("N N N", $buf);
-
-   push @index, [$minrev, $maxrev, $pos];
-}
-
-close(IDX);
-
-my($lastindex) = scalar(@index)-1;
-my($lastindexpos) = $index[$lastindex][2];
-my($lastindexrev) = $index[$lastindex][1];
-
-my @stat = stat $db_path;
-($stat[7] % 20) == 0 or die "$db_path inconsistent size: $stat[7]\n";
-my ($maxrev) = ($stat[7]/20)-($lastindexpos)+($lastindexrev);
-my ($minrev) = $index[0][1]+1;
-
-my($cachestep) = int((scalar(@index))/9);
-my(@cache);
-for (my($i)=0; $i < scalar(@index); $i += $cachestep) {
-   push @cache, [$index[$i][0], $i];
-}
-
-my($lastsearch) = 0;
-
-sub pos2sha1 {
-   my($pos) = @_;
-   sysopen(BINDB, $db_path, O_RDONLY);
-
-   sysseek(BINDB, $pos, 0);
-
-   my($buf);
-   sysread(BINDB, $buf, 20);
-
-   return unpack ("H40", $buf);
-
-   close(BINDB);
-}
-
-sub get_sha1 {
-   my($rev) = @_;
-   my($i) = 0;
-
-   if (($rev <= 0) || ($rev > $maxrev) || $rev <= $index[0][1]) {
-      return ("0" x 40);
-   }
-
-   if ($rev > $lastindexrev) {
-      my($pos) = (((($rev-1) - $lastindexrev)+$lastindexpos))*20;
-
-      return pos2sha1($pos);
-   }
-
-   if(($rev >= $index[$lastsearch][0] && $rev <= $index[$lastsearch][1]) ||
-($rev >= $index[$lastsearch+1][0] && $rev <= $index[$lastsearch+1][1])) {
-      return ("0" x 40);
-   }
-   elsif ($rev > $index[$lastsearch][1] && $rev < $index[$lastsearch+1][0]) {
-      my($pos) = (($rev-1) - $index[$lastsearch][1] + $index[$lastsearch][2]) * 20;
-
-      return pos2sha1($pos);
-   }
-   elsif($rev > $index[$lastsearch+1][1] && $rev < $index[$lastsearch+2][0]) {
-      $lastsearch++;
-
-      my($pos) = (($rev-1) - $index[$lastsearch][1] + $index[$lastsearch][2]) * 20;
-
-      return pos2sha1($pos);
-   }
-   elsif($lastsearch != 0 && $rev > $index[$lastsearch-1][1] && $rev <
-$index[$lastsearch][0]) {
-      $lastsearch--;
-
-      my($pos) = (($rev-1) - $index[$lastsearch][1] + $index[$lastsearch][2]) * 20;
-
-      return pos2sha1($pos);
-   }
-
-   my($l, $r);
-   $l = 0;
-   $r = scalar(@index)-1;
-
-   my($lastcache) = scalar(@cache)-1;
-
-   for (my($i)=0; $i <= $lastcache; $i++) {
-      if ($rev >= $cache[$i][0]) {
-         $l = $cache[$i][1];
-      }
-
-      if ($rev < $cache[$lastcache-$i][0]) {
-         $r = $cache[$lastcache-$i][1];
-      }
-   }
-
-   if ($rev <= $index[$l][1]) {
-      return ("0" x 40);
-   }
-
-   while ($l <= $r) {
-      $i = int(($l + $r)/2);
-
-      if ($rev >= $index[$i][0]  && $rev <= $index[$i][1]) {
-         $lastsearch = $i;
-
-         return ("0" x 40);
-      }
-      elsif ($rev <= $index[$i][0]) {
-         $r = $i-1;
-      }
-      elsif ($rev >= $index[$i+1][0]) {
-         $l = $i+1;
-      } 
-      else {
-         $lastsearch = $i;
-         my($pos) = (($rev-1) - $index[$i][1] + $index[$i][2]) * 20;
-
-         return pos2sha1($pos);
-      }
-   }
-
-   return ("0" x 40);
-}
-
-for (my($i)=$maxrev; $i >= $minrev; $i--) {
-   my($sha1) = get_sha1($i);
-   if ($sha1 ne ("0" x 40)) {
-      print "$i = $sha1\n";
-   }
-}
+Index: src/comparison/scm-comparison.xml
+===================================================================
+--- src/comparison/scm-comparison.xml	(revision 290)
++++ src/comparison/scm-comparison.xml	(working copy)
+@@ -38,6 +38,9 @@ <implementations>
+             <impl id="darcs">
+                 <name>Darcs</name>
+             </impl>
++            <impl id="git">
++                <name>Git</name>
++            </impl>
+             <impl id="mercurial">
+                 <name>Mercurial</name>
+             </impl>
+@@ -106,6 +109,7 @@ <title>Atomic Commits</title>
+                 <s id="svk">Commits are atomic.</s>
+                 <s id="aegis">Commits are atomic.</s>
+                 <s id="bitkeeper">Yes (but need to verify)</s>
++                <s id="git">Yes.</s>
+                 <s id="mercurial">Yes.</s>
+                 <s id="monotone">Yes.</s>
+                 <s id="opencm">Yes. Commits are atomic.</s>
+@@ -142,6 +146,13 @@ <title>Files and Directories Moves or Renames</title>
+                 <s id="darcs">Yes. Renames are supported.</s>
+                 <s id="bitkeeper">Yes. Renames are supported.</s>
+                 <s id="aegis">Yes. Renames are supported.</s>
++                <s id="git">
++                    Yes (or no depending on interpretation). Git detects
++                    renames based on content regardless of whether the
++                    committer indicated the fact.
++                    You can follow history of file across renames using
++                    'git log -M --follow'.
++                </s>
+                 <s id="mercurial">Yes. Renames are supported.</s>
+                 <s id="monotone">Yes. Renames are supported.</s>
+                 <s id="opencm">Yes. Renames are supported</s>
+@@ -214,6 +225,13 @@ <title>File and Directories Copies</title>
+                     Yes. Copies are supported.
+                 </s>
+                 <s id="aegis">No. Copies are not supported.</s>
++                <s id="git">
++                    Yes (or no depending on interpretation). Git detects
++                    copies (when requested) based on content regardless
++                    of whether the committer indicated the fact.
++                    You can follow history of file across copies using
++                    'git log -C -C --follow'.
++                </s>
+                 <s id="mercurial">Yes. Copies are supported</s>
+                 <s id="monotone">Yes. Copies are supported</s>
+                 <s id="opencm">No. Copies are not supported.</s>
+@@ -267,6 +285,7 @@ <title>Remote Repository Replication</title>
+                 <s id="darcs">Yes.</s>
+                 <s id="bitkeeper">Yes.</s>
+                 <s id="aegis">Yes.</s>
++                <s id="git">Yes.</s>
+                 <s id="mercurial">Yes.</s>
+                 <s id="monotone">Yes.</s>
+                 <s id="opencm">No.</s>
+@@ -313,6 +332,7 @@ <title>Propagating Changes to Parent Repositories</title>
+                 <s id="darcs">Yes.</s>
+                 <s id="bitkeeper">Yes.</s>
+                 <s id="aegis">Yes.</s>
++                <s id="git">Yes.</s>
+                 <s id="mercurial">Yes.</s>
+                 <s id="monotone">Yes.</s>
+                 <s id="opencm">No.</s>
+@@ -373,6 +393,10 @@ <title>Repository Permissions</title>
+                 <s id="svk">
+                     Same as subversion.
+                 </s>
++                <s id="git">
++                    Partial (?). It is possible to lock down repository
++                    (access to branches and tags) using hooks.
++                </s>
+                 <s id="mercurial">
+                     Yes. It is possible to lock down repositories,
+                     subdirectories, or files using hooks.
+@@ -455,6 +479,13 @@ <title>Changesets' Support</title>
+                 <s id="darcs">
+                     Yes. Changesets are supported.
+                 </s>
++                <s id="git">
++                    Yes. Changesets are supported.<br />
++                    Actually Git is snapshot based which means Git records
++                    the full state in every commit.  This means that any two
++                    commits can be compared directly very quickly, although the
++                    repository is typically browsed as a series of changesets.
++                </s>
+                 <s id="mercurial">
+                     Yes. Changesets are supported.
+                 </s>
+@@ -509,6 +540,11 @@ <title>Tracking Line-wise File History</title>
+                 <s id="arch">Not in the command line client, but ViewARCH,
+                 a web-interface for Arch, has it.</s>
+                 <s id="darcs">Yes. (darcs annotate)</s>
++                <s id="git">
++                    Yes. (git blame, git gui blame).
++                    It can also detect the origin of copied and moved source
++                    lines, and can ignore whitespace changes.
++                </s>
+                 <s id="mercurial">Yes. (hg annotate)</s>
+                 <s id="monotone">Yes, as of version 0.19.</s>
+                 <s id="aegis">Yes. aeannotate</s>
+@@ -570,6 +606,11 @@ <title>Ability to Work only on One Directory...</title>
+                     whole.
+                 </s>
+                 <s id="aegis">No. All changes are made repository-wide.</s>
++                <s id="git">
++                    No. All changes are made repository-wide.  However
++                    it is possible to commit only selected changes in the
++                    working tree rather than everything.  You can also
++                    use submodules (subproject) support.</s>
+                 <s id="mercurial">
+                     It is possible to commit changes only in a subset of the
+                     tree. There are plans for partial checkouts.
+@@ -636,6 +677,10 @@ <title>Tracking Uncommited Changes</title>
+                     Yes, using "darcs whatsnew".
+                 </s>
+                 <s id="aegis">Yes. Using aediff</s>
++                <s id="git">
++                    Yes, of course. Using git diff.
++                    Note that git uses staging area for commits (index).
++                </s>
+                 <s id="mercurial">Yes. Using hg diff.</s>
+                 <s id="monotone">Yes. In a similar fashion to CVS.</s>
+                 <s id="opencm">Yes. Using cm diff</s>
+@@ -681,6 +726,11 @@ <title>Per-File Commit Messages</title>
+                 <s id="darcs">
+                     No.
+                 </s>
++                <s id="git">
++                    No.  The message applies to the commit as a whole.
++                    But you can tag (with description) given contents
++                    of a file (blob).
++                </s>
+                 <s id="mercurial">
+                     No.
+                 </s>
+@@ -782,6 +832,15 @@ <title>Documentation</title>
+                     and the client contains a help tool that offers
+                     an integrated help system.
+                 </s>
++                <s id="git">
++                    Good. There's Git User's Manual, manpages, some
++                    technical documentation and some howtos.  All
++                    documentation is also available
++                    <a href="http://www.kernel.org/pub/software/scm/git/docs">online</a>
++                    in HTML format; there is additional information (including
++                    beginnings of FAQ) on a
++                    <a href="http://git-scm.org/gitwiki">git wiki</a>.
++                </s>
+                 <s id="mercurial">
+                     Very good. There's an overview and tutorial on the
+                     web site, and integrated help for every command.
+@@ -894,6 +953,16 @@ <title>Ease of Deployment</title>
+                     to install the subversion perl bindings and a few modules
+                     from CPAN.
+                 </s>
++                <s id="git">
++                    Very good.  Install from RPM or deb on Linux; use
++                    msysGit or Cygwin install on Windows.  Git requires
++                    zlib; also POSIX shell and utilities and Perl for some
++                    commands.
++                    Installing from sources is easy: Makefile has ready
++                    configuration for many OS, you can also use autoconf
++                    to generate Makefile configuration.  Compiling docs
++                    requires asciidoc toolchain, but you can use prebuild.
++                </s>
+                 <s id="mercurial">
+                     Excellent.  Binary packages are available for all
+                     popular platforms.  Building from source requires
+@@ -1006,6 +1075,13 @@ <title>Command Set</title>
+                     but since the model is different most commands are
+                     unique.
+                 </s>
++                <s id="git">
++                    Tries to follow CVS conventions, but deviates where there
++                    is a different design (following BitKeeper for DVCS).
++                    Large command set (~140) is divided into plumbing commands
++                    (low lewel, to be used in scripts) and porcelain (high level).
++                    It is easy to add new commands as scripts, or as git aliases.
++                </s>
+                 <s id="mercurial">
+                     Tries to follow CVS conventions, but deviates where there
+                     is a different design.
+@@ -1106,6 +1182,13 @@ <title>Networking Support</title>
+                     There exists some HTTP-functionality, but it is quite
+                     limited.
+                 </s>
++                <s id="git">
++                    Excellent.  Uses HTTPS (with WebDAV) or ssh for push
++                    (to publish changes to server) and HTTP, FTP, ssh or custom
++                    "git" protocol for fetch (read from server).  There is also
++                    git-bundle for offline transport, and tools to exchange
++                    (create and apply) patches via email.
++                </s>
+                 <s id="mercurial">
+                     Excellent.  Uses HTTP or ssh.  Remote access also
+                     works safely without locks over read-only network
+@@ -1203,6 +1286,11 @@ <title>Portability</title>
+                     Very good. Supports many UNIXes, Mac OS X, and Windows,
+                     and is written in a portable language.
+                 </s>
++                <s id="git">
++                    Good to very good.  Portable across all POSIX systems.
++                    There exists Win32 binary using MinGW (msysGit),
++                    or you can use binary provided by Cygwin.
++                </s>
+                 <s id="mercurial">
+                     Excellent. Runs on all platforms supported by
+                     Python.  Repositories are portable across CPU
+@@ -1300,6 +1388,10 @@ <title>Web Interface</title>
+                     is included in the distribution.
+                 </s>
+                 <s id="aegis">Yes.</s>
++                <s id="git">
++                    Yes, gitweb is included in git since version 1.4.0.
++                    Other web interfaces exists: cgit, wit, git-php
++                </s>
+                 <s id="mercurial">Yes.  The web interface is a bundled component.</s>
+                 <s id="monotone">No.</s>
+                 <s id="opencm">No.</s>
+@@ -1373,6 +1464,12 @@ <title>Availability of Graphical User-Interfaces.</title>
+                 <s id="aegis">
+                     There is tkaegis.
+                 </s>
++                <s id="git">
++                    There is history viewer 'gitk' and commit tool 'git-gui';
++                    both in Tcl/Tk.  There also exists a number of third-party
++                    GUIs, including: qgit (Qt), GitView (GTK+), Giggle (GTK+),
++                    tig (ncurses).
++                </s>
+                 <s id="mercurial">
+                     History viewing available with hgit extension;
+                     check-in extension (hgct) makes committing easier.
+@@ -1453,6 +1550,7 @@ <title>License</title>
+                 GNU GPL (open-source)
+             </s>
+             <s id="svk">Perl License. (open source)</s>
++            <s id="git">GNU GPL v2 (open source)</s>
+             <s id="mercurial">GNU GPL (open source)</s>
+             <s id="monotone">GNU GPL (open source)</s>
+             <s id="opencm">
