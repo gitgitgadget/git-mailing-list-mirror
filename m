@@ -1,100 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Introduce .git/BRANCH to point to the current branch
-Date: Tue, 4 Dec 2007 23:08:55 +0100
-Message-ID: <200712042308.57048.jnareb@gmail.com>
-References: <4755B3B3.80704@gmail.com> <m34peyur8r.fsf@roke.D-201> <4755CD32.7040204@gmail.com>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: [PATCH] Set OLD_ICONV on Cygwin.
+Date: Tue, 04 Dec 2007 23:12:19 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <4755D0C3.501@obry.net>
+References: <21977191.137171196775591804.JavaMail.www@wwinf1621>	<4755597B.9050709@op5.se> <7v63ze5osn.fsf@gitster.siamese.dyndns.org> <7vaboq3yuy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Git Mailing List <git@vger.kernel.org>
-To: Salikh Zakirov <salikh@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 04 23:09:23 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andreas Ericsson <ae@op5.se>, Pascal Obry <pascal.obry@wanadoo.fr>,
+	Pascal Obry <pascal.obry@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 04 23:12:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzfxA-0004T4-Py
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 23:09:21 +0100
+	id 1Izg0a-0005xj-VS
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 23:12:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751751AbXLDWJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Dec 2007 17:09:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751754AbXLDWJA
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 17:09:00 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:55209 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751713AbXLDWI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Dec 2007 17:08:59 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so2999381nfb
-        for <git@vger.kernel.org>; Tue, 04 Dec 2007 14:08:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=7r5IioQ8LdEox6XIqVuTpoiNYrrA+46O+Ziv9rRmN18=;
-        b=cY5ODC7aCbnxabHg1sYTtIvwOly2aD8raZfbghc1ABk2IVmTre0uybuAW+jMoGq4xTNjR42hMLzJQ7pNmR9uvWxOcsuISIpgQ69Q+XdEIDafqwhi4par0ir/neQOGkAG58AGOZJCFepOvF2Nim0W7/V5aJI/g6oSrOolvVo8lNk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=fkAqW6XIBxDkpIRmXfsMLJgAWkZ4MWlnNqlKy5SNddXnXGmL3cgdqeRK4Sc8QDCx7uUuAad1N9Vs0Us4aCw7INOAlxisNS/GN9i+CKPY3+0UE3W7N+BWH9duEB1x6+0YWGYR5qoaKyd9hf+5BPLq0Bg+a0F8jcJeVaJWlU14yFk=
-Received: by 10.86.54.3 with SMTP id c3mr9709449fga.1196806137555;
-        Tue, 04 Dec 2007 14:08:57 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.215.161])
-        by mx.google.com with ESMTPS id f19sm74750fka.2007.12.04.14.08.55
-        (version=SSLv3 cipher=OTHER);
-        Tue, 04 Dec 2007 14:08:56 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4755CD32.7040204@gmail.com>
-Content-Disposition: inline
+	id S1753014AbXLDWMZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Dec 2007 17:12:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752901AbXLDWMY
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 17:12:24 -0500
+Received: from smtp2e.orange.fr ([80.12.242.112]:35801 "EHLO smtp2e.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752813AbXLDWMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Dec 2007 17:12:22 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2e13.orange.fr (SMTP Server) with ESMTP id 3BC037000092
+	for <git@vger.kernel.org>; Tue,  4 Dec 2007 23:12:21 +0100 (CET)
+Received: from [192.168.0.100] (AVelizy-151-1-88-105.w86-205.abo.wanadoo.fr [86.205.126.105])
+	by mwinf2e13.orange.fr (SMTP Server) with ESMTP id CEAB07000082;
+	Tue,  4 Dec 2007 23:12:20 +0100 (CET)
+X-ME-UUID: 20071204221220846.CEAB07000082@mwinf2e13.orange.fr
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <7vaboq3yuy.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67092>
 
-On Tue, 4 Dec 2007, Salikh Zakirov wrote:
-> Jakub Narebski wrote:
->>> Salikh Zakirov <salikh@gmail.com> writes:
->>>> This combination leads to the confusing user experience
->>>> if the branch changes independently of the working directory.
->>>> This can happen in following cases:
->> 
->> All those cases are cases of not recommended workflows.
-> 
-> I guess those cases are not recommended exactly because
-> there are prone to causing confusion with current git.
+Junio C Hamano a =E9crit :
+> I am at work and will be busy for the rest of the afternoon, so won't=
+ be
+> applying it until this evening, though.
 
-BTW. I think for each such workflow there is alternative
-in git, which does not cause those problems.
+Ok, thanks. No urgency with this patch anyway.
 
-> I use multiple workdirs quite often, and by now learned
-> not to check out the same branch in different workdirs, 
-> but it would very convenient if it would not be necessary
-> to remember it. 
+Pascal.
 
-Those cases are not recommended because they would _always_ cause
-confusion, whether the user is informed that somehow working copy
-or current branch has changed while he/she was working or not.
-Currently git tries to follow "merge when ready" (i.e. you
-explicitely ask to merge or rebase), not "merge when needed"
-(like in old, broken CVS workflow where 'cvs update' might have
-_forced_ a merge before being allowed to save his/her finished
-work).
- 
->> BTW. how in your proposal would you detach HEAD?
-> 
-> Deleting .git/BRANCH should be enough.
+--=20
 
-Hmmm...
-
-> But I cannot see the workflow that would need it.
-
-Checking out tag. Checking out remote-tracking branch. You cannot
-commit on top of either (immovable) tag, or (externally controlled) 
-remote-tracking branch.
-
-Besides rebase now uses detached HEAD, and I guess that bisect would 
-too.
--- 
-Jakub Narebski
-Poland
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
