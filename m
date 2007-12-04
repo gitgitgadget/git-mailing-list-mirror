@@ -1,53 +1,75 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [PATCH v4] Allow update hooks to update refs on their own.
-Date: Mon, 3 Dec 2007 18:33:12 -0800
-Message-ID: <21AA9521-0FED-471F-AFBC-B5CEF4B4A5E9@midwinter.com>
-References: <7vr6i8sfsa.fsf@gitster.siamese.dyndns.org> <20071202212224.GA22117@midwinter.com> <20071203040108.GS14735@spearce.org> <Pine.LNX.4.64.0712031146520.27959@racer.site> <20071204015108.GV14735@spearce.org> <Pine.LNX.4.64.0712040211270.27959@racer.site> <20071204022020.GA14735@spearce.org> <Pine.LNX.4.64.0712040224080.27959@racer.site>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Dec 04 03:33:48 2007
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG] Pulling tags no longer works in 1.5.3.4...
+Date: Mon, 3 Dec 2007 21:33:40 -0500
+Message-ID: <20071204023340.GA22320@coredump.intra.peff.net>
+References: <4754B4AF.8070408@garzik.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff Garzik <jeff@garzik.org>
+X-From: git-owner@vger.kernel.org Tue Dec 04 03:34:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzNbS-0006nY-Dc
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 03:33:42 +0100
+	id 1IzNbo-0006si-4D
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 03:34:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751245AbXLDCdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 21:33:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751076AbXLDCdO
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 21:33:14 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:41307 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750740AbXLDCdN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 21:33:13 -0500
-Received: (qmail 24409 invoked from network); 4 Dec 2007 02:33:13 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=XGNDxKhcdiB9HS2g6C6PAF0L3R39ImelHkouWoaCz2vmqsZuRuseoutCR3QJDCZy  ;
-Received: from localhost (127.0.0.1)
-  by localhost with SMTP; 4 Dec 2007 02:33:13 -0000
-In-Reply-To: <Pine.LNX.4.64.0712040224080.27959@racer.site>
-X-Mailer: Apple Mail (2.915)
+	id S1751248AbXLDCdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 21:33:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751076AbXLDCdn
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 21:33:43 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2334 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750709AbXLDCdm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 21:33:42 -0500
+Received: (qmail 1993 invoked by uid 111); 4 Dec 2007 02:33:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 03 Dec 2007 21:33:41 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Dec 2007 21:33:40 -0500
+Content-Disposition: inline
+In-Reply-To: <4754B4AF.8070408@garzik.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66999>
 
-On Dec 3, 2007, at 6:25 PM, Johannes Schindelin wrote:
-> I am somewhat wary of using environment variables in that context,  
-> since
-> the variables could leak to subprocesses, or (even worse), they  
-> could be
-> set inadvertently by the user or other scripts.
+On Mon, Dec 03, 2007 at 09:00:15PM -0500, Jeff Garzik wrote:
 
-Agreed on the inadvertent setting, but isn't leaking to subprocesses  
-the whole point of the exercise here?
+> Using package git-core-1.5.3.3-3.fc7, I can do the following with kernel git 
+> trees:
+>
+> 1) git-clone --reference linux-2.6 linux-2.6 tmp-2.6
+>
+> 2) time passes (days or weeks)
+>
+> 3)	cd tmp-2.6
+> 	git pull ../linux-2.6
+> 	git pull --tags ../linux-2.6
+>
+> Result:  works as expected.
 
--Steve
+Hrm, when I try to reproduce using v1.5.3.3, I get the "Warning: No
+merge candidate found..." message. Between 1.5.3.3 and 1.5.3.4, this
+message got a bit longer and the exit code was fixed to indicate an
+error. Were you perhaps just missing the warning message, since no error
+was signaled?
+
+At any rate, I think what you really want in step 3 is
+
+  git fetch --tags ../linux-2.6
+
+since you just want to grab the tags, and not merge anything (remember
+that pull is fetch+merge -- you are only interesting in the fetching
+side effect). You could also do this:
+
+  git pull --tags ../linux-2.6 master
+
+In general, "git pull --tags" without a branch to pull doesn't make much
+sense. What happens is that the "--tags" tells the fetch part of the
+pull operation to just grab the tags. Then the merge part of the pull
+operation looks in what has just been fetched for something merge-able.
+And of course there isn't anything, since all you fetched were tags.
+
+-Peff
