@@ -1,63 +1,83 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: [PATCH] Set OLD_ICONV on Cygwin.
-Date: Tue, 04 Dec 2007 23:12:19 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <4755D0C3.501@obry.net>
-References: <21977191.137171196775591804.JavaMail.www@wwinf1621>	<4755597B.9050709@op5.se> <7v63ze5osn.fsf@gitster.siamese.dyndns.org> <7vaboq3yuy.fsf@gitster.siamese.dyndns.org>
+From: Phillip Susi <psusi@cfl.rr.com>
+Subject: Re: git guidance
+Date: Tue, 04 Dec 2007 17:21:28 -0500
+Message-ID: <4755D2E8.5050402@cfl.rr.com>
+References: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com> <alpine.LFD.0.9999.0711290810170.8458@woody.linux-foundation.org> <200712010950.15628.a1426z@gawab.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Ericsson <ae@op5.se>, Pascal Obry <pascal.obry@wanadoo.fr>,
-	Pascal Obry <pascal.obry@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 04 23:12:55 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jing Xue <jingxue@digizenstudio.com>,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: Al Boldi <a1426z@gawab.com>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755119AbXLDWVq@vger.kernel.org Tue Dec 04 23:22:48 2007
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755119AbXLDWVq@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Izg0a-0005xj-VS
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 23:12:53 +0100
+	id 1IzgAB-0001aE-9V
+	for glk-linux-kernel-3@gmane.org; Tue, 04 Dec 2007 23:22:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753014AbXLDWMZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Dec 2007 17:12:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752901AbXLDWMY
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 17:12:24 -0500
-Received: from smtp2e.orange.fr ([80.12.242.112]:35801 "EHLO smtp2e.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752813AbXLDWMW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Dec 2007 17:12:22 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2e13.orange.fr (SMTP Server) with ESMTP id 3BC037000092
-	for <git@vger.kernel.org>; Tue,  4 Dec 2007 23:12:21 +0100 (CET)
-Received: from [192.168.0.100] (AVelizy-151-1-88-105.w86-205.abo.wanadoo.fr [86.205.126.105])
-	by mwinf2e13.orange.fr (SMTP Server) with ESMTP id CEAB07000082;
-	Tue,  4 Dec 2007 23:12:20 +0100 (CET)
-X-ME-UUID: 20071204221220846.CEAB07000082@mwinf2e13.orange.fr
+	id S1755119AbXLDWVq (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 4 Dec 2007 17:21:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752846AbXLDWV1
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Tue, 4 Dec 2007 17:21:27 -0500
+Received: from iriserv.iradimed.com ([72.242.190.170]:18321 "EHLO iradimed.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752219AbXLDWV0 (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 4 Dec 2007 17:21:26 -0500
+Received: from [10.1.1.235] ([10.1.1.235]) by iradimed.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 4 Dec 2007 17:21:40 -0500
 User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <7vaboq3yuy.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.5
-Sender: git-owner@vger.kernel.org
+In-Reply-To: <200712010950.15628.a1426z@gawab.com>
+X-OriginalArrivalTime: 04 Dec 2007 22:21:40.0518 (UTC) FILETIME=[0AF1FC60:01C836C4]
+X-TM-AS-Product-Ver: SMEX-7.5.0.1243-5.0.1023-15586.001
+X-TM-AS-Result: No--9.637500-5.000000-31
+X-TM-AS-User-Approved-Sender: No
+X-TM-AS-User-Blocked-Sender: No
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67092>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67093>
 
-Junio C Hamano a =E9crit :
-> I am at work and will be busy for the rest of the afternoon, so won't=
- be
-> applying it until this evening, though.
+Al Boldi wrote:
+> Judging an idea, based on a flawed implementation, doesn't prove that the 
+> idea itself is flawed.
 
-Ok, thanks. No urgency with this patch anyway.
+It isn't the implementation that is flawed, it is the idea.  The entire 
+point of a change control system is that you explicitly define change 
+sets and add comments to the set.  The filesystem was designed to allow 
+changes to be made willy-nilly.  If your goal is to perform change 
+control only with filesystem semantics, then you have a non starter as 
+their goals are opposing.  Requiring an explicit command command is 
+hardly burdensome, and otherwise, a git tree is perfectly transparent to 
+non git aware tools.
 
-Pascal.
+> Sure, you wouldn't want to change the git-engine update semantics, as that 
+> sits on the server and handles all users.  But what the git model is 
+> currently missing is a client manager.  Right now, this is being worked 
+> around by replicating the git tree on the client, which still doesn't 
+> provide the required transparency.
 
---=20
+It isn't missing a client manager, it was explicitly designed to not 
+have one, at least not as a distinct entity from a server, because it 
+does not use a client/server architecture.  This is very much by design, 
+not a work around.
 
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+What transparency are you requiring here?  You can transparently read 
+your git tree with all non git aware tools, what other meaning of 
+transparency is there?
+
+> IOW, git currently only implements the server-side use-case, but fails to 
+> deliver on the client-side.  By introducing a git-client manager that 
+> handles the transparency needs of a single user, it should be possible to 
+> clearly isolate update semantics for both the client and the server, each 
+> handling their specific use-case.
+
+Any talk of client or server makes no sense since git does not use a 
+client/server model.  If you wish to use a centralized repository, then 
+git can be set up to transparently push/pull to/from said repository if 
+you wish via hooks or cron jobs.
+
