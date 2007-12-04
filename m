@@ -1,70 +1,83 @@
-From: Russell <russellsteicke@gmail.com>
-Subject: Re: v1.5.4 plans
-Date: Tue, 4 Dec 2007 09:48:04 +0900
-Message-ID: <c1b8b6670712031648q4c6ed92cx4295042d2a80bf18@mail.gmail.com>
-References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] xdiff-interface.c (buffer_is_binary): Remove buffer size
+ limitation
+Date: Tue, 4 Dec 2007 01:00:39 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712040054280.27959@racer.site>
+References: <20071201160113.GA20849@nomad.office.altlinux.org>
+ <7vlk8e42qb.fsf@gitster.siamese.dyndns.org> <20071203215007.GA14697@basalt.office.altlinux.org>
+ <alpine.LFD.0.9999.0712031559480.8458@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 04 01:48:32 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Dmitry V. Levin" <ldv@altlinux.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Dec 04 02:01:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzLxf-0006Ur-HU
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 01:48:31 +0100
+	id 1IzMAD-0001Yt-Bg
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 02:01:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750924AbXLDAsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 19:48:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750885AbXLDAsH
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 19:48:07 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:33998 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750730AbXLDAsF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 19:48:05 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so5653924wah
-        for <git@vger.kernel.org>; Mon, 03 Dec 2007 16:48:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=KGckCajDmU/aix5RTFZrfhhPkQFpsXFROy/i+NQPi3Y=;
-        b=oUuEb4kjPHRzmNtMPvdoOkJRIZ1NAiigqvYAkEpsqVX8kkhu5QahfgD+a27KkLSoubN0eckkJif3SWM2d2BlmuSOekORiC3X4KlrK1ENzB4jBS7ky2Cpal5QnTlfALRCCuo7PF+sIytOVDahU/4B7CIe/YAmQINc8cuEleM3BZA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=q5RC5keB7qn9CnQ/dX1y2WbbdVnXKabEst9zJE3WWg+GiZHf+d4SSNw3CjAq4LpCFPjAbTFk8NWH0fkps4FDNz364CXlyIXVXNnz8NXhzMoslgeoIJvMPWv9AihRmfLdCKgK87a/01K7xEuk5Bkzx0bwH1YA+8MKcdAqOqs7k8I=
-Received: by 10.115.106.7 with SMTP id i7mr43554wam.1196729284352;
-        Mon, 03 Dec 2007 16:48:04 -0800 (PST)
-Received: by 10.115.78.5 with HTTP; Mon, 3 Dec 2007 16:48:04 -0800 (PST)
-In-Reply-To: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751103AbXLDBBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 20:01:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbXLDBBH
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 20:01:07 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39421 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750818AbXLDBBG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 20:01:06 -0500
+Received: (qmail invoked by alias); 04 Dec 2007 01:01:03 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp048) with SMTP; 04 Dec 2007 02:01:03 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19xr4tPOhxxM4hjPKcQkIHOionca5WMqc8iT9N531
+	BxpXD5TeehnA0k
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.0.9999.0712031559480.8458@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66983>
 
-On Dec 3, 2007 7:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
->  * We have already removed svnimport without giving a deprecation notice
->    in the release notes of the previous feature release, which was bad.
->    Maybe the users will forgive us.  Maybe not.
+Hi,
 
-Ah, that explains that.  I was in the middle of importing the open2x
-project into a git repo.  It's a large tree which looks like it
-includes several copies of linux 2.4, and importing is taking several
-days.  Occasionally the svn connection times out or something, and I
-just restart it and it continues.  In the middle of that I built and
-installed git 1.5.3.7 and was surprised when git-svnimport wasn't
-there the next time I tried to restart it.  Back to 1.5.3.6 for now.
+On Mon, 3 Dec 2007, Linus Torvalds wrote:
 
-I see there's a thread about using a git-svnimport tree with git-svn,
-so I'll do that.
+> On Tue, 4 Dec 2007, Dmitry V. Levin wrote:
+> >
+> > Average file size in the linux-2.6.23.9 kernel tree is 10944 bytes,
+> 
+> Don't do "average" sizes. That's an almost totally meaningless number.
+> 
+> "Average" makes sense if you have some kind of gaussian distribution or 
+> similar.
 
-Oh, and you're forgiven.  :)
+To enhance on that: Gaussian is symmetric, which cannot be the proper 
+distribution for anything that is non-negative.
 
+I see so many mis-applications of statistics/probability theory in my day 
+job that I cannot resist pointing people to the Poisson distribution here 
+(in whose context "average" actually makes kind of sense).
 
+But back to the problem: if you have a truly binary file, then _every_ 
+byte (absent further information, of course) has a probability of 1/256 of 
+being 0.
 
--- 
-Virus found in this message.
+Which means that if a file is binary, but is unusual enough to have that 
+property only for half of the first 8192 bytes, you get a probability of 
+1 - 1 / 256^4096 = 1 - 1 / 2 ^ 32768 that the current test succeeds.
+
+I fail to see how this test can possibly fail for the average case.
+
+So if it fails only for special cases, we are probably (in the common, not 
+the mathematical, sense) better off asking those people encountering them 
+to add git-attributes for the files.
+
+IMHO that is not asking for too much.
+
+Ciao,
+Dscho
