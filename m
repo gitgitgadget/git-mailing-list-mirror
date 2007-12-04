@@ -1,66 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Reorder msgfmt command-line arguments.
-Date: Mon, 3 Dec 2007 21:07:48 -0500
-Message-ID: <20071204020748.GZ14735@spearce.org>
-References: <20071203012631.GA22450@crustytoothpaste.ath.cx> <Pine.LNX.4.64.0712031034200.27959@racer.site> <20071203170402.GA13712@crustytoothpaste.ath.cx>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v4] Allow update hooks to update refs on their own.
+Date: Tue, 4 Dec 2007 02:12:05 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712040211270.27959@racer.site>
+References: <7vr6i8sfsa.fsf@gitster.siamese.dyndns.org> <20071202212224.GA22117@midwinter.com>
+ <20071203040108.GS14735@spearce.org> <Pine.LNX.4.64.0712031146520.27959@racer.site>
+ <20071204015108.GV14735@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "brian m. carlson" <sandals@crustytoothpaste.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Dec 04 03:08:14 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Dec 04 03:12:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzNCn-0001Gc-PU
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 03:08:14 +0100
+	id 1IzNHH-0002KS-0g
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 03:12:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750914AbXLDCHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 21:07:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750813AbXLDCHy
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 21:07:54 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:50191 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750818AbXLDCHx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 21:07:53 -0500
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IzNCF-0004uv-Ny; Mon, 03 Dec 2007 21:07:39 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id DB3E720FBAE; Mon,  3 Dec 2007 21:07:48 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20071203170402.GA13712@crustytoothpaste.ath.cx>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1750969AbXLDCMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 21:12:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751193AbXLDCMb
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 21:12:31 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42254 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750866AbXLDCMa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 21:12:30 -0500
+Received: (qmail invoked by alias); 04 Dec 2007 02:12:29 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp004) with SMTP; 04 Dec 2007 03:12:29 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+OANUwkHqObKrvnj669QTXf5v7XfxcdYmeKoEsZ+
+	AMoazLL7h/uiIR
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071204015108.GV14735@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66993>
 
-"brian m. carlson" <sandals@crustytoothpaste.ath.cx> wrote:
-> On Mon, Dec 03, 2007 at 10:35:33AM +0000, Johannes Schindelin wrote:
-> >On Mon, 3 Dec 2007, brian m. carlson wrote:
-> >
-> >>Any program using getopt or getopt_long will stop processing options 
-> >>once a non-option argument has been encountered, if POSIXLY_CORRECT is 
-> >>set.
-...
-> >Besides, you probably want to send this as a git-gui patch: based on 
-> >git-gui.git, not git.git, and Cc'ed to Shawn Pearce.
+Hi,
+
+On Mon, 3 Dec 2007, Shawn O. Pearce wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > On Sun, 2 Dec 2007, Shawn O. Pearce wrote:
+> > 
+> > > Steven Grimm <koreth@midwinter.com> wrote:
+> > > > This is useful in cases where a hook needs to modify an incoming commit
+> > > > in some way, e.g., fixing whitespace errors, adding an annotation to
+> > > > the commit message, noting the location of output from a profiling tool,
+> > > > or committing to an svn repository using git-svn.
+> > > ...
+> > > > +/* Update hook exit code: hook has updated ref on its own */
+> > > > +#define EXIT_CODE_REF_UPDATED 100
+> > > 
+> > > Hmm.  I would actually rather move the ref locking to before we run
+> > > the update hook, so the ref is locked *while* the hook executes.
+> > 
+> > Would that not mean that you cannot use update-ref to update the ref, 
+> > since that wants to use the same lock?
 > 
-> Thanks.  Will do.
+> You failed to quote the part of my email where I talked about how
+> we set an evironment variable to pass a hint to lockfile.c running
+> within the git-update-ref subprocess to instruct it to perform a
+> different style of locking, one that would work as a "recursive"
+> lock.
+> 
+> Such a recursive lock could be useful for a whole lot more than just
+> the update hook.  But it would at least allow the update hook to
+> use git-update-ref to safely change the ref, without receive-pack
+> losing its own lock on the ref.
 
-Don't bother.  I already did the necesary work to apply this patch
-to the git-gui.git tree.  It was small, obviously correct, and easy
-to fix up to make it apply to git-gui.git.  Its already pushed out
-in my master branch and will be in gitgui-0.9.1.
+Indeed, I even failed to read it fully ;-)
 
--- 
-Shawn.
+What do you propose, though?  <filename>.lock.<n>?
+
+Ciao,
+Dscho
