@@ -1,82 +1,63 @@
-From: bdowning@lavos.net (Brian Downing)
-Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 4 Dec 2007 10:18:51 -0600
-Message-ID: <20071204161850.GW6212@lavos.net>
-References: <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org> <7vir4d40sw.fsf@gitster.siamese.dyndns.org> <7vwsso3poo.fsf@gitster.siamese.dyndns.org> <7vfxz89x9q.fsf@gitster.siamese.dyndns.org> <7vabpctx3b.fsf@gitster.siamese.dyndns.org> <7vsl30eyuk.fsf@gitster.siamese.dyndns.org> <7vve7tuz3a.fsf@gitster.siamese.dyndns.org> <7v4pfakr4j.fsf@gitster.siamese.dyndns.org> <7vzlwv6sxr.fsf@gitster.siamese.dyndns.org>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: git help error
+Date: Tue, 4 Dec 2007 21:56:48 +0530
+Message-ID: <cc723f590712040826o7ca36bfg35b8cb4d64ee8d2d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 04 17:19:45 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 04 17:27:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzaUo-000648-U8
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 17:19:43 +0100
+	id 1Izac1-0000nJ-Gm
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 17:27:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754307AbXLDQS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Dec 2007 11:18:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755227AbXLDQS6
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 11:18:58 -0500
-Received: from mxsf07.insightbb.com ([74.128.0.77]:44475 "EHLO
-	mxsf07.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755277AbXLDQSz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Dec 2007 11:18:55 -0500
-X-IronPort-AV: E=Sophos;i="4.23,249,1194238800"; 
-   d="scan'208";a="155155861"
-Received: from unknown (HELO asav00.insightbb.com) ([172.31.249.124])
-  by mxsf07.insightbb.com with ESMTP; 04 Dec 2007 11:18:53 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah4FAO4LVUdKhvkY/2dsb2JhbACBWw
-X-IronPort-AV: E=Sophos;i="4.23,249,1194238800"; 
-   d="scan'208";a="137907811"
-Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
-  by asav00.insightbb.com with ESMTP; 04 Dec 2007 11:18:53 -0500
-Received: by mail.lavos.net (Postfix, from userid 1000)
-	id C3708309F21; Tue,  4 Dec 2007 10:18:52 -0600 (CST)
+	id S1750955AbXLDQ0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Dec 2007 11:26:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750954AbXLDQ0t
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 11:26:49 -0500
+Received: from wa-out-1112.google.com ([209.85.146.179]:7959 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750937AbXLDQ0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Dec 2007 11:26:48 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so6265295wah
+        for <git@vger.kernel.org>; Tue, 04 Dec 2007 08:26:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=3iPGNA0q7FhrLPqOzrARTskt9d/CebJoRnlfpfV9X0g=;
+        b=S4S3pXB85tSXeyrfrSeDrDq8IC2WV84ptG1VdHa3S1DFXEpVmozV2yQO/keO3he6Ui7hBLD+MVMfbOQfaN3VUrD4CJ3V5rVGAHVcsdFiGiVbqPeie2XD4Rft0Ujm1b+zMhwgydmVwmefAjM3KClf/bb2h4+b/GKPzvcx4hC93yE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=wCzdx/+VJ8ostWNiOXguYEb2oWrs8SC6GL3mcvo5Lv1BsYI/dv58Dbyy1snsced0PmljjSDl9movVAqm21//AZQ9l9LEbzccnTnjENec6e0gCXM16tfaxiPfXywl7Xng6CJqDZ1kHXfotwFkaSbHQ/TDMgfxdqnEKDGqBW6BYEE=
+Received: by 10.114.112.1 with SMTP id k1mr943836wac.1196785608110;
+        Tue, 04 Dec 2007 08:26:48 -0800 (PST)
+Received: by 10.115.48.17 with HTTP; Tue, 4 Dec 2007 08:26:48 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <7vzlwv6sxr.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67063>
 
-On Fri, Nov 30, 2007 at 06:37:52PM -0800, Junio C Hamano wrote:
-> * jc/api-doc (Sat Nov 24 23:48:04 2007 -0800) 1 commit
->  - Start preparing the API documents.
-> 
-> The primary reason of this series is because I think we made the system
-> a lot less approachable by losing hackability.  Although we still have
-> sample scripts in contrib/example for use of plumbing in scripts, they
-> will not help aspiring git-hacker-wannabees when our primary attention
-> has already shifted to moving things to C.
-> 
-> This currently consists of mostly stubs, although I wrote about a few
-> topics as examples.
+git help gives me the below error.
 
-One comment on this:
+[master@git]$ git help add
+No manual entry for git-add
+See 'man 7 undocumented' for help when manual pages are not available.
+[master@git]$
 
-+sometype *ary;
-+int nr;
-+int alloc
-+
-+for (i = 0; i < nr; i++)
-+	if (you like ary[i])
-+		return;
-+/* you did not like any existing one, so add one */
-+ALLOC_GROW(ary, nr+1, alloc);
-+ary[nr++] = value you like;
+I have the git binaries installed via --prefix
 
-Shouldn't we be encouraging the use of size_t here?  I don't know of a
-64-bit platform off hand that has an 'int' that's actually 64 bits, so
-encouraging this just seems like asking for 64-bit platform limitations
-when arrays get over 2GB.
+./configure --prefix=/home/kvaneesh/bin-local/git/
+and to see the man page i have to say
 
-(Looking through the code it looks like there's a fair bit of using
-'int' for array indices already, but I think it's probably best not to
-perpetuate that.)
+man -M /home/kvaneesh/bin-local/git/share/man/
 
--bcd
+I guess git-help need to take care of the prefix.
+
+-aneesh
