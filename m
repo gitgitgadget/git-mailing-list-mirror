@@ -1,82 +1,70 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: What's in git-gui.git
-Date: Tue, 4 Dec 2007 01:29:56 +0100
-Message-ID: <20071204002956.GJ31750@genesis.frugalware.org>
-References: <20071203041010.GT14735@spearce.org>
+From: Russell <russellsteicke@gmail.com>
+Subject: Re: v1.5.4 plans
+Date: Tue, 4 Dec 2007 09:48:04 +0900
+Message-ID: <c1b8b6670712031648q4c6ed92cx4295042d2a80bf18@mail.gmail.com>
+References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="5FFaGRZUwcpbKFrw"
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Dec 04 01:30:35 2007
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 04 01:48:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzLg7-0001pn-Ml
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 01:30:24 +0100
+	id 1IzLxf-0006Ur-HU
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 01:48:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750979AbXLDAaD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 19:30:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751107AbXLDAaD
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 19:30:03 -0500
-Received: from virgo.iok.hu ([193.202.89.103]:29882 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750898AbXLDAaB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 19:30:01 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id ABEA41B24FB;
-	Tue,  4 Dec 2007 01:29:57 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 3D0C3541E3;
-	Tue,  4 Dec 2007 01:28:55 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id A39E611904C0; Tue,  4 Dec 2007 01:29:56 +0100 (CET)
+	id S1750924AbXLDAsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 19:48:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750885AbXLDAsH
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 19:48:07 -0500
+Received: from wa-out-1112.google.com ([209.85.146.178]:33998 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750730AbXLDAsF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 19:48:05 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so5653924wah
+        for <git@vger.kernel.org>; Mon, 03 Dec 2007 16:48:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=KGckCajDmU/aix5RTFZrfhhPkQFpsXFROy/i+NQPi3Y=;
+        b=oUuEb4kjPHRzmNtMPvdoOkJRIZ1NAiigqvYAkEpsqVX8kkhu5QahfgD+a27KkLSoubN0eckkJif3SWM2d2BlmuSOekORiC3X4KlrK1ENzB4jBS7ky2Cpal5QnTlfALRCCuo7PF+sIytOVDahU/4B7CIe/YAmQINc8cuEleM3BZA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=q5RC5keB7qn9CnQ/dX1y2WbbdVnXKabEst9zJE3WWg+GiZHf+d4SSNw3CjAq4LpCFPjAbTFk8NWH0fkps4FDNz364CXlyIXVXNnz8NXhzMoslgeoIJvMPWv9AihRmfLdCKgK87a/01K7xEuk5Bkzx0bwH1YA+8MKcdAqOqs7k8I=
+Received: by 10.115.106.7 with SMTP id i7mr43554wam.1196729284352;
+        Mon, 03 Dec 2007 16:48:04 -0800 (PST)
+Received: by 10.115.78.5 with HTTP; Mon, 3 Dec 2007 16:48:04 -0800 (PST)
+In-Reply-To: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <20071203041010.GT14735@spearce.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66982>
+
+On Dec 3, 2007 7:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>  * We have already removed svnimport without giving a deprecation notice
+>    in the release notes of the previous feature release, which was bad.
+>    Maybe the users will forgive us.  Maybe not.
+
+Ah, that explains that.  I was in the middle of importing the open2x
+project into a git repo.  It's a large tree which looks like it
+includes several copies of linux 2.4, and importing is taking several
+days.  Occasionally the svn connection times out or something, and I
+just restart it and it continues.  In the middle of that I built and
+installed git 1.5.3.7 and was surprised when git-svnimport wasn't
+there the next time I tried to restart it.  Back to 1.5.3.6 for now.
+
+I see there's a thread about using a git-svnimport tree with git-svn,
+so I'll do that.
+
+Oh, and you're forgiven.  :)
 
 
---5FFaGRZUwcpbKFrw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Sun, Dec 02, 2007 at 11:10:10PM -0500, "Shawn O. Pearce" <spearce@spearce.org> wrote:
-> The following changes since gitgui-0.9.0 are now in my git-gui
-> master branch.  I'm considering tagging a 0.9.1 release next week.
-
-The following changes since commit 6f4ec3aa29450f4fa5af3cd8f6593d46d80aa909:
-  Christian Stimming (1):
-        Update German translation. 100% completed.
-
-are available in the git repository at:
-
-  git://repo.or.cz/git-gui/git-gui-i18n.git mob
-
-Miklos Vajna (1):
-      Update Hungarian translation. 100% completed.
-
- po/hu.po |  682 +++++++++++++++++++++++++++++++++-----------------------------
- 1 files changed, 362 insertions(+), 320 deletions(-)
-
-thanks,
-- VMiklos
-
---5FFaGRZUwcpbKFrw
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFHVJ+Ee81tAgORUJYRAprxAJ9ExAeQzTNijmfJAcdQOB3jBz0N6gCcDJR8
-EDjJYn/pCMW0DrgOd86+Kng=
-=AIgC
------END PGP SIGNATURE-----
-
---5FFaGRZUwcpbKFrw--
+-- 
+Virus found in this message.
