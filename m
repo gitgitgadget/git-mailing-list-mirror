@@ -1,60 +1,67 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Set OLD_ICONV on Cygwin.
-Date: Tue, 04 Dec 2007 09:54:00 -0800
-Message-ID: <7v63ze5osn.fsf@gitster.siamese.dyndns.org>
-References: <21977191.137171196775591804.JavaMail.www@wwinf1621>
-	<4755597B.9050709@op5.se>
+Subject: Re: git help error
+Date: Tue, 04 Dec 2007 09:55:23 -0800
+Message-ID: <7v1wa25oqc.fsf@gitster.siamese.dyndns.org>
+References: <cc723f590712040826o7ca36bfg35b8cb4d64ee8d2d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pascal Obry <pascal.obry@wanadoo.fr>,
-	Pascal Obry <pascal@obry.net>,
-	Pascal Obry <pascal.obry@gmail.com>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Dec 04 18:54:38 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 04 18:56:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Izbye-0005Ly-2b
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 18:54:36 +0100
+	id 1Izc0k-0006Hs-VO
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 18:56:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751943AbXLDRyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Dec 2007 12:54:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751859AbXLDRyO
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 12:54:14 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:39695 "EHLO
+	id S1754150AbXLDRzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Dec 2007 12:55:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754564AbXLDRza
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 12:55:30 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:38426 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751502AbXLDRyN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Dec 2007 12:54:13 -0500
+	with ESMTP id S1753863AbXLDRz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Dec 2007 12:55:29 -0500
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 11E902F2;
-	Tue,  4 Dec 2007 12:54:34 -0500 (EST)
+	by sceptre.pobox.com (Postfix) with ESMTP id CE6722FB;
+	Tue,  4 Dec 2007 12:55:50 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 346A89CD6C;
-	Tue,  4 Dec 2007 12:54:26 -0500 (EST)
-In-Reply-To: <4755597B.9050709@op5.se> (Andreas Ericsson's message of "Tue, 04
-	Dec 2007 14:43:23 +0100")
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 581989CD70;
+	Tue,  4 Dec 2007 12:55:47 -0500 (EST)
+In-Reply-To: <cc723f590712040826o7ca36bfg35b8cb4d64ee8d2d@mail.gmail.com>
+	(Aneesh Kumar's message of "Tue, 4 Dec 2007 21:56:48 +0530")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67069>
 
-Andreas Ericsson <ae@op5.se> writes:
+"Aneesh Kumar" <aneesh.kumar@gmail.com> writes:
 
-> Nice. If my suspicions are correct and he missed your patch the first time
-> around, you should probably resend it though.
+> git help gives me the below error.
+>
+> [master@git]$ git help add
+> No manual entry for git-add
+> See 'man 7 undocumented' for help when manual pages are not available.
+> [master@git]$
+>
+> I have the git binaries installed via --prefix
+>
+> ./configure --prefix=/home/kvaneesh/bin-local/git/
+> and to see the man page i have to say
+>
+> man -M /home/kvaneesh/bin-local/git/share/man/
+>
+> I guess git-help need to take care of the prefix.
 
-I still have it in my mailbox.
+When you run "man" from the command line, can you say
 
-I saw the patch but saw nobody else said about the patch being helpful
-to his installation, nor more importantly, "Good, this won't hurt for me
-who run a different vintage of Cygwin", and I was waiting for such
-confirmations.
+     $ man git-add
 
-Then nobody responded, so I forgot.
-
-That was what happened the first time Pascal's patch was posted.
+and make it work?  If it fails the same way, then what you are missing
+is MANPATH environment variable, isn't it?
