@@ -1,81 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Make Git accept absolute path names for files within
-	the work tree
-Date: Tue, 4 Dec 2007 17:08:40 -0500
-Message-ID: <20071204220840.GA3340@coredump.intra.peff.net>
-References: <3665a1a00712021652tbdfe9d1tdc4575d225bfed36@mail.gmail.com> <20071204014326.GA21358@coredump.intra.peff.net> <Pine.LNX.4.64.0712040216220.27959@racer.site> <200712040742.24728.robin.rosenberg.lists@dewire.com> <Pine.LNX.4.64.0712041149440.27959@racer.site> <alpine.LFD.0.9999.0712040756370.2981@woody.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Introduce .git/BRANCH to point to the current branch
+Date: Tue, 4 Dec 2007 23:08:55 +0100
+Message-ID: <200712042308.57048.jnareb@gmail.com>
+References: <4755B3B3.80704@gmail.com> <m34peyur8r.fsf@roke.D-201> <4755CD32.7040204@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Anatol Pomozov <anatol.pomozov@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Dec 04 23:09:12 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Git Mailing List <git@vger.kernel.org>
+To: Salikh Zakirov <salikh@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 04 23:09:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Izfwt-0004L1-2N
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 23:09:03 +0100
+	id 1IzfxA-0004T4-Py
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 23:09:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751572AbXLDWIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Dec 2007 17:08:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751196AbXLDWIn
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 17:08:43 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1528 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751513AbXLDWIm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Dec 2007 17:08:42 -0500
-Received: (qmail 12269 invoked by uid 111); 4 Dec 2007 22:08:41 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 04 Dec 2007 17:08:41 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Dec 2007 17:08:40 -0500
+	id S1751751AbXLDWJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Dec 2007 17:09:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751754AbXLDWJA
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 17:09:00 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:55209 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751713AbXLDWI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Dec 2007 17:08:59 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so2999381nfb
+        for <git@vger.kernel.org>; Tue, 04 Dec 2007 14:08:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=7r5IioQ8LdEox6XIqVuTpoiNYrrA+46O+Ziv9rRmN18=;
+        b=cY5ODC7aCbnxabHg1sYTtIvwOly2aD8raZfbghc1ABk2IVmTre0uybuAW+jMoGq4xTNjR42hMLzJQ7pNmR9uvWxOcsuISIpgQ69Q+XdEIDafqwhi4par0ir/neQOGkAG58AGOZJCFepOvF2Nim0W7/V5aJI/g6oSrOolvVo8lNk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=fkAqW6XIBxDkpIRmXfsMLJgAWkZ4MWlnNqlKy5SNddXnXGmL3cgdqeRK4Sc8QDCx7uUuAad1N9Vs0Us4aCw7INOAlxisNS/GN9i+CKPY3+0UE3W7N+BWH9duEB1x6+0YWGYR5qoaKyd9hf+5BPLq0Bg+a0F8jcJeVaJWlU14yFk=
+Received: by 10.86.54.3 with SMTP id c3mr9709449fga.1196806137555;
+        Tue, 04 Dec 2007 14:08:57 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.215.161])
+        by mx.google.com with ESMTPS id f19sm74750fka.2007.12.04.14.08.55
+        (version=SSLv3 cipher=OTHER);
+        Tue, 04 Dec 2007 14:08:56 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4755CD32.7040204@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0712040756370.2981@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67091>
 
-On Tue, Dec 04, 2007 at 07:59:43AM -0800, Linus Torvalds wrote:
-
-> > I do remember the hassles I went through with get_relative_cwd() until I 
-> > broke down and used chdir() two times (ugly).
+On Tue, 4 Dec 2007, Salikh Zakirov wrote:
+> Jakub Narebski wrote:
+>>> Salikh Zakirov <salikh@gmail.com> writes:
+>>>> This combination leads to the confusing user experience
+>>>> if the branch changes independently of the working directory.
+>>>> This can happen in following cases:
+>> 
+>> All those cases are cases of not recommended workflows.
 > 
-> It really is a pretty heavy and complex operation in UNIX in general (and 
-> open to various races too), which is why I'd generally suggest avoiding it 
-> if you at all can.
+> I guess those cases are not recommended exactly because
+> there are prone to causing confusion with current git.
 
-It is more expensive, though we will be doing it once per user-supplied
-pathspec, so I don't know that it will actually have an impact.
+BTW. I think for each such workflow there is alternative
+in git, which does not cause those problems.
 
-I am concerned that not supporting symlinks will make this feature
-unusably annoying for some users. I used to have a home directory that
-had a symlink in it, and I frequently ran into these sorts of path
-comparison issues ($HOME was /home/peff, so typing ~/repo/file pointed
-there, but /home was a symlink to /mnt/data/home, so any routines that
-normalize the cwd used /mnt/data/home/repo, and the two never matched
-up).
+> I use multiple workdirs quite often, and by now learned
+> not to check out the same branch in different workdirs, 
+> but it would very convenient if it would not be necessary
+> to remember it. 
 
-Hrm. Looks like somebody has already helpfully implemented
-make_absolute_path, so it would just require calling that on each
-argument. Something like this on top of Robin's patch:
-
-diff --git a/setup.c b/setup.c
-index 4ee8024..e76c83c 100644
---- a/setup.c
-+++ b/setup.c
-@@ -58,7 +58,8 @@ const char *prefix_path(const char *prefix, int len, const char *path)
- {
- 	const char *orig = path;
- 	if (is_absolute_path(path))
--		path = strip_work_tree_path(prefix, len, path);
-+		path = strip_work_tree_path(prefix, len,
-+				xstrdup(make_absolute_path(path)));
+Those cases are not recommended because they would _always_ cause
+confusion, whether the user is informed that somehow working copy
+or current branch has changed while he/she was working or not.
+Currently git tries to follow "merge when ready" (i.e. you
+explicitely ask to merge or rebase), not "merge when needed"
+(like in old, broken CVS workflow where 'cvs update' might have
+_forced_ a merge before being allowed to save his/her finished
+work).
  
- 	for (;;) {
- 		char c;
+>> BTW. how in your proposal would you detach HEAD?
+> 
+> Deleting .git/BRANCH should be enough.
 
--Peff
+Hmmm...
+
+> But I cannot see the workflow that would need it.
+
+Checking out tag. Checking out remote-tracking branch. You cannot
+commit on top of either (immovable) tag, or (externally controlled) 
+remote-tracking branch.
+
+Besides rebase now uses detached HEAD, and I guess that bisect would 
+too.
+-- 
+Jakub Narebski
+Poland
