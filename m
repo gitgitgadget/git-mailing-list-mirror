@@ -1,64 +1,82 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Make Git accept absolute path names for files within
- the work tree
-Date: Tue, 4 Dec 2007 07:59:43 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712040756370.2981@woody.linux-foundation.org>
-References: <3665a1a00712021652tbdfe9d1tdc4575d225bfed36@mail.gmail.com> <20071204014326.GA21358@coredump.intra.peff.net> <Pine.LNX.4.64.0712040216220.27959@racer.site> <200712040742.24728.robin.rosenberg.lists@dewire.com>
- <Pine.LNX.4.64.0712041149440.27959@racer.site>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 4 Dec 2007 10:18:51 -0600
+Message-ID: <20071204161850.GW6212@lavos.net>
+References: <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org> <7vir4d40sw.fsf@gitster.siamese.dyndns.org> <7vwsso3poo.fsf@gitster.siamese.dyndns.org> <7vfxz89x9q.fsf@gitster.siamese.dyndns.org> <7vabpctx3b.fsf@gitster.siamese.dyndns.org> <7vsl30eyuk.fsf@gitster.siamese.dyndns.org> <7vve7tuz3a.fsf@gitster.siamese.dyndns.org> <7v4pfakr4j.fsf@gitster.siamese.dyndns.org> <7vzlwv6sxr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Anatol Pomozov <anatol.pomozov@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Dec 04 17:02:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 04 17:19:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzaDL-0006pm-EA
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 17:01:39 +0100
+	id 1IzaUo-000648-U8
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 17:19:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755250AbXLDQAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Dec 2007 11:00:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755246AbXLDQAx
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 11:00:53 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:46283 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755220AbXLDQAv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Dec 2007 11:00:51 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB4Fxinm015016
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 4 Dec 2007 07:59:45 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB4FxhW9025199;
-	Tue, 4 Dec 2007 07:59:43 -0800
-In-Reply-To: <Pine.LNX.4.64.0712041149440.27959@racer.site>
-X-Spam-Status: No, hits=-4.725 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754307AbXLDQS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Dec 2007 11:18:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755227AbXLDQS6
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 11:18:58 -0500
+Received: from mxsf07.insightbb.com ([74.128.0.77]:44475 "EHLO
+	mxsf07.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755277AbXLDQSz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Dec 2007 11:18:55 -0500
+X-IronPort-AV: E=Sophos;i="4.23,249,1194238800"; 
+   d="scan'208";a="155155861"
+Received: from unknown (HELO asav00.insightbb.com) ([172.31.249.124])
+  by mxsf07.insightbb.com with ESMTP; 04 Dec 2007 11:18:53 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah4FAO4LVUdKhvkY/2dsb2JhbACBWw
+X-IronPort-AV: E=Sophos;i="4.23,249,1194238800"; 
+   d="scan'208";a="137907811"
+Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
+  by asav00.insightbb.com with ESMTP; 04 Dec 2007 11:18:53 -0500
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id C3708309F21; Tue,  4 Dec 2007 10:18:52 -0600 (CST)
+Content-Disposition: inline
+In-Reply-To: <7vzlwv6sxr.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67062>
 
-
-
-On Tue, 4 Dec 2007, Johannes Schindelin wrote:
+On Fri, Nov 30, 2007 at 06:37:52PM -0800, Junio C Hamano wrote:
+> * jc/api-doc (Sat Nov 24 23:48:04 2007 -0800) 1 commit
+>  - Start preparing the API documents.
 > 
-> I do remember the hassles I went through with get_relative_cwd() until I 
-> broke down and used chdir() two times (ugly).
+> The primary reason of this series is because I think we made the system
+> a lot less approachable by losing hackability.  Although we still have
+> sample scripts in contrib/example for use of plumbing in scripts, they
+> will not help aspiring git-hacker-wannabees when our primary attention
+> has already shifted to moving things to C.
+> 
+> This currently consists of mostly stubs, although I wrote about a few
+> topics as examples.
 
-It really is a pretty heavy and complex operation in UNIX in general (and 
-open to various races too), which is why I'd generally suggest avoiding it 
-if you at all can.
+One comment on this:
 
-The sad(?) part is, it's fairly trivial to do inside the Linux kernel (but 
-probably not in other operating systems - it's only because of our 
-superior dcache that we could do it). So a special system call would be no 
-problem at all. But obviously very unportable indeed.
++sometype *ary;
++int nr;
++int alloc
++
++for (i = 0; i < nr; i++)
++	if (you like ary[i])
++		return;
++/* you did not like any existing one, so add one */
++ALLOC_GROW(ary, nr+1, alloc);
++ary[nr++] = value you like;
 
-			Linus
+Shouldn't we be encouraging the use of size_t here?  I don't know of a
+64-bit platform off hand that has an 'int' that's actually 64 bits, so
+encouraging this just seems like asking for 64-bit platform limitations
+when arrays get over 2GB.
+
+(Looking through the code it looks like there's a fair bit of using
+'int' for array indices already, but I think it's probably best not to
+perpetuate that.)
+
+-bcd
