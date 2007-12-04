@@ -1,86 +1,66 @@
-From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Fix UTF Encoding issue
-Date: Tue, 4 Dec 2007 10:55:41 +0200
-Organization: Pardus / KDE
-Message-ID: <200712041055.41593.ismail@pardus.org.tr>
-References: <4753D419.80503@clearchain.com> <20071204084412.GA19597@auto.tuwien.ac.at> <200712041047.39340.ismail@pardus.org.tr>
+Date: Tue, 4 Dec 2007 10:07:43 +0100
+Message-ID: <200712041007.44525.jnareb@gmail.com>
+References: <4753D419.80503@clearchain.com> <200712041047.39340.ismail@pardus.org.tr> <200712041055.41593.ismail@pardus.org.tr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>,
 	Junio C Hamano <gitster@pobox.com>,
 	Alexandre Julliard <julliard@winehq.org>,
 	Benjamin Close <Benjamin.Close@clearchain.com>,
-	git@vger.kernel.org,
-	Perl Unicode Mailing List <perl-unicode@perl.org>,
-	Dan Kogai <dankogai@dan.co.jp>
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Tue Dec 04 09:55:19 2007
+	git@vger.kernel.org
+To: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
+X-From: git-owner@vger.kernel.org Tue Dec 04 10:08:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzTYk-0000AE-Be
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 09:55:18 +0100
+	id 1IzTlE-0004Al-Q9
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 10:08:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751103AbXLDIy6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Dec 2007 03:54:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751229AbXLDIy5
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 03:54:57 -0500
-Received: from ns2.uludag.org.tr ([193.140.100.220]:59970 "EHLO uludag.org.tr"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751063AbXLDIy5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Dec 2007 03:54:57 -0500
-Received: from ninjamobile.local (unknown [85.102.220.209])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by uludag.org.tr (Postfix) with ESMTP id 4282061D0197;
-	Tue,  4 Dec 2007 10:54:51 +0200 (EET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-In-Reply-To: <200712041047.39340.ismail@pardus.org.tr>
+	id S1752026AbXLDJHw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Dec 2007 04:07:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751499AbXLDJHw
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 04:07:52 -0500
+Received: from mu-out-0910.google.com ([209.85.134.185]:45493 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751754AbXLDJHv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Dec 2007 04:07:51 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so698783mue
+        for <git@vger.kernel.org>; Tue, 04 Dec 2007 01:07:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=W419/GMipu3mgDNxAPMZipSguAc5WJt4TsxR6ZSPVH8=;
+        b=a7kUVIoNr8/5zOTIbZQTeULjpO8oZgxdQOuKLVcPVLI2tP6bcYaswjghLv66GLoo1rO1qxSnZVn0cm3cI5ql6etaBZhn8YwmmVpJ9xPG9+/uk5JGmCu+Gt1YjMm5NfhlWYM5qpo3GiGLQdp5+rdXd2QSphc2mxbMLrzRVZiKJAU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=FAasbjBVc2jIs8/1VKWncS2jmyY4gaQCkB5Yx6JiDsMIW42zP6GCDM6fC1LTlKKEfIu7FuExJacAr57O4vKdJH5xDDP0xZq1ILtBBHYYhE224a3r6HP348oJTh097xnkkhDRPiDlB8gEn3sH4GhagjlwDFnVJQLZs/5VaE5q2lU=
+Received: by 10.86.54.3 with SMTP id c3mr8365537fga.1196759268382;
+        Tue, 04 Dec 2007 01:07:48 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.233.204])
+        by mx.google.com with ESMTPS id d13sm16004980fka.2007.12.04.01.07.45
+        (version=SSLv3 cipher=OTHER);
+        Tue, 04 Dec 2007 01:07:47 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200712041055.41593.ismail@pardus.org.tr>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67029>
 
-Tuesday 04 December 2007 10:47:39 Ismail D=C3=B6nmez yazm=C4=B1=C5=9Ft=C4=
-=B1:
-> Tuesday 04 December 2007 10:44:12 Martin Koegler yazm=C4=B1=C5=9Ft=C4=
-=B1:
-> > On Tue, Dec 04, 2007 at 10:33:39AM +0200, Ismail D=C3=B6nmez wrote:
-> > > Following to_utf8 function works for me :
-> >
-> > For me too (Debian sarge+etch).
->
-> Thanks for testing.
+On Tue, 4 Dec 2007, Ismail D=C3=B6nmez wrote:
 
-Use Perl built-in utf8 function for UTF-8 decoding.
-
-Signed-off-by: =C4=B0smail D=C3=B6nmez <ismail@pardus.org.tr>
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index ff5daa7..db255c1 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -695,10 +695,9 @@ sub validate_refname {
- # in utf-8 thanks to "binmode STDOUT, ':utf8'" at beginning
- sub to_utf8 {
- 	my $str =3D shift;
--	my $res;
--	eval { $res =3D decode_utf8($str, Encode::FB_CROAK); };
--	if (defined $res) {
--		return $res;
-+        if (utf8::valid($str)) {
-+                utf8::decode($str);
-+                return $str;
- 	} else {
- 		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
- 	}
-
-
-
+> Use Perl built-in utf8 function for UTF-8 decoding.
+>=20
+> Signed-off-by: =C4=B0smail D=C3=B6nmez <ismail@pardus.org.tr>
+=20
+Looks nice. I have not tested it, but if it works: Ack.
 --=20
-Never learn by your mistakes, if you do you may never dare to try again=
-=2E
+Jakub Narebski
+Poland
