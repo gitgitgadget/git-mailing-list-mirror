@@ -1,115 +1,78 @@
-From: Luciano Rocha <luciano@eurotux.com>
-Subject: Re: git help error
-Date: Tue, 4 Dec 2007 20:06:25 +0000
-Message-ID: <20071204200625.GA32717@bit.office.eurotux.com>
-References: <cc723f590712040826o7ca36bfg35b8cb4d64ee8d2d@mail.gmail.com> <7v1wa25oqc.fsf@gitster.siamese.dyndns.org> <874pey9uow.fsf@osv.gnss.ru> <7vr6i245b4.fsf@gitster.siamese.dyndns.org> <20071204194754.GB30780@bit.office.eurotux.com> <863auiw86m.fsf@lola.quinscape.zz>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [RFC] Introduce .git/BRANCH to point to the current branch
+Date: Tue, 04 Dec 2007 21:19:00 +0100
+Message-ID: <vpqbq96jjrf.fsf@bauges.imag.fr>
+References: <4755B3B3.80704@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="fUYQa+Pmc3FrFX/N"
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Dec 04 21:13:57 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Salikh Zakirov <salikh@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 04 21:20:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ize9H-0005rs-JS
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 21:13:44 +0100
+	id 1IzeFN-0008ON-M0
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 21:20:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105AbXLDUNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Dec 2007 15:13:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751982AbXLDUNO
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 15:13:14 -0500
-Received: from os.eurotux.com ([216.75.63.6]:40760 "EHLO os.eurotux.com"
+	id S1751071AbXLDUTk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Dec 2007 15:19:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751103AbXLDUTk
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 15:19:40 -0500
+Received: from imag.imag.fr ([129.88.30.1]:49331 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751658AbXLDUNO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Dec 2007 15:13:14 -0500
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Dec 2007 15:13:13 EST
-Received: (qmail 7387 invoked from network); 4 Dec 2007 20:06:31 -0000
-Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
-  by os.eurotux.com with AES256-SHA encrypted SMTP; 4 Dec 2007 20:06:31 -0000
-Content-Disposition: inline
-In-Reply-To: <863auiw86m.fsf@lola.quinscape.zz>
-User-Agent: Mutt/1.5.14 (2007-03-31)
+	id S1751071AbXLDUTj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Dec 2007 15:19:39 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lB4KJ2md015615
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 4 Dec 2007 21:19:02 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IzeEP-0007a8-2f; Tue, 04 Dec 2007 21:19:01 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IzeEP-0006F5-05; Tue, 04 Dec 2007 21:19:01 +0100
+In-Reply-To: <4755B3B3.80704@gmail.com> (Salikh Zakirov's message of "Wed\, 05 Dec 2007 05\:08\:19 +0900")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 04 Dec 2007 21:19:02 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67081>
 
+Salikh Zakirov <salikh@gmail.com> writes:
 
---fUYQa+Pmc3FrFX/N
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> This combination leads to the confusing user experience
+> if the branch changes independently of the working directory.
+> This can happen in following cases:
 
-On Tue, Dec 04, 2007 at 08:50:41PM +0100, David Kastrup wrote:
-> Luciano Rocha <strange@nsk.no-ip.org> writes:
->=20
-> > On Tue, Dec 04, 2007 at 11:40:15AM -0800, Junio C Hamano wrote:
-> >
-> >> Having said that, I do not mind accepting a patch that prepends the
-> >> nonlocal path to MANPATH in help.c::show_man_page().
-> >
-> > Actually, current man utilities locate the manual page by looking where
-> > the executable is, if MANPATH isn't defined (tested in Linux and
-> > Darwin).
-> >
-> > So, "unset MANPATH; man git-add" should be sufficient.
->=20
-> That only works for paths registered in /etc/manpath.config (or an
-> equivalent config file depending on system/distribution).
+There's another thing that your proposal could change: navigating back
+in history without loosing track of the branch you're on.
 
-Err, no. I doubt my ~/opt/noarch/.../...; ~/opt/`uname -i`/git/; etc.,
-are pre-registered by my Linux distro or OS X 10.[45].
+Currently, I can do:
 
-man man:
-       If you specify the -M pathlist option, pathlist  is  a  colon-separa=
-ted
-       list of the directories that man searches.
+# Oh, what did this look like two commits ago?
+$ git checkout HEAD^^
+# Ah, OK, let's go back to the tip
+$ git checkout branch-name
+               ^^^^^^^^^^^
+But I have to remember and re-type the branch name.
 
-       If  you  don=E2=80=99t specify -M but set the MANPATH environment va=
-riable, the
-       value of that  variable  is  the  list  of  the  directories  that  =
-man
-       searches.
+I can imagine (not tested with your patch) doing just:
 
-       If  you  don=E2=80=99t  specify  an  explicit path list with -M or M=
-ANPATH, man
-       develops its own path list based on the contents of  the  configurat=
-ion
-       file /etc/man.config.  The MANPATH statements in the configuration f=
-ile
-       identify particular directories to include in the search path.
-=2E..
-       In addition, for each directory in the command search path (we=E2=80=
-=99ll  call
-       it  a  "command  directory")  for  which  you do not have a MANPATH_=
-MAP
-       statement, man automatically looks for a manual page directory "near=
-by"
-       namely as a subdirectory in the command directory itself or in the p=
-ar-
-       ent directory of the command directory.
+$ git checkout HEAD^^
+$ git checkout BRANCH
 
-So, according to the last paragraph, and assuming no -M argument and no
-MANPATH environment variable are defined, man should be able to find the
-manual pages for git commands if they're in PATH.
+(that's one point in favor of your change, but I'm not familiar enough
+with git's internal to say whether this is sufficient to justify the
+change).
 
---=20
-Luciano Rocha <luciano@eurotux.com>
-Eurotux Inform=C3=A1tica, S.A. <http://www.eurotux.com/>
-
---fUYQa+Pmc3FrFX/N
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFHVbNBinSul6a7oB8RAnhyAJ4tK9tsjdINR6pRKvwpWkAGLnxCeACeO7TD
-ex/hb0nBVxKNSlP3tRJJ1UM=
-=Y2Ue
------END PGP SIGNATURE-----
-
---fUYQa+Pmc3FrFX/N--
+-- 
+Matthieu
