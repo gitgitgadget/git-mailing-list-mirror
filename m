@@ -1,53 +1,213 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: [PATCH] Use a strbuf for copying the command line for the
-	reflog.
-Date: Tue, 04 Dec 2007 10:46:16 -0500
-Message-ID: <1196783176.2606.2.camel@hinata.boston.redhat.com>
-References: <1196753147-20073-1-git-send-email-krh@redhat.com>
+From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Subject: Re: Building git-1.5.3.7 on HP-UX 11.00
+Date: Tue, 4 Dec 2007 15:56:55 +0000
+Message-ID: <20071204155655.053f4fb4@pc09.procura.nl>
+References: <20071204130922.731c407a@pc09.procura.nl>
+	<Pine.LNX.4.64.0712041343040.27959@racer.site>
+	<20071204140326.14d9e7a0@pc09.procura.nl>
+	<Pine.LNX.4.64.0712041439590.27959@racer.site>
+	<20071204150102.7f3ec3e9@pc09.procura.nl>
+	<47556EE2.6040105@op5.se>
+	<20071204152240.6cb6018e@pc09.procura.nl>
+	<Pine.LNX.4.64.0712041536180.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Dec 04 16:47:12 2007
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
+	Sam Vilain <sam@vilain.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 04 16:57:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzZzK-0000XB-9p
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 16:47:10 +0100
+	id 1Iza9E-00058A-1j
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 16:57:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752889AbXLDPqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Dec 2007 10:46:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753233AbXLDPqt
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 10:46:49 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:44468 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752889AbXLDPqt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Dec 2007 10:46:49 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lB4FkMau011477;
-	Tue, 4 Dec 2007 10:46:22 -0500
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lB4FkLu9017640;
-	Tue, 4 Dec 2007 10:46:21 -0500
-Received: from [192.168.1.100] (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lB4FkLxd004311;
-	Tue, 4 Dec 2007 10:46:21 -0500
-In-Reply-To: <1196753147-20073-1-git-send-email-krh@redhat.com>
-X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
+	id S1753985AbXLDP5D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Dec 2007 10:57:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753967AbXLDP5C
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 10:57:02 -0500
+Received: from smtp-vbr13.xs4all.nl ([194.109.24.33]:1364 "EHLO
+	smtp-vbr13.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753402AbXLDP5A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Dec 2007 10:57:00 -0500
+Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
+	(authenticated bits=0)
+	by smtp-vbr13.xs4all.nl (8.13.8/8.13.8) with ESMTP id lB4FuuGa014801
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 4 Dec 2007 16:56:56 +0100 (CET)
+	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <Pine.LNX.4.64.0712041536180.27959@racer.site>
+X-Mailer: Claws Mail 3.1.0cvs51 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67060>
 
-Doh, I forgot -n to git-format-patch again for this two patch series.
-Maybe git-format-patch should default to -n when there's more than one
-patch?  Anyway, it should have been:
+On Tue, 4 Dec 2007 15:39:47 +0000 (GMT), Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 
-[PATCH 1/2] Use a strbuf for copying the command line for the reflog.
-[PATCH 2/2] Rewrite builtin-fetch option parsing to use parse_options().
+> Hi,
+> 
+> On Tue, 4 Dec 2007, H.Merijn Brand wrote:
+> 
+> > + + pwd
+> > GIT_EXEC_PATH=/pro/3gl/LINUX/git-1.5.3.7/t/..
+> > + + pwd
+> > GIT_TEMPLATE_DIR=/pro/3gl/LINUX/git-1.5.3.7/t/../templates/blt
+> > + GIT_CONFIG=.git/config
+> > + export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG
+> > + + pwd
+> > + pwd
+> > GITPERLLIB=/pro/3gl/LINUX/git-1.5.3.7/t/../perl/blib/lib:/pro/3gl/LINUX/git-1.5.3.7/t/../perl/blib/arch/auto/Git
+> > + export GITPERLLIB
+> > + test -d ../templates/blt
+> > + test -x ../test-chmtime
+> > + test=trash
+> > + rm -fr trash
+> > + test_create_repo trash
+> > + cd trash
+> > + + expr ./t0001-init.sh : .*/\(t[0-9]*\)-[^/]*$
+> > this_test=t0001
+> > + test_expect_success plain
+> >         (
+> >                 unset GIT_DIR GIT_WORK_TREE &&
+> >                 mkdir plain &&
+> >                 cd plain &&
+> >                 git init
+> >         ) &&
+> >         check_config plain/.git false unset
+> > 
+> > * expecting success:
+> >         (
+> >                 unset GIT_DIR GIT_WORK_TREE &&
+> >                 mkdir plain &&
+> >                 cd plain &&
+> >                 git init
+> >         ) &&
+> >         check_config plain/.git false unset
+> > 
+> > * FAIL 1: plain
+> > 
+> >                 (
+> >                         unset GIT_DIR GIT_WORK_TREE &&
+> >                         mkdir plain &&
+> >                         cd plain &&
+> >                         git init
+> >                 ) &&
+> >                 check_config plain/.git false unset
+> 
+> That's not good.  The relevant part here reads:
 
-cheers,
-Kristian
+I found it! unset returns false
+
+/pro/3gl/LINUX/git-1.5.3.7/t 152 > sh t0001*.sh
+*   ok 1: plain
+*   ok 2: plain with GIT_WORK_TREE
+*   ok 3: plain bare
+*   ok 4: plain bare with GIT_WORK_TREE
+*   ok 5: GIT_DIR bare
+*   ok 6: GIT_DIR non-bare
+*   ok 7: GIT_DIR & GIT_WORK_TREE (1)
+*   ok 8: GIT_DIR & GIT_WORK_TREE (2)
+* passed all 8 test(s)
+
+--8<---
+--- t0001-init.sh.org   2007-12-04 16:55:25 +0100
++++ t0001-init.sh       2007-12-04 16:52:37 +0100
+@@ -25,7 +25,7 @@ check_config () {
+
+ test_expect_success 'plain' '
+        (
+-               unset GIT_DIR GIT_WORK_TREE &&
++               unset GIT_DIR GIT_WORK_TREE ;
+                mkdir plain &&
+                cd plain &&
+                git init
+@@ -35,7 +35,7 @@ test_expect_success 'plain' '
+
+ test_expect_success 'plain with GIT_WORK_TREE' '
+        if (
+-               unset GIT_DIR &&
++               unset GIT_DIR ;
+                mkdir plain-wt &&
+                cd plain-wt &&
+                GIT_WORK_TREE=$(pwd) git init
+@@ -48,7 +48,7 @@ test_expect_success 'plain with GIT_WORK
+
+ test_expect_success 'plain bare' '
+        (
+-               unset GIT_DIR GIT_WORK_TREE GIT_CONFIG &&
++               unset GIT_DIR GIT_WORK_TREE GIT_CONFIG ;
+                mkdir plain-bare-1 &&
+                cd plain-bare-1 &&
+                git --bare init
+@@ -58,7 +58,7 @@ test_expect_success 'plain bare' '
+
+ test_expect_success 'plain bare with GIT_WORK_TREE' '
+        if (
+-               unset GIT_DIR GIT_CONFIG &&
++               unset GIT_DIR GIT_CONFIG ;
+                mkdir plain-bare-2 &&
+                cd plain-bare-2 &&
+                GIT_WORK_TREE=$(pwd) git --bare init
+@@ -72,7 +72,7 @@ test_expect_success 'plain bare with GIT
+ test_expect_success 'GIT_DIR bare' '
+
+        (
+-               unset GIT_CONFIG &&
++               unset GIT_CONFIG ;
+                mkdir git-dir-bare.git &&
+                GIT_DIR=git-dir-bare.git git init
+        ) &&
+@@ -82,7 +82,7 @@ test_expect_success 'GIT_DIR bare' '
+ test_expect_success 'GIT_DIR non-bare' '
+
+        (
+-               unset GIT_CONFIG &&
++               unset GIT_CONFIG ;
+                mkdir non-bare &&
+                cd non-bare &&
+                GIT_DIR=.git git init
+@@ -93,7 +93,7 @@ test_expect_success 'GIT_DIR non-bare' '
+ test_expect_success 'GIT_DIR & GIT_WORK_TREE (1)' '
+
+        (
+-               unset GIT_CONFIG &&
++               unset GIT_CONFIG ;
+                mkdir git-dir-wt-1.git &&
+                GIT_WORK_TREE=$(pwd) GIT_DIR=git-dir-wt-1.git git init
+        ) &&
+@@ -103,7 +103,7 @@ test_expect_success 'GIT_DIR & GIT_WORK_
+ test_expect_success 'GIT_DIR & GIT_WORK_TREE (2)' '
+
+        if (
+-               unset GIT_CONFIG &&
++               unset GIT_CONFIG ;
+                mkdir git-dir-wt-2.git &&
+                GIT_WORK_TREE=$(pwd) GIT_DIR=git-dir-wt-2.git git --bare init
+        )
+-->8---
+
+I must leave now.
+
+-- 
+H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
+using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
+& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
+http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
+                        http://www.goldmark.org/jeff/stupid-disclaimers/
