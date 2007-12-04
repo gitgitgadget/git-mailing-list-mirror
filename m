@@ -1,91 +1,76 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH v4] Allow update hooks to update refs on their own.
-Date: Mon, 3 Dec 2007 21:20:20 -0500
-Message-ID: <20071204022020.GA14735@spearce.org>
-References: <7vr6i8sfsa.fsf@gitster.siamese.dyndns.org> <20071202212224.GA22117@midwinter.com> <20071203040108.GS14735@spearce.org> <Pine.LNX.4.64.0712031146520.27959@racer.site> <20071204015108.GV14735@spearce.org> <Pine.LNX.4.64.0712040211270.27959@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [BUG] Pulling tags no longer works in 1.5.3.4...
+Date: Tue, 4 Dec 2007 02:21:36 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712040220270.27959@racer.site>
+References: <4754B4AF.8070408@garzik.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Dec 04 03:20:51 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff Garzik <jeff@garzik.org>
+X-From: git-owner@vger.kernel.org Tue Dec 04 03:22:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzNP0-00048R-IU
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 03:20:50 +0100
+	id 1IzNQv-0004Vg-UN
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 03:22:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751442AbXLDCU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 21:20:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbXLDCU3
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 21:20:29 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:51440 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751375AbXLDCU1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 21:20:27 -0500
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IzNON-00066H-Eg; Mon, 03 Dec 2007 21:20:11 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B514D20FB31; Mon,  3 Dec 2007 21:20:20 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0712040211270.27959@racer.site>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751324AbXLDCWa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 21:22:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751316AbXLDCWa
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 21:22:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49783 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750717AbXLDCW3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 21:22:29 -0500
+Received: (qmail invoked by alias); 04 Dec 2007 02:22:27 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp042) with SMTP; 04 Dec 2007 03:22:27 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19FUoQEXklFkrETCaWr5rlJG8juAkWvtjNVnDkG3t
+	1DcYOcdp5jua3I
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4754B4AF.8070408@garzik.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66996>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Mon, 3 Dec 2007, Shawn O. Pearce wrote:
-> > You failed to quote the part of my email where I talked about how
-> > we set an evironment variable to pass a hint to lockfile.c running
-> > within the git-update-ref subprocess to instruct it to perform a
-> > different style of locking, one that would work as a "recursive"
-> > lock.
-> > 
-> > Such a recursive lock could be useful for a whole lot more than just
-> > the update hook.  But it would at least allow the update hook to
-> > use git-update-ref to safely change the ref, without receive-pack
-> > losing its own lock on the ref.
+Hi,
+
+On Mon, 3 Dec 2007, Jeff Garzik wrote:
+
+> Using package git-core-1.5.3.3-3.fc7, I can do the following with kernel git
+> trees:
 > 
-> Indeed, I even failed to read it fully ;-)
+> 1) git-clone --reference linux-2.6 linux-2.6 tmp-2.6
 > 
-> What do you propose, though?  <filename>.lock.<n>?
+> 2) time passes (days or weeks)
+> 
+> 3)	cd tmp-2.6
+> 	git pull ../linux-2.6
+> 	git pull --tags ../linux-2.6
+> 
+> Result:  works as expected.
+> 
+> 
+> 
+> Using package git-core-1.5.3.4-1.fc8, step #3 breaks:
+> 
+> [jgarzik@pretzel misc-2.6]$ git pull --tags ../linux-2.6/
+> You asked me to pull without telling me which branch you
+> want to merge with, and 'branch.master.merge' in
+> your configuration file does not tell me either.  Please
+> name which branch you want to merge on the command line and
+> try again (e.g. 'git pull <repository> <refspec>').
+> See git-pull(1) for details on the refspec.
 
-Sure.  :-)
+Oops.
 
-I was also hand-waving.  Hoping someone else would fill in the
-magic details.
+As a workaround, please do "git fetch --tags ../linux-2.6 && git pull 
+../linux-2.6/" until it is fixed.
 
-Actually <n> wouldn't be so bad.  We could do something like:
-
-	GIT_INHERITED_LOCKS="<ref> <depth> <ref> <depth> ..."
-
-where <ref> is a ref name (which cannot contain spaces, even though
-some people seem to forget that rule) and <depth> is the number
-of times it has been locked already.  <depth> of 0 is the current
-".lock" file.  So the first lock taken out by receive-pack would
-be setting:
-
-	GIT_INHERITED_LOCKS="refs/heads/master 0"
-
-and another lock on the same ref by a subprocess would then update
-it to:
-
-	GIT_INHERITED_LOCKS="refs/heads/master 1"
-
-etc...
-
-</hand-waving>
-
--- 
-Shawn.
+Ciao,
+Dscho
