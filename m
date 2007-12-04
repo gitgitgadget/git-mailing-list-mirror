@@ -1,65 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make Git accept absolute path names for files within
- the work tree
-Date: Tue, 4 Dec 2007 02:17:40 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712040216220.27959@racer.site>
-References: <3665a1a00712021652tbdfe9d1tdc4575d225bfed36@mail.gmail.com>
- <20071203024916.GA11003@coredump.intra.peff.net> <200712030755.37038.robin.rosenberg@dewire.com>
- <200712032153.31322.robin.rosenberg.lists@dewire.com>
- <20071204014326.GA21358@coredump.intra.peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH v4] Allow update hooks to update refs on their own.
+Date: Mon, 3 Dec 2007 21:20:20 -0500
+Message-ID: <20071204022020.GA14735@spearce.org>
+References: <7vr6i8sfsa.fsf@gitster.siamese.dyndns.org> <20071202212224.GA22117@midwinter.com> <20071203040108.GS14735@spearce.org> <Pine.LNX.4.64.0712031146520.27959@racer.site> <20071204015108.GV14735@spearce.org> <Pine.LNX.4.64.0712040211270.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Anatol Pomozov <anatol.pomozov@gmail.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 04 03:18:48 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 04 03:20:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzNMz-0003eD-ML
-	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 03:18:46 +0100
+	id 1IzNP0-00048R-IU
+	for gcvg-git-2@gmane.org; Tue, 04 Dec 2007 03:20:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751257AbXLDCSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Dec 2007 21:18:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751250AbXLDCSH
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 21:18:07 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54900 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751239AbXLDCSG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Dec 2007 21:18:06 -0500
-Received: (qmail invoked by alias); 04 Dec 2007 02:18:04 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp038) with SMTP; 04 Dec 2007 03:18:04 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18YIdBYa2sYkRMnmDBQZNdEwulY8UfWe8vFBR7t7C
-	zzRrUvltqdYF1m
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071204014326.GA21358@coredump.intra.peff.net>
-X-Y-GMX-Trusted: 0
+	id S1751442AbXLDCU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Dec 2007 21:20:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbXLDCU3
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Dec 2007 21:20:29 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:51440 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751375AbXLDCU1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Dec 2007 21:20:27 -0500
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IzNON-00066H-Eg; Mon, 03 Dec 2007 21:20:11 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B514D20FB31; Mon,  3 Dec 2007 21:20:20 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0712040211270.27959@racer.site>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/66995>
 
-Hi,
-
-On Mon, 3 Dec 2007, Jeff King wrote:
-
-> On Mon, Dec 03, 2007 at 09:53:30PM +0100, Robin Rosenberg wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Mon, 3 Dec 2007, Shawn O. Pearce wrote:
+> > You failed to quote the part of my email where I talked about how
+> > we set an evironment variable to pass a hint to lockfile.c running
+> > within the git-update-ref subprocess to instruct it to perform a
+> > different style of locking, one that would work as a "recursive"
+> > lock.
+> > 
+> > Such a recursive lock could be useful for a whole lot more than just
+> > the update hook.  But it would at least allow the update hook to
+> > use git-update-ref to safely change the ref, without receive-pack
+> > losing its own lock on the ref.
 > 
-> > code did not pass). Like Linus, this code does not resolve symlinks,
-> > but I forgot to state that it is by design. It solves my problem and
+> Indeed, I even failed to read it fully ;-)
 > 
-> By design meaning "I didn't feel like implemening it because I do not
-> personally care" or "I have some reason not to resolve symlinks"?
+> What do you propose, though?  <filename>.lock.<n>?
 
-IMHO those symlinks would be a nice thing in some corner cases, but 
-penalise the common case.  So I tend to believe the latter.  (See also 
-Linus' message why he talks about his preference for the die() code path.)
+Sure.  :-)
 
-Ciao,
-Dscho
+I was also hand-waving.  Hoping someone else would fill in the
+magic details.
+
+Actually <n> wouldn't be so bad.  We could do something like:
+
+	GIT_INHERITED_LOCKS="<ref> <depth> <ref> <depth> ..."
+
+where <ref> is a ref name (which cannot contain spaces, even though
+some people seem to forget that rule) and <depth> is the number
+of times it has been locked already.  <depth> of 0 is the current
+".lock" file.  So the first lock taken out by receive-pack would
+be setting:
+
+	GIT_INHERITED_LOCKS="refs/heads/master 0"
+
+and another lock on the same ref by a subprocess would then update
+it to:
+
+	GIT_INHERITED_LOCKS="refs/heads/master 1"
+
+etc...
+
+</hand-waving>
+
+-- 
+Shawn.
