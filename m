@@ -1,64 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Wed, 05 Dec 2007 12:10:04 +0100
-Organization: At home
-Message-ID: <fj60uc$er$2@ger.gmane.org>
-References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org> <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org> <7vir4d40sw.fsf@gitster.siamese.dyndns.org> <7vwsso3poo.fsf@gitster.siamese.dyndns.org> <7vfxz89x9q.fsf@gitster.siamese.dyndns.org> <7vabpctx3b.fsf@gitster.siamese.dyndns.org> <7vsl30eyuk.fsf@gitster.siamese.dyndns.org> <7vve7tuz3a.fsf@gitster.siamese.dyndns.org> <7v4pfakr4j.fsf@gitster.siamese.dyndns.org> <7vzlwv6sxr.fsf@gitster.siamese.dyndns.org> <7vy7ca6ea9.fsf@gitster.siamese.dyndns.org> <7vzlwps8zf.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-cvsserver runs hooks/post-update
+Date: Wed, 05 Dec 2007 03:18:26 -0800
+Message-ID: <7vtzmxs83h.fsf@gitster.siamese.dyndns.org>
+References: <7v63zdtnjz.fsf@gitster.siamese.dyndns.org>
+	<7245A47D-143F-4DC7-8414-D8C99C0ED9C3@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 05 12:15:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Witten <mfwitten@MIT.EDU>
+X-From: git-owner@vger.kernel.org Wed Dec 05 12:18:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzsE1-0005PC-AZ
-	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 12:15:33 +0100
+	id 1IzsHF-0006cm-P9
+	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 12:18:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751964AbXLELPM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Dec 2007 06:15:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751941AbXLELPM
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 06:15:12 -0500
-Received: from main.gmane.org ([80.91.229.2]:53198 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751885AbXLELPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 06:15:11 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IzsDW-0008VB-G7
-	for git@vger.kernel.org; Wed, 05 Dec 2007 11:15:02 +0000
-Received: from abvr161.neoplus.adsl.tpnet.pl ([83.8.215.161])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 Dec 2007 11:15:02 +0000
-Received: from jnareb by abvr161.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 Dec 2007 11:15:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abvr161.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1751566AbXLELSd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 06:18:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751963AbXLELSd
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 06:18:33 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:41312 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750993AbXLELSc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 06:18:32 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 644102EF;
+	Wed,  5 Dec 2007 06:18:53 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id E77B09C38D;
+	Wed,  5 Dec 2007 06:18:50 -0500 (EST)
+In-Reply-To: <7245A47D-143F-4DC7-8414-D8C99C0ED9C3@mit.edu> (Michael Witten's
+	message of "Wed, 5 Dec 2007 06:07:29 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67145>
 
-Junio C Hamano wrote:
+Michael Witten <mfwitten@MIT.EDU> writes:
 
-> * jk/builtin-alias (Fri Nov 30 11:22:58 2007 -0500) 1 commit
-> =A0+ Support builtin aliases
->=20
-> Cute hack. =A0I'd like to have "git less" here.
+> 	### Emulate git-receive-pack by running hooks/post-receive
+> 	my $hook = $ENV{GIT_DIR}.'hooks/post-receive';
+> 	if( -x $hook ) {
+> 		open(my $pipe, "| $hook") || die "can't fork $!";
+>
+> 		local $SIG{PIPE} = sub { die 'pipe broke' };
+>
+> 		print $pipe "$parenthash $commithash refs/heads/$state->{module}\n";
+>
+> 		close $pipe || die "bad pipe: $! $?";
+> 	}
+>
+>> Unfortunately, it turns out that open() with a pipe essentially
+>> invokes system(); the solution is to fork a child process and
+>> then to turn the child into the process with which communication
+>> is desired via a call to exec().
+>>
+>> Because the rest of git-cvsserver.perl uses explicit system()
+>> calls, I have been wondering if I am being overly cautious.
+>
+> Am I being overly cautious?
 
-I guess that "git whatchanged" can be implemented also as builtin alias=
-=2E
+I do not think you are.  open($fh, "| $hook") can be confused with any
+IFS in $hook (there is no problem with 'hooks/post-receive', but
+$ENV{GIT_DIR} part can have pretty much anything other than NUL), so if
+anything, you are not being careful enough.  Other parts of cvsserver
+seem to be more careful by doing open($fh, '-|', @cmd), which does not
+have this problem.
 
-BTW. now that "git show" can be used on blobs, is "git less" really
-that needed?
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+The execution environment of post-receive is probably wrong; I think
+receive-pack runs the hooks with their $CWD = $GIT_DIR.
