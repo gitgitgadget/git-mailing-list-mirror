@@ -1,62 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t9600: require cvsps 2.1 to perform tests
-Date: Tue, 4 Dec 2007 20:02:02 -0500
-Message-ID: <20071205010202.GA4713@coredump.intra.peff.net>
-References: <20071202163426.GA29781@coredump.intra.peff.net> <47533D75.1090002@gmail.com> <Pine.LNX.4.64.0712022340250.27959@racer.site> <20071203015954.GB8322@coredump.intra.peff.net> <47548CEC.6010701@gmail.com> <7vir3fe54c.fsf@gitster.siamese.dyndns.org> <20071204014145.GA20145@coredump.intra.peff.net> <7v1wa3aukt.fsf@gitster.siamese.dyndns.org> <20071204154454.GA2994@coredump.intra.peff.net> <7vhciy5pg0.fsf@gitster.siamese.dyndns.org>
+From: Federico Mena Quintero <federico@novell.com>
+Subject: Re: Some git performance measurements..
+Date: Tue, 04 Dec 2007 19:04:48 -0600
+Message-ID: <1196816688.23870.2.camel@cacharro.xalalinux.org>
+References: <alpine.LFD.0.9999.0711281747450.8458@woody.linux-foundation.org>
+	 <alpine.LFD.0.9999.0711281852160.8458@woody.linux-foundation.org>
+	 <alpine.LFD.0.99999.0711282244190.9605@xanadu.home>
+	 <alpine.LFD.0.9999.0711282022470.8458@woody.linux-foundation.org>
+	 <alpine.LFD.0.99999.0711291208060.9605@xanadu.home>
+	 <finmvm$da8$1@ger.gmane.org>
+	 <alpine.LFD.0.9999.0711291812530.8458@woody.linux-foundation.org>
+	 <alpine.LFD.0.9999.0711291836230.8458@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitzilla@gmail.com,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 05 02:02:32 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, Nicolas Pitre <nico@cam.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Dec 05 02:30:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iziei-0006EF-P1
-	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 02:02:29 +0100
+	id 1Izj5y-0005Z6-6U
+	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 02:30:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751296AbXLEBCG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Dec 2007 20:02:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751196AbXLEBCG
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 20:02:06 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2627 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751183AbXLEBCF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Dec 2007 20:02:05 -0500
-Received: (qmail 13119 invoked by uid 111); 5 Dec 2007 01:02:03 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 04 Dec 2007 20:02:03 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Dec 2007 20:02:02 -0500
-Content-Disposition: inline
-In-Reply-To: <7vhciy5pg0.fsf@gitster.siamese.dyndns.org>
+	id S1751055AbXLEBaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Dec 2007 20:30:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750979AbXLEBaR
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Dec 2007 20:30:17 -0500
+Received: from jericho.provo.novell.com ([137.65.248.124]:36628 "EHLO
+	jericho.provo.novell.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750764AbXLEBaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Dec 2007 20:30:16 -0500
+X-Greylist: delayed 1219 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Dec 2007 20:30:15 EST
+Received: from [164.99.195.6] ([164.99.195.6])
+	by jericho.provo.novell.com with ESMTP; Tue, 04 Dec 2007 18:09:36 -0700
+In-Reply-To: <alpine.LFD.0.9999.0711291836230.8458@woody.linux-foundation.org>
+X-Mailer: Evolution 2.11.5 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67099>
 
-On Tue, Dec 04, 2007 at 09:39:59AM -0800, Junio C Hamano wrote:
+On Thu, 2007-11-29 at 18:54 -0800, Linus Torvalds wrote:
 
-> You are right about "we may be depending on what 2.1 has other than
-> -A".  Will apply as-is.
-> 
-> Thanks, both.
-> 
-> The primary reason I asked about '\[-A\]' was what will happen if
-> somebody uses 2.2.
+> Jakub pointed out, the cold-cache numbers do fluctuate a lot, and while 
 
-Yes, it would be nice to be able to easily check >2.1. GNU expr seems to
-handle this ok:
+You may want to try iogrind:
 
-  $ expr 2.2 '>' 2.1
-  1
-  $ expr 2.0 '>' 2.1
-  0
+http://live.gnome.org/iogrind
 
-but POSIX seems to mention only integers and string comparison (though
-if all are of the form "x.y", string comparison works). I have no idea
-how portable this is.
+It's a valgrind skin to record I/O operations (including "implicit" ones
+like touching mmap()ed pages), plus a graphical tool to visualize the
+logs, similar to kcachegrind.
 
--Peff
+  Federico
