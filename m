@@ -1,116 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: Try harder in parse_tag; perhaps it was given ambiguous name
-Date: Wed, 05 Dec 2007 11:46:53 -0800
-Message-ID: <7v7ijsq5zm.fsf@gitster.siamese.dyndns.org>
-References: <200712010245.29204.jnareb@gmail.com>
-	<200712010247.25107.jnareb@gmail.com>
-	<7v3auh1v75.fsf@gitster.siamese.dyndns.org>
-	<200712051113.40654.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 6/6] DWIM "git add remote ..."
+Date: Wed, 5 Dec 2007 19:47:44 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712051946350.27959@racer.site>
+References: <Pine.LNX.4.64.0712051858270.27959@racer.site>
+ <Pine.LNX.4.64.0712051902510.27959@racer.site>
+ <alpine.LFD.0.9999.0712051129280.13796@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Guillaume Seguin <guillaume@segu.in>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 05 20:48:30 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Dec 05 20:54:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J00Dy-0004F4-Ie
-	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 20:48:03 +0100
+	id 1J00KY-0007ON-Hh
+	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 20:54:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755062AbXLETrD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 14:47:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756236AbXLETrA
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 14:47:00 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:45884 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756227AbXLETq7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 14:46:59 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 8C18A2EF;
-	Wed,  5 Dec 2007 14:47:20 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id D330A9D3E3;
-	Wed,  5 Dec 2007 14:47:16 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754556AbXLETsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 14:48:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756523AbXLETsQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 14:48:16 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47273 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755854AbXLETsP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 14:48:15 -0500
+Received: (qmail invoked by alias); 05 Dec 2007 19:48:13 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp046) with SMTP; 05 Dec 2007 20:48:13 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/swPd9QEzsuD8ZsLQDg/GdPy8iB9j//PGLX6wfok
+	jb8tlCVDj6mjn0
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.0.9999.0712051129280.13796@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67190>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Hi,
 
-> First patch, which is modified version of Guillaume Seguin patch solves
-> problem that links in gitweb does lead to correct 'tag' view, while the
-> second one solves the problem from the other side: instead of ensuring
-> that links in gitweb are unambiguous it tries to resolve ambiguity.
+On Wed, 5 Dec 2007, Linus Torvalds wrote:
 
-Ok, I'll queue the first one (disambiguate) for 1.5.4 while letting the
-people decide the latter for now.
+> On Wed, 5 Dec 2007, Johannes Schindelin wrote:
+> > 
+> > It is wrong to divert to "git remote add" when you typed the (more 
+> > English) "git add remote".  But is it also pretty convenient.
+> 
+> Please don't do cute things like this. Suddenly "git add remote" has two 
+> different meanings depending on whether you have a file called "remote" 
+> or not. That is *not* ok.
+> 
+> Not to mention the fact that your patch is also a horrible piece of 
+> bug-infested shit, to put it less-than-politely. Namely, you now broke 
+> "git add remote" when "remote" is a symbolic link pointing to 
+> hyperspace.
+> 
+> But even if you fix that bug, it only goes to show just how misguided 
+> things like these are. It's a *lot* more important to make sense and not 
+> have surprising special cases, than to try to make git command lines act 
+> as if they were free-form English.
 
-> The problem is caused by the fact that git _always_ prefer heads (head
-> refs) to tags (tag refs), even when it is clear
->   $ git cat-file tags ambiguous-ref
-> that we want a tag. So alternate solution would be to correct
-> git-cat-file.
+Hehe.  You're right, of course.  But I could not resist showing off that 
+patch which I wrote after I mixed up the command line of "remote add" for 
+the 926th time.
 
-You are getting the layering all wrong.
-
- * git-cat-file takes "object name" on its command line (so do many
-   other commands).
-
- * One of the way to spell an "object name" is to refer to it with a ref
-   that can reach it (e.g. to name 12th generation parent of the tip of
-   the master branch, you spell "master~12" and you are using the ref
-   refs/heads/master).
-
- * You do not have to always write out the ref in full.  There is a
-   defined order to disambiguate refs (see git-rev-parse(1)), that
-   allows you to say 'master' and it expands to either refs/tags/master,
-   refs/heads/master or whatever.
-
-Now git-cat-file does not care how you spelled your object name, and has
-no business influencing the ref disambiguation order.  You _could_ argue
-"git cat-file tag <foo>" _expects_ <foo> to name a tag, but that logic
-is very flawed (and that is why I said your understanding of layering is
-screwed) for two reasons:
-
- (1) <foo> may be user input to the script that uses cat-file and the
-     script may be expecting a tag there.  Perhaps the script is about
-     creating a new branch from a tag (expecting a tag) and adds some
-     administrative info in the configuration file for the branch.  It
-     does first:
-
-	t=$(git cat-file tag "$1") || die not a tag
-
-     and later the script may want to do:
-
-	git branch $newone "$1"
-        git config branch.$newone.description "created from tag $1 ($t)"
-
-     If you make "cat-file tag" to favor tag, and in a similar fashion
-     if you make "branch" favor branch, the above will not do what you
-     expect.
-
-     Consistently resolving the refname without (or minimum number of)
-     exceptions would give less surprising result.
-
- (2) "git cat-file -t <foo>" is to find out what type the object is and
-     is meant to be used by callers who do not know the type.  There is
-     no "favoring this class of ref over other classses" possible there.
-
-> It would be quite easy I think to add checking if gitweb returns
-> expected HTTP return code (HTTP status). So what is the portable way
-> to check if first line of some output matches given regexp (given fixed
-> string)?
-
-Huh?  Wouldn't something like this be enough?
-
-	>expect.empty &&
-	cmd >actual.out 2>actual.err &&
-        diff -u expect.empty actual.err &&
-        first=$(sed -e '1q' <actual.out) &&
-	test "z$first" = "I like it"
+Ciao,
+Dscho
