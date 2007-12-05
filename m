@@ -1,69 +1,74 @@
-From: =?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
-Subject: Re: [PATCH] Documentation: add a new man page for "git-help" and
- -i|--info option.
-Date: Wed, 05 Dec 2007 13:50:17 +0200
-Message-ID: <6809BA12-0200-4EA8-BB9E-D26ED5E27660@pp.inet.fi>
-References: <20071204064429.1b5007b2.chriscool@tuxfamily.org>
- <178B37CE-9B28-4CE2-B8A0-FCA28CF85E12@pp.inet.fi>
- <7vabopzfek.fsf@gitster.siamese.dyndns.org>
+From: Anton Korobeynikov <asl@math.spbu.ru>
+Subject: How to fix this error
+Date: Wed, 05 Dec 2007 15:04:02 +0300
+Organization: Saint Petersburg State University
+Message-ID: <1196856242.10880.8.camel@asl.dorms.spbu.ru>
+Reply-To: asl@math.spbu.ru
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 05 12:52:41 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 05 13:04:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Izsnw-00029x-GA
-	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 12:52:40 +0100
+	id 1Izsze-0006lN-0Y
+	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 13:04:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751752AbXLELv7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Dec 2007 06:51:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751799AbXLELv7
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 06:51:59 -0500
-Received: from hyat.suomi.net ([82.128.152.22]:45871 "EHLO hyat.suomi.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751602AbXLELv6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Dec 2007 06:51:58 -0500
-Received: from taku.suomi.net ([82.128.154.66])
- by hyatt.suomi.net (Sun Java System Messaging Server 6.2-3.04 (built Jul 15
- 2005)) with ESMTP id <0JSK002JBRID8670@hyatt.suomi.net> for
- git@vger.kernel.org; Wed, 05 Dec 2007 13:49:25 +0200 (EET)
-Received: from spam5.suomi.net (spam5.suomi.net [212.50.131.165])
- by mailstore.suomi.net
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSK00H9CRK43NC0@mailstore.suomi.net> for git@vger.kernel.org;
- Wed, 05 Dec 2007 13:51:03 +0200 (EET)
-Received: from Kaalimaa.fudeco.com (unknown [213.139.166.27])
-	by spam5.suomi.net (Postfix) with ESMTP id B81BD2FE93; Wed,
- 05 Dec 2007 11:50:17 +0000 (UTC)
-In-reply-to: <7vabopzfek.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.915)
-X-OPOY-MailScanner-Watermark: 1197460218.53114@zerVrTHLD4G2e1yNytIxig
-X-OPOY-MailScanner-Information: Please contact OPOY for more information
-X-OPOY-MailScanner: Found to be clean
-X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (not cached, score=0.1,
-	required 5, AWL -0.00, RDNS_NONE 0.10)
-X-OPOY-MailScanner-From: v@pp.inet.fi
-X-Spam-Status: No
+	id S1751531AbXLEMEX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 07:04:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751432AbXLEMEX
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 07:04:23 -0500
+Received: from star.math.spbu.ru ([195.19.226.178]:1555 "EHLO
+	star.math.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751474AbXLEMEW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 07:04:22 -0500
+Received: from [195.19.254.136] (asl.dorms.spbu.ru [195.19.254.136])
+	by star.math.spbu.ru (8.13.6/8.13.6) with ESMTP id lB5C4Ek3036878
+	for <git@vger.kernel.org>; Wed, 5 Dec 2007 15:04:17 +0300 (MSK)
+X-Mailer: Evolution 2.12.2 
+X-Virus-Scanned: ClamAV 0.88.7/5011/Wed Dec  5 12:42:23 2007 on star.math.spbu.ru
+X-Virus-Status: Clean
+X-Spam-Checker-Version: SpamAssassin 3.1.0 (2005-09-13) on star.math.spbu.ru
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67149>
 
-On Dec 5, 2007, at 10:58, Junio C Hamano wrote:
+Hello, Everyone
 
-> Perhaps your mail and my push crossed.  The same fix is there at the =
-=20
-> tip
-> of 'master' branch since last night.
+Today I discovered, that one of my git-svn-pulled trees cannot sync
+anymore:
 
-Ah, sorry, I didn't check the master, and didn't mention that the fix =20
-was for next.
+$ git-svn rebase -A ../authors 
+Index mismatch: cc94b590c0a458a610fca10fa01e7461c627b63b !=
+09ac82e1a756c11865eca3e23c5704f73dc45244
+rereading dc25ba706a6edaa0cc51dd376952b694559137c0
+        D       test/Sema/undecl-objc-h.m
+        M       Basic/FileManager.cpp
+        M       Basic/SourceManager.cpp
+        M       include/clang/Basic/FileManager.h
+        M       include/clang/Basic/SourceManager.h
+        M       include/clang/AST/Expr.h
+        M       Sema/SemaChecking.cpp
+        M       Sema/SemaType.cpp
+        M       Sema/Sema.h
+        M       Sema/SemaDecl.cpp
+        M       Sema/SemaStmt.cpp
+        M       Driver/Targets.cpp
+        M       Driver/RewriteTest.cpp
+Last fetched revision of refs/remotes/git-svn was r44583, but we are
+about to fetch: r44571!
 
---
-V=E4in=F6
+Maybe the actual reason were some fs transactions being rollbacked after
+power loss, but I'm not sure. Any idea how this can be fixed without
+repulling everything from scratch?
+
+Thanks in advance.
+
+-- 
+With best regards, Anton Korobeynikov.
+
+Faculty of Mathematics & Mechanics, Saint Petersburg State University.
