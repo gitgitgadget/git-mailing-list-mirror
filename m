@@ -1,33 +1,33 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: (unknown)
-Date: Wed, 5 Dec 2007 19:00:47 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712051900370.27959@racer.site>
+Subject: [PATCH 2/6] parseopt: add flag to stop on first non option
+Date: Wed, 5 Dec 2007 19:01:01 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712051900530.27959@racer.site>
 References: <Pine.LNX.4.64.0712051858270.27959@racer.site>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Dec 05 20:01:59 2007
+X-From: git-owner@vger.kernel.org Wed Dec 05 20:02:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzzVO-0001Bp-Rv
+	id 1IzzVP-0001Bp-Hq
 	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 20:01:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751589AbXLETBQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 14:01:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751592AbXLETBQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 14:01:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37909 "HELO mail.gmx.net"
+	id S1751882AbXLETBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 14:01:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbXLETBa
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 14:01:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51427 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750862AbXLETBP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 14:01:15 -0500
-Received: (qmail invoked by alias); 05 Dec 2007 19:01:14 -0000
+	id S1751850AbXLETB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 14:01:29 -0500
+Received: (qmail invoked by alias); 05 Dec 2007 19:01:27 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp048) with SMTP; 05 Dec 2007 20:01:14 +0100
+  by mail.gmx.net (mp056) with SMTP; 05 Dec 2007 20:01:27 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19XmNVSIU9X0AVqbI5AYtFtyVAk223t8lxxzQ9TQb
-	9933vBqeOCV1rc
+X-Provags-ID: V01U2FsdGVkX1+5ov5DUuS5VouFNkKmZpdXUinhXBY/WYgAEiTsm0
+	xpyeLuMMipsAqr
 X-X-Sender: gene099@racer.site
 In-Reply-To: <Pine.LNX.4.64.0712051858270.27959@racer.site>
 X-Y-GMX-Trusted: 0
@@ -35,87 +35,42 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67174>
 
-[PATCH 1/6] path-list: add functions to work with unsorted lists
-
-Up to now, path-lists were sorted at all times.  But sometimes it
-is much more convenient to build the list and sort it at the end,
-or sort it not at all.
-
-Add path_list_append() and sort_path_list() to allow that.
-
-Also, add the unsorted_path_list_has_path() function, to do a linear
-search.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
 
-	I should have done this much earlier...
+	This allows "git remote --option command --command-option".
 
- path-list.c |   30 ++++++++++++++++++++++++++++++
- path-list.h |    8 +++++++-
- 2 files changed, 37 insertions(+), 1 deletions(-)
+ parse-options.c |    2 ++
+ parse-options.h |    1 +
+ 2 files changed, 3 insertions(+), 0 deletions(-)
 
-diff --git a/path-list.c b/path-list.c
-index 3d83b7b..92e5cf2 100644
---- a/path-list.c
-+++ b/path-list.c
-@@ -102,3 +102,33 @@ void print_path_list(const char *text, const struct path_list *p)
- 	for (i = 0; i < p->nr; i++)
- 		printf("%s:%p\n", p->items[i].path, p->items[i].util);
- }
-+
-+struct path_list_item *path_list_append(const char *path, struct path_list *list)
-+{
-+	ALLOC_GROW(list->items, list->nr + 1, list->alloc);
-+	list->items[list->nr].path =
-+		list->strdup_paths ? xstrdup(path) : (char *)path;
-+	return list->items + list->nr++;
-+}
-+
-+static int cmp_items(const void *a, const void *b)
-+{
-+	const struct path_list_item *one = a;
-+	const struct path_list_item *two = b;
-+	return strcmp(one->path, two->path);
-+}
-+
-+void sort_path_list(struct path_list *list)
-+{
-+	qsort(list->items, list->nr, sizeof(*list->items), cmp_items);
-+}
-+
-+int unsorted_path_list_has_path(struct path_list *list, const char *path)
-+{
-+	int i;
-+	for (i = 0; i < list->nr; i++)
-+		if (!strcmp(path, list->items[i].path))
-+			return 1;
-+	return 0;
-+}
-+
-diff --git a/path-list.h b/path-list.h
-index 5931e2c..ca2cbba 100644
---- a/path-list.h
-+++ b/path-list.h
-@@ -13,10 +13,16 @@ struct path_list
+diff --git a/parse-options.c b/parse-options.c
+index e12b428..6df1230 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -229,6 +229,8 @@ int parse_options(int argc, const char **argv, const struct option *options,
+ 		const char *arg = args.argv[0];
+ 
+ 		if (*arg != '-' || !arg[1]) {
++			if (flags & PARSE_OPT_STOP_AT_NON_OPTION)
++				break;
+ 			argv[j++] = args.argv[0];
+ 			continue;
+ 		}
+diff --git a/parse-options.h b/parse-options.h
+index 102ac31..0d40cd2 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -18,6 +18,7 @@ enum parse_opt_type {
+ 
+ enum parse_opt_flags {
+ 	PARSE_OPT_KEEP_DASHDASH = 1,
++	PARSE_OPT_STOP_AT_NON_OPTION = 2,
  };
  
- void print_path_list(const char *text, const struct path_list *p);
-+void path_list_clear(struct path_list *list, int free_util);
- 
-+/* Use these functions only on sorted lists: */
- int path_list_has_path(const struct path_list *list, const char *path);
--void path_list_clear(struct path_list *list, int free_util);
- struct path_list_item *path_list_insert(const char *path, struct path_list *list);
- struct path_list_item *path_list_lookup(const char *path, struct path_list *list);
- 
-+/* Use these functions only on unsorted lists: */
-+struct path_list_item *path_list_append(const char *path, struct path_list *list);
-+void sort_path_list(struct path_list *list);
-+int unsorted_path_list_has_path(struct path_list *list, const char *path);
-+
- #endif /* PATH_LIST_H */
+ enum parse_opt_option_flags {
 -- 
 1.5.3.7.2157.g9598e
