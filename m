@@ -1,70 +1,56 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: git-svn: .git/svn disk usage
-Date: Wed, 5 Dec 2007 13:30:10 -0800
-Message-ID: <6D1288C9-8FD7-40CB-BA0B-0032F8D2DA6A@midwinter.com>
-References: <65dd6fd50712022217l5f807f31pf3f00d82c3dccf5c@mail.gmail.com> <loom.20071203T182924-435@post.gmane.org> <20071205085451.GA347@soma>
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH/RFC] autoconf: Add test for OLD_ICONV
+Date: Wed, 5 Dec 2007 16:38:10 -0500
+Message-ID: <9B4498E3-295F-4D0B-896C-34E54A869B5E@silverinsanity.com>
+References: <7vd4u5l29v.fsf@gitster.siamese.dyndns.org> <200712051752.28667.jnareb@gmail.com> <52A4CC8B-EB11-4E3F-A3B6-06826F860E5D@wincent.com> <200712052219.00930.jnareb@gmail.com>
 Mime-Version: 1.0 (Apple Message framework v915)
 Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: David Voit <david.voit@gmail.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Dec 05 22:30:34 2007
+Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Arjen Laarhoven <arjen@yaph.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 05 22:38:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J01pC-00047e-0T
-	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 22:30:34 +0100
+	id 1J01x1-0007ZZ-Ev
+	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 22:38:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751884AbXLEVaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 16:30:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751814AbXLEVaN
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 16:30:13 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:57638 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751755AbXLEVaL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 16:30:11 -0500
-Received: (qmail 15703 invoked from network); 5 Dec 2007 21:30:10 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=dkKdwQ2x/gOGuWVSDgAAGbq9tNoGWjwqqQU40AXu5rGug6mGf2swFIxD9Lmu5Mvt  ;
-Received: from localhost (127.0.0.1)
-  by localhost with SMTP; 5 Dec 2007 21:30:10 -0000
-In-Reply-To: <20071205085451.GA347@soma>
+	id S1752335AbXLEViR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 16:38:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752253AbXLEViR
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 16:38:17 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:38091 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751761AbXLEViQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 16:38:16 -0500
+Received: from [192.168.1.3] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 1E02A1FFC229;
+	Wed,  5 Dec 2007 21:38:13 +0000 (UTC)
+In-Reply-To: <200712052219.00930.jnareb@gmail.com>
 X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67198>
 
-How about using git itself to keep some of this information? I'll just  
-throw this idea out there; might or might not make any actual sense.
 
-Create a new "git-svn metadata" branch. This branch contains a fake  
-directory (never intended for checkout, though you could do it) that  
-has a "file" for each svn revision. The filename is just the svn  
-revision number, maybe divided into subdirectories in case you want to  
-check the branch out for debugging purposes or whatever. The contents  
-are the git commit SHA1 and whatever other metadata you want to keep  
-in the future.
+On Dec 5, 2007, at 4:19 PM, Jakub Narebski wrote:
 
-The advantage of doing it this way? You can pass around svn metadata  
-using the normal git fetch/push tools, query the metadata using "git  
-show", etc. In terms of data integrity, it's as secure as anything  
-else in a git repository, much more so than a separately maintained db  
-file under .git.
+> Ahhh... now I understand. You have installed new iconv() on your
+> computer, and generic 'uname -s' (OS name) based guessing in Makefile
+> guesses wrongly that you need OLD_ICONV, while ./configure script
+> actually tests it and correctly decides to unset OLD_ICONV !
 
-Along similar lines, a separate branch where the filenames are commit  
-SHA1s and the file contents are the stuff that currently gets written  
-into the git-svn-id: lines would mean no more need to rewrite history  
-when doing dcommit, and thus easier mixing of native git workflows and  
-interactions with an svn repository.
+As far as the "installed new iconv()" goes, you may be wrong there.   
+The latest major release of OS X includes a version of iconv that does  
+not need OLD_ICONV as part of the base system.  I've had to unset it  
+in my config.mak in order to avoid the warning.
 
-It would be great if you could clone a git-svn repository and then do  
-"git svn dcommit" from the clone, secure in the knowledge that things  
-will stay consistent even if the origin gets your changes via "git svn  
-fetch" rather than from you.
-
--Steve
+~~ Brian Gernhardt
