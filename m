@@ -1,109 +1,82 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] Documentation: describe -w/--web option to "git-help".
-Date: Wed, 5 Dec 2007 06:09:40 +0100
-Message-ID: <20071205060940.20687a64.chriscool@tuxfamily.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t9600: require cvsps 2.1 to perform tests
+Date: Tue, 04 Dec 2007 21:44:38 -0800
+Message-ID: <7v3auh3dbt.fsf@gitster.siamese.dyndns.org>
+References: <20071202163426.GA29781@coredump.intra.peff.net>
+	<47533D75.1090002@gmail.com>
+	<Pine.LNX.4.64.0712022340250.27959@racer.site>
+	<20071203015954.GB8322@coredump.intra.peff.net>
+	<47548CEC.6010701@gmail.com>
+	<7vir3fe54c.fsf@gitster.siamese.dyndns.org>
+	<20071204014145.GA20145@coredump.intra.peff.net>
+	<7v1wa3aukt.fsf@gitster.siamese.dyndns.org>
+	<20071204154454.GA2994@coredump.intra.peff.net>
+	<7vhciy5pg0.fsf@gitster.siamese.dyndns.org>
+	<20071205010202.GA4713@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Dec 05 06:03:38 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: gitzilla@gmail.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 05 06:45:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzmQ5-0000Dx-PW
-	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 06:03:38 +0100
+	id 1Izn4H-0008Oc-1U
+	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 06:45:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750849AbXLEFDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 00:03:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750835AbXLEFDR
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 00:03:17 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:44823 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750739AbXLEFDQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 00:03:16 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 2AB3E1AB2B0;
-	Wed,  5 Dec 2007 06:03:15 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id EE5311AB2AA;
-	Wed,  5 Dec 2007 06:03:14 +0100 (CET)
-X-Mailer: Sylpheed 2.4.7 (GTK+ 2.12.1; i486-pc-linux-gnu)
+	id S1751216AbXLEFos (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 00:44:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751135AbXLEFos
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 00:44:48 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:34494 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750709AbXLEFor (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 00:44:47 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 323872F0;
+	Wed,  5 Dec 2007 00:45:07 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 922199AF04;
+	Wed,  5 Dec 2007 00:45:02 -0500 (EST)
+In-Reply-To: <20071205010202.GA4713@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 4 Dec 2007 20:02:02 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67102>
 
-Also explain that "git instaweb" may use "web.browser" config
-variable.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-help.txt     |   21 +++++++++++++++++++--
- Documentation/git-instaweb.txt |    3 +++
- 2 files changed, 22 insertions(+), 2 deletions(-)
+> On Tue, Dec 04, 2007 at 09:39:59AM -0800, Junio C Hamano wrote:
+>
+>> You are right about "we may be depending on what 2.1 has other than
+>> -A".  Will apply as-is.
+>> 
+>> Thanks, both.
+>> 
+>> The primary reason I asked about '\[-A\]' was what will happen if
+>> somebody uses 2.2.
+>
+> Yes, it would be nice to be able to easily check >2.1. GNU expr seems to
+> handle this ok:
+>
+>   $ expr 2.2 '>' 2.1
+>   1
+>   $ expr 2.0 '>' 2.1
+>   0
+>
+> but POSIX seems to mention only integers and string comparison (though
+> if all are of the form "x.y", string comparison works). I have no idea
+> how portable this is.
 
-diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-index c94e27b..ac9e15d 100644
---- a/Documentation/git-help.txt
-+++ b/Documentation/git-help.txt
-@@ -7,7 +7,7 @@ git-help - display help information about git
- 
- SYNOPSIS
- --------
--'git help' [-a|--all|-i|--info] [COMMAND]
-+'git help' [-a|--all|-i|--info|-w|--web] [COMMAND]
- 
- DESCRIPTION
- -----------
-@@ -29,7 +29,6 @@ former is internally converted into the latter.
- OPTIONS
- -------
- -a|--all::
--
- 	Prints all the available commands on the standard output. This
- 	option superseeds any other option.
- 
-@@ -37,6 +36,24 @@ OPTIONS
- 	Use the 'info' program to display the manual page, instead of
- 	the 'man' program that is used by default.
- 
-+-w|--web::
-+	Use a web browser to display the HTML manual page, instead of
-+	the 'man' program that is used by default.
-++
-+The web browser can be specified using the configuration variable
-+'help.browser', or 'web.browser' if the former is not set. If none of
-+these config variables is set, the 'git-browse-help' script (called by
-+'git-help') will pick a suitable default.
-++
-+You can explicitly provide a full path to your prefered browser by
-+setting the configuration variable 'browser.<tool>.path'. For example,
-+you can configure the absolute path to firefox by setting
-+'browser.firefox.path'. Otherwise, 'git-browse-help' assumes the tool
-+is available in PATH.
-++
-+Note that the script tries, as much as possible, to display the HTML
-+page in a new tab on an already opened browser.
-+
- Author
- ------
- Written by Junio C Hamano <gitster@pobox.com> and the git-list
-diff --git a/Documentation/git-instaweb.txt b/Documentation/git-instaweb.txt
-index 735008c..d2ce779 100644
---- a/Documentation/git-instaweb.txt
-+++ b/Documentation/git-instaweb.txt
-@@ -71,6 +71,9 @@ You may specify configuration in your .git/config
- 
- -----------------------------------------------------------------------
- 
-+If the configuration variable 'instaweb.browser' is not set,
-+'web.browser' will be used instead if it is defined.
-+
- Author
- ------
- Written by Eric Wong <normalperson@yhbt.net>
--- 
-1.5.3.6.1993.g154f-dirty
+Yeah, but it is the same thing -- we know 2.1 works, we do not know if
+2.2 will break things for us ;-)
+
+We'll worry about it when somebody with 2.2 complains.
