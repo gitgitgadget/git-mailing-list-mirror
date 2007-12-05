@@ -1,124 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Soft aliases: add "less" and minimal documentation
-Date: Wed, 5 Dec 2007 11:37:55 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712051131120.27959@racer.site>
-References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org>
- <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org>
- <7vir4d40sw.fsf@gitster.siamese.dyndns.org> <7vwsso3poo.fsf@gitster.siamese.dyndns.org>
- <7vfxz89x9q.fsf@gitster.siamese.dyndns.org> <7vabpctx3b.fsf@gitster.siamese.dyndns.org>
- <7vsl30eyuk.fsf@gitster.siamese.dyndns.org> <7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
- <7v4pfakr4j.fsf@gitster.siamese.dyndns.org> <7vzlwv6sxr.fsf@gitster.siamese.dyndns.org>
- <7vy7ca6ea9.fsf@gitster.siamese.dyndns.org> <7vzlwps8zf.fsf@gitster.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
+Subject: Re: [PATCH] Documentation: add a new man page for "git-help" and
+ -i|--info option.
+Date: Wed, 05 Dec 2007 13:50:17 +0200
+Message-ID: <6809BA12-0200-4EA8-BB9E-D26ED5E27660@pp.inet.fi>
+References: <20071204064429.1b5007b2.chriscool@tuxfamily.org>
+ <178B37CE-9B28-4CE2-B8A0-FCA28CF85E12@pp.inet.fi>
+ <7vabopzfek.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 05 12:38:46 2007
+X-From: git-owner@vger.kernel.org Wed Dec 05 12:52:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzsaT-0005Qf-Q1
-	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 12:38:46 +0100
+	id 1Izsnw-00029x-GA
+	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 12:52:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750969AbXLELi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 06:38:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbXLELiZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 06:38:25 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39223 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750964AbXLELiY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 06:38:24 -0500
-Received: (qmail invoked by alias); 05 Dec 2007 11:38:22 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp012) with SMTP; 05 Dec 2007 12:38:22 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX184yZ4Z5Rs41akWXYZH2FYMqi+qKhdlqxlqrsGomN
-	8JFtBoFfdlhX7l
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vzlwps8zf.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1751752AbXLELv7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Dec 2007 06:51:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751799AbXLELv7
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 06:51:59 -0500
+Received: from hyat.suomi.net ([82.128.152.22]:45871 "EHLO hyat.suomi.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751602AbXLELv6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Dec 2007 06:51:58 -0500
+Received: from taku.suomi.net ([82.128.154.66])
+ by hyatt.suomi.net (Sun Java System Messaging Server 6.2-3.04 (built Jul 15
+ 2005)) with ESMTP id <0JSK002JBRID8670@hyatt.suomi.net> for
+ git@vger.kernel.org; Wed, 05 Dec 2007 13:49:25 +0200 (EET)
+Received: from spam5.suomi.net (spam5.suomi.net [212.50.131.165])
+ by mailstore.suomi.net
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JSK00H9CRK43NC0@mailstore.suomi.net> for git@vger.kernel.org;
+ Wed, 05 Dec 2007 13:51:03 +0200 (EET)
+Received: from Kaalimaa.fudeco.com (unknown [213.139.166.27])
+	by spam5.suomi.net (Postfix) with ESMTP id B81BD2FE93; Wed,
+ 05 Dec 2007 11:50:17 +0000 (UTC)
+In-reply-to: <7vabopzfek.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.915)
+X-OPOY-MailScanner-Watermark: 1197460218.53114@zerVrTHLD4G2e1yNytIxig
+X-OPOY-MailScanner-Information: Please contact OPOY for more information
+X-OPOY-MailScanner: Found to be clean
+X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (not cached, score=0.1,
+	required 5, AWL -0.00, RDNS_NONE 0.10)
+X-OPOY-MailScanner-From: v@pp.inet.fi
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67148>
 
+On Dec 5, 2007, at 10:58, Junio C Hamano wrote:
 
-Now you can use "git less HEAD" to view the raw HEAD commit object.  It
-is really a soft alias (i.e. it can be overridden by any user-specified
-alias) to "-p cat-file -p".
+> Perhaps your mail and my push crossed.  The same fix is there at the =
+=20
+> tip
+> of 'master' branch since last night.
 
-This commit refactors the code a bit, to make adding new soft aliases
-much easier.
+Ah, sorry, I didn't check the master, and didn't mention that the fix =20
+was for next.
 
-It also adds a few lines in git.txt, so that users actually have a chance
-to find out about soft aliases.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-
-	On Wed, 5 Dec 2007, Junio C Hamano wrote:
-
-	> * jk/builtin-alias (Fri Nov 30 11:22:58 2007 -0500) 1 commit
-	>  + Support builtin aliases
-	> 
-	> Cute hack.  I'd like to have "git less" here.
-
-	How about this?
-
-	BTW now it should be easy to add soft aliases for "update", "up",
-	"checkin" and "ci".
-
- Documentation/git.txt |    9 +++++++++
- git.c                 |   13 +++++++++++--
- 2 files changed, 20 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index c4e4d24..d29dfdc 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -248,6 +248,15 @@ users typically do not use them directly.
- include::cmds-purehelpers.txt[]
- 
- 
-+Soft aliases
-+~~~~~~~~~~~~
-+
-+There are a few hard-coded aliases which can be overridden by explicit
-+aliases (see gitlink:git-config[1]).  These include "view" for viewing
-+the repository graphically, and "less" to show an object from the
-+database using the pager.
-+
-+
- Configuration Mechanism
- -----------------------
- 
-diff --git a/git.c b/git.c
-index 92cc49b..3c82f80 100644
---- a/git.c
-+++ b/git.c
-@@ -148,10 +148,19 @@ static int split_cmdline(char *cmdline, const char ***argv)
- 	return count;
- }
- 
-+static struct {
-+	const char *alias, *command;
-+} builtin_aliases[] = {
-+	{ "view", "!gitk" },
-+	{ "less", "-p cat-file -p" },
-+};
-+
- static char *builtin_alias(const char *cmd)
- {
--	if (!strcmp(cmd, "view"))
--		return xstrdup("!gitk");
-+	int i;
-+	for (i = 0; i < ARRAY_SIZE(builtin_aliases); i++)
-+		if (!strcmp(cmd, builtin_aliases[i].alias))
-+			return xstrdup(builtin_aliases[i].command);
- 	return NULL;
- }
- 
--- 
-1.5.3.7.2139.g2a5a3
+--
+V=E4in=F6
