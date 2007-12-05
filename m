@@ -1,75 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Cosmetic git-am interactive bug
-Date: Tue, 04 Dec 2007 23:01:30 -0800
-Message-ID: <7v8x491v79.fsf@gitster.siamese.dyndns.org>
-References: <4755A836.1050408@garzik.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff Garzik <jeff@garzik.org>
-X-From: git-owner@vger.kernel.org Wed Dec 05 08:02:11 2007
+From: Pini Reznik <pinir@expand.com>
+Subject: [PATCH] Open external merge tool with original file extensions for all three files
+Date: Wed,  5 Dec 2007 09:19:13 +0200
+Message-ID: <1196839153-31084-1-git-send-email-pinir@expand.com>
+Cc: Pini Reznik <pinir@expand.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 05 08:17:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzoGe-0000Bi-TX
-	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 08:02:01 +0100
+	id 1IzoVl-0004En-On
+	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 08:17:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751531AbXLEHBf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 02:01:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750892AbXLEHBf
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 02:01:35 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:47482 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750709AbXLEHBe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 02:01:34 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 59BDE2F2;
-	Wed,  5 Dec 2007 02:01:56 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id E1DFB99FF2;
-	Wed,  5 Dec 2007 02:01:53 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751656AbXLEHRP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 02:17:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751578AbXLEHRP
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 02:17:15 -0500
+Received: from smtp-tlv.expand.com ([192.116.193.121]:19235 "EHLO
+	smtp-tlv.expand.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751425AbXLEHRO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 02:17:14 -0500
+Received: from localhost.localdomain ([172.16.30.232]) by smtp-tlv.expand.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 5 Dec 2007 09:18:50 +0200
+X-Mailer: git-send-email 1.5.3.5
+X-OriginalArrivalTime: 05 Dec 2007 07:18:50.0859 (UTC) FILETIME=[15B9BBB0:01C8370F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67116>
 
-Jeff Garzik <jeff@garzik.org> writes:
+Before this fix conflicted files were open in external merge tool with temporal extensions like REMOTE.$$ and LOCAL.$$.
+This way meld was unable to recognize these files and syntax highlighting feature was unusable.
 
-> The use of the older one-line summary led me to believe that it had
-> not committed my changelog edits.  Looking at the result, however,
-> proved that the commit changelog was my new, corrected version.
 
-I knew about this for quite some time but it was a very low priority for
-me.  This should fix it.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Pini Reznik <pinir@expand.com>
 ---
+ git-mergetool.sh |    9 +++++----
+ 1 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/git-am.sh b/git-am.sh
-index 2e40708..339d863 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -117,6 +117,10 @@ It does not apply to blobs recorded in its index."
-     unset GITHEAD_$his_tree
- }
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 5587c5e..2f31fa2 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -152,10 +152,11 @@ merge_file () {
+ 	exit 1
+     fi
  
-+reread_subject () {
-+	git stripspace <"$1" | sed -e 1q
-+}
-+
- prec=4
- dotest=.dotest sign= utf8=t keep= skip= interactive= resolved= binary=
- resolvemsg= resume=
-@@ -376,6 +380,7 @@ do
- 		[aA]*) action=yes interactive= ;;
- 		[nN]*) action=skip ;;
- 		[eE]*) git_editor "$dotest/final-commit"
-+		       SUBJECT=$(reread_subject "$dotest/final-commit")
- 		       action=again ;;
- 		[vV]*) action=again
- 		       LESS=-S ${PAGER:-less} "$dotest/patch" ;;
+-    BACKUP="$path.BACKUP.$$"
+-    LOCAL="$path.LOCAL.$$"
+-    REMOTE="$path.REMOTE.$$"
+-    BASE="$path.BASE.$$"
++    ext="$$$(expr "$path" : '.*\(\.[^/]*\)$')"
++    BACKUP="$path.BACKUP.$ext"
++    LOCAL="$path.LOCAL.$ext"
++    REMOTE="$path.REMOTE.$ext"
++    BASE="$path.BASE.$ext"
+ 
+     mv -- "$path" "$BACKUP"
+     cp -- "$BACKUP" "$path"
+-- 
+1.5.3.5
