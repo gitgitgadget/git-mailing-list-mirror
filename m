@@ -1,75 +1,57 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH] git-checkout --push/--pop
-Date: Wed, 05 Dec 2007 18:44:05 +0100
-Message-ID: <877ijt2g0q.fsf@lysator.liu.se>
-References: <4755B3B3.80704@gmail.com> <vpqbq96jjrf.fsf@bauges.imag.fr> <m34peyur8r.fsf@roke.D-201> <7vir3e428i.fsf@gitster.siamese.dyndns.org> <200712042204.lB4M4SVB002260@mi1.bluebottle.com> <7vprxl1v9v.fsf@gitster.siamese.dyndns.org> <vpqir3de8t6.fsf@bauges.imag.fr>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: fetch_refs_via_pack() discards status?
+Date: Wed, 5 Dec 2007 14:16:04 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0712051356040.5349@iabervon.org>
+References: <b8bf37780711211659i4d621533o6a3b97349bb75f8c@mail.gmail.com>
+ <20071122160959.GA3411@steel.home> <b8bf37780711221427q5dda709dt38ce1837c0e56c1f@mail.gmail.com>
+ <b8bf37780711251339y796286fbj2cd8d9225008e13@mail.gmail.com>
+ <7v3aunqvha.fsf_-_@gitster.siamese.dyndns.org> <7vk5nt1v7k.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 05 20:16:28 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 05 20:16:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzzjL-0007U1-23
-	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 20:16:23 +0100
+	id 1IzzjY-0007a0-9r
+	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 20:16:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751821AbXLETPu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Dec 2007 14:15:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbXLETPu
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 14:15:50 -0500
-Received: from main.gmane.org ([80.91.229.2]:37181 "EHLO ciao.gmane.org"
+	id S1751968AbXLETQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 14:16:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751943AbXLETQH
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 14:16:07 -0500
+Received: from iabervon.org ([66.92.72.58]:41097 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751821AbXLETPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 14:15:49 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IzyrV-0001ey-Bf
-	for git@vger.kernel.org; Wed, 05 Dec 2007 18:20:45 +0000
-Received: from dns.vtab.com ([62.20.90.195])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 Dec 2007 18:20:45 +0000
-Received: from davidk by dns.vtab.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 Dec 2007 18:20:45 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dns.vtab.com
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:TcZBP1fVrXM4NBrpZzpJkYx3Vos=
+	id S1751936AbXLETQG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 14:16:06 -0500
+Received: (qmail 27747 invoked by uid 1000); 5 Dec 2007 19:16:04 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 5 Dec 2007 19:16:04 -0000
+In-Reply-To: <7vk5nt1v7k.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67182>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+On Tue, 4 Dec 2007, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Matthieu, is this something that forgetful people would find useful?
->
-> Not sure. That's obviously an interesting feature, but adding two mor=
-e
-> options to checkout (which is already a huge swiss-army knife) might
-> not be worth the trouble.
->
-> And the issue with push/pop approaches is that I usually notice I hav=
-e
-> to use pop after not having used push (i.e. I use "cd -" all the time=
-,
-> but rarely "pushd"/"popd").
+> The code calls fetch_pack() to get the list of refs it fetched, and
+> discards refs and always returns 0 to signal success.
+> 
+> But builtin-fetch-pack.c::fetch_pack() has error cases.  The function
+> returns NULL if error is detected (shallow-support side seems to choose
+> to die but I suspect that is easily fixable to error out as well).
+> 
+> Shouldn't fetch_refs_via_pack() propagate that error to the caller?
 
-It is probably more common that you want to be able to switch back to
-the previous branch, than that you actually need a full stack.
+I think that's right. I think I got as far as having the error status from 
+fetch_pack() actually returned correctly, and then failed to look at it. 
+I'd personally avoid testing a pointer to freed memory, but that's 
+obviously not actually wrong.
 
-So a "git checkout --previous" could be enough.  Or a set of aliases
-
-[alias]
-	co =3D !"git symbolic-ref HEAD | sed -ne 's!refs/heads/!!p' > .git/LAS=
-T ; git checkout"
-        pop =3D !"git co $(cat .git/LAST)"
-
---=20
-David K=C3=A5gedal
+	-Daniel
+*This .sig left intentionally blank*
