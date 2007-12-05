@@ -1,98 +1,153 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: Building git-1.5.3.7 on HP-UX 11.00
-Date: Wed, 5 Dec 2007 10:49:11 +0000
-Message-ID: <20071205104911.06a77de7@pc09.procura.nl>
-References: <20071204130922.731c407a@pc09.procura.nl>
-	<Pine.LNX.4.64.0712041343040.27959@racer.site>
-	<20071204140326.14d9e7a0@pc09.procura.nl>
-	<Pine.LNX.4.64.0712041439590.27959@racer.site>
-	<20071204150102.7f3ec3e9@pc09.procura.nl>
-	<47556EE2.6040105@op5.se>
-	<20071204152240.6cb6018e@pc09.procura.nl>
-	<Pine.LNX.4.64.0712041536180.27959@racer.site>
-	<20071204155655.053f4fb4@pc09.procura.nl>
-	<Pine.LNX.4.64.0712041625530.27959@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's in git.git (stable)
+Date: Wed, 05 Dec 2007 02:57:55 -0800
+Message-ID: <7vhcixtnm4.fsf@gitster.siamese.dyndns.org>
+References: <20071022061115.GR14735@spearce.org>
+	<7vodeecyni.fsf@gitster.siamese.dyndns.org>
+	<7vpryqwtt7.fsf@gitster.siamese.dyndns.org>
+	<7vk5ot40w9.fsf@gitster.siamese.dyndns.org>
+	<7vy7d43ptc.fsf@gitster.siamese.dyndns.org>
+	<7vabpg9x5k.fsf@gitster.siamese.dyndns.org>
+	<7vy7cwsi3p.fsf@gitster.siamese.dyndns.org>
+	<7vk5o6jbq9.fsf@gitster.siamese.dyndns.org>
+	<7v63zjgoel.fsf@gitster.siamese.dyndns.org>
+	<7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Dec 05 11:49:42 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 05 11:58:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Izroz-0005ES-EI
-	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 11:49:41 +0100
+	id 1IzrxS-00080d-Qc
+	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 11:58:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751780AbXLEKtQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 05:49:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751355AbXLEKtQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 05:49:16 -0500
-Received: from smtp-vbr3.xs4all.nl ([194.109.24.23]:4657 "EHLO
-	smtp-vbr3.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751344AbXLEKtP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 05:49:15 -0500
-Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
-	(authenticated bits=0)
-	by smtp-vbr3.xs4all.nl (8.13.8/8.13.8) with ESMTP id lB5AnBPv080813
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 5 Dec 2007 11:49:12 +0100 (CET)
-	(envelope-from h.m.brand@xs4all.nl)
-In-Reply-To: <Pine.LNX.4.64.0712041625530.27959@racer.site>
-X-Mailer: Claws Mail 3.1.0cvs51 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1751071AbXLEK6F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Dec 2007 05:58:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751568AbXLEK6E
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 05:58:04 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:35168 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750896AbXLEK6B convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Dec 2007 05:58:01 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 276AE2F2;
+	Wed,  5 Dec 2007 05:58:21 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 7EB279C321;
+	Wed,  5 Dec 2007 05:58:19 -0500 (EST)
+X-maint-at: 4e596e988abfd7ce0b4456cdbf27baa16fa7aab8
+X-master-at: 7a4a2e1f797724ce15b059f55ce57eab0e6be807
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67138>
 
-On Tue, 4 Dec 2007 16:28:40 +0000 (GMT), Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+I haven't tagged the tip of 'master' as -rc0 yet, this has more than 80=
+%
+of it.  Graduated to 'master' tonight are:
 
-> Hi,
-> 
-> On Tue, 4 Dec 2007, H.Merijn Brand wrote:
-> 
-> > I found it! unset returns false
-> 
-> Oh, wow!  The question is now: how to deal with it (there are quite a few 
-> unsets in the test scripts).
+ * Wincent's "git add -p"
+ * "git commit in C" by Kristian and others
+ * Steffen Prohaska's clean-up of push/fetch refspec handling.
 
-HP-UX 11.23/IPF 64bit gcc-4.2.1
+----------------------------------------------------------------
 
-env CC=gcc configure --disable-nls --prefix=/pro/local --without-iconv --with-perl=/pro/bin/perl
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-ifeq ($(uname_S),HP-UX)
-	BASIC_CFLAGS += -mlp64
-	NO_UNSETENV = YesPlease
-endif
+Alex Riesen (2):
+  Do not generate full commit log message if it is not going to be used
+  Simplify crud() in ident.c
 
-needs the unset patch
+H.Merijn Brand (1):
+  Do not rely on the exit status of "unset" for unset variables
 
-fails at the same point.
+Jakub Narebski (1):
+  contrib: Make remotes2config.sh script more robust
 
-So at least all of HP-UX is consistent, which means that any of the HP
-testdrive systems might be worth looking at for you lot.
+Jeff King (3):
+  git-commit: clean up die messages
+  quote_path: fix collapsing of relative paths
+  t9600: require cvsps 2.1 to perform tests
 
-http://www.testdrive.hp.com/current.shtml
+Johannes Schindelin (8):
+  launch_editor(): read the file, even when EDITOR=3D:
+  builtin-commit: fix reflog message generation
+  git status: show relative paths when run in a subdirectory
+  builtin-commit: fix --signoff
+  builtin-commit --s: add a newline if the last line was not a S-o-b
+  builtin-commit: resurrect behavior for multiple -m options
+  builtin-commit: Add newline when showing which commit was created
+  Replace "runstatus" with "status" in the tests
 
--- 
-H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
-using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
-& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
-http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
-                        http://www.goldmark.org/jeff/stupid-disclaimers/
+Junio C Hamano (15):
+  file_exists(): dangling symlinks do exist
+  builtin-commit: do not color status output shown in the message templ=
+ate
+  builtin-commit: run commit-msg hook with correct message file
+  Export three helper functions from ls-files
+  Fix add_files_to_cache() to take pathspec, not user specified list of
+    files
+  builtin-commit: fix partial-commit support
+  git-add -i: allow multiple selection in patch subcommand
+  Add a few more tests for git-commit
+  builtin-add: fix command line building to call interactive
+  add -i: Fix running from a subdirectory
+  Fix --signoff in builtin-commit differently.
+  git-commit: Allow to amend a merge commit that does not change the tr=
+ee
+  git-commit --allow-empty
+  Documentation/git.txt: typofix
+  t5510: add a bit more tests for fetch
+
+Kristian H=C3=B8gsberg (10):
+  Add testcase for amending and fixing author in git commit.
+  Export launch_editor() and make it accept ':' as a no-op editor.
+  Port git commit to C.
+  builtin-commit: Refresh cache after adding files.
+  Call refresh_cache() when updating the user index for --only commits.
+  builtin-commit: Clean up an unused variable and a debug fprintf().
+  t7501-commit: Add test for git commit <file> with dirty index.
+  builtin-commit: Include the diff in the commit message when verbose.
+  Fix off-by-one error when truncating the diff out of the commit messa=
+ge.
+  Use a strbuf for copying the command line for the reflog.
+
+Pascal Obry (1):
+  Set OLD_ICONV on Cygwin.
+
+Pierre Habouzit (1):
+  builtin-commit.c: export GIT_INDEX_FILE for launch_editor as well.
+
+Ralf Wildenhues (1):
+  Document all help keys in "git add -i" patch mode.
+
+Shawn Bohrer (1):
+  Make git status usage say git status instead of git commit
+
+Shawn O. Pearce (1):
+  Remove git-status from list of scripts as it is builtin
+
+Steffen Prohaska (4):
+  push: support pushing HEAD to real branch name
+  add refname_match()
+  push: use same rules as git-rev-parse to resolve refspecs
+  refactor fetch's ref matching to use refname_match()
+
+Wincent Colaiuta (6):
+  Teach builtin-add to pass multiple paths to git-add--interactive
+  Add path-limiting to git-add--interactive
+  Add "--patch" option to git-add--interactive
+  Highlight keyboard shortcuts in git-add--interactive
+  add -i: allow prefix highlighting for "Add untracked" as well.
+  git-add -i: add help text for list-and-choose UI
+
+=C4=B0smail D=C3=B6nmez (1):
+  gitweb: use Perl built-in utf8 function for UTF-8 decoding.
