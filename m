@@ -1,84 +1,61 @@
-From: g2 <gerald.gutierrez@gmail.com>
-Subject: How to jump between two repositories ...
-Date: Tue, 4 Dec 2007 21:59:57 -0800
-Message-ID: <C6AF7922-B2F7-42EB-B5DD-25353BC0AF2A@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 05 07:00:26 2007
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: How to jump between two repositories ...
+Date: Wed, 5 Dec 2007 01:11:26 -0500
+Message-ID: <20071205061125.GE14735@spearce.org>
+References: <C6AF7922-B2F7-42EB-B5DD-25353BC0AF2A@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: g2 <gerald.gutierrez@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 05 07:11:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IznJ3-0002wO-NT
-	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 07:00:26 +0100
+	id 1IznU7-0005EU-2y
+	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 07:11:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751444AbXLEGAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 01:00:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751455AbXLEGAF
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 01:00:05 -0500
-Received: from rv-out-0910.google.com ([209.85.198.186]:28161 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750969AbXLEGAC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 01:00:02 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so3483024rvb
-        for <git@vger.kernel.org>; Tue, 04 Dec 2007 22:00:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
-        bh=GVimKjDj+2ZyJ6jpRCa7bpojxSHQZlhAaXvMlP6GXlM=;
-        b=vZAT3RhNtydXBzjdsjAmKslOIhXjIYms6INuyiczmKphJd4upE3any6BrlorsNyNOWnHrNSyYp2X8K6GOAeCX3OX03tywZoWQ+Za7q5inC4fApInbw7J0v73zD4TvFPcwoNAePqO4cPsBPAoWAQyuA6rNMJCt+bcroGJVg73hs4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
-        b=Qb95e2RCXZ32IY4heqqM/JD9p8NW9jZZCNjnFl7l0MWKTz7U0Azbp8eBbwjo0hlAd/sY+oUuk06enWh5vyoWyV8G7ODxnRZFp2sA3Np6euSxjMk7I+xAffkKkNNuW/zCnBzjogbvPR1pfLg1BxTMe0+DTHbzMF+n3cWnURa3RPo=
-Received: by 10.141.129.14 with SMTP id g14mr907456rvn.1196834401634;
-        Tue, 04 Dec 2007 22:00:01 -0800 (PST)
-Received: from ?192.168.0.200? ( [70.79.106.215])
-        by mx.google.com with ESMTPS id l17sm82285rvb.2007.12.04.21.59.58
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 04 Dec 2007 21:59:59 -0800 (PST)
-X-Mailer: Apple Mail (2.915)
+	id S1751566AbXLEGLa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 01:11:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751531AbXLEGLa
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 01:11:30 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:42906 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751495AbXLEGL3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 01:11:29 -0500
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IznTj-0001hH-GR; Wed, 05 Dec 2007 01:11:27 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1F1C120FBAE; Wed,  5 Dec 2007 01:11:26 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <C6AF7922-B2F7-42EB-B5DD-25353BC0AF2A@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67104>
 
-Hello all,
+g2 <gerald.gutierrez@gmail.com> wrote:
+> At this point, I wanted to push my changes back to my work repository  
+> so I can continue work the next day. So at home, I did a git push. I  
+> expect that my work repository has the newest material, but I find  
+> that when I do "git status" at work the next day, it tells me that my  
+> test.c is "modified" and has already staged it for commit. I need to  
+> do a "git reset" followed by "git checkout" to update my work folder  
+> to the latest stuff.
 
-I am currently working on some code at the office that I also want to  
-work with at home. Seems like a good candidate for git. So I created a  
-repository at work and did a "git clone" at home. I've run into some  
-strange behaviour that I don't understand and would appreciate if  
-someone can clarify for me.
+Oddly enough, this question is asked so frequently that it is
+answered in the GitFaq on the GitWiki:
 
-Imagine this scenario. At work:
-git init
-edit test.c
-git add test.c
-git commit
+  http://git.or.cz/gitwiki/GitFaq#head-b96f48bc9c925074be9f95c0fce69bcece5f6e73
 
-Then at home:
-git clone <work git url>
-edit test.c
-git commit -a
-git push
-
-At this point, I wanted to push my changes back to my work repository  
-so I can continue work the next day. So at home, I did a git push. I  
-expect that my work repository has the newest material, but I find  
-that when I do "git status" at work the next day, it tells me that my  
-test.c is "modified" and has already staged it for commit. I need to  
-do a "git reset" followed by "git checkout" to update my work folder  
-to the latest stuff.
-
-Totally different from my expectation of the repository knowing that  
-it is out of date and then kindly suggesting that I should do a "git  
-update" of some sort. What piece of understanding am I missing to  
-properly "get" what is going on here, and how am I supposed to  
-properly work with this setup?
-
-Thanks for any help.
-Gerald.
+-- 
+Shawn.
