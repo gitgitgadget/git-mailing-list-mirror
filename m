@@ -1,87 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: builtin command's prefix question
-Date: Wed, 05 Dec 2007 15:43:13 -0800
-Message-ID: <7v8x48lnce.fsf@gitster.siamese.dyndns.org>
-References: <fcaeb9bf0712050856t5d730779q82783fdb9876f41@mail.gmail.com>
-	<7vlk88n648.fsf@gitster.siamese.dyndns.org>
-	<7vk5nsloa8.fsf@gitster.siamese.dyndns.org>
+From: Jeff Garzik <jeff@garzik.org>
+Subject: Re: Cosmetic git-am interactive bug
+Date: Wed, 05 Dec 2007 18:58:17 -0500
+Message-ID: <47573B19.40502@garzik.org>
+References: <4755A836.1050408@garzik.org> <7v8x491v79.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 06 00:43:44 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 06 00:58:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J03u1-0005Vx-LG
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 00:43:42 +0100
+	id 1J048Z-0002Jp-UL
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 00:58:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751661AbXLEXnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 18:43:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751589AbXLEXnV
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 18:43:21 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:50831 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751239AbXLEXnU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 18:43:20 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 1C77E2F0;
-	Wed,  5 Dec 2007 18:43:40 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 8C6429D188;
-	Wed,  5 Dec 2007 18:43:36 -0500 (EST)
-In-Reply-To: <7vk5nsloa8.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 05 Dec 2007 15:22:55 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751658AbXLEX6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 18:58:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751755AbXLEX6X
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 18:58:23 -0500
+Received: from srv5.dvmed.net ([207.36.208.214]:53328 "EHLO mail.dvmed.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751561AbXLEX6W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 18:58:22 -0500
+Received: from cpe-069-134-071-233.nc.res.rr.com ([69.134.71.233] helo=core.yyz.us)
+	by mail.dvmed.net with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
+	id 1J048C-00037z-SC; Wed, 05 Dec 2007 23:58:21 +0000
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <7v8x491v79.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: -4.4 (----)
+X-Spam-Report: SpamAssassin version 3.1.9 on srv5.dvmed.net summary:
+	Content analysis details:   (-4.4 points, 5.0 required)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67213>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano wrote:
+> Jeff Garzik <jeff@garzik.org> writes:
+> 
+>> The use of the older one-line summary led me to believe that it had
+>> not committed my changelog edits.  Looking at the result, however,
+>> proved that the commit changelog was my new, corrected version.
+> 
+> I knew about this for quite some time but it was a very low priority for
+> me.  This should fix it.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-> I am not convinced this is giving any natural user experience, nor an
-> alternative:
->
->       $ cd $HOME
->       $ GIT_WORK_TREE=$HOME; export GIT_WORK_TREE
->       $ cd $HOME/gits/vimrc.git
->       $ edit $HOME/.vimrc
->       $ git commit .vimrc
->       $ cd $HOME/gits/pinerc.git
->       $ edit $HOME/.pinerc
->       $ git commit .pinerc
->
-> While I still think the combination is simply crazy and does not make
-> any sense, if enough users on the list agrees that it makes sense, I
-> wouldn't mind setup() did (1) to (3) mentioned above.  The alternative
-> is simply to declare GIT_WORK_TREE without GIT_DIR is a nonsense and
-> either error error out or ignore GIT_WORK_TREE, which might be easier to
-> explain to people.
->
-> Opinions?
-
-Side note.
-
-By saying the above, I do not mean it is nonsense to try supporting a
-work tree that is an overlay of disjoint set of work tree files from
-multiple repositories/projects.  I do think it is a worthwhile goal to
-support such a layout.
-
-What I do not like is the way the ugly workaround does it, by
-encouraging (rather, requiring) to issue git commands from a location
-that is completely separate from the actual editing of the content
-happens.
-
-An independent issue of supporting such a overlayed work tree layout is
-what to do with .gitignore files.  I think, especially with the recent
-addition of --exclude-standard to ls-files and setup_standard_excludes()
-in dir.c, we could have a per repository configuration that names the
-per repository exclude files, so that .gitignore-vim and .gitignore-pine
-can co-exist in $HOME, each excluding everything other than the
-project's own files.
+Thanks!  :)
