@@ -1,68 +1,46 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] git-checkout --push/--pop
-Date: Wed, 05 Dec 2007 11:26:45 +0100
-Message-ID: <vpqir3de8t6.fsf@bauges.imag.fr>
-References: <4755B3B3.80704@gmail.com> <vpqbq96jjrf.fsf@bauges.imag.fr>
-	<m34peyur8r.fsf@roke.D-201>
-	<7vir3e428i.fsf@gitster.siamese.dyndns.org>
-	<200712042204.lB4M4SVB002260@mi1.bluebottle.com>
-	<7vprxl1v9v.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Use perl builtin class utf8 for UTF-8 decoding
+Date: Wed, 05 Dec 2007 02:33:13 -0800
+Message-ID: <7vzlwpv3bq.fsf@gitster.siamese.dyndns.org>
+References: <200712051226.30162.ismail@pardus.org.tr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@bluebottle.com>,
-	Salikh Zakirov <salikh@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 05 11:28:42 2007
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>, git@vger.kernel.org,
+	Alexandre Julliard <julliard@winehq.org>,
+	Benjamin Close <Benjamin.Close@clearchain.com>
+To: Ismail =?utf-8?Q?D=C3=B6nmez?= <ismail@pardus.org.tr>
+X-From: git-owner@vger.kernel.org Wed Dec 05 11:33:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IzrUe-0006cM-Uq
-	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 11:28:41 +0100
+	id 1IzrZY-0008Pr-ST
+	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 11:33:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753043AbXLEK2H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 05:28:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751490AbXLEK2G
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 05:28:06 -0500
-Received: from imag.imag.fr ([129.88.30.1]:60256 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751842AbXLEK2E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 05:28:04 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lB5AQp9Z011554
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 5 Dec 2007 11:26:51 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IzrSn-0002IZ-HE; Wed, 05 Dec 2007 11:26:45 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IzrSn-0008Hf-Ek; Wed, 05 Dec 2007 11:26:45 +0100
-In-Reply-To: <7vprxl1v9v.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Tue\, 04 Dec 2007 22\:59\:56 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 05 Dec 2007 11:26:52 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751539AbXLEKdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 05:33:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751432AbXLEKdY
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 05:33:24 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:41685 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751165AbXLEKdX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 05:33:23 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 22BE42F0;
+	Wed,  5 Dec 2007 05:33:43 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 9786B9C2E0;
+	Wed,  5 Dec 2007 05:33:37 -0500 (EST)
+In-Reply-To: <200712051226.30162.ismail@pardus.org.tr> (Ismail =?utf-8?Q?D?=
+ =?utf-8?Q?=C3=B6nmez's?=
+	message of "Wed, 5 Dec 2007 12:26:30 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67134>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Matthieu, is this something that forgetful people would find useful?
-
-Not sure. That's obviously an interesting feature, but adding two more
-options to checkout (which is already a huge swiss-army knife) might
-not be worth the trouble.
-
-And the issue with push/pop approaches is that I usually notice I have
-to use pop after not having used push (i.e. I use "cd -" all the time,
-but rarely "pushd"/"popd").
-
--- 
-Matthieu
+Thanks.  Already queued, but I've been busy and haven't pushed out yet.
