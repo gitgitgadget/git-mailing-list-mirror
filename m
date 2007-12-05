@@ -1,156 +1,163 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re:* [BUG] "git clean" does not pay attention to its parameters
-Date: Tue, 04 Dec 2007 23:55:41 -0800
-Message-ID: <7veje1zibm.fsf@gitster.siamese.dyndns.org>
-References: <200712050654.lB56scKk000311@mi0.bluebottle.com>
+From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Subject: Re: [PATCH] Do not rely on the exit status of "unset" for unset
+ variables
+Date: Wed, 5 Dec 2007 08:01:57 +0000
+Message-ID: <20071205080157.5121bfee@pc09.procura.nl>
+References: <20071204130922.731c407a@pc09.procura.nl>
+ <Pine.LNX.4.64.0712041343040.27959@racer.site>
+ <20071204140326.14d9e7a0@pc09.procura.nl>
+ <Pine.LNX.4.64.0712041439590.27959@racer.site>
+ <20071204150102.7f3ec3e9@pc09.procura.nl>
+ <47556EE2.6040105@op5.se>
+ <20071204152240.6cb6018e@pc09.procura.nl>
+ <Pine.LNX.4.64.0712041536180.27959@racer.site>
+ <20071204155655.053f4fb4@pc09.procura.nl>
+ <7vve7e49or.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0712042242310.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@bluebottle.com>
-X-From: git-owner@vger.kernel.org Wed Dec 05 08:57:17 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org, Sam Vilain <sam@vilain.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Dec 05 09:02:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Izp85-00055p-7a
-	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 08:57:13 +0100
+	id 1IzpDQ-0006ei-P0
+	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 09:02:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754553AbXLEHzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 02:55:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754544AbXLEHzw
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 02:55:52 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:55138 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754211AbXLEHzv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 02:55:51 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 200212EF;
-	Wed,  5 Dec 2007 02:56:11 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 5E0D89B423;
-	Wed,  5 Dec 2007 02:56:07 -0500 (EST)
-In-Reply-To: <200712050654.lB56scKk000311@mi0.bluebottle.com> (Nanako
-	Shiraishi's message of "Wed, 5 Dec 2007 15:54:06 +0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751641AbXLEICQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 03:02:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751467AbXLEICQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 03:02:16 -0500
+Received: from smtp-vbr10.xs4all.nl ([194.109.24.30]:4878 "EHLO
+	smtp-vbr10.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751422AbXLEICO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 03:02:14 -0500
+Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
+	(authenticated bits=0)
+	by smtp-vbr10.xs4all.nl (8.13.8/8.13.8) with ESMTP id lB581wf8056998
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 5 Dec 2007 09:01:59 +0100 (CET)
+	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <Pine.LNX.4.64.0712042242310.27959@racer.site>
+X-Mailer: Claws Mail 3.1.0cvs51 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67120>
 
-Nanako Shiraishi <nanako3@bluebottle.com> writes:
+On Tue, 4 Dec 2007 22:45:16 +0000 (GMT), Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 
-> In a repository with LaTeX documents, I tried to see what *.aux files are left behind after formatting, by running "git clean -n" with the latest git (1.5.3.7-1005-gdada0c1):
->
->   % git clean -n '*.aux'
->
-> This however showed more than just '*.aux' files.  With the released version 1.5.3.6, the output is correctly limited to the files that match the pattern.
+> From: H.Merijn Brand <h.m.brand@xs4all.nl>
+> 
+> POSIX says that exit status "0" means that "unset" successfully unset
+> the variable.  However, it is kind of ambiguous if an environment
+> variable which was not set could be successfully unset.
+> 
+> At least the default shell on HP-UX insists on reporting an error in
 
-Yuck.  People actually use git-clean?
+please, for now make that HP-UX 11.11 and older. I'll check if it also
+fails in 11.23/IPF.
 
-But thanks for reporting.
+On 11.11 HP C-ANSI-C cannot be used either.
 
-Comparing the corresponding part from builtin-ls-files.c and what
-builtin-clean.c does, it does look broken.
+And I have to remove "#include <sys/select.h>" from pager.c on HP-UX, I
+forgot to tell. With the Makefile change in place, building with 64bit
+gcc, 
 
-Does this patch help?  I am not sure why the directory side of the code
-is written that way, but I have a suspicion that "was a directory
-explicitly given as one of the pathspec" check is also bogus, although I
-did not touch that part.
+--8<--- skip this part if you're not interested in 64bit builds on HP-UX
+On 64bit gcc on HP-UX, there is no strtoull (). Nowhere! strtoul () is
+the same there. But this is only in the 64bit world, so NO_STRTOULL can
+not be set to YesPlease unconditionally. When I also set NO_STRTOUMAX,
+I get shiploads of warnings like:
 
--- >8 --
-[PATCH] git-clean: Honor pathspec.
+    CC commit.o
+In file included from cache.h:4,
+                 from commit.c:1:
+git-compat-util.h:166:1: warning: "strtoumax" redefined
+In file included from git-compat-util.h:62,
+                 from cache.h:4,
+                 from commit.c:1:
+/usr/include/inttypes.h:527:1: warning: this is the location of the previous
+definition
 
-git-clean "*.rej" should attempt to look at only paths that match
-pattern "*.rej", but rewrite to C broke it.
+And that is NOT your fault, as this include file has defines like
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin-clean.c |   31 ++++++++++++++++++++-----------
- 1 files changed, 20 insertions(+), 11 deletions(-)
+** When compiling in ILP32 mode long long will be used for the 64-bit data
+** types. This will cause compilation errors if 64-bit data types are
+** requested and the compiler in use does not support them.
 
-diff --git a/builtin-clean.c b/builtin-clean.c
-index 56ae4eb..7dd901e 100644
---- a/builtin-clean.c
-+++ b/builtin-clean.c
-@@ -27,13 +27,14 @@ static int git_clean_config(const char *var, const char *value)
- 
- int cmd_clean(int argc, const char **argv, const char *prefix)
- {
--	int j;
-+	int i;
- 	int show_only = 0, remove_directories = 0, quiet = 0, ignored = 0;
- 	int ignored_only = 0, baselen = 0, config_set = 0;
- 	struct strbuf directory;
- 	struct dir_struct dir;
- 	const char *path, *base;
- 	static const char **pathspec;
-+	char *seen = NULL;
- 	struct option options[] = {
- 		OPT__QUIET(&quiet),
- 		OPT__DRY_RUN(&show_only),
-@@ -85,12 +86,17 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	read_directory(&dir, path, base, baselen, pathspec);
- 	strbuf_init(&directory, 0);
- 
--	for (j = 0; j < dir.nr; ++j) {
--		struct dir_entry *ent = dir.entries[j];
--		int len, pos, specs;
-+	if (pathspec) {
-+		for (i = 0; pathspec[i]; i++)
-+			; /* nothing */
-+		seen = xmalloc();
-+	}
-+
-+	for (i = 0; i < dir.nr; i++) {
-+		struct dir_entry *ent = dir.entries[i];
-+		int len, pos;
- 		struct cache_entry *ce;
- 		struct stat st;
--		char *seen;
- 
- 		/*
- 		 * Remove the '/' at the end that directory
-@@ -114,15 +120,13 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 			int matched_path = 0;
- 			strbuf_addstr(&directory, ent->name);
- 			if (pathspec) {
--				for (specs =0; pathspec[specs]; ++specs)
--					/* nothing */;
--				seen = xcalloc(specs, 1);
--				/* Check if directory was explictly passed as
--				 * pathspec.  If so we want to remove it */
-+				/*
-+				 * Check if directory was explictly passed as
-+				 * pathspec. If so we want to remove it.
-+				 */
- 				if (match_pathspec(pathspec, ent->name, ent->len,
- 						   baselen, seen))
- 					matched_path = 1;
--				free(seen);
- 			}
- 			if (show_only && (remove_directories || matched_path)) {
- 				printf("Would remove %s\n", directory.buf);
-@@ -138,6 +142,10 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 			}
- 			strbuf_reset(&directory);
- 		} else {
-+			if (pathspec &&
-+			    !match_pathspec(pathspec, ent->name, ent->len,
-+					    baselen, seen))
-+				continue; /* excluded */
- 			if (show_only) {
- 				printf("Would remove %s\n", ent->name);
- 				continue;
-@@ -147,6 +155,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 			unlink(ent->name);
- 		}
- 	}
-+	free(seen);
- 
- 	strbuf_release(&directory);
- 	return 0;
+#define strtoimax(__a, __b, __c) __strtoll(__a, __b, __c)
+#define strtoumax(__a, __b, __c) __strtoull(__a, __b, __c)
+
+and that is not guarded with something like
+
+/* LP64 takes precedence */
+#if (defined(__STDC_EXT__) || defined(_INCLUDE_LONGLONG))
+&& !defined(__LP64__)
+
+so I ended up replacing all strtoumax () to strtoul () in git-fast-import.c
+
+Then I end up with the same error as on 11.00.
+-->8---
+
+
+> such a case, so just ignore the exit status of "unset".
+> 
+> [Dscho: extended the patch to git-submodule.sh, as Junio realized that
+>  this is the only other place where we check the exit status of "unset".]
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> 
+> 	On Tue, 4 Dec 2007, Junio C Hamano wrote:
+> 
+> 	> "H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
+> 	> 
+> 	> > On Tue, 4 Dec 2007 15:39:47 +0000 (GMT), Johannes Schindelin
+> 	> > ...
+> 	> > I found it! unset returns false
+> 	> > ...
+> 	> > I must leave now.
+> 	> 
+> 	> Thanks, you two.
+> 	> 
+> 	> I do not see "unset VAR... &&" outside t0001 test, but there are
+> 	> instances of "unset VAR... &&" in git-submodule implementations 
+> 	> as well.
+> 	> 
+> 	> In short, not too many places to fix.
+> 
+> 	You're right.  I grepped for "unset" in t/*.sh, but that catches 
+> 	only false positives other than t0001.
+> 
+> 	Merijn, maybe you want to have your sign-off in the commit 
+> 	message?
+
+Feel free to do so, I don't really care.
+
+Will you also be looking into the install issue?
+
 -- 
-1.5.3.7-2115-geb804
+H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
+using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
+& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
+http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
+                        http://www.goldmark.org/jeff/stupid-disclaimers/
