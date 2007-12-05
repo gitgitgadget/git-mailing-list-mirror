@@ -1,53 +1,90 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Color support for "git-add -i"
-Date: Wed, 5 Dec 2007 14:55:20 +0100
-Message-ID: <EDEE4359-2706-4F8F-B8B8-A29334E752E2@wincent.com>
-References: <7vbq95tnk7.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
+From: =?utf-8?q?Bj=C3=B6rn=20Steinbrink?= <B.Steinbrink@gmx.de>
+Subject: [PATCH] git config: Don't rely on regexec() returning 1 on non-match
+Date: Wed,  5 Dec 2007 16:11:24 +0100
+Message-ID: <1196867484-22188-1-git-send-email-B.Steinbrink@gmx.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Dan Zwell <dzwell@zwell.net>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 05 14:56:58 2007
+Cc: git@vger.kernel.org,
+	=?utf-8?q?Bj=C3=B6rn=20Steinbrink?= <B.Steinbrink@gmx.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Dec 05 16:11:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Izuk6-0003d6-4w
-	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 14:56:50 +0100
+	id 1Izvuj-000443-BG
+	for gcvg-git-2@gmane.org; Wed, 05 Dec 2007 16:11:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751964AbXLEN43 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Dec 2007 08:56:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbXLEN43
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 08:56:29 -0500
-Received: from wincent.com ([72.3.236.74]:37269 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751957AbXLEN42 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Dec 2007 08:56:28 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lB5DtL0w023085;
-	Wed, 5 Dec 2007 07:55:21 -0600
-In-Reply-To: <7vbq95tnk7.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.915)
+	id S1751806AbXLEPL2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Dec 2007 10:11:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752049AbXLEPL2
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 10:11:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47105 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751613AbXLEPL1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 10:11:27 -0500
+Received: (qmail invoked by alias); 05 Dec 2007 15:11:25 -0000
+Received: from i577AD074.versanet.de (EHLO localhost) [87.122.208.116]
+  by mail.gmx.net (mp034) with SMTP; 05 Dec 2007 16:11:25 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+5P/Rr4O252/bZpPMsIkxoHQn5U3m8DIxdMthwBB
+	9lDFKOTz3mLi6K
+X-Mailer: git-send-email 1.5.3.GIT
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67156>
 
-El 5/12/2007, a las 11:59, Junio C Hamano escribi=F3:
+Some systems don't return 1 from regexec() when the pattern does not
+match (notably HP-UX which returns 20). Fortunately, there's the
+REG_NOMATCH constant, which we can use as the expected return value
+and test for that instead of "1 XOR retval".
 
-> This is mostly lifted from earlier series by Dan Zwell, but updated t=
-o
-> use "git config --get-color" to make it simpler and more consistent =20
-> with
-> commands written in C.
+Bug identified by Dscho and H.Merijn Brand.
 
-Tested here and seems to work well. This is a nice little bit of =20
-usability polish.
+Signed-off-by: Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>
+Tested-by: H.Merijn Brand <h.m.brand@xs4all.nl>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+ builtin-config.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-Cheers,
-Wincent
+diff --git a/builtin-config.c b/builtin-config.c
+index 4c9ded3..9fda4e4 100644
+--- a/builtin-config.c
++++ b/builtin-config.c
+@@ -11,7 +11,7 @@ static regex_t *regexp;
+ static int show_keys;
+ static int use_key_regexp;
+ static int do_all;
+-static int do_not_match;
++static int expected_regexec_result;
+ static int seen;
+ static char delim =3D '=3D';
+ static char key_delim =3D ' ';
+@@ -38,7 +38,7 @@ static int show_config(const char* key_, const char* =
+value_)
+ 	if (use_key_regexp && regexec(key_regexp, key_, 0, NULL, 0))
+ 		return 0;
+ 	if (regexp !=3D NULL &&
+-			 (do_not_match ^
++			 (expected_regexec_result !=3D
+ 			  regexec(regexp, (value_?value_:""), 0, NULL, 0)))
+ 		return 0;
+=20
+@@ -101,7 +101,7 @@ static int get_value(const char* key_, const char* =
+regex_)
+=20
+ 	if (regex_) {
+ 		if (regex_[0] =3D=3D '!') {
+-			do_not_match =3D 1;
++			expected_regexec_result =3D REG_NOMATCH;
+ 			regex_++;
+ 		}
+=20
+--=20
+1.5.3.GIT
