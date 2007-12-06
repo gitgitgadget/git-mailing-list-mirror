@@ -1,119 +1,125 @@
 From: Sergei Organov <osv@javad.com>
-Subject: Re: git help error
-Date: Thu, 06 Dec 2007 21:36:01 +0300
-Message-ID: <87k5nr7jse.fsf@osv.gnss.ru>
-References: <cc723f590712040826o7ca36bfg35b8cb4d64ee8d2d@mail.gmail.com>
-	<7v1wa25oqc.fsf@gitster.siamese.dyndns.org>
-	<874pey9uow.fsf@osv.gnss.ru>
-	<7vr6i245b4.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCH] Let git-help prefer man-pages installed with this version of git
+Date: Thu, 6 Dec 2007 21:33:01 +0300
+Message-ID: <87hciv7jkt.fsf@osv.gnss.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Aneesh Kumar" <aneesh.kumar@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 06 19:37:45 2007
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 06 19:41:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0LbU-0007ff-GJ
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 19:37:44 +0100
+	id 1J0Leg-0000fi-VA
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 19:41:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752161AbXLFSgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 13:36:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754686AbXLFSgx
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 13:36:53 -0500
-Received: from javad.com ([216.122.176.236]:4992 "EHLO javad.com"
+	id S1751661AbXLFSkm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 13:40:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751593AbXLFSkm
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 13:40:42 -0500
+Received: from javad.com ([216.122.176.236]:1465 "EHLO javad.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752113AbXLFSgw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 13:36:52 -0500
+	id S1751415AbXLFSkl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 13:40:41 -0500
 Received: from osv ([87.236.81.130])
-	by javad.com (8.11.6/8.11.0) with ESMTP id lB6Ia7U11660;
-	Thu, 6 Dec 2007 18:36:07 GMT
+	by javad.com (8.11.6/8.11.0) with ESMTP id lB6IeeU12275;
+	Thu, 6 Dec 2007 18:40:40 GMT
 	(envelope-from s.organov@javad.com)
 Received: from osv by osv with local (Exim 4.63)
 	(envelope-from <s.organov@javad.com>)
-	id 1J0LZp-0000sG-Pm; Thu, 06 Dec 2007 21:36:01 +0300
-In-Reply-To: <7vr6i245b4.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Tue\, 04 Dec 2007 11\:40\:15 -0800")
+	id 1J0LeE-0000vC-A7; Thu, 06 Dec 2007 21:40:34 +0300
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67317>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Prepend $(prefix)/share/man to the MANPATH environment variable
+before invoking 'man' from help.c:show_man_page().
 
-> Sergei Organov <osv@javad.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>> "Aneesh Kumar" <aneesh.kumar@gmail.com> writes:
->>>
->>>> git help gives me the below error.
->>>>
->>>> [master@git]$ git help add
->>>> No manual entry for git-add
->>>> See 'man 7 undocumented' for help when manual pages are not available.
->>>> [master@git]$
->>>>
->>>> I have the git binaries installed via --prefix
->>>>
->>>> ./configure --prefix=/home/kvaneesh/bin-local/git/
->>>> and to see the man page i have to say
->>>>
->>>> man -M /home/kvaneesh/bin-local/git/share/man/
->>> ...
->>> When you run "man" from the command line, can you say
->>>
->>>      $ man git-add
->>>
->>> and make it work?  If it fails the same way, then what you are missing
->>> is MANPATH environment variable, isn't it?
->>
->> I think what the OP asked for makes sense. git-help should better find
->> corresponding version of manual pages automatically. This way, if one
->> invokes different versions of git-help, he will get corresponding
->> version of help text.
->
-> I do not necessarily agree.  Read what Aneesh wrote originally again,
-> and read what he _didn't_ write.
->
-> Not only he needs to run his "man" with -M (and my point was that it is
-> not the only way, by the way), he needs to futz with his $PATH to
-> include $HOME/bin-local/git for _his_ installation to work.
+Signed-off-by: Sergei Organov <osv@javad.com>
+---
+ Makefile |    5 ++++-
+ help.c   |   21 +++++++++++++++++++++
+ 2 files changed, 25 insertions(+), 1 deletions(-)
 
-My point is that he doesn't need to tweak his $PATH, because he can
-simply say:
-
-$ ~/bin-local/git/bin/git help add
-
-Then, I'd expect that the manual page that is installed along with the
-version that
-
-$ ~/bin-local/git/bin/git --version
-
-reports is displayed, not any random version of git-add manual page
-found using default 'man' rules.
-
-> I think my suggestion to use $MANPATH is in line with what he is already
-> doing.  If you install things in non-standard places, you can use
-> environments to adjust to what you did, and that's the reason PATH and
-> MANPATH environments are supported by your tools.
-
-Yes, but provided you have more than one version of git installed, it's
-inconvenient to tweak both PATH and MANPATH to use one or another. It
-would be more convenient and consistent if
-
-$ ~/git.old/bin/git help add
-$ ~/git.new/bin/git help add
-
-were render different versions of git-add manual page, each
-corresponding to the right version of git.
-
-> Having said that, I do not mind accepting a patch that prepends the
-> nonlocal path to MANPATH in help.c::show_man_page().
-
-OK, patch will follow shortly.
-
+diff --git a/Makefile b/Makefile
+index 999391e..3030d31 100644
+--- a/Makefile
++++ b/Makefile
+@@ -154,6 +154,7 @@ STRIP ?= strip
+ 
+ prefix = $(HOME)
+ bindir = $(prefix)/bin
++mandir = $(prefix)/share/man
+ gitexecdir = $(bindir)
+ sharedir = $(prefix)/share
+ template_dir = $(sharedir)/git-core/templates
+@@ -744,6 +745,7 @@ ETC_GITCONFIG_SQ = $(subst ','\'',$(ETC_GITCONFIG))
+ 
+ DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
+ bindir_SQ = $(subst ','\'',$(bindir))
++mandir_SQ = $(subst ','\'',$(mandir))
+ gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
+ template_dir_SQ = $(subst ','\'',$(template_dir))
+ prefix_SQ = $(subst ','\'',$(prefix))
+@@ -790,7 +792,8 @@ git$X: git.o $(BUILTIN_OBJS) $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ git.o \
+ 		$(BUILTIN_OBJS) $(ALL_LDFLAGS) $(LIBS)
+ 
+-help.o: common-cmds.h
++help.o: help.c common-cmds.h GIT-CFLAGS
++	$(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) '-DGIT_MAN_PATH="$(mandir_SQ)"' $<
+ 
+ git-merge-subtree$X: git-merge-recursive$X
+ 	$(QUIET_BUILT_IN)$(RM) $@ && ln git-merge-recursive$X $@
+diff --git a/help.c b/help.c
+index 37a9c25..9f843c9 100644
+--- a/help.c
++++ b/help.c
+@@ -8,6 +8,8 @@
+ #include "exec_cmd.h"
+ #include "common-cmds.h"
+ 
++static const char *builtin_man_path = GIT_MAN_PATH;
++
+ /* most GUI terminals set COLUMNS (although some don't export it) */
+ static int term_columns(void)
+ {
+@@ -239,6 +241,24 @@ void list_common_cmds_help(void)
+ 	}
+ }
+ 
++static void setup_man_path(void)
++{
++	const char *old_path = getenv("MANPATH");
++	struct strbuf new_path;
++
++	strbuf_init(&new_path, 0);
++
++	strbuf_addstr(&new_path, builtin_man_path);
++	if (old_path) {
++		strbuf_addch(&new_path, ':');
++		strbuf_addstr(&new_path, old_path);
++	}
++
++	setenv("MANPATH", new_path.buf, 1);
++
++	strbuf_release(&new_path);
++}
++
+ static void show_man_page(const char *git_cmd)
+ {
+ 	const char *page;
+@@ -254,6 +274,7 @@ static void show_man_page(const char *git_cmd)
+ 		page = p;
+ 	}
+ 
++	setup_man_path();
+ 	execlp("man", "man", page, NULL);
+ }
+ 
 -- 
-Sergei.
+1.5.3.4
