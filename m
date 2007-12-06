@@ -1,68 +1,60 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] gc --aggressive: make it really aggressive
-Date: Thu, 6 Dec 2007 15:55:43 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712061552550.27959@racer.site>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>  <20071205.202047.58135920.davem@davemloft.net>  <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>  <20071205.204848.227521641.davem@davemloft.net>  <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com>  <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org>  <Pine.LNX.4.64.0712061201580.27959@racer.site> <20071206142254.GD5959@artemis.madism.org>
+Date: Thu, 6 Dec 2007 15:56:01 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712061555490.27959@racer.site>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 
+ <20071205.202047.58135920.davem@davemloft.net> 
+ <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com> 
+ <20071205.204848.227521641.davem@davemloft.net> 
+ <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> 
+ <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org> 
+ <Pine.LNX.4.64.0712061201580.27959@racer.site> <1196955059.13633.3.camel@brick>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,      Daniel Berlin <dberlin@dberlin.org>, David Miller <davem@davemloft.net>,      ismail@pardus.org.tr, gcc@gcc.gnu.org, git@vger.kernel.org,      gitster@pobox.com
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: gcc-return-142747-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 16:56:43 2007
-Return-path: <gcc-return-142747-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J0J5d-0002Nk-2V
-	for gcc@gmane.org; Thu, 06 Dec 2007 16:56:41 +0100
-Received: (qmail 23627 invoked by alias); 6 Dec 2007 15:56:22 -0000
-Received: (qmail 23613 invoked by uid 22791); 6 Dec 2007 15:56:21 -0000
-X-Spam-Check-By: sourceware.org
-Received: from mail.gmx.net (HELO mail.gmx.net) (213.165.64.20)     by sourceware.org (qpsmtpd/0.31) with SMTP; Thu, 06 Dec 2007 15:56:15 +0000
-Received: (qmail invoked by alias); 06 Dec 2007 15:56:12 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]   by mail.gmx.net (mp058) with SMTP; 06 Dec 2007 16:56:12 +0100
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Daniel Berlin <dberlin@dberlin.org>,
+	David Miller <davem@davemloft.net>, ismail@pardus.org.tr,
+	gcc@gcc.gnu.org, git@vger.kernel.org, gitster@pobox.com
+To: Harvey Harrison <harvey.harrison@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 06 16:57:02 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J0J5x-0002W0-Ly
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 16:57:02 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752671AbXLFP4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 10:56:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752608AbXLFP4f
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 10:56:35 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57884 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752532AbXLFP4e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 10:56:34 -0500
+Received: (qmail invoked by alias); 06 Dec 2007 15:56:32 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp058) with SMTP; 06 Dec 2007 16:56:32 +0100
 X-Authenticated: #1490710
-In-Reply-To: <20071206142254.GD5959@artemis.madism.org>
+X-Provags-ID: V01U2FsdGVkX1+UHTQxT/uUUTlYxlD3mafXKdWgt9O2LHaFWN1u0U
+	le/JD5OjQB8B/j
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1196955059.13633.3.camel@brick>
 X-Y-GMX-Trusted: 0
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67298>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67299>
 
 Hi,
 
-On Thu, 6 Dec 2007, Pierre Habouzit wrote:
+On Thu, 6 Dec 2007, Harvey Harrison wrote:
 
-> On Thu, Dec 06, 2007 at 12:03:38PM +0000, Johannes Schindelin wrote:
-> > 
-> > The default was not to change the window or depth at all.  As 
-> > suggested by Jon Smirl, Linus Torvalds and others, default to
-> > 
-> > 	--window=250 --depth=250
-> 
->   well, this will explode on many quite reasonnably sized systems. This 
-> should also use a memory-limit that could be auto-guessed from the 
-> system total physical memory (50% of the actual memory could be a good 
-> idea e.g.).
-> 
->   On very large repositories, using that on the e.g. linux kernel, swaps 
-> like hell on a machine with 1Go of ram, and almost nothing running on it 
-> (less than 200Mo of ram actually used)
+> -r--r--r-- 1 hharrison hharrison 324094684 2007-12-06 07:26
+> pack-1d46ca030c3d6d6b95ad316deb922be06b167a3d.pack
 
-Yes.
-
-However, I think that --aggressive should be aggressive, and if you decide 
-to run it on a machine which lacks the muscle to be aggressive, well, you 
-should have known better.
-
-The upside: if you run this on a strong machine and clone it to a weak 
-machine, you'll still have the benefit of a small pack (and you should 
-mark it as .keep, too, to keep the benefit...)
+Wow.
 
 Ciao,
 Dscho
