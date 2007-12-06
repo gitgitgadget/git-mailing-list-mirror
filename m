@@ -1,90 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Soft aliases: add "less" and minimal documentation
-Date: Wed, 5 Dec 2007 23:50:46 -0500
-Message-ID: <20071206045046.GE5499@coredump.intra.peff.net>
-References: <7vfxz89x9q.fsf@gitster.siamese.dyndns.org> <7vabpctx3b.fsf@gitster.siamese.dyndns.org> <7vsl30eyuk.fsf@gitster.siamese.dyndns.org> <7vve7tuz3a.fsf@gitster.siamese.dyndns.org> <7v4pfakr4j.fsf@gitster.siamese.dyndns.org> <7vzlwv6sxr.fsf@gitster.siamese.dyndns.org> <7vy7ca6ea9.fsf@gitster.siamese.dyndns.org> <7vzlwps8zf.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0712051131120.27959@racer.site> <7vd4tlorho.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git and GCC
+Date: Wed, 5 Dec 2007 20:54:28 -0800 (PST)
+Message-ID: <alpine.LFD.0.9999.0712052033570.13796@woody.linux-foundation.org>
+References: <4aca3dc20712051108s216d3331t8061ef45b9aa324a@mail.gmail.com>  <20071205.182815.249974508.davem@davemloft.net>  <4aca3dc20712051841o71ab773ft6dd0714ebc355dd5@mail.gmail.com>  <20071205.185203.262588544.davem@davemloft.net>   <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> <1196915112.10408.66.camel@brick>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 06 05:51:11 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J08hY-0000qB-LO
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 05:51:09 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752560AbXLFEut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 23:50:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752534AbXLFEus
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 23:50:48 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2610 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752486AbXLFEus (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 23:50:48 -0500
-Received: (qmail 27629 invoked by uid 111); 6 Dec 2007 04:50:47 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 05 Dec 2007 23:50:47 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Dec 2007 23:50:46 -0500
-Content-Disposition: inline
-In-Reply-To: <7vd4tlorho.fsf@gitster.siamese.dyndns.org>
-Sender: git-owner@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Berlin <dberlin@dberlin.org>, David Miller <davem@davemloft.net>,         ismail@pardus.org.tr, gcc@gcc.gnu.org, git@vger.kernel.org
+To: Harvey Harrison <harvey.harrison@gmail.com>
+X-From: gcc-return-142720-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 05:55:08 2007
+Return-path: <gcc-return-142720-gcc=m.gmane.org@gcc.gnu.org>
+Envelope-to: gcc@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1J08lP-0001hq-UF
+	for gcc@gmane.org; Thu, 06 Dec 2007 05:55:08 +0100
+Received: (qmail 32249 invoked by alias); 6 Dec 2007 04:54:49 -0000
+Received: (qmail 32237 invoked by uid 22791); 6 Dec 2007 04:54:48 -0000
+X-Spam-Check-By: sourceware.org
+Received: from smtp2.linux-foundation.org (HELO smtp2.linux-foundation.org) (207.189.120.14)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 04:54:39 +0000
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55]) 	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB64sTi6023383 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); 	Wed, 5 Dec 2007 20:54:34 -0800
+Received: from localhost (localhost [127.0.0.1]) 	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB64sSP6009361; 	Wed, 5 Dec 2007 20:54:28 -0800
+In-Reply-To: <1196915112.10408.66.camel@brick>
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67236>
+List-Id: <gcc.gcc.gnu.org>
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Delivered-To: mailing list gcc@gcc.gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67237>
 
-On Wed, Dec 05, 2007 at 11:45:23AM -0800, Junio C Hamano wrote:
 
-> I actually regret to have suggested "git less".  Not only because you
-> can always say "git show" instead, but because the error message you
-> would get with usage string will _not_ say "git-less", but some other
-> command's name if you say "git less nonsense".
+
+On Wed, 5 Dec 2007, Harvey Harrison wrote:
 > 
-> I on the other hand find the "view" alias moderately less problematic.
-> As long as the future direction for the "view" alias is to allow it to
-> notice user preference and launch something other than the default
-> "gitk", iow, it is crystal clear that "git view" is just a short-hand
-> for launching a history browser and the users are free to choose
-> whichever viewer available, it won't feel inconsistent if underlying
-> "gitk" barfed on malformed input using its own name.
+> If anyone recalls my report was something along the lines of
+> git gc --aggressive explodes pack size.
 
-The pattern I see here is that we get into trouble when we _pretend_
-that builtin aliases are real commands, and not just handy shortcuts for
-the real commands.
+Yes, --aggressive is generally a bad idea. I think we should remove it or 
+at least fix it. It doesn't do what the name implies, because it actually 
+throws away potentially good packing, and re-does it all from a clean 
+slate.
 
-IOW, if a user is told that "git less" is the command to look at
-objects, then they will:
+That said, it's totally pointless for a person who isn't a git proponent 
+to do an initial import, and in that sense I agree with Daniel: he 
+shouldn't waste his time with tools that he doesn't know or care about, 
+since there are people who *can* do a better job, and who know what they 
+are doing, and understand and like the tool.
 
-  1. get confused when "git less" claims to be "git cat-file" or "git
-     show" in error messages
-  2. get confused when there is no "git less" manpage
-  3. get confused when their coworker's "git less" behaves completely
-     differently
+While you can do a half-assed job with just mindlessly running "git 
+svnimport" (which is deprecated these days) or "git svn clone" (better), 
+the fact is, to do a *good* import does likely mean spending some effort 
+on it. Trying to make the user names / emails to be better with a mailmap, 
+for example. 
 
-OTOH, if a user is told that "git less" is an alias for the user's
-preferred method for viewing objects, that the default is "git show",
-and that they can customize it themselves using alias.less, then I don't
-think any of the above will be surprising.
+[ By default, for example, "git svn clone/fetch" seems to create those 
+  horrible fake email addresses that contain the ID of the SVN repo in 
+  each commit - I'm not talking about the "git-svn-id", I'm talking about 
+  the "user@hex-string-goes-here" thing for the author. Maybe people don't 
+  really care, but isn't that ugly as hell? I'd think it's worth it doing 
+  a really nice import, spending some effort on it.
 
-So I think it is a bad idea to use such aliases to satisfy user requests
-for simple commands, even when they can obviously be implemented as such
-an alias.
+  But maybe those things come from the older CVS->SVN import, I don't 
+  really know. I've done a few SVN imports, but I've done them just for 
+  stuff where I didn't want to touch SVN, but just wanted to track some 
+  project like libgpod. For things like *that*, a totally mindless "git 
+  svn" thing is fine ]
 
-That being said...
+Of course, that does require there to be git people in the gcc crowd who 
+are motivated enough to do the proper import and then make sure it's 
+up-to-date and hosted somewhere. If those people don't exist, I'm not sure 
+there's much idea to it.
 
-> By extension to this reasoning, I am not too keen on adding "update",
-> "up", "checkin", "ci", nor "co".  I do not think of any alternative
+The point being, you cannot ask a non-git person to do a major git import 
+for an actual switch-over. Yes, it *can* be as simple as just doing a
 
-I think "checkin", "ci", and "co" are well-understood as aliases (and
-will be doubly so if they are presented in the documentation as such).
+	git svn clone --stdlayout svn://svn://gcc.gnu.org/svn/gcc gcc
 
-After all, they come from CVS, which treats them this way:
+but the fact remains, you want to spend more effort and expertise on it if 
+you actually want the result to be used as a basis for future work (as 
+opposed to just tracking somebody elses SVN tree).
 
-$ cvs co
-cvs checkout: No CVSROOT specified!  Please use the `-d' option
-    ^^^^^^^^
+That includes:
 
--Peff
+ - do the historic import with good packing (and no, "--aggressive" 
+   is not it, never mind the misleading name and man-page)
+
+ - probably mailmap entries, certainly spending some time validating the 
+   results.
+
+ - hosting it
+
+and perhaps most importantly
+
+ - helping people who are *not* git users get up to speed.
+
+because doing a good job at it is like asking a CVS newbie to set up a 
+branch in CVS. I'm sure you can do it from man-pages, but I'm also sure 
+you sure as hell won't like the end result.
+
+		Linus
