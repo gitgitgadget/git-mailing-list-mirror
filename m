@@ -1,67 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG/PATCH] git grep shows the same hit repeatedly for unmerged paths
-Date: Thu, 06 Dec 2007 00:08:30 -0800
-Message-ID: <7v3auggs8x.fsf@gitster.siamese.dyndns.org>
-References: <7vsl2gk7e3.fsf@gitster.siamese.dyndns.org>
-	<4757A4DD.901@viscovery.net>
+From: David Brown <git@davidb.org>
+Subject: Re: Git and GCC
+Date: Thu, 6 Dec 2007 00:11:39 -0800
+Message-ID: <20071206081139.GA14370@old.davidb.org>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> <20071205.202047.58135920.davem@davemloft.net> <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com> <20071205.204848.227521641.davem@davemloft.net> <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org> <1196927361.13109.1.camel@brick>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Dec 06 09:09:10 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0Bn5-0007P1-BP
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 09:09:03 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753421AbXLFIIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 03:08:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753351AbXLFIIj
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 03:08:39 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:57932 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753228AbXLFIIi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 03:08:38 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id E479D2EF;
-	Thu,  6 Dec 2007 03:08:58 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 7C0BA9C4E7;
-	Thu,  6 Dec 2007 03:08:56 -0500 (EST)
-In-Reply-To: <4757A4DD.901@viscovery.net> (Johannes Sixt's message of "Thu, 06
-	Dec 2007 08:29:33 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, 	Daniel Berlin <dberlin@dberlin.org>, 	David Miller <davem@davemloft.net>, ismail@pardus.org.tr, 	gcc@gcc.gnu.org, git@vger.kernel.org
+To: Harvey Harrison <harvey.harrison@gmail.com>
+X-From: gcc-return-142729-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 09:12:28 2007
+Return-path: <gcc-return-142729-gcc=m.gmane.org@gcc.gnu.org>
+Envelope-to: gcc@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1J0BqK-0008VQ-AD
+	for gcc@gmane.org; Thu, 06 Dec 2007 09:12:24 +0100
+Received: (qmail 2883 invoked by alias); 6 Dec 2007 08:12:04 -0000
+Received: (qmail 2870 invoked by uid 22791); 6 Dec 2007 08:12:02 -0000
+X-Spam-Check-By: sourceware.org
+Received: from mail.davidb.org (HELO mail.davidb.org) (66.93.32.219)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 08:11:57 +0000
+Received: from davidb by mail.davidb.org with local (Exim 4.68 #1 (Debian)) 	id 1J0Bpb-0003nn-PI; Thu, 06 Dec 2007 00:11:39 -0800
+Mail-Followup-To: Harvey Harrison <harvey.harrison@gmail.com>, 	Linus Torvalds <torvalds@linux-foundation.org>, 	Daniel Berlin <dberlin@dberlin.org>, 	David Miller <davem@davemloft.net>, ismail@pardus.org.tr, 	gcc@gcc.gnu.org, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1196927361.13109.1.camel@brick>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67268>
+List-Id: <gcc.gcc.gnu.org>
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Delivered-To: mailing list gcc@gcc.gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67269>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
-
-> Junio C Hamano schrieb:
->> When the index is unmerged, e.g.
->> 
->> 	$ git ls-files -u
->>         100644 faf413748eb6ccb15161a212156c5e348302b1b6 1	setup.c
->>         100644 145eca50f41d811c4c8fcb21ed2604e6b2971aba 2	setup.c
->>         100644 cb9558c49b6027bf225ba2a6154c4d2a52bcdbe2 3	setup.c
->> 
->> running "git grep" for work tree files repeats hits for each unmerged
->> stage.
->> 
->> 	$ git grep -n -e setup_work_tree -- '*.[ch]'
->>         setup.c:209:void setup_work_tree(void)
->>         setup.c:209:void setup_work_tree(void)
->>         setup.c:209:void setup_work_tree(void)
->> 
->> This should fix it.
+On Wed, Dec 05, 2007 at 11:49:21PM -0800, Harvey Harrison wrote:
 >
-> Does this change the behavior of grep --cached? IOW, listing the same hit
-> more than once when --cached is given is a feature, IMHO.
+>> 	git repack -a -d --depth=250 --window=250
+>> 
+>
+>Since I have the whole gcc repo locally I'll give this a shot overnight
+>just to see what can be done at the extreme end or things.
 
-Yeah, --cached should grep for each stage.  It doesn't?
+When I tried this on a very large repo, at least one with some large files
+in it, git quickly exceeded my physical memory and started thrashing the
+machine.  I had good results with
+
+  git config pack.deltaCacheSize 512m
+  git config pack.windowMemory 512m
+
+of course adjusting based on your physical memory.  I think changing the
+windowMemory will affect the resulting compression, so changing these
+ratios might get better compression out of the result.
+
+If you're really patient, though, you could leave the unbounded window,
+hope you have enough swap, and just let it run.
+
+Dave
