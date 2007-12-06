@@ -1,92 +1,72 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Git and GCC
-Date: Thu, 6 Dec 2007 17:44:33 -0500
-Message-ID: <9e4733910712061444i64c115e2y94f6212dd7a4ddda@mail.gmail.com>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 	 <alpine.LFD.0.99999.0712060915590.555@xanadu.home> 	 <20071206173946.GA10845@sigill.intra.peff.net> 	 <alpine.LFD.0.9999.0712061030560.13796@woody.linux-foundation.org> 	 <9e4733910712061055p353775d8wd0321bc9c81297b7@mail.gmail.com> 	 <alpine.LFD.0.99999.0712061403000.555@xanadu.home> 	 <9e4733910712061339n3aef023r22e5b73aac120c8a@mail.gmail.com> 	 <alpine.LFD.0.99999.0712061645120.555@xanadu.home> 	 <9e4733910712061422w139273c0gf3cfb04c6ba8c509@mail.gmail.com> 	 <alpine.LFD.0.99999.0712061726240.555@xanadu.home>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Gaahh!!! We've been throough this before
+Date: Thu, 06 Dec 2007 17:47:40 -0500
+Message-ID: <47587C0C.30908@gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,  	"Jeff King" <peff@peff.net>, "Daniel Berlin" <dberlin@dberlin.org>,  	"Harvey Harrison" <harvey.harrison@gmail.com>,  	"David Miller" <davem@davemloft.net>, ismail@pardus.org.tr,  	gcc@gcc.gnu.org, git@vger.kernel.org
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: gcc-return-142779-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 23:45:04 2007
-Return-path: <gcc-return-142779-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J0PSm-0003dJ-VT
-	for gcc@gmane.org; Thu, 06 Dec 2007 23:45:01 +0100
-Received: (qmail 8684 invoked by alias); 6 Dec 2007 22:44:42 -0000
-Received: (qmail 8669 invoked by uid 22791); 6 Dec 2007 22:44:41 -0000
-X-Spam-Check-By: sourceware.org
-Received: from ro-out-1112.google.com (HELO ro-out-1112.google.com) (72.14.202.176)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 22:44:36 +0000
-Received: by ro-out-1112.google.com with SMTP id o35so6816162rog         for <gcc@gcc.gnu.org>; Thu, 06 Dec 2007 14:44:34 -0800 (PST)
-Received: by 10.114.177.1 with SMTP id z1mr1299315wae.1196981073658;         Thu, 06 Dec 2007 14:44:33 -0800 (PST)
-Received: by 10.114.208.17 with HTTP; Thu, 6 Dec 2007 14:44:33 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.99999.0712061726240.555@xanadu.home>
-Content-Disposition: inline
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 06 23:48:15 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J0PVp-0005AA-NE
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 23:48:10 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752747AbXLFWrs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 17:47:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752704AbXLFWrs
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 17:47:48 -0500
+Received: from rv-out-0910.google.com ([209.85.198.191]:45371 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751149AbXLFWrr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 17:47:47 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so449968rvb
+        for <git@vger.kernel.org>; Thu, 06 Dec 2007 14:47:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        bh=jafn7eCuBEmzg2MU1r3dHdCIPwcQFiMksvzFOgF/XHk=;
+        b=pw18aPCKhuZKfHkGeTSH41z6XtQtQyw4anEAsgvwGJnljPqmxXgTF6//S21fWVA1BRgA9CGVxmitFcKNWiWxQLxVLPZK1/KrEQJEODP23zI34CtxV+XKGhZW3OeCdtakACEP2yILpEq2DgG/xrpl2a5jOJEeAnyewrMH3ER9+Fs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to:user-agent:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        b=psMxvJiZO/db2lmGyxNnC2mLIWzUMZHvGMXFOV/quw1iaihn6Vp2UqICa9XVk0UjYd25AwLA1n122vPrbxHLy8r7fsksqbGv6KXYnVB5iDO4Tz3Z9DSbnSKsOfOlF9AZ2GJyauCrNhWrdWFYiPd0rV4bgFC2kKG8eUdO0t1cQ88=
+Received: by 10.141.2.19 with SMTP id e19mr2323747rvi.1196981266653;
+        Thu, 06 Dec 2007 14:47:46 -0800 (PST)
+Received: from ?10.0.0.6? ( [66.177.19.100])
+        by mx.google.com with ESMTPS id a68sm3407917rnc.2007.12.06.14.47.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 06 Dec 2007 14:47:42 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67351>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67352>
 
-On 12/6/07, Nicolas Pitre <nico@cam.org> wrote:
-> > > Well, that's possible with a window 25 times larger than the default.
-> >
-> > Why did it never use more than three cores?
->
-> You have 648366 objects total, and only 647457 of them are subject to
-> delta compression.
->
-> With a window size of 250 and a default thread segment of window * 1000
-> that means only 3 segments will be distributed to threads, hence only 3
-> threads with work to do.
+Git does not NEED a name or email address to checkout something. So how 
+are "Big Scary Warnings"(tm) about things that are not required 
+considered anything but user hostile?
 
-One little tweak and the clock time drops from 9.5 to 6 minutes. The
-tweak makes all four cores work.
+Oh, and "email.com" actually belongs to someone so should not be used as 
+an example domain name.
 
-jonsmirl@terra:/home/apps/git$ git diff
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 4f44658..e0dd12e 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -1645,7 +1645,7 @@ static void ll_find_deltas(struct object_entry
-**list, unsigned list_size,
-        }
+"Big Scary Warning"(tm) follows:
+git> git-checkout master
 
-        /* this should be auto-tuned somehow */
--       chunk_size = window * 1000;
-+       chunk_size = window * 50;
+*** Your name cannot be determined from your system services (gecos).
 
-        do {
-                unsigned sublist_size = chunk_size;
+Run
 
+   git config --global user.email "you@email.com"
+   git config --global user.name "Your Name"
 
-jonsmirl@terra:/home/linux/.git$ time git repack -a -d -f --depth=250
---window=250
-Counting objects: 648366, done.
-Compressing objects: 100% (647457/647457), done.
-Writing objects: 100% (648366/648366), done.
-Total 648366 (delta 539043), reused 0 (delta 0)
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
 
-real    6m2.109s
-user    20m0.491s
-sys     0m4.608s
-jonsmirl@terra:/home/linux/.git$
-
-
-
->
->
-> Nicolas
->
-
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
+fatal: empty ident  <unknown@localhost> not allowed
+git>
