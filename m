@@ -1,28 +1,29 @@
-From: Randy Dunlap <rdunlap@xenotime.net>
-Subject: [OT] Re: Git and GCC
-Date: Thu, 6 Dec 2007 14:38:27 -0800
-Message-ID: <20071206143827.004991f8.rdunlap@xenotime.net>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 	<20071205.202047.58135920.davem@davemloft.net> 	<4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com> 	<20071205.204848.227521641.davem@davemloft.net> 	<4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> 	<alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org> 	<1196968371.18340.30.camel@ld0161-tx32> 	<7vk5nrd1yq.fsf@gitster.siamese.dyndns.org> 	<7vabonczad.fsf@gitster.siamese.dyndns.org> 	<85r6hzo3y8.fsf@lola.goethe.zz>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Git and GCC
+Date: Thu, 6 Dec 2007 17:44:33 -0500
+Message-ID: <9e4733910712061444i64c115e2y94f6212dd7a4ddda@mail.gmail.com>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 	 <alpine.LFD.0.99999.0712060915590.555@xanadu.home> 	 <20071206173946.GA10845@sigill.intra.peff.net> 	 <alpine.LFD.0.9999.0712061030560.13796@woody.linux-foundation.org> 	 <9e4733910712061055p353775d8wd0321bc9c81297b7@mail.gmail.com> 	 <alpine.LFD.0.99999.0712061403000.555@xanadu.home> 	 <9e4733910712061339n3aef023r22e5b73aac120c8a@mail.gmail.com> 	 <alpine.LFD.0.99999.0712061645120.555@xanadu.home> 	 <9e4733910712061422w139273c0gf3cfb04c6ba8c509@mail.gmail.com> 	 <alpine.LFD.0.99999.0712061726240.555@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jon Loeliger <jdl@freescale.com>,  Linus Torvalds <torvalds@linux-foundation.org>, Daniel Berlin  <dberlin@dberlin.org>, David Miller <davem@davemloft.net>,  ismail@pardus.org.tr, gcc@gcc.gnu.org, Git List <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: gcc-return-142778-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 23:39:12 2007
-Return-path: <gcc-return-142778-gcc=m.gmane.org@gcc.gnu.org>
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,  	"Jeff King" <peff@peff.net>, "Daniel Berlin" <dberlin@dberlin.org>,  	"Harvey Harrison" <harvey.harrison@gmail.com>,  	"David Miller" <davem@davemloft.net>, ismail@pardus.org.tr,  	gcc@gcc.gnu.org, git@vger.kernel.org
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: gcc-return-142779-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 23:45:04 2007
+Return-path: <gcc-return-142779-gcc=m.gmane.org@gcc.gnu.org>
 Envelope-to: gcc@gmane.org
 Received: from sourceware.org ([209.132.176.174])
 	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J0PN6-000182-Q5
-	for gcc@gmane.org; Thu, 06 Dec 2007 23:39:09 +0100
-Received: (qmail 2341 invoked by alias); 6 Dec 2007 22:38:49 -0000
-Received: (qmail 2332 invoked by uid 22791); 6 Dec 2007 22:38:49 -0000
+	id 1J0PSm-0003dJ-VT
+	for gcc@gmane.org; Thu, 06 Dec 2007 23:45:01 +0100
+Received: (qmail 8684 invoked by alias); 6 Dec 2007 22:44:42 -0000
+Received: (qmail 8669 invoked by uid 22791); 6 Dec 2007 22:44:41 -0000
 X-Spam-Check-By: sourceware.org
-Received: from xenotime.net (HELO xenotime.net) (66.160.160.81)     by sourceware.org (qpsmtpd/0.31) with SMTP; Thu, 06 Dec 2007 22:38:32 +0000
-Received: from midway.site ([71.117.233.180]) by xenotime.net for <gcc@gcc.gnu.org>; Thu, 6 Dec 2007 14:38:27 -0800
-In-Reply-To: <85r6hzo3y8.fsf@lola.goethe.zz>
-X-Mailer: Sylpheed 2.4.7 (GTK+ 2.8.10; x86_64-unknown-linux-gnu)
-X-IsSubscribed: yes
+Received: from ro-out-1112.google.com (HELO ro-out-1112.google.com) (72.14.202.176)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 22:44:36 +0000
+Received: by ro-out-1112.google.com with SMTP id o35so6816162rog         for <gcc@gcc.gnu.org>; Thu, 06 Dec 2007 14:44:34 -0800 (PST)
+Received: by 10.114.177.1 with SMTP id z1mr1299315wae.1196981073658;         Thu, 06 Dec 2007 14:44:33 -0800 (PST)
+Received: by 10.114.208.17 with HTTP; Thu, 6 Dec 2007 14:44:33 -0800 (PST)
+In-Reply-To: <alpine.LFD.0.99999.0712061726240.555@xanadu.home>
+Content-Disposition: inline
 Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
 List-Id: <gcc.gcc.gnu.org>
@@ -32,38 +33,60 @@ List-Post: <mailto:gcc@gcc.gnu.org>
 List-Help: <http://gcc.gnu.org/ml/>
 Sender: gcc-owner@gcc.gnu.org
 Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67351>
 
-On Thu, 06 Dec 2007 23:26:07 +0100 David Kastrup wrote:
-
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Junio C Hamano <gitster@pobox.com> writes:
+On 12/6/07, Nicolas Pitre <nico@cam.org> wrote:
+> > > Well, that's possible with a window 25 times larger than the default.
 > >
-> >> Jon Loeliger <jdl@freescale.com> writes:
-> >>
-> >>> I'd like to learn more about that.  Can someone point me to
-> >>> either more documentation on it?  In the absence of that,
-> >>> perhaps a pointer to the source code that implements it?
-> >>
-> >> See Documentation/technical/pack-heuristics.txt,
-> >
-> > A somewhat funny thing about this is ...
-> >
-> > $ git show --stat --summary b116b297
-> > commit b116b297a80b54632256eb89dd22ea2b140de622
-> > Author: Jon Loeliger <jdl@jdl.com>
-> > Date:   Thu Mar 2 19:19:29 2006 -0600
-> >
-> >     Added Packing Heursitics IRC writeup.
-> 
-> Ah, fishing for compliments.  The cookie baking season...
+> > Why did it never use more than three cores?
+>
+> You have 648366 objects total, and only 647457 of them are subject to
+> delta compression.
+>
+> With a window size of 250 and a default thread segment of window * 1000
+> that means only 3 segments will be distributed to threads, hence only 3
+> threads with work to do.
 
-Indeed.  Here are some really good & sweet recipes (IMHO).
+One little tweak and the clock time drops from 9.5 to 6 minutes. The
+tweak makes all four cores work.
 
-http://www.xenotime.net/linux/recipes/
+jonsmirl@terra:/home/apps/git$ git diff
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 4f44658..e0dd12e 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1645,7 +1645,7 @@ static void ll_find_deltas(struct object_entry
+**list, unsigned list_size,
+        }
+
+        /* this should be auto-tuned somehow */
+-       chunk_size = window * 1000;
++       chunk_size = window * 50;
+
+        do {
+                unsigned sublist_size = chunk_size;
 
 
----
-~Randy
-Features and documentation: http://lwn.net/Articles/260136/
+jonsmirl@terra:/home/linux/.git$ time git repack -a -d -f --depth=250
+--window=250
+Counting objects: 648366, done.
+Compressing objects: 100% (647457/647457), done.
+Writing objects: 100% (648366/648366), done.
+Total 648366 (delta 539043), reused 0 (delta 0)
+
+real    6m2.109s
+user    20m0.491s
+sys     0m4.608s
+jonsmirl@terra:/home/linux/.git$
+
+
+
+>
+>
+> Nicolas
+>
+
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
