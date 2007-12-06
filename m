@@ -1,63 +1,39 @@
 From: "Jon Smirl" <jonsmirl@gmail.com>
 Subject: Re: Git and GCC
-Date: Thu, 6 Dec 2007 17:11:48 -0500
-Message-ID: <9e4733910712061411y77f800dcx46bb8fdd5d97941f@mail.gmail.com>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>
-	 <9e4733910712052247x116cabb4q48ebafffb93f7e03@mail.gmail.com>
-	 <20071206071503.GA19504@coredump.intra.peff.net>
-	 <alpine.LFD.0.99999.0712060915590.555@xanadu.home>
-	 <20071206173946.GA10845@sigill.intra.peff.net>
-	 <alpine.LFD.0.9999.0712061030560.13796@woody.linux-foundation.org>
-	 <9e4733910712061055p353775d8wd0321bc9c81297b7@mail.gmail.com>
-	 <alpine.LFD.0.99999.0712061403000.555@xanadu.home>
-	 <9e4733910712061339n3aef023r22e5b73aac120c8a@mail.gmail.com>
-	 <alpine.LFD.0.99999.0712061645120.555@xanadu.home>
+Date: Thu, 6 Dec 2007 17:22:04 -0500
+Message-ID: <9e4733910712061422w139273c0gf3cfb04c6ba8c509@mail.gmail.com>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 	 <9e4733910712052247x116cabb4q48ebafffb93f7e03@mail.gmail.com> 	 <20071206071503.GA19504@coredump.intra.peff.net> 	 <alpine.LFD.0.99999.0712060915590.555@xanadu.home> 	 <20071206173946.GA10845@sigill.intra.peff.net> 	 <alpine.LFD.0.9999.0712061030560.13796@woody.linux-foundation.org> 	 <9e4733910712061055p353775d8wd0321bc9c81297b7@mail.gmail.com> 	 <alpine.LFD.0.99999.0712061403000.555@xanadu.home> 	 <9e4733910712061339n3aef023r22e5b73aac120c8a@mail.gmail.com> 	 <alpine.LFD.0.99999.0712061645120.555@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Jeff King" <peff@peff.net>, "Daniel Berlin" <dberlin@dberlin.org>,
-	"Harvey Harrison" <harvey.harrison@gmail.com>,
-	"David Miller" <davem@davemloft.net>, ismail@pardus.org.tr,
-	gcc@gcc.gnu.org, git@vger.kernel.org
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,  	"Jeff King" <peff@peff.net>, "Daniel Berlin" <dberlin@dberlin.org>,  	"Harvey Harrison" <harvey.harrison@gmail.com>,  	"David Miller" <davem@davemloft.net>, ismail@pardus.org.tr,  	gcc@gcc.gnu.org, git@vger.kernel.org
 To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Dec 06 23:12:17 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0Ox6-0006vE-CI
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 23:12:16 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752586AbXLFWLu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 17:11:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752701AbXLFWLu
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 17:11:50 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:6843 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752361AbXLFWLt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 17:11:49 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so906308wah
-        for <git@vger.kernel.org>; Thu, 06 Dec 2007 14:11:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=rSXanSll/uCNh/PqX1qi3maD9GL8khnM3+j9mI6SvSs=;
-        b=qCWcLG/IcfygbYAmOaX5/Ox1RBQ/jgTQI7eOOvc9GE2JsSLWzdA42bMkizIyTi5RX8tI/TUoQF+SL6nNaa6S6q0bkItknuU4MgCzdqmKEpEGTGjZjTAcb/+GW8HRjWpCRhNrg+Z5Sa/4rbYqkOhzIKVNj7yfbw9IWezkQM4MhFE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=l4o2vzCC3cI2KpGzlaxyUIi24yS2AbbnzamHAjnZBnEk2D7lwKRv6s8uUpozCOOtsa6/wbeE3l2bgum5+N9yvxzPJ+Ol6HlMNmCV9JWcMPYw0GWalJxhAqaQvRyTPqGJH0QFFx0pNhPt+OI5WHvyg7WUZiJx67+JRS7rtW2WlAM=
-Received: by 10.115.22.1 with SMTP id z1mr2099251wai.1196979109066;
-        Thu, 06 Dec 2007 14:11:49 -0800 (PST)
-Received: by 10.114.208.17 with HTTP; Thu, 6 Dec 2007 14:11:48 -0800 (PST)
+X-From: gcc-return-142775-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 23:22:32 2007
+Return-path: <gcc-return-142775-gcc=m.gmane.org@gcc.gnu.org>
+Envelope-to: gcc@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1J0P71-0002u3-2s
+	for gcc@gmane.org; Thu, 06 Dec 2007 23:22:31 +0100
+Received: (qmail 19873 invoked by alias); 6 Dec 2007 22:22:13 -0000
+Received: (qmail 19861 invoked by uid 22791); 6 Dec 2007 22:22:12 -0000
+X-Spam-Check-By: sourceware.org
+Received: from wa-out-1112.google.com (HELO wa-out-1112.google.com) (209.85.146.178)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 22:22:06 +0000
+Received: by wa-out-1112.google.com with SMTP id m16so872360waf         for <gcc@gcc.gnu.org>; Thu, 06 Dec 2007 14:22:04 -0800 (PST)
+Received: by 10.114.73.1 with SMTP id v1mr1457271waa.1196979724791;         Thu, 06 Dec 2007 14:22:04 -0800 (PST)
+Received: by 10.114.208.17 with HTTP; Thu, 6 Dec 2007 14:22:04 -0800 (PST)
 In-Reply-To: <alpine.LFD.0.99999.0712061645120.555@xanadu.home>
 Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67346>
+List-Id: <gcc.gcc.gnu.org>
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Delivered-To: mailing list gcc@gcc.gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67347>
 
 On 12/6/07, Nicolas Pitre <nico@cam.org> wrote:
 > On Thu, 6 Dec 2007, Jon Smirl wrote:
@@ -86,6 +62,9 @@ On 12/6/07, Nicolas Pitre <nico@cam.org> wrote:
 > > balancing problem I observed earlier.
 >
 > Well, that's possible with a window 25 times larger than the default.
+
+Why did it never use more than three cores?
+
 >
 > The load balancing is solved with a master thread serving relatively
 > small object list segments to any work thread that finished with its
@@ -93,18 +72,9 @@ On 12/6/07, Nicolas Pitre <nico@cam.org> wrote:
 > window * 1000 which is way too large when window == 250.
 >
 > I have to find a way to auto-tune that segment size somehow.
-
-That would be nice. Threading is most important on the giant
-pack/window combinations. The normal case is fast enough that I don't
-real notice it. These giant pack/window combos can run 8-10 hours.
-
 >
 > But with the default window size there should not be any such noticeable
 > load balancing problem.
-
-I only spend 30 seconds in the compression phase without making the
-window larger. It's not long enough to really see what is going on.
-
 >
 > Note that threading only happens in the compression phase.  The count
 > and write phase are hardly paralleled.
