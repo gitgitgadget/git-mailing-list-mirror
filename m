@@ -1,61 +1,141 @@
-From: "Daniel Berlin" <dberlin@dberlin.org>
-Subject: Re: Git and GCC
-Date: Wed, 5 Dec 2007 23:32:52 -0500
-Message-ID: <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>
-References: <4aca3dc20712051841o71ab773ft6dd0714ebc355dd5@mail.gmail.com>
-	 <20071205.185203.262588544.davem@davemloft.net>
-	 <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>
-	 <20071205.202047.58135920.davem@davemloft.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (topics)
+Date: Wed, 5 Dec 2007 23:32:48 -0500
+Message-ID: <20071206043247.GC5499@coredump.intra.peff.net>
+References: <7vir4d40sw.fsf@gitster.siamese.dyndns.org> <7vwsso3poo.fsf@gitster.siamese.dyndns.org> <7vfxz89x9q.fsf@gitster.siamese.dyndns.org> <7vabpctx3b.fsf@gitster.siamese.dyndns.org> <7vsl30eyuk.fsf@gitster.siamese.dyndns.org> <7vve7tuz3a.fsf@gitster.siamese.dyndns.org> <7v4pfakr4j.fsf@gitster.siamese.dyndns.org> <7vzlwv6sxr.fsf@gitster.siamese.dyndns.org> <7vy7ca6ea9.fsf@gitster.siamese.dyndns.org> <7vzlwps8zf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: ismail@pardus.org.tr, gcc@gcc.gnu.org, git@vger.kernel.org
-To: "David Miller" <davem@davemloft.net>
-X-From: git-owner@vger.kernel.org Thu Dec 06 05:33:16 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 06 05:33:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J08QD-00058D-P7
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 05:33:14 +0100
+	id 1J08QD-00058D-4J
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 05:33:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752177AbXLFEcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 23:32:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752161AbXLFEcy
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 23:32:54 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:25011 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752030AbXLFEcx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 23:32:53 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so181880wah
-        for <git@vger.kernel.org>; Wed, 05 Dec 2007 20:32:53 -0800 (PST)
-Received: by 10.142.50.15 with SMTP id x15mr461891wfx.1196915572553;
-        Wed, 05 Dec 2007 20:32:52 -0800 (PST)
-Received: by 10.142.217.1 with HTTP; Wed, 5 Dec 2007 20:32:52 -0800 (PST)
-In-Reply-To: <20071205.202047.58135920.davem@davemloft.net>
+	id S1752146AbXLFEcv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 23:32:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752030AbXLFEcv
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 23:32:51 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3558 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751968AbXLFEcu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 23:32:50 -0500
+Received: (qmail 27418 invoked by uid 111); 6 Dec 2007 04:32:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 05 Dec 2007 23:32:49 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Dec 2007 23:32:48 -0500
 Content-Disposition: inline
+In-Reply-To: <7vzlwps8zf.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67232>
 
-On 12/5/07, David Miller <davem@davemloft.net> wrote:
-> From: "Daniel Berlin" <dberlin@dberlin.org>
-> Date: Wed, 5 Dec 2007 22:47:01 -0500
->
-> > The size is clearly not just svn data, it's in the git pack itself.
->
-> And other users have shown much smaller metadata from a GIT import,
-> and yes those are including all of the repository history and branches
-> not just the trunk.
-I followed the instructions in the tutorials.
-I followed the instructions given to by people who created these.
-I came up with a 1.5 gig pack file.
-You want to help, or you want to argue with me.
-Right now it sounds like you are trying to blame me or make it look
-like i did something wrong.
+On Wed, Dec 05, 2007 at 02:59:16AM -0800, Junio C Hamano wrote:
 
-You are of course, welcome to try it yourself.
-I can give you the absolute exactly commands I gave, and with git
-1.5.3.7, it will give you a 1.5 gig pack file.
+> * jc/clean-fix (Tue Dec 4 23:55:41 2007 -0800) 1 commit
+>  - git-clean: Honor pathspec.
+> 
+> This does fix limited test cases I tried, but I didn't check the
+> directory related options at all.  Sanity checking appreciated.  We need
+> a regression fix before v1.5.4
+
+Hrm, I took a look at this and I'm a bit stumped.
+
+I think the logic in builtin-clean is a bit suspect, and I have a patch
+below that fixes it.
+
+However, I still can't get something as simple as:
+
+  mkdir dir.clean &&
+  touch dir.clean/file &&
+  git clean -d "*.clean/"
+
+to work, and I think the pathspec matching is to blame. If I use
+"*.clean/", then read_directory assumes that "*.clean" is a directory to
+be opened, without considering that it might be a wildcard, which is
+just wrong. If I use "*.clean", then I get the correct directory
+listing, but match_pathspec fails because read_directory returns
+"dir.clean/". We could fix this by passing match_pathspec ent->len - 1,
+but that actually ends up getting ignored! It ends up handing the string
+to fnmatch, which treats it like a C string.
+
+Am I crazy, or do we need to fix the wildcard semantics for directories
+with both read_directory and with match_pathspec?
+
+Below is my partial patch for reference.
+
+-Peff
+
+---
+diff --git a/builtin-clean.c b/builtin-clean.c
+index 61ae851..f4cf39f 100644
+--- a/builtin-clean.c
++++ b/builtin-clean.c
+@@ -117,7 +117,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 		}
+ 
+ 		if (!lstat(ent->name, &st) && (S_ISDIR(st.st_mode))) {
+-			int matched_path = 0;
++			int matched_path = !pathspec;
+ 			strbuf_addstr(&directory, ent->name);
+ 			if (pathspec) {
+ 				/*
+@@ -128,11 +128,11 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 						   baselen, seen))
+ 					matched_path = 1;
+ 			}
+-			if (show_only && (remove_directories || matched_path)) {
++			if (show_only && (remove_directories && matched_path)) {
+ 				printf("Would remove %s\n", directory.buf);
+-			} else if (quiet && (remove_directories || matched_path)) {
++			} else if (quiet && (remove_directories && matched_path)) {
+ 				remove_dir_recursively(&directory, 0);
+-			} else if (remove_directories || matched_path) {
++			} else if (remove_directories && matched_path) {
+ 				printf("Removing %s\n", directory.buf);
+ 				remove_dir_recursively(&directory, 0);
+ 			} else if (show_only) {
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index dfd1188..f204a50 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -192,6 +192,34 @@ test_expect_success 'git-clean -d src/ examples/' '
+ 
+ '
+ 
++test_expect_success 'git-clean with directory wildcards' '
++
++	mkdir -p dir.clean dir.stay &&
++	touch dir.clean/file dir.stay/file &&
++	git clean "*.clean" &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f dir.stay/file &&
++	test -f dir.clean/file
++
++'
++
++test_expect_success 'git-clean -d with directory wildcards' '
++
++	mkdir -p dir.clean dir.stay &&
++	touch dir.clean/file dir.stay/file &&
++	git clean -d "*.clean" &&
++	test -f Makefile &&
++	test -f README &&
++	test -f src/part1.c &&
++	test -f src/part2.c &&
++	test -f dir.stay/file &&
++	test ! -f dir.clean/file
++
++'
++
+ test_expect_success 'git-clean -x' '
+ 
+ 	mkdir -p build docs &&
