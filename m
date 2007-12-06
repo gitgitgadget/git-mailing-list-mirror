@@ -1,101 +1,117 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add option --path to allow to run tests with real systems.
- You must install git before running this test.
-Date: Thu, 6 Dec 2007 15:23:31 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712061422010.27959@racer.site>
-References: <20071206134817.GA8523@laptop>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: builtin command's prefix question
+Date: Thu, 6 Dec 2007 22:26:29 +0700
+Message-ID: <fcaeb9bf0712060726r383c3a36j798a439b9dbb0cae@mail.gmail.com>
+References: <fcaeb9bf0712050856t5d730779q82783fdb9876f41@mail.gmail.com>
+	 <7vlk88n648.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811741-1755104978-1196954611=:27959"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 06 16:24:39 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 06 16:27:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0IaW-0004vB-Iu
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 16:24:34 +0100
+	id 1J0Icu-00060H-HY
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 16:27:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752204AbXLFPYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 10:24:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752011AbXLFPYE
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 10:24:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48900 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750954AbXLFPYC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 10:24:02 -0500
-Received: (qmail invoked by alias); 06 Dec 2007 15:24:00 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp016) with SMTP; 06 Dec 2007 16:24:00 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/WttQvLxfWksp8owm/0C3wA46E0Y5y0Nve4fpBCS
-	tTWRz1mCMrma+F
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071206134817.GA8523@laptop>
-X-Y-GMX-Trusted: 0
+	id S1752438AbXLFP0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 10:26:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752546AbXLFP0c
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 10:26:32 -0500
+Received: from mu-out-0910.google.com ([209.85.134.186]:63115 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752084AbXLFP0b (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 10:26:31 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so355652mue
+        for <git@vger.kernel.org>; Thu, 06 Dec 2007 07:26:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=6FGFlm2OYLhdDE6SNUgRQnHXsp+yGNhzcLFiz6SODgY=;
+        b=oorfRSiGkJy6vpUdMTHJ0PA+EzI3dwnF97IyLiIKMk4D6vQavXOodGw9kQ48W3vt4rP1G8ip1Fh4zEtlAIZMepi80G2ETJN6+zXXi2t8volgwwxqy9dqfR3y++tB88BG1RQaAFbrFebf5b/c0qtaJv01Jytz0Bqe0j+DP885Nko=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=vLLQMQvKpYX0q5nU0Qul9yUq2fiiN2kjL+leoRuoWmHQLFGh21Kuc8Hn4n8smLd15SfNT3GFGZjmrFV1L/fg7xfZqmdHQA5iBGHHZSjs7rXAzz1k/CEoFMzpamrNlE+TuG2zLdF29T564GZmLDZeca8J1JY3P84VOBTN5wnHEII=
+Received: by 10.86.49.13 with SMTP id w13mr1136405fgw.1196954789510;
+        Thu, 06 Dec 2007 07:26:29 -0800 (PST)
+Received: by 10.86.83.6 with HTTP; Thu, 6 Dec 2007 07:26:29 -0800 (PST)
+In-Reply-To: <7vlk88n648.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67294>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Dec 6, 2007 5:12 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> The intention is:
+>
+>  * If GIT_DIR is set but not GIT_WORK_TREE (nor core.worktree in
+>    config), you are either inside project.git/ directory of bare
+>    repository or at the toplevel of worktree-full directory.  This has
+>    been the traditional behaviour before GIT_WORK_TREE and we shouldn't
+>    break the existing setups that assume this behaviour.  So in that
+>    sense, with this combination:
+>
+>    - If the repository is bare, the value of the prefix should not
+>      matter; the command that wants to look at prefix by definition
+>      wants to run from a subdirectory but there is no notion of
+>      "the user directory being a subdirectory of the top of the work
+>      tree" in a bare repository;
+>
+>    - If the repository is not bare, the user directory _MUST_ be at the
+>      top of the work tree, as that is what the traditional behaviour is.
+>      Anything else would break existing setups.
+>
+>      IOW, if you use GIT_DIR and still want to run from a subdirectory
+>      of the worktree, you must have either GIT_WORK_TREE or
+>      core.worktree to tell where the top of the worktree is, and if you
+>      don't, then you must be at the top.
+>
+>    So the right thing to do in this case is not going anywhere and using
+>    prefix=NULL.
 
----1463811741-1755104978-1196954611=:27959
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+You are right. It is quite obvious from the code. No idea why I had
+that in my mind.
 
-Hi,
+>  * I would say it is a misconfiguration if GIT_DIR is not set and
+>    GIT_WORK_TREE is, as the sole purpose of GIT_WORK_TREE is so that you
+>    can work from a subdirectory when you set GIT_DIR.  I may be missing
+>    an obvious use case that this is useful, but I do not think of any.
+>    Dscho may be able to correct me on this, as he fixed up the original
+>    work tree series that was even messier quite a bit during the last
+>    round.
 
-On Thu, 6 Dec 2007, Nguyễn Thái Ngọc Duy wrote:
+On Dec 6, 2007 6:22 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> However, if we define setup() to behave this way when GIT_DIR is not
+> defined and GIT_WORK_TREE is:
+>
+>  (1) internally pretend as if GIT_DIR was specified to be the
+>      directory where the command was started from (iow, do getcwd()
+>      once upon startup);
+>
+>  (2) chdir to GIT_WORK_TREE (which means "callers of setup() always
+>      run from the top of the work tree");
+>
+>  (3) set prefix to NULL;
 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  On Thu, Dec 06, 2007 at 10:15:05AM +0700, Nguyen Thai Ngoc Duy wrote:
->  > On Dec 6, 2007 2:32 AM, Junio C Hamano <gitster@pobox.com> wrote:
->  > > This is wrong, isn't it?  $path may point at the freshly built but not
->  > > installed git executable, but it reports --exec-path the location that
->  > > git-foo and friends are to be _eventually_ installed, not the location
->  > > they are sitting after built, being tested, waiting to be installed.
->  > >
->  > Yes, forgot to mention you must do "make install" first :)
->  > 
-> 
->  Perhaps a check to remind people to 'make install' like this?
+(1) is fine by me, even if it goes up to find a gitdir. But (3), no,
+prefix should be set as relative path from worktree top directory to
+user current directory, not NULL.
 
-Well, the whole point of "make test" is to be sure that it works before 
-installing it.
+> ...
+> While I still think the combination is simply crazy and does not make
+> any sense, if enough users on the list agrees that it makes sense, I
+> wouldn't mind setup() did (1) to (3) mentioned above.  The alternative
+> is simply to declare GIT_WOR+1 on whatever way that makes worktree less complicated. so your alternative ++K_TREE without GIT_DIR is a nonsense and
+> either error error out or ignore GIT_WORK_TREE, which might be easier to
+> explain to people.
 
-How about something completely different?
-
--- snipsnap --
-
- t/test-lib.sh |   13 ++++++++++++-
- 1 files changed, 12 insertions(+), 1 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 90b6844..ee87b83 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -296,7 +296,18 @@ test_done () {
- 
- # Test the binaries we have just built.  The tests are kept in
- # t/ subdirectory and are run in trash subdirectory.
--PATH=$(pwd)/..:$PATH
-+
-+# Test libexec, while we are at it
-+
-+test -d test-bin || mkdir test-bin || error "t/test-bin/ could not be created"
-+for file in ../git ../git-sh-setup ../test-*
-+do
-+	target=test-bin/"$(basename "$filename")"
-+	test -x "$file" && test ! -x "$target" &&
-+		ln -s ../"$file" test-bin/
-+done
-+
-+PATH=$(pwd)/test-bin:$PATH
- GIT_EXEC_PATH=$(pwd)/..
- GIT_TEMPLATE_DIR=$(pwd)/../templates/blt
- GIT_CONFIG=.git/config
----1463811741-1755104978-1196954611=:27959--
+I don't use either way you mentioned. So no comment here. But again,
+no (3) please.
+-- 
+Duy
