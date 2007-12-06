@@ -1,73 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: When a merge turns into a conflict
-Date: Wed, 05 Dec 2007 21:51:59 -0800
-Message-ID: <7v7ijsid4w.fsf@gitster.siamese.dyndns.org>
-References: <pan.2007.12.06.04.49.25@progsoc.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4] Allow update hooks to update refs on their own.
+Date: Thu, 6 Dec 2007 00:57:23 -0500
+Message-ID: <20071206055723.GB23309@coredump.intra.peff.net>
+References: <7vr6i8sfsa.fsf@gitster.siamese.dyndns.org> <20071202212224.GA22117@midwinter.com> <20071203021333.GC8322@coredump.intra.peff.net> <7vlk8csetl.fsf@gitster.siamese.dyndns.org> <5920F34B-A94B-4C24-A95B-D35F35A4F0C0@midwinter.com> <7vhciwn5rl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Anand Kumria <wildfire@progsoc.org>
-X-From: git-owner@vger.kernel.org Thu Dec 06 06:52:31 2007
+Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 06 06:57:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J09eu-0006aA-6e
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 06:52:28 +0100
+	id 1J09k3-0007xN-30
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 06:57:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752195AbXLFFwG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 00:52:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752011AbXLFFwG
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 00:52:06 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:58165 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751578AbXLFFwF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 00:52:05 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 204F72EF;
-	Thu,  6 Dec 2007 00:52:25 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id A242D98747;
-	Thu,  6 Dec 2007 00:52:22 -0500 (EST)
-In-Reply-To: <pan.2007.12.06.04.49.25@progsoc.org> (Anand Kumria's message of
-	"Thu, 6 Dec 2007 04:49:27 +0000 (UTC)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751816AbXLFF51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 00:57:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751733AbXLFF50
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 00:57:26 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2097 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751377AbXLFF50 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 00:57:26 -0500
+Received: (qmail 28132 invoked by uid 111); 6 Dec 2007 05:57:24 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 06 Dec 2007 00:57:24 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Dec 2007 00:57:23 -0500
+Content-Disposition: inline
+In-Reply-To: <7vhciwn5rl.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67248>
 
-Anand Kumria <wildfire@progsoc.org> writes:
+On Wed, Dec 05, 2007 at 02:19:58PM -0800, Junio C Hamano wrote:
 
-> However when my colleague came to merge my patches in; git complained 
-> that the file had conflict because:
->
-> 	a. it found the ========= AsciiDoc header line
+> > what rewriting was done by the server, and if another push happened in
+> > the meantime, the client will have to basically guess about which
+> > commits correspond to the ones it pushed.
+> 
+> Ok, but the output from fetch is meant to be human readable and we do
+> not promise parsability, so if we go this route (which I think you made
+> a sensible argument for) we would need a hook on the pushing end to act
+> on this (perhaps record the correspondence of pushed and rewritten sha1
+> somewhere for the hook's own use).
 
-Perhaps .git/hooks/pre-commit hook is enabled for the person who needed
-to merge, fix conflicts and make a commit.
+I am not clear on what you mean. Are you saying that the send-pack code
+should _not_ recognize the "ok, but I rewrote your commit" status?
+Because that is how we will avoid updating the tracking ref, which I
+think is a good goal.
 
-We ship the hook _disabled_ by default, but that hook inspects the
-change (relative to the HEAD, which means "difference this merge brings
-in relative to the state before I started the merge") and complains if
-it finds lines that:
+Or are you saying "it's ok to understand the 'ok, but...' response and
+not update the tracking ref, but pulling the new hash from the message
+is up to a hook on the pushing side"? Which I think it reasonable.
 
- * have trailing whitespaces,
+Or alternatively, "there should be a hook on the pushing side which is
+allowed to set the ref status to 'ok, but don't bother updating the
+tracking ref' or 'ok, but here is the actual thing to put in the
+tracking ref'"? Which is also fine by me.
 
- * have a SP immediately before HT in the indentation, or
-
- * matches 7 or more <, >, or = at the beginning (i.e. <<<<<<<, =======,
-   or >>>>>>>, typically are conflict markers).
-
-And the last heuristics does trigger on an AsciiDoc text.
-
-The easiest (and standard) workaround in such a case is, after
-inspecting the change yourself to make sure you are bitten by false
-positive, to commit with --no-verify option:
-
-	git commit --no-verify
-
-This bypasses the pre-commit hook.
+-Peff
