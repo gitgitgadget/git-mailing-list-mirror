@@ -1,64 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (topics)
-Date: Wed, 5 Dec 2007 23:43:00 -0500
-Message-ID: <20071206044300.GD5499@coredump.intra.peff.net>
-References: <7vwsso3poo.fsf@gitster.siamese.dyndns.org> <7vfxz89x9q.fsf@gitster.siamese.dyndns.org> <7vabpctx3b.fsf@gitster.siamese.dyndns.org> <7vsl30eyuk.fsf@gitster.siamese.dyndns.org> <7vve7tuz3a.fsf@gitster.siamese.dyndns.org> <7v4pfakr4j.fsf@gitster.siamese.dyndns.org> <7vzlwv6sxr.fsf@gitster.siamese.dyndns.org> <7vy7ca6ea9.fsf@gitster.siamese.dyndns.org> <7vzlwps8zf.fsf@gitster.siamese.dyndns.org> <fj60uc$er$2@ger.gmane.org>
+From: David Miller <davem@davemloft.net>
+Subject: Re: Git and GCC
+Date: Wed, 05 Dec 2007 20:48:48 -0800 (PST)
+Message-ID: <20071205.204848.227521641.davem@davemloft.net>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>
+	<20071205.202047.58135920.davem@davemloft.net>
+	<4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 06 05:43:31 2007
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: ismail@pardus.org.tr, gcc@gcc.gnu.org, git@vger.kernel.org
+To: dberlin@dberlin.org
+X-From: git-owner@vger.kernel.org Thu Dec 06 05:49:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J08a9-0007TY-Qh
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 05:43:30 +0100
+	id 1J08fe-0000MI-2v
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 05:49:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754077AbXLFEnF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Dec 2007 23:43:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754068AbXLFEnE
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 23:43:04 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3403 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754000AbXLFEnD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 23:43:03 -0500
-Received: (qmail 27516 invoked by uid 111); 6 Dec 2007 04:43:01 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 05 Dec 2007 23:43:01 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Dec 2007 23:43:00 -0500
-Content-Disposition: inline
-In-Reply-To: <fj60uc$er$2@ger.gmane.org>
+	id S1752419AbXLFEst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 23:48:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752436AbXLFEst
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 23:48:49 -0500
+Received: from 74-93-104-97-Washington.hfc.comcastbusiness.net ([74.93.104.97]:47820
+	"EHLO sunset.davemloft.net" rhost-flags-OK-FAIL-OK-OK)
+	by vger.kernel.org with ESMTP id S1752242AbXLFEst (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Dec 2007 23:48:49 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by sunset.davemloft.net (Postfix) with ESMTP id 56C8FC8C15C;
+	Wed,  5 Dec 2007 20:48:48 -0800 (PST)
+In-Reply-To: <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>
+X-Mailer: Mew version 5.2 on Emacs 22.1 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67234>
 
-On Wed, Dec 05, 2007 at 12:10:04PM +0100, Jakub Narebski wrote:
+From: "Daniel Berlin" <dberlin@dberlin.org>
+Date: Wed, 5 Dec 2007 23:32:52 -0500
 
-> Junio C Hamano wrote:
->=20
-> > * jk/builtin-alias (Fri Nov 30 11:22:58 2007 -0500) 1 commit
-> > =A0+ Support builtin aliases
-> >=20
-> > Cute hack. =A0I'd like to have "git less" here.
->=20
-> I guess that "git whatchanged" can be implemented also as builtin ali=
-as.
+> On 12/5/07, David Miller <davem@davemloft.net> wrote:
+> > From: "Daniel Berlin" <dberlin@dberlin.org>
+> > Date: Wed, 5 Dec 2007 22:47:01 -0500
+> >
+> > > The size is clearly not just svn data, it's in the git pack itself.
+> >
+> > And other users have shown much smaller metadata from a GIT import,
+> > and yes those are including all of the repository history and branches
+> > not just the trunk.
+> I followed the instructions in the tutorials.
+> I followed the instructions given to by people who created these.
+> I came up with a 1.5 gig pack file.
+> You want to help, or you want to argue with me.
 
-If you are thinking of
+Several people replied in this thread showing what options can lead to
+smaller pack files.
 
-  [alias]
-    whatchanged =3D log --raw --full-history
-
-it does not quite work. git-log unconditionally sets --always, and ther=
-e
-is no command line option to turn it off. In most cases you could get a=
-n
-approximation by using --no-merges, but it would still show commits tha=
-t
-actually have no tree change (there are 2 in git.git).
-
--Peff
+They also listed what the GIT limitations are that would effect the
+kind of work you are doing, which seemed to mostly deal with the high
+space cost of branching and tags when converting to/from SVN repos.
