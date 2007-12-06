@@ -1,87 +1,137 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] gc --aggressive: make it really aggressive
-Date: Thu, 06 Dec 2007 15:22:54 +0100
-Message-ID: <20071206142254.GD5959@artemis.madism.org>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> <20071205.202047.58135920.davem@davemloft.net> <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com> <20071205.204848.227521641.davem@davemloft.net> <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org> <Pine.LNX.4.64.0712061201580.27959@racer.site>
+From: Baz <brian.ewins@gmail.com>
+Subject: Re: [PATCH] hg-to-git: do not include the branch name as the first line of commit msg
+Date: Thu, 6 Dec 2007 14:36:43 +0000
+Message-ID: <2faad3050712060636i5eab2169vc4588c075fcd73f1@mail.gmail.com>
+References: <4751A036.1080209@gmail.com>
+	 <7vsl2jcl32.fsf@gitster.siamese.dyndns.org>
+	 <1196949043.5388.18.camel@galileo>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="NklN7DEeGtkPCoo3";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Daniel Berlin <dberlin@dberlin.org>,
-	David Miller <davem@davemloft.net>, ismail@pardus.org.tr,
-	gcc@gcc.gnu.org, git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Dec 06 15:23:31 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Mark Drago" <markdrago@gmail.com>, git@vger.kernel.org
+To: "Stelian Pop" <stelian@popies.net>
+X-From: git-owner@vger.kernel.org Thu Dec 06 15:37:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0HdS-0004jR-Hl
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 15:23:30 +0100
+	id 1J0Hqg-0001fL-Qe
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 15:37:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753144AbXLFOXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 09:23:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752897AbXLFOXG
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 09:23:06 -0500
-Received: from pan.madism.org ([88.191.52.104]:50389 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752779AbXLFOXF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 09:23:05 -0500
-Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 24E502E47A;
-	Thu,  6 Dec 2007 15:22:55 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id F10EBFEED9; Thu,  6 Dec 2007 15:22:54 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Daniel Berlin <dberlin@dberlin.org>,
-	David Miller <davem@davemloft.net>, ismail@pardus.org.tr,
-	gcc@gcc.gnu.org, git@vger.kernel.org, gitster@pobox.com
+	id S1751768AbXLFOgq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Dec 2007 09:36:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751750AbXLFOgq
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 09:36:46 -0500
+Received: from wr-out-0506.google.com ([64.233.184.229]:40503 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751578AbXLFOgp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Dec 2007 09:36:45 -0500
+Received: by wr-out-0506.google.com with SMTP id c49so196778wra
+        for <git@vger.kernel.org>; Thu, 06 Dec 2007 06:36:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=ghyFkCVagnLFy1Ju0HSPDPGiBxyG+V0THltC/l5DwJk=;
+        b=OO4NHd9qFIRBMTt+y7GyjY8sa8ZqFz58/pWqVkDC4/iafA4dp65zhYucFjmkPmHxYwUPPpca83TCFybvGQG6r1nAVW4CvdDUY4To+RA/NgASLkClwTagJyGCe2kFLyjH8gVYC40Ur8z6ieiQWjnZorwS5oYsLKlgtPg3hXCVl98=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=cFXU+oIscZ7F2ABpaC7D3FFPYG1GGyJbQ98pqfw0U842TiQgBM3OejOCSk0bmR8vd74GSfd0iNN1ItWCF8ttlh8IHSuspYPlSS3JPUve/IqiovrBXCREIm6oJCFK6+q1uLcyyqr1RuW1jNbpWmN2lKrN16842BWBw2x9KRbm7GE=
+Received: by 10.142.12.14 with SMTP id 14mr1612007wfl.1196951804022;
+        Thu, 06 Dec 2007 06:36:44 -0800 (PST)
+Received: by 10.142.157.1 with HTTP; Thu, 6 Dec 2007 06:36:43 -0800 (PST)
+In-Reply-To: <1196949043.5388.18.camel@galileo>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0712061201580.27959@racer.site>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67291>
 
+On Dec 6, 2007 1:50 PM, Stelian Pop <stelian@popies.net> wrote:
+>
+> Le lundi 03 d=E9cembre 2007 =E0 17:20 -0800, Junio C Hamano a =E9crit=
+ :
+>
+> > >      (fdcomment, filecomment) =3D tempfile.mkstemp()
+> > > -    csetcomment =3D os.popen('hg log -r %d -v | grep -v ^changes=
+et: | grep -v ^parent: | grep -v ^user: | grep -v ^date | grep -v ^file=
+s: | grep -v ^description: | grep -v ^tag:' % cset).read().strip()
+> > > +    csetcomment =3D os.popen('hg log -r %d -v | grep -v ^changes=
+et: | grep -v ^parent: | grep -v ^user: | grep -v ^date | grep -v ^file=
+s: | grep -v ^description: | grep -v ^tag: | grep -v ^branch:' % cset).=
+read().strip()
+> > >      os.write(fdcomment, csetcomment)
+> > >      os.close(fdcomment)
+> >
+> > Isn't this one of the ugliest lines in the whole git.git project, I=
+ have
+> > to wonder?
+>
+> It probably is, and I take full resposibility for the original
+> version :). Incremental development woes.
+>
+> > I also wonder missing colon after "date" is a bug from the original
+> > version, and assuming that it is,
+>
+> It is indeed a bug.
+>
+> > how about doing something less error
+> > prone like this?
+> >
+> >         def included(line):
+> >             keywords =3D ('changeset', 'parent', 'user', 'date', 'f=
+iles',
+> >                         'description', 'tag', 'branch')
+> >             for kw in keywords:
+> >                 if line.startswith(kw + ':'):
+> >                     return 0
+> >             return 1
+> >
+> >         hglog =3D os.popen('hg log -r %d -v' % cset).read();
+> >         csetcomment =3D '\n'.join(filter(included, hglog.split('\n'=
+))).strip()
+>
+> Seems great to me.
+>
+> > If you are excluding _all_ of the <word>: header lines, the "includ=
+ed"
+> > function may have to become cleverer but much simpler by doing some=
+thing
+> > like:
+> >
+> >       import re
+> >       header_re =3D re.compile(r'^\w+:')
+> >       def included(line):
+> >               return not header_re.match(line)
+>
+> I'm afraid something like this will be much more prone to false
+> positives.
+>
+> Maybe an even better alternative, given the way mercurial outputs the
+> changeset information, is to search for the '^description:' tag and t=
+ake
+> all the text that follows.
 
---NklN7DEeGtkPCoo3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Would it not be better to use hg log --template to output only the
+information needed?
+eg
 
-On Thu, Dec 06, 2007 at 12:03:38PM +0000, Johannes Schindelin wrote:
->=20
-> The default was not to change the window or depth at all.  As suggested
-> by Jon Smirl, Linus Torvalds and others, default to
->=20
-> 	--window=3D250 --depth=3D250
+date =3D os.popen('hg log -r %d --template "{date|isodate}"' %
+cset).read().strip()
+=2E.. or even just create a template to pull in everything needed in a
+single popen.
 
-  well, this will explode on many quite reasonnably sized systems. This
-should also use a memory-limit that could be auto-guessed from the
-system total physical memory (50% of the actual memory could be a good
-idea e.g.).
+-Baz
 
-  On very large repositories, using that on the e.g. linux kernel, swaps
-like hell on a machine with 1Go of ram, and almost nothing running on it
-(less than 200Mo of ram actually used)
-
---NklN7DEeGtkPCoo3
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHWAW+vGr7W6HudhwRAkAvAJ4mPfVoZkyMDmNknfHPPbI1l4HatACgiD85
-nj/U9KGR/mYxLCUOJnTg7yQ=
-=B6Ea
------END PGP SIGNATURE-----
-
---NklN7DEeGtkPCoo3--
+>
+> --
+> Stelian Pop <stelian@popies.net>
+>
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
