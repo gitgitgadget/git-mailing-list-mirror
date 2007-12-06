@@ -1,83 +1,77 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: how to create v2 patch
-Date: Thu, 06 Dec 2007 23:03:11 +0100
-Message-ID: <4758719F.1080408@op5.se>
-References: <47515693.9070405@imap.cc> <47515EF3.8010507@obry.net> <20071201134321.GA10997@glandium.org> <475855D6.201@imap.cc>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Git and GCC
+Date: Thu, 06 Dec 2007 17:08:03 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0712061645120.555@xanadu.home>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>  <1196918132.10408.85.camel@brick>  <4aca3dc20712052117j3ef5cf99y848d4962ae8ddf33@mail.gmail.com>  <9e4733910712052247x116cabb4q48ebafffb93f7e03@mail.gmail.com>  <20071206071503.GA19504@coredump.intra.peff.net>  <alpine.LFD.0.99999.0712060915590.555@xanadu.home>  <20071206173946.GA10845@sigill.intra.peff.net>  <alpine.LFD.0.9999.0712061030560.13796@woody.linux-foundation.org>  <9e4733910712061055p353775d8wd0321bc9c81297b7@mail.gmail.com>  <alpine.LFD.0.99999.0712061403000.555@xanadu.home>  <9e4733910712061339n3aef023r22e5b73aac120c8a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mike Hommey <mh@glandium.org>, Pascal Obry <pascal@obry.net>,
-	git@vger.kernel.org
-To: Tilman Schmidt <tilman@imap.cc>
-X-From: git-owner@vger.kernel.org Thu Dec 06 23:03:50 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0Ool-0002mE-2P
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 23:03:39 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752509AbXLFWDQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Dec 2007 17:03:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752351AbXLFWDQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 17:03:16 -0500
-Received: from mail.op5.se ([193.201.96.20]:51648 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751889AbXLFWDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 17:03:15 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id C302B1F08003;
-	Thu,  6 Dec 2007 23:03:13 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id iHCleaPQVrYQ; Thu,  6 Dec 2007 23:03:13 +0100 (CET)
-Received: from nox.op5.se (unknown [172.27.78.26])
-	by mail.op5.se (Postfix) with ESMTP id 91C981F08002;
-	Thu,  6 Dec 2007 23:03:12 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <475855D6.201@imap.cc>
-Sender: git-owner@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, Jeff King <peff@peff.net>,  Daniel Berlin <dberlin@dberlin.org>,  Harvey Harrison <harvey.harrison@gmail.com>,  David Miller <davem@davemloft.net>, ismail@pardus.org.tr, gcc@gcc.gnu.org,  git@vger.kernel.org
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: gcc-return-142773-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 23:08:42 2007
+Return-path: <gcc-return-142773-gcc=m.gmane.org@gcc.gnu.org>
+Envelope-to: gcc@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1J0OtV-00051w-Lw
+	for gcc@gmane.org; Thu, 06 Dec 2007 23:08:34 +0100
+Received: (qmail 6607 invoked by alias); 6 Dec 2007 22:08:15 -0000
+Received: (qmail 6594 invoked by uid 22791); 6 Dec 2007 22:08:14 -0000
+X-Spam-Check-By: sourceware.org
+Received: from relais.videotron.ca (HELO relais.videotron.ca) (24.201.245.36)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 22:08:06 +0000
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca  (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))  with ESMTP id <0JSN002DQETGP380@VL-MO-MR004.ip.videotron.ca> for  gcc@gcc.gnu.org; Thu, 06 Dec 2007 17:08:04 -0500 (EST)
+In-reply-to: <9e4733910712061339n3aef023r22e5b73aac120c8a@mail.gmail.com>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67343>
+List-Id: <gcc.gcc.gnu.org>
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Delivered-To: mailing list gcc@gcc.gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67344>
 
-Tilman Schmidt wrote:
-> Am 01.12.2007 14:43 schrieb Mike Hommey:
->> On Sat, Dec 01, 2007 at 02:17:39PM +0100, Pascal Obry wrote:
->>> Tilman Schmidt a =E9crit :
->>>> I have produced a patch, submitted it to LKML, received a few
->>>> comments, committed appropriate changes to my local git tree,
->>>> and now want to submit a revised patch. How do I do that?
->>>> If I just run git-format-patch again, it produces my original
->>>> patch plus a second one containing my updates, but what I need
->>>> is a single new patch replacing the first one.
->>> Can't you merge both of your changes in your local repository? I wo=
-uld
->>> do that with an interactive rebase.
->> Or just git commit --amend when committing.
->=20
-> Hmm. But wouldn't each of these approaches lead to my original
-> commit being removed from my git repository? And isn't removing
-> commits that have already been published strongly discouraged?
->=20
+On Thu, 6 Dec 2007, Jon Smirl wrote:
 
-The term "published" means different things for different projects.
-=46or the Linux kernel, "published" is when your commit ends up in a
-repository that Linus pulls from.
+> On 12/6/07, Nicolas Pitre <nico@cam.org> wrote:
+> > > When I lasted looked at the code, the problem was in evenly dividing
+> > > the work. I was using a four core machine and most of the time one
+> > > core would end up with 3-5x the work of the lightest loaded core.
+> > > Setting pack.threads up to 20 fixed the problem. With a high number of
+> > > threads I was able to get a 4hr pack to finished in something like
+> > > 1:15.
+> >
+> > But as far as I know you didn't try my latest incarnation which has been
+> > available in Git's master branch for a few months already.
+> 
+> I've deleted all my giant packs. Using the kernel pack:
+> 4GB Q6600
+> 
+> Using the current thread pack code I get these results.
+> 
+> The interesting case is the last one. I set it to 15 threads and
+> monitored with 'top'.
+> For 0-60% compression I was at 300% CPU, 60-74% was 200% CPU and
+> 74-100% was 100% CPU. It never used all for cores. The only other
+> things running were top and my desktop. This is the same load
+> balancing problem I observed earlier.
 
-So long as you're getting suggestions to fix up your patch, it's
-safe to assume it hasn't been accepted into one of those repos, and
-you can safely --amend the offending commit(s).
+Well, that's possible with a window 25 times larger than the default.
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+The load balancing is solved with a master thread serving relatively 
+small object list segments to any work thread that finished with its 
+previous segment.  But the size for those segments is currently fixed to 
+window * 1000 which is way too large when window == 250.
+
+I have to find a way to auto-tune that segment size somehow.
+
+But with the default window size there should not be any such noticeable 
+load balancing problem.
+
+Note that threading only happens in the compression phase.  The count 
+and write phase are hardly paralleled.
+
+
+Nicolas
