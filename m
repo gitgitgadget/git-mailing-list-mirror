@@ -1,77 +1,71 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Git and GCC
-Date: Thu, 06 Dec 2007 17:08:03 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0712061645120.555@xanadu.home>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>  <1196918132.10408.85.camel@brick>  <4aca3dc20712052117j3ef5cf99y848d4962ae8ddf33@mail.gmail.com>  <9e4733910712052247x116cabb4q48ebafffb93f7e03@mail.gmail.com>  <20071206071503.GA19504@coredump.intra.peff.net>  <alpine.LFD.0.99999.0712060915590.555@xanadu.home>  <20071206173946.GA10845@sigill.intra.peff.net>  <alpine.LFD.0.9999.0712061030560.13796@woody.linux-foundation.org>  <9e4733910712061055p353775d8wd0321bc9c81297b7@mail.gmail.com>  <alpine.LFD.0.99999.0712061403000.555@xanadu.home>  <9e4733910712061339n3aef023r22e5b73aac120c8a@mail.gmail.com>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: XML parsing error from gitweb at freedesktop.org
+Date: Thu, 6 Dec 2007 23:11:32 +0100
+Message-ID: <8c5c35580712061411k7a40a08el35f31c43add25cb3@mail.gmail.com>
+References: <799406d60712061334q33d2dba5r5496ba21069a4547@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, Jeff King <peff@peff.net>,  Daniel Berlin <dberlin@dberlin.org>,  Harvey Harrison <harvey.harrison@gmail.com>,  David Miller <davem@davemloft.net>, ismail@pardus.org.tr, gcc@gcc.gnu.org,  git@vger.kernel.org
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: gcc-return-142773-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 23:08:42 2007
-Return-path: <gcc-return-142773-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J0OtV-00051w-Lw
-	for gcc@gmane.org; Thu, 06 Dec 2007 23:08:34 +0100
-Received: (qmail 6607 invoked by alias); 6 Dec 2007 22:08:15 -0000
-Received: (qmail 6594 invoked by uid 22791); 6 Dec 2007 22:08:14 -0000
-X-Spam-Check-By: sourceware.org
-Received: from relais.videotron.ca (HELO relais.videotron.ca) (24.201.245.36)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 22:08:06 +0000
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca  (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))  with ESMTP id <0JSN002DQETGP380@VL-MO-MR004.ip.videotron.ca> for  gcc@gcc.gnu.org; Thu, 06 Dec 2007 17:08:04 -0500 (EST)
-In-reply-to: <9e4733910712061339n3aef023r22e5b73aac120c8a@mail.gmail.com>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Adam Mercer" <ramercer@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 06 23:11:59 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J0Owo-0006mg-7T
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 23:11:58 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752402AbXLFWLh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 17:11:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751913AbXLFWLg
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 17:11:36 -0500
+Received: from wa-out-1112.google.com ([209.85.146.178]:6843 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752015AbXLFWLf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 17:11:35 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so906308wah
+        for <git@vger.kernel.org>; Thu, 06 Dec 2007 14:11:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=rZF5Nvoht3CGjg+AYMtliT7VfyB3KeoFdQ4tkOTjP3A=;
+        b=Qs2T9raMHmRV1u452Hx9kJ3I+h8TbSI9CA3Ers9GmeFEiVpEJlQ1i0uoslbCY51NJEFNx00VseUrdLDCJOMtm77z5ob5DXd5PUa9DY8cYcoXoQ57NazoM/FVPmFwFBE41KbljmFYWNfWfnTmsaY8eUizpXPp4IDy8JuoQ+uzAwk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JyaFAwrUvz1n6I+YZcZnEO49N77NVGDb3qcFAbqqdE5yv47DmvfihdtZmrZPo69apmk6/TpMQcNAu7ZGySGvhHz5w9RcicIoIfulUSBBomdmKjK7Jk8lAVEcd6lCcCW1AVe5eCWPAOlmP/ZzQxDm6YsgLvFrwwcgb0PkM3vUZd4=
+Received: by 10.115.79.1 with SMTP id g1mr2244315wal.1196979092821;
+        Thu, 06 Dec 2007 14:11:32 -0800 (PST)
+Received: by 10.114.234.1 with HTTP; Thu, 6 Dec 2007 14:11:32 -0800 (PST)
+In-Reply-To: <799406d60712061334q33d2dba5r5496ba21069a4547@mail.gmail.com>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67344>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67345>
 
-On Thu, 6 Dec 2007, Jon Smirl wrote:
+On Dec 6, 2007 10:34 PM, Adam Mercer <ramercer@gmail.com> wrote:
+> as cgit displays the commit OK
+>
+> <http://cgit.freedesktop.org/xorg/xserver/commit/?h=xorg-server-1.2-apple&id=48e6a75fbdd0fee86e364f02ace83f20b312a2b2>
+>
+> leads me to think that the problem lies in gitweb.  Could this be a
+> problem with gitweb?
+>
 
-> On 12/6/07, Nicolas Pitre <nico@cam.org> wrote:
-> > > When I lasted looked at the code, the problem was in evenly dividing
-> > > the work. I was using a four core machine and most of the time one
-> > > core would end up with 3-5x the work of the lightest loaded core.
-> > > Setting pack.threads up to 20 fixed the problem. With a high number of
-> > > threads I was able to get a 4hr pack to finished in something like
-> > > 1:15.
-> >
-> > But as far as I know you didn't try my latest incarnation which has been
-> > available in Git's master branch for a few months already.
-> 
-> I've deleted all my giant packs. Using the kernel pack:
-> 4GB Q6600
-> 
-> Using the current thread pack code I get these results.
-> 
-> The interesting case is the last one. I set it to 15 threads and
-> monitored with 'top'.
-> For 0-60% compression I was at 300% CPU, 60-74% was 200% CPU and
-> 74-100% was 100% CPU. It never used all for cores. The only other
-> things running were top and my desktop. This is the same load
-> balancing problem I observed earlier.
+Actually, it's a problem in both cgit and gitweb, but you need to look
+a bit harder to find the error in cgit. It seems that gitweb on
+freedesktop.org doesn't detect a file rename (due to diff.renamelimit
+maybe?), so it shows the full source of the offending files, while in
+cgit you'll need to go from the diff to either the old or the new
+sourcefile to get the same error:
 
-Well, that's possible with a window 25 times larger than the default.
+http://cgit.freedesktop.org/xorg/xserver/tree/hw/darwin/quartz/applewmExt.h?h=xorg-server-1.2-apple&id=141f69dc3d8d6e7d8ff65607f43700ac11243041
+http://cgit.freedesktop.org/xorg/xserver/diff/hw/xquartz/applewm.c?h=xorg-server-1.2-apple&id=48e6a75fbdd0fee86e364f02ace83f20b312a2b2
 
-The load balancing is solved with a master thread serving relatively 
-small object list segments to any work thread that finished with its 
-previous segment.  But the size for those segments is currently fixed to 
-window * 1000 which is way too large when window == 250.
+The problem is a number of unencoded ascii char 12.
 
-I have to find a way to auto-tune that segment size somehow.
-
-But with the default window size there should not be any such noticeable 
-load balancing problem.
-
-Note that threading only happens in the compression phase.  The count 
-and write phase are hardly paralleled.
-
-
-Nicolas
+--
+larsh
