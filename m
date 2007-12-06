@@ -1,85 +1,95 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git guidance
-Date: Thu, 6 Dec 2007 21:22:18 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0712062119090.21625@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com>
- <200712072035.47359.a1426z@gawab.com> <47583E57.9050208@op5.se>
- <200712072155.04643.a1426z@gawab.com>
+From: Tilman Schmidt <tilman@imap.cc>
+Subject: Re: how to create v2 patch
+Date: Thu, 06 Dec 2007 21:04:38 +0100
+Organization: me - organized??
+Message-ID: <475855D6.201@imap.cc>
+References: <47515693.9070405@imap.cc> <47515EF3.8010507@obry.net> <20071201134321.GA10997@glandium.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>, Phillip Susi <psusi@cfl.rr.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Jing Xue <jingxue@digizenstudio.com>,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org
-To: Al Boldi <a1426z@gawab.com>
-X-From: git-owner@vger.kernel.org Thu Dec 06 21:22:51 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig179FE9D856E74472C61D4F85"
+Cc: Pascal Obry <pascal@obry.net>, git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Dec 06 21:31:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0NF7-0001z1-7I
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 21:22:45 +0100
+	id 1J0NNb-0005ZV-Uh
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 21:31:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752170AbXLFUWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 15:22:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752106AbXLFUWX
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 15:22:23 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36175 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751490AbXLFUWW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 15:22:22 -0500
-Received: (qmail invoked by alias); 06 Dec 2007 20:22:20 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp038) with SMTP; 06 Dec 2007 21:22:20 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+cyhoPC9ec6nuRUbjMWVClQSSTI5NHK27IfebMnJ
-	X9itHd8JzOmRnt
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <200712072155.04643.a1426z@gawab.com>
-X-Y-GMX-Trusted: 0
+	id S1752248AbXLFUbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 15:31:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752267AbXLFUbI
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 15:31:08 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:56170 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751592AbXLFUbH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Dec 2007 15:31:07 -0500
+X-Greylist: delayed 1670 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Dec 2007 15:31:07 EST
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id BA1F568D56;
+	Thu,  6 Dec 2007 15:03:16 -0500 (EST)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Thu, 06 Dec 2007 15:03:16 -0500
+X-Sasl-enc: SyWnSv7isShbUEcIBA87rTL5RBPJljlZRGKoI4eLtTqv 1196971396
+Received: from [192.168.59.127] (pD9E873FE.dip.t-dialin.net [217.232.115.254])
+	by mail.messagingengine.com (Postfix) with ESMTP id CD7A61147D;
+	Thu,  6 Dec 2007 15:03:15 -0500 (EST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; de-AT; rv:1.8.1.4) Gecko/20070509 SeaMonkey/1.1.2 Mnenhy/0.7.5.666
+In-Reply-To: <20071201134321.GA10997@glandium.org>
+X-Enigmail-Version: 0.95.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67335>
 
-Hi,
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig179FE9D856E74472C61D4F85
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, 7 Dec 2007, Al Boldi wrote:
+Am 01.12.2007 14:43 schrieb Mike Hommey:
+> On Sat, Dec 01, 2007 at 02:17:39PM +0100, Pascal Obry wrote:
+>> Tilman Schmidt a =E9crit :
+>>> I have produced a patch, submitted it to LKML, received a few
+>>> comments, committed appropriate changes to my local git tree,
+>>> and now want to submit a revised patch. How do I do that?
+>>> If I just run git-format-patch again, it produces my original
+>>> patch plus a second one containing my updates, but what I need
+>>> is a single new patch replacing the first one.
+>> Can't you merge both of your changes in your local repository? I would=
 
-> Andreas Ericsson wrote:
-> > Al Boldi wrote:
-> >
-> > > By pulling the sources into a git-client manager mounted on some 
-> > > dir, it should be possible to let the developer work 
-> > > naturally/transparently in a readable/writeable manner, and only 
-> > > require his input when reverting locally or committing to the 
-> > > server/repository.
-> >
-> > How is that different from what every SCM, including git, is doing 
-> > today? The user needs to tell the scm when it's time to take a 
-> > snapshot of the current state. Git is distributed though, so 
-> > committing is usually not the same as publishing. Is that lack of a 
-> > single command to commit and publish what's nagging you? If it's not, 
-> > I completely fail to see what you're getting at, unless you've only 
-> > ever looked at repositories without a worktree attached, or you think 
-> > that git should work like an editor's "undo" functionality, which 
-> > would be quite insane.
-> 
-> You need to re-read the thread.
+>> do that with an interactive rebase.
+>=20
+> Or just git commit --amend when committing.
 
-I don't know why you write that, and then say thanks.  Clearly, what you 
-wrote originally, and what Andreas pointed out, were quite obvious 
-indicators that git already does what you suggest.
+Hmm. But wouldn't each of these approaches lead to my original
+commit being removed from my git repository? And isn't removing
+commits that have already been published strongly discouraged?
 
-You _do_ work "transparently" (whatever you understand by that overused 
-term) in the working directory, unimpeded by git.
+Thx
+T.
 
-And whenever it is time to revert or commit, you cry for help, invoking 
-git.
+--=20
+Tilman Schmidt                          E-Mail: tilman@imap.cc
+Bonn, Germany
+Yes, I have searched Google!
 
-So either you succeeded in making yourself misunderstood, or Andreas had 
-quite the obvious and correct comment for you.
 
-Not that diffcult,
-Dscho
+--------------enig179FE9D856E74472C61D4F85
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3rc1 (MingW32)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFHWFXWMdB4Whm86/kRAmq7AJ9U90DoombNQNgGsTlNofGInbIj2QCfQVyu
+4HNfeTEkxa0+IZOXaMM4fzQ=
+=b2X4
+-----END PGP SIGNATURE-----
+
+--------------enig179FE9D856E74472C61D4F85--
