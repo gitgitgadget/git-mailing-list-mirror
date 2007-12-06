@@ -1,29 +1,29 @@
-From: Harvey Harrison <harvey.harrison@gmail.com>
+From: "Daniel Berlin" <dberlin@dberlin.org>
 Subject: Re: Git and GCC
-Date: Wed, 05 Dec 2007 21:04:47 -0800
-Message-ID: <1196917487.10408.82.camel@brick>
-References: <4aca3dc20712051108s216d3331t8061ef45b9aa324a@mail.gmail.com> 	 <20071205.182815.249974508.davem@davemloft.net> 	 <4aca3dc20712051841o71ab773ft6dd0714ebc355dd5@mail.gmail.com> 	 <20071205.185203.262588544.davem@davemloft.net> 	 <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 	 <1196915112.10408.66.camel@brick> 	 <alpine.LFD.0.9999.0712052033570.13796@woody.linux-foundation.org>
+Date: Thu, 6 Dec 2007 00:11:05 -0500
+Message-ID: <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 	 <20071205.202047.58135920.davem@davemloft.net> 	 <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com> 	 <20071205.204848.227521641.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Daniel Berlin <dberlin@dberlin.org>, David Miller <davem@davemloft.net>,  ismail@pardus.org.tr, gcc@gcc.gnu.org, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: gcc-return-142721-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 06:06:06 2007
-Return-path: <gcc-return-142721-gcc=m.gmane.org@gcc.gnu.org>
+Cc: ismail@pardus.org.tr, gcc@gcc.gnu.org, git@vger.kernel.org
+To: "David Miller" <davem@davemloft.net>
+X-From: gcc-return-142722-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 06:11:34 2007
+Return-path: <gcc-return-142722-gcc=m.gmane.org@gcc.gnu.org>
 Envelope-to: gcc@gmane.org
 Received: from sourceware.org ([209.132.176.174])
 	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J08vB-0003wZ-JW
-	for gcc@gmane.org; Thu, 06 Dec 2007 06:05:43 +0100
-Received: (qmail 3662 invoked by alias); 6 Dec 2007 05:04:54 -0000
-Received: (qmail 3647 invoked by uid 22791); 6 Dec 2007 05:04:54 -0000
+	id 1J091I-0005Wz-OP
+	for gcc@gmane.org; Thu, 06 Dec 2007 06:11:33 +0100
+Received: (qmail 14153 invoked by alias); 6 Dec 2007 05:11:13 -0000
+Received: (qmail 14143 invoked by uid 22791); 6 Dec 2007 05:11:12 -0000
 X-Spam-Check-By: sourceware.org
-Received: from rv-out-0910.google.com (HELO rv-out-0910.google.com) (209.85.198.188)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 05:04:47 +0000
-Received: by rv-out-0910.google.com with SMTP id f5so92188rvb         for <gcc@gcc.gnu.org>; Wed, 05 Dec 2007 21:04:45 -0800 (PST)
-Received: by 10.140.226.14 with SMTP id y14mr1731660rvg.1196917485507;         Wed, 05 Dec 2007 21:04:45 -0800 (PST)
-Received: from ?192.168.1.101? ( [216.19.190.48])         by mx.google.com with ESMTPS id l32sm88616rvb.2007.12.05.21.04.42         (version=TLSv1/SSLv3 cipher=RC4-MD5);         Wed, 05 Dec 2007 21:04:44 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.9999.0712052033570.13796@woody.linux-foundation.org>
-X-Mailer: Evolution 2.12.1
+Received: from wa-out-1112.google.com (HELO wa-out-1112.google.com) (209.85.146.179)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 05:11:08 +0000
+Received: by wa-out-1112.google.com with SMTP id m16so196764waf         for <gcc@gcc.gnu.org>; Wed, 05 Dec 2007 21:11:06 -0800 (PST)
+Received: by 10.142.177.7 with SMTP id z7mr1470393wfe.1196917865823;         Wed, 05 Dec 2007 21:11:05 -0800 (PST)
+Received: by 10.142.217.1 with HTTP; Wed, 5 Dec 2007 21:11:05 -0800 (PST)
+In-Reply-To: <20071205.204848.227521641.davem@davemloft.net>
+Content-Disposition: inline
 X-IsSubscribed: yes
 Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
@@ -34,33 +34,43 @@ List-Post: <mailto:gcc@gcc.gnu.org>
 List-Help: <http://gcc.gnu.org/ml/>
 Sender: gcc-owner@gcc.gnu.org
 Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67239>
 
-On Wed, 2007-12-05 at 20:54 -0800, Linus Torvalds wrote:
-> 
-> On Wed, 5 Dec 2007, Harvey Harrison wrote:
-> > 
-> > If anyone recalls my report was something along the lines of
-> > git gc --aggressive explodes pack size.
+On 12/5/07, David Miller <davem@davemloft.net> wrote:
+> From: "Daniel Berlin" <dberlin@dberlin.org>
+> Date: Wed, 5 Dec 2007 23:32:52 -0500
+>
+> > On 12/5/07, David Miller <davem@davemloft.net> wrote:
+> > > From: "Daniel Berlin" <dberlin@dberlin.org>
+> > > Date: Wed, 5 Dec 2007 22:47:01 -0500
+> > >
+> > > > The size is clearly not just svn data, it's in the git pack itself.
+> > >
+> > > And other users have shown much smaller metadata from a GIT import,
+> > > and yes those are including all of the repository history and branches
+> > > not just the trunk.
+> > I followed the instructions in the tutorials.
+> > I followed the instructions given to by people who created these.
+> > I came up with a 1.5 gig pack file.
+> > You want to help, or you want to argue with me.
+>
+> Several people replied in this thread showing what options can lead to
+> smaller pack files.
 
-> [ By default, for example, "git svn clone/fetch" seems to create those 
->   horrible fake email addresses that contain the ID of the SVN repo in 
->   each commit - I'm not talking about the "git-svn-id", I'm talking about 
->   the "user@hex-string-goes-here" thing for the author. Maybe people don't 
->   really care, but isn't that ugly as hell? I'd think it's worth it doing 
->   a really nice import, spending some effort on it.
-> 
->   But maybe those things come from the older CVS->SVN import, I don't 
->   really know. I've done a few SVN imports, but I've done them just for 
->   stuff where I didn't want to touch SVN, but just wanted to track some 
->   project like libgpod. For things like *that*, a totally mindless "git 
->   svn" thing is fine ]
-> 
+Actually, one person did, but that's okay, let's assume it was several.
+I am currently trying Harvey's options.
 
-git svn does accept a mailmap at import time with the same format as the
-cvs importer I think.  But for someone that just wants a repo to check
-out this was easiest.  I'd be willing to spend the time to do a nicer
-job if there was any interest from the gcc side, but I'm not that
-invested (other than owing them for an often-used tool).
+I asked about using the pre-existing repos so i didn't have to do
+this, but they were all
+1. Done using read-only imports or
+2. Don't contain full history
+(IE the one that contains full history that is often posted here was
+done as a read only import and thus doesn't have the metadata).
 
-Harvey
+> They also listed what the GIT limitations are that would effect the
+> kind of work you are doing, which seemed to mostly deal with the high
+> space cost of branching and tags when converting to/from SVN repos.
+
+Actually, it turns out that git-gc --aggressive does this dumb thing
+to pack files sometimes regardless of whether you converted from an
+SVN repo or not.
