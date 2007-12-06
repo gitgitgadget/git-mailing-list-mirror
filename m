@@ -1,70 +1,101 @@
-From: Ivo Alxneit <ivo.alxneit@psi.ch>
-Subject: [BUG/RFC git-gui] password for push/pull in case of git+ssh://repo
-Date: Thu, 06 Dec 2007 15:31:57 +0100
-Message-ID: <1196951517.3294.24.camel@localhost.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add option --path to allow to run tests with real systems.
+ You must install git before running this test.
+Date: Thu, 6 Dec 2007 15:23:31 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712061422010.27959@racer.site>
+References: <20071206134817.GA8523@laptop>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-HRvjkkhvkGC6ijkiyPpz"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 06 15:38:34 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811741-1755104978-1196954611=:27959"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 06 16:24:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0Hs0-0002Cc-KN
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 15:38:33 +0100
+	id 1J0IaW-0004vB-Iu
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 16:24:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751589AbXLFOiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 09:38:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751661AbXLFOiJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 09:38:09 -0500
-Received: from mail14.bluewin.ch ([195.186.19.62]:52599 "EHLO
-	mail14.bluewin.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751589AbXLFOiI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 09:38:08 -0500
-X-Greylist: delayed 368 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Dec 2007 09:38:08 EST
-Received: from [192.168.1.36] (83.77.172.134) by mail14.bluewin.ch (Bluewin 7.3.121)
-        id 472EF4D100787D1D for git@vger.kernel.org; Thu, 6 Dec 2007 14:31:57 +0000
-X-Mailer: Evolution 2.6.3 
+	id S1752204AbXLFPYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 10:24:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752011AbXLFPYE
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 10:24:04 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48900 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750954AbXLFPYC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 10:24:02 -0500
+Received: (qmail invoked by alias); 06 Dec 2007 15:24:00 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp016) with SMTP; 06 Dec 2007 16:24:00 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/WttQvLxfWksp8owm/0C3wA46E0Y5y0Nve4fpBCS
+	tTWRz1mCMrma+F
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071206134817.GA8523@laptop>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67293>
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---=-HRvjkkhvkGC6ijkiyPpz
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+---1463811741-1755104978-1196954611=:27959
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-when i use git-gui (0.9.0) to push/pull to/from a git+ssh://repo i have
-to supply my password to ssh. i get the password prompt from ssh on the
-controlling shell. as i often use several shells and git-gui might run
-in the background it is rather bothering to find the correct shell where
-ssh expects the password. could this be changed (in a safe way) in
-git-gui e.g. like pinentry pops up a window when gpg is used to sign
-emails?
+Hi,
 
-p.s. please cc me. i have not subscribed to the list
+On Thu, 6 Dec 2007, Nguyễn Thái Ngọc Duy wrote:
 
-thanks
---=20
-Dr. Ivo Alxneit
-Laboratory for Solar Technology   phone: +41 56 310 4092
-Paul Scherrer Institute             fax: +41 56 310 2688
-CH-5232 Villigen                   http://solar.web.psi.ch
-Switzerland                   gnupg key: 0x515E30C7
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  On Thu, Dec 06, 2007 at 10:15:05AM +0700, Nguyen Thai Ngoc Duy wrote:
+>  > On Dec 6, 2007 2:32 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>  > > This is wrong, isn't it?  $path may point at the freshly built but not
+>  > > installed git executable, but it reports --exec-path the location that
+>  > > git-foo and friends are to be _eventually_ installed, not the location
+>  > > they are sitting after built, being tested, waiting to be installed.
+>  > >
+>  > Yes, forgot to mention you must do "make install" first :)
+>  > 
+> 
+>  Perhaps a check to remind people to 'make install' like this?
 
+Well, the whole point of "make test" is to be sure that it works before 
+installing it.
 
---=-HRvjkkhvkGC6ijkiyPpz
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
+How about something completely different?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+-- snipsnap --
 
-iD8DBQBHWAfdAd7CE1FeMMcRAo1uAKC02iPap/OD/cgBqGaZbT3GAs0FYwCeI2MW
-MUDyzOo2T0TPbIb5Bs9vPWw=
-=fD58
------END PGP SIGNATURE-----
+ t/test-lib.sh |   13 ++++++++++++-
+ 1 files changed, 12 insertions(+), 1 deletions(-)
 
---=-HRvjkkhvkGC6ijkiyPpz--
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 90b6844..ee87b83 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -296,7 +296,18 @@ test_done () {
+ 
+ # Test the binaries we have just built.  The tests are kept in
+ # t/ subdirectory and are run in trash subdirectory.
+-PATH=$(pwd)/..:$PATH
++
++# Test libexec, while we are at it
++
++test -d test-bin || mkdir test-bin || error "t/test-bin/ could not be created"
++for file in ../git ../git-sh-setup ../test-*
++do
++	target=test-bin/"$(basename "$filename")"
++	test -x "$file" && test ! -x "$target" &&
++		ln -s ../"$file" test-bin/
++done
++
++PATH=$(pwd)/test-bin:$PATH
+ GIT_EXEC_PATH=$(pwd)/..
+ GIT_TEMPLATE_DIR=$(pwd)/../templates/blt
+ GIT_CONFIG=.git/config
+---1463811741-1755104978-1196954611=:27959--
