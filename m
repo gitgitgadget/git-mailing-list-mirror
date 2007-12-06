@@ -1,68 +1,69 @@
-From: "Blake Ramsdell" <blaker@gmail.com>
-Subject: Re: [PATCH] Silence iconv warnings on Leopard
-Date: Thu, 6 Dec 2007 15:04:08 -0800
-Message-ID: <985966520712061504s686395d6jf680363c7b3b9de7@mail.gmail.com>
-References: <1196968023-45284-1-git-send-email-win@wincent.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, jnareb@gmail.com
-To: "Wincent Colaiuta" <win@wincent.com>
-X-From: git-owner@vger.kernel.org Fri Dec 07 00:04:35 2007
+From: David Symonds <dsymonds@gmail.com>
+Subject: [PATCH] Change from using email.com to example.com as example domain, as per RFC 2606.
+Date: Fri,  7 Dec 2007 10:36:45 +1100
+Message-ID: <11969842052283-git-send-email-dsymonds@gmail.com>
+Cc: git@vger.kernel.org, David Symonds <dsymonds@gmail.com>
+To: Junio Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 07 00:37:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0Plh-00034b-V4
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 00:04:34 +0100
+	id 1J0QHP-0005xl-Eo
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 00:37:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752355AbXLFXEL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 18:04:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752473AbXLFXEK
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 18:04:10 -0500
-Received: from wa-out-1112.google.com ([209.85.146.177]:16732 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752334AbXLFXEJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 18:04:09 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so942001wah
-        for <git@vger.kernel.org>; Thu, 06 Dec 2007 15:04:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=yzWV6nWP5WN+bd0IZgme3m1vLmL5LmpLkag500Rc7to=;
-        b=FRoRQLAKa3BWO5u2v+3nHrmh6V/MPmF5ZReGtpIW1m3n8DKGKKbUGxZtcMJpYx59nyUo+OlgGXWcISm6I7TozgdDb4MWGi67Ie7avCm9mo6QBDNgP/Edq6BAZD/n52HukjtN4hohIIJ0bRSY9DrpH6a2K/1xi5df34e8uodpDFo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BXQxugRJ/b0w53wR0OjKbbumiww56DA3Gd/YxDt/U7pF9WLW7RxZPMmL35qY65yQk4m+OLrUfDlvl0XpWAjMNAYhMlELJLsPlnck2c+7a5TqvgQq8kF2sRyeCjhkcUQTAquMUjHVob/+qvte+e9c0E5bbQ97qxZHPgpnyOfADCI=
-Received: by 10.114.53.1 with SMTP id b1mr2227795waa.1196982248343;
-        Thu, 06 Dec 2007 15:04:08 -0800 (PST)
-Received: by 10.115.110.7 with HTTP; Thu, 6 Dec 2007 15:04:08 -0800 (PST)
-In-Reply-To: <1196968023-45284-1-git-send-email-win@wincent.com>
-Content-Disposition: inline
+	id S1752486AbXLFXg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 18:36:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752212AbXLFXg5
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 18:36:57 -0500
+Received: from ipmail04.adl2.internode.on.net ([203.16.214.57]:27814 "EHLO
+	ipmail04.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752088AbXLFXg5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Dec 2007 18:36:57 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah4FAOMWWEd5LDSh/2dsb2JhbACBWo9P
+X-IronPort-AV: E=Sophos;i="4.23,264,1194183000"; 
+   d="scan'208";a="12823776"
+Received: from ppp121-44-52-161.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.52.161])
+  by ipmail04.adl2.internode.on.net with ESMTP; 07 Dec 2007 10:06:51 +1030
+X-Mailer: git-send-email 1.5.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67354>
 
-On Dec 6, 2007 11:07 AM, Wincent Colaiuta <win@wincent.com> wrote:
-> Apple ships a newer version of iconv with Leopard (Mac OS X 10.5/Darwin
-> 9). Ensure that OLD_ICONV is not set on any version of Darwin in the
-> 9.x series; this should be good for at least a couple of years, when
-> Darwin 10 comes out and we can invert the sense of the test to
-> specifically check for Darwin 7 or 8.
+Signed-off-by: David Symonds <dsymonds@gmail.com>
+---
+ Documentation/SubmittingPatches |    2 +-
+ ident.c                         |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-This approach seems fine to me, there was some concern about matching
-the OS type / version in the past, but I haven't really seen a better
-answer.
-
-> A more sophisticated and robust check is possible for those who use
-> autoconf, but not everybody does that.
-
-I did make a patch for configure.ac that does this. If it's
-interesting, I'll send it along.
-
-Blake
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 83bf54c..d234c8d 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -10,7 +10,7 @@ Checklist (and a short version for the impatient):
+ 	- the first line of the commit message should be a short
+ 	  description and should skip the full stop
+ 	- if you want your work included in git.git, add a
+-	  "Signed-off-by: Your Name <your@email.com>" line to the
++	  "Signed-off-by: Your Name <your@example.com>" line to the
+ 	  commit message (or just use the option "-s" when
+ 	  committing) to confirm that you agree to the Developer's
+ 	  Certificate of Origin
+diff --git a/ident.c b/ident.c
+index 07b4998..7631698 100644
+--- a/ident.c
++++ b/ident.c
+@@ -175,7 +175,7 @@ static const char *env_hint =
+ "\n"
+ "Run\n"
+ "\n"
+-"  git config --global user.email \"you@email.com\"\n"
++"  git config --global user.email \"you@example.com\"\n"
+ "  git config --global user.name \"Your Name\"\n"
+ "\n"
+ "to set your account\'s default identity.\n"
 -- 
-Blake Ramsdell | http://www.blakeramsdell.com
+1.5.3.1
