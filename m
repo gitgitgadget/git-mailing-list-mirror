@@ -1,301 +1,61 @@
-From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [PATCH] Add option --path to allow to run tests with real systems.
-	You must install git before running this test.
-Date: Thu, 6 Dec 2007 20:48:17 +0700
-Message-ID: <20071206134817.GA8523@laptop>
-References: <7v3auhq6mv.fsf@gitster.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Git and GCC
+Date: Thu, 06 Dec 2007 09:01:51 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0712060901120.555@xanadu.home>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>
+ <20071205.202047.58135920.davem@davemloft.net>
+ <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>
+ <20071205.204848.227521641.davem@davemloft.net>
+ <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com>
+ <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org>
+ <1196927361.13109.1.camel@brick>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 06 14:49:01 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Daniel Berlin <dberlin@dberlin.org>,
+	David Miller <davem@davemloft.net>, ismail@pardus.org.tr,
+	gcc@gcc.gnu.org, git@vger.kernel.org
+To: Harvey Harrison <harvey.harrison@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 06 15:02:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0H64-0007m3-4O
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 14:49:00 +0100
+	id 1J0HIs-0004Z8-Ca
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 15:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752712AbXLFNsi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Dec 2007 08:48:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752678AbXLFNsi
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 08:48:38 -0500
-Received: from py-out-1112.google.com ([64.233.166.177]:63249 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752028AbXLFNsh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 08:48:37 -0500
-Received: by py-out-1112.google.com with SMTP id u77so499600pyb
-        for <git@vger.kernel.org>; Thu, 06 Dec 2007 05:48:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
-        bh=EX6M/YNdq1jmDoQkM5KqsoblgdShR4PglXR26TCNUG0=;
-        b=tvN43BemDR1QhAkm5yXuESPOwgioVIqDBikwCG1JDjd8CLLUpTF2sZWb0n3/7v2mzVZeKG8rB/n4eoMSdMT1TbtV4+O7jTUz0LiOfhVdcsrRU92P0W27EWsaxJ3fvln92dFGDenL/e0/YxOv1madr78I3J2DBg3doQiuUqHq8uQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
-        b=rOs8wZp0oHkb7Esrpr+LqX86mknzuXdAT6JJyDtBiJA8VbqKnTuwOFUvFF3jgVzMHwzbBSy4TTfqiLhARxhqkxbxZEnuC0UBMM/vrHwaxhti4cvjFaepj0S/Z7pXUN9QwjrY/SyzifmtSsKLM2gsE3Ic4f5oEjh1yL3FFgKhShY=
-Received: by 10.35.75.15 with SMTP id c15mr2042964pyl.1196948914472;
-        Thu, 06 Dec 2007 05:48:34 -0800 (PST)
-Received: from pclouds@gmail.com ( [117.5.1.36])
-        by mx.google.com with ESMTPS id a70sm7074682pye.2007.12.06.05.48.25
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 06 Dec 2007 05:48:33 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu,  6 Dec 2007 20:48:17 +0700
-Content-Disposition: inline
-In-Reply-To: <7v3auhq6mv.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752839AbXLFOBz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 09:01:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752763AbXLFOBy
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 09:01:54 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:20084 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752752AbXLFOBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 09:01:52 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JSM006K4SB31S50@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 06 Dec 2007 09:01:51 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <1196927361.13109.1.camel@brick>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67285>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- On Thu, Dec 06, 2007 at 10:15:05AM +0700, Nguyen Thai Ngoc Duy wrote:
- > On Dec 6, 2007 2:32 AM, Junio C Hamano <gitster@pobox.com> wrote:
- > > This is wrong, isn't it?  $path may point at the freshly built but=
- not
- > > installed git executable, but it reports --exec-path the location =
-that
- > > git-foo and friends are to be _eventually_ installed, not the loca=
-tion
- > > they are sitting after built, being tested, waiting to be installe=
-d.
- > >
- > Yes, forgot to mention you must do "make install" first :)
- >=20
+On Wed, 5 Dec 2007, Harvey Harrison wrote:
 
- Perhaps a check to remind people to 'make install' like this?
+> 
+> > 	git repack -a -d --depth=250 --window=250
+> > 
+> 
+> Since I have the whole gcc repo locally I'll give this a shot overnight
+> just to see what can be done at the extreme end or things.
 
- t/lib-git-svn.sh          |    2 +-
- t/t0000-basic.sh          |    6 +++---
- t/t0040-parse-options.sh  |   16 ++++++++--------
- t/t4200-rerere.sh         |    8 ++++----
- t/t5301-sliding-window.sh |    2 +-
- t/t5302-pack-index.sh     |    4 ++--
- t/test-lib.sh             |   19 +++++++++++++++----
- 7 files changed, 34 insertions(+), 23 deletions(-)
+Don't forget to add -f as well.
 
-diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-index 8d4a447..fd60ebc 100644
---- a/t/lib-git-svn.sh
-+++ b/t/lib-git-svn.sh
-@@ -46,7 +46,7 @@ rawsvnrepo=3D"$svnrepo"
- svnrepo=3D"file://$svnrepo"
-=20
- poke() {
--	test-chmtime +1 "$1"
-+	$GIT_TEST_PATH/test-chmtime +1 "$1"
- }
-=20
- SVN_HTTPD_MODULE_PATH=3D${SVN_HTTPD_MODULE_PATH-'/usr/lib/apache2/modu=
-les'}
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 4e49d59..f809163 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -289,12 +289,12 @@ test_expect_success 'absolute path works as expec=
-ted' '
- 	mkdir third &&
- 	dir=3D"$(cd .git; pwd -P)" &&
- 	dir2=3Dthird/../second/other/.git &&
--	test "$dir" =3D "$(test-absolute-path $dir2)" &&
-+	test "$dir" =3D "$($GIT_TEST_PATH/test-absolute-path $dir2)" &&
- 	file=3D"$dir"/index &&
--	test "$file" =3D "$(test-absolute-path $dir2/index)" &&
-+	test "$file" =3D "$($GIT_TEST_PATH/test-absolute-path $dir2/index)" &=
-&
- 	ln -s ../first/file .git/syml &&
- 	sym=3D"$(cd first; pwd -P)"/file &&
--	test "$sym" =3D "$(test-absolute-path $dir2/syml)"
-+	test "$sym" =3D "$($GIT_TEST_PATH/test-absolute-path $dir2/syml)"
- '
-=20
- test_done
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 462fdf2..ca1cc9f 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -23,7 +23,7 @@ string options
- EOF
-=20
- test_expect_success 'test help' '
--	! test-parse-options -h > output 2> output.err &&
-+	! $GIT_TEST_PATH/test-parse-options -h > output 2> output.err &&
- 	test ! -s output &&
- 	git diff expect.err output.err
- '
-@@ -35,7 +35,7 @@ string: 123
- EOF
-=20
- test_expect_success 'short options' '
--	test-parse-options -s123 -b -i 1729 -b > output 2> output.err &&
-+	$GIT_TEST_PATH/test-parse-options -s123 -b -i 1729 -b > output 2> out=
-put.err &&
- 	git diff expect output &&
- 	test ! -s output.err
- '
-@@ -46,7 +46,7 @@ string: 321
- EOF
-=20
- test_expect_success 'long options' '
--	test-parse-options --boolean --integer 1729 --boolean --string2=3D321=
- \
-+	$GIT_TEST_PATH/test-parse-options --boolean --integer 1729 --boolean =
---string2=3D321 \
- 		> output 2> output.err &&
- 	test ! -s output.err &&
- 	git diff expect output
-@@ -62,7 +62,7 @@ arg 02: --boolean
- EOF
-=20
- test_expect_success 'intermingled arguments' '
--	test-parse-options a1 --string 123 b1 --boolean -j 13 -- --boolean \
-+	$GIT_TEST_PATH/test-parse-options a1 --string 123 b1 --boolean -j 13 =
--- --boolean \
- 		> output 2> output.err &&
- 	test ! -s output.err &&
- 	git diff expect output
-@@ -75,19 +75,19 @@ string: (not set)
- EOF
-=20
- test_expect_success 'unambiguously abbreviated option' '
--	test-parse-options --int 2 --boolean --no-bo > output 2> output.err &=
-&
-+	$GIT_TEST_PATH/test-parse-options --int 2 --boolean --no-bo > output =
-2> output.err &&
- 	test ! -s output.err &&
- 	git diff expect output
- '
-=20
- test_expect_success 'unambiguously abbreviated option with "=3D"' '
--	test-parse-options --int=3D2 > output 2> output.err &&
-+	$GIT_TEST_PATH/test-parse-options --int=3D2 > output 2> output.err &&
- 	test ! -s output.err &&
- 	git diff expect output
- '
-=20
- test_expect_failure 'ambiguously abbreviated option' '
--	test-parse-options --strin 123;
-+	$GIT_TEST_PATH/test-parse-options --strin 123;
-         test $? !=3D 129
- '
-=20
-@@ -98,7 +98,7 @@ string: 123
- EOF
-=20
- test_expect_success 'non ambiguous option (after two options it abbrev=
-iates)' '
--	test-parse-options --st 123 > output 2> output.err &&
-+	$GIT_TEST_PATH/test-parse-options --st 123 > output 2> output.err &&
- 	test ! -s output.err &&
- 	git diff expect output
- '
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index cfcdb69..ddbae1d 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -149,16 +149,16 @@ just_over_15_days_ago=3D$((-1-15*86400))
- almost_60_days_ago=3D$((60-60*86400))
- just_over_60_days_ago=3D$((-1-60*86400))
-=20
--test-chmtime =3D$almost_60_days_ago $rr/preimage
--test-chmtime =3D$almost_15_days_ago $rr2/preimage
-+$GIT_TEST_PATH/test-chmtime =3D$almost_60_days_ago $rr/preimage
-+$GIT_TEST_PATH/test-chmtime =3D$almost_15_days_ago $rr2/preimage
-=20
- test_expect_success 'garbage collection (part1)' 'git rerere gc'
-=20
- test_expect_success 'young records still live' \
- 	"test -f $rr/preimage && test -f $rr2/preimage"
-=20
--test-chmtime =3D$just_over_60_days_ago $rr/preimage
--test-chmtime =3D$just_over_15_days_ago $rr2/preimage
-+$GIT_TEST_PATH/test-chmtime =3D$just_over_60_days_ago $rr/preimage
-+$GIT_TEST_PATH/test-chmtime =3D$just_over_15_days_ago $rr2/preimage
-=20
- test_expect_success 'garbage collection (part2)' 'git rerere gc'
-=20
-diff --git a/t/t5301-sliding-window.sh b/t/t5301-sliding-window.sh
-index 073ac0c..8327051 100755
---- a/t/t5301-sliding-window.sh
-+++ b/t/t5301-sliding-window.sh
-@@ -12,7 +12,7 @@ test_expect_success \
-      for i in a b c
-      do
-          echo $i >$i &&
--         test-genrandom "$i" 32768 >>$i &&
-+         $GIT_TEST_PATH/test-genrandom "$i" 32768 >>$i &&
-          git update-index --add $i || return 1
-      done &&
-      echo d >d && cat c >>d && git update-index --add d &&
-diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
-index 2a2878b..0ae9cd8 100755
---- a/t/t5302-pack-index.sh
-+++ b/t/t5302-pack-index.sh
-@@ -15,11 +15,11 @@ test_expect_success \
-      do
- 		 i=3D`printf '%03i' $i`
-          echo $i >file_$i &&
--         test-genrandom "$i" 8192 >>file_$i &&
-+         $GIT_TEST_PATH/test-genrandom "$i" 8192 >>file_$i &&
-          git update-index --add file_$i &&
- 		 i=3D`expr $i + 1` || return 1
-      done &&
--     { echo 101 && test-genrandom 100 8192; } >file_101 &&
-+     { echo 101 && $GIT_TEST_PATH/test-genrandom 100 8192; } >file_101=
- &&
-      git update-index --add file_101 &&
-      tree=3D`git write-tree` &&
-      commit=3D`git commit-tree $tree </dev/null` && {
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 90b6844..97c0f4d 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -84,6 +84,8 @@ do
- 	--no-python)
- 		# noop now...
- 		shift ;;
-+	--path=3D*)
-+		path=3D"${1#*=3D}"; shift ;;
- 	*)
- 		break ;;
- 	esac
-@@ -296,11 +298,20 @@ test_done () {
-=20
- # Test the binaries we have just built.  The tests are kept in
- # t/ subdirectory and are run in trash subdirectory.
--PATH=3D$(pwd)/..:$PATH
--GIT_EXEC_PATH=3D$(pwd)/..
-+if [ -n "$path" ]; then
-+	[ -x "$path/git" ] || error "git not found in $path"
-+	[ "$($path/git --version)" =3D "$(../git --version)" ] ||
-+		error "Version mismatch. Did you forget to 'make install'?"
-+	PATH=3D"$path":$PATH
-+	GIT_EXEC_PATH=3D"$($path/git --exec-path)"
-+else
-+	PATH=3D$(pwd)/..:$PATH
-+	GIT_EXEC_PATH=3D$(pwd)/..
-+fi
-+GIT_TEST_PATH=3D$(pwd)/..
- GIT_TEMPLATE_DIR=3D$(pwd)/../templates/blt
- GIT_CONFIG=3D.git/config
--export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG
-+export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG GIT_TEST_PATH
-=20
- GITPERLLIB=3D$(pwd)/../perl/blib/lib:$(pwd)/../perl/blib/arch/auto/Git
- export GITPERLLIB
-@@ -308,7 +319,7 @@ test -d ../templates/blt || {
- 	error "You haven't built things yet, have you?"
- }
-=20
--if ! test -x ../test-chmtime; then
-+if ! test -x $GIT_TEST_PATH/test-chmtime; then
- 	echo >&2 'You need to build test-chmtime:'
- 	echo >&2 'Run "make test-chmtime" in the source (toplevel) directory'
- 	exit 1
---=20
-1.5.3.6.2040.gfc2f-dirty
+
+Nicolas
