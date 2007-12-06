@@ -1,241 +1,348 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/3] git config --get-colorbool
-Date: Wed,  5 Dec 2007 18:05:04 -0800
-Message-ID: <1196906706-11170-2-git-send-email-gitster@pobox.com>
+Subject: [PATCH 3/3] Color support for "git-add -i"
+Date: Wed,  5 Dec 2007 18:05:05 -0800
+Message-ID: <1196906706-11170-3-git-send-email-gitster@pobox.com>
 References: <475697BC.2090701@viscovery.net>
  <1196906706-11170-1-git-send-email-gitster@pobox.com>
+ <1196906706-11170-2-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 06 03:23:17 2007
+X-From: git-owner@vger.kernel.org Thu Dec 06 03:23:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J06OS-00012B-MO
+	id 1J06OT-00012B-C5
 	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 03:23:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756416AbXLFCWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 21:22:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756407AbXLFCWh
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 21:22:37 -0500
+	id S1756369AbXLFCWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 21:22:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755478AbXLFCWm
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 21:22:42 -0500
 Received: from fed1rmmtai113.cox.net ([68.230.241.47]:48794 "EHLO
 	fed1rmmtai113.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755917AbXLFCWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 21:22:36 -0500
+	with ESMTP id S1756403AbXLFCWj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 21:22:39 -0500
 X-Greylist: delayed 1048 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Dec 2007 21:22:36 EST
-Received: from fed1rmimpo03.cox.net ([70.169.32.75])
-          by fed1rmmtao101.cox.net
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20071206020508.VMOU27415.fed1rmmtao101.cox.net@fed1rmimpo03.cox.net>
-          for <git@vger.kernel.org>; Wed, 5 Dec 2007 21:05:08 -0500
+          id <20071206020514.CBED21007.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>
+          for <git@vger.kernel.org>; Wed, 5 Dec 2007 21:05:14 -0500
 Received: from localhost ([68.225.240.77])
-	by fed1rmimpo03.cox.net with bizsmtp
-	id ME561Y00D1gtr5g0000000; Wed, 05 Dec 2007 21:05:06 -0500
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ME5D1Y00D1gtr5g0000000; Wed, 05 Dec 2007 21:05:13 -0500
 X-Mailer: git-send-email 1.5.3.7-2132-gbd1cf
-In-Reply-To: <1196906706-11170-1-git-send-email-gitster@pobox.com>
+In-Reply-To: <1196906706-11170-2-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67222>
 
-This adds an option to help scripts find out color settings from
-the configuration file.
+This is mostly lifted from earlier series by Dan Zwell, but updated to
+use "git config --get-color" and "git config --get-colorbool" to make it
+simpler and more consistent with commands written in C.
 
-    git config --get-colorbool color.diff
+A new configuration color.interactive variable is like color.diff and
+color.status, and controls if "git-add -i" uses color.
 
-inspects color.diff variable, and exits with status 0 (i.e. success) if
-color is to be used.  It exits with status 1 otherwise.
+A set of configuration variables, color.interactive.<slot>, are used to
+define what color is used for the prompt, header, and help text.
 
-If a script wants "true"/"false" answer to the standard output of the
-command, it can pass an additional boolean parameter to its command
-line, telling if its standard output is a terminal, like this:
-
-    git config --get-colorbool color.diff true
-
-When called like this, the command outputs "true" to its standard output
-if color is to be used (i.e. "color.diff" says "always", "auto", or
-"true"), and "false" otherwise.
+For perl scripts, Git.pm provides $repo->get_color() method, which takes
+the slot name and the default color, and returns the terminal escape
+sequence to color the output text.  $repo->get_colorbool() method can be
+used to check if color is set to be used for a given operation.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-config.txt |   10 ++++++++++
- builtin-branch.c             |    2 +-
- builtin-config.c             |   41 ++++++++++++++++++++++++++++++++++++++++-
- color.c                      |    6 ++++--
- color.h                      |    2 +-
- diff.c                       |    2 +-
- wt-status.c                  |    2 +-
- 7 files changed, 58 insertions(+), 7 deletions(-)
+ Documentation/config.txt  |   12 +++++
+ git-add--interactive.perl |  119 +++++++++++++++++++++++++++++++++++++--------
+ perl/Git.pm               |   35 +++++++++++++
+ 3 files changed, 146 insertions(+), 20 deletions(-)
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 7640450..98509b4 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -21,6 +21,7 @@ SYNOPSIS
- 'git-config' [<file-option>] --remove-section name
- 'git-config' [<file-option>] [-z|--null] -l | --list
- 'git-config' [<file-option>] --get-color name [default]
-+'git-config' [<file-option>] --get-colorbool name [stdout-is-tty]
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0e45ec5..736fcd7 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -391,6 +391,18 @@ color.diff.<slot>::
+ 	whitespace).  The values of these variables may be specified as
+ 	in color.branch.<slot>.
  
- DESCRIPTION
- -----------
-@@ -135,6 +136,15 @@ See also <<FILES>>.
- 	output without getting confused e.g. by values that
- 	contain line breaks.
- 
-+--get-colorbool name [stdout-is-tty]::
++color.interactive::
++	When set to `always`, always use colors in `git add --interactive`.
++	When false (or `never`), never.  When set to `true` or `auto`, use
++	colors only when the output is to the terminal. Defaults to false.
 +
-+	Find the color setting for `name` (e.g. `color.diff`) and output
-+	"true" or "false".  `stdout-is-tty` should be either "true" or
-+	"false", and is taken into account when configuration says
-+	"auto".  If `stdout-is-tty` is missing, then checks the standard
-+	output of the command itself, and exits with status 0 if color
-+	is to be used, or exits with status 1 otherwise.
++color.interactive.<slot>::
++	Use customized color for `git add --interactive`
++	output. `<slot>` may be `prompt`, `header`, or `help`, for
++	three distinct types of normal output from interactive
++	programs.  The values of these variables may be specified as
++	in color.branch.<slot>.
 +
- --get-color name default::
+ color.pager::
+ 	A boolean to enable/disable colored output when the pager is in
+ 	use (default is true).
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 335c2c6..1019a72 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -1,6 +1,55 @@
+ #!/usr/bin/perl -w
  
- 	Find the color configured for `name` (e.g. `color.diff.new`) and
-diff --git a/builtin-branch.c b/builtin-branch.c
-index c64768b..089cae5 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -65,7 +65,7 @@ static int parse_branch_color_slot(const char *var, int ofs)
- static int git_branch_config(const char *var, const char *value)
- {
- 	if (!strcmp(var, "color.branch")) {
--		branch_use_color = git_config_colorbool(var, value);
-+		branch_use_color = git_config_colorbool(var, value, -1);
- 		return 0;
- 	}
- 	if (!prefixcmp(var, "color.branch.")) {
-diff --git a/builtin-config.c b/builtin-config.c
-index 6175dc3..d10b03f 100644
---- a/builtin-config.c
-+++ b/builtin-config.c
-@@ -3,7 +3,7 @@
- #include "color.h"
- 
- static const char git_config_set_usage[] =
--"git-config [ --global | --system | [ -f | --file ] config-file ] [ --bool | --int ] [ -z | --null ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list | --get-color var [default]";
-+"git-config [ --global | --system | [ -f | --file ] config-file ] [ --bool | --int ] [ -z | --null ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list | --get-color var [default] | --get-colorbool name [stdout-is-tty]";
- 
- static char *key;
- static regex_t *key_regexp;
-@@ -208,6 +208,43 @@ static int get_color(int argc, const char **argv)
- 	return 0;
- }
- 
-+static int stdout_is_tty;
-+static int get_colorbool_found;
-+static int git_get_colorbool_config(const char *var, const char *value)
-+{
-+	if (!strcmp(var, get_color_slot))
-+		get_colorbool_found =
-+			git_config_colorbool(var, value, stdout_is_tty);
-+	return 0;
-+}
+ use strict;
++use Git;
 +
-+static int get_colorbool(int argc, const char **argv)
-+{
-+	/*
-+	 * git config --get-colorbool <slot> [<stdout-is-tty>]
-+	 *
-+	 * returns "true" or "false" depending on how <slot>
-+	 * is configured.
-+	 */
++# Prompt colors:
++my ($prompt_color, $header_color, $help_color, $normal_color);
++# Diff colors:
++my ($new_color, $old_color, $fraginfo_color, $metainfo_color, $whitespace_color);
 +
-+	if (argc == 2)
-+		stdout_is_tty = git_config_bool("command line", argv[1]);
-+	else if (argc == 1)
-+		stdout_is_tty = isatty(1);
-+	else
-+		usage(git_config_set_usage);
-+	get_colorbool_found = 0;
-+	get_color_slot = argv[0];
-+	git_config(git_get_colorbool_config);
++my ($use_color, $diff_use_color);
++my $repo = Git->repository();
 +
-+	if (argc == 1) {
-+		return get_colorbool_found ? 0 : 1;
-+	} else {
-+		printf("%s\n", get_colorbool_found ? "true" : "false");
-+		return 0;
++$use_color = $repo->get_colorbool('color.interactive');
++
++if ($use_color) {
++	# Set interactive colors:
++
++	# Grab the 3 main colors in git color string format, with sane
++	# (visible) defaults:
++	$prompt_color = $repo->get_color("color.interactive.prompt", "bold blue");
++	$header_color = $repo->get_color("color.interactive.header", "bold");
++	$help_color = $repo->get_color("color.interactive.help", "red bold");
++	$normal_color = $repo->get_color("", "reset");
++
++	# Do we also set diff colors?
++	$diff_use_color = $repo->get_colorbool('color.diff');
++	if ($diff_use_color) {
++		$new_color = $repo->get_color("color.diff.new", "green");
++		$old_color = $repo->get_color("color.diff.old", "red");
++		$fraginfo_color = $repo->get_color("color.diff.frag", "cyan");
++		$metainfo_color = $repo->get_color("color.diff.meta", "bold");
++		$whitespace_color = $repo->get_color("color.diff.whitespace", "normal red");
 +	}
 +}
 +
- int cmd_config(int argc, const char **argv, const char *prefix)
- {
- 	int nongit = 0;
-@@ -283,6 +320,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			return 0;
- 		} else if (!strcmp(argv[1], "--get-color")) {
- 			return get_color(argc-2, argv+2);
-+		} else if (!strcmp(argv[1], "--get-colorbool")) {
-+			return get_colorbool(argc-2, argv+2);
- 		} else
- 			break;
- 		argc--;
-diff --git a/color.c b/color.c
-index 97cfbda..7bd424a 100644
---- a/color.c
-+++ b/color.c
-@@ -116,7 +116,7 @@ bad:
- 	die("bad config value '%s' for variable '%s'", value, var);
++sub colored {
++	my $color = shift;
++	my $string = join("", @_);
++
++	if ($use_color) {
++		# Put a color code at the beginning of each line, a reset at the end
++		# color after newlines that are not at the end of the string
++		$string =~ s/(\n+)(.)/$1$color$2/g;
++		# reset before newlines
++		$string =~ s/(\n+)/$normal_color$1/g;
++		# codes at beginning and end (if necessary):
++		$string =~ s/^/$color/;
++		$string =~ s/$/$normal_color/ unless $string =~ /\n$/;
++	}
++	return $string;
++}
+ 
+ # command line options
+ my $patch_mode;
+@@ -246,10 +295,20 @@ sub is_valid_prefix {
+ sub highlight_prefix {
+ 	my $prefix = shift;
+ 	my $remainder = shift;
+-	return $remainder unless defined $prefix;
+-	return is_valid_prefix($prefix) ?
+-	    "[$prefix]$remainder" :
+-	    "$prefix$remainder";
++
++	if (!defined $prefix) {
++		return $remainder;
++	}
++
++	if (!is_valid_prefix($prefix)) {
++		return "$prefix$remainder";
++	}
++
++	if (!$use_color) {
++		return "[$prefix]$remainder";
++	}
++
++	return "$prompt_color$prefix$normal_color$remainder";
  }
  
--int git_config_colorbool(const char *var, const char *value)
-+int git_config_colorbool(const char *var, const char *value, int stdout_is_tty)
- {
- 	if (value) {
- 		if (!strcasecmp(value, "never"))
-@@ -133,7 +133,9 @@ int git_config_colorbool(const char *var, const char *value)
+ sub list_and_choose {
+@@ -266,7 +325,7 @@ sub list_and_choose {
+ 			if (!$opts->{LIST_FLAT}) {
+ 				print "     ";
+ 			}
+-			print "$opts->{HEADER}\n";
++			print colored $header_color, "$opts->{HEADER}\n";
+ 		}
+ 		for ($i = 0; $i < @stuff; $i++) {
+ 			my $chosen = $chosen[$i] ? '*' : ' ';
+@@ -304,7 +363,7 @@ sub list_and_choose {
  
- 	/* any normal truth value defaults to 'auto' */
-  auto_color:
--	if (isatty(1) || (pager_in_use && pager_use_color)) {
-+	if (stdout_is_tty < 0)
-+		stdout_is_tty = isatty(1);
-+	if (stdout_is_tty || (pager_in_use && pager_use_color)) {
- 		char *term = getenv("TERM");
- 		if (term && strcmp(term, "dumb"))
- 			return 1;
-diff --git a/color.h b/color.h
-index 6809800..ff63513 100644
---- a/color.h
-+++ b/color.h
-@@ -4,7 +4,7 @@
- /* "\033[1;38;5;2xx;48;5;2xxm\0" is 23 bytes */
- #define COLOR_MAXLEN 24
+ 		return if ($opts->{LIST_ONLY});
  
--int git_config_colorbool(const char *var, const char *value);
-+int git_config_colorbool(const char *var, const char *value, int stdout_is_tty);
- void color_parse(const char *var, const char *value, char *dst);
- int color_fprintf(FILE *fp, const char *color, const char *fmt, ...);
- int color_fprintf_ln(FILE *fp, const char *color, const char *fmt, ...);
-diff --git a/diff.c b/diff.c
-index 6b54959..be6cf68 100644
---- a/diff.c
-+++ b/diff.c
-@@ -146,7 +146,7 @@ int git_diff_ui_config(const char *var, const char *value)
- 		return 0;
- 	}
- 	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff")) {
--		diff_use_color_default = git_config_colorbool(var, value);
-+		diff_use_color_default = git_config_colorbool(var, value, -1);
- 		return 0;
- 	}
- 	if (!strcmp(var, "diff.renames")) {
-diff --git a/wt-status.c b/wt-status.c
-index d35386d..02dbb75 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -391,7 +391,7 @@ void wt_status_print(struct wt_status *s)
- int git_status_config(const char *k, const char *v)
- {
- 	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
--		wt_status_use_color = git_config_colorbool(k, v);
-+		wt_status_use_color = git_config_colorbool(k, v, -1);
- 		return 0;
- 	}
- 	if (!prefixcmp(k, "status.color.") || !prefixcmp(k, "color.status.")) {
+-		print $opts->{PROMPT};
++		print colored $prompt_color, $opts->{PROMPT};
+ 		if ($opts->{SINGLETON}) {
+ 			print "> ";
+ 		}
+@@ -371,7 +430,7 @@ sub list_and_choose {
+ }
+ 
+ sub singleton_prompt_help_cmd {
+-	print <<\EOF ;
++	print colored $help_color, <<\EOF ;
+ Prompt help:
+ 1          - select a numbered item
+ foo        - select item based on unique prefix
+@@ -380,7 +439,7 @@ EOF
+ }
+ 
+ sub prompt_help_cmd {
+-	print <<\EOF ;
++	print colored $help_color, <<\EOF ;
+ Prompt help:
+ 1          - select a single item
+ 3-5        - select a range of items
+@@ -477,6 +536,31 @@ sub parse_diff {
+ 	return @hunk;
+ }
+ 
++sub colored_diff_hunk {
++	my ($text) = @_;
++	# return the text, so that it can be passed to print()
++	my @ret;
++	for (@$text) {
++		if (!$diff_use_color) {
++			push @ret, $_;
++			next;
++		}
++
++		if (/^\+/) {
++			push @ret, colored($new_color, $_);
++		} elsif (/^\-/) {
++			push @ret, colored($old_color, $_);
++		} elsif (/^\@/) {
++			push @ret, colored($fraginfo_color, $_);
++		} elsif (/^ /) {
++			push @ret, colored($normal_color, $_);
++		} else {
++			push @ret, colored($metainfo_color, $_);
++		}
++	}
++	return @ret;
++}
++
+ sub hunk_splittable {
+ 	my ($text) = @_;
+ 
+@@ -671,7 +755,7 @@ sub coalesce_overlapping_hunks {
+ }
+ 
+ sub help_patch_cmd {
+-	print <<\EOF ;
++	print colored $help_color, <<\EOF ;
+ y - stage this hunk
+ n - do not stage this hunk
+ a - stage this and all the remaining hunks in the file
+@@ -710,9 +794,7 @@ sub patch_update_file {
+ 	my ($ix, $num);
+ 	my $path = shift;
+ 	my ($head, @hunk) = parse_diff($path);
+-	for (@{$head->{TEXT}}) {
+-		print;
+-	}
++	print colored_diff_hunk($head->{TEXT});
+ 	$num = scalar @hunk;
+ 	$ix = 0;
+ 
+@@ -754,10 +836,8 @@ sub patch_update_file {
+ 		if (hunk_splittable($hunk[$ix]{TEXT})) {
+ 			$other .= '/s';
+ 		}
+-		for (@{$hunk[$ix]{TEXT}}) {
+-			print;
+-		}
+-		print "Stage this hunk [y/n/a/d$other/?]? ";
++		print colored_diff_hunk($hunk[$ix]{TEXT});
++		print colored $prompt_color, "Stage this hunk [y/n/a/d$other/?]? ";
+ 		my $line = <STDIN>;
+ 		if ($line) {
+ 			if ($line =~ /^y/i) {
+@@ -811,7 +891,7 @@ sub patch_update_file {
+ 			elsif ($other =~ /s/ && $line =~ /^s/) {
+ 				my @split = split_hunk($hunk[$ix]{TEXT});
+ 				if (1 < @split) {
+-					print "Split into ",
++					print colored $header_color, "Split into ",
+ 					scalar(@split), " hunks.\n";
+ 				}
+ 				splice(@hunk, $ix, 1,
+@@ -894,8 +974,7 @@ sub diff_cmd {
+ 				     HEADER => $status_head, },
+ 				   @mods);
+ 	return if (!@them);
+-	system(qw(git diff-index -p --cached HEAD --),
+-	       map { $_->{VALUE} } @them);
++	system(qw(git diff -p --cached HEAD --), map { $_->{VALUE} } @them);
+ }
+ 
+ sub quit_cmd {
+@@ -904,7 +983,7 @@ sub quit_cmd {
+ }
+ 
+ sub help_cmd {
+-	print <<\EOF ;
++	print colored $help_color, <<\EOF ;
+ status        - show paths with changes
+ update        - add working tree state to the staged set of changes
+ revert        - revert staged set of changes back to the HEAD version
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 7468460..a2812ea 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -581,6 +581,41 @@ sub config_int {
+ 	};
+ }
+ 
++=item get_colorbool ( NAME )
++
++Finds if color should be used for NAMEd operation from the configuration,
++and returns boolean (true for "use color", false for "do not use color").
++
++=cut
++
++sub get_colorbool {
++	my ($self, $var) = @_;
++	my $stdout_to_tty = (-t STDOUT) ? "true" : "false";
++	my $use_color = $self->command_oneline('config', '--get-colorbool',
++					       $var, $stdout_to_tty);
++	return ($use_color eq 'true');
++}
++
++=item get_color ( SLOT, COLOR )
++
++Finds color for SLOT from the configuration, while defaulting to COLOR,
++and returns the ANSI color escape sequence:
++
++	print $repo->get_color("color.interactive.prompt", "underline blue white");
++	print "some text";
++	print $repo->get_color("", "normal");
++
++=cut
++
++sub get_color {
++	my ($self, $slot, $default) = @_;
++	my $color = $self->command_oneline('config', '--get-color', $slot, $default);
++	if (!defined $color) {
++		$color = "";
++	}
++	return $color;
++}
++
+ =item ident ( TYPE | IDENTSTR )
+ 
+ =item ident_person ( TYPE | IDENTSTR | IDENTARRAY )
 -- 
 1.5.3.7-2132-gbd1cf
