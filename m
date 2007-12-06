@@ -1,103 +1,139 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] gc --aggressive: make it really aggressive
-Date: Thu, 6 Dec 2007 12:03:38 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712061201580.27959@racer.site>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 
- <20071205.202047.58135920.davem@davemloft.net> 
- <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com> 
- <20071205.204848.227521641.davem@davemloft.net>
- <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com>
- <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Berlin <dberlin@dberlin.org>,
-	David Miller <davem@davemloft.net>, ismail@pardus.org.tr,
-	gcc@gcc.gnu.org, git@vger.kernel.org, gitster@pobox.com
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Dec 06 13:04:42 2007
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH] for-each-ref: Fix quoting style constants.
+Date: Thu,  6 Dec 2007 13:11:46 +0100
+Message-ID: <1196943106-4559-1-git-send-email-johannes.sixt@telecom.at>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <johannes.sixt@telecom.at>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 06 13:12:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0FSz-0005JQ-7B
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 13:04:33 +0100
+	id 1J0Fac-0008E3-IO
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 13:12:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752376AbXLFMEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 07:04:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752333AbXLFMEN
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 07:04:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35160 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752298AbXLFMEL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 07:04:11 -0500
-Received: (qmail invoked by alias); 06 Dec 2007 12:04:09 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp046) with SMTP; 06 Dec 2007 13:04:09 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Ufas1LBVUEYfsaktUYXuvbSoa/T0o04EcYMyddf
-	U6G8XX0HZLOZB/
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S1752453AbXLFMLy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 07:11:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752540AbXLFMLy
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 07:11:54 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:21528 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752420AbXLFMLx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 07:11:53 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@eudaptics.com>)
+	id 1J0FZD-0000qq-EN; Thu, 06 Dec 2007 13:11:00 +0100
+Received: from srv.linz.viscovery (srv.linz.viscovery [192.168.1.4])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 77F9054D; Thu,  6 Dec 2007 13:11:47 +0100 (CET)
+Received: by srv.linz.viscovery (Postfix, from userid 1000)
+	id 39C80FA45; Thu,  6 Dec 2007 13:11:47 +0100 (CET)
+X-Mailer: git-send-email 1.5.3.7.1079.gecca
+X-Spam-Score: 1.2 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67276>
 
+for-each-ref can accept only one quoting style. For this reason it uses
+OPT_BIT for the quoting style switches so that it is easy to check for
+more than one bit being set. However, not all symbolic constants were
+actually single bit values. In particular:
 
-The default was not to change the window or depth at all.  As suggested
-by Jon Smirl, Linus Torvalds and others, default to
+    $ git for-each-ref --python
+    error: more than one quoting style ?
 
-	--window=250 --depth=250
+This fixes it.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+While we are here, let's also remove the space before the question mark.
+
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
+ builtin-for-each-ref.c  |    6 +++---
+ t/t6300-for-each-ref.sh |   44 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+), 3 deletions(-)
 
-	On Wed, 5 Dec 2007, Linus Torvalds wrote:
-
-	> On Thu, 6 Dec 2007, Daniel Berlin wrote:
-	> > 
-	> > Actually, it turns out that git-gc --aggressive does this dumb 
-	> > thing to pack files sometimes regardless of whether you 
-	> > converted from an SVN repo or not.
-	> 
-	> Absolutely. git --aggressive is mostly dumb. It's really only 
-	> useful for the case of "I know I have a *really* bad pack, and I 
-	> want to throw away all the bad packing decisions I have done".
-	>
-	> [...]
-	> 
-	> So the equivalent of "git gc --aggressive" - but done *properly* 
-	> - is to do (overnight) something like
-	> 
-	> 	git repack -a -d --depth=250 --window=250
-
-	How about this, then?
-	
- builtin-gc.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-gc.c b/builtin-gc.c
-index 799c263..c6806d3 100644
---- a/builtin-gc.c
-+++ b/builtin-gc.c
-@@ -23,7 +23,7 @@ static const char * const builtin_gc_usage[] = {
- };
+diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+index daf3a08..f36a43c 100644
+--- a/builtin-for-each-ref.c
++++ b/builtin-for-each-ref.c
+@@ -13,8 +13,8 @@
+ #define QUOTE_NONE 0
+ #define QUOTE_SHELL 1
+ #define QUOTE_PERL 2
+-#define QUOTE_PYTHON 3
+-#define QUOTE_TCL 4
++#define QUOTE_PYTHON 4
++#define QUOTE_TCL 8
  
- static int pack_refs = 1;
--static int aggressive_window = -1;
-+static int aggressive_window = 250;
- static int gc_auto_threshold = 6700;
- static int gc_auto_pack_limit = 20;
+ typedef enum { FIELD_STR, FIELD_ULONG, FIELD_TIME } cmp_type;
  
-@@ -192,6 +192,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+@@ -861,7 +861,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(for_each_ref_usage, opts);
+ 	}
+ 	if (HAS_MULTI_BITS(quote_style)) {
+-		error("more than one quoting style ?");
++		error("more than one quoting style?");
+ 		usage_with_options(for_each_ref_usage, opts);
+ 	}
+ 	if (verify_format(format))
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index c722635..c5d0721 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -169,5 +169,49 @@ test_expect_success 'Verify descending sort' '
+ 	git diff expected actual
+ '
  
- 	if (aggressive) {
- 		append_option(argv_repack, "-f", MAX_ADD);
-+		append_option(argv_repack, "--depth=250", MAX_ADD);
- 		if (aggressive_window > 0) {
- 			sprintf(buf, "--window=%d", aggressive_window);
- 			append_option(argv_repack, buf, MAX_ADD);
++cat >expected <<\EOF
++'refs/heads/master'
++'refs/tags/testtag'
++EOF
++
++test_expect_success 'Quoting style: shell' '
++	git for-each-ref --shell --format="%(refname)" >actual &&
++	git diff expected actual
++'
++
++test_expect_success 'Quoting style: perl' '
++	git for-each-ref --perl --format="%(refname)" >actual &&
++	git diff expected actual
++'
++
++test_expect_success 'Quoting style: python' '
++	git for-each-ref --python --format="%(refname)" >actual &&
++	git diff expected actual
++'
++
++test_expect_success 'Quoting style: tcl' '
++	git for-each-ref --python --format="%(refname)" >actual &&
++	git diff expected actual
++'
++
++cat >expected <<\EOF
++"refs/heads/master"
++"refs/tags/testtag"
++EOF
++
++test_expect_success 'Quoting style: shell' '
++	git for-each-ref --tcl --format="%(refname)" >actual &&
++	git diff expected actual
++'
++
++for i in "--perl --shell" "-s --python" "--python --tcl" "--tcl --perl"; do
++	test_expect_success "more than one quoting style: $i" "
++		git for-each-ref $i 2>&1 | (read line &&
++		case \$line in
++		\"error: more than one quoting style\"*) : happy;;
++		*) false
++		esac)
++	"
++done
+ 
+ test_done
 -- 
-1.5.3.7.2157.g9598e
+1.5.3.7.1079.gecca
