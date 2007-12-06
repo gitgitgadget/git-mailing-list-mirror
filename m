@@ -1,65 +1,53 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: [PATCH] Silence iconv warnings on Leopard
-Date: Thu,  6 Dec 2007 20:07:03 +0100
-Message-ID: <1196968023-45284-1-git-send-email-win@wincent.com>
-Cc: jnareb@gmail.com, blaker@gmail.com,
-	Wincent Colaiuta <win@wincent.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 06 20:09:41 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0M6E-0004NA-GR
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 20:09:30 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755182AbXLFTHQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 14:07:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754168AbXLFTHP
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 14:07:15 -0500
-Received: from wincent.com ([72.3.236.74]:40147 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755161AbXLFTHN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 14:07:13 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lB6J75r8025145;
-	Thu, 6 Dec 2007 13:07:07 -0600
-X-Mailer: git-send-email 1.5.3.7.1067.gaa51
-Sender: git-owner@vger.kernel.org
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Re: Git and GCC
+Date: Thu, 06 Dec 2007 13:12:51 -0600
+Message-ID: <1196968371.18340.30.camel@ld0161-tx32>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 	 <20071205.202047.58135920.davem@davemloft.net> 	 <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com> 	 <20071205.204848.227521641.davem@davemloft.net> 	 <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> 	 <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Daniel Berlin <dberlin@dberlin.org>, David Miller <davem@davemloft.net>,         ismail@pardus.org.tr, gcc@gcc.gnu.org, Git List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: gcc-return-142762-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 20:13:28 2007
+Return-path: <gcc-return-142762-gcc=m.gmane.org@gcc.gnu.org>
+Envelope-to: gcc@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1J0MA1-00064N-9A
+	for gcc@gmane.org; Thu, 06 Dec 2007 20:13:25 +0100
+Received: (qmail 28618 invoked by alias); 6 Dec 2007 19:13:06 -0000
+Received: (qmail 28574 invoked by uid 22791); 6 Dec 2007 19:13:04 -0000
+X-Spam-Check-By: sourceware.org
+Received: from de01egw02.freescale.net (HELO de01egw02.freescale.net) (192.88.165.103)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 19:12:59 +0000
+Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31]) 	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id lB6JCqL1026857; 	Thu, 6 Dec 2007 12:12:52 -0700 (MST)
+Received: from ld0161-tx32 (ld0161-tx32.am.freescale.net [10.82.19.111]) 	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id lB6JCp1S019387; 	Thu, 6 Dec 2007 13:12:51 -0600 (CST)
+In-Reply-To: <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org>
+X-Mailer: Ximian Evolution 1.4.5 (1.4.5-17)
+Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67324>
+List-Id: <gcc.gcc.gnu.org>
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Delivered-To: mailing list gcc@gcc.gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67325>
 
-Apple ships a newer version of iconv with Leopard (Mac OS X 10.5/Darwin
-9). Ensure that OLD_ICONV is not set on any version of Darwin in the
-9.x series; this should be good for at least a couple of years, when
-Darwin 10 comes out and we can invert the sense of the test to
-specifically check for Darwin 7 or 8.
+On Thu, 2007-12-06 at 00:09, Linus Torvalds wrote:
 
-A more sophisticated and robust check is possible for those who use
-autoconf, but not everybody does that.
+> Git also does delta-chains, but it does them a lot more "loosely". There 
+> is no fixed entity. Delta's are generated against any random other version 
+> that git deems to be a good delta candidate (with various fairly 
+> successful heursitics), and there are absolutely no hard grouping rules.
 
-Signed-off-by: Wincent Colaiuta <win@wincent.com>
----
- Makefile |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+I'd like to learn more about that.  Can someone point me to
+either more documentation on it?  In the absence of that,
+perhaps a pointer to the source code that implements it?
 
-diff --git a/Makefile b/Makefile
-index 999391e..4dda340 100644
---- a/Makefile
-+++ b/Makefile
-@@ -406,7 +406,9 @@ endif
- ifeq ($(uname_S),Darwin)
- 	NEEDS_SSL_WITH_CRYPTO = YesPlease
- 	NEEDS_LIBICONV = YesPlease
--	OLD_ICONV = UnfortunatelyYes
-+	ifneq ($(shell expr "$(uname_R)" : '9\.'),2)
-+		OLD_ICONV = UnfortunatelyYes
-+	endif
- 	NO_STRLCPY = YesPlease
- 	NO_MEMMEM = YesPlease
- endif
--- 
-1.5.3.7.1067.gaa51
+I guess one question I posit is, would it be more accurate
+to think of this as a "delta net" in a weighted graph rather
+than a "delta chain"?
+
+Thanks,
+jdl
