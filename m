@@ -1,53 +1,84 @@
-From: Jeff Garzik <jeff@garzik.org>
-Subject: Re: Cosmetic git-am interactive bug
-Date: Wed, 05 Dec 2007 18:58:17 -0500
-Message-ID: <47573B19.40502@garzik.org>
-References: <4755A836.1050408@garzik.org> <7v8x491v79.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [BUG/PATCH] git grep shows the same hit repeatedly for unmerged paths
+Date: Wed, 05 Dec 2007 16:13:08 -0800
+Message-ID: <7vsl2gk7e3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 06 00:58:46 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 06 01:14:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J048Z-0002Jp-UL
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 00:58:44 +0100
+	id 1J04NU-0007Y3-HK
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 01:14:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751658AbXLEX6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Dec 2007 18:58:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751755AbXLEX6X
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 18:58:23 -0500
-Received: from srv5.dvmed.net ([207.36.208.214]:53328 "EHLO mail.dvmed.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751561AbXLEX6W (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Dec 2007 18:58:22 -0500
-Received: from cpe-069-134-071-233.nc.res.rr.com ([69.134.71.233] helo=core.yyz.us)
-	by mail.dvmed.net with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
-	id 1J048C-00037z-SC; Wed, 05 Dec 2007 23:58:21 +0000
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <7v8x491v79.fsf@gitster.siamese.dyndns.org>
-X-Spam-Score: -4.4 (----)
-X-Spam-Report: SpamAssassin version 3.1.9 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.4 points, 5.0 required)
+	id S1751922AbXLFANQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Dec 2007 19:13:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751531AbXLFANQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Dec 2007 19:13:16 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:42324 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751922AbXLFANP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Dec 2007 19:13:15 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id A78F42EF;
+	Wed,  5 Dec 2007 19:13:33 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 3D7699D33E;
+	Wed,  5 Dec 2007 19:13:32 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67214>
 
-Junio C Hamano wrote:
-> Jeff Garzik <jeff@garzik.org> writes:
-> 
->> The use of the older one-line summary led me to believe that it had
->> not committed my changelog edits.  Looking at the result, however,
->> proved that the commit changelog was my new, corrected version.
-> 
-> I knew about this for quite some time but it was a very low priority for
-> me.  This should fix it.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+When the index is unmerged, e.g.
 
-Thanks!  :)
+	$ git ls-files -u
+        100644 faf413748eb6ccb15161a212156c5e348302b1b6 1	setup.c
+        100644 145eca50f41d811c4c8fcb21ed2604e6b2971aba 2	setup.c
+        100644 cb9558c49b6027bf225ba2a6154c4d2a52bcdbe2 3	setup.c
+
+running "git grep" for work tree files repeats hits for each unmerged
+stage.
+
+	$ git grep -n -e setup_work_tree -- '*.[ch]'
+        setup.c:209:void setup_work_tree(void)
+        setup.c:209:void setup_work_tree(void)
+        setup.c:209:void setup_work_tree(void)
+
+This should fix it.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ builtin-grep.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/builtin-grep.c b/builtin-grep.c
+index bbf747f..f1ff8dc 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -343,12 +343,12 @@ static int external_grep(struct grep_opt *opt, const char **paths, int cached)
+ 			memcpy(name + 2, ce->name, len + 1);
+ 		}
+ 		argv[argc++] = name;
+-		if (argc < MAXARGS)
+-			continue;
+-		status = flush_grep(opt, argc, nr, argv, &kept);
+-		if (0 < status)
+-			hit = 1;
+-		argc = nr + kept;
++		if (MAXARGS <= argc) {
++			status = flush_grep(opt, argc, nr, argv, &kept);
++			if (0 < status)
++				hit = 1;
++			argc = nr + kept;
++		}
+ 		if (ce_stage(ce)) {
+ 			do {
+ 				i++;
