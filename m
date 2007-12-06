@@ -1,113 +1,105 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Git and GCC
-Date: Thu, 6 Dec 2007 11:39:49 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712061118050.13796@woody.linux-foundation.org>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>  <20071205.202047.58135920.davem@davemloft.net>  <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>  <20071205.204848.227521641.davem@davemloft.net>   <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com>  <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org> <1196968371.18340.30.camel@ld0161-tx32>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Berlin <dberlin@dberlin.org>, David Miller <davem@davemloft.net>,         ismail@pardus.org.tr, gcc@gcc.gnu.org, Git List <git@vger.kernel.org>
-To: Jon Loeliger <jdl@freescale.com>
-X-From: gcc-return-142766-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 20:41:01 2007
-Return-path: <gcc-return-142766-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J0MaO-0000nU-DM
-	for gcc@gmane.org; Thu, 06 Dec 2007 20:40:41 +0100
-Received: (qmail 21099 invoked by alias); 6 Dec 2007 19:40:22 -0000
-Received: (qmail 21089 invoked by uid 22791); 6 Dec 2007 19:40:21 -0000
-X-Spam-Check-By: sourceware.org
-Received: from smtp2.linux-foundation.org (HELO smtp2.linux-foundation.org) (207.189.120.14)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 19:40:15 +0000
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55]) 	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB6JdpWB025893 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); 	Thu, 6 Dec 2007 11:39:52 -0800
-Received: from localhost (localhost [127.0.0.1]) 	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB6Jdn9E008421; 	Thu, 6 Dec 2007 11:39:50 -0800
-In-Reply-To: <1196968371.18340.30.camel@ld0161-tx32>
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH 3/3] Color support for "git-add -i"
+Date: Thu, 6 Dec 2007 20:59:48 +0100
+Message-ID: <5055E3DF-E01D-41B5-9F59-DAD69885CAE8@wincent.com>
+References: <475697BC.2090701@viscovery.net> <1196906706-11170-1-git-send-email-gitster@pobox.com> <1196906706-11170-2-git-send-email-gitster@pobox.com> <1196906706-11170-3-git-send-email-gitster@pobox.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 06 21:03:02 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J0Mvl-00029Y-15
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 21:02:45 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754586AbXLFUCW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Dec 2007 15:02:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754563AbXLFUCV
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 15:02:21 -0500
+Received: from wincent.com ([72.3.236.74]:40261 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754355AbXLFUCS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Dec 2007 15:02:18 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lB6JxmIh026497;
+	Thu, 6 Dec 2007 13:59:49 -0600
+In-Reply-To: <1196906706-11170-3-git-send-email-gitster@pobox.com>
+X-Mailer: Apple Mail (2.915)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67329>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67330>
+
+El 6/12/2007, a las 3:05, Junio C Hamano escribi=F3:
+
+> +sub colored_diff_hunk {
+> +	my ($text) =3D @_;
+> +	# return the text, so that it can be passed to print()
+> +	my @ret;
+> +	for (@$text) {
+> +		if (!$diff_use_color) {
+> +			push @ret, $_;
+> +			next;
+> +		}
+> +
+> +		if (/^\+/) {
+> +			push @ret, colored($new_color, $_);
+> +		} elsif (/^\-/) {
+> +			push @ret, colored($old_color, $_);
+> +		} elsif (/^\@/) {
+> +			push @ret, colored($fraginfo_color, $_);
+> +		} elsif (/^ /) {
+> +			push @ret, colored($normal_color, $_);
+> +		} else {
+> +			push @ret, colored($metainfo_color, $_);
+> +		}
+> +	}
+> +	return @ret;
+> +}
 
 
+My one concern here is that as Git's awareness of whitespace problems =20
+becomes more sophisticated it will be harder and harder to do diff =20
+colorization in a way that matches that which is performed by the =20
+builtin diff tools. Here I'm talking about the whole core.whitespace =20
+series which allows the user to define per-path attributes specifying =20
+what kinds of things are to be considered whitespace errors; so far we =
+=20
+have three classes of error proposed as far as I know: trailing =20
+whitespace, spaces before tabs, and indents with non-tabs.
 
-On Thu, 6 Dec 2007, Jon Loeliger wrote:
->
-> On Thu, 2007-12-06 at 00:09, Linus Torvalds wrote:
-> > Git also does delta-chains, but it does them a lot more "loosely". There 
-> > is no fixed entity. Delta's are generated against any random other version 
-> > that git deems to be a good delta candidate (with various fairly 
-> > successful heursitics), and there are absolutely no hard grouping rules.
-> 
-> I'd like to learn more about that.  Can someone point me to
-> either more documentation on it?  In the absence of that,
-> perhaps a pointer to the source code that implements it?
+I think it's very important that "git add --interactive" be 100% =20
+consistent with the other tools here because in many cases the =20
+previewing you do during an interactive session is what you rely upon =20
+to review whether a change should be committed. In other words, you =20
+don't want to think stuff is ok because "git add --interactive" leads =20
+you to believe that it's ok when it really isn't, and you don't want =20
+to have to run "git diff" as a separate step either just to double =20
+check.
 
-Well, in a very real sense, what the delta code does is:
- - just list every single object in the whole repository
- - walk over each object, trying to find another object that it can be 
-   written as a delta against
- - write out the result as a pack-file
+We can replicate the core.whitespace logic here but it's likely to be =20
+an error prone process as it involves repeating the same logic in two =20
+different places using two different implementations in two different =20
+languages.
 
-That's simplified: we may not walk _all_ objects, for example: only a 
-global repack does that (and most pack creations are actually for pushign 
-and pulling between two repositories, so we only walk the objects that are 
-in the source but not the destination repository).
+What are the other options?
 
-The interesting phase is the "walk each object, try to find a delta" part. 
-In particular, you don't want to try to find a delta by comparing each 
-object to every other object out there (that would be O(n^2) in objects, 
-and with a fairly high constant cost too!). So what it does is to sort the 
-objects by a few heuristics (type of object, base name that object was 
-found as when traversing a tree and size, and how recently it was found in 
-the history).
+- Make git-add--interactive part of builtin-add so as to be able to =20
+use the core.whitespace code directly? (ideally yes and at some point =20
+in the future it seems inevitable that this will happen, but it will =20
+require a fair bit of work)
 
-And then over that sorted list, it tries to find deltas between entries 
-that are "close" to each other (and that's where the "--window=xyz" thing 
-comes in - it says how big the window is for objects being close. A 
-smaller window generates somewhat less good deltas, but takes a lot less 
-effort to generate).
+- Fork a second "git diff-files" process to capture the colorized =20
+version of the output? (may set off the "kludge" alarm)
 
-The source is in git/builtin-pack-objects.c, with the core of it being
+- Something else?
 
- - try_delta() - try to generate a *single* delta when given an object 
-   pair.
-
- - find_deltas() - do the actual list traversal
-
- - prepare_pack() and type_size_sort() - create the delta sort list from 
-   the list of objects.
-
-but that whole file is probably some of the more opaque parts of git.
-
-> I guess one question I posit is, would it be more accurate
-> to think of this as a "delta net" in a weighted graph rather
-> than a "delta chain"?
-
-It's certainly not a simple chain, it's more of a set of acyclic directed 
-graphs in the object list. And yes, it's weigted by the size of the delta 
-between objects, and the optimization problem is kind of akin to finding 
-the smallest spanning tree (well, forest - since you do *not* want to 
-create one large graph, you also want to make the individual trees shallow 
-enough that you don't have excessive delta depth).
-
-There are good algorithms for finding minimum spanning trees, but this one 
-is complicated by the fact that the biggest cost (by far!) is the 
-calculation of the weights itself. So rather than really worry about 
-finding the minimal tree/forest, the code needs to worry about not having 
-to even calculate all the weights!
-
-(That, btw, is a common theme. A lot of git is about traversing graphs, 
-like the revision graph. And most of the trivial graph problems all assume 
-that you have the whole graph, but since the "whole graph" is the whole 
-history of the repository, those algorithms are totally worthless, since 
-they are fundamentally much too expensive - if we have to generate the 
-whole history, we're already screwed for a big project. So things like 
-revision graph calculation, the main performance issue is to avoid having 
-to even *look* at parts of the graph that we don't need to see!)
-
-			Linus
+Cheers,
+Wincent
