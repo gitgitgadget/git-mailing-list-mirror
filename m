@@ -1,49 +1,77 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] gc --aggressive: make it really aggressive
-Date: Thu, 06 Dec 2007 18:05:17 +0100
-Message-ID: <8563zbpxde.fsf@lola.goethe.zz>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 	<20071205.202047.58135920.davem@davemloft.net> 	<4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com> 	<20071205.204848.227521641.davem@davemloft.net> 	<4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> 	<alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org> 	<Pine.LNX.4.64.0712061201580.27959@racer.site> 	<20071206142254.GD5959@artemis.madism.org> 	<Pine.LNX.4.64.0712061552550.27959@racer.site>
+From: Thomas Harning <harningt@gmail.com>
+Subject: Re: [BUG/RFC git-gui] password for push/pull in case of git+ssh://repo
+Date: Thu, 06 Dec 2007 12:11:59 -0500
+Message-ID: <47582D5F.7070003@gmail.com>
+References: <1196951517.3294.24.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>,  Linus Torvalds <torvalds@linux-foundation.org>,  Daniel Berlin <dberlin@dberlin.org>,  David Miller <davem@davemloft.net>,  ismail@pardus.org.tr,  gcc@gcc.gnu.org,  git@vger.kernel.org,  gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: gcc-return-142750-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 18:08:40 2007
-Return-path: <gcc-return-142750-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J0KD6-0001NN-0a
-	for gcc@gmane.org; Thu, 06 Dec 2007 18:08:28 +0100
-Received: (qmail 4598 invoked by alias); 6 Dec 2007 17:08:09 -0000
-Received: (qmail 4588 invoked by uid 22791); 6 Dec 2007 17:08:09 -0000
-X-Spam-Check-By: sourceware.org
-Received: from fencepost.gnu.org (HELO fencepost.gnu.org) (140.186.70.10)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 17:08:04 +0000
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz) 	by fencepost.gnu.org with esmtp (Exim 4.60) 	(envelope-from <dak@gnu.org>) 	id 1J0KCb-00016N-1z; Thu, 06 Dec 2007 12:07:57 -0500
-Received: by lola.goethe.zz (Postfix, from userid 1002) 	id 3DC2D1C4CE16; Thu,  6 Dec 2007 18:05:16 +0100 (CET)
-In-Reply-To: <Pine.LNX.4.64.0712061552550.27959@racer.site> (Johannes 	Schindelin's message of "Thu, 6 Dec 2007 15:55:43 +0000 (GMT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ivo Alxneit <ivo.alxneit@psi.ch>
+X-From: git-owner@vger.kernel.org Thu Dec 06 18:13:34 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J0KHq-0003aA-56
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 18:13:22 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752658AbXLFRM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 12:12:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815AbXLFRM7
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 12:12:59 -0500
+Received: from nz-out-0506.google.com ([64.233.162.237]:12485 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751359AbXLFRM6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 12:12:58 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so115368nze
+        for <git@vger.kernel.org>; Thu, 06 Dec 2007 09:12:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        bh=CaHYpXnbmJaP81zpcWceyuW8gFQeSNko4J06OUq10Vk=;
+        b=oBLj7ikSe5SQu1hviXh648G7+0PUD4jO32hwOwiL0kiRAkMZyOE/Vop+7l46MGeDkaW5KgSQ2gjhtdRVacvQc77G0Kve6ms5YQe+3fqj4iYjYLBPcu0fmM88LTfyoXvntDIvKb2vhm4UtgGsUJuhVNg13hSmk9c1W4veUap8Q0A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=is+AZ29c28WBinFP2pQjKnTY4L3iJ74Aznx0gQN7yz6iVcyebGwDQNKmE153Ws/mE1cYtkXrhFyeURPQTaZTFEfESZgrB6dTiPR9c1JTjzwNZm0VTTlQY/oPJHxOftCHlJO9TevZFUBJWd9/oRzfo+zPis9+SXK4LGA00koyVNI=
+Received: by 10.142.106.18 with SMTP id e18mr1751284wfc.1196961177374;
+        Thu, 06 Dec 2007 09:12:57 -0800 (PST)
+Received: from ?192.168.24.40? ( [149.164.193.61])
+        by mx.google.com with ESMTPS id a16sm1854272rof.2007.12.06.09.12.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 06 Dec 2007 09:12:56 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070716)
+In-Reply-To: <1196951517.3294.24.camel@localhost.localdomain>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67305>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67306>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Ivo Alxneit wrote:
+> when i use git-gui (0.9.0) to push/pull to/from a git+ssh://repo i have
+> to supply my password to ssh. i get the password prompt from ssh on the
+> controlling shell. as i often use several shells and git-gui might run
+> in the background it is rather bothering to find the correct shell where
+> ssh expects the password. could this be changed (in a safe way) in
+> git-gui e.g. like pinentry pops up a window when gpg is used to sign
+> emails?
+>
+> p.s. please cc me. i have not subscribed to the list
+>
+> thanks
+>   
+I know this doesn't answer the problem exactly, but if you use ssh keys 
+and some sort of key management utility (such as Keychain or maybe Gnome 
+keyring?), you can dodge the password entry problem and never have to 
+enter a password (pending you register your ssh key with the server [ex: 
+ssh-copy-id servername])
 
-> However, I think that --aggressive should be aggressive, and if you
-> decide to run it on a machine which lacks the muscle to be aggressive,
-> well, you should have known better.
 
-That's a rather cheap shot.  "you should have known better" than
-expecting to be able to use a documented command and option because the
-git developers happened to have a nicer machine...
+Another option that might answer your problem (and could be potentially 
+integrated into git-gui) is the usage of the SSH_ASKPASS environment 
+variable.
 
-_How_ is one supposed to have known better?
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+SSH_ASKPASS is a program to execute to get the passphrase that works by 
+reading console output from the program.
