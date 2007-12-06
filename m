@@ -1,77 +1,65 @@
-From: "Adam Mercer" <ramercer@gmail.com>
-Subject: XML parsing error from gitweb at freedesktop.org
-Date: Thu, 6 Dec 2007 16:34:55 -0500
-Message-ID: <799406d60712061334q33d2dba5r5496ba21069a4547@mail.gmail.com>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: how to create v2 patch
+Date: Thu, 06 Dec 2007 22:38:14 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <47586BC6.2020100@obry.net>
+References: <47515693.9070405@imap.cc> <47515EF3.8010507@obry.net> <20071201134321.GA10997@glandium.org> <475855D6.201@imap.cc>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 06 22:35:23 2007
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Tilman Schmidt <tilman@imap.cc>
+X-From: git-owner@vger.kernel.org Thu Dec 06 22:38:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0ONO-0007ML-MT
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 22:35:23 +0100
+	id 1J0OQf-0000I8-OQ
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 22:38:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751137AbXLFVe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 16:34:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbXLFVe6
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 16:34:58 -0500
-Received: from nz-out-0506.google.com ([64.233.162.236]:60945 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750986AbXLFVe5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 16:34:57 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so227715nze
-        for <git@vger.kernel.org>; Thu, 06 Dec 2007 13:34:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=pGqNndOPCCJnIlP8yd+XdTWNEcajlCFfd+F8ESx24+0=;
-        b=awj+e3rEZgDH2NP+NeekPLTx6Z0T278zDoA2X8+uZRMIGFeUt7/JGlpIUDZse5XpeFklbpPqy+km+Ct5S4NZdIrxNanWB0g1n/kDJofqxcp522ET2OZyESdMm6YhaIu+2AhZbSYSlWiN5zRcwdmChshk27TMH+e3VFdkq3VrOs4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=fsMCFmem28UVcjw4qIRtQrQXboFsIqeYFrNR1WqAAgs3jjNRoplLkdQlciP2f/i4wBC88vDmQvdTbxTApFN+fhH1LC20Alh5fx5OklDGj+yArIi878a/vGU6kZaXhasIElOc4SZVlQqIzRrULNbZrBvwmwqSMumKb+5ygNCUI+A=
-Received: by 10.142.222.21 with SMTP id u21mr1968023wfg.1196976895289;
-        Thu, 06 Dec 2007 13:34:55 -0800 (PST)
-Received: by 10.142.86.21 with HTTP; Thu, 6 Dec 2007 13:34:55 -0800 (PST)
-Content-Disposition: inline
+	id S1751936AbXLFViU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Dec 2007 16:38:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752356AbXLFViU
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 16:38:20 -0500
+Received: from smtp21.orange.fr ([80.12.242.48]:61626 "EHLO smtp21.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751696AbXLFViT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 16:38:19 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2116.orange.fr (SMTP Server) with ESMTP id 4B2011C0009F
+	for <git@vger.kernel.org>; Thu,  6 Dec 2007 22:38:17 +0100 (CET)
+Received: from [192.168.0.100] (AVelizy-151-1-88-105.w86-205.abo.wanadoo.fr [86.205.126.105])
+	by mwinf2116.orange.fr (SMTP Server) with ESMTP id 057931C00086;
+	Thu,  6 Dec 2007 22:38:16 +0100 (CET)
+X-ME-UUID: 20071206213817224.057931C00086@mwinf2116.orange.fr
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <475855D6.201@imap.cc>
+X-Enigmail-Version: 0.95.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67340>
 
-Hi
+Tilman Schmidt a =E9crit :
+> Hmm. But wouldn't each of these approaches lead to my original
+> commit being removed from my git repository? And isn't removing
+> commits that have already been published strongly discouraged?
 
-In looking through some commits on the freedesktop.org gitweb I
-encountered an error trying to view the following commit
+They won't be removed, just changed/merged... and that's what you were
+looking for or I did not understand your question! This is not bad
+practice as it is done on YOUR repository. Of course this should never
+be done on a pushed/published changeset.
 
-<http://gitweb.freedesktop.org/?p=xorg/xserver.git;a=commitdiff;h=48e6a75fbdd0fee86e364f02ace83f20b312a2b2>
+Pascal.
 
-In viewing the page under Safari on Mac OS X Leopard the following
-error is displayed:
+--=20
 
-This page contains the following errors:
-error on line 7998 at column 129634: internal error
-
-Camino & Firefox both display:
-
-XML Parsing Error: not well-formed
-Location: http://gitweb.freedesktop.org/?p=xorg/xserver.git;a=commitdiff;h=48e6a75fbdd0fee86e364f02ace83f20b312a2b2
-Line Number 7998, Column 24:
-
-<div class="diff rem">- </div>
------------------------^
-
-as cgit displays the commit OK
-
-<http://cgit.freedesktop.org/xorg/xserver/commit/?h=xorg-server-1.2-apple&id=48e6a75fbdd0fee86e364f02ace83f20b312a2b2>
-
-leads me to think that the problem lies in gitweb.  Could this be a
-problem with gitweb?
-
-Cheers
-
-Adam
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
