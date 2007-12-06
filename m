@@ -1,29 +1,27 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: Git and GCC
-Date: Thu, 6 Dec 2007 17:22:04 -0500
-Message-ID: <9e4733910712061422w139273c0gf3cfb04c6ba8c509@mail.gmail.com>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 	 <9e4733910712052247x116cabb4q48ebafffb93f7e03@mail.gmail.com> 	 <20071206071503.GA19504@coredump.intra.peff.net> 	 <alpine.LFD.0.99999.0712060915590.555@xanadu.home> 	 <20071206173946.GA10845@sigill.intra.peff.net> 	 <alpine.LFD.0.9999.0712061030560.13796@woody.linux-foundation.org> 	 <9e4733910712061055p353775d8wd0321bc9c81297b7@mail.gmail.com> 	 <alpine.LFD.0.99999.0712061403000.555@xanadu.home> 	 <9e4733910712061339n3aef023r22e5b73aac120c8a@mail.gmail.com> 	 <alpine.LFD.0.99999.0712061645120.555@xanadu.home>
+Date: Thu, 06 Dec 2007 23:26:07 +0100
+Message-ID: <85r6hzo3y8.fsf@lola.goethe.zz>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 	<20071205.202047.58135920.davem@davemloft.net> 	<4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com> 	<20071205.204848.227521641.davem@davemloft.net> 	<4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> 	<alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org> 	<1196968371.18340.30.camel@ld0161-tx32> 	<7vk5nrd1yq.fsf@gitster.siamese.dyndns.org> 	<7vabonczad.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,  	"Jeff King" <peff@peff.net>, "Daniel Berlin" <dberlin@dberlin.org>,  	"Harvey Harrison" <harvey.harrison@gmail.com>,  	"David Miller" <davem@davemloft.net>, ismail@pardus.org.tr,  	gcc@gcc.gnu.org, git@vger.kernel.org
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: gcc-return-142775-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 23:22:32 2007
-Return-path: <gcc-return-142775-gcc=m.gmane.org@gcc.gnu.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Jon Loeliger <jdl@freescale.com>,  Linus Torvalds <torvalds@linux-foundation.org>,  Daniel Berlin <dberlin@dberlin.org>,  David Miller <davem@davemloft.net>,  ismail@pardus.org.tr,  gcc@gcc.gnu.org,  Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: gcc-return-142776-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 23:26:16 2007
+Return-path: <gcc-return-142776-gcc=m.gmane.org@gcc.gnu.org>
 Envelope-to: gcc@gmane.org
 Received: from sourceware.org ([209.132.176.174])
 	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J0P71-0002u3-2s
-	for gcc@gmane.org; Thu, 06 Dec 2007 23:22:31 +0100
-Received: (qmail 19873 invoked by alias); 6 Dec 2007 22:22:13 -0000
-Received: (qmail 19861 invoked by uid 22791); 6 Dec 2007 22:22:12 -0000
+	id 1J0PAb-0004Kw-U9
+	for gcc@gmane.org; Thu, 06 Dec 2007 23:26:14 +0100
+Received: (qmail 25156 invoked by alias); 6 Dec 2007 22:25:55 -0000
+Received: (qmail 25144 invoked by uid 22791); 6 Dec 2007 22:25:55 -0000
 X-Spam-Check-By: sourceware.org
-Received: from wa-out-1112.google.com (HELO wa-out-1112.google.com) (209.85.146.178)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 22:22:06 +0000
-Received: by wa-out-1112.google.com with SMTP id m16so872360waf         for <gcc@gcc.gnu.org>; Thu, 06 Dec 2007 14:22:04 -0800 (PST)
-Received: by 10.114.73.1 with SMTP id v1mr1457271waa.1196979724791;         Thu, 06 Dec 2007 14:22:04 -0800 (PST)
-Received: by 10.114.208.17 with HTTP; Thu, 6 Dec 2007 14:22:04 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.99999.0712061645120.555@xanadu.home>
-Content-Disposition: inline
+Received: from fencepost.gnu.org (HELO fencepost.gnu.org) (140.186.70.10)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 22:25:48 +0000
+Received: from localhost ([127.0.0.1] helo=lola.goethe.zz) 	by fencepost.gnu.org with esmtp (Exim 4.60) 	(envelope-from <dak@gnu.org>) 	id 1J0PA5-000567-R1; Thu, 06 Dec 2007 17:25:42 -0500
+Received: by lola.goethe.zz (Postfix, from userid 1002) 	id 3AE671C4CCE5; Thu,  6 Dec 2007 23:26:07 +0100 (CET)
+In-Reply-To: <7vabonczad.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's 	message of "Thu, 06 Dec 2007 13:02:18 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
 Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
 List-Id: <gcc.gcc.gnu.org>
@@ -33,57 +31,30 @@ List-Post: <mailto:gcc@gcc.gnu.org>
 List-Help: <http://gcc.gnu.org/ml/>
 Sender: gcc-owner@gcc.gnu.org
 Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67348>
 
-On 12/6/07, Nicolas Pitre <nico@cam.org> wrote:
-> On Thu, 6 Dec 2007, Jon Smirl wrote:
->
-> > On 12/6/07, Nicolas Pitre <nico@cam.org> wrote:
-> > > > When I lasted looked at the code, the problem was in evenly dividing
-> > > > the work. I was using a four core machine and most of the time one
-> > > > core would end up with 3-5x the work of the lightest loaded core.
-> > > > Setting pack.threads up to 20 fixed the problem. With a high number of
-> > > > threads I was able to get a 4hr pack to finished in something like
-> > > > 1:15.
-> > >
-> > > But as far as I know you didn't try my latest incarnation which has been
-> > > available in Git's master branch for a few months already.
-> >
-> > I've deleted all my giant packs. Using the kernel pack:
-> > 4GB Q6600
-> >
-> > Using the current thread pack code I get these results.
-> >
-> > The interesting case is the last one. I set it to 15 threads and
-> > monitored with 'top'.
-> > For 0-60% compression I was at 300% CPU, 60-74% was 200% CPU and
-> > 74-100% was 100% CPU. It never used all for cores. The only other
-> > things running were top and my desktop. This is the same load
-> > balancing problem I observed earlier.
->
-> Well, that's possible with a window 25 times larger than the default.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Why did it never use more than three cores?
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Jon Loeliger <jdl@freescale.com> writes:
+>>
+>>> I'd like to learn more about that.  Can someone point me to
+>>> either more documentation on it?  In the absence of that,
+>>> perhaps a pointer to the source code that implements it?
+>>
+>> See Documentation/technical/pack-heuristics.txt,
+>
+> A somewhat funny thing about this is ...
+>
+> $ git show --stat --summary b116b297
+> commit b116b297a80b54632256eb89dd22ea2b140de622
+> Author: Jon Loeliger <jdl@jdl.com>
+> Date:   Thu Mar 2 19:19:29 2006 -0600
+>
+>     Added Packing Heursitics IRC writeup.
 
->
-> The load balancing is solved with a master thread serving relatively
-> small object list segments to any work thread that finished with its
-> previous segment.  But the size for those segments is currently fixed to
-> window * 1000 which is way too large when window == 250.
->
-> I have to find a way to auto-tune that segment size somehow.
->
-> But with the default window size there should not be any such noticeable
-> load balancing problem.
->
-> Note that threading only happens in the compression phase.  The count
-> and write phase are hardly paralleled.
->
->
-> Nicolas
->
-
+Ah, fishing for compliments.  The cookie baking season...
 
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
