@@ -1,90 +1,124 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [RFC] Introduce .git/BRANCH to point to the current branch
-Date: Fri, 7 Dec 2007 00:39:54 +0100
-Message-ID: <200712070039.55249.robin.rosenberg.lists@dewire.com>
-References: <4755B3B3.80704@gmail.com> <m34peyur8r.fsf@roke.D-201> <7vir3e428i.fsf@gitster.siamese.dyndns.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Better value for chunk_size when threaded
+Date: Thu, 6 Dec 2007 18:58:34 -0500
+Message-ID: <9e4733910712061558k19fbc864ia1fb7a3431fd2603@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Salikh Zakirov <salikh@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 07 00:38:18 2007
+To: "Git Mailing List" <git@vger.kernel.org>,
+	"Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Dec 07 00:59:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0QIL-0006DI-0g
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 00:38:17 +0100
+	id 1J0QcM-0004TC-Vt
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 00:58:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752532AbXLFXh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 18:37:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752560AbXLFXhz
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 18:37:55 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:2271 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752088AbXLFXhz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 18:37:55 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id E15418026FD;
-	Fri,  7 Dec 2007 00:28:29 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 03570-10; Fri,  7 Dec 2007 00:28:29 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 7FB7B80265A;
-	Fri,  7 Dec 2007 00:28:27 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <7vir3e428i.fsf@gitster.siamese.dyndns.org>
+	id S1751615AbXLFX6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 18:58:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751502AbXLFX6h
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 18:58:37 -0500
+Received: from qb-out-0506.google.com ([72.14.204.227]:34111 "EHLO
+	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751160AbXLFX6g (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 18:58:36 -0500
+Received: by qb-out-0506.google.com with SMTP id e11so4473423qbe
+        for <git@vger.kernel.org>; Thu, 06 Dec 2007 15:58:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=LlVRcdMVCponHAxQC8zeZlGOTUxDAiH678MmHdrDLIM=;
+        b=cS/kRNpkiehkqj8bH+Oezh5sN60Uy5WmmKQ8/aM9HYOiGhB9Bw1eueYh6WxnfgllJHGIWE2UFwLiKHRb6O5qsmP8YziDgqSDPL9/OLfSG6uLFTYpCLQpNJ8RIWGSTcAo/+bNBSRp+qimqpLVRejK8k780N6A9exoY3pDSHD//B8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=dYHSIW4E6HiwBSjF3SvqQVltfozEQWxujoiXuwLpzsBj5ScgUROAoY5rVyOdUPyXvCe22gJaXbFA9av1Az/9pOFhaC2juk7PPiTlq/PVSclEausqR7UxVNxDe+ukIBmHaXMF/DrYrFQmpRn4M1vLt5Cj+d0ABZHObFy8vaxDTcU=
+Received: by 10.114.88.1 with SMTP id l1mr1970213wab.1196985514059;
+        Thu, 06 Dec 2007 15:58:34 -0800 (PST)
+Received: by 10.114.208.17 with HTTP; Thu, 6 Dec 2007 15:58:34 -0800 (PST)
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67356>
 
-tisdag 04 december 2007 skrev Junio C Hamano:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> >> Currently, I can do:
-> >> 
-> >> # Oh, what did this look like two commits ago?
-> >> $ git checkout HEAD^^
-> >> # Ah, OK, let's go back to the tip
-> >> $ git checkout branch-name
-> >>                ^^^^^^^^^^^
-> >> But I have to remember and re-type the branch name.
-> >
-> > No, you don't have. You can use
-> >   $ git checkout ORIG_HEAD
-> > or
-> >   $ git checkout HEAD@{1}
-> 
-> But the point is he wants to go back to the branch he came from.  He
-> does not want to detach HEAD at the original commit.
-> 
-> Having said that, I am not sympathetic to "I have to remember".
+I tried some various ideas out for chunk_size and the best strategy I
+found was to simply set it to a constant. How does 20,000 work on
+other CPUs?
 
-I abuse git bisect for this temporary switcing. It only gives me a one
-level memory, but otoh the git prompt tells me I'm on a discourse.
+I'd turn on default threaded support with this change. With threads=1
+versus non-threaded there is no appreciable difference in the time.
 
-[me@lathund GIT (rr/abspath|BISECTING)]$ git checkout master
-Switched to branch "master"
+Is there an API to ask how many CPUs are in the system? It would be
+nice to default the number of threads equal to the number of CPUs and
+only use pack.threads=X to override.
 
-[me@lathund GIT (master|BISECTING)]$ git checkout HEAD~2
-Note: moving to "HEAD~2" which isn't a local branch
-If you want to create a new branch from this checkout, you may do so
-(now or later) by using -b with the checkout command again. Example:
-  git checkout -b <new_branch_name>
-HEAD is now at afcc4f7... Merge branch 'js/prune-expire'
+Making all of this work by default should help when outside people
+decide to do a massive import.
 
-[me@lathund GIT (afcc4f7...|BISECTING)]$ git bisect reset
-Previous HEAD position was afcc4f7... Merge branch 'js/prune-expire'
-Switched to branch "rr/abspath"
-[me@lathund GIT (rr/abspath)]$
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 4f44658..4d73be8 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1645,7 +1645,7 @@ static void ll_find_deltas(struct object_entry
+**list, unsigned list_size,
+        }
 
--- robin
+        /* this should be auto-tuned somehow */
+-       chunk_size = window * 1000;
++       chunk_size = 20000;
+
+        do {
+                unsigned sublist_size = chunk_size;
+
+
+with chunk_size = 20000, everything is on a q6600 4GB
+
+threads = 5
+time git repack -a -d -f --depth=250 --window=250
+real    6m20.123s
+user    20m25.841s
+sys     0m5.520s
+
+
+threads = 4
+time git repack -a -d -f --depth=250 --window=250
+real    6m15.525s
+user    20m20.852s
+sys     0m5.356s
+
+threads = 4
+time git repack -a -d -f
+real    1m31.537s
+user    3m2.063s
+sys     0m3.064s
+
+threads = 1
+time git repack -a -d -f --depth=250 --window=250
+real    18m46.005s
+user    18m43.122s
+sys     0m1.228s
+
+threads = 1
+time git repack -a -d -f
+real    2m57.774s
+user    2m54.211s
+sys     0m1.228s
+
+Non-threaded
+time git repack -a -d -f --depth=250 --window=250
+real    18m51.183s
+user    18m46.538s
+sys     0m1.604s
+
+Non-threaded
+time git repack -a -d -f
+real    2m54.849s
+user    2m51.267s
+sys     0m1.412s
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
