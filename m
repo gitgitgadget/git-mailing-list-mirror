@@ -1,134 +1,129 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Git and GCC
-Date: Wed, 5 Dec 2007 22:09:12 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>  <20071205.202047.58135920.davem@davemloft.net>  <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>  <20071205.204848.227521641.davem@davemloft.net>  <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] git config --get-colorbool
+Date: Wed, 05 Dec 2007 22:12:07 -0800
+Message-ID: <7vve7cgxmw.fsf@gitster.siamese.dyndns.org>
+References: <475697BC.2090701@viscovery.net>
+	<1196906706-11170-1-git-send-email-gitster@pobox.com>
+	<1196906706-11170-2-git-send-email-gitster@pobox.com>
+	<20071206053059.GF5499@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: David Miller <davem@davemloft.net>, ismail@pardus.org.tr, gcc@gcc.gnu.org,         git@vger.kernel.org
-To: Daniel Berlin <dberlin@dberlin.org>
-X-From: gcc-return-142725-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 07:09:56 2007
-Return-path: <gcc-return-142725-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J09vl-00033v-Gu
-	for gcc@gmane.org; Thu, 06 Dec 2007 07:09:54 +0100
-Received: (qmail 8826 invoked by alias); 6 Dec 2007 06:09:34 -0000
-Received: (qmail 8815 invoked by uid 22791); 6 Dec 2007 06:09:33 -0000
-X-Spam-Check-By: sourceware.org
-Received: from smtp2.linux-foundation.org (HELO smtp2.linux-foundation.org) (207.189.120.14)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 06:09:22 +0000
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55]) 	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB669E24025853 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); 	Wed, 5 Dec 2007 22:09:15 -0800
-Received: from localhost (localhost [127.0.0.1]) 	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB669CAw011937; 	Wed, 5 Dec 2007 22:09:12 -0800
-In-Reply-To: <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com>
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 06 07:12:37 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J09yO-0003hf-MQ
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 07:12:37 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752224AbXLFGMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 01:12:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752339AbXLFGMP
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 01:12:15 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:50270 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751136AbXLFGMO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 01:12:14 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id DF9D52EF;
+	Thu,  6 Dec 2007 01:12:34 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 2EDE29A6D2;
+	Thu,  6 Dec 2007 01:12:31 -0500 (EST)
+In-Reply-To: <20071206053059.GF5499@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 6 Dec 2007 00:30:59 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67249>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67250>
 
+Jeff King <peff@peff.net> writes:
 
+> [Eric Wong cc'd because of git-svn relevance]
+>
+> On Wed, Dec 05, 2007 at 06:05:04PM -0800, Junio C Hamano wrote:
+>
+>> This adds an option to help scripts find out color settings from
+>> the configuration file.
+>> 
+>>     git config --get-colorbool color.diff
+>> 
+>> inspects color.diff variable, and exits with status 0 (i.e. success) if
+>> color is to be used.  It exits with status 1 otherwise.
+>
+> There is no way to differentiate between "do not use color" and "no
+> value found". This makes it impossible to use this to implement the
+> required "try color.diff, fallback to diff.color" behavior.
+>
+> We could simply make it
+>
+>   git config --get-colorbool diff
+>
+> which would check both (and when diff.color support is finally dropped,
+> just remove it from there).
 
-On Thu, 6 Dec 2007, Daniel Berlin wrote:
-> 
-> Actually, it turns out that git-gc --aggressive does this dumb thing
-> to pack files sometimes regardless of whether you converted from an
-> SVN repo or not.
+I thought about this a bit and thought that it would probably be a good
+workaround to teach "--get-colorbool that diff.color is a deprecated
+synonym to color.diff, like this.
 
-Absolutely. git --aggressive is mostly dumb. It's really only useful for 
-the case of "I know I have a *really* bad pack, and I want to throw away 
-all the bad packing decisions I have done".
+-- >8 --
+config --get-colorbool: diff.color is a deprecated synonym to color.diff
 
-To explain this, it's worth explaining (you are probably aware of it, but 
-let me go through the basics anyway) how git delta-chains work, and how 
-they are so different from most other systems.
+The applications can ask for color.diff but the configuration of old
+timer users can still instruct it to use color with diff.color this
+way.
 
-In other SCM's, a delta-chain is generally fixed. It might be "forwards" 
-or "backwards", and it might evolve a bit as you work with the repository, 
-but generally it's a chain of changes to a single file represented as some 
-kind of single SCM entity. In CVS, it's obviously the *,v file, and a lot 
-of other systems do rather similar things.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin-config.c |   18 ++++++++++++++++--
+ 1 files changed, 16 insertions(+), 2 deletions(-)
 
-Git also does delta-chains, but it does them a lot more "loosely". There 
-is no fixed entity. Delta's are generated against any random other version 
-that git deems to be a good delta candidate (with various fairly 
-successful heursitics), and there are absolutely no hard grouping rules.
-
-This is generally a very good thing. It's good for various conceptual 
-reasons (ie git internally never really even needs to care about the whole 
-revision chain - it doesn't really think in terms of deltas at all), but 
-it's also great because getting rid of the inflexible delta rules means 
-that git doesn't have any problems at all with merging two files together, 
-for example - there simply are no arbitrary *,v "revision files" that have 
-some hidden meaning.
-
-It also means that the choice of deltas is a much more open-ended 
-question. If you limit the delta chain to just one file, you really don't 
-have a lot of choices on what to do about deltas, but in git, it really 
-can be a totally different issue.
-
-And this is where the really badly named "--aggressive" comes in. While 
-git generally tries to re-use delta information (because it's a good idea, 
-and it doesn't waste CPU time re-finding all the good deltas we found 
-earlier), sometimes you want to say "let's start all over, with a blank 
-slate, and ignore all the previous delta information, and try to generate 
-a new set of deltas".
-
-So "--aggressive" is not really about being aggressive, but about wasting 
-CPU time re-doing a decision we already did earlier!
-
-*Sometimes* that is a good thing. Some import tools in particular could 
-generate really horribly bad deltas. Anything that uses "git fast-import", 
-for example, likely doesn't have much of a great delta layout, so it might 
-be worth saying "I want to start from a clean slate".
-
-But almost always, in other cases, it's actually a really bad thing to do. 
-It's going to waste CPU time, and especially if you had actually done a 
-good job at deltaing earlier, the end result isn't going to re-use all 
-those *good* deltas you already found, so you'll actually end up with a 
-much worse end result too!
-
-I'll send a patch to Junio to just remove the "git gc --aggressive" 
-documentation. It can be useful, but it generally is useful only when you 
-really understand at a very deep level what it's doing, and that 
-documentation doesn't help you do that.
-
-Generally, doing incremental "git gc" is the right approach, and better 
-than doing "git gc --aggressive". It's going to re-use old deltas, and 
-when those old deltas can't be found (the reason for doing incremental GC 
-in the first place!) it's going to create new ones.
-
-On the other hand, it's definitely true that an "initial import of a long 
-and involved history" is a point where it can be worth spending a lot of 
-time finding the *really*good* deltas. Then, every user ever after (as 
-long as they don't use "git gc --aggressive" to undo it!) will get the 
-advantage of that one-time event. So especially for big projects with a 
-long history, it's probably worth doing some extra work, telling the delta 
-finding code to go wild.
-
-So the equivalent of "git gc --aggressive" - but done *properly* - is to 
-do (overnight) something like
-
-	git repack -a -d --depth=250 --window=250
-
-where that depth thing is just about how deep the delta chains can be 
-(make them longer for old history - it's worth the space overhead), and 
-the window thing is about how big an object window we want each delta 
-candidate to scan.
-
-And here, you might well want to add the "-f" flag (which is the "drop all 
-old deltas", since you now are actually trying to make sure that this one 
-actually finds good candidates.
-
-And then it's going to take forever and a day (ie a "do it overnight" 
-thing). But the end result is that everybody downstream from that 
-repository will get much better packs, without having to spend any effort 
-on it themselves.
-
-			Linus
+diff --git a/builtin-config.c b/builtin-config.c
+index d10b03f..e4a12e3 100644
+--- a/builtin-config.c
++++ b/builtin-config.c
+@@ -210,11 +210,17 @@ static int get_color(int argc, const char **argv)
+ 
+ static int stdout_is_tty;
+ static int get_colorbool_found;
++static int get_diff_color_found;
+ static int git_get_colorbool_config(const char *var, const char *value)
+ {
+-	if (!strcmp(var, get_color_slot))
++	if (!strcmp(var, get_color_slot)) {
+ 		get_colorbool_found =
+ 			git_config_colorbool(var, value, stdout_is_tty);
++	}
++	if (!strcmp(var, "diff.color")) {
++		get_diff_color_found =
++			git_config_colorbool(var, value, stdout_is_tty);
++	}
+ 	return 0;
+ }
+ 
+@@ -233,10 +239,18 @@ static int get_colorbool(int argc, const char **argv)
+ 		stdout_is_tty = isatty(1);
+ 	else
+ 		usage(git_config_set_usage);
+-	get_colorbool_found = 0;
++	get_colorbool_found = -1;
++	get_diff_color_found = -1;
+ 	get_color_slot = argv[0];
+ 	git_config(git_get_colorbool_config);
+ 
++	if (get_colorbool_found < 0) {
++		if (!strcmp(get_color_slot, "color.diff"))
++			get_colorbool_found = get_diff_color_found;
++		if (get_colorbool_found < 0)
++			get_colorbool_found = 0;
++	}
++
+ 	if (argc == 1) {
+ 		return get_colorbool_found ? 0 : 1;
+ 	} else {
