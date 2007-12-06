@@ -1,78 +1,95 @@
-From: Harvey Harrison <harvey.harrison@gmail.com>
-Subject: Re: [RFC] Mirroring svn
-Date: Wed, 05 Dec 2007 22:45:25 -0800
-Message-ID: <1196923525.10408.103.camel@brick>
-References: <1196922153.10408.101.camel@brick>
-	 <20071206064317.GC18698@coredump.intra.peff.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn: .git/svn disk usage
+Date: Wed, 5 Dec 2007 22:47:17 -0800
+Message-ID: <20071206064717.GA7744@muzzle>
+References: <65dd6fd50712022217l5f807f31pf3f00d82c3dccf5c@mail.gmail.com> <loom.20071203T182924-435@post.gmane.org> <20071205085451.GA347@soma> <6D1288C9-8FD7-40CB-BA0B-0032F8D2DA6A@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 06 07:45:52 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: David Voit <david.voit@gmail.com>, git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Thu Dec 06 07:47:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0AUV-0002pa-CL
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 07:45:47 +0100
+	id 1J0AWJ-0003IT-HW
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 07:47:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752680AbXLFGp0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 01:45:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752396AbXLFGp0
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 01:45:26 -0500
-Received: from rv-out-0910.google.com ([209.85.198.188]:31443 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752012AbXLFGpZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 01:45:25 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so134906rvb
-        for <git@vger.kernel.org>; Wed, 05 Dec 2007 22:45:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        bh=sElfjvmiogkndW546fpVXkMc53La4aNbiye6BC7hAMU=;
-        b=l8mYlDvaiFom04s57XAlMr2EISXBgYytW/MgbzKuGjGl0jNkRNDtruUMAc9BgejP3qdOBIdVkt2NT7Tdz7BXVxQiwJmsa6uLUiW3ukgGbQ5RSOogscUgC9KLEGSopw0IV9N59ZRb04DJFMpz/2iC9chPesnQteKnvCzFrufwa64=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=P9Iigqrn/DwHy2y3ks50eoNVRYPYNNRceK0QjgsIXud9KDyukzfR3aHKIINnmAHEfUIzhlOWGkws6yIi+VRJzG1CMs9J0Xiriasn+/VD/VHFZJlZJx2I8ALaH3dLr0LjjbX37ExeTzaazhCR/24S4hCLkMMx0Fe7MPjEHNKVsz8=
-Received: by 10.140.180.13 with SMTP id c13mr1757332rvf.1196923524112;
-        Wed, 05 Dec 2007 22:45:24 -0800 (PST)
-Received: from ?192.168.1.101? ( [216.19.190.48])
-        by mx.google.com with ESMTPS id l17sm310621rvb.2007.12.05.22.45.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 05 Dec 2007 22:45:22 -0800 (PST)
-In-Reply-To: <20071206064317.GC18698@coredump.intra.peff.net>
-X-Mailer: Evolution 2.12.1 
+	id S1752113AbXLFGrT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 01:47:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752396AbXLFGrT
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 01:47:19 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:47436 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751733AbXLFGrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 01:47:19 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 0E6037DC025;
+	Wed,  5 Dec 2007 22:47:18 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <6D1288C9-8FD7-40CB-BA0B-0032F8D2DA6A@midwinter.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67260>
 
-On Thu, 2007-12-06 at 01:43 -0500, Jeff King wrote:
-> On Wed, Dec 05, 2007 at 10:22:33PM -0800, Harvey Harrison wrote:
+Steven Grimm <koreth@midwinter.com> wrote:
+> How about using git itself to keep some of this information? I'll just  
+> throw this idea out there; might or might not make any actual sense.
 > 
-> > // fetching someone else's remote branches is not a standard thing to do
-> > // so we'll need to edit our .git/config file
-> > // you should have a section that looks like:
-> > [remote "gcc.gnu.org"]
-> > 	url = git://git.infradead.org/gcc.git
-> > 	fetch = +refs/heads/*:refs/remotes/gcc.gnu.org/*
-> > // infradead's mirror puts the gcc svn branches in its own namespace
-> > // refs/remotes/gcc.gnu.org/*
-> > // change our fetch line accordingly
-> > [remote "gcc.gnu.org"]
-> > 	url = git://git.infradead.org/gcc.git
-> > 	fetch = +refs/remotes/gcc.gnu.org/*:refs/remotes/gcc.gnu.org/*
+> Create a new "git-svn metadata" branch. This branch contains a fake  
+> directory (never intended for checkout, though you could do it) that  
+> has a "file" for each svn revision. The filename is just the svn  
+> revision number, maybe divided into subdirectories in case you want to  
+> check the branch out for debugging purposes or whatever. The contents  
+> are the git commit SHA1 and whatever other metadata you want to keep  
+> in the future.
 > 
-> FWIW, if you are writing a shell recipe for other people to cut and
-> paste, you can say this as:
-> 
->   git config remote.gcc.gnu.org.fetch \
->     '+refs/remotes/gcc.gnu.org/*:refs/remotes/gcc.gnu.org/*'
+> The advantage of doing it this way? You can pass around svn metadata  
+> using the normal git fetch/push tools, query the metadata using "git  
+> show", etc. In terms of data integrity, it's as secure as anything  
+> else in a git repository, much more so than a separately maintained db  
+> file under .git.
 
-I thought about that, but I like to encourage people to actually look at
-the config file, it's pretty easy to understand.
+I've thought of doing the way you describe in the past, too.
 
-Harvey
+However, a missing ref to the tree you proposed would mean that the
+metadata becomes inaccessible unless git-svn-id: lines are retained.
+
+Right now there's a single ref for all data and metadata.  Going to
+two refs would mean those two refs would always need to be in sync
+with each other.
+
+The basic idea of the git-svn-id: lines is that with the default
+settings, the .rev_db files are deletable and can be regenerated from
+that metadata.  git-svn will automatically re-create .rev_db files it
+cannot find.
+
+This is why the rev_db code in git-svn uses slow, synchronous writes iff
+svk props or no-metadata is enabled; and fast, assynchronous writes
+when the user sticks with the git-svn defaults.
+
+> Along similar lines, a separate branch where the filenames are commit  
+> SHA1s and the file contents are the stuff that currently gets written  
+> into the git-svn-id: lines would mean no more need to rewrite history  
+> when doing dcommit, and thus easier mixing of native git workflows and  
+> interactions with an svn repository.
+
+The current dcommit still has the advantage that commit times match
+those in the SVN repository.
+
+> It would be great if you could clone a git-svn repository and then do  
+> "git svn dcommit" from the clone, secure in the knowledge that things  
+> will stay consistent even if the origin gets your changes via "git svn  
+> fetch" rather than from you.
+
+It's actually doable after the [svn-remote "..."] section .git/config is
+copied and the refs/remotes/* structure is cloned via git.
+
+The [svn-remote "..."] information can be regenerated based on
+git-svn-id: lines (there's no automated way to do that, currently).
+
+-- 
+Eric Wong
