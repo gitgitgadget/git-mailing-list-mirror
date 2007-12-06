@@ -1,105 +1,75 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH 3/3] Color support for "git-add -i"
-Date: Thu, 6 Dec 2007 20:59:48 +0100
-Message-ID: <5055E3DF-E01D-41B5-9F59-DAD69885CAE8@wincent.com>
-References: <475697BC.2090701@viscovery.net> <1196906706-11170-1-git-send-email-gitster@pobox.com> <1196906706-11170-2-git-send-email-gitster@pobox.com> <1196906706-11170-3-git-send-email-gitster@pobox.com>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 06 21:03:02 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git and GCC
+Date: Thu, 06 Dec 2007 12:04:29 -0800
+Message-ID: <7vk5nrd1yq.fsf@gitster.siamese.dyndns.org>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>
+	<20071205.202047.58135920.davem@davemloft.net>
+	<4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>
+	<20071205.204848.227521641.davem@davemloft.net>
+	<4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com>
+	<alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org>
+	<1196968371.18340.30.camel@ld0161-tx32>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Daniel Berlin <dberlin@dberlin.org>,
+	David Miller <davem@davemloft.net>, ismail@pardus.org.tr,
+	gcc@gcc.gnu.org, Git List <git@vger.kernel.org>
+To: Jon Loeliger <jdl@freescale.com>
+X-From: git-owner@vger.kernel.org Thu Dec 06 21:05:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0Mvl-00029Y-15
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 21:02:45 +0100
+	id 1J0Mxy-00038q-6v
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 21:05:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754586AbXLFUCW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Dec 2007 15:02:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754563AbXLFUCV
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 15:02:21 -0500
-Received: from wincent.com ([72.3.236.74]:40261 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754355AbXLFUCS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Dec 2007 15:02:18 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lB6JxmIh026497;
-	Thu, 6 Dec 2007 13:59:49 -0600
-In-Reply-To: <1196906706-11170-3-git-send-email-gitster@pobox.com>
-X-Mailer: Apple Mail (2.915)
+	id S1751755AbXLFUEm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 15:04:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754036AbXLFUEm
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 15:04:42 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:35543 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751216AbXLFUEk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 15:04:40 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 695002EF;
+	Thu,  6 Dec 2007 15:05:01 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id A86C29D9D7;
+	Thu,  6 Dec 2007 15:04:53 -0500 (EST)
+In-Reply-To: <1196968371.18340.30.camel@ld0161-tx32> (Jon Loeliger's message
+	of "Thu, 06 Dec 2007 13:12:51 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67331>
 
-El 6/12/2007, a las 3:05, Junio C Hamano escribi=F3:
+Jon Loeliger <jdl@freescale.com> writes:
 
-> +sub colored_diff_hunk {
-> +	my ($text) =3D @_;
-> +	# return the text, so that it can be passed to print()
-> +	my @ret;
-> +	for (@$text) {
-> +		if (!$diff_use_color) {
-> +			push @ret, $_;
-> +			next;
-> +		}
-> +
-> +		if (/^\+/) {
-> +			push @ret, colored($new_color, $_);
-> +		} elsif (/^\-/) {
-> +			push @ret, colored($old_color, $_);
-> +		} elsif (/^\@/) {
-> +			push @ret, colored($fraginfo_color, $_);
-> +		} elsif (/^ /) {
-> +			push @ret, colored($normal_color, $_);
-> +		} else {
-> +			push @ret, colored($metainfo_color, $_);
-> +		}
-> +	}
-> +	return @ret;
-> +}
+> On Thu, 2007-12-06 at 00:09, Linus Torvalds wrote:
+>
+>> Git also does delta-chains, but it does them a lot more "loosely". There 
+>> is no fixed entity. Delta's are generated against any random other version 
+>> that git deems to be a good delta candidate (with various fairly 
+>> successful heursitics), and there are absolutely no hard grouping rules.
+>
+> I'd like to learn more about that.  Can someone point me to
+> either more documentation on it?  In the absence of that,
+> perhaps a pointer to the source code that implements it?
 
+See Documentation/technical/pack-heuristics.txt,
+but the document predates and does not talk about delta
+reusing, which was covered here:
 
-My one concern here is that as Git's awareness of whitespace problems =20
-becomes more sophisticated it will be harder and harder to do diff =20
-colorization in a way that matches that which is performed by the =20
-builtin diff tools. Here I'm talking about the whole core.whitespace =20
-series which allows the user to define per-path attributes specifying =20
-what kinds of things are to be considered whitespace errors; so far we =
-=20
-have three classes of error proposed as far as I know: trailing =20
-whitespace, spaces before tabs, and indents with non-tabs.
+    http://thread.gmane.org/gmane.comp.version-control.git/16223/focus=16267
 
-I think it's very important that "git add --interactive" be 100% =20
-consistent with the other tools here because in many cases the =20
-previewing you do during an interactive session is what you rely upon =20
-to review whether a change should be committed. In other words, you =20
-don't want to think stuff is ok because "git add --interactive" leads =20
-you to believe that it's ok when it really isn't, and you don't want =20
-to have to run "git diff" as a separate step either just to double =20
-check.
+> I guess one question I posit is, would it be more accurate
+> to think of this as a "delta net" in a weighted graph rather
+> than a "delta chain"?
 
-We can replicate the core.whitespace logic here but it's likely to be =20
-an error prone process as it involves repeating the same logic in two =20
-different places using two different implementations in two different =20
-languages.
-
-What are the other options?
-
-- Make git-add--interactive part of builtin-add so as to be able to =20
-use the core.whitespace code directly? (ideally yes and at some point =20
-in the future it seems inevitable that this will happen, but it will =20
-require a fair bit of work)
-
-- Fork a second "git diff-files" process to capture the colorized =20
-version of the output? (may set off the "kludge" alarm)
-
-- Something else?
-
-Cheers,
-Wincent
+Yes.
