@@ -1,104 +1,153 @@
-From: Harvey Harrison <harvey.harrison@gmail.com>
-Subject: [RFC] Mirroring svn
-Date: Wed, 05 Dec 2007 22:22:33 -0800
-Message-ID: <1196922153.10408.101.camel@brick>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] Allow update hooks to update refs on their own.
+Date: Wed, 05 Dec 2007 22:30:45 -0800
+Message-ID: <7veje0gwru.fsf@gitster.siamese.dyndns.org>
+References: <7vr6i8sfsa.fsf@gitster.siamese.dyndns.org>
+	<20071202212224.GA22117@midwinter.com>
+	<20071203021333.GC8322@coredump.intra.peff.net>
+	<7vlk8csetl.fsf@gitster.siamese.dyndns.org>
+	<5920F34B-A94B-4C24-A95B-D35F35A4F0C0@midwinter.com>
+	<7vhciwn5rl.fsf@gitster.siamese.dyndns.org>
+	<20071206055723.GB23309@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 06 07:23:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Dec 06 07:31:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0A8r-00063H-SH
-	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 07:23:26 +0100
+	id 1J0AGP-0007n6-Ax
+	for gcvg-git-2@gmane.org; Thu, 06 Dec 2007 07:31:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754683AbXLFGW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 01:22:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbXLFGW2
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 01:22:28 -0500
-Received: from rv-out-0910.google.com ([209.85.198.186]:55240 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754732AbXLFGW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 01:22:27 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so128804rvb
-        for <git@vger.kernel.org>; Wed, 05 Dec 2007 22:22:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        bh=xq8MAj+EGPeC78EX5q48rX/kkf0/gpSPi5Fw3UpgGhk=;
-        b=SMF1R/PD/+qss9XAkaGW182OAYwfAeIg7scWTBw1mBaWBA2gtrExANfBUbImFPySHxzP/IVZtumZXJ3AixHiQ7qaUKR22xjB9AD6LLBhgqL477WCqzyowGd0tosOrAxGAaTzQMzIBg23UvAVkQhI2rfRZSpHK/1Gt2abfWmrMNc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=nwMHytCyqaPU07CHswDEASMq/r5hinADIKy5W/X+nuhvC/J7X7xG5xiPAbkBsNB26Ek3UQv6bIUyJFvdmMaad4gXHI5rycm8Rh7dFr2vbpXJR3K07+QXX+XIs4xk1cMRf0qoEsL0un6ykikKpGRH9NUi9kJvfKPfqw/5SNart14=
-Received: by 10.140.172.6 with SMTP id u6mr1745162rve.1196922145966;
-        Wed, 05 Dec 2007 22:22:25 -0800 (PST)
-Received: from ?192.168.1.101? ( [216.19.190.48])
-        by mx.google.com with ESMTPS id k2sm729452rvb.2007.12.05.22.22.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 05 Dec 2007 22:22:25 -0800 (PST)
-X-Mailer: Evolution 2.12.1 
+	id S1752628AbXLFGax (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 01:30:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752594AbXLFGax
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 01:30:53 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:57310 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752566AbXLFGaw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 01:30:52 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 4CDE52F0;
+	Thu,  6 Dec 2007 01:31:13 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 8D56B9B7DF;
+	Thu,  6 Dec 2007 01:31:09 -0500 (EST)
+In-Reply-To: <20071206055723.GB23309@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 6 Dec 2007 00:57:23 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67254>
 
-After the discussions lately regarding the gcc svn mirror.  I'm coming
-up with a recipe to set up your own git-svn mirror.  Suggestions on the
-following.
+Jeff King <peff@peff.net> writes:
 
-// Create directory and initialize git
-mkdir gcc
-cd gcc
-git init
-// add the remote site that currently mirrors gcc
-// I have chosen the name gcc.gnu.org *1* as my local name to refer to
-// this choose something else if you like
-git remote add gcc.gnu.org git://git.infradead.org/gcc.git
-// fetching someone else's remote branches is not a standard thing to do
-// so we'll need to edit our .git/config file
-// you should have a section that looks like:
-[remote "gcc.gnu.org"]
-	url = git://git.infradead.org/gcc.git
-	fetch = +refs/heads/*:refs/remotes/gcc.gnu.org/*
-// infradead's mirror puts the gcc svn branches in its own namespace
-// refs/remotes/gcc.gnu.org/*
-// change our fetch line accordingly
-[remote "gcc.gnu.org"]
-	url = git://git.infradead.org/gcc.git
-	fetch = +refs/remotes/gcc.gnu.org/*:refs/remotes/gcc.gnu.org/*
-// fetch the remote data from the mirror site
-git remote update
-// set up git-svn
-// gcc has the standard trunk/branches/tags naming so use -s
-// add a prefix so git-svn uses the metadata we just got from the
-// mirror so we don't have to get everything from the svn server
-// the --prefix must match whatever you chose in *1*, the trailing
-// slash is important.
-git svn init -s --prefix=gcc.gnu.org/ svn://gcc.gnu.org/svn/gcc
-// your config should look like this now:
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-[remote "gccmirror"]
-	url = git://git.infradead.org/gcc.git
-	fetch = +refs/heads/*:refs/remotes/gccmirror/*
-[svn-remote "svn"]
-	url = svn://gcc.gnu.org/svn/gcc
-	fetch = trunk:refs/remotes/gcc.gnu.org/trunk
-	branches = branches/*:refs/remotes/gcc.gnu.org/*
-	tags = tags/*:refs/remotes/gcc.gnu.org/tags/*
-// Try and get more revisions from the svn server
-// this may take a little while the first time as git-svn builds
-// metadata to allow bi-directional operation
-git svn fetch
+> On Wed, Dec 05, 2007 at 02:19:58PM -0800, Junio C Hamano wrote:
+>
+>> > what rewriting was done by the server, and if another push happened in
+>> > the meantime, the client will have to basically guess about which
+>> > commits correspond to the ones it pushed.
+>> 
+>> Ok, but the output from fetch is meant to be human readable and we do
+>> not promise parsability, so if we go this route (which I think you made
+>> a sensible argument for) we would need a hook on the pushing end to act
+>> on this (perhaps record the correspondence of pushed and rewritten sha1
+>> somewhere for the hook's own use).
+>
+> I am not clear on what you mean. Are you saying that the send-pack code
+> should _not_ recognize the "ok, but I rewrote your commit" status?
+> Because that is how we will avoid updating the tracking ref, which I
+> think is a good goal.
+>
+> Or are you saying "it's ok to understand the 'ok, but...' response and
+> not update the tracking ref, but pulling the new hash from the message
+> is up to a hook on the pushing side"? Which I think it reasonable.
+>
+> Or alternatively, "there should be a hook on the pushing side which is
+> allowed to set the ref status to 'ok, but don't bother updating the
+> tracking ref' or 'ok, but here is the actual thing to put in the
+> tracking ref'"? Which is also fine by me.
 
+What I meant in response to what I thought Steven was talking about was
+this.
 
-Happy Hacking
+ * With Steven's patch, the sending side needs to expect what it pushes
+   to be rewritten.  If it starts with this history:
 
-Harvey Harrison
+    ---o---o---o---Y---o---o---X
+
+   where Y is what its remote tracking branch points at for the
+   corresponding branch, three commits were built locally since the last
+   fetch, and the sender pushes X.
+
+ * Then the receiving end rewrites the history, making the history into
+   this:
+
+		     o'--o'--X'
+                    /
+    ---o---o---o---Y---o---o---X
+
+ * Before the next fetch, the sending side can continue building on top
+   of X, leading to this:
+
+		     o'--o'--X'
+                    /
+    ---o---o---o---Y---o---o---X---o---Z
+
+ * Similarly other people push into the same remote, get their commits
+   rewritten and remote side's history becomes like this (but the
+   original sender does not know about the upper history at all yet).
+
+		     o'--o'--X'--o'--o'--W'
+                    /
+    ---o---o---o---Y---o---o---X---o---Z
+
+ * Then the original sender fetches from the remote, now the tracking
+   branch points at W' (it previously pointed at Y).  You would want to
+   rebase your work since the last push on top of that tracking branch.
+
+The rebase would be "rebase --onto W' X Z", so it is not strictly
+necessary to keep the fact that X corresponds to X', but somehow I
+thought it was necessary, and Steven's message was hinting about that:
+
+  > If we want that status in principle, I'd argue that sending down the
+  > updated commit SHA1 is actually the right way to indicate it, because
+  > it gives the client all the information it needs to make an
+  > intelligent choice about what to do next. If you don't transmit the
+  > modified SHA1, the client will have to do another fetch to find out
+  > what rewriting was done by the server, and if another push happened in
+  > the meantime, the client will have to basically guess about which
+  > commits correspond to the ones it pushed.
+
+(notice the last part).
+
+So if we want to transmit minimum amount of information, we can just
+send a bit ("the ref was rewritten") back to send-pack without telling
+it what X' is (but it would not hurt to send it back either).  With that
+one bit of information, send-pack can refrain from updating tracking ref
+from Y to X.
+
+In the above scenario I illustrated, it turns out that getting
+correspondence between X and X' is not strictly necessary to perform a
+rebase later, but maybe there is some other scenario that keeping track
+of that information would be helpful.  In such a case, a hook on the
+send-pack end (which currently we do not have) can be called with X and
+X' as parameters (and perhaps the name of the ref and the corresponding
+tracking ref) to do whatever it wants to do with that information.
+
+Even if we do not send X' back but just one bit, having that hook would
+probably be needed so that sender can record "I've pushed up to X" and
+perhaps "now I cannot push out Z until I rebase" after receiving "push
+was accepted but rewritten" bit.
+
+This is all handwaving --- I suspect for this to really work, send-pack
+might need a pre-send-pack hook that pays attention to such "now I
+cannot push out Z until I rebase" information the previous round of push
+may have left and declines to push.  Of course, the receiving end would
+would probably refuse such a push because it is not a fast-forward.
