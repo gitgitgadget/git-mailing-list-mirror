@@ -1,75 +1,78 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: Git and GCC
-Date: Fri, 7 Dec 2007 01:38:48 -0500
-Message-ID: <20071207063848.GA13101@coredump.intra.peff.net>
-References: <20071206071503.GA19504@coredump.intra.peff.net> <alpine.LFD.0.99999.0712060915590.555@xanadu.home> <20071206173946.GA10845@sigill.intra.peff.net> <20071206.193121.40404287.davem@davemloft.net>
+Date: Fri, 7 Dec 2007 01:50:47 -0500
+Message-ID: <20071207065047.GB13101@coredump.intra.peff.net>
+References: <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com> <20071205.204848.227521641.davem@davemloft.net> <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> <1196918132.10408.85.camel@brick> <4aca3dc20712052117j3ef5cf99y848d4962ae8ddf33@mail.gmail.com> <9e4733910712052247x116cabb4q48ebafffb93f7e03@mail.gmail.com> <20071206071503.GA19504@coredump.intra.peff.net> <alpine.LFD.0.99999.0712060915590.555@xanadu.home> <20071206173946.GA10845@sigill.intra.peff.net> <alpine.LFD.0.99999.0712061246120.555@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: nico@cam.org, jonsmirl@gmail.com, dberlin@dberlin.org,
-	harvey.harrison@gmail.com, ismail@pardus.org.tr, gcc@gcc.gnu.org,
-	git@vger.kernel.org
-To: David Miller <davem@davemloft.net>
-X-From: git-owner@vger.kernel.org Fri Dec 07 07:39:21 2007
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	Daniel Berlin <dberlin@dberlin.org>,
+	Harvey Harrison <harvey.harrison@gmail.com>,
+	David Miller <davem@davemloft.net>, ismail@pardus.org.tr,
+	gcc@gcc.gnu.org, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Dec 07 07:51:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0Wrl-0007dw-DM
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 07:39:17 +0100
+	id 1J0X3J-0001kc-NU
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 07:51:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750789AbXLGGiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 01:38:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750783AbXLGGiw
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 01:38:52 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2368 "EHLO
+	id S1751225AbXLGGuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 01:50:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283AbXLGGuv
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 01:50:51 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4229 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750735AbXLGGiv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 01:38:51 -0500
-Received: (qmail 3084 invoked by uid 111); 7 Dec 2007 06:38:49 -0000
+	id S1751054AbXLGGuv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 01:50:51 -0500
+Received: (qmail 3143 invoked by uid 111); 7 Dec 2007 06:50:48 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 07 Dec 2007 01:38:49 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Dec 2007 01:38:48 -0500
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 07 Dec 2007 01:50:48 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Dec 2007 01:50:47 -0500
 Content-Disposition: inline
-In-Reply-To: <20071206.193121.40404287.davem@davemloft.net>
+In-Reply-To: <alpine.LFD.0.99999.0712061246120.555@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67386>
 
-On Thu, Dec 06, 2007 at 07:31:21PM -0800, David Miller wrote:
+On Thu, Dec 06, 2007 at 01:02:58PM -0500, Nicolas Pitre wrote:
 
-> > So it is about 5% bigger. What is really disappointing is that we saved
+> > What is really disappointing is that we saved
 > > only about 20% of the time. I didn't sit around watching the stages, but
 > > my guess is that we spent a long time in the single threaded "writing
 > > objects" stage with a thrashing delta cache.
 > 
-> If someone can give me a good way to run this test case I can
-> have my 64-cpu Niagara-2 box crunch on this and see how fast
-> it goes and how much larger the resulting pack file is.
+> Maybe you should run the non threaded repack on the same machine to have 
+> a good comparison.
 
-That would be fun to see. The procedure I am using is this:
+Sorry, I should have been more clear. By "saved" I meant "we needed N
+minutes of CPU time, but took only M minutes of real time to use it."
+IOW, if we assume that the threading had zero overhead and that we were
+completely CPU bound, then the task would have taken N minutes of real
+time. And obviously those assumptions aren't true, but I was attempting
+to say "it would have been at most N minutes of real time to do it
+single-threaded."
 
-# compile recent git master with threaded delta
-cd git
-echo THREADED_DELTA_SEARCH = 1 >>config.mak
-make install
+> And if you have only 2 CPUs, you will have better performances with
+> pack.threads = 2, otherwise there'll be wasteful task switching going
+> on.
 
-# get the gcc pack
-mkdir gcc && cd gcc
-git --bare init
-git config remote.gcc.url git://git.infradead.org/gcc.git
-git config remote.gcc.fetch \
-  '+refs/remotes/gcc.gnu.org/*:refs/remotes/gcc.gnu.org/*'
-git remote update
+Yes, but balanced by one thread running out of data way earlier than the
+other, and completing the task with only one CPU. I am doing a 4-thread
+test on a quad-CPU right now, and I will also try it with threads=1 and
+threads=6 for comparison.
 
-# make a copy, so we can run further tests from a known point
-cd ..
-cp -a gcc test
+> And of course, if the delta cache is being trashed, that might be due to 
+> the way the existing pack was previously packed.  Hence the current pack 
+> might impact object _access_ when repacking them.  So for a really 
+> really fair performance comparison, you'd have to preserve the original 
+> pack and swap it back before each repack attempt.
 
-# and test multithreaded large depth/window repacking
-cd test
-git config pack.threads 4
-time git repack -a -d -f --window=250 --depth=250
+I am working each time from the pack generated by fetching from
+git://git.infradead.org/gcc.git.
 
 -Peff
