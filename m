@@ -1,54 +1,67 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: In future, to replace autotools by cmake like KDE4 did?
-Date: Fri, 7 Dec 2007 17:10:51 +0100
-Message-ID: <e5bfff550712070810p6beb0becs54280cb0f1f02637@mail.gmail.com>
-References: <998d0e4a0712061810k18e6388jde9d7bc5bd006b57@mail.gmail.com> 	 <m3lk86u2fq.fsf@roke.D-201> <47594021.40200@op5.se> 	 <200712071456.11019.jnareb@gmail.com> 	 <998d0e4a0712070642u6ae75232t9cb5bfd0920b2439@mail.gmail.com>
+From: David Brown <git@davidb.org>
+Subject: Re: [PATCH] Let git-help prefer man-pages installed with this
+	version of git
+Date: Fri, 7 Dec 2007 08:19:19 -0800
+Message-ID: <20071207161919.GA25490@old.davidb.org>
+References: <87hciv7jkt.fsf@osv.gnss.ru> <Pine.LNX.4.64.0712062107520.21625@wbgn129.biozentrum.uni-wuerzburg.de> <87d4ti7qu1.fsf@osv.gnss.ru> <7vodd23i1v.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, "Andreas Ericsson" <ae@op5.se>,  	gcc@gcc.gnu.org, git@vger.kernel.org,  	"David Miller" <davem@davemloft.net>,  	"Daniel Berlin" <dberlin@dberlin.org>,  	"Ismail Donmez" <ismail@pardus.org.tr>,  	"Marcel Holtmann" <marcel@holtmann.org>
-To: "J.C. Pizarro" <jcpiza@gmail.com>
-X-From: gcc-return-142806-gcc=m.gmane.org@gcc.gnu.org Fri Dec 07 17:11:17 2007
-Return-path: <gcc-return-142806-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J0fnI-0002vy-AZ
-	for gcc@gmane.org; Fri, 07 Dec 2007 17:11:16 +0100
-Received: (qmail 27701 invoked by alias); 7 Dec 2007 16:10:58 -0000
-Received: (qmail 27693 invoked by uid 22791); 7 Dec 2007 16:10:57 -0000
-X-Spam-Check-By: sourceware.org
-Received: from rv-out-0910.google.com (HELO rv-out-0910.google.com) (209.85.198.191)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Fri, 07 Dec 2007 16:10:53 +0000
-Received: by rv-out-0910.google.com with SMTP id f5so677696rvb         for <gcc@gcc.gnu.org>; Fri, 07 Dec 2007 08:10:51 -0800 (PST)
-Received: by 10.141.132.8 with SMTP id j8mr2746184rvn.1197043851165;         Fri, 07 Dec 2007 08:10:51 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Fri, 7 Dec 2007 08:10:51 -0800 (PST)
-In-Reply-To: <998d0e4a0712070642u6ae75232t9cb5bfd0920b2439@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Cc: Sergei Organov <osv@javad.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 07 17:19:56 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J0fvc-0006o3-Ar
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 17:19:52 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752127AbXLGQT2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 11:19:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751928AbXLGQT2
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 11:19:28 -0500
+Received: from mail.davidb.org ([66.93.32.219]:38595 "EHLO mail.davidb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751178AbXLGQT2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 11:19:28 -0500
+Received: from davidb by mail.davidb.org with local (Exim 4.68 #1 (Debian))
+	id 1J0fv5-0006hf-BO; Fri, 07 Dec 2007 08:19:19 -0800
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>,
+	Sergei Organov <osv@javad.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 Content-Disposition: inline
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+In-Reply-To: <7vodd23i1v.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67433>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67434>
 
-On Dec 7, 2007 3:42 PM, J.C. Pizarro <jcpiza@gmail.com> wrote:
+On Fri, Dec 07, 2007 at 02:39:24AM -0800, Junio C Hamano wrote:
+
+>    Usually, if a user has his own version of git and regularly uses it
+>    by having the non-system executable directory (e.g. $HOME/bin/git)
+>    early in his $PATH, its corresponding documentation would also be in
+>    a non-system documentation directory (e.g. $HOME/man) early in his
+>    $MANPATH, and this change is a no-op.  The only case this change
+>    matters is where the user installs his own git outside of his $PATH
+>    and $MANPATH, and explicitly runs his git executable
+>    (e.g. "$HOME/junk/git-1.5.4/bin/git diff").
 >
-> A powerful tool can do better things that old generators-based tools
-> (as autotools).
->
---- cut ---
+>When you clarify it this way, the change does not look as useful
+>anymore, does it?  How typical would that use be, to run your git
+>executable by always naming it by path without relying on $PATH
+>environment variable?
 
->
-> * Later: (with the powerful tool that had cached many predefined variables in
+Or, git gets installed out of path in its own tree, and then the 'git'
+executable itself is symlinked somewhere into the path.  I know this
+happens, because this is what IT ended up doing.
 
-Insisting on highlighting your proposal as "powerful tool" vs what is
-in git now (on which people spent long hours to tune it out) will give
-you hard times on this list ;-)
+It's also fairly easy to add a new executable path, and forget to add a new
+manpath directory.
 
-Just my guess...
-
-Marco
+Dave
