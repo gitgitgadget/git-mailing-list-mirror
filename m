@@ -1,61 +1,128 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: In future, to replace autotools by cmake like KDE4 did?
-Date: Fri, 07 Dec 2007 04:14:42 -0800 (PST)
-Message-ID: <m3lk86u2fq.fsf@roke.D-201>
-References: <998d0e4a0712061810k18e6388jde9d7bc5bd006b57@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git guidance
+Date: Fri, 07 Dec 2007 13:30:56 +0100
+Message-ID: <47593D00.9030003@op5.se>
+References: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com> <200712070737.18519.a1426z@gawab.com> <475906F7.5010309@op5.se> <200712071353.11654.a1426z@gawab.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gcc@gcc.gnu.org, git@vger.kernel.org, "David Miller" <davem@davemloft.net>,         "Daniel Berlin" <dberlin@dberlin.org>,         "Ismail Donmez" <ismail@pardus.org.tr>
-To: "J.C. Pizarro" <jcpiza@gmail.com>
-X-From: gcc-return-142796-gcc=m.gmane.org@gcc.gnu.org Fri Dec 07 13:15:17 2007
-Return-path: <gcc-return-142796-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J0c6r-00035O-6t
-	for gcc@gmane.org; Fri, 07 Dec 2007 13:15:13 +0100
-Received: (qmail 8886 invoked by alias); 7 Dec 2007 12:14:54 -0000
-Received: (qmail 8853 invoked by uid 22791); 7 Dec 2007 12:14:53 -0000
-X-Spam-Check-By: sourceware.org
-Received: from ug-out-1314.google.com (HELO ug-out-1314.google.com) (66.249.92.174)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Fri, 07 Dec 2007 12:14:46 +0000
-Received: by ug-out-1314.google.com with SMTP id o38so921602ugd         for <gcc@gcc.gnu.org>; Fri, 07 Dec 2007 04:14:43 -0800 (PST)
-Received: by 10.78.149.15 with SMTP id w15mr3500186hud.1197029683165;         Fri, 07 Dec 2007 04:14:43 -0800 (PST)
-Received: from roke.D-201 ( [83.8.224.19])         by mx.google.com with ESMTPS id w7sm1602090mue.2007.12.07.04.14.40         (version=TLSv1/SSLv3 cipher=OTHER);         Fri, 07 Dec 2007 04:14:42 -0800 (PST)
-Received: from roke (localhost.localdomain [127.0.0.1]) 	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lB7CEZN5005279; 	Fri, 7 Dec 2007 13:14:35 +0100
-Received: (from jnareb@localhost) 	by roke (8.13.4/8.13.4/Submit) id lB7CEXBs005276; 	Fri, 7 Dec 2007 13:14:33 +0100
-In-Reply-To: <998d0e4a0712061810k18e6388jde9d7bc5bd006b57@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Phillip Susi <psusi@cfl.rr.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jing Xue <jingxue@digizenstudio.com>,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: Al Boldi <a1426z@gawab.com>
+X-From: git-owner@vger.kernel.org Fri Dec 07 13:31:29 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J0cMa-0008DZ-T0
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 13:31:29 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752921AbXLGMbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 07:31:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751935AbXLGMbE
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 07:31:04 -0500
+Received: from mail.op5.se ([193.201.96.20]:44721 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751038AbXLGMbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 07:31:03 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 2315D1F08098;
+	Fri,  7 Dec 2007 13:31:01 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id eHnjnE6diSmP; Fri,  7 Dec 2007 13:31:00 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id A1AE91F0802A;
+	Fri,  7 Dec 2007 13:30:58 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <200712071353.11654.a1426z@gawab.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67415>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67416>
 
-"J.C. Pizarro" <jcpiza@gmail.com> writes:
+Al Boldi wrote:
+> Andreas Ericsson wrote:
+>> So, to get to the bottom of this, which of the following workflows is it
+>> you want git to support?
+>>
+>> ### WORKFLOW A ###
+>> edit, edit, edit
+>> edit, edit, edit
+>> edit, edit, edit
+>> Oops I made a mistake and need to hop back to "current - 12".
+>> edit, edit, edit
+>> edit, edit, edit
+>> publish everything, similar to just tarring up your workdir and sending
+>> out ### END WORKFLOW A ###
+>>
+>> ### WORKFLOW B ###
+>> edit, edit, edit
+>> ok this looks good, I want to save a checkpoint here
+>> edit, edit, edit
+>> looks good again. next checkpoint
+>> edit, edit, edit
+>> oh crap, back to checkpoint 2
+>> edit, edit, edit
+>> ooh, that's better. save a checkpoint and publish those checkpoints
+>> ### END WORKFLOW B ###
+> 
+> ### WORKFLOW C ###
+> for every save on a gitfs mounted dir, do an implied checkpoint, commit, or 
+> publish (should be adjustable), on its privately created on-the-fly 
+> repository.
+> ### END WORKFLOW C ###
+> 
 
-> The autotools ( automake + libtool + autoconf + ... ) generate many big
-> files that they have been slowing the building's computation and growing
-> enormously their cvs/svn/git/hg repositories because of generated files.
-[cut]
+So you *do* want an editor's undo function, but for an entire filesystem.
+That's a handy thing to have every now and then, but it's not what git
+(or any other scm) does.
 
-And this is relevant for this mailing list exactly how? From the whole
-autotools package git uses only autoconf, and only as an optional part
-to configure only Makefile configuration variables.
+> For example:
+> 
+>   echo "// last comment on this file" >> /gitfs.mounted/file
+> 
+> should do an implied checkpoint, and make these checkpoints immediately 
+> visible under some checkpoint branch of the gitfs mounted dir.
+> 
+> Note, this way the developer gets version control without even noticing, and 
+> works completely transparent to any kind of application.
+> 
 
-Generated files should not be put into version control, unless it is
-for convenience only in separate branch like HTML and manpage versions
-of git documentation are in 'html and 'man' branches, respectively.
-The same could be done with ./configure script.
+One other thing that's fairly important to note is that this can never
+ever handle changesets, since each write() of each file will be a commit
+on its own. It's so far from what git does that I think you'd be better
+off just implementing it from scratch, or looking at a versioned fs, like
+Jakub suggested in his reply.
 
-Although there was some talk about whether giw should use autotools,
-or perhaps CMake, or handmade ./configure script like MPlayer IIRC,
-instead of its own handmade Makefile...
+You're also neglecting one very important aspect of what an SCM provides
+if you go down this road, namely project history. You basically have two
+choices with this "implicit save on each edit":
+* force the user to supply a commit message for each and every edit
+* ignore commit messages altogether
+
+Obviously, forcing a commit message each time is the only way to get some
+sort of proper history to look at after it's done, but it's also such an
+appalling nuisance that I doubt *anyone* will actually like that, and since
+changesets aren't supported, you'll have "implement xniz api, commit 1 of X"
+messages. Cumbersome, stupid, and not very useful.
+
+Ignoring commit messages altogether means you ignore the entire history,
+and the SCM then becomes a filesystem-wide "undo" cache. This could
+ofcourse work, but it's something akin to building a nuclear powerplant
+to power a single lightbulb.
 
 -- 
-Jakub Narebski
-ShadeHawk on #git
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
