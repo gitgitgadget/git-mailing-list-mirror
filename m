@@ -1,65 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git and GCC
-Date: Fri, 7 Dec 2007 02:31:09 -0500
-Message-ID: <20071207073109.GA13638@coredump.intra.peff.net>
-References: <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com> <20071205.204848.227521641.davem@davemloft.net> <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> <1196918132.10408.85.camel@brick> <4aca3dc20712052117j3ef5cf99y848d4962ae8ddf33@mail.gmail.com> <9e4733910712052247x116cabb4q48ebafffb93f7e03@mail.gmail.com> <20071206071503.GA19504@coredump.intra.peff.net> <alpine.LFD.0.99999.0712060915590.555@xanadu.home> <20071206173946.GA10845@sigill.intra.peff.net> <alpine.LFD.0.9999.0712061030560.13796@woody.linux-foundation.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: After-the-fact submodule detection or creation
+Date: Fri, 7 Dec 2007 08:37:28 +0100
+Message-ID: <20071207073728.GA2847@steel.home>
+References: <87ir3bp5sf.fsf@graviton.dyn.troilus.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, Jon Smirl <jonsmirl@gmail.com>, 	Daniel Berlin <dberlin@dberlin.org>, 	Harvey Harrison <harvey.harrison@gmail.com>, 	David Miller <davem@davemloft.net>, ismail@pardus.org.tr, 	gcc@gcc.gnu.org, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: gcc-return-142794-gcc=m.gmane.org@gcc.gnu.org Fri Dec 07 08:31:37 2007
-Return-path: <gcc-return-142794-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J0XgN-0002nC-La
-	for gcc@gmane.org; Fri, 07 Dec 2007 08:31:36 +0100
-Received: (qmail 29490 invoked by alias); 7 Dec 2007 07:31:17 -0000
-Received: (qmail 29480 invoked by uid 22791); 7 Dec 2007 07:31:16 -0000
-X-Spam-Check-By: sourceware.org
-Received: from 66-23-211-5.clients.speedfactory.net (HELO peff.net) (66.23.211.5)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Fri, 07 Dec 2007 07:31:12 +0000
-Received: (qmail 3377 invoked by uid 111); 7 Dec 2007 07:31:10 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)     by peff.net (qpsmtpd/0.32) with SMTP; Fri, 07 Dec 2007 02:31:10 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Dec 2007 02:31:09 -0500
+Cc: git@vger.kernel.org
+To: Michael Poole <mdpoole@troilus.org>
+X-From: git-owner@vger.kernel.org Fri Dec 07 08:37:56 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J0XmT-0004IC-Rz
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 08:37:54 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751601AbXLGHhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 02:37:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751772AbXLGHhc
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 02:37:32 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:35654 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751601AbXLGHhb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 02:37:31 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCT5T8Q==
+Received: from tigra.home (Fca29.f.strato-dslnet.de [195.4.202.41])
+	by post.webmailer.de (mrclete mo19) (RZmta 14.5)
+	with ESMTP id C0399cjB73hXAx ; Fri, 7 Dec 2007 08:37:29 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 08FBE277AE;
+	Fri,  7 Dec 2007 08:37:29 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 6C48256D22; Fri,  7 Dec 2007 08:37:28 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0712061030560.13796@woody.linux-foundation.org>
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+In-Reply-To: <87ir3bp5sf.fsf@graviton.dyn.troilus.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67393>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67394>
 
-On Thu, Dec 06, 2007 at 10:35:22AM -0800, Linus Torvalds wrote:
+Michael Poole, Fri, Dec 07, 2007 04:01:04 +0100:
+> It seems like using the current submodule code would mean that this
+> kind of import would need two passes over the foreign repository,
+> rather than one if the branch could be created after the parent tree
+> is initially imported.  I can live with that -- it is a rather unusual
+> case -- but maybe there is a better way.)
 
-> > What is really disappointing is that we saved only about 20% of the 
-> > time. I didn't sit around watching the stages, but my guess is that we 
-> > spent a long time in the single threaded "writing objects" stage with a 
-> > thrashing delta cache.
-> 
-> I don't think you spent all that much time writing the objects. That part 
-> isn't very intensive, it's mostly about the IO.
+Import the core module in a branch all by itself, and merge it in
+every support branch?
 
-It can get nasty with super-long deltas thrashing the cache, I think.
-But in this case, I think it ended up being just a poor division of
-labor caused by the chunk_size parameter using the quite large window
-size (see elsewhere in the thread for discussion).
 
-> I suspect you may simply be dominated by memory-throughput issues. The 
-> delta matching doesn't cache all that well, and using two or more cores 
-> isn't going to help all that much if they are largely waiting for memory 
-> (and quite possibly also perhaps fighting each other for a shared cache? 
-> Is this a Core 2 with the shared L2?)
-
-I think the chunk_size more or less explains it. I have had reasonable
-success keeping both CPUs busy on similar tasks in the past (but with
-smaller window sizes).
-
-For reference, it was a Core 2 Duo; do they all share L2, or is there
-something I can look for in /proc/cpuinfo?
-
--Peff
+    Supp1: o-o-o-----o-o-o-o-o-o-o
+		    /
+    Core:  o-o-o-o-o
+		    \
+    Supp2: o-o-------o-o-o-o
