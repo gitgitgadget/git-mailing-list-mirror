@@ -1,84 +1,80 @@
-From: Len Brown <lenb@kernel.org>
-Subject: Re: git-am: catch missing author date early.
-Date: Thu, 6 Dec 2007 21:34:47 -0500
-Organization: Intel Open Source Technology Center
-Message-ID: <200712062134.47330.lenb@kernel.org>
+From: Harvey Harrison <harvey.harrison@gmail.com>
+Subject: Re: Git and GCC
+Date: Thu, 06 Dec 2007 18:42:33 -0800
+Message-ID: <1196995353.22471.20.camel@brick>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>
+	 <20071205.202047.58135920.davem@davemloft.net>
+	 <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>
+	 <20071205.204848.227521641.davem@davemloft.net>
+	 <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com>
+	 <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org>
+	 <4aca3dc20712061004g43f5902cw79bf633917d3ade9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 07 03:35:40 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	David Miller <davem@davemloft.net>, ismail@pardus.org.tr,
+	gcc@gcc.gnu.org, git@vger.kernel.org
+To: Daniel Berlin <dberlin@dberlin.org>
+X-From: git-owner@vger.kernel.org Fri Dec 07 03:43:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0T3y-0005Qt-Db
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 03:35:38 +0100
+	id 1J0TB7-0007HC-RI
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 03:43:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752953AbXLGCfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 21:35:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752998AbXLGCfH
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 21:35:07 -0500
-Received: from hera.kernel.org ([140.211.167.34]:58130 "EHLO hera.kernel.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752953AbXLGCfF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 21:35:05 -0500
-Received: from d975xbx2 (c-65-96-213-102.hsd1.ma.comcast.net [65.96.213.102])
-	(authenticated bits=0)
-	by hera.kernel.org (8.13.8/8.13.8) with ESMTP id lB72Yqr7032310
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Fri, 7 Dec 2007 02:34:54 GMT
-User-Agent: KMail/1.9.5
-Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.88.7/5023/Thu Dec  6 19:37:18 2007 on hera.kernel.org
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-1.9 required=5.0 tests=AWL,BAYES_00,RCVD_IN_PBL,
-	RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=no version=3.2.3
-X-Spam-Checker-Version: SpamAssassin 3.2.3 (2007-08-08) on hera.kernel.org
+	id S1752711AbXLGCmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 21:42:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752697AbXLGCmk
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 21:42:40 -0500
+Received: from rv-out-0910.google.com ([209.85.198.186]:37579 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752680AbXLGCmj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 21:42:39 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so520841rvb
+        for <git@vger.kernel.org>; Thu, 06 Dec 2007 18:42:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:to:cc:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        bh=V2t5Z1Iucw2rx5fh1MMn+qM0ykCygNmXuEtcq8qdYC8=;
+        b=pnTSz8tP0Qo3ogUhJSMi1pJLtl/kR3McHMmafwzQjQ4TwVJ08/ZoNr0Clz+VTVzaVNOktld6HuxYpAOUZndWgUEnzxRQ2BSYxakgt1hKSTodDMOesy0TAIPR51djpMVY8Ohqs/HwKvN6qixX1gmZrW+P+IJFZ3SkDxUbiIbraj4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:cc:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=Oh9pX5O8d/EDrSbVEqimgwc8CzPqURDUY70s9Kt0+UYl+rHQYrIryqbkmzGqdxuJn0KFUgvUcwFPlAfTGPruA8+henAN/FvPYpD3CFCs/dSMEZ1lN6yGevpUmvP+VeA390PSAAVRJm8gepGizbajWfIIA/UiaLezWS3Ajy7qRKk=
+Received: by 10.141.107.13 with SMTP id j13mr2406125rvm.1196995359034;
+        Thu, 06 Dec 2007 18:42:39 -0800 (PST)
+Received: from ?192.168.1.124? ( [216.19.190.48])
+        by mx.google.com with ESMTPS id b34sm159055rvf.2007.12.06.18.42.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 06 Dec 2007 18:42:34 -0800 (PST)
+In-Reply-To: <4aca3dc20712061004g43f5902cw79bf633917d3ade9@mail.gmail.com>
+X-Mailer: Evolution 2.12.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67368>
 
-This change made git-am more difficult to use.
+On Thu, 2007-12-06 at 13:04 -0500, Daniel Berlin wrote:
+> On 12/6/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> 
+> > So the equivalent of "git gc --aggressive" - but done *properly* - is to
+> > do (overnight) something like
+> >
+> >         git repack -a -d --depth=250 --window=250
+> >
+> I gave this a try overnight, and it definitely helps a lot.
+> Thanks!
 
-I tend to check-in a fair number of patches that didn't come from an e-mail message.
-In the past, I slap a Subject: and a From: on the top of the commit message
-and off I go.
+I've updated the public mirror repo with the very-packed version.
 
-With this change git-am fails b/c I haven't also conjured up the time,
-when in the past it figured out what time it was for me.
+People cloning it now should get the just over 300MB repo now.
 
-thanks,
--Len
+git.infradead.org/gcc.git
 
-commit 6e9e0327b7d7f384d8a223b4bc40330ef3e7fb61
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Sun Dec 2 14:38:40 2007 -0800
 
-    git-am: catch missing author date early.
-    
-    Even though commit-tree would default to the current time if the incoming
-    e-mail message somehow did not record the timestamp, it is safer to catch
-    the breakage sooner.
-    
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Cheers,
 
-diff --git a/git-am.sh b/git-am.sh
-index 76c1c84..2e40708 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -307,9 +307,9 @@ do
- 	GIT_AUTHOR_EMAIL="$(sed -n '/^Email/ s/Email: //p' "$dotest/info")"
- 	GIT_AUTHOR_DATE="$(sed -n '/^Date/ s/Date: //p' "$dotest/info")"
- 
--	if test -z "$GIT_AUTHOR_EMAIL"
-+	if test -z "$GIT_AUTHOR_EMAIL" || test -z "$GIT_AUTHOR_DATE"
- 	then
--		echo "Patch does not have a valid e-mail address."
-+		echo "Patch does not have valid authorship information."
- 		stop_here $this
- 	fi
- 
+Harvey
