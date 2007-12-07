@@ -1,71 +1,56 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [RFC/PATCH] Add a --nosort option to pack-objects
-Date: Fri, 7 Dec 2007 22:44:26 +0100
-Organization: glandium.org
-Message-ID: <20071207214426.GA13170@glandium.org>
-References: <1197061832-8489-1-git-send-email-mh@glandium.org> <alpine.LFD.0.99999.0712071622150.555@xanadu.home>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-bisect feature suggestion: "git-bisect diff"
+Date: Fri, 7 Dec 2007 17:07:39 -0500
+Message-ID: <20071207220738.GA23535@coredump.intra.peff.net>
+References: <20071207093439.GA21896@elte.hu> <7v63za4yic.fsf@gitster.siamese.dyndns.org> <7vwsrq3iox.fsf@gitster.siamese.dyndns.org> <20071207213414.GA11688@coredump.intra.peff.net> <20071207213541.GA11723@coredump.intra.peff.net> <7vtzmuyyc3.fsf@gitster.siamese.dyndns.org> <20071207215514.GA11784@coredump.intra.peff.net> <7vprxiyxfj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Dec 07 23:07:34 2007
+Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 07 23:08:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0lLo-0006C5-W6
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 23:07:17 +0100
+	id 1J0lMb-0006Ws-Ug
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 23:08:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753507AbXLGWG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 17:06:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752862AbXLGWG4
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 17:06:56 -0500
-Received: from smtp19.orange.fr ([80.12.242.1]:38820 "EHLO smtp19.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752457AbXLGWGz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 17:06:55 -0500
-X-Greylist: delayed 1341 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 Dec 2007 17:06:55 EST
-Received: from smtp19.orange.fr (mwinf1901 [172.22.129.23])
-	by mwinf1905.orange.fr (SMTP Server) with ESMTP id C33F95C031DD
-	for <git@vger.kernel.org>; Fri,  7 Dec 2007 22:45:14 +0100 (CET)
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf1901.orange.fr (SMTP Server) with ESMTP id 4990A5400097
-	for <git@vger.kernel.org>; Fri,  7 Dec 2007 22:44:31 +0100 (CET)
-Received: from namakemono.glandium.org (APuteaux-153-1-79-219.w81-249.abo.wanadoo.fr [81.249.109.219])
-	by mwinf1901.orange.fr (SMTP Server) with ESMTP id 2842F5400094;
-	Fri,  7 Dec 2007 22:44:31 +0100 (CET)
-X-ME-UUID: 20071207214431165.2842F5400094@mwinf1901.orange.fr
-Received: from mh by namakemono.glandium.org with local (Exim 4.68)
-	(envelope-from <mh@glandium.org>)
-	id 1J0kzj-0006zW-Pc; Fri, 07 Dec 2007 22:44:27 +0100
+	id S1755192AbXLGWHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 17:07:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755223AbXLGWHm
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 17:07:42 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3272 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754234AbXLGWHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 17:07:41 -0500
+Received: (qmail 13707 invoked by uid 111); 7 Dec 2007 22:07:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 07 Dec 2007 17:07:40 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Dec 2007 17:07:39 -0500
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.99999.0712071622150.555@xanadu.home>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <7vprxiyxfj.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67480>
 
-On Fri, Dec 07, 2007 at 04:24:17PM -0500, Nicolas Pitre wrote:
-> On Fri, 7 Dec 2007, Mike Hommey wrote:
+On Fri, Dec 07, 2007 at 02:03:44PM -0800, Junio C Hamano wrote:
+
+> > Sure, but regular aliases already do that. The point of making it a
+> > "builtin" alias is that we can depend on it being there. But who is
+> > depending?
 > 
-> > While most of the time the heuristics used by pack-objects to sort the
-> > given object list are satisfying enough, there are cases where it can be
-> > useful for the user to sort the list with heuristics that would be better
-> > suited.
+> Nobody is depending.
 > 
-> Could you please elaborate on those cases where the current heuristic 
-> would be unsatisfactory?
+> And I think the reason nobody depends on it is because there is no
+> compelling reason to.  Perhaps the behaviour is not useful enough.  It
+> surely is the case for "bisect view".
 
-I imagine it could be useful when importing a huge tree in the first commit,
-when some data in the tree is redundant with (or similar to) others in the
-same tree. I guess there could be some other VCS use-cases.
+Right, which leads to my (perhaps subtle) point that the builtin alias
+hack is just what you said elsewhere: a cute hack. IOW, I am slightly
+NAKing inclusion of it in master (OTOH, I really don't see what it could
+_hurt_, so maybe somebody could find a use for it that we didn't think
+of).
 
-The real case where I've been using this is that I use git to store my debian
-build logs in an efficient manner, and having a custom-sorted list of objects
-ends up being much faster and less memory consuming than using a huge
-window (and 1GB of logs became less than 10MB).
-
-Mike
+-Peff
