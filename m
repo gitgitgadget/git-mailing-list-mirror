@@ -1,101 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] git-help: add -w|--web option to display html man page in a browser.
-Date: Thu, 06 Dec 2007 22:04:03 -0800
-Message-ID: <7v1w9z9h2k.fsf@gitster.siamese.dyndns.org>
-References: <20071202060755.4d6d5ec8.chriscool@tuxfamily.org>
-	<7v3aufeowe.fsf@gitster.siamese.dyndns.org>
-	<200712070635.18018.chriscool@tuxfamily.org>
+From: Shawn Bohrer <shawn.bohrer@gmail.com>
+Subject: Re: git-clean and empty pathspec
+Date: Fri, 7 Dec 2007 00:14:02 -0600
+Message-ID: <20071207061402.GB21347@mediacenter.austin.rr.com>
+References: <fcaeb9bf0712061021o5383f538h3a086a913ac1b05d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Theodore Tso <tytso@mit.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>, Andreas Ericsson <ae@op5.se>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Eric Wong <normalperson@yhbt.net>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Dec 07 07:11:14 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 07 07:14:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0WQb-0001vz-44
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 07:11:13 +0100
+	id 1J0WTP-0002VA-MC
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 07:14:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750921AbXLGGKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 01:10:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751085AbXLGGKs
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 01:10:48 -0500
-Received: from a-sasl-quonix.pobox.com ([208.72.237.25]:38891 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750921AbXLGGKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 01:10:45 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B7C4D25B7;
-	Fri,  7 Dec 2007 01:04:20 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D6E9325B4;
-	Fri,  7 Dec 2007 01:04:10 -0500 (EST)
-In-Reply-To: <200712070635.18018.chriscool@tuxfamily.org> (Christian Couder's
-	message of "Fri, 7 Dec 2007 06:35:17 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751187AbXLGGNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 01:13:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751186AbXLGGNr
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 01:13:47 -0500
+Received: from an-out-0708.google.com ([209.85.132.250]:63740 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751085AbXLGGNq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 01:13:46 -0500
+Received: by an-out-0708.google.com with SMTP id d31so138466and
+        for <git@vger.kernel.org>; Thu, 06 Dec 2007 22:13:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=C5zZNUVB9vLHp0I1qabIFvAQFyHEUt+B3ickWqemI5c=;
+        b=hROMI043FXm35adNHlJ9M/bW/vPC2l0rjPpqdHwUntaJKwUC2p65ZzRlsG9a2teotSMjmGPdKM0lPlN9opUG05ly67zXhk/M0xs1tNqNXDo8zs/roruiCEtcJeSx9GtOo9XWy94gSHRJ1Zip5BqLBXPPLY4d3jGMkS7+FcIINYM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=vZ+zM0q0cpkIqN5Iu0fd+Ecczu+gDa52wrJu/rv/VUtd6lc5EoFR8Noqugm+Hw6xFdxARCjOnf0B4s4PYJpGW5IjvaEPWljaKX0clBR2RewsrjHk9h08bXbs0oKd1ufiNO4zaCY9+wV7s2E7MGC5Es/5LOc5/1PczJXeS2pxoWY=
+Received: by 10.100.210.9 with SMTP id i9mr8500449ang.1197008024902;
+        Thu, 06 Dec 2007 22:13:44 -0800 (PST)
+Received: from mediacenter.austin.rr.com ( [70.112.149.232])
+        by mx.google.com with ESMTPS id n5sm3991026rnf.2007.12.06.22.13.43
+        (version=SSLv3 cipher=OTHER);
+        Thu, 06 Dec 2007 22:13:43 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <fcaeb9bf0712061021o5383f538h3a086a913ac1b05d@mail.gmail.com>
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67384>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On Fri, Dec 07, 2007 at 01:21:10AM +0700, Nguyen Thai Ngoc Duy wrote:
+> "git clean -n" would not remove directories while "git clean -n -- ''"
+> (two single quotes) would. Is there anything wrong with it?
 
->> > +# Directories that may contain html documentation:
->> > +install_html_dir="$PREFIX/share/doc/git-doc"
->> > +rpm_dir="$PREFIX/share/doc/git-core-$GIT_VERSION"
->>
->> ... doing this is wrong. People can set htmldir to somewhere other than
->> $(prefix)/share/doc/git-doc while building and installing, but you are
->> not telling the munged script where it is.
->
-> Yeah, I sent a fix for this.
+It appears that match_pathspec views this as a recursive match to
+everything, so git clean thinks that you provided the pathspec for all
+files and directories and thus will remove them.
 
-Why do you even need to fallback?  I'd rather drop these two fallbacks
-entirely.
+Without the '' there is no provided pathspec so git clean will not
+remove the directories without -d.
 
-Distros have their own html documentation layout policy, so I suspect
-they will patch this part to their liking anyway, and this point will
-mostly become moot.  For source distribution, I'd prefer to point at
-the place we know we are installing in.
-
->> > +init_browser_path() {
->> > +	browser_path=`git config browser.$1.path`
->> > +	test -z "$browser_path" && browser_path=$1
->> > +}
->>
->> Please do not contaminate the config file with something the user can
->> easily use a lot more standardized way (iow $PATH) to configure to his
->> taste.
->>
->> I'd suggest dropping this bit.
->
-> I stole this part from "git-mergetool.sh":
->
-> init_merge_tool_path() {
->         merge_tool_path=`git config mergetool.$1.path`
->         if test -z "$merge_tool_path" ; then
->                 case "$1" in
->                         emerge)
->                                 merge_tool_path=emacs
->                                 ;;
-> ...
-> }
->
-> So we should either drop it in "git-mergetool.sh" too or keep it in both 
-> scripts.
-
-I think this is an irrelevant defense.  If others are doing bad, that is
-not a justification to make things worse.
-
-In the case of mergetool, it has case "$merge_tool" that can be spelled
-totally differently from path (e.g. emerge and emacs), so that function
-itself is semi justified.  For browser I do not think there isn't such
-justification.
+Note this is different behavior from the old git-clean.sh.
