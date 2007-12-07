@@ -1,74 +1,48 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC (take 3)] autoconf: Add test for OLD_ICONV (squelching compiler warning)
-Date: Thu, 06 Dec 2007 23:26:02 -0800
-Message-ID: <7v7ijr7yph.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.0.9999.0712061628070.13796@woody.linux-foundation.org>
-	<1196990840-1168-1-git-send-email-jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git and GCC
+Date: Fri, 7 Dec 2007 02:27:10 -0500
+Message-ID: <20071207072710.GA13620@coredump.intra.peff.net>
+References: <20071205.204848.227521641.davem@davemloft.net> <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> <1196918132.10408.85.camel@brick> <4aca3dc20712052117j3ef5cf99y848d4962ae8ddf33@mail.gmail.com> <9e4733910712052247x116cabb4q48ebafffb93f7e03@mail.gmail.com> <20071206071503.GA19504@coredump.intra.peff.net> <alpine.LFD.0.99999.0712060915590.555@xanadu.home> <20071206173946.GA10845@sigill.intra.peff.net> <alpine.LFD.0.99999.0712061246120.555@xanadu.home> <20071207065047.GB13101@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Blake Ramsdell <blaker@gmail.com>,
-	Wincent Colaiuta <win@wincent.com>,
-	Pascal Obry <pascal@obry.net>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Arjen Laarhoven <arjen@yaph.org>,
-	Brian Gernhardt <benji@silverinsanity.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 07 08:27:00 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0Xbs-0001d6-7q
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 08:26:56 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751459AbXLGH0d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 02:26:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751423AbXLGH0d
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 02:26:33 -0500
-Received: from a-sasl-quonix.pobox.com ([208.72.237.25]:40191 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750792AbXLGH0c (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 02:26:32 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 800FA2BC7;
-	Fri,  7 Dec 2007 02:26:20 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DBFD2BC5;
-	Fri,  7 Dec 2007 02:26:09 -0500 (EST)
-In-Reply-To: <1196990840-1168-1-git-send-email-jnareb@gmail.com> (Jakub
-	Narebski's message of "Fri, 7 Dec 2007 02:27:20 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+Cc: Jon Smirl <jonsmirl@gmail.com>, Daniel Berlin <dberlin@dberlin.org>, 	Harvey Harrison <harvey.harrison@gmail.com>, 	David Miller <davem@davemloft.net>, ismail@pardus.org.tr, 	gcc@gcc.gnu.org, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: gcc-return-142793-gcc=m.gmane.org@gcc.gnu.org Fri Dec 07 08:27:43 2007
+Return-path: <gcc-return-142793-gcc=m.gmane.org@gcc.gnu.org>
+Envelope-to: gcc@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1J0XcZ-0001oG-TK
+	for gcc@gmane.org; Fri, 07 Dec 2007 08:27:40 +0100
+Received: (qmail 26105 invoked by alias); 7 Dec 2007 07:27:20 -0000
+Received: (qmail 26093 invoked by uid 22791); 7 Dec 2007 07:27:20 -0000
+X-Spam-Check-By: sourceware.org
+Received: from 66-23-211-5.clients.speedfactory.net (HELO peff.net) (66.23.211.5)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Fri, 07 Dec 2007 07:27:14 +0000
+Received: (qmail 3344 invoked by uid 111); 7 Dec 2007 07:27:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)     by peff.net (qpsmtpd/0.32) with SMTP; Fri, 07 Dec 2007 02:27:11 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Dec 2007 02:27:10 -0500
+Content-Disposition: inline
+In-Reply-To: <20071207065047.GB13101@coredump.intra.peff.net>
+Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67391>
+List-Id: <gcc.gcc.gnu.org>
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Delivered-To: mailing list gcc@gcc.gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67392>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Fri, Dec 07, 2007 at 01:50:47AM -0500, Jeff King wrote:
 
-> On Fri, 7 Dec 2007, Blake Ramsdell wrote:
->> On Dec 6, 2007 4:41 PM, Blake Ramsdell <blaker@gmail.com> wrote:
->>> On Dec 6, 2007 4:30 PM, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->>>> Umm. Why not just make the test be whether the following compiles cleanly?
->>>>
->>>>         #include <iconv.h>
->>>>
->>>>         extern size_t iconv(iconv_t cd,
->>>>           char **inbuf, size_t *inbytesleft,
->>>>           char **outbuf, size_t *outbytesleft);
->>>>
->>>> because if the compiler has seen a "const char **inbuf", then it  should
->>>> error out with a "conflicting types for 'iconv'" style message..
->>>
->>> Yeah, this is what I did:
->> 
->> My apologies. Your suggestion is completely different, and should work
->> without -Werror. Let me try that.
->
-> Is something like the patch below what you wanted to try?
+> Yes, but balanced by one thread running out of data way earlier than the
+> other, and completing the task with only one CPU. I am doing a 4-thread
+> test on a quad-CPU right now, and I will also try it with threads=1 and
+> threads=6 for comparison.
 
-This looks sensible.  Will apply.
+Hmm. As this has been running, I read the rest of the thread, and it
+looks like Jon Smirl has already posted the interesting numbers. So
+nevermind, unless there is something particular you would like to see.
+
+-Peff
