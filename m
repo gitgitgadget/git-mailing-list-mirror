@@ -1,63 +1,75 @@
-From: Shawn Bohrer <shawn.bohrer@gmail.com>
-Subject: Re: git-clean and empty pathspec
-Date: Fri, 7 Dec 2007 00:14:02 -0600
-Message-ID: <20071207061402.GB21347@mediacenter.austin.rr.com>
-References: <fcaeb9bf0712061021o5383f538h3a086a913ac1b05d@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git and GCC
+Date: Fri, 7 Dec 2007 01:38:48 -0500
+Message-ID: <20071207063848.GA13101@coredump.intra.peff.net>
+References: <20071206071503.GA19504@coredump.intra.peff.net> <alpine.LFD.0.99999.0712060915590.555@xanadu.home> <20071206173946.GA10845@sigill.intra.peff.net> <20071206.193121.40404287.davem@davemloft.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 07 07:14:09 2007
+Cc: nico@cam.org, jonsmirl@gmail.com, dberlin@dberlin.org,
+	harvey.harrison@gmail.com, ismail@pardus.org.tr, gcc@gcc.gnu.org,
+	git@vger.kernel.org
+To: David Miller <davem@davemloft.net>
+X-From: git-owner@vger.kernel.org Fri Dec 07 07:39:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0WTP-0002VA-MC
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 07:14:08 +0100
+	id 1J0Wrl-0007dw-DM
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 07:39:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751187AbXLGGNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 01:13:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751186AbXLGGNr
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 01:13:47 -0500
-Received: from an-out-0708.google.com ([209.85.132.250]:63740 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751085AbXLGGNq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 01:13:46 -0500
-Received: by an-out-0708.google.com with SMTP id d31so138466and
-        for <git@vger.kernel.org>; Thu, 06 Dec 2007 22:13:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=C5zZNUVB9vLHp0I1qabIFvAQFyHEUt+B3ickWqemI5c=;
-        b=hROMI043FXm35adNHlJ9M/bW/vPC2l0rjPpqdHwUntaJKwUC2p65ZzRlsG9a2teotSMjmGPdKM0lPlN9opUG05ly67zXhk/M0xs1tNqNXDo8zs/roruiCEtcJeSx9GtOo9XWy94gSHRJ1Zip5BqLBXPPLY4d3jGMkS7+FcIINYM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=vZ+zM0q0cpkIqN5Iu0fd+Ecczu+gDa52wrJu/rv/VUtd6lc5EoFR8Noqugm+Hw6xFdxARCjOnf0B4s4PYJpGW5IjvaEPWljaKX0clBR2RewsrjHk9h08bXbs0oKd1ufiNO4zaCY9+wV7s2E7MGC5Es/5LOc5/1PczJXeS2pxoWY=
-Received: by 10.100.210.9 with SMTP id i9mr8500449ang.1197008024902;
-        Thu, 06 Dec 2007 22:13:44 -0800 (PST)
-Received: from mediacenter.austin.rr.com ( [70.112.149.232])
-        by mx.google.com with ESMTPS id n5sm3991026rnf.2007.12.06.22.13.43
-        (version=SSLv3 cipher=OTHER);
-        Thu, 06 Dec 2007 22:13:43 -0800 (PST)
+	id S1750789AbXLGGiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 01:38:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750783AbXLGGiw
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 01:38:52 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2368 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750735AbXLGGiv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 01:38:51 -0500
+Received: (qmail 3084 invoked by uid 111); 7 Dec 2007 06:38:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 07 Dec 2007 01:38:49 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Dec 2007 01:38:48 -0500
 Content-Disposition: inline
-In-Reply-To: <fcaeb9bf0712061021o5383f538h3a086a913ac1b05d@mail.gmail.com>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+In-Reply-To: <20071206.193121.40404287.davem@davemloft.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67385>
 
-On Fri, Dec 07, 2007 at 01:21:10AM +0700, Nguyen Thai Ngoc Duy wrote:
-> "git clean -n" would not remove directories while "git clean -n -- ''"
-> (two single quotes) would. Is there anything wrong with it?
+On Thu, Dec 06, 2007 at 07:31:21PM -0800, David Miller wrote:
 
-It appears that match_pathspec views this as a recursive match to
-everything, so git clean thinks that you provided the pathspec for all
-files and directories and thus will remove them.
+> > So it is about 5% bigger. What is really disappointing is that we saved
+> > only about 20% of the time. I didn't sit around watching the stages, but
+> > my guess is that we spent a long time in the single threaded "writing
+> > objects" stage with a thrashing delta cache.
+> 
+> If someone can give me a good way to run this test case I can
+> have my 64-cpu Niagara-2 box crunch on this and see how fast
+> it goes and how much larger the resulting pack file is.
 
-Without the '' there is no provided pathspec so git clean will not
-remove the directories without -d.
+That would be fun to see. The procedure I am using is this:
 
-Note this is different behavior from the old git-clean.sh.
+# compile recent git master with threaded delta
+cd git
+echo THREADED_DELTA_SEARCH = 1 >>config.mak
+make install
+
+# get the gcc pack
+mkdir gcc && cd gcc
+git --bare init
+git config remote.gcc.url git://git.infradead.org/gcc.git
+git config remote.gcc.fetch \
+  '+refs/remotes/gcc.gnu.org/*:refs/remotes/gcc.gnu.org/*'
+git remote update
+
+# make a copy, so we can run further tests from a known point
+cd ..
+cp -a gcc test
+
+# and test multithreaded large depth/window repacking
+cd test
+git config pack.threads 4
+time git repack -a -d -f --window=250 --depth=250
+
+-Peff
