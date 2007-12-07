@@ -1,138 +1,81 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/3] git-help: add -w|--web option to display html man page in a browser.
-Date: Fri, 7 Dec 2007 06:35:17 +0100
-Message-ID: <200712070635.18018.chriscool@tuxfamily.org>
-References: <20071202060755.4d6d5ec8.chriscool@tuxfamily.org> <7v3aufeowe.fsf@gitster.siamese.dyndns.org>
+From: NightStrike <nightstrike@gmail.com>
+Subject: Re: Git and GCC
+Date: Fri, 7 Dec 2007 00:36:59 -0500
+Message-ID: <b609cb3b0712062136y154ec1c3g875ba33e470355a8@mail.gmail.com>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 	 <20071205.202047.58135920.davem@davemloft.net> 	 <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com> 	 <20071205.204848.227521641.davem@davemloft.net> 	 <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> 	 <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org> 	 <b609cb3b0712061024rc48022bhc3fbfba02061dd94@mail.gmail.com> 	 <alpine.LFD.0.9999.0712061036200.13796@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Theodore Tso <tytso@mit.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>, Andreas Ericsson <ae@op5.se>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Eric Wong <normalperson@yhbt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 07 06:29:21 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0Vm5-00023t-9r
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 06:29:21 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750801AbXLGF26 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Dec 2007 00:28:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750783AbXLGF26
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 00:28:58 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:49307 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750785AbXLGF25 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Dec 2007 00:28:57 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 571231AB2CC;
-	Fri,  7 Dec 2007 06:28:56 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 9C4531AB2AB;
-	Fri,  7 Dec 2007 06:28:55 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <7v3aufeowe.fsf@gitster.siamese.dyndns.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Daniel Berlin" <dberlin@dberlin.org>, "David Miller" <davem@davemloft.net>,  	ismail@pardus.org.tr, gcc@gcc.gnu.org, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: gcc-return-142787-gcc=m.gmane.org@gcc.gnu.org Fri Dec 07 06:37:28 2007
+Return-path: <gcc-return-142787-gcc=m.gmane.org@gcc.gnu.org>
+Envelope-to: gcc@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1J0Vtw-0003eA-EX
+	for gcc@gmane.org; Fri, 07 Dec 2007 06:37:28 +0100
+Received: (qmail 12100 invoked by alias); 7 Dec 2007 05:37:08 -0000
+Received: (qmail 12074 invoked by uid 22791); 7 Dec 2007 05:37:06 -0000
+X-Spam-Check-By: sourceware.org
+Received: from wa-out-1112.google.com (HELO wa-out-1112.google.com) (209.85.146.181)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Fri, 07 Dec 2007 05:37:02 +0000
+Received: by wa-out-1112.google.com with SMTP id m16so1135031waf         for <gcc@gcc.gnu.org>; Thu, 06 Dec 2007 21:37:00 -0800 (PST)
+Received: by 10.142.12.14 with SMTP id 14mr2052536wfl.1197005820020;         Thu, 06 Dec 2007 21:37:00 -0800 (PST)
+Received: by 10.142.126.8 with HTTP; Thu, 6 Dec 2007 21:36:59 -0800 (PST)
+In-Reply-To: <alpine.LFD.0.9999.0712061036200.13796@woody.linux-foundation.org>
 Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+X-IsSubscribed: yes
+Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67380>
+List-Id: <gcc.gcc.gnu.org>
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Delivered-To: mailing list gcc@gcc.gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67381>
 
-Le jeudi 6 d=E9cembre 2007, Junio C Hamano a =E9crit :
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > diff --git a/Documentation/Makefile b/Documentation/Makefile
-> > index d886641..3e01718 100644
-> > --- a/Documentation/Makefile
-> > +++ b/Documentation/Makefile
-> > @@ -29,6 +29,7 @@ DOC_MAN7=3D$(patsubst %.txt,%.7,$(MAN7_TXT))
+On 12/6/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>
+>
+> On Thu, 6 Dec 2007, NightStrike wrote:
 > >
-> >  prefix?=3D$(HOME)
-> >  bindir?=3D$(prefix)/bin
-> > +htmldir?=3D$(prefix)/share/doc/git-doc
-> >  mandir?=3D$(prefix)/share/man
-> >  man1dir=3D$(mandir)/man1
-> >  man5dir=3D$(mandir)/man5
+> > No disrespect is meant by this reply.  I am just curious (and I am
+> > probably misunderstanding something)..  Why remove all of the
+> > documentation entirely?  Wouldn't it be better to just document it
+> > more thoroughly?
 >
-> Doing this and then ...
+> Well, part of it is that I don't think "--aggressive" as it is implemented
+> right now is really almost *ever* the right answer. We could change the
+> implementation, of course, but generally the right thing to do is to not
+> use it (tweaking the "--window" and "--depth" manually for the repacking
+> is likely the more natural thing to do).
 >
-> > diff --git a/Makefile b/Makefile
-> > index a5a40ce..9204bfe 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -807,6 +808,7 @@ $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
-> >  	    -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
-> >  	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-> >  	    -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
-> > +	    -e 's|@@PREFIX@@|$(prefix_SQ)|g' \
-> >  	    $@.sh >$@+ && \
-> >  	chmod +x $@+ && \
-> >  	mv $@+ $@
-> > ...
-> > diff --git a/git-browse-help.sh b/git-browse-help.sh
-> > new file mode 100755
-> > index 0000000..11f8bfa
-> > --- /dev/null
-> > +++ b/git-browse-help.sh
-> > @@ -0,0 +1,154 @@
-> > +#!/bin/sh
-> > ...
-> > +USAGE=3D'[--browser=3Dbrowser|--tool=3Dbrowser] [cmd to display] .=
-=2E.'
-> > +SUBDIRECTORY_OK=3DYes
-> > +OPTIONS_SPEC=3D
-> > +. git-sh-setup
-> > +
-> > +PREFIX=3D"@@PREFIX@@"
-> > +GIT_VERSION=3D"@@GIT_VERSION@@"
-> > +
-> > +# Directories that may contain html documentation:
-> > +install_html_dir=3D"$PREFIX/share/doc/git-doc"
-> > +rpm_dir=3D"$PREFIX/share/doc/git-core-$GIT_VERSION"
+> The other part of the answer is that, when you *do* want to do what that
+> "--aggressive" tries to achieve, it's such a special case event that while
+> it should probably be documented, I don't think it should necessarily be
+> documented where it is now (as part of "git gc"), but as part of a much
+> more technical manual for "deep and subtle tricks you can play".
 >
-> ... doing this is wrong. People can set htmldir to somewhere other th=
-an
-> $(prefix)/share/doc/git-doc while building and installing, but you ar=
-e
-> not telling the munged script where it is.
-
-Yeah, I sent a fix for this.
-
-> > +init_browser_path() {
-> > +	browser_path=3D`git config browser.$1.path`
-> > +	test -z "$browser_path" && browser_path=3D$1
-> > +}
+> > I thought you did a fine job in this post in explaining its purpose,
+> > when to use it, when not to, etc.  Removing the documention seems
+> > counter-intuitive when you've already gone to the trouble of creating
+> > good documentation here in this post.
 >
-> Please do not contaminate the config file with something the user can
-> easily use a lot more standardized way (iow $PATH) to configure to hi=
-s
-> taste.
+> I'm so used to writing emails, and I *like* trying to explain what is
+> going on, so I have no problems at all doing that kind of thing. However,
+> trying to write a manual or man-page or other technical documentation is
+> something rather different.
 >
-> I'd suggest dropping this bit.
+> IOW, I like explaining git within the _context_ of a discussion or a
+> particular problem/issue. But documentation should work regardless of
+> context (or at least set it up), and that's the part I am not so good at.
+>
+> In other words, if somebody (hint hint) thinks my explanation was good and
+> readable, I'd love for them to try to turn it into real documentation by
+> editing it up and creating enough context for it! But I'm nort personally
+> very likely to do that. I'd just send Junio the patch to remove a
+> misleading part of the documentation we have.
 
-I stole this part from "git-mergetool.sh":
-
-init_merge_tool_path() {
-        merge_tool_path=3D`git config mergetool.$1.path`
-        if test -z "$merge_tool_path" ; then
-                case "$1" in
-                        emerge)
-                                merge_tool_path=3Demacs
-                                ;;
-                        *)
-                                merge_tool_path=3D$1
-                                ;;
-                esac
-        fi
-}
-
-So we should either drop it in "git-mergetool.sh" too or keep it in bot=
-h=20
-scripts.
-
-Thanks,
-Christian.
+hehe.. I'd love to, actually.  I can work on it next week.
