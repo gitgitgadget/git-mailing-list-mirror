@@ -1,67 +1,83 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Git and GCC
-Date: Thu, 06 Dec 2007 23:21:32 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0712062315000.555@xanadu.home>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>
- <20071205.202047.58135920.davem@davemloft.net>
- <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>
- <20071205.204848.227521641.davem@davemloft.net>
- <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com>
- <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org>
- <4aca3dc20712061004g43f5902cw79bf633917d3ade9@mail.gmail.com>
- <1196995353.22471.20.camel@brick>
- <alpine.LFD.0.9999.0712061857060.13796@woody.linux-foundation.org>
- <9e4733910712062006l651571f3w7f76ce64c6650dff@mail.gmail.com>
+From: Al Boldi <a1426z@gawab.com>
+Subject: Re: git guidance
+Date: Fri, 7 Dec 2007 07:37:18 +0300
+Message-ID: <200712070737.18519.a1426z@gawab.com>
+References: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com> <200712072155.04643.a1426z@gawab.com> <Pine.LNX.4.64.0712062119090.21625@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Harvey Harrison <harvey.harrison@gmail.com>,
-	Daniel Berlin <dberlin@dberlin.org>,
-	David Miller <davem@davemloft.net>, ismail@pardus.org.tr,
-	gcc@gcc.gnu.org, git@vger.kernel.org
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 07 05:21:56 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Ericsson <ae@op5.se>, Phillip Susi <psusi@cfl.rr.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jing Xue <jingxue@digizenstudio.com>,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Dec 07 05:42:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0Uip-0003vd-3s
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 05:21:55 +0100
+	id 1J0V39-0000Ge-2m
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 05:42:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752897AbXLGEVe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 23:21:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752605AbXLGEVe
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 23:21:34 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:57336 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752601AbXLGEVd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 23:21:33 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSN00HHAW3WT9K0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 06 Dec 2007 23:21:32 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <9e4733910712062006l651571f3w7f76ce64c6650dff@mail.gmail.com>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1753180AbXLGEmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 23:42:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753109AbXLGEmc
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 23:42:32 -0500
+Received: from [212.12.190.105] ([212.12.190.105]:40442 "EHLO raad.intranet"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752973AbXLGEmb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 23:42:31 -0500
+Received: from localhost ([10.0.0.111])
+	by raad.intranet (8.8.7/8.8.7) with ESMTP id HAA13594;
+	Fri, 7 Dec 2007 07:40:52 +0300
+User-Agent: KMail/1.5
+In-Reply-To: <Pine.LNX.4.64.0712062119090.21625@wbgn129.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67377>
 
-On Thu, 6 Dec 2007, Jon Smirl wrote:
+Johannes Schindelin wrote:
+> Hi,
 
-> I have a 4.8GB git process with 4GB of physical memory. Everything
-> started slowing down a lot when the process got that big. Does git
-> really need 4.8GB to repack? I could only keep 3.4GB resident. Luckily
-> this happen at 95% completion. With 8GB of memory you should be able
-> to do this repack in under 20 minutes.
+Hi
 
-Probably you have too many cached delta results.  By default, every 
-delta smaller than 1000 bytes is kept in memory until the write phase.  
-Try using pack.deltacachesize = 256M or lower, or try disabling this 
-caching entirely with pack.deltacachelimit = 0.
+> On Fri, 7 Dec 2007, Al Boldi wrote:
+> > You need to re-read the thread.
+>
+> I don't know why you write that, and then say thanks.  Clearly, what you
+> wrote originally, and what Andreas pointed out, were quite obvious
+> indicators that git already does what you suggest.
+>
+> You _do_ work "transparently" (whatever you understand by that overused
+> term) in the working directory, unimpeded by git.
+
+If you go back in the thread, you may find a link to a gitfs client that 
+somebody kindly posted.  This client pretty much defines the transparency 
+I'm talking about.  The only problem is that it's read-only.
+
+To make it really useful, it has to support versioning locally, disconnected 
+from the server repository.  One way to implement this, could be by 
+committing every update unconditionally to an on-the-fly created git 
+repository private to the gitfs client.
+
+With this transparently created private scratch repository it should then be 
+possible for the same gitfs to re-expose the locally created commits, all 
+without any direct user-intervention.
+
+Later, this same scratch repository could then be managed by the normal 
+git-management tools/commands to ultimately update the backend git 
+repositories.
+
+BTW:  Sorry for my previous posts that contained the wrong date; it seems 
+that hibernation sometimes advances the date by a full 24h.  Has anybody 
+noticed this as well?
 
 
-Nicolas
+Thanks!
+
+--
+Al
