@@ -1,76 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] git-help: add -w|--web option to display html man page in a browser.
-Date: Thu, 06 Dec 2007 23:05:01 -0800
-Message-ID: <7vfxyf7zoi.fsf@gitster.siamese.dyndns.org>
-References: <20071202060755.4d6d5ec8.chriscool@tuxfamily.org>
-	<7v3aufeowe.fsf@gitster.siamese.dyndns.org>
-	<200712070635.18018.chriscool@tuxfamily.org>
-	<7v1w9z9h2k.fsf@gitster.siamese.dyndns.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Git and GCC
+Date: Fri, 7 Dec 2007 02:08:09 -0500
+Message-ID: <9e4733910712062308t22258c6anb685b18a663e0a31@mail.gmail.com>
+References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>
+	 <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>
+	 <20071205.204848.227521641.davem@davemloft.net>
+	 <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com>
+	 <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org>
+	 <4aca3dc20712061004g43f5902cw79bf633917d3ade9@mail.gmail.com>
+	 <1196995353.22471.20.camel@brick>
+	 <alpine.LFD.0.9999.0712061857060.13796@woody.linux-foundation.org>
+	 <9e4733910712062006l651571f3w7f76ce64c6650dff@mail.gmail.com>
+	 <alpine.LFD.0.9999.0712062120100.13796@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Theodore Tso <tytso@mit.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>, Andreas Ericsson <ae@op5.se>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Eric Wong <normalperson@yhbt.net>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Dec 07 08:06:08 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Harvey Harrison" <harvey.harrison@gmail.com>,
+	"Daniel Berlin" <dberlin@dberlin.org>,
+	"David Miller" <davem@davemloft.net>, ismail@pardus.org.tr,
+	gcc@gcc.gnu.org, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Dec 07 08:08:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0XHT-0004hy-7Z
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 08:05:52 +0100
+	id 1J0XK5-0005Sc-MT
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 08:08:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750956AbXLGHFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 02:05:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750954AbXLGHF3
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 02:05:29 -0500
-Received: from a-sasl-quonix.pobox.com ([208.72.237.25]:39795 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750759AbXLGHF3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 02:05:29 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 203772A9E;
-	Fri,  7 Dec 2007 02:05:16 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6B1272A9D;
-	Fri,  7 Dec 2007 02:05:05 -0500 (EST)
-In-Reply-To: <7v1w9z9h2k.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 06 Dec 2007 22:04:03 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750998AbXLGHIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 02:08:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbXLGHIM
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 02:08:12 -0500
+Received: from qb-out-0506.google.com ([72.14.204.225]:28302 "EHLO
+	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750925AbXLGHIK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 02:08:10 -0500
+Received: by qb-out-0506.google.com with SMTP id e11so4514390qbe
+        for <git@vger.kernel.org>; Thu, 06 Dec 2007 23:08:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=M9xABKCFrBngt2wfro1HCWOBn2jm2epU1EzzByrDtCY=;
+        b=M4ev+aQUgjwzbNbwHfiyOSRgIbv53623h3e7zs1RUyxk1gtzHifvQwtVmWA+RTS/Jpu3TzMtY3oKsxqRbrXk7Aq39bbxqdONU0DRqNFQcw6tF/TZv+CooyG5o96ZoG5dBtBCBOy42AByzIT5Ouo3Sl+TK3/kBhKee7rWPDVrOQU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lVmweiak3rSUHA3H2IrOJlt5s50H82Iq6hqmhiSEEY83D1YUdu+HQPmPDd/B63sws8QgooNkyZtv0I2nU32XREuxtpvsRNs6I2R8AUdkz/rCjIzwsGzQPD/gna88v+xFf54YQr32X+j3oH13KMeLvDNFwLp3XJ1hdb7TIdvsUpA=
+Received: by 10.114.154.1 with SMTP id b1mr3191368wae.1197011289532;
+        Thu, 06 Dec 2007 23:08:09 -0800 (PST)
+Received: by 10.114.208.17 with HTTP; Thu, 6 Dec 2007 23:08:09 -0800 (PST)
+In-Reply-To: <alpine.LFD.0.9999.0712062120100.13796@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67389>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 12/7/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>
+>
+> On Thu, 6 Dec 2007, Jon Smirl wrote:
+> > >
+> > >         time git blame -C gcc/regclass.c > /dev/null
+> >
+> > jonsmirl@terra:/video/gcc$ time git blame -C gcc/regclass.c > /dev/null
+> >
+> > real    1m21.967s
+> > user    1m21.329s
+>
+> Well, I was also hoping for a "compared to not-so-aggressive packing"
+> number on the same machine.. IOW, what I was wondering is whether there is
+> a visible performance downside to the deeper delta chains in the 300MB
+> pack vs the (less aggressive) 500MB pack.
 
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> ...
->>> > +init_browser_path() {
->>> > +	browser_path=`git config browser.$1.path`
->>> > +	test -z "$browser_path" && browser_path=$1
->>> > +}
->>>
->>> Please do not contaminate the config file with something the user can
->>> easily use a lot more standardized way (iow $PATH) to configure to his
->>> taste.
->>>
->>> I'd suggest dropping this bit.
+Same machine with a default pack
 
-Well, I changed my mind.  It is a bit funny to have both firefox and
-iceweasel as "valid-tool", but if we consider $browser to define the
-external interface and $browser_path to define the implementation, it
-sort of makes sense to have that configuration.  browser_path could be
-iceweasel for browser firefox.
+jonsmirl@terra:/video/gcc/.git/objects/pack$ ls -l
+total 2145716
+-r--r--r-- 1 jonsmirl jonsmirl   23667932 2007-12-07 02:03
+pack-bd163555ea9240a7fdd07d2708a293872665f48b.idx
+-r--r--r-- 1 jonsmirl jonsmirl 2171385413 2007-12-07 02:03
+pack-bd163555ea9240a7fdd07d2708a293872665f48b.pack
+jonsmirl@terra:/video/gcc/.git/objects/pack$
 
-I'll squash the patch to update the one from the last round (as the last
-two patches are not yet accepted in 'next' yet), remove the html
-documentation path fallback, but will leave this part in.
+Delta lengths have virtually no impact. The bigger pack file causes
+more IO which offsets the increased delta processing time.
 
-browser.*.path and web.browser configuration need to be documented, if
-not already, though.
+One of my rules is smaller is almost always better. Smaller eliminates
+IO and helps with the CPU cache. It's like the kernel being optimized
+for size instead of speed ending up being  faster.
+
+time git blame -C gcc/regclass.c > /dev/null
+real    1m19.289s
+user    1m17.853s
+sys     0m0.952s
+
+
+
+>
+>                 Linus
+>
+
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
