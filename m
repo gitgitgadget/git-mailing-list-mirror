@@ -1,62 +1,66 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: After-the-fact submodule detection or creation
-Date: Fri, 7 Dec 2007 08:37:28 +0100
-Message-ID: <20071207073728.GA2847@steel.home>
-References: <87ir3bp5sf.fsf@graviton.dyn.troilus.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Poole <mdpoole@troilus.org>
-X-From: git-owner@vger.kernel.org Fri Dec 07 08:37:56 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0XmT-0004IC-Rz
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 08:37:54 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751601AbXLGHhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 02:37:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751772AbXLGHhc
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 02:37:32 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:35654 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751601AbXLGHhb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 02:37:31 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCT5T8Q==
-Received: from tigra.home (Fca29.f.strato-dslnet.de [195.4.202.41])
-	by post.webmailer.de (mrclete mo19) (RZmta 14.5)
-	with ESMTP id C0399cjB73hXAx ; Fri, 7 Dec 2007 08:37:29 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 08FBE277AE;
-	Fri,  7 Dec 2007 08:37:29 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 6C48256D22; Fri,  7 Dec 2007 08:37:28 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <87ir3bp5sf.fsf@graviton.dyn.troilus.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-Sender: git-owner@vger.kernel.org
+From: Marcel Holtmann <marcel@holtmann.org>
+Subject: Re: In future, to replace autotools by cmake like KDE4 did?
+Date: Fri, 7 Dec 2007 08:56:47 +0100
+Message-ID: <7FAE3E89-4C56-47AE-8AD8-9191D6BB8FAC@holtmann.org>
+References: <998d0e4a0712061810k18e6388jde9d7bc5bd006b57@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: gcc@gcc.gnu.org, git@vger.kernel.org, "David Miller" <davem@davemloft.net>,         "Daniel Berlin" <dberlin@dberlin.org>,         "Ismail Donmez" <ismail@pardus.org.tr>
+To: "J.C. Pizarro" <jcpiza@gmail.com>
+X-From: gcc-return-142795-gcc=m.gmane.org@gcc.gnu.org Fri Dec 07 08:57:44 2007
+Return-path: <gcc-return-142795-gcc=m.gmane.org@gcc.gnu.org>
+Envelope-to: gcc@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1J0Y5a-0000Ro-4z
+	for gcc@gmane.org; Fri, 07 Dec 2007 08:57:38 +0100
+Received: (qmail 12573 invoked by alias); 7 Dec 2007 07:57:18 -0000
+Received: (qmail 12556 invoked by uid 22791); 7 Dec 2007 07:57:17 -0000
+X-Spam-Check-By: sourceware.org
+Received: from coyote.holtmann.net (HELO mail.holtmann.net) (217.160.111.169)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Fri, 07 Dec 2007 07:57:09 +0000
+Received: from bluebird (i577ADB98.versanet.de [87.122.219.152]) 	by mail.holtmann.net (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id lB781T01019376 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT); 	Fri, 7 Dec 2007 09:01:31 +0100
+In-Reply-To: <998d0e4a0712061810k18e6388jde9d7bc5bd006b57@mail.gmail.com>
+X-Mailer: Apple Mail (2.915)
+Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67394>
+List-Id: <gcc.gcc.gnu.org>
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Delivered-To: mailing list gcc@gcc.gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67395>
 
-Michael Poole, Fri, Dec 07, 2007 04:01:04 +0100:
-> It seems like using the current submodule code would mean that this
-> kind of import would need two passes over the foreign repository,
-> rather than one if the branch could be created after the parent tree
-> is initially imported.  I can live with that -- it is a rather unusual
-> case -- but maybe there is a better way.)
+Hi,
 
-Import the core module in a branch all by itself, and merge it in
-every support branch?
+> The autotools ( automake + libtool + autoconf + ... ) generate many  
+> big
+> files that they have been slowing the building's computation and  
+> growing
+> enormously their cvs/svn/git/hg repositories because of generated  
+> files.
+>
+> To see below interesting links:
+> 1. http://dot.kde.org/1172083974/
+> 2. http://sam.zoy.org/lectures/20050910-debian/
+> 3. https://lwn.net/Articles/188693/
+> 4. http://en.wikipedia.org/wiki/GNU_Build_Tools
+> 5. http://en.wikipedia.org/wiki/GNU_Automake
+>
+> The benefits could be:
+> * +40% faster in the KDE4 building vs KDE 3.5.6.
+> * elimination of redundant and unnecesary generated files as those
+>  from autotools.
+> * smaller cvs/svn/git/hg repositories.
 
+stop spreading this FUD. If you leave the auto-generated files from  
+autotools in the source control repositories, then it is your fault.  
+They are generated files and can always be generated. Hence putting  
+them under revision control makes no sense and so don't do it. And  
+more certain don't complain about it if you did.
 
-    Supp1: o-o-o-----o-o-o-o-o-o-o
-		    /
-    Core:  o-o-o-o-o
-		    \
-    Supp2: o-o-------o-o-o-o
+Regards
+
+Marcel
