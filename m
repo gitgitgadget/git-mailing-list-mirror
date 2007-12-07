@@ -1,70 +1,106 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Git and GCC
-Date: Thu, 6 Dec 2007 13:55:55 -0500
-Message-ID: <9e4733910712061055p353775d8wd0321bc9c81297b7@mail.gmail.com>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 	 <20071205.204848.227521641.davem@davemloft.net> 	 <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> 	 <1196918132.10408.85.camel@brick> 	 <4aca3dc20712052117j3ef5cf99y848d4962ae8ddf33@mail.gmail.com> 	 <9e4733910712052247x116cabb4q48ebafffb93f7e03@mail.gmail.com> 	 <20071206071503.GA19504@coredump.intra.peff.net> 	 <alpine.LFD.0.99999.0712060915590.555@xanadu.home> 	 <20071206173946.GA10845@sigill.intra.peff.net> 	 <alpine.LFD.0.9999.0712061030560.13796@woody.linux-foundation.org>
+From: Al Boldi <a1426z@gawab.com>
+Subject: Re: git guidance
+Date: Fri, 7 Dec 2007 21:55:04 +0300
+Message-ID: <200712072155.04643.a1426z@gawab.com>
+References: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com> <200712072035.47359.a1426z@gawab.com> <47583E57.9050208@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>, "Nicolas Pitre" <nico@cam.org>,  	"Daniel Berlin" <dberlin@dberlin.org>,  	"Harvey Harrison" <harvey.harrison@gmail.com>,  	"David Miller" <davem@davemloft.net>, ismail@pardus.org.tr,  	gcc@gcc.gnu.org, git@vger.kernel.org
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: gcc-return-142759-gcc=m.gmane.org@gcc.gnu.org Thu Dec 06 19:56:34 2007
-Return-path: <gcc-return-142759-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J0Ltf-0007Dd-Df
-	for gcc@gmane.org; Thu, 06 Dec 2007 19:56:31 +0100
-Received: (qmail 10784 invoked by alias); 6 Dec 2007 18:56:13 -0000
-Received: (qmail 10772 invoked by uid 22791); 6 Dec 2007 18:56:12 -0000
-X-Spam-Check-By: sourceware.org
-Received: from wa-out-1112.google.com (HELO wa-out-1112.google.com) (209.85.146.183)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Thu, 06 Dec 2007 18:56:01 +0000
-Received: by wa-out-1112.google.com with SMTP id m16so740570waf         for <gcc@gcc.gnu.org>; Thu, 06 Dec 2007 10:55:58 -0800 (PST)
-Received: by 10.114.95.1 with SMTP id s1mr862250wab.1196967355495;         Thu, 06 Dec 2007 10:55:55 -0800 (PST)
-Received: by 10.114.208.17 with HTTP; Thu, 6 Dec 2007 10:55:55 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.9999.0712061030560.13796@woody.linux-foundation.org>
+Cc: Phillip Susi <psusi@cfl.rr.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jing Xue <jingxue@digizenstudio.com>,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1753099AbXLFS42@vger.kernel.org Thu Dec 06 19:56:53 2007
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1753099AbXLFS42@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J0Ltv-0007LT-7L
+	for glk-linux-kernel-3@gmane.org; Thu, 06 Dec 2007 19:56:47 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753099AbXLFS42 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Thu, 6 Dec 2007 13:56:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751973AbXLFS4R
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Thu, 6 Dec 2007 13:56:17 -0500
+Received: from [212.12.190.167] ([212.12.190.167]:33522 "EHLO raad.intranet"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751641AbXLFS4Q (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Thu, 6 Dec 2007 13:56:16 -0500
+Received: from localhost ([10.0.0.111])
+	by raad.intranet (8.8.7/8.8.7) with ESMTP id VAA02022;
+	Thu, 6 Dec 2007 21:55:16 +0300
+User-Agent: KMail/1.5
+In-Reply-To: <47583E57.9050208@op5.se>
 Content-Disposition: inline
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67319>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67320>
 
-On 12/6/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->
->
-> On Thu, 6 Dec 2007, Jeff King wrote:
+Andreas Ericsson wrote:
+> Al Boldi wrote:
+> > Phillip Susi wrote:
+> >> Al Boldi wrote:
+> >>> IOW, git currently only implements the server-side use-case, but fails
+> >>> to deliver on the client-side.  By introducing a git-client manager
+> >>> that handles the transparency needs of a single user, it should be
+> >>> possible to clearly isolate update semantics for both the client and
+> >>> the server, each handling their specific use-case.
+> >>
+> >> Any talk of client or server makes no sense since git does not use a
+> >> client/server model.
 > >
-> > What is really disappointing is that we saved only about 20% of the
-> > time. I didn't sit around watching the stages, but my guess is that we
-> > spent a long time in the single threaded "writing objects" stage with a
-> > thrashing delta cache.
+> > Whether git uses the client/server model or not does not matter; what
+> > matters is that there are two distinct use-cases at work here:  one on
+> > the server/repository, and the other on the client.
 >
-> I don't think you spent all that much time writing the objects. That part
-> isn't very intensive, it's mostly about the IO.
+> Git is distributed. The repository is everywhere. No server is actually
+> needed. Many use one anyway since it can be convenient. It's not, however,
+> necessary.
+
+When you read server, don't read it as localized; a server can be 
+distributed.  What distinguishes a server from an engine is that it has to 
+handle a multi-user use-case.  How that is implemented, locally or remotely 
+or distributed, is another issue.
+
+> >> If you wish to use a centralized repository, then
+> >> git can be set up to transparently push/pull to/from said repository if
+> >> you wish via hooks or cron jobs.
+> >
+> > Again, this only handles the interface to/from the server/repository,
+> > but once you pulled the sources, it leaves you without Version Control
+> > on the client.
 >
-> I suspect you may simply be dominated by memory-throughput issues. The
-> delta matching doesn't cache all that well, and using two or more cores
-> isn't going to help all that much if they are largely waiting for memory
-> (and quite possibly also perhaps fighting each other for a shared cache?
-> Is this a Core 2 with the shared L2?)
+> No, that's CVS, SVN and other centralized scm's. With git you have perfect
+> version control on each peer. That's the entire idea behind "fully
+> distributed".
 
-When I lasted looked at the code, the problem was in evenly dividing
-the work. I was using a four core machine and most of the time one
-core would end up with 3-5x the work of the lightest loaded core.
-Setting pack.threads up to 20 fixed the problem. With a high number of
-threads I was able to get a 4hr pack to finished in something like
-1:15.
+As explained before in this thread, replicating the git tree on the client 
+still doesn't provide the required transparency.
 
-A scheme where each core could work a minute without communicating to
-the other cores would be best. It would also be more efficient if the
-cores could avoid having sync points between them.
+> > By pulling the sources into a git-client manager mounted on some dir, it
+> > should be possible to let the developer work naturally/transparently in
+> > a readable/writeable manner, and only require his input when reverting
+> > locally or committing to the server/repository.
+>
+> How is that different from what every SCM, including git, is doing today?
+> The user needs to tell the scm when it's time to take a snapshot of the
+> current state. Git is distributed though, so committing is usually not the
+> same as publishing. Is that lack of a single command to commit and publish
+> what's nagging you? If it's not, I completely fail to see what you're
+> getting at, unless you've only ever looked at repositories without a
+> worktree attached, or you think that git should work like an editor's
+> "undo" functionality, which would be quite insane.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+You need to re-read the thread.
+
+
+Thanks!
+
+--
+Al
+
