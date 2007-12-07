@@ -1,78 +1,54 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git and GCC
-Date: Fri, 7 Dec 2007 01:50:47 -0500
-Message-ID: <20071207065047.GB13101@coredump.intra.peff.net>
-References: <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com> <20071205.204848.227521641.davem@davemloft.net> <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> <1196918132.10408.85.camel@brick> <4aca3dc20712052117j3ef5cf99y848d4962ae8ddf33@mail.gmail.com> <9e4733910712052247x116cabb4q48ebafffb93f7e03@mail.gmail.com> <20071206071503.GA19504@coredump.intra.peff.net> <alpine.LFD.0.99999.0712060915590.555@xanadu.home> <20071206173946.GA10845@sigill.intra.peff.net> <alpine.LFD.0.99999.0712061246120.555@xanadu.home>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Change from using email.com to example.com as example
+	domain, as per RFC 2606.
+Date: Fri, 7 Dec 2007 08:01:35 +0100
+Organization: glandium.org
+Message-ID: <20071207070135.GA29333@glandium.org>
+References: <11969842052283-git-send-email-dsymonds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Daniel Berlin <dberlin@dberlin.org>,
-	Harvey Harrison <harvey.harrison@gmail.com>,
-	David Miller <davem@davemloft.net>, ismail@pardus.org.tr,
-	gcc@gcc.gnu.org, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Dec 07 07:51:15 2007
+Cc: Junio Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: David Symonds <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 07 08:02:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0X3J-0001kc-NU
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 07:51:14 +0100
+	id 1J0XDq-000443-17
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 08:02:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751225AbXLGGuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 01:50:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283AbXLGGuv
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 01:50:51 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4229 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751054AbXLGGuv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 01:50:51 -0500
-Received: (qmail 3143 invoked by uid 111); 7 Dec 2007 06:50:48 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 07 Dec 2007 01:50:48 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Dec 2007 01:50:47 -0500
+	id S1750865AbXLGHBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 02:01:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbXLGHBl
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 02:01:41 -0500
+Received: from smtp19.orange.fr ([80.12.242.17]:20556 "EHLO smtp19.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750748AbXLGHBk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 02:01:40 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf1914.orange.fr (SMTP Server) with ESMTP id A5F321C00094
+	for <git@vger.kernel.org>; Fri,  7 Dec 2007 08:01:38 +0100 (CET)
+Received: from namakemono.glandium.org (APuteaux-153-1-79-219.w81-249.abo.wanadoo.fr [81.249.109.219])
+	by mwinf1914.orange.fr (SMTP Server) with ESMTP id 834EB1C0008E;
+	Fri,  7 Dec 2007 08:01:38 +0100 (CET)
+X-ME-UUID: 20071207070138537.834EB1C0008E@mwinf1914.orange.fr
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1J0XDL-0007am-KL; Fri, 07 Dec 2007 08:01:36 +0100
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.99999.0712061246120.555@xanadu.home>
+In-Reply-To: <11969842052283-git-send-email-dsymonds@gmail.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67387>
 
-On Thu, Dec 06, 2007 at 01:02:58PM -0500, Nicolas Pitre wrote:
+On Fri, Dec 07, 2007 at 10:36:45AM +1100, David Symonds wrote:
+> -	  "Signed-off-by: Your Name <your@email.com>" line to the
+> +	  "Signed-off-by: Your Name <your@example.com>" line to the
 
-> > What is really disappointing is that we saved
-> > only about 20% of the time. I didn't sit around watching the stages, but
-> > my guess is that we spent a long time in the single threaded "writing
-> > objects" stage with a thrashing delta cache.
-> 
-> Maybe you should run the non threaded repack on the same machine to have 
-> a good comparison.
+you@example.com would be better IMHO.
 
-Sorry, I should have been more clear. By "saved" I meant "we needed N
-minutes of CPU time, but took only M minutes of real time to use it."
-IOW, if we assume that the threading had zero overhead and that we were
-completely CPU bound, then the task would have taken N minutes of real
-time. And obviously those assumptions aren't true, but I was attempting
-to say "it would have been at most N minutes of real time to do it
-single-threaded."
-
-> And if you have only 2 CPUs, you will have better performances with
-> pack.threads = 2, otherwise there'll be wasteful task switching going
-> on.
-
-Yes, but balanced by one thread running out of data way earlier than the
-other, and completing the task with only one CPU. I am doing a 4-thread
-test on a quad-CPU right now, and I will also try it with threads=1 and
-threads=6 for comparison.
-
-> And of course, if the delta cache is being trashed, that might be due to 
-> the way the existing pack was previously packed.  Hence the current pack 
-> might impact object _access_ when repacking them.  So for a really 
-> really fair performance comparison, you'd have to preserve the original 
-> pack and swap it back before each repack attempt.
-
-I am working each time from the pack generated by fetching from
-git://git.infradead.org/gcc.git.
-
--Peff
+Mike
