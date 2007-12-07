@@ -1,81 +1,46 @@
-From: NightStrike <nightstrike@gmail.com>
-Subject: Re: Git and GCC
-Date: Fri, 7 Dec 2007 00:36:59 -0500
-Message-ID: <b609cb3b0712062136y154ec1c3g875ba33e470355a8@mail.gmail.com>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com> 	 <20071205.202047.58135920.davem@davemloft.net> 	 <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com> 	 <20071205.204848.227521641.davem@davemloft.net> 	 <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com> 	 <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org> 	 <b609cb3b0712061024rc48022bhc3fbfba02061dd94@mail.gmail.com> 	 <alpine.LFD.0.9999.0712061036200.13796@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-am: catch missing author date early.
+Date: Thu, 06 Dec 2007 22:06:13 -0800
+Message-ID: <7vk5nr82ei.fsf@gitster.siamese.dyndns.org>
+References: <200712062134.47330.lenb@kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Daniel Berlin" <dberlin@dberlin.org>, "David Miller" <davem@davemloft.net>,  	ismail@pardus.org.tr, gcc@gcc.gnu.org, git@vger.kernel.org
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: gcc-return-142787-gcc=m.gmane.org@gcc.gnu.org Fri Dec 07 06:37:28 2007
-Return-path: <gcc-return-142787-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J0Vtw-0003eA-EX
-	for gcc@gmane.org; Fri, 07 Dec 2007 06:37:28 +0100
-Received: (qmail 12100 invoked by alias); 7 Dec 2007 05:37:08 -0000
-Received: (qmail 12074 invoked by uid 22791); 7 Dec 2007 05:37:06 -0000
-X-Spam-Check-By: sourceware.org
-Received: from wa-out-1112.google.com (HELO wa-out-1112.google.com) (209.85.146.181)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Fri, 07 Dec 2007 05:37:02 +0000
-Received: by wa-out-1112.google.com with SMTP id m16so1135031waf         for <gcc@gcc.gnu.org>; Thu, 06 Dec 2007 21:37:00 -0800 (PST)
-Received: by 10.142.12.14 with SMTP id 14mr2052536wfl.1197005820020;         Thu, 06 Dec 2007 21:37:00 -0800 (PST)
-Received: by 10.142.126.8 with HTTP; Thu, 6 Dec 2007 21:36:59 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.9999.0712061036200.13796@woody.linux-foundation.org>
-Content-Disposition: inline
-X-IsSubscribed: yes
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Len Brown <lenb@kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 07 07:11:14 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J0WQa-0001vz-FV
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 07:11:12 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751118AbXLGGKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 01:10:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750965AbXLGGKq
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 01:10:46 -0500
+Received: from a-sasl-quonix.pobox.com ([208.72.237.25]:38890 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750901AbXLGGKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 01:10:45 -0500
+X-Greylist: delayed 371 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 Dec 2007 01:10:45 EST
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 49A8D2645;
+	Fri,  7 Dec 2007 01:06:30 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A4A642644;
+	Fri,  7 Dec 2007 01:06:26 -0500 (EST)
+In-Reply-To: <200712062134.47330.lenb@kernel.org> (Len Brown's message of
+	"Thu, 6 Dec 2007 21:34:47 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67381>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67382>
 
-On 12/6/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->
->
-> On Thu, 6 Dec 2007, NightStrike wrote:
-> >
-> > No disrespect is meant by this reply.  I am just curious (and I am
-> > probably misunderstanding something)..  Why remove all of the
-> > documentation entirely?  Wouldn't it be better to just document it
-> > more thoroughly?
->
-> Well, part of it is that I don't think "--aggressive" as it is implemented
-> right now is really almost *ever* the right answer. We could change the
-> implementation, of course, but generally the right thing to do is to not
-> use it (tweaking the "--window" and "--depth" manually for the repacking
-> is likely the more natural thing to do).
->
-> The other part of the answer is that, when you *do* want to do what that
-> "--aggressive" tries to achieve, it's such a special case event that while
-> it should probably be documented, I don't think it should necessarily be
-> documented where it is now (as part of "git gc"), but as part of a much
-> more technical manual for "deep and subtle tricks you can play".
->
-> > I thought you did a fine job in this post in explaining its purpose,
-> > when to use it, when not to, etc.  Removing the documention seems
-> > counter-intuitive when you've already gone to the trouble of creating
-> > good documentation here in this post.
->
-> I'm so used to writing emails, and I *like* trying to explain what is
-> going on, so I have no problems at all doing that kind of thing. However,
-> trying to write a manual or man-page or other technical documentation is
-> something rather different.
->
-> IOW, I like explaining git within the _context_ of a discussion or a
-> particular problem/issue. But documentation should work regardless of
-> context (or at least set it up), and that's the part I am not so good at.
->
-> In other words, if somebody (hint hint) thinks my explanation was good and
-> readable, I'd love for them to try to turn it into real documentation by
-> editing it up and creating enough context for it! But I'm nort personally
-> very likely to do that. I'd just send Junio the patch to remove a
-> misleading part of the documentation we have.
+Sorry, and thanks for the report.
 
-hehe.. I'd love to, actually.  I can work on it next week.
+Jens complained the same yesterday and the change was reverted.
