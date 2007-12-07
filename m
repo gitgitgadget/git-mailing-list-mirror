@@ -1,79 +1,69 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: RAM consumption when working with the gcc repo
-Date: Fri, 07 Dec 2007 15:46:30 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0712071529580.555@xanadu.home>
-References: <9e4733910712071207p750c14f4h7abc5d637da3a478@mail.gmail.com>
- <Pine.LNX.4.64.0712071323260.12607@asgard.lang.hm>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] quote_path: convert empty path to "./"
+Date: Fri, 7 Dec 2007 15:49:37 -0500
+Message-ID: <20071207204937.GA20111@coredump.intra.peff.net>
+References: <20071207165703.GA8889@sigill.intra.peff.net> <Pine.LNX.4.64.0712071853500.27959@racer.site> <4759996B.2000300@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Fri Dec 07 21:47:03 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Harning <harningt@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 07 21:50:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0k64-0008TX-18
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 21:46:56 +0100
+	id 1J0k94-0001Ge-AH
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 21:50:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754330AbXLGUqd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 15:46:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753650AbXLGUqd
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 15:46:33 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:54183 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753347AbXLGUqc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 15:46:32 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSP00C6Y5PG9N60@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 07 Dec 2007 15:46:29 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <Pine.LNX.4.64.0712071323260.12607@asgard.lang.hm>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1753142AbXLGUtl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 15:49:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754532AbXLGUtl
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 15:49:41 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4150 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753033AbXLGUtk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 15:49:40 -0500
+Received: (qmail 12935 invoked by uid 111); 7 Dec 2007 20:49:39 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 07 Dec 2007 15:49:39 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Dec 2007 15:49:37 -0500
+Content-Disposition: inline
+In-Reply-To: <4759996B.2000300@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67456>
 
-On Fri, 7 Dec 2007, david@lang.hm wrote:
+On Fri, Dec 07, 2007 at 02:05:15PM -0500, Thomas Harning wrote:
 
-> On Fri, 7 Dec 2007, Jon Smirl wrote:
-> 
-> > I noticed two things when doing a repack of the gcc repo. First is
-> > that the git process is getting to be way too big. Turning off the
-> > delta caches had minimal impact. Why does the process still grow to
-> > 4.8GB?
-> > 
-> > Putting this in perspective, this is a 4.8GB process constructing a
-> > 330MB file. Something isn't right. Memory leak or inefficient data
-> > structure?
-> 
-> keep in mind that that 330MB file is _very_ heavily compressed. the simple
-> zlib compression is probably getting you 10:1 or 20:1 compression and the
-> delta compression is a significant multiplier on top of that.
+> I concur.  There is one case that this seems to dodge.  What about the case 
+> where you are in:
+>
+> /test/test_2  where /test  is not tracked...
+>
+> This should probably show "./../"   not just "./"   , right?
 
-Doesn't matter.  Something is indeed fishy.
+It already says "../", which is correct:
 
-The bulk of pack-objects memory consumption can be estimated as follows:
+  $ git init
+  $ mkdir test && cd test
+  $ touch file
+  $ mkdir test2 && cd test2
+  $ git status
+  ...
+  # Untracked files:
+  #   (use "git add <file>..." to include in what will be committed)
+  #
+  #       ../
 
-1M objects * sizeof(struct object_entry) ~= 100MB
-256 window entries with data (assuming a big 1MB per entry) = 256MB
-Delta result caching was disabled therefore 0MB
-read-side delta cache limited to 16MB
+There's no point in ever saying "./" _except_ in the case where the
+output would be totally blank, since there is no way to tell that it is
+an output line.
 
-So the purely ram allocation might get to roughly 400MB.
+Personally, I don't like either the "../" or the "./", but I actually
+think the relative paths are less readable than the full paths in
+general.
 
-Then add the pack and index map, which, depending on the original pack 
-size,
-might be 2GB.
-
-So we're pessimistically talking of about 2.5GB of virtual space.
-
-The other 2.3GB is hard to explain.
-
-
-Nicolas
+-Peff
