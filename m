@@ -1,63 +1,62 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Git and GCC
-Date: Fri, 7 Dec 2007 09:23:47 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712070919590.7274@woody.linux-foundation.org>
-References: <20071206.193121.40404287.davem@davemloft.net> <20071207063848.GA13101@coredump.intra.peff.net> <9e4733910712062310s30153afibc44a5550fd9ea99@mail.gmail.com> <20071207.045329.204650714.davem@davemloft.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Not a valid object name refs/heads/t20050127-arm during git-cvsimport
+Date: Fri, 07 Dec 2007 18:48:30 +0100
+Message-ID: <4759876E.4080807@alum.mit.edu>
+References: <20071204171833.GD29315@radix50.net> <m38x4auyga.fsf@roke.D-201>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: jonsmirl@gmail.com, peff@peff.net, nico@cam.org, dberlin@dberlin.org,         harvey.harrison@gmail.com, ismail@pardus.org.tr, gcc@gcc.gnu.org,         git@vger.kernel.org
-To: David Miller <davem@davemloft.net>
-X-From: gcc-return-142810-gcc=m.gmane.org@gcc.gnu.org Fri Dec 07 18:25:15 2007
-Return-path: <gcc-return-142810-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J0gwq-00035h-6b
-	for gcc@gmane.org; Fri, 07 Dec 2007 18:25:12 +0100
-Received: (qmail 15044 invoked by alias); 7 Dec 2007 17:24:53 -0000
-Received: (qmail 15035 invoked by uid 22791); 7 Dec 2007 17:24:52 -0000
-X-Spam-Check-By: sourceware.org
-Received: from smtp2.linux-foundation.org (HELO smtp2.linux-foundation.org) (207.189.120.14)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Fri, 07 Dec 2007 17:24:08 +0000
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55]) 	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB7HNn1o031890 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); 	Fri, 7 Dec 2007 09:23:50 -0800
-Received: from localhost (localhost [127.0.0.1]) 	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB7HNlmN027780; 	Fri, 7 Dec 2007 09:23:48 -0800
-In-Reply-To: <20071207.045329.204650714.davem@davemloft.net>
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Baurzhan Ismagulov <ibr@radix50.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 07 18:48:17 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J0hJ9-0003xH-5k
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 18:48:15 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753732AbXLGRrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 12:47:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753702AbXLGRrv
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 12:47:51 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:58601 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752477AbXLGRru (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 12:47:50 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.142])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id lB7HldNh014537
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 7 Dec 2007 18:47:39 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.8pre) Gecko/20071022 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
+In-Reply-To: <m38x4auyga.fsf@roke.D-201>
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67437>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67438>
 
-
-
-On Fri, 7 Dec 2007, David Miller wrote:
+Jakub Narebski wrote:
+> Baurzhan Ismagulov <ibr@radix50.net> writes:
 > 
-> Also I could end up being performance limited by SHA, it's not very
-> well tuned on Sparc.  It's been on my TODO list to code up the crypto
-> unit support for Niagara-2 in the kernel, then work with Herbert Xu on
-> the userland interfaces to take advantage of that in things like
-> libssl.  Even a better C/asm version would probably improve GIT
-> performance a bit.
+>> I want to import a CVS repo myrepo into git. I copied CVSHEAD and myrepo
+>> dirs from the cvs server to /home/ibr/tmp and issued the following
+>> command:
+>>
+>> git-cvsimport -p x -k -o cvshead -d/home/ibr/tmp -C zzz myrepo/drv
+>>
+>> It fails [...]
+> 
+> You can try to use other CVS importers, for example parsecvs [...]
 
-I doubt yu can use the hardware support. Kernel-only hw support is 
-inherently broken for any sane user-space usage, the setup costs are just 
-way way too high. To be useful, crypto engines need to support direct user 
-space access (ie a regular instruction, with all state being held in 
-normal registers that get saved/restored by the kernel).
+Or cvs2svn, which can now also output to git.  See these threads for
+more info:
 
-> Is SHA a significant portion of the compute during these repacks?
-> I should run oprofile...
+http://marc.info/?l=git&m=118592701426175&w=4
+http://cvs2svn.tigris.org/servlets/BrowseList?list=users&by=thread&from=624393
 
-SHA1 is almost totally insignificant on x86. It hardly shows up. But we 
-have a good optimized version there.
-
-zlib tends to be a lot more noticeable (especially the uncompression: it 
-may be faster than compression, but it's done _so_ much more that it 
-totally dominates).
-
-			Linus
+Michael
