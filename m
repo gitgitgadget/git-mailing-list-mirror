@@ -1,132 +1,134 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git guidance
-Date: Fri, 07 Dec 2007 03:47:49 -0800 (PST)
-Message-ID: <m3prxiu3oo.fsf@roke.D-201>
-References: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com>
-	<200712070737.18519.a1426z@gawab.com> <475906F7.5010309@op5.se>
-	<200712071353.11654.a1426z@gawab.com>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: [PATCH] Let git-help prefer man-pages installed with this version of git
+Date: Fri, 07 Dec 2007 14:51:49 +0300
+Message-ID: <871w9y7mei.fsf@osv.gnss.ru>
+References: <87hciv7jkt.fsf@osv.gnss.ru>
+	<Pine.LNX.4.64.0712062107520.21625@wbgn129.biozentrum.uni-wuerzburg.de>
+	<87d4ti7qu1.fsf@osv.gnss.ru>
+	<7vodd23i1v.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Phillip Susi <psusi@cfl.rr.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Jing Xue <jingxue@digizenstudio.com>,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org
-To: Al Boldi <a1426z@gawab.com>
-X-From: git-owner@vger.kernel.org Fri Dec 07 12:48:27 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 07 12:52:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0bgo-0002Xl-Pn
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 12:48:19 +0100
+	id 1J0bku-0003yl-PJ
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 12:52:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753215AbXLGLr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 06:47:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753114AbXLGLr4
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 06:47:56 -0500
-Received: from nf-out-0910.google.com ([64.233.182.186]:34578 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752754AbXLGLrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 06:47:55 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so295868nfb
-        for <git@vger.kernel.org>; Fri, 07 Dec 2007 03:47:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=yOKHx1VBdL/+3BmO+kzf8xLOdd7pd/MwrQG+Qf6+46U=;
-        b=iZUlE5fWO5CCNWOMqHRgfxrGPtj/zvyJwTth1abxa/SAPPO4g0nTeQYBJjJHXifvIHuStfX72/JtL4E9gixDoI6wBQHM8NIqvPjNyv/edYfMPA2lpJUUHTm2G4PgSumwY6VHpMh24NNSnpIpIlDbJOhePrfdd36QmSHHq1Z/B7I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=QYU1MpJZbPu6LMzCJQSqR9rhZ8RoSh9JQF9NT7MhVET2r7eBFcS8LVB/s0svyUboQsnGMWSdHJxgX3OhxyYnkXtC+LfRAM4PkyR+c17wMhFmIeh3Z6pX/Hik12tWlCEv4ldJOQ19KwyM/Na0tjI9kwMFoN92059OrhkbVHVQBl8=
-Received: by 10.82.187.16 with SMTP id k16mr4430744buf.1197028070474;
-        Fri, 07 Dec 2007 03:47:50 -0800 (PST)
-Received: from roke.D-201 ( [83.8.224.19])
-        by mx.google.com with ESMTPS id w5sm1195888mue.2007.12.07.03.47.48
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 07 Dec 2007 03:47:49 -0800 (PST)
-Received: from roke (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lB7BleHj005112;
-	Fri, 7 Dec 2007 12:47:40 +0100
-Received: (from jnareb@localhost)
-	by roke (8.13.4/8.13.4/Submit) id lB7Blaqc005108;
-	Fri, 7 Dec 2007 12:47:36 +0100
-X-Authentication-Warning: roke: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <200712071353.11654.a1426z@gawab.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752010AbXLGLwL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 06:52:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751455AbXLGLwK
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 06:52:10 -0500
+Received: from javad.com ([216.122.176.236]:1924 "EHLO javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751538AbXLGLwJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 06:52:09 -0500
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id lB7BptU21981;
+	Fri, 7 Dec 2007 11:51:55 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1J0bkD-00033u-TC; Fri, 07 Dec 2007 14:51:49 +0300
+In-Reply-To: <7vodd23i1v.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 07 Dec 2007 02\:39\:24 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67414>
 
-Al Boldi <a1426z@gawab.com> writes:
-> Andreas Ericsson wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> So, to get to the bottom of this, which of the following workflows is it
->> you want git to support?
+> Sergei Organov <osv@javad.com> writes:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >>
->> ### WORKFLOW A ###
->> edit, edit, edit
->> edit, edit, edit
->> edit, edit, edit
->> Oops I made a mistake and need to hop back to "current - 12".
->> edit, edit, edit
->> edit, edit, edit
->> publish everything, similar to just tarring up your workdir and sending
->> out ### END WORKFLOW A ###
+>>> On Thu, 6 Dec 2007, Sergei Organov wrote:
+>>>
+>>>> Prepend $(prefix)/share/man to the MANPATH environment variable before 
+>>>> invoking 'man' from help.c:show_man_page().
+>>>
+>>> This commit message is severely lacking.  Why would you _ever_ prefer the 
+>>> installed man pages before invoking "man", which should find them
+>>> anyway?
 >>
->> ### WORKFLOW B ###
->> edit, edit, edit
->> ok this looks good, I want to save a checkpoint here
->> edit, edit, edit
->> looks good again. next checkpoint
->> edit, edit, edit
->> oh crap, back to checkpoint 2
->> edit, edit, edit
->> ooh, that's better. save a checkpoint and publish those checkpoints
->> ### END WORKFLOW B ###
-> 
-> ### WORKFLOW C ###
-> for every save on a gitfs mounted dir, do an implied checkpoint, commit, or 
-> publish (should be adjustable), on its privately created on-the-fly 
-> repository.
-> ### END WORKFLOW C ###
+>> Obviously because you want manual pages corresponding to the version of
+>> git you are invoking, not any random version of man-pages man may find
+>> by default.
+>
+> While I almost agree with the rest of your sentence, you have to realize
+> that it is obviously not obvious if somebody asked you to clarify.
 
-It looks like it is WORKFLOW A (with the fact that each ',' is file
-save stated explicitely rather than implicitely).
- 
-> For example:
-> 
->   echo "// last comment on this file" >> /gitfs.mounted/file
-> 
-> should do an implied checkpoint, and make these checkpoints immediately 
-> visible under some checkpoint branch of the gitfs mounted dir.
-> 
-> Note, this way the developer gets version control without even noticing, and 
-> works completely transparent to any kind of application.
+Probably.
 
-Why not use versioning filesystem for that, for example ext3cow
-(which looks suprisingly git-like, when you take into account that
-for ext3cow history is linear and centralized, so one can use date
-or sequential number to name commits).
+>
+> How about this:
+>
+>     Prepend $(prefix)/share/man to the MANPATH environment variable
+>     before invoking 'man' from help.c:show_man_page().  There may be
+>     other git documentation in the user's MANPATH but the user is asking
+>     a specific instance of git about its own documentation, so we'd
+>     better show the documentation for _that_ instance of git.
 
-See GitLinks page on Git Wiki, "Other links" section:
-  http://www.ext3cow.com/
+This sounds nice to me. Do you want me to re-submit the patch with
+modified commit message?
 
-Version control system is all about WORKFLOW B, where programmer
-controls when it is time to commit (and in private repository he/she
-can then rewrite history to arrive at "Perfect patch series"[*1*]);
-something that for example CVS failed at, requiring programmer to do
-a merge if upstream has any changes when trying to commit.
+>
+> Having written that, it is very tempting to further clarify the above:
+>
+>     Usually, if a user has his own version of git and regularly uses it
+>     by having the non-system executable directory (e.g. $HOME/bin/git)
+>     early in his $PATH, its corresponding documentation would also be in
+>     a non-system documentation directory (e.g. $HOME/man) early in his
+>     $MANPATH, and this change is a no-op.  The only case this change
+>     matters is where the user installs his own git outside of his $PATH
+>     and $MANPATH, and explicitly runs his git executable
+>     (e.g. "$HOME/junk/git-1.5.4/bin/git diff").
 
-[*1*] I have lost link to post at LKML about rewriting history to
-      arrive at perfect patch _series_. IIRC I have found it first
-      time on this mailing list. I would be grateful for sending this
-      link if you have it. TIA.
+First, I don't think you need to clarify like this. It is just
+implementation detail of git-help that it uses 'man', and thus
+implicitly relies on MANPATH. The essential thing has been already
+stated above: git-help should show correct documentation.
+
+Second, the change is still useful even if user did put custom path to
+'git' into its PATH, but didn't even thought of customizing
+MANPATH. Besides, a user could be entirely unaware of 'man' the utility.
+
+
+> When you clarify it this way, the change does not look as useful
+> anymore, does it?
+
+Yes, it still does, I think. I doubt it's that obvious that 'git help'
+uses MANPATH at all. Besides, it's not 'git man', isn't it? To further
+emphasize my point, we don't require user to tweak MANPATH in order to
+get corresponding 'git --help' output, isn't it? Also, please look here:
+
+$ ~/git/bin/git help -a | head -n 3 | tail -n 1
+available git commands in '/home/osv/git/bin'
+$ git help -a | head -n 3 | tail -n 1
+git commands available in '/usr/bin'
+$
+
+And the last, basing on the same arguments, it's not that useful that
+'git xxx' invokes correct 'git-xxx' command by prepending installation
+path to the PATH, isn't it?
+
+Overall, I just want 'git help' to behave consistently.
+
+> How typical would that use be, to run your git executable by always
+> naming it by path without relying on $PATH environment variable?
+
+To tell the truth, I'd prefer to just use -M option of man and don't
+rely on MANPATH at all, so that 'git help' will issue error if there is
+no documentation installed for this particular version of git.
+
+[BTW, git-help lacks his own man page, so I can't actually argue on a
+ground of some documentation of git-help.]
 
 -- 
-Jakub Narebski
-ShadeHawk on #git
+Sergei.
