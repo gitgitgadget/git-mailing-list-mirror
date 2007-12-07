@@ -1,109 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-bisect feature suggestion: "git-bisect diff"
-Date: Fri, 07 Dec 2007 01:58:35 -0800
-Message-ID: <7v63za4yic.fsf@gitster.siamese.dyndns.org>
-References: <20071207093439.GA21896@elte.hu>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: [PATCH] Let git-help prefer man-pages installed with this version of git
+Date: Fri, 07 Dec 2007 13:16:06 +0300
+Message-ID: <87d4ti7qu1.fsf@osv.gnss.ru>
+References: <87hciv7jkt.fsf@osv.gnss.ru>
+	<Pine.LNX.4.64.0712062107520.21625@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Fri Dec 07 10:59:32 2007
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Dec 07 11:16:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0ZzY-0000OU-8d
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 10:59:32 +0100
+	id 1J0aGB-0005nM-Kv
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 11:16:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751197AbXLGJ6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 04:58:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751163AbXLGJ6w
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 04:58:52 -0500
-Received: from a-sasl-quonix.pobox.com ([208.72.237.25]:42746 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750916AbXLGJ6v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 04:58:51 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B2BB37AA;
-	Fri,  7 Dec 2007 04:58:46 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 681AF37A7;
-	Fri,  7 Dec 2007 04:58:42 -0500 (EST)
-In-Reply-To: <20071207093439.GA21896@elte.hu> (Ingo Molnar's message of "Fri,
-	7 Dec 2007 10:34:39 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754675AbXLGKQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 05:16:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754558AbXLGKQS
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 05:16:18 -0500
+Received: from javad.com ([216.122.176.236]:4217 "EHLO javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754200AbXLGKQQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 05:16:16 -0500
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id lB7AGCU12452;
+	Fri, 7 Dec 2007 10:16:12 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1J0aFa-00026s-VU; Fri, 07 Dec 2007 13:16:06 +0300
+In-Reply-To: <Pine.LNX.4.64.0712062107520.21625@wbgn129.biozentrum.uni-wuerzburg.de> (Johannes Schindelin's message of "Thu\, 6 Dec 2007 21\:09\:05 +0100 \(CET\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67407>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Ingo Molnar <mingo@elte.hu> writes:
-
-> would be nice to have:
+> Hi,
 >
->  git-bisect diff
+> On Thu, 6 Dec 2007, Sergei Organov wrote:
 >
-> that enables one to have a look at the currently open bisection window, 
-> in git-log -p format. This would often be much faster to analyze than 
-> looking at git-bisect visualize. (and it could also be used in non-GUI 
-> workflows)
+>> Prepend $(prefix)/share/man to the MANPATH environment variable before 
+>> invoking 'man' from help.c:show_man_page().
+>
+> This commit message is severely lacking.  Why would you _ever_ prefer the 
+> installed man pages before invoking "man", which should find them
+> anyway?
 
-Hmm.  It is very unfortunate that "bisect log" is taken for something
-unrelated, so tentatively let's call it lumber.
+Obviously because you want manual pages corresponding to the version of
+git you are invoking, not any random version of man-pages man may find
+by default.
 
-	$ git bisect lumber [-p] [--stat]
-
-would give you the short-hand, hopefully.
-
----
-
- git-bisect.sh |   12 +++++++++++-
- 1 files changed, 11 insertions(+), 1 deletions(-)
-
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 7a6521e..ee26624 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -1,6 +1,6 @@
- #!/bin/sh
- 
--USAGE='[start|bad|good|skip|next|reset|visualize|replay|log|run]'
-+USAGE='[start|bad|good|skip|next|reset|visualize|log|replay|lumber|run]'
- LONG_USAGE='git bisect start [<bad> [<good>...]] [--] [<pathspec>...]
-         reset bisect state and start bisection.
- git bisect bad [<rev>]
-@@ -15,6 +15,8 @@ git bisect reset [<branch>]
-         finish bisection search and go back to branch.
- git bisect visualize
-         show bisect status in gitk.
-+git bisect lumber
-+        show bisect status in git log.
- git bisect replay <logfile>
-         replay bisection log.
- git bisect log
-@@ -328,6 +330,12 @@ bisect_visualize() {
- 	eval gitk refs/bisect/bad --not $not -- $(cat "$GIT_DIR/BISECT_NAMES")
- }
- 
-+bisect_lumber() {
-+	bisect_next_check fail
-+	not=$(git for-each-ref --format='%(refname)' "refs/bisect/good-*")
-+	eval git log "$@" refs/bisect/bad --not $not -- $(cat "$GIT_DIR/BISECT_NAMES")
-+}
-+
- bisect_reset() {
- 	test -f "$GIT_DIR/BISECT_NAMES" || {
- 		echo "We are not bisecting."
-@@ -451,6 +459,8 @@ case "$#" in
-         bisect_next "$@" ;;
-     visualize)
- 	bisect_visualize "$@" ;;
-+    lumber)
-+	bisect_lumber "$@" ;;
-     reset)
-         bisect_reset "$@" ;;
-     replay)
+-- 
+Sergei.
