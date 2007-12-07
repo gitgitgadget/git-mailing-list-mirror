@@ -1,52 +1,127 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Git and GCC
-Date: Thu, 6 Dec 2007 21:21:35 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712062120100.13796@woody.linux-foundation.org>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>  <20071205.202047.58135920.davem@davemloft.net>  <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>  <20071205.204848.227521641.davem@davemloft.net>   <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com>  <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org>  <4aca3dc20712061004g43f5902cw79bf633917d3ade9@mail.gmail.com>  <1196995353.22471.20.camel@brick>   <alpine.LFD.0.9999.0712061857060.13796@woody.linux-foundation.org> <9e4733910712062006l651571f3w7f76ce64c6650dff@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] git-help: fix looking up html install dir when browsing.
+Date: Fri, 7 Dec 2007 06:29:23 +0100
+Message-ID: <20071207062923.6663a7d1.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Harvey Harrison <harvey.harrison@gmail.com>,         Daniel Berlin <dberlin@dberlin.org>,         David Miller <davem@davemloft.net>, ismail@pardus.org.tr,         gcc@gcc.gnu.org, git@vger.kernel.org
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: gcc-return-142786-gcc=m.gmane.org@gcc.gnu.org Fri Dec 07 06:22:38 2007
-Return-path: <gcc-return-142786-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J0VfY-0000Wp-OX
-	for gcc@gmane.org; Fri, 07 Dec 2007 06:22:37 +0100
-Received: (qmail 2515 invoked by alias); 7 Dec 2007 05:22:18 -0000
-Received: (qmail 2503 invoked by uid 22791); 7 Dec 2007 05:22:17 -0000
-X-Spam-Check-By: sourceware.org
-Received: from smtp2.linux-foundation.org (HELO smtp2.linux-foundation.org) (207.189.120.14)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Fri, 07 Dec 2007 05:22:11 +0000
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55]) 	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB75Lbdi022171 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); 	Thu, 6 Dec 2007 21:21:38 -0800
-Received: from localhost (localhost [127.0.0.1]) 	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB75LZ6d031437; 	Thu, 6 Dec 2007 21:21:35 -0800
-In-Reply-To: <9e4733910712062006l651571f3w7f76ce64c6650dff@mail.gmail.com>
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Dec 07 06:23:28 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J0VgN-0000jZ-PD
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 06:23:28 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1750816AbXLGFXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 00:23:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750783AbXLGFXG
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 00:23:06 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:43404 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750784AbXLGFXF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 00:23:05 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id A566D1AB2EF;
+	Fri,  7 Dec 2007 06:22:58 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 675661AB2AB;
+	Fri,  7 Dec 2007 06:22:58 +0100 (CET)
+X-Mailer: Sylpheed 2.4.7 (GTK+ 2.12.1; i486-pc-linux-gnu)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67378>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67379>
 
+We used to search for the following directories:
 
+	- $PREFIX/share/doc/git-doc
+	- $PREFIX/share/doc/git-core-$GIT_VERSION
 
-On Thu, 6 Dec 2007, Jon Smirl wrote:
-> >
-> >         time git blame -C gcc/regclass.c > /dev/null
-> 
-> jonsmirl@terra:/video/gcc$ time git blame -C gcc/regclass.c > /dev/null
-> 
-> real    1m21.967s
-> user    1m21.329s
+This was wrong because "htmldir" could be defined in the
+Makefiles to something completely different.
 
-Well, I was also hoping for a "compared to not-so-aggressive packing" 
-number on the same machine.. IOW, what I was wondering is whether there is 
-a visible performance downside to the deeper delta chains in the 300MB 
-pack vs the (less aggressive) 500MB pack.
+So we now look for the $htlmdir directory first. But if
+it fails we still fall back to the two above directories,
+in case the script install and the html doc install have
+been done with different $htmldir.
 
-		Linus
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Makefile           |    5 ++++-
+ git-browse-help.sh |    4 +++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+	Junio wrote:
+	> People can set htmldir to somewhere other than
+	> $(prefix)/share/doc/git-doc while building and
+	> installing, but you are not telling the munged
+	> script where it is.
+
+	This should fix it.
+	Thanks.
+
+diff --git a/Makefile b/Makefile
+index e9a119a..1e31f02 100644
+--- a/Makefile
++++ b/Makefile
+@@ -157,6 +157,7 @@ bindir = $(prefix)/bin
+ gitexecdir = $(bindir)
+ sharedir = $(prefix)/share
+ template_dir = $(sharedir)/git-core/templates
++htmldir=$(sharedir)/doc/git-doc
+ ifeq ($(prefix),/usr)
+ sysconfdir = /etc
+ else
+@@ -183,7 +184,7 @@ GITWEB_FAVICON = git-favicon.png
+ GITWEB_SITE_HEADER =
+ GITWEB_SITE_FOOTER =
+ 
+-export prefix bindir gitexecdir sharedir template_dir sysconfdir
++export prefix bindir gitexecdir sharedir template_dir htmldir sysconfdir
+ 
+ CC = gcc
+ AR = ar
+@@ -747,6 +748,7 @@ DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
+ bindir_SQ = $(subst ','\'',$(bindir))
+ gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
+ template_dir_SQ = $(subst ','\'',$(template_dir))
++htmldir_SQ = $(subst ','\'',$(htmldir))
+ prefix_SQ = $(subst ','\'',$(prefix))
+ 
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
+@@ -811,6 +813,7 @@ $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
+ 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+ 	    -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
+ 	    -e 's|@@PREFIX@@|$(prefix_SQ)|g' \
++	    -e 's|@@HTMLDIR@@|$(htmldir_SQ)|g' \
+ 	    $@.sh >$@+ && \
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+diff --git a/git-browse-help.sh b/git-browse-help.sh
+index 11f8bfa..12d313a 100755
+--- a/git-browse-help.sh
++++ b/git-browse-help.sh
+@@ -21,6 +21,8 @@ SUBDIRECTORY_OK=Yes
+ OPTIONS_SPEC=
+ . git-sh-setup
+ 
++# Install data.
++special_html_dir="@@HTMLDIR@@"
+ PREFIX="@@PREFIX@@"
+ GIT_VERSION="@@GIT_VERSION@@"
+ 
+@@ -30,7 +32,7 @@ rpm_dir="$PREFIX/share/doc/git-core-$GIT_VERSION"
+ 
+ # Look for the directory that really contains html documentation.
+ html_dir=''
+-for dir in "$install_html_dir" "$rpm_dir"
++for dir in "$special_html_dir" "$install_html_dir" "$rpm_dir"
+ do
+ 	test -d "$dir" && { html_dir="$dir" ; break ; }
+ done
+-- 
+1.5.3.6.1993.g154f-dirty
