@@ -1,220 +1,104 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: [PATCH] Teach "git add -i" to colorize whitespace errors
-Date: Fri,  7 Dec 2007 13:35:10 +0100
-Message-ID: <1197030910-29638-1-git-send-email-win@wincent.com>
-Cc: gitster@pobox.com, Wincent Colaiuta <win@wincent.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 07 13:36:18 2007
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Let git-help prefer man-pages installed with this version
+ of git
+Date: Fri, 07 Dec 2007 13:38:10 +0100
+Message-ID: <47593EB2.3020309@op5.se>
+References: <87hciv7jkt.fsf@osv.gnss.ru>	<Pine.LNX.4.64.0712062107520.21625@wbgn129.biozentrum.uni-wuerzburg.de>	<87d4ti7qu1.fsf@osv.gnss.ru>	<7vodd23i1v.fsf@gitster.siamese.dyndns.org> <871w9y7mei.fsf@osv.gnss.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Sergei Organov <osv@javad.com>
+X-From: git-owner@vger.kernel.org Fri Dec 07 13:38:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0cR7-0001M3-8v
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 13:36:09 +0100
+	id 1J0cTX-00027x-Dj
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 13:38:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752889AbXLGMfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 07:35:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752036AbXLGMfm
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 07:35:42 -0500
-Received: from wincent.com ([72.3.236.74]:41803 "EHLO s69819.wincent.com"
+	id S1753438AbXLGMiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 07:38:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753429AbXLGMiR
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 07:38:17 -0500
+Received: from mail.op5.se ([193.201.96.20]:42159 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752007AbXLGMfl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 07:35:41 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lB7CZD0F013052;
-	Fri, 7 Dec 2007 06:35:14 -0600
-X-Mailer: git-send-email 1.5.3.7.1079.gb270a-dirty
+	id S1753424AbXLGMiQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 07:38:16 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id A054A1F0809D;
+	Fri,  7 Dec 2007 13:38:14 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id nxtCoNEHd9OZ; Fri,  7 Dec 2007 13:38:13 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 82F951F0802A;
+	Fri,  7 Dec 2007 13:38:12 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <871w9y7mei.fsf@osv.gnss.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67419>
 
-Rather than replicating the colorization logic of "git diff-files" we
-rely on "git diff-files" itself. This guarantees consistent colorization
-in and outside "git add -i".
+Sergei Organov wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+ >> Having written that, it is very tempting to further clarify the above:
+>>
+>>     Usually, if a user has his own version of git and regularly uses it
+>>     by having the non-system executable directory (e.g. $HOME/bin/git)
+>>     early in his $PATH, its corresponding documentation would also be in
+>>     a non-system documentation directory (e.g. $HOME/man) early in his
+>>     $MANPATH, and this change is a no-op.  The only case this change
+>>     matters is where the user installs his own git outside of his $PATH
+>>     and $MANPATH, and explicitly runs his git executable
+>>     (e.g. "$HOME/junk/git-1.5.4/bin/git diff").
+> 
+> First, I don't think you need to clarify like this. It is just
+> implementation detail of git-help that it uses 'man', and thus
+> implicitly relies on MANPATH. The essential thing has been already
+> stated above: git-help should show correct documentation.
+> 
+> Second, the change is still useful even if user did put custom path to
+> 'git' into its PATH, but didn't even thought of customizing
+> MANPATH. Besides, a user could be entirely unaware of 'man' the utility.
+> 
 
-Seeing as speed is not a concern here (the bottleneck is how fast the
-user can read, not how fast "git diff-files" runs) we do this by
-actually running it twice, once without color and once with.
+The number of users in the entire world that are completely unaware of
+the 'man' utility but still manages to build git and install it in a
+non-default path can probably be counted on one hand of a 65 year old
+saw-mill worker.
 
-In this way as the whitespace colorization provided by "git diff-files"
-evolves (per-path attributes, new classes of whitespace error), "git
-add -i" will automatically benefit from it and stay in synch.
+I'm not sure if we're doing them a greater service by DWIMing this or
+by telling them about the 'man' utility.
 
-Also, by working with two sets of diff output (an uncolorized one for
-internal processing and a colorized one for display only) we minimize
-the risk of regressions because the changes required to implement this
-are minimally invasive.
+> 
+>> How typical would that use be, to run your git executable by always
+>> naming it by path without relying on $PATH environment variable?
+> 
+> To tell the truth, I'd prefer to just use -M option of man and don't
+> rely on MANPATH at all, so that 'git help' will issue error if there is
+> no documentation installed for this particular version of git.
+> 
 
-Signed-off-by: Wincent Colaiuta <win@wincent.com>
----
+Does "man -M" work everywhere, or is your patch opening a can of worms
+to get probably-not-needed functionality?
 
-This applies on top of these patches that Junio sent out yesterday:
-	git config --get-colorbool
-	Color support for "git-add -i"
+Otoh, you submitted a patch, so there are probably a few people out
+there that care about this. I'm not one of them, so I'll shut up now
+that my lunch is over ;-)
 
-I've tested it here and it works for me but it would be nice if
-someone else could play with it and see if this is good.
-
- git-add--interactive.perl |   67 +++++++++++++++++++-------------------------
- 1 files changed, 29 insertions(+), 38 deletions(-)
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 1019a72..e492fac 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -525,42 +525,21 @@ sub add_untracked_cmd {
- sub parse_diff {
- 	my ($path) = @_;
- 	my @diff = run_cmd_pipe(qw(git diff-files -p --), $path);
--	my (@hunk) = { TEXT => [] };
-+	my @colored = run_cmd_pipe(qw(git diff-files -p --color --), $path)
-+	   if $diff_use_color;
-+	my (@hunk) = { TEXT => [], DISPLAY => [] };
- 
--	for (@diff) {
--		if (/^@@ /) {
--			push @hunk, { TEXT => [] };
-+	for (my $i = 0; $i < @diff; $i++) {
-+		if ($diff[$i] =~ /^@@ /) {
-+			push @hunk, { TEXT => [], DISPLAY => [] };
- 		}
--		push @{$hunk[-1]{TEXT}}, $_;
-+		push @{$hunk[-1]{TEXT}}, $diff[$i];
-+		push @{$hunk[-1]{DISPLAY}},
-+		    $diff_use_color ? $colored[$i] : $diff[$i];
- 	}
- 	return @hunk;
- }
- 
--sub colored_diff_hunk {
--	my ($text) = @_;
--	# return the text, so that it can be passed to print()
--	my @ret;
--	for (@$text) {
--		if (!$diff_use_color) {
--			push @ret, $_;
--			next;
--		}
--
--		if (/^\+/) {
--			push @ret, colored($new_color, $_);
--		} elsif (/^\-/) {
--			push @ret, colored($old_color, $_);
--		} elsif (/^\@/) {
--			push @ret, colored($fraginfo_color, $_);
--		} elsif (/^ /) {
--			push @ret, colored($normal_color, $_);
--		} else {
--			push @ret, colored($metainfo_color, $_);
--		}
--	}
--	return @ret;
--}
--
- sub hunk_splittable {
- 	my ($text) = @_;
- 
-@@ -578,7 +557,9 @@ sub parse_hunk_header {
- }
- 
- sub split_hunk {
--	my ($text) = @_;
-+	my $text = shift;
-+	my $display = shift;
-+	$display = $text unless $display;
- 	my @split = ();
- 
- 	# If there are context lines in the middle of a hunk,
-@@ -594,16 +575,19 @@ sub split_hunk {
- 		my $i = $hunk_start - 1;
- 		my $this = +{
- 			TEXT => [],
-+			DISPLAY => [],
- 			OLD => $o_ofs,
- 			NEW => $n_ofs,
- 			OCNT => 0,
- 			NCNT => 0,
- 			ADDDEL => 0,
- 			POSTCTX => 0,
-+			USE => undef,
- 		};
- 
- 		while (++$i < @$text) {
- 			my $line = $text->[$i];
-+			my $display = $display->[$i];
- 			if ($line =~ /^ /) {
- 				if ($this->{ADDDEL} &&
- 				    !defined $next_hunk_start) {
-@@ -615,6 +599,7 @@ sub split_hunk {
- 					$next_hunk_start = $i;
- 				}
- 				push @{$this->{TEXT}}, $line;
-+				push @{$this->{DISPLAY}}, $display;
- 				$this->{OCNT}++;
- 				$this->{NCNT}++;
- 				if (defined $next_hunk_start) {
-@@ -637,6 +622,7 @@ sub split_hunk {
- 				redo OUTER;
- 			}
- 			push @{$this->{TEXT}}, $line;
-+			push @{$this->{DISPLAY}}, $display;
- 			$this->{ADDDEL}++;
- 			if ($line =~ /^-/) {
- 				$this->{OCNT}++;
-@@ -662,8 +648,10 @@ sub split_hunk {
- 			    (($n_cnt != 1) ? ",$n_cnt" : '') .
- 			    " @@\n");
- 		unshift @{$hunk->{TEXT}}, $head;
-+		unshift @{$hunk->{DISPLAY}},
-+		    $use_color ? (colored $fraginfo_color, $head) : $head;
- 	}
--	return map { $_->{TEXT} } @split;
-+	return @split;
- }
- 
- sub find_last_o_ctx {
-@@ -794,7 +782,9 @@ sub patch_update_file {
- 	my ($ix, $num);
- 	my $path = shift;
- 	my ($head, @hunk) = parse_diff($path);
--	print colored_diff_hunk($head->{TEXT});
-+	for (@{$head->{DISPLAY}}) {
-+		print;
-+	}
- 	$num = scalar @hunk;
- 	$ix = 0;
- 
-@@ -836,7 +826,9 @@ sub patch_update_file {
- 		if (hunk_splittable($hunk[$ix]{TEXT})) {
- 			$other .= '/s';
- 		}
--		print colored_diff_hunk($hunk[$ix]{TEXT});
-+		for (@{$hunk[$ix]{DISPLAY}}) {
-+			print;
-+		}
- 		print colored $prompt_color, "Stage this hunk [y/n/a/d$other/?]? ";
- 		my $line = <STDIN>;
- 		if ($line) {
-@@ -889,14 +881,13 @@ sub patch_update_file {
- 				next;
- 			}
- 			elsif ($other =~ /s/ && $line =~ /^s/) {
--				my @split = split_hunk($hunk[$ix]{TEXT});
-+				my @split = split_hunk($hunk[$ix]{TEXT},
-+				    $hunk[$ix]{DISPLAY});
- 				if (1 < @split) {
- 					print colored $header_color, "Split into ",
- 					scalar(@split), " hunks.\n";
- 				}
--				splice(@hunk, $ix, 1,
--				       map { +{ TEXT => $_, USE => undef } }
--				       @split);
-+				splice (@hunk, $ix, 1, @split);
- 				$num = scalar @hunk;
- 				next;
- 			}
 -- 
-1.5.3.7.1079.gb270a-dirty
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
