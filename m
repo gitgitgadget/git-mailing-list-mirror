@@ -1,77 +1,75 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Something is broken in repack
-Date: Fri, 7 Dec 2007 18:05:38 -0500
-Message-ID: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
+From: Giovanni Bajo <rasky@develer.com>
+Subject: Re: Git and GCC
+Date: Sat, 08 Dec 2007 00:14:58 +0100
+Organization: Develer S.r.l.
+Message-ID: <1197069298.6118.1.camel@ozzu>
+References: <20071206.193121.40404287.davem@davemloft.net>
+	 <20071207063848.GA13101@coredump.intra.peff.net>
+	 <9e4733910712062310s30153afibc44a5550fd9ea99@mail.gmail.com>
+	 <20071207.045329.204650714.davem@davemloft.net>
+	 <alpine.LFD.0.9999.0712070919590.7274@woody.linux-foundation.org>
+	 <4759AC8E.3070102@develer.com>  <m3hciutaoq.fsf@roke.D-201>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Dec 08 00:06:30 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	David Miller <davem@davemloft.net>, jonsmirl@gmail.com,
+	peff@peff.net, nico@cam.org, dberlin@dberlin.org,
+	harvey.harrison@gmail.com, ismail@pardus.org.tr, gcc@gcc.gnu.org,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 08 00:14:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0mGf-0001I6-LV
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 00:06:02 +0100
+	id 1J0mOw-0004SP-6G
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 00:14:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755481AbXLGXFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 18:05:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755418AbXLGXFj
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 18:05:39 -0500
-Received: from wa-out-1112.google.com ([209.85.146.177]:51985 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755410AbXLGXFi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 18:05:38 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1752072wah
-        for <git@vger.kernel.org>; Fri, 07 Dec 2007 15:05:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=6+5eauNX+T864TT4W+jovyMzFo7M+mG5L0u8JH3gxog=;
-        b=tR5gYdq2zpsDKm/3WQ4MMRP7GBKcueY7asAsoSFZUfOVQcYSCYuth9XcsOzxx9kOywE+xBI7g3DOzTs9/mv12DJpMOEIwcXnH1RFEJ6AsPE6i5Fzulilyt+ooBAkkINen7u0HZCZ/qR7dZh4W96QsE+q3LVpCPW1RbDI1NEgdBg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=w49BziHeApQCEbNXtZxdOzKC5L6hLSV+tEHDsJTvRdFiwsqcGEQafP3kD/upfVeDySISyu0XVdUkcAJ/hDSNcPdgGNydj0e5m2SLejrRSs+JSR+VSNAWgQOrw968X50w/b+70BSuGvG/iYo1EmHTt1i52dqODZBohRol/CdwXOs=
-Received: by 10.114.160.1 with SMTP id i1mr1575461wae.1197068738125;
-        Fri, 07 Dec 2007 15:05:38 -0800 (PST)
-Received: by 10.114.208.17 with HTTP; Fri, 7 Dec 2007 15:05:38 -0800 (PST)
-Content-Disposition: inline
+	id S1756753AbXLGXOM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 18:14:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756907AbXLGXOL
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 18:14:11 -0500
+Received: from trinity.develer.com ([89.97.188.34]:47438 "EHLO
+	trinity.develer.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756347AbXLGXOK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 18:14:10 -0500
+Received: (qmail 26558 invoked from network); 7 Dec 2007 23:14:00 -0000
+Received: from unknown (HELO ?192.168.1.3?) (rasky@27.244.106.158)
+  by trinity.develer.com with ESMTPA; 7 Dec 2007 23:14:00 -0000
+In-Reply-To: <m3hciutaoq.fsf@roke.D-201>
+X-Mailer: Evolution 2.12.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67486>
 
-Using this config:
-[pack]
-        threads = 4
-        deltacachesize = 256M
-        deltacachelimit = 0
+On Fri, 2007-12-07 at 14:14 -0800, Jakub Narebski wrote:
 
-And the 330MB gcc pack for input
- git repack -a -d -f  --depth=250 --window=250
+> > >> Is SHA a significant portion of the compute during these repacks?
+> > >> I should run oprofile...
+> > > SHA1 is almost totally insignificant on x86. It hardly shows up. But
+> > > we have a good optimized version there.
+> > > zlib tends to be a lot more noticeable (especially the
+> > > *uncompression*: it may be faster than compression, but it's done _so_
+> > > much more that it totally dominates).
+> > 
+> > Have you considered alternatives, like:
+> > http://www.oberhumer.com/opensource/ucl/
+> 
+> <quote>
+>   As compared to LZO, the UCL algorithms achieve a better compression
+>   ratio but *decompression* is a little bit slower. See below for some
+>   rough timings.
+> </quote>
+> 
+> It is uncompression speed that is more important, because it is used
+> much more often.
 
-complete seconds RAM
-10%  47 1GB
-20%  29 1Gb
-30%  24 1Gb
-40%  18 1GB
-50%  110 1.2GB
-60%  85 1.4GB
-70%  195 1.5GB
-80%  186 2.5GB
-90%  489 3.8GB
-95%  800 4.8GB
-I killed it because it started swapping
-
-The mmaps are only about 400MB in this case.
-At the end the git process had 4.4GB of physical RAM allocated.
-
-Starting from a highly compressed pack greatly aggravates the problem.
-Starting with a 2GB pack of the same data my process size only grew to
-3GB with 2GB of mmaps.
-
+I know, but the point is not what is the fastestest, but if it's fast
+enough to get off the profiles. I think UCL is fast enough since it's
+still times faster than zlib. Anyway, LZO is GPL too, so why not
+considering it too. They are good libraries.
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+Giovanni Bajo
