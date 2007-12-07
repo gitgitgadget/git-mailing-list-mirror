@@ -1,62 +1,84 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Not a valid object name refs/heads/t20050127-arm during git-cvsimport
-Date: Fri, 07 Dec 2007 18:48:30 +0100
-Message-ID: <4759876E.4080807@alum.mit.edu>
-References: <20071204171833.GD29315@radix50.net> <m38x4auyga.fsf@roke.D-201>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Some git performance measurements..
+Date: Fri, 7 Dec 2007 18:37:30 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712071816100.27959@racer.site>
+References: <alpine.LFD.0.9999.0711281747450.8458@woody.linux-foundation.org>
+  <alpine.LFD.0.99999.0711282244190.9605@xanadu.home> 
+ <alpine.LFD.0.9999.0711282022470.8458@woody.linux-foundation.org> 
+ <alpine.LFD.0.99999.0711291208060.9605@xanadu.home>  <finmvm$da8$1@ger.gmane.org>
+  <alpine.LFD.0.9999.0711291812530.8458@woody.linux-foundation.org> 
+ <alpine.LFD.0.99999.0711292131350.9605@xanadu.home> 
+ <B161871F-E812-44B4-A699-44341B5783D3@zib.de> 
+ <e2b179460712070535x2eb10710s75a581664139e0cf@mail.gmail.com> 
+ <Pine.LNX.4.64.0712071348100.27959@racer.site>
+ <e2b179460712070809r4127dc0br8dc20f55b1076501@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Baurzhan Ismagulov <ibr@radix50.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 07 18:48:17 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mike Ralphson <mike.ralphson@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 07 19:39:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0hJ9-0003xH-5k
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 18:48:15 +0100
+	id 1J0i63-00009A-2Q
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 19:38:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753732AbXLGRrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 12:47:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753702AbXLGRrv
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 12:47:51 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:58601 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752477AbXLGRru (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 12:47:50 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.142])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id lB7HldNh014537
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 7 Dec 2007 18:47:39 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.8pre) Gecko/20071022 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
-In-Reply-To: <m38x4auyga.fsf@roke.D-201>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1754129AbXLGSiI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 13:38:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754297AbXLGSiI
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 13:38:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33577 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754129AbXLGSiG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 13:38:06 -0500
+Received: (qmail invoked by alias); 07 Dec 2007 18:38:03 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp006) with SMTP; 07 Dec 2007 19:38:03 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+0ETQXpjK0LWEfaFNq5BkVqiY0fbGuHTUo63Z89c
+	hAj9mP+xXHomdI
+X-X-Sender: gene099@racer.site
+In-Reply-To: <e2b179460712070809r4127dc0br8dc20f55b1076501@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67439>
 
-Jakub Narebski wrote:
-> Baurzhan Ismagulov <ibr@radix50.net> writes:
+Hi,
+
+On Fri, 7 Dec 2007, Mike Ralphson wrote:
+
+> On Dec 7, 2007 1:49 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > On Fri, 7 Dec 2007, Mike Ralphson wrote:
+> >
+> > > I benchmarked 3 alternative qsorts, qsortG [2] was the fastest on my 
+> > > system but has funky licensing, the NetBSD qsort was middle-range 
+> > > and the glibc one the slowest of the three (but that could be due to 
+> > > it being tuned for a "Sun 4/260"). All of them show over 100x speed 
+> > > improvements on a git-status of my main repo (104s -> ~0.7s)
+> >
+> > How is "You may use it in anything you like;" funky licensing?  It is 
+> > effectively public domain.
 > 
->> I want to import a CVS repo myrepo into git. I copied CVSHEAD and myrepo
->> dirs from the cvs server to /home/ibr/tmp and issued the following
->> command:
->>
->> git-cvsimport -p x -k -o cvshead -d/home/ibr/tmp -C zzz myrepo/drv
->>
->> It fails [...]
+> I did ask what the git licensing policy was (GPL2 or GPL2-compatible) 
+> but got no response. The author's wishes state:
 > 
-> You can try to use other CVS importers, for example parsecvs [...]
+>  * This code may be reproduced freely provided
+> [long list]
 
-Or cvs2svn, which can now also output to git.  See these threads for
-more info:
+Okay, sorry, I did not bother reading further when I read "You may use it 
+in anything you like;".
 
-http://marc.info/?l=git&m=118592701426175&w=4
-http://cvs2svn.tigris.org/servlets/BrowseList?list=users&by=thread&from=624393
+But if the author did not respond, it might be a better idea to just 
+reimplement it.
 
-Michael
+Ciao,
+Dscho
