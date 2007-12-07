@@ -1,77 +1,74 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Git and GCC
-Date: Thu, 6 Dec 2007 19:01:57 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712061857060.13796@woody.linux-foundation.org>
-References: <4aca3dc20712051947t5fbbb383ua1727c652eb25d7e@mail.gmail.com>  <20071205.202047.58135920.davem@davemloft.net>  <4aca3dc20712052032n521c344cla07a5df1f2c26cb8@mail.gmail.com>  <20071205.204848.227521641.davem@davemloft.net> 
- <4aca3dc20712052111o730f6fb6h7a329ee811a70f28@mail.gmail.com>  <alpine.LFD.0.9999.0712052132450.13796@woody.linux-foundation.org>  <4aca3dc20712061004g43f5902cw79bf633917d3ade9@mail.gmail.com> <1196995353.22471.20.camel@brick>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Better value for chunk_size when threaded
+Date: Thu, 06 Dec 2007 22:25:01 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0712062139170.555@xanadu.home>
+References: <9e4733910712061558k19fbc864ia1fb7a3431fd2603@mail.gmail.com>
+ <alpine.LFD.0.99999.0712062014060.555@xanadu.home>
+ <9e4733910712061737o50a9a5f1ldccdf943bb19319f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Berlin <dberlin@dberlin.org>,
-	David Miller <davem@davemloft.net>, ismail@pardus.org.tr,
-	gcc@gcc.gnu.org, git@vger.kernel.org
-To: Harvey Harrison <harvey.harrison@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 07 04:03:13 2007
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 07 04:25:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0TUe-0003OM-0q
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 04:03:12 +0100
+	id 1J0TqA-0008G4-4f
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 04:25:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755133AbXLGDCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 22:02:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755041AbXLGDCo
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 22:02:44 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:44895 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754745AbXLGDCm (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Dec 2007 22:02:42 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB731w6G018385
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 6 Dec 2007 19:01:59 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lB731vNI026873;
-	Thu, 6 Dec 2007 19:01:58 -0800
-In-Reply-To: <1196995353.22471.20.camel@brick>
-X-Spam-Status: No, hits=-2.727 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1753068AbXLGDZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 22:25:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbXLGDZE
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 22:25:04 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:11691 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752975AbXLGDZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 22:25:03 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JSN00BK2THPRR30@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 06 Dec 2007 22:25:02 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <9e4733910712061737o50a9a5f1ldccdf943bb19319f@mail.gmail.com>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67371>
 
+On Thu, 6 Dec 2007, Jon Smirl wrote:
 
-
-On Thu, 6 Dec 2007, Harvey Harrison wrote:
+> On 12/6/07, Nicolas Pitre <nico@cam.org> wrote:
+> > On Thu, 6 Dec 2007, Jon Smirl wrote:
+> >
+> > > I tried some various ideas out for chunk_size and the best strategy I
+> > > found was to simply set it to a constant. How does 20,000 work on
+> > > other CPUs?
+> >
+> > That depends on the object size.  If you have a repo with big objects
+> > but only 1000 of them for example, then the constant doesn't work.
 > 
-> I've updated the public mirror repo with the very-packed version.
+> How about defaulting it to 20,000 and allowing an override? It's not
+> fatal if we guess wrong, we just want to most common cases to work out
+> of the box. 20,000 is definitely better than the current window *
+> 1000.
 
-Side note: it might be interesting to compare timings for 
-history-intensive stuff with and without this kind of very-packed 
-situation.
+Sure.
 
-The very density of a smaller pack-file might be enough to overcome the 
-downsides (more CPU time to apply longer delta-chains), but regardless, 
-real numbers talks, bullshit walks. So wouldn't it be nice to have real 
-numbers?
+... But I think this can be made much better than that with no guessing 
+at all.
 
-One easy way to get real numbers for history would be to just time some 
-reasonably costly operation that uses lots of history. Ie just do a 
+Say you have 4 threads.  then let's divide the whole object list into 4 
+big segments and feed those to each thread.
 
-	time git blame -C gcc/regclass.c > /dev/null
+One thread will always finish before the others.  The idea is to find 
+the active thread with the largest amount of remaining objects to 
+process at that point, and steal half of them and give that to the 
+thread that just finished.  Repeat for each thread that completes its 
+segment until everything is done.
 
-and see if the deeper delta chains are very expensive.
 
-(Yeah, the above is pretty much designed to be the worst possible case for 
-this kind of aggressive history packing, but I don't know if that choice 
-of file to try to annotate is a good choice or not. I suspect that "git 
-blame -C" with a CVS import is just horrid, because CVS commits tend to be 
-pretty big and nasty and not as localized as we've tried to make things in 
-the kernel, so doing the code copy detection is probably horrendously 
-expensive)
-
-			Linus
+Nicolas
