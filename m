@@ -1,90 +1,71 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Better value for chunk_size when threaded
-Date: Thu, 6 Dec 2007 20:37:07 -0500
-Message-ID: <9e4733910712061737o50a9a5f1ldccdf943bb19319f@mail.gmail.com>
-References: <9e4733910712061558k19fbc864ia1fb7a3431fd2603@mail.gmail.com>
-	 <alpine.LFD.0.99999.0712062014060.555@xanadu.home>
+From: "J.C. Pizarro" <jcpiza@gmail.com>
+Subject: In future, to replace autotools by cmake like KDE4 did?
+Date: Fri, 7 Dec 2007 03:10:36 +0100
+Message-ID: <998d0e4a0712061810k18e6388jde9d7bc5bd006b57@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Dec 07 02:37:43 2007
+To: gcc@gcc.gnu.org, git@vger.kernel.org,
+	"David Miller" <davem@davemloft.net>,
+	"Daniel Berlin" <dberlin@dberlin.org>,
+	"Ismail Donmez" <ismail@pardus.org.tr>
+X-From: git-owner@vger.kernel.org Fri Dec 07 03:11:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0S9t-0007lz-N8
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 02:37:42 +0100
+	id 1J0Sg7-0007pC-6M
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 03:10:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752971AbXLGBhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Dec 2007 20:37:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752974AbXLGBhL
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 20:37:11 -0500
-Received: from ro-out-1112.google.com ([72.14.202.180]:22462 "EHLO
-	ro-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752971AbXLGBhJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Dec 2007 20:37:09 -0500
-Received: by ro-out-1112.google.com with SMTP id p4so6908119roc
-        for <git@vger.kernel.org>; Thu, 06 Dec 2007 17:37:08 -0800 (PST)
+	id S1751737AbXLGCKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Dec 2007 21:10:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752068AbXLGCKi
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Dec 2007 21:10:38 -0500
+Received: from wr-out-0506.google.com ([64.233.184.225]:7187 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751737AbXLGCKh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Dec 2007 21:10:37 -0500
+Received: by wr-out-0506.google.com with SMTP id c49so398297wra
+        for <git@vger.kernel.org>; Thu, 06 Dec 2007 18:10:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=cwNJKMGGdS9bod9gP3wvgGDhUtXNLwoAIpSvj2kiCDo=;
-        b=fpD+H5x8d3ZivYsQ/dlt1dpbW08kX1BU4qf7oFhK6RKuxDeqSz/NNT7klIJkQNBLimREihTeuLKw9g/x1TM4wxkWFFrxZlHWjYU/CzFwSddFfYIEp/ZEq4v2BsK2GzhGEj9XtzojZCX4iWpxiWqvhcJV5EGPndiK1LhWV8qCWcc=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=EQ9Vw2LtzRk8+0wX5/KdGn8ohXghA3SRMEzD04Y5BSE=;
+        b=F9fPw8kDaYoIDBhNKpG+J+uHuNcE5VJDEAD5vnN16MtRIIBQtyK1XE9p+G3k5+nodeJ1M56TqL68kICMJZwqeckQJCPVYXy4t/X2YFgmJrH0fnd2K1USRXr6Ipkzazjv8DoZU9UNY0oXC6LKAUDzfteQFZ47ToOLMDLPGCut2qw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rQqmmrLq28nys7Z3WxjRRNKSGC/GdCx1xpg3RaqsGgGZzQLx/sMcxREA/D4j80LHSyo2EhWXtjlkCoXZb4R4f+jLtkTW9ezH9fMwqZndFxOXJlVi6CSLjHpyKsOy1WIBqoAx0JRqmCbQjlgN8GUPCLpNavMF96Zy0YTh9LDq2LY=
-Received: by 10.114.168.1 with SMTP id q1mr2730825wae.1196991427989;
-        Thu, 06 Dec 2007 17:37:07 -0800 (PST)
-Received: by 10.114.208.17 with HTTP; Thu, 6 Dec 2007 17:37:07 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.99999.0712062014060.555@xanadu.home>
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=TXrjTyoTSIJzFiU+WkA0qGk3/3DnFW+p/as0cJlY3h4sztHx28T50okfqfUYraDrcnWtUa+t+ElN0l9MjdlV+b8ON5YuTmtzenogqgBUVgd3zJdW8QEVAaCl4HFyYZgomCsj+wOIAxzYXB1nxEJXrDf+bZyHQwVCia0XCiTchfA=
+Received: by 10.70.118.4 with SMTP id q4mr1794929wxc.1196993436099;
+        Thu, 06 Dec 2007 18:10:36 -0800 (PST)
+Received: by 10.70.54.17 with HTTP; Thu, 6 Dec 2007 18:10:36 -0800 (PST)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67366>
 
-On 12/6/07, Nicolas Pitre <nico@cam.org> wrote:
-> On Thu, 6 Dec 2007, Jon Smirl wrote:
->
-> > I tried some various ideas out for chunk_size and the best strategy I
-> > found was to simply set it to a constant. How does 20,000 work on
-> > other CPUs?
->
-> That depends on the object size.  If you have a repo with big objects
-> but only 1000 of them for example, then the constant doesn't work.
+The autotools ( automake + libtool + autoconf + ... ) generate many big
+files that they have been slowing the building's computation and growing
+enormously their cvs/svn/git/hg repositories because of generated files.
 
-How about defaulting it to 20,000 and allowing an override? It's not
-fatal if we guess wrong, we just want to most common cases to work out
-of the box. 20,000 is definitely better than the current window *
-1000.
+To see below interesting links:
+1. http://dot.kde.org/1172083974/
+2. http://sam.zoy.org/lectures/20050910-debian/
+3. https://lwn.net/Articles/188693/
+4. http://en.wikipedia.org/wiki/GNU_Build_Tools
+5. http://en.wikipedia.org/wiki/GNU_Automake
 
-> Ideally I'd opt for a value that tend towards around 5 seconds worth of
-> work per segment, or something like that.  Maybe using the actual
-> objects size could be another way.
->
-> > I'd turn on default threaded support with this change. With threads=1
-> > versus non-threaded there is no appreciable difference in the time.
->
-> Would need a way to determine pthreads availability from Makefile.
+The benefits could be:
+* +40% faster in the KDE4 building vs KDE 3.5.6.
+* elimination of redundant and unnecesary generated files as those
+  from autotools.
+* smaller cvs/svn/git/hg repositories.
+* less errors/crashes when it's configuring.
+* can be improved the cmake's sources for better performance's gain.
+* good and long maintainance life.
 
-configure knows if pthreads is there.
+I hope if the files for cmake+make can be well integrated in GCC 4.4
 
-> > Is there an API to ask how many CPUs are in the system? It would be
-> > nice to default the number of threads equal to the number of CPUs and
-> > only use pack.threads=X to override.
->
-> If there is one besides futzing with /proc/cpuinfo I'd like to know
-> about it.  Bonus points if it is portable.
->
->
-> Nicolas
->
-
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
+   J.C.Pizarro
