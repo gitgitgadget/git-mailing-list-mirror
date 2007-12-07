@@ -1,131 +1,88 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-bisect feature suggestion: "git-bisect diff"
-Date: Fri, 07 Dec 2007 02:25:34 -0800
-Message-ID: <7vwsrq3iox.fsf@gitster.siamese.dyndns.org>
-References: <20071207093439.GA21896@elte.hu>
-	<7v63za4yic.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] Let git-help prefer man-pages installed with this version of git
+Date: Fri, 07 Dec 2007 02:39:24 -0800
+Message-ID: <7vodd23i1v.fsf@gitster.siamese.dyndns.org>
+References: <87hciv7jkt.fsf@osv.gnss.ru>
+	<Pine.LNX.4.64.0712062107520.21625@wbgn129.biozentrum.uni-wuerzburg.de>
+	<87d4ti7qu1.fsf@osv.gnss.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Fri Dec 07 11:26:21 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Sergei Organov <osv@javad.com>
+X-From: git-owner@vger.kernel.org Fri Dec 07 11:40:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0aPO-0000Jp-PW
-	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 11:26:15 +0100
+	id 1J0acj-0004V8-My
+	for gcvg-git-2@gmane.org; Fri, 07 Dec 2007 11:40:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752025AbXLGKZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 05:25:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752037AbXLGKZw
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 05:25:52 -0500
-Received: from a-sasl-quonix.pobox.com ([208.72.237.25]:43304 "EHLO
+	id S1751410AbXLGKjk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 05:39:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751264AbXLGKjk
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 05:39:40 -0500
+Received: from a-sasl-quonix.pobox.com ([208.72.237.25]:43542 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750943AbXLGKZv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 05:25:51 -0500
+	with ESMTP id S1751160AbXLGKjj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 05:39:39 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 56B553A31;
-	Fri,  7 Dec 2007 05:25:45 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CB0673B0B;
+	Fri,  7 Dec 2007 05:39:33 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 537E93A2B;
-	Fri,  7 Dec 2007 05:25:42 -0500 (EST)
-In-Reply-To: <7v63za4yic.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 07 Dec 2007 01:58:35 -0800")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E36A23B0A;
+	Fri,  7 Dec 2007 05:39:29 -0500 (EST)
+In-Reply-To: <87d4ti7qu1.fsf@osv.gnss.ru> (Sergei Organov's message of "Fri,
+	07 Dec 2007 13:16:06 +0300")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67409>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Sergei Organov <osv@javad.com> writes:
 
-> Ingo Molnar <mingo@elte.hu> writes:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
->> would be nice to have:
+>> On Thu, 6 Dec 2007, Sergei Organov wrote:
 >>
->>  git-bisect diff
+>>> Prepend $(prefix)/share/man to the MANPATH environment variable before 
+>>> invoking 'man' from help.c:show_man_page().
 >>
->> that enables one to have a look at the currently open bisection window, 
->> in git-log -p format. This would often be much faster to analyze than 
->> looking at git-bisect visualize. (and it could also be used in non-GUI 
->> workflows)
+>> This commit message is severely lacking.  Why would you _ever_ prefer the 
+>> installed man pages before invoking "man", which should find them
+>> anyway?
 >
-> Hmm.  It is very unfortunate that "bisect log" is taken for something
-> unrelated, so tentatively let's call it lumber.
->
-> 	$ git bisect lumber [-p] [--stat]
->
-> would give you the short-hand, hopefully.
+> Obviously because you want manual pages corresponding to the version of
+> git you are invoking, not any random version of man-pages man may find
+> by default.
 
-More seriously...
+While I almost agree with the rest of your sentence, you have to realize
+that it is obviously not obvious if somebody asked you to clarify.
 
--- >8 --
-git-bisect visualize: work in non-windowed environments better
+How about this:
 
-This teaches "git bisect visualize" to be more useful in non-windowed
-environments.
+    Prepend $(prefix)/share/man to the MANPATH environment variable
+    before invoking 'man' from help.c:show_man_page().  There may be
+    other git documentation in the user's MANPATH but the user is asking
+    a specific instance of git about its own documentation, so we'd
+    better show the documentation for _that_ instance of git.
 
- (1) When no option is given, and $DISPLAY is set, it continues to
-     spawn gitk as before;
+Having written that, it is very tempting to further clarify the above:
 
- (2) When no option is given, and $DISPLAY is unset, "git log" is run
-     to show the range of commits between the bad one and the good ones;
+    Usually, if a user has his own version of git and regularly uses it
+    by having the non-system executable directory (e.g. $HOME/bin/git)
+    early in his $PATH, its corresponding documentation would also be in
+    a non-system documentation directory (e.g. $HOME/man) early in his
+    $MANPATH, and this change is a no-op.  The only case this change
+    matters is where the user installs his own git outside of his $PATH
+    and $MANPATH, and explicitly runs his git executable
+    (e.g. "$HOME/junk/git-1.5.4/bin/git diff").
 
- (3) If only "-flag" options are given, "git log <options>" is run.
-     E.g. "git bisect visualize --stat"
-
- (4) Otherwise, all of the given options are taken as the initial part
-     of the command line and the commit range expression is given to
-     that command.  E.g. "git bisect visualize tig" will run "tig"
-     history viewer to show between the bad one and the good ones.
-
-As "visualize" is a bit too long to type, we also give it a shorter
-synonym "view".
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- git-bisect.sh |   19 +++++++++++++++++--
- 1 files changed, 17 insertions(+), 2 deletions(-)
-
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 7a6521e..bb6fe84 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -324,8 +324,23 @@ bisect_next() {
- 
- bisect_visualize() {
- 	bisect_next_check fail
-+
-+	if test $# = 0
-+	then
-+		case "${DISPLAY+set}" in
-+		'')	set git log ;;
-+		set)	set gitk ;;
-+		esac
-+	else
-+		case "$1" in
-+		git*|tig) ;;
-+		-*)	set git log "$@" ;;
-+		*)	set git "$@" ;;
-+		esac
-+	fi
-+
- 	not=$(git for-each-ref --format='%(refname)' "refs/bisect/good-*")
--	eval gitk refs/bisect/bad --not $not -- $(cat "$GIT_DIR/BISECT_NAMES")
-+	eval '"$@"' refs/bisect/bad --not $not -- $(cat "$GIT_DIR/BISECT_NAMES")
- }
- 
- bisect_reset() {
-@@ -449,7 +464,7 @@ case "$#" in
-     next)
-         # Not sure we want "next" at the UI level anymore.
-         bisect_next "$@" ;;
--    visualize)
-+    visualize|view)
- 	bisect_visualize "$@" ;;
-     reset)
-         bisect_reset "$@" ;;
+When you clarify it this way, the change does not look as useful
+anymore, does it?  How typical would that use be, to run your git
+executable by always naming it by path without relying on $PATH
+environment variable?
