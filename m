@@ -1,67 +1,81 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: git-bisect feature suggestion: "git-bisect diff"
-Date: Sat, 8 Dec 2007 06:36:12 +0100
-Message-ID: <200712080636.12982.chriscool@tuxfamily.org>
-References: <20071207093439.GA21896@elte.hu>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: git guidance
+Date: Sat, 8 Dec 2007 19:33:00 +1300
+Message-ID: <46a038f90712072233v4ee1143cx68a82d15cfaa4402@mail.gmail.com>
+References: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com>
+	 <alpine.LFD.0.9999.0711290810170.8458@woody.linux-foundation.org>
+	 <200712010950.15628.a1426z@gawab.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Sat Dec 08 06:30:16 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Jing Xue" <jingxue@digizenstudio.com>,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: "Al Boldi" <a1426z@gawab.com>
+X-From: git-owner@vger.kernel.org Sat Dec 08 07:33:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0sGV-0002v7-RG
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 06:30:16 +0100
+	id 1J0tFr-00060y-5S
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 07:33:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752418AbXLHF3y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Dec 2007 00:29:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752245AbXLHF3y
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 00:29:54 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:57033 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752203AbXLHF3x convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Dec 2007 00:29:53 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 8EF391AB2B5;
-	Sat,  8 Dec 2007 06:29:49 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 6000E1AB2B3;
-	Sat,  8 Dec 2007 06:29:49 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <20071207093439.GA21896@elte.hu>
+	id S1751542AbXLHGdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 01:33:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752083AbXLHGdF
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 01:33:05 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:41979 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751606AbXLHGdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 01:33:01 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so1120599ugc
+        for <git@vger.kernel.org>; Fri, 07 Dec 2007 22:33:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Lb378plfUPAxx6Z0rk+Chg4piAlZF6YnTyrE7iEehQc=;
+        b=heiUC/gqDk/O0W6/sVwQgywvspVg+EciHqSW3JLa1iQJTBMdhH7m0ZdbDaQLzN8gzx0UJWPktf2SOYQBk0uoiFnSCmO2/i6FQQ3Va6nxiClGvN62o84qZEU3htSCuabF4czGbMM0X1Qwz4nO299mF8fZe5ZEZx80f5KmXWBgkhE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QeM6Zrd89amZ7E3GQFwzlrhIKUjbu9LzacKT9/w7gdxs1WmnK9D2LsRfN55qQkSlbzoKVspefLL84wdfW5NkL3UhpZIKt4cyC/Jtmln6le4YQtWrtnwflEbbH13Tl0MMbQvSgDAlvdCJQjEvrlcdpRQtgcpUhgOvbSnFHAFIxuE=
+Received: by 10.66.243.2 with SMTP id q2mr3420298ugh.1197095580110;
+        Fri, 07 Dec 2007 22:33:00 -0800 (PST)
+Received: by 10.66.252.2 with HTTP; Fri, 7 Dec 2007 22:33:00 -0800 (PST)
+In-Reply-To: <200712010950.15628.a1426z@gawab.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67519>
 
-Le vendredi 7 d=E9cembre 2007, Ingo Molnar a =E9crit :
-> would be nice to have:
->
->  git-bisect diff
->
-> that enables one to have a look at the currently open bisection windo=
-w,
-> in git-log -p format. This would often be much faster to analyze than
-> looking at git-bisect visualize. (and it could also be used in non-GU=
-I
-> workflows)
->
-> Right now i have this silly git-bisect-diff script:
->
-> git-log -p "`git-bisect log | grep good | tail -1 | cut -d' ' -f3`"..=
-"\
-> `git-bisect log | grep bad | tail -1 | cut -d' ' -f3`"
->
+On Dec 1, 2007 7:50 PM, Al Boldi <a1426z@gawab.com> wrote:
+> Not sure what you mean by operationally transparent?  It would be transparent
+> for the updating client,  and the rest of the git-users would need to wait
+> for the commit from the updating client; which is ok, as this transparency
+> is not meant to change the server-side git-update semantic.
 
-Tell us if you have other scripts or suggestions related to git-bisect.
+I guess what he means is that when your write to the file -- from your
+editor -- it can't be considered a commit. During an editing session
+you might write a dozen times, only to commit it once you are happy
+(that it compiles, passes tests, etc).
 
-And thanks for you kind word about it:
+> Sure, you wouldn't want to change the git-engine update semantics, as that
+> sits on the server and handles all users.  But what the git model is
+> currently missing is a client manager.  Right now, this is being worked
+> around by replicating the git tree on the client, which still doesn't
+> provide the required transparency.
 
-http://thread.gmane.org/gmane.linux.kernel.input/3740/focus=3D3764
+If you want a dumb-ish client CVS-style, you can try git-cvsserver.
+But the git model is definitely superior -- "replicating the tree on
+the client" is not a workaround but a central strategy.
 
-Christian.
+Have you used git and other DSCMs much? From your writing, it sounds
+like you may have misunderstood how some of the principles of git work
+out in practice.
+
+cheers,
+
+
+m
