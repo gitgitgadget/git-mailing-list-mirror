@@ -1,59 +1,76 @@
-From: "Assim Deodia" <assim.deodia@gmail.com>
-Subject: On running git via proxy
-Date: Sat, 8 Dec 2007 10:43:40 +0530
-Message-ID: <fcf013560712072113s6b41b437t3176412356e258a6@mail.gmail.com>
+From: Valdis.Kletnieks@vt.edu
+Subject: Re: git guidance
+Date: Sat, 08 Dec 2007 00:16:27 -0500
+Message-ID: <7135.1197090987@turing-police.cc.vt.edu>
+References: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com> <200712072204.48410.a1426z@gawab.com> <11272.1197056185@turing-police.cc.vt.edu>
+            <200712080756.21980.a1426z@gawab.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed; boundary="==_Exmh_1197090987_2992P";
+	 micalg=pgp-sha1; protocol="application/pgp-signature"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 08 06:14:03 2007
+Cc: Jakub Narebski <jnareb@gmail.com>, Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Phillip Susi <psusi@cfl.rr.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jing Xue <jingxue@digizenstudio.com>,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: Al Boldi <a1426z@gawab.com>
+X-From: git-owner@vger.kernel.org Sat Dec 08 06:17:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0s0n-0000ET-QU
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 06:14:02 +0100
+	id 1J0s3h-0000km-Jy
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 06:17:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751972AbXLHFNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 00:13:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751908AbXLHFNl
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 00:13:41 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:47410 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751848AbXLHFNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 00:13:40 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1905566wah
-        for <git@vger.kernel.org>; Fri, 07 Dec 2007 21:13:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        bh=7cB31tecpUvBKWhDWIQnFyRkQZWnHu1gfI0rUn4Tiww=;
-        b=UMZt6eHU5+m6/D2XUAapkyz4glzXlGGgvXMruQHr5GF33fLkFgRPgy7xXSsj2/ei8w/F7xc/7YwdobtYUe8Q9dhsdft+4DxpRst5nEWMX+yiR/825xdR9EwVpLrqT06luZvjRm2kyokUli/rHGXMDCj1cEMERfJCGNkGwJY+jGY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=EwjAhjp9/DCB6RDkwzZR0oLeXWnVEUy8Xeikuffc59gfe/1+Ahh4TB7DEbXdCggTNd5xwg31ePdpLvBAzAHZA2pp1UkVwYHLy4IAVqGRoKSGtwAEQ+KR3E+5Nyn7ZOKfMXEfnEU0Wm+YvJ/JHX4aTuWY3reMJeY9yhpE+jp6HXk=
-Received: by 10.114.158.1 with SMTP id g1mr4435112wae.1197090820087;
-        Fri, 07 Dec 2007 21:13:40 -0800 (PST)
-Received: by 10.114.75.8 with HTTP; Fri, 7 Dec 2007 21:13:40 -0800 (PST)
-Content-Disposition: inline
-X-Google-Sender-Auth: f669f0df8e996352
+	id S1752098AbXLHFQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 00:16:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751998AbXLHFQj
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 00:16:39 -0500
+Received: from turing-police.cc.vt.edu ([128.173.14.107]:42417 "EHLO
+	turing-police.cc.vt.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751908AbXLHFQi (ORCPT <RFC822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 00:16:38 -0500
+Received: from turing-police.cc.vt.edu (turing-police.cc.vt.edu [127.0.0.1])
+	by turing-police.cc.vt.edu (8.14.2.Alpha0/8.14.2.Alpha0) with ESMTP id lB85GR1B007137;
+	Sat, 8 Dec 2007 00:16:27 -0500
+X-Mailer: exmh version 2.7.2 01/07/2005 with nmh-1.2
+In-Reply-To: Your message of "Sat, 08 Dec 2007 07:56:21 +0300."
+             <200712080756.21980.a1426z@gawab.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67517>
 
-Hello,
+--==_Exmh_1197090987_2992P
+Content-Type: text/plain; charset=us-ascii
 
-I am a newbie to git. I am running git on my virtual machine which has
-the internet access via proxy through the host machine.
+On Sat, 08 Dec 2007 07:56:21 +0300, Al Boldi said:
 
-I am unable to configure git to run via proxy. system proxy seems not
-to be working for git..
+> It probably goes without saying, that gitfs should have some basic 
+> configuration file to setup its transparent behaviour
 
-Can you please guide me for the same?
+But then it's not *truly* transparent, is it?
 
--- 
-With Regards
-Assim
+And that leaves another question - if you make a config file that excludes
+all the .o files - then what's backing the .o files?  Those data blocks need
+to be *someplace*.  Maybe you can do something ugly like use unionfs to
+combine your gitfs with something else to store the other files...
+
+But at that point, you're probably better off just creating a properly
+designed versioning filesystem.
+
+--==_Exmh_1197090987_2992P
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+Comment: Exmh version 2.5 07/13/2001
+
+iD8DBQFHWiircC3lWbTT17ARAiEqAJ9+8RurRYI6jjSiX/BaqiNZGJ97AACfTOAw
+g5Y8Lh36QWvSod8+Zbh9d9E=
+=DvZ0
+-----END PGP SIGNATURE-----
+
+--==_Exmh_1197090987_2992P--
