@@ -1,61 +1,71 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Something is broken in repack
-Date: Fri, 07 Dec 2007 23:30:16 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0712072328420.555@xanadu.home>
-References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
- <alpine.LFD.0.99999.0712072032410.555@xanadu.home>
- <9e4733910712071804ja0a49e1m1eb209cb942bc36f@mail.gmail.com>
- <alpine.LFD.0.99999.0712072124160.555@xanadu.home>
- <9e4733910712071929h17a7d88dv37686ec7cd858c63@mail.gmail.com>
- <20071208033722.GA27776@old.davidb.org>
- <9e4733910712072022na3369caob48d4b26a56224ea@mail.gmail.com>
+From: Al Boldi <a1426z@gawab.com>
+Subject: Re: git guidance
+Date: Sat, 8 Dec 2007 07:56:21 +0300
+Message-ID: <200712080756.21980.a1426z@gawab.com>
+References: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com> <200712072204.48410.a1426z@gawab.com> <11272.1197056185@turing-police.cc.vt.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: David Brown <git@davidb.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 08 05:30:41 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Phillip Susi <psusi@cfl.rr.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jing Xue <jingxue@digizenstudio.com>,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: Valdis.Kletnieks@vt.edu
+X-From: git-owner@vger.kernel.org Sat Dec 08 05:58:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0rKq-0000nF-9k
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 05:30:40 +0100
+	id 1J0rlQ-0005kc-Bo
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 05:58:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753405AbXLHEaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 23:30:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753345AbXLHEaT
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 23:30:19 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:10751 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753332AbXLHEaS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 23:30:18 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSP003GDR6GULI0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 07 Dec 2007 23:30:16 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <9e4733910712072022na3369caob48d4b26a56224ea@mail.gmail.com>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1753711AbXLHE5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 23:57:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753799AbXLHE5q
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 23:57:46 -0500
+Received: from [212.12.190.8] ([212.12.190.8]:35760 "EHLO raad.intranet"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751935AbXLHE5p (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 23:57:45 -0500
+Received: from localhost ([10.0.0.111])
+	by raad.intranet (8.8.7/8.8.7) with ESMTP id HAA26816;
+	Sat, 8 Dec 2007 07:55:55 +0300
+User-Agent: KMail/1.5
+In-Reply-To: <11272.1197056185@turing-police.cc.vt.edu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67509>
 
-On Fri, 7 Dec 2007, Jon Smirl wrote:
+Valdis.Kletnieks@vt.edu wrote:
+> On Fri, 07 Dec 2007 22:04:48 +0300, Al Boldi said:
+> > Because WORKFLOW C is transparent, it won't affect other workflows.  So
+> > you could still use your normal WORKFLOW B in addition to WORKFLOW C,
+> > gaining an additional level of version control detail at no extra cost
+> > other than the git-engine scratch repository overhead.
+> >
+> > BTW, is git efficient enough to handle WORKFLOW C?
+>
+> Imagine the number of commits a 'make clean; make' will do in a kernel
+> tree, as it commits all those .o files... :)
 
-> Does the gcc repo contain some giant objects? Why wasn't the memory
-> freed after their chain was processed?
+.o files???
 
-It should be.
+It probably goes without saying, that gitfs should have some basic 
+configuration file to setup its transparent behaviour, and which would most 
+probably contain an include / exclude file-filter mask, and probably other 
+basic configuration options.  But this is really secondary to the 
+implementation, and the question remains whether git is efficient enough.
 
-> Most of the last 10% is being done on a single CPU. There must be a
-> chain of giant objects that is unbalancing everything.
-
-I'm about to send a patch to fix the thread balancing for real this 
-time.
+IOW, how big is the git commit overhead as compared to a normal copy?
 
 
-Nicolas
+Thanks!
+
+--
+Al
