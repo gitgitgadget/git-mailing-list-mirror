@@ -1,89 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git guidance
-Date: Sat, 8 Dec 2007 11:13:55 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712081106200.27959@racer.site>
-References: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com>
- <200712071353.11654.a1426z@gawab.com> <m3prxiu3oo.fsf@roke.D-201>
- <200712072204.48410.a1426z@gawab.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, Andreas Ericsson <ae@op5.se>,
-	Phillip Susi <psusi@cfl.rr.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Jing Xue <jingxue@digizenstudio.com>,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org
-To: Al Boldi <a1426z@gawab.com>
-X-From: git-owner@vger.kernel.org Sat Dec 08 12:15:03 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: [PATCH 0/3] builtin-commit fixes
+Date: Sat,  8 Dec 2007 12:38:06 +0100
+Message-ID: <1197113889-16243-1-git-send-email-win@wincent.com>
+Cc: gitster@pobox.com, krh@redhat.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 08 12:38:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0xe3-00055R-Ab
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 12:14:55 +0100
+	id 1J0y1L-0002Ln-5E
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 12:38:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752573AbXLHLOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 06:14:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752394AbXLHLOe
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 06:14:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43269 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751462AbXLHLOd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 06:14:33 -0500
-Received: (qmail invoked by alias); 08 Dec 2007 11:14:31 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp028) with SMTP; 08 Dec 2007 12:14:31 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18463F0oiI4428e/4JdKQk45RJixE4dB+omI+mzQ0
-	dK8/cdWtHwOatz
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200712072204.48410.a1426z@gawab.com>
-X-Y-GMX-Trusted: 0
+	id S1751816AbXLHLih (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 06:38:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751632AbXLHLih
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 06:38:37 -0500
+Received: from wincent.com ([72.3.236.74]:34206 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751001AbXLHLig (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 06:38:36 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lB8BcAA9021147;
+	Sat, 8 Dec 2007 05:38:11 -0600
+X-Mailer: git-send-email 1.5.3.7.1115.gaa595
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67542>
 
-Hi,
+A little series to bring built-in commit back in line with the
+behaviour as implemented by git-commit.sh and described in the
+documentation.
 
-On Fri, 7 Dec 2007, Al Boldi wrote:
+1/3 Allow --no-verify to bypass commit-msg hook
 
-> Jakub Narebski wrote:
->
-> > Version control system is all about WORKFLOW B, where programmer 
-> > controls when it is time to commit (and in private repository he/she 
-> > can then rewrite history to arrive at "Perfect patch series"[*1*]); 
-> > something that for example CVS failed at, requiring programmer to do a 
-> > merge if upstream has any changes when trying to commit.
-> 
-> Because WORKFLOW C is transparent, it won't affect other workflows.  So 
-> you could still use your normal WORKFLOW B in addition to WORKFLOW C, 
-> gaining an additional level of version control detail at no extra cost 
-> other than the git-engine scratch repository overhead.
-> 
-> BTW, is git efficient enough to handle WORKFLOW C?
+- git-commit.sh used to do this, but builtin-commit wasn't.
 
-The question is not if git is efficient enough to handle workflow C, but 
-if that worflow is efficient enough to help anybody.
+2/3 Documentation: fix --no-verify documentation for "git commit"
 
-Guess what takes me the longest time when committing?  The commit message.  
-But it is really helpful, so there is a _point_ in writing one, and there 
-is a _point_ in committing when I do it: it is a point in time where I 
-expect the tree to be in a good shape, to be compilable, and to solve a 
-specific problem which I describe in the commit message.
+- The "git commit" man page should mention the commit-msg hook to
+bring it in line with what's in the hook notes and in
+Documentation/hooks.txt.
 
-So I absolutely hate this "transparency".  Git _is_ transparent; it does 
-not affect any of my other tools; they still work very well 
-thankyouverymuch.
+3/3 Fix commit-msg hook to allow editing
 
-What your version of "transparency" would do: destroy bisectability, make 
-an absolute gibberish of the history, and more!
+- Again, git-commit.sh allowed this, but builtin-commit wasn't
+doing so.
 
-Nobody could read the output of "git log" and form an understanding what 
-was done.  Nobody could read the commit message for a certain "git blame"d 
-line that she tries to make sense of.
+I have manually tested these changes and they seem to work, but
+the fact that the test suite didn't break when the behaviour of
+"git commit" changed is indicative of a hole in the suite. I am
+not very familiar yet with the test machinery, but I am going
+to see if I can whip something up.
 
-IOW you would revert the whole meaning of the term Source Code Management.
-
-Hth,
-Dscho
+Cheers,
+Wincent
