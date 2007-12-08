@@ -1,84 +1,59 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Something is broken in repack
-Date: Sat, 08 Dec 2007 00:12:53 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0712080004490.555@xanadu.home>
-References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
- <alpine.LFD.0.99999.0712072032410.555@xanadu.home>
- <9e4733910712071804ja0a49e1m1eb209cb942bc36f@mail.gmail.com>
- <alpine.LFD.0.99999.0712072124160.555@xanadu.home>
- <9e4733910712071929h17a7d88dv37686ec7cd858c63@mail.gmail.com>
- <20071208033722.GA27776@old.davidb.org>
- <9e4733910712072022na3369caob48d4b26a56224ea@mail.gmail.com>
- <alpine.LFD.0.99999.0712072328420.555@xanadu.home>
- <9e4733910712072101k4583c0afsea368253fe1cf706@mail.gmail.com>
+From: "Assim Deodia" <assim.deodia@gmail.com>
+Subject: On running git via proxy
+Date: Sat, 8 Dec 2007 10:43:40 +0530
+Message-ID: <fcf013560712072113s6b41b437t3176412356e258a6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 08 06:13:17 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 08 06:14:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0s04-00006e-G8
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 06:13:16 +0100
+	id 1J0s0n-0000ET-QU
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 06:14:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751809AbXLHFMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 00:12:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751835AbXLHFMz
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 00:12:55 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:31398 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751734AbXLHFMy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 00:12:54 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSP00BF1T5HZ1A0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 08 Dec 2007 00:12:54 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <9e4733910712072101k4583c0afsea368253fe1cf706@mail.gmail.com>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1751972AbXLHFNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 00:13:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751908AbXLHFNl
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 00:13:41 -0500
+Received: from wa-out-1112.google.com ([209.85.146.178]:47410 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751848AbXLHFNk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 00:13:40 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1905566wah
+        for <git@vger.kernel.org>; Fri, 07 Dec 2007 21:13:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        bh=7cB31tecpUvBKWhDWIQnFyRkQZWnHu1gfI0rUn4Tiww=;
+        b=UMZt6eHU5+m6/D2XUAapkyz4glzXlGGgvXMruQHr5GF33fLkFgRPgy7xXSsj2/ei8w/F7xc/7YwdobtYUe8Q9dhsdft+4DxpRst5nEWMX+yiR/825xdR9EwVpLrqT06luZvjRm2kyokUli/rHGXMDCj1cEMERfJCGNkGwJY+jGY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=EwjAhjp9/DCB6RDkwzZR0oLeXWnVEUy8Xeikuffc59gfe/1+Ahh4TB7DEbXdCggTNd5xwg31ePdpLvBAzAHZA2pp1UkVwYHLy4IAVqGRoKSGtwAEQ+KR3E+5Nyn7ZOKfMXEfnEU0Wm+YvJ/JHX4aTuWY3reMJeY9yhpE+jp6HXk=
+Received: by 10.114.158.1 with SMTP id g1mr4435112wae.1197090820087;
+        Fri, 07 Dec 2007 21:13:40 -0800 (PST)
+Received: by 10.114.75.8 with HTTP; Fri, 7 Dec 2007 21:13:40 -0800 (PST)
+Content-Disposition: inline
+X-Google-Sender-Auth: f669f0df8e996352
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67516>
 
-On Sat, 8 Dec 2007, Jon Smirl wrote:
+Hello,
 
-> On 12/7/07, Nicolas Pitre <nico@cam.org> wrote:
-> > On Fri, 7 Dec 2007, Jon Smirl wrote:
-> >
-> > > Does the gcc repo contain some giant objects? Why wasn't the memory
-> > > freed after their chain was processed?
-> >
-> > It should be.
-> >
-> > > Most of the last 10% is being done on a single CPU. There must be a
-> > > chain of giant objects that is unbalancing everything.
-> >
-> > I'm about to send a patch to fix the thread balancing for real this
-> > time.
-> 
-> Something is really broken in the last 5% of that repo. I have been
-> processing at 97% for 30 minutes without moving to 98%.
+I am a newbie to git. I am running git on my virtual machine which has
+the internet access via proxy through the host machine.
 
-This is a clear sign of a problem, indeed.
+I am unable to configure git to run via proxy. system proxy seems not
+to be working for git..
 
-I'll be away for the weekend, so here's a few things to try out if you 
-feel like it:
+Can you please guide me for the same?
 
-1) Make sure the problem occurs with the thread code disabled.  That 
-   would eliminate one variable, and will help for #2.
-
-2) Try bissecting the issue.  If you can find an old Git version where 
-   the issue doesn't appear then simply run "git bissect" to find the 
-   exact commit causing the problem.  Best with a repo that doesn't take
-   ages to repack.
-
-3) Compile Git against the dmalloc library in order to identify where
-   the huge memory leak is happening.
-
-
-Nicolas
+-- 
+With Regards
+Assim
