@@ -1,58 +1,79 @@
-From: Joe Buck <Joe.Buck@synopsys.COM>
+From: "Marco Costalba" <mcostalba@gmail.com>
 Subject: Re: Git and GCC
-Date: Sat, 8 Dec 2007 11:53:53 -0800
-Message-ID: <20071208195352.GB4731@synopsys.com>
-References: <998d0e4a0712071821o520a75c4lbcaae92256071f48@mail.gmail.com> <Pine.LNX.4.64.0712081223070.27959@racer.site>
+Date: Sat, 8 Dec 2007 21:28:32 +0100
+Message-ID: <e5bfff550712081228s6bcb064ep23f2bb06ef2c6b9b@mail.gmail.com>
+References: <998d0e4a0712071821o520a75c4lbcaae92256071f48@mail.gmail.com>
+	 <Pine.LNX.4.64.0712081223070.27959@racer.site>
+	 <20071208195352.GB4731@synopsys.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "J.C. Pizarro" <jcpiza@gmail.com>,         Linus Torvalds <torvalds@linux-foundation.org>,         David Miller <davem@davemloft.net>, gcc@gcc.gnu.org,         git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: gcc-return-142849-gcc=m.gmane.org@gcc.gnu.org Sat Dec 08 20:54:29 2007
-Return-path: <gcc-return-142849-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J15kq-0004tM-IZ
-	for gcc@gmane.org; Sat, 08 Dec 2007 20:54:29 +0100
-Received: (qmail 1343 invoked by alias); 8 Dec 2007 19:54:10 -0000
-Received: (qmail 1333 invoked by uid 22791); 8 Dec 2007 19:54:09 -0000
-X-Spam-Check-By: sourceware.org
-Received: from us01smtp1.synopsys.com (HELO boden.synopsys.com) (198.182.44.79)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Sat, 08 Dec 2007 19:54:03 +0000
-Received: from crone.synopsys.com (crone.synopsys.com [146.225.7.23]) 	by boden.synopsys.com (Postfix) with ESMTP id A8BF9E788; 	Sat,  8 Dec 2007 11:54:01 -0800 (PST)
-Received: from piper.synopsys.com (localhost [127.0.0.1]) 	by crone.synopsys.com (8.9.1/8.9.1) with ESMTP id LAA03363; 	Sat, 8 Dec 2007 11:51:53 -0800 (PST)
-Received: from piper.synopsys.com (localhost [127.0.0.1]) 	by piper.synopsys.com (8.12.11/8.12.3) with ESMTP id lB8JrvGK004815; 	Sat, 8 Dec 2007 11:53:57 -0800
-Received: (from jbuck@localhost) 	by piper.synopsys.com (8.12.11/8.12.11/Submit) id lB8Jrr8v004813; 	Sat, 8 Dec 2007 11:53:53 -0800
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"J.C. Pizarro" <jcpiza@gmail.com>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	"David Miller" <davem@davemloft.net>, gcc@gcc.gnu.org,
+	git@vger.kernel.org
+To: "Joe Buck" <Joe.Buck@synopsys.com>
+X-From: git-owner@vger.kernel.org Sat Dec 08 21:28:57 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J16IB-0006Gc-D8
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 21:28:55 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752355AbXLHU2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 15:28:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751838AbXLHU2e
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 15:28:34 -0500
+Received: from wa-out-1112.google.com ([209.85.146.179]:12194 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751799AbXLHU2d (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 15:28:33 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so2278451wah
+        for <git@vger.kernel.org>; Sat, 08 Dec 2007 12:28:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=tELE1dH+yvAEqV62vAtEoVOXlKv/BXlMM6Ch5pO/qqo=;
+        b=hzMMxNDGzJlGkzRXcCzDexqMNJ7SUWNXQ6EDDApORc2WGtFuQFiFqpQHm4bf/GpobVUo9yusr8l/6kct84hJuK/c2sK/HaziXJLjR7rgXmZJPfUkBST/l5ZPgbcSzr6mhGsdApahcV8GJUaq98E4II+s8HwDvh40CiAVNKgzs6U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=If9uz2ijnTcEAXBmxPgY4c96zXAE8ImdAqR/07lu4Gv4Awrd8Z4RtfoNddKe4NLUNpwpFkeyPEoJSwCWnd/C5AcaEiCIVDgmCpv+K96W3wm/X81KYPovNZvJ/j3PpsrDliSUyNwcWC4xA9ok/rzwy8L4kFfagKRZZZMQbkSPr34=
+Received: by 10.140.164.1 with SMTP id m1mr3377774rve.1197145712700;
+        Sat, 08 Dec 2007 12:28:32 -0800 (PST)
+Received: by 10.141.76.1 with HTTP; Sat, 8 Dec 2007 12:28:32 -0800 (PST)
+In-Reply-To: <20071208195352.GB4731@synopsys.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0712081223070.27959@racer.site>
-User-Agent: Mutt/1.4.1i
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67566>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67567>
 
-On Sat, 8 Dec 2007, J.C. Pizarro wrote:
-> > 1.   "Don't compress this repo but compact this uncompressed repo
-> >       using minimal spanning forest and deltas"
-> > 2.   "After, compress this whole repo with LZMA (e.g. 48MiB) from 7zip before
-> >       burning it to DVD for backup reasons or before replicating it to
-> >	internet".
+On Dec 8, 2007 8:53 PM, Joe Buck <Joe.Buck@synopsys.com> wrote:
+>
+> Mr. Pizarro has endless ideas, and he'll give you some new ones every day.
 
-On Sat, Dec 08, 2007 at 12:24:00PM +0000, Johannes Schindelin wrote:
-> Patches? ;-)
+That's true.
 
-git list, meet J.C. Pizarro.  Care to take him off of our hands for
-a while?  He's been hanging on the gcc list for some time, and perhaps
-seeks new horizons.
+> He thinks that no one else knows any computer science, and he will attempt
+> to teach you what he knows,
 
-Mr. Pizarro has endless ideas, and he'll give you some new ones every day.
-He thinks that no one else knows any computer science, and he will attempt
-to teach you what he knows, and tell you to rewrite all of your code based
-on something he read and half-understood.  But he's not interested in
-actually DOING the work, mind you; that's up to you.  When you object
-that he's wasting your time, he'll start talking about freedom of speech.
+It's not the only one ;-) is in good and numerous company.
+
+>  But he's not interested in
+> actually DOING the work, mind you; that's up to you.
+
+Where did have you read this ? I missed that part.
+
+>  When you object
+> that he's wasting your time, he'll start talking about freedom of speech.
+>
+
+Actually he never spoke like that (probably I missed that part too).
+
+
+Thanks
+Marco
