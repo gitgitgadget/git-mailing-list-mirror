@@ -1,97 +1,50 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: git-svn branch naming question
-Date: Sat, 8 Dec 2007 17:56:57 +0100
-Message-ID: <20071208165657.GC2844@xp.machine.xx>
-References: <20071208010438.GE3199@genesis.frugalware.org> <20071208105901.GA2844@xp.machine.xx> <20071208141449.GH3199@genesis.frugalware.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 2/2] shortlog: code restruturing and clean-up
+Date: Sat, 8 Dec 2007 18:13:14 +0100
+Message-ID: <20071208171314.GA2812@steel.home>
+References: <1197077573-14945-1-git-send-email-gitster@pobox.com> <1197077573-14945-2-git-send-email-gitster@pobox.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sat Dec 08 17:57:44 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 08 18:19:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J12zn-0001Ny-Cs
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 17:57:43 +0100
+	id 1J13Ks-0006z1-C4
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 18:19:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751652AbXLHQ5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 11:57:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751085AbXLHQ5B
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 11:57:01 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36696 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750790AbXLHQ5B (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 11:57:01 -0500
-Received: (qmail invoked by alias); 08 Dec 2007 16:56:58 -0000
-Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
-  by mail.gmx.net (mp024) with SMTP; 08 Dec 2007 17:56:58 +0100
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX18ZJ/VqARYZzyl2ZIbYQtX4xVWYGSPut+1Fj9E24k
-	WsoMra6Kt7XQQN
+	id S1751908AbXLHRNT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 12:13:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751473AbXLHRNT
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 12:13:19 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:25710 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751175AbXLHRNS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 12:13:18 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+cUik=
+Received: from tigra.home (Fc885.f.strato-dslnet.de [195.4.200.133])
+	by post.webmailer.de (klopstock mo62) (RZmta 14.5)
+	with ESMTP id v00efdjB8E7F33 ; Sat, 8 Dec 2007 18:13:16 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id DEF3F277AE;
+	Sat,  8 Dec 2007 18:13:14 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 3AE6F56D22; Sat,  8 Dec 2007 18:13:14 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <20071208141449.GH3199@genesis.frugalware.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Y-GMX-Trusted: 0
+In-Reply-To: <1197077573-14945-2-git-send-email-gitster@pobox.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67560>
 
-On Sat, Dec 08, 2007 at 03:14:49PM +0100, Miklos Vajna wrote:
-> On Sat, Dec 08, 2007 at 11:59:01AM +0100, Peter Baumann <waste.manager@gmx.de> wrote:
-> > Look up  --prefix in the manpage for git-svn.
-> 
-> great, --prefix is what i missed.
-> 
-> a related question: is it possible to avoid even the "remotes" prefix?
-> 
-> it could be useful when creating an incremental import of an svn repo.
-> (ie when using git-svn as a replacement of git-svnimport.)
-> 
+Junio C Hamano, Sat, Dec 08, 2007 02:32:53 +0100:
+> Subject: Re: [PATCH 2/2] shortlog: code restruturing and clean-up
 
-git svn init --stdlayout creates this entry in your .git/config per default
-
-  [svn-remote "svn"]
-        url = https://url/to/your/svn/repo
-        fetch = trunk:refs/remotes/trunk
-        branches = branches/*:refs/remotes/*
-        tags = tags/*:refs/remotes/tags/*
-
-You could change this to
-
-  [svn-remote "svn"]
-        url = https://url/to/your/svn/repo
-        fetch = trunk:refs/remotes/origin/trunk
-        branches = branches/*:refs/remotes/origin/*
-        tags = tags/*:refs/remotes/origin/tags/*
-
-to get what --prefix origin would do.
-
-
- On the other hand you could forget completly the remote part by specifying
-
-  [svn-remote "svn"]
-        url = https://url/to/your/svn/repo
-        fetch = trunk:refs/heads/trunk
-        branches = branches/*:refs/heads/*
-        tags = tags/*:refs/heads/tags/*
-
-but I advice you to not do this. refs/remotes has a special meaning in git,
-e.g.  you can't commit directly to it (which makes sense, because it only
-tracks the state of the remote repo. On the other hand remote branches won't
-get cloned per default.)
-
-Side note, if you want to track only some branches, or if you have a strange
-svn layout, you could use something like this:
-
-  [svn-remote "svn"]
-        url = https://url/to/your/svn/repo
-        fetch = trunk:refs/remotes/origin/trunk
-        fetch = branches/branchA:refs/remotes/origin/branchA
-        fetch = branches/branchB:refs/remotes/origin/branchB
-	...
-
-
--Peter
+restruturing -> restructuring
