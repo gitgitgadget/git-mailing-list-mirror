@@ -1,75 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] add status.relativePaths config variable
-Date: Sat, 8 Dec 2007 03:45:52 -0500
-Message-ID: <20071208084552.GA5206@coredump.intra.peff.net>
-References: <20071207165703.GA8889@sigill.intra.peff.net> <Pine.LNX.4.64.0712071853500.27959@racer.site> <4759996B.2000300@gmail.com> <20071207204937.GA20111@coredump.intra.peff.net> <20071207212607.GA11504@coredump.intra.peff.net> <7vejdxy70p.fsf@gitster.siamese.dyndns.org> <7vaboly6dv.fsf@gitster.siamese.dyndns.org> <20071208080238.GB4812@coredump.intra.peff.net> <7v63z9y5k2.fsf@gitster.siamese.dyndns.org>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH] Calculate $commitsha1 in update() only when needed
+Date: Sat, 08 Dec 2007 03:48:21 -0500
+Message-ID: <20071208034821.8icn2cflr4ksc0kw@webmail.spamcop.net>
+References: <20071208050745.29462.74137.stgit@dv.roinet.com>
+	<7vtzmtwqff.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Thomas Harning <harningt@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII;
+	DelSp=Yes	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 08 09:46:18 2007
+X-From: git-owner@vger.kernel.org Sat Dec 08 09:48:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0vKB-0005O9-SC
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 09:46:16 +0100
+	id 1J0vMZ-0005sn-RK
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 09:48:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756112AbXLHIpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 03:45:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756078AbXLHIpz
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 03:45:55 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1154 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756008AbXLHIpz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 03:45:55 -0500
-Received: (qmail 17612 invoked by uid 111); 8 Dec 2007 08:45:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 08 Dec 2007 03:45:53 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Dec 2007 03:45:52 -0500
+	id S1754172AbXLHIsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 03:48:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754728AbXLHIsX
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 03:48:23 -0500
+Received: from c60.cesmail.net ([216.154.195.49]:62882 "EHLO c60.cesmail.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753020AbXLHIsW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Dec 2007 03:48:22 -0500
+Received: from unknown (HELO epsilon2) ([192.168.1.60])
+  by c60.cesmail.net with ESMTP; 08 Dec 2007 03:48:21 -0500
+Received: from pool-96-227-106-33.phlapa.east.verizon.net
+	(pool-96-227-106-33.phlapa.east.verizon.net [96.227.106.33]) by
+	webmail.spamcop.net (Horde MIME library) with HTTP; Sat, 08 Dec 2007
+	03:48:21 -0500
+In-Reply-To: <7vtzmtwqff.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7v63z9y5k2.fsf@gitster.siamese.dyndns.org>
+User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67530>
 
-On Sat, Dec 08, 2007 at 12:05:49AM -0800, Junio C Hamano wrote:
+Quoting Junio C Hamano <gitster@pobox.com>:
 
-> >> index 225fb4d..63d50f2 100644
-> >> --- a/wt-status.h
-> >> +++ b/wt-status.h
-> >> @@ -28,6 +28,7 @@ struct wt_status {
-> >>  
-> >>  int git_status_config(const char *var, const char *value);
-> >>  int wt_status_use_color;
-> >> +int wt_status_relative_paths;
-> >>  void wt_status_prepare(struct wt_status *s);
-> >>  void wt_status_print(struct wt_status *s);
-> >
-> > Shouldn't both of these ints be marked "extern"? I'm surprised it worked
-> > at all (or perhaps the part of my brain that stores C linkage issues is
-> > rotting?).
-> 
-> Yes, rotting very much.
+> Pavel Roskin <proski@gnu.org> writes:
+>
+>> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+>> index ecded3b..409b301 100755
+>> --- a/git-cvsserver.perl
+>> +++ b/git-cvsserver.perl
+>> @@ -2427,9 +2427,6 @@ sub update
+>>      # first lets get the commit list
+>>      $ENV{GIT_DIR} = $self->{git_path};
+>>
+>> -    my $commitsha1 = `git rev-parse $self->{module}`;
+>> -    chomp $commitsha1;
+>> -
+>>      my $commitinfo = `git cat-file commit $self->{module} 2>&1`;
+>>      unless ( $commitinfo =~ /tree\s+[a-zA-Z0-9]{40}/ )
+>>      {
+>
+> Hmm.  The first rev-parse could be squelched with 2>/dev/null and then
+> you can check if it does not match [a-f0-9]{40} and die early before
+> running "cat-file commit", can't you?
 
-Nope, there's still a little grey matter left. It is not technically
-guaranteed by the standard to work, since the declaration in every
-source file which includes wt-status.h is a "tentative definition."
-Fortunately, the linker is nice enough to figure out what's going on as
-long as only one is actually initialized. This is listed in C99 Section
-J.5.11 as a "Common extension".
+Yes, my impression is that the code in question can be improved a lot.
 
-The Summit C FAQ mentions it as well:
+This is specifically the error message I'd like to see fixed in some  
+way, as it's confusing to beginners trying to check out the module for  
+the first time.
 
-  http://c-faq.com/decl/decldef.html
+$ CVS_SERVER=/home/proski/bin/git-cvsserver cvs -d \
+  :fork:/home/proski/src/qgit/.git co foo
+fatal: ambiguous argument 'foo': unknown revision or path not in the  
+working tree.
+Use '--' to separate paths from revisions
+Invalid module 'foo' at /home/proski/bin/git-cvsserver line 2437,  
+<STDIN> line 15.
+cvs [checkout aborted]: end of file from server (consult above  
+messages if any)
 
-So "extern" is better, but apparently not required for any
-linkers we care about. Note that omitting "extern" _is_ illegal in C++,
-but fortunately we _really_ don't care about those linkers. :)
+It's possible that the message about "--" makes sense and it should  
+actually be added in some spaces.
 
-But at least I'm not totally crazy.
-
--Peff
+-- 
+Regards,
+Pavel Roskin
