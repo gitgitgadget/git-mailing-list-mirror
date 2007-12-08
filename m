@@ -1,88 +1,99 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] Calculate $commitsha1 in update() only when needed
-Date: Sat, 08 Dec 2007 03:48:21 -0500
-Message-ID: <20071208034821.8icn2cflr4ksc0kw@webmail.spamcop.net>
-References: <20071208050745.29462.74137.stgit@dv.roinet.com>
-	<7vtzmtwqff.fsf@gitster.siamese.dyndns.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [OT] perhaps we want to support copied-context diff output
+Date: Sat, 8 Dec 2007 09:53:02 +0100
+Organization: glandium.org
+Message-ID: <20071208085302.GA13432@glandium.org>
+References: <alpine.LFD.0.99999.0712072357050.555@xanadu.home> <7vmyslwqdr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	DelSp=Yes	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	Jon Smirl <jonsmirl@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 08 09:48:44 2007
+X-From: git-owner@vger.kernel.org Sat Dec 08 09:53:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0vMZ-0005sn-RK
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 09:48:44 +0100
+	id 1J0vR9-0006oQ-U9
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 09:53:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754172AbXLHIsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 03:48:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754728AbXLHIsX
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 03:48:23 -0500
-Received: from c60.cesmail.net ([216.154.195.49]:62882 "EHLO c60.cesmail.net"
+	id S1757302AbXLHIxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 03:53:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754864AbXLHIxI
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 03:53:08 -0500
+Received: from smtp23.orange.fr ([193.252.22.30]:27004 "EHLO smtp23.orange.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753020AbXLHIsW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Dec 2007 03:48:22 -0500
-Received: from unknown (HELO epsilon2) ([192.168.1.60])
-  by c60.cesmail.net with ESMTP; 08 Dec 2007 03:48:21 -0500
-Received: from pool-96-227-106-33.phlapa.east.verizon.net
-	(pool-96-227-106-33.phlapa.east.verizon.net [96.227.106.33]) by
-	webmail.spamcop.net (Horde MIME library) with HTTP; Sat, 08 Dec 2007
-	03:48:21 -0500
-In-Reply-To: <7vtzmtwqff.fsf@gitster.siamese.dyndns.org>
+	id S1757325AbXLHIxG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 03:53:06 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2337.orange.fr (SMTP Server) with ESMTP id 804931C0008B
+	for <git@vger.kernel.org>; Sat,  8 Dec 2007 09:53:03 +0100 (CET)
+Received: from namakemono.glandium.org (APuteaux-153-1-79-219.w81-249.abo.wanadoo.fr [81.249.109.219])
+	by mwinf2337.orange.fr (SMTP Server) with ESMTP id 602A51C0008A;
+	Sat,  8 Dec 2007 09:53:03 +0100 (CET)
+X-ME-UUID: 20071208085303394.602A51C0008A@mwinf2337.orange.fr
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1J0vQk-0003dC-NB; Sat, 08 Dec 2007 09:53:02 +0100
 Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
+In-Reply-To: <7vmyslwqdr.fsf@gitster.siamese.dyndns.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67531>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+> Perhaps we may want to add "diff -c" (copied context) output format as
+> an option, which may be easier to read.
 
-> Pavel Roskin <proski@gnu.org> writes:
->
->> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
->> index ecded3b..409b301 100755
->> --- a/git-cvsserver.perl
->> +++ b/git-cvsserver.perl
->> @@ -2427,9 +2427,6 @@ sub update
->>      # first lets get the commit list
->>      $ENV{GIT_DIR} = $self->{git_path};
->>
->> -    my $commitsha1 = `git rev-parse $self->{module}`;
->> -    chomp $commitsha1;
->> -
->>      my $commitinfo = `git cat-file commit $self->{module} 2>&1`;
->>      unless ( $commitinfo =~ /tree\s+[a-zA-Z0-9]{40}/ )
->>      {
->
-> Hmm.  The first rev-parse could be squelched with 2>/dev/null and then
-> you can check if it does not match [a-f0-9]{40} and die early before
-> running "cat-file commit", can't you?
+Or maybe use the patience diff.
 
-Yes, my impression is that the code in question can be improved a lot.
+On a testcase I had a few months ago, patience diff would give:
+@@ -42,11 +42,10 @@
 
-This is specifically the error message I'd like to see fixed in some  
-way, as it's confusing to beginners trying to check out the module for  
-the first time.
+ include $(DEPTH)/config/autoconf.mk
 
-$ CVS_SERVER=/home/proski/bin/git-cvsserver cvs -d \
-  :fork:/home/proski/src/qgit/.git co foo
-fatal: ambiguous argument 'foo': unknown revision or path not in the  
-working tree.
-Use '--' to separate paths from revisions
-Invalid module 'foo' at /home/proski/bin/git-cvsserver line 2437,  
-<STDIN> line 15.
-cvs [checkout aborted]: end of file from server (consult above  
-messages if any)
++EXTRA_COMPONENTS = nsKillAll.js
++
+ include $(topsrcdir)/config/rules.mk
 
-It's possible that the message about "--" makes sense and it should  
-actually be added in some spaces.
+-libs::
+-       $(INSTALL) $(srcdir)/nsKillAll.js $(DIST)/bin/components
+-
+ clean::
+        rm -f $(DIST)/bin/components/nsKillAll.js
 
--- 
-Regards,
-Pavel Roskin
+Where "normal" diff would give:
+@@ -42,10 +42,9 @@
+
+ include $(DEPTH)/config/autoconf.mk
+
+-include $(topsrcdir)/config/rules.mk
++EXTRA_COMPONENTS = nsKillAll.js
+
+-libs::
+-       $(INSTALL) $(srcdir)/nsKillAll.js $(DIST)/bin/components
++include $(topsrcdir)/config/rules.mk
+
+ clean::
+        rm -f $(DIST)/bin/components/nsKillAll.js
+
+git outputs the same as the normal diff, bzr and svn seem to use the
+patience diff. Mercurial outputs almost the same as bzr and svn:
+@@ -42,10 +42,9 @@
+
+ include $(DEPTH)/config/autoconf.mk
+
++EXTRA_COMPONENTS = nsKillAll.js
++
+ include $(topsrcdir)/config/rules.mk
+-
+-libs::
+-       $(INSTALL) $(srcdir)/nsKillAll.js $(DIST)/bin/components
+
+ clean::
+        rm -f $(DIST)/bin/components/nsKillAll.js
+
+Mike
