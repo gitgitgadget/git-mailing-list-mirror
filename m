@@ -1,143 +1,65 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [OT] perhaps we want to support copied-context diff output
-Date: Sat, 08 Dec 2007 00:18:56 -0800
-Message-ID: <7vmyslwqdr.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.0.99999.0712072357050.555@xanadu.home>
+Subject: Re: [PATCH 2/3] git-help: add -w|--web option to display html man page in a browser.
+Date: Sat, 08 Dec 2007 00:28:44 -0800
+Message-ID: <7vir39wpxf.fsf@gitster.siamese.dyndns.org>
+References: <20071202060755.4d6d5ec8.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jon Smirl <jonsmirl@gmail.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Dec 08 09:19:42 2007
+Cc: git@vger.kernel.org, Theodore Tso <tytso@mit.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>, Andreas Ericsson <ae@op5.se>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Eric Wong <normalperson@yhbt.net>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sat Dec 08 09:29:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0uuU-0000CZ-7L
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 09:19:42 +0100
+	id 1J0v44-0002G4-6M
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 09:29:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755052AbXLHITV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 03:19:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754936AbXLHITV
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 03:19:21 -0500
-Received: from a-sasl-quonix.pobox.com ([208.72.237.25]:60783 "EHLO
+	id S1756015AbXLHI3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 03:29:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755978AbXLHI3P
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 03:29:15 -0500
+Received: from a-sasl-quonix.pobox.com ([208.72.237.25]:61051 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753646AbXLHITU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 03:19:20 -0500
+	with ESMTP id S1753899AbXLHI3P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 03:29:15 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 36497425F;
-	Sat,  8 Dec 2007 03:19:14 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 01DCB431D;
+	Sat,  8 Dec 2007 03:29:03 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DA267425E;
-	Sat,  8 Dec 2007 03:19:07 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 28930431C;
+	Sat,  8 Dec 2007 03:28:52 -0500 (EST)
+In-Reply-To: <20071202060755.4d6d5ec8.chriscool@tuxfamily.org> (Christian
+	Couder's message of "Sun, 2 Dec 2007 06:07:55 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67528>
 
-The patch looks correct, but I have an offtopic comment that does not
-have anything to do with the problem being discussed right now.
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-Nicolas Pitre <nico@cam.org> writes:
-
-> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-> index 4f44658..5002cc6 100644
-> --- a/builtin-pack-objects.c
-> +++ b/builtin-pack-objects.c
-> @@ -1245,28 +1245,37 @@ static void get_object_details(void)
-> ...
->  static int type_size_sort(const void *_a, const void *_b)
->  {
->  	const struct object_entry *a = *(struct object_entry **)_a;
->  	const struct object_entry *b = *(struct object_entry **)_b;
->  
-> -	if (a->type < b->type)
-> -		return -1;
->  	if (a->type > b->type)
-> -		return 1;
-> -	if (a->hash < b->hash)
->  		return -1;
-> -	if (a->hash > b->hash)
-> +	if (a->type < b->type)
->  		return 1;
-> -	if (a->preferred_base < b->preferred_base)
-> +	if (a->hash > b->hash)
->  		return -1;
-> -	if (a->preferred_base > b->preferred_base)
-> +	if (a->hash < b->hash)
->  		return 1;
-> -	if (a->size < b->size)
-> +	if (a->preferred_base > b->preferred_base)
->  		return -1;
-> +	if (a->preferred_base < b->preferred_base)
-> +		return 1;
->  	if (a->size > b->size)
-> +		return -1;
-> +	if (a->size < b->size)
->  		return 1;
-> -	return a > b ? -1 : (a < b);  /* newest last */
-> +	return a < b ? -1 : (a > b);  /* newest first */
+> diff --git a/help.c b/help.c
+> index 0f1cb71..ecc8c66 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -265,6 +265,12 @@ static void show_info_page(const char *git_cmd)
+>  	execlp("info", "info", page, NULL);
 >  }
+>  
+> +static void show_html_page(const char *git_cmd)
+> +{
+> +	const char *page = cmd_to_page(git_cmd);
+> +	execlp("git-browse-help", "git-browse-help", page, NULL);
+> +}
+> +
 
-Before being able to understand what was going on, I had to shuffle the
-above patch by duplicating the context lines, prefix them with '-' and
-then '+', and grouping preimage lines and postimage lines together, to
-come up with this patch:
-
- static int type_size_sort(const void *_a, const void *_b)
- {
- 	const struct object_entry *a = *(struct object_entry **)_a;
- 	const struct object_entry *b = *(struct object_entry **)_b;
- 
--	if (a->type < b->type)
--		return -1;
--	if (a->type > b->type)
--		return 1;
--	if (a->hash < b->hash)
--		return -1;
--	if (a->hash > b->hash)
--		return 1;
--	if (a->preferred_base < b->preferred_base)
--		return -1;
--	if (a->preferred_base > b->preferred_base)
--		return 1;
--	if (a->size < b->size)
--		return -1;
--	if (a->size > b->size)
--		return 1;
--	return a > b ? -1 : (a < b);  /* newest last */
-+	if (a->type > b->type)
-+		return -1;
-+	if (a->type < b->type)
-+		return 1;
-+	if (a->hash > b->hash)
-+		return -1;
-+	if (a->hash < b->hash)
-+		return 1;
-+	if (a->preferred_base > b->preferred_base)
-+		return -1;
-+	if (a->preferred_base < b->preferred_base)
-+		return 1;
-+	if (a->size > b->size)
-+		return -1;
-+	if (a->size < b->size)
-+		return 1;
-+	return a < b ? -1 : (a > b);  /* newest first */
- }
-
-Perhaps we may want to add "diff -c" (copied context) output format as
-an option, which may be easier to read.
-
-A possible alternative with much less impact to our toolset would be to
-stay with unified context format but employ some heuristics (e.g. "a
-hunk has many small context lines between preimage and postimage pairs")
-and rewrite the diff output automatically like what I did by hand above.
-
-The problematic region has 26 lines, among which 9 lines are deleted
-material and 9 lines are added material, and it contains 8 isolated
-groups of unchanged material, one line each.  A heuristics to notice
-such excessively large number of groups of unchanged lines compared to
-the size of the hunk itself would be reasonably easy to implement.
+This should be execl_git_cmd() to honor GIT_TRACE and to help transition
+to bindir != gitexecdir layout, I think.
