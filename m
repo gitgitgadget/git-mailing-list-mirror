@@ -1,70 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: dmalloc and leaks in git
-Date: Sat, 8 Dec 2007 21:19:29 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712082118210.27959@racer.site>
-References: <9e4733910712081253t7cd43f87o6001f32fddc01565@mail.gmail.com> 
- <Pine.LNX.4.64.0712082058280.27959@racer.site>
- <9e4733910712081302h64d9b062kad02c4f13818d59f@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Removing redundant packs
+Date: Sat, 08 Dec 2007 13:37:44 -0800
+Message-ID: <7vsl2cvpef.fsf@gitster.siamese.dyndns.org>
+References: <20071208125050.GA17478@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 08 22:20:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Sat Dec 08 22:38:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J176E-0004P2-Px
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 22:20:39 +0100
+	id 1J17NM-0000vT-PR
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 22:38:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751258AbXLHVUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 16:20:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751652AbXLHVUI
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 16:20:08 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45553 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751012AbXLHVUG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 16:20:06 -0500
-Received: (qmail invoked by alias); 08 Dec 2007 21:20:04 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp034) with SMTP; 08 Dec 2007 22:20:04 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+POPBQM4ePGOjMU9P+PEkzRvptVRiKq1WdvbyTl0
-	JONeCNYgZdC4s9
-X-X-Sender: gene099@racer.site
-In-Reply-To: <9e4733910712081302h64d9b062kad02c4f13818d59f@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1752054AbXLHVh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 16:37:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751899AbXLHVh4
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 16:37:56 -0500
+Received: from a-sasl-quonix.pobox.com ([208.72.237.25]:55487 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751138AbXLHVhz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 16:37:55 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E4B404F4C;
+	Sat,  8 Dec 2007 16:37:50 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A3EA24F4B;
+	Sat,  8 Dec 2007 16:37:46 -0500 (EST)
+In-Reply-To: <20071208125050.GA17478@machine.or.cz> (Petr Baudis's message of
+	"Sat, 8 Dec 2007 13:50:50 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67572>
 
-Hi,
+Petr Baudis <pasky@ucw.cz> writes:
 
-On Sat, 8 Dec 2007, Jon Smirl wrote:
+> At the same time, I have to be careful not to prune all unreferenced
+> objects since they can be referenced in forks.
 
-> On 12/8/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Hi,
-> >
-> > On Sat, 8 Dec 2007, Jon Smirl wrote:
-> >
-> > > It is very easy to use dmalloc with git. Follow the instructions here,
-> > > http://dmalloc.com/docs/latest/online/dmalloc_4.html
-> > >
-> > > But using dmalloc shows a pervasive problem, none of the git commands
-> > > are cleaning up after themselves. For example I ran a simple command,
-> > > git-status, and thousands of objects were not freed.
-> >
-> > Known problem.  Goes by the name of "libification" on this list.
-> 
-> I tried using dmalloc to find the leak in repack but it is impossible
-> to sort out the accidental leaks from the on-purpose ones. On exit
-> there were millions of unfreed objects coming from all over the place.
+How about...
 
-This might be a starting point:
+ (1) In each repository, run "repack -a -d".  That would ensure that
+     everybody has the necessary objects that they themselves need.  By
+     doing this for a repository that borrows from another makes sure
+     pruning the latter would not break the former, so you start from
+     leaves and move on to the repositories they borrow from.
 
-http://repo.or.cz/w/git/dscho.git?a=commitdiff;h=2083418c5010f04fbcd6e1f67de522ad6acd863d
-
-Hth,
-Dscho
+ (2) In each repository, run "repack -a -l -d".  By doing this for a
+     repository that borrows from another repacks the former without
+     objects it borrows from the latter, so the former repository will
+     retain what it needs but will borrow what are common from the
+     latter, so you start from the repository that does not borrow from
+     anybody else, and move on to the repositories that borrow from the
+     one you already run this step.
