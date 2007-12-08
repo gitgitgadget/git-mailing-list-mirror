@@ -1,148 +1,76 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 1/2] pack-objects: reverse the delta search sort list
-Date: Sat, 08 Dec 2007 00:00:08 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0712072357050.555@xanadu.home>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Something is broken in repack
+Date: Sat, 8 Dec 2007 00:01:13 -0500
+Message-ID: <9e4733910712072101k4583c0afsea368253fe1cf706@mail.gmail.com>
+References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
+	 <alpine.LFD.0.99999.0712072032410.555@xanadu.home>
+	 <9e4733910712071804ja0a49e1m1eb209cb942bc36f@mail.gmail.com>
+	 <alpine.LFD.0.99999.0712072124160.555@xanadu.home>
+	 <9e4733910712071929h17a7d88dv37686ec7cd858c63@mail.gmail.com>
+	 <20071208033722.GA27776@old.davidb.org>
+	 <9e4733910712072022na3369caob48d4b26a56224ea@mail.gmail.com>
+	 <alpine.LFD.0.99999.0712072328420.555@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Jon Smirl <jonsmirl@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 08 06:00:48 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "David Brown" <git@davidb.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sat Dec 08 06:01:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0rnz-0006F1-92
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 06:00:47 +0100
+	id 1J0ron-0006P1-Ol
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 06:01:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751009AbXLHFAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 00:00:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750991AbXLHFAM
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 00:00:12 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:30769 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750949AbXLHFAK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 00:00:10 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSP00GVUSK8VC70@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 08 Dec 2007 00:00:09 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1751123AbXLHFBQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 00:01:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751001AbXLHFBQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 00:01:16 -0500
+Received: from ro-out-1112.google.com ([72.14.202.179]:8781 "EHLO
+	ro-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750704AbXLHFBP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 00:01:15 -0500
+Received: by ro-out-1112.google.com with SMTP id p4so7439674roc
+        for <git@vger.kernel.org>; Fri, 07 Dec 2007 21:01:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=7DV4D5UW1PXHQD0APspyPFf6+IuhcA6wsIBKu/K6G5k=;
+        b=PuGQh8a9OYkPHCNTsnA0gVzgKJ7b/RAfco7pHpCzn+KMvnHjIZIdhgrsx9YcmR8NFSP/IOJrD3gnGQccY1pY147IV57hGvYrzvAP4qIWCFnmIzku1KHFPZaKI2pT6APsV8tJgQUA3uOeegGQS7TKaNUPYYzb1E4qla9U31vwwvg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=uncOQoxHNn2l4hLjRfFi4sHA/9j3rGyk4dWb3ZxwKO2Z0o+bLuOfth0l7fX5aBexxExNDCIoCkwPWavS7jvUYVMl58tPo57T2RsfpB6wsxPZN+wI/B3XNQ3j0HC0T/osapgbyAudmfeZNUEEglfxqm1NVsO/KFXzWby86DOz07Y=
+Received: by 10.114.126.1 with SMTP id y1mr2874604wac.1197090074155;
+        Fri, 07 Dec 2007 21:01:14 -0800 (PST)
+Received: by 10.114.208.17 with HTTP; Fri, 7 Dec 2007 21:01:13 -0800 (PST)
+In-Reply-To: <alpine.LFD.0.99999.0712072328420.555@xanadu.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67512>
 
+On 12/7/07, Nicolas Pitre <nico@cam.org> wrote:
+> On Fri, 7 Dec 2007, Jon Smirl wrote:
+>
+> > Does the gcc repo contain some giant objects? Why wasn't the memory
+> > freed after their chain was processed?
+>
+> It should be.
+>
+> > Most of the last 10% is being done on a single CPU. There must be a
+> > chain of giant objects that is unbalancing everything.
+>
+> I'm about to send a patch to fix the thread balancing for real this
+> time.
 
-It is currently sorted and then walked backward.  Not only this doesn't
-feel natural for my poor brain, but it would make the next patch less
-obvious as well.
+Something is really broken in the last 5% of that repo. I have been
+processing at 97% for 30 minutes without moving to 98%.
 
-So reverse the sort order, and reverse the list walking direction,
-which effectively produce the exact same end result as before.
-
-Also bring the relevant comment nearer the actual code and adjust it
-accordingly, with minor additional clarifications.
-
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
- builtin-pack-objects.c |   41 +++++++++++++++++++++--------------------
- 1 files changed, 21 insertions(+), 20 deletions(-)
-
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 4f44658..5002cc6 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -1245,28 +1245,37 @@ static void get_object_details(void)
- 	free(sorted_by_offset);
- }
- 
-+/*
-+ * We search for deltas in a list sorted by type, by filename hash, and then
-+ * by size, so that we see progressively smaller and smaller files.
-+ * That's because we prefer deltas to be from the bigger file
-+ * to the smaller -- deletes are potentially cheaper, but perhaps
-+ * more importantly, the bigger file is likely the more recent
-+ * one.  The deepest deltas are therefore the oldest objects which are
-+ * less susceptible to be accessed often.
-+ */
- static int type_size_sort(const void *_a, const void *_b)
- {
- 	const struct object_entry *a = *(struct object_entry **)_a;
- 	const struct object_entry *b = *(struct object_entry **)_b;
- 
--	if (a->type < b->type)
--		return -1;
- 	if (a->type > b->type)
--		return 1;
--	if (a->hash < b->hash)
- 		return -1;
--	if (a->hash > b->hash)
-+	if (a->type < b->type)
- 		return 1;
--	if (a->preferred_base < b->preferred_base)
-+	if (a->hash > b->hash)
- 		return -1;
--	if (a->preferred_base > b->preferred_base)
-+	if (a->hash < b->hash)
- 		return 1;
--	if (a->size < b->size)
-+	if (a->preferred_base > b->preferred_base)
- 		return -1;
-+	if (a->preferred_base < b->preferred_base)
-+		return 1;
- 	if (a->size > b->size)
-+		return -1;
-+	if (a->size < b->size)
- 		return 1;
--	return a > b ? -1 : (a < b);  /* newest last */
-+	return a < b ? -1 : (a > b);  /* newest first */
- }
- 
- struct unpacked {
-@@ -1317,14 +1326,6 @@ static pthread_mutex_t progress_mutex = PTHREAD_MUTEX_INITIALIZER;
- 
- #endif
- 
--/*
-- * We search for deltas _backwards_ in a list sorted by type and
-- * by size, so that we see progressively smaller and smaller files.
-- * That's because we prefer deltas to be from the bigger file
-- * to the smaller - deletes are potentially cheaper, but perhaps
-- * more importantly, the bigger file is likely the more recent
-- * one.
-- */
- static int try_delta(struct unpacked *trg, struct unpacked *src,
- 		     unsigned max_depth, unsigned long *mem_usage)
- {
-@@ -1481,7 +1482,7 @@ static unsigned long free_unpacked(struct unpacked *n)
- static void find_deltas(struct object_entry **list, unsigned list_size,
- 			int window, int depth, unsigned *processed)
- {
--	uint32_t i = list_size, idx = 0, count = 0;
-+	uint32_t i = 0, idx = 0, count = 0;
- 	unsigned int array_size = window * sizeof(struct unpacked);
- 	struct unpacked *array;
- 	unsigned long mem_usage = 0;
-@@ -1490,7 +1491,7 @@ static void find_deltas(struct object_entry **list, unsigned list_size,
- 	memset(array, 0, array_size);
- 
- 	do {
--		struct object_entry *entry = list[--i];
-+		struct object_entry *entry = list[i++];
- 		struct unpacked *n = array + idx;
- 		int j, max_depth, best_base = -1;
- 
-@@ -1575,7 +1576,7 @@ static void find_deltas(struct object_entry **list, unsigned list_size,
- 			count++;
- 		if (idx >= window)
- 			idx = 0;
--	} while (i > 0);
-+	} while (i < list_size);
- 
- 	for (i = 0; i < window; ++i) {
- 		free_delta_index(array[i].index);
 -- 
-1.5.3.7.2184.ge321d-dirty
+Jon Smirl
+jonsmirl@gmail.com
