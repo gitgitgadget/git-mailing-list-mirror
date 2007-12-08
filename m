@@ -1,89 +1,69 @@
-From: "J.C. Pizarro" <jcpiza@gmail.com>
-Subject: Re: Git and GCC
-Date: Sat, 8 Dec 2007 03:21:40 +0100
-Message-ID: <998d0e4a0712071821o520a75c4lbcaae92256071f48@mail.gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Something is broken in repack
+Date: Fri, 7 Dec 2007 21:22:21 -0500
+Message-ID: <9e4733910712071822w5a7d5bb5k5d099825b333acda@mail.gmail.com>
+References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
+	 <alpine.LFD.0.99999.0712072032410.555@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"David Miller" <davem@davemloft.net>, gcc@gcc.gnu.org,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 08 03:22:05 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sat Dec 08 03:23:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0pKO-0002nq-9W
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 03:22:04 +0100
+	id 1J0pLR-000311-RP
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 03:23:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753502AbXLHCVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 21:21:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753368AbXLHCVn
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 21:21:43 -0500
-Received: from wr-out-0506.google.com ([64.233.184.233]:57219 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752116AbXLHCVm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 21:21:42 -0500
-Received: by wr-out-0506.google.com with SMTP id c49so750897wra
-        for <git@vger.kernel.org>; Fri, 07 Dec 2007 18:21:41 -0800 (PST)
+	id S1753615AbXLHCWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 21:22:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752892AbXLHCWZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 21:22:25 -0500
+Received: from ro-out-1112.google.com ([72.14.202.183]:37253 "EHLO
+	ro-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753368AbXLHCWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 21:22:24 -0500
+Received: by ro-out-1112.google.com with SMTP id p4so7395338roc
+        for <git@vger.kernel.org>; Fri, 07 Dec 2007 18:22:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=PZT/ph6TQAO1aaJ/mJsyL3syWihJc/oJZ1uC+mLD7Cw=;
-        b=WhSQAqzrYf0eK22yGXMHXbVkUj4udSO1dva3DHOnucW9rkeNIInTtV9eX0zGGjggmyh0OJpHKQAp8yd6lIyCyYNQ83lgai6/wOzaHhHQIhbQYQeV9Trzq/ZtSiAxSZOQWVrHY8FtX/0KlYb/zgwtfU/hXR4bcFS9/6Su8F5rQzQ=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=gmh9e3kXul1j/bC3Zr7p6k1vKKnBvv+Jz3LMup6N/BM=;
+        b=vBUAP2CYZaMVq8BIsoia2GFRHIKFU956maCbK4vqFNrzA6T0Alrnj8TJwuLxRrh2pu7a27Ly5iZ48t8EhLcX7pmjJuvcxkKKDeU75FwMiWr2b/6/4ajLoIdGeqjArJLQV4JhUcnHhYn+/kx7qLoZDNju3TdyDBiwitX3tqoEwf4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=xrw1sJKFoB9RhEkaEdCZcoBYFc2UctRB5Fyi0UEOu6QEY7ZamXTk0ibuGsuewPGfwoefJJ/0eMlMf+rY501Md891rXGbVLofR3SpxC1Ud6uuapjbqMQdQdlOMzxJvVSbascNAmkotn0f1ZSn967U/xRWymWUr4rHFLrXL/Np7JA=
-Received: by 10.70.49.4 with SMTP id w4mr874283wxw.1197080500623;
-        Fri, 07 Dec 2007 18:21:40 -0800 (PST)
-Received: by 10.70.54.17 with HTTP; Fri, 7 Dec 2007 18:21:40 -0800 (PST)
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZvcsRstyeY4td6KMtDnrMReaCbqv6ggl13tWhvZZaeZ/S5ZWBS3CByORNHeGD71esTqJwOvI1B2dIW9wWkljdMykKTAX41L2He6beFofzTqK7CqFpsbhDQUASfywqCqHGxKn++Ln3fCHxy/E4HVscVqLcrMHpgHFKoeyqkwKnvk=
+Received: by 10.114.171.1 with SMTP id t1mr3580836wae.1197080541538;
+        Fri, 07 Dec 2007 18:22:21 -0800 (PST)
+Received: by 10.114.208.17 with HTTP; Fri, 7 Dec 2007 18:22:21 -0800 (PST)
+In-Reply-To: <alpine.LFD.0.99999.0712072032410.555@xanadu.home>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67498>
 
-On 2007/12/07, "Linus Torvalds" <torvalds@linux-foundation.org> wrote:
-> On Fri, 7 Dec 2007, David Miller wrote:
-> >
-> > Also I could end up being performance limited by SHA, it's not very
-> > well tuned on Sparc.  It's been on my TODO list to code up the crypto
-> > unit support for Niagara-2 in the kernel, then work with Herbert Xu on
-> > the userland interfaces to take advantage of that in things like
-> > libssl.  Even a better C/asm version would probably improve GIT
-> > performance a bit.
->
-> I doubt yu can use the hardware support. Kernel-only hw support is
-> inherently broken for any sane user-space usage, the setup costs are just
-> way way too high. To be useful, crypto engines need to support direct user
-> space access (ie a regular instruction, with all state being held in
-> normal registers that get saved/restored by the kernel).
->
-> > Is SHA a significant portion of the compute during these repacks?
-> > I should run oprofile...
->
-> SHA1 is almost totally insignificant on x86. It hardly shows up. But we
-> have a good optimized version there.
+On 12/7/07, Nicolas Pitre <nico@cam.org> wrote:
+> So the problem seems to be related to the pack access code and not the
+> repack code.  And it must have something to do with the number of deltas
+> being replayed.  And because the repack is attempting delta compression
+> roughly from newest to oldest, and because old objects are typically in
+> a deeper delta chain, then this might explain the logarithmic slowdown.
 
-If SHA1 is slow then why dont he contribute adding Haval160 (3 rounds)
-that it's faster than SHA1? And to optimize still more it with SIMD instructions
-in kernelspace and userland.
+What could be wrongly allocating 4GB of memory? Figure that out and
+you should have your answer. The slow down may be coming from having
+to search through more and more objects in memory.
 
->
-> zlib tends to be a lot more noticeable (especially the uncompression: it
-> may be faster than compression, but it's done _so_ much more that it
-> totally dominates).
->
-> 			Linus
+Memory consumption seem to be correlated to the depth of the delta
+chain being accessed. It blows up tremendously right at the end. It
+may even be a square of the length of the chain length. For the normal
+default case the square didn't hurt, but 250*250 = 62,500 which would
+eat a huge amount of memory.
 
-It's better
-
-1.   "Don't compress this repo but compact this uncompressed repo
-      using minimal spanning forest and deltas"
-2.   "After, compress this whole repo with LZMA (e.g. 48MiB) from 7zip before
-      burning it to DVD for backup reasons or before replicating it to
-internet".
-
-   J.C.Pizarro "the noiser"
+-- 
+Jon Smirl
+jonsmirl@gmail.com
