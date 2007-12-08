@@ -1,97 +1,332 @@
 From: Harvey Harrison <harvey.harrison@gmail.com>
 Subject: Re: Something is broken in repack
-Date: Fri, 07 Dec 2007 19:44:16 -0800
-Message-ID: <1197085456.22471.42.camel@brick>
+Date: Fri, 07 Dec 2007 19:48:20 -0800
+Message-ID: <1197085700.22471.47.camel@brick>
 References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
 	 <alpine.LFD.0.99999.0712072032410.555@xanadu.home>
+	 <9e4733910712071804ja0a49e1m1eb209cb942bc36f@mail.gmail.com>
+	 <alpine.LFD.0.99999.0712072124160.555@xanadu.home>
+	 <9e4733910712071929h17a7d88dv37686ec7cd858c63@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Jon Smirl <jonsmirl@gmail.com>,
+Cc: Nicolas Pitre <nico@cam.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Dec 08 04:44:40 2007
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 08 04:48:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0qcJ-0000oY-Gs
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 04:44:39 +0100
+	id 1J0qgF-0001TD-9U
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 04:48:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751816AbXLHDoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Dec 2007 22:44:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751591AbXLHDoS
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 22:44:18 -0500
-Received: from rv-out-0910.google.com ([209.85.198.189]:41675 "EHLO
+	id S1752626AbXLHDsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Dec 2007 22:48:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752482AbXLHDsW
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Dec 2007 22:48:22 -0500
+Received: from rv-out-0910.google.com ([209.85.198.186]:46078 "EHLO
 	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751462AbXLHDoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Dec 2007 22:44:17 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so929243rvb
-        for <git@vger.kernel.org>; Fri, 07 Dec 2007 19:44:17 -0800 (PST)
+	with ESMTP id S1752436AbXLHDsV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Dec 2007 22:48:21 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so930075rvb
+        for <git@vger.kernel.org>; Fri, 07 Dec 2007 19:48:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:subject:from:to:cc:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        bh=H1DcuePKLiGILkJpTL4y3FH0mdM8GCWTuJP6cbZ4tR8=;
-        b=G5dkjGwYdL8J8j68PUGdi3qbpkQhgOOlc0kuTEenVFPYyfb5f3Ne5v18Wx/XTZzRozDHU5tyEcKr5nRfwRTMVd+oBAU2vHVm0vvYzBO1KdvkxMBs2psTRnlue7uQ/bkzvtKHJGkqy6CeykSH+PIXIMbniwvhFCJfW5vSGxUVHl8=
+        bh=CFjzzl0s/UL4RMd0OZcVCFNPLvRYjqyYwD71MpI4JA0=;
+        b=shTWMoKbXcDqNCE33YmUUnNxBBM7+zbOKVo5YtUrPiMCoiC1odKdj9BcFkwRNhifrMDmWTzPH3LZQOjoH1qtdxOwKHI9hOE7H5cTNJ5lvGSajIMsTh9L4Stm31vHprCREnRUjiblT/mGih7+d2tlcEd6pbsazNV5PDv90zF2Uw4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=subject:from:to:cc:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=Cl6I2Fzp3LgezmslXynyAbMJwc6KXFoFaO6FcuM8Pf7z5vJ/4OSogj4M1hjhrXuUUY9ZlFiUQbsYh9Dn/HleQycyb5vBa/FXtfXflc37Fcld9Ecuh008jifiWZAb5YloXtEUKhQ17DQhd22t/2mAw4kAW71UrEKfByRp708IdtY=
-Received: by 10.141.198.8 with SMTP id a8mr401471rvq.1197085457033;
-        Fri, 07 Dec 2007 19:44:17 -0800 (PST)
+        b=kq9fEwlii68bnlOfRa/LeHOjAGj07wI+sfh8RxDVjoCIRoblqhFFzOh8zayS1TR3WekXwd/byrCKwxPZgxWVHIRSsFa+3nCXrSpQMWEDezIzZp6XuDE2N09kQuR7ci2zbTjQm8j7wqMqneGtraqhySbzcJLBfGZmsOVVGHG5bUU=
+Received: by 10.141.79.12 with SMTP id g12mr3114542rvl.1197085700988;
+        Fri, 07 Dec 2007 19:48:20 -0800 (PST)
 Received: from ?192.168.1.124? ( [216.19.190.48])
-        by mx.google.com with ESMTPS id f42sm893849rvb.2007.12.07.19.44.16
+        by mx.google.com with ESMTPS id f21sm911898rvb.2007.12.07.19.48.19
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 07 Dec 2007 19:44:16 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.99999.0712072032410.555@xanadu.home>
+        Fri, 07 Dec 2007 19:48:20 -0800 (PST)
+In-Reply-To: <9e4733910712071929h17a7d88dv37686ec7cd858c63@mail.gmail.com>
 X-Mailer: Evolution 2.12.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67505>
 
-
-On Fri, 2007-12-07 at 20:46 -0500, Nicolas Pitre wrote:
-> On Fri, 7 Dec 2007, Jon Smirl wrote:
-> > And the 330MB gcc pack for input
-> >  git repack -a -d -f  --depth=250 --window=250
-> > 
-> > complete seconds RAM
-> > 10%  47 1GB
-> > 20%  29 1Gb
-> > 30%  24 1Gb
-> > 40%  18 1GB
-> > 50%  110 1.2GB
-> > 60%  85 1.4GB
-> > 70%  195 1.5GB
-> > 80%  186 2.5GB
-> > 90%  489 3.8GB
-> > 95%  800 4.8GB
-> > I killed it because it started swapping
-> > 
-> > The mmaps are only about 400MB in this case.
-> > At the end the git process had 4.4GB of physical RAM allocated.
-> > Starting with a 2GB pack of the same data my process size only grew to
-> > 3GB with 2GB of mmaps.
+On Fri, 2007-12-07 at 22:29 -0500, Jon Smirl wrote:
+> The kernel repo has the same problem but not nearly as bad.
 > 
-> Which is quite reasonable, even if the same issue might still be there.
+> Starting from a default pack
+>  git repack -a -d -f  --depth=1000 --window=1000
+> Uses 1GB of physical memory
 > 
-> So the problem seems to be related to the pack access code and not the 
-> repack code.  And it must have something to do with the number of deltas 
-> being replayed.  And because the repack is attempting delta compression 
-> roughly from newest to oldest, and because old objects are typically in 
-> a deeper delta chain, then this might explain the logarithmic slowdown.
+> Now do the command again.
+>  git repack -a -d -f  --depth=1000 --window=1000
+> Uses 1.3GB of physical memory
 > 
-> So something must be wrong with the delta cache in sha1_file.c somehow.
+> I suspect the gcc repo has much longer revision chains than the kernel
+> one since the kernel repo is only a few years old. The Mozilla repo
+> contained revision chains with over 2,000 revisions. Longer revision
+> chains result in longer delta chains.
 
-All I have is a qualitative observation, but during the process of
-creating the pack, there was a _huge_ slowdown between 10-15%
-(hundreds/dozens per second to single object per second and a
-corresponding increase in process size).  Didn't keep any numbers
-at the time, but it was noticable.
+I sent out a partial delta breakdown for the gcc repo earlier, here's
+the whole list.
 
-I wonder if there are a bunch of huge objects somewhere in gcc's
-history?
+breakdown of the gcc packfile:
+
+Total objects
+1017922
+
+ChainLength	Objects	Cumulative
+1:	103817	103817
+2:	67332	171149
+3:	57520	228669
+4:	52570	281239
+5:	43910	325149
+6:	37520	362669
+7:	35248	397917
+8:	29819	427736
+9:	27619	455355
+10:	22656	478011
+11:	21073	499084
+12:	18738	517822
+13:	16674	534496
+14:	14882	549378
+15:	14424	563802
+16:	12765	576567
+17:	11662	588229
+18:	11845	600074
+19:	11694	611768
+20:	9625	621393
+21:	9031	630424
+22:	8437	638861
+23:	8217	647078
+24:	7927	655005
+25:	7955	662960
+26:	7092	670052
+27:	7004	677056
+28:	6724	683780
+29:	6626	690406
+30:	5875	696281
+31:	5970	702251
+32:	5726	707977
+33:	6025	714002
+34:	5354	719356
+35:	6413	725769
+36:	4933	730702
+37:	4888	735590
+38:	4561	740151
+39:	4366	744517
+40:	4166	748683
+41:	4531	753214
+42:	4029	757243
+43:	3701	760944
+44:	3647	764591
+45:	3553	768144
+46:	3509	771653
+47:	3473	775126
+48:	3442	778568
+49:	3379	781947
+50:	3395	785342
+51:	3315	788657
+52:	3168	791825
+53:	3345	795170
+54:	3166	798336
+55:	3237	801573
+56:	2795	804368
+57:	2768	807136
+58:	2666	809802
+59:	2723	812525
+60:	2547	815072
+61:	2565	817637
+62:	2622	820259
+63:	2521	822780
+64:	2492	825272
+65:	2529	827801
+66:	2566	830367
+67:	2685	833052
+68:	2458	835510
+69:	2457	837967
+70:	2440	840407
+71:	2410	842817
+72:	2337	845154
+73:	2301	847455
+74:	2201	849656
+75:	2127	851783
+76:	2256	854039
+77:	2038	856077
+78:	1925	858002
+79:	1965	859967
+80:	1929	861896
+81:	1890	863786
+82:	1873	865659
+83:	1964	867623
+84:	1898	869521
+85:	1839	871360
+86:	1933	873293
+87:	1876	875169
+88:	1851	877020
+89:	1789	878809
+90:	1790	880599
+91:	1804	882403
+92:	1696	884099
+93:	1863	885962
+94:	1889	887851
+95:	1766	889617
+96:	1731	891348
+97:	1775	893123
+98:	1750	894873
+99:	1767	896640
+100:	1644	898284
+101:	1642	899926
+102:	1489	901415
+103:	1532	902947
+104:	1564	904511
+105:	1477	905988
+106:	1461	907449
+107:	1383	908832
+108:	1422	910254
+109:	1316	911570
+110:	1480	913050
+111:	1329	914379
+112:	1375	915754
+113:	1292	917046
+114:	1224	918270
+115:	1123	919393
+116:	1216	920609
+117:	1252	921861
+118:	1252	923113
+119:	1346	924459
+120:	1320	925779
+121:	1277	927056
+122:	1234	928290
+123:	1200	929490
+124:	1255	930745
+125:	1206	931951
+126:	1155	933106
+127:	1246	934352
+128:	1226	935578
+129:	1194	936772
+130:	1268	938040
+131:	1334	939374
+132:	1146	940520
+133:	1220	941740
+134:	1055	942795
+135:	1110	943905
+136:	1095	945000
+137:	1294	946294
+138:	1204	947498
+139:	1218	948716
+140:	1101	949817
+141:	993	950810
+142:	975	951785
+143:	1014	952799
+144:	968	953767
+145:	957	954724
+146:	1069	955793
+147:	996	956789
+148:	967	957756
+149:	964	958720
+150:	954	959674
+151:	949	960623
+152:	1001	961624
+153:	1042	962666
+154:	1057	963723
+155:	948	964671
+156:	966	965637
+157:	833	966470
+158:	959	967429
+159:	907	968336
+160:	854	969190
+161:	847	970037
+162:	836	970873
+163:	769	971642
+164:	747	972389
+165:	755	973144
+166:	707	973851
+167:	774	974625
+168:	777	975402
+169:	783	976185
+170:	707	976892
+171:	738	977630
+172:	775	978405
+173:	781	979186
+174:	698	979884
+175:	801	980685
+176:	712	981397
+177:	679	982076
+178:	775	982851
+179:	696	983547
+180:	760	984307
+181:	740	985047
+182:	752	985799
+183:	704	986503
+184:	683	987186
+185:	690	987876
+186:	741	988617
+187:	642	989259
+188:	672	989931
+189:	679	990610
+190:	691	991301
+191:	648	991949
+192:	703	992652
+193:	675	993327
+194:	687	994014
+195:	625	994639
+196:	607	995246
+197:	583	995829
+198:	632	996461
+199:	540	997001
+200:	652	997653
+201:	600	998253
+202:	628	998881
+203:	624	999505
+204:	582	1000087
+205:	548	1000635
+206:	520	1001155
+207:	648	1001803
+208:	556	1002359
+209:	563	1002922
+210:	508	1003430
+211:	570	1004000
+212:	530	1004530
+213:	575	1005105
+214:	527	1005632
+215:	521	1006153
+216:	515	1006668
+217:	513	1007181
+218:	460	1007641
+219:	491	1008132
+220:	474	1008606
+221:	471	1009077
+222:	482	1009559
+223:	485	1010044
+224:	439	1010483
+225:	385	1010868
+226:	385	1011253
+227:	403	1011656
+228:	380	1012036
+229:	376	1012412
+230:	377	1012789
+231:	415	1013204
+232:	394	1013598
+233:	362	1013960
+234:	334	1014294
+235:	366	1014660
+236:	317	1014977
+237:	362	1015339
+238:	343	1015682
+239:	392	1016074
+240:	317	1016391
+241:	305	1016696
+242:	319	1017015
+243:	276	1017291
+244:	247	1017538
+245:	179	1017717
+246:	111	1017828
+247:	61	1017889
+248:	27	1017916
+249:	6	1017922
 
 Harvey
