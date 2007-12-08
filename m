@@ -1,76 +1,268 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Something is broken in repack
-Date: Sat, 8 Dec 2007 00:01:13 -0500
-Message-ID: <9e4733910712072101k4583c0afsea368253fe1cf706@mail.gmail.com>
-References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
-	 <alpine.LFD.0.99999.0712072032410.555@xanadu.home>
-	 <9e4733910712071804ja0a49e1m1eb209cb942bc36f@mail.gmail.com>
-	 <alpine.LFD.0.99999.0712072124160.555@xanadu.home>
-	 <9e4733910712071929h17a7d88dv37686ec7cd858c63@mail.gmail.com>
-	 <20071208033722.GA27776@old.davidb.org>
-	 <9e4733910712072022na3369caob48d4b26a56224ea@mail.gmail.com>
-	 <alpine.LFD.0.99999.0712072328420.555@xanadu.home>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH 2/2] pack-objects: fix threaded load balancing
+Date: Sat, 08 Dec 2007 00:03:17 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0712080000120.555@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "David Brown" <git@davidb.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Dec 08 06:01:46 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Jon Smirl <jonsmirl@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 08 06:03:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0ron-0006P1-Ol
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 06:01:38 +0100
+	id 1J0rqm-0006o1-Q0
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 06:03:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751123AbXLHFBQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 00:01:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751001AbXLHFBQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 00:01:16 -0500
-Received: from ro-out-1112.google.com ([72.14.202.179]:8781 "EHLO
-	ro-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750704AbXLHFBP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 00:01:15 -0500
-Received: by ro-out-1112.google.com with SMTP id p4so7439674roc
-        for <git@vger.kernel.org>; Fri, 07 Dec 2007 21:01:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=7DV4D5UW1PXHQD0APspyPFf6+IuhcA6wsIBKu/K6G5k=;
-        b=PuGQh8a9OYkPHCNTsnA0gVzgKJ7b/RAfco7pHpCzn+KMvnHjIZIdhgrsx9YcmR8NFSP/IOJrD3gnGQccY1pY147IV57hGvYrzvAP4qIWCFnmIzku1KHFPZaKI2pT6APsV8tJgQUA3uOeegGQS7TKaNUPYYzb1E4qla9U31vwwvg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uncOQoxHNn2l4hLjRfFi4sHA/9j3rGyk4dWb3ZxwKO2Z0o+bLuOfth0l7fX5aBexxExNDCIoCkwPWavS7jvUYVMl58tPo57T2RsfpB6wsxPZN+wI/B3XNQ3j0HC0T/osapgbyAudmfeZNUEEglfxqm1NVsO/KFXzWby86DOz07Y=
-Received: by 10.114.126.1 with SMTP id y1mr2874604wac.1197090074155;
-        Fri, 07 Dec 2007 21:01:14 -0800 (PST)
-Received: by 10.114.208.17 with HTTP; Fri, 7 Dec 2007 21:01:13 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.99999.0712072328420.555@xanadu.home>
-Content-Disposition: inline
+	id S1751319AbXLHFDT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 00:03:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751232AbXLHFDT
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 00:03:19 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:13578 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750704AbXLHFDS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 00:03:18 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JSP006UHSPHVC10@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 08 Dec 2007 00:03:17 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67513>
 
-On 12/7/07, Nicolas Pitre <nico@cam.org> wrote:
-> On Fri, 7 Dec 2007, Jon Smirl wrote:
->
-> > Does the gcc repo contain some giant objects? Why wasn't the memory
-> > freed after their chain was processed?
->
-> It should be.
->
-> > Most of the last 10% is being done on a single CPU. There must be a
-> > chain of giant objects that is unbalancing everything.
->
-> I'm about to send a patch to fix the thread balancing for real this
-> time.
 
-Something is really broken in the last 5% of that repo. I have been
-processing at 97% for 30 minutes without moving to 98%.
+The current method consists of a master thread serving chunks of objects
+to work threads when they're done with their previous chunk.  The issue
+is to determine the best chunk size: making it too large creates poor
+load balancing, while making it too small has a negative effect on pack
+size because of the increased number of chunk boundaries and poor delta
+window utilization.
 
+This patch implements a completely different approach by initially
+splitting the work in large chunks uniformly amongst all threads, and
+whenever a thread is done then it steals half of the remaining work from
+another thread with the largest amount of unprocessed objects.
+
+This has the advantage of greatly reducing the number of chunk boundaries
+with an almost perfect load balancing.
+
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
+ builtin-pack-objects.c |  117 +++++++++++++++++++++++++++++++++++-------------
+ 1 files changed, 85 insertions(+), 32 deletions(-)
+
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 5002cc6..fcc1901 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1479,10 +1479,10 @@ static unsigned long free_unpacked(struct unpacked *n)
+ 	return freed_mem;
+ }
+ 
+-static void find_deltas(struct object_entry **list, unsigned list_size,
++static void find_deltas(struct object_entry **list, unsigned *list_size,
+ 			int window, int depth, unsigned *processed)
+ {
+-	uint32_t i = 0, idx = 0, count = 0;
++	uint32_t i, idx = 0, count = 0;
+ 	unsigned int array_size = window * sizeof(struct unpacked);
+ 	struct unpacked *array;
+ 	unsigned long mem_usage = 0;
+@@ -1490,11 +1490,23 @@ static void find_deltas(struct object_entry **list, unsigned list_size,
+ 	array = xmalloc(array_size);
+ 	memset(array, 0, array_size);
+ 
+-	do {
+-		struct object_entry *entry = list[i++];
++	for (;;) {
++		struct object_entry *entry = *list++;
+ 		struct unpacked *n = array + idx;
+ 		int j, max_depth, best_base = -1;
+ 
++		progress_lock();
++		if (!*list_size) {
++			progress_unlock();
++			break;
++		}
++		(*list_size)--;
++		if (!entry->preferred_base) {
++			(*processed)++;
++			display_progress(progress_state, *processed);
++		}
++		progress_unlock();
++
+ 		mem_usage -= free_unpacked(n);
+ 		n->entry = entry;
+ 
+@@ -1512,11 +1524,6 @@ static void find_deltas(struct object_entry **list, unsigned list_size,
+ 		if (entry->preferred_base)
+ 			goto next;
+ 
+-		progress_lock();
+-		(*processed)++;
+-		display_progress(progress_state, *processed);
+-		progress_unlock();
+-
+ 		/*
+ 		 * If the current object is at pack edge, take the depth the
+ 		 * objects that depend on the current object into account
+@@ -1576,7 +1583,7 @@ static void find_deltas(struct object_entry **list, unsigned list_size,
+ 			count++;
+ 		if (idx >= window)
+ 			idx = 0;
+-	} while (i < list_size);
++	}
+ 
+ 	for (i = 0; i < window; ++i) {
+ 		free_delta_index(array[i].index);
+@@ -1591,6 +1598,7 @@ struct thread_params {
+ 	pthread_t thread;
+ 	struct object_entry **list;
+ 	unsigned list_size;
++	unsigned remaining;
+ 	int window;
+ 	int depth;
+ 	unsigned *processed;
+@@ -1612,10 +1620,10 @@ static void *threaded_find_deltas(void *arg)
+ 		pthread_mutex_lock(&data_ready);
+ 		pthread_mutex_unlock(&data_request);
+ 
+-		if (!me->list_size)
++		if (!me->remaining)
+ 			return NULL;
+ 
+-		find_deltas(me->list, me->list_size,
++		find_deltas(me->list, &me->remaining,
+ 			    me->window, me->depth, me->processed);
+ 	}
+ }
+@@ -1624,57 +1632,102 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
+ 			   int window, int depth, unsigned *processed)
+ {
+ 	struct thread_params *target, p[delta_search_threads];
+-	int i, ret;
+-	unsigned chunk_size;
++	int i, ret, active_threads = 0;
+ 
+ 	if (delta_search_threads <= 1) {
+-		find_deltas(list, list_size, window, depth, processed);
++		find_deltas(list, &list_size, window, depth, processed);
+ 		return;
+ 	}
+ 
+ 	pthread_mutex_lock(&data_provider);
+ 	pthread_mutex_lock(&data_ready);
+ 
++	/* Start work threads. */
+ 	for (i = 0; i < delta_search_threads; i++) {
+ 		p[i].window = window;
+ 		p[i].depth = depth;
+ 		p[i].processed = processed;
++		p[i].remaining = 0;
+ 		ret = pthread_create(&p[i].thread, NULL,
+ 				     threaded_find_deltas, &p[i]);
+ 		if (ret)
+ 			die("unable to create thread: %s", strerror(ret));
++		active_threads++;
+ 	}
+ 
+-	/* this should be auto-tuned somehow */
+-	chunk_size = window * 1000;
++	/* Then partition the work amongst them. */
++	for (i = 0; i < delta_search_threads; i++) {
++		unsigned sub_size = list_size / (delta_search_threads - i);
+ 
+-	do {
+-		unsigned sublist_size = chunk_size;
+-		if (sublist_size > list_size)
+-			sublist_size = list_size;
++		pthread_mutex_lock(&data_provider);
++		target = data_requester;
++		if (!sub_size) {
++			pthread_mutex_unlock(&data_ready);
++			pthread_join(target->thread, NULL);
++			active_threads--;
++			continue;
++		}
+ 
+ 		/* try to split chunks on "path" boundaries */
+-		while (sublist_size < list_size && list[sublist_size]->hash &&
+-		       list[sublist_size]->hash == list[sublist_size-1]->hash)
+-			sublist_size++;
++		while (sub_size < list_size && list[sub_size]->hash &&
++		       list[sub_size]->hash == list[sub_size-1]->hash)
++			sub_size++;
++
++		target->list = list;
++		target->list_size = sub_size;
++		target->remaining = sub_size;
++		pthread_mutex_unlock(&data_ready);
+ 
++		list += sub_size;
++		list_size -= sub_size;
++	}
++
++	/*
++	 * Now let's wait for work completion.  Each time a thread is done
++	 * with its work, we steal half of the remaining work from the
++	 * thread with the largest number of unprocessed objects and give
++	 * it to that newly idle thread.  This ensure good load balancing
++	 * until the remaining object list segments are simply too short
++	 * to be worth splitting anymore.
++	 */
++	do {
++		struct thread_params *victim = NULL;
++		unsigned sub_size = 0;
+ 		pthread_mutex_lock(&data_provider);
+ 		target = data_requester;
+-		target->list = list;
+-		target->list_size = sublist_size;
++
++		progress_lock();
++		for (i = 0; i < delta_search_threads; i++)
++			if (p[i].remaining > 2*window &&
++			    (!victim || victim->remaining < p[i].remaining))
++				victim = &p[i];
++		if (victim) {
++			sub_size = victim->remaining / 2;
++			list = victim->list + victim->list_size - sub_size;
++			while (sub_size && list[0]->hash &&
++			       list[0]->hash == list[-1]->hash) {
++				list++;
++				sub_size--;
++			}
++			target->list = list;
++			victim->list_size -= sub_size;
++			victim->remaining -= sub_size;
++		}
++		progress_unlock();
++
++		target->list_size = sub_size;
++		target->remaining = sub_size;
+ 		pthread_mutex_unlock(&data_ready);
+ 
+-		list += sublist_size;
+-		list_size -= sublist_size;
+-		if (!sublist_size) {
++		if (!sub_size) {
+ 			pthread_join(target->thread, NULL);
+-			i--;
++			active_threads--;
+ 		}
+-	} while (i);
++	} while (active_threads);
+ }
+ 
+ #else
+-#define ll_find_deltas find_deltas
++#define ll_find_deltas(l, s, w, d, p)	find_deltas(l, &s, w, d, p)
+ #endif
+ 
+ static void prepare_pack(int window, int depth)
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+1.5.3.7.2184.ge321d-dirty
