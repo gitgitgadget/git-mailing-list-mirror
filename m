@@ -1,102 +1,124 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git and GCC
-Date: Sat, 8 Dec 2007 12:00:41 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712081156450.27959@racer.site>
-References: <20071206.193121.40404287.davem@davemloft.net> 
- <20071207063848.GA13101@coredump.intra.peff.net> 
- <9e4733910712062310s30153afibc44a5550fd9ea99@mail.gmail.com> 
- <20071207.045329.204650714.davem@davemloft.net> 
- <alpine.LFD.0.9999.0712070919590.7274@woody.linux-foundation.org> 
- <4759AC8E.3070102@develer.com> <m3hciutaoq.fsf@roke.D-201> 
- <1197069298.6118.1.camel@ozzu> <4aca3dc20712071533k3189d25dp901c5941e5326ead@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2] git-help: simplify and fix option parsing.
+Date: Sat, 8 Dec 2007 13:18:27 +0100
+Message-ID: <20071208131827.65e842c2.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Giovanni Bajo <rasky@develer.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	David Miller <davem@davemloft.net>, jonsmirl@gmail.com,
-	peff@peff.net, nico@cam.org, harvey.harrison@gmail.com,
-	ismail@pardus.org.tr, gcc@gcc.gnu.org, git@vger.kernel.org
-To: Daniel Berlin <dberlin@dberlin.org>
-X-From: git-owner@vger.kernel.org Sat Dec 08 13:01:44 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Dec 08 13:17:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0yNK-0008JI-V7
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 13:01:43 +0100
+	id 1J0ycu-00043t-Jm
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 13:17:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751734AbXLHMBW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 07:01:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752702AbXLHMBW
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 07:01:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54113 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751704AbXLHMBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 07:01:21 -0500
-Received: (qmail invoked by alias); 08 Dec 2007 12:01:19 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp034) with SMTP; 08 Dec 2007 13:01:19 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19mHjBn+gNmRufhhHjDAy3Zx/6DrPcdVgyZUnka0o
-	VAdEKKznJgzTNn
-X-X-Sender: gene099@racer.site
-In-Reply-To: <4aca3dc20712071533k3189d25dp901c5941e5326ead@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1753189AbXLHMMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 07:12:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752457AbXLHMMJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 07:12:09 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:37196 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752203AbXLHMMI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 07:12:08 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 949151AB303;
+	Sat,  8 Dec 2007 13:12:04 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 57A9F1AB2F5;
+	Sat,  8 Dec 2007 13:12:04 +0100 (CET)
+X-Mailer: Sylpheed 2.4.7 (GTK+ 2.12.1; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67549>
 
-Hi,
+Also use "execl_git_cmd" to launch "git-browse-help".
 
-On Fri, 7 Dec 2007, Daniel Berlin wrote:
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ help.c |   33 ++++++++++++---------------------
+ 1 files changed, 12 insertions(+), 21 deletions(-)
 
-> On 12/7/07, Giovanni Bajo <rasky@develer.com> wrote:
-> > On Fri, 2007-12-07 at 14:14 -0800, Jakub Narebski wrote:
-> >
-> > > > >> Is SHA a significant portion of the compute during these 
-> > > > >> repacks? I should run oprofile...
-> > > > > SHA1 is almost totally insignificant on x86. It hardly shows up. 
-> > > > > But we have a good optimized version there. zlib tends to be a 
-> > > > > lot more noticeable (especially the *uncompression*: it may be 
-> > > > > faster than compression, but it's done _so_ much more that it 
-> > > > > totally dominates).
-> > > >
-> > > > Have you considered alternatives, like: 
-> > > > http://www.oberhumer.com/opensource/ucl/
-> > >
-> > > <quote>
-> > >   As compared to LZO, the UCL algorithms achieve a better 
-> > >   compression ratio but *decompression* is a little bit slower. See 
-> > >   below for some rough timings.
-> > > </quote>
-> > >
-> > > It is uncompression speed that is more important, because it is used 
-> > > much more often.
-> >
-> > I know, but the point is not what is the fastestest, but if it's fast 
-> > enough to get off the profiles. I think UCL is fast enough since it's 
-> > still times faster than zlib. Anyway, LZO is GPL too, so why not 
-> > considering it too. They are good libraries.
-> 
-> 
-> At worst, you could also use fastlz (www.fastlz.org), which is faster 
-> than all of these by a factor of 4 (and compression wise, is actually 
-> sometimes better, sometimes worse, than LZO).
+	Junio wrote:
+	> This should be execl_git_cmd() to honor GIT_TRACE and to help
+	> transition to bindir != gitexecdir layout, I think.
 
-fastLZ is awfully short on details when it comes to a comparison of the 
-resulting file sizes.
+	Here it is.
 
-The only result I saw was that for the (single) example they chose, 
-compressed size was 470MB as opposed to 361MB for zip's _fastest_ mode.
-
-Really, that's not acceptable for me in the context of git.
-
-Besides, if you change the compression algorithm you will have to add 
-support for legacy clients to _recompress_ with libz.  Which most likely 
-would make Sisyphos grin watching them servers.
-
-Ciao,
-Dscho
+diff --git a/help.c b/help.c
+index ecc8c66..9d7fc8a 100644
+--- a/help.c
++++ b/help.c
+@@ -241,7 +241,9 @@ void list_common_cmds_help(void)
+ 
+ static const char *cmd_to_page(const char *git_cmd)
+ {
+-	if (!prefixcmp(git_cmd, "git"))
++	if (!git_cmd)
++		return "git";
++	else if (!prefixcmp(git_cmd, "git"))
+ 		return git_cmd;
+ 	else {
+ 		int page_len = strlen(git_cmd) + 4;
+@@ -268,7 +270,7 @@ static void show_info_page(const char *git_cmd)
+ static void show_html_page(const char *git_cmd)
+ {
+ 	const char *page = cmd_to_page(git_cmd);
+-	execlp("git-browse-help", "git-browse-help", page, NULL);
++	execl_git_cmd("browse-help", page, NULL);
+ }
+ 
+ void help_unknown_cmd(const char *cmd)
+@@ -283,38 +285,27 @@ int cmd_version(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
+-static void check_help_cmd(const char *help_cmd)
++int cmd_help(int argc, const char **argv, const char *prefix)
+ {
+-	if (!help_cmd) {
++	if (argc < 2) {
+ 		printf("usage: %s\n\n", git_usage_string);
+ 		list_common_cmds_help();
+ 		exit(0);
+ 	}
+ 
+-	else if (!strcmp(help_cmd, "--all") || !strcmp(help_cmd, "-a")) {
++	const char *help_cmd = argv[1];
++
++	if (!strcmp(help_cmd, "--all") || !strcmp(help_cmd, "-a")) {
+ 		printf("usage: %s\n\n", git_usage_string);
+ 		list_commands();
+-		exit(0);
+ 	}
+-}
+ 
+-int cmd_help(int argc, const char **argv, const char *prefix)
+-{
+-	const char *help_cmd = argc > 1 ? argv[1] : NULL;
+-	check_help_cmd(help_cmd);
+-
+-	if (!strcmp(help_cmd, "--web") || !strcmp(help_cmd, "-w")) {
+-		help_cmd = argc > 2 ? argv[2] : NULL;
+-		check_help_cmd(help_cmd);
+-
+-		show_html_page(help_cmd);
++	else if (!strcmp(help_cmd, "--web") || !strcmp(help_cmd, "-w")) {
++		show_html_page(argc > 2 ? argv[2] : NULL);
+ 	}
+ 
+ 	else if (!strcmp(help_cmd, "--info") || !strcmp(help_cmd, "-i")) {
+-		help_cmd = argc > 2 ? argv[2] : NULL;
+-		check_help_cmd(help_cmd);
+-
+-		show_info_page(help_cmd);
++		show_info_page(argc > 2 ? argv[2] : NULL);
+ 	}
+ 
+ 	else
+-- 
+1.5.3.7.2200.g9275-dirty
