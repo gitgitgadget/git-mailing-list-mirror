@@ -1,91 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Some git performance measurements..
-Date: Sat, 8 Dec 2007 11:05:35 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712081103430.27959@racer.site>
-References: <alpine.LFD.0.9999.0711281747450.8458@woody.linux-foundation.org>
-  <alpine.LFD.0.99999.0711291208060.9605@xanadu.home>  <finmvm$da8$1@ger.gmane.org>
-  <alpine.LFD.0.9999.0711291812530.8458@woody.linux-foundation.org> 
- <alpine.LFD.0.99999.0711292131350.9605@xanadu.home> 
- <B161871F-E812-44B4-A699-44341B5783D3@zib.de> 
- <e2b179460712070535x2eb10710s75a581664139e0cf@mail.gmail.com> 
- <Pine.LNX.4.64.0712071348100.27959@racer.site> 
- <e2b179460712070809r4127dc0br8dc20f55b1076501@mail.gmail.com> 
- <Pine.LNX.4.64.0712071816100.27959@racer.site>
- <e2b179460712071115k369dddcatb0f6456d0028acbb@mail.gmail.com>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: git-svn branch naming question
+Date: Sat, 8 Dec 2007 11:59:01 +0100
+Message-ID: <20071208105901.GA2844@xp.machine.xx>
+References: <20071208010438.GE3199@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@cam.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Mike Ralphson <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 08 12:06:40 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sat Dec 08 12:06:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0xVz-00039a-58
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 12:06:35 +0100
+	id 1J0xWF-0003Dn-IN
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 12:06:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751827AbXLHLGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 06:06:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752098AbXLHLGO
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 06:06:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56934 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751009AbXLHLGN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 06:06:13 -0500
-Received: (qmail invoked by alias); 08 Dec 2007 11:06:11 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp032) with SMTP; 08 Dec 2007 12:06:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+jkWt/HpGj7SXejMyVFKZV2mrerA3/OeVDY5yyAg
-	z4ObrAFUnLNHti
-X-X-Sender: gene099@racer.site
-In-Reply-To: <e2b179460712071115k369dddcatb0f6456d0028acbb@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1752652AbXLHLG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 06:06:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752573AbXLHLG1
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 06:06:27 -0500
+Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:45607 "HELO
+	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752439AbXLHLG0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Dec 2007 06:06:26 -0500
+X-Greylist: delayed 441 seconds by postgrey-1.27 at vger.kernel.org; Sat, 08 Dec 2007 06:06:26 EST
+Received: (qmail 27646 invoked by uid 0); 8 Dec 2007 10:59:02 -0000
+Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
+  by mail.hofmann.stw.uni-erlangen.de with SMTP; 8 Dec 2007 10:59:02 -0000
+Content-Disposition: inline
+In-Reply-To: <20071208010438.GE3199@genesis.frugalware.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67539>
 
-Hi,
-
-On Fri, 7 Dec 2007, Mike Ralphson wrote:
-
-> On Dec 7, 2007 6:37 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > On Fri, 7 Dec 2007, Mike Ralphson wrote:
-> >
-> > > On Dec 7, 2007 1:49 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > > On Fri, 7 Dec 2007, Mike Ralphson wrote:
-> > > >
-> > > > > I benchmarked 3 alternative qsorts, qsortG [2] was the fastest 
-> > > > > on my system but has funky licensing, the NetBSD qsort was 
-> > > > > middle-range and the glibc one the slowest of the three (but 
-> > > > > that could be due to it being tuned for a "Sun 4/260"). All of 
-> > > > > them show over 100x speed improvements on a git-status of my 
-> > > > > main repo (104s -> ~0.7s)
-> > > >
-> >
-> > Okay, sorry, I did not bother reading further when I read "You may use 
-> > it in anything you like;".
-> >
-> > But if the author did not respond, it might be a better idea to just 
-> > reimplement it.
-> >
+On Sat, Dec 08, 2007 at 02:04:38AM +0100, Miklos Vajna wrote:
+> hi,
 > 
-> I've just tried the mergesort implementation as used in msysgit and that 
-> performs faster for me. It's simpler, and compatibly licensed. It looks 
-> good.
+> i'm using git-svn for projects where i don't just want to commit to
+> trunk but to other branches, too.
+> 
+> for example:
+> 
+> git-svn clone -s svn+ssh://vmiklos@svn.gnome.org/svn/ooo-build ooo-build
+> 
+> then i have a local 'master' branch and all the other branches are local
+> branches.
+> 
+> so, when i want to work in the ooo-build-2-3 branch, i do a:
+> 
+> git checkout -b ooo-build-2-3 ooo-build-2-3
+> 
+> but when i do a git svn rebase, i get:
+> 
+> warning: refname 'ooo-build-2-3' is ambiguous.
+> 
+> what am i doing wrong?
 
-Now I'm confused.  You said you tested qsortG, NetBSD qsort and qlibc, 
-with glibc performing the slowest.  Now, 4msysgit's implementation is 
-based on glibc (Thanks Brian!), so I wonder if you could redo the 
-performance tests and say if qsortG still is substantially faster than 
-4msysgit's qsort?
+Try using 'git svn rebase remotes/ooo-build-2-3'.
 
-Ciao,
-Dscho
+git-svn should produce its branches under refs/remotes/* and your
+local branches are under refs/heads/*.
+
+By using 'git checkout -b ooo-build-2-3 ooo-build-2-3' you created
+refs/heads/ooo-build-2-3 as a copy of refs/remotes/ooo-build-2-3 and now
+using only ooo-build-2-3 is ambigious. (at least in some cases where git
+won't take refs/heads/ooo-build-2-3)
+
+
+> 
+> in fact i suspect that in case i would use some other branch name, like
+> simply '2-3' then i could get rid of this warning, but that's the
+> problem with using the equivalent name of the remote branch when working
+> in a branch locally?
+> 
+
+See above.
+
+> probably i miss some parameter to git-svn clone so that it would prefix
+> the refs with some 'origin'?
+
+Look up  --prefix in the manpage for git-svn.
+
+-Peter
