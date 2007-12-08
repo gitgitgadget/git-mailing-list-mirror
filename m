@@ -1,63 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Something is broken in repack
-Date: Sat, 08 Dec 2007 14:18:52 -0800
-Message-ID: <7vodd0vnhv.fsf@gitster.siamese.dyndns.org>
-References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
-	<alpine.LFD.0.99999.0712072032410.555@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Dec 08 23:19:35 2007
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: [Misfeature] cloning without configuration fails and returns 0
+Date: Sat, 8 Dec 2007 23:21:35 +0100
+Message-ID: <9438BB94-AE9C-4F4E-A4DA-8E2121642736@lrde.epita.fr>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Dec 08 23:22:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J181G-0004EC-Uo
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 23:19:35 +0100
+	id 1J183t-00051C-Iy
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 23:22:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752533AbXLHWTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 17:19:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752402AbXLHWTM
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 17:19:12 -0500
-Received: from a-sasl-quonix.pobox.com ([208.72.237.25]:57138 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750850AbXLHWTL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 17:19:11 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D7B0F480F;
-	Sat,  8 Dec 2007 17:19:04 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CED1F480E;
-	Sat,  8 Dec 2007 17:18:59 -0500 (EST)
-In-Reply-To: <alpine.LFD.0.99999.0712072032410.555@xanadu.home> (Nicolas
-	Pitre's message of "Fri, 07 Dec 2007 20:46:25 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750991AbXLHWV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 17:21:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbXLHWV4
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 17:21:56 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:38268 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750985AbXLHWV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 17:21:56 -0500
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1J183W-0007Ja-JB
+	for git@vger.kernel.org; Sat, 08 Dec 2007 23:21:54 +0100
+X-Gpgmail-State: !signed
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67574>
 
-Nicolas Pitre <nico@cam.org> writes:
+Hi,
+on a new machine I have access to, I fetched tonight's git master  
+(git version 1.5.3.7.g9758e) and installed it on my account in order  
+to clone one of my projects.  I did not setup anything in my git  
+config and stumbled on the following misfeature:
 
-> On Fri, 7 Dec 2007, Jon Smirl wrote:
->
->> Starting with a 2GB pack of the same data my process size only grew to
->> 3GB with 2GB of mmaps.
->
-> Which is quite reasonable, even if the same issue might still be there.
->
-> So the problem seems to be related to the pack access code and not the 
-> repack code.  And it must have something to do with the number of deltas 
-> being replayed.  And because the repack is attempting delta compression 
-> roughly from newest to oldest, and because old objects are typically in 
-> a deeper delta chain, then this might explain the logarithmic slowdown.
->
-> So something must be wrong with the delta cache in sha1_file.c somehow.
+----------------------------------------------------------------------
+$ git clone ssh://login@host/~/path/git/project/.git project
+Initialized empty Git repository in /home/me/git/project/.git/
+Password:
+remote: Counting objects: 609, done.
+remote: Compressing objects: 100% (465/465), done.
+remote: Total 609 (delta 267), reused 462 (delta 134)
+Receiving objects: 100% (609/609), 1.56 MiB | 63 KiB/s, done.
+Resolving deltas: 100% (267/267), done.
 
-I was reaching the same conclusion but haven't managed to spot anything
-blatantly wrong in that area.  Will need to dig more.
+*** Your name cannot be determined from your system services (gecos).
+
+Run
+
+   git config --global user.email "you@example.com"
+   git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: empty ident  <me@fqdn> not allowed
+[last 11 lines repeated 3 times!]
+fatal: Not a valid object name HEAD
+----------------------------------------------------------------------
+
+Not only the same 11 lines of error message were printed 3 times, but  
+also the command returned 0!
+
+This is not user friendly at all.  So I thought I'd point this out on  
+this ML.
+
+Cheers,
+
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
