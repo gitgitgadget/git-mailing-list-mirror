@@ -1,81 +1,87 @@
-From: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
-Subject: Where has "git ls-remote" reference pattern matching gone?
-Date: Sat, 8 Dec 2007 23:05:14 +0100
-Message-ID: <4E5E5B1E-A303-45C9-9944-57D54FD50F80@orakel.ntnu.no>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 08 23:39:20 2007
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: Some git performance measurements..
+Date: Sat, 8 Dec 2007 17:04:03 -0600
+Message-ID: <20071208230402.GK6212@lavos.net>
+References: <finmvm$da8$1@ger.gmane.org> <alpine.LFD.0.9999.0711291812530.8458@woody.linux-foundation.org> <alpine.LFD.0.99999.0711292131350.9605@xanadu.home> <B161871F-E812-44B4-A699-44341B5783D3@zib.de> <e2b179460712070535x2eb10710s75a581664139e0cf@mail.gmail.com> <Pine.LNX.4.64.0712071348100.27959@racer.site> <e2b179460712070809r4127dc0br8dc20f55b1076501@mail.gmail.com> <Pine.LNX.4.64.0712071816100.27959@racer.site> <e2b179460712071115k369dddcatb0f6456d0028acbb@mail.gmail.com> <Pine.LNX.4.64.0712081103430.27959@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Mike Ralphson <mike.ralphson@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Dec 09 00:06:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J18KN-0000vH-CD
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 23:39:19 +0100
+	id 1J18ik-0000fS-Mb
+	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 00:04:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752269AbXLHWi5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 17:38:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752676AbXLHWi5
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 17:38:57 -0500
-Received: from 97.84-49-228.nextgentel.com ([84.49.228.97]:60522 "EHLO
-	eyvind.bernhardsens.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752248AbXLHWi5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 17:38:57 -0500
-X-Greylist: delayed 2020 seconds by postgrey-1.27 at vger.kernel.org; Sat, 08 Dec 2007 17:38:56 EST
-Received: from vredefort.d.eyvind.bernhardsens.net (vredefort.d.eyvind.bernhardsens.net [172.16.3.223])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by eyvind.bernhardsens.net (Postfix) with ESMTP id BB0C862E788
-	for <git@vger.kernel.org>; Sat,  8 Dec 2007 23:05:14 +0100 (CET)
-X-Mailer: Apple Mail (2.915)
+	id S1752668AbXLHXEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 18:04:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752711AbXLHXEI
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 18:04:08 -0500
+Received: from mxsf08.insightbb.com ([74.128.0.78]:18304 "EHLO
+	mxsf08.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751881AbXLHXEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 18:04:07 -0500
+X-IronPort-AV: E=Sophos;i="4.23,271,1194238800"; 
+   d="scan'208";a="161744298"
+Received: from unknown (HELO asav01.insightbb.com) ([172.31.249.124])
+  by mxsf08.insightbb.com with ESMTP; 08 Dec 2007 18:04:06 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Aq4HAHKxWkdKhvkY/2dsb2JhbACBWg
+X-IronPort-AV: E=Sophos;i="4.23,271,1194238800"; 
+   d="scan'208";a="99943006"
+Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
+  by asav01.insightbb.com with ESMTP; 08 Dec 2007 18:04:03 -0500
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id 2E742309F21; Sat,  8 Dec 2007 17:04:03 -0600 (CST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0712081103430.27959@racer.site>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67576>
 
-git-ls-remote(1) says that ls-remote supports filtering by reference  
-name:
+On Sat, Dec 08, 2007 at 11:05:35AM +0000, Johannes Schindelin wrote:
+> On Fri, 7 Dec 2007, Mike Ralphson wrote:
+> > I've just tried the mergesort implementation as used in msysgit and that 
+> > performs faster for me. It's simpler, and compatibly licensed. It looks 
+> > good.
+> 
+> Now I'm confused.  You said you tested qsortG, NetBSD qsort and qlibc, 
+> with glibc performing the slowest.  Now, 4msysgit's implementation is 
+> based on glibc (Thanks Brian!), so I wonder if you could redo the 
+> performance tests and say if qsortG still is substantially faster than 
+> 4msysgit's qsort?
 
+This is just me guessing, but when he said:
 
-> SYNOPSIS
->        git-ls-remote [--heads] [--tags]  [-u <exec> | --upload-pack  
-> <exec>]
->                      <repository> <refs>...
->
-> [...]
->
->        <refs>...
->               When unspecified, all references, after filtering done  
-> with
->               --heads and --tags, are shown. When <refs>... are  
-> specified,
->               only references matching the given patterns are  
-> displayed.
->
-> [...]
->
->        $ git ls-remote --tags public v\*
->        d6602ec5194c87b0fc87103ca4d67251c76f233a        refs/tags/v0.99
->        f25a265a342aed6041ab0cc484224d9ca54b6f41        refs/tags/ 
-> v0.99.1
->        c5db5456ae3b0873fc659c19fafdde22313cc441        refs/tags/ 
-> v0.99.2
->        7ceca275d047c90c0c7d5afb13ab97efdf51bd6e        refs/tags/ 
-> v0.99.3
+> I benchmarked 3 alternative qsorts, qsortG [2] was the fastest on my
+> system but has funky licensing, the NetBSD qsort was middle-range and
+> the glibc one the slowest of the three (but that could be due to it
+> being tuned for a "Sun 4/260"). All of them show over 100x speed
+> improvements on a git-status of my main repo (104s -> ~0.7s)
 
-But when I try to use the <refs> argument on a current build of git  
-(git version v1.5.3.7-1112-g9758ecd), I just get its usage message,  
-which doesn't mention that argument:
+It's possible he tried glibc's actual quicksort implementation, rather
+than their "qsort."  Their qsort basically has the following behavior:
 
-> vredefort:[backup]% git ls-remote origin foob
-> usage: git-ls-remote [--upload-pack=<git-upload-pack>]  
-> [<host>:]<directory>
+if size < 1024
+    mergesort with temporary array on stack
+if allocating size bytes would likely cause swapping
+    quicksort in place
+else
+    mergesort with temporary array in heap
 
+I removed the "quicksort in place" possibility, as it would have added
+another sort algorithm and I had no way to easily determine whether
+"allocating size bytes would likely cause swapping."
 
-ls-remote was recently made a builtin; was reference filtering  
-deliberately removed, or was it just lost in translation from the  
-shell script?
-
-Eyvind Bernhardsen
+-bcd
