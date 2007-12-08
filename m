@@ -1,79 +1,97 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Make config_to_multi return [] instead of [undef]
-Date: Sat, 08 Dec 2007 08:13:45 -0800 (PST)
-Message-ID: <m38x45tb9y.fsf@roke.D-201>
-References: <20071208123058.7364.25491.stgit@rover>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: git-svn branch naming question
+Date: Sat, 8 Dec 2007 17:56:57 +0100
+Message-ID: <20071208165657.GC2844@xp.machine.xx>
+References: <20071208010438.GE3199@genesis.frugalware.org> <20071208105901.GA2844@xp.machine.xx> <20071208141449.GH3199@genesis.frugalware.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, <git@vger.kernel.org>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Sat Dec 08 17:14:21 2007
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sat Dec 08 17:57:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J12Jn-0004nZ-1r
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 17:14:19 +0100
+	id 1J12zn-0001Ny-Cs
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 17:57:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751009AbXLHQNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 11:13:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751123AbXLHQNx
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 11:13:53 -0500
-Received: from mu-out-0910.google.com ([209.85.134.187]:37250 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750949AbXLHQNw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 11:13:52 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so1439593mue
-        for <git@vger.kernel.org>; Sat, 08 Dec 2007 08:13:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=blK+ligalry1U+haR8XwXIkBc4RIAmjcu0EdDpEOURY=;
-        b=loOLoW07QNIUZHkcsTEqHRCVpEwumPujR7c5BDLoYsj3OA3M0qmtKtPlzD8EZ1ZpWY2WLjS5RY+etaJQ2UszZ+JRgKlNkhtZra+3q5pKYDPKVLZ7iylmQ0gCrmZLXlVIjNCuSwSezBTnT2xrtqU1MYHKo6BPx2op9RaXY72fYrU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=KaVrrKo6y3AzanJDlKHKVjexSz54DilyfgHyAvLvogJlMmx8H2RBQM9v/qPsqN/RkXXTi9rOxe11Ft34orRQoOzTzemJ2vhUYjJ125LL5yXFCDNeBzgr878AdgyzK1iqK3sXjZ1v7T4nSwtuiMfF4z3eLHpR+PaZgxD3anVn0hE=
-Received: by 10.82.181.7 with SMTP id d7mr4140535buf.1197130427243;
-        Sat, 08 Dec 2007 08:13:47 -0800 (PST)
-Received: from roke.D-201 ( [83.8.230.31])
-        by mx.google.com with ESMTPS id i5sm2300569mue.2007.12.08.08.13.44
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 08 Dec 2007 08:13:45 -0800 (PST)
-Received: from roke (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lB8GDiRm017508;
-	Sat, 8 Dec 2007 17:13:46 +0100
-Received: (from jnareb@localhost)
-	by roke (8.13.4/8.13.4/Submit) id lB8GDfTi017504;
-	Sat, 8 Dec 2007 17:13:42 +0100
-X-Authentication-Warning: roke: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <20071208123058.7364.25491.stgit@rover>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751652AbXLHQ5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 11:57:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751085AbXLHQ5B
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 11:57:01 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36696 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750790AbXLHQ5B (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 11:57:01 -0500
+Received: (qmail invoked by alias); 08 Dec 2007 16:56:58 -0000
+Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
+  by mail.gmx.net (mp024) with SMTP; 08 Dec 2007 17:56:58 +0100
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX18ZJ/VqARYZzyl2ZIbYQtX4xVWYGSPut+1Fj9E24k
+	WsoMra6Kt7XQQN
+Content-Disposition: inline
+In-Reply-To: <20071208141449.GH3199@genesis.frugalware.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67559>
 
-Petr Baudis <pasky@suse.cz> writes:
+On Sat, Dec 08, 2007 at 03:14:49PM +0100, Miklos Vajna wrote:
+> On Sat, Dec 08, 2007 at 11:59:01AM +0100, Peter Baumann <waste.manager@gmx.de> wrote:
+> > Look up  --prefix in the manpage for git-svn.
+> 
+> great, --prefix is what i missed.
+> 
+> a related question: is it possible to avoid even the "remotes" prefix?
+> 
+> it could be useful when creating an incremental import of an svn repo.
+> (ie when using git-svn as a replacement of git-svnimport.)
+> 
 
-> This is important for the list of clone urls, where if there are
-> no per-repository clone URL configured, the default base URLs
-> are never used for URL construction with this patch.
+git svn init --stdlayout creates this entry in your .git/config per default
 
-Thanks.
- 
-> @@ -1512,7 +1512,7 @@ sub config_to_int {
->  sub config_to_multi {
->  	my $val = shift;
->  
-> -	return ref($val) ? $val : [ $val ];
-> +	return ref($val) ? $val : $val ? [ $val ] : [];
->  }
+  [svn-remote "svn"]
+        url = https://url/to/your/svn/repo
+        fetch = trunk:refs/remotes/trunk
+        branches = branches/*:refs/remotes/*
+        tags = tags/*:refs/remotes/tags/*
 
-Shouldn't it be
+You could change this to
 
-  +	return ref($val) ? $val : defined($val) ? [ $val ] : [];
+  [svn-remote "svn"]
+        url = https://url/to/your/svn/repo
+        fetch = trunk:refs/remotes/origin/trunk
+        branches = branches/*:refs/remotes/origin/*
+        tags = tags/*:refs/remotes/origin/tags/*
 
--- 
-Jakub Narebski
+to get what --prefix origin would do.
+
+
+ On the other hand you could forget completly the remote part by specifying
+
+  [svn-remote "svn"]
+        url = https://url/to/your/svn/repo
+        fetch = trunk:refs/heads/trunk
+        branches = branches/*:refs/heads/*
+        tags = tags/*:refs/heads/tags/*
+
+but I advice you to not do this. refs/remotes has a special meaning in git,
+e.g.  you can't commit directly to it (which makes sense, because it only
+tracks the state of the remote repo. On the other hand remote branches won't
+get cloned per default.)
+
+Side note, if you want to track only some branches, or if you have a strange
+svn layout, you could use something like this:
+
+  [svn-remote "svn"]
+        url = https://url/to/your/svn/repo
+        fetch = trunk:refs/remotes/origin/trunk
+        fetch = branches/branchA:refs/remotes/origin/branchA
+        fetch = branches/branchB:refs/remotes/origin/branchB
+	...
+
+
+-Peter
