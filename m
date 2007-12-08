@@ -1,81 +1,90 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git guidance
-Date: Sat, 8 Dec 2007 19:33:00 +1300
-Message-ID: <46a038f90712072233v4ee1143cx68a82d15cfaa4402@mail.gmail.com>
-References: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com>
-	 <alpine.LFD.0.9999.0711290810170.8458@woody.linux-foundation.org>
-	 <200712010950.15628.a1426z@gawab.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add status.relativePaths config variable
+Date: Fri, 07 Dec 2007 23:34:14 -0800
+Message-ID: <7vejdxy70p.fsf@gitster.siamese.dyndns.org>
+References: <20071207165703.GA8889@sigill.intra.peff.net>
+	<Pine.LNX.4.64.0712071853500.27959@racer.site>
+	<4759996B.2000300@gmail.com>
+	<20071207204937.GA20111@coredump.intra.peff.net>
+	<20071207212607.GA11504@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Jing Xue" <jingxue@digizenstudio.com>,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org
-To: "Al Boldi" <a1426z@gawab.com>
-X-From: git-owner@vger.kernel.org Sat Dec 08 07:33:41 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Thomas Harning <harningt@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Dec 08 08:34:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J0tFr-00060y-5S
-	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 07:33:39 +0100
+	id 1J0uD6-0000Hu-W8
+	for gcvg-git-2@gmane.org; Sat, 08 Dec 2007 08:34:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751542AbXLHGdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 01:33:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752083AbXLHGdF
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 01:33:05 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:41979 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751606AbXLHGdB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 01:33:01 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so1120599ugc
-        for <git@vger.kernel.org>; Fri, 07 Dec 2007 22:33:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Lb378plfUPAxx6Z0rk+Chg4piAlZF6YnTyrE7iEehQc=;
-        b=heiUC/gqDk/O0W6/sVwQgywvspVg+EciHqSW3JLa1iQJTBMdhH7m0ZdbDaQLzN8gzx0UJWPktf2SOYQBk0uoiFnSCmO2/i6FQQ3Va6nxiClGvN62o84qZEU3htSCuabF4czGbMM0X1Qwz4nO299mF8fZe5ZEZx80f5KmXWBgkhE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QeM6Zrd89amZ7E3GQFwzlrhIKUjbu9LzacKT9/w7gdxs1WmnK9D2LsRfN55qQkSlbzoKVspefLL84wdfW5NkL3UhpZIKt4cyC/Jtmln6le4YQtWrtnwflEbbH13Tl0MMbQvSgDAlvdCJQjEvrlcdpRQtgcpUhgOvbSnFHAFIxuE=
-Received: by 10.66.243.2 with SMTP id q2mr3420298ugh.1197095580110;
-        Fri, 07 Dec 2007 22:33:00 -0800 (PST)
-Received: by 10.66.252.2 with HTTP; Fri, 7 Dec 2007 22:33:00 -0800 (PST)
-In-Reply-To: <200712010950.15628.a1426z@gawab.com>
-Content-Disposition: inline
+	id S1752167AbXLHHea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 02:34:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752159AbXLHHea
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 02:34:30 -0500
+Received: from a-sasl-quonix.pobox.com ([208.72.237.25]:59543 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751827AbXLHHe3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 02:34:29 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D89D1858;
+	Sat,  8 Dec 2007 02:34:22 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CB3E21857;
+	Sat,  8 Dec 2007 02:34:16 -0500 (EST)
+In-Reply-To: <20071207212607.GA11504@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 7 Dec 2007 16:26:07 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67520>
 
-On Dec 1, 2007 7:50 PM, Al Boldi <a1426z@gawab.com> wrote:
-> Not sure what you mean by operationally transparent?  It would be transparent
-> for the updating client,  and the rest of the git-users would need to wait
-> for the commit from the updating client; which is ok, as this transparency
-> is not meant to change the server-side git-update semantic.
+Jeff King <peff@peff.net> writes:
 
-I guess what he means is that when your write to the file -- from your
-editor -- it can't be considered a commit. During an editing session
-you might write a dozen times, only to commit it once you are happy
-(that it compiles, passes tests, etc).
+> The output of git-status was recently changed to output
+> relative paths. Setting this variable to false restores the
+> old behavior for any old-timers that prefer it.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> On Fri, Dec 07, 2007 at 03:49:37PM -0500, Jeff King wrote:
+>
+>> Personally, I don't like either the "../" or the "./", but I actually
+>> think the relative paths are less readable than the full paths in
+>> general.
+>
+> So here is a config option to turn it off; I don't think there should be
+> any consistency problems, since git-status output is meant to be
+> human-readable (and after all, we just changed it :) ).
 
-> Sure, you wouldn't want to change the git-engine update semantics, as that
-> sits on the server and handles all users.  But what the git model is
-> currently missing is a client manager.  Right now, this is being worked
-> around by replicating the git tree on the client, which still doesn't
-> provide the required transparency.
+I like the general idea (and suspect we might want to make it default to
+false to retain the original behaviour, but I'd refrain from suggesting
+it, to keep the user experience stable during the upcoming -rc period).
 
-If you want a dumb-ish client CVS-style, you can try git-cvsserver.
-But the git model is definitely superior -- "replicating the tree on
-the client" is not a workaround but a central strategy.
+We'd need an update to git-status documentation to mention the variable.
 
-Have you used git and other DSCMs much? From your writing, it sounds
-like you may have misunderstood how some of the principles of git work
-out in practice.
+> diff --git a/builtin-commit.c b/builtin-commit.c
+> index 18c6323..04b3bf1 100644
+> --- a/builtin-commit.c
+> +++ b/builtin-commit.c
+> @@ -284,8 +284,7 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix)
+>  {
+>  	struct wt_status s;
+>  
+> -	wt_status_prepare(&s);
+> -	s.prefix = prefix;
+> +	wt_status_prepare(&s, prefix);
 
-cheers,
+I have been wondering ever since receiving this patch if this is a good
+interface change.  Was there a problem if instead:
 
+	- The implementation of wt_status_prepare(&s) stays as before;
 
-m
+	- run_status(), after calling wt_status_prepare(&s), notices the
+          configuration variable, and sets s.prefix conditionally;
