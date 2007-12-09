@@ -1,83 +1,78 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Restore ls-remote reference pattern matching
-Date: Sat, 8 Dec 2007 21:35:48 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0712082134350.5349@iabervon.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: git-svn branch naming question
+Date: Sun, 9 Dec 2007 03:36:00 +0100
+Message-ID: <20071209023600.GP3199@genesis.frugalware.org>
+References: <20071208010438.GE3199@genesis.frugalware.org> <20071208105901.GA2844@xp.machine.xx> <20071208141449.GH3199@genesis.frugalware.org> <20071208165657.GC2844@xp.machine.xx> <20071208235248.GK3199@genesis.frugalware.org> <20071209020510.GM3199@genesis.frugalware.org> <20071209022624.GA31033@soma>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Dec 09 03:36:13 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="KDy5+/kaQUC2a3Gw"
+Cc: Peter Baumann <waste.manager@gmx.de>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Dec 09 03:36:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1C1d-0006r9-22
-	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 03:36:13 +0100
+	id 1J1C1t-0006uz-67
+	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 03:36:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753358AbXLICfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 21:35:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753350AbXLICfv
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 21:35:51 -0500
-Received: from iabervon.org ([66.92.72.58]:33397 "EHLO iabervon.org"
+	id S1753362AbXLICgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 21:36:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753356AbXLICgF
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 21:36:05 -0500
+Received: from virgo.iok.hu ([193.202.89.103]:39554 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753348AbXLICfu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 21:35:50 -0500
-Received: (qmail 14993 invoked by uid 1000); 9 Dec 2007 02:35:48 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 9 Dec 2007 02:35:48 -0000
+	id S1753350AbXLICgD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 21:36:03 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 9439A1B2511;
+	Sun,  9 Dec 2007 03:36:01 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 1D61C4465C;
+	Sun,  9 Dec 2007 03:34:54 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 8EE7A11904C1; Sun,  9 Dec 2007 03:36:00 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20071209022624.GA31033@soma>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67590>
 
-I entirely missed that "git ls-remote <repo> <ref-pattern>..." is
-supposed to work. This restores it.
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
----
-How's this? I vaguely tested it, and it doesn't break existing tests, and 
-it matches my guess at how the old code worked, at least maybe.
+--KDy5+/kaQUC2a3Gw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
- builtin-ls-remote.c |   10 ++++++++--
- 1 files changed, 8 insertions(+), 2 deletions(-)
+On Sat, Dec 08, 2007 at 06:26:24PM -0800, Eric Wong <normalperson@yhbt.net> wrote:
+> I'm not sure if it's considered a "bug", but that's just the
+> way it is at the moment.  I can't remember why, but I did
+> make git-svn force the presence of the "remotes/" prefix
+> in all refs it writes to...
 
-diff --git a/builtin-ls-remote.c b/builtin-ls-remote.c
-index 56f3f88..f8669ce 100644
---- a/builtin-ls-remote.c
-+++ b/builtin-ls-remote.c
-@@ -17,6 +17,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 	struct remote *remote;
- 	struct transport *transport;
- 	const struct ref *ref;
-+	const char **refpathspec = NULL;
- 
- 	setup_git_directory_gently(&nongit);
- 
-@@ -50,9 +51,12 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 		break;
- 	}
- 
--	if (!dest || i != argc - 1)
-+	if (!dest)
- 		usage(ls_remote_usage);
- 
-+	if (argc > i + 1)
-+		refpathspec = get_pathspec("*", argv + i);
-+
- 	remote = nongit ? NULL : remote_get(dest);
- 	if (remote && !remote->url_nr)
- 		die("remote %s has no configured URL", dest);
-@@ -66,7 +70,9 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
- 		return 1;
- 
- 	while (ref) {
--		if (check_ref_type(ref, flags))
-+		if (check_ref_type(ref, flags) && 
-+		    (!refpathspec || 
-+		     pathspec_match(refpathspec, NULL, ref->name, 0)))
- 			printf("%s	%s\n", sha1_to_hex(ref->old_sha1), ref->name);
- 		ref = ref->next;
- 	}
--- 
-1.5.3.6.886.gb204
+okay, i see. one problem: git-svnimport is to be removed and (afaik) the
+supposed way is to use git-svn instead. what is the supposed way to use
+git-svn to convert an svn repo to a git one if the method i tried is not
+working?
+
+(if the branches are fetched to "remotes/" then they won't be visible
+when one clones the converted repo)
+
+thanks,
+- VMiklos
+
+--KDy5+/kaQUC2a3Gw
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFHW1SQe81tAgORUJYRAtqQAJ0Zgj54yeyAM8hnvIcr/0xvqAmEkgCfS+oY
+E8y81sFvaule0EtFdLh+omU=
+=vlXz
+-----END PGP SIGNATURE-----
+
+--KDy5+/kaQUC2a3Gw--
