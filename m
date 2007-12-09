@@ -1,77 +1,84 @@
-From: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@bitplanet.net>
-Subject: [PATCH] Remove .git/branches from the .git template.
-Date: Sun, 9 Dec 2007 13:38:56 -0500
-Message-ID: <20071209183856.GA5587@bitplanet.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-send-email.perl: Really add angle brackets to In-Reply-To if necessary
+Date: Sun, 09 Dec 2007 10:09:44 -0800
+Message-ID: <7v63z7rb87.fsf@gitster.siamese.dyndns.org>
+References: <1197219900-19334-1-git-send-email-mh@glandium.org>
+	<1197220648-20433-1-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Dec 09 18:57:05 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Kastrup <dak@gnu.org>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sun Dec 09 19:10:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1QOd-0001gc-0b
-	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 18:56:55 +0100
+	id 1J1Qbh-0007eX-Ce
+	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 19:10:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751101AbXLIR4P convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Dec 2007 12:56:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751170AbXLIR4P
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Dec 2007 12:56:15 -0500
-Received: from py-out-1112.google.com ([64.233.166.176]:63634 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751101AbXLIR4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Dec 2007 12:56:14 -0500
-Received: by py-out-1112.google.com with SMTP id u77so2950786pyb
-        for <git@vger.kernel.org>; Sun, 09 Dec 2007 09:56:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:to:cc:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent:from:sender;
-        bh=PHJOqxgk3RMA5W3LhEXmuceqhDyRLV+qyHfUgZxZ7F4=;
-        b=UvgUkgyVODkHuRY9DAWwinTYkE2lBcL0Lv6HcgOQ1P2S2e2T84Z8jfaFc9b3XamBd1DWKJY3axSRxsTHIY+HAh3QUHiy1Up5222OmSo/meQ5lShl8msu3Jeh3HlFfj8IV25AsYBh6FbIP9eeuq7uZjPTXGwaQrPr5djOenCllnI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:to:cc:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent:from:sender;
-        b=Ezuyo5YfBOIn2XeJ9FYVXZEQDt6lck4MMQsyVf6mc6SndpRzcZ2bMQFnR84xq/vqVLr4oFnESRBxzFb09L0bO7Sh7ZuNFIZAtOt+Ve6IW/XEKD4ZD2KkNncJbfS2yaWS98Kp8Tmsp5ncDxef3oHEgYfaO05enzheJ2KQDvNfyx0=
-Received: by 10.142.104.9 with SMTP id b9mr1530047wfc.1197222969583;
-        Sun, 09 Dec 2007 09:56:09 -0800 (PST)
-Received: from localhost ( [76.24.237.133])
-        by mx.google.com with ESMTPS id 29sm4175822wrl.2007.12.09.09.56.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 09 Dec 2007 09:56:07 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1750985AbXLISKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Dec 2007 13:10:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750952AbXLISKE
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Dec 2007 13:10:04 -0500
+Received: from a-sasl-quonix.pobox.com ([208.72.237.25]:37931 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750785AbXLISKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Dec 2007 13:10:03 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 94AED5A90;
+	Sun,  9 Dec 2007 13:09:57 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 119F95A8F;
+	Sun,  9 Dec 2007 13:09:51 -0500 (EST)
+In-Reply-To: <1197220648-20433-1-git-send-email-mh@glandium.org> (Mike
+	Hommey's message of "Sun, 9 Dec 2007 18:17:28 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67637>
 
-The code in git to read the info in .git/branches is still there,
-but nothing ever writes to this, so lets stop creating it.
+Mike Hommey <mh@glandium.org> writes:
 
-Signed-off-by: Kristian H=C3=B8gsberg <krh@redhat.com>
----
+> 3803bcea tried to fix this, but it only adds the branckes when the given
+> In-Reply-To begins and ends with whitespaces. It also didn't do anything
+> to the --in-reply-to argument.
+>
+> Signed-off-by: Mike Hommey <mh@glandium.org>
+> ---
+>
+> I just got bitten by this...
 
-As far as I can see this should be safe, but I admit to never really
-knowing what .git/branches was originally used for - tracking remote
-branches or something?  In any case, we only ever read from this dir
-so the only left in git to deal with this seems to be for compatibilty
-with older repos.
+Interesting.
 
-Kristian
+>
+>  git-send-email.perl |    5 +++--
+>  1 files changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 76baa8e..1434eb2 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -367,10 +367,11 @@ if ($thread && !defined $initial_reply_to && $prompting) {
+>  	} while (!defined $_);
+>  
+>  	$initial_reply_to = $_;
+> -	$initial_reply_to =~ s/^\s+<?/</;
+> -	$initial_reply_to =~ s/>?\s+$/>/;
+>  }
 
- templates/branches-- |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
- delete mode 100644 templates/branches--
+I wonder what the original rationale for these \s+ was.
+Will apply, anyway.  Thanks.
 
-diff --git a/templates/branches-- b/templates/branches--
-deleted file mode 100644
-index fae8870..0000000
---- a/templates/branches--
-+++ /dev/null
-@@ -1 +0,0 @@
--: this is just to ensure the directory exists.
---=20
-1.5.3.4
+>  
+> +$initial_reply_to =~ s/^\s*\<?/\</;
+> +$initial_reply_to =~ s/>?\s*$/>/;
+> +
+>  if (!defined $smtp_server) {
+>  	foreach (qw( /usr/sbin/sendmail /usr/lib/sendmail )) {
+>  		if (-x $_) {
+> -- 
+> 1.5.3.7
