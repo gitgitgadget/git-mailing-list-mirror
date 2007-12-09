@@ -1,72 +1,55 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: git-svn branch naming question
-Date: Sun, 9 Dec 2007 03:13:36 +0100
-Message-ID: <20071209021336.GA8327@atjola.homenet>
-References: <20071208010438.GE3199@genesis.frugalware.org> <20071208105901.GA2844@xp.machine.xx> <20071208141449.GH3199@genesis.frugalware.org> <20071208165657.GC2844@xp.machine.xx> <20071208235248.GK3199@genesis.frugalware.org> <20071209020510.GM3199@genesis.frugalware.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Where has "git ls-remote" reference pattern matching gone?
+Date: Sat, 8 Dec 2007 21:20:50 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0712082048570.5349@iabervon.org>
+References: <4E5E5B1E-A303-45C9-9944-57D54FD50F80@orakel.ntnu.no>
+ <7vve78tzw1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Baumann <waste.manager@gmx.de>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sun Dec 09 03:14:19 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 09 03:21:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1BgP-0002l3-4h
-	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 03:14:17 +0100
+	id 1J1Bn7-0004B2-EQ
+	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 03:21:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753225AbXLICNk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Dec 2007 21:13:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751659AbXLICNk
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 21:13:40 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38951 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752743AbXLICNj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 21:13:39 -0500
-Received: (qmail invoked by alias); 09 Dec 2007 02:13:37 -0000
-Received: from i577AC58C.versanet.de (EHLO localhost) [87.122.197.140]
-  by mail.gmx.net (mp027) with SMTP; 09 Dec 2007 03:13:37 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19fIxVbJLhfY9cBu5drP+udeEmSnchdps9cvpLhMD
-	Xkdfnpnwow7tFU
-Content-Disposition: inline
-In-Reply-To: <20071209020510.GM3199@genesis.frugalware.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Y-GMX-Trusted: 0
+	id S1753235AbXLICUx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 21:20:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752791AbXLICUw
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 21:20:52 -0500
+Received: from iabervon.org ([66.92.72.58]:49060 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751188AbXLICUw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 21:20:52 -0500
+Received: (qmail 14598 invoked by uid 1000); 9 Dec 2007 02:20:50 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 9 Dec 2007 02:20:50 -0000
+In-Reply-To: <7vve78tzw1.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67585>
 
-On 2007.12.09 03:05:10 +0100, Miklos Vajna wrote:
-> On Sun, Dec 09, 2007 at 12:52:48AM +0100, Miklos Vajna <vmiklos@fruga=
-lware.org> wrote:
-> > >   [svn-remote "svn"]
-> > >         url =3D https://url/to/your/svn/repo
-> > >         fetch =3D trunk:refs/heads/trunk
-                                 ^^^^^
-> > >         branches =3D branches/*:refs/heads/*
-                                         ^^^^^
-> > >         tags =3D tags/*:refs/heads/tags/*
-                                 ^^^^^
+On Sat, 8 Dec 2007, Junio C Hamano wrote:
 
->         url =3D svn+ssh://vmiklos@svn.gnome.org/svn/ooo-build
->         fetch =3D trunk:refs/master
->         branches =3D branches/*:refs/*
->         tags =3D tags/*:refs/tags/*
+> Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no> writes:
+> 
+> > ls-remote was recently made a builtin; was reference filtering
+> > deliberately removed, or was it just lost in translation from the
+> > shell script?
+> 
+> I suspect that to be the case.  Daniel, I think this is yours.
 
-Just a guess, but this seems pretty headless ;-)
+Ah, sure enough. I didn't see that feature there, I guess. Am I right that 
+it's supposed to have "git ls-remote origin db/*" return refs of the 
+form "*/db/*", interpreted as for globs?
 
-Bj=F6rn
+Eyvind: can I get a test case? I haven't ever used this feature, and I'm 
+not sure I'll implement it correctly.
 
-> and wanted to fetch the revisions, but actually
->=20
-> $ git svn fetch
->=20
-> does not fetch any revisions. (yes, it does once i put back the
-> "remotes" prefix). is this a bug? :)
->=20
-> thanks,
-> - VMiklos
+	-Daniel
+*This .sig left intentionally blank*
