@@ -1,69 +1,63 @@
-From: "Jonathan del Strother" <maillist@steelskies.com>
-Subject: Re: [PATCH] don't mention index refreshing side effect in git-status docs
-Date: Sun, 9 Dec 2007 16:16:13 +0000
-Message-ID: <57518fd10712090816pa43cf97mbc1b8f5fbe81c66f@mail.gmail.com>
-References: <20071209082133.GA2257@coredump.intra.peff.net>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH 2/2] Add support for URLs to git-apply
+Date: Sun, 9 Dec 2007 18:02:50 +0100
+Organization: glandium.org
+Message-ID: <20071209170250.GA18955@glandium.org>
+References: <1197194672-28568-1-git-send-email-mh@glandium.org> <1197194672-28568-2-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 09 17:16:37 2007
+X-From: git-owner@vger.kernel.org Sun Dec 09 18:03:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1OpY-0001tZ-No
-	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 17:16:37 +0100
+	id 1J1PYg-0007lP-Qn
+	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 18:03:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750865AbXLIQQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Dec 2007 11:16:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750773AbXLIQQP
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Dec 2007 11:16:15 -0500
-Received: from rv-out-0910.google.com ([209.85.198.190]:15739 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750713AbXLIQQO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Dec 2007 11:16:14 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1311337rvb
-        for <git@vger.kernel.org>; Sun, 09 Dec 2007 08:16:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=fENsBWWI90ugAiWK+2Ypdgq72BGIkmeaoniYIyQ86NM=;
-        b=G/tCsUd3LuXbzDMVdX2EpR36rQDbfgf4pbmFGsGm9F5D3DhBXgEuK6K7Ixtmfp04v5+5yo9NoatSUurLWDHPiwZvOMcofbmVd+wXIrRLqN+jeFD05VFcVYKFUzUJSsDboGQWHfBYruXm4ywFc8j+a0HuWicQm3ZWZhoaQgT716A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=UZb4vLxSoipzToqc26cC5nB8kWlkAtVMG8VzNy/jTVvwCbafNOrqsPOIJ8qFl819Egdm/wn8qmH8GH4xE3u6mYMS9mqlKDKU6TN2Y9zvszlJ8VnJHR/xQKpG2u7nz3rm9Gyuq8yRm/HWoumFqyv5cHnT4AuM7tcvxZC4/4J/nKs=
-Received: by 10.140.192.9 with SMTP id p9mr3704339rvf.1197216973862;
-        Sun, 09 Dec 2007 08:16:13 -0800 (PST)
-Received: by 10.141.211.1 with HTTP; Sun, 9 Dec 2007 08:16:13 -0800 (PST)
-In-Reply-To: <20071209082133.GA2257@coredump.intra.peff.net>
+	id S1751192AbXLIRCx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Dec 2007 12:02:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751188AbXLIRCx
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Dec 2007 12:02:53 -0500
+Received: from smtp28.orange.fr ([80.12.242.101]:41651 "EHLO smtp28.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751175AbXLIRCw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Dec 2007 12:02:52 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2816.orange.fr (SMTP Server) with ESMTP id 7399570000C2
+	for <git@vger.kernel.org>; Sun,  9 Dec 2007 18:02:51 +0100 (CET)
+Received: from namakemono.glandium.org (APuteaux-153-1-79-219.w81-249.abo.wanadoo.fr [81.249.109.219])
+	by mwinf2816.orange.fr (SMTP Server) with ESMTP id 5781C70000C1;
+	Sun,  9 Dec 2007 18:02:51 +0100 (CET)
+X-ME-UUID: 20071209170251358.5781C70000C1@mwinf2816.orange.fr
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1J1PYI-0004zt-QT; Sun, 09 Dec 2007 18:02:50 +0100
 Content-Disposition: inline
-X-Google-Sender-Auth: 9ed85562be72b540
+In-Reply-To: <1197194672-28568-2-git-send-email-mh@glandium.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67629>
 
-On Dec 9, 2007 8:21 AM, Jeff King <peff@peff.net> wrote:
-> The tip about speeding up subsequent operations is now
-> obsolete; since aecbf914, git-diff now squelches empty diffs
-> and performs an automatic refresh.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+On Sun, Dec 09, 2007 at 11:04:32AM +0100, Mike Hommey wrote:
+> Instead of doing several "wget -O - url | git-apply -" in a raw, you now
+> can just git-apply url1 url2 ...
+> 
+> Signed-off-by: Mike Hommey <mh@glandium.org>
 > ---
-> This is on top of my other patches to the git-status docs.
->
-> I don't see any reason to mention this side effect at all. Those who
-> know enough to set diff.autorefreshindex presumably know what they are
-> doing, and the removed paragraph is a bit confusing to those who don't.
->
+> 
+> After spending an afternoon wgetting patches to applying them, I got fed up
+> and just added basic url support to git-apply. Note that the fwrite_strbuf
+> function should just live in http.c, but until the http api is fully switched
+> to use strbufs instead of its struct buffer (which I'm planning to do), it
+> can stay like this.
 
+I'm going to resend these 2 patches, with some others that do some changes
+to the http code.
 
-...   I wasn't aware the index needed refreshing.  This might be
-totally unrelated to the present conversation, but the GIT-VERSION-GEN
-script occasionally gives me spurious 'dirty' results (eg when a file
-timestamp changes despite the content having changed).  Should it
-perhaps be running "git update-index --refresh" before it runs "git
-diff-index --name-only HEAD" ?
+Mike
