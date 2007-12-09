@@ -1,83 +1,59 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git-svn branch naming question
-Date: Sun, 9 Dec 2007 20:36:33 +0100
-Message-ID: <20071209193633.GR3199@genesis.frugalware.org>
-References: <20071208010438.GE3199@genesis.frugalware.org> <20071208105901.GA2844@xp.machine.xx> <20071208141449.GH3199@genesis.frugalware.org> <20071208165657.GC2844@xp.machine.xx> <20071208235248.GK3199@genesis.frugalware.org> <20071209020510.GM3199@genesis.frugalware.org> <20071209022624.GA31033@soma> <20071209023600.GP3199@genesis.frugalware.org> <20071209032608.GB31033@soma>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] git-send-email.perl: Really add angle brackets to  In-Reply-To if necessary
+Date: Sun, 09 Dec 2007 20:46:37 +0100
+Message-ID: <85lk83r6qq.fsf@lola.goethe.zz>
+References: <1197219900-19334-1-git-send-email-mh@glandium.org>
+	<1197220648-20433-1-git-send-email-mh@glandium.org>
+	<7v63z7rb87.fsf@gitster.siamese.dyndns.org>
+	<851w9vsp8o.fsf@lola.goethe.zz> <86aboju2bp.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="kZU6r8y0YpRwyDfh"
-Cc: Peter Baumann <waste.manager@gmx.de>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun Dec 09 20:36:59 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Mike Hommey <mh@glandium.org>,
+	git@vger.kernel.org
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+X-From: git-owner@vger.kernel.org Sun Dec 09 20:46:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1RxR-0005Qk-CN
-	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 20:36:57 +0100
+	id 1J1S6z-0000hR-H6
+	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 20:46:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751519AbXLITgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Dec 2007 14:36:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751042AbXLITgf
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Dec 2007 14:36:35 -0500
-Received: from virgo.iok.hu ([193.202.89.103]:40793 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751285AbXLITge (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Dec 2007 14:36:34 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 8DD4D1B24F0;
-	Sun,  9 Dec 2007 20:36:33 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id BCEDA4465C;
-	Sun,  9 Dec 2007 20:35:25 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 33B2E1190054; Sun,  9 Dec 2007 20:36:33 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20071209032608.GB31033@soma>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751529AbXLITq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Dec 2007 14:46:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbXLITq2
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Dec 2007 14:46:28 -0500
+Received: from fencepost.gnu.org ([140.186.70.10]:44026 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751138AbXLITq2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Dec 2007 14:46:28 -0500
+Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
+	by fencepost.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <dak@gnu.org>)
+	id 1J1S6a-0005LA-4A; Sun, 09 Dec 2007 14:46:24 -0500
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 4E7BA1C4CE33; Sun,  9 Dec 2007 20:46:36 +0100 (CET)
+In-Reply-To: <86aboju2bp.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+	message of "Sun, 09 Dec 2007 10:53:46 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67655>
 
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
---kZU6r8y0YpRwyDfh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> I think what you were trying to do would work with:
+>
+>   for ($initial_reply_to) {
+>       s/^\s*<?/</;
+>       s/>?\s*$/>/;
+>   }
+>
+> Untested, but I get this stuff right most of the time. :)
 
-On Sat, Dec 08, 2007 at 07:26:08PM -0800, Eric Wong <normalperson@yhbt.net> wrote:
-> Perhaps git-clone could gain the ability to clone refs/remotes/ as-is
-> without an extra step?
+How is that supposed to differ from Mike's patch?
 
-well, what i did for now is to use 2 repos. i use git-svn to create a
-regular git-svn repo from svn, then an other one to create a regular git
-repo from the git-svn one. this has one benefit: git-svn requires a
-working tree, but i definitely want to publish only a bare repo. so here
-is what i have in the bare repo's config:
-
-[remote "origin"]
-        url = /path/to/git-svn/repo
-        fetch = +refs/remotes/origin/tags/*:refs/tags/*
-        fetch = +refs/remotes/origin/trunk:refs/heads/master
-        fetch = +refs/remotes/origin/*:refs/heads/*
-
-then a simple git fetch will do what i need. i'm not entirely sure this
-is the right think to do, but works for me :)
-
-thanks,
-- VMiklos
-
---kZU6r8y0YpRwyDfh
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFHXEPBe81tAgORUJYRAsAYAJ9Pcl5VWemytiCm3EwNxAD4ZW6iegCgpojw
-o0gOP5/7/nSxzzJHZHF8DoM=
-=QRqs
------END PGP SIGNATURE-----
-
---kZU6r8y0YpRwyDfh--
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
