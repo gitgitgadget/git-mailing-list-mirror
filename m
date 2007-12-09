@@ -1,74 +1,58 @@
-From: Adam Roben <aroben@apple.com>
-Subject: Re: git-svn capabilities
-Date: Sun, 09 Dec 2007 00:37:51 -0800
-Message-ID: <475BA95F.7040403@apple.com>
-References: <DB0B4F17-9E06-4C28-933E-FDEF9BAD6539@simplicidade.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] don't mention index refreshing side effect in
+	git-status docs
+Date: Sun, 9 Dec 2007 03:42:17 -0500
+Message-ID: <20071209084217.GA2377@coredump.intra.peff.net>
+References: <20071209082133.GA2257@coredump.intra.peff.net> <7vhciss1ww.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Pedro Melo <melo@simplicidade.org>
-X-From: git-owner@vger.kernel.org Sun Dec 09 09:38:15 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 09 09:42:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1Hfy-0007KF-VX
-	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 09:38:15 +0100
+	id 1J1HkH-00081K-BZ
+	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 09:42:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751692AbXLIIhy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Dec 2007 03:37:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751655AbXLIIhy
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Dec 2007 03:37:54 -0500
-Received: from mail-out3.apple.com ([17.254.13.22]:61621 "EHLO
-	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751511AbXLIIhx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Dec 2007 03:37:53 -0500
-Received: from relay14.apple.com (relay14.apple.com [17.128.113.52])
-	by mail-out3.apple.com (Postfix) with ESMTP id 6A9D91A9D5F7
-	for <git@vger.kernel.org>; Sun,  9 Dec 2007 00:37:53 -0800 (PST)
-Received: from relay14.apple.com (unknown [127.0.0.1])
-	by relay14.apple.com (Symantec Mail Security) with ESMTP id D100D28083
-	for <git@vger.kernel.org>; Sun,  9 Dec 2007 00:37:52 -0800 (PST)
-X-AuditID: 11807134-a819bbb000005aa1-24-475ba9604a6d
-Received: from gertie.apple.com (gertie.apple.com [17.151.62.15])
-	by relay14.apple.com (Apple SCV relay) with ESMTP id 3A14A28056
-	for <git@vger.kernel.org>; Sun,  9 Dec 2007 00:37:52 -0800 (PST)
-Received: from [192.168.1.104] ([67.180.198.239])
- by ifon.apple.com (Sun Java System Messaging Server 6.2-8.04 (built Feb 28
- 2007)) with ESMTPSA id <0JSR00J0JXB30S80@ifon.apple.com> for
- git@vger.kernel.org; Sun, 09 Dec 2007 00:37:52 -0800 (PST)
-In-reply-to: <DB0B4F17-9E06-4C28-933E-FDEF9BAD6539@simplicidade.org>
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-X-Brightmail-Tracker: AAAAAA==
+	id S1751408AbXLIImU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Dec 2007 03:42:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751410AbXLIImU
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Dec 2007 03:42:20 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2078 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750884AbXLIImU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Dec 2007 03:42:20 -0500
+Received: (qmail 23891 invoked by uid 111); 9 Dec 2007 08:42:19 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 09 Dec 2007 03:42:19 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Dec 2007 03:42:17 -0500
+Content-Disposition: inline
+In-Reply-To: <7vhciss1ww.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67609>
 
-Pedro Melo wrote:
-> Hi,
->
-> I've been following along the gcc/git thread with interest and I've 
-> used Harvey Harrison recipe
->
-> http://article.gmane.org/gmane.comp.version-control.git/67253
->
-> with success on several svn repos.
->
-> One thing that I'm not sure yet if it is possible to do is this:
->
-> can I have a single central git repo that tracks the svn repo, allow 
-> several developers to use clone to copy that repo, and each one of 
-> them (after proper manual configuration) uses dcommit to push back to 
-> svn?
->
-> All the recipes so far assume that each developer has to go through 
-> the initial git-svn fetch and have a copy of the entire SVN repo, and 
-> that seems wasteful to me.
+On Sun, Dec 09, 2007 at 12:33:19AM -0800, Junio C Hamano wrote:
 
-The "Basic Examples" section of the git-svn man page describe how to do 
-just that (though only for a single branch).
+> Jeff King <peff@peff.net> writes:
+> 
+> > If there is some desire to document the side effect, I think we should
+> > at least remove the mention of speeding up git-diff (which is just wrong
+> > now).
+> 
+> Why is it "just wrong"?  Having to squelch the false hits and to run
+> auto-refresh are both unnecessary overhead if your index is fresh.
 
--Adam
+I mean that this is not a useful technique for speeding up git-diff
+anymore (assuming you have not tinkered with autorefreshindex, in which
+case I assume you know what you are doing and don't need this tip).
+
+Did you think I meant "there is no speedup with autorefreshindex off",
+or are you arguing that even with the new diff behavior there is still a
+speedup in "git status; git diff" over just "git status"?
+
+-Peff
