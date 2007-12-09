@@ -1,75 +1,171 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: [PATCH] git-send-email.perl: Really add angle brackets to  In-Reply-To if necessary
-Date: Sun, 09 Dec 2007 10:53:46 -0800
-Message-ID: <86aboju2bp.fsf@blue.stonehenge.com>
-References: <1197219900-19334-1-git-send-email-mh@glandium.org>
-	<1197220648-20433-1-git-send-email-mh@glandium.org>
-	<7v63z7rb87.fsf@gitster.siamese.dyndns.org>
-	<851w9vsp8o.fsf@lola.goethe.zz>
+From: Wink Saville <wink@saville.com>
+Subject: Re: How-to combine several separate git repos?
+Date: Sun, 09 Dec 2007 11:12:37 -0800
+Message-ID: <475C3E25.30704@saville.com>
+References: <475B8C59.7050707@saville.com> <20071209104336.GA3163@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Mike Hommey <mh@glandium.org>,
-	git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Dec 09 19:54:14 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 09 20:13:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1RI2-0007IM-VJ
-	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 19:54:11 +0100
+	id 1J1RaJ-0005br-T3
+	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 20:13:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751294AbXLISxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Dec 2007 13:53:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750940AbXLISxs
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Dec 2007 13:53:48 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:38122 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750789AbXLISxr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Dec 2007 13:53:47 -0500
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 58E281DE63D; Sun,  9 Dec 2007 10:53:46 -0800 (PST)
-x-mayan-date: Long count = 12.19.14.16.1; tzolkin = 11 Imix; haab = 9 Mac
-In-Reply-To: <851w9vsp8o.fsf@lola.goethe.zz> (David Kastrup's message of "Sun, 09 Dec 2007 19:21:43 +0100")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
+	id S1751560AbXLITMm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Dec 2007 14:12:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751534AbXLITMm
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Dec 2007 14:12:42 -0500
+Received: from rv-out-0910.google.com ([209.85.198.188]:19114 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751009AbXLITMl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Dec 2007 14:12:41 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so1343217rvb
+        for <git@vger.kernel.org>; Sun, 09 Dec 2007 11:12:40 -0800 (PST)
+Received: by 10.140.169.4 with SMTP id r4mr3805371rve.1197227560272;
+        Sun, 09 Dec 2007 11:12:40 -0800 (PST)
+Received: from ?192.168.0.133? ( [70.91.206.233])
+        by mx.google.com with ESMTPS id f42sm4744571rvb.2007.12.09.11.12.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 09 Dec 2007 11:12:39 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <20071209104336.GA3163@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67651>
 
->>>>> "David" == David Kastrup <dak@gnu.org> writes:
+Alex Riesen wrote:
+> Wink Saville, Sun, Dec 09, 2007 07:34:01 +0100:
+>   
+>> I've got several git repositories of different projects and was thinking
+>> I should combine into one repository, but my googling around didn't turn up
+>> any simple way of doing it.
+>>
+>> Any advice?
+>>     
+>
+> Should they both be visible in one working tree as directories?
+>   
+Yes, I currently have:
 
->>> $initial_reply_to = $_;
->>> -	$initial_reply_to =~ s/^\s+<?/</;
->>> -	$initial_reply_to =~ s/>?\s+$/>/;
->>> }
->> 
->> I wonder what the original rationale for these \s+ was.
->> Will apply, anyway.  Thanks.
+  ~/prgs/android/StateMachine
+  ~/prgs/android/test2
+  ~/prgs/android/test-annotation
 
-David> The original line read
+I'd with 3 git repo's in StateMachine, test2 & test-annotation.
+Ideally I was thinking having using submodules as they
+separate but related. But not sure submodules are ready.
+> Should these be independent branches?
+>
+> For instance, you can fetch one into another:
+>
+>     $ cd project1
+>     $ git config remote.project2.url /path/to/project2
+>     $ git config remote.project2.fetch 'refs/heads/*:refs/project2/*'
+>     $ git fetch project
+>
+> That will give you two (or more) branches, containing history of the
+> project1 and project2. They are still completely independent, just use
+> the same object store.
+>   
+So the above isn't what I want, but for grins I tried it, and got to
+this point:
 
-David> 	$initial_reply_to =~ s/(^\s+|\s+$)//g;
+wink@ic2d1:$ cd StateMachine
+wink@ic2d1:$ cat .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+wink@ic2d1:$ git config remote.test2.url ../test2
+wink@ic2d1:$ git config remote.test2.fetch 'refs/heads/*:refs/test2/*'
+wink@ic2d1:$ cat .git/config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "test2"]
+        url = ../test2
+        fetch = refs/heads/*:refs/test2/*
+wink@ic2d1:$ git fetch test2
+warning: no common commits
+remote: Counting objects: 24, done.  
+remote: Compressing objects: 100% remote: (16/16), done.  
+remote: Total 24 (delta 3), reused 0 (delta 0)
+Unpacking objects: 100% (24/24), done.  
+ From ../test2
+ * [new branch]      master -> refs/test2/master
+wink@ic2d1:$ git checkout -b test2 test2/master
+Branch test2 set up to track remote branch refs/test2/master.
+Switched to a new branch "test2"
+wink@ic2d1:$ git status
+# On branch test2
+nothing to commit (working directory clean)
+wink@ic2d1:$ git status
+# On branch test2
+nothing to commit (working directory clean)
+wink@ic2d1:$ git branch -a
+  master
+* test2
+wink@ic2d1:$ git checkout master
+Switched to branch "master"
+wink@ic2d1:$ git checkout test2
+Switched to branch "test2"
 
-David> and was used just for stripping spaces (no stripping necessary when
-David> there is no space, so \s+ was ok).  The change was supposed to work
-David> on the brackets, too.
+So that worked, but as I mentioned not quite what I want
+as I want to "see" them all simultaneously.
 
-David> That Mike got bitten here is proof that the original idea had merit.
-David> Too bad the implementation did not actually work.
+> You can merge them, for example:
+>
+>     $ cd project1
+>     $ git merge project2/master
+>   
+Starting over (restoring the original from a tar backup)
+this didn't work I get:
 
-I think what you were trying to do would work with:
+wink@ic2d1:$ cd StateMachine
+wink@ic2d1:$ git merge ../test2/master
+../test2/master - not something we can merge
 
-  for ($initial_reply_to) {
-      s/^\s*<?/</;
-      s/>?\s*$/>/;
-  }
+> Assuming that there is no filename collisions you'll get a repo with
+> two merged histories (and two starting points). In case you get
+> conflicts you can either resolve them by editing or just move the
+> problematic project in subdirectory:
+>
+>     $ git merge -s ours --no-commit project2/master
+>     Automatic merge went well; stopped before committing as requested
+>
+> here will be no conflicts. Merge strategy "ours" (-s ours) does not
+> take anything from the branch to be merged. The coolest strategy ever.
+> "--no-commit" stops the operation just before committing.
+>
+>     $ git read-tree --prefix=project2/ project2/master
+>     $ git checkout-index -a
+>     $ git commit
+>
+> That's it. The histories are merged and the files of project2 are
+> placed in the directory "project2". It is a wee bit harder to browse
+> the history of the files: you have to give both new and "old" name of
+> the project2's files, as if you renamed them (that's what read-tree
+> with --prefix did).
+>
+>   
+So the first suggestion works, but I don't want them as
+separate branches as I want to work on the simultaneously
+and they'll share common code.
 
-Untested, but I get this stuff right most of the time. :)
+Another option I was thinking would work for me would be to use
+submodules. But I'm not sure submodules are ready for
+neophytes and maybe it doesn't do what I want?
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Thanks,
+
+Wink Saville
