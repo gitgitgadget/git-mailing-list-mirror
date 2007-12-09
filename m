@@ -1,108 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: Teach "a=blob" action to be more lenient about blob/file mime type
-Date: Sat, 08 Dec 2007 19:34:34 -0800
-Message-ID: <7vk5notub9.fsf@gitster.siamese.dyndns.org>
-References: <1197114913-15626-1-git-send-email-jnareb@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Restore ls-remote reference pattern matching
+Date: Sun, 9 Dec 2007 00:16:05 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0712082346310.5349@iabervon.org>
+References: <Pine.LNX.4.64.0712082134350.5349@iabervon.org>
+ <7vodd0tuuu.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 09 04:35:15 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 09 06:16:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1Cwk-0000rp-3M
-	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 04:35:14 +0100
+	id 1J1EWn-00080S-Ip
+	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 06:16:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750853AbXLIDev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 22:34:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750816AbXLIDev
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 22:34:51 -0500
-Received: from a-sasl-quonix.pobox.com ([208.72.237.25]:36431 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750785AbXLIDev (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 22:34:51 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B1E7412F;
-	Sat,  8 Dec 2007 22:34:45 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5148D412E;
-	Sat,  8 Dec 2007 22:34:41 -0500 (EST)
-In-Reply-To: <1197114913-15626-1-git-send-email-jnareb@gmail.com> (Jakub
-	Narebski's message of "Sat, 8 Dec 2007 12:55:13 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751141AbXLIFQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Dec 2007 00:16:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751109AbXLIFQI
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Dec 2007 00:16:08 -0500
+Received: from iabervon.org ([66.92.72.58]:36610 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750794AbXLIFQH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Dec 2007 00:16:07 -0500
+Received: (qmail 25368 invoked by uid 1000); 9 Dec 2007 05:16:05 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 9 Dec 2007 05:16:05 -0000
+In-Reply-To: <7vodd0tuuu.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67594>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Sat, 8 Dec 2007, Junio C Hamano wrote:
 
-> Since 930cf7dd7cc6b87d173f182230763e1f1913d319 'blob' action knows the
-> file type; if the file type is not "text/*" or one of common network
-> image formats/mimetypes (gif, png, jpeg) then the action "blob"
-> defaulted to "blob_plain".  This caused the problem if mimetypes file
-> was not well suited for web, for example returning "application/x-sh"
-> for "*.sh" shell scripts, instead of "text/plain" (or other "text/*").
->
-> Now "blob" action defaults to "blob_plain" ('raw' view) only if file
-> is of type which is neither "text/*" nor "image/{gif,png,jpeg}"
-> AND it is binary file.  Otherwise it assumes that it can be displayed
-> either in <img> tag ("image/*" mimetype), or can be displayed line by
-> line (otherwise).
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > How's this? I vaguely tested it, and it doesn't break existing tests, and 
+> > it matches my guess at how the old code worked, at least maybe.
+> 
+> Well, contrib/examples/git-ls-remote.sh is your friend and you do not
+> have to "guess".
+> 
+> It did, for each ref $path it got from peek-remote, this:
+> 
+> 		for pat
+> 		do
+> 			case "/$path" in
+> 			*/$pat )
+> 				match=yes
+> 				break ;;
+> 			esac
+> 		done
+> 
+> I do not think pathspec_match() matches the string in a way compatible
+> with the above loop, and calling get_pathspec(prefix, argv) with
+> anything but a real path is a misuse of the interface.
 
-Ok, the intent sounds sane.  Let's see if the implementation is also
-sane.
+I'd found the same code ("git log -p -- git-ls-remote.sh" also reveals it, 
+and I couldn't remember it's contrib/examples that things end up in), but 
+I don't really follow that shell syntax.
 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index eac7e16..b833327 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -4302,7 +4302,7 @@ sub git_blob {
->  	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
->  		or die_error(undef, "Couldn't cat $file_name, $hash");
->  	my $mimetype = blob_mimetype($fd, $file_name);
-> -	if ($mimetype !~ m!^(?:text/|image/(?:gif|png|jpeg)$)!) {
-> +	if ($mimetype !~ m!^(?:text/|image/(?:gif|png|jpeg)$)! && -B $fd) {
->  		close $fd;
->  		return git_blob_plain($mimetype);
->  	}
+> I think if you do fnmatch(3) that would be compatible with the shell
+> loop.
 
-"If not text or image and binary go blob_plain" -- Ok.
+Maybe:
+--- cut here ---
+I entirely missed that "git ls-remote <repo> <ref-pattern>..." is
+supposed to work. This restores it.
 
-> @@ -4343,16 +4343,7 @@ sub git_blob {
->  	}
->  	git_print_page_path($file_name, "blob", $hash_base);
->  	print "<div class=\"page_body\">\n";
-> +	if ($mimetype =~ m!^image/!) {
->  		print qq!<img type="$mimetype"!;
->  		if ($file_name) {
->  			print qq! alt="$file_name" title="$file_name"!;
-> @@ -4361,7 +4352,16 @@ sub git_blob {
->  		      href(action=>"blob_plain", hash=>$hash,
->  		           hash_base=>$hash_base, file_name=>$file_name) .
->  		      qq!" />\n!;
-> +	} else {
-> +		my $nr;
-> +		while (my $line = <$fd>) {
-> +			chomp $line;
-> +			$nr++;
-> +			$line = untabify($line);
-> +			printf "<div class=\"pre\"><a id=\"l%i\" href=\"#l%i\" class=\"linenr\">%4i</a> %s</div>\n",
-> +			       $nr, $nr, $nr, esc_html($line, -nbsp=>1);
-> +		}
-> +	} els
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+This matches git-name-rev --refs=<ref-pattern>, anyway, which is the 
+closest example I could find. If this isn't the desired behavior, it's 
+probably easier to just edit this instead of trying to explain the right 
+thing to me.
 
-"If image, do image, but otherwise show line-by-line" -- Ok.
+ builtin-ls-remote.c |   20 +++++++++++++++++---
+ 1 files changed, 17 insertions(+), 3 deletions(-)
 
-There is a "Huh?" on the last line, though.
-
-> P.S. BTW is there some plumbing for scripts to help with
-> gitattributes, for example showing all gitattributes (or status of
-> selected attributes) for given path?
-
-$ git grep gitattributes Documentation | grep -i display
+diff --git a/builtin-ls-remote.c b/builtin-ls-remote.c
+index 56f3f88..d936c28 100644
+--- a/builtin-ls-remote.c
++++ b/builtin-ls-remote.c
+@@ -17,6 +17,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	struct remote *remote;
+ 	struct transport *transport;
+ 	const struct ref *ref;
++	const char **refpatterns = NULL;
+ 
+ 	setup_git_directory_gently(&nongit);
+ 
+@@ -50,9 +51,12 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 		break;
+ 	}
+ 
+-	if (!dest || i != argc - 1)
++	if (!dest)
+ 		usage(ls_remote_usage);
+ 
++	if (argc > i + 1)
++		refpatterns = argv + i;
++
+ 	remote = nongit ? NULL : remote_get(dest);
+ 	if (remote && !remote->url_nr)
+ 		die("remote %s has no configured URL", dest);
+@@ -66,8 +70,18 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 		return 1;
+ 
+ 	while (ref) {
+-		if (check_ref_type(ref, flags))
+-			printf("%s	%s\n", sha1_to_hex(ref->old_sha1), ref->name);
++		if (check_ref_type(ref, flags)) {
++			int match = 0;
++			if (refpatterns) {
++				for (i = 0; refpatterns[i]; i++) {
++					if (!fnmatch(refpatterns[i], ref->name, 0))
++						match = 1;
++				}
++			} else
++				match = 1;
++			if (match)
++				printf("%s	%s\n", sha1_to_hex(ref->old_sha1), ref->name);
++		}
+ 		ref = ref->next;
+ 	}
+ 	return 0;
+-- 
+1.5.3.6.886.gb204
