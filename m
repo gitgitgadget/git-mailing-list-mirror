@@ -1,84 +1,83 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn branch naming question
-Date: Sat, 8 Dec 2007 18:26:24 -0800
-Message-ID: <20071209022624.GA31033@soma>
-References: <20071208010438.GE3199@genesis.frugalware.org> <20071208105901.GA2844@xp.machine.xx> <20071208141449.GH3199@genesis.frugalware.org> <20071208165657.GC2844@xp.machine.xx> <20071208235248.GK3199@genesis.frugalware.org> <20071209020510.GM3199@genesis.frugalware.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Restore ls-remote reference pattern matching
+Date: Sat, 8 Dec 2007 21:35:48 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0712082134350.5349@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Peter Baumann <waste.manager@gmx.de>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sun Dec 09 03:26:47 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Dec 09 03:36:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1BsU-0005K1-QG
-	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 03:26:47 +0100
+	id 1J1C1d-0006r9-22
+	for gcvg-git-2@gmane.org; Sun, 09 Dec 2007 03:36:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753301AbXLIC00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Dec 2007 21:26:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753297AbXLIC0Z
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 21:26:25 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:50218 "EHLO hand.yhbt.net"
+	id S1753358AbXLICfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Dec 2007 21:35:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753350AbXLICfv
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Dec 2007 21:35:51 -0500
+Received: from iabervon.org ([66.92.72.58]:33397 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753258AbXLIC0Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Dec 2007 21:26:25 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id A5FD27DC025;
-	Sat,  8 Dec 2007 18:26:24 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20071209020510.GM3199@genesis.frugalware.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753348AbXLICfu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Dec 2007 21:35:50 -0500
+Received: (qmail 14993 invoked by uid 1000); 9 Dec 2007 02:35:48 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 9 Dec 2007 02:35:48 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67589>
 
-Miklos Vajna <vmiklos@frugalware.org> wrote:
-> On Sun, Dec 09, 2007 at 12:52:48AM +0100, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> > >   [svn-remote "svn"]
-> > >         url = https://url/to/your/svn/repo
-> > >         fetch = trunk:refs/heads/trunk
-> > >         branches = branches/*:refs/heads/*
-> > >         tags = tags/*:refs/heads/tags/*
-> > > 
-> > > but I advice you to not do this. refs/remotes has a special meaning in git,
-> > > e.g.  you can't commit directly to it (which makes sense, because it only
-> > > tracks the state of the remote repo. On the other hand remote branches won't
-> > > get cloned per default.)
-> > 
-> > yes, that's exactly what i want to do - in case the target is to convert
-> > an svn repo to a git one (and i need git-svn since git-svnimport is to
-> > be removed in 1.5.4)
-> 
-> hm, this seem to be not-working for me.
-> 
-> after "git svn init -s url" i edited the config:
-> 
-> $ cat .git/config
-> [core]
->         repositoryformatversion = 0
->         filemode = true
->         bare = false
->         logallrefupdates = true
-> [svn-remote "svn"]
->         url = svn+ssh://vmiklos@svn.gnome.org/svn/ooo-build
->         fetch = trunk:refs/master
->         branches = branches/*:refs/*
->         tags = tags/*:refs/tags/*
-> 
-> and wanted to fetch the revisions, but actually
-> 
-> $ git svn fetch
-> 
-> does not fetch any revisions. (yes, it does once i put back the
-> "remotes" prefix). is this a bug? :)
+I entirely missed that "git ls-remote <repo> <ref-pattern>..." is
+supposed to work. This restores it.
 
-I'm not sure if it's considered a "bug", but that's just the
-way it is at the moment.  I can't remember why, but I did
-make git-svn force the presence of the "remotes/" prefix
-in all refs it writes to...
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
+How's this? I vaguely tested it, and it doesn't break existing tests, and 
+it matches my guess at how the old code worked, at least maybe.
 
+ builtin-ls-remote.c |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/builtin-ls-remote.c b/builtin-ls-remote.c
+index 56f3f88..f8669ce 100644
+--- a/builtin-ls-remote.c
++++ b/builtin-ls-remote.c
+@@ -17,6 +17,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	struct remote *remote;
+ 	struct transport *transport;
+ 	const struct ref *ref;
++	const char **refpathspec = NULL;
+ 
+ 	setup_git_directory_gently(&nongit);
+ 
+@@ -50,9 +51,12 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 		break;
+ 	}
+ 
+-	if (!dest || i != argc - 1)
++	if (!dest)
+ 		usage(ls_remote_usage);
+ 
++	if (argc > i + 1)
++		refpathspec = get_pathspec("*", argv + i);
++
+ 	remote = nongit ? NULL : remote_get(dest);
+ 	if (remote && !remote->url_nr)
+ 		die("remote %s has no configured URL", dest);
+@@ -66,7 +70,9 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 		return 1;
+ 
+ 	while (ref) {
+-		if (check_ref_type(ref, flags))
++		if (check_ref_type(ref, flags) && 
++		    (!refpathspec || 
++		     pathspec_match(refpathspec, NULL, ref->name, 0)))
+ 			printf("%s	%s\n", sha1_to_hex(ref->old_sha1), ref->name);
+ 		ref = ref->next;
+ 	}
 -- 
-Eric Wong
+1.5.3.6.886.gb204
