@@ -1,230 +1,166 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH 5/5] Fix various memory leaks in http-push.c and http-walker.c
-Date: Mon, 10 Dec 2007 22:36:11 +0100
-Message-ID: <1197322571-25023-5-git-send-email-mh@glandium.org>
-References: <1197322571-25023-1-git-send-email-mh@glandium.org>
- <1197322571-25023-2-git-send-email-mh@glandium.org>
- <1197322571-25023-3-git-send-email-mh@glandium.org>
- <1197322571-25023-4-git-send-email-mh@glandium.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 10 22:36:51 2007
+From: Luciano Rocha <luciano@eurotux.com>
+Subject: Re: backups with git and inotify
+Date: Mon, 10 Dec 2007 21:47:28 +0000
+Message-ID: <20071210214728.GB17458@bit.office.eurotux.com>
+References: <20071210202911.GA14738@bit.office.eurotux.com> <e1dab3980712101318v264fcce5pebbb829d8cefb1ac@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="8P1HSweYDcXXzwPJ"
+Cc: git@vger.kernel.org
+To: David Tweed <david.tweed@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 10 22:47:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1qIq-0003Jj-7B
-	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 22:36:40 +0100
+	id 1J1qTm-0007zF-7H
+	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 22:47:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753962AbXLJVgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2007 16:36:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753954AbXLJVgQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 16:36:16 -0500
-Received: from smtp27.orange.fr ([80.12.242.96]:55901 "EHLO smtp27.orange.fr"
+	id S1751210AbXLJVrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 16:47:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751198AbXLJVrg
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 16:47:36 -0500
+Received: from os.eurotux.com ([216.75.63.6]:42152 "EHLO os.eurotux.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751485AbXLJVgO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2007 16:36:14 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2716.orange.fr (SMTP Server) with ESMTP id A6A7B1C000BE
-	for <git@vger.kernel.org>; Mon, 10 Dec 2007 22:36:12 +0100 (CET)
-Received: from namakemono.glandium.org (APuteaux-153-1-79-219.w81-249.abo.wanadoo.fr [81.249.109.219])
-	by mwinf2716.orange.fr (SMTP Server) with ESMTP id 6931F1C00115;
-	Mon, 10 Dec 2007 22:36:12 +0100 (CET)
-X-ME-UUID: 20071210213612431.6931F1C00115@mwinf2716.orange.fr
-Received: from mh by namakemono.glandium.org with local (Exim 4.68)
-	(envelope-from <mh@glandium.org>)
-	id 1J1qIO-0006W2-2P; Mon, 10 Dec 2007 22:36:12 +0100
-X-Mailer: git-send-email 1.5.3.7.1159.gdd4a4-dirty
-In-Reply-To: <1197322571-25023-4-git-send-email-mh@glandium.org>
+	id S1751176AbXLJVrf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 16:47:35 -0500
+Received: (qmail 14294 invoked from network); 10 Dec 2007 21:47:33 -0000
+Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
+  by os.eurotux.com with AES256-SHA encrypted SMTP; 10 Dec 2007 21:47:33 -0000
+Content-Disposition: inline
+In-Reply-To: <e1dab3980712101318v264fcce5pebbb829d8cefb1ac@mail.gmail.com>
+User-Agent: Mutt/1.5.14 (2007-03-31)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67762>
 
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
+--8P1HSweYDcXXzwPJ
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- This one, too, sits on top of my strbuf patch for the http code. Note that
- I only went for the obvious ones I saw in the code I touched. There is more
- in these files.
+On Mon, Dec 10, 2007 at 09:18:18PM +0000, David Tweed wrote:
+> Hi, looks interesting project.
+>=20
+> I've been doing something similar-ish (but periodically rather than
+> upon changes). Here are some rough off-the-cuff observations (probably
+> telling you things you already know).
 
- http-push.c   |   32 +++++++++++++++++++++-----------
- http-walker.c |   40 +++++++++++++++++++++++++---------------
- 2 files changed, 46 insertions(+), 26 deletions(-)
+Thanks.
 
-diff --git a/http-push.c b/http-push.c
-index ad8167e..610ed9c 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -924,6 +924,7 @@ static int fetch_index(unsigned char *sha1)
- 				     hex);
- 		}
- 	} else {
-+		free(url);
- 		return error("Unable to start request");
- 	}
- 
-@@ -1114,6 +1115,7 @@ int fetch_ref(char *ref, unsigned char *sha1)
- 	char *base = remote->url;
- 	struct active_request_slot *slot;
- 	struct slot_results results;
-+	int ret;
- 
- 	url = quote_ref_url(base, ref);
- 	slot = get_active_slot();
-@@ -1124,17 +1126,23 @@ int fetch_ref(char *ref, unsigned char *sha1)
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
--		if (results.curl_result != CURLE_OK)
--			return error("Couldn't get %s for %s\n%s",
--				     url, ref, curl_errorstr);
-+		if (results.curl_result == CURLE_OK) {
-+			strbuf_rtrim(&buffer);
-+			if (buffer.len == 40)
-+				ret = get_sha1_hex(buffer.buf, sha1);
-+			else
-+				ret = 1;
-+		} else {
-+			ret = error("Couldn't get %s for %s\n%s",
-+				    url, ref, curl_errorstr);
-+		}
- 	} else {
--		return error("Unable to start request");
-+		ret = error("Unable to start request");
- 	}
- 
--	strbuf_rtrim(&buffer);
--	if (buffer.len != 40)
--		return 1;
--	return get_sha1_hex(buffer.buf, sha1);
-+	strbuf_release(&buffer);
-+	free(url);
-+	return ret;
- }
- 
- static void one_remote_object(const char *hex)
-@@ -2033,6 +2041,7 @@ static int remote_exists(const char *path)
- 	char *url = xmalloc(strlen(remote->url) + strlen(path) + 1);
- 	struct active_request_slot *slot;
- 	struct slot_results results;
-+	int ret = -1;
- 
- 	sprintf(url, "%s%s", remote->url, path);
- 
-@@ -2044,16 +2053,17 @@ static int remote_exists(const char *path)
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
- 		if (results.http_code == 404)
--			return 0;
-+			ret = 0;
- 		else if (results.curl_result == CURLE_OK)
--			return 1;
-+			ret = 1;
- 		else
- 			fprintf(stderr, "HEAD HTTP error %ld\n", results.http_code);
- 	} else {
- 		fprintf(stderr, "Unable to start HEAD request\n");
- 	}
- 
--	return -1;
-+	free(url);
-+	return ret;
- }
- 
- static void fetch_symref(const char *path, char **symref, unsigned char *sha1)
-diff --git a/http-walker.c b/http-walker.c
-index 8dbf9cc..4e878b3 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -644,6 +644,7 @@ static int fetch_indices(struct walker *walker, struct alt_base *repo)
- 	struct strbuf buffer = STRBUF_INIT;
- 	char *data;
- 	int i = 0;
-+	int ret = 0;
- 
- 	struct active_request_slot *slot;
- 	struct slot_results results;
-@@ -666,19 +667,19 @@ static int fetch_indices(struct walker *walker, struct alt_base *repo)
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
- 		if (results.curl_result != CURLE_OK) {
--			strbuf_release(&buffer);
- 			if (missing_target(&results)) {
- 				repo->got_indices = 1;
--				return 0;
-+				goto cleanup;
- 			} else {
- 				repo->got_indices = 0;
--				return error("%s", curl_errorstr);
-+				ret = error("%s", curl_errorstr);
-+				goto cleanup;
- 			}
- 		}
- 	} else {
- 		repo->got_indices = 0;
--		strbuf_release(&buffer);
--		return error("Unable to start request");
-+		ret = error("Unable to start request");
-+		goto cleanup;
- 	}
- 
- 	data = buffer.buf;
-@@ -701,9 +702,11 @@ static int fetch_indices(struct walker *walker, struct alt_base *repo)
- 		i++;
- 	}
- 
--	strbuf_release(&buffer);
- 	repo->got_indices = 1;
--	return 0;
-+cleanup:
-+	strbuf_release(&buffer);
-+	free(url);
-+	return ret;
- }
- 
- static int fetch_pack(struct walker *walker, struct alt_base *repo, unsigned char *sha1)
-@@ -939,6 +942,7 @@ static int fetch_ref(struct walker *walker, char *ref, unsigned char *sha1)
- 	const char *base = data->alt->base;
- 	struct active_request_slot *slot;
- 	struct slot_results results;
-+	int ret;
- 
- 	url = quote_ref_url(base, ref);
- 	slot = get_active_slot();
-@@ -949,17 +953,23 @@ static int fetch_ref(struct walker *walker, char *ref, unsigned char *sha1)
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
- 	if (start_active_slot(slot)) {
- 		run_active_slot(slot);
--		if (results.curl_result != CURLE_OK)
--			return error("Couldn't get %s for %s\n%s",
--				     url, ref, curl_errorstr);
-+		if (results.curl_result == CURLE_OK) {
-+			strbuf_rtrim(&buffer);
-+			if (buffer.len == 40)
-+				ret = get_sha1_hex(buffer.buf, sha1);
-+			else
-+				ret = 1;
-+		} else {
-+			ret = error("Couldn't get %s for %s\n%s",
-+				    url, ref, curl_errorstr);
-+		}
- 	} else {
--		return error("Unable to start request");
-+		ret = error("Unable to start request");
- 	}
- 
--	strbuf_rtrim(&buffer);
--	if (buffer.len != 40)
--		return 1;
--	return get_sha1_hex(buffer.buf, sha1);
-+	strbuf_release(&buffer);
-+	free(url);
-+	return ret;
- }
- 
- static void cleanup(struct walker *walker)
--- 
-1.5.3.7.1159.gdd4a4
+>=20
+> Firstly, are you doing backups (be able to restore to n previous
+> states upon catastrophe) or archives (being able to lookup arbitrary
+> points in history to compare with current stuff, eg, for regressions)?
+> (Archiving is useful if you aren't in a disciplined enough project to
+> do rewritten proper commits but still want to be able to look around
+> and try to figure out what's caused regressions, etc.)
+
+Archives, only. If the project requires a coherent state, then I don't
+think that automatic commits are the way to go.
+
+>=20
+> The scripts I use are at
+>=20
+> http://www.personal.rdg.ac.uk/~sis05dst/chronoversion.tgz
+>=20
+> but they're designed around archiving rather than backups.
+
+Thanks, I'll take a look, and maybe borrow some ideas. :)
+
+>=20
+> On Dec 10, 2007 8:29 PM, Luciano Rocha <luciano@eurotux.com> wrote:
+> > The following is a work in progress. There are some problems in how I'm
+> > using git and recording the history:
+> >
+> > 1. I use an opened fd for each monitored directory (and subdirectories),
+> >    (inotify_add_watch_at would be nice).
+> >    I fchdir(fd) when a change happens to register and commit it.
+>=20
+> I thought about trying to have a daemon using inotify to record the
+> git-add's/git-rm's but keeping the cron driven actual commits, and
+> looked at python support module. I didn't because firstly I wasn't
+> sure how far inotify scaled (the fact the Linux VFS maintainer insists
+> on calling it "idiotify" doesn't inspire confidence). If it was me,
+> I'd pull the git-commit outside your loop that does the git-add/git-rm
+> (see later comment about emacs, etc).
+
+I'd like to have the changes committed as soon as an application closes
+its files. As I monitor a small subset of possible inotify events, I
+think I shouldn't have much problems with scale. I'll have to test it
+with my Maildir, though, to have a definitive answer.
+
+> Obviously if your buffer isn't
+> completely emptied you'll get a misleading granularity of commits, but
+> then I guess that'll happen anyway. I think inotify drops events if an
+> internal queue fills: personally I'd try to check for that and
+> initiate manually scanning if I detected that happening.
+
+Hm, that could be a problem. Maybe a periodic git-status followed by
+git-add/rm, etc.. Hourly, perhaps.
+
+>=20
+> > 2. git-rm dir/file also removes <dir> if file was the only entry of
+> >    <dir>. So, when committing the removal, git complains that it can't
+> >    find cwd. So I record the parent directory, do the git command, check
+> >    if getcwd() works, and if not do the commit in the parent directory.
+> >
+> > 3. git-rm (empty) directory fails
+> >
+> > 4. Changes aren't atomic, but I can live with that and I doubt I would
+> >    be able to make it atomic without implementing a filesystem (FUSE or
+> >    not).
+>=20
+> With things like emacs that do update writes by writing a new file
+> with a temporary name and then copying it over the top of the old
+> file, you'll get presumably 3 commits. Is that acceptable?
+
+No. Vim also has that behaviour. I plan on accepting ignore patterns,
+and maybe also parse .gitignore, and add those temporary files (*~,
+=2E*.sw[po]), etc.) implicitly.
+
+>=20
+> > I can work around most of the problems, and rewrite to use recorded path
+> > names instead of directories fd, but before I do that, and while I'm
+> > at the beginning, I'd like to probe for opinions and suggestions.
+>=20
+> The only other thing that occurs to me is whether you need any greater
+> support for stopping the automatic monitoring than just stopping the
+> daemon. Eg, what happens if you decide you need to recover a previous
+> version of a file. Git checks it out, presumably updates the index
+> itself and then inotify fires off a git-add that will want to write to
+> the index. Basically, I'm trying to think if there's any situation
+> where you can have a delete event that git causes, followed by a
+> creating some new content where delay in your program processing the
+> delete will cause the new content to be `lost'? (I know, I sould read
+> the code.) In chronoversion, the first thing it does is check for a
+> "suppress" file which stops it doing anything automatically and I put
+> one in there whenever I'm doing anything more than looking at the data
+> (eg, switch branch, checkout old version, etc). But I might be being
+> hyper-cautious.
+
+I'll have to think about that. A stop/pause button is a good idea, and
+checking if the tree is at HEAD. I don't think a commit of changes to a
+file checked-out to a previous version will lose any information,
+but I'll check.
+
+--=20
+Luciano Rocha <luciano@eurotux.com>
+Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
+
+--8P1HSweYDcXXzwPJ
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFHXbPwinSul6a7oB8RAh5EAKChNYMZ71l4a1vF1Tq26l6Erc7odACeOjYK
+8ZP3lJPoezCIS8PBLzmaiyE=
+=C7Eq
+-----END PGP SIGNATURE-----
+
+--8P1HSweYDcXXzwPJ--
