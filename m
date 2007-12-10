@@ -1,49 +1,83 @@
-From: "J.C. Pizarro" <jcpiza@gmail.com>
-Subject: There is not summary of kernel 2.4.x repo.
-Date: Mon, 10 Dec 2007 13:42:27 +0100
-Message-ID: <998d0e4a0712100442g40c61093q570aee1c063f1302@mail.gmail.com>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: [PATCH] Better errors when trying to merge a submodule
+Date: Mon, 10 Dec 2007 13:44:35 +0100
+Message-ID: <20071210124435.GA4788@pvv.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 10 13:42:59 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Dec 10 13:45:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1hyF-0006Ok-RE
-	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 13:42:52 +0100
+	id 1J1i0K-00071v-0B
+	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 13:45:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751800AbXLJMma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2007 07:42:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751657AbXLJMma
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 07:42:30 -0500
-Received: from wr-out-0506.google.com ([64.233.184.236]:63230 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751036AbXLJMm3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2007 07:42:29 -0500
-Received: by wr-out-0506.google.com with SMTP id c49so1250767wra
-        for <git@vger.kernel.org>; Mon, 10 Dec 2007 04:42:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=BUrEY8fxul3PBSEac+9KSA84OBC3PoZtgrMo0eLceO0=;
-        b=oRcTsAHoUPISUOoNxIfPv2Q5cdoCwi1cFsWZehpMvWpYFLWYN4602hIksydAZf+gOZw4aXXsdE8I+oCu3WpI6gKZNPVKbjaaQ6yl/m/3VdCBLfhadn7D+EjNkZBsQ5Wv/4RmYcfhYb2Pubj88Bp6ZN0vcQkvnKDxifVvEtMANpg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=f/GqsjPvVZs6aGv4ag4jGHfJtggBsuB+tr6h5YmJ5Fb21Y15bDeZIEHVCBcSEoLxoe8Zqysdz/vqVjFs4SXD/pt6+FybllJ53kGtY1CBRUXL8gBAdM6GfeI6G5sxZuZwVwosNHzsPrhDc83hSz9DvZaPV1Fc2husEOPOoGLHLJM=
-Received: by 10.70.16.6 with SMTP id 6mr5883373wxp.1197290547602;
-        Mon, 10 Dec 2007 04:42:27 -0800 (PST)
-Received: by 10.70.54.17 with HTTP; Mon, 10 Dec 2007 04:42:27 -0800 (PST)
+	id S1751657AbXLJMoj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 07:44:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751036AbXLJMoj
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 07:44:39 -0500
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:33446 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750941AbXLJMoi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 07:44:38 -0500
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.60)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1J1hzv-0002Sv-K6; Mon, 10 Dec 2007 13:44:35 +0100
 Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67707>
 
-It exists http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=summary
-but http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.4.git;a=summary
-is empty.   :)
+
+Instead of dying with weird errors when trying to merge submodules from a
+supermodule, emit errors that show what the problem is.
+
+Signed-off-by: Finn Arne Gangstad <finnag@pvv.org>
+---
+
+If you try to merge a submodule from a supermodule, you get some very
+strange error messages. With this patch you get a nice clean error
+message indicating that this isn't supported instead.
+
+
+ git-merge-one-file.sh |    7 +++++++
+ merge-recursive.c     |    2 ++
+ 2 files changed, 9 insertions(+), 0 deletions(-)
+
+diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
+index 1e7727d..7aee342 100755
+--- a/git-merge-one-file.sh
++++ b/git-merge-one-file.sh
+@@ -82,6 +82,13 @@ case "${1:-.}${2:-.}${3:-.}" in
+ 		;;
+ 	esac
+ 
++	case ",$6,$7," in
++	*,160000,*)
++		echo "ERROR: $4: Not merging submodule."
++		exit 1
++		;;
++	esac
++
+ 	src2=`git-unpack-file $3`
+ 	case "$1" in
+ 	'')
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 9a1e2f2..ecae8ea 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1046,6 +1046,8 @@ static struct merge_file_info merge_file(struct diff_filespec *o,
+ 
+ 			free(result_buf.ptr);
+ 			result.clean = (merge_status == 0);
++                } else if (S_ISGITLINK(a->mode) || S_ISGITLINK(b->mode)) {
++                        die("cannot merge submodules!");
+ 		} else {
+ 			if (!(S_ISLNK(a->mode) || S_ISLNK(b->mode)))
+ 				die("cannot merge modes?");
+-- 
+1.5.3.7.1149.g591a-dirty
