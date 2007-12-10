@@ -1,110 +1,99 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Adding Git to Better SCM Initiative : Comparison
-Date: Mon, 10 Dec 2007 09:21:26 -0800 (PST)
-Message-ID: <m3zlwisbxx.fsf@roke.D-201>
-References: <200712101357.49325.jnareb@gmail.com>
-	<87ve76mwos.fsf@mid.deneb.enyo.de> <20071210165052.GA22327@pe.Belkin>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [RFC] Configurable name(s) for .gitmodules
+Date: Tue, 11 Dec 2007 01:34:02 +0800
+Message-ID: <46dff0320712100934o86af6femaaf563cf40295333@mail.gmail.com>
+References: <46dff0320712070800j6dd83714j265b3f7b291b855c@mail.gmail.com>
+	 <20071210165200.GF3490MdfPADPa@greensroom.kotnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Florian Weimer <fw@deneb.enyo.de>,
-	Shlomi Fish <shlomif@iglu.org.il>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Chris Shoemaker <c.shoemaker@cox.net>
-X-From: git-owner@vger.kernel.org Mon Dec 10 18:22:02 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Sven Verdoolaege" <skimo@kotnet.org>
+X-From: git-owner@vger.kernel.org Mon Dec 10 18:34:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1mKH-0008SC-5b
-	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 18:21:53 +0100
+	id 1J1mWT-0005n7-PG
+	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 18:34:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752959AbXLJRVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2007 12:21:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752979AbXLJRVb
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 12:21:31 -0500
-Received: from nf-out-0910.google.com ([64.233.182.186]:16145 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752959AbXLJRVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2007 12:21:30 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1054871nfb
-        for <git@vger.kernel.org>; Mon, 10 Dec 2007 09:21:28 -0800 (PST)
+	id S1752509AbXLJReH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 12:34:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751534AbXLJReG
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 12:34:06 -0500
+Received: from rn-out-0910.google.com ([64.233.170.189]:26325 "EHLO
+	rn-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752060AbXLJReF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 12:34:05 -0500
+Received: by rn-out-0102.google.com with SMTP id i6so220108rng
+        for <git@vger.kernel.org>; Mon, 10 Dec 2007 09:34:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=UxI4uBQXObtPtWx+0u0nXvy52QPVzm5ua9DGUnSKKlQ=;
-        b=Xb4hI+OIQdfNzbSMVyRnp1Q8ru29pGYV+USul9SBlDcw0EWNUpzUoI7aZi8h3gViReMeIw5Pw71tmtpzgUZphWnF2bWDC0EKlFvXVrF7z+Nz8Cg9QO8LxSpASClAT95gl4y/hVlBKnrkHXe3AB9c629DMv6oT5nf+tw5DJp0Q8o=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=FUDWuiCNrCo7711RdKBGmwRCVW7IYmMpuQWfktiyk8w=;
+        b=PbpgRWOLqNSSArog+1MzqnPeqvrSTzBKSfmtJU9uxbaBU+dAIbMw075vqFZcp7cEFDtwU1o12XU/0Cean5si8nfzBcAxXBUlyUSMsKkZB+eUX6eRzs1+Ad1p5Iv7ZD15jMeIYbLstM96ROygvxEqYMfctvelswVzI+9VE+pfgVQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=SAo6dgrw5Xy9ivmi4CdPet8DvlN+6aGg3bClJP20ISnK784rzk3Q3kK+aiKyQDpp2kpe7pOhCsy4KGu5/yEenT25BCkiNKJwNLrrUnL77QP/o6Bug7ZqgBPzbHRclIlXh4p4O+Z6gJ8tFoaXulOKbBjBT4t+MWc0f9++8VCs4+M=
-Received: by 10.82.158.12 with SMTP id g12mr14179144bue.1197307288284;
-        Mon, 10 Dec 2007 09:21:28 -0800 (PST)
-Received: from roke.D-201 ( [83.8.241.16])
-        by mx.google.com with ESMTPS id g1sm8634515muf.2007.12.10.09.21.24
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 10 Dec 2007 09:21:26 -0800 (PST)
-Received: from roke (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lBAHLIgf029516;
-	Mon, 10 Dec 2007 18:21:19 +0100
-Received: (from jnareb@localhost)
-	by roke (8.13.4/8.13.4/Submit) id lBAHLFAv029513;
-	Mon, 10 Dec 2007 18:21:15 +0100
-X-Authentication-Warning: roke: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <20071210165052.GA22327@pe.Belkin>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bkS1BM4J//NstYjIGgn7yX/Tyl4Cpbm/5OqCsod8fw9BbpnnBUIrzgtsqv9SoHwzBvDZOWsh5p/zfkhtAMPurN8c6X1bGi4EPjRMZ6D/DrWr0G3q6BuRPIvcbAbAY565e4sflRHL1pgEsN3+KHKAOxtXUPEWpMKmmq1N7DQbyUM=
+Received: by 10.150.200.8 with SMTP id x8mr2366789ybf.1197308042544;
+        Mon, 10 Dec 2007 09:34:02 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Mon, 10 Dec 2007 09:34:02 -0800 (PST)
+In-Reply-To: <20071210165200.GF3490MdfPADPa@greensroom.kotnet.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67740>
 
-Chris Shoemaker <c.shoemaker@cox.net> writes:
+On Dec 11, 2007 12:52 AM, Sven Verdoolaege <skimo@kotnet.org> wrote:
+> On Sat, Dec 08, 2007 at 12:00:12AM +0800, Ping Yin wrote:
+> > I have a super project with many submodules. Each kind of role may
+> > check out different set of submodules. There are some common modules
+> > which are almost checked out by every role.
+> >
+> > Here comes my question: how to implement this elegantly? If all
+> > submodules are put in the same .gitmodules, every role has to in the
+> > command line manually designate all submodules to be checked out.
+>
+> You could have submodules (roles in your case) containing
+> other submodules, as proposed in the thread that ends in
+> http://thread.gmane.org/gmane.comp.version-control.git/48643/focus=48939
+>
+> skimo
+>
 
-> On Mon, Dec 10, 2007 at 03:49:39PM +0100, Florian Weimer wrote:
-> > * Jakub Narebski:
-> > 
-> > > +                <s id="git">
-> > > +                    Yes (or no depending on interpretation). Git
-> > 
-> > This should be "No." (same for copies below).
-> 
-> ISTM that people are stuck using less than helpful criteria for
-> judging whether renames are supported.  Namely, in effect, they ask:
-> "Does the user get to do extra work in order to get rename-detection?"
-> 
-> Let me humbly suggest an alternate, two-fold, very practical criteria
-> that I actually care about as a user:
-> 
-> 1) If I edit file A, while another developer renames file A to B, and
-> I merge my work with his, do I have to clean things up myself, or does
-> everything Just Work?
+Thanks for the suggestion. Linus's idea is what i want. As linus said,
+one level of indirect will give much more flexibility. It's wonderful
+to put something like following to .gitmodules.
+	[module "infrastructure"]
+		submodule = lib
+		submodule = build
 
-The only thing Git doesn't implement _yet_ is when you have renamed
-a directory, and another developer created a new file in the old
-directory name. Currently Git creates new files in old directory.
-Note however that moving files to other directory might need changes
-in files: for example Java, or header files includes in C/C++. This
-is not very common, though.
+	[submodule "lib"]
+		url = git://xyzzy/lib-1.2.3
 
-BTW. this issue is in TODO for "Better SCM : Comparison"
- * Add intelligent merging of renamed paths.
+	[submodule "build"]
+		url = git://xyzzy/build-0.61
 
-> 2) If I'm browsing the history of some code in a renamed file, does
-> the history continue through the rename?
+Also I  found Lars's following reply,  i still don't understand quite
+well why this idea is not accepted.
 
-And Git does support it in both "git blame" (or "git gui blame"),
-and in "git log" thanks to --follow option.
+> The reason I wanted to use
+>
+> [path "lib"]
+>   submodule=xyzzylib
+>   url=git://xyzzy/lib-1.2.3
+>
+> is that the git-submodule command always starts out with the submodule
+> path, trying to map that to an url or a submodule name. My proposal
+> allows
+>
+>   $ name=$(GIT_CONFIG=.gitmodules git-config path."$path".submodule)
+>   $ url=$(GIT_CONFIG=.gitmodules git-config path."$path".url)
+>
 
-Note however that --follow cannot be used (yet?) with directories or
-pathspecs. Not that other SCMs support wildcard pathspec limiting...
-
-> By these criteria, git certainly does support renames.
-
-That's why I wrote "Yes", adding "or no" (as suggested by Robin
-Rosenberg) because it does it dofferently than other SCMs.
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Ping Yin
