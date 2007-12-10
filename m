@@ -1,361 +1,87 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH 6/5] Move fetch_ref from http-push.c and http-walker.c to http.c
-Date: Tue, 11 Dec 2007 00:08:25 +0100
-Message-ID: <1197328105-4843-1-git-send-email-mh@glandium.org>
-References: <1197322571-25023-5-git-send-email-mh@glandium.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 11 00:09:15 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] diff: Make numstat machine friendly also for renames (and copies)
+Date: Tue, 11 Dec 2007 00:14:47 +0100
+Message-ID: <200712110014.48343.jnareb@gmail.com>
+References: <200712102332.53114.jnareb@gmail.com> <7vir36jgty.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 00:15:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1rkF-0007Go-Sb
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 00:09:04 +0100
+	id 1J1rqL-0000v6-Pz
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 00:15:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751939AbXLJXIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2007 18:08:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751976AbXLJXIm
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 18:08:42 -0500
-Received: from vuizook.err.no ([85.19.215.103]:55002 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751713AbXLJXIl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2007 18:08:41 -0500
-Received: from aputeaux-153-1-79-219.w81-249.abo.wanadoo.fr ([81.249.109.219] helo=namakemono.glandium.org)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1J1rkP-0004Ka-09; Tue, 11 Dec 2007 00:09:19 +0100
-Received: from mh by namakemono.glandium.org with local (Exim 4.68)
-	(envelope-from <mh@glandium.org>)
-	id 1J1rjd-0001GW-GL; Tue, 11 Dec 2007 00:08:25 +0100
-X-Mailer: git-send-email 1.5.3.7.1160.g1e7a-dirty
-In-Reply-To: <1197322571-25023-5-git-send-email-mh@glandium.org>
-X-Spam-Status: (score 5.2): Yes, score=5.2 required=5.0 tests=RCVD_IN_DSBL,RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1752079AbXLJXPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 18:15:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752076AbXLJXPA
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 18:15:00 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:21265 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752011AbXLJXO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 18:14:59 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1123031nfb
+        for <git@vger.kernel.org>; Mon, 10 Dec 2007 15:14:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=DdjvGPwFf18R2EBIW00xBgobC+TklMSE4eNnd2k5maI=;
+        b=MhhPOje4XmP02HmYzlA3GL7Tbmd36D/9wBFOuERzB0pwQbZv8zLv0zCpqxbtBnPiML3Pm6FaszDCVUC6QmzpcYJwg1YhWhZRf0miTL5coM+dLPipWIx4RV/epEfAUrx9BnK/i5YpoCH+NQOwwEAMjWpNudQ/g+MYTS72ZrxRZ0g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=KmxL0CnZQI3RL3FmFQ5+FiN1Zhqv6NfTQXLNWK1787eFWYltUhlh6fNRWQ904zF2Rze8iUnBpx/nwuU3ASKjo9gZcjNqvc9IVzOZG1n18lxMhvPpvKdY881Sb0QOzqgYsJ9+3/DBxf8+jkLez6M81L96lD2hhJM/Nfe6mpgKEIM=
+Received: by 10.86.54.3 with SMTP id c3mr6063285fga.1197328497881;
+        Mon, 10 Dec 2007 15:14:57 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.241.16])
+        by mx.google.com with ESMTPS id 4sm2583929fge.2007.12.10.15.14.55
+        (version=SSLv3 cipher=OTHER);
+        Mon, 10 Dec 2007 15:14:56 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vir36jgty.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67770>
 
-Make the necessary changes to be ok with their difference, and rename the
-function http_fetch_ref.
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > "git diff --numstat" used the same format as "git diff --stat" for
+> > renamed (and copied) files, except that filenames were not shortened
+> > when they didn't fit in the column width.  This format is suitable for
+> > human consumption, but it cannot be unambiguously parsed.
+> 
+> Agreed about the (un)parsability, and --numstat is all about parsability
+> so I would not object.  A fix is really needed there.
+> 
+> I do not have time to look at the patch right now, but if the changed
+> output is in line with what --name-status would show, that would be
+> great.  I'd call that "the format that should have been from day one".
+> 
+> I.e. no '=>' rename marker, but show two names c-quoted (unless -z is
+> used) and separated with inter_name_termination).  IIRC, that is how
+> rename/copy is shown with --name-status.
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
- http-push.c   |   88 ++------------------------------------------------------
- http-walker.c |   80 +---------------------------------------------------
- http.c        |   82 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- http.h        |    2 +
- 4 files changed, 89 insertions(+), 163 deletions(-)
+Unfortunately this is not possible, at least if we want to retain
+the assertion that -z output looks like normal output, only without
+quoting.
 
-diff --git a/http-push.c b/http-push.c
-index 610ed9c..a4a9d1c 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1063,88 +1063,6 @@ static int fetch_indices(void)
- 	return 0;
- }
- 
--static inline int needs_quote(int ch)
--{
--	if (((ch >= 'A') && (ch <= 'Z'))
--			|| ((ch >= 'a') && (ch <= 'z'))
--			|| ((ch >= '0') && (ch <= '9'))
--			|| (ch == '/')
--			|| (ch == '-')
--			|| (ch == '.'))
--		return 0;
--	return 1;
--}
--
--static inline int hex(int v)
--{
--	if (v < 10) return '0' + v;
--	else return 'A' + v - 10;
--}
--
--static char *quote_ref_url(const char *base, const char *ref)
--{
--	const char *cp;
--	char *dp, *qref;
--	int len, baselen, ch;
--
--	baselen = strlen(base);
--	len = baselen + 1;
--	for (cp = ref; (ch = *cp) != 0; cp++, len++)
--		if (needs_quote(ch))
--			len += 2; /* extra two hex plus replacement % */
--	qref = xmalloc(len);
--	memcpy(qref, base, baselen);
--	for (cp = ref, dp = qref + baselen; (ch = *cp) != 0; cp++) {
--		if (needs_quote(ch)) {
--			*dp++ = '%';
--			*dp++ = hex((ch >> 4) & 0xF);
--			*dp++ = hex(ch & 0xF);
--		}
--		else
--			*dp++ = ch;
--	}
--	*dp = 0;
--
--	return qref;
--}
--
--int fetch_ref(char *ref, unsigned char *sha1)
--{
--	char *url;
--	struct strbuf buffer = STRBUF_INIT;
--	char *base = remote->url;
--	struct active_request_slot *slot;
--	struct slot_results results;
--	int ret;
--
--	url = quote_ref_url(base, ref);
--	slot = get_active_slot();
--	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, NULL);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	if (start_active_slot(slot)) {
--		run_active_slot(slot);
--		if (results.curl_result == CURLE_OK) {
--			strbuf_rtrim(&buffer);
--			if (buffer.len == 40)
--				ret = get_sha1_hex(buffer.buf, sha1);
--			else
--				ret = 1;
--		} else {
--			ret = error("Couldn't get %s for %s\n%s",
--				    url, ref, curl_errorstr);
--		}
--	} else {
--		ret = error("Unable to start request");
--	}
--
--	strbuf_release(&buffer);
--	free(url);
--	return ret;
--}
--
- static void one_remote_object(const char *hex)
- {
- 	unsigned char sha1[20];
-@@ -1827,7 +1745,8 @@ static void one_remote_ref(char *refname)
- 	struct object *obj;
- 	int len = strlen(refname) + 1;
- 
--	if (fetch_ref(refname, remote_sha1) != 0) {
-+	if (http_fetch_ref(remote->url, refname + 5 /* "refs/" */,
-+			   remote_sha1) != 0) {
- 		fprintf(stderr,
- 			"Unable to fetch ref %s from %s\n",
- 			refname, remote->url);
-@@ -1959,7 +1878,8 @@ static void add_remote_info_ref(struct remote_ls_ctx *ls)
- 	int len;
- 	char *ref_info;
- 
--	if (fetch_ref(ls->dentry_name, remote_sha1) != 0) {
-+	if (http_fetch_ref(remote->url, ls->dentry_name + 5 /* "refs/" */,
-+			   remote_sha1) != 0) {
- 		fprintf(stderr,
- 			"Unable to fetch ref %s from %s\n",
- 			ls->dentry_name, remote->url);
-diff --git a/http-walker.c b/http-walker.c
-index 4e878b3..2c37868 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -888,88 +888,10 @@ static int fetch(struct walker *walker, unsigned char *sha1)
- 		     data->alt->base);
- }
- 
--static inline int needs_quote(int ch)
--{
--	if (((ch >= 'A') && (ch <= 'Z'))
--			|| ((ch >= 'a') && (ch <= 'z'))
--			|| ((ch >= '0') && (ch <= '9'))
--			|| (ch == '/')
--			|| (ch == '-')
--			|| (ch == '.'))
--		return 0;
--	return 1;
--}
--
--static inline int hex(int v)
--{
--	if (v < 10) return '0' + v;
--	else return 'A' + v - 10;
--}
--
--static char *quote_ref_url(const char *base, const char *ref)
--{
--	const char *cp;
--	char *dp, *qref;
--	int len, baselen, ch;
--
--	baselen = strlen(base);
--	len = baselen + 7; /* "/refs/" + NUL */
--	for (cp = ref; (ch = *cp) != 0; cp++, len++)
--		if (needs_quote(ch))
--			len += 2; /* extra two hex plus replacement % */
--	qref = xmalloc(len);
--	memcpy(qref, base, baselen);
--	memcpy(qref + baselen, "/refs/", 6);
--	for (cp = ref, dp = qref + baselen + 6; (ch = *cp) != 0; cp++) {
--		if (needs_quote(ch)) {
--			*dp++ = '%';
--			*dp++ = hex((ch >> 4) & 0xF);
--			*dp++ = hex(ch & 0xF);
--		}
--		else
--			*dp++ = ch;
--	}
--	*dp = 0;
--
--	return qref;
--}
--
- static int fetch_ref(struct walker *walker, char *ref, unsigned char *sha1)
- {
--	char *url;
--	struct strbuf buffer = STRBUF_INIT;
- 	struct walker_data *data = walker->data;
--	const char *base = data->alt->base;
--	struct active_request_slot *slot;
--	struct slot_results results;
--	int ret;
--
--	url = quote_ref_url(base, ref);
--	slot = get_active_slot();
--	slot->results = &results;
--	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
--	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, NULL);
--	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
--	if (start_active_slot(slot)) {
--		run_active_slot(slot);
--		if (results.curl_result == CURLE_OK) {
--			strbuf_rtrim(&buffer);
--			if (buffer.len == 40)
--				ret = get_sha1_hex(buffer.buf, sha1);
--			else
--				ret = 1;
--		} else {
--			ret = error("Couldn't get %s for %s\n%s",
--				    url, ref, curl_errorstr);
--		}
--	} else {
--		ret = error("Unable to start request");
--	}
--
--	strbuf_release(&buffer);
--	free(url);
--	return ret;
-+	return http_fetch_ref(data->alt->base, ref, sha1);
- }
- 
- static void cleanup(struct walker *walker)
-diff --git a/http.c b/http.c
-index 784b93e..c6de964 100644
---- a/http.c
-+++ b/http.c
-@@ -552,3 +552,85 @@ void finish_all_active_slots(void)
- 			slot = slot->next;
- 		}
- }
-+
-+static inline int needs_quote(int ch)
-+{
-+	if (((ch >= 'A') && (ch <= 'Z'))
-+			|| ((ch >= 'a') && (ch <= 'z'))
-+			|| ((ch >= '0') && (ch <= '9'))
-+			|| (ch == '/')
-+			|| (ch == '-')
-+			|| (ch == '.'))
-+		return 0;
-+	return 1;
-+}
-+
-+static inline int hex(int v)
-+{
-+	if (v < 10) return '0' + v;
-+	else return 'A' + v - 10;
-+}
-+
-+static char *quote_ref_url(const char *base, const char *ref)
-+{
-+	const char *cp;
-+	char *dp, *qref;
-+	int len, baselen, ch;
-+
-+	baselen = strlen(base);
-+	len = baselen + 7; /* "/refs/" + NUL */
-+	for (cp = ref; (ch = *cp) != 0; cp++, len++)
-+		if (needs_quote(ch))
-+			len += 2; /* extra two hex plus replacement % */
-+	qref = xmalloc(len);
-+	memcpy(qref, base, baselen);
-+	memcpy(qref + baselen, "/refs/", 6);
-+	for (cp = ref, dp = qref + baselen + 6; (ch = *cp) != 0; cp++) {
-+		if (needs_quote(ch)) {
-+			*dp++ = '%';
-+			*dp++ = hex((ch >> 4) & 0xF);
-+			*dp++ = hex(ch & 0xF);
-+		}
-+		else
-+			*dp++ = ch;
-+	}
-+	*dp = 0;
-+
-+	return qref;
-+}
-+
-+int http_fetch_ref(const char *base, const char *ref, unsigned char *sha1)
-+{
-+	char *url;
-+	struct strbuf buffer = STRBUF_INIT;
-+	struct active_request_slot *slot;
-+	struct slot_results results;
-+	int ret;
-+
-+	url = quote_ref_url(base, ref);
-+	slot = get_active_slot();
-+	slot->results = &results;
-+	curl_easy_setopt(slot->curl, CURLOPT_FILE, &buffer);
-+	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
-+	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, NULL);
-+	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-+	if (start_active_slot(slot)) {
-+		run_active_slot(slot);
-+		if (results.curl_result == CURLE_OK) {
-+			strbuf_rtrim(&buffer);
-+			if (buffer.len == 40)
-+				ret = get_sha1_hex(buffer.buf, sha1);
-+			else
-+				ret = 1;
-+		} else {
-+			ret = error("Couldn't get %s for %s\n%s",
-+				    url, ref, curl_errorstr);
-+		}
-+	} else {
-+		ret = error("Unable to start request");
-+	}
-+
-+	strbuf_release(&buffer);
-+	free(url);
-+	return ret;
-+}
-diff --git a/http.h b/http.h
-index 87d638b..b709222 100644
---- a/http.h
-+++ b/http.h
-@@ -96,4 +96,6 @@ static inline int missing__target(int code, int result)
- 
- #define missing_target(a) missing__target((a)->http_code, (a)->curl_result)
- 
-+extern int http_fetch_ref(const char *base, const char *ref, unsigned char *sha1);
-+
- #endif /* HTTP_H */
+diff --name-status has _status_ field which can be used to distinguish
+if the NUL (for -z output) is the end of source filename, or the end
+of record.
+
+The patch send changes --numstat to use only _destination_ name.
+What you want I'd left for futore --numstat-extended (basically --numstat,
+but with status field.
+
 -- 
-1.5.3.7.1160.g1e7a-dirty
+Jakub Narebski
+Poland
