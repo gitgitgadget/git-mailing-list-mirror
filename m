@@ -1,149 +1,91 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Add more checkout tests
-Date: Sun, 9 Dec 2007 23:03:28 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0712092244570.5349@iabervon.org>
-References: <Pine.LNX.4.64.0712092204200.5349@iabervon.org>
- <7vprxfmczi.fsf@gitster.siamese.dyndns.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: [PATCH 2/2] pack-objects: fix threaded load balancing
+Date: Sun, 9 Dec 2007 23:10:58 -0500
+Message-ID: <9e4733910712092010m31043915kb6fd0867beefa8f3@mail.gmail.com>
+References: <alpine.LFD.0.99999.0712080000120.555@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 10 05:04:03 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Dec 10 05:11:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1Zs8-0001zv-QG
-	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 05:04:01 +0100
+	id 1J1ZzM-0003PQ-Dl
+	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 05:11:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754948AbXLJEDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Dec 2007 23:03:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753030AbXLJEDc
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Dec 2007 23:03:32 -0500
-Received: from iabervon.org ([66.92.72.58]:53795 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754808AbXLJEDa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Dec 2007 23:03:30 -0500
-Received: (qmail 15056 invoked by uid 1000); 10 Dec 2007 04:03:28 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 Dec 2007 04:03:28 -0000
-In-Reply-To: <7vprxfmczi.fsf@gitster.siamese.dyndns.org>
+	id S1751799AbXLJELE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Dec 2007 23:11:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbXLJELD
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Dec 2007 23:11:03 -0500
+Received: from wa-out-1112.google.com ([209.85.146.178]:44993 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751229AbXLJELB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Dec 2007 23:11:01 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so3097575wah
+        for <git@vger.kernel.org>; Sun, 09 Dec 2007 20:10:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=yMpn72PqLxFbsZv9i2mzlHaH0b8efsXySRJUTjVNtFA=;
+        b=R9O29IOt/bTpbv3VzOnQu7MIEjPSs/w+aULx+glRXgELZbOtrH+CGFlAbqfEEDcpND002uIuixuOHigLXYPaPRKCBz9aEEG4KJcOaa2fZ8dWkZycOfmAvN33JH9ZzX4RKwawoYlsoRbisHB0nGbzR7XCpvEMJ15k5Lqt1Od2d4c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dWThZsoBnVgW40ygknmn8ItshXx9JrbnueEfjkG0bJk5QLJGz08dEXGZseA3XIcuOJ+9EXlJz2OUV2mZsSdeSFLv0Hbj/kTohVOE+7Y0mlHMdMPL61IRcfgJcUPc+ogi52ggJUayHbvfa6iSeE7reAiZE3Gt5CK1D0PBsAfevxU=
+Received: by 10.114.60.19 with SMTP id i19mr3110696waa.1197259858247;
+        Sun, 09 Dec 2007 20:10:58 -0800 (PST)
+Received: by 10.114.208.17 with HTTP; Sun, 9 Dec 2007 20:10:58 -0800 (PST)
+In-Reply-To: <alpine.LFD.0.99999.0712080000120.555@xanadu.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67677>
 
-On Sun, 9 Dec 2007, Junio C Hamano wrote:
+I added a couple of printfs to debug this.
+Why did the thread exit when there were still 72,000 objects left?
+Another one exited with 50,000 objects left.
+The repack is still running, it has been proceeding on two cores for
+10 minutes after the two threads exited.
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > +test_expect_success "checkout with unrelated dirty tree without -m" '
-> > +
-> > +	git checkout -f master &&
-> > +	fill 0 1 2 3 4 5 6 7 8 >same &&
-> > +	cp same kept
-> > +	git checkout side >messages && 
-> > +	git diff same kept
-> > +	(cat > messages.expect <<EOF
-> > +M	same
-> > +EOF
-> > +) &&
-> > +	touch messages.expect &&
-> > +	git diff messages.expect messages
-> > +'
-> 
-> What is this "touch" about?
+jonsmirl@terra:/video/gcc$ git-repack -a -d -f --depth=250 --window=250
+Counting objects: 828348, done.
 
-Left over from before I'd added the here document, so there'd be a file to 
-diff against, and it would be wrong, and I could find the actual contents. 
-I just forgot to take it out when I was creating the real thing.
+ starting thread 0
+Compressing objects:   0% (1/809010)
+ starting thread 1
 
-> I do not recall the details, but we had problem reports that some shells
-> do not handle here-documents (i.e. cmd <<EOF) inside test_expect_success
-> well, and generally tried to keep them outside.  I however see some of
-> the newer tests do have here-doc inside expect-success, and do not
-> recall hearing breakage reports on them.  Maybe it was a false alarm and
-> we were being overly cautious, or maybe not enough people (especially on
-> more exotic systems) are running tests these days.  Let's keep the
-> here-doc as-is in your tests and see what happens.
+ starting thread 2
 
-Sure. Possibly we should instead just be testing for the presence of the 
-correct line, and absence of incorrect lines, in any case?
+ starting thread 3
+Compressing objects:  59% (478011/809010)
+ victim 0x7fffc7976480 sub_size 76058
 
-> >  test_expect_success "checkout -m with dirty tree" '
-> >  
-> >  	git checkout -f master &&
-> >  	git clean -f &&
-> >  
-> >  	fill 0 1 2 3 4 5 6 7 8 >one &&
-> > -	git checkout -m side &&
-> > +	git checkout -m side > messages &&
-> >  
-> >  	test "$(git symbolic-ref HEAD)" = "refs/heads/side" &&
-> >  
-> > +	(cat >expect.messages <<EOF
-> > +Merging side with local
-> > +Merging:
-> > +ab76817 Side M one, D two, A three
-> > +virtual local
-> > +found 1 common ancestor(s):
-> > +7329388 Initial A one, A two
-> > +Auto-merged one
-> > +M	one
-> > +EOF
-> > +) &&
-> > +	git diff expect.messages messages &&
-> 
-> I do not like the idea of testing the exact wording of messages this
-> way.
-> 
-> I do not think we care about the exact wording of these messages, and I
-> think our tests should check what we do care about without casting the
-> UI in stone.  Otherwise, it will make it harder to clean-up the user
-> experience later.  Perhaps it would be sufficient to make sure that (1)
-> this checkout succeeds with exit 0 status, and that (2) the contents of
-> the merged 'one' is a reasonable merge result, i.e. "git diff HEAD one"
-> gets the same patch-id as "git diff HEAD one" taken before switching the
-> branches.
+thread 0x7fffc79764f8 sub_size 76058
+Compressing objects:  62% (504273/809010)
+ victim 0x7fffc79764a8 sub_size 69967
 
-What I'm actually testing for is the "M<tab>one" line, and that the 
-previous line isn't name-status stuff; that is, that the name-status stuff 
-is right.
+thread 0x7fffc79764d0 sub_size 69967
+Compressing objects:  82% (664231/809010)
+ victim 0x7fffc7976480 sub_size 35308
 
-Of course, a patch to clean up the user experience could have a hunk that 
-makes the test expect that the UI is cleaned up. It's not like we can't 
-change our tests to accompany improvements in behavior, and I'd argue that 
-those hunks give a useful example of the improvement.
+thread 0x7fffc79764d0 sub_size 35308
+Compressing objects:  91% (736690/809010)
+ victim 0x7fffc79764d0 sub_size 0
 
-> > @@ -145,7 +176,16 @@ test_expect_success 'checkout -m with merge conflict' '
-> >  test_expect_success 'checkout to detach HEAD' '
-> >  
-> >  	git checkout -f renamer && git clean -f &&
-> > -	git checkout renamer^ &&
-> > +	git checkout renamer^ 2>messages &&
-> > +	(cat >messages.expect <<EOF
-> > +Note: moving to "renamer^" which isn'"'"'t a local branch
-> > +If you want to create a new branch from this checkout, you may do so
-> > +(now or later) by using -b with the checkout command again. Example:
-> > +  git checkout -b <new_branch_name>
-> > +HEAD is now at 7329388... Initial A one, A two
-> > +EOF
-> > +) &&
-> > +	git diff messages.expect messages &&
-> 
-> Same here.  If we want to make sure the head is detached at the intended
-> commit, make sure "rev-parse HEAD" gives the expected result, and make
-> sure "symbolic-ref HEAD" says it is not symbolic.
+thread 0x7fffc79764f8 sub_size 0
+Compressing objects:  93% (758922/809010)
+ victim 0x7fffc79764d0 sub_size 0
 
-I think we're already testing for that. I really want the "HEAD is now..." 
-line, which ought to give the right info.
+thread 0x7fffc79764a8 sub_size 0
 
-The point of adding these tests (and parts of tests) is that I'd forgotten 
-to maintain some of the important information while writing 
-builtin-checkout, and there wasn't a test that it was provided. While some 
-of the output is arbitrary informative text, there's a certain amount of 
-generated information there that shouldn't get lost or be incorrect.
 
-	-Daniel
-*This .sig left intentionally blank*
+
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
