@@ -1,56 +1,71 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [RFC] Configurable name(s) for .gitmodules
-Date: Mon, 10 Dec 2007 17:54:36 +0100
-Message-ID: <20071210165436.GG3490MdfPADPa@greensroom.kotnet.org>
-References: <46dff0320712070800j6dd83714j265b3f7b291b855c@mail.gmail.com>
-Reply-To: skimo@liacs.nl
+From: Chris Shoemaker <c.shoemaker@cox.net>
+Subject: Re: Adding Git to Better SCM Initiative : Comparison
+Date: Mon, 10 Dec 2007 11:50:52 -0500
+Message-ID: <20071210165052.GA22327@pe.Belkin>
+References: <200712101357.49325.jnareb@gmail.com> <87ve76mwos.fsf@mid.deneb.enyo.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 10 17:55:04 2007
+Cc: git@vger.kernel.org
+To: Florian Weimer <fw@deneb.enyo.de>
+X-From: git-owner@vger.kernel.org Mon Dec 10 17:57:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1luJ-0004hZ-FD
-	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 17:55:03 +0100
+	id 1J1lwl-0005lu-6L
+	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 17:57:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753849AbXLJQyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2007 11:54:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753871AbXLJQyk
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 11:54:40 -0500
-Received: from psmtp09.wxs.nl ([195.121.247.23]:52740 "EHLO psmtp09.wxs.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753849AbXLJQyj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2007 11:54:39 -0500
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp09.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JSU001L4EZ0O2@psmtp09.wxs.nl> for git@vger.kernel.org; Mon,
- 10 Dec 2007 17:54:38 +0100 (MET)
-Received: (qmail 3186 invoked by uid 500); Mon, 10 Dec 2007 16:54:36 +0000
-In-reply-to: <46dff0320712070800j6dd83714j265b3f7b291b855c@mail.gmail.com>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1754075AbXLJQ5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 11:57:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753872AbXLJQ5K
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 11:57:10 -0500
+Received: from eastrmmtai110.cox.net ([68.230.240.29]:50969 "EHLO
+	eastrmmtai110.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751840AbXLJQ5J (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 11:57:09 -0500
+X-Greylist: delayed 375 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Dec 2007 11:57:09 EST
+Received: from eastrmimpo02.cox.net ([68.1.16.120])
+          by eastrmmtao106.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20071210165054.UJJX21667.eastrmmtao106.cox.net@eastrmimpo02.cox.net>;
+          Mon, 10 Dec 2007 11:50:54 -0500
+Received: from localhost ([68.0.253.29])
+	by eastrmimpo02.cox.net with bizsmtp
+	id P4qY1Y00F0epFYL0000000; Mon, 10 Dec 2007 11:50:33 -0500
+Received: from chris by localhost with local (Exim 4.66)
+	(envelope-from <c.shoemaker@cox.net>)
+	id 1J1lqG-0005ru-5M; Mon, 10 Dec 2007 11:50:52 -0500
+Content-Disposition: inline
+In-Reply-To: <87ve76mwos.fsf@mid.deneb.enyo.de>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67737>
 
-On Sat, Dec 08, 2007 at 12:00:12AM +0800, Ping Yin wrote:
-> I have a super project with many submodules. Each kind of role may
-> check out different set of submodules. There are some common modules
-> which are almost checked out by every role.
+On Mon, Dec 10, 2007 at 03:49:39PM +0100, Florian Weimer wrote:
+> * Jakub Narebski:
 > 
-> Here comes my question: how to implement this elegantly? If all
-> submodules are put in the same .gitmodules, every role has to in the
-> command line manually designate all submodules to be checked out.
+> > +                <s id="git">
+> > +                    Yes (or no depending on interpretation). Git
+> 
+> This should be "No." (same for copies below).
 
-You could have submodules (roles in your case) containing
-other submodules, as proposed in the thread that ends in
-http://thread.gmane.org/gmane.comp.version-control.git/48643/focus=48939
+ISTM that people are stuck using less than helpful criteria for
+judging whether renames are supported.  Namely, in effect, they ask:
+"Does the user get to do extra work in order to get rename-detection?"
 
-skimo
+Let me humbly suggest an alternate, two-fold, very practical criteria
+that I actually care about as a user:
+
+1) If I edit file A, while another developer renames file A to B, and
+I merge my work with his, do I have to clean things up myself, or does
+everything Just Work?
+
+2) If I'm browsing the history of some code in a renamed file, does
+the history continue through the rename?
+
+By these criteria, git certainly does support renames.
+
+-chris
