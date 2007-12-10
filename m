@@ -1,56 +1,57 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: Adding Git to Better SCM Initiative : Comparison
-Date: Mon, 10 Dec 2007 16:36:06 +0100
-Message-ID: <8763z6mujd.fsf@mid.deneb.enyo.de>
-References: <200712101357.49325.jnareb@gmail.com>
-	<87ve76mwos.fsf@mid.deneb.enyo.de>
-	<Pine.LNX.4.64.0712101522290.27959@racer.site>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Performance problem, long run of identical hashes
+Date: Mon, 10 Dec 2007 10:45:49 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0712101037270.555@xanadu.home>
+References: <9e4733910712100707i66e185bofe22805b8e0ba4d8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Dec 10 16:36:43 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 10 16:46:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1kgR-0007UW-OM
-	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 16:36:40 +0100
+	id 1J1kpj-0002ed-1K
+	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 16:46:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751880AbXLJPgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2007 10:36:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751842AbXLJPgL
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 10:36:11 -0500
-Received: from mail.enyo.de ([212.9.189.167]:4100 "EHLO mail.enyo.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751769AbXLJPgK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2007 10:36:10 -0500
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1J1kfw-0005DQ-Bp; Mon, 10 Dec 2007 16:36:08 +0100
-Received: from fw by deneb.enyo.de with local (Exim 4.68)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1J1kfu-0004CO-IC; Mon, 10 Dec 2007 16:36:06 +0100
-In-Reply-To: <Pine.LNX.4.64.0712101522290.27959@racer.site> (Johannes
-	Schindelin's message of "Mon, 10 Dec 2007 15:23:23 +0000 (GMT)")
+	id S1752858AbXLJPpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 10:45:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752374AbXLJPpy
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 10:45:54 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:64486 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751899AbXLJPpw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 10:45:52 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JSU0016NBSC9920@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 10 Dec 2007 10:45:48 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <9e4733910712100707i66e185bofe22805b8e0ba4d8@mail.gmail.com>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67724>
 
-* Johannes Schindelin:
+On Mon, 10 Dec 2007, Jon Smirl wrote:
 
->> > +                <s id="git">
->> > +                    Yes (or no depending on interpretation). Git
->> 
->> This should be "No." (same for copies below).
->
-> Nice.  I have no idea what you are talking about, as you only quoted the 
-> answer, but not the question. 
+> Running oprofile during my gcc repack shows this loop as the hottest
+> place in the code by far.
 
-Oops.  It's about the rename/copy detection stuff.
+Well, that is kind of expected.
 
-> (Same for the other quoted text.)
+> I added some debug printfs which show that I
+> have a 100,000+ run of identical hash entries. Processing the 100,000
+> entries also causes RAM consumption to explode.
 
-I tried to provide more context in those cases; the @@ lines should be
-sufficient, I guess.
+That is impossible.  If you look at the code where those hash entries 
+are created in create_delta_index(), you'll notice a hard limit of 
+HASH_LIMIT (currently 64) is imposed on the number of identical hash 
+entries.
+
+
+Nicolas
