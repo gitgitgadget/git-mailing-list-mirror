@@ -1,129 +1,170 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] diff: Make numstat machine friendly also for renames (and copies)
-Date: Mon, 10 Dec 2007 23:32:51 +0100
-Message-ID: <200712102332.53114.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: v1.5.4 plans
+Date: Mon, 10 Dec 2007 14:37:09 -0800
+Message-ID: <7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org>
+References: <20071022061115.GR14735@spearce.org>
+	<7vodeecyni.fsf@gitster.siamese.dyndns.org>
+	<7vpryqwtt7.fsf@gitster.siamese.dyndns.org>
+	<7vk5ot40w9.fsf@gitster.siamese.dyndns.org>
+	<7vy7d43ptc.fsf@gitster.siamese.dyndns.org>
+	<7vabpg9x5k.fsf@gitster.siamese.dyndns.org>
+	<7vy7cwsi3p.fsf@gitster.siamese.dyndns.org>
+	<7vk5o6jbq9.fsf@gitster.siamese.dyndns.org>
+	<7v63zjgoel.fsf@gitster.siamese.dyndns.org>
+	<7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>
+	<7vhcixtnm4.fsf@gitster.siamese.dyndns.org>
+	<7vfxye4yv7.fsf@gitster.siamese.dyndns.org>
+	<7vve78qhtf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 10 23:33:52 2007
+X-From: git-owner@vger.kernel.org Mon Dec 10 23:37:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1rC6-0001VS-1Y
-	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 23:33:46 +0100
+	id 1J1rFv-00032s-0U
+	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 23:37:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751658AbXLJWdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2007 17:33:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751805AbXLJWdK
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 17:33:10 -0500
-Received: from mu-out-0910.google.com ([209.85.134.188]:31594 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751502AbXLJWdG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2007 17:33:06 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so2811774mue
-        for <git@vger.kernel.org>; Mon, 10 Dec 2007 14:33:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=Rg8nvJq3uDBQ29UgbPuTt9Sex5Gx1aW2k17nt1AxWao=;
-        b=tktek3nJqXenA1WIpG0p4PQ54tJQLwl57VndRdJRz8b4eOpXOGj7Mr8P1KMLk04mVjZObP57T2m1P/0clLHPmmKBjxP+gBWrb0knOw82x49ELqIEWnxq4ZFrjGX7yUFaef4IMl6MQHLsk0O+UBYQ1uyHq+lxDztAapUDz5qIsqk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=EE7kCp/xcVfCikbt6fEBvuMtZ2Ae0uOhu5HrKzcW7T356AqyjduLcH/HtebgIMCqbt4yqpOf5s/7gXv5YJZzXZNdvEG/waZM+N2mFC2zPjYc4TAKiEfwoJHIpqqtMVRiVjoygt1M08JynRXHm44tMnm9w0oXfh7FvfyTBhLzG60=
-Received: by 10.82.145.7 with SMTP id s7mr8188682bud.1197325983770;
-        Mon, 10 Dec 2007 14:33:03 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.241.16])
-        by mx.google.com with ESMTPS id i5sm9451664mue.2007.12.10.14.32.59
-        (version=SSLv3 cipher=OTHER);
-        Mon, 10 Dec 2007 14:33:00 -0800 (PST)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1751810AbXLJWhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 17:37:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751807AbXLJWhV
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 17:37:21 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33070 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751800AbXLJWhT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 17:37:19 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8335B1A8F;
+	Mon, 10 Dec 2007 17:37:13 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 83BFB1A8D;
+	Mon, 10 Dec 2007 17:37:11 -0500 (EST)
+In-Reply-To: <7vve78qhtf.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 09 Dec 2007 02:32:44 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67765>
 
-"git diff --numstat" used the same format as "git diff --stat" for
-renamed (and copied) files, except that filenames were not shortened
-when they didn't fit in the column width.  This format is suitable for
-human consumption, but it cannot be unambiguously parsed.
+People might have noticed that I've been ignoring most of the new
+topics/enhancements for the past few days.  Here is what I want to see
+happen until we declare v1.5.4.
 
-Instead of that always use final file name ("to" name) for numstat.
-It is possible to find name before rename when name after is known.
+First, stabilize 'master' enough and tag v1.5.4-rc0 soon.
 
-This required to use pprint_rename (pretty print rename) during output
-(in the show_stats function) and not during parsing (in diffstat_add
-function).
+ * Among what's already in 'next', Christian's "git help -w" enhancement
+   is the only candidate to be in v1.5.4.  Johannes's "git remote" could
+   also be, but I've seen it fail tests when run in my k.org private
+   repository and haven't had chance to find time to diagnose it, so I'd
+   rather leave it after v1.5.4.
 
-Adding from_name field to struct diffstat_t makes is_renamed bitfield
-redundant; nevertheless for the sake of clarity, readability and
-making this patch minimal (and because it would not reduce memory
-footprint) it was not removed, and its used not replaced by checking
-from_name field.
+ * Eric's sanely-compact mapping from SVN rev-ids to git commits saw a
+   positive feedback.  I haven't carefully read that patch but it seemed
+   sane and I'd like to have it in v1.5.4.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This would be useful for gitweb, later.
+ * Please, everybody, no more new features until v1.5.4 final ships, and
+   please spend a bit more time on finding and fixing regressions than
+   you would spend time cooking your favorite new features.  I do not
+   have infinite amount of time to comment on new feature patches while
+   concentrating on fixes at the same time.
 
-I hope I have made it in time before feature freeze...
+There are outstanding issues that need to be resolved:
 
- diff.c |   15 ++++++++++++---
- 1 files changed, 12 insertions(+), 3 deletions(-)
+ * I'd like to see the pack-object's memory performance issue resolved
+   before the release; two very capable people are looking into it and I
+   am fairly optimistic.
 
-diff --git a/diff.c b/diff.c
-index f780e3e..38b9367 100644
---- a/diff.c
-+++ b/diff.c
-@@ -735,6 +735,7 @@ struct diffstat_t {
- 	int alloc;
- 	struct diffstat_file {
- 		char *name;
-+		char *from_name;
- 		unsigned is_unmerged:1;
- 		unsigned is_binary:1;
- 		unsigned is_renamed:1;
-@@ -755,11 +756,14 @@ static struct diffstat_file *diffstat_add(struct diffstat_t *diffstat,
- 	}
- 	diffstat->files[diffstat->nr++] = x;
- 	if (name_b) {
--		x->name = pprint_rename(name_a, name_b);
-+		x->from_name = xstrdup(name_a);
-+		x->name      = xstrdup(name_b);
- 		x->is_renamed = 1;
- 	}
--	else
-+	else {
-+		x->from_name = NULL;
- 		x->name = xstrdup(name_a);
-+	}
- 	return x;
- }
- 
-@@ -837,7 +841,7 @@ static void show_stats(struct diffstat_t* data, struct diff_options *options)
- 		struct diffstat_file *file = data->files[i];
- 		int change = file->added + file->deleted;
- 
--		if (!file->is_renamed) {  /* renames are already quoted by pprint_rename */
-+		if (!file->is_renamed) {  /* renames will be quoted by pprint_rename */
- 			struct strbuf buf;
- 			strbuf_init(&buf, 0);
- 			if (quote_c_style(file->name, &buf, NULL, 0)) {
-@@ -846,6 +850,11 @@ static void show_stats(struct diffstat_t* data, struct diff_options *options)
- 			} else {
- 				strbuf_release(&buf);
- 			}
-+		} else {
-+			char *qname = pprint_rename(file->from_name, file->name);
-+			free(file->name);
-+			free(file->from_name);
-+			file->name = qname;
- 		}
- 
- 		len = strlen(file->name);
--- 
-1.5.3.7
+ * We need to do something about "gc --aggressive".  The documentation
+   removal patch from Linus, if it ever materializes, would be better
+   than nothing, but I have this nagging suspicion that the explosion is
+   merely a bad interation between -A and -f option to the repack, which
+   are not meant to be used together.
+
+ * We have a handful deprecation notices in the draft release notes, but
+   if I recall correctly, Nico wanted to add a few more.  We need to
+   come up with a wording that is easy to understand for the end users
+   to decide which ancient versions will be affected.
+
+  "git help -w" will want to have the HTML pages installed, which means
+   we would need to add a new package to hold it in git.spec.in.  I am
+   willing to work on the initial draft, but help in testing is very
+   much appreciated --- I do not work on RPM systems myself.  The same
+   goes for "git help -i" which will want the INFO pages installed.
+
+ * I've seen t9119-git-svn-info.sh fail in my k.org private repository
+   and have been skipping the test, but this needs to be diagnosed and
+   fixed [*1*].  It could be just that the code is fine and the test is
+   not rejecting SVN that is too-old. I dunno.
+
+ * There have been quite a few HTTP paches from Mike Hommey.  I'd like
+   to limit the changes only to fixes and trivially-correct clean-ups,
+   which means these will need to be looked at:
+
+    [PATCH 1/4] Cleanup variables in http.[ch]
+    [PATCH 2/4] Use strbuf in http code
+    [PATCH 1/5] Remove the default_headers variable from http-push.c
+    [PATCH 2/5] Remove a CURLOPT_HTTPHEADER (un)setting
+    [PATCH 3/5] Avoid redundant declaration of missing_target()
+    [PATCH 4/5] Correctly initialize buffer in start_put() in http-push.c
+    [PATCH 5/5] Fix various memory leaks in http-push.c and http-walker.c
+
+   Help in reviewing these from people who were involved in the http
+   part of the current codebase is very much appreciated.
+
+If we can freeze by the end of the year, we may be able to release mid
+January 2008.
+
+
+[Footnote]
+----------------------------------------------------------------
+
+*1* t9119 first fails at the 6th test.  Perhaps the test needs to check
+svn version first and stop testing this feature.  This test does not
+fail on my personal box that has svn 1.4.2.
+
+* expecting success:
+        (cd svnwc; svn info file) > expected.info-file &&
+        (cd gitwc; git-svn info file) > actual.info-file &&
+        git-diff expected.info-file actual.info-file
+
+diff --git a/expected.info-file b/actual.info-file
+index b1d57f4..997c927 100644
+--- a/expected.info-file
++++ b/actual.info-file
+@@ -10,6 +10,5 @@ Last Changed Author: junio
+ Last Changed Rev: 1
+ Last Changed Date: 2007-12-10 22:18:12 +0000 (Mon, 10 Dec 2007)
+ Text Last Updated: 2007-12-10 22:18:13 +0000 (Mon, 10 Dec 2007)
+-Properties Last Updated: 2007-12-10 22:18:13 +0000 (Mon, 10 Dec 2007)
+ Checksum: 5bbf5a52328e7439ae6e719dfe712200
+
+* FAIL 6: info file
+
+                (cd svnwc; svn info file) > expected.info-file &&
+                (cd gitwc; git-svn info file) > actual.info-file &&
+                git-diff expected.info-file actual.info-file
+
+: hera t/master; svn --version
+svn, version 1.3.2 (r19776)
+   compiled Jun  1 2006, 10:05:51
+
+Copyright (C) 2000-2006 CollabNet.
+Subversion is open source software, see http://subversion.tigris.org/
+This product includes software developed by CollabNet (http://www.Collab.Net/).
+
+The following repository access (RA) modules are available:
+
+* ra_dav : Module for accessing a repository via WebDAV (DeltaV) protocol.
+  - handles 'http' scheme
+  - handles 'https' scheme
+* ra_svn : Module for accessing a repository using the svn network protocol.
+  - handles 'svn' scheme
+* ra_local : Module for accessing a repository on local disk.
+  - handles 'file' scheme
+
+----------------------------------------------------------------
