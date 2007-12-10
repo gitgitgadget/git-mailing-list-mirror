@@ -1,88 +1,66 @@
-From: Wink Saville <wink@saville.com>
-Subject: Re: How-to combine several separate git repos?
-Date: Sun, 09 Dec 2007 22:36:35 -0800
-Message-ID: <475CDE73.9010505@saville.com>
-References: <475B8C59.7050707@saville.com> <20071209104336.GA3163@steel.home> <475C3E25.30704@saville.com> <Pine.LNX.4.64.0712091445470.5349@iabervon.org> <475C7DD5.9040209@saville.com> <Pine.LNX.4.64.0712091942520.5349@iabervon.org> <475CA476.6070507@saville.com> <Pine.LNX.4.64.0712092130560.5349@iabervon.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH 2/2] Add support for URLs to git-apply
+Date: Mon, 10 Dec 2007 07:46:59 +0100
+Organization: glandium.org
+Message-ID: <20071210064659.GA4148@glandium.org>
+References: <1197194672-28568-1-git-send-email-mh@glandium.org> <1197194672-28568-2-git-send-email-mh@glandium.org> <475C5869.4080900@op5.se> <7vhciro4vx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Dec 10 07:37:02 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 10 07:47:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1cGB-0002a4-Kk
-	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 07:37:00 +0100
+	id 1J1cQQ-0004kT-LG
+	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 07:47:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751388AbXLJGgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2007 01:36:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751315AbXLJGgi
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 01:36:38 -0500
-Received: from rv-out-0910.google.com ([209.85.198.185]:1772 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751177AbXLJGgi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2007 01:36:38 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1512491rvb
-        for <git@vger.kernel.org>; Sun, 09 Dec 2007 22:36:37 -0800 (PST)
-Received: by 10.141.171.6 with SMTP id y6mr4017596rvo.1197268597429;
-        Sun, 09 Dec 2007 22:36:37 -0800 (PST)
-Received: from ?192.168.0.133? ( [70.91.206.233])
-        by mx.google.com with ESMTPS id f42sm5956665rvb.2007.12.09.22.36.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 09 Dec 2007 22:36:37 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <Pine.LNX.4.64.0712092130560.5349@iabervon.org>
+	id S1751196AbXLJGrH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 01:47:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750953AbXLJGrG
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 01:47:06 -0500
+Received: from smtp19.orange.fr ([80.12.242.17]:60590 "EHLO smtp19.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750806AbXLJGrF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 01:47:05 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf1906.orange.fr (SMTP Server) with ESMTP id B17451C0009D
+	for <git@vger.kernel.org>; Mon, 10 Dec 2007 07:47:00 +0100 (CET)
+Received: from namakemono.glandium.org (APuteaux-153-1-79-219.w81-249.abo.wanadoo.fr [81.249.109.219])
+	by mwinf1906.orange.fr (SMTP Server) with ESMTP id 8D0FE1C0008A;
+	Mon, 10 Dec 2007 07:47:00 +0100 (CET)
+X-ME-UUID: 20071210064700577.8D0FE1C0008A@mwinf1906.orange.fr
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1J1cPr-00017b-4v; Mon, 10 Dec 2007 07:46:59 +0100
+Content-Disposition: inline
+In-Reply-To: <7vhciro4vx.fsf@gitster.siamese.dyndns.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67685>
 
-Daniel Barkalow wrote:
-> On Sun, 9 Dec 2007, Wink Saville wrote:
->
->   
-> Ah, okay. I was assuming that you wanted them to maintain their original 
-> identities (so you'd send stuff off for each of them separately, for 
-> example).
->
-> I think you can do what you want by doing:
->
-> # Set up the new line:
-> $ mkdir x; cd x
-> $ git init
-> $ touch README
-> $ git add README
-> $ git commit
->
-> # Add a project "foo"
-> $ git fetch ../foo refs/heads/master:refs/heads/foo
-> $ git merge --no-commit foo
-> $ git read-tree --reset -u HEAD
-> $ git read-tree -u --prefix=foo/ foo
-> $ git commit
->
-> And repeat for all of the other projects.
->
-> What's going on here is that you're merging in each project, except that 
-> you're moving all of the files from that project into a subdirectory as 
-> you pull in the content. The resulting repository has one recent dull 
-> initial commit, and then merges in each of the other projects with their 
-> history, with only the slight oddity that they don't go back to the same 
-> initial commit, and the merge renames all of the project's files.
->
-> I think there may be a more obvious way of doing this (it's essentially 
-> how gitweb and git-gui got into the git history), but I'm not sure what it 
-> is, if there is one.
->
-> 	-Daniel
-> *This .sig left intentionally blank*
->   
+On Sun, Dec 09, 2007 at 02:54:58PM -0800, Junio C Hamano wrote:
+> Andreas Ericsson <ae@op5.se> writes:
+> 
+> > Mike Hommey wrote:
+> >> Instead of doing several "wget -O - url | git-apply -" in a raw, you now
+> >> can just git-apply url1 url2 ...
+> >>
+> >
+> > I seriously like this idea. Combined with gitweb (or cgit), it could be
+> > used as a cherry-pick from someone else's repo :)
+> 
+> FWIW, my initial impression is that I seriously dislike this.  It may be
+> good if the patch were to git-am, but when git-apply rejects an
+> inapplicable patch, there won't be nothing left for you to recover with
+> and you need to re-download the patch anyway.
 
-Daniel,
+There are some usecase differences between git-apply and git-am.
+Probably, this change would be good to have on both.
 
-Worked like a charm, someday maybe I'll understand why it works:)
-
-Wink
+Mike
