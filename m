@@ -1,66 +1,86 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH 2/2] Add support for URLs to git-apply
-Date: Mon, 10 Dec 2007 07:46:59 +0100
-Organization: glandium.org
-Message-ID: <20071210064659.GA4148@glandium.org>
-References: <1197194672-28568-1-git-send-email-mh@glandium.org> <1197194672-28568-2-git-send-email-mh@glandium.org> <475C5869.4080900@op5.se> <7vhciro4vx.fsf@gitster.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: How-to combine several separate git repos?
+Date: Mon, 10 Dec 2007 01:51:32 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0712100137250.5349@iabervon.org>
+References: <475B8C59.7050707@saville.com> <20071209104336.GA3163@steel.home>
+ <475C3E25.30704@saville.com> <Pine.LNX.4.64.0712091445470.5349@iabervon.org>
+ <475C7DD5.9040209@saville.com> <Pine.LNX.4.64.0712091942520.5349@iabervon.org>
+ <475CA476.6070507@saville.com> <Pine.LNX.4.64.0712092130560.5349@iabervon.org>
+ <475CDE73.9010505@saville.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 10 07:47:36 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Wink Saville <wink@saville.com>
+X-From: git-owner@vger.kernel.org Mon Dec 10 07:52:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1cQQ-0004kT-LG
-	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 07:47:35 +0100
+	id 1J1cUi-0005ov-54
+	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 07:52:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751196AbXLJGrH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2007 01:47:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750953AbXLJGrG
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 01:47:06 -0500
-Received: from smtp19.orange.fr ([80.12.242.17]:60590 "EHLO smtp19.orange.fr"
+	id S1751450AbXLJGvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 01:51:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751413AbXLJGvj
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 01:51:39 -0500
+Received: from iabervon.org ([66.92.72.58]:39085 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750806AbXLJGrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2007 01:47:05 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf1906.orange.fr (SMTP Server) with ESMTP id B17451C0009D
-	for <git@vger.kernel.org>; Mon, 10 Dec 2007 07:47:00 +0100 (CET)
-Received: from namakemono.glandium.org (APuteaux-153-1-79-219.w81-249.abo.wanadoo.fr [81.249.109.219])
-	by mwinf1906.orange.fr (SMTP Server) with ESMTP id 8D0FE1C0008A;
-	Mon, 10 Dec 2007 07:47:00 +0100 (CET)
-X-ME-UUID: 20071210064700577.8D0FE1C0008A@mwinf1906.orange.fr
-Received: from mh by namakemono.glandium.org with local (Exim 4.68)
-	(envelope-from <mh@glandium.org>)
-	id 1J1cPr-00017b-4v; Mon, 10 Dec 2007 07:46:59 +0100
-Content-Disposition: inline
-In-Reply-To: <7vhciro4vx.fsf@gitster.siamese.dyndns.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1751407AbXLJGvi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 01:51:38 -0500
+Received: (qmail 21574 invoked by uid 1000); 10 Dec 2007 06:51:32 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 10 Dec 2007 06:51:32 -0000
+In-Reply-To: <475CDE73.9010505@saville.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67686>
 
-On Sun, Dec 09, 2007 at 02:54:58PM -0800, Junio C Hamano wrote:
-> Andreas Ericsson <ae@op5.se> writes:
+On Sun, 9 Dec 2007, Wink Saville wrote:
+
+> Daniel,
 > 
-> > Mike Hommey wrote:
-> >> Instead of doing several "wget -O - url | git-apply -" in a raw, you now
-> >> can just git-apply url1 url2 ...
-> >>
-> >
-> > I seriously like this idea. Combined with gitweb (or cgit), it could be
-> > used as a cherry-pick from someone else's repo :)
-> 
-> FWIW, my initial impression is that I seriously dislike this.  It may be
-> good if the patch were to git-am, but when git-apply rejects an
-> inapplicable patch, there won't be nothing left for you to recover with
-> and you need to re-download the patch anyway.
+> Worked like a charm, someday maybe I'll understand why it works:)
 
-There are some usecase differences between git-apply and git-am.
-Probably, this change would be good to have on both.
+I should probably explain (now that I know it's actually relevant).
 
-Mike
+> > # Add a project "foo"
+> > $ git fetch ../foo refs/heads/master:refs/heads/foo
+
+Get the history and data, as an extra branch, so we can deal with it 
+easily.
+
+> > $ git merge --no-commit foo
+
+We want to generate a merge commit, but we want to mess with it, so we use 
+merge to set it up, but --no-commit to not actually commit it. (The commit 
+below will generate a merge commit if we don't cancel stuff entirely.)
+
+> > $ git read-tree --reset -u HEAD
+
+Replace the index (--reset), updating the working directory (-u), with 
+HEAD (the commit on the local side before the merge we're in the middle 
+of).
+
+> > $ git read-tree -u --prefix=foo/ foo
+
+Read into the index, updating the working directory, "foo" (the branch we 
+fetched above), but with the prefix "foo/" so everything is stuffed into a 
+subdirectory.
+
+> > $ git commit
+
+And commit the result, which has the tree as constructed above (everything 
+from the local parent, and everything from the branch in a subdirectory), 
+and has the parents as for the merge we started: first parent is the local 
+line without the additional branch, and the second parent is the added 
+repository.
+
+And git doesn't care about global structure, so the fact that this commit 
+is obviously just what you'd ideally like, while the history as a whole is 
+a bit odd (like, it doesn't have a unique start, and development didn't 
+start in subdirectories, and...) doesn't matter.
+
+	-Daniel
+*This .sig left intentionally blank*
