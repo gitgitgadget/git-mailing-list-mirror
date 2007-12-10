@@ -1,94 +1,129 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: backups with git and inotify
-Date: Mon, 10 Dec 2007 22:57:46 +0100
-Message-ID: <20071210215746.GA3022@atjola.homenet>
-References: <20071210202911.GA14738@bit.office.eurotux.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] diff: Make numstat machine friendly also for renames (and copies)
+Date: Mon, 10 Dec 2007 23:32:51 +0100
+Message-ID: <200712102332.53114.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Luciano Rocha <luciano@eurotux.com>
-X-From: git-owner@vger.kernel.org Mon Dec 10 22:58:16 2007
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 10 23:33:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1qdg-0003ke-IE
-	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 22:58:12 +0100
+	id 1J1rC6-0001VS-1Y
+	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 23:33:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751553AbXLJV5u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Dec 2007 16:57:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbXLJV5u
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 16:57:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57729 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751543AbXLJV5t (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2007 16:57:49 -0500
-Received: (qmail invoked by alias); 10 Dec 2007 21:57:47 -0000
-Received: from i577B9DF1.versanet.de (EHLO localhost) [87.123.157.241]
-  by mail.gmx.net (mp007) with SMTP; 10 Dec 2007 22:57:47 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+fUIJdNuqfeHrFQQjatD/kHC9tI0UujXYCEALp6x
-	yB/HSvuaDgZHA6
+	id S1751658AbXLJWdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 17:33:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751805AbXLJWdK
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 17:33:10 -0500
+Received: from mu-out-0910.google.com ([209.85.134.188]:31594 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751502AbXLJWdG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 17:33:06 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so2811774mue
+        for <git@vger.kernel.org>; Mon, 10 Dec 2007 14:33:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=Rg8nvJq3uDBQ29UgbPuTt9Sex5Gx1aW2k17nt1AxWao=;
+        b=tktek3nJqXenA1WIpG0p4PQ54tJQLwl57VndRdJRz8b4eOpXOGj7Mr8P1KMLk04mVjZObP57T2m1P/0clLHPmmKBjxP+gBWrb0knOw82x49ELqIEWnxq4ZFrjGX7yUFaef4IMl6MQHLsk0O+UBYQ1uyHq+lxDztAapUDz5qIsqk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=EE7kCp/xcVfCikbt6fEBvuMtZ2Ae0uOhu5HrKzcW7T356AqyjduLcH/HtebgIMCqbt4yqpOf5s/7gXv5YJZzXZNdvEG/waZM+N2mFC2zPjYc4TAKiEfwoJHIpqqtMVRiVjoygt1M08JynRXHm44tMnm9w0oXfh7FvfyTBhLzG60=
+Received: by 10.82.145.7 with SMTP id s7mr8188682bud.1197325983770;
+        Mon, 10 Dec 2007 14:33:03 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.241.16])
+        by mx.google.com with ESMTPS id i5sm9451664mue.2007.12.10.14.32.59
+        (version=SSLv3 cipher=OTHER);
+        Mon, 10 Dec 2007 14:33:00 -0800 (PST)
+User-Agent: KMail/1.9.3
 Content-Disposition: inline
-In-Reply-To: <20071210202911.GA14738@bit.office.eurotux.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67764>
 
-On 2007.12.10 20:29:11 +0000, Luciano Rocha wrote:
->=20
-> Hello,
->=20
-> The following is a work in progress. There are some problems in how I=
-'m
-> using git and recording the history:
->=20
-> 1. I use an opened fd for each monitored directory (and subdirectorie=
-s),
->    (inotify_add_watch_at would be nice).
->    I fchdir(fd) when a change happens to register and commit it.
->=20
-> 2. git-rm dir/file also removes <dir> if file was the only entry of
->    <dir>. So, when committing the removal, git complains that it can'=
-t
->    find cwd. So I record the parent directory, do the git command, ch=
-eck
->    if getcwd() works, and if not do the commit in the parent director=
-y.
->=20
-> 3. git-rm (empty) directory fails
->=20
-> 4. Changes aren't atomic, but I can live with that and I doubt I woul=
-d
->    be able to make it atomic without implementing a filesystem (FUSE =
-or
->    not).
->=20
-> I can work around most of the problems, and rewrite to use recorded p=
-ath
-> names instead of directories fd, but before I do that, and while I'm
-> at the beginning, I'd like to probe for opinions and suggestions.
->=20
-> So, please, suggest.
+"git diff --numstat" used the same format as "git diff --stat" for
+renamed (and copied) files, except that filenames were not shortened
+when they didn't fit in the column width.  This format is suitable for
+human consumption, but it cannot be unambiguously parsed.
 
-I posted an extremely simple bash script here:
-http://lkml.org/lkml/2007/12/7/279
+Instead of that always use final file name ("to" name) for numstat.
+It is possible to find name before rename when name after is known.
 
-It just employs inotifywait to do all watching and just needs to
-translate the events to the different git command. Did just glance over
-your code, but it seems to do basically the same thing, just that it's =
-a
-lot shorter. The overhead of being a shell script is probably neglible,
-as the amount of git calls are likely dominating anyway.
+This required to use pprint_rename (pretty print rename) during output
+(in the show_stats function) and not during parsing (in diffstat_add
+function).
 
-=46eel free to ignore my comments on why I think that that is crap anyw=
-ay
-and do whatever you want with the script.
+Adding from_name field to struct diffstat_t makes is_renamed bitfield
+redundant; nevertheless for the sake of clarity, readability and
+making this patch minimal (and because it would not reduce memory
+footprint) it was not removed, and its used not replaced by checking
+from_name field.
 
-HTH
-Bj=F6rn
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This would be useful for gitweb, later.
+
+I hope I have made it in time before feature freeze...
+
+ diff.c |   15 ++++++++++++---
+ 1 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index f780e3e..38b9367 100644
+--- a/diff.c
++++ b/diff.c
+@@ -735,6 +735,7 @@ struct diffstat_t {
+ 	int alloc;
+ 	struct diffstat_file {
+ 		char *name;
++		char *from_name;
+ 		unsigned is_unmerged:1;
+ 		unsigned is_binary:1;
+ 		unsigned is_renamed:1;
+@@ -755,11 +756,14 @@ static struct diffstat_file *diffstat_add(struct diffstat_t *diffstat,
+ 	}
+ 	diffstat->files[diffstat->nr++] = x;
+ 	if (name_b) {
+-		x->name = pprint_rename(name_a, name_b);
++		x->from_name = xstrdup(name_a);
++		x->name      = xstrdup(name_b);
+ 		x->is_renamed = 1;
+ 	}
+-	else
++	else {
++		x->from_name = NULL;
+ 		x->name = xstrdup(name_a);
++	}
+ 	return x;
+ }
+ 
+@@ -837,7 +841,7 @@ static void show_stats(struct diffstat_t* data, struct diff_options *options)
+ 		struct diffstat_file *file = data->files[i];
+ 		int change = file->added + file->deleted;
+ 
+-		if (!file->is_renamed) {  /* renames are already quoted by pprint_rename */
++		if (!file->is_renamed) {  /* renames will be quoted by pprint_rename */
+ 			struct strbuf buf;
+ 			strbuf_init(&buf, 0);
+ 			if (quote_c_style(file->name, &buf, NULL, 0)) {
+@@ -846,6 +850,11 @@ static void show_stats(struct diffstat_t* data, struct diff_options *options)
+ 			} else {
+ 				strbuf_release(&buf);
+ 			}
++		} else {
++			char *qname = pprint_rename(file->from_name, file->name);
++			free(file->name);
++			free(file->from_name);
++			file->name = qname;
+ 		}
+ 
+ 		len = strlen(file->name);
+-- 
+1.5.3.7
