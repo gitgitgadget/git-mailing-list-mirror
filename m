@@ -1,88 +1,63 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 2/2] pack-objects: fix threaded load balancing
-Date: Mon, 10 Dec 2007 13:21:54 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0712101308150.555@xanadu.home>
-References: <alpine.LFD.0.99999.0712080000120.555@xanadu.home>
- <9e4733910712092030j5cf7dfdcrb3a003fbce391422@mail.gmail.com>
- <9e4733910712092123r6987c3edua74a15890ae45a3d@mail.gmail.com>
- <9e4733910712092159s24cf5a7cx4610f797f61b1de5@mail.gmail.com>
- <9e4733910712092206o40e0c748s3796b95f637bf2b3@mail.gmail.com>
- <alpine.LFD.0.99999.0712101104320.555@xanadu.home>
- <9e4733910712100906g6794e326qf18da4be146f3667@mail.gmail.com>
+From: "J.H." <warthog9@kernel.org>
+Subject: Re: There is not summary of kernel 2.4.x repo.
+Date: Mon, 10 Dec 2007 09:57:24 -0800
+Message-ID: <1197309444.8067.28.camel@localhost.localdomain>
+References: <998d0e4a0712100442g40c61093q570aee1c063f1302@mail.gmail.com>
+	 <475D39A3.1040401@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 10 19:22:34 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: "J.C. Pizarro" <jcpiza@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Mon Dec 10 20:15:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1nGk-00021z-7D
-	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 19:22:18 +0100
+	id 1J1o6P-00082G-Fd
+	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 20:15:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753316AbXLJSV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2007 13:21:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753022AbXLJSV4
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 13:21:56 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:17805 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752815AbXLJSVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2007 13:21:55 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSU001WMJ0H99M0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 10 Dec 2007 13:21:53 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <9e4733910712100906g6794e326qf18da4be146f3667@mail.gmail.com>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1752631AbXLJTPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 14:15:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752570AbXLJTPS
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 14:15:18 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:41034 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751769AbXLJTPQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 14:15:16 -0500
+X-Greylist: delayed 4618 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Dec 2007 14:15:16 EST
+Received: from [172.19.0.93] ([76.21.83.184])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.13.8/8.13.8) with ESMTP id lBAHw9Am029510
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
+	Mon, 10 Dec 2007 09:58:09 -0800
+In-Reply-To: <475D39A3.1040401@op5.se>
+X-Mailer: Evolution 2.8.3 (2.8.3-2.fc6) 
+X-Virus-Scanned: ClamAV 0.88.7/5077/Mon Dec 10 05:59:40 2007 on shards.monkeyblade.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67744>
 
-On Mon, 10 Dec 2007, Jon Smirl wrote:
+To further this the Linus Torvalds 2.4 tree does not actually exist (at
+least not where your looking and not in my quick glance on the server),
+so gitweb not showing you anything is a bit expected.
 
-> On 12/10/07, Nicolas Pitre <nico@cam.org> wrote:
+- John 'Warthog9' Hawley
+
+On Mon, 2007-12-10 at 14:05 +0100, Andreas Ericsson wrote:
+> J.C. Pizarro wrote:
+> > It exists http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=summary
+> > but http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.4.git;a=summary
+> > is empty.   :)
 > 
-> > The hash in the code above has to do with the file names the
-> > corresponding objects are coming from.
+> That's what you get for hand-hacking URL's when there's a list to choose
+> from.
 > 
-> So can we change this loop to exit after a max of window_size * 10 or
-> something like that iterations? Without capping it the threads become
-> way unbalanced in the end. In the gcc case one thread is continuing
-> 30+ minutes past the others exiting.
-
-Indeed, some more tweaking are needed.
-
-The object path distribution goes like this for the gcc repo:
-
-105557  gcc
-42537   gcc/ChangeLog
-25210   gcc/config
-20690   gcc/testsuite
-13434   gcc/testsuite/ChangeLog
-12363   libstdc++-v3
-9346    gcc/cp
-8757    libstdc++-v3/include
-8186    gcc/version.c
-7867    gcc/cp/ChangeLog
-7737    libstdc++-v3/include/bits
-7653    libjava
-6577    gcc/testsuite/gcc.dg
-5942    libjava/ChangeLog
-5351    gcc/config/i386
-5260    gcc/testsuite/g++.dg
-4451    gcc/f
-4330    libstdc++-v3/ChangeLog
-4321    libstdc++-v3/include/bits/c++config
-4316    gcc/doc
-[...]
-
-So... the top entries are most certainly going to create load balancing 
-issues if their path hash clustering isn't broken.
-
-
-Nicolas
+> http://git.kernel.org/?p=linux/kernel/git/wtarreau/linux-2.4.git;a=summary
+> works though.
+> 
