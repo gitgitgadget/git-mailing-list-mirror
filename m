@@ -1,125 +1,89 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: Adding Git to Better SCM Initiative : Comparison
-Date: Mon, 10 Dec 2007 17:28:19 +0100
-Message-ID: <87r6huldjw.fsf@mid.deneb.enyo.de>
-References: <200712101357.49325.jnareb@gmail.com>
-	<87ve76mwos.fsf@mid.deneb.enyo.de> <m34peqtuuj.fsf@roke.D-201>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Performance problem, long run of identical hashes
+Date: Mon, 10 Dec 2007 11:30:10 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0712101129050.555@xanadu.home>
+References: <9e4733910712100707i66e185bofe22805b8e0ba4d8@mail.gmail.com>
+ <alpine.LFD.0.99999.0712101037270.555@xanadu.home>
+ <9e4733910712100820k1bd0959fsdfae92727826c6db@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Shlomi Fish <shlomif@iglu.org.il>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 10 17:28:50 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 10 17:30:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1lUv-00025x-CO
-	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 17:28:49 +0100
+	id 1J1lWc-0002mT-J8
+	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 17:30:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752704AbXLJQ21 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Dec 2007 11:28:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752426AbXLJQ21
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 11:28:27 -0500
-Received: from mail.enyo.de ([212.9.189.167]:1949 "EHLO mail.enyo.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752051AbXLJQ20 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Dec 2007 11:28:26 -0500
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1J1lUU-0007v1-Ha; Mon, 10 Dec 2007 17:28:22 +0100
-Received: from fw by deneb.enyo.de with local (Exim 4.68)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1J1lUR-0004Rj-Vz; Mon, 10 Dec 2007 17:28:19 +0100
-In-Reply-To: <m34peqtuuj.fsf@roke.D-201> (Jakub Narebski's message of "Mon, 10
-	Dec 2007 07:47:49 -0800 (PST)")
+	id S1752815AbXLJQaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 11:30:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752142AbXLJQaN
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 11:30:13 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:30646 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752050AbXLJQaL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 11:30:11 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JSU00JGJDUAEO70@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 10 Dec 2007 11:30:11 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <9e4733910712100820k1bd0959fsdfae92727826c6db@mail.gmail.com>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67731>
 
-* Jakub Narebski:
+On Mon, 10 Dec 2007, Jon Smirl wrote:
 
-> Florian Weimer <fw@deneb.enyo.de> writes:
->
->> * Jakub Narebski:
->> > @@ -214,6 +225,13 @@ <title>File and Directories Copies</title>
-> [...]
->> > +                <s id=3D"git">
->> > +                    Yes (or no depending on interpretation). Git
->>=20
->> This should be "No." (same for copies below).
->
-> I would agree to "N/A" or "Partial", but with 'git log --follow'
-> implemented at least for single file I wouldn't say that that git
-> doesn't support file and directories renames (copies).  It does, in
-> it's own fashion, using rename (copy) detection instead of rename
-> (copy) tracking.
+> On 12/10/07, Nicolas Pitre <nico@cam.org> wrote:
+> > On Mon, 10 Dec 2007, Jon Smirl wrote:
+> >
+> > > Running oprofile during my gcc repack shows this loop as the hottest
+> > > place in the code by far.
+> >
+> > Well, that is kind of expected.
+> >
+> > > I added some debug printfs which show that I
+> > > have a 100,000+ run of identical hash entries. Processing the 100,000
+> > > entries also causes RAM consumption to explode.
+> >
+> > That is impossible.  If you look at the code where those hash entries
+> > are created in create_delta_index(), you'll notice a hard limit of
+> > HASH_LIMIT (currently 64) is imposed on the number of identical hash
+> > entries.
+> 
+> On 12/10/07, Jon Smirl <jonsmirl@gmail.com> wrote:
+> > On 12/9/07, Jon Smirl <jonsmirl@gmail.com> wrote:
+> > > > +               if (victim) {
+> > > > +                       sub_size = victim->remaining / 2;
+> > > > +                       list = victim->list + victim->list_size - sub_size;
+> > > > +                       while (sub_size && list[0]->hash &&
+> > > > +                              list[0]->hash == list[-1]->hash) {
+> > > > +                               list++;
+> > >
+> > > I think you needed to copy sub_size to another variable for this loop
+> >
+> > Copying sub_size was wrong. I believe you are checking for deltas on
+> > the same file. It's probably that chain of 103,817 deltas that can't
+> > be broken up.
+> 
+> At the end of multi-threaded repack one thread ends up with 45 minutes
+> of work after all the other threads have exited. That's because it
+> hits this loop and can't spit the list any more.
+> 
+> If the lists can't be over 64 identical entries, why do I get caught
+> in this loop for 50,000+ iterations? If remove this loop the threads
+> are balanced right to the end.
 
-It's undoubtly a difficult question.  In my experience, developers tend
-to not mark renames properly, so rename detection in log/diff/annotate
-is still helpful even if renames are encoded explicitly.  But this was =
-a
-learning process; I used to think that explicit rename support was
-essential.
+Completely different issue.
 
->> > +                <s id=3D"git">
->> > +                    Partial (?). It is possible to lock down repo=
-sitory
->> > +                    (access to branches and tags) using hooks.
->> > +                </s>
->>=20
->> I doubt this works reliably.  You still can access data once you've =
-got
->> its SHA1 hash, for instance.
->
-> So what? The data is not visible, so it is as if it didn't
-> exist.
+Please read my other answers.
 
-Uhm, I'd commit something that references some SHA-1, and voil=E0, I ca=
-n
-read the object with that SHA-1.
 
->> > +                <s id=3D"git">
->> > +                    Yes. Changesets are supported.<br />
->> > +                    Actually Git is snapshot based which means Gi=
-t records
->> > +                    the full state in every commit.  This means t=
-hat any two
->> > +                    commits can be compared directly very quickly=
-, although the
->> > +                    repository is typically browsed as a series o=
-f changesets.
->> > +                </s>
->>=20
->> I don't think this explanation is necessary.  What does Subversion s=
-ay?
->
-> Subversion has the following currently:
->
->   Partial support. There are implicit changeset that are generated on
->   each commit.
-
-Hmm.
-
-> Well, we could follow Mercurial, Monotone and Darcs and simply write
->
-> +                <s id=3D"git">
-> +                    Yes. Changesets are supported.
-> +                </s>
-
-Makes sense, especially since there's "git bundle" nowadays.
-
->> I don't think this is true.  Is there any command that closely match=
-es
->> what CVS does?
->
-> Yes: init, add, annotate (alias to blame), checkout, commit, diff,
-> status, log, version. At least in principle, if not in output format.
-
-I think we disagree on the meaning of "close" here. 8-/
-
-In my experience, it's hard to see the parallels between GIT and CVS
-because the semantics are so different.  This is, to some extent,
-unavoidable.  But I'm not sure if knowing your way around CVS actually
-helps learning GIT (the old sayings about BASIC come to my mind).
+Nicolas
