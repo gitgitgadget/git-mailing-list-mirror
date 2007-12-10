@@ -1,76 +1,49 @@
-From: Clifford Heath <clifford.heath@gmail.com>
-Subject: "remote end hung up unexpectedly"
-Date: Mon, 10 Dec 2007 22:49:48 +1100
-Message-ID: <CE1FB037-26E3-475E-9F9D-AC3874987B9C@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "J.C. Pizarro" <jcpiza@gmail.com>
+Subject: There is not summary of kernel 2.4.x repo.
+Date: Mon, 10 Dec 2007 13:42:27 +0100
+Message-ID: <998d0e4a0712100442g40c61093q570aee1c063f1302@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 10 12:51:37 2007
+To: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 10 13:42:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1hAe-0007xO-LV
-	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 12:51:37 +0100
+	id 1J1hyF-0006Ok-RE
+	for gcvg-git-2@gmane.org; Mon, 10 Dec 2007 13:42:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757742AbXLJLuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2007 06:50:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757730AbXLJLuP
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 06:50:15 -0500
-Received: from wa-out-1112.google.com ([209.85.146.176]:49768 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757702AbXLJLuN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2007 06:50:13 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so3306538wah
-        for <git@vger.kernel.org>; Mon, 10 Dec 2007 03:50:12 -0800 (PST)
+	id S1751800AbXLJMma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 07:42:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751657AbXLJMma
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 07:42:30 -0500
+Received: from wr-out-0506.google.com ([64.233.184.236]:63230 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751036AbXLJMm3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 07:42:29 -0500
+Received: by wr-out-0506.google.com with SMTP id c49so1250767wra
+        for <git@vger.kernel.org>; Mon, 10 Dec 2007 04:42:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:mime-version:content-transfer-encoding:message-id:content-type:to:from:subject:date:x-mailer;
-        bh=F80Gn+kPkDIxuKF/pJfbFH5TAOl5gj/CXDwgQrNZPKQ=;
-        b=BAxGqTOClayVSnwrPLMWQrQooVoR/EvhPOERKPOOUjv0INpBg0220UGWoGYvkMGUBcEOp+GdjGOCN86i3xMvBDFGvyTAiEaI1lu4hRMoaIgbXTx2GS/7zy55CQc3FjKBEWuPqgpVfnZoDSWBp1PHgJAKYGZn2M1likX1pWOmN8Y=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=BUrEY8fxul3PBSEac+9KSA84OBC3PoZtgrMo0eLceO0=;
+        b=oRcTsAHoUPISUOoNxIfPv2Q5cdoCwi1cFsWZehpMvWpYFLWYN4602hIksydAZf+gOZw4aXXsdE8I+oCu3WpI6gKZNPVKbjaaQ6yl/m/3VdCBLfhadn7D+EjNkZBsQ5Wv/4RmYcfhYb2Pubj88Bp6ZN0vcQkvnKDxifVvEtMANpg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:content-transfer-encoding:message-id:content-type:to:from:subject:date:x-mailer;
-        b=IFlUz6iNOQw482L9CaNsN2O2e476Gyowyn6mrzM41UVUrDDattsizhQt16qr0ApCHNbaAkX/PCscAI/B8A8WBdiJeVkFHWUKqy854aM9fVMo9DGPIgHPIMHK/NicXKhesc84zifjmxVL2J7qLf9Qe/0mY1zhmZrF6W0H2XzVvQE=
-Received: by 10.114.66.2 with SMTP id o2mr1911962waa.1197287412521;
-        Mon, 10 Dec 2007 03:50:12 -0800 (PST)
-Received: from ?10.0.0.1? ( [122.107.155.136])
-        by mx.google.com with ESMTPS id j6sm6283722wah.2007.12.10.03.50.10
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 10 Dec 2007 03:50:11 -0800 (PST)
-X-Mailer: Apple Mail (2.752.3)
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=f/GqsjPvVZs6aGv4ag4jGHfJtggBsuB+tr6h5YmJ5Fb21Y15bDeZIEHVCBcSEoLxoe8Zqysdz/vqVjFs4SXD/pt6+FybllJ53kGtY1CBRUXL8gBAdM6GfeI6G5sxZuZwVwosNHzsPrhDc83hSz9DvZaPV1Fc2husEOPOoGLHLJM=
+Received: by 10.70.16.6 with SMTP id 6mr5883373wxp.1197290547602;
+        Mon, 10 Dec 2007 04:42:27 -0800 (PST)
+Received: by 10.70.54.17 with HTTP; Mon, 10 Dec 2007 04:42:27 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67706>
 
-Be patient with me, it's my first day on git... I like it better than  
-svn already,
-but I need a bit of help.
-
-After cloning a remote repository, I wanted to update (rebase) an  
-existing
-remote branch to get the latest master commits, so I switched to it  
-using
-git checkout, then did a "git merge origin/master" and it updated my  
-local
-copy so it looked reasonable... I have changes to add to this branch,  
-but
-I wanted a proper base, so I did a "git commit" and a "git push". The  
-push
-gave me the above message.
-
-I've checked ssh access (don't have shell) to the other side, my PK  
-is set up.
-
-What went wrong? How can I diagnose it further (-v doesn't help)
-
-I understand that to add my further changes, I should set up a local  
-branch
-to track this updated remote branch. But I'm assuming that the rebase  
-must
-be done while switched to the remote branch...?
-
-Clifford Heath.
+It exists http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=summary
+but http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.4.git;a=summary
+is empty.   :)
