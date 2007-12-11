@@ -1,158 +1,126 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: Something is broken in repack
-Date: Tue, 11 Dec 2007 13:43:19 -0500
-Message-ID: <9e4733910712111043h6a361996x740f4dba3d742da5@mail.gmail.com>
-References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com> 	 <9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com> 	 <alpine.LFD.0.99999.0712102231570.555@xanadu.home> 	 <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com> 	 <9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com> 	 <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com> 	 <alpine.LFD.0.9999.0712110806540.25032@woody.linux-foundation.org>
+Date: Tue, 11 Dec 2007 13:57:22 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0712111349270.555@xanadu.home>
+References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
+ <9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com>
+ <alpine.LFD.0.99999.0712102231570.555@xanadu.home>
+ <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>
+ <9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com>
+ <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>
+ <alpine.LFD.0.9999.0712110806540.25032@woody.linux-foundation.org>
+ <9e4733910712111043h6a361996x740f4dba3d742da5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: "Nicolas Pitre" <nico@cam.org>, "Junio C Hamano" <gitster@pobox.com>,  	gcc@gcc.gnu.org, "Git Mailing List" <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: gcc-return-142917-gcc=m.gmane.org@gcc.gnu.org Tue Dec 11 19:43:49 2007
-Return-path: <gcc-return-142917-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J2A56-0003H6-F5
-	for gcc@gmane.org; Tue, 11 Dec 2007 19:43:49 +0100
-Received: (qmail 6380 invoked by alias); 11 Dec 2007 18:43:29 -0000
-Received: (qmail 6370 invoked by uid 22791); 11 Dec 2007 18:43:27 -0000
-X-Spam-Check-By: sourceware.org
-Received: from rv-out-0910.google.com (HELO rv-out-0910.google.com) (209.85.198.189)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Tue, 11 Dec 2007 18:43:23 +0000
-Received: by rv-out-0910.google.com with SMTP id f5so1999498rvb         for <gcc@gcc.gnu.org>; Tue, 11 Dec 2007 10:43:19 -0800 (PST)
-Received: by 10.140.179.25 with SMTP id b25mr1266026rvf.1197398599206;         Tue, 11 Dec 2007 10:43:19 -0800 (PST)
-Received: by 10.140.166.14 with HTTP; Tue, 11 Dec 2007 10:43:19 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.9999.0712110806540.25032@woody.linux-foundation.org>
-Content-Disposition: inline
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Content-Type: multipart/mixed; boundary="Boundary_(ID_L/QTZKROBiW6TBaoSOrJhg)"
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>, gcc@gcc.gnu.org,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 19:57:50 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J2AIg-0000r9-9g
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 19:57:50 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751901AbXLKS53 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 13:57:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751615AbXLKS53
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 13:57:29 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:21182 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751160AbXLKS52 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 13:57:28 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JSW003L7FBOLYV0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 11 Dec 2007 13:57:25 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <9e4733910712111043h6a361996x740f4dba3d742da5@mail.gmail.com>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67902>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67903>
 
-T24gMTIvMTEvMDcsIExpbnVzIFRvcnZhbGRzIDx0b3J2YWxkc0BsaW51eC1m
-b3VuZGF0aW9uLm9yZz4gd3JvdGU6Cj4KPgo+IE9uIFR1ZSwgMTEgRGVjIDIw
-MDcsIEpvbiBTbWlybCB3cm90ZToKPiA+Cj4gPiBTbyB3aHkgZG9lcyBvdXIg
-dGhyZWFkZWQgY29kZSB0YWtlIDIwIENQVSBtaW51dGVzIGxvbmdlciAoMTIl
-KSB0byBydW4KPiA+IHRoYW4gdGhlIHNhbWUgY29kZSB3aXRoIGEgc2luZ2xl
-IHRocmVhZD8KPgo+IFRocmVhZGVkIGNvZGUgKmFsd2F5cyogdGFrZXMgbW9y
-ZSBDUFUgdGltZS4gVGhlIG9ubHkgdGhpbmcgeW91IGNhbiBob3BlCj4gZm9y
-IGlzIGEgd2FsbC1jbG9jayByZWR1Y3Rpb24uIFlvdSdyZSBzZWVpbmcgcHJv
-YmFibHkgYSBjb21iaW5hdGlvbiBvZgo+ICAoYSkgbW9yZSBjYWNoZSBtaXNz
-ZXMKPiAgKGIpIGJpZ2dlciBkYXRhc2V0IGFjdGl2ZSBhdCBhIHRpbWUKPiBh
-bmQgYSBwcm9iYWJseSBmYWlybHkgbWluaXNjdWxlCj4gIChjKSB0aHJlYWRp
-bmcgaXRzZWxmIHRlbmRzIHRvIGhhdmUgc29tZSBvdmVyaGVhZHMuCj4KPiA+
-IFE2NjAwIGlzIGp1c3QgdHdvIEU2NjAwcyBpbiB0aGUgc2FtZSBwYWNrYWdl
-LCB0aGUgY2FjaGVzIGFyZSBub3Qgc2hhcmVkLgo+Cj4gU3VyZSB0aGV5IGFy
-ZSBzaGFyZWQuIFRoZXkncmUganVzdCBub3QgKmVudGlyZWx5KiBzaGFyZWQu
-IEJ1dCB0aGV5IGFyZQo+IHNoYXJlZCBiZXR3ZWVuIGVhY2ggdHdvIGNvcmVz
-LCBzbyBlYWNoIHRocmVhZCBlc3NlbnRpYWxseSBoYXMgb25seSBoYWxmCj4g
-dGhlIGNhY2hlIHRoZXkgaGFkIHdpdGggdGhlIG5vbi10aHJlYWRlZCB2ZXJz
-aW9uLgo+Cj4gVGhyZWFkaW5nIGlzICpub3QqIGEgbWFnaWMgc29sdXRpb24g
-dG8gYWxsIHByb2JsZW1zLiBJdCBnaXZlcyB5b3UKPiBwb3RlbnRpYWxseSB0
-d2ljZSB0aGUgQ1BVIHBvd2VyLCBidXQgdGhlcmUgYXJlIHJlYWwgZG93bnNp
-ZGVzIHRoYXQgeW91Cj4gc2hvdWxkIGtlZXAgaW4gbWluZC4KPgo+ID4gV2h5
-IGRvZXMgdGhlIHRocmVhZGVkIGNvZGUgbmVlZCAyLjI0R0IgKGdvb2dsZSBh
-bGxvY2F0b3IsIDIuODVHQiBnY2MpCj4gPiB3aXRoIDQgdGhyZWFkcz8gQnV0
-IG9ubHkgbmVlZCA5NTBNQiB3aXRoIG9uZSB0aHJlYWQ/IFdoZXJlJ3MgdGhl
-IGV4dHJhCj4gPiBnaWdhYnl0ZSBnb2luZz8KPgo+IEkgc3VzcGVjdCB0aGF0
-IGl0J3MgcmVhbGx5IHNpbXBsZTogeW91IGhhdmUgYSBmZXcgcmF0aGVyIGJp
-ZyBmaWxlcyBpbiB0aGUKPiBnY2MgaGlzdG9yeSwgd2l0aCBkZWVwIGRlbHRh
-IGNoYWlucy4gQW5kIHdoYXQgaGFwcGVucyB3aGVuIHlvdSBoYXZlIGZvdXIK
-PiB0aHJlYWRzIHJ1bm5pbmcgYXQgdGhlIHNhbWUgdGltZSBpcyB0aGF0IHRo
-ZXkgYWxsIG5lZWQgdG8ga2VlcCBhbGwgdGhvc2UKPiBvYmplY3RzIHRoYXQg
-dGhleSBhcmUgd29ya2luZyBvbiAtIGFuZCB0aGVpciBoYXNoIHN0YXRlIC0g
-aW4gbWVtb3J5IGF0IHRoZQo+IHNhbWUgdGltZSEKPgo+IFNvIGlmIHlvdSB3
-YW50IHRvIHVzZSBtb3JlIHRocmVhZHMsIHRoYXQgX2ZvcmNlc18geW91IHRv
-IGhhdmUgYSBiaWdnZXIKPiBtZW1vcnkgZm9vdHByaW50LCBzaW1wbHkgYmVj
-YXVzZSB5b3UgaGF2ZSBtb3JlICJsaXZlIiBvYmplY3RzIHRoYXQgeW91Cj4g
-d29yayBvbi4gTm9ybWFsbHksIHRoYXQgaXNuJ3QgbXVjaCBvZiBhIHByb2Js
-ZW0sIHNpbmNlIG1vc3Qgc291cmNlIGZpbGVzCj4gYXJlIHNtYWxsLCBidXQg
-aWYgeW91IGhhdmUgYSBmZXcgZGVlcCBkZWx0YSBjaGFpbnMgb24gYmlnIGZp
-bGVzLCBib3RoIHRoZQo+IGRlbHRhIGNoYWluIGl0c2VsZiBpcyBnb2luZyB0
-byB1c2UgbWVtb3J5ICh5b3UgbWF5IGhhdmUgbGltaXRlZCB0aGUgc2l6ZQo+
-IG9mIHRoZSBjYWNoZSwgYnV0IGl0J3Mgc3RpbGwgbmVlZGVkIGZvciB0aGUg
-YWN0dWFsIGRlbHRhIGdlbmVyYXRpb24sIHNvCj4gaXQncyBub3QgbGlrZSB0
-aGUgbWVtb3J5IHVzYWdlIHdlbnQgYXdheSkuCgpUaGlzIG1ha2VzIHNlbnNl
-LiBUaG9zZSBydW5zIHRoYXQgYmxldyB1cCB0byA0LjVHQiB3ZXJlIGEgY29t
-YmluYXRpb24Kb2YgdGhpcyBlZmZlY3QgYW5kIGZyYWdtZW50YXRpb24gaW4g
-dGhlIGdjYyBhbGxvY2F0b3IuIEdvb2dsZQphbGxvY2F0b3IgYXBwZWFycyB0
-byBiZSBtdWNoIGJldHRlciBhdCBjb250cm9sbGluZyBmcmFnbWVudGF0aW9u
-LgoKSXMgdGhlcmUgYSByZWFzb25hYmxlIHNjaGVtZSB0byBmb3JjZSB0aGUg
-Y2hhaW5zIHRvIG9ubHkgYmUgbG9hZGVkCm9uY2UgYW5kIHRoZW4gc2hhcmVk
-IGJldHdlZW4gd29ya2VyIHRocmVhZHM/IFRoZSBtZW1vcnkgYmxvdyB1cAph
-cHBlYXJzIHRvIGJlIGRpcmVjdGx5IGNvcnJlbGF0ZWQgd2l0aCBjaGFpbiBs
-ZW5ndGguCgo+Cj4gVGhhdCBzYWlkLCBJIHN1c3BlY3QgdGhlcmUgYXJlIGEg
-ZmV3IHRoaW5ncyBmaWdodGluZyB5b3U6Cj4KPiAgLSB0aHJlYWRpbmcgaXMg
-aGFyZC4gSSBoYXZlbid0IGxvb2tlZCBhIGxvdCBhdCB0aGUgY2hhbmdlcyBO
-aWNvIGRpZCB0byBkbwo+ICAgIGEgdGhyZWFkZWQgb2JqZWN0IHBhY2tlciwg
-YnV0IHdoYXQgSSd2ZSBzZWVuIGRvZXMgbm90IGNvbnZpbmNlIG1lIGl0IGlz
-Cj4gICAgY29ycmVjdC4gVGhlICJ0cmdfZW50cnkiIGFjY2Vzc2VzIGFyZSAq
-bW9zdGx5KiBwcm90ZWN0ZWQgd2l0aAo+ICAgICJjYWNoZV9sb2NrIiwgYnV0
-IG5vdGhpbmcgZWxzZSByZWFsbHkgc2VlbXMgdG8gYmUsIHNvIHF1aXRlIGZy
-YW5rbHksIEkKPiAgICB3b3VsZG4ndCB0cnVzdCB0aGUgdGhyZWFkZWQgdmVy
-c2lvbiB2ZXJ5IG11Y2guIEl0J3Mgb2ZmIGJ5IGRlZmF1bHQsIGFuZAo+ICAg
-IGZvciBhIGdvb2QgcmVhc29uLCBJIHRoaW5rLgo+Cj4gICAgRm9yIGV4YW1w
-bGU6IHRoZSBwYWNraW5nIGNvZGUgZG9lcyB0aGlzOgo+Cj4gICAgICAgICBp
-ZiAoIXNyYy0+ZGF0YSkgewo+ICAgICAgICAgICAgICAgICByZWFkX2xvY2so
-KTsKPiAgICAgICAgICAgICAgICAgc3JjLT5kYXRhID0gcmVhZF9zaGExX2Zp
-bGUoc3JjX2VudHJ5LT5pZHguc2hhMSwgJnR5cGUsICZzeik7Cj4gICAgICAg
-ICAgICAgICAgIHJlYWRfdW5sb2NrKCk7Cj4gICAgICAgICAgICAgICAgIC4u
-Lgo+Cj4gICAgYW5kIHRoYXQncyByYWN5LiBJZiB0d28gdGhyZWFkcyBjb21l
-IGluIGF0IHJvdWdobHkgdGhlIHNhbWUgdGltZSBhbmQKPiAgICBzZWUgYSBO
-VUxMIHNyYy0+ZGF0YSwgdGhlec2EJ2xsIGJvdGggZ2V0IHRoZSBsb2NrLCBh
-bmQgdGhleSdsbCBib3RoCj4gICAgKHNlcmlhbGx5KSB0cnkgdG8gZmlsbCBp
-dCBpbi4gSXQgd2lsbCBhbGwgKndvcmsqLCBidXQgb25lIG9mIHRoZW0gd2ls
-bAo+ICAgIGhhdmUgZG9uZSB1bm5lY2Vzc2FyeSB3b3JrLCBhbmQgb25lIG9m
-IHRoZW0gd2lsbCBoYXZlIHRoZWlyIHJlc3VsdAo+ICAgIHRocm93biBhd2F5
-IGFuZCBsZWFrZWQuCgpUaGF0IG1heSBhY2NvdW50IGZvciB0aGUgdGhyZWFk
-ZWQgdmVyc2lvbiBuZWVkaW5nIGFuIGV4dHJhIDIwIG1pbnV0ZXMKQ1BVIHRp
-bWUuICBBbiBleHRyYSAxMiUgb2YgQ1BVIHNlZW1zIGxpa2UgdG9vIG11Y2gg
-b3ZlcmhlYWQgZm9yCnRocmVhZGluZy4gSnVzdCBsZXR0aW5nIGEgY291cGxl
-IG9mIHRob3NlIGxvbmcgY2hhaW4gY29tcHJlc3Npb25zIGJlCmRvbmUgdHdp
-Y2UKCj4KPiAgICBBcmUgeW91IGhpdHRpbmcgaXNzdWVzIGxpa2UgdGhpcz8g
-SSBkdW5uby4gVGhlIG9iamVjdCBzb3J0aW5nIG1lYW5zCj4gICAgdGhhdCBk
-aWZmZXJlbnQgdGhyZWFkcyBub3JtYWxseSBzaG91bGRuJ3QgbG9vayBhdCB0
-aGUgc2FtZSBvYmplY3RzIChub3QKPiAgICBldmVuIHRoZSBzb3VyY2VzKSwg
-c28gcHJvYmFibHkgbm90LCBidXQgYmFzaWNhbGx5LCBJIHdvdWxkbid0IHRy
-dXN0IHRoZQo+ICAgIHRocmVhZGluZyAxMDAlLiBJdCBuZWVkcyB3b3JrLCBh
-bmQgaXQgbmVlZHMgdG8gc3RheSBvZmYgYnkgZGVmYXVsdC4KPgo+ICAtIHlv
-dSdyZSB3b3JraW5nIG9uIGEgcHJvYmxlbSB0aGF0IGlzbid0IHJlYWxseSBl
-dmVuIHdvcnRoIG9wdGltaXppbmcKPiAgICB0aGF0IG11Y2guIFRoZSAqbm9y
-bWFsKiBjYXNlIGlzIHRvIHJlLXVzZSBvbGQgZGVsdGFzLCB3aGljaCBtYWtl
-cyBhbGwKPiAgICBvZiB0aGUgaXNzdWVzIHlvdSBhcmUgZmlnaHRpbmcgYmFz
-aWNhbGx5IGdvIGF3YXkgKGJlY2F1c2UgeW91IG9ubHkgaGF2ZQo+ICAgIGEg
-ZmV3IF9pbmNyZW1lbnRhbF8gb2JqZWN0cyB0aGF0IG5lZWQgZGVsdGFpbmcp
-LgoKSSBhZ3JlZSwgdGhpcyBwcm9ibGVtIG9ubHkgb2NjdXJzIHdoZW4gcGVv
-cGxlIGltcG9ydCBnaWFudApyZXBvc2l0b3JpZXMuIEJ1dCBldmVyeSB0aW1l
-IHNvbWVvbmUgaGl0cyB0aGVzZSBwcm9ibGVtcyB0aGV5IGRlY2xhcmUKZ2l0
-IHRvIGJlIHNjcmV3ZWQgdXAgYW5kIHByb2NlZWQgdG8gdGhyYXNoIGl0IGlu
-IHRoZWlyIGJsb2dzLgoKPiAgICBJbiBvdGhlciB3b3JkczogdGhlIF9yZWFs
-XyBvcHRpbWl6YXRpb25zIGhhdmUgYWxyZWFkeSBiZWVuIGRvbmUsIGFuZAo+
-ICAgIGFyZSBkb25lIGVsc2V3aGVyZSwgYW5kIGFyZSBtdWNoIHNtYXJ0ZXIg
-KHRoZSBiZXN0IHdheSB0byBvcHRpbWl6ZSBYIGlzCj4gICAgbm90IHRvIG1h
-a2UgWCBydW4gZmFzdCwgYnV0IHRvIGF2b2lkIGRvaW5nIFggaW4gdGhlIGZp
-cnN0IHBsYWNlISkuIFRoZQo+ICAgIHRoaW5nIHlvdSBhcmUgdHJ5aW5nIHRv
-IHdvcmsgd2l0aCBpcyB0aGUgb25lLXRpbWUtb25seSBjYXNlIHdoZXJlIHlv
-dQo+ICAgIGV4cGxpY2l0bHkgZGlzYWJsZSB0aGF0IGJpZyBhbmQgaW1wb3J0
-YW50IG9wdGltaXphdGlvbiwgYW5kIHRoZW4geW91Cj4gICAgY29tcGxhaW4g
-YWJvdXQgdGhlIGVuZCByZXN1bHQgYmVpbmcgc2xvdyEKPgo+ICAgIEl0J3Mg
-bGlrZSBzYXlpbmcgdGhhdCB5b3UncmUgY29tcGlsaW5nIHdpdGggZXh0cmVt
-ZSBkZWJ1Z2dpbmcgYW5kIG5vCj4gICAgb3B0aW1pemF0aW9ucywgYW5kIHRo
-ZW4gY29tcGxhaW5pbmcgdGhhdCB0aGUgZW5kIHJlc3VsdCBkb2Vzbid0IHJ1
-biBhcwo+ICAgIGZhc3QgYXMgaWYgeW91IHVzZWQgLU8yLiBFeGNlcHQgdGhp
-cyBpcyBhIGh1bmRyZWQgdGltZXMgd29yc2UsIGJlY2F1c2UKPiAgICB5b3Ug
-bGl0ZXJhbGx5IGFza2VkIGdpdCB0byBkbyB0aGUgcmVhbGx5IGV4cGVuc2l2
-ZSB0aGluZyB0aGF0IGl0IHJlYWxseQo+ICAgIHJlYWxseSBkb2Vzbid0IHdh
-bnQgdG8gZG8gOykKPgo+ID4gSXMgdGhlcmUgYW5vdGhlciBhbGxvY2F0b3Ig
-dG8gdHJ5PyBPbmUgdGhhdCBjb21iaW5lcyBHb29nbGUncwo+ID4gZWZmaWNp
-ZW5jeSB3aXRoIGdjYydzIHNwZWVkPwo+Cj4gU2VlIGFib3ZlOiBJJ2QgbG9v
-ayBhcm91bmQgYXQgdGhyZWFkaW5nLXJlbGF0ZWQgYnVncyBhbmQgY2hlY2sg
-dGhlIHdheSB3ZQo+IGxvY2sgKG9yIGRvbid0KSBhY2Nlc3Nlcy4KPgo+ICAg
-ICAgICAgICAgICAgICBMaW51cwo+CgoKLS0gCkpvbiBTbWlybApqb25zbWly
-bEBnbWFpbC5jb20K
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--Boundary_(ID_L/QTZKROBiW6TBaoSOrJhg)
+Content-type: TEXT/PLAIN; charset=UTF-8
+Content-transfer-encoding: 8BIT
+
+On Tue, 11 Dec 2007, Jon Smirl wrote:
+
+> This makes sense. Those runs that blew up to 4.5GB were a combination
+> of this effect and fragmentation in the gcc allocator.
+
+I disagree.  This is insane.
+
+> Google allocator appears to be much better at controlling fragmentation.
+
+Indeed.  And if fragmentation is indeed wasting half of Git's memory 
+usage then we'll have to come with a custom memory allocator.
+
+> Is there a reasonable scheme to force the chains to only be loaded
+> once and then shared between worker threads? The memory blow up
+> appears to be directly correlated with chain length.
+
+No.  That would be the equivalent of holding each revision of all files 
+uncompressed all at once in memory.
+
+> > That said, I suspect there are a few things fighting you:
+> >
+> >  - threading is hard. I haven't looked a lot at the changes Nico did to do
+> >    a threaded object packer, but what I've seen does not convince me it is
+> >    correct. The "trg_entry" accesses are *mostly* protected with
+> >    "cache_lock", but nothing else really seems to be, so quite frankly, I
+> >    wouldn't trust the threaded version very much. It's off by default, and
+> >    for a good reason, I think.
+> >
+> >    For example: the packing code does this:
+> >
+> >         if (!src->data) {
+> >                 read_lock();
+> >                 src->data = read_sha1_file(src_entry->idx.sha1, &type, &sz);
+> >                 read_unlock();
+> >                 ...
+> >
+> >    and that's racy. If two threads come in at roughly the same time and
+> >    see a NULL src->data, theÿ́'ll both get the lock, and they'll both
+> >    (serially) try to fill it in. It will all *work*, but one of them will
+> >    have done unnecessary work, and one of them will have their result
+> >    thrown away and leaked.
+> 
+> That may account for the threaded version needing an extra 20 minutes
+> CPU time.  An extra 12% of CPU seems like too much overhead for
+> threading. Just letting a couple of those long chain compressions be
+> done twice
+
+No it may not.  This theory is wrong as explained before.
+
+> >
+> >    Are you hitting issues like this? I dunno. The object sorting means
+> >    that different threads normally shouldn't look at the same objects (not
+> >    even the sources), so probably not, but basically, I wouldn't trust the
+> >    threading 100%. It needs work, and it needs to stay off by default.
+> >
+> >  - you're working on a problem that isn't really even worth optimizing
+> >    that much. The *normal* case is to re-use old deltas, which makes all
+> >    of the issues you are fighting basically go away (because you only have
+> >    a few _incremental_ objects that need deltaing).
+> 
+> I agree, this problem only occurs when people import giant
+> repositories. But every time someone hits these problems they declare
+> git to be screwed up and proceed to thrash it in their blogs.
+
+It's not only for repack.  Someone just reported git-blame being 
+unusable too due to insane memory usage, which I suspect is due to the 
+same issue.
+
+
+Nicolas
+
+--Boundary_(ID_L/QTZKROBiW6TBaoSOrJhg)--
