@@ -1,63 +1,82 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] builtin-clone: Implement git clone as a builtin command.
-Date: Tue, 11 Dec 2007 15:59:13 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0712111549490.5349@iabervon.org>
-References: <20071211195712.GA3865@bitplanet.net>
+From: "Daniel Berlin" <dberlin@dberlin.org>
+Subject: Re: git annotate runs out of memory
+Date: Tue, 11 Dec 2007 16:09:08 -0500
+Message-ID: <4aca3dc20712111309yf43179dh6c43ac84dcaf38e8@mail.gmail.com>
+References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
+	 <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
+	 <vpq4pepcaz5.fsf@bauges.imag.fr>
+	 <alpine.LFD.0.9999.0712111119310.25032@woody.linux-foundation.org>
+	 <4aca3dc20712111124y1d9171eem4d2c4f0872703786@mail.gmail.com>
+	 <20071211194238.GD20644@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1092064470-1197406753=:5349"
-Cc: git@vger.kernel.org
-To: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 21:59:42 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Pierre Habouzit" <madcoder@debian.org>,
+	"Daniel Berlin" <dberlin@dberlin.org>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Matthieu Moy" <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 11 22:09:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2CCW-0002AI-Rh
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 21:59:37 +0100
+	id 1J2CMB-0006OZ-Q4
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 22:09:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750952AbXLKU7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 15:59:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751211AbXLKU7P
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 15:59:15 -0500
-Received: from iabervon.org ([66.92.72.58]:39801 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750920AbXLKU7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 15:59:14 -0500
-Received: (qmail 21458 invoked by uid 1000); 11 Dec 2007 20:59:13 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 11 Dec 2007 20:59:13 -0000
-In-Reply-To: <20071211195712.GA3865@bitplanet.net>
+	id S1751135AbXLKVJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 16:09:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751131AbXLKVJL
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 16:09:11 -0500
+Received: from wr-out-0506.google.com ([64.233.184.238]:7438 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751092AbXLKVJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 16:09:10 -0500
+Received: by wr-out-0506.google.com with SMTP id c49so1890145wra
+        for <git@vger.kernel.org>; Tue, 11 Dec 2007 13:09:09 -0800 (PST)
+Received: by 10.142.52.9 with SMTP id z9mr3930510wfz.1197407348630;
+        Tue, 11 Dec 2007 13:09:08 -0800 (PST)
+Received: by 10.142.217.1 with HTTP; Tue, 11 Dec 2007 13:09:08 -0800 (PST)
+In-Reply-To: <20071211194238.GD20644@artemis.madism.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67940>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 12/11/07, Pierre Habouzit <madcoder@debian.org> wrote:
+> On Tue, Dec 11, 2007 at 07:24:54PM +0000, Daniel Berlin wrote:
+> > On 12/11/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> > >
+> > >
+> > > On Tue, 11 Dec 2007, Matthieu Moy wrote:
+> > > >
+> > > > I've seen you pointing this kind of examples many times, but is that
+> > > > really different from what even SVN does? "svn log drivers/char" will
+> > > > also list atomic commits, and give me a filtered view of the global
+> > > > log.
+> > >
+> > > Ok, BK and CVS both got this horribly wrong, which is why I care. Maybe
+> > > this is one of the things SVN gets right.
+> > >
+> > > I seriously doubt it, though. Do you get *history* right, or do you just
+> > > get a random list of commits?
+> >
+> > No, it will get actual history (IE not just things that happen to have
+> > that path in the repository)
+>
+> OTOH svn has the result right, but the way it does that is horrible.
+> When you svn log some/path, I think it just (basically) ask svn log for
+> each file in that directory, and merge the logs together. This is "easy"
+> for svn since it remembers "where this specific file" came from.
 
---1547844168-1092064470-1197406753=:5349
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+What?
+We version directories too.
+We don't do svn log for each file in the directory when you request a path.
+We look at the history of the path, follow renames, etc.
 
-On Tue, 11 Dec 2007, Kristian H=C3=B8gsberg wrote:
+When you change foo/bar/fred.c, we consider it a change to foo/bar and
+foo/, and thus, they have new versions.
 
-> Ok, don't flame me, I know this isn't appropriate at the moment with
-> stabilization for 1.5.4 going on, but I just wanted to post a heads up
-> on this work to avoid duplicate effort.  It's one big patch at this point
-> and I haven't even run the test suite yet, but that will change.
-
-Is that why you misspelled Junio's email address? :)=20
-
-Also as a heads-up, I've got a builtin-checkout that I've got passing all=
-=20
-the tests (plus a few to test stuff I originally hadn't implemented). This=
-=20
-mostly involved correcting the "interesting" states that unpack_trees()=20
-can leave the index in memory when it returns and figuring out how the=20
-merge code works. I can send it off for review and testing to people who=20
-are interested and don't have other things they should be doing instead.
-
-=09-Daniel
-*This .sig left intentionally blank*
---1547844168-1092064470-1197406753=:5349--
+I'm not sure where you get this crazy notion that we do anything with
+files when you ask about directories.
