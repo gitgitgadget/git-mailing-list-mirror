@@ -1,61 +1,67 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH 4/9] gitk i18n: Initial German translation.
-Date: Wed, 12 Dec 2007 10:22:20 +1100
-Message-ID: <18271.7084.431598.815386@cargo.ozlabs.ibm.com>
-References: <200711071839.08570.stimming@tuhh.de>
-	<200711071840.59972.stimming@tuhh.de>
-	<200711071842.55975.stimming@tuhh.de>
-	<200711071844.03106.stimming@tuhh.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git annotate runs out of memory
+Date: Tue, 11 Dec 2007 15:36:19 -0800 (PST)
+Message-ID: <alpine.LFD.0.9999.0712111523210.25032@woody.linux-foundation.org>
+References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com> <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org> <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com> <alpine.LFD.0.9999.0712111122400.25032@woody.linux-foundation.org>
+ <alpine.LFD.0.9999.0712111300440.25032@woody.linux-foundation.org> <7vprxcdhis.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Christian Stimming <stimming@tuhh.de>
-X-From: git-owner@vger.kernel.org Wed Dec 12 00:31:58 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Berlin <dberlin@dberlin.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 12 00:38:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2EZx-0008OS-17
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 00:31:57 +0100
+	id 1J2Efq-0001uP-Kw
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 00:38:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753100AbXLKXbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 18:31:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752573AbXLKXbf
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 18:31:35 -0500
-Received: from ozlabs.org ([203.10.76.45]:54389 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751998AbXLKXbe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 18:31:34 -0500
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 07171DDE3A; Wed, 12 Dec 2007 10:31:33 +1100 (EST)
-In-Reply-To: <200711071844.03106.stimming@tuhh.de>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1756924AbXLKXhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 18:37:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbXLKXhm
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 18:37:42 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:44980 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751131AbXLKXhl (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 18:37:41 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBBNaK00002859
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 11 Dec 2007 15:36:21 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBBNaJFS014869;
+	Tue, 11 Dec 2007 15:36:20 -0800
+In-Reply-To: <7vprxcdhis.fsf@gitster.siamese.dyndns.org>
+X-Spam-Status: No, hits=-2.639 required=5 tests=AWL,BAYES_00,TW_CP,TW_XD
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67968>
 
-Christian Stimming writes:
 
-> ---
-> In order to test the i18n code, I prepared half-completed 
-> German translation.
+
+On Tue, 11 Dec 2007, Junio C Hamano wrote:
 > 
->  po/de.po |  703 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 files changed, 703 insertions(+), 0 deletions(-)
->  create mode 100644 po/de.po
-> 
-> diff --git a/po/de.po b/po/de.po
-> new file mode 100644
-> index 0000000..8c41069
-> --- /dev/null
-> +++ b/po/de.po
-> @@ -0,0 +1,703 @@
-> +# Translation of git-gui to German.
-> +# Copyright (C) 2007 Shawn Pearce, et al.
+> Instead, how about discarding after we are done with each origin, like
+> this?
 
-Ummm?  I think you forgot to change some things here. :)
+Sure, looks fine to me. With either of these patches, all of the cost is 
+in the diffing routines:
 
-Paul.
+	samples  %        image name               app name                 symbol name
+	191317   31.4074  git                      git                      xdl_hash_record
+	120060   19.7096  git                      git                      xdl_recmatch
+	99286    16.2992  git                      git                      xdl_prepare_ctx
+	56370     9.2539  libc-2.7.so              libc-2.7.so              memcpy
+	23315     3.8275  git                      git                      xdl_prepare_env
+	..
+
+and while I suspect xdiff could be optimized a bit more for the cases 
+where we have no changes at the end, that's beyond my skills.
+
+		Linus
