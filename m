@@ -1,80 +1,76 @@
-From: "Daniel Berlin" <dberlin@dberlin.org>
-Subject: Re: git annotate runs out of memory
-Date: Tue, 11 Dec 2007 14:09:03 -0500
-Message-ID: <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com>
-References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
-	 <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: v1.5.4 plans
+Date: Tue, 11 Dec 2007 11:13:29 -0800
+Message-ID: <7vmyshdoyu.fsf@gitster.siamese.dyndns.org>
+References: <20071022061115.GR14735@spearce.org>
+	<7vodeecyni.fsf@gitster.siamese.dyndns.org>
+	<7vpryqwtt7.fsf@gitster.siamese.dyndns.org>
+	<7vk5ot40w9.fsf@gitster.siamese.dyndns.org>
+	<7vy7d43ptc.fsf@gitster.siamese.dyndns.org>
+	<7vabpg9x5k.fsf@gitster.siamese.dyndns.org>
+	<7vy7cwsi3p.fsf@gitster.siamese.dyndns.org>
+	<7vk5o6jbq9.fsf@gitster.siamese.dyndns.org>
+	<7v63zjgoel.fsf@gitster.siamese.dyndns.org>
+	<7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>
+	<7vhcixtnm4.fsf@gitster.siamese.dyndns.org>
+	<7vfxye4yv7.fsf@gitster.siamese.dyndns.org>
+	<7vve78qhtf.fsf@gitster.siamese.dyndns.org>
+	<7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org>
+	<1197386675.5001.4.camel@hinata.boston.redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 20:09:28 2007
+To: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 20:14:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2ATv-0005hC-8z
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 20:09:27 +0100
+	id 1J2AYY-0007fb-Lm
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 20:14:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606AbXLKTJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 14:09:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752228AbXLKTJH
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 14:09:07 -0500
-Received: from py-out-1112.google.com ([64.233.166.178]:52538 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751864AbXLKTJG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 14:09:06 -0500
-Received: by py-out-1112.google.com with SMTP id u77so481862pyb
-        for <git@vger.kernel.org>; Tue, 11 Dec 2007 11:09:05 -0800 (PST)
-Received: by 10.142.76.4 with SMTP id y4mr1186050wfa.1197400143543;
-        Tue, 11 Dec 2007 11:09:03 -0800 (PST)
-Received: by 10.142.217.1 with HTTP; Tue, 11 Dec 2007 11:09:03 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1752915AbXLKTNw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Dec 2007 14:13:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751960AbXLKTNw
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 14:13:52 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52429 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752839AbXLKTNv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 14:13:51 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id AB5B32FD5;
+	Tue, 11 Dec 2007 14:13:46 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id F15D02FD4;
+	Tue, 11 Dec 2007 14:13:41 -0500 (EST)
+In-Reply-To: <1197386675.5001.4.camel@hinata.boston.redhat.com> (Kristian
+	=?utf-8?Q?H=C3=B8gsberg's?= message of "Tue, 11 Dec 2007 10:24:35 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67908>
 
-On 12/11/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->
->
-> On Tue, 11 Dec 2007, Daniel Berlin wrote:
-> >
-> > This seems to be a common problem with git. It seems to use a lot of
-> > memory to perform common operations on the gcc repository (even though
-> > it is faster in some cases than hg).
->
-> The thing is, git has a very different notion of "common operations" than
-> you do.
->
-> To git, "git annotate" is just about the *last* thing you ever want to do.
-> It's not a common operation, it's a "last resort" operation. In git, the
-> whole workflow is designed for "git log -p <pathnamepattern>" rather than
-> annotate/blame.
->
-I understand this, and completely agree with you.
-However, I cannot force GCC people to adopt completely new workflow in
-this regard.
-The changelog's are not useful enough (and we've had huge fights over
-this) to do git log -p and figure out the info we want.
-Looking through thousands of diffs to find the one that happened to
-your line is also pretty annoying.
-Annotate is a major use for gcc developers as a result
-I wish I could fix this silliness, but i can't :)
+Kristian H=C3=B8gsberg <krh@redhat.com> writes:
 
-> That said, I'll see if I can speed up "git blame" on the gcc repository.
-> It _is_ a fundamentally much more expensive operation than it is for
-> systems that do single-file things.
+> On Mon, 2007-12-10 at 14:37 -0800, Junio C Hamano wrote:
+>>  * We have a handful deprecation notices in the draft release notes,=
+ but
+>>    if I recall correctly, Nico wanted to add a few more.  We need to
+>>    come up with a wording that is easy to understand for the end use=
+rs
+>>    to decide which ancient versions will be affected.
+>
+> Can we deprecate .git/branches?
 
-SVN had the same problem (the file retrieval was the most expensive op
-on FSFS). One of the things i did to speed it up tremendously was to
-do the annotate from newest to oldest (IE in reverse), and stop
-annotating when we had come up with annotate info for all the lines.
-If you can't speed up file retrieval itself, you can make it need less
-files :)
-In GCC history, it is likely you will be able to cut off at least 30%
-of the time if you do this, because files often have changed entirely
-multiple times.
+We deprecated it from the very beginning, in the sense that we never
+wrote into it ourselves, but merely tried to pay attention to what
+others wrote there.  So I am open to a bullet point that officially
+declares the deprecation.
+
+But we need to come up with a removal schedule.  Say, the first feature
+release after June 2008?
