@@ -1,87 +1,114 @@
-From: "Jason Sewall" <jasonsewall@gmail.com>
-Subject: Re: [ANNOUNCE] ugit: a pyqt-based git gui // was: Re: If you would write git from scratch now, what would you change?
-Date: Tue, 11 Dec 2007 14:14:42 -0500
-Message-ID: <31e9dd080712111114t2bbdba60m18b7d6210f3f9174@mail.gmail.com>
-References: <402731c90712110548k67f28b64w5afa93ee908ce73b@mail.gmail.com>
-	 <e5bfff550712111020k51829c03n5d64a94ce7c7ac2a@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Something is broken in repack
+Date: Tue, 11 Dec 2007 11:17:08 -0800 (PST)
+Message-ID: <alpine.LFD.0.9999.0712111055590.25032@woody.linux-foundation.org>
+References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>  <9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com>  <alpine.LFD.0.99999.0712102231570.555@xanadu.home>  <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>   <9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com>  <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>  <alpine.LFD.0.9999.0712110806540.25032@woody.linux-foundation.org> <9e4733910712111043h6a361996x740f4dba3d742da5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: David <davvid@gmail.com>, "Andy Parkins" <andyparkins@gmail.com>,
-	git@vger.kernel.org
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 20:15:54 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2AZy-0008Cj-Vp
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 20:15:43 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754816AbXLKTOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 14:14:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753555AbXLKTOo
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 14:14:44 -0500
-Received: from an-out-0708.google.com ([209.85.132.242]:14049 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752953AbXLKTOn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 14:14:43 -0500
-Received: by an-out-0708.google.com with SMTP id d31so507136and
-        for <git@vger.kernel.org>; Tue, 11 Dec 2007 11:14:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=s/dkUs7vBguJbPKWUuvxCpddodvMYEcTNBiJklRDaPA=;
-        b=RRGAQkGgDU8SadurLl5NiHPsIRn/JvVbkPfvv4LOogCL3dgR0SAURoq7/0Y/0QmHf/9+nx7HPVzuosDIjSlbwUOjwFvbg7k22Df2Sht1z8lSR+v8kCRIXy628qKctbHJSbHR1IQU8J9u5uMD+6xJqb6+B5Dmhi2kkg2KxXMCyr4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=A12+owqN3aOX58RVBmOO8TU9BisfZ2/vCPBQG1iMU8hEcqLbSEDEZgV166e6U3IOmw/lM5f+zJh4v55vo+CWbSG1C9eWtJwdnC/4eKGoBKfyzx3E6rSrPLIRLY0zdTcHJhwFRTQ8Grzgfh3XunbaAbBwOmi7Hi3z1yKsvX9ndO8=
-Received: by 10.101.66.14 with SMTP id t14mr18314749ank.1197400482064;
-        Tue, 11 Dec 2007 11:14:42 -0800 (PST)
-Received: by 10.101.66.17 with HTTP; Tue, 11 Dec 2007 11:14:42 -0800 (PST)
-In-Reply-To: <e5bfff550712111020k51829c03n5d64a94ce7c7ac2a@mail.gmail.com>
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <gitster@pobox.com>,         gcc@gcc.gnu.org, Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: gcc-return-142919-gcc=m.gmane.org@gcc.gnu.org Tue Dec 11 20:18:00 2007
+Return-path: <gcc-return-142919-gcc=m.gmane.org@gcc.gnu.org>
+Envelope-to: gcc@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1J2AcA-0000iR-7E
+	for gcc@gmane.org; Tue, 11 Dec 2007 20:17:58 +0100
+Received: (qmail 28609 invoked by alias); 11 Dec 2007 19:17:39 -0000
+Received: (qmail 28601 invoked by uid 22791); 11 Dec 2007 19:17:38 -0000
+X-Spam-Check-By: sourceware.org
+Received: from smtp2.linux-foundation.org (HELO smtp2.linux-foundation.org) (207.189.120.14)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Tue, 11 Dec 2007 19:17:28 +0000
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55]) 	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBBJH97f023470 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); 	Tue, 11 Dec 2007 11:17:10 -0800
+Received: from localhost (localhost [127.0.0.1]) 	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBBJH8h8004777; 	Tue, 11 Dec 2007 11:17:08 -0800
+In-Reply-To: <9e4733910712111043h6a361996x740f4dba3d742da5@mail.gmail.com>
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67910>
+List-Id: <gcc.gcc.gnu.org>
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Delivered-To: mailing list gcc@gcc.gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67911>
 
-On Dec 11, 2007 1:20 PM, Marco Costalba <mcostalba@gmail.com> wrote:
-> Cannot start the thing...
->
-> $ python bin/ugit.py
-> Traceback (most recent call last):
->   File "bin/ugit.py", line 6, in <module>
->     from ugitlibs.models import GitModel
-> ImportError: No module named ugitlibs.models
-> $
->
-> Some hints?
 
-Where did you install it?
 
-Because I had the same problem when I did
-./configure
-because it puts the python stuff in
-/usr/local/python2.5/site-packages/... and python doesn't look there
-by default.
-./configure --prefix=/usr fixed that for me (and I'm sure there's a
-way to tell python to look in /usr/local... too, but I can't be
-bothered with that.
+On Tue, 11 Dec 2007, Jon Smirl wrote:
+> >
+> > So if you want to use more threads, that _forces_ you to have a bigger
+> > memory footprint, simply because you have more "live" objects that you
+> > work on. Normally, that isn't much of a problem, since most source files
+> > are small, but if you have a few deep delta chains on big files, both the
+> > delta chain itself is going to use memory (you may have limited the size
+> > of the cache, but it's still needed for the actual delta generation, so
+> > it's not like the memory usage went away).
+> 
+> This makes sense. Those runs that blew up to 4.5GB were a combination
+> of this effect and fragmentation in the gcc allocator. Google
+> allocator appears to be much better at controlling fragmentation.
 
-I re-installed without the prefix and that error disappeared, but now I get
-Traceback (most recent call last):
-  File "/usr/local/bin/ugit", line 12, in <module>
-    view = GitView (app.activeWindow())
-  File "../py/views.py", line 15, in __init__
-  File "default/ui/Window.py", line 43, in setupUi
-AttributeError: setLeftMargin
+Yes. I think we do have some case where we simply keep a lot of objects 
+around, and if we are talking reasonably large deltas, we'll have the 
+whole delta-chain in memory just to unpack one single object.
 
-I'm too busy to poke around and see why that's happening, but
-hopefully someone can.
+The delta cache size limits kick in only when we explicitly cache old 
+delta results (in case they will be re-used, which is rather common), it 
+doesn't affect the normal "I'm using this data right now" case at all.
 
-This with Python 2.5.1 and PyQt4 4.2-8 (from an up-to-date Fedora 8 install)
+And then fragmentation makes it much much worse. Since the allocation 
+patterns aren't nice (they are pretty random and depend on just the sizes 
+of the objects), and the lifetimes aren't always nicely nested _either_ 
+(they become more so when you disable the cache entirely, but that's just 
+death for performance), I'm not surprised that there can be memory 
+allocators that end up having some issues.
 
-Jason
+> Is there a reasonable scheme to force the chains to only be loaded
+> once and then shared between worker threads? The memory blow up
+> appears to be directly correlated with chain length.
+
+The worker threads explicitly avoid touching the same objects, and no, you 
+definitely don't want to explode the chains globally once, because the 
+whole point is that we do fit 15 years worth of history into 300MB of 
+pack-file thanks to having a very dense representation. The "loaded once" 
+part is the mmap'ing of the pack-file into memory, but if you were to 
+actually then try to expand the chains, you'd be talking about many *many* 
+more gigabytes of memory than you already see used ;)
+
+So what you actually want to do is to just re-use already packed delta 
+chains directly, which is what we normally do. But you are explicitly 
+looking at the "--no-reuse-delta" (aka "git repack -f") case, which is why 
+it then blows up.
+
+I'm sure we can find places to improve. But I would like to re-iterate the 
+statement that you're kind of doing a "don't do that then" case which is 
+really - by design - meant to be done once and never again, and is using 
+resources - again, pretty much by design - wildly inappropriately just to 
+get an initial packing done.
+
+> That may account for the threaded version needing an extra 20 minutes
+> CPU time.  An extra 12% of CPU seems like too much overhead for
+> threading. Just letting a couple of those long chain compressions be
+> done twice
+
+Well, Nico pointed out that those things should all be thread-private 
+data, so no, the race isn't there (unless there's some other bug there).
+
+> I agree, this problem only occurs when people import giant
+> repositories. But every time someone hits these problems they declare
+> git to be screwed up and proceed to thrash it in their blogs.
+
+Sure. I'd love to do global packing without paying the cost, but it really 
+was a design decision. Thanks to doing off-line packing ("let it run 
+overnight on some beefy machine") we can get better results. It's 
+expensive, yes. But it was pretty much meant to be expensive. It's a very 
+efficient compression algorithm, after all, and you're turning it up to 
+eleven ;)
+
+I also suspect that the gcc archive makes things more interesting thanks 
+to having some rather large files. The ChangeLog is probably the worst 
+case (large file with *lots* of edits), but I suspect the *.po files 
+aren't wonderful either.
+
+			Linus
