@@ -1,116 +1,129 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Something is broken in repack
-Date: Tue, 11 Dec 2007 10:36:20 -0500
-Message-ID: <9e4733910712110736w34495ba2l86b2de82055620fd@mail.gmail.com>
-References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
-	 <9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com>
-	 <alpine.LFD.0.99999.0712102231570.555@xanadu.home>
-	 <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>
-	 <9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com>
-	 <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>
-	 <alpine.LFD.0.99999.0712110832251.555@xanadu.home>
-	 <alpine.LFD.0.99999.0712110951070.555@xanadu.home>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: [PATCH] Invert numbers and names in the git-shortlog summary
+	mode.
+Date: Tue, 11 Dec 2007 16:48:41 +0100
+Message-ID: <20071211154841.GA29805@elte.hu>
+References: <200712080636.12982.chriscool@tuxfamily.org> <20071211092446.GA4703@elte.hu> <20071211092916.GF30948@artemis.madism.org> <m3ve75sfn3.fsf@roke.D-201> <20071211115914.GJ30948@artemis.madism.org> <20071211122539.GA13945@sigill.intra.peff.net> <20071211140508.GA12204@elte.hu> <20071211144351.GA15448@artemis.madism.org> <20071211145709.GB19427@elte.hu> <20071211152412.GB15448@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, gcc@gcc.gnu.org,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 16:36:46 2007
+Content-Type: text/plain; charset=us-ascii
+To: Pierre Habouzit <madcoder@debian.org>, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Junio C Hamano <g
+X-From: git-owner@vger.kernel.org Tue Dec 11 16:50:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J27A3-0005KD-Uv
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 16:36:44 +0100
+	id 1J27Ml-000305-94
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 16:49:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752366AbXLKPgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 10:36:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752396AbXLKPgW
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 10:36:22 -0500
-Received: from rv-out-0910.google.com ([209.85.198.187]:61048 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752139AbXLKPgV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 10:36:21 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2074759rvb
-        for <git@vger.kernel.org>; Tue, 11 Dec 2007 07:36:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=zrR1qauTPbFT3JaH1AISUkad8HHGJSN660KT4oAyQRw=;
-        b=FcOTkl1K7Fu6lz3EpfnzK5+6ZxYOJrxZ+2Zl5fnMnUkkhtWi1RoKAGCkJ0bBQuUdowiHw3LE89fh6JlKBVFCC7Ej4pIzfjWMBBtJQJ3h99gXd6cehcl+QDOFlTYljgS20U7/OQCXPg3sotfR0G3zii9UUDfNbd4GCCt3F26sl8g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jvWmCy77p99YuPlKURNdgKc5Y2kI/Lz2M8A2JnFy4yU8psDe8CPGHN/foVF9J04LpVZK5qLfNmBu2QDrtPgavvbDzg/JLpzw93y74fDR0V8FgSARU63Q3woMDlUdRcNCuoFTwSwD4hP1Kptymk5cAJo97b09vzwEP6ZsbdkZxQg=
-Received: by 10.141.164.10 with SMTP id r10mr5084043rvo.1197387380697;
-        Tue, 11 Dec 2007 07:36:20 -0800 (PST)
-Received: by 10.140.166.14 with HTTP; Tue, 11 Dec 2007 07:36:20 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.99999.0712110951070.555@xanadu.home>
+	id S1751285AbXLKPt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 10:49:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751007AbXLKPt3
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 10:49:29 -0500
+Received: from mx2.mail.elte.hu ([157.181.151.9]:54885 "EHLO mx2.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750705AbXLKPt2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 10:49:28 -0500
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1J27Lk-00069S-NX
+	from <mingo@elte.hu>; Tue, 11 Dec 2007 16:48:54 +0100
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 9DCE73E2193; Tue, 11 Dec 2007 16:48:37 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <20071211152412.GB15448@artemis.madism.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+Received-SPF: neutral (mx2: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67875>
 
-On 12/11/07, Nicolas Pitre <nico@cam.org> wrote:
-> On Tue, 11 Dec 2007, Nicolas Pitre wrote:
->
-> > And yet, this is still missing the actual issue.  The issue being that
-> > the 2.1GB pack as a _source_ doesn't cause as much memory to be
-> > allocated even if the _result_ pack ends up being the same.
-> >
-> > I was able to repack the 2.1GB pack on my machine which has 1GB of ram.
-> > Now that it has been repacked, I can't repack it anymore, even when
-> > single threaded, as it start crowling into swap fairly quickly.  It is
-> > really non intuitive and actually senseless that Git would require twice
-> > as much RAM to deal with a pack that is 7 times smaller.
->
-> OK, here's something else for you to try:
->
->         core.deltabasecachelimit=0
->         pack.threads=2
->         pack.deltacachesize=1
->
-> With that I'm able to repack the small gcc pack on my machine with 1GB
-> of ram using:
->
->         git repack -a -f -d --window=250 --depth=250
->
-> and top reports a ~700m virt and ~500m res without hitting swap at all.
-> It is only at 25% so far, but I was unable to get that far before.
->
-> Would be curious to know what you get with 4 threads on your machine.
 
-Changing those parameters really slowed down counting the objects. I
-used to be able to count in 45 seconds now it took 130 seconds. I am
-still have the Google allocator linked in.
+* Pierre Habouzit <madcoder@debian.org> wrote:
 
-4 threads, cumulative clock time
-25%     200 seconds, 820/627M
-55%     510 seconds, 1240/1000M - little late recording
-75%     15 minutes, 1658/1500M
-90%      22 minutes, 1974/1800M
-it's still running but there is no significant change.
+> > which is quite a bit confusing to someone who'd like to keep as few 
+> > details of command line arguments in his head as possible :-)
+> 
+> Because git-shortlog insists on you passing a reference first, HEAD is 
+> not implicit if you pass something that looks like a path first. This 
+> is arguably wrong. What you meant here is:
+> 
+> $ git-shortlog -n -s HEAD kernel/
+> 
+> The reason IIRC is that git-shortlog once only read things on stdin, 
+> and this keeps backward compatbility to `git-shortlog` without any 
+> arguments.
+> 
+> Sometimes history hurts :) I don't think there is much we can do on a 
+> short timescale. Maybe the old way can be slowly deprecated, and then 
+> git-shortlog will be able to act like git-log.
 
-Are two types of allocations being mixed?
-1) long term, global objects kept until the end of everything
-2) volatile, private objects allocated only while the object is being
-compressed and then freed
+if we are growing legacies in git this fast it will turn itself into CVS 
+very quickly, give or take 20 years ;-) I think a straightforward usage 
+model is paramount, so phasing out such inconsistencies as early as 
+possible in the project's lifetime should be a priority IMHO. Git has a 
+very, very 'refreshing' approach to information management, and that 
+should permeate it all across. It's easy to be "fresh" in the beginning 
+of a project - maintaining freshness for years is a lot harder. (i dont 
+suggest to break compatibility, but to be aware of such inconsitencies 
+and make it a priority to get rid of them. It does not help that such 
+inconsistencies are only apparent to git newbies.)
 
-Separating these would make a big difference to the fragmentation
-problem. Single threading probably wouldn't see a fragmentation
-problem from mixing the allocation types.
+another thing i noticed that bites git newbies is that there are 
+commands that do not do the "obvious" thing (to a newbie) and there are 
+commands that just dont tell what they are doing. It would be very 
+helpful if git was just a little bit more verbose about what it does. 
+I.e. use the standard output for ... actual output, and there will be an 
+instant and pleasant feedback loop between newbie and tool.
 
-When a thread is created it could allocated a private 20MB (or
-whatever) pool. The volatile, private objects would come from that
-pool. Long term objects would stay in the global pool. Since they are
-long term they will just get laid down sequentially in memory.
-Separating these allocation types make things way easier for malloc.
+It should basically "teach" the user along the way about what is being 
+done, so that it quickly becomes an automatism. Especially where 
+concepts differ from legacy SCMs. When is the index updated, when do 
+files get modified, how branching works, etc.
 
-CPU time would be helped by removing some of the locking if possible.
+for example, if i type "git-checkout" in a Linux kernel tree, it just 
+sits there for up to a minute, and "does nothing". That is totally 
+wrong, human-interaction wise. Then after a minute it just returns. What 
+happened? Why? Where? A newbie would then try "git-checkout -v", using 
+the well-established "verbose" flag, but that gives:
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+ Usage: /usr/bin/git-checkout [-q] [-f] [-b <new_branch>] [-m] [<branch>] [<paths>...]
+
+That's what a newbie asks. We are trying to turn the world of SCM's 
+upside down with git, and we should do that by teaching things gradually 
+and by being very explicit what happens and why, when a command is typed 
+;-)
+
+i could go on and on with other examples. (should I ? ;-)
+
+It's small, little details like that and if we fix a few dozen of them 
+it will do _wonders_ to user education, really. The best tools are the 
+ones that emit just about information to essentially give a tutorial to 
+the newbie about the philosophy and workings of the tool - without being 
+annoying to advanced users. It flattens the learning curve and increases 
+adoption rate enormously. It also helps people learn their way out of 
+the mental deformations that CVS causes ;-)
+
+And we could do this by adding a -q "quiet" flag, to restore the current 
+'silent' behavior of git. I could then do this in my .bashrc:
+
+   alias git='git -q'
+
+to get the old, quiet behavior. This issue is pretty much the only 
+conceptual advantage i can see of the competition like hg/mercurial ;-)
+
+Ok, enough ranting for today i guess =B-)
+
+	Ingo
