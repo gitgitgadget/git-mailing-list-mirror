@@ -1,86 +1,95 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Building git-1.5.3.7 on HP-UX 11.00
-Date: Tue, 11 Dec 2007 03:54:40 -0500
-Message-ID: <20071211085440.GK14735@spearce.org>
-References: <20071204140326.14d9e7a0@pc09.procura.nl> <Pine.LNX.4.64.0712041439590.27959@racer.site> <20071204150102.7f3ec3e9@pc09.procura.nl> <47556EE2.6040105@op5.se> <20071204152240.6cb6018e@pc09.procura.nl> <Pine.LNX.4.64.0712041536180.27959@racer.site> <20071204155655.053f4fb4@pc09.procura.nl> <7vve7e49or.fsf@gitster.siamese.dyndns.org> <20071210145123.7c34af6d@pc09.procura.nl> <7vfxy9fxh3.fsf@gitster.siamese.dyndns.org>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: git help -t <topic>: list the help of the commands in a given topic
+Date: Tue, 11 Dec 2007 10:04:35 +0100
+Message-ID: <8aa486160712110104v6d12985dq45739ff2fc4cc39@mail.gmail.com>
+References: <1197299021-28463-1-git-send-email-sbejar@gmail.com>
+	 <7v7ijmjayl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 09:55:12 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 10:05:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J20tT-0000UP-Gz
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 09:55:11 +0100
+	id 1J212z-0003ld-U3
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 10:05:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751923AbXLKIyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 03:54:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751866AbXLKIyt
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 03:54:49 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:52520 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751816AbXLKIys (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 03:54:48 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1J20sy-0000ya-R7; Tue, 11 Dec 2007 03:54:40 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 71EDD20FBAE; Tue, 11 Dec 2007 03:54:40 -0500 (EST)
+	id S1751232AbXLKJEk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Dec 2007 04:04:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbXLKJEj
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 04:04:39 -0500
+Received: from wr-out-0506.google.com ([64.233.184.235]:57123 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750749AbXLKJEh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 04:04:37 -0500
+Received: by wr-out-0506.google.com with SMTP id c49so1633956wra
+        for <git@vger.kernel.org>; Tue, 11 Dec 2007 01:04:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=jYqEpV9nhyt+Wfaaj4wqNSt8JH4PRRrfb1mMVqSuSYY=;
+        b=EOTKmmyXL38mdYOfgSRX65B/Z8+PDIZUfacLExqUXqmvBmCswn9C9s3rT1G715ZeDiGTIwhHQz0WnqX3w9qU+vTgGjwz+t9rXCD4c9gXs3TvlBqXbo+iDSbQo9I8s+GDvXSOs/XOByLTvesmYaUhS/VT/9kvd1Ln+grOSg66PMc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=B2EVFYMlRve0mMxgHObOm7jZKTalzVbhTYdBc8S4WwqeMJG4/a+jsrymzVih4ZvDBMPtNpSrYjmthAkB+4/Oq13hyCfF0p2OZwn7w0PUqwK/YaZ9EMyxg2eHMq326niLDw7Re5E996cxwmbI/aEGbnuQ6oMSkKA7yImbLK42vkw=
+Received: by 10.150.91.20 with SMTP id o20mr1663069ybb.1197363875049;
+        Tue, 11 Dec 2007 01:04:35 -0800 (PST)
+Received: by 10.150.205.9 with HTTP; Tue, 11 Dec 2007 01:04:35 -0800 (PST)
+In-Reply-To: <7v7ijmjayl.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7vfxy9fxh3.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67827>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
-> 
-> > 3 I am willing to believe that HP_UX' vsnprintf () is broken, or
-> >   at least does not conform to the expectations in the GNU world,
-> >   but chickening out like the way strbuf_addf () does is maybe a
-> >   bit too rude, so I forced a minimum of 64bytes available. That
-> >   fixes a lot!
+On Dec 11, 2007 2:07 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Santi B=E9jar <sbejar@gmail.com> writes:
+>
+> > With 'git help -t' lists the available topics.
 > >
-> >   but it still breaks t4013 :(
-> 
-> I think Shawn had something similar for Solaris, and if it is a small
-> cost to help portability, it does not feel so bad.
+> > Show a hint to get a longer list when listing the common commands.
+>
+> I like the idea of making the categorized command list in git(7)
+> available, and agree with you that renaming common_cmds[] to cmd_list=
+[]
+> and place everything in there would be the way to go.
+>
+> However, I doubt about your presentation.  Who are the intended
+> audience and what is the expected way this is used?
 
-My Solaris change is already in your tree; on Solaris vnsprintf
-will return -1 if the input buffer we gave it had a length of 0.
-This can happen at odd times, depending on what is already in the
-strbuf and how its buffer is. :)
+The main reason for this was to be able to show a longer list in git
+help. But at the end I did this topic thing. The intented audience was
+the newbies looking at the "git help" output, for them to have a
+longer list. Then the topic part was intended for intermidiate user
+looking for even more powerfull commands.
 
-The fix for Solaris turned out to be just make sure there is at
-least 1 byte in the buffer before calling vsnprintf().
- 
-> > + git-index-pack -o tmp.idx test-2-7f8ead892057e78576c0329a70cc83afb113f117.pack
-> > fatal: serious inflate inconsistency
-> 
-> That sounds like a broken zlib X-<.
+>
+> I highly suspect that it would be much easier to use if you add a mod=
+e
+> to "git help" that runs the pager over the categoized command list pa=
+rt
+> of git(7) manual page, without taking "show me list of topics" nor "s=
+how
+> commands only in this topic" parameters.  It is highly unlikely that =
+a
+> user knows which category an obscure command whose name he wants to
+> recall is in, or can guess which category it would be classified in
+> after seeing the "category list".  It would be much more likely that =
+he
+> finds it easier to scan (perhaps with "/<string>") the command list w=
+ith
+> one line description in the pager.
 
-I think this is actually a broken pread().  Its been reported
-multiple times by different people on HP-UX.  Compiling with
-NO_PREAD=1 resolves the issues for everyone who has tried it.
+OK, this makes sense. But I still think that having a longer list in
+"git help -l?" with the main porcelain commands makes sense. I'll try
+to do it.
 
-Jakub asked me for an autoconf test to look for this sort of
-breakage in pread(), I have yet to come up with a theory for
-what sort of breakage HP-UX is showing us here, let alone write
-a test for it.
+Best regards,
 
--- 
-Shawn.
+Santi
+>
