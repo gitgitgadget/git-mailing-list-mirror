@@ -1,76 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: v1.5.4 plans
-Date: Tue, 11 Dec 2007 11:13:29 -0800
-Message-ID: <7vmyshdoyu.fsf@gitster.siamese.dyndns.org>
-References: <20071022061115.GR14735@spearce.org>
-	<7vodeecyni.fsf@gitster.siamese.dyndns.org>
-	<7vpryqwtt7.fsf@gitster.siamese.dyndns.org>
-	<7vk5ot40w9.fsf@gitster.siamese.dyndns.org>
-	<7vy7d43ptc.fsf@gitster.siamese.dyndns.org>
-	<7vabpg9x5k.fsf@gitster.siamese.dyndns.org>
-	<7vy7cwsi3p.fsf@gitster.siamese.dyndns.org>
-	<7vk5o6jbq9.fsf@gitster.siamese.dyndns.org>
-	<7v63zjgoel.fsf@gitster.siamese.dyndns.org>
-	<7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>
-	<7vhcixtnm4.fsf@gitster.siamese.dyndns.org>
-	<7vfxye4yv7.fsf@gitster.siamese.dyndns.org>
-	<7vve78qhtf.fsf@gitster.siamese.dyndns.org>
-	<7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org>
-	<1197386675.5001.4.camel@hinata.boston.redhat.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: git annotate runs out of memory
+Date: Tue, 11 Dec 2007 20:14:41 +0100
+Message-ID: <e5bfff550712111114s4e9c31cxb7aed4da70d23382@mail.gmail.com>
+References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
+	 <e5bfff550712111032p60fedbedu304cab834ce86eb9@mail.gmail.com>
+	 <4aca3dc20712111103s1af3b045h484ea749378c6282@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 20:14:16 2007
+To: "Daniel Berlin" <dberlin@dberlin.org>
+X-From: git-owner@vger.kernel.org Tue Dec 11 20:15:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2AYY-0007fb-Lm
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 20:14:15 +0100
+	id 1J2AZy-0008Cj-91
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 20:15:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752915AbXLKTNw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Dec 2007 14:13:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751960AbXLKTNw
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 14:13:52 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52429 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752839AbXLKTNv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 14:13:51 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id AB5B32FD5;
-	Tue, 11 Dec 2007 14:13:46 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id F15D02FD4;
-	Tue, 11 Dec 2007 14:13:41 -0500 (EST)
-In-Reply-To: <1197386675.5001.4.camel@hinata.boston.redhat.com> (Kristian
-	=?utf-8?Q?H=C3=B8gsberg's?= message of "Tue, 11 Dec 2007 10:24:35 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753404AbXLKTOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 14:14:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754623AbXLKTOn
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 14:14:43 -0500
+Received: from wa-out-1112.google.com ([209.85.146.180]:2730 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752934AbXLKTOm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 14:14:42 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so4160553wah
+        for <git@vger.kernel.org>; Tue, 11 Dec 2007 11:14:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=qnFz2g4wDJ3Hp5NdYhRMC+OMH+zoXePJE+hPb1M/Hqg=;
+        b=DD8INT8K8dQihNHbzs1IRqUWSh8fOqo/gCqjUvFfewe+0A6Pg8ReB426Eciiws0H/Ws6XRS73yYUVW5XHEyqRlcYrcHm8sdg9V0Upxji5UK8P7tyGdf3syiBGUUT2cAqOikECOAD89tVWuDC5Mtp9QKrFMACVmItfSiOUtFQuPM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rvG/xSE61ARy9w3kLICVutRfAedISyUNHVQWiBKhfA09SPhMD0n8wo5G3Q2YI7G+WFP1pehG5gUqpUeT9J6Vi8vnQQ5KiR+886+Gis89qwVfvyr7fWi6u5qdu5S7hiesB6IxEWyu+xZmVWtQLwGt8LveCBlgeRib8NC3X1ehpV4=
+Received: by 10.141.115.6 with SMTP id s6mr2240229rvm.1197400481624;
+        Tue, 11 Dec 2007 11:14:41 -0800 (PST)
+Received: by 10.141.76.1 with HTTP; Tue, 11 Dec 2007 11:14:41 -0800 (PST)
+In-Reply-To: <4aca3dc20712111103s1af3b045h484ea749378c6282@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67909>
 
-Kristian H=C3=B8gsberg <krh@redhat.com> writes:
-
-> On Mon, 2007-12-10 at 14:37 -0800, Junio C Hamano wrote:
->>  * We have a handful deprecation notices in the draft release notes,=
- but
->>    if I recall correctly, Nico wanted to add a few more.  We need to
->>    come up with a wording that is easy to understand for the end use=
-rs
->>    to decide which ancient versions will be affected.
+On Dec 11, 2007 8:03 PM, Daniel Berlin <dberlin@dberlin.org> wrote:
 >
-> Can we deprecate .git/branches?
+> > I don't know *how* file history is stored in the others scm, perhaps
+> > is easier to retrieve, i.e. without a full walk across the
+> > revisions...
+>
+> It is stored in an easier format. However, can you not simply provide
+> side-indexes to do the annotation?
+>
+> I guess that own't work in git because you can change history (in
+> other scm's, history is readonly so you could know the results for
+> committed revisions will never change).
+>
 
-We deprecated it from the very beginning, in the sense that we never
-wrote into it ourselves, but merely tried to pay attention to what
-others wrote there.  So I am open to a bullet point that officially
-declares the deprecation.
+As Linus pointed out annotation in git is "much slower and much more
+costly than just
+having a local history view to begin with".
 
-But we need to come up with a removal schedule.  Say, the first feature
-release after June 2008?
+Indeed to annotate say kernel/sched.c
+
+the time is spent by git while executing
+
+git log -p -- kernel/sched.c
+
+could be also 10X higher the the following annotation processing time
+starting from the git log output.
+
+Unfortunately my knowledge of git internals falls far far shorter then
+guessing what could be done to increase the *one file* history case
+that _seems_ to be the common one.
+
+
+> > I would be interested in cold start and warm cache start (close the
+> > annotation tab and start annotation again).
+>
+> I will try to do this.
+>
+
+Thanks. Very appreciated.
