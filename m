@@ -1,69 +1,78 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: 'git fast-export' is crashing on the gcc repo
-Date: Tue, 11 Dec 2007 15:27:33 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0712111509270.555@xanadu.home>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: git annotate runs out of memory
+Date: Tue, 11 Dec 2007 21:29:59 +0100
+Message-ID: <e5bfff550712111229i227361e9s1a6dcbed9a13019d@mail.gmail.com>
+References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
+	 <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
+	 <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 11 21:28:04 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Daniel Berlin" <dberlin@dberlin.org>
+X-From: git-owner@vger.kernel.org Tue Dec 11 21:30:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2Bhs-0005ci-Dt
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 21:27:56 +0100
+	id 1J2BkE-0006nJ-9C
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 21:30:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753121AbXLKU1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 15:27:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752949AbXLKU1f
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 15:27:35 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:32796 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752459AbXLKU1e (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 15:27:34 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSW008O6JHXAEM0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 11 Dec 2007 15:27:33 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1751841AbXLKUaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 15:30:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751410AbXLKUaA
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 15:30:00 -0500
+Received: from rv-out-0910.google.com ([209.85.198.190]:56455 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751174AbXLKU37 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 15:29:59 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so2159173rvb
+        for <git@vger.kernel.org>; Tue, 11 Dec 2007 12:29:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=iamFoon4dzMkrladm7UjqlWq8UydxvpCYzyokor/caI=;
+        b=fIhFwinjarfCAoY6vIFRj24t6fBQ6qpc1T7JjIO1E/VlrbaYBQpeJG1l3N4UNErKueBxo/wA3PiW9UCJUlm/n8y7vm1npguQjo2eLY5/KdMN95aneHGhabrmlZnMMej7x6eQ8I8lvuXUHm4D3i8jrrsMh0fvKVh2ybqwu87zY5Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rsXd3kpawAWIN44JTVip6uS6EwZX8XSljw8kn+/pRAFheKMVaQjeSM/dnWN4ez3l7KZ1XkzQSTlRVa6nTtv554UGwWQCNchJJEzDxeaNOikfdHqs2gMHdET/ooMAj0fAVIakLnUQLriAxmXXWOn4LXrBrgPONVc0n4nTIrUE22s=
+Received: by 10.141.198.8 with SMTP id a8mr2588653rvq.1197404999391;
+        Tue, 11 Dec 2007 12:29:59 -0800 (PST)
+Received: by 10.141.76.1 with HTTP; Tue, 11 Dec 2007 12:29:59 -0800 (PST)
+In-Reply-To: <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67933>
 
-Simply doing something like:
+On Dec 11, 2007 8:09 PM, Daniel Berlin <dberlin@dberlin.org> wrote:
+>
+> In GCC history, it is likely you will be able to cut off at least 30%
+> of the time if you do this, because files often have changed entirely
+> multiple times.
+>
 
-$ git fast-export --all > /dev/null
+This could be useful for a command line tool but for a GUI the top
+down approach is a myth IMHO.
 
-results in:
+In the GUI case what you actually end up doing (because a GUI allows
+it) is to start from the latest file version, check the code region
+you are interested then when you find the changed lines you _may_ want
+to double click and go to see how it was the file before that change
+and then perhaps start a new digging.
 
-fatal: Could not write blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+I found this is my typical workflow with annotation info because I'm
+more interested not in what lines have changed but _why_ have changed
+and to do this you naturally end up digging in the past (and checking
+also the corresponding revisions patch as example in another tab)
 
-Since this is extremely enlightening, I patched it as follows:
+In this case the advantage of oldest to newest annotation algorithm is
+that you have _already_ annotated all the history so you can walk and
+dig back and forth among the different file versions without *any*
+additional delay.
 
-diff --git a/builtin-fast-export.c b/builtin-fast-export.c
-index 2136aad..5c7bfe0 100755
---- a/builtin-fast-export.c
-+++ b/builtin-fast-export.c
-@@ -104,7 +104,8 @@ static void handle_object(const unsigned char *sha1)
- 
- 	printf("blob\nmark :%d\ndata %lu\n", last_idnum, size);
- 	if (fwrite(buf, size, 1, stdout) != 1)
--		die ("Could not write blob %s", sha1_to_hex(sha1));
-+		die ("Could not write blob %s: %s",
-+		     sha1_to_hex(sha1), strerror(errno));
- 	printf("\n");
- 
- 	show_progress();
-
-And then running it again produced:
-
-fatal: Could not write blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391: Inappropriate ioctl for device
-
-adding to today's confusion.
-
-
-Nicolas
+Marco
