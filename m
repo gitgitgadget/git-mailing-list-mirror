@@ -1,46 +1,70 @@
-From: "Daniel Berlin" <dberlin@dberlin.org>
-Subject: Re: Something is broken in repack
-Date: Tue, 11 Dec 2007 12:28:25 -0500
-Message-ID: <4aca3dc20712110928ybb84c16n40b6dbd50feddb06@mail.gmail.com>
-References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com> 	 <9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com> 	 <alpine.LFD.0.99999.0712102231570.555@xanadu.home> 	 <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com> 	 <9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com> 	 <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 2/2] pack-objects: fix threaded load balancing
+Date: Tue, 11 Dec 2007 12:28:30 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0712111227080.555@xanadu.home>
+References: <alpine.LFD.0.99999.0712080000120.555@xanadu.home>
+ <475EC2AB.60702@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Nicolas Pitre" <nico@cam.org>, "Junio C Hamano" <gitster@pobox.com>,  	gcc@gcc.gnu.org, "Git Mailing List" <git@vger.kernel.org>
-To: "Jon Smirl" <jonsmirl@gmail.com>
-X-From: gcc-return-142915-gcc=m.gmane.org@gcc.gnu.org Tue Dec 11 18:28:56 2007
-Return-path: <gcc-return-142915-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J28ub-0007vt-Jr
-	for gcc@gmane.org; Tue, 11 Dec 2007 18:28:54 +0100
-Received: (qmail 5560 invoked by alias); 11 Dec 2007 17:28:34 -0000
-Received: (qmail 5550 invoked by uid 22791); 11 Dec 2007 17:28:33 -0000
-X-Spam-Check-By: sourceware.org
-Received: from wr-out-0506.google.com (HELO wr-out-0506.google.com) (64.233.184.226)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Tue, 11 Dec 2007 17:28:29 +0000
-Received: by wr-out-0506.google.com with SMTP id 60so1879592wri         for <gcc@gcc.gnu.org>; Tue, 11 Dec 2007 09:28:27 -0800 (PST)
-Received: by 10.142.191.2 with SMTP id o2mr3761281wff.1197394105207;         Tue, 11 Dec 2007 09:28:25 -0800 (PST)
-Received: by 10.142.217.1 with HTTP; Tue, 11 Dec 2007 09:28:25 -0800 (PST)
-In-Reply-To: <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>
-Content-Disposition: inline
-X-IsSubscribed: yes
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jon Smirl <jonsmirl@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Dec 11 18:28:59 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J28ua-0007ui-4S
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 18:28:52 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752807AbXLKR2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 12:28:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752717AbXLKR2c
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 12:28:32 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:62856 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752713AbXLKR2b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 12:28:31 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JSW0088TB7IKS20@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 11 Dec 2007 12:28:31 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <475EC2AB.60702@viscovery.net>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67888>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67889>
 
-On 12/11/07, Jon Smirl <jonsmirl@gmail.com> wrote:
->
-> Total CPU time 196 CPU minutes vs 190 for gcc. Google's claims of
-> being faster are not true.
+On Tue, 11 Dec 2007, Johannes Sixt wrote:
 
-Depends on your allocation patterns. For our apps, it certainly is :)
-Of course, i don't know if we've updated the external allocator in a
-while, i'll bug the people in charge of it.
+> Nicolas Pitre schrieb:
+> > @@ -1612,10 +1620,10 @@ static void *threaded_find_deltas(void *arg)
+> >  		pthread_mutex_lock(&data_ready);
+> >  		pthread_mutex_unlock(&data_request);
+> >  
+> > -		if (!me->list_size)
+> > +		if (!me->remaining)
+> >  			return NULL;
+> >  
+> > -		find_deltas(me->list, me->list_size,
+> > +		find_deltas(me->list, &me->remaining,
+> >  			    me->window, me->depth, me->processed);
+> >  	}
+> >  }
+> 
+> This hunk caught my attention. &data_ready is locked, but not released in
+> this function.
+> 
+> Looking more closely at the code surrounding this hunk, it seems that the
+> lock is released in a *different* thread than the one that locked it. This
+> works on Linux, but is not portable. We will have to use condition variables
+> like every one else does in a producer-consumer-like scenario.
+
+Are you willing to make a patch for it?
+
+
+Nicolas
