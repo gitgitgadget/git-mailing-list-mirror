@@ -1,55 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: v1.5.4 plans
-Date: Tue, 11 Dec 2007 01:17:43 -0500
-Message-ID: <20071211061743.GA21718@coredump.intra.peff.net>
-References: <7vy7cwsi3p.fsf@gitster.siamese.dyndns.org> <7vk5o6jbq9.fsf@gitster.siamese.dyndns.org> <7v63zjgoel.fsf@gitster.siamese.dyndns.org> <7vsl2i6ea4.fsf@gitster.siamese.dyndns.org> <7vhcixtnm4.fsf@gitster.siamese.dyndns.org> <7vfxye4yv7.fsf@gitster.siamese.dyndns.org> <7vve78qhtf.fsf@gitster.siamese.dyndns.org> <7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org> <20071210234941.GE22254@coredump.intra.peff.net> <7vtzmqhvgq.fsf@gitster.siamese.dyndns.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Something is broken in repack
+Date: Tue, 11 Dec 2007 01:20:37 -0500
+Message-ID: <9e4733910712102220u47601845q60ccfd754e71936b@mail.gmail.com>
+References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
+	 <9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com>
+	 <alpine.LFD.0.99999.0712102231570.555@xanadu.home>
+	 <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>
+	 <BAYC1-PASMTP08CFB6F824B1282649E5EAAE640@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 07:18:09 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Nicolas Pitre" <nico@cam.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: Sean <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Tue Dec 11 07:21:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1yRS-0006uu-MD
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 07:18:07 +0100
+	id 1J1yUG-0007TI-Jx
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 07:21:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751773AbXLKGRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 01:17:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751675AbXLKGRq
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 01:17:46 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4612 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751273AbXLKGRp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 01:17:45 -0500
-Received: (qmail 6556 invoked by uid 111); 11 Dec 2007 06:17:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 11 Dec 2007 01:17:44 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Dec 2007 01:17:43 -0500
+	id S1751848AbXLKGUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 01:20:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbXLKGUj
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 01:20:39 -0500
+Received: from wa-out-1112.google.com ([209.85.146.177]:51499 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751813AbXLKGUi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 01:20:38 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so3810028wah
+        for <git@vger.kernel.org>; Mon, 10 Dec 2007 22:20:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=4HdRnBdxBW8L08vKgjnxzcFixJeD5N6Yiw2Fd4PisnM=;
+        b=vBUMj+/TopsrJpwxDFP9Rbz5dQcN6EIPXBhntE0OfwPZP93M+YTtMG1up89gx2zYfFMSWi+lLja/qruWi5KTnZNpgk0dP5fSLhGHBBe82zpMeopSwh9amnHYGJvtM5OGklhbO2GGeLWLjjpGD7c6EKqvwjTWB60JITgAmwKmu1E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=m2XW3AW8LQ9YeTZgNsSQC5mKyGRhRFLN49aXTHNlajGV7vgneX1aIQDUWxqvfg5kTmK+t4dKA5poxBdj8CeRF7LYyn7KplymhVubjeojyCPmn9N/R9IhclB1NIFV1R+/7GmXh2d33xJLWKq+8oPDEe5CX8phLzkavVyyg21MymA=
+Received: by 10.115.111.1 with SMTP id o1mr229530wam.1197354037689;
+        Mon, 10 Dec 2007 22:20:37 -0800 (PST)
+Received: by 10.114.208.17 with HTTP; Mon, 10 Dec 2007 22:20:37 -0800 (PST)
+In-Reply-To: <BAYC1-PASMTP08CFB6F824B1282649E5EAAE640@CEZ.ICE>
 Content-Disposition: inline
-In-Reply-To: <7vtzmqhvgq.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67799>
 
-On Mon, Dec 10, 2007 at 05:27:17PM -0800, Junio C Hamano wrote:
+On 12/11/07, Sean <seanlkml@sympatico.ca> wrote:
+> On Tue, 11 Dec 2007 00:25:55 -0500
+> "Jon Smirl" <jonsmirl@gmail.com> wrote:
+>
+> > Something is hurting bad with threads. 170 CPU minutes with one
+> > thread, versus 195 CPU minutes with four threads.
+> >
+> > Is there a different memory allocator that can be used when
+> > multithreaded on gcc? This whole problem may be coming from the memory
+> > allocation function. git is hardly interacting at all on the thread
+> > level so it's likely a problem in the C run-time.
+>
+> You might want to try Google's malloc, it's basically a drop in replacement
+> with some optional built-in performance monitoring capabilities.  It is said
+> to be much faster and better at threading than glibc's:
+>
+>   http://code.google.com/p/google-perftools/wiki/GooglePerformanceTools
+>   http://google-perftools.googlecode.com/svn/trunk/doc/tcmalloc.html
+>
+>
+> You can LD_PRELOAD it or link directly.
 
-> > And perhaps not a regression, but I think we should bring git-svn's
-> > handling of color.* in line with the changes to the rest of the code
-> > before 1.5.4. I posted a "last resort" patch, but I think with your
-> > changes to "git config --colorbool" it might be possible to use that.
-> > I'll try to work up a new patch.
-> 
-> Thanks for a reminder.  Anything else?
+I'm 45 minutes into a run using it. It doesn't seem to be any faster
+but it is reducing memory consumption significantly. The run should be
+done in another 20 minutes or so.
 
-2-patch series will follow momentarily. 1/2 gives --get-colorbool the
-necessary information for implementing color.pager, and 2/2 fixes
-git-svn.
 
-Very light testing by me, since I'm not actually a git-svn user, but it
-does pass the test scripts. Acks from svn-using people would be nice.
+>
+> Cheers,
+> Sean
+>
 
--Peff
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
