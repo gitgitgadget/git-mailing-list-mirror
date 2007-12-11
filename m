@@ -1,69 +1,79 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: git annotate runs out of memory
-Date: Tue, 11 Dec 2007 15:31:23 -0500
-Message-ID: <9e4733910712111231x1bbe181ew4f90fc5bb0e87039@mail.gmail.com>
-References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
-	 <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
-	 <alpine.LFD.0.99999.0712111403080.555@xanadu.home>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Something is broken in repack
+Date: Tue, 11 Dec 2007 21:34:27 +0100
+Message-ID: <475EF453.90404@op5.se>
+References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>	<9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com>	<alpine.LFD.0.99999.0712102231570.555@xanadu.home>	<9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>	<9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com>	<9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>	<alpine.LFD.0.9999.0712110806540.25032@woody.linux-foundation.org>	<9e4733910712111043h6a361996x740f4dba3d742da5@mail.gmail.com>	<alpine.LFD.0.9999.0712111055590.25032@woody.linux-foundation.org> <7v7ijldnq1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Daniel Berlin" <dberlin@dberlin.org>, git@vger.kernel.org
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 21:32:07 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jon Smirl <jonsmirl@gmail.com>, Nicolas Pitre <nico@cam.org>,
+	gcc@gcc.gnu.org, Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 21:34:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2Bld-0007Ww-7c
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 21:31:49 +0100
+	id 1J2Bob-0000OO-IS
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 21:34:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754564AbXLKUb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 15:31:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754273AbXLKUbZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 15:31:25 -0500
-Received: from rv-out-0910.google.com ([209.85.198.190]:58886 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754126AbXLKUbY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 15:31:24 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2159508rvb
-        for <git@vger.kernel.org>; Tue, 11 Dec 2007 12:31:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=YQmIUDt9d+6OwgBHjCMu4u4ipRXd22aRiyou73F0TZY=;
-        b=f2sdd+6yBJAeDEswJhma6gkSkKV/7PrQ0QQfNNMGNoech28suM34eXznpWOUpoygBaNb0oqmhRNKK+0J/2Pa4V9IceZoxOtu6iJIvIJjSEeFD3xNVsQ30wYDlHXw3QnjIPwqAbWhVnNVSLvzLV7zR4idQNWqpmsUq8JydoiQF/8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=waWfVRnbEwuPMSGo9eBIC7Xfwi/1/JWBNKSJ4uWml1HH7fE10mN4IFuKqhA4zPDunanPYAdBxr3tHNlUHVP2akJZdnNujqwDZN6gRJYyZrne2wzLche/jj14INfVMaelKBr5iLrOY69AqPbjt4bxwnYXql5dOEPnFxG/Z0QruKk=
-Received: by 10.140.164.1 with SMTP id m1mr739708rve.1197405083781;
-        Tue, 11 Dec 2007 12:31:23 -0800 (PST)
-Received: by 10.140.166.14 with HTTP; Tue, 11 Dec 2007 12:31:23 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.99999.0712111403080.555@xanadu.home>
-Content-Disposition: inline
+	id S1752347AbXLKUec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 15:34:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751057AbXLKUec
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 15:34:32 -0500
+Received: from mail.op5.se ([193.201.96.20]:50613 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751332AbXLKUeb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 15:34:31 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 45DB21F08040;
+	Tue, 11 Dec 2007 21:34:30 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.212
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.212 tagged_above=-10 required=6.6
+	tests=[AWL=-0.712, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id EEsgkGw5DjtQ; Tue, 11 Dec 2007 21:34:29 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id 98C201F08039;
+	Tue, 11 Dec 2007 21:34:28 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <7v7ijldnq1.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67935>
 
-On 12/11/07, Nicolas Pitre <nico@cam.org> wrote:
-> On Tue, 11 Dec 2007, Linus Torvalds wrote:
->
-> > That said, I'll see if I can speed up "git blame" on the gcc repository.
-> > It _is_ a fundamentally much more expensive operation than it is for
-> > systems that do single-file things.
->
-> It has no excuse for eating up to 1.6GB or RAM though.  That's plainly
-> wrong.
+Junio C Hamano wrote:
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> 
+>> So what you actually want to do is to just re-use already packed delta 
+>> chains directly, which is what we normally do. But you are explicitly 
+>> looking at the "--no-reuse-delta" (aka "git repack -f") case, which is why 
+>> it then blows up.
+> 
+> While that does not explain, as Nico pointed out, the huge difference
+> between the two repack runs that have different starting pack, I would
+> say it is a fair thing to say.  If you have a suboptimal pack (i.e. not
+> enough reusable deltas, as in the 2.1GB pack case), do run "repack -f",
+> but if you have a good pack (i.e. 300MB pack), don't.
 
- git blame gcc/ChangeLog
-It needs 2.25GB of RAM to run without swapping
 
-That is pretty close to the same number the repack needs.
+I think this is too much of a mystery for a lot of people to let it go.
+Even I started looking into it, and I've got so little spare time just
+now that I wouldn't stand much of a chance of making a contribution
+even if I had written the code originally.
+
+That being said, I the fact that some git repositories really *can't*
+be repacked on some machines (because it eats ALL virtual memory) is
+really something that lowers git's reputation among huge projects.
 
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
