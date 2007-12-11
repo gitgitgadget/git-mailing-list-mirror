@@ -1,103 +1,96 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: git blame with valgrind massif
-Date: Tue, 11 Dec 2007 22:27:43 +0100
-Message-ID: <20071211212743.GD29110@artemis.madism.org>
-References: <9e4733910712111257h20a4a916gd4747e816e4706ff@mail.gmail.com> <alpine.LFD.0.9999.0712111315060.25032@woody.linux-foundation.org>
+From: "Jason Sewall" <jasonsewall@gmail.com>
+Subject: Re: [ANNOUNCE] ugit: a pyqt-based git gui // was: Re: If you would write git from scratch now, what would you change?
+Date: Tue, 11 Dec 2007 16:29:52 -0500
+Message-ID: <31e9dd080712111329j2c8b22ebs38ab727a5fbe85fb@mail.gmail.com>
+References: <402731c90712110548k67f28b64w5afa93ee908ce73b@mail.gmail.com>
+	 <e5bfff550712111020k51829c03n5d64a94ce7c7ac2a@mail.gmail.com>
+	 <31e9dd080712111114t2bbdba60m18b7d6210f3f9174@mail.gmail.com>
+	 <e5bfff550712111133j66c4b9adx9f57661cc720aa41@mail.gmail.com>
+	 <402731c90712111254q1cb99c6al47538971d93b4592@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="UoPmpPX/dBe4BELn";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 22:28:08 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Marco Costalba" <mcostalba@gmail.com>,
+	"Andy Parkins" <andyparkins@gmail.com>, git@vger.kernel.org
+To: David <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 22:31:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2Ce7-00069y-1I
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 22:28:07 +0100
+	id 1J2Cgk-0007Bf-3O
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 22:30:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751518AbXLKV1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 16:27:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751653AbXLKV1p
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 16:27:45 -0500
-Received: from pan.madism.org ([88.191.52.104]:53265 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751518AbXLKV1p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 16:27:45 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id EB9172F70B;
-	Tue, 11 Dec 2007 22:27:43 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 3F2662B150D; Tue, 11 Dec 2007 22:27:43 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+	id S1752093AbXLKVaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 16:30:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754477AbXLKV3z
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 16:29:55 -0500
+Received: from an-out-0708.google.com ([209.85.132.248]:39965 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752331AbXLKV3y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 16:29:54 -0500
+Received: by an-out-0708.google.com with SMTP id d31so517868and
+        for <git@vger.kernel.org>; Tue, 11 Dec 2007 13:29:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Bk1l6I51rYvTEvGU5+h7YekoH57kT52+6BvfBs/OGDs=;
+        b=ffuHBEgFKHMPmmk9q1AFpMo03kX+2+Io85K9eCU6cfYec0X4AlkIC3ahjN0e5oGd3cYLocWfdxUFuXlGKYVugflXquc6qOKbBDeHLwaApU49z/D1b04T4lX0XYM6hPSfyESoBZtJ2+jvH3q4KA2Om4oiVDstGtT158IAzRxaRN8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=inh9J5MQ/TsdiYoSR6/NuLPpR4tMD8MUk9d1552qTUMbsUQyTWflmdj1cadASThfrA35tOmnS8j/SdCqphalgTziA9a6a64FtDM4viywrLXNfhGnqdjh0VLRWHmVCTebe+BsBOL0LGnngI/bCvFj27PJWTjFgqAtWDkrjMP3um8=
+Received: by 10.101.67.11 with SMTP id u11mr17239313ank.1197408592945;
+        Tue, 11 Dec 2007 13:29:52 -0800 (PST)
+Received: by 10.101.66.17 with HTTP; Tue, 11 Dec 2007 13:29:52 -0800 (PST)
+In-Reply-To: <402731c90712111254q1cb99c6al47538971d93b4592@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0712111315060.25032@woody.linux-foundation.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67950>
 
+On Dec 11, 2007 3:54 PM, David <davvid@gmail.com> wrote:
+> > On Dec 11, 2007 8:14 PM, Jason Sewall <jasonsewall@gmail.com> wrote:
+> >
+> > I re-installed without the prefix and that error disappeared, but now I get
+> > Traceback (most recent call last):
+> >   File "/usr/local/bin/ugit", line 12, in <module>
+> >     view = GitView (app.activeWindow())
+> >   File "../py/views.py", line 15, in __init__
+> >   File "default/ui/Window.py", line 43, in setupUi
+> > AttributeError: setLeftMargin
+>
+> As for the setLeftMarginError -- That could be because you have py/qt
+> 4.2.  The ui files were generated with designer-qt4 (4.3.x) so you
+> might need a more recent pyqt4.  I'll see if I can grab an older
+> version of pyqt and use it for all of the ui designs  (.ui files are
+> probably forward but not backwards compatible).
 
---UoPmpPX/dBe4BELn
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+That was it - as a matter of fact, the package updater for my distro
+was asking me to upgrade.
 
-On Tue, Dec 11, 2007 at 09:22:53PM +0000, Linus Torvalds wrote:
->=20
->=20
-> On Tue, 11 Dec 2007, Jon Smirl wrote:
-> >=20
-> > How do you interpret the massif output?
->=20
-> Not very easy, since massif will tell you what *allocated* it, but then=
-=20
-> trying to see who was supposed to free it is another issue altogether.
->=20
-> I also find the textual output to be very confusing. But what massif is=
-=20
-> really good at is to look at the memory usage over time in the postscript=
-=20
-> file it generates, and that gives you a much better feel for what=20
-> particular allocation is a problem.
->=20
-> In this case, it's patch_delta that generates all the memory usage (well,=
-=20
-> 98% of it ;^), but that's not that helpful unless you know git internals,=
-=20
+Well done, though I don't think I'm going to abandon git-gui quite yet.
 
-  No 37%, the 98% list is the list of calls that generate 98% of the
-total allocations git blame does, and then massif lists each individual
-call, and patch_delta generates 37% of the total.
+The most valuable thing git-gui does, IMHO, is give you fine control
+over what you stage in a commit. The two-paned view of staged and
+unstaged changes with the view of the actual changes makes it really
+easy to see exactly what you are committing. And the graphical
+"{Un}stage hunk for commit" business, which ugit seems to lack so far,
+is really excellent - it's much easier to use than git add -i for
+partial adds.
 
-  Though it's meaningless without knowing how much time this memory
-stayed allocated>
+I would like to see git add -i's hunk-splitting functionality in a
+graphical tool for that matter.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+Anyway, ugit is very good for a first draft; its text display beats
+whats in git-gui in a big way (and I would *hope* qt4 would beat
+Tcl/Tk at that at least).
 
---UoPmpPX/dBe4BELn
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+One suggestion:
+For Westerners like me, having "staged" on the left and "unstaged" on
+the right seems a little unnatural; I'd be curious to hear others'
+opinions on that.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHXwDPvGr7W6HudhwRAuTxAJ4nrGPMcSCt4fDwCCCkOkVu+BSkEgCggAw2
-6biZ+lz8dDM14z4xp0ufxvY=
-=eG3B
------END PGP SIGNATURE-----
-
---UoPmpPX/dBe4BELn--
+Jason
