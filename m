@@ -1,133 +1,146 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: Building git-1.5.3.7 on HP-UX 11.00
-Date: Tue, 11 Dec 2007 13:57:42 +0100
-Message-ID: <20071211135742.62d1d641@pc09.procura.nl>
-References: <20071204140326.14d9e7a0@pc09.procura.nl>
-	<Pine.LNX.4.64.0712041439590.27959@racer.site>
-	<20071204150102.7f3ec3e9@pc09.procura.nl>
-	<47556EE2.6040105@op5.se>
-	<20071204152240.6cb6018e@pc09.procura.nl>
-	<Pine.LNX.4.64.0712041536180.27959@racer.site>
-	<20071204155655.053f4fb4@pc09.procura.nl>
-	<7vve7e49or.fsf@gitster.siamese.dyndns.org>
-	<20071210145123.7c34af6d@pc09.procura.nl>
-	<7vfxy9fxh3.fsf@gitster.siamese.dyndns.org>
-	<20071211085440.GK14735@spearce.org>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH] Adding menu for Emacs git.el
+Date: Tue, 11 Dec 2007 14:02:00 +0100
+Message-ID: <878x41idvb.fsf@wine.dyndns.org>
+References: <87mysvfr7e.dlv@vanicat.homelinux.org>
+	<87fxylos4o.fsf@wine.dyndns.org>
+	<877ijwfh6z.dlv@vanicat.homelinux.org>
+	<7vhciphh4k.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>, arjen@yaph.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 13:59:01 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Remi Vanicat <vanicat@debian.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 14:02:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J24hQ-0003AN-5K
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 13:59:00 +0100
+	id 1J24l9-0004Wf-E3
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 14:02:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751518AbXLKM6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 07:58:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751503AbXLKM6h
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 07:58:37 -0500
-Received: from smtp-vbr13.xs4all.nl ([194.109.24.33]:3921 "EHLO
-	smtp-vbr13.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751387AbXLKM6g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 07:58:36 -0500
-Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
-	(authenticated bits=0)
-	by smtp-vbr13.xs4all.nl (8.13.8/8.13.8) with ESMTP id lBBCvgSA078035
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 11 Dec 2007 13:57:47 +0100 (CET)
-	(envelope-from h.m.brand@xs4all.nl)
-In-Reply-To: <20071211085440.GK14735@spearce.org>
-X-Mailer: Claws Mail 3.1.0cvs70 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1752131AbXLKNCO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Dec 2007 08:02:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751186AbXLKNCN
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 08:02:13 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:34790 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751803AbXLKNCM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 08:02:12 -0500
+Received: from adsl-89-217-159-121.adslplus.ch ([89.217.159.121] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1J24kN-0004YL-A9; Tue, 11 Dec 2007 07:02:09 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 82F9A1E713B; Tue, 11 Dec 2007 14:02:00 +0100 (CET)
+In-Reply-To: <7vhciphh4k.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 10 Dec 2007 22:36:59 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+X-Spam-Score: -3.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67850>
 
-On Tue, 11 Dec 2007 03:54:40 -0500, "Shawn O. Pearce" <spearce@spearce.org>
-wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> wrote:
-> > "H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
-> > 
-> > > 3 I am willing to believe that HP_UX' vsnprintf () is broken, or
-> > >   at least does not conform to the expectations in the GNU world,
-> > >   but chickening out like the way strbuf_addf () does is maybe a
-> > >   bit too rude, so I forced a minimum of 64bytes available. That
-> > >   fixes a lot!
-> > >
-> > >   but it still breaks t4013 :(
-> > 
-> > I think Shawn had something similar for Solaris, and if it is a small
-> > cost to help portability, it does not feel so bad.
-> 
-> My Solaris change is already in your tree; on Solaris vnsprintf
-> will return -1 if the input buffer we gave it had a length of 0.
-> This can happen at odd times, depending on what is already in the
-> strbuf and how its buffer is. :)
-> 
-> The fix for Solaris turned out to be just make sure there is at
-> least 1 byte in the buffer before calling vsnprintf().
->  
-> > > + git-index-pack -o tmp.idx test-2-7f8ead892057e78576c0329a70cc83afb113f117.pack
-> > > fatal: serious inflate inconsistency
-> > 
-> > That sounds like a broken zlib X-<.
+> Alex, what is the current status of this patch?
 
-libz is version 1.2.3
+Patch v3 looked good but the patch file was corrupted. Here's the lates=
+t
+version, I have moved things around a bit to use only one menu and to b=
+e
+more similar to pcl-cvs.
 
-> I think this is actually a broken pread().  Its been reported
-> multiple times by different people on HP-UX.  Compiling with
-> NO_PREAD=1 resolves the issues for everyone who has tried it.
+=46rom 0a67dfc88a8bbf479c37ba76521ebe39fa67f577 Mon Sep 17 00:00:00 200=
+1
+=46rom: Alexandre Julliard <julliard@winehq.org>
+Date: Tue, 11 Dec 2007 13:56:09 +0100
+Subject: [PATCH] git.el: Added a menu for git-status-mode.
+MIME-Version: 1.0
+Content-Type: text/plain; charset=3Dutf-8
+Content-Transfer-Encoding: 8bit
 
-:)
+Originally written by R=C3=A9mi Vanicat, I just changed the layout a li=
+ttle.
 
-* passed all 114 test(s)
+Signed-off-by: R=C3=A9mi Vanicat <vanicat@debian.org>
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ contrib/emacs/git.el |   43 ++++++++++++++++++++++++++++++++++++++++++=
+-
+ 1 files changed, 42 insertions(+), 1 deletions(-)
 
-> Jakub asked me for an autoconf test to look for this sort of
-> breakage in pread(), I have yet to come up with a theory for
-> what sort of breakage HP-UX is showing us here, let alone write
-> a test for it.
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index e147da0..ae58f1c 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -49,6 +49,7 @@
+ (eval-when-compile (require 'cl))
+ (require 'ewoc)
+ (require 'log-edit)
++(require 'easymenu)
+=20
+=20
+ ;;;; Customizations
+@@ -1297,7 +1298,47 @@ Return the list of files that haven't been handl=
+ed."
+     (define-key toggle-map "i" 'git-toggle-show-ignored)
+     (define-key toggle-map "k" 'git-toggle-show-unknown)
+     (define-key toggle-map "m" 'git-toggle-all-marks)
+-    (setq git-status-mode-map map)))
++    (setq git-status-mode-map map))
++  (easy-menu-define git-menu git-status-mode-map
++    "Git Menu"
++    `("Git"
++      ["Refresh" git-refresh-status t]
++      ["Commit" git-commit-file t]
++      ("Merge"
++        ["Next Unmerged File" git-next-unmerged-file t]
++        ["Prev Unmerged File" git-prev-unmerged-file t]
++        ["Mark as Resolved" git-resolve-file t]
++        ["Interactive Merge File" git-find-file-imerge t]
++        ["Diff Against Common Base File" git-diff-file-base t]
++        ["Diff Combined" git-diff-file-combined t]
++        ["Diff Against Merge Head" git-diff-file-merge-head t]
++        ["Diff Against Mine" git-diff-file-mine t]
++        ["Diff Against Other" git-diff-file-other t])
++      "--------"
++      ["Add File" git-add-file t]
++      ["Revert File" git-revert-file t]
++      ["Ignore File" git-ignore-file t]
++      ["Remove File" git-remove-file t]
++      "--------"
++      ["Find File" git-find-file t]
++      ["View File" git-view-file t]
++      ["Diff File" git-diff-file t]
++      ["Interactive Diff File" git-diff-file-idiff t]
++      ["Log" git-log-file t]
++      "--------"
++      ["Mark" git-mark-file t]
++      ["Mark All" git-mark-all t]
++      ["Unmark" git-unmark-file t]
++      ["Unmark All" git-unmark-all t]
++      ["Toggle All Marks" git-toggle-all-marks t]
++      ["Hide Handled Files" git-remove-handled t]
++      "--------"
++      ["Show Uptodate Files" git-toggle-show-uptodate :style toggle :s=
+elected git-show-uptodate]
++      ["Show Ignored Files" git-toggle-show-ignored :style toggle :sel=
+ected git-show-ignored]
++      ["Show Unknown Files" git-toggle-show-unknown :style toggle :sel=
+ected git-show-unknown]
++      "--------"
++      ["Quit" git-status-quit t])))
++
+=20
+ ;; git mode should only run in the *git status* buffer
+ (put 'git-status-mode 'mode-class 'special)
+--=20
+1.5.3.7.959.gdf7e-dirty
 
-For now, the HP section in Makefile for 11.00 now looks like
-
-ifeq ($(uname_S),HP-UX)
-	# HP-UX
-	BASIC_LDFLAGS  += -L/usr/local/ssl/lib -L/usr/local/lib
-#	EXTLIBS        += -lc_r -lgcc
-	NO_HSTRERROR	= YesPlease
-	NO_ICONV	= YesPlease
-	NO_INET_NTOP	= YesPlease
-	NO_INET_PTON	= YesPlease
-	NO_UNSETENV	= YesPlease
-	NO_STRTOULL	= YesPlease
-	NO_STRTOUMAX	= YesPlease
-	NO_PREAD	= YesPlease
-endif
-
-
--- 
-H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
-using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
-& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
-http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
-                        http://www.goldmark.org/jeff/stupid-disclaimers/
+--=20
+Alexandre Julliard
+julliard@winehq.org
