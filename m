@@ -1,76 +1,62 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Something is broken in repack
-Date: Tue, 11 Dec 2007 10:00:56 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0712110951070.555@xanadu.home>
-References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
- <9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com>
- <alpine.LFD.0.99999.0712102231570.555@xanadu.home>
- <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>
- <9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com>
- <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>
- <alpine.LFD.0.99999.0712110832251.555@xanadu.home>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Fix typo: we require Python 2.4, not 2.5
+Date: Tue, 11 Dec 2007 16:01:56 +0100
+Message-ID: <20071211150156.GA23609@diana.vm.bytemark.co.uk>
+References: <b0943d9e0712100340p78326b4avf2b7e64008bba6d6@mail.gmail.com> <20071211142347.GA22879@diana.vm.bytemark.co.uk> <b0943d9e0712110627g70ad0aecyfeaafd8b8655fb57@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, gcc@gcc.gnu.org,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 16:01:37 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 16:02:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J26bn-0007op-14
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 16:01:19 +0100
+	id 1J26cr-0008FY-TO
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 16:02:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751733AbXLKPA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 10:00:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751983AbXLKPA6
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 10:00:58 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:53832 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751616AbXLKPA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 10:00:57 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSW00K134DKJZ40@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 11 Dec 2007 10:00:56 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LFD.0.99999.0712110832251.555@xanadu.home>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1752270AbXLKPCF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Dec 2007 10:02:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752228AbXLKPCD
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 10:02:03 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2012 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751983AbXLKPCC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 10:02:02 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1J26cO-0006Ae-00; Tue, 11 Dec 2007 15:01:56 +0000
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0712110627g70ad0aecyfeaafd8b8655fb57@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67865>
 
-On Tue, 11 Dec 2007, Nicolas Pitre wrote:
+On 2007-12-11 14:27:08 +0000, Catalin Marinas wrote:
 
-> And yet, this is still missing the actual issue.  The issue being that 
-> the 2.1GB pack as a _source_ doesn't cause as much memory to be 
-> allocated even if the _result_ pack ends up being the same.
-> 
-> I was able to repack the 2.1GB pack on my machine which has 1GB of ram. 
-> Now that it has been repacked, I can't repack it anymore, even when 
-> single threaded, as it start crowling into swap fairly quickly.  It is 
-> really non intuitive and actually senseless that Git would require twice 
-> as much RAM to deal with a pack that is 7 times smaller.
+> Is the GIT version OK or just too restrictive?
 
-OK, here's something else for you to try:
+The only restriction I've checked is this one:
 
-	core.deltabasecachelimit=0
-	pack.threads=2
-	pack.deltacachesize=1
+commit 9a6bcbe26b6032c39031773da020fd7bf4015953
+Author: Karl Hasselstr=F6m <kha@treskal.com>
+Date:   Sat Sep 22 10:22:18 2007 +0200
 
-With that I'm able to repack the small gcc pack on my machine with 1GB 
-of ram using:
+    Properly remove all config for a deleted branch
 
-	git repack -a -f -d --window=250 --depth=250
+    This uses "git-config --remove-section", which was first released i=
+n
+    git 1.5.1-rc1. I'm not sure if this is later than what we used to
+    depend on; we already use "git-config --rename-section", but that's
+    been in since git 1.5.0-rc0.
 
-and top reports a ~700m virt and ~500m res without hitting swap at all.
-It is only at 25% so far, but I was unable to get that far before.
+So I guess we should require at least 1.5.1. But I don't think
+requiring 1.5.2 is that bad.
 
-Would be curious to know what you get with 4 threads on your machine.
-
-
-Nicolas
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
