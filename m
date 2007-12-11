@@ -1,66 +1,55 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Ingo Molnar <mingo@elte.hu>
 Subject: Re: git-bisect feature suggestion: "git-bisect diff"
-Date: Tue, 11 Dec 2007 02:13:45 -0800 (PST)
-Message-ID: <m3ve75sfn3.fsf@roke.D-201>
-References: <20071207093439.GA21896@elte.hu>
-	<200712080636.12982.chriscool@tuxfamily.org>
-	<20071211092446.GA4703@elte.hu>
-	<20071211092916.GF30948@artemis.madism.org>
+Date: Tue, 11 Dec 2007 11:17:25 +0100
+Message-ID: <20071211101725.GB14372@elte.hu>
+References: <20071207093439.GA21896@elte.hu> <200712080636.12982.chriscool@tuxfamily.org> <20071211092446.GA4703@elte.hu> <20071211092916.GF30948@artemis.madism.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ingo Molnar <mingo@elte.hu>,
+To: Pierre Habouzit <madcoder@debian.org>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 11:14:47 2007
+X-From: git-owner@vger.kernel.org Tue Dec 11 11:18:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J227u-0008Iy-OW
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 11:14:11 +0100
+	id 1J22Bp-0001gY-Dq
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 11:18:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751659AbXLKKNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 05:13:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751638AbXLKKNs
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 05:13:48 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:39548 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751498AbXLKKNr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 05:13:47 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1243455nfb
-        for <git@vger.kernel.org>; Tue, 11 Dec 2007 02:13:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=XHDsfDqkn6iexqVPvMrMac5LavHx5RdbukEU9ntzQk0=;
-        b=kYZrNGKqyL0w6oMMOfF300XDY1Si6c1B9skhjlSuivUFrHQ41O8ftknOMf5P2MvzQj4mo9+1x02Ous/DZKkxPV+LuDV5yhnM+NwdbLhbAktpKFUDSWoHQR0du8vugB9unzI2hisRe/nX2aTuOBvL5P/nsX/OS1ZC/dCUxxj2OfU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=pl9eSbIfkWi1q4rjTJYU4u5jWFgzaXB+389ODFiOJLliOTOrqoerYdmI1dCRLOTG2u7cqvgJk3s/inaLhrkftEizwpOPjKnHC8SRfmna92Unqd8WHg4bapduBmFddyF9G81Tx6GhD86VHbp4YY7V6gvB7pQsEoMeRc2wbL1G0EU=
-Received: by 10.86.84.5 with SMTP id h5mr6520328fgb.1197368026428;
-        Tue, 11 Dec 2007 02:13:46 -0800 (PST)
-Received: from roke.D-201 ( [83.8.252.236])
-        by mx.google.com with ESMTPS id 4sm2941325fge.2007.12.11.02.13.43
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 11 Dec 2007 02:13:45 -0800 (PST)
-Received: from roke (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lBBADdsc008900;
-	Tue, 11 Dec 2007 11:13:40 +0100
-Received: (from jnareb@localhost)
-	by roke (8.13.4/8.13.4/Submit) id lBBADbhH008897;
-	Tue, 11 Dec 2007 11:13:37 +0100
-X-Authentication-Warning: roke: jnareb set sender to jnareb@fuw.edu.pl using -f
+	id S1751273AbXLKKRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 05:17:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751187AbXLKKRv
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 05:17:51 -0500
+Received: from mx2.mail.elte.hu ([157.181.151.9]:51989 "EHLO mx2.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751180AbXLKKRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 05:17:50 -0500
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1J22BA-0002nS-KH
+	from <mingo@elte.hu>; Tue, 11 Dec 2007 11:17:38 +0100
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 49CDB3E2193; Tue, 11 Dec 2007 11:17:22 +0100 (CET)
+Content-Disposition: inline
 In-Reply-To: <20071211092916.GF30948@artemis.madism.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+User-Agent: Mutt/1.5.17 (2007-11-01)
+Received-SPF: neutral (mx2: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67834>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+
+* Pierre Habouzit <madcoder@debian.org> wrote:
 
 > On Tue, Dec 11, 2007 at 09:24:46AM +0000, Ingo Molnar wrote:
 > > ---------{ git-authors }--------->
@@ -72,9 +61,19 @@ Pierre Habouzit <madcoder@debian.org> writes:
 >     git shortlog -n -s HEAD -- "$@"
 > to do exactly the same right ? :)
 
-Not exactly, as it does not give us email address.
+didnt know about that - i guess i wrote git-authors before even 
+git-shortlog existed ;-)
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+but i still prefer this format:
+
+      2  Serge E. Hallyn <serue@us.ibm.com>
+     10  Eric W. Biederman <ebiederm@xmission.com>
+     10  Pavel Emelyanov <xemul@openvz.org>
+     10  Sukadev Bhattiprolu <sukadev@us.ibm.com>
+
+because i'm not just interested in the stats, i'm also interested in an 
+email address to pick. Also, the number should be the first column and 
+aligned, it's easier to read for humans that way. (and this summary 
+output is for humans.)
+
+	Ingo
