@@ -1,106 +1,71 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Something is broken in repack
-Date: Tue, 11 Dec 2007 08:49:32 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0712110832251.555@xanadu.home>
-References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
- <9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com>
- <alpine.LFD.0.99999.0712102231570.555@xanadu.home>
- <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>
- <9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com>
- <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Building git-1.5.3.7 on HP-UX 11.00
+Date: Tue, 11 Dec 2007 14:53:03 +0100
+Message-ID: <475E963F.3000804@viscovery.net>
+References: <20071204130922.731c407a@pc09.procura.nl>	<Pine.LNX.4.64.0712041343040.27959@racer.site>	<20071204140326.14d9e7a0@pc09.procura.nl>	<Pine.LNX.4.64.0712041439590.27959@racer.site>	<20071204150102.7f3ec3e9@pc09.procura.nl>	<47556EE2.6040105@op5.se>	<20071204152240.6cb6018e@pc09.procura.nl>	<Pine.LNX.4.64.0712041536180.27959@racer.site>	<20071204155655.053f4fb4@pc09.procura.nl>	<7vve7e49or.fsf@gitster.siamese.dyndns.org>	<20071210145123.7c34af6d@pc09.procura.nl>	<7vfxy9fxh3.fsf@gitster.siamese.dyndns.org> <20071211143323.27c860db@pc09.procura.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, gcc@gcc.gnu.org,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 14:49:58 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
+	Sam Vilain <sam@vilain.net>, arjen@yaph.org
+To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+X-From: git-owner@vger.kernel.org Tue Dec 11 14:53:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J25Uh-0005DP-PI
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 14:49:56 +0100
+	id 1J25YB-0006RZ-BO
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 14:53:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752753AbXLKNte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 08:49:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752719AbXLKNte
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 08:49:34 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:50294 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752473AbXLKNtd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 08:49:33 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSW00D0712KNYH0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 11 Dec 2007 08:49:32 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1752802AbXLKNxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 08:53:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752776AbXLKNxI
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 08:53:08 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:21039 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752651AbXLKNxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 08:53:07 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1J25Wt-0000up-Qu; Tue, 11 Dec 2007 14:52:12 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 2B712546; Tue, 11 Dec 2007 14:53:03 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20071211143323.27c860db@pc09.procura.nl>
+X-Spam-Score: 1.2 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67856>
 
-On Tue, 11 Dec 2007, Jon Smirl wrote:
-
-> Switching to the Google perftools malloc
-> http://goog-perftools.sourceforge.net/
+H.Merijn Brand schrieb:
+> I have put the output of
 > 
-> 10%   30  828M
-> 20%   15  831M
-> 30%   10  834M
-> 40%   50  1014M
-> 50%   80  1086M
-> 60%   80  1500M
-> 70% 200  1.53G
-> 80% 200  1.85G
-> 90% 260  1.87G
-> 95% 520  1.97G
-> 100% 1335 2.24G
+> % make -i test | & perl -ne'm/^\*\s+ok\s+\d+:/ or print' > git-make-test.log
 > 
-> Google allocator knocked 600MB off from memory use.
-> Memory consumption did not fall during the write out phase like it did with gcc.
+> on http://www.xs4all.nl/~procura/git-make-test.log
 > 
-> Since all of this is with the same code except for changing the
-> threading split, those runs where memory consumption went to 4.5GB
-> with the gcc allocator must have triggered an extreme problem with
-> fragmentation.
-
-Did you mean the glibc allocator?
-
-> Total CPU time 196 CPU minutes vs 190 for gcc. Google's claims of
-> being faster are not true.
+> which leaves only the following tests as failures:
 > 
-> So why does our threaded code take 20 CPU minutes longer (12%) to run
-> than the same code with a single thread? Clock time is obviously
-> faster. Are the threads working too close to each other in memory and
-> bouncing cache lines between the cores? Q6600 is just two E6600s in
-> the same package, the caches are not shared.
+> t3901-i18n-patch.sh        t4201-shortlog.sh            t5100-mailinfo.sh
+> t5405-send-pack-rewind.sh  t5500-fetch-pack.sh          t5505-remote.sh
+> t5510-fetch.sh             t5515-fetch-merge-logic.sh   t5516-fetch-push.sh
+> t5520-pull.sh              t5600-clone-fail-cleanup.sh  t5700-clone-reference.sh
+> t5701-clone-local.sh       t6002-rev-list-bisect.sh     t6003-rev-list-topo-order.sh
+> t6022-merge-rename.sh      t6026-merge-attr.sh          t6200-fmt-merge-msg.sh
+> t7003-filter-branch.sh     t9300-fast-import.sh         t9301-fast-export.sh
+> t9500-gitweb-standalone-no-errors.sh
+> 
+> How close am I to success?
 
-Of course there'll always be a certain amount of wasted cycles when 
-threaded.  The locking overhead, the extra contention for IO, etc.  So 
-12% overhead (3% per thread) when using 4 threads is not that bad I 
-would say.
+There are a number of tests that pass only if you have iconv, most notably
+t3901 and t5100. pull, clone, merge, filter-branch are shell scripts with
+plenty of opportunities to stumble over incompatible/unportable constructs.
 
-> Why does the threaded code need 2.24GB (google allocator, 2.85GB gcc)
-> with 4 threads? But only need 950MB with one thread? Where's the extra
-> gigabyte going?
-
-I really don't know.
-
-Did you try with pack.deltacachesize set to 1 ?
-
-And yet, this is still missing the actual issue.  The issue being that 
-the 2.1GB pack as a _source_ doesn't cause as much memory to be 
-allocated even if the _result_ pack ends up being the same.
-
-I was able to repack the 2.1GB pack on my machine which has 1GB of ram. 
-Now that it has been repacked, I can't repack it anymore, even when 
-single threaded, as it start crowling into swap fairly quickly.  It is 
-really non intuitive and actually senseless that Git would require twice 
-as much RAM to deal with a pack that is 7 times smaller.
-
-
-Nicolas (still puzzled)
+-- Hannes
