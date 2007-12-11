@@ -1,85 +1,106 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: git annotate runs out of memory
-Date: Tue, 11 Dec 2007 21:14:02 +0100
-Message-ID: <e5bfff550712111214p189945e5g38e85e11bf7af68@mail.gmail.com>
+Date: Tue, 11 Dec 2007 12:14:56 -0800 (PST)
+Message-ID: <m3bq8xrntc.fsf@roke.D-201>
 References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
-	 <e5bfff550712111032p60fedbedu304cab834ce86eb9@mail.gmail.com>
-	 <4aca3dc20712111103s1af3b045h484ea749378c6282@mail.gmail.com>
-	 <Pine.LNX.4.64.0712111428040.5349@iabervon.org>
+	<alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
+	<74ED838F-4966-42A9-BC8A-906FD0B4B46F@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Daniel Berlin" <dberlin@dberlin.org>, git@vger.kernel.org
-To: "Daniel Barkalow" <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 21:14:36 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Daniel Berlin <dberlin@dberlin.org>, git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 21:15:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2BUs-0008Ln-7r
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 21:14:30 +0100
+	id 1J2BVi-0000Dm-Cz
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 21:15:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752507AbXLKUOI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 15:14:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752395AbXLKUOH
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 15:14:07 -0500
-Received: from wa-out-1112.google.com ([209.85.146.180]:26523 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752359AbXLKUOE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 15:14:04 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so4185858wah
-        for <git@vger.kernel.org>; Tue, 11 Dec 2007 12:14:03 -0800 (PST)
+	id S1752425AbXLKUPB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 15:15:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752657AbXLKUPB
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 15:15:01 -0500
+Received: from mu-out-0910.google.com ([209.85.134.186]:20132 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752395AbXLKUPA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 15:15:00 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so3336081mue
+        for <git@vger.kernel.org>; Tue, 11 Dec 2007 12:14:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=OpJ501zRDO4Ym/yDlEXKWQzHJ9QRZywDyQKK8nUMPHE=;
-        b=rYSs7ZmYss2YJON9Vtdji4/pucddzUgo5hknmzbKxc+2wYkMgGsYk1F8e1A2i2gdmPMnMkMGq7t2nGw9UAoCvl1EWFxCTdbDua6NtRK2C9bsQgrWIpMdMiCyBjSLuLFEN1IzzcMolmeRXXveQCCE5PCyBCYuIXrxZC0NeTZPSdE=
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=L9jxrhBqoI/dnFPhlT4hk58xXyhPhuETmZ35fJ15X6c=;
+        b=tblADkleTk1N6uggZYCFthRczBOsI6f6lciBvU+DT39RJ8F/0DIL5kGC8b2meOZxUWwZkbHst0r2FrjuSZhm4liWjNiwVtEZdzPIfKlopbZu5Qxae7F1Vdlj0JW4HeR7TmFzYzfInqUGeMI5km7Sr7X2biWEEHD3Ccxh2kEs2Go=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AICZOqn8OmPUao50JOOkedLFCX1i1VRIQQ0N+yWRhr9SGMMz/dqbpvPeKolVM/T8/+EoKn0CAzY2lACvK49lVrTddb9DFuj350Xp/BJOHO5jte9MjHw/6vsH/6dazRwovFz31yLBM/95plNHkCaRM2U9PJ+aK3pwVr8PQZR7Tk8=
-Received: by 10.140.148.3 with SMTP id v3mr456200rvd.1197404042926;
-        Tue, 11 Dec 2007 12:14:02 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Tue, 11 Dec 2007 12:14:02 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0712111428040.5349@iabervon.org>
-Content-Disposition: inline
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=iXA6Q/qHnrHRRFz0kbxSOUROjn8l+WKe995RJz44P9q6didfo9KWFP/B6ObO3+K4u3UKZcN7ge1eWARQZRNRMhEbKNLNtjkJfEwwPVdWC8Fs6bsM/scohcqc/X/ZS/0cR+sgDZk79A5iuxgQYBr+LgsfD+g0lA+aWks4OglhNFE=
+Received: by 10.82.148.7 with SMTP id v7mr13234114bud.1197404098537;
+        Tue, 11 Dec 2007 12:14:58 -0800 (PST)
+Received: from roke.D-201 ( [83.8.252.236])
+        by mx.google.com with ESMTPS id e11sm3452972fga.2007.12.11.12.14.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 11 Dec 2007 12:14:56 -0800 (PST)
+Received: from roke (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lBBKEmWb012213;
+	Tue, 11 Dec 2007 21:14:51 +0100
+Received: (from jnareb@localhost)
+	by roke (8.13.4/8.13.4/Submit) id lBBKEdxO012203;
+	Tue, 11 Dec 2007 21:14:39 +0100
+X-Authentication-Warning: roke: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <74ED838F-4966-42A9-BC8A-906FD0B4B46F@midwinter.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67930>
 
-On Dec 11, 2007 8:46 PM, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> On Tue, 11 Dec 2007, Daniel Berlin wrote:
->
-> > It is stored in an easier format. However, can you not simply provide
-> > side-indexes to do the annotation?
-> >
-> > I guess that own't work in git because you can change history (in
-> > other scm's, history is readonly so you could know the results for
-> > committed revisions will never change).
->
-> History in git is read-only. It's just that git lets you fork and move
-> forward with something different. Each commit can never change (and, in
-> fact, you'd have to badly break SHA1 to change it), but which commits are
-> relevant to the history can change.
->
+Steven Grimm <koreth@midwinter.com> writes:
+> On Dec 11, 2007, at 10:40 AM, Linus Torvalds wrote:
 
-Well, revisions never change, but history intended as revision's
-parent information could and do changes when you use a path delimiter.
-So does the graph that is a direct visualization of parent
-information.
+> > To git, "git annotate" is just about the *last* thing you ever want
+> > to do.
+> > It's not a common operation, it's a "last resort" operation. In git,
+> > the
+> > whole workflow is designed for "git log -p <pathnamepattern>" rather
+> > than
+> > annotate/blame.
+> 
+> My use of "git blame" is perhaps not typical, but I use it fairly
+> often when I'm looking at a part of my company's code base that I'm
+> not terribly familiar with. I've found it's the fastest way to figure
+> out who to go ask about a particular block of code that I think is
+> responsible for a bug, or more commonly, who to ask to review a change
+> I'm making.
+> 
+> "git log" is too coarse-grained to be useful for that purpose; it
+> usually doesn't tell me which of the 500 revisions to the file I'm
+> looking at introduced the actual line of code I want to change.
 
-For a single revision (that modifies say 3 files) you can have at leat
-3 different histories and acutally more if you want to visualize also
-the history of the directories trees that owns the modified files.
+There is always "pickaxe" search, i.e. 
+  $ git log -p -S'<string>' -- <file or pathspec>
+which can be used instead of blame (perhaps with --follow).
 
-You end up with a quite big number of different histories all showing
-your revisions in different ways, according to the path delimiter you
-use.
+And you can limit blame to the interesting region of file, and to
+interesting (important) range of revisions.
 
-Perhaps the intended meaning of "changing histories" is this, and in
-any case is this the reason you cannot (or has no sense to do) "save"
-a single file history in git.
 
-Marco
+[about blame cache]
+
+"git gui blame" uses incremental blame; if only it accepted range
+(file fragment) limiting, and if "reblame" (blame --reference=<rev>,
+blaming incrementally only lines which changed wrt. given revision)
+was implemented.
+
+BTW. qgit actually does blame using it's own "multiple files bottom-up
+blame" code (it would be nice to have it in core-git if possible,
+hint, hint), and does some caching, although I'm not sure if blame
+info also. You should try it, I think.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
