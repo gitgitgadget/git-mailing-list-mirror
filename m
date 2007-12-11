@@ -1,97 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: v1.5.4 plans
-Date: Mon, 10 Dec 2007 17:27:17 -0800
-Message-ID: <7vtzmqhvgq.fsf@gitster.siamese.dyndns.org>
-References: <7vy7d43ptc.fsf@gitster.siamese.dyndns.org>
-	<7vabpg9x5k.fsf@gitster.siamese.dyndns.org>
-	<7vy7cwsi3p.fsf@gitster.siamese.dyndns.org>
-	<7vk5o6jbq9.fsf@gitster.siamese.dyndns.org>
-	<7v63zjgoel.fsf@gitster.siamese.dyndns.org>
-	<7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>
-	<7vhcixtnm4.fsf@gitster.siamese.dyndns.org>
-	<7vfxye4yv7.fsf@gitster.siamese.dyndns.org>
-	<7vve78qhtf.fsf@gitster.siamese.dyndns.org>
-	<7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org>
-	<20071210234941.GE22254@coredump.intra.peff.net>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Something is broken in repack
+Date: Mon, 10 Dec 2007 21:25:26 -0500
+Message-ID: <9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com>
+References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 11 02:27:51 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>,
+	"Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Dec 11 03:26:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1tuW-0005Jr-OZ
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 02:27:49 +0100
+	id 1J1uot-0001SX-P8
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 03:26:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751718AbXLKB11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2007 20:27:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750912AbXLKB11
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 20:27:27 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41014 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751663AbXLKB10 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2007 20:27:26 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B08B520A5;
-	Mon, 10 Dec 2007 20:27:21 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 1442820A2;
-	Mon, 10 Dec 2007 20:27:18 -0500 (EST)
-In-Reply-To: <20071210234941.GE22254@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 10 Dec 2007 18:49:41 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751568AbXLKCZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 21:25:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751342AbXLKCZ2
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 21:25:28 -0500
+Received: from wa-out-1112.google.com ([209.85.146.177]:20737 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751304AbXLKCZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 21:25:27 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so3710134wah
+        for <git@vger.kernel.org>; Mon, 10 Dec 2007 18:25:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=3Ys9o5cIhSWELy70c/Lv5y2DkJYSVh2fSPf3DCm+Q/I=;
+        b=edCNr6b2H6rYe+DRXzaIJQgMRdglVnkpzRVjrvTRkQyA8adr1sDnFIIq72wZCvZuSnECBkryzSsAF8WP3pDsNdzpElFeFfQv6ZlyWZSdC1P2AEr63bzq8/1tpYCtnouyrtTuzPe9q94uW5g6SP2Y+IVdZMIlzNVWpcPimHynjzE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jVJrmpgQcwicU+RiDnfJRxEaTwpuGiF61EYDpUGlK4FjcFpL+8yxx3BuD3CiFieajRglLXs1ztiHq1qtUopvzy0yil3n1MMVWUBl4BXrMLK81CgKJGNxBEJZu8IsxLKh3DGvp6lMKQdm8dml1Qc2oI3y3/+YDtBMkSgfX6/8/JI=
+Received: by 10.114.193.1 with SMTP id q1mr4518315waf.1197339926597;
+        Mon, 10 Dec 2007 18:25:26 -0800 (PST)
+Received: by 10.114.208.17 with HTTP; Mon, 10 Dec 2007 18:25:26 -0800 (PST)
+In-Reply-To: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67776>
 
-Jeff King <peff@peff.net> writes:
+New run using same configuration. With the addition of the more
+efficient load balancing patches and delta cache accounting.
 
-> A few regressions that you did not mention, but I think should be
-> addressed before 1.5.4:
+Seconds are wall clock time. They are lower since the patch made
+threading better at using all four cores. I am stuck at 380-390% CPU
+utilization for the git process.
+
+complete seconds RAM
+10%   60    900M (includes counting)
+20%   15    900M
+30%   15    900M
+40%   50    1.2G
+50%   80    1.3G
+60%   70    1.7G
+70%   140  1.8G
+80%   180  2.0G
+90%   280  2.2G
+95%   530  2.8G - 1,420 total to here, previous was 1,983
+100% 1390 2.85G
+During the writing phase RAM fell to 1.6G
+What is being freed in the writing phase??
+
+I have no explanation for the change in RAM usage. Two guesses come to
+mind. Memory fragmentation. Or the change in the way the work was
+split up altered RAM usage.
+
+Total CPU time was 195 minutes in 70 minutes clock time. About 70%
+efficient. During the compress phase all four cores were active until
+the last 90 seconds. Writing the objects took over 23 minutes CPU
+bound on one core.
+
+New pack file is: 270,594,853
+Old one was: 344,543,752
+It still has 828,660 objects
+
+
+On 12/7/07, Jon Smirl <jonsmirl@gmail.com> wrote:
+> Using this config:
+> [pack]
+>         threads = 4
+>         deltacachesize = 256M
+>         deltacachelimit = 0
 >
->  - extra newline in builtin-commit output. You found a case that
->    needs it, but fixing it is non-trivial, and I wanted to get your
->    input before preparing a patch. See
+> And the 330MB gcc pack for input
+>  git repack -a -d -f  --depth=250 --window=250
 >
->      http://mid.gmane.org/20071203075357.GB3614@sigill.intra.peff.net
-
-I am actually becoming somewhat fond of the newline that makes the end
-of a session that led to a commit stand out ;-). IOW, I was wondering if
-we can have another for a merge commit case.
-
-But I suspect that it amounts to the change in the same area and of
-similar complexity.
-
->  - git-clean's handling of directory wildcards. I didn't get a response
->    to
+> complete seconds RAM
+> 10%  47 1GB
+> 20%  29 1Gb
+> 30%  24 1Gb
+> 40%  18 1GB
+> 50%  110 1.2GB
+> 60%  85 1.4GB
+> 70%  195 1.5GB
+> 80%  186 2.5GB
+> 90%  489 3.8GB
+> 95%  800 4.8GB
+> I killed it because it started swapping
 >
->      http://mid.gmane.org/20071206043247.GC5499@coredump.intra.peff.net
+> The mmaps are only about 400MB in this case.
+> At the end the git process had 4.4GB of physical RAM allocated.
 >
->    I suspect there are still some bugs lurking in there, but it's hard
->    to say because I don't know what the behavior _should_ be (there are
->    some test cases in that email).
+> Starting from a highly compressed pack greatly aggravates the problem.
+> Starting with a 2GB pack of the same data my process size only grew to
+> 3GB with 2GB of mmaps.
+>
+> --
+> Jon Smirl
+> jonsmirl@gmail.com
+>
 
-The last time I looked at the "directory" side of builtin-clean.c, I had
-to quickly reach for my barf bag.  I never use "git clean" without "-n"
-and I never ever use "git clean" with "-d"; I do not have any idea what
-behaviour when given "-d" would be useful.  AFAIU, the scripted version
-did not have clear semantics either.
 
-Another thing that irritates me is it talks about not removing a
-directory when run "git clean -n" (without -d).  I did not ask it to
-remove directories, so I did not expect it to talk about it not doing
-what I did not ask it to.
-
-> And perhaps not a regression, but I think we should bring git-svn's
-> handling of color.* in line with the changes to the rest of the code
-> before 1.5.4. I posted a "last resort" patch, but I think with your
-> changes to "git config --colorbool" it might be possible to use that.
-> I'll try to work up a new patch.
-
-Thanks for a reminder.  Anything else?
+-- 
+Jon Smirl
+jonsmirl@gmail.com
