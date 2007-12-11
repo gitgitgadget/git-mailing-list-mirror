@@ -1,76 +1,98 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: git annotate runs out of memory
-Date: Tue, 11 Dec 2007 19:32:12 +0100
-Message-ID: <e5bfff550712111032p60fedbedu304cab834ce86eb9@mail.gmail.com>
+Date: Tue, 11 Dec 2007 10:40:36 -0800 (PST)
+Message-ID: <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
 References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: "Daniel Berlin" <dberlin@dberlin.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 19:32:40 2007
+To: Daniel Berlin <dberlin@dberlin.org>
+X-From: git-owner@vger.kernel.org Tue Dec 11 19:41:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J29uJ-0006Ve-8P
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 19:32:39 +0100
+	id 1J2A2Y-00025q-Dv
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 19:41:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751047AbXLKScR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 13:32:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750749AbXLKScR
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 13:32:17 -0500
-Received: from rv-out-0910.google.com ([209.85.198.186]:30261 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751388AbXLKScQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 13:32:16 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2127707rvb
-        for <git@vger.kernel.org>; Tue, 11 Dec 2007 10:32:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=XCoJSGSCYqdxWRI51PHxa/3TnyTtUm5juZvNEh7nQfw=;
-        b=l35k2Q3F7AaTz4B/dZYHwbV8jNCaCeKlPDk3xciTZgvZOdP8jUvCf/FTes9AcEcOchp9lYCbmHGtjDAZHaSmxwpdkwanXTAxpTiHGa+xa8ZPQyLpI2osobszKYEqGgQvcee6ohaF2Eja2PP4hgk/mQ8cMsfSypwoxq9Eq3YoK3I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=A5K+NNezBE6pajXIOGgj22fzxFPjZobIEZiVHUtmULvyLZYU/33a0+PZcHBHFmDzOEFf0UT/1HZu2xiMGB4WUVC1ATB69Bw5rChC8pPIrfWH2u0GKj7bUqK6XV5ZahLOV5Ixpky9qHHLWJngBMZBqJ/Bd+KSsQBksZyMSdTGSvs=
-Received: by 10.141.90.17 with SMTP id s17mr5202024rvl.1197397932433;
-        Tue, 11 Dec 2007 10:32:12 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Tue, 11 Dec 2007 10:32:12 -0800 (PST)
+	id S1751710AbXLKSks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 13:40:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752635AbXLKSks
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 13:40:48 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:57543 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751577AbXLKSkr (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 13:40:47 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBBIebp1022362
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 11 Dec 2007 10:40:38 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBBIea6m003430;
+	Tue, 11 Dec 2007 10:40:37 -0800
 In-Reply-To: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
-Content-Disposition: inline
+X-Spam-Status: No, hits=-2.717 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67901>
 
-On Dec 11, 2007 6:33 PM, Daniel Berlin <dberlin@dberlin.org> wrote:
+
+
+On Tue, 11 Dec 2007, Daniel Berlin wrote:
 >
-> Annotate is treasured by gcc developers (this was a key sticking point
-> in svn conversion).
-> Having an annotate that is 2x slower and takes 15x memory would not
-> fly (regardless of how good the results are).
->
+> This seems to be a common problem with git. It seems to use a lot of
+> memory to perform common operations on the gcc repository (even though
+> it is faster in some cases than hg).
 
-Speed of annotation is mainly due to getting the file history more
-then calculating the actual annotation.
+The thing is, git has a very different notion of "common operations" than 
+you do.
 
-I don't know *how* file history is stored in the others scm, perhaps
-is easier to retrieve, i.e. without a full walk across the
-revisions...
+To git, "git annotate" is just about the *last* thing you ever want to do. 
+It's not a common operation, it's a "last resort" operation. In git, the 
+whole workflow is designed for "git log -p <pathnamepattern>" rather than 
+annotate/blame.
 
-In case you have qgit (especially the 2.0 version that is much faster
-in this feature) I would be very interested to have annotation times
-on this file. Indeed annotation times are shown splitted between file
-history retrieval, based on something along the lines of "git log -p
--- <path>", and actual annotation calculation (fully internal at
-qgit).
+In fact, we didn't support annotate at all for the first year or so of 
+git.
 
-I would be interested in cold start and warm cache start (close the
-annotation tab and start annotation again).
+The reason for git being relatively slow is exactly that git doesn't have 
+"file history" at all, and only tracks full snapshots. So "git blame" is 
+really a very complex operation that basically looks at the global history 
+(because nothing else exists) and will basically generate a totally 
+different "view" of local history from that one.
 
+The disadvantage is that it's much slower and much more costly than just 
+having a local history view to begin with.
 
-Thanks (a lot)
-Marco
+However, the absolutely *huge* advantage is that it isn't then limited to 
+local history.
+
+So where git shines is when you actually use the global history, and do 
+merges or when you track more than one file (which others find hard, but 
+git finds much more natural).
+
+An examples of this is content that actually comes from multiple files. 
+File-based systems simply cannot do this at all. They aren't just slower, 
+they are totally unable to do it sanely. For git, it's all the same: it 
+never really cares about file boundaries in the first place.
+
+The other example is doing things like "git log -p drivers/char", where 
+you don't ask for the log of a single file, but a general file pattern, 
+and get (still atomic!) commits as the result.
+
+And perhaps the best example is just tracking code when you have two files 
+that merge into one (possibly because the "same" file was created 
+independently in two different branches). git gets things like that right 
+without even thinking about it. Others tend to just flounder about and 
+can't do anything at all about it.
+
+That said, I'll see if I can speed up "git blame" on the gcc repository. 
+It _is_ a fundamentally much more expensive operation than it is for 
+systems that do single-file things.
+
+			Linus
