@@ -1,59 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Brown paper bag fix to previous send-email change
-Date: Mon, 10 Dec 2007 23:04:36 -0800
-Message-ID: <7v3au9hfuj.fsf@gitster.siamese.dyndns.org>
-References: <1197356116-12176-1-git-send-email-mh@glandium.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: v1.5.4 plans
+Date: Tue, 11 Dec 2007 08:05:51 +0100
+Message-ID: <475E36CF.7050207@op5.se>
+References: <7vy7d43ptc.fsf@gitster.siamese.dyndns.org>	<7vabpg9x5k.fsf@gitster.siamese.dyndns.org>	<7vy7cwsi3p.fsf@gitster.siamese.dyndns.org>	<7vk5o6jbq9.fsf@gitster.siamese.dyndns.org>	<7v63zjgoel.fsf@gitster.siamese.dyndns.org>	<7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>	<7vhcixtnm4.fsf@gitster.siamese.dyndns.org>	<7vfxye4yv7.fsf@gitster.siamese.dyndns.org>	<7vve78qhtf.fsf@gitster.siamese.dyndns.org>	<7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org>	<20071210234941.GE22254@coredump.intra.peff.net> <7vtzmqhvgq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 08:05:52 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 08:06:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1zAy-0007BV-Nz
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 08:05:37 +0100
+	id 1J1zC4-0007QM-Lu
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 08:06:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751092AbXLKHEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 02:04:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751832AbXLKHEq
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 02:04:46 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52808 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751092AbXLKHEq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 02:04:46 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DF4FC4E7D;
-	Tue, 11 Dec 2007 02:04:41 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 780194E7C;
-	Tue, 11 Dec 2007 02:04:38 -0500 (EST)
-In-Reply-To: <1197356116-12176-1-git-send-email-mh@glandium.org> (Mike
-	Hommey's message of "Tue, 11 Dec 2007 07:55:16 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751744AbXLKHF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 02:05:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751887AbXLKHFz
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 02:05:55 -0500
+Received: from mail.op5.se ([193.201.96.20]:49380 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751670AbXLKHFz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 02:05:55 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id C610E1F08037;
+	Tue, 11 Dec 2007 08:05:53 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zHBhxJug3Pgd; Tue, 11 Dec 2007 08:05:52 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 81FB81F08035;
+	Tue, 11 Dec 2007 08:05:52 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <7vtzmqhvgq.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67815>
 
-Mike Hommey <mh@glandium.org> writes:
+Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+>>  - git-clean's handling of directory wildcards. I didn't get a response
+>>    to
+>>
+>>      http://mid.gmane.org/20071206043247.GC5499@coredump.intra.peff.net
+>>
+>>    I suspect there are still some bugs lurking in there, but it's hard
+>>    to say because I don't know what the behavior _should_ be (there are
+>>    some test cases in that email).
+> 
+> The last time I looked at the "directory" side of builtin-clean.c, I had
+> to quickly reach for my barf bag.  I never use "git clean" without "-n"
+> and I never ever use "git clean" with "-d"; I do not have any idea what
+> behaviour when given "-d" would be useful.
 
-> My previous change led to the In-Reply-To header being <> when the given
-> value was empty. This fixes it.
->
-> Signed-off-by: Mike Hommey <mh@glandium.org>
-> ---
->
->  I think I have an antispam problem somewhere with this patch, because even
->  keeping sending it, it never reached the list. And Junio didn't answer to my
->  private message about it, so I guess that was some server being smart with
->  the subject line. *sigh*
->
->  PS: sorry Junio if you get this patch multiple time.
 
-No, I happened to have noticed the same and have an almost identical fix
-(I said "defined $initial_reply_to") already queued in my tree.
+When you have a trash directory without any tracked files, clean will not
+by default descend into that directory and thus won't remove neither files
+nor directory. I frequently use one for automated testing, much like git's
+trash repository, but the only time I do "git clean -d" is when building
+things on a release-server with the repository checked out. It's faster
+than "make distclean", and not all of our projects have a Makefile to begin
+with. Tacking "git clean -d" at the end of test-scripts makes it simple to
+remove all excess cruft in one go.
+
+So in short, git clean -d can be useful. I have no idea when "git clean dir"
+would be though.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
