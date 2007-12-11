@@ -1,86 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] autoconf: Check autoconf version (ASCIIDOC8)
-Date: Tue, 11 Dec 2007 09:34:28 +0100
-Message-ID: <200712110934.29746.jnareb@gmail.com>
-References: <1197205059-16742-1-git-send-email-jnareb@gmail.com> <7vhciqhqnd.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Building git-1.5.3.7 on HP-UX 11.00
+Date: Tue, 11 Dec 2007 03:54:40 -0500
+Message-ID: <20071211085440.GK14735@spearce.org>
+References: <20071204140326.14d9e7a0@pc09.procura.nl> <Pine.LNX.4.64.0712041439590.27959@racer.site> <20071204150102.7f3ec3e9@pc09.procura.nl> <47556EE2.6040105@op5.se> <20071204152240.6cb6018e@pc09.procura.nl> <Pine.LNX.4.64.0712041536180.27959@racer.site> <20071204155655.053f4fb4@pc09.procura.nl> <7vve7e49or.fsf@gitster.siamese.dyndns.org> <20071210145123.7c34af6d@pc09.procura.nl> <7vfxy9fxh3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
+	Sam Vilain <sam@vilain.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 09:35:06 2007
+X-From: git-owner@vger.kernel.org Tue Dec 11 09:55:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J20Zz-0003Gs-2n
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 09:35:03 +0100
+	id 1J20tT-0000UP-Gz
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 09:55:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752269AbXLKIem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 03:34:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752264AbXLKIem
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 03:34:42 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:41052 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752267AbXLKIel (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 03:34:41 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1222675nfb
-        for <git@vger.kernel.org>; Tue, 11 Dec 2007 00:34:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=idUK7B2LIm3UswoRN4TypgiA11B5rv+R/yocNi4+18g=;
-        b=djW8Pels28sDhn0uxv2x+KQckevLVx4qwiJA8xQQnfY2WUFkB6E6Z/IgedCfEinVYGxNGb3wG49Q+2ACdYikcvc/Ng9d6p+FvoaqH5PlXSwAdNrzP8m+8LiYhE9+G9egoOSwJozNniVSDISeoJPYHtWnFXC2kXg+84rFmA8/51s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=TiSUKy1BQfFQ6vRWkgAn5tQX6evzgdEhQOKMJ9MhRz6MYvK994/ux0VAorh88FTuzmTw4IjvhbJZAgRG+5Vzculi8Bimx71ukhVXHdOM+7hJ+lU0RHuxq9leZpDdM43VzDv8C2rvrvw7T/Sanfu56EKKfxwXFZ/ODyBW5IZjFJc=
-Received: by 10.86.33.10 with SMTP id g10mr6478728fgg.1197362079892;
-        Tue, 11 Dec 2007 00:34:39 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.241.16])
-        by mx.google.com with ESMTPS id 4sm2888822fgg.2007.12.11.00.34.37
-        (version=SSLv3 cipher=OTHER);
-        Tue, 11 Dec 2007 00:34:38 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vhciqhqnd.fsf@gitster.siamese.dyndns.org>
+	id S1751923AbXLKIyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 03:54:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751866AbXLKIyt
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 03:54:49 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:52520 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751816AbXLKIys (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 03:54:48 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1J20sy-0000ya-R7; Tue, 11 Dec 2007 03:54:40 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 71EDD20FBAE; Tue, 11 Dec 2007 03:54:40 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <7vfxy9fxh3.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67826>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> "H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
 > 
-> > Subject: Re: [PATCH] autoconf: Check autoconf version (ASCIIDOC8)
-> 
-> That's "Check asciidoc version".
-
-Yep. Sorry for mistake (autoconf <-> asciidoc).
-
-> > Check for asciidoc, and if it exists check asciidoc version, setting
-> > ASCIIDOC8 when needed.  Currently it just runs asciidoc in asciidoc7
-> > compatibility mode (see: Documentation/Makefile).
+> > 3 I am willing to believe that HP_UX' vsnprintf () is broken, or
+> >   at least does not conform to the expectations in the GNU world,
+> >   but chickening out like the way strbuf_addf () does is maybe a
+> >   bit too rude, so I forced a minimum of 64bytes available. That
+> >   fixes a lot!
 > >
-> > Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> > ---
-> > diff --git a/config.mak.in b/config.mak.in
-> > index 7d5df9b..759470a 100644
-> > --- a/config.mak.in
-> > +++ b/config.mak.in
-> > @@ -7,6 +7,7 @@ AR = @AR@
-> >  TAR = @TAR@
-> >  #INSTALL = @INSTALL@		# needs install-sh or install.sh in sources
-> >  TCLTK_PATH = @TCLTK_PATH@
-> > +ASCIIDOC=@ASCIIDOC@
+> >   but it still breaks t4013 :(
 > 
-> And this is "ASCIIDOC8=@ASCIIDOC8@", I think.
+> I think Shawn had something similar for Solaris, and if it is a small
+> cost to help portability, it does not feel so bad.
 
-Nope. ASCIIDOC8=@ASCIIDOC8@ is in chunk below, this is for [future]
-detecting asciidoc binary (so you can drop this chunk).
+My Solaris change is already in your tree; on Solaris vnsprintf
+will return -1 if the input buffer we gave it had a length of 0.
+This can happen at odd times, depending on what is already in the
+strbuf and how its buffer is. :)
+
+The fix for Solaris turned out to be just make sure there is at
+least 1 byte in the buffer before calling vsnprintf().
+ 
+> > + git-index-pack -o tmp.idx test-2-7f8ead892057e78576c0329a70cc83afb113f117.pack
+> > fatal: serious inflate inconsistency
+> 
+> That sounds like a broken zlib X-<.
+
+I think this is actually a broken pread().  Its been reported
+multiple times by different people on HP-UX.  Compiling with
+NO_PREAD=1 resolves the issues for everyone who has tried it.
+
+Jakub asked me for an autoconf test to look for this sort of
+breakage in pread(), I have yet to come up with a theory for
+what sort of breakage HP-UX is showing us here, let alone write
+a test for it.
 
 -- 
-Jakub Narebski
-Poland
+Shawn.
