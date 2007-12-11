@@ -1,59 +1,61 @@
 From: Paul Mackerras <paulus@samba.org>
-Subject: Re: gitk graph routing problem
-Date: Wed, 12 Dec 2007 09:26:10 +1100
-Message-ID: <18271.3714.731136.272491@cargo.ozlabs.ibm.com>
-References: <20071104104618.GA3078@steel.home>
+Subject: Re: [PATCH 4/9] gitk i18n: Initial German translation.
+Date: Wed, 12 Dec 2007 10:22:20 +1100
+Message-ID: <18271.7084.431598.815386@cargo.ozlabs.ibm.com>
+References: <200711071839.08570.stimming@tuhh.de>
+	<200711071840.59972.stimming@tuhh.de>
+	<200711071842.55975.stimming@tuhh.de>
+	<200711071844.03106.stimming@tuhh.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 00:14:06 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Christian Stimming <stimming@tuhh.de>
+X-From: git-owner@vger.kernel.org Wed Dec 12 00:31:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2EIf-00029a-0f
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 00:14:05 +0100
+	id 1J2EZx-0008OS-17
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 00:31:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753472AbXLKXNo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 18:13:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754042AbXLKXNo
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 18:13:44 -0500
-Received: from ozlabs.org ([203.10.76.45]:43762 "EHLO ozlabs.org"
+	id S1753100AbXLKXbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 18:31:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752573AbXLKXbf
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 18:31:35 -0500
+Received: from ozlabs.org ([203.10.76.45]:54389 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753472AbXLKXNn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 18:13:43 -0500
+	id S1751998AbXLKXbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 18:31:34 -0500
 Received: by ozlabs.org (Postfix, from userid 1003)
-	id 9CFE8DDECA; Wed, 12 Dec 2007 10:13:42 +1100 (EST)
-In-Reply-To: <20071104104618.GA3078@steel.home>
+	id 07171DDE3A; Wed, 12 Dec 2007 10:31:33 +1100 (EST)
+In-Reply-To: <200711071844.03106.stimming@tuhh.de>
 X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67967>
 
-Alex Riesen writes:
+Christian Stimming writes:
 
-> To reproduce, try running in git repo:
+> ---
+> In order to test the i18n code, I prepared half-completed 
+> German translation.
 > 
->     gitk 02f630448e5d48e..06ea6ba9cf46ef5
+>  po/de.po |  703 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 files changed, 703 insertions(+), 0 deletions(-)
+>  create mode 100644 po/de.po
 > 
-> Than go some pages (around 5) forward. You should notice system load
-> going up rapidly. Now try paging back - and graph starts stretching
-> to the right, to the point nothing fits on the screen anymore.
+> diff --git a/po/de.po b/po/de.po
+> new file mode 100644
+> index 0000000..8c41069
+> --- /dev/null
+> +++ b/po/de.po
+> @@ -0,0 +1,703 @@
+> +# Translation of git-gui to German.
+> +# Copyright (C) 2007 Shawn Pearce, et al.
 
-I finally got back to look at this.  The problem is not so much the
-layout algorithm per se as the fact that I haven't worked out a good
-way to pack lots of downward-pointing arrows in without using up
-arbitrarily large amounts of horizontal space.  You have managed to
-find an example where just about every commit is a merge needing one
-or more downward-pointing arrows.
-
-Incidentally, gitk from the dev branch of my gitk.git repo does much
-better on this example, since it is able to hoist the open-circle
-(excluded) commits up to the row below their merge children, which
-looks much nicer.
+Ummm?  I think you forgot to change some things here. :)
 
 Paul.
