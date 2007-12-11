@@ -1,72 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Invert numbers and names in the git-shortlog summary mode.
-Date: Tue, 11 Dec 2007 14:21:05 -0800
-Message-ID: <7vlk80dga6.fsf@gitster.siamese.dyndns.org>
-References: <20071211092916.GF30948@artemis.madism.org>
-	<m3ve75sfn3.fsf@roke.D-201>
-	<20071211115914.GJ30948@artemis.madism.org>
-	<20071211122539.GA13945@sigill.intra.peff.net>
-	<20071211140508.GA12204@elte.hu>
-	<20071211144351.GA15448@artemis.madism.org>
-	<20071211145709.GB19427@elte.hu>
-	<20071211152412.GB15448@artemis.madism.org>
-	<20071211154841.GA29805@elte.hu>
-	<20071211160744.GE15448@artemis.madism.org>
-	<20071211211341.GB6902@elte.hu>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+Subject: Re: git-bisect feature suggestion: "git-bisect diff"
+Date: Wed, 12 Dec 2007 07:22:30 +0900
+Message-ID: <200712112223.lBBMNGiT007085@mi0.bluebottle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: git-owner@vger.kernel.org Tue Dec 11 23:23:31 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Jakub Narebski <jnareb@gmail.com>, Ingo Molnar <mingo@elte.hu>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Dec 11 23:27:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2DVd-0005DC-PW
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 23:23:26 +0100
+	id 1J2DZ2-0006n6-Rc
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 23:26:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756041AbXLKWV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 17:21:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756033AbXLKWV0
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 17:21:26 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62653 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755998AbXLKWVY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 17:21:24 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 51CDC56B8;
-	Tue, 11 Dec 2007 17:21:15 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 196DC56B3;
-	Tue, 11 Dec 2007 17:21:06 -0500 (EST)
-In-Reply-To: <20071211211341.GB6902@elte.hu> (Ingo Molnar's message of "Tue,
-	11 Dec 2007 22:13:41 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756611AbXLKWXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 17:23:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755299AbXLKWXS
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 17:23:18 -0500
+Received: from mi0.bluebottle.com ([206.188.25.15]:41272 "EHLO
+	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756267AbXLKWXR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 17:23:17 -0500
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id lBBMNGiT007085
+	for <git@vger.kernel.org>; Tue, 11 Dec 2007 14:23:16 -0800
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:cc:date:subject:mime-version:
+	content-type:content-transfer-encoding:x-trusted-delivery;
+	b=t42AM8qFYXxBPQc3FBofu6H1vcWGcoKbL3LRzJnnixmmy25VZrcD1sBCN5meXtbI0
+	yew7B8+xmEMhn3oL/yds8CpXcN1Ct2eXIdJ6XV4bSg8seatWc7YxHE8ggcXA9Lb
+Received: from nanako3.mail.bluebottle.com ([212.62.97.21])
+	(authenticated bits=0)
+	by fe0.bluebottle.com (8.13.1/8.13.1) with ESMTP id lBBMMqWe023758
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 11 Dec 2007 14:22:59 -0800
+X-Trusted-Delivery: <770b0b081e9758ef2c0770e99e7444f8>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67959>
 
-Ingo Molnar <mingo@elte.hu> writes:
+Quoting Jeff King <peff@peff.net>:
 
-> * Pierre Habouzit <madcoder@debian.org> wrote:
+> On Tue, Dec 11, 2007 at 12:59:14PM +0100, Pierre Habouzit wrote:
 >
->> The next git has a _lot_ of things done better wrt UI and such issues. 
->> Though some backward incompatible changes must be introduced with the 
->> proper deprecation warnings, so that people can adapt.
+>> > Not exactly, as it does not give us email address.
+>> 
+>>   maybe it should be "fixed" so that it does, not to mention that other
+>> concerns ingo raised look legit to me.
 >
-> hey, cool! Just when i decide to complain about it, after 2 years of 
-> suffering, it's already fixed in the devel branch =;-)
+> Perhaps Junio is a time-traveller.
+>
+> $ git show 4602c17d
+> commit 4602c17d8911e14d537f6f87db02faab6e3f5d69
+> Author: Junio C Hamano <gitster@pobox.com>
+> Date:   Fri Dec 7 17:19:31 2007 -0800
+>
+>     git-shortlog -e: show e-mail address as well
+>
+>     This option shows the author's email address next to the name.
+>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Heh, as I saw you post "diff --git" patches to the kernel mailing list
-and heard nothing from you for the last two years here, I naturally
-assumed you were one of the many people who were perfectly happy with
-git.
+Or, Junio and Ingo are the same person ;-)
 
-Please direct more complaints to this list, not to the kernel list nor
-elsewhere ;-).
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
+
+----------------------------------------------------------------------
+Free pop3 email with a spam filter.
+http://www.bluebottle.com/tag/5
