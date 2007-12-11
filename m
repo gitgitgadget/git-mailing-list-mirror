@@ -1,146 +1,75 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH] Adding menu for Emacs git.el
-Date: Tue, 11 Dec 2007 14:02:00 +0100
-Message-ID: <878x41idvb.fsf@wine.dyndns.org>
-References: <87mysvfr7e.dlv@vanicat.homelinux.org>
-	<87fxylos4o.fsf@wine.dyndns.org>
-	<877ijwfh6z.dlv@vanicat.homelinux.org>
-	<7vhciphh4k.fsf@gitster.siamese.dyndns.org>
+From: "David Tweed" <david.tweed@gmail.com>
+Subject: Re: backups with git and inotify
+Date: Tue, 11 Dec 2007 13:24:16 +0000
+Message-ID: <e1dab3980712110524k59437f15pd38f74f55d692a69@mail.gmail.com>
+References: <20071210202911.GA14738@bit.office.eurotux.com>
+	 <20071210215746.GA3022@atjola.homenet>
+	 <20071211102546.GA5811@bit.office.eurotux.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Remi Vanicat <vanicat@debian.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 14:02:51 2007
+Cc: "=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?=" <B.Steinbrink@gmx.de>,
+	git@vger.kernel.org
+To: "Luciano Rocha" <luciano@eurotux.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 14:25:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J24l9-0004Wf-E3
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 14:02:51 +0100
+	id 1J256G-0004Zy-5O
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 14:24:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752131AbXLKNCO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Dec 2007 08:02:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751186AbXLKNCN
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 08:02:13 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:34790 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751803AbXLKNCM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 08:02:12 -0500
-Received: from adsl-89-217-159-121.adslplus.ch ([89.217.159.121] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1J24kN-0004YL-A9; Tue, 11 Dec 2007 07:02:09 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 82F9A1E713B; Tue, 11 Dec 2007 14:02:00 +0100 (CET)
-In-Reply-To: <7vhciphh4k.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 10 Dec 2007 22:36:59 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-X-Spam-Score: -3.7
+	id S1752343AbXLKNYS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Dec 2007 08:24:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752314AbXLKNYS
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 08:24:18 -0500
+Received: from wr-out-0506.google.com ([64.233.184.230]:8760 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752115AbXLKNYR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 08:24:17 -0500
+Received: by wr-out-0506.google.com with SMTP id c49so1683767wra
+        for <git@vger.kernel.org>; Tue, 11 Dec 2007 05:24:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Y+IM+A7HbLxlUgjCri/x2Z4/x8AiElnTflaqNggK9D4=;
+        b=Cz4XAe+eW9ctgZZwqkUl9k3YJby9XqYCmGDIrZlOLLQARGzIcfEqDRz7+SRsAgxmFox91WXjRh4e4km3obPTnWg3NODR6KRarMXES9fVhmfArkvjnesbKjDOZ70aukMixPYV8tldkPlyZr8KDBVj4pz5YYkArqXmYCJDdpy9Uak=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NPXsXZBf8LrmPfa2YjVq87F6vwEsgJ35h9FsZjj7V0GB1H8pSoX1MoW+kl4DAM+gmR1LLxKIYHLZsY1tk+g0/Up5H8CMWvAcM6ALOtIqWuLRHxoZlJT8e6N+tgiAqq0mapsSr6r4FareMRyS8YY5hYEokLbL0FkHoX5qgbZciss=
+Received: by 10.150.123.16 with SMTP id v16mr2685200ybc.1197379456417;
+        Tue, 11 Dec 2007 05:24:16 -0800 (PST)
+Received: by 10.150.53.15 with HTTP; Tue, 11 Dec 2007 05:24:16 -0800 (PST)
+In-Reply-To: <20071211102546.GA5811@bit.office.eurotux.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67851>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Dec 11, 2007 10:25 AM, Luciano Rocha <luciano@eurotux.com> wrote:
+> On Mon, Dec 10, 2007 at 10:57:46PM +0100, Bj=F6rn Steinbrink wrote:
+> > On 2007.12.10 20:29:11 +0000, Luciano Rocha wrote:
+> FWIW, I also think that trying to keep a coherent stat with automatic
+> commits isn't possible. As for the temporary, unneeded files, a
+> exclusion pattern will suffice, and using .git directly, instead of a
+> (FUSE) filesystem, will allow permanent storage of those temporary
+> files, until explicitly removed.
 
-> Alex, what is the current status of this patch?
-
-Patch v3 looked good but the patch file was corrupted. Here's the lates=
-t
-version, I have moved things around a bit to use only one menu and to b=
-e
-more similar to pcl-cvs.
-
-=46rom 0a67dfc88a8bbf479c37ba76521ebe39fa67f577 Mon Sep 17 00:00:00 200=
-1
-=46rom: Alexandre Julliard <julliard@winehq.org>
-Date: Tue, 11 Dec 2007 13:56:09 +0100
-Subject: [PATCH] git.el: Added a menu for git-status-mode.
-MIME-Version: 1.0
-Content-Type: text/plain; charset=3Dutf-8
-Content-Transfer-Encoding: 8bit
-
-Originally written by R=C3=A9mi Vanicat, I just changed the layout a li=
-ttle.
-
-Signed-off-by: R=C3=A9mi Vanicat <vanicat@debian.org>
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
----
- contrib/emacs/git.el |   43 ++++++++++++++++++++++++++++++++++++++++++=
--
- 1 files changed, 42 insertions(+), 1 deletions(-)
-
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index e147da0..ae58f1c 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -49,6 +49,7 @@
- (eval-when-compile (require 'cl))
- (require 'ewoc)
- (require 'log-edit)
-+(require 'easymenu)
-=20
-=20
- ;;;; Customizations
-@@ -1297,7 +1298,47 @@ Return the list of files that haven't been handl=
-ed."
-     (define-key toggle-map "i" 'git-toggle-show-ignored)
-     (define-key toggle-map "k" 'git-toggle-show-unknown)
-     (define-key toggle-map "m" 'git-toggle-all-marks)
--    (setq git-status-mode-map map)))
-+    (setq git-status-mode-map map))
-+  (easy-menu-define git-menu git-status-mode-map
-+    "Git Menu"
-+    `("Git"
-+      ["Refresh" git-refresh-status t]
-+      ["Commit" git-commit-file t]
-+      ("Merge"
-+        ["Next Unmerged File" git-next-unmerged-file t]
-+        ["Prev Unmerged File" git-prev-unmerged-file t]
-+        ["Mark as Resolved" git-resolve-file t]
-+        ["Interactive Merge File" git-find-file-imerge t]
-+        ["Diff Against Common Base File" git-diff-file-base t]
-+        ["Diff Combined" git-diff-file-combined t]
-+        ["Diff Against Merge Head" git-diff-file-merge-head t]
-+        ["Diff Against Mine" git-diff-file-mine t]
-+        ["Diff Against Other" git-diff-file-other t])
-+      "--------"
-+      ["Add File" git-add-file t]
-+      ["Revert File" git-revert-file t]
-+      ["Ignore File" git-ignore-file t]
-+      ["Remove File" git-remove-file t]
-+      "--------"
-+      ["Find File" git-find-file t]
-+      ["View File" git-view-file t]
-+      ["Diff File" git-diff-file t]
-+      ["Interactive Diff File" git-diff-file-idiff t]
-+      ["Log" git-log-file t]
-+      "--------"
-+      ["Mark" git-mark-file t]
-+      ["Mark All" git-mark-all t]
-+      ["Unmark" git-unmark-file t]
-+      ["Unmark All" git-unmark-all t]
-+      ["Toggle All Marks" git-toggle-all-marks t]
-+      ["Hide Handled Files" git-remove-handled t]
-+      "--------"
-+      ["Show Uptodate Files" git-toggle-show-uptodate :style toggle :s=
-elected git-show-uptodate]
-+      ["Show Ignored Files" git-toggle-show-ignored :style toggle :sel=
-ected git-show-ignored]
-+      ["Show Unknown Files" git-toggle-show-unknown :style toggle :sel=
-ected git-show-unknown]
-+      "--------"
-+      ["Quit" git-status-quit t])))
-+
-=20
- ;; git mode should only run in the *git status* buffer
- (put 'git-status-mode 'mode-class 'special)
---=20
-1.5.3.7.959.gdf7e-dirty
+As a data point, I find it easier for my work to have rules that
+specify the files you DO want to keep. (I actually have a set of
+common suffixes to ignore that's checked first but purely for
+efficiency: it's quicker to throw out the usual suspects like *~, *.o,
+*.pyc, etc, immediately rather than fail to match all the more
+complicated "keep this" rules every single time.) One advantage of
+this is that if I do something stupid like drop a 2G video file into
+the tracked tree it's doesn't get sucked in to the git repo.
 
 --=20
-Alexandre Julliard
-julliard@winehq.org
+cheers, dave tweed__________________________
+david.tweed@gmail.com
+Rm 124, School of Systems Engineering, University of Reading.
+"we had no idea that when we added templates we were adding a Turing-
+complete compile-time language." -- C++ standardisation committee
