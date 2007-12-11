@@ -1,106 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git annotate runs out of memory
-Date: Tue, 11 Dec 2007 12:14:56 -0800 (PST)
-Message-ID: <m3bq8xrntc.fsf@roke.D-201>
-References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
-	<alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
-	<74ED838F-4966-42A9-BC8A-906FD0B4B46F@midwinter.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Something is broken in repack
+Date: Tue, 11 Dec 2007 21:26:35 +0100
+Message-ID: <475EF27B.7060609@op5.se>
+References: <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com> <alpine.LFD.0.9999.0712110806540.25032@woody.linux-foundation.org> <alpine.LFD.0.99999.0712111202470.555@xanadu.home> <20071211.092402.266823343.davem@davemloft.net> <alpine.LFD.0.99999.0712111237530.555@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Daniel Berlin <dberlin@dberlin.org>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 21:15:29 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: David Miller <davem@davemloft.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	jonsmirl@gmail.com, Junio C Hamano <gitster@pobox.com>,
+	gcc@gcc.gnu.org, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Dec 11 21:27:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2BVi-0000Dm-Cz
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 21:15:22 +0100
+	id 1J2Bh3-0005GE-Cu
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 21:27:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752425AbXLKUPB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 15:15:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752657AbXLKUPB
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 15:15:01 -0500
-Received: from mu-out-0910.google.com ([209.85.134.186]:20132 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752395AbXLKUPA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 15:15:00 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so3336081mue
-        for <git@vger.kernel.org>; Tue, 11 Dec 2007 12:14:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=L9jxrhBqoI/dnFPhlT4hk58xXyhPhuETmZ35fJ15X6c=;
-        b=tblADkleTk1N6uggZYCFthRczBOsI6f6lciBvU+DT39RJ8F/0DIL5kGC8b2meOZxUWwZkbHst0r2FrjuSZhm4liWjNiwVtEZdzPIfKlopbZu5Qxae7F1Vdlj0JW4HeR7TmFzYzfInqUGeMI5km7Sr7X2biWEEHD3Ccxh2kEs2Go=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=iXA6Q/qHnrHRRFz0kbxSOUROjn8l+WKe995RJz44P9q6didfo9KWFP/B6ObO3+K4u3UKZcN7ge1eWARQZRNRMhEbKNLNtjkJfEwwPVdWC8Fs6bsM/scohcqc/X/ZS/0cR+sgDZk79A5iuxgQYBr+LgsfD+g0lA+aWks4OglhNFE=
-Received: by 10.82.148.7 with SMTP id v7mr13234114bud.1197404098537;
-        Tue, 11 Dec 2007 12:14:58 -0800 (PST)
-Received: from roke.D-201 ( [83.8.252.236])
-        by mx.google.com with ESMTPS id e11sm3452972fga.2007.12.11.12.14.55
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 11 Dec 2007 12:14:56 -0800 (PST)
-Received: from roke (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lBBKEmWb012213;
-	Tue, 11 Dec 2007 21:14:51 +0100
-Received: (from jnareb@localhost)
-	by roke (8.13.4/8.13.4/Submit) id lBBKEdxO012203;
-	Tue, 11 Dec 2007 21:14:39 +0100
-X-Authentication-Warning: roke: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <74ED838F-4966-42A9-BC8A-906FD0B4B46F@midwinter.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752303AbXLKU0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 15:26:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752360AbXLKU0k
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 15:26:40 -0500
+Received: from mail.op5.se ([193.201.96.20]:54743 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752257AbXLKU0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 15:26:39 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id DBDE41F08040;
+	Tue, 11 Dec 2007 21:26:37 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.449
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.449 tagged_above=-10 required=6.6
+	tests=[AWL=-0.950, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id z+oaq7P-oa9k; Tue, 11 Dec 2007 21:26:37 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id AD7CC1F08039;
+	Tue, 11 Dec 2007 21:26:36 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <alpine.LFD.0.99999.0712111237530.555@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67931>
 
-Steven Grimm <koreth@midwinter.com> writes:
-> On Dec 11, 2007, at 10:40 AM, Linus Torvalds wrote:
-
-> > To git, "git annotate" is just about the *last* thing you ever want
-> > to do.
-> > It's not a common operation, it's a "last resort" operation. In git,
-> > the
-> > whole workflow is designed for "git log -p <pathnamepattern>" rather
-> > than
-> > annotate/blame.
+Nicolas Pitre wrote:
+> On Tue, 11 Dec 2007, David Miller wrote:
 > 
-> My use of "git blame" is perhaps not typical, but I use it fairly
-> often when I'm looking at a part of my company's code base that I'm
-> not terribly familiar with. I've found it's the fastest way to figure
-> out who to go ask about a particular block of code that I think is
-> responsible for a bug, or more commonly, who to ask to review a change
-> I'm making.
+>> From: Nicolas Pitre <nico@cam.org>
+>> Date: Tue, 11 Dec 2007 12:21:11 -0500 (EST)
+>>
+>>> BUT.  The point is that repacking the gcc repo using "git repack -a -f 
+>>> --window=250" has a radically different memory usage profile whether you 
+>>> do the repack on the earlier 2.1GB pack or the later 300MB pack.  
+>> If you repack on the smaller pack file, git has to expand more stuff
+>> internally in order to search the deltas, whereas with the larger pack
+>> file I bet git has to less often undelta'ify to get base objects blobs
+>> for delta search.
 > 
-> "git log" is too coarse-grained to be useful for that purpose; it
-> usually doesn't tell me which of the 500 revisions to the file I'm
-> looking at introduced the actual line of code I want to change.
+> Of course.  I came to that conclusion two days ago.  And despite being 
+> pretty familiar with the involved code (I wrote part of it myself) I 
+> just can't spot anything wrong with it so far.
+> 
+> But somehow the threading code keep distracting people from that issue 
+> since it gets to do the same work whether or not the source pack is 
+> densely packed or not.
+> 
+> Nicolas 
+> (who wish he had access to a much faster machine to investigate this issue)
 
-There is always "pickaxe" search, i.e. 
-  $ git log -p -S'<string>' -- <file or pathspec>
-which can be used instead of blame (perhaps with --follow).
-
-And you can limit blame to the interesting region of file, and to
-interesting (important) range of revisions.
-
-
-[about blame cache]
-
-"git gui blame" uses incremental blame; if only it accepted range
-(file fragment) limiting, and if "reblame" (blame --reference=<rev>,
-blaming incrementally only lines which changed wrt. given revision)
-was implemented.
-
-BTW. qgit actually does blame using it's own "multiple files bottom-up
-blame" code (it would be nice to have it in core-git if possible,
-hint, hint), and does some caching, although I'm not sure if blame
-info also. You should try it, I think.
+If it's still an issue next week, we'll have a 16 core (8 dual-core cpu's)
+machine with some 32gb of ram in that'll be free for about two days.
+You'll have to remind me about it though, as I've got a lot on my mind
+these days.
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
