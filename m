@@ -1,116 +1,116 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Pierre Habouzit <madcoder@debian.org>
 Subject: Re: git annotate runs out of memory
-Date: Tue, 11 Dec 2007 11:42:01 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712111122400.25032@woody.linux-foundation.org>
-References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>  <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org> <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com>
+Date: Tue, 11 Dec 2007 20:42:38 +0100
+Message-ID: <20071211194238.GD20644@artemis.madism.org>
+References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com> <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org> <vpq4pepcaz5.fsf@bauges.imag.fr> <alpine.LFD.0.9999.0712111119310.25032@woody.linux-foundation.org> <4aca3dc20712111124y1d9171eem4d2c4f0872703786@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: multipart/signed; boundary="+KJYzRxRHjYqLGl5";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
 To: Daniel Berlin <dberlin@dberlin.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 20:42:55 2007
+X-From: git-owner@vger.kernel.org Tue Dec 11 20:43:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2B0I-0002ra-OY
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 20:42:55 +0100
+	id 1J2B0U-0002wY-6u
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 20:43:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752538AbXLKTme (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 14:42:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752736AbXLKTmd
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 14:42:33 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:38122 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752111AbXLKTmc (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 14:42:32 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBBJg1l5024424
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 11 Dec 2007 11:42:02 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBBJg1C3005724;
-	Tue, 11 Dec 2007 11:42:01 -0800
-In-Reply-To: <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com>
-X-Spam-Status: No, hits=-2.716 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1752812AbXLKTml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 14:42:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752401AbXLKTml
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 14:42:41 -0500
+Received: from pan.madism.org ([88.191.52.104]:51284 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752434AbXLKTmk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 14:42:40 -0500
+Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 3EA1E2F6A4;
+	Tue, 11 Dec 2007 20:42:38 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 28C1684E3; Tue, 11 Dec 2007 20:42:38 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Daniel Berlin <dberlin@dberlin.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <4aca3dc20712111124y1d9171eem4d2c4f0872703786@mail.gmail.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67922>
 
 
+--+KJYzRxRHjYqLGl5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 11 Dec 2007, Daniel Berlin wrote:
->
-> I understand this, and completely agree with you.
-> However, I cannot force GCC people to adopt completely new workflow in
-> this regard.
+On Tue, Dec 11, 2007 at 07:24:54PM +0000, Daniel Berlin wrote:
+> On 12/11/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> >
+> >
+> > On Tue, 11 Dec 2007, Matthieu Moy wrote:
+> > >
+> > > I've seen you pointing this kind of examples many times, but is that
+> > > really different from what even SVN does? "svn log drivers/char" will
+> > > also list atomic commits, and give me a filtered view of the global
+> > > log.
+> >
+> > Ok, BK and CVS both got this horribly wrong, which is why I care. Maybe
+> > this is one of the things SVN gets right.
+> >
+> > I seriously doubt it, though. Do you get *history* right, or do you just
+> > get a random list of commits?
+>=20
+> No, it will get actual history (IE not just things that happen to have
+> that path in the repository)
 
-Oh, I agree. It's why we do have "git blame" these days, and it's why I've 
-tried to make people use the nicer incremental mode, which is not at all 
-faster, but it's a hell of a lot more pleasant to use because you get some 
-output immediately.
+OTOH svn has the result right, but the way it does that is horrible.
+When you svn log some/path, I think it just (basically) ask svn log for
+each file in that directory, and merge the logs together. This is "easy"
+for svn since it remembers "where this specific file" came from.
 
-In other words,
+So for svn it's just a matter of merging the individual files histories
+together. It may have a more clever implementation, but basically I
+believe it would be similar to that in the end.
 
-	git blame gcc/ChangeLog
+Of course, if you do something as stupid as:
+  svn cp Makefile some/path/foo.c
+  # completely rewrite foo.c
+  svn commit
+then you'll have the history of `Makefile` melded into the
+some/path/foo.c svn log, which is completely horribly wrong.
 
-is virtually useless because it's too expensive, but try doing
+or if you do (which unlike the previous example isn't silly for so
+many good reasons):
+  cp bar.c foo.c
+  svn add foo.c
+  svn commit
+then foo.c won't have bar.c history in its svn log.
 
-	git gui blame gcc ChangeLog
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-instead, and doesn't that just seem nicer? (*)
+--+KJYzRxRHjYqLGl5
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-The difference is that the GUI one does it incrementally, and doesn't have 
-to get _all_ the results before it can start reporting blame.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-Not that I claim that the gui blame is perfect either (I dunno why it 
-delays the nice coloring so long, for example), but it was something I 
-pushed - and others made the gui for - exactly to help people with the 
-fact that git interally really does it that incremental way.
+iD8DBQBHXuguvGr7W6HudhwRApGxAKCXI4I5oJpIMQsY6n6VGA+O3yFSkgCeLWdH
+SIOYKr3nCuinqclgmod9cYY=
+=AoLO
+-----END PGP SIGNATURE-----
 
-> SVN had the same problem (the file retrieval was the most expensive op
-> on FSFS). One of the things i did to speed it up tremendously was to
-> do the annotate from newest to oldest (IE in reverse), and stop
-> annotating when we had come up with annotate info for all the lines.
-
-We do that. The expense for git is that we don't do the revisions as a 
-single file at all. We'll look through each commit, check whether the 
-"gcc" directory changed, if it did, we'll go into it, and check whether 
-the "ChangeLog" file changed - and if it did, we'll actually diff it 
-against the previous version.
-
-> In GCC history, it is likely you will be able to cut off at least 30%
-> of the time if you do this, because files often have changed entirely
-> multiple times.
-
-Not gcc/ChangeLog, though (apart from the renames that happen 
-occasionally).
-
-Btw, an example of something git *should* do right, but is just too damn 
-expensive, is doing
-
-	git gui blame gcc/ChangeLog-2000
-
-and have it actually be able to track the original source of each of those 
-annotations across that "ChangeLog split from hell". 
-
-I bet it would eventually get it right, but that's a large file, way back 
-in history, and it will try to do a non-whitespace blame with copy 
-detection.
-
-That's *expensive*, although it is an amusing thing to try to do ;)
-
-			Linus
-
-PS. I also do agree that we seem to use an excessive amount of memory 
-there. As to whether it's the same issue or not, I'd not go as far as Nico 
-and say "yes" yet. But it's interesting.
-
-It's not entirely surprising that we see multiple issues with the gcc 
-repo, simply because it's not the kind of repo that people have ever 
-really worked on. So I don't think it's necessarily related at all, except 
-in the sense of it being a different load and showing issues.
+--+KJYzRxRHjYqLGl5--
