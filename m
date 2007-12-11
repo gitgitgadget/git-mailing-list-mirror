@@ -1,82 +1,91 @@
-From: "Daniel Berlin" <dberlin@dberlin.org>
-Subject: Re: git annotate runs out of memory
-Date: Tue, 11 Dec 2007 16:09:08 -0500
-Message-ID: <4aca3dc20712111309yf43179dh6c43ac84dcaf38e8@mail.gmail.com>
-References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
-	 <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
-	 <vpq4pepcaz5.fsf@bauges.imag.fr>
-	 <alpine.LFD.0.9999.0712111119310.25032@woody.linux-foundation.org>
-	 <4aca3dc20712111124y1d9171eem4d2c4f0872703786@mail.gmail.com>
-	 <20071211194238.GD20644@artemis.madism.org>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: [PATCH] Invert numbers and names in the git-shortlog summary
+	mode.
+Date: Tue, 11 Dec 2007 22:13:41 +0100
+Message-ID: <20071211211341.GB6902@elte.hu>
+References: <20071211092916.GF30948@artemis.madism.org> <m3ve75sfn3.fsf@roke.D-201> <20071211115914.GJ30948@artemis.madism.org> <20071211122539.GA13945@sigill.intra.peff.net> <20071211140508.GA12204@elte.hu> <20071211144351.GA15448@artemis.madism.org> <20071211145709.GB19427@elte.hu> <20071211152412.GB15448@artemis.madism.org> <20071211154841.GA29805@elte.hu> <20071211160744.GE15448@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Pierre Habouzit" <madcoder@debian.org>,
-	"Daniel Berlin" <dberlin@dberlin.org>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Matthieu Moy" <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 11 22:09:48 2007
+Content-Type: text/plain; charset=us-ascii
+To: Pierre Habouzit <madcoder@debian.org>, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Junio C Hamano <g
+X-From: git-owner@vger.kernel.org Tue Dec 11 22:14:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2CMB-0006OZ-Q4
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 22:09:36 +0100
+	id 1J2CRF-0000Ah-VX
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 22:14:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751135AbXLKVJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 16:09:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751131AbXLKVJL
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 16:09:11 -0500
-Received: from wr-out-0506.google.com ([64.233.184.238]:7438 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751092AbXLKVJK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 16:09:10 -0500
-Received: by wr-out-0506.google.com with SMTP id c49so1890145wra
-        for <git@vger.kernel.org>; Tue, 11 Dec 2007 13:09:09 -0800 (PST)
-Received: by 10.142.52.9 with SMTP id z9mr3930510wfz.1197407348630;
-        Tue, 11 Dec 2007 13:09:08 -0800 (PST)
-Received: by 10.142.217.1 with HTTP; Tue, 11 Dec 2007 13:09:08 -0800 (PST)
-In-Reply-To: <20071211194238.GD20644@artemis.madism.org>
+	id S1751433AbXLKVO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 16:14:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751428AbXLKVO2
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 16:14:28 -0500
+Received: from mx2.mail.elte.hu ([157.181.151.9]:36730 "EHLO mx2.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751397AbXLKVO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 16:14:27 -0500
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1J2CQE-0002Vb-F9
+	from <mingo@elte.hu>; Tue, 11 Dec 2007 22:13:52 +0100
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id E05233E219F; Tue, 11 Dec 2007 22:13:40 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <20071211160744.GE15448@artemis.madism.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+Received-SPF: neutral (mx2: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67941>
 
-On 12/11/07, Pierre Habouzit <madcoder@debian.org> wrote:
-> On Tue, Dec 11, 2007 at 07:24:54PM +0000, Daniel Berlin wrote:
-> > On 12/11/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> > >
-> > >
-> > > On Tue, 11 Dec 2007, Matthieu Moy wrote:
-> > > >
-> > > > I've seen you pointing this kind of examples many times, but is that
-> > > > really different from what even SVN does? "svn log drivers/char" will
-> > > > also list atomic commits, and give me a filtered view of the global
-> > > > log.
-> > >
-> > > Ok, BK and CVS both got this horribly wrong, which is why I care. Maybe
-> > > this is one of the things SVN gets right.
-> > >
-> > > I seriously doubt it, though. Do you get *history* right, or do you just
-> > > get a random list of commits?
-> >
-> > No, it will get actual history (IE not just things that happen to have
-> > that path in the repository)
->
-> OTOH svn has the result right, but the way it does that is horrible.
-> When you svn log some/path, I think it just (basically) ask svn log for
-> each file in that directory, and merge the logs together. This is "easy"
-> for svn since it remembers "where this specific file" came from.
 
-What?
-We version directories too.
-We don't do svn log for each file in the directory when you request a path.
-We look at the history of the path, follow renames, etc.
+* Pierre Habouzit <madcoder@debian.org> wrote:
 
-When you change foo/bar/fred.c, we consider it a change to foo/bar and
-foo/, and thus, they have new versions.
+> > for example, if i type "git-checkout" in a Linux kernel tree, it 
+> > just sits there for up to a minute, and "does nothing". That is 
+> > totally wrong, human-interaction wise. Then after a minute it just 
+> > returns. What happened? Why? Where? A newbie would then try 
+> > "git-checkout -v", using the well-established "verbose" flag, but 
+> > that gives:
+> > 
+> >  Usage: /usr/bin/git-checkout [-q] [-f] [-b <new_branch>] [-m] [<branch>] [<paths>...]
+> 
+> not anymore:
+> 
+>     $ git checkout -v
+>     error: unknown switch `v'
+>     usage: git-branch [options] [<branch>] [<paths>...]
+> 
+> 	-b ...                create a new branch started at <branch>
+> 	-l                    create the new branchs reflog
+> 	--track               tells if the new branch should track the remote branch
+> 	-f                    proceed even if the index or working tree is not HEAD
+> 	-m                    performa  three-way merge on local modifications if needed
+> 	-q, --quiet           be quiet
+> 
+> Not all commands are migrated to this new scheme though.
+> 
+> The next git has a _lot_ of things done better wrt UI and such issues. 
+> Though some backward incompatible changes must be introduced with the 
+> proper deprecation warnings, so that people can adapt.
 
-I'm not sure where you get this crazy notion that we do anything with
-files when you ask about directories.
+hey, cool! Just when i decide to complain about it, after 2 years of 
+suffering, it's already fixed in the devel branch =;-) I'll post 
+suggestions once i have tried out the next version. I'm happy that the 
+git "first impression" that new users are getting (and the many pitfalls 
+that they can fall into) is being actively reviewed and improved. It's i 
+think the main barrier for git world dominance :-)
+
+	Ingo
