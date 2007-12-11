@@ -1,82 +1,79 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git annotate runs out of memory
-Date: Tue, 11 Dec 2007 13:34:10 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712111323270.25032@woody.linux-foundation.org>
-References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>  <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>  <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com>  <alpine.LFD.0.9999.0712111122400.25032@woody.linux-foundation.org>
-  <alpine.LFD.0.9999.0712111146200.25032@woody.linux-foundation.org> <4aca3dc20712111314wf4525l790120dce29a9bc5@mail.gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: git blame with valgrind massif
+Date: Tue, 11 Dec 2007 16:45:48 -0500
+Message-ID: <9e4733910712111345i23d86a85jfedb4f37f20a5b0@mail.gmail.com>
+References: <9e4733910712111257h20a4a916gd4747e816e4706ff@mail.gmail.com>
+	 <20071211212052.GC29110@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Daniel Berlin <dberlin@dberlin.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 22:35:12 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "Pierre Habouzit" <madcoder@debian.org>,
+	"Jon Smirl" <jonsmirl@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 11 22:46:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2Ckx-0000Vr-CC
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 22:35:11 +0100
+	id 1J2Cvg-0005Qq-Ew
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 22:46:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751867AbXLKVeu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 16:34:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751862AbXLKVet
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 16:34:49 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:50193 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751799AbXLKVet (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 16:34:49 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBBLYA97029861
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 11 Dec 2007 13:34:11 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBBLYABn009976;
-	Tue, 11 Dec 2007 13:34:10 -0800
-In-Reply-To: <4aca3dc20712111314wf4525l790120dce29a9bc5@mail.gmail.com>
-X-Spam-Status: No, hits=-2.416 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_33
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1752014AbXLKVpz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Dec 2007 16:45:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751984AbXLKVpy
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 16:45:54 -0500
+Received: from rv-out-0910.google.com ([209.85.198.185]:58699 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751956AbXLKVpy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 16:45:54 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so2176626rvb
+        for <git@vger.kernel.org>; Tue, 11 Dec 2007 13:45:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=kG8VLr1CatTVWfE0XCqzNvVjaGumC3+vVWvAuvFob3M=;
+        b=O6n2XQTUr3Ckd58KJwqid4J7obfVZwdTQz5P8q+8uvl16hx7lnf4b/f7dBwT982lEC7dii6jD5jXlrX532rP4NulCmwurDO7ww5cS09ilNELX44qFozoClUH1I1tI4m3igzkUvkPWtXz5x2LZeBg1FZ8TcjCGXfnrtdiQs3pqbw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=o00OIwCIMFjBYqGtqN7a6dgBGesdMksklgpXtUP8e78zA4pZ8fbk5dr0j1LRQPgmymGXXhRBEmvjcfTUAcNhuRUpuxhgslOX1qITqJokYemrFt2IBjAYI2+qFmEMTi59JPCwy18nEJ5iarlbbXplEorSf44p6YBXdMDRnIGaLN0=
+Received: by 10.141.99.4 with SMTP id b4mr2394440rvm.1197409548926;
+        Tue, 11 Dec 2007 13:45:48 -0800 (PST)
+Received: by 10.140.166.14 with HTTP; Tue, 11 Dec 2007 13:45:48 -0800 (PST)
+In-Reply-To: <20071211212052.GC29110@artemis.madism.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67952>
+
+On 12/11/07, Pierre Habouzit <madcoder@debian.org> wrote:
+> On Tue, Dec 11, 2007 at 08:57:24PM +0000, Jon Smirl wrote:
+> > I ran:
+> >  valgrind --tool=3Dmassif --heap=3Dyes git blame gcc/ChangeLog
+> > it used about 2.25GB
+> >
+> > How do you interpret the massif output?
+>
+>   would you mind putting the postscript it generated somewhere too ?
+> it's usually pretty informative, because the amount of data allocated=
+ is
+> not all, its liveness is an important information too.
+
+It was very boring. A diagonal line from 0 to 2GB.
+
+>
+> --
+> =B7O=B7  Pierre Habouzit
+> =B7=B7O                                                madcoder@debia=
+n.org
+> OOO                                                http://www.madism.=
+org
+>
+>
 
 
-
-On Tue, 11 Dec 2007, Daniel Berlin wrote:
-> 
-> You theroetically can generate blame info from SVN/GIT's block deltas,
-> but you of course, have the problem GIT does, which is that the delta
-> is not meant to represent the actual changes that occurred, but
-> instead, the smallest way to reconstruct data x from data y.
-> This only sometimes has any relation to how the file actually changed
-
-Exactly. Git objects in themselves have no history or relationships, and 
-being a delta against another object means nothing at all except for the 
-fact that the data seems to resemble that other object (which has a 
-_correlation_ with being related, but nothign more).
-
-Anyway, I think the git annotate memory usage was simpyl just a real bug 
-that nobody had noticed before because the memory leak wasn't all that 
-noticeable with smaller files and/or less deep histories. Can'you verify 
-that it works for you with the patch I sent out?
-
-With that fix, I could even run 
-
-	git blame -C gcc/ChangeLog-2000
-
-to see the blame machinery work past the strange "combine many different 
-changelogs into year-based ones" commit. Now, I cannot honestly claim that 
-it was really *usable* (it did take three minutes to run!), but sometimes 
-those three minutes of CPU time may be worth it, if it shows the real 
-historical context it came from. 
-
-In the case of the ChangeLog-2000 file, all the original lines obviously 
-came from older versions of a file called "gcc/ChangeLog", so the end 
-result doesn't really show what an involved situation it was to track the 
-sources back through not just renames, but actually file splits and 
-merges. Sad, but once you know what it did it's still a bit cool to see 
-that it worked ;)
-
-			Linus
+--=20
+Jon Smirl
+jonsmirl@gmail.com
