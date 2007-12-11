@@ -1,78 +1,72 @@
-From: Wink Saville <wink@saville.com>
-Subject: Re: Using git with Eclipse
-Date: Mon, 10 Dec 2007 21:55:41 -0800
-Message-ID: <475E265D.5090106@saville.com>
-References: <475DC0CE.9070109@saville.com> <20071211024442.GJ14735@spearce.org>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: Something is broken in repack
+Date: Tue, 11 Dec 2007 01:01:30 -0500
+Message-ID: <BAYC1-PASMTP08CFB6F824B1282649E5EAAE640@CEZ.ICE>
+References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
+	<9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com>
+	<alpine.LFD.0.99999.0712102231570.555@xanadu.home>
+	<9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 06:56:08 2007
+Cc: "Nicolas Pitre" <nico@cam.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Jon Smirl" <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 07:01:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1y6A-00033A-JX
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 06:56:07 +0100
+	id 1J1yBm-000461-Vu
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 07:01:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751906AbXLKFzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 00:55:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751428AbXLKFzp
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 00:55:45 -0500
-Received: from rv-out-0910.google.com ([209.85.198.190]:21999 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751266AbXLKFzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 00:55:44 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1911074rvb
-        for <git@vger.kernel.org>; Mon, 10 Dec 2007 21:55:44 -0800 (PST)
-Received: by 10.140.199.19 with SMTP id w19mr2952286rvf.1197352543502;
-        Mon, 10 Dec 2007 21:55:43 -0800 (PST)
-Received: from ?192.168.0.133? ( [70.91.206.233])
-        by mx.google.com with ESMTPS id l38sm7534099rvb.2007.12.10.21.55.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 10 Dec 2007 21:55:43 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <20071211024442.GJ14735@spearce.org>
+	id S1751087AbXLKGBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 01:01:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751266AbXLKGBd
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 01:01:33 -0500
+Received: from bay0-omc2-s39.bay0.hotmail.com ([65.54.246.175]:31972 "EHLO
+	bay0-omc2-s39.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751030AbXLKGBc (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 01:01:32 -0500
+Received: from BAYC1-PASMTP08 ([65.54.191.168]) by bay0-omc2-s39.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 10 Dec 2007 22:01:32 -0800
+X-Originating-IP: [74.15.76.104]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([74.15.76.104]) by bayc1-pasmtp08.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Mon, 10 Dec 2007 22:01:32 -0800
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with smtp (Exim 4.43)
+	id 1J1yBI-0004JW-Ts; Tue, 11 Dec 2007 01:01:24 -0500
+In-Reply-To: <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>
+X-Mailer: Sylpheed 2.4.5 (GTK+ 2.12.1; i686-pc-linux-gnu)
+X-OriginalArrivalTime: 11 Dec 2007 06:01:32.0417 (UTC) FILETIME=[477A2710:01C83BBB]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67795>
 
-Shawn O. Pearce wrote:
-> Wink Saville <wink@saville.com> wrote:
->   
->> I'm trying to use git on an Eclipse workspace and the .metadata 
->> directory is chock full of files and was wondering what, if anything, 
->> should be ignored. At the moment .history looks like a candidate for 
->> ignoring there are probably others.
->>     
->
-> Ignore all of .metadata; its Eclipse private state that you don't
-> want to version.  I'd add it to .git/info/exclude so its ignored only
-> in the repository that is using Eclipse, rather than in .gitignore
-> (which is published).
->
->   
-Shawn,
+On Tue, 11 Dec 2007 00:25:55 -0500
+"Jon Smirl" <jonsmirl@gmail.com> wrote:
 
-I added .metadata to exclude then used git rm to remove
-.metadata from the repository. I then cloned that
-repository to see how Eclipse would work. (As part of  my
-workflow I use git as a backup so I wanted to see what would
-happen when I "restored".)
+> Something is hurting bad with threads. 170 CPU minutes with one
+> thread, versus 195 CPU minutes with four threads.
+> 
+> Is there a different memory allocator that can be used when
+> multithreaded on gcc? This whole problem may be coming from the memory
+> allocation function. git is hardly interacting at all on the thread
+> level so it's likely a problem in the C run-time.
 
-As I'm sure you know with the metadata gone my existing projects
-in the Ui were gone and they have to be recreated as well as
-some Eclipse and plugin specific configuration.
-I understand you and others are working on an Eclipse plugin
-for git, will it also ignore . metadata?
+You might want to try Google's malloc, it's basically a drop in replacement
+with some optional built-in performance monitoring capabilities.  It is said
+to be much faster and better at threading than glibc's:
 
-Do you need any testing done or is it too early? I'd be glad to
-test if you feel its solid enough that I won't lose data or if it
-uses a separate different repo then I could use both.
+  http://code.google.com/p/google-perftools/wiki/GooglePerformanceTools
+  http://google-perftools.googlecode.com/svn/trunk/doc/tcmalloc.html
 
-Regards,
 
-Wink Saville
+You can LD_PRELOAD it or link directly.
+
+Cheers,
+Sean
