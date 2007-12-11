@@ -1,67 +1,92 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
 Subject: Re: git annotate runs out of memory
-Date: Tue, 11 Dec 2007 15:36:19 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712111523210.25032@woody.linux-foundation.org>
-References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com> <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org> <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com> <alpine.LFD.0.9999.0712111122400.25032@woody.linux-foundation.org>
- <alpine.LFD.0.9999.0712111300440.25032@woody.linux-foundation.org> <7vprxcdhis.fsf@gitster.siamese.dyndns.org>
+Date: Wed, 12 Dec 2007 00:37:46 +0100
+Message-ID: <vpq63z49511.fsf@bauges.imag.fr>
+References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
+	<alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
+	<vpq4pepcaz5.fsf@bauges.imag.fr>
+	<alpine.LFD.0.9999.0712111119310.25032@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Berlin <dberlin@dberlin.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 00:38:08 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Berlin <dberlin@dberlin.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Dec 12 00:38:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2Efq-0001uP-Kw
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 00:38:03 +0100
+	id 1J2Egh-0002B7-3T
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 00:38:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756924AbXLKXhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 18:37:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbXLKXhm
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 18:37:42 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:44980 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751131AbXLKXhl (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 18:37:41 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBBNaK00002859
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 11 Dec 2007 15:36:21 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBBNaJFS014869;
-	Tue, 11 Dec 2007 15:36:20 -0800
-In-Reply-To: <7vprxcdhis.fsf@gitster.siamese.dyndns.org>
-X-Spam-Status: No, hits=-2.639 required=5 tests=AWL,BAYES_00,TW_CP,TW_XD
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754201AbXLKXi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 18:38:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753463AbXLKXi1
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 18:38:27 -0500
+Received: from imag.imag.fr ([129.88.30.1]:48947 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752713AbXLKXi0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 18:38:26 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lBBNbkEM007405
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 12 Dec 2007 00:37:46 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1J2Efa-00051z-Od; Wed, 12 Dec 2007 00:37:46 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1J2Efa-0005r2-MG; Wed, 12 Dec 2007 00:37:46 +0100
+In-Reply-To: <alpine.LFD.0.9999.0712111119310.25032@woody.linux-foundation.org> (Linus Torvalds's message of "Tue\, 11 Dec 2007 11\:22\:20 -0800 \(PST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 12 Dec 2007 00:37:47 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67969>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> On Tue, 11 Dec 2007, Matthieu Moy wrote:
+>> 
+>> I've seen you pointing this kind of examples many times, but is that
+>> really different from what even SVN does? "svn log drivers/char" will
+>> also list atomic commits, and give me a filtered view of the global
+>> log.
+>
+> Ok, BK and CVS both got this horribly wrong, which is why I care. Maybe 
+> this is one of the things SVN gets right.
+>
+> I seriously doubt it, though. Do you get *history* right, or do you just 
+> get a random list of commits?
 
-On Tue, 11 Dec 2007, Junio C Hamano wrote:
-> 
-> Instead, how about discarding after we are done with each origin, like
-> this?
+Well, you don't get merge commit right with SVN, but that's a
+different issue (svn 1.5 is supposed to have something about merge
+history, I don't know how it's done ...). So, if by "history", you
+mean how branches interferred together, obviously, SVN is bad at this.
+But it's equally bad at "svn log dir/" and plain "svn log".
 
-Sure, looks fine to me. With either of these patches, all of the cost is 
-in the diffing routines:
+But to simplify, if you take a linear history (no merge commits),
+"svn log dir/" give you the list of commits which changed something
+inside "dir/". As pointed out in other messages, the way it's done is
+really different from what git does. SVN does know a lot about
+directories, and records a lot about them at commit time, while git
+just considers them as file containers.
 
-	samples  %        image name               app name                 symbol name
-	191317   31.4074  git                      git                      xdl_hash_record
-	120060   19.7096  git                      git                      xdl_recmatch
-	99286    16.2992  git                      git                      xdl_prepare_ctx
-	56370     9.2539  libc-2.7.so              libc-2.7.so              memcpy
-	23315     3.8275  git                      git                      xdl_prepare_env
-	..
+Year, CVS got this terribly wrong. IIRC, it just took the log for
+individual messages, and mix them together, so a commit touching
+multiple files would appear several times.
 
-and while I suspect xdiff could be optimized a bit more for the cases 
-where we have no changes at the end, that's beyond my skills.
+I've taken SVN as an extreme example, but at least bzr and mercurial
+have an approach very similar to git.
 
-		Linus
+So, to me, this particular point is something git obviously got right,
+but not a point where git is so different from the others.
+
+-- 
+Matthieu
