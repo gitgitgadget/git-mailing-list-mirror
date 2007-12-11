@@ -1,78 +1,69 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
 Subject: Re: git annotate runs out of memory
-Date: Tue, 11 Dec 2007 21:29:59 +0100
-Message-ID: <e5bfff550712111229i227361e9s1a6dcbed9a13019d@mail.gmail.com>
+Date: Tue, 11 Dec 2007 15:31:23 -0500
+Message-ID: <9e4733910712111231x1bbe181ew4f90fc5bb0e87039@mail.gmail.com>
 References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
 	 <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
-	 <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com>
+	 <alpine.LFD.0.99999.0712111403080.555@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "Daniel Berlin" <dberlin@dberlin.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 21:30:44 2007
+	"Daniel Berlin" <dberlin@dberlin.org>, git@vger.kernel.org
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Dec 11 21:32:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2BkE-0006nJ-9C
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 21:30:22 +0100
+	id 1J2Bld-0007Ww-7c
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 21:31:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751841AbXLKUaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 15:30:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751410AbXLKUaA
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 15:30:00 -0500
-Received: from rv-out-0910.google.com ([209.85.198.190]:56455 "EHLO
+	id S1754564AbXLKUb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 15:31:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754273AbXLKUbZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 15:31:25 -0500
+Received: from rv-out-0910.google.com ([209.85.198.190]:58886 "EHLO
 	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751174AbXLKU37 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 15:29:59 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2159173rvb
-        for <git@vger.kernel.org>; Tue, 11 Dec 2007 12:29:59 -0800 (PST)
+	with ESMTP id S1754126AbXLKUbY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 15:31:24 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so2159508rvb
+        for <git@vger.kernel.org>; Tue, 11 Dec 2007 12:31:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=iamFoon4dzMkrladm7UjqlWq8UydxvpCYzyokor/caI=;
-        b=fIhFwinjarfCAoY6vIFRj24t6fBQ6qpc1T7JjIO1E/VlrbaYBQpeJG1l3N4UNErKueBxo/wA3PiW9UCJUlm/n8y7vm1npguQjo2eLY5/KdMN95aneHGhabrmlZnMMej7x6eQ8I8lvuXUHm4D3i8jrrsMh0fvKVh2ybqwu87zY5Y=
+        bh=YQmIUDt9d+6OwgBHjCMu4u4ipRXd22aRiyou73F0TZY=;
+        b=f2sdd+6yBJAeDEswJhma6gkSkKV/7PrQ0QQfNNMGNoech28suM34eXznpWOUpoygBaNb0oqmhRNKK+0J/2Pa4V9IceZoxOtu6iJIvIJjSEeFD3xNVsQ30wYDlHXw3QnjIPwqAbWhVnNVSLvzLV7zR4idQNWqpmsUq8JydoiQF/8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rsXd3kpawAWIN44JTVip6uS6EwZX8XSljw8kn+/pRAFheKMVaQjeSM/dnWN4ez3l7KZ1XkzQSTlRVa6nTtv554UGwWQCNchJJEzDxeaNOikfdHqs2gMHdET/ooMAj0fAVIakLnUQLriAxmXXWOn4LXrBrgPONVc0n4nTIrUE22s=
-Received: by 10.141.198.8 with SMTP id a8mr2588653rvq.1197404999391;
-        Tue, 11 Dec 2007 12:29:59 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Tue, 11 Dec 2007 12:29:59 -0800 (PST)
-In-Reply-To: <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com>
+        b=waWfVRnbEwuPMSGo9eBIC7Xfwi/1/JWBNKSJ4uWml1HH7fE10mN4IFuKqhA4zPDunanPYAdBxr3tHNlUHVP2akJZdnNujqwDZN6gRJYyZrne2wzLche/jj14INfVMaelKBr5iLrOY69AqPbjt4bxwnYXql5dOEPnFxG/Z0QruKk=
+Received: by 10.140.164.1 with SMTP id m1mr739708rve.1197405083781;
+        Tue, 11 Dec 2007 12:31:23 -0800 (PST)
+Received: by 10.140.166.14 with HTTP; Tue, 11 Dec 2007 12:31:23 -0800 (PST)
+In-Reply-To: <alpine.LFD.0.99999.0712111403080.555@xanadu.home>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67934>
 
-On Dec 11, 2007 8:09 PM, Daniel Berlin <dberlin@dberlin.org> wrote:
+On 12/11/07, Nicolas Pitre <nico@cam.org> wrote:
+> On Tue, 11 Dec 2007, Linus Torvalds wrote:
 >
-> In GCC history, it is likely you will be able to cut off at least 30%
-> of the time if you do this, because files often have changed entirely
-> multiple times.
+> > That said, I'll see if I can speed up "git blame" on the gcc repository.
+> > It _is_ a fundamentally much more expensive operation than it is for
+> > systems that do single-file things.
 >
+> It has no excuse for eating up to 1.6GB or RAM though.  That's plainly
+> wrong.
 
-This could be useful for a command line tool but for a GUI the top
-down approach is a myth IMHO.
+ git blame gcc/ChangeLog
+It needs 2.25GB of RAM to run without swapping
 
-In the GUI case what you actually end up doing (because a GUI allows
-it) is to start from the latest file version, check the code region
-you are interested then when you find the changed lines you _may_ want
-to double click and go to see how it was the file before that change
-and then perhaps start a new digging.
+That is pretty close to the same number the repack needs.
 
-I found this is my typical workflow with annotation info because I'm
-more interested not in what lines have changed but _why_ have changed
-and to do this you naturally end up digging in the past (and checking
-also the corresponding revisions patch as example in another tab)
-
-In this case the advantage of oldest to newest annotation algorithm is
-that you have _already_ annotated all the history so you can walk and
-dig back and forth among the different file versions without *any*
-additional delay.
-
-Marco
+-- 
+Jon Smirl
+jonsmirl@gmail.com
