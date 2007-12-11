@@ -1,72 +1,100 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: Something is broken in repack
-Date: Tue, 11 Dec 2007 01:01:30 -0500
-Message-ID: <BAYC1-PASMTP08CFB6F824B1282649E5EAAE640@CEZ.ICE>
-References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
-	<9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com>
-	<alpine.LFD.0.99999.0712102231570.555@xanadu.home>
-	<9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Resend PATCH 2/4] Use strbuf in http code
+Date: Mon, 10 Dec 2007 22:04:52 -0800
+Message-ID: <7vlk81him3.fsf@gitster.siamese.dyndns.org>
+References: <7vy7c3ogu2.fsf@gitster.siamese.dyndns.org>
+	<1197228659-19459-1-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: "Nicolas Pitre" <nico@cam.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Jon Smirl" <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 07:01:57 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Tue Dec 11 07:06:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1yBm-000461-Vu
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 07:01:55 +0100
+	id 1J1yFH-0004hk-Q2
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 07:05:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751087AbXLKGBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 01:01:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751266AbXLKGBd
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 01:01:33 -0500
-Received: from bay0-omc2-s39.bay0.hotmail.com ([65.54.246.175]:31972 "EHLO
-	bay0-omc2-s39.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751030AbXLKGBc (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 01:01:32 -0500
-Received: from BAYC1-PASMTP08 ([65.54.191.168]) by bay0-omc2-s39.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 10 Dec 2007 22:01:32 -0800
-X-Originating-IP: [74.15.76.104]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([74.15.76.104]) by bayc1-pasmtp08.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Mon, 10 Dec 2007 22:01:32 -0800
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with smtp (Exim 4.43)
-	id 1J1yBI-0004JW-Ts; Tue, 11 Dec 2007 01:01:24 -0500
-In-Reply-To: <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>
-X-Mailer: Sylpheed 2.4.5 (GTK+ 2.12.1; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 11 Dec 2007 06:01:32.0417 (UTC) FILETIME=[477A2710:01C83BBB]
+	id S1751012AbXLKGFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 01:05:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751089AbXLKGFK
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 01:05:10 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50827 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750984AbXLKGFI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 01:05:08 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 016094504;
+	Tue, 11 Dec 2007 01:05:03 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CDC964501;
+	Tue, 11 Dec 2007 01:04:59 -0500 (EST)
+In-Reply-To: <1197228659-19459-1-git-send-email-mh@glandium.org> (Mike
+	Hommey's message of "Sun, 9 Dec 2007 20:30:59 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67796>
 
-On Tue, 11 Dec 2007 00:25:55 -0500
-"Jon Smirl" <jonsmirl@gmail.com> wrote:
+Mike Hommey <mh@glandium.org> writes:
 
-> Something is hurting bad with threads. 170 CPU minutes with one
-> thread, versus 195 CPU minutes with four threads.
-> 
-> Is there a different memory allocator that can be used when
-> multithreaded on gcc? This whole problem may be coming from the memory
-> allocation function. git is hardly interacting at all on the thread
-> level so it's likely a problem in the C run-time.
+> Also, replace whitespaces with tabs in some places
+>
+> Signed-off-by: Mike Hommey <mh@glandium.org>
+> ---
+>
+>  While this doesn't fix the problem with symbolic refs, it does fail more
+>  cleanly.
+>
+>  http-push.c   |  187 +++++++++++++++++++--------------------------------------
+>  http-walker.c |   60 +++++++------------
+>  http.c        |   34 ++++------
+>  http.h        |   11 ++--
+>  transport.c   |   18 ++----
+>  5 files changed, 109 insertions(+), 201 deletions(-)
 
-You might want to try Google's malloc, it's basically a drop in replacement
-with some optional built-in performance monitoring capabilities.  It is said
-to be much faster and better at threading than glibc's:
+I like this code reduction, but
 
-  http://code.google.com/p/google-perftools/wiki/GooglePerformanceTools
-  http://google-perftools.googlecode.com/svn/trunk/doc/tcmalloc.html
+> diff --git a/http.h b/http.h
+> index fe1b0d1..bf3f12c 100644
+> --- a/http.h
+> +++ b/http.h
+> @@ -6,6 +6,8 @@
+>  #include <curl/curl.h>
+>  #include <curl/easy.h>
+>  
+> +#include "strbuf.h"
+> +
+>  #if LIBCURL_VERSION_NUM >= 0x071000
+>  #define USE_CURL_MULTI
+>  #define DEFAULT_MAX_REQUESTS 5
+> @@ -48,18 +50,17 @@ struct active_request_slot
+>  
+>  struct buffer
+>  {
+> -        size_t posn;
+> -        size_t size;
+> -        void *buffer;
+> +	struct strbuf buf;
+> +	size_t posn;
+>  };
 
+With this definition of "struct buffer", I do not think this can be correct.
 
-You can LD_PRELOAD it or link directly.
+> @@ -1267,10 +1257,8 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
+>  {
+>  	struct active_request_slot *slot;
+>  	struct slot_results results;
+> -	struct buffer out_buffer;
+> -	struct buffer in_buffer;
+> -	char *out_data;
+> -	char *in_data;
+> +	struct buffer out_buffer = { 0, STRBUF_INIT };
 
-Cheers,
-Sean
+How seriously have you proofread and tested this series before sending
+it out?
