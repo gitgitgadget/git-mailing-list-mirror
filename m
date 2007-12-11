@@ -1,97 +1,83 @@
-From: Ingo Molnar <mingo@elte.hu>
+From: Pierre Habouzit <madcoder@debian.org>
 Subject: Re: git-bisect feature suggestion: "git-bisect diff"
-Date: Tue, 11 Dec 2007 10:24:46 +0100
-Message-ID: <20071211092446.GA4703@elte.hu>
-References: <20071207093439.GA21896@elte.hu> <200712080636.12982.chriscool@tuxfamily.org>
+Date: Tue, 11 Dec 2007 10:29:16 +0100
+Message-ID: <20071211092916.GF30948@artemis.madism.org>
+References: <20071207093439.GA21896@elte.hu> <200712080636.12982.chriscool@tuxfamily.org> <20071211092446.GA4703@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 10:25:24 2007
+Content-Type: multipart/signed; boundary="gneEPciiIl/aKvOT";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Ingo Molnar <mingo@elte.hu>
+X-From: git-owner@vger.kernel.org Tue Dec 11 10:29:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J21Mf-0001E8-Ty
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 10:25:22 +0100
+	id 1J21Qq-0002Q3-4q
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 10:29:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751131AbXLKJY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 04:24:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbXLKJY7
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 04:24:59 -0500
-Received: from mx3.mail.elte.hu ([157.181.1.138]:50582 "EHLO mx3.mail.elte.hu"
+	id S1751184AbXLKJ3T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 04:29:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751180AbXLKJ3T
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 04:29:19 -0500
+Received: from pan.madism.org ([88.191.52.104]:41872 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750986AbXLKJY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 04:24:58 -0500
-Received: from elvis.elte.hu ([157.181.1.14])
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1J21M9-0005X2-Vg
-	from <mingo@elte.hu>; Tue, 11 Dec 2007 10:24:56 +0100
-Received: by elvis.elte.hu (Postfix, from userid 1004)
-	id 6BCC63E2193; Tue, 11 Dec 2007 10:24:45 +0100 (CET)
+	id S1750829AbXLKJ3S (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 04:29:18 -0500
+Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 6B4FD2F4B6;
+	Tue, 11 Dec 2007 10:29:17 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id AFED7105FD; Tue, 11 Dec 2007 10:29:16 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Ingo Molnar <mingo@elte.hu>,
+	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
 Content-Disposition: inline
-In-Reply-To: <200712080636.12982.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.5
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+In-Reply-To: <20071211092446.GA4703@elte.hu>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67832>
 
 
-* Christian Couder <chriscool@tuxfamily.org> wrote:
+--gneEPciiIl/aKvOT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Tell us if you have other scripts or suggestions related to 
-> git-bisect.
+On Tue, Dec 11, 2007 at 09:24:46AM +0000, Ingo Molnar wrote:
+> ---------{ git-authors }--------->
+> #!/bin/bash
+>=20
+> git-log $@ | grep Author: | cut -d: -f2 | sort | uniq -c | sort -n
 
-not strictly git-bisect related, but i've got the git-authors oneliner 
-script below that i find very useful when figuring out whom to mail to 
-related to a bug in any given kernel subsystem. For example when i see 
-some USB problem i can do:
+You mean:
+    git shortlog -n -s HEAD -- "$@"
+to do exactly the same right ? :)
 
-  git-authors v2.6.23.. drivers/usb/
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-which gives me the most active (and hence most relevant) developers in 
-an area:
+--gneEPciiIl/aKvOT
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-      9  Pete Zaitcev <zaitcev@redhat.com>
-     10  Inaky Perez-Gonzalez <inaky@linux.intel.com>
-     12  David Brownell <david-b@pacbell.net>
-     12  Oliver Neukum <oliver@neukum.org>
-     23  Alan Cox <alan@lxorguk.ukuu.org.uk>
-     49  Alan Stern <stern@rowland.harvard.edu>
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-with an email to pick up. In terms of accuracy this beats the 
-MAINTAINERS file most of the time. And even when MAINTAINERS is accurate 
-- in this particular case there are 48 'USB' related entries in the 
-MAINTAINERS file - totally hard to sort out for a newbie.
+iD8DBQBHXlhsvGr7W6HudhwRAi9MAJ9xMPQwVqd+8U3ygSU+6TEkLqXH6wCgjP/b
+ueGUWfVXf0joJtimxZsIhjc=
+=gryD
+-----END PGP SIGNATURE-----
 
-git-authors is also much easier and more natural to use - when i find 
-problems it's usually related to a file, and i can run this:
-
-$ git-authors v2.6.23.. kernel/pid.c
-      1  Eric W. Biederman <ebiederm@xmission.com>
-      1  Pavel Emelianov <xemul@openvz.org>
-      1  Serge E. Hallyn <serue@us.ibm.com>
-      3  Sukadev Bhattiprolu <sukadev@us.ibm.com>
-     10  Pavel Emelyanov <xemul@openvz.org>
-
-which works on a very finegrained level and gives a better "overview" 
-than a pure git-log. Perhaps this could be a --authorstats option of 
-git-log perhaps?
-
-	Ingo
-
----------{ git-authors }--------->
-#!/bin/bash
-
-git-log $@ | grep Author: | cut -d: -f2 | sort | uniq -c | sort -n
+--gneEPciiIl/aKvOT--
