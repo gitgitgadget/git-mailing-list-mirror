@@ -1,133 +1,93 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: git annotate runs out of memory
-Date: Tue, 11 Dec 2007 20:34:07 +0100
-Message-ID: <20071211193407.GC20644@artemis.madism.org>
-References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com> <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org> <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Something is broken in repack
+Date: Tue, 11 Dec 2007 11:40:22 -0800
+Message-ID: <7v7ijldnq1.fsf@gitster.siamese.dyndns.org>
+References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
+	<9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com>
+	<alpine.LFD.0.99999.0712102231570.555@xanadu.home>
+	<9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>
+	<9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com>
+	<9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>
+	<alpine.LFD.0.9999.0712110806540.25032@woody.linux-foundation.org>
+	<9e4733910712111043h6a361996x740f4dba3d742da5@mail.gmail.com>
+	<alpine.LFD.0.9999.0712111055590.25032@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="eHhjakXzOLJAF9wJ";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Daniel Berlin <dberlin@dberlin.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 20:34:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jon Smirl <jonsmirl@gmail.com>, Nicolas Pitre <nico@cam.org>,
+	gcc@gcc.gnu.org, Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Dec 11 20:41:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2AsE-0007qX-0x
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 20:34:34 +0100
+	id 1J2AyS-0002A4-26
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 20:41:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753597AbXLKTeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 14:34:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753578AbXLKTeM
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 14:34:12 -0500
-Received: from pan.madism.org ([88.191.52.104]:58518 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753550AbXLKTeL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 14:34:11 -0500
-Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
+	id S1753425AbXLKTkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 14:40:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752434AbXLKTkj
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 14:40:39 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54038 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751911AbXLKTki (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 14:40:38 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 91FBF4083;
+	Tue, 11 Dec 2007 14:40:30 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 3616E2F6A4;
-	Tue, 11 Dec 2007 20:34:07 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 5364E2F3; Tue, 11 Dec 2007 20:34:07 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Daniel Berlin <dberlin@dberlin.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 109EA38FF;
+	Tue, 11 Dec 2007 14:40:23 -0500 (EST)
+In-Reply-To: <alpine.LFD.0.9999.0712111055590.25032@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 11 Dec 2007 11:17:08 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67920>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
---eHhjakXzOLJAF9wJ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Tue, 11 Dec 2007, Jon Smirl wrote:
+>> >
+>> > So if you want to use more threads, that _forces_ you to have a bigger
+>> > memory footprint, simply because you have more "live" objects that you
+>> > work on. Normally, that isn't much of a problem, since most source files
+>> > are small, but if you have a few deep delta chains on big files, both the
+>> > delta chain itself is going to use memory (you may have limited the size
+>> > of the cache, but it's still needed for the actual delta generation, so
+>> > it's not like the memory usage went away).
+>> 
+>> This makes sense. Those runs that blew up to 4.5GB were a combination
+>> of this effect and fragmentation in the gcc allocator. Google
+>> allocator appears to be much better at controlling fragmentation.
+>
+> Yes. I think we do have some case where we simply keep a lot of objects 
+> around, and if we are talking reasonably large deltas, we'll have the 
+> whole delta-chain in memory just to unpack one single object.
 
-On Tue, Dec 11, 2007 at 07:09:03PM +0000, Daniel Berlin wrote:
-> On 12/11/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> >
-> >
-> > On Tue, 11 Dec 2007, Daniel Berlin wrote:
-> > >
-> > > This seems to be a common problem with git. It seems to use a lot of
-> > > memory to perform common operations on the gcc repository (even though
-> > > it is faster in some cases than hg).
-> >
-> > The thing is, git has a very different notion of "common operations" th=
-an
-> > you do.
-> >
-> > To git, "git annotate" is just about the *last* thing you ever want to =
-do.
-> > It's not a common operation, it's a "last resort" operation. In git, the
-> > whole workflow is designed for "git log -p <pathnamepattern>" rather th=
-an
-> > annotate/blame.
-> >
-> I understand this, and completely agree with you.
-> However, I cannot force GCC people to adopt completely new workflow in
-> this regard.
-> The changelog's are not useful enough (and we've had huge fights over
-> this) to do git log -p and figure out the info we want.
+Eh, excuse me.  unpack_delta_entry()
 
-> Looking through thousands of diffs to find the one that happened to
-> your line is also pretty annoying.
+ - first unpacks the base object (this goes recursive);
+ - uncompresses the delta;
+ - applies the delta to the base to obtain the target object;
+ - frees delta;
+ - frees (but allows it to be cached) the base object;
+ - returns the result
 
-  If the question you want to answer is "what happened to that line"
-then using git annotate is using a big hammer for no good reason.
+So no matter how deep a chain is, you keep only one delta at a time in
+core, not whole delta-chain in core.
 
-git log -S'<put the content of the line here>' -- path/to/file.c
+> So what you actually want to do is to just re-use already packed delta 
+> chains directly, which is what we normally do. But you are explicitly 
+> looking at the "--no-reuse-delta" (aka "git repack -f") case, which is why 
+> it then blows up.
 
-will give you the very same answer, pointing you to the changes that
-added or removed that line directly. It's not a fast command either, but
-it should be less resource hungry than annotate that has to do roughly
-the same for all lines whereas you're interested in one only.
-
-The direct plus here, is that git log output is incremental, so you have
-answers about the first diffs quite quick, which let you examine the
-first answers while the rest is still being computed.
-
-Unlike git annotate, this also allow you to restrict the revisions
-where it searches to a range where you know this happened, which makes
-it almost instantaneous in most cases.
-
-Of course, if the line is '    free(p);\n' then you will probably have
-quite a few false positives, but with the path restriction, I assume
-this will still be quite accurate.
-
-What is important here is to know what is the real question the GCC
-programmers want to answer to. It seems to me that `blame` is an
-overkill for the underlying issue.
-
-
-Note that it does not justifies the current memory consumption that just
-looks bad and wrong to me, but this aims at finding a way to answer your
-question doing just what you need to answer it and not gazillions of
-other things :)
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---eHhjakXzOLJAF9wJ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHXuYvvGr7W6HudhwRAjLKAKCmas1lx/KnHi/jdl8DX6VclAnN3ACffPmS
-xX6Nbjj5k7dSnvSqGdiV4j4=
-=ugiq
------END PGP SIGNATURE-----
-
---eHhjakXzOLJAF9wJ--
+While that does not explain, as Nico pointed out, the huge difference
+between the two repack runs that have different starting pack, I would
+say it is a fair thing to say.  If you have a suboptimal pack (i.e. not
+enough reusable deltas, as in the 2.1GB pack case), do run "repack -f",
+but if you have a good pack (i.e. 300MB pack), don't.
