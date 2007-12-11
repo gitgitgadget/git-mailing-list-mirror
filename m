@@ -1,58 +1,86 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Using git with Eclipse
-Date: Mon, 10 Dec 2007 21:44:42 -0500
-Message-ID: <20071211024442.GJ14735@spearce.org>
-References: <475DC0CE.9070109@saville.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH (amend)] diff: Make numstat machine friendly also for renames (and copies)
+Date: Mon, 10 Dec 2007 18:50:36 -0800
+Message-ID: <7vprxehrlv.fsf@gitster.siamese.dyndns.org>
+References: <200712102332.53114.jnareb@gmail.com>
+	<200712102355.39084.jnareb@gmail.com>
+	<7vejdujazu.fsf@gitster.siamese.dyndns.org>
+	<200712110226.35343.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Wink Saville <wink@saville.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 03:45:12 2007
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 03:51:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1v7P-0005H5-NZ
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 03:45:12 +0100
+	id 1J1vDB-0006Vd-EG
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 03:51:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751572AbXLKCor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Dec 2007 21:44:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbXLKCor
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 21:44:47 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:56586 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751380AbXLKCoq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Dec 2007 21:44:46 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1J1v6n-0000Ds-Mc; Mon, 10 Dec 2007 21:44:33 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 3496220FBAE; Mon, 10 Dec 2007 21:44:43 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <475DC0CE.9070109@saville.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751343AbXLKCur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Dec 2007 21:50:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbXLKCuq
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Dec 2007 21:50:46 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44015 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751202AbXLKCuq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Dec 2007 21:50:46 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 850EC20C0;
+	Mon, 10 Dec 2007 21:50:41 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DA9DE20BF;
+	Mon, 10 Dec 2007 21:50:38 -0500 (EST)
+In-Reply-To: <200712110226.35343.jnareb@gmail.com> (Jakub Narebski's message
+	of "Tue, 11 Dec 2007 02:26:33 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67778>
 
-Wink Saville <wink@saville.com> wrote:
-> I'm trying to use git on an Eclipse workspace and the .metadata 
-> directory is chock full of files and was wondering what, if anything, 
-> should be ignored. At the moment .history looks like a candidate for 
-> ignoring there are probably others.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Ignore all of .metadata; its Eclipse private state that you don't
-want to version.  I'd add it to .git/info/exclude so its ignored only
-in the repository that is using Eclipse, rather than in .gitignore
-(which is published).
+> Junio C Hamano wrote:
+>> Jakub Narebski <jnareb@gmail.com> writes:
+>> 
+>> > Previous version of this patch (from 7 May 2007) used instead of current
+>> > only "to_name" format similar to git-diff-tree raw format for renames:
+>> >
+>> >   added deleted TAB path for "src" TAB path for "dst" LF
 
--- 
-Shawn.
+That's perfectly fine (that is without -z).
+
+>> > ... Previous version
+>> > of patch used (or was to use actually, because of error in the code)
+>> >
+>> >   added deleted TAB path for "src" NUL NUL path for "dst" NUL
+>> >
+>> > when -z option was used.
+
+I think your "previous" one:
+
+	<added> <deleted> <src> NUL		  (no rename)
+	<added> <deleted> <src> NUL NUL <dst> NUL (with rename)
+
+would be unambiguously parsable, but it would be cleaner and easier for
+the parser if the latter were like this instead:
+
+	<added> <deleted> NUL <src> NUL <dst> NUL (with rename)
+
+The reader can expect to find a NUL terminated src, finds the length is
+zero and notices it cannot be src and then reads two paths from that
+point.
+
+Without having the status letter, we cannot do "optional two paths"
+without breaking existing --numstat -z readers that do not care about
+renames and copies, and I agree that existing --numstat -z readers that
+pass -M or -C are already broken, so I think a format extension along
+the above line (your "previous" and the above clean-up proposal have the
+same power of expressiveness, I just think the latter is syntactically
+cleaner) would be reasonable.  And at that point we probably would not
+need --numstat-enhanced at all ;-)
