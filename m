@@ -1,64 +1,136 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [ANNOUNCE] ugit: a pyqt-based git gui // was: Re: If you would
-	write git from scratch now, what would you change?
-Date: Tue, 11 Dec 2007 23:37:42 +0100
-Message-ID: <20071211223742.GB19857@steel.home>
-References: <402731c90712110548k67f28b64w5afa93ee908ce73b@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: David <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 23:38:30 2007
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH 1/2 for master] Fix XML parser leaks in http-push
+Date: Tue, 11 Dec 2007 23:50:21 +0100
+Message-ID: <1197413421-4759-1-git-send-email-mh@glandium.org>
+References: <7v4peodfkb.fsf@gitster.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 11 23:53:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2DkA-0003DF-TF
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 23:38:27 +0100
+	id 1J2DyI-0001O9-Md
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 23:53:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755902AbXLKWhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 17:37:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755490AbXLKWhp
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 17:37:45 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:63238 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752047AbXLKWho (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 17:37:44 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+a7Bs=
-Received: from tigra.home (Fc89d.f.strato-dslnet.de [195.4.200.157])
-	by post.webmailer.de (fruni mo24) (RZmta 14.6)
-	with ESMTP id v03660jBBLrWe4 ; Tue, 11 Dec 2007 23:37:42 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 3C996277AE;
-	Tue, 11 Dec 2007 23:37:42 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 19A5256D22; Tue, 11 Dec 2007 23:37:42 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <402731c90712110548k67f28b64w5afa93ee908ce73b@mail.gmail.com>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+	id S1756911AbXLKWu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 17:50:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756250AbXLKWu1
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 17:50:27 -0500
+Received: from smtp28.orange.fr ([80.12.242.101]:29548 "EHLO smtp28.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758144AbXLKWuY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 17:50:24 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2821.orange.fr (SMTP Server) with ESMTP id 7FFF87000095
+	for <git@vger.kernel.org>; Tue, 11 Dec 2007 23:50:22 +0100 (CET)
+Received: from namakemono.glandium.org (APuteaux-153-1-79-219.w81-249.abo.wanadoo.fr [81.249.109.219])
+	by mwinf2821.orange.fr (SMTP Server) with ESMTP id 4C5A87000090;
+	Tue, 11 Dec 2007 23:50:22 +0100 (CET)
+X-ME-UUID: 20071211225022312.4C5A87000090@mwinf2821.orange.fr
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1J2Dvh-0001FA-It; Tue, 11 Dec 2007 23:50:21 +0100
+X-Mailer: git-send-email 1.5.3.7.1164.ga23bb-dirty
+In-Reply-To: <7v4peodfkb.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67963>
 
-David, Tue, Dec 11, 2007 14:48:32 +0100:
-> Though there's still a few things remaining to be implemented, the
-> bulk of the initial groundwork is already done.  All you need to
-> build/run it is python and pyqt4 (pyuic4).  I've deliberately tried to
-> keep the interface similar to git-gui for now since it is obviously
-> based on it, but that's not a requirement.
+XML_Parser were never freed. While at it, move the parser initialization to
+right before it is needed.
 
-Interesting. I had to start it like this:
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
 
-	$ export PYTHONPATH=$(pwd)/build/default:$(pwd)/build/default/ui
-	$ python ./build/default/bin/ugit.pyc
+ Same, on top of master.
 
-It has some problem with merges in "Git Commit Browser": takes a lot
-of CPU and very slowly generates a very big diff.
+ http-push.c |   15 +++++++++------
+ 1 files changed, 9 insertions(+), 6 deletions(-)
 
-The diff view is very ... dark. Out of place, when the rest of the
-interface corresponds to system theme (mine is rather light).
+diff --git a/http-push.c b/http-push.c
+index 78283b4..fffbe9c 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1275,8 +1275,6 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
+ 	char *ep;
+ 	char timeout_header[25];
+ 	struct remote_lock *lock = NULL;
+-	XML_Parser parser = XML_ParserCreate(NULL);
+-	enum XML_Status result;
+ 	struct curl_slist *dav_headers = NULL;
+ 	struct xml_ctx ctx;
+ 
+@@ -1345,6 +1343,8 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
+ 	if (start_active_slot(slot)) {
+ 		run_active_slot(slot);
+ 		if (results.curl_result == CURLE_OK) {
++			XML_Parser parser = XML_ParserCreate(NULL);
++			enum XML_Status result;
+ 			ctx.name = xcalloc(10, 1);
+ 			ctx.len = 0;
+ 			ctx.cdata = NULL;
+@@ -1363,6 +1363,7 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
+ 						XML_GetErrorCode(parser)));
+ 				lock->timeout = -1;
+ 			}
++			XML_ParserFree(parser);
+ 		}
+ 	} else {
+ 		fprintf(stderr, "Unable to start LOCK request\n");
+@@ -1525,8 +1526,6 @@ static void remote_ls(const char *path, int flags,
+ 	struct buffer out_buffer;
+ 	char *in_data;
+ 	char *out_data;
+-	XML_Parser parser = XML_ParserCreate(NULL);
+-	enum XML_Status result;
+ 	struct curl_slist *dav_headers = NULL;
+ 	struct xml_ctx ctx;
+ 	struct remote_ls_ctx ls;
+@@ -1569,6 +1568,8 @@ static void remote_ls(const char *path, int flags,
+ 	if (start_active_slot(slot)) {
+ 		run_active_slot(slot);
+ 		if (results.curl_result == CURLE_OK) {
++			XML_Parser parser = XML_ParserCreate(NULL);
++			enum XML_Status result;
+ 			ctx.name = xcalloc(10, 1);
+ 			ctx.len = 0;
+ 			ctx.cdata = NULL;
+@@ -1587,6 +1588,7 @@ static void remote_ls(const char *path, int flags,
+ 					XML_ErrorString(
+ 						XML_GetErrorCode(parser)));
+ 			}
++			XML_ParserFree(parser);
+ 		}
+ 	} else {
+ 		fprintf(stderr, "Unable to start PROPFIND request\n");
+@@ -1620,8 +1622,6 @@ static int locking_available(void)
+ 	struct buffer out_buffer;
+ 	char *in_data;
+ 	char *out_data;
+-	XML_Parser parser = XML_ParserCreate(NULL);
+-	enum XML_Status result;
+ 	struct curl_slist *dav_headers = NULL;
+ 	struct xml_ctx ctx;
+ 	int lock_flags = 0;
+@@ -1658,6 +1658,8 @@ static int locking_available(void)
+ 	if (start_active_slot(slot)) {
+ 		run_active_slot(slot);
+ 		if (results.curl_result == CURLE_OK) {
++			XML_Parser parser = XML_ParserCreate(NULL);
++			enum XML_Status result;
+ 			ctx.name = xcalloc(10, 1);
+ 			ctx.len = 0;
+ 			ctx.cdata = NULL;
+@@ -1676,6 +1678,7 @@ static int locking_available(void)
+ 						XML_GetErrorCode(parser)));
+ 				lock_flags = 0;
+ 			}
++			XML_ParserFree(parser);
+ 		}
+ 	} else {
+ 		fprintf(stderr, "Unable to start PROPFIND request\n");
+-- 
+1.5.3.7.1164.ga23bb-dirty
