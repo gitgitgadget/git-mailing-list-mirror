@@ -1,81 +1,74 @@
-From: Jeff King <peff@peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: v1.5.4 plans
-Date: Tue, 11 Dec 2007 07:53:47 -0500
-Message-ID: <20071211125347.GA18140@sigill.intra.peff.net>
-References: <7vy7cwsi3p.fsf@gitster.siamese.dyndns.org> <7vk5o6jbq9.fsf@gitster.siamese.dyndns.org> <7v63zjgoel.fsf@gitster.siamese.dyndns.org> <7vsl2i6ea4.fsf@gitster.siamese.dyndns.org> <7vhcixtnm4.fsf@gitster.siamese.dyndns.org> <7vfxye4yv7.fsf@gitster.siamese.dyndns.org> <7vve78qhtf.fsf@gitster.siamese.dyndns.org> <7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org> <20071210234941.GE22254@coredump.intra.peff.net> <7vtzmqhvgq.fsf@gitster.siamese.dyndns.org>
+Date: Tue, 11 Dec 2007 12:57:28 +0000 (UTC)
+Message-ID: <Pine.LNX.4.64.2903301355300.27959@racer.site>
+References: <20071022061115.GR14735@spearce.org> <7vodeecyni.fsf@gitster.siamese.dyndns.org>
+ <7vpryqwtt7.fsf@gitster.siamese.dyndns.org> <7vk5ot40w9.fsf@gitster.siamese.dyndns.org>
+ <7vy7d43ptc.fsf@gitster.siamese.dyndns.org> <7vabpg9x5k.fsf@gitster.siamese.dyndns.org>
+ <7vy7cwsi3p.fsf@gitster.siamese.dyndns.org> <7vk5o6jbq9.fsf@gitster.siamese.dyndns.org>
+ <7v63zjgoel.fsf@gitster.siamese.dyndns.org> <7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>
+ <7vhcixtnm4.fsf@gitster.siamese.dyndns.org> <7vfxye4yv7.fsf@gitster.siamese.dyndns.org>
+ <7vve78qhtf.fsf@gitster.siamese.dyndns.org> <7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org>
+ <alpine.LFD.0.99999.0712102249180.555@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 13:54:15 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Dec 11 13:57:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J24cm-0001ha-UL
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 13:54:13 +0100
+	id 1J24g4-0002la-3e
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 13:57:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751938AbXLKMxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 07:53:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752018AbXLKMxu
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 07:53:50 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4285 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751615AbXLKMxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 07:53:50 -0500
-Received: (qmail 13829 invoked by uid 111); 11 Dec 2007 12:53:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 11 Dec 2007 07:53:48 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Dec 2007 07:53:47 -0500
-Content-Disposition: inline
-In-Reply-To: <7vtzmqhvgq.fsf@gitster.siamese.dyndns.org>
+	id S1752248AbXLKM5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 07:57:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752183AbXLKM5L
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 07:57:11 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54743 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752107AbXLKM5K (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 07:57:10 -0500
+Received: (qmail invoked by alias); 11 Dec 2007 12:57:07 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp003) with SMTP; 11 Dec 2007 13:57:07 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+nH7lRntGn/7O+I/hFIdupP0T+WHWPrtl2gdzNAL
+	WFUZMuz7leMMIq
+Date: Fri, 30 Mar 2029 13:56:20 +0100 (BST)
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.0.99999.0712102249180.555@xanadu.home>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67848>
 
-On Mon, Dec 10, 2007 at 05:27:17PM -0800, Junio C Hamano wrote:
+Hi,
 
-> Thanks for a reminder.  Anything else?
+On Mon, 10 Dec 2007, Nicolas Pitre wrote:
 
-This bugfix has been sitting in my repo for a few weeks.  When it last
-appeared, you asked if the other code paths needed a similar fix, and I
-verified that they did not, so I think it is complete as-is.
+> On Mon, 10 Dec 2007, Junio C Hamano wrote:
+> 
+> > There are outstanding issues that need to be resolved:
+> > 
+> >  * We need to do something about "gc --aggressive".  The documentation
+> >    removal patch from Linus, if it ever materializes, would be better
+> >    than nothing, but I have this nagging suspicion that the explosion is
+> >    merely a bad interation between -A and -f option to the repack, which
+> >    are not meant to be used together.
+> 
+> Well, with the gcc repo, simply using 'git repack -a -f' with current 
+> default window size does produce a 2.1GB pack, while changing the window 
+> size to 100 (keeping default delta depth) produces a 400MB pack for me.
+> 
+> So this is really a matter of not having a sufficiently large window for 
+> some data sets.
 
--- >8 --
-git-clone: print an error message when trying to clone empty repo
+So my dumb patch to simply default to window and depth 250 with 
+aggressive was not _that_ dumb after all?
 
-Previously, cloning an empty repository looked like this:
-
-$ (mkdir parent && cd parent && git --bare init)
-$ git-clone parent child
-Initialized empty Git repository in /home/peff/clone/child/.git/
-$ cd child
--bash: cd: child: No such file or directory
-$ echo 'wtf?' | mail git@vger.kernel.org
-
-Now we at least report that the clone was not successful.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-clone.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/git-clone.sh b/git-clone.sh
-index ecf9d89..96a356d 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -297,7 +297,8 @@ yes)
- 				      find objects -type f -print | sed -e 1q)
- 			# objects directory should not be empty because
- 			# we are cloning!
--			test -f "$repo/$sample_file" || exit
-+			test -f "$repo/$sample_file" ||
-+				die "fatal: cannot clone empty repository"
- 			if ln "$repo/$sample_file" "$GIT_DIR/objects/sample" 2>/dev/null
- 			then
- 				rm -f "$GIT_DIR/objects/sample"
--- 
-1.5.3.7.2224.ge4a5
+Ciao,
+Dscho
