@@ -1,88 +1,88 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: v1.5.4 plans
-Date: Tue, 11 Dec 2007 08:59:28 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0712110853350.555@xanadu.home>
-References: <20071022061115.GR14735@spearce.org>
- <7vodeecyni.fsf@gitster.siamese.dyndns.org>
- <7vpryqwtt7.fsf@gitster.siamese.dyndns.org>
- <7vk5ot40w9.fsf@gitster.siamese.dyndns.org>
- <7vy7d43ptc.fsf@gitster.siamese.dyndns.org>
- <7vabpg9x5k.fsf@gitster.siamese.dyndns.org>
- <7vy7cwsi3p.fsf@gitster.siamese.dyndns.org>
- <7vk5o6jbq9.fsf@gitster.siamese.dyndns.org>
- <7v63zjgoel.fsf@gitster.siamese.dyndns.org>
- <7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>
- <7vhcixtnm4.fsf@gitster.siamese.dyndns.org>
- <7vfxye4yv7.fsf@gitster.siamese.dyndns.org>
- <7vve78qhtf.fsf@gitster.siamese.dyndns.org>
- <7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org>
- <alpine.LFD.0.99999.0712102249180.555@xanadu.home>
- <Pine.LNX.4.64.2903301355300.27959@racer.site>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: git-bisect feature suggestion: "git-bisect diff"
+Date: Tue, 11 Dec 2007 15:05:08 +0100
+Message-ID: <20071211140508.GA12204@elte.hu>
+References: <20071207093439.GA21896@elte.hu> <200712080636.12982.chriscool@tuxfamily.org> <20071211092446.GA4703@elte.hu> <20071211092916.GF30948@artemis.madism.org> <m3ve75sfn3.fsf@roke.D-201> <20071211115914.GJ30948@artemis.madism.org> <20071211122539.GA13945@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Dec 11 14:59:54 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Dec 11 15:06:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J25eM-0000ML-2u
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 14:59:54 +0100
+	id 1J25k7-0002QE-5h
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 15:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752776AbXLKN7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 08:59:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752713AbXLKN7b
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 08:59:31 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:9510 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752159AbXLKN7b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 08:59:31 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSW0023V1J4WG10@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 11 Dec 2007 08:59:30 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <Pine.LNX.4.64.2903301355300.27959@racer.site>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1752361AbXLKOFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 09:05:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752367AbXLKOFa
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 09:05:30 -0500
+Received: from mx3.mail.elte.hu ([157.181.1.138]:45025 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752303AbXLKOF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 09:05:29 -0500
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1J25jW-0007Nk-3F
+	from <mingo@elte.hu>; Tue, 11 Dec 2007 15:05:20 +0100
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 82E793E2193; Tue, 11 Dec 2007 15:05:07 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20071211122539.GA13945@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+Received-SPF: neutral (mx3: 157.181.1.14 is neither permitted nor denied by domain of elte.hu) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67858>
 
-On Fri, 30 Mar 2029, Johannes Schindelin wrote:
 
-> Hi,
+* Jeff King <peff@peff.net> wrote:
+
+> On Tue, Dec 11, 2007 at 12:59:14PM +0100, Pierre Habouzit wrote:
 > 
-> On Mon, 10 Dec 2007, Nicolas Pitre wrote:
+> > > Not exactly, as it does not give us email address.
+> > 
+> >   maybe it should be "fixed" so that it does, not to mention that other
+> > concerns ingo raised look legit to me.
 > 
-> > On Mon, 10 Dec 2007, Junio C Hamano wrote:
-> > 
-> > > There are outstanding issues that need to be resolved:
-> > > 
-> > >  * We need to do something about "gc --aggressive".  The documentation
-> > >    removal patch from Linus, if it ever materializes, would be better
-> > >    than nothing, but I have this nagging suspicion that the explosion is
-> > >    merely a bad interation between -A and -f option to the repack, which
-> > >    are not meant to be used together.
-> > 
-> > Well, with the gcc repo, simply using 'git repack -a -f' with current 
-> > default window size does produce a 2.1GB pack, while changing the window 
-> > size to 100 (keeping default delta depth) produces a 400MB pack for me.
-> > 
-> > So this is really a matter of not having a sufficiently large window for 
-> > some data sets.
+> Perhaps Junio is a time-traveller.
 > 
-> So my dumb patch to simply default to window and depth 250 with 
-> aggressive was not _that_ dumb after all?
+> $ git show 4602c17d
+> commit 4602c17d8911e14d537f6f87db02faab6e3f5d69
+> Author: Junio C Hamano <gitster@pobox.com>
+> Date:   Fri Dec 7 17:19:31 2007 -0800
+> 
+>     git-shortlog -e: show e-mail address as well
+> 
+>     This option shows the author's email address next to the name.
+> 
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Probably not, although this might be rather wasteful on some 
-repositories.  But that's what expectations are for --aggressive.
+please switch around the column too so that the commit count comes 
+first, this is way too ugly:
 
-I wish we could find a way to set some good window default dynamically 
-though.  Or perhaps the filename hashing needs improvements.
+ Junio C Hamano: 4826
+ Shawn O. Pearce: 1146
+ Linus Torvalds: 950
+ Johannes Schindelin: 497
+ Eric Wong: 383
+ Jakub Narebski: 317
+ Simon Hausmann: 243
+ Nicolas Pitre: 235
 
-
-Nicolas
+	Ingo
