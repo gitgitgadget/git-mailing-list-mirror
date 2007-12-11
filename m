@@ -1,71 +1,88 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Building git-1.5.3.7 on HP-UX 11.00
-Date: Tue, 11 Dec 2007 14:53:03 +0100
-Message-ID: <475E963F.3000804@viscovery.net>
-References: <20071204130922.731c407a@pc09.procura.nl>	<Pine.LNX.4.64.0712041343040.27959@racer.site>	<20071204140326.14d9e7a0@pc09.procura.nl>	<Pine.LNX.4.64.0712041439590.27959@racer.site>	<20071204150102.7f3ec3e9@pc09.procura.nl>	<47556EE2.6040105@op5.se>	<20071204152240.6cb6018e@pc09.procura.nl>	<Pine.LNX.4.64.0712041536180.27959@racer.site>	<20071204155655.053f4fb4@pc09.procura.nl>	<7vve7e49or.fsf@gitster.siamese.dyndns.org>	<20071210145123.7c34af6d@pc09.procura.nl>	<7vfxy9fxh3.fsf@gitster.siamese.dyndns.org> <20071211143323.27c860db@pc09.procura.nl>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: v1.5.4 plans
+Date: Tue, 11 Dec 2007 08:59:28 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0712110853350.555@xanadu.home>
+References: <20071022061115.GR14735@spearce.org>
+ <7vodeecyni.fsf@gitster.siamese.dyndns.org>
+ <7vpryqwtt7.fsf@gitster.siamese.dyndns.org>
+ <7vk5ot40w9.fsf@gitster.siamese.dyndns.org>
+ <7vy7d43ptc.fsf@gitster.siamese.dyndns.org>
+ <7vabpg9x5k.fsf@gitster.siamese.dyndns.org>
+ <7vy7cwsi3p.fsf@gitster.siamese.dyndns.org>
+ <7vk5o6jbq9.fsf@gitster.siamese.dyndns.org>
+ <7v63zjgoel.fsf@gitster.siamese.dyndns.org>
+ <7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>
+ <7vhcixtnm4.fsf@gitster.siamese.dyndns.org>
+ <7vfxye4yv7.fsf@gitster.siamese.dyndns.org>
+ <7vve78qhtf.fsf@gitster.siamese.dyndns.org>
+ <7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org>
+ <alpine.LFD.0.99999.0712102249180.555@xanadu.home>
+ <Pine.LNX.4.64.2903301355300.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
-	Sam Vilain <sam@vilain.net>, arjen@yaph.org
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Tue Dec 11 14:53:32 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 11 14:59:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J25YB-0006RZ-BO
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 14:53:31 +0100
+	id 1J25eM-0000ML-2u
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 14:59:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752802AbXLKNxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 08:53:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752776AbXLKNxI
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 08:53:08 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:21039 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752651AbXLKNxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 08:53:07 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1J25Wt-0000up-Qu; Tue, 11 Dec 2007 14:52:12 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 2B712546; Tue, 11 Dec 2007 14:53:03 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20071211143323.27c860db@pc09.procura.nl>
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1752776AbXLKN7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 08:59:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752713AbXLKN7b
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 08:59:31 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:9510 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752159AbXLKN7b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 08:59:31 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JSW0023V1J4WG10@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 11 Dec 2007 08:59:30 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <Pine.LNX.4.64.2903301355300.27959@racer.site>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67857>
 
-H.Merijn Brand schrieb:
-> I have put the output of
-> 
-> % make -i test | & perl -ne'm/^\*\s+ok\s+\d+:/ or print' > git-make-test.log
-> 
-> on http://www.xs4all.nl/~procura/git-make-test.log
-> 
-> which leaves only the following tests as failures:
-> 
-> t3901-i18n-patch.sh        t4201-shortlog.sh            t5100-mailinfo.sh
-> t5405-send-pack-rewind.sh  t5500-fetch-pack.sh          t5505-remote.sh
-> t5510-fetch.sh             t5515-fetch-merge-logic.sh   t5516-fetch-push.sh
-> t5520-pull.sh              t5600-clone-fail-cleanup.sh  t5700-clone-reference.sh
-> t5701-clone-local.sh       t6002-rev-list-bisect.sh     t6003-rev-list-topo-order.sh
-> t6022-merge-rename.sh      t6026-merge-attr.sh          t6200-fmt-merge-msg.sh
-> t7003-filter-branch.sh     t9300-fast-import.sh         t9301-fast-export.sh
-> t9500-gitweb-standalone-no-errors.sh
-> 
-> How close am I to success?
+On Fri, 30 Mar 2029, Johannes Schindelin wrote:
 
-There are a number of tests that pass only if you have iconv, most notably
-t3901 and t5100. pull, clone, merge, filter-branch are shell scripts with
-plenty of opportunities to stumble over incompatible/unportable constructs.
+> Hi,
+> 
+> On Mon, 10 Dec 2007, Nicolas Pitre wrote:
+> 
+> > On Mon, 10 Dec 2007, Junio C Hamano wrote:
+> > 
+> > > There are outstanding issues that need to be resolved:
+> > > 
+> > >  * We need to do something about "gc --aggressive".  The documentation
+> > >    removal patch from Linus, if it ever materializes, would be better
+> > >    than nothing, but I have this nagging suspicion that the explosion is
+> > >    merely a bad interation between -A and -f option to the repack, which
+> > >    are not meant to be used together.
+> > 
+> > Well, with the gcc repo, simply using 'git repack -a -f' with current 
+> > default window size does produce a 2.1GB pack, while changing the window 
+> > size to 100 (keeping default delta depth) produces a 400MB pack for me.
+> > 
+> > So this is really a matter of not having a sufficiently large window for 
+> > some data sets.
+> 
+> So my dumb patch to simply default to window and depth 250 with 
+> aggressive was not _that_ dumb after all?
 
--- Hannes
+Probably not, although this might be rather wasteful on some 
+repositories.  But that's what expectations are for --aggressive.
+
+I wish we could find a way to set some good window default dynamically 
+though.  Or perhaps the filename hashing needs improvements.
+
+
+Nicolas
