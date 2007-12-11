@@ -1,64 +1,84 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] Fix typo: we require Python 2.4, not 2.5
-Date: Tue, 11 Dec 2007 15:06:30 +0000
-Message-ID: <b0943d9e0712110706l324b98bfy1e71f9dfa36da4ab@mail.gmail.com>
-References: <b0943d9e0712100340p78326b4avf2b7e64008bba6d6@mail.gmail.com>
-	 <20071211142347.GA22879@diana.vm.bytemark.co.uk>
-	 <b0943d9e0712110627g70ad0aecyfeaafd8b8655fb57@mail.gmail.com>
-	 <m3r6hts2yk.fsf@roke.D-201> <m3myshs27c.fsf@roke.D-201>
+From: Jing Xue <jingxue@digizenstudio.com>
+Subject: Re: Using git with Eclipse
+Date: Tue, 11 Dec 2007 10:14:49 -0500
+Message-ID: <20071211101449.uqnyht2e8kcc00ww@intranet.digizenstudio.com>
+References: <475DC0CE.9070109@saville.com>
+	<20071211024442.GJ14735@spearce.org> <475E265D.5090106@saville.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 16:07:04 2007
+Content-Type: text/plain;
+	charset=UTF-8;
+	DelSp="Yes";
+	format="flowed"
+Content-Transfer-Encoding: 8BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Wink Saville <wink@saville.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 16:15:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J26hA-0001Xe-IJ
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 16:06:52 +0100
+	id 1J26pL-00055K-Sj
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 16:15:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752603AbXLKPGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 10:06:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752567AbXLKPGb
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 10:06:31 -0500
-Received: from rv-out-0910.google.com ([209.85.198.188]:65379 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752563AbXLKPGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 10:06:30 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2065948rvb
-        for <git@vger.kernel.org>; Tue, 11 Dec 2007 07:06:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=z0pDj8UcL0s74p56V29eRR3xtq3SXut1jYgOcKE77y8=;
-        b=nvWtOe0EqJ5A59T1z3SxW2ylGkwRfY7sgEHPkcloelJIH3GZ2/yRVwNMRlAZKX0LDOvjyjKmDhXNsdQ87Vym6Vm57v0Oe8uhoWk4o9XsSsUXEXYv+xcnJ+T9fH2MIEG4wWrnBcqi8YCRABkn1g5Ln2mEIO3YVxudUJ9/Uj5z3iw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kNBMTNeHL4wFwxK+BY0K2OBFc2mCS4qUhKRfl6TdNnnXBXimUqVg5Pc5yGkqiWZLB7btt6bpF2lHpiX3jkm+Zel1aGpDUBN86r8WjMJfv+OhTpkPUhE9D9FMQbaZ1QamXChD4UBuvFIB2M8Uu6Sy7EeEyLk1Yd7O0mjdABrlkH0=
-Received: by 10.141.48.10 with SMTP id a10mr2750420rvk.1197385590064;
-        Tue, 11 Dec 2007 07:06:30 -0800 (PST)
-Received: by 10.141.186.5 with HTTP; Tue, 11 Dec 2007 07:06:30 -0800 (PST)
-In-Reply-To: <m3myshs27c.fsf@roke.D-201>
+	id S1751528AbXLKPOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 10:14:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753924AbXLKPOx
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 10:14:53 -0500
+Received: from k2smtpout04-02.prod.mesa1.secureserver.net ([64.202.189.173]:50392
+	"HELO k2smtpout04-02.prod.mesa1.secureserver.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753890AbXLKPOv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 10:14:51 -0500
+Received: (qmail 1118 invoked from network); 11 Dec 2007 15:14:50 -0000
+Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
+  by k2smtpout04-02.prod.mesa1.secureserver.net (64.202.189.173) with ESMTP; 11 Dec 2007 15:14:50 -0000
+Received: from localhost (unknown [127.0.0.1])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id B4FBF100A37;
+	Tue, 11 Dec 2007 15:14:50 +0000 (UTC)
+Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
+	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 089uyH52G5rO; Tue, 11 Dec 2007 10:14:50 -0500 (EST)
+Received: by ip-72-167-33-213.ip.secureserver.net (Postfix, from userid 48)
+	id 01FFD100B4A; Tue, 11 Dec 2007 10:14:50 -0500 (EST)
+Received: from mailrelay2.private.geico.com (mailrelay2.private.geico.com
+	[205.143.204.198]) by intranet.digizenstudio.com (Horde MIME library) with
+	HTTP; Tue, 11 Dec 2007 10:14:49 -0500
+In-Reply-To: <475E265D.5090106@saville.com>
 Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67870>
 
-On 11/12/2007, Jakub Narebski <jnareb@gmail.com> wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> Ooops... I think I'd have to wait for 0.14.1
+
+Quoting Wink Saville <wink@saville.com>:
+
+> Shawn,
+> I added .metadata to exclude then used git rm to remove
+> .metadata from the repository. I then cloned that
+> repository to see how Eclipse would work. (As part of  my
+> workflow I use git as a backup so I wanted to see what would
+> happen when I "restored".)
+
+One way to deal with this might be (after excluding it from the  
+workspace repository) creating a sub-repository under .metadata, and  
+use that one for your local backup.
+
+> As I'm sure you know with the metadata gone my existing projects
+> in the Ui were gone and they have to be recreated as well as
+> some Eclipse and plugin specific configuration.
+> I understand you and others are working on an Eclipse plugin
+> for git, will it also ignore . metadata?
 >
-> $ rpmbuild --rebuild --target=noarch stgit-0.14-1.src.rpm
-> [...]
-> Python version 2.5 or newer required. Found 2.4.3.final.0
+> Do you need any testing done or is it too early? I'd be glad to
+> test if you feel its solid enough that I won't lose data or if it
+> uses a separate different repo then I could use both.
 
-Or just change the string in stgit/version.py.
+Egit is an Eclipse plugin, so you can always test it in an isolated  
+"sandbox" workspace.
 
+Cheers.
 -- 
-Catalin
+Jing Xue
