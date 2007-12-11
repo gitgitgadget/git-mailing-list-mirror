@@ -1,82 +1,114 @@
-From: "Daniel Berlin" <dberlin@dberlin.org>
-Subject: Re: git annotate runs out of memory
-Date: Tue, 11 Dec 2007 16:14:59 -0500
-Message-ID: <4aca3dc20712111314wf4525l790120dce29a9bc5@mail.gmail.com>
-References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
-	 <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
-	 <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com>
-	 <alpine.LFD.0.9999.0712111122400.25032@woody.linux-foundation.org>
-	 <alpine.LFD.0.9999.0712111146200.25032@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 22:16:06 2007
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH 2/2] Fix some memory leaks in various places
+Date: Tue, 11 Dec 2007 22:19:57 +0100
+Message-ID: <1197407997-22945-2-git-send-email-mh@glandium.org>
+References: <1197407997-22945-1-git-send-email-mh@glandium.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 11 22:20:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2CSM-0000ge-8J
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 22:15:58 +0100
+	id 1J2CWd-0002PV-WD
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 22:20:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753452AbXLKVPC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 16:15:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753442AbXLKVPB
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 16:15:01 -0500
-Received: from nz-out-0506.google.com ([64.233.162.225]:4362 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751733AbXLKVPA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 16:15:00 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so1322958nze
-        for <git@vger.kernel.org>; Tue, 11 Dec 2007 13:15:00 -0800 (PST)
-Received: by 10.143.174.4 with SMTP id b4mr1667435wfp.1197407699374;
-        Tue, 11 Dec 2007 13:14:59 -0800 (PST)
-Received: by 10.142.217.1 with HTTP; Tue, 11 Dec 2007 13:14:59 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.9999.0712111146200.25032@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1751647AbXLKVUA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 16:20:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751553AbXLKVUA
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 16:20:00 -0500
+Received: from smtp19.orange.fr ([80.12.242.18]:10158 "EHLO smtp19.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751389AbXLKVT7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 16:19:59 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf1926.orange.fr (SMTP Server) with ESMTP id AFC3D1C000DF
+	for <git@vger.kernel.org>; Tue, 11 Dec 2007 22:19:57 +0100 (CET)
+Received: from namakemono.glandium.org (APuteaux-153-1-79-219.w81-249.abo.wanadoo.fr [81.249.109.219])
+	by mwinf1926.orange.fr (SMTP Server) with ESMTP id 92BFE1C0007E;
+	Tue, 11 Dec 2007 22:19:57 +0100 (CET)
+X-ME-UUID: 20071211211957601.92BFE1C0007E@mwinf1926.orange.fr
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1J2CWD-0005yT-6d; Tue, 11 Dec 2007 22:19:57 +0100
+X-Mailer: git-send-email 1.5.3.7.1161.g4a58-dirty
+In-Reply-To: <1197407997-22945-1-git-send-email-mh@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67944>
 
-On 12/11/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->
->
-> On Tue, 11 Dec 2007, Linus Torvalds wrote:
-> >
-> > We do that. The expense for git is that we don't do the revisions as a
-> > single file at all. We'll look through each commit, check whether the
-> > "gcc" directory changed, if it did, we'll go into it, and check whether
-> > the "ChangeLog" file changed - and if it did, we'll actually diff it
-> > against the previous version.
->
-> And, btw: the diff is totally different from the xdelta we have, so even
-> if we have an already prepared nice xdelta between the two versions, we'll
-> end up re-generating the files in full, and then do a diff on the end
-> result.
 
-This is what SVN does as well.
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
+ builtin-init-db.c |    1 +
+ http-walker.c     |   10 ++++++++++
+ walker.c          |    2 ++
+ 3 files changed, 13 insertions(+), 0 deletions(-)
 
->
-> Of course, part of that is that git logically *never* works with deltas,
-> except in the actual code-paths that generate objects (or generate packs,
-> of course). So even if we had used a delta algorithm that would be
-> amenable to be turned into a diff directly, it would have been a layering
-> violation to actually do that.
-
-Right. SVN has the same problem.
-
->
-> Other systems can sometimes just re-use their deltas to generate the
-> diffs and/or blame information. I dunno whether SVN does that. CVS does,
-> afaik.
-
-CVS does because it's delta is line based, so it's easy.
-
-You theroetically can generate blame info from SVN/GIT's block deltas,
-but you of course, have the problem GIT does, which is that the delta
-is not meant to represent the actual changes that occurred, but
-instead, the smallest way to reconstruct data x from data y.
-This only sometimes has any relation to how the file actually changed
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index e1393b8..df61758 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -415,6 +415,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 	safe_create_dir(path, 1);
+ 	strcpy(path+len, "/info");
+ 	safe_create_dir(path, 1);
++	free(path);
+ 
+ 	if (shared_repository) {
+ 		char buf[10];
+diff --git a/http-walker.c b/http-walker.c
+index 2c37868..1a02f86 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -231,6 +231,8 @@ static void finish_object_request(struct object_request *obj_req)
+ {
+ 	struct stat st;
+ 
++	free(obj_req->url);
++
+ 	fchmod(obj_req->local, 0444);
+ 	close(obj_req->local); obj_req->local = -1;
+ 
+@@ -897,9 +899,17 @@ static int fetch_ref(struct walker *walker, char *ref, unsigned char *sha1)
+ static void cleanup(struct walker *walker)
+ {
+ 	struct walker_data *data = walker->data;
++	struct alt_base *prev_altbase, *altbase = data->alt;
++	while (altbase) {
++		free(altbase->base);
++		prev_altbase = altbase;
++		altbase = altbase->next;
++		free(prev_altbase);
++	}
+ 	http_cleanup();
+ 
+ 	curl_slist_free_all(data->no_pragma_header);
++	free(data);
+ }
+ 
+ struct walker *get_http_walker(const char *url)
+diff --git a/walker.c b/walker.c
+index 397b80d..7473e90 100644
+--- a/walker.c
++++ b/walker.c
+@@ -299,6 +299,7 @@ int walker_fetch(struct walker *walker, int targets, char **target,
+ 			goto unlock_and_fail;
+ 	}
+ 	free(msg);
++	free(sha1);
+ 
+ 	return 0;
+ 
+@@ -306,6 +307,7 @@ unlock_and_fail:
+ 	for (i = 0; i < targets; i++)
+ 		if (lock[i])
+ 			unlock_ref(lock[i]);
++	free(sha1);
+ 
+ 	return -1;
+ }
+-- 
+1.5.3.7
