@@ -1,77 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Adding menu for Emacs git.el
-Date: Mon, 10 Dec 2007 22:36:59 -0800
-Message-ID: <7vhciphh4k.fsf@gitster.siamese.dyndns.org>
-References: <87mysvfr7e.dlv@vanicat.homelinux.org>
-	<87fxylos4o.fsf@wine.dyndns.org>
-	<877ijwfh6z.dlv@vanicat.homelinux.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: v1.5.4 plans
+Date: Tue, 11 Dec 2007 01:39:41 -0500
+Message-ID: <20071211063941.GB21718@coredump.intra.peff.net>
+References: <7vk5o6jbq9.fsf@gitster.siamese.dyndns.org> <7v63zjgoel.fsf@gitster.siamese.dyndns.org> <7vsl2i6ea4.fsf@gitster.siamese.dyndns.org> <7vhcixtnm4.fsf@gitster.siamese.dyndns.org> <7vfxye4yv7.fsf@gitster.siamese.dyndns.org> <7vve78qhtf.fsf@gitster.siamese.dyndns.org> <7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org> <20071210234941.GE22254@coredump.intra.peff.net> <7vtzmqhvgq.fsf@gitster.siamese.dyndns.org> <7vzlwhhli5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Remi Vanicat <vanicat@debian.org>, git@vger.kernel.org
-To: Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 07:37:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 07:40:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1ykR-0002Ff-CB
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 07:37:43 +0100
+	id 1J1yml-0002cO-5a
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 07:40:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751292AbXLKGhU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Dec 2007 01:37:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751092AbXLKGhS
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 01:37:18 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51824 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750984AbXLKGhR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Dec 2007 01:37:17 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id BBB604929;
-	Tue, 11 Dec 2007 01:37:10 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 238464928;
-	Tue, 11 Dec 2007 01:37:06 -0500 (EST)
-In-Reply-To: <877ijwfh6z.dlv@vanicat.homelinux.org> (Remi Vanicat's message of
-	"Mon, 03 Dec 2007 07:03:32 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751653AbXLKGjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 01:39:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751428AbXLKGjp
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 01:39:45 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3293 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751273AbXLKGjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 01:39:44 -0500
+Received: (qmail 6730 invoked by uid 111); 11 Dec 2007 06:39:42 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 11 Dec 2007 01:39:42 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Dec 2007 01:39:41 -0500
+Content-Disposition: inline
+In-Reply-To: <7vzlwhhli5.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67805>
 
-Remi Vanicat <vanicat@debian.org> writes:
+On Mon, Dec 10, 2007 at 09:02:26PM -0800, Junio C Hamano wrote:
 
-> Adding three menus to the git-status-mode of git.el : One for marking
-> and unmarking, one for what you do when you have a conflict, and the
-> other one for all the rest.
->
-> Signed-off-by: R=C3=A9mi Vanicat <vanicat@debian.org>
-> ---
->
-> Alexandre Julliard <julliard@winehq.org> writes:
->
->> "=3D?utf-8?q?R=3DC3=3DA9mi=3D20Vanicat?=3D" <vanicat@debian.org>, Re=
-mi Vanicat
->> <vanicat@debian.org> writes:
->>
->>> Adding three menu to the git-status-mode of git.el : One for markin=
-g
->>> and unmarking, one for every thing you need when you have a conflic=
-t,
->>> and a last one for all the rest.
->>>
->>> Signed-off-by: R=C3=A9mi Vanicat <vanicat@debian.org>
->>
->> It looks good to me. A couple of minor details:
->
-> Here is the corrected patch
-> [...]
->
->> BTW do you have a copyright assignment for Emacs?
-> No, should I seek one ?
+> [PATCH] commit: do not add extra LF at the end of the summary.
+> 
+> The scripted version relied on the nice "auto-strip the terminating LF"
+> behaviour shell gives to "var=$(cmd)" construct, but we have to roll
+> that ourselves.
 
-Alex, what is the current status of this patch?
+This looks reasonable and generates the correct output as far as I can
+tell, but...
+
+> -	log_tree_commit(&rev, commit);
+> -	printf("\n");
+> +	if (!log_tree_commit(&rev, commit)) {
+> +		struct strbuf buf = STRBUF_INIT;
+> +		pretty_print_commit(rev.commit_format, commit, &buf,
+> +				    0, NULL, NULL, 0, 0);
+> +		printf("%s\n", buf.buf);
+> +		strbuf_release(&buf);
+> +	}
+
+We are duplicating the "!shown && ..." conditional branch from
+log_tree_commit, which calls show_log. Why are we not calling show_log
+instead of pretty_print_commit (I understand that show_log should end up
+calling pretty_print_commit, but it is not immediately obvious that all
+of the extra code in show_log is going to be ignored).
+
+-Peff
