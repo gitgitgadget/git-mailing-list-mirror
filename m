@@ -1,74 +1,55 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [Resend PATCH 2/4] Use strbuf in http code
-Date: Tue, 11 Dec 2007 07:16:20 +0100
-Organization: glandium.org
-Message-ID: <20071211061620.GA8047@glandium.org>
-References: <7vy7c3ogu2.fsf@gitster.siamese.dyndns.org> <1197228659-19459-1-git-send-email-mh@glandium.org> <7vlk81him3.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: v1.5.4 plans
+Date: Tue, 11 Dec 2007 01:17:43 -0500
+Message-ID: <20071211061743.GA21718@coredump.intra.peff.net>
+References: <7vy7cwsi3p.fsf@gitster.siamese.dyndns.org> <7vk5o6jbq9.fsf@gitster.siamese.dyndns.org> <7v63zjgoel.fsf@gitster.siamese.dyndns.org> <7vsl2i6ea4.fsf@gitster.siamese.dyndns.org> <7vhcixtnm4.fsf@gitster.siamese.dyndns.org> <7vfxye4yv7.fsf@gitster.siamese.dyndns.org> <7vve78qhtf.fsf@gitster.siamese.dyndns.org> <7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org> <20071210234941.GE22254@coredump.intra.peff.net> <7vtzmqhvgq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 11 07:17:00 2007
+X-From: git-owner@vger.kernel.org Tue Dec 11 07:18:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J1yQN-0006jB-Ru
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 07:17:00 +0100
+	id 1J1yRS-0006uu-MD
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 07:18:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751147AbXLKGQh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 01:16:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751266AbXLKGQh
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 01:16:37 -0500
-Received: from vuizook.err.no ([85.19.215.103]:43675 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750984AbXLKGQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 01:16:37 -0500
-Received: from aputeaux-153-1-79-219.w81-249.abo.wanadoo.fr ([81.249.109.219] helo=namakemono.glandium.org)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1J1yQX-0001Rk-3e; Tue, 11 Dec 2007 07:17:15 +0100
-Received: from mh by namakemono.glandium.org with local (Exim 4.68)
-	(envelope-from <mh@glandium.org>)
-	id 1J1yPk-00029P-Mq; Tue, 11 Dec 2007 07:16:20 +0100
+	id S1751773AbXLKGRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 01:17:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751675AbXLKGRq
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 01:17:46 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4612 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751273AbXLKGRp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 01:17:45 -0500
+Received: (qmail 6556 invoked by uid 111); 11 Dec 2007 06:17:44 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 11 Dec 2007 01:17:44 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Dec 2007 01:17:43 -0500
 Content-Disposition: inline
-In-Reply-To: <7vlk81him3.fsf@gitster.siamese.dyndns.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Spam-Status: (score 5.2): Yes, score=5.2 required=5.0 tests=RCVD_IN_DSBL,RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
+In-Reply-To: <7vtzmqhvgq.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67798>
 
-On Mon, Dec 10, 2007 at 10:04:52PM -0800, Junio C Hamano wrote:
-> Mike Hommey <mh@glandium.org> writes:
-> >  struct buffer
-> >  {
-> > -        size_t posn;
-> > -        size_t size;
-> > -        void *buffer;
-> > +	struct strbuf buf;
-> > +	size_t posn;
-> >  };
-> 
-> With this definition of "struct buffer", I do not think this can be correct.
-> 
-> > @@ -1267,10 +1257,8 @@ static struct remote_lock *lock_remote(const char *path, long timeout)
-> >  {
-> >  	struct active_request_slot *slot;
-> >  	struct slot_results results;
-> > -	struct buffer out_buffer;
-> > -	struct buffer in_buffer;
-> > -	char *out_data;
-> > -	char *in_data;
-> > +	struct buffer out_buffer = { 0, STRBUF_INIT };
-> 
-> How seriously have you proofread and tested this series before sending
-> it out?
+On Mon, Dec 10, 2007 at 05:27:17PM -0800, Junio C Hamano wrote:
 
-Damn ! I did fix this on sunday and was pretty sure to have sent it :-/
+> > And perhaps not a regression, but I think we should bring git-svn's
+> > handling of color.* in line with the changes to the rest of the code
+> > before 1.5.4. I posted a "last resort" patch, but I think with your
+> > changes to "git config --colorbool" it might be possible to use that.
+> > I'll try to work up a new patch.
+> 
+> Thanks for a reminder.  Anything else?
 
-Mike
+2-patch series will follow momentarily. 1/2 gives --get-colorbool the
+necessary information for implementing color.pager, and 2/2 fixes
+git-svn.
+
+Very light testing by me, since I'm not actually a git-svn user, but it
+does pass the test scripts. Acks from svn-using people would be nice.
+
+-Peff
