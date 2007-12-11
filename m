@@ -1,58 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2 v2] Fix XML parser leaks in http-push
-Date: Tue, 11 Dec 2007 14:36:36 -0800
-Message-ID: <7v4peodfkb.fsf@gitster.siamese.dyndns.org>
-References: <1197407997-22945-1-git-send-email-mh@glandium.org>
-	<1197412253-927-1-git-send-email-mh@glandium.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [ANNOUNCE] ugit: a pyqt-based git gui // was: Re: If you would
+	write git from scratch now, what would you change?
+Date: Tue, 11 Dec 2007 23:37:42 +0100
+Message-ID: <20071211223742.GB19857@steel.home>
+References: <402731c90712110548k67f28b64w5afa93ee908ce73b@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Tue Dec 11 23:38:04 2007
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: David <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 11 23:38:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2Djl-00032m-Pu
-	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 23:38:02 +0100
+	id 1J2DkA-0003DF-TF
+	for gcvg-git-2@gmane.org; Tue, 11 Dec 2007 23:38:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755367AbXLKWg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 17:36:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753587AbXLKWg4
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 17:36:56 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63583 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752782AbXLKWgy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 17:36:54 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B8575DD0;
-	Tue, 11 Dec 2007 17:36:50 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 337F15DCC;
-	Tue, 11 Dec 2007 17:36:48 -0500 (EST)
-In-Reply-To: <1197412253-927-1-git-send-email-mh@glandium.org> (Mike Hommey's
-	message of "Tue, 11 Dec 2007 23:30:53 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755902AbXLKWhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 17:37:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755490AbXLKWhp
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 17:37:45 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:63238 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752047AbXLKWho (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 17:37:44 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+a7Bs=
+Received: from tigra.home (Fc89d.f.strato-dslnet.de [195.4.200.157])
+	by post.webmailer.de (fruni mo24) (RZmta 14.6)
+	with ESMTP id v03660jBBLrWe4 ; Tue, 11 Dec 2007 23:37:42 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 3C996277AE;
+	Tue, 11 Dec 2007 23:37:42 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 19A5256D22; Tue, 11 Dec 2007 23:37:42 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <402731c90712110548k67f28b64w5afa93ee908ce73b@mail.gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67962>
 
-Mike Hommey <mh@glandium.org> writes:
+David, Tue, Dec 11, 2007 14:48:32 +0100:
+> Though there's still a few things remaining to be implemented, the
+> bulk of the initial groundwork is already done.  All you need to
+> build/run it is python and pyqt4 (pyuic4).  I've deliberately tried to
+> keep the interface similar to git-gui for now since it is obviously
+> based on it, but that's not a requirement.
 
-> XML_Parser were never freed. While at it, move the parser initialization to
-> right before it is needed.
->
-> Signed-off-by: Mike Hommey <mh@glandium.org>
-> ---
->
->  This one is the same, but against pu, where Junio fixed my strbuf patch in
->  a different way than I did.
+Interesting. I had to start it like this:
 
-To be very honest, I wish the strbuf patch (that has potentially larger
-impact) did not take these obviously correct leakfix patches hostage.
+	$ export PYTHONPATH=$(pwd)/build/default:$(pwd)/build/default/ui
+	$ python ./build/default/bin/ugit.pyc
 
-Will have to take a look but slowly (I'm at work now).
+It has some problem with merges in "Git Commit Browser": takes a lot
+of CPU and very slowly generates a very big diff.
+
+The diff view is very ... dark. Out of place, when the rest of the
+interface corresponds to system theme (mine is rather light).
