@@ -1,73 +1,109 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git-cvsexportcommit fails for huge commits
-Date: Thu, 13 Dec 2007 08:58:33 +1300
-Message-ID: <46a038f90712121158n674a9044t75ef99473314457c@mail.gmail.com>
-References: <20071211200418.GA13815@mkl-desktop>
-	 <20071212083154.GB7676@coredump.intra.peff.net>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Don't cache DESTDIR in perl/perl.mak.
+Date: Wed, 12 Dec 2007 21:02:11 +0100
+Message-ID: <20071212200211.GB1060@artemis.madism.org>
+References: <20071210093102.3050.qmail@06e91d20307a62.315fe32.mid.smarden.org> <7vodcyl5dy.fsf@gitster.siamese.dyndns.org> <20071212180050.GA18980@untitled>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Markus Klinik" <markus.klinik@gmx.de>, git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 12 20:59:12 2007
+Content-Type: multipart/signed; boundary="CdrF4e02JqNVZeln";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Junio C Hamano <gitster@pobox.com>, Gerrit Pape <pape@smarden.org>,
+	git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Dec 12 21:02:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2XjQ-0000gy-6Z
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 20:59:00 +0100
+	id 1J2Xmw-0002Dd-By
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 21:02:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752590AbXLLT6g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 14:58:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751991AbXLLT6g
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 14:58:36 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:44108 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752538AbXLLT6f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 14:58:35 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so676954ugc.16
-        for <git@vger.kernel.org>; Wed, 12 Dec 2007 11:58:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=QFVD6Y/fXV5IinlH1iYhiTAixrI0gJ7VPNTrzCf25hA=;
-        b=Bk9tPJIpA/ANdRum+ZSnGnuSHqdtbxZW4jeTwpw2oCNuC+OH0w38phqhFDZUzVexv1jO+8tmPHj1ldxG4UoCpeyvfvgwCIrheXfXln6G9GsEPQviNe4duM21SH1dfava5Kvs9ndeqyU4GQYa8SNe9NziCWWYQDVfHxLN3/66vTA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BhOLX4oPRIvV/8b7xf0obcUm+RK45rwUPwh2WehscMNZkSDVDw3GIwXNY3AHvoeHOwzud6kkWao7Pehx5NwVfXYb57sm0oitK9tLvoEHu5gxsgaDy/dzfttVkHEyEOj2HNxMSRb8mcfi8BjIZegZdUEoP1/vY5ROssVfYRQLhhw=
-Received: by 10.66.225.9 with SMTP id x9mr2590139ugg.47.1197489513603;
-        Wed, 12 Dec 2007 11:58:33 -0800 (PST)
-Received: by 10.66.252.2 with HTTP; Wed, 12 Dec 2007 11:58:33 -0800 (PST)
-In-Reply-To: <20071212083154.GB7676@coredump.intra.peff.net>
+	id S1752953AbXLLUCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 15:02:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753088AbXLLUCP
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 15:02:15 -0500
+Received: from pan.madism.org ([88.191.52.104]:50692 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752876AbXLLUCO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 15:02:14 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 491192FA36;
+	Wed, 12 Dec 2007 21:02:12 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 593C44993DF; Wed, 12 Dec 2007 21:02:11 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>, Gerrit Pape <pape@smarden.org>,
+	git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <20071212180050.GA18980@untitled>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68096>
-
-On Dec 12, 2007 9:31 PM, Jeff King <peff@peff.net> wrote:
-> We will make our commits
-> in two CVS invocations, but since CVS isn't atomic _anyway_, we
-> shouldn't mind losing the atomicity.
-
-Quick note -- I used to understand that cvs was not atomic, but
-reading the on-the-wire protocol has taught me otherwise. Modern
-versions of cvs are actually quite atomic-ish -- the protocol expects
-the client to give all the relevant data to the server, and then say
-"yep, that was all", and only _then_ the server does its commit.
-
-So if the client dies or cancels along the way, nothing ever happens
-on the server side.
-
-Still, I suspect that the _server_ is not atomic, so if the server
-process dies or finds a problem along the way, you could end up with a
-half-commit in the repository, and maybe some hosed ,v files.
-
-IOWs, the protocol *is* atomic, and this patch does make things
-slightly more brittle. Perhaps require an option to be set before we
-do this?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68097>
 
 
-m
+--CdrF4e02JqNVZeln
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Dec 12, 2007 at 06:01:48PM +0000, Eric Wong wrote:
+> Junio C Hamano <gitster@pobox.com> wrote:
+> > Hmph.  That's reverting this:
+> >=20
+> > commit 4c5cf8c44ce06a79da5bafd4a92e6d6f598cea2e
+> > Author: Eric Wong <normalperson@yhbt.net>
+> > Date:   Sun Aug 13 04:13:25 2006 -0700
+> >=20
+> >     pass DESTDIR to the generated perl/Makefile
+> >    =20
+> >     Makes life for binary packagers easier, as the Perl modules will
+> >     be installed inside DESTDIR.
+> >    =20
+> >     Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> >     Signed-off-by: Junio C Hamano <junkio@cox.net>
+> >=20
+> > Eric, care to comment?
+>=20
+> I used to make a statically linked binary package for working on an
+> ancient box that didn't have a lot of libraries I wanted, and I probably
+> just called `make install' into DESTDIR as a single step without calling
+> `make' alone without DESTDIR argument, or I had DESTDIR set in
+> config.mak
+
+  Actually this fact generated a bug in debian packaging because git is
+built then installed twice in different DESTDIRS, then parts of the
+install is pruned (the two installs are arch-dependant and
+arch-independant files install so it's a very good reason in term of
+packaging).
+
+  The fact that perl.mak caches the DESTDIR make it install things in
+the wrong place because it doesn't honour make DESTDIR=3Dfoo install and
+always use the cached value instead, which is wrong.
+
+  I think Gerrit won't care if it's cached or not, he just cares that it
+still honours environment if present.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--CdrF4e02JqNVZeln
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHYD5DvGr7W6HudhwRAhCPAJ94RtcB7z3fdinmyZ4BgcKT/tUlMQCdEGNH
+WxhqqORoNVC/ilQ7uxU+On0=
+=tyRU
+-----END PGP SIGNATURE-----
+
+--CdrF4e02JqNVZeln--
