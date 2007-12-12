@@ -1,74 +1,112 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] builtin-clone: Implement git clone as a builtin command.
-Date: Wed, 12 Dec 2007 18:24:18 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712121823090.27959@racer.site>
-References: <20071211195712.GA3865@bitplanet.net>  <Pine.LNX.4.64.0712111549490.5349@iabervon.org>
-  <1197416286.7552.4.camel@hinata.boston.redhat.com> 
- <7vejdsbo7d.fsf@gitster.siamese.dyndns.org>  <Pine.LNX.4.64.0712121103510.27959@racer.site>
- <1197471866.9269.2.camel@hinata.boston.redhat.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 2/2] git-svn: get color config from --get-colorbool
+Date: Wed, 12 Dec 2007 10:27:34 -0800
+Message-ID: <20071212182734.GA28377@untitled>
+References: <7v63zjgoel.fsf@gitster.siamese.dyndns.org> <7vsl2i6ea4.fsf@gitster.siamese.dyndns.org> <7vhcixtnm4.fsf@gitster.siamese.dyndns.org> <7vfxye4yv7.fsf@gitster.siamese.dyndns.org> <7vve78qhtf.fsf@gitster.siamese.dyndns.org> <7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org> <20071210234941.GE22254@coredump.intra.peff.net> <7vtzmqhvgq.fsf@gitster.siamese.dyndns.org> <20071211061743.GA21718@coredump.intra.peff.net> <20071211062842.GB21768@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 19:25:08 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 12 19:28:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2WGX-0001Xd-6q
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 19:25:05 +0100
+	id 1J2WJg-000300-Kn
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 19:28:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752593AbXLLSYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 13:24:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752548AbXLLSYW
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 13:24:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33688 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752543AbXLLSYV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 13:24:21 -0500
-Received: (qmail invoked by alias); 12 Dec 2007 18:24:19 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp051) with SMTP; 12 Dec 2007 19:24:19 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19n6ulRjulnbim5aS7uhTxA/uBKdMl0XYTt0Nmm23
-	0L6EQ20cBy7eO0
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1197471866.9269.2.camel@hinata.boston.redhat.com>
-X-Y-GMX-Trusted: 0
+	id S1752682AbXLLS1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 13:27:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752663AbXLLS1g
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 13:27:36 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:57769 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752233AbXLLS1f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 13:27:35 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 675297DC025;
+	Wed, 12 Dec 2007 10:27:34 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20071211062842.GB21768@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68081>
 
-Hi,
-
-On Wed, 12 Dec 2007, Kristian H?gsberg wrote:
-
-> On Wed, 2007-12-12 at 11:12 +0000, Johannes Schindelin wrote:
+Jeff King <peff@peff.net> wrote:
+> git-config recently learned a --get-colorbool option. By
+> using it, we will get the same color=auto behavior that
+> other git commands have.
 > 
-> > On Tue, 11 Dec 2007, Junio C Hamano wrote:
-> ...
-> > >  * --shared optimization
-> > > 
-> > >    This is a very easy addition to "git remote add".  You make sure 
-> > >    that the added remote repository is on a local machine, and set 
-> > >    up alternates to point at its object store.
-> > 
-> > Concur.
-> > 
-> > Since I want to lose that dependency on cpio on Windows (which we fake 
-> > by using tar), I'll implement this in C anyway.
+> Specifically, this fixes the case where "color.diff = true"
+> meant "always" in git-svn, but "auto" in other programs.
 > 
-> It's not used for --shared (which is just writing an alternates file), 
-> it's used for -l, hardlinking locally cloned repos.  The code to replace 
-> cpio is already in the patch I sent, look for clone_local().
+> Signed-off-by: Jeff King <peff@peff.net>
 
-Sorry, that comment should have gone after another part of the original 
-message.
+Acked-by: Eric Wong <normalperson@yhbt.net>
 
-My only two excuses are that I am ill, and am overloaded with work.
+> ---
+>  git-svn.perl |   35 ++---------------------------------
+>  1 files changed, 2 insertions(+), 33 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 9f884eb..1c42c55 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -3969,39 +3969,7 @@ sub cmt_showable {
+>  }
+>  
+>  sub log_use_color {
+> -	return 1 if $color;
+> -	my ($dc, $dcvar);
+> -	$dcvar = 'color.diff';
+> -	$dc = `git-config --get $dcvar`;
+> -	if ($dc eq '') {
+> -		# nothing at all; fallback to "diff.color"
+> -		$dcvar = 'diff.color';
+> -		$dc = `git-config --get $dcvar`;
+> -	}
+> -	chomp($dc);
+> -	if ($dc eq 'auto') {
+> -		my $pc;
+> -		$pc = `git-config --get color.pager`;
+> -		if ($pc eq '') {
+> -			# does not have it -- fallback to pager.color
+> -			$pc = `git-config --bool --get pager.color`;
+> -		}
+> -		else {
+> -			$pc = `git-config --bool --get color.pager`;
+> -			if ($?) {
+> -				$pc = 'false';
+> -			}
+> -		}
+> -		chomp($pc);
+> -		if (-t *STDOUT || (defined $pager && $pc eq 'true')) {
+> -			return ($ENV{TERM} && $ENV{TERM} ne 'dumb');
+> -		}
+> -		return 0;
+> -	}
+> -	return 0 if $dc eq 'never';
+> -	return 1 if $dc eq 'always';
+> -	chomp($dc = `git-config --bool --get $dcvar`);
+> -	return ($dc eq 'true');
+> +	return $color || Git->repository->get_colorbool('color.diff');
+>  }
+>  
+>  sub git_svn_log_cmd {
+> @@ -4060,6 +4028,7 @@ sub config_pager {
+>  	} elsif (length $pager == 0 || $pager eq 'cat') {
+>  		$pager = undef;
+>  	}
+> +	$ENV{GIT_PAGER_IN_USE} = defined($pager);
+>  }
+>  
+>  sub run_pager {
+> -- 
+> 1.5.3.7.2230.g796d07-dirty
+> 
 
-Ciao,
-Dscho
+-- 
+Eric Wong
