@@ -1,58 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [ANNOUNCE] ugit: a pyqt-based git gui // was: Re: If you would write git from scratch now, what would you change?
-Date: Tue, 11 Dec 2007 23:10:02 -0500
-Message-ID: <20071212041002.GN14735@spearce.org>
-References: <402731c90712110548k67f28b64w5afa93ee908ce73b@mail.gmail.com> <e5bfff550712111020k51829c03n5d64a94ce7c7ac2a@mail.gmail.com> <31e9dd080712111114t2bbdba60m18b7d6210f3f9174@mail.gmail.com> <e5bfff550712111133j66c4b9adx9f57661cc720aa41@mail.gmail.com> <402731c90712111254q1cb99c6al47538971d93b4592@mail.gmail.com> <31e9dd080712111329j2c8b22ebs38ab727a5fbe85fb@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git annotate runs out of memory
+Date: Tue, 11 Dec 2007 20:48:41 -0800
+Message-ID: <7v63z4bjrq.fsf@gitster.siamese.dyndns.org>
+References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
+	<alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
+	<4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com>
+	<alpine.LFD.0.9999.0712111122400.25032@woody.linux-foundation.org>
+	<alpine.LFD.0.9999.0712111300440.25032@woody.linux-foundation.org>
+	<7vprxcdhis.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: David <davvid@gmail.com>, Marco Costalba <mcostalba@gmail.com>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Jason Sewall <jasonsewall@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 05:10:38 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Berlin <dberlin@dberlin.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Dec 12 05:49:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2Ivc-0006Qo-Gv
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 05:10:36 +0100
+	id 1J2JXS-0006Th-D5
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 05:49:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752270AbXLLEKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 23:10:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751657AbXLLEKH
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 23:10:07 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39272 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751099AbXLLEKF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 23:10:05 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1J2Iuu-0003Ec-9o; Tue, 11 Dec 2007 23:09:52 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id C333420FBCB; Tue, 11 Dec 2007 23:10:02 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <31e9dd080712111329j2c8b22ebs38ab727a5fbe85fb@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752382AbXLLEtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 23:49:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752635AbXLLEtU
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 23:49:20 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48084 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751615AbXLLEtU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 23:49:20 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 68449593D;
+	Tue, 11 Dec 2007 23:49:13 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F399593A;
+	Tue, 11 Dec 2007 23:49:06 -0500 (EST)
+In-Reply-To: <7vprxcdhis.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 11 Dec 2007 13:54:19 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67991>
 
-Jason Sewall <jasonsewall@gmail.com> wrote:
-> Anyway, ugit is very good for a first draft; its text display beats
-> whats in git-gui in a big way (and I would *hope* qt4 would beat
-> Tcl/Tk at that at least).
+Junio C Hamano <gitster@pobox.com> writes:
 
-Are you just using the wrong fonts under git-gui?  I mean both
-Tk and qt4 are drawing text through your windowing system, from
-the same pool of font files... if qt4 can draw nice text then
-so can Tk, right?
+> While this should be safe (because the user of blob lazily re-fetches),
+> it feels a bit too aggressive, especially when -C or other "retry and
+> try harder to assign blame elsewhere" option is used.
+>
+> Instead, how about discarding after we are done with each origin, like
+> this?
 
--- 
-Shawn.
+It's been a while for me to look at the blame engine, and it hit me that
+it would be interesting to run assign_blame() loop on multi-core machine
+in parallel threads.
