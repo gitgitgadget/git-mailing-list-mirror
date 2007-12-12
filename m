@@ -1,95 +1,111 @@
-From: Davide Libenzi <davidel@xmailserver.org>
-Subject: Re: git annotate runs out of memory
-Date: Tue, 11 Dec 2007 16:22:40 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0712111611570.1671@alien.or.mcafeemobile.com>
-References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
- <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
- <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com>
- <alpine.LFD.0.9999.0712111122400.25032@woody.linux-foundation.org>
- <alpine.LFD.0.9999.0712111300440.25032@woody.linux-foundation.org>
- <7vprxcdhis.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.0.9999.0712111523210.25032@woody.linux-foundation.org>
- <alpine.LFD.0.9999.0712111548200.25032@woody.linux-foundation.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Using git with Eclipse
+Date: Wed, 12 Dec 2007 01:29:43 +0100
+Message-ID: <200712120129.43878.robin.rosenberg.lists@dewire.com>
+References: <475DC0CE.9070109@saville.com> <20071211024442.GJ14735@spearce.org> <475E265D.5090106@saville.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Berlin <dberlin@dberlin.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Dec 12 01:23:09 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Wink Saville <wink@saville.com>
+X-From: git-owner@vger.kernel.org Wed Dec 12 01:28:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2FNQ-00084B-NZ
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 01:23:05 +0100
+	id 1J2FSF-0000xh-8e
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 01:28:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751706AbXLLAWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Dec 2007 19:22:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751807AbXLLAWn
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 19:22:43 -0500
-Received: from x35.xmailserver.org ([64.71.152.41]:52093 "EHLO
-	x35.xmailserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751450AbXLLAWm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Dec 2007 19:22:42 -0500
-X-AuthUser: davidel@xmailserver.org
-Received: from alien.or.mcafeemobile.com
-	by x35.xmailserver.org with [XMail 1.25 ESMTP Server]
-	id <S263EEB> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
-	Tue, 11 Dec 2007 19:22:41 -0500
-X-X-Sender: davide@alien.or.mcafeemobile.com
-In-Reply-To: <alpine.LFD.0.9999.0712111548200.25032@woody.linux-foundation.org>
-X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
-X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
+	id S1751631AbXLLA1m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Dec 2007 19:27:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbXLLA1l
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Dec 2007 19:27:41 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:11490 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751572AbXLLA1l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Dec 2007 19:27:41 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 5098C802E0A;
+	Wed, 12 Dec 2007 01:18:11 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 06352-03; Wed, 12 Dec 2007 01:18:10 +0100 (CET)
+Received: from [10.9.0.7] (unknown [10.9.0.7])
+	by dewire.com (Postfix) with ESMTP id D84678026DC;
+	Wed, 12 Dec 2007 01:18:08 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <475E265D.5090106@saville.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67975>
 
-On Tue, 11 Dec 2007, Linus Torvalds wrote:
+tisdag 11 december 2007 skrev Wink Saville:
+> Shawn O. Pearce wrote:
+> > Wink Saville <wink@saville.com> wrote:
+> >   
+> >> I'm trying to use git on an Eclipse workspace and the .metadata 
+> >> directory is chock full of files and was wondering what, if anything, 
+> >> should be ignored. At the moment .history looks like a candidate for 
+> >> ignoring there are probably others.
+> >>     
+> >
+> > Ignore all of .metadata; its Eclipse private state that you don't
+> > want to version.  I'd add it to .git/info/exclude so its ignored only
+> > in the repository that is using Eclipse, rather than in .gitignore
+> > (which is published).
+> >
+> >   
+> Shawn,
+> 
+> I added .metadata to exclude then used git rm to remove
+> .metadata from the repository. I then cloned that
+> repository to see how Eclipse would work. (As part of  my
+> workflow I use git as a backup so I wanted to see what would
+> happen when I "restored".)
+> 
+> As I'm sure you know with the metadata gone my existing projects
+> in the Ui were gone and they have to be recreated as well as
+> some Eclipse and plugin specific configuration.
+> I understand you and others are working on an Eclipse plugin
+> for git, will it also ignore . metadata?
 
-> On Tue, 11 Dec 2007, Linus Torvalds wrote:
-> > 
-> > and while I suspect xdiff could be optimized a bit more for the cases 
-> > where we have no changes at the end, that's beyond my skills.
-> 
-> Ok, I lied.
-> 
-> Nothing is beyond my skills. My mad k0der skillz are unbeatable.
-> 
-> This speeds up git-blame on ChangeLog-style files by a big amount, by just 
-> ignoring the common end that we don't care about, since we don't want any 
-> context anyway at that point. So I now get:
-> 
-> 	[torvalds@woody gcc]$ time git blame gcc/ChangeLog > /dev/null
-> 
-> 	real    0m7.031s
-> 	user    0m6.852s
-> 	sys     0m0.180s
-> 
-> which seems quite reasonable, and is about three times faster than trying 
-> to diff those big files.
-> 
-> Davide: this really _does_ make a huge difference. Maybe xdiff itself 
-> should do this optimization on its own, rather than have the caller hack 
-> around the fact that xdiff doesn't handle this common case all that well?
+I don't put my projects into the workspace directory so I don't have
+that problem. I think mixing projects and workspaces is a bad idea
+(from experience, especially when testing different Eclipse versions
+on the same projects.
 
-I didn't follow the thread, but I can guess from the subject that this is 
-about memory, isn't it?
-Libxdiff already has a xdl_trim_ends() that strips all the common 
-beginning and ending records, but at that point files are already loaded.
-Since libxdiff works with memory files in order to keep any sort of 
-system dependency out of the window, so the optimization would be 
-useless on libxdiff side. This because the user would have to have 
-already the file loaded in memory, to pass it to libxdiff.
-If this is really about memory, this better be kept on the libxdiff caller 
-side, so that it can avoid loading the terminal file sections altogether.
-About your code, you may want to have an extend-till-next-eol code after 
-the trimming part, since the last line may be used for context in the 
-diffs.
+As for settings you can configure project specific settings,
+rather than workspace settings for most interesting settings. You can
+also export/import settings. Getting projects into a new workspace
+is best done using import. Point import to a directory  and it will scan
+for all projects and let you import them all in one go.
 
+Egit doesn't ignore .metadata by default, I think. Probably should. For now
+you can tell egit to ignore it via the workspace settings, which egit honors.
+Eventually it will honor .git/info/exclude etc, but currently it doesn't.
 
+> 
+> Do you need any testing done or is it too early? I'd be glad to
+> test if you feel its solid enough that I won't lose data or if it
+> uses a separate different repo then I could use both.
 
+Sure testing is needed. It's solid enough to be usable, but probably not
+bug free and isn't feature complete. So if we can root out some bugs and not 
+just introduce new buggy features that helps. Not that development is very 
+fast nowadays, but having real users spurs development and hopefully gets 
+more contributors.
 
-- Davide
+The likelyhood of loosing data is probably very low as few operations are
+dangerous. Of course, there is no warranty etc. etc. and we haven't done
+very much monkey testing (unless using the plugin on windows counts).
+
+I use egit and git on the same work dir in parallel, sometimes using egit, 
+sometimes git-gui and sometimes plain git depending on which does the
+work better.
+
+-- robin
