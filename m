@@ -1,137 +1,136 @@
-From: =?utf-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>
-Subject: [PATCH] clone: support cloning full bundles
-Date: Wed, 12 Dec 2007 11:48:05 +0100
-Message-ID: <1197456485-22909-1-git-send-email-sbejar@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] builtin-clone: Implement git clone as a builtin command.
+Date: Wed, 12 Dec 2007 11:12:50 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712121103510.27959@racer.site>
+References: <20071211195712.GA3865@bitplanet.net> <Pine.LNX.4.64.0712111549490.5349@iabervon.org>
+ <1197416286.7552.4.camel@hinata.boston.redhat.com> <7vejdsbo7d.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Santi=20B=C3=A9jar?= <sbejar@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 12 11:41:11 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811741-284983851-1197457970=:27959"
+Cc: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 12 12:13:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2P1Z-0008Lm-2X
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 11:41:09 +0100
+	id 1J2PWf-00037h-6l
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 12:13:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756667AbXLLKkr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Dec 2007 05:40:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756182AbXLLKkr
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 05:40:47 -0500
-Received: from mail.mppmu.mpg.de ([134.107.24.11]:58909 "EHLO
-	mail.mppmu.mpg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755995AbXLLKkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 05:40:46 -0500
-Received: by mail.mppmu.mpg.de (Postfix, from userid 998)
-	id 2BB421203F; Wed, 12 Dec 2007 11:40:45 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on mail.mppmu.mpg.de
-X-Spam-Status: No, score=-3.2 required=6.0 tests=ALL_TRUSTED,BAYES_00,
-	J_CHICKENPOX_13,J_CHICKENPOX_53 autolearn=ham version=3.1.7
-X-Spam-Level: 
-Received: from localhost.localdomain (sn3dhcp15.mppmu.mpg.de [134.107.3.155])
-	by mail.mppmu.mpg.de (Postfix) with ESMTP id 163D712027;
-	Wed, 12 Dec 2007 11:40:36 +0100 (CET)
-X-Mailer: git-send-email 1.5.3.7.2094.gff6c
+	id S1751807AbXLLLMy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 06:12:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753907AbXLLLMy
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 06:12:54 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42043 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751631AbXLLLMx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 06:12:53 -0500
+Received: (qmail invoked by alias); 12 Dec 2007 11:12:51 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp047) with SMTP; 12 Dec 2007 12:12:51 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1887zx27uk8w6tToiz5FwChawS6Y1a2kC8+RLxBbf
+	klPJcR3ORyGqH7
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vejdsbo7d.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68036>
 
-It still fails for incremental bundles.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
----
-Hi *,
+---1463811741-284983851-1197457970=:27959
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-Does anyone know how to create a repository from an incremental bundle?
+Hi,
 
-Also, when a repo/bundle does not have a HEAD, clone does not setup the
-remote configs, is this the desired behavior?=20
+On Tue, 11 Dec 2007, Junio C Hamano wrote:
 
-I know that Kristian is working in the C conversion, I'll rebase this
-patch on top if that is prefered. Or maybe it will not be necessary at =
-all,
-as "git fetch" supports bundles.
+> Kristian Høgsberg <krh@redhat.com> writes:
+> 
+> > On Tue, 2007-12-11 at 15:59 -0500, Daniel Barkalow wrote:
+> >> On Tue, 11 Dec 2007, Kristian Høgsberg wrote:
+> >> 
+> >> > Ok, don't flame me, I know this isn't appropriate at the moment 
+> >> > with stabilization for 1.5.4 going on, but I just wanted to post a 
+> >> > heads up on this work to avoid duplicate effort.  It's one big 
+> >> > patch at this point and I haven't even run the test suite yet, but 
+> >> > that will change.
+> >> 
+> >> Is that why you misspelled Junio's email address? :)
+> >
+> > Hehe, yeah, do not mess with maintainers in release mode :)
+> 
+> Actually this is a bit unfortunate, regardless of everybody being in 
+> release and bugfix only mode.
 
-Santi
+I can understand that feeling, but I have to say that I am actually quite 
+pleased with the progress in direction of having most of git as builtins.
 
- git-clone.sh           |   17 +++++++++++++----
- t/t5701-clone-local.sh |   11 +++++++++++
- 2 files changed, 24 insertions(+), 4 deletions(-)
+> I was hoping that the evolution path for clone would be to first make it 
+> a very thin wrapper around:
+> 
+> 	git init
+>         git remote add -f
+>         git checkout
+> 
+> sequence.
 
-diff --git a/git-clone.sh b/git-clone.sh
-index ecf9d89..a4a2124 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -206,11 +206,14 @@ fi
- if base=3D$(get_repo_base "$repo"); then
- 	repo=3D"$base"
- 	local=3Dyes
-+elif [ -f "$repo" ] ; then
-+	case "$repo" in /*);; *) repo=3D"$PWD/$repo" ; esac
- fi
-=20
- dir=3D"$2"
- # Try using "humanish" part of source repo if user didn't specify one
- [ -z "$dir" ] && dir=3D$(echo "$repo" | sed -e 's|/$||' -e 's|:*/*\.gi=
-t$||' -e 's|.*[/:]||g')
-+[ -f "$dir" ] && dir=3D$(expr "$repo" : '.*/\([^/]*\)\.[^/]*')
- [ -e "$dir" ] && die "destination directory '$dir' already exists."
- [ yes =3D "$bare" ] && unset GIT_WORK_TREE
- [ -n "$GIT_WORK_TREE" ] && [ -e "$GIT_WORK_TREE" ] &&
-@@ -359,11 +362,17 @@ yes)
- 		fi
- 		;;
- 	*)
--		case "$upload_pack" in
--		'') git-fetch-pack --all -k $quiet $depth $no_progress "$repo";;
--		*) git-fetch-pack --all -k $quiet "$upload_pack" $depth $no_progress=
- "$repo" ;;
--		esac >"$GIT_DIR/CLONE_HEAD" ||
-+		if [ -f "$repo" ] ; then
-+			git bundle unbundle "$repo" > "$GIT_DIR/CLONE_HEAD" ||
-+			die "unbundle from '$repo' failed."
-+		else
-+			case "$upload_pack" in
-+			'') git-fetch-pack --all -k $quiet $depth $no_progress "$repo";;
-+			*) git-fetch-pack --all -k \
-+				$quiet "$upload_pack" $depth $no_progress "$repo" ;;
-+			esac >"$GIT_DIR/CLONE_HEAD" ||
- 			die "fetch-pack from '$repo' failed."
-+		fi
- 		;;
- 	esac
- 	;;
-diff --git a/t/t5701-clone-local.sh b/t/t5701-clone-local.sh
-index 822ac8c..a7e5a31 100755
---- a/t/t5701-clone-local.sh
-+++ b/t/t5701-clone-local.sh
-@@ -9,6 +9,7 @@ test_expect_success 'preparing origin repository' '
- 	: >file && git add . && git commit -m1 &&
- 	git clone --bare . a.git &&
- 	git clone --bare . x &&
-+	git bundle create b1.bundle --all HEAD &&
- 	test "$(GIT_CONFIG=3Da.git/config git config --bool core.bare)" =3D t=
-rue &&
- 	test "$(GIT_CONFIG=3Dx/config git config --bool core.bare)" =3D true
- '
-@@ -63,4 +64,14 @@ test_expect_success 'Even without -l, local will mak=
-e a hardlink' '
- 	test 0 =3D $copied
- '
-=20
-+test_expect_success 'bundle clone with suffix' '
-+	cd "$D" &&
-+	git clone b1.bundle
-+'
-+
-+test_expect_success 'bundle clone' '
-+	cd "$D" &&
-+	git clone b1.bundle bdl1
-+'
-+
- test_done
---=20
-1.5.3.7.2094.gff6c
+Yeah, I thought so too, but I'll also gladly take the builtin first.
+
+> There are a handful issues in that approach with the current git-remote, 
+> and that was why I also thought recent "git remote in C" by Dscho a bit 
+> unfortunate, as enhancements and interface fixes (both user and machine) 
+> tend to be much easier in scripted version.
+
+And here I have to disagree strongly.  I _wasted_ a _week_ on trying to 
+fix that stupid "add --mirror && prune" bug in the scripted version.  It 
+was absolutely horrible.  And I felt like a moron after that week.
+
+In contrast, it was easy as chocolate cake to fix it in the builtin 
+remote.
+
+Now, if you not only hinted in some mail that something is wrong with 
+builtin-remote, but gave me some input, I could fix that in the builtin, 
+too.
+
+> What the current "git clone" does that are not naturally expressed by
+> the above sequence are:
+> 
+>  * HEAD discovery
+> 
+>    The code can be lifted from the scripted version and transplanted to
+>    git-remote.  And to make "origin" and other remotes added by "git
+>    remote add", this logic needs to be moved to "git remote".
+> 
+>    However, before rewriting the "git remote" to C, it would be really
+>    nice if we can update the native protocol so that we can reliably
+>    find out which branch HEAD points at.  The current code guesses, only
+>    because the native protocol does not carry that information [*1*].
+>    Worse yet, even though the current code _knows_ this information when
+>    going over dumb protocols, it discards it to use the same guessing
+>    logic as used by the native protocol.
+
+I wonder why this should be easier with git remote in Perl.  IMHO it is 
+easier with git remote in C.
+
+>  * --shared optimization
+> 
+>    This is a very easy addition to "git remote add".  You make sure that
+>    the added remote repository is on a local machine, and set up
+>    alternates to point at its object store.
+
+Concur.
+
+Since I want to lose that dependency on cpio on Windows (which we fake by 
+using tar), I'll implement this in C anyway.
+
+Ciao,
+Dscho
+
+---1463811741-284983851-1197457970=:27959--
