@@ -1,98 +1,58 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 2/2] git-help: add "web_or_man" and "web_or_info" config
- vars.
-Date: Wed, 12 Dec 2007 06:33:25 +0100
-Message-ID: <20071212063325.92cd29a8.chriscool@tuxfamily.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] git-help: add "web_or_man" and "web_or_info" config vars.
+Date: Tue, 11 Dec 2007 21:35:39 -0800
+Message-ID: <7v1w9sbhlg.fsf@gitster.siamese.dyndns.org>
+References: <20071212063325.92cd29a8.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Dec 12 06:27:44 2007
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Dec 12 06:36:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2K8C-0007VQ-Lw
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 06:27:41 +0100
+	id 1J2KGw-0001U9-If
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 06:36:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752500AbXLLF1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 00:27:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752476AbXLLF1H
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 00:27:07 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:49201 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752495AbXLLF1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 00:27:06 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 9A6281AB2BD;
-	Wed, 12 Dec 2007 06:27:04 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 6453F1AB2B7;
-	Wed, 12 Dec 2007 06:27:04 +0100 (CET)
-X-Mailer: Sylpheed 2.4.7 (GTK+ 2.12.1; i486-pc-linux-gnu)
+	id S1757220AbXLLFf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 00:35:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757198AbXLLFf6
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 00:35:58 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50097 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757109AbXLLFf5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 00:35:57 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A1DFF5CDB;
+	Wed, 12 Dec 2007 00:35:52 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E1FB25CDA;
+	Wed, 12 Dec 2007 00:35:48 -0500 (EST)
+In-Reply-To: <20071212063325.92cd29a8.chriscool@tuxfamily.org> (Christian
+	Couder's message of "Wed, 12 Dec 2007 06:33:25 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67997>
 
-These configuration variables can be used when you want to
-use a web browser if DISPLAY is set and "man" or "info"
-otherwise.
+I personally feel this is going a bit overboard.  We'd be better off
+doing something like this:
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-help.txt |   15 +++++++++++----
- help.c                     |   10 ++++++++++
- 2 files changed, 21 insertions(+), 4 deletions(-)
+ - add 'help.external' configuration variable, that allows the user to
+   set any external program;
 
-diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-index af5e5cb..c790584 100644
---- a/Documentation/git-help.txt
-+++ b/Documentation/git-help.txt
-@@ -24,10 +24,17 @@ up. The 'man' program is used by default for this purpose, but this
- can be overriden by other options.
- 
- If no command line option is passed, the 'help.format' configuration
--variable will be checked. Supported values for this variable are
--"man", "info" and "web" (or "html" as a synonym to the latter). This
--makes git-help behave as if a command line option with the same long
--name as been passed to it.
-+variable will be checked. The following values are supported for this
-+variable; they make 'git-help' behave as their corresponding command
-+line option:
-+
-+* "man" corresponds to '-m|--man',
-+* "info" corresponds to '-i|--info',
-+* "web" or "html" correspond to '-w|--web',
-+* "web_or_man" corresponds to '-w|--web' if DISPLAY is set, '-m|--man'
-+otherwise,
-+* "web_or_info" corresponds to '-w|--web' if DISPLAY is set, '-i|--info'
-+otherwise.
- 
- Note that 'git --help ...' is identical as 'git help ...' because the
- former is internally converted into the latter.
-diff --git a/help.c b/help.c
-index af0a433..d46bc08 100644
---- a/help.c
-+++ b/help.c
-@@ -34,6 +34,16 @@ static void parse_help_format(const char *format)
- 		help_format = web_format;
- 		return;
- 	}
-+	if (!strcmp(format, "web_or_man")) {
-+		char *display = getenv("DISPLAY");
-+		help_format = display ? web_format : man_format;
-+		return;
-+	}
-+	if (!strcmp(format, "web_or_info")) {
-+		char *display = getenv("DISPLAY");
-+		help_format = display ? web_format : info_format;
-+		return;
-+	}
- 	die("unrecognized help format '%s'", format);
- }
- 
--- 
-1.5.3.7.2269.g4ae7
+ - spawn the external program when "git help <cmd>" is given, with <cmd>
+   as the parameter;
+
+ - add an option to 'git config' to dump various paths configured in the
+   git program, such as manual page path, info page path and such, so
+   that the external program can learn where things are.
+
+The second point above means that translating "cat-file" to
+"git-cat-file.html" becomes the responsibility for the external
+program.
