@@ -1,71 +1,100 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] builtin-clone: Implement git clone as a builtin command.
-Date: Wed, 12 Dec 2007 13:40:12 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0712121330541.5349@iabervon.org>
-References: <20071211195712.GA3865@bitplanet.net>  <Pine.LNX.4.64.0712111549490.5349@iabervon.org>
-  <1197416286.7552.4.camel@hinata.boston.redhat.com> 
- <7vejdsbo7d.fsf@gitster.siamese.dyndns.org>  <1197473063.9269.20.camel@hinata.boston.redhat.com>
-  <Pine.LNX.4.64.0712121237540.5349@iabervon.org>
- <1197483943.10132.4.camel@hinata.boston.redhat.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: v1.5.4 plans
+Date: Wed, 12 Dec 2007 10:40:22 -0800
+Message-ID: <20071212184022.GB28377@untitled>
+References: <7vy7d43ptc.fsf@gitster.siamese.dyndns.org> <7vabpg9x5k.fsf@gitster.siamese.dyndns.org> <7vy7cwsi3p.fsf@gitster.siamese.dyndns.org> <7vk5o6jbq9.fsf@gitster.siamese.dyndns.org> <7v63zjgoel.fsf@gitster.siamese.dyndns.org> <7vsl2i6ea4.fsf@gitster.siamese.dyndns.org> <7vhcixtnm4.fsf@gitster.siamese.dyndns.org> <7vfxye4yv7.fsf@gitster.siamese.dyndns.org> <7vve78qhtf.fsf@gitster.siamese.dyndns.org> <7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-2143387413-1197484812=:5349"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 19:40:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	"David D. Kilzer" <ddkilzer@kilzer.net>
+X-From: git-owner@vger.kernel.org Wed Dec 12 19:42:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2WVe-0008PZ-B4
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 19:40:42 +0100
+	id 1J2WX1-0000jI-5m
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 19:42:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755602AbXLLSkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 13:40:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755351AbXLLSkP
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 13:40:15 -0500
-Received: from iabervon.org ([66.92.72.58]:51281 "EHLO iabervon.org"
+	id S1755846AbXLLSkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 13:40:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756124AbXLLSkZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 13:40:25 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:57786 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755574AbXLLSkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 13:40:14 -0500
-Received: (qmail 19336 invoked by uid 1000); 12 Dec 2007 18:40:12 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 12 Dec 2007 18:40:12 -0000
-In-Reply-To: <1197483943.10132.4.camel@hinata.boston.redhat.com>
+	id S1755700AbXLLSkX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 13:40:23 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 935947DC025;
+	Wed, 12 Dec 2007 10:40:22 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68084>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Junio C Hamano <gitster@pobox.com> wrote:
+> People might have noticed that I've been ignoring most of the new
+> topics/enhancements for the past few days.  Here is what I want to see
+> happen until we declare v1.5.4.
+> 
+> First, stabilize 'master' enough and tag v1.5.4-rc0 soon.
 
---1547844168-2143387413-1197484812=:5349
-Content-Type: TEXT/PLAIN; charset=X-UNKNOWN
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+>  * Eric's sanely-compact mapping from SVN rev-ids to git commits saw a
+>    positive feedback.  I haven't carefully read that patch but it seemed
+>    sane and I'd like to have it in v1.5.4.
 
-On Wed, 12 Dec 2007, Kristian H=F8gsberg wrote:
+It's looking good for most users, I think it's safe enough for 1.5.4
 
-> Ugh, I meant builtin-remote there, sorry.  I use fetch_pack() like the sh=
-ell
-> script does, and it seem a lot easier that trying to call fetch:
->=20
->         struct fetch_pack_args args;
->=20
->         args.uploadpack =3D option_upload_pack;
->         args.quiet =3D option_quiet;
->         args.fetch_all =3D 1;
->         args.lock_pack =3D 0;
->         args.keep_pack =3D 1;
->         args.depth =3D option_depth;
->         args.no_progress =3D 1;
->=20
->         refs =3D fetch_pack(&args, argv[0], 0, NULL, NULL);
+>  * I've seen t9119-git-svn-info.sh fail in my k.org private repository
+>    and have been skipping the test, but this needs to be diagnosed and
+>    fixed [*1*].  It could be just that the code is fine and the test is
+>    not rejecting SVN that is too-old. I dunno.
 
-Ah, but that only works for git native protocol remote repositories.=20
-Calling fetch instead would mean that other protocols also work without=20
-any fuss.
+I wouldn't mind dropping this test for now.
 
-=09-Daniel
-*This .sig left intentionally blank*
---1547844168-2143387413-1197484812=:5349--
+100% output compatibility with SVN is too difficult to achieve
+and IMHO not worth it for commands like `info' and `log'.
+
+David:
+
+I also noticed some race-conditions on this test when running this on my
+Centrino laptop (my fastest box, but I rarely use it for git
+development) and having git on my USB thumb drive.  I'm pretty sure
+these were caused by inconsistencies in handling timestamps on symlinks
+vs timestamps on the files they link to.
+
+> *1* t9119 first fails at the 6th test.  Perhaps the test needs to check
+> svn version first and stop testing this feature.  This test does not
+> fail on my personal box that has svn 1.4.2.
+> 
+> * expecting success:
+>         (cd svnwc; svn info file) > expected.info-file &&
+>         (cd gitwc; git-svn info file) > actual.info-file &&
+>         git-diff expected.info-file actual.info-file
+> 
+> diff --git a/expected.info-file b/actual.info-file
+> index b1d57f4..997c927 100644
+> --- a/expected.info-file
+> +++ b/actual.info-file
+> @@ -10,6 +10,5 @@ Last Changed Author: junio
+>  Last Changed Rev: 1
+>  Last Changed Date: 2007-12-10 22:18:12 +0000 (Mon, 10 Dec 2007)
+>  Text Last Updated: 2007-12-10 22:18:13 +0000 (Mon, 10 Dec 2007)
+> -Properties Last Updated: 2007-12-10 22:18:13 +0000 (Mon, 10 Dec 2007)
+>  Checksum: 5bbf5a52328e7439ae6e719dfe712200
+> 
+> * FAIL 6: info file
+> 
+>                 (cd svnwc; svn info file) > expected.info-file &&
+>                 (cd gitwc; git-svn info file) > actual.info-file &&
+>                 git-diff expected.info-file actual.info-file
+> 
+> : hera t/master; svn --version
+> svn, version 1.3.2 (r19776)
+
+-- 
+Eric Wong
