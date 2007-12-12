@@ -1,107 +1,72 @@
-From: "J.C. Pizarro" <jcpiza@gmail.com>
-Subject: Re: Something is broken in repack. Why not with fork and pipes?
-Date: Wed, 12 Dec 2007 19:47:14 +0100
-Message-ID: <998d0e4a0712121047m3cb09f37qc3157b96e5d171e7@mail.gmail.com>
+From: "Jason Sewall" <jasonsewall@gmail.com>
+Subject: Re: [ANNOUNCE] ugit: a pyqt-based git gui // was: Re: If you would write git from scratch now, what would you change?
+Date: Wed, 12 Dec 2007 13:50:55 -0500
+Message-ID: <31e9dd080712121050i45981ed5u845b71f0e73aa8e2@mail.gmail.com>
+References: <402731c90712110548k67f28b64w5afa93ee908ce73b@mail.gmail.com>
+	 <31e9dd080712111114t2bbdba60m18b7d6210f3f9174@mail.gmail.com>
+	 <e5bfff550712111133j66c4b9adx9f57661cc720aa41@mail.gmail.com>
+	 <402731c90712111254q1cb99c6al47538971d93b4592@mail.gmail.com>
+	 <31e9dd080712111329j2c8b22ebs38ab727a5fbe85fb@mail.gmail.com>
+	 <20071212041002.GN14735@spearce.org>
+	 <31e9dd080712112113u44b30c62ja012951fba958c5d@mail.gmail.com>
+	 <20071212052329.GR14735@spearce.org>
+	 <31e9dd080712120702k36a959cfh3e2a5c5fb076d922@mail.gmail.com>
+	 <Pine.LNX.4.64.0712121814260.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "David Miller" <davem@davemloft.net>, "Nicolas Pitre" <nico@cam.org>,  	jonsmirl@gmail.com, "Junio C Hamano" <gitster@pobox.com>,  	gcc@gcc.gnu.org, git@vger.kernel.org
-To: "Linus Torvalds" <torvalds@linux-foundation.org>,  	"Andreas Ericsson" <ae@op5.se>
-X-From: gcc-return-142944-gcc=m.gmane.org@gcc.gnu.org Wed Dec 12 19:47:59 2007
-Return-path: <gcc-return-142944-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J2WcY-0003Bh-50
-	for gcc@gmane.org; Wed, 12 Dec 2007 19:47:50 +0100
-Received: (qmail 20492 invoked by alias); 12 Dec 2007 18:47:30 -0000
-Received: (qmail 20480 invoked by uid 22791); 12 Dec 2007 18:47:30 -0000
-X-Spam-Check-By: sourceware.org
-Received: from an-out-0708.google.com (HELO an-out-0708.google.com) (209.85.132.241)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Wed, 12 Dec 2007 18:47:17 +0000
-Received: by an-out-0708.google.com with SMTP id c3so93155ana.104         for <gcc@gcc.gnu.org>; Wed, 12 Dec 2007 10:47:14 -0800 (PST)
-Received: by 10.70.44.1 with SMTP id r1mr1624015wxr.61.1197485234136;         Wed, 12 Dec 2007 10:47:14 -0800 (PST)
-Received: by 10.70.26.9 with HTTP; Wed, 12 Dec 2007 10:47:14 -0800 (PST)
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, David <davvid@gmail.com>,
+	"Marco Costalba" <mcostalba@gmail.com>,
+	"Andy Parkins" <andyparkins@gmail.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Dec 12 19:51:30 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J2Wfv-0004a3-PR
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 19:51:20 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753294AbXLLSu5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 13:50:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752614AbXLLSu5
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 13:50:57 -0500
+Received: from wa-out-1112.google.com ([209.85.146.180]:61213 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752188AbXLLSu4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 13:50:56 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so560585wah.23
+        for <git@vger.kernel.org>; Wed, 12 Dec 2007 10:50:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=9+b1gc5aUBES6riiaeo7yKrquTyjkqRB0eBECx3Mbkw=;
+        b=Y5a8ZTSvvGFmJpd0Rk75tOVBm3VjsqLfFwWaqboP0+4u8f4EliQnNRZuJ0ts6TA93ioXEmpMemBj7ZxL2ZN5FDffEdkAUx79dvxdB2d2tfJ/XFImb0R2WNKVVBkjunVDAJWQz9WaSidZXg7IDy50drBygbrmxMN62KvAUvU6cAI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UeU1kQJHHwK5ANA56sOKGHt7ZIVAScwcc1mwKluzljjOj7BnBFz6LhS/8Res7beuvyxc3oi5Q5bEefLj/FA1q0XmDmoOodIZXsKfx+AAWSkkAAx8l3Bv7/pz/PcmmsiQbo8QpeomT/TdIS0ge3Skbv7sP2gEs4RhpPfqsLW1E+8=
+Received: by 10.114.154.1 with SMTP id b1mr1166330wae.34.1197485455867;
+        Wed, 12 Dec 2007 10:50:55 -0800 (PST)
+Received: by 10.115.18.14 with HTTP; Wed, 12 Dec 2007 10:50:55 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0712121814260.27959@racer.site>
 Content-Disposition: inline
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68086>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68087>
 
-At http://gcc.gnu.org/ml/gcc/2007-12/msg00360.html, Andreas Ericsson
-<ae@op5.se> wrote:
-> If it's still an issue next week, we'll have a 16 core (8 dual-core cpu's)
-> machine with some 32gb of ram in that'll be free for about two days.
-> You'll have to remind me about it though, as I've got a lot on my mind
-> these days.
+On Dec 12, 2007 1:15 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Wed, 12 Dec 2007, Jason Sewall wrote:
+> > On that note, did you see what I wrote above, about having "split hunk"
+> > functionality?
 >
->
-> --
-> Andreas Ericsson                   andreas.ericsson@op5.se
-> OP5 AB                             www.op5.se
-> Tel: +46 8-230225                  Fax: +46 8-230231
+> I had a patch for splitting hunks in git-gui in August, but there were
+> some issues that I did not yet resolve.  If you want to work on it, I'll
+> gladly share that patch with you.
 
-It's good idea if it's for 24/365.25 that it does
- autorepack-compute-again-again-again-those-unexplored-deltas of
- git repositories in realtime. :D
+Sure, send it along. I'm not going to make any promises, but I could
+probably find time poke around in there.
 
-Some body can do "git clone" that it could give smaller that one hour ago :D
-
------------------------------------------------------------------
-
-To Linus, Why don't you forget the threaded implementation of your repo-pack?
-
-To imagine a "buggy bloated threading implementation originated to try it to
-work only in HyperThreading Intel CPUs and 8 cores x 8 threads/core
-Niagara Sparcs"
-
-IMHO, in multicored machine, multiprocessed implementation of repo-pack perfomes
-better than multithreaded implementation, although i've not their results.
-
-It has not issue, not problem, etc. with memory allocation of threads,
-so monothreaded memory allocation is simple and fast!
-
-You can see "Why not with fork and pipes like in linux?" at
-http://gcc.gnu.org/ml/gcc/2007-12/msg00203.html
-http://gcc.gnu.org/ml/gcc/2007-12/msg00209.html
-
-For easy implementation, don't use threads due to complicated condition races
- between threads of multithreaded processes.
-
-To use only condition races between monothreaded processes with select/epoll
- only in the parent process. It's due to the KISS principle works.
-
-The children processes share almost readed-only memory due to COW
- (Copy On Write), so, before forking, the parent must to have a large
- plain data structures in C for children. The children use pipes to
- realize a complex intercommunication that the parent updates the
- results computated by the children almost of the time.
-
-Another implementation is that the children can realize a locked
- load-and-store to/from unique filesystem's database if big memory to
- store data is a big problem.
-
-Another implementation is to consider children processes as intensive-CPU
-slaves and parent process as the master that manipulates the big database.
-
-If you want to measure the performance between multiprocessed vs multithreaded
-implementation of repo-pack then you have to remember that
-
-   For same data input size and same data output size, to get the
-   seconds of your wall-clock or watch-clock as a measure of the benchmark
-   of this repo-pack.
-
-The numeric data posted to mailing list about the timings dependently of # of
- threads are bad measured because they don't say how is small the result repo.
- and don't say if the results are the same independently of # of threads.
-
-For good measures, we need "to plot the curves", e.g. based in
-( # of threads, elapsed time of wall-clock, data input size, data output size )
-and we can observe the intersection between above curves.
-
-   J.C.Pizarro
+Jason
