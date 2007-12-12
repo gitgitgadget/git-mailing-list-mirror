@@ -1,76 +1,73 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [(not so) random thoughts] using git as its own caching tool
-Date: Wed, 12 Dec 2007 17:03:00 +0100
-Message-ID: <47600634.3030207@op5.se>
-References: <20071212003813.GG29110@artemis.madism.org> <475FFFB7.4010102@op5.se> <20071212154848.GA19294@glandium.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Something is broken in repack
+Date: Wed, 12 Dec 2007 11:13:52 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0712121106400.555@xanadu.home>
+References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>  <9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com>  <alpine.LFD.0.99999.0712102231570.555@xanadu.home>  <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>  <9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com>  <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>  <alpine.LFD.0.99999.0712110832251.555@xanadu.home>  <alpine.LFD.0.99999.0712110951070.555@xanadu.home>  <alpine.LFD.0.99999.0712111117440.555@xanadu.home>  <9e4733910712110821o7748802ag75d9df4be8b2c123@mail.gmail.com>  <alpine.LFD.0.99999.0712112057390.555@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Pierre Habouzit <madcoder@debian.org>, Git ML <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Wed Dec 12 17:03:48 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2U3W-0001YF-Kd
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 17:03:31 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755384AbXLLQDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 11:03:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755830AbXLLQDG
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 11:03:06 -0500
-Received: from mail.op5.se ([193.201.96.20]:34600 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752343AbXLLQDF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 11:03:05 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id A55B01F08016;
-	Wed, 12 Dec 2007 17:03:02 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id OQrvd8JM2U7Y; Wed, 12 Dec 2007 17:03:01 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 7CB0C1F08008;
-	Wed, 12 Dec 2007 17:03:01 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <20071212154848.GA19294@glandium.org>
-Sender: git-owner@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, gcc@gcc.gnu.org,  Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: gcc-return-142935-gcc=m.gmane.org@gcc.gnu.org Wed Dec 12 17:14:43 2007
+Return-path: <gcc-return-142935-gcc=m.gmane.org@gcc.gnu.org>
+Envelope-to: gcc@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1J2UEM-0006eA-QF
+	for gcc@gmane.org; Wed, 12 Dec 2007 17:14:43 +0100
+Received: (qmail 25507 invoked by alias); 12 Dec 2007 16:14:23 -0000
+Received: (qmail 25498 invoked by uid 22791); 12 Dec 2007 16:14:23 -0000
+X-Spam-Check-By: sourceware.org
+Received: from relais.videotron.ca (HELO relais.videotron.ca) (24.201.245.36)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Wed, 12 Dec 2007 16:14:14 +0000
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca  (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))  with ESMTP id <0JSY000MH2F5AVA0@VL-MH-MR002.ip.videotron.ca> for  gcc@gcc.gnu.org; Wed, 12 Dec 2007 11:13:53 -0500 (EST)
+In-reply-to: <alpine.LFD.0.99999.0712112057390.555@xanadu.home>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68061>
+List-Id: <gcc.gcc.gnu.org>
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Delivered-To: mailing list gcc@gcc.gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68062>
 
-Mike Hommey wrote:
-> On Wed, Dec 12, 2007 at 04:35:19PM +0100, Andreas Ericsson <ae@op5.se> wrote:
->> A bit of both ;-)
->>
->> I like the idea to use the git object store, because that certainly
->> has an API that can't be done away with by user config. The reflog
->> and its expiration mechanism is subject to human control though, and
->> everyone doesn't even have them enabled. I don't for some repos where
->> I know I'll create a thousand-and-one loose objects by rebasing,
->> --amend'ing and otherwise fiddling with history rewrites.
->>
->> Having a tool that works on some repos but not on others because it
->> relies on me living with an auto-gc after pretty much every operation
->> would be very tiresome indeed.
+On Wed, 12 Dec 2007, Nicolas Pitre wrote:
+
+> I did modify the progress display to show accounted memory that was 
+> allocated vs memory that was freed but still not released to the system.  
+> At least that gives you an idea of memory allocation and fragmentation 
+> with glibc in real time:
 > 
-> There is already a tool that relies on reflogs: stash.
-> 
+> diff --git a/progress.c b/progress.c
+> index d19f80c..46ac9ef 100644
+> --- a/progress.c
+> +++ b/progress.c
+> @@ -8,6 +8,7 @@
+>   * published by the Free Software Foundation.
+>   */
+>  
+> +#include <malloc.h>
+>  #include "git-compat-util.h"
+>  #include "progress.h"
+>  
+> @@ -94,10 +95,12 @@ static int display(struct progress *progress, unsigned n, const char *done)
+>  	if (progress->total) {
+>  		unsigned percent = n * 100 / progress->total;
+>  		if (percent != progress->last_percent || progress_update) {
+> +			struct mallinfo m = mallinfo();
+>  			progress->last_percent = percent;
+> -			fprintf(stderr, "%s: %3u%% (%u/%u)%s%s",
+> -				progress->title, percent, n,
+> -				progress->total, tp, eol);
+> +			fprintf(stderr, "%s: %3u%% (%u/%u) %u/%uMB%s%s",
+> +				progress->title, percent, n, progress->total,
+> +				m.uordblks >> 18, m.fordblks >> 18,
+> +				tp, eol);
 
-No, "git stash save" works anyway. It's when you want to use multiple
-stashes that it becomes tricky, but even that works if you're willing
-to put some effort into it (although I don't use stash a lot, and not
-at all in the very rebase-heavy ones).
+Note: I didn't know what unit of memory those blocks represents, so the 
+shift is most probably wrong.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+
+Nicolas
