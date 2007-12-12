@@ -1,55 +1,56 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-cvsexportcommit fails for huge commits
-Date: Wed, 12 Dec 2007 11:17:01 -0500
-Message-ID: <20071212161701.GA18930@sigill.intra.peff.net>
-References: <20071211200418.GA13815@mkl-desktop> <20071212083154.GB7676@coredump.intra.peff.net> <alpine.LFD.0.9999.0712120753120.25032@woody.linux-foundation.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: Something is broken in repack
+Date: Wed, 12 Dec 2007 17:17:43 +0100
+Message-ID: <fjp1iu$rv3$1@ger.gmane.org>
+References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>  <9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com>  <alpine.LFD.0.99999.0712102231570.555@xanadu.home>  <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>  <9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com>  <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>  <alpine.LFD.0.99999.0712110832251.555@xanadu.home>  <alpine.LFD.0.99999.0712110951070.555@xanadu.home>  <alpine.LFD.0.99999.0712111117440.555@xanadu.home>  <9e4733910712110821o7748802ag75d9df4be8b2c123@mail.gmail.com>  <alpine.LFD.0.99999.0712112057390.555@xanadu.home> <alpine.LFD.0.99999.0712120743040.555@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Markus Klinik <markus.klinik@gmx.de>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Dec 12 17:17:36 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2UH3-0007wq-3N
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 17:17:29 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753890AbXLLQRG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 11:17:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753497AbXLLQRF
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 11:17:05 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4878 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752401AbXLLQRE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 11:17:04 -0500
-Received: (qmail 3248 invoked by uid 111); 12 Dec 2007 16:17:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 12 Dec 2007 11:17:03 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Dec 2007 11:17:01 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0712120753120.25032@woody.linux-foundation.org>
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: gcc@gcc.gnu.org
+X-From: gcc-return-142936-gcc=m.gmane.org@gcc.gnu.org Wed Dec 12 17:19:38 2007
+Return-path: <gcc-return-142936-gcc=m.gmane.org@gcc.gnu.org>
+Envelope-to: gcc@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1J2UJ3-0000V3-GT
+	for gcc@gmane.org; Wed, 12 Dec 2007 17:19:33 +0100
+Received: (qmail 30825 invoked by alias); 12 Dec 2007 16:19:14 -0000
+Received: (qmail 30816 invoked by uid 22791); 12 Dec 2007 16:19:13 -0000
+X-Spam-Check-By: sourceware.org
+Received: from main.gmane.org (HELO ciao.gmane.org) (80.91.229.2)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Wed, 12 Dec 2007 16:19:00 +0000
+Received: from list by ciao.gmane.org with local (Exim 4.43) 	id 1J2UHn-0005yj-Qy 	for gcc@gcc.gnu.org; Wed, 12 Dec 2007 16:18:15 +0000
+Received: from usilu-ge.ti-edu.ch ([195.176.176.226])         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))         id 1AlnuQ-0007hv-00         for <gcc@gcc.gnu.org>; Wed, 12 Dec 2007 16:18:15 +0000
+Received: from bonzini by usilu-ge.ti-edu.ch with local (Gmexim 0.1 (Debian))         id 1AlnuQ-0007hv-00         for <gcc@gcc.gnu.org>; Wed, 12 Dec 2007 16:18:15 +0000
+User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
+In-Reply-To: <alpine.LFD.0.99999.0712120743040.555@xanadu.home>
+X-IsSubscribed: yes
+Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68063>
+List-Id: <gcc.gcc.gnu.org>
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Delivered-To: mailing list gcc@gcc.gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68064>
 
-On Wed, Dec 12, 2007 at 08:02:35AM -0800, Linus Torvalds wrote:
 
-> On Wed, 12 Dec 2007, Jeff King wrote:
-> >  
-> > +sub xargs_safe_pipe_capture {
-> > +	my $MAX_ARG_LENGTH = 1024;
+> When I returned to the computer this morning, the repack was 
+> completed... with a 1.3GB pack instead.
 > 
-> Well, that's a bit extreme. Make it 16kB or something. Anything should be 
-> able to handle that.
+> So... The gcc repo apparently really needs a large window to efficiently 
+> compress those large objects.
 
-Obviously it should be tweaked, and I just chose an absurdly low value.
-However, "xargs --show-limit" claims that the POSIX minimum is 2048,
-less the size of the environment. I have no idea what the original
-problem reporter's platform is, or what sort of environment size is sane
-there.
+So, am I right that if you have a very well-done pack (such as gcc's), 
+you might want to repack in two phases:
 
--Peff
+- first discarding the old deltas and using a small window, thus 
+producing a bad pack that can be repacked without humongous amounts of 
+memory...
+
+- ... then discarding the old deltas and producing another 
+well-compressed pack?
+
+Paolo
