@@ -1,58 +1,66 @@
-From: "Daniel Berlin" <dberlin@dberlin.org>
-Subject: Re: git annotate runs out of memory
-Date: Wed, 12 Dec 2007 14:43:20 -0500
-Message-ID: <4aca3dc20712121143q4d7ccd9n5408ad7199981164@mail.gmail.com>
-References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
-	 <alpine.LFD.0.9999.0712111018540.25032@woody.linux-foundation.org>
-	 <4aca3dc20712111109y5d74a292rf29be6308932393c@mail.gmail.com>
-	 <alpine.LFD.0.9999.0712111122400.25032@woody.linux-foundation.org>
-	 <alpine.LFD.0.9999.0712111300440.25032@woody.linux-foundation.org>
-	 <7vprxcdhis.fsf@gitster.siamese.dyndns.org>
-	 <alpine.LFD.0.9999.0712111523210.25032@woody.linux-foundation.org>
-	 <alpine.LFD.0.9999.0712111548200.25032@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: v1.5.4 plans
+Date: Wed, 12 Dec 2007 11:50:17 -0800
+Message-ID: <7vodcv7kw6.fsf@gitster.siamese.dyndns.org>
+References: <7vy7d43ptc.fsf@gitster.siamese.dyndns.org>
+	<7vabpg9x5k.fsf@gitster.siamese.dyndns.org>
+	<7vy7cwsi3p.fsf@gitster.siamese.dyndns.org>
+	<7vk5o6jbq9.fsf@gitster.siamese.dyndns.org>
+	<7v63zjgoel.fsf@gitster.siamese.dyndns.org>
+	<7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>
+	<7vhcixtnm4.fsf@gitster.siamese.dyndns.org>
+	<7vfxye4yv7.fsf@gitster.siamese.dyndns.org>
+	<7vve78qhtf.fsf@gitster.siamese.dyndns.org>
+	<7vmysijhwq.fsf_-_@gitster.siamese.dyndns.org>
+	<20071212184022.GB28377@untitled>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Davide Libenzi" <davidel@xmailserver.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Dec 12 20:44:42 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "David D. Kilzer" <ddkilzer@kilzer.net>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Dec 12 20:52:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2XVZ-0002gK-JS
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 20:44:42 +0100
+	id 1J2Xcg-0006B9-1o
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 20:52:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760612AbXLLTnY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 14:43:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760633AbXLLTnY
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 14:43:24 -0500
-Received: from wr-out-0506.google.com ([64.233.184.225]:51322 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760538AbXLLTnW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 14:43:22 -0500
-Received: by wr-out-0506.google.com with SMTP id c49so106090wra.1
-        for <git@vger.kernel.org>; Wed, 12 Dec 2007 11:43:22 -0800 (PST)
-Received: by 10.143.162.8 with SMTP id p8mr485083wfo.49.1197488600881;
-        Wed, 12 Dec 2007 11:43:20 -0800 (PST)
-Received: by 10.142.217.1 with HTTP; Wed, 12 Dec 2007 11:43:20 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.9999.0712111548200.25032@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1761155AbXLLTuo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 14:50:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761148AbXLLTun
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 14:50:43 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63154 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761129AbXLLTum (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 14:50:42 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F1F35EA3;
+	Wed, 12 Dec 2007 14:50:29 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B42C95EA0;
+	Wed, 12 Dec 2007 14:50:25 -0500 (EST)
+In-Reply-To: <20071212184022.GB28377@untitled> (Eric Wong's message of "Wed,
+	12 Dec 2007 10:40:22 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68095>
 
-On 12/11/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+Eric Wong <normalperson@yhbt.net> writes:
+
+> David:
 >
->
-> Daniel, this is obviously on top of the patches that fix the memory leak.
+> I also noticed some race-conditions on this test when running this on my
+> Centrino laptop (my fastest box, but I rarely use it for git
+> development) and having git on my USB thumb drive.  I'm pretty sure
+> these were caused by inconsistencies in handling timestamps on symlinks
+> vs timestamps on the files they link to.
 
-Thanks, these patches work *great*.
-
-I'm starting to have a few users who have no experience with git or hg
-try their daily workflow with it, to see what UI issues they come up
-with :)
+I actually saw that for the first time on my primary box during the
+nightly rebuild last night.  I'll disable the test for now --- if we can
+spot and fix the race by the release, that's good, otherwise, shipping
+the test disabled is also fine, too.
