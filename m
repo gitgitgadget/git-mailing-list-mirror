@@ -1,73 +1,123 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
 Subject: Re: Something is broken in repack
-Date: Wed, 12 Dec 2007 08:54:28 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712120848130.25032@woody.linux-foundation.org>
-References: <alpine.LFD.0.99999.0712112057390.555@xanadu.home> <alpine.LFD.0.99999.0712120743040.555@xanadu.home> <alpine.LFD.0.9999.0712120826440.25032@woody.linux-foundation.org> <20071212.084212.02518392.davem@davemloft.net>
+Date: Wed, 12 Dec 2007 12:12:04 -0500
+Message-ID: <9e4733910712120912l342350f2i1f190c45730108f2@mail.gmail.com>
+References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>
+	 <9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com>
+	 <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>
+	 <alpine.LFD.0.99999.0712110832251.555@xanadu.home>
+	 <alpine.LFD.0.99999.0712110951070.555@xanadu.home>
+	 <alpine.LFD.0.99999.0712111117440.555@xanadu.home>
+	 <9e4733910712110821o7748802ag75d9df4be8b2c123@mail.gmail.com>
+	 <alpine.LFD.0.99999.0712112057390.555@xanadu.home>
+	 <alpine.LFD.0.99999.0712120743040.555@xanadu.home>
+	 <alpine.LFD.0.9999.0712120826440.25032@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: nico@cam.org, jonsmirl@gmail.com, gitster@pobox.com, gcc@gcc.gnu.org,         git@vger.kernel.org
-To: David Miller <davem@davemloft.net>
-X-From: gcc-return-142939-gcc=m.gmane.org@gcc.gnu.org Wed Dec 12 17:55:32 2007
-Return-path: <gcc-return-142939-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J2Ure-00017q-3P
-	for gcc@gmane.org; Wed, 12 Dec 2007 17:55:18 +0100
-Received: (qmail 21271 invoked by alias); 12 Dec 2007 16:54:58 -0000
-Received: (qmail 21263 invoked by uid 22791); 12 Dec 2007 16:54:57 -0000
-X-Spam-Check-By: sourceware.org
-Received: from smtp2.linux-foundation.org (HELO smtp2.linux-foundation.org) (207.189.120.14)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Wed, 12 Dec 2007 16:54:47 +0000
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55]) 	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBCGsTHj022871 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); 	Wed, 12 Dec 2007 08:54:30 -0800
-Received: from localhost (localhost [127.0.0.1]) 	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBCGsSUs019776; 	Wed, 12 Dec 2007 08:54:28 -0800
-In-Reply-To: <20071212.084212.02518392.davem@davemloft.net>
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Nicolas Pitre" <nico@cam.org>,
+	"Junio C Hamano" <gitster@pobox.com>, gcc@gcc.gnu.org,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Dec 12 18:13:08 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J2V8M-0000wo-57
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 18:12:34 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756693AbXLLRMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 12:12:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756214AbXLLRMM
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 12:12:12 -0500
+Received: from wa-out-1112.google.com ([209.85.146.177]:2351 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755996AbXLLRMK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 12:12:10 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so512058wah.23
+        for <git@vger.kernel.org>; Wed, 12 Dec 2007 09:12:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=/klSS5IWVjQS+ZHGI74guJZTsfhqaTTfppJB3G+fLLY=;
+        b=M5/AzKzzkbXyqgqCmZ6WbvzigC+0ZbIByItGwUWGUd+Edm8cJA9vp6TgFwkgxIR5rZmenkE8sUV5G/opxxY7zDTZIIGtJQJkQCu6WOkSUUnsWqVhZSknxo8e294U2biJ31gc5QbVQyhr94ofbyTZ910tv0vm92ZBNLsaDZFPh60=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DAe8CpUv/u1ReXa1L3bYZGg3g4iZArNEO2CQUousSzSkeHMKkbvUkI9r7+5cCwgjIEoCzF60zq20IpZgz1l4mHrn2QhzTBugPQoKr4Fmephh/AG8Bn4OHXya00raguXhKK5Y/SWTLTpkWveuerDT8IbtxYm70uVgF+r9PHzBGa0=
+Received: by 10.114.111.1 with SMTP id j1mr1006994wac.138.1197479530127;
+        Wed, 12 Dec 2007 09:12:10 -0800 (PST)
+Received: by 10.114.208.17 with HTTP; Wed, 12 Dec 2007 09:12:04 -0800 (PST)
+In-Reply-To: <alpine.LFD.0.9999.0712120826440.25032@woody.linux-foundation.org>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68074>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68075>
+
+On 12/12/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>
+>
+> On Wed, 12 Dec 2007, Nicolas Pitre wrote:
+> >
+> > So... my conclusion is that the glibc allocator has fragmentation issues
+> > with this work load, given the notable difference with the Google
+> > allocator, which itself might not be completely immune to fragmentation
+> > issues of its own.
+>
+> Yes.
+>
+> Note that delta following involves patterns something like
+>
+>    allocate (small) space for delta
+>    for i in (1..depth) {
+>         allocate large space for base
+>         allocate large space for result
+>         .. apply delta ..
+>         free large space for base
+>         free small space for delta
+>    }
+
+Is it hard to hack up something that statically allocates a big block
+of memory per thread for these two and then just reuses it?
+   allocate (small) space for delta
+   allocate large space for base
+
+The alternating between long term and short term allocations
+definitely aggravates fragmentation.
+
+>
+> so if you have some stupid heap algorithm that doesn't try to merge and
+> re-use free'd spaces very aggressively (because that takes CPU time!), you
+> might have memory usage be horribly inflated by the heap having all those
+> holes for all the objects that got free'd in the chain that don't get
+> aggressively re-used.
+>
+> Threaded memory allocators then make this worse by probably using totally
+> different heaps for different threads (in order to avoid locking), so they
+> will *all* have the fragmentation issue.
+>
+> And if you *really* want to cause trouble for a memory allocator, what you
+> should try to do is to allocate the memory in one thread, and free it in
+> another, and then things can really explode (the freeing thread notices
+> that the allocation is not in its thread-local heap, so instead of really
+> freeing it, it puts it on a separate list of areas to be freed later by
+> the original thread when it needs memory - or worse, it adds it to the
+> local thread list, and makes it effectively totally impossible to then
+> ever merge different free'd allocations ever again because the freed
+> things will be on different heap lists!).
+>
+> I'm not saying that particular case happens in git, I'm just saying that
+> it's not unheard of. And with the delta cache and the object lookup, it's
+> not at _all_ impossible that we hit the "allocate in one thread, free in
+> another" case!
+>
+>                 Linus
+>
 
 
-
-On Wed, 12 Dec 2007, David Miller wrote:
-> 
-> I personally don't think it's unreasonable for GIT to have it's
-> own customized allocator at least for certain object types.
-
-Well, we actually already *do* have a customized allocator, but currently 
-only for the actual core "object descriptor" that really just has the SHA1 
-and object flags in it (and a few extra words depending on object type).
-
-Those are critical for certain loads, and small too (so using the standard 
-allocator wasted a _lot_ of memory). In addition, they're fixed-size and 
-never free'd, so a specialized allocator really can do a lot better than 
-any general-purpose memory allocator ever could.
-
-But the actual object *contents* are currently all allocated with whatever 
-the standard libc malloc/free allocator is that you compile for (or load 
-dynamically). Havign a specialized allocator for them is a much more 
-involved issue, exactly because we do have interesting allocation patterns 
-etc.
-
-That said, at least those object allocations are all single-threaded (for 
-right now, at least), so even when git does multi-threaded stuff, the core 
-sha1_file.c stuff is always run under a single lock, and a simpler 
-allocator that doesn't care about threads is likely to be much better than 
-one that tries to have thread-local heaps etc.
-
-I suspect that is what the google allocator does. It probably doesn't have 
-per-thread heaps, it just uses locking (and quite possibly things like 
-per-*size* heaps, which is much more memory-efficient and helps avoid some 
-of the fragmentation problems). 
-
-Locking is much slower than per-thread accesses, but it doesn't have the 
-issues with per-thread-fragmentation and all the problems with one thread 
-allocating and another one freeing.
-
-			Linus
+-- 
+Jon Smirl
+jonsmirl@gmail.com
