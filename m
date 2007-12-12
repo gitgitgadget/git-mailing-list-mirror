@@ -1,56 +1,69 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: git gui blame utf-8 bugs
-Date: Wed, 12 Dec 2007 10:17:44 +0100
-Message-ID: <20071212091744.GA5377@pvv.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-cvsexportcommit fails for huge commits
+Date: Wed, 12 Dec 2007 01:21:14 -0800
+Message-ID: <7vir348e0l.fsf@gitster.siamese.dyndns.org>
+References: <20071211200418.GA13815@mkl-desktop>
+	<20071212083154.GB7676@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Wed Dec 12 10:18:42 2007
+Cc: Markus Klinik <markus.klinik@gmx.de>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 12 10:22:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2Njm-0005YA-EY
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 10:18:42 +0100
+	id 1J2Nn6-0006fk-VU
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 10:22:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758868AbXLLJRt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 04:17:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758064AbXLLJRs
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 04:17:48 -0500
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:59789 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758846AbXLLJRq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 04:17:46 -0500
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.60)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1J2Niq-0002Az-Qc; Wed, 12 Dec 2007 10:17:44 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
+	id S1757607AbXLLJVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 04:21:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757177AbXLLJVc
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 04:21:32 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58922 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756793AbXLLJVb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 04:21:31 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 14B5864DF;
+	Wed, 12 Dec 2007 04:21:26 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8538A64DE;
+	Wed, 12 Dec 2007 04:21:21 -0500 (EST)
+In-Reply-To: <20071212083154.GB7676@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 12 Dec 2007 03:31:54 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68020>
 
-git gui has some utf-8 bugs:
+Jeff King <peff@peff.net> writes:
 
-If you do git gui blame <file>, and the file contains utf-8 text,
-the lines are not parsed as utf-8, but seemingly as iso-8859-1 instead.
+> @@ -335,6 +335,22 @@ sub safe_pipe_capture {
+>      return wantarray ? @output : join('',@output);
+>  }
+>  
+> +sub xargs_safe_pipe_capture {
+> +	my $MAX_ARG_LENGTH = 1024;
+> +	my $cmd = shift;
+> +	my @output;
+> +	while(@_) {
+> +		my @args;
+> +		my $length = 0;
+> +		while(@_ && $length < $MAX_ARG_LENGTH) {
+> +			push @args, shift;
+> +			$length += length($args[$#args]);
+> +		}
+> +		push @output, safe_pipe_capture(@$cmd, @args);
+> +	}
+> +	return @output;
+> +}
+> +
 
-Also, the hovering comment is INITIALLY shown garbled (both Author and
-commit message), but if you click on a line, so that the commit
-message is shown in the bottom window, the hovering message is
-magically corrected to utf-8.
-
-The text in the lower window (showing specific commits) seems to
-always be handled correctly.
-
-To reproduce: Set your author name to include some utf-8 tokens, add a
-line with some utf-8 tokens to a file, commit it with a commit message
-including some utf-8 tokens, and do git gui blame on the file. The
-line will be garbled in the top window, and the hovering message will
-be garbled until you click on the line.
-
-Verified with git-gui.git master
-
-- Finn Arne
+Makes me wonder why you are not spawning xargs by doing it by hand.  If
+the path at the beginning happens to be longer than 1024 then you will
+run path-less "cvs status"?
