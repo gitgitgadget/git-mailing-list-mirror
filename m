@@ -1,99 +1,193 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [ANNOUNCE] ugit: a pyqt-based git gui // was: Re: If you would write git from scratch now, what would you change?
-Date: Wed, 12 Dec 2007 00:23:29 -0500
-Message-ID: <20071212052329.GR14735@spearce.org>
-References: <402731c90712110548k67f28b64w5afa93ee908ce73b@mail.gmail.com> <e5bfff550712111020k51829c03n5d64a94ce7c7ac2a@mail.gmail.com> <31e9dd080712111114t2bbdba60m18b7d6210f3f9174@mail.gmail.com> <e5bfff550712111133j66c4b9adx9f57661cc720aa41@mail.gmail.com> <402731c90712111254q1cb99c6al47538971d93b4592@mail.gmail.com> <31e9dd080712111329j2c8b22ebs38ab727a5fbe85fb@mail.gmail.com> <20071212041002.GN14735@spearce.org> <31e9dd080712112113u44b30c62ja012951fba958c5d@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/2] git-help: add "help.format" config variable.
+Date: Wed, 12 Dec 2007 06:33:20 +0100
+Message-ID: <20071212063320.3cbb1698.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: David <davvid@gmail.com>, Marco Costalba <mcostalba@gmail.com>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Jason Sewall <jasonsewall@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 06:24:22 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Dec 12 06:27:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2K50-0006RA-25
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 06:24:22 +0100
+	id 1J2K7y-0007S0-8X
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 06:27:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752497AbXLLFXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 00:23:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752496AbXLLFXe
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 00:23:34 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:43947 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751312AbXLLFXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 00:23:33 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1J2K4B-0007Za-Ka; Wed, 12 Dec 2007 00:23:31 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B691F20FBAE; Wed, 12 Dec 2007 00:23:29 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <31e9dd080712112113u44b30c62ja012951fba958c5d@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752479AbXLLF1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 00:27:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752476AbXLLF1E
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 00:27:04 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:49194 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752390AbXLLF1C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 00:27:02 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 4A66A1AB2B7;
+	Wed, 12 Dec 2007 06:26:59 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 0CAD41AB2A8;
+	Wed, 12 Dec 2007 06:26:59 +0100 (CET)
+X-Mailer: Sylpheed 2.4.7 (GTK+ 2.12.1; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/67995>
 
-Jason Sewall <jasonsewall@gmail.com> wrote:
-> I don't know much about graphical toolkits and the like, but I think
-> that the more modern ones have fancy features like antialiasing and
-> subpixel rendering, which makes a big difference when you're working
-> on a laptop with a tiny screen.
+This config variable makes it possible to choose the default format
+used to display help. This format will be used only if no option
+like -a|--all|-i|--info|-m|--man|-w|--web is passed to "git-help".
 
-Oh, that's a good point.  On my Mac OS X system with the aqua port
-of Tk the fonts render just as good as anything else on this box.
-I guess the Aqua port of Tk is just better than the X11 port of
-Tk is.  :)
+The following values are possible for this variable:
+
+	- "man"  --> "man" program is used
+	- "info" --> "info" program is used
+	- "web"  --> "git-browse-help" is used
+
+By default we still show help using "man".
+
+By the way, this patch also adds -m|--man command line option to
+use "man" even if something else is set in the "help.format"
+config variable.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Documentation/git-help.txt |   13 ++++++++-
+ git.c                      |    2 +-
+ help.c                     |   61 ++++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 72 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index ac9e15d..af5e5cb 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -7,7 +7,7 @@ git-help - display help information about git
  
-> Take a look for yourself:
-> http://img441.imageshack.us/img441/492/comparejd6.png
-> 
-> They are obviously using different fonts there (because I can't figure
-> out what font ugit is using) but there is a difference in rendering
-> quality to be sure.
-
-Be nice to know what ugit is using, or really how its guessing the
-default font.  I wonder what font you are using with your git-gui.
-The default Tk picks on X11 is basically crap, but git-gui goes
-with your system default as its own default.
+ SYNOPSIS
+ --------
+-'git help' [-a|--all|-i|--info|-w|--web] [COMMAND]
++'git help' [-a|--all|-i|--info|-m|--man|-w|--web] [COMMAND]
  
-> The qt stuff fits better with the rest of my system better too (even
-> though I'm using gnome) - it's entirely the result of Tk being
-> lightweight and a million years old, when UI conventions were
-> different (like every menu being detachable, and antique scrollbars).
-> I'm not here to start a toolkit flame war (we had a toolkit dogpile on
-> the list last week, I think) I'm just pointing out that Tk is from a
-> different era.
-
-Yes.  The tile extension in 8.5 should actually improve this quite
-a bit; as I understand it there is a GTK backend for Tk with that
-set of extensions, making the UI look more modern on X11, assuming
-GTK was available when Tk was compiled, etc...
-
-I have yet to make git-gui use the tile extension.  Its however
-planned to happen in the near-ish future.
+ DESCRIPTION
+ -----------
+@@ -23,6 +23,12 @@ If a git command is named, a manual page for that command is brought
+ up. The 'man' program is used by default for this purpose, but this
+ can be overriden by other options.
  
-> I use git-gui and gitk for my git graphical needs because they rock
-> and at the end of the day, the fonts and antialiasing aren't that big
-> of a deal, especially since I'm usually doing quick scans and searches
-> over the information those tools display, not reading novels in them.
-
-Good points.  Features win over pretty most of the time.  But at
-some point pretty is important; especially to new user adoption.
-Plus if you are looking at it all day long it shouldn't be jarring
-to the eyes.  But git-gui still isn't even where I want it ot
-be feature-wise.  E.g. I'd *love* to teach it inotify support,
-so you don't even need to have that Rescan button.
-
++If no command line option is passed, the 'help.format' configuration
++variable will be checked. Supported values for this variable are
++"man", "info" and "web" (or "html" as a synonym to the latter). This
++makes git-help behave as if a command line option with the same long
++name as been passed to it.
++
+ Note that 'git --help ...' is identical as 'git help ...' because the
+ former is internally converted into the latter.
+ 
+@@ -36,6 +42,11 @@ OPTIONS
+ 	Use the 'info' program to display the manual page, instead of
+ 	the 'man' program that is used by default.
+ 
++-m|--man::
++	Use the 'man' program to display the manual page. This may be
++	used to override a value set in the 'help.format'
++	configuration variable.
++
+ -w|--web::
+ 	Use a web browser to display the HTML manual page, instead of
+ 	the 'man' program that is used by default.
+diff --git a/git.c b/git.c
+index 4f9876e..d46b63d 100644
+--- a/git.c
++++ b/git.c
+@@ -324,7 +324,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "gc", cmd_gc, RUN_SETUP },
+ 		{ "get-tar-commit-id", cmd_get_tar_commit_id },
+ 		{ "grep", cmd_grep, RUN_SETUP | USE_PAGER },
+-		{ "help", cmd_help },
++		{ "help", cmd_help, RUN_SETUP },
+ #ifndef NO_CURL
+ 		{ "http-fetch", cmd_http_fetch, RUN_SETUP },
+ #endif
+diff --git a/help.c b/help.c
+index c96b167..af0a433 100644
+--- a/help.c
++++ b/help.c
+@@ -8,6 +8,44 @@
+ #include "exec_cmd.h"
+ #include "common-cmds.h"
+ 
++static const char *help_default_format;
++
++static enum help_format {
++	man_format,
++	info_format,
++	web_format,
++} help_format = man_format;
++
++static void parse_help_format(const char *format)
++{
++	if (!format) {
++		help_format = man_format;
++		return;
++	}
++	if (!strcmp(format, "man")) {
++		help_format = man_format;
++		return;
++	}
++	if (!strcmp(format, "info")) {
++		help_format = info_format;
++		return;
++	}
++	if (!strcmp(format, "web") || !strcmp(format, "html")) {
++		help_format = web_format;
++		return;
++	}
++	die("unrecognized help format '%s'", format);
++}
++
++static int git_help_config(const char *var, const char *value)
++{
++	if (!strcmp(var, "help.format")) {
++		help_default_format = xstrdup(value);
++		return 0;
++	}
++	return git_default_config(var, value);
++}
++
+ /* most GUI terminals set COLUMNS (although some don't export it) */
+ static int term_columns(void)
+ {
+@@ -331,8 +369,27 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 		show_info_page(argc > 2 ? argv[2] : NULL);
+ 	}
+ 
+-	else
+-		show_man_page(help_cmd);
++	else if (!strcmp(help_cmd, "--man") || !strcmp(help_cmd, "-m")) {
++		show_man_page(argc > 2 ? argv[2] : NULL);
++	}
++
++	else {
++		git_config(git_help_config);
++		if (help_default_format)
++			parse_help_format(help_default_format);
++
++		switch (help_format) {
++		case man_format:
++			show_man_page(help_cmd);
++			break;
++		case info_format:
++			show_info_page(help_cmd);
++			break;
++		case web_format:
++			show_html_page(help_cmd);
++			break;
++		}
++	}
+ 
+ 	return 0;
+ }
 -- 
-Shawn.
+1.5.3.7.2270.g786cf-dirty
