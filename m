@@ -1,81 +1,56 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH (amend)] diff: Make numstat machine friendly also for renames (and copies)
-Date: Wed, 12 Dec 2007 11:31:01 +0100
-Message-ID: <200712121131.01471.jnareb@gmail.com>
-References: <200712102332.53114.jnareb@gmail.com> <7vprxehrlv.fsf@gitster.siamese.dyndns.org> <200712120009.36560.jnareb@gmail.com>
+From: Florian Weimer <fweimer@bfk.de>
+Subject: Re: git annotate runs out of memory
+Date: Wed, 12 Dec 2007 11:36:01 +0100
+Message-ID: <82bq8wi4j2.fsf@mid.bfk.de>
+References: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 11:31:34 2007
+To: "Daniel Berlin" <dberlin@dberlin.org>
+X-From: git-owner@vger.kernel.org Wed Dec 12 11:36:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2OsH-000543-CV
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 11:31:34 +0100
+	id 1J2OxM-0006tR-5T
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 11:36:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756287AbXLLKbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 05:31:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756366AbXLLKbI
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 05:31:08 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:8124 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756290AbXLLKbH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 05:31:07 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so515584ugc.16
-        for <git@vger.kernel.org>; Wed, 12 Dec 2007 02:31:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=ZVg1yEm2qY49fF1JbqsNZyY2OkCFp9dxVz3pDKs5jNA=;
-        b=ZkncSkdLsjdax2tasBZDjFoPvhsYOFvwD4+UpO96ZUfhQsEPcXHHRGOwNFg5bpwDjRGeVhMmOIlAp/a1edtzA9pw4r88YpLJbDjtJKCRp4Zn6PuoreotNGOpVMQWsGl/DpOV1uKrm0a/krpfxl9I9D9QuPZd3qYZnho92K3pZZk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=dJwx+e9XoFqV/9EKx/NMo2kmsIZGVrFkIo0YQvnj1f6kQBQUx6pKkxlvR30q8iyAnmv3VMDxKixWQmQxFmTpAt0VAiOWMR9S+VGpCj72J+dSGBQ7Hl6e/mJb1h9XleZz8Zllnk489ZJKeS19ErNky5QGFVylW5o3x7c005JCO80=
-Received: by 10.67.27.3 with SMTP id e3mr2070067ugj.22.1197455465613;
-        Wed, 12 Dec 2007 02:31:05 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.249.28])
-        by mx.google.com with ESMTPS id k29sm8103135fkk.2007.12.12.02.31.03
-        (version=SSLv3 cipher=OTHER);
-        Wed, 12 Dec 2007 02:31:04 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200712120009.36560.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1758437AbXLLKgH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Dec 2007 05:36:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758558AbXLLKgG
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 05:36:06 -0500
+Received: from mx01.bfk.de ([193.227.124.2]:34908 "EHLO mx01.bfk.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758437AbXLLKgF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Dec 2007 05:36:05 -0500
+Received: from mx00.int.bfk.de ([10.119.110.2])
+	by mx01.bfk.de with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	id 1J2Owc-0006GD-1e; Wed, 12 Dec 2007 11:36:02 +0100
+Received: from fweimer by bfk.de with local id 1J2Owb-0007HY-W7; Wed, 12 Dec 2007 11:36:02 +0100
+In-Reply-To: <4aca3dc20712110933i636342fbifb15171d3e3cafb3@mail.gmail.com> (Daniel Berlin's message of "Tue, 11 Dec 2007 12:33:56 -0500")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68034>
 
-BTW. I have noticed something strange with current (after my two
-patches) diffstat code:
+* Daniel Berlin:
 
- 3606:[gitweb/web@git]# ./git diff-tree -C -C -r --stat gitweb/test~8 
- 0456a2ba58efb0e1d5f7421d5a8a2278e3b15ebc
-  .../test/file with spaces\tand\ttabs"              |    4 +++-
-  1 files changed, 3 insertions(+), 1 deletions(-)
- 3607:[gitweb/web@git]# ./git diff-tree -C -C -r --numstat gitweb/test~8
- 0456a2ba58efb0e1d5f7421d5a8a2278e3b15ebc
- 3       1       gitweb/test/file with spaces    "gitweb/test/file with spaces\tand\ttabs"
+> On the gcc repository (which is now a 234 meg pack for me), git
+> annotate ChangeLog takes > 800 meg of memory (I stopped it at about
+> 1.6 gig, since it started swapping my machine).
+> I assume it will run out of memory.  I stopped it after 2 minutes.
 
-but:
+A less unwieldy repository that shows the same problem is:
 
- 3603:[gitweb/web@git]# ./git diff-tree -C -C -r --stat gitweb/test~6
- cfb9ef9ec73b37f44e9370c4f5d91e01d46ec6e4
-  gitweb/test/Documentation-symlink1                 |    1 +
-  gitweb/test/Documentation-symlink2                 |    1 +
-  .../{git-shortlog.8.html => git-shortlog.html}     |    0 
-  3 files changed, 2 insertions(+), 0 deletions(-)
+  svn://svn.debian.org/secure-testing/
 
-So rename detection works. Strange.
+It's annotating the data/CVE/list file that uses tons of memory.  I
+guess you don't need to clone the full history to exhibit the problem.
 
-P.S. gitweb/test branch can be found on
-  http://repo.or.cz/w/git/jnareb-git.git
-
--- 
-Jakub Narebski
-Poland
+--=20
+=46lorian Weimer                <fweimer@bfk.de>
+BFK edv-consulting GmbH       http://www.bfk.de/
+Kriegsstra=DFe 100              tel: +49-721-96201-1
+D-76133 Karlsruhe             fax: +49-721-96201-99
