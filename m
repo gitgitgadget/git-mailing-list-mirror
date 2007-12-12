@@ -1,108 +1,69 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: [PATCH] builtin-clone: Implement git clone as a builtin
-	command.
-Date: Wed, 12 Dec 2007 10:24:23 -0500
-Message-ID: <1197473063.9269.20.camel@hinata.boston.redhat.com>
-References: <20071211195712.GA3865@bitplanet.net>
-	 <Pine.LNX.4.64.0712111549490.5349@iabervon.org>
-	 <1197416286.7552.4.camel@hinata.boston.redhat.com>
-	 <7vejdsbo7d.fsf@gitster.siamese.dyndns.org>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [PATCH] clone: support cloning full bundles
+Date: Wed, 12 Dec 2007 16:21:10 +0100
+Message-ID: <8aa486160712120721k26158972qf11c889da98572c6@mail.gmail.com>
+References: <1197456485-22909-1-git-send-email-sbejar@gmail.com>
+	 <Pine.LNX.4.64.0712121449310.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 16:27:23 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Dec 12 16:28:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2TUY-0001at-TE
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 16:27:23 +0100
+	id 1J2TVk-000275-OD
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 16:28:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756288AbXLLP1A convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Dec 2007 10:27:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755965AbXLLP07
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 10:26:59 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:51862 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754790AbXLLP07 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 10:26:59 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lBCFOVeH009098;
-	Wed, 12 Dec 2007 10:24:31 -0500
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lBCFOUng006866;
-	Wed, 12 Dec 2007 10:24:30 -0500
-Received: from [192.168.1.100] (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lBCFOSCa003996;
-	Wed, 12 Dec 2007 10:24:28 -0500
-In-Reply-To: <7vejdsbo7d.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
+	id S1754285AbXLLP1w convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Dec 2007 10:27:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752147AbXLLP1w
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 10:27:52 -0500
+Received: from rn-out-0910.google.com ([64.233.170.190]:5696 "EHLO
+	rn-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751900AbXLLP1v convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Dec 2007 10:27:51 -0500
+Received: by rn-out-0102.google.com with SMTP id i6so22216rng.1
+        for <git@vger.kernel.org>; Wed, 12 Dec 2007 07:27:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=AhrqSnyxYg7PEQ7O1spBSZOayAjP+WEXiF0JKcLLAlY=;
+        b=UnYQAHDHo4WREl6FIHxqvGXfAe5u/b9w8rN9wGQP1Eih2rP/XdxTBSjK4k6gv1YuZwriNBPdtYpdFDJL99fARD7aKBlV20KmyfzaVlRWEYzv+nMmcuYlNHoRuc4eAdxZM30xCsglJ8oG+Tw1Jq+8M9oV2QpWA5x27Vb6/FbhcdE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=fKi47VTZ2FxgZxnIQbeoxj7bH7OgWc32zBetMrvoVOCfed2q9CVs5qI4ywAwYDAbgLPRlSr5E/7gCq2vK1htlytyGYXcYuFLNiHGOttGYGDYBsgWsaVSJpLN7cyfVnUONFnW6CGm0YBRtrmHqBTRyNPNjKCOqmehFHww1huEbew=
+Received: by 10.150.201.13 with SMTP id y13mr260418ybf.31.1197472870288;
+        Wed, 12 Dec 2007 07:21:10 -0800 (PST)
+Received: by 10.150.205.9 with HTTP; Wed, 12 Dec 2007 07:21:10 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0712121449310.27959@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68050>
 
+On Dec 12, 2007 3:50 PM, Johannes Schindelin <Johannes.Schindelin@gmx.d=
+e> wrote:
+> Hi,
+>
+> On Wed, 12 Dec 2007, Santi B=E9jar wrote:
+>
+> > It still fails for incremental bundles.
+>
+> Of course it does.  The whole point of incremental bundles is that th=
+ey do
+> _not_ contain all objects, but rely on some objects being present on =
+the
+> "fetch" side.
 
-On Tue, 2007-12-11 at 19:12 -0800, Junio C Hamano wrote:
-> Kristian H=C3=B8gsberg <krh@redhat.com> writes:
->=20
-> > On Tue, 2007-12-11 at 15:59 -0500, Daniel Barkalow wrote:
-> >> On Tue, 11 Dec 2007, Kristian H=C3=B8gsberg wrote:
-> >>=20
-> >> > Ok, don't flame me, I know this isn't appropriate at the moment =
-with
-> >> > stabilization for 1.5.4 going on, but I just wanted to post a he=
-ads up
-> >> > on this work to avoid duplicate effort.  It's one big patch at t=
-his point
-> >> > and I haven't even run the test suite yet, but that will change.
-> >>=20
-> >> Is that why you misspelled Junio's email address? :)=20
-> >
-> > Hehe, yeah, do not mess with maintainers in release mode :)
->=20
-> Actually this is a bit unfortunate, regardless of everybody being in
-> release and bugfix only mode.
+I know this. But then there is no bundle equivalent of the shallow
+clones, as with:
 
-Well, let's just pick up the discussion in January, I have a lot of
-other stuff I'm trying to do anyway :)
+git clone --depth <depth> <repo>
 
-> I was hoping that the evolution path for clone would be to first make=
- it
-> a very thin wrapper around:
->=20
-> 	git init
->         git remote add -f
->         git checkout
->=20
-> sequence.
-
-However, let me just say that the patch I sent is almost just that.
-Part of the patch refactors init-db to be useful from clone, part of th=
-e
-code is option parsing and figuring out the git dir, work tree.  Also,
-the part of the patch that does 'git checkout' is approximately 20 line=
-s
-that end up calling unpack_tre() and then write_cache().  The bulk of
-the work here is really just builtin boilerplate code, option parsing
-and the builtin-clone tasks you describe below (HEAD discovery, --share=
-d
-and --reference optimizations and the local hardlink optimization - all
-these are in the 500 line builtin-clone.c I sent).
-
-And maybe it makes sense to use builtin-remote for the remote add -f
-part, but the fetch part of the patch is 10 lines to set up for
-fetch_pack().  So while I do agree that it makes sense to keep remotes
-handling in one place, doing the fetch_pack() in builtin-clone.c doesn'=
-t
-seem like a big duplication of code.  And either way, I agree with
-Dscho, once we have either builtin-clone or builtin-fetch it's easier t=
-o
-share code and refactor, and there is not a strong reason to do one or
-the other first.
-
-cheers,
-Kristian
+Santi
