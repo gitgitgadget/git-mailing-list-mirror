@@ -1,96 +1,153 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach git-gui to split hunks
-Date: Wed, 12 Dec 2007 20:39:14 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712122037180.27959@racer.site>
-References: <402731c90712110548k67f28b64w5afa93ee908ce73b@mail.gmail.com>
- <31e9dd080712111114t2bbdba60m18b7d6210f3f9174@mail.gmail.com>
- <e5bfff550712111133j66c4b9adx9f57661cc720aa41@mail.gmail.com>
- <402731c90712111254q1cb99c6al47538971d93b4592@mail.gmail.com>
- <31e9dd080712111329j2c8b22ebs38ab727a5fbe85fb@mail.gmail.com>
- <20071212041002.GN14735@spearce.org> <31e9dd080712112113u44b30c62ja012951fba958c5d@mail.gmail.com>
- <20071212052329.GR14735@spearce.org> <31e9dd080712120702k36a959cfh3e2a5c5fb076d922@mail.gmail.com>
- <Pine.LNX.4.64.0712121814260.27959@racer.site>
- <31e9dd080712121050i45981ed5u845b71f0e73aa8e2@mail.gmail.com>
- <Pine.LNX.4.64.0712121931050.27959@racer.site> <7vk5nj7jkp.fsf@gitster.siamese.dyndns.org>
+From: Nix <nix@esperi.org.uk>
+Subject: git-pull followed by git-gc often yields *much* bigger pack than git-pull alone
+Date: Wed, 12 Dec 2007 20:47:41 +0000
+Message-ID: <87ejdrej2q.fsf@hades.wkstn.nix>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jason Sewall <jasonsewall@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, David <davvid@gmail.com>,
-	Marco Costalba <mcostalba@gmail.com>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 21:40:02 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 12 21:48:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2YMq-0000XT-PL
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 21:39:45 +0100
+	id 1J2YUy-0004CO-OC
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 21:48:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756203AbXLLUjS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 15:39:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755738AbXLLUjS
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 15:39:18 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46396 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752990AbXLLUjR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 15:39:17 -0500
-Received: (qmail invoked by alias); 12 Dec 2007 20:39:14 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp041) with SMTP; 12 Dec 2007 21:39:14 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19aqogs+QhadmUkfIxHFzKkrPojD0KS67332XY5tb
-	2zCcEPoEt+Dovr
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vk5nj7jkp.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1753142AbXLLUrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 15:47:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752779AbXLLUrq
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 15:47:46 -0500
+Received: from 41-052.adsl.zetnet.co.uk ([194.247.41.52]:42014 "EHLO
+	mail.esperi.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751917AbXLLUrp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 15:47:45 -0500
+Received: from esperi.org.uk (nix@hades.wkstn.nix [192.168.14.18])
+	by mail.esperi.org.uk (8.12.11.20060614/8.12.11) with ESMTP id lBCKlgSw026771
+	for <git@vger.kernel.org>; Wed, 12 Dec 2007 20:47:42 GMT
+Received: (from nix@localhost)
+	by esperi.org.uk (8.12.11.20060614/8.12.11/Submit) id lBCKlfED007682;
+	Wed, 12 Dec 2007 20:47:41 GMT
+Emacs: don't try this at home, kids!
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) XEmacs/21.5-b28 (linux)
+X-DCC-dcc-servers.net-Metrics: hades 102; Body=1 Fuz1=1 Fuz2=1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68101>
 
-Hi,
+I've seen this intermittently, but this is a particularly extreme
+example. This happens to be with 1.5.3.7, but I've seen the same
+symptoms back in git 1.4.x. I assumed it was something I was doing wrong
+then, but I'm no longer so sure.
 
-On Wed, 12 Dec 2007, Junio C Hamano wrote:
+,----
+| hades /usr/packages/poppler/poppler% ls -al .git/objects/pack
+| drwxr-xr-x 2 compiler hackers    2048 2007-12-12 20:35 .
+| drwxr-xr-x 9 compiler hackers    2048 2007-12-12 20:35 ..
+| -r--r--r-- 1 compiler hackers  149288 2007-10-25 23:51 pack-f5a84fe3e212f9dc62a65aee617be4bf1387cb2b.idx
+| -rw-r--r-- 1 compiler hackers       0 2007-12-06 14:45 pack-f5a84fe3e212f9dc62a65aee617be4bf1387cb2b.keep
+| -r--r--r-- 1 compiler hackers 1610421 2007-10-25 23:51 pack-f5a84fe3e212f9dc62a65aee617be4bf1387cb2b.pack
+| 
+| hades /usr/packages/poppler/poppler% git-count-objects
+| 0 objects, 0 kilobytes
+| 
+| hades /usr/packages/poppler/poppler% git-remote update
+| Updating origin
+| remote: Generating pack...
+| remote: Done counting 491 objects.
+| remote: Result has 351 objects.
+| remote: Deltifying 351 objects.
+| remote:  100% (351/351) done
+| remote: Total 351, written 351 (delta 274), reused 0 (delta 0)
+| * refs/remotes/origin/master: fast forward to branch 'master' of git://git.freedesktop.org/git/poppler/poppler
+|   old..new: ab0a6c3..f24259c
+| * refs/remotes/origin/poppler-0.6: fast forward to branch 'poppler-0.6' of git://git.freedesktop.org/git/poppler/poppler
+|   old..new: 5c321d3..db1e360
+| Auto-following refs/tags/poppler-0.6.2
+| Auto-following refs/tags/poppler-0.6.3
+| remote: Generating pack...
+| remote: Done counting 2 objects.
+| remote: Deltifying 2 objects.
+| remote: /2) done
+| remote: Total 2, written 2 (delta 0), reused 0 (delta 0)
+| Unpacking 2 objects...
+|  100% (2/2) done
+| * refs/tags/poppler-0.6.2: storing tag 'poppler-0.6.2' of git://git.freedesktop.org/git/poppler/poppler
+|   tag: 26470b3
+| * refs/tags/poppler-0.6.3: storing tag 'poppler-0.6.3' of git://git.freedesktop.org/git/poppler/poppler
+|   tag: fdf7e0b
+| 
+| hades /usr/packages/poppler/poppler% ls -al .git/objects/pack
+| drwxr-xr-x 2 compiler hackers    2048 2007-12-12 20:35 .
+| drwxr-xr-x 6 compiler hackers    2048 2007-12-12 20:35 ..
+| -r--r--r-- 1 compiler hackers   12080 2007-12-12 20:35 pack-f534c957f3ee7f3f1046dee0081fcc315d9698bb.idx
+| -r--r--r-- 1 compiler hackers  678643 2007-12-12 20:35 pack-f534c957f3ee7f3f1046dee0081fcc315d9698bb.pack
+| -r--r--r-- 1 compiler hackers  149288 2007-10-25 23:51 pack-f5a84fe3e212f9dc62a65aee617be4bf1387cb2b.idx
+| -rw-r--r-- 1 compiler hackers       0 2007-12-06 14:45 pack-f5a84fe3e212f9dc62a65aee617be4bf1387cb2b.keep
+| -r--r--r-- 1 compiler hackers 1610421 2007-10-25 23:51 pack-f5a84fe3e212f9dc62a65aee617be4bf1387cb2b.pack
+`----
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > When you select the context menu item "Split Hunk" in the diff area, 
-> > git-gui will now split the current hunk so that a new hunk starts at 
-> > the current position.
-> >
-> > For this to work, apply has to be called with --unidiff-zero, since 
-> > the new hunks can start or stop with a "-" or "+" line. ...
-> 
-> I still have conceptual problem with this whole thing.  For example, 
-> what does that MEAN to split this hunk from your patch...
-> 
-> > @@ -296,7 +369,7 @@ proc apply_hunk {x y} {
-> >  	if {$current_diff_path eq {} || $current_diff_header eq {}} return
-> >  	if {![lock_index apply_hunk]} return
-> >  
-> > -	set apply_cmd {apply --cached --whitespace=nowarn}
-> > +	set apply_cmd {apply --cached --whitespace=nowarn --unidiff-zero}
-> >  	set mi [lindex $file_states($current_diff_path) 0]
-> >  	if {$current_diff_side eq $ui_index} {
-> >  		set failed_msg [mc "Failed to unstage selected hunk."]
-> 
-> ... by clicking between the '-' and '+' lines, and apply only one half?
-> 
-> Well, the question was not very well stated.  I know what it means -- 
-> remove that old line, without replacing with the corrected/updated one. 
-> The real question is how would that be useful?
+OK, so that's a 662Kb packfile, 351/274...
 
-The thing is: sometimes there is a patch which contains just one garbage 
-line.  (I am talking about my current working tree, so you are not allowed 
-to be offended by my language in this case.)
+[... a couple of trivial merges, then ...]
 
-The thing I would like to do is right click on that line, start a new 
-hunk, then right click on the next line to start yet another hunk, and 
-apply this and the first hunk.
+,----
+| hades /usr/packages/poppler/poppler% git-count-objects
+| 5 objects, 10 kilobytes
+| 
+| hades /usr/packages/poppler/poppler% git-gc
+| Generating pack...
+| Done counting 827 objects.
+| Deltifying 827 objects...
+|  100% (827/827) done
+| Writing 827 objects...
+|  100% (827/827) done
+| Total 827 (delta 393), reused 695 (delta 331)
+| Pack pack-5145ce9770077cee99795fc21cfcc6ea30eb6d47 created.
+| Removing unused objects 100%...
+| Done.
+| 
+| hades /usr/packages/poppler/poppler% ls -al .git/objects/pack
+| drwxr-xr-x 2 compiler hackers    2048 2007-12-12 20:36 .
+| drwxr-xr-x 4 compiler hackers    2048 2007-12-12 20:36 ..
+| -r--r--r-- 1 compiler hackers   20912 2007-12-12 20:36 pack-5145ce9770077cee99795fc21cfcc6ea30eb6d47.idx
+| -r--r--r-- 1 compiler hackers 1144055 2007-12-12 20:36 pack-5145ce9770077cee99795fc21cfcc6ea30eb6d47.pack
+| -r--r--r-- 1 compiler hackers  149288 2007-10-25 23:51 pack-f5a84fe3e212f9dc62a65aee617be4bf1387cb2b.idx
+| -rw-r--r-- 1 compiler hackers       0 2007-12-06 14:45 pack-f5a84fe3e212f9dc62a65aee617be4bf1387cb2b.keep
+| -r--r--r-- 1 compiler hackers 1610421 2007-10-25 23:51 pack-f5a84fe3e212f9dc62a65aee617be4bf1387cb2b.pack
+`----
 
-It is a lazy way to edit a patch.
+The git-gc figures are wildly different from the original server-side
+packing, as is the size of the resulting packfile.
 
-Ciao,
-Dscho
+This has me scared to do git-gc, which is presumably not good if we're
+supposed to get into the habit of running it whenever we have a spare
+moment :)
+
+A while back I did a git-gc on the kernel and watched as a 10Mb pack
+resulting from a git-pull blew right up to 130Mb: I had to zap the .keep
+file, do a complete repack, and blow a backup CD to get the space
+back. (This only happens if you have .keep files lying around: if git-gc
+is allowed to amalgamate all your packs, it doesn't do this.)
+
+Possibly-relevant .gitconfig settings:
+
+[core]
+legacyheaders=false
+deltabasecachelimit=32m
+
+[pack]
+window=50
+aggressiveWindow=100
+depth=100
+
+[repack]
+usedeltabaseoffset=true
+
+(yes, those windows and depths are intentionally high. I was hoping that
+maybe the servers were running with enormous windows... it didn't help.)
+
+-- 
+`The rest is a tale of post and counter-post.' --- Ian Rawlings
+                                                   describes USENET
