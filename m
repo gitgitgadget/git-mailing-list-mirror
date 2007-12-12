@@ -1,65 +1,135 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [(not so) random thoughts] using git as its own caching tool
-Date: Wed, 12 Dec 2007 16:48:48 +0100
-Organization: glandium.org
-Message-ID: <20071212154848.GA19294@glandium.org>
-References: <20071212003813.GG29110@artemis.madism.org> <475FFFB7.4010102@op5.se>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Invalid dates in git log
+Date: Wed, 12 Dec 2007 16:51:46 +0100
+Message-ID: <47600392.5050809@op5.se>
+References: <34660cca0712120111k3f11769fk1a8cefda3b82683e@mail.gmail.com>	 <20071212092304.GA20799@coredump.intra.peff.net> <34660cca0712120619r708ee7a8ta20a5458ca11a5ac@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>, Git ML <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Dec 12 16:51:52 2007
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: =?ISO-8859-15?Q?Eirik_Bj=F8rsn=F8s?= <eirbjo@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 12 16:52:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2TrK-0003t9-Ha
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 16:50:55 +0100
+	id 1J2Tsc-0004eV-P6
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 16:52:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756332AbXLLPtT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 10:49:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755921AbXLLPtS
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 10:49:18 -0500
-Received: from vuizook.err.no ([85.19.215.103]:37400 "EHLO vuizook.err.no"
+	id S1751535AbXLLPvv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Dec 2007 10:51:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751800AbXLLPvv
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 10:51:51 -0500
+Received: from mail.op5.se ([193.201.96.20]:33284 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755421AbXLLPtR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 10:49:17 -0500
-Received: from aputeaux-153-1-17-136.w82-124.abo.wanadoo.fr ([82.124.59.136] helo=vaio.glandium.org)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1J2TqJ-0007RR-Qk; Wed, 12 Dec 2007 16:49:58 +0100
-Received: from mh by vaio.glandium.org with local (Exim 4.63)
-	(envelope-from <mh@glandium.org>)
-	id 1J2TpI-00051X-J1; Wed, 12 Dec 2007 16:48:48 +0100
-Content-Disposition: inline
-In-Reply-To: <475FFFB7.4010102@op5.se>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: mh@glandium.org
-X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
-X-Spam-Status: (score 2.2): No, score=2.2 required=5.0 tests=RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1751535AbXLLPvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 10:51:50 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 135731F08016;
+	Wed, 12 Dec 2007 16:51:49 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id WtYcktO5IBfn; Wed, 12 Dec 2007 16:51:48 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id D205E1F08008;
+	Wed, 12 Dec 2007 16:51:47 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <34660cca0712120619r708ee7a8ta20a5458ca11a5ac@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68057>
 
-On Wed, Dec 12, 2007 at 04:35:19PM +0100, Andreas Ericsson <ae@op5.se> wrote:
-> A bit of both ;-)
-> 
-> I like the idea to use the git object store, because that certainly
-> has an API that can't be done away with by user config. The reflog
-> and its expiration mechanism is subject to human control though, and
-> everyone doesn't even have them enabled. I don't for some repos where
-> I know I'll create a thousand-and-one loose objects by rebasing,
-> --amend'ing and otherwise fiddling with history rewrites.
-> 
-> Having a tool that works on some repos but not on others because it
-> relies on me living with an auto-gc after pretty much every operation
-> would be very tiresome indeed.
+Eirik Bj=F8rsn=F8s wrote:
+>> Your best guess is probably the committer information. Try this:
+>=20
+> Thanks Jeff, Junio,
+>=20
+> I'll just use the committer date instead.
+>=20
+> Being a Git newbie (only started looking at it yesterday) I'm not sur=
+e
+> my understanding of "author" and "committer" and how they releate to
+> dates is correct:
+>=20
 
-There is already a tool that relies on reflogs: stash.
+They're often the same. They will end up being different if
+* you cherry-pick a commit made by someone else.
+   ("someone else" is author, you are the committer)
+* you rebase a series of commit containing changes from others
+   ("others" are the authors, you are the committer)
+* you apply a patch using "git am" from someone
+   ("someone" is the author, you are the committer)
+* you "git commit --amend" a commit from someone else
+   ("someone else" is author, you are the committer)
 
-Mike
+There are probably other cases, but those were the ones I could
+think of right now.
+
+In short, whenever a commit is modified in some way, it gets a
+new committer. It might help if you think of author as "contributor"
+and "committer" as "integrator", where various integrators merge
+between each other. A merge obviously doesn't fiddle with commits,
+so once a commit has entered an integrators repository, both author
+and committer stays intact (that's not strictly true, but for the
+sake of this argument, which concerns the linux kernel, it will
+suffice and be mostly correct insofar as I understand the kernel
+workflow).
+
+> * author: Original source of the change. This person may typically
+> have sent a committer an email with a patch. It's the commiter's
+> responsibility to supply this information.
+
+No, it's the author's responsibility to supply this information.
+Author is hardly ever changed.
+
+> * author date: The commiter is free to specify a date for the contrib=
+ution.
+>=20
+
+No, the author does that too :)
+
+> * committer: First committer to actually add this change to a reposit=
+ory
+
+No, committer is the person who added the commit to the repository by
+some other means than merging from another repository.
+
+> * committer date: Date of the actual commit, added by the git client
+> during the commit. Typically the system clock at the time of the
+> commit.
+>=20
+
+Sort of, yes, although commits can be created by other means than
+just running "git commit". The operations listed in bullets at the
+top of this mail all create new commits, in the sense that they
+can't have the same SHA1 as their original ones. Hence, committer
+and commitdate must be updated.
+
+> * A transfer of a commit across repositories (pull, push) will not
+> change the author, commit or date information
+>=20
+
+True. Since neither ancestry nor content is allowed to change, the
+commit will be exactly the same in the new repository as it was in
+the old one.
+
+> If I got some of this wrong, I'd be happy if someone would correct me=
+=2E
+>=20
+
+I think I just did. Perhaps I missed something, but I'm sure someone
+will correct me if that's the case.
+
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
