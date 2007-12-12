@@ -1,72 +1,89 @@
-From: "Jason Sewall" <jasonsewall@gmail.com>
-Subject: Re: [ANNOUNCE] ugit: a pyqt-based git gui // was: Re: If you would write git from scratch now, what would you change?
-Date: Wed, 12 Dec 2007 13:50:55 -0500
-Message-ID: <31e9dd080712121050i45981ed5u845b71f0e73aa8e2@mail.gmail.com>
-References: <402731c90712110548k67f28b64w5afa93ee908ce73b@mail.gmail.com>
-	 <31e9dd080712111114t2bbdba60m18b7d6210f3f9174@mail.gmail.com>
-	 <e5bfff550712111133j66c4b9adx9f57661cc720aa41@mail.gmail.com>
-	 <402731c90712111254q1cb99c6al47538971d93b4592@mail.gmail.com>
-	 <31e9dd080712111329j2c8b22ebs38ab727a5fbe85fb@mail.gmail.com>
-	 <20071212041002.GN14735@spearce.org>
-	 <31e9dd080712112113u44b30c62ja012951fba958c5d@mail.gmail.com>
-	 <20071212052329.GR14735@spearce.org>
-	 <31e9dd080712120702k36a959cfh3e2a5c5fb076d922@mail.gmail.com>
-	 <Pine.LNX.4.64.0712121814260.27959@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Invalid dates in git log
+Date: Wed, 12 Dec 2007 10:57:51 -0800
+Message-ID: <7v8x3z91w0.fsf@gitster.siamese.dyndns.org>
+References: <34660cca0712120111k3f11769fk1a8cefda3b82683e@mail.gmail.com>
+	<20071212092304.GA20799@coredump.intra.peff.net>
+	<7vejds8ddf.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0712121457280.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, David <davvid@gmail.com>,
-	"Marco Costalba" <mcostalba@gmail.com>,
-	"Andy Parkins" <andyparkins@gmail.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Dec 12 19:51:30 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	Eirik =?utf-8?B?QmrDuHJzbsO4cw==?= <eirbjo@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Dec 12 19:58:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2Wfv-0004a3-PR
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 19:51:20 +0100
+	id 1J2Wn1-0007R4-RR
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 19:58:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753294AbXLLSu5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 13:50:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752614AbXLLSu5
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 13:50:57 -0500
-Received: from wa-out-1112.google.com ([209.85.146.180]:61213 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752188AbXLLSu4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 13:50:56 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so560585wah.23
-        for <git@vger.kernel.org>; Wed, 12 Dec 2007 10:50:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=9+b1gc5aUBES6riiaeo7yKrquTyjkqRB0eBECx3Mbkw=;
-        b=Y5a8ZTSvvGFmJpd0Rk75tOVBm3VjsqLfFwWaqboP0+4u8f4EliQnNRZuJ0ts6TA93ioXEmpMemBj7ZxL2ZN5FDffEdkAUx79dvxdB2d2tfJ/XFImb0R2WNKVVBkjunVDAJWQz9WaSidZXg7IDy50drBygbrmxMN62KvAUvU6cAI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UeU1kQJHHwK5ANA56sOKGHt7ZIVAScwcc1mwKluzljjOj7BnBFz6LhS/8Res7beuvyxc3oi5Q5bEefLj/FA1q0XmDmoOodIZXsKfx+AAWSkkAAx8l3Bv7/pz/PcmmsiQbo8QpeomT/TdIS0ge3Skbv7sP2gEs4RhpPfqsLW1E+8=
-Received: by 10.114.154.1 with SMTP id b1mr1166330wae.34.1197485455867;
-        Wed, 12 Dec 2007 10:50:55 -0800 (PST)
-Received: by 10.115.18.14 with HTTP; Wed, 12 Dec 2007 10:50:55 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0712121814260.27959@racer.site>
-Content-Disposition: inline
+	id S1752694AbXLLS6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 13:58:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752362AbXLLS6L
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 13:58:11 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59439 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751962AbXLLS6K (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 13:58:10 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 410814FD8;
+	Wed, 12 Dec 2007 13:57:59 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E3164FD3;
+	Wed, 12 Dec 2007 13:57:54 -0500 (EST)
+In-Reply-To: <Pine.LNX.4.64.0712121457280.27959@racer.site> (Johannes
+	Schindelin's message of "Wed, 12 Dec 2007 14:59:31 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68088>
 
-On Dec 12, 2007 1:15 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Wed, 12 Dec 2007, Jason Sewall wrote:
-> > On that note, did you see what I wrote above, about having "split hunk"
-> > functionality?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> On Wed, 12 Dec 2007, Junio C Hamano wrote:
 >
-> I had a patch for splitting hunks in git-gui in August, but there were
-> some issues that I did not yet resolve.  If you want to work on it, I'll
-> gladly share that patch with you.
+>>     Author:     Len Brown <len.brown@intel.com>
+>>     AuthorDate: Fri Apr 5 00:07:45 2019 -0500
+>>     Commit:     Len Brown <len.brown@intel.com>
+>>     CommitDate: Tue Jul 12 00:12:09 2005 -0400
+>> 
+>>     author Len Brown <len.brown@intel.com> 1554440865 -0500
+>>     committer Len Brown <len.brown@intel.com> 1121141529 -0400
+>> 
+>> [...] It looks like quite a random timestamp, and committer timestamp 
+>> look reasonable, relative to the other commits around it.
+>
+> It is quite possible that Len Brown had a similar problem to what I 
+> experienced yesterday: my clock was set one hour and 22 years into the 
+> future, but I have no idea how that happened.  My only guess is a 
+> half-succeeded ntpdate call, but somehow I doubt that.
 
-Sure, send it along. I'm not going to make any promises, but I could
-probably find time poke around in there.
+But how would you explain the more reasonable committer date?
 
-Jason
+I am guessing that this particular commit was rebased (using rebase,
+rebase -i, stgit, guilt or something else), and whatever tool that was
+used had some thinko that broke the author timestamp (and zone).
+
+Nah, exonerate guilt and rebase -i from the list.  The commit is from
+July 2005 which means there wasn't much usable tool for rebasing in the
+core distribution.  Interactive rebase did not exist back then, and
+rebase was done with "git-commit-script -m", which took an existing
+commit and used its metainformation when creating a commit.  This was
+almost totally different codepath from what we have now.  Not even
+format-patch nor applymbox existed.
+
+StGIT 0.4 (initial) was Jul 10, 2005, so it is _possible_ (I do not know
+about plausibility) that it had an early bug that caused this, but if we
+really want to figure it out we need to ask Len what was used, and I
+suspect the most likely answer is "are you crazy enough to expect me to
+remember?".
+
+I am personally more interested in the other one, which was much more
+recent incident, though.
