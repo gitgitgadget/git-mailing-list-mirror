@@ -1,79 +1,71 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Efficient retrieval of commit log info
-Date: Wed, 12 Dec 2007 10:04:07 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0712121001430.555@xanadu.home>
-References: <34660cca0712120636w149e2a82h84609f8ac7c958a9@mail.gmail.com>
- <Pine.LNX.4.64.0712121453150.27959@racer.site>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: [PATCH] builtin-clone: Implement git clone as a builtin
+	command.
+Date: Wed, 12 Dec 2007 10:04:26 -0500
+Message-ID: <1197471866.9269.2.camel@hinata.boston.redhat.com>
+References: <20071211195712.GA3865@bitplanet.net>
+	 <Pine.LNX.4.64.0712111549490.5349@iabervon.org>
+	 <1197416286.7552.4.camel@hinata.boston.redhat.com>
+	 <7vejdsbo7d.fsf@gitster.siamese.dyndns.org>
+	 <Pine.LNX.4.64.0712121103510.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: =?ISO-8859-15?Q?Eirik_Bj=F8rsn=F8s?= <eirbjo@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Dec 12 16:05:58 2007
+X-From: git-owner@vger.kernel.org Wed Dec 12 16:06:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2T9B-0007fu-Su
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 16:05:45 +0100
+	id 1J2T9o-0007fu-3j
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 16:05:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755475AbXLLPEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 10:04:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755392AbXLLPEQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 10:04:16 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:34244 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751965AbXLLPEP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 10:04:15 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSX00F3SZ6VHRF0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 12 Dec 2007 10:04:07 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <Pine.LNX.4.64.0712121453150.27959@racer.site>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1751794AbXLLPE7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 10:04:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751747AbXLLPE7
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 10:04:59 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:34110 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751685AbXLLPE6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 10:04:58 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lBCF4XHp031789;
+	Wed, 12 Dec 2007 10:04:33 -0500
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lBCF4XrK026746;
+	Wed, 12 Dec 2007 10:04:33 -0500
+Received: from [192.168.1.100] (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lBCF4WHw029517;
+	Wed, 12 Dec 2007 10:04:32 -0500
+In-Reply-To: <Pine.LNX.4.64.0712121103510.27959@racer.site>
+X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68046>
 
-On Wed, 12 Dec 2007, Johannes Schindelin wrote:
-
+On Wed, 2007-12-12 at 11:12 +0000, Johannes Schindelin wrote:
 > Hi,
 > 
-> On Wed, 12 Dec 2007, Eirik Bj?rsn?s wrote:
+> On Tue, 11 Dec 2007, Junio C Hamano wrote:
+...
+> >  * --shared optimization
+> > 
+> >    This is a very easy addition to "git remote add".  You make sure that
+> >    the added remote repository is on a local machine, and set up
+> >    alternates to point at its object store.
 > 
-> > I'm developing a piece of software that grabs logs from various types of 
-> > SCMs and presents (hopefully) useful information about the history.
-> > 
-> > My current approach with Git is do a "git clone --n" and then parse the 
-> > output of "git log". To check for updates I do a "git pull" followed by 
-> > a new "git log".
-> > 
-> > This approach works fine, but cloning the whole repository just to get 
-> > the change log seems like a somewhat inefficient use of bandwidth and 
-> > storage.
-> > 
-> > What I would like to do is to fetch just the change log information
-> > from the remote repository.
-> > 
-> > (Using the "CVS done right" tool I can do this with: "svn log --xml -v
-> > -r<last, HEAD> http://svn.example.com/")
-> > 
-> > I haven't found a way to do this using the Git command line tools.
+> Concur.
 > 
-> It is not possible to get just the metadata.  Remember, svn can do it only 
-> since the repository is purely remote.  And git is a SCM (source code 
-> management system), not a CMV (commit metadata viewer).
-> 
-> You might be able to cobble up something that works accessing gitweb, but 
-> it might be even more inefficient.
+> Since I want to lose that dependency on cpio on Windows (which we fake by 
+> using tar), I'll implement this in C anyway.
 
-On the other hand, this is pretty trivial to extend the protocol so only 
-commit objects are transferred.  Using 'git log' on the client side 
-would work, as long as you don't use any of the content walking options.
+It's not used for --shared (which is just writing an alternates file),
+it's used for -l, hardlinking locally cloned repos.  The code to replace
+cpio is already in the patch I sent, look for clone_local().
 
-
-Nicolas
+cheers,
+Kristian
