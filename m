@@ -1,69 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-cvsexportcommit fails for huge commits
-Date: Wed, 12 Dec 2007 01:21:14 -0800
-Message-ID: <7vir348e0l.fsf@gitster.siamese.dyndns.org>
-References: <20071211200418.GA13815@mkl-desktop>
-	<20071212083154.GB7676@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Invalid dates in git log
+Date: Wed, 12 Dec 2007 04:23:04 -0500
+Message-ID: <20071212092304.GA20799@coredump.intra.peff.net>
+References: <34660cca0712120111k3f11769fk1a8cefda3b82683e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Markus Klinik <markus.klinik@gmx.de>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 12 10:22:14 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Eirik =?iso-8859-1?Q?Bj=F8rsn=F8s?= <eirbjo@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 12 10:23:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2Nn6-0006fk-VU
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 10:22:09 +0100
+	id 1J2NoS-00078k-Kr
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 10:23:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757607AbXLLJVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 04:21:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757177AbXLLJVc
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 04:21:32 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58922 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756793AbXLLJVb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 04:21:31 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 14B5864DF;
-	Wed, 12 Dec 2007 04:21:26 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8538A64DE;
-	Wed, 12 Dec 2007 04:21:21 -0500 (EST)
-In-Reply-To: <20071212083154.GB7676@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 12 Dec 2007 03:31:54 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757767AbXLLJXK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Dec 2007 04:23:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757787AbXLLJXJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 04:23:09 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2119 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757641AbXLLJXI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 04:23:08 -0500
+Received: (qmail 356 invoked by uid 111); 12 Dec 2007 09:23:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 12 Dec 2007 04:23:06 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Dec 2007 04:23:04 -0500
+Content-Disposition: inline
+In-Reply-To: <34660cca0712120111k3f11769fk1a8cefda3b82683e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68021>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Dec 12, 2007 at 10:11:12AM +0100, Eirik Bj=F8rsn=F8s wrote:
 
-> @@ -335,6 +335,22 @@ sub safe_pipe_capture {
->      return wantarray ? @output : join('',@output);
->  }
->  
-> +sub xargs_safe_pipe_capture {
-> +	my $MAX_ARG_LENGTH = 1024;
-> +	my $cmd = shift;
-> +	my @output;
-> +	while(@_) {
-> +		my @args;
-> +		my $length = 0;
-> +		while(@_ && $length < $MAX_ARG_LENGTH) {
-> +			push @args, shift;
-> +			$length += length($args[$#args]);
-> +		}
-> +		push @output, safe_pipe_capture(@$cmd, @args);
-> +	}
-> +	return @output;
-> +}
-> +
+> My questions are:
+>=20
+> 1) Is this a problem in the Git software?
 
-Makes me wonder why you are not spawning xargs by doing it by hand.  If
-the path at the beginning happens to be longer than 1024 then you will
-run path-less "cvs status"?
+No. Whoever made the commit probably just didn't have their clock set
+right. Git doesn't generally care about the timestamp for its
+operations; it just records it as a historical note.
+
+> 2) Or is it a data corruption issue in the repository?
+
+No. You can check for corruption with git-fsck, but these commits were
+actually created with bad dates.
+
+> 3) Can it be fixed and should I contact anyone to get it fixed?
+
+Changing the date will change the commit id (since the id is the sha1 o=
+f
+the commit contents). Which would mean rewriting all of the history tha=
+t
+follows it. You could do it in your own repository, but then you might
+have some trouble merging with Linus later on. Linus could do it, but I
+doubt he will think it is worth the trouble.
+
+> $ git  log  a27ac38efd6dc6dccebfc9bcc475ab4aa5fc4a56 -1
+> commit a27ac38efd6dc6dccebfc9bcc475ab4aa5fc4a56
+> Author: Len Brown <len.brown@intel.com>
+> Date:   Fri Apr 5 00:07:45 2019 -0500
+
+Your best guess is probably the committer information. Try this:
+
+  git log a27ac38 -1 --pretty=3Dformat:'Author: %an %ad%nCommitter: %cn=
+ %cd'
+
+-Peff
