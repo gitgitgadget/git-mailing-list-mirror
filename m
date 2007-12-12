@@ -1,65 +1,107 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] clone: support cloning full bundles
-Date: Wed, 12 Dec 2007 18:46:30 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712121846070.27959@racer.site>
-References: <1197456485-22909-1-git-send-email-sbejar@gmail.com> 
- <Pine.LNX.4.64.0712121449310.27959@racer.site>
- <8aa486160712120721k26158972qf11c889da98572c6@mail.gmail.com>
+From: "J.C. Pizarro" <jcpiza@gmail.com>
+Subject: Re: Something is broken in repack. Why not with fork and pipes?
+Date: Wed, 12 Dec 2007 19:47:14 +0100
+Message-ID: <998d0e4a0712121047m3cb09f37qc3157b96e5d171e7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 19:47:15 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2Wbz-0002wi-5Z
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 19:47:15 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758935AbXLLSqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 13:46:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756503AbXLLSqe
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 13:46:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55027 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757969AbXLLSqd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 13:46:33 -0500
-Received: (qmail invoked by alias); 12 Dec 2007 18:46:31 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp037) with SMTP; 12 Dec 2007 19:46:31 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+hFOIOUseh/Bl0Mw8rx5HlBQHes2iHCIgSto6JPI
-	xUEvji8tG8RtIw
-X-X-Sender: gene099@racer.site
-In-Reply-To: <8aa486160712120721k26158972qf11c889da98572c6@mail.gmail.com>
-X-Y-GMX-Trusted: 0
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "David Miller" <davem@davemloft.net>, "Nicolas Pitre" <nico@cam.org>,  	jonsmirl@gmail.com, "Junio C Hamano" <gitster@pobox.com>,  	gcc@gcc.gnu.org, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>,  	"Andreas Ericsson" <ae@op5.se>
+X-From: gcc-return-142944-gcc=m.gmane.org@gcc.gnu.org Wed Dec 12 19:47:59 2007
+Return-path: <gcc-return-142944-gcc=m.gmane.org@gcc.gnu.org>
+Envelope-to: gcc@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1J2WcY-0003Bh-50
+	for gcc@gmane.org; Wed, 12 Dec 2007 19:47:50 +0100
+Received: (qmail 20492 invoked by alias); 12 Dec 2007 18:47:30 -0000
+Received: (qmail 20480 invoked by uid 22791); 12 Dec 2007 18:47:30 -0000
+X-Spam-Check-By: sourceware.org
+Received: from an-out-0708.google.com (HELO an-out-0708.google.com) (209.85.132.241)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Wed, 12 Dec 2007 18:47:17 +0000
+Received: by an-out-0708.google.com with SMTP id c3so93155ana.104         for <gcc@gcc.gnu.org>; Wed, 12 Dec 2007 10:47:14 -0800 (PST)
+Received: by 10.70.44.1 with SMTP id r1mr1624015wxr.61.1197485234136;         Wed, 12 Dec 2007 10:47:14 -0800 (PST)
+Received: by 10.70.26.9 with HTTP; Wed, 12 Dec 2007 10:47:14 -0800 (PST)
+Content-Disposition: inline
+Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68085>
+List-Id: <gcc.gcc.gnu.org>
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Delivered-To: mailing list gcc@gcc.gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68086>
 
-Hi,
-
-On Wed, 12 Dec 2007, Santi B?jar wrote:
-
-> On Dec 12, 2007 3:50 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+At http://gcc.gnu.org/ml/gcc/2007-12/msg00360.html, Andreas Ericsson
+<ae@op5.se> wrote:
+> If it's still an issue next week, we'll have a 16 core (8 dual-core cpu's)
+> machine with some 32gb of ram in that'll be free for about two days.
+> You'll have to remind me about it though, as I've got a lot on my mind
+> these days.
 >
-> > On Wed, 12 Dec 2007, Santi B?jar wrote:
-> >
-> > > It still fails for incremental bundles.
-> >
-> > Of course it does.  The whole point of incremental bundles is that 
-> > they do _not_ contain all objects, but rely on some objects being 
-> > present on the "fetch" side.
-> 
-> I know this. But then there is no bundle equivalent of the shallow 
-> clones, as with:
-> 
-> git clone --depth <depth> <repo>
+>
+> --
+> Andreas Ericsson                   andreas.ericsson@op5.se
+> OP5 AB                             www.op5.se
+> Tel: +46 8-230225                  Fax: +46 8-230231
 
-Ah, thanks.  Completely forgot about this.
+It's good idea if it's for 24/365.25 that it does
+ autorepack-compute-again-again-again-those-unexplored-deltas of
+ git repositories in realtime. :D
 
-Ciao,
-Dscho
+Some body can do "git clone" that it could give smaller that one hour ago :D
+
+-----------------------------------------------------------------
+
+To Linus, Why don't you forget the threaded implementation of your repo-pack?
+
+To imagine a "buggy bloated threading implementation originated to try it to
+work only in HyperThreading Intel CPUs and 8 cores x 8 threads/core
+Niagara Sparcs"
+
+IMHO, in multicored machine, multiprocessed implementation of repo-pack perfomes
+better than multithreaded implementation, although i've not their results.
+
+It has not issue, not problem, etc. with memory allocation of threads,
+so monothreaded memory allocation is simple and fast!
+
+You can see "Why not with fork and pipes like in linux?" at
+http://gcc.gnu.org/ml/gcc/2007-12/msg00203.html
+http://gcc.gnu.org/ml/gcc/2007-12/msg00209.html
+
+For easy implementation, don't use threads due to complicated condition races
+ between threads of multithreaded processes.
+
+To use only condition races between monothreaded processes with select/epoll
+ only in the parent process. It's due to the KISS principle works.
+
+The children processes share almost readed-only memory due to COW
+ (Copy On Write), so, before forking, the parent must to have a large
+ plain data structures in C for children. The children use pipes to
+ realize a complex intercommunication that the parent updates the
+ results computated by the children almost of the time.
+
+Another implementation is that the children can realize a locked
+ load-and-store to/from unique filesystem's database if big memory to
+ store data is a big problem.
+
+Another implementation is to consider children processes as intensive-CPU
+slaves and parent process as the master that manipulates the big database.
+
+If you want to measure the performance between multiprocessed vs multithreaded
+implementation of repo-pack then you have to remember that
+
+   For same data input size and same data output size, to get the
+   seconds of your wall-clock or watch-clock as a measure of the benchmark
+   of this repo-pack.
+
+The numeric data posted to mailing list about the timings dependently of # of
+ threads are bad measured because they don't say how is small the result repo.
+ and don't say if the results are the same independently of # of threads.
+
+For good measures, we need "to plot the curves", e.g. based in
+( # of threads, elapsed time of wall-clock, data input size, data output size )
+and we can observe the intersection between above curves.
+
+   J.C.Pizarro
