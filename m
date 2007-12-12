@@ -1,77 +1,64 @@
-From: "=?ISO-8859-1?Q?Eirik_Bj=F8rsn=F8s?=" <eirbjo@gmail.com>
-Subject: Re: Invalid dates in git log
-Date: Wed, 12 Dec 2007 15:19:49 +0100
-Message-ID: <34660cca0712120619r708ee7a8ta20a5458ca11a5ac@mail.gmail.com>
-References: <34660cca0712120111k3f11769fk1a8cefda3b82683e@mail.gmail.com>
-	 <20071212092304.GA20799@coredump.intra.peff.net>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] Fix typo: we require Python 2.4, not 2.5
+Date: Wed, 12 Dec 2007 14:04:11 +0000
+Message-ID: <b0943d9e0712120604m97aac2cyaf60cb33c51cf9a7@mail.gmail.com>
+References: <b0943d9e0712100340p78326b4avf2b7e64008bba6d6@mail.gmail.com>
+	 <20071211142347.GA22879@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 12 15:30:26 2007
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Wed Dec 12 15:32:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2SbJ-0000LP-Mt
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 15:30:18 +0100
+	id 1J2Sd0-00019T-GN
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 15:32:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751153AbXLLO3v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 09:29:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751577AbXLLO3v
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 09:29:51 -0500
-Received: from rv-out-0910.google.com ([209.85.198.186]:17746 "EHLO
+	id S1751624AbXLLObk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Dec 2007 09:31:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751628AbXLLObk
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 09:31:40 -0500
+Received: from rv-out-0910.google.com ([209.85.198.187]:21229 "EHLO
 	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750992AbXLLO3u (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 09:29:50 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so222968rvb.1
-        for <git@vger.kernel.org>; Wed, 12 Dec 2007 06:29:49 -0800 (PST)
+	with ESMTP id S1751602AbXLLObk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Dec 2007 09:31:40 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so223391rvb.1
+        for <git@vger.kernel.org>; Wed, 12 Dec 2007 06:31:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=XCRXBANLUdWxq6vznOJ+PpUxOBGoq+tWPbgOtNmqKac=;
-        b=FvRC5bFG8dnnzqbqUsTdBJHep2joJhtSrrfzkJ1mXqIROv6DedQQRfspvgu147+SHCj500Dw9hlTNwnXp1teVmuaM/YZNaRdE8dmDBWEIGZnVlNwsJ55ITZ9Y2S2d0tz53DYl6przggzqZ5FL54BcJKm+TyxzPoV9hVrLe6FoMk=
+        bh=quHPnLgDQgzT/+NdfFhcQ155gaLx8CNr/cHOXc9ZYsA=;
+        b=JqOjZypJln+A5rS5C/ticm5Xkc3o/KLxwUEAJ1oDgsQu0CqgoCjxBRyqzme7ojIxmZwE22B7ot+q4QXRhbVCMuwRkwsEWfJtsSuJPZVmp8FTGmg+3uLFc0XT3EnQcwwcYilSCJNlqWjTdI8DpH9+HB7/kfQyrsvNEH7FFZO8Qbw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=k9qVKpYtS+j0ArSHDouG3MHtNbhJd/iWZl+W5T0Xo/fY9aGXvg+ecygDJ/lrjUtLTZNVfwMpIFT0CIFkBSn6CEeHe+5jdFpUWEH0SUeZ6hrKEg0AyM4gY9q5Gj2vqaN5Q/6eA1aB5zQhv+r6XFDLjVOgdxYS88EDDwkev8FV6ts=
-Received: by 10.141.167.5 with SMTP id u5mr353662rvo.189.1197469189425;
-        Wed, 12 Dec 2007 06:19:49 -0800 (PST)
-Received: by 10.140.207.1 with HTTP; Wed, 12 Dec 2007 06:19:49 -0800 (PST)
-In-Reply-To: <20071212092304.GA20799@coredump.intra.peff.net>
+        b=GmxwI+1bPXFMvXG0sakP2h27bPjXQB5aGCsbWM/H7kIJzlNwkQoPal+3bRDIMwSzDHtw/MOymoixvhrilfzmIOKQ0c0QUa2VOu/RiN/8TjDPDu51lxLW4pRxRO47+8VY2VamJuzBdY9RHuM6HhkeO0oq7VxImkTS72uv+SfQkqk=
+Received: by 10.141.88.3 with SMTP id q3mr351001rvl.94.1197468251595;
+        Wed, 12 Dec 2007 06:04:11 -0800 (PST)
+Received: by 10.141.186.5 with HTTP; Wed, 12 Dec 2007 06:04:11 -0800 (PST)
+In-Reply-To: <20071211142347.GA22879@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68039>
 
-> Your best guess is probably the committer information. Try this:
+On 11/12/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> Yeah. So 0.14.1 (to be released very soon) should probably have this
+> fix. :-)
 
-Thanks Jeff, Junio,
+OK, done. Thanks.
 
-I'll just use the committer date instead.
+On the RPM side, I found a way to specify the required Python version
+on the "setup.py bdist_rpm" command line but I don't think it makes
+any difference since the installed files will go into the python2.5
+directory.
 
-Being a Git newbie (only started looking at it yesterday) I'm not sure
-my understanding of "author" and "committer" and how they releate to
-dates is correct:
+Anyway, I linked the SRPMS as well from the website's page.
 
-* author: Original source of the change. This person may typically
-have sent a committer an email with a patch. It's the commiter's
-responsibility to supply this information.
-* author date: The commiter is free to specify a date for the contribution.
-
-* committer: First committer to actually add this change to a repository
-* committer date: Date of the actual commit, added by the git client
-during the commit. Typically the system clock at the time of the
-commit.
-
-* A transfer of a commit across repositories (pull, push) will not
-change the author, commit or date information
-
-If I got some of this wrong, I'd be happy if someone would correct me.
-
-Thanks,
-
-Eirik.
+--=20
+Catalin
