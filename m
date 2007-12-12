@@ -1,61 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] "diff --check" should affect exit status
-Date: Wed, 12 Dec 2007 01:16:20 -0800
-Message-ID: <7vmysg8e8r.fsf@gitster.siamese.dyndns.org>
-References: <1197447122-93416-1-git-send-email-win@wincent.com>
-	<1197447122-93416-2-git-send-email-win@wincent.com>
-	<1197447122-93416-3-git-send-email-win@wincent.com>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: git gui blame utf-8 bugs
+Date: Wed, 12 Dec 2007 10:17:44 +0100
+Message-ID: <20071212091744.GA5377@pvv.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Wed Dec 12 10:17:01 2007
+To: git@vger.kernel.org, spearce@spearce.org
+X-From: git-owner@vger.kernel.org Wed Dec 12 10:18:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2Ni5-00052B-Th
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 10:16:58 +0100
+	id 1J2Njm-0005YA-EY
+	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 10:18:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757255AbXLLJQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 04:16:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756601AbXLLJQf
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 04:16:35 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58669 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756236AbXLLJQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 04:16:34 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0DFDB644B;
-	Wed, 12 Dec 2007 04:16:30 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A146644A;
-	Wed, 12 Dec 2007 04:16:27 -0500 (EST)
-In-Reply-To: <1197447122-93416-3-git-send-email-win@wincent.com> (Wincent
-	Colaiuta's message of "Wed, 12 Dec 2007 09:12:02 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758868AbXLLJRt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 04:17:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758064AbXLLJRs
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 04:17:48 -0500
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:59789 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758846AbXLLJRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 04:17:46 -0500
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.60)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1J2Niq-0002Az-Qc; Wed, 12 Dec 2007 10:17:44 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68019>
 
-Wincent Colaiuta <win@wincent.com> writes:
+git gui has some utf-8 bugs:
 
-> "git diff" has a --check option that can be used to check for whitespace
-> problems but it only reported by printing warnings to the
-> console.
+If you do git gui blame <file>, and the file contains utf-8 text,
+the lines are not parsed as utf-8, but seemingly as iso-8859-1 instead.
 
-The primary use of this option used to be to see where the breakages are
-in order to fix them up (IOW, the option was not about seeing if
-breakage exists or not), but that is much easier with --color output
-these days.
+Also, the hovering comment is INITIALLY shown garbled (both Author and
+commit message), but if you click on a line, so that the commit
+message is shown in the bottom window, the hovering message is
+magically corrected to utf-8.
 
-It is probably a good idea to do this, although I do not care much about
-it either way.  It probably could replace the sample pre-commit hook
-currently implemented in Perl.  As I happen to be fairly familiar with
-the area, I'll take a look at the patch if/when I find time.
+The text in the lower window (showing specific commits) seems to
+always be handled correctly.
 
-Thanks.
+To reproduce: Set your author name to include some utf-8 tokens, add a
+line with some utf-8 tokens to a file, commit it with a commit message
+including some utf-8 tokens, and do git gui blame on the file. The
+line will be garbled in the top window, and the hovering message will
+be garbled until you click on the line.
+
+Verified with git-gui.git master
+
+- Finn Arne
