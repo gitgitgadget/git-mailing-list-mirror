@@ -1,144 +1,96 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [(not so) random thoughts] using git as its own caching tool
-Date: Wed, 12 Dec 2007 16:35:19 +0100
-Message-ID: <475FFFB7.4010102@op5.se>
-References: <20071212003813.GG29110@artemis.madism.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Something is broken in repack
+Date: Wed, 12 Dec 2007 10:48:12 -0500 (EST)
+Message-ID: <alpine.LFD.0.99999.0712120743040.555@xanadu.home>
+References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>  <9e4733910712101825l33cdc2c0mca2ddbfd5afdb298@mail.gmail.com>  <alpine.LFD.0.99999.0712102231570.555@xanadu.home>  <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>  <9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com>  <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>  <alpine.LFD.0.99999.0712110832251.555@xanadu.home>  <alpine.LFD.0.99999.0712110951070.555@xanadu.home>  <alpine.LFD.0.99999.0712111117440.555@xanadu.home>  <9e4733910712110821o7748802ag75d9df4be8b2c123@mail.gmail.com>  <alpine.LFD.0.99999.0712112057390.555@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Pierre Habouzit <madcoder@debian.org>, Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 12 16:35:50 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2Tcg-0005Pp-MX
-	for gcvg-git-2@gmane.org; Wed, 12 Dec 2007 16:35:47 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751574AbXLLPfX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Dec 2007 10:35:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751488AbXLLPfX
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 10:35:23 -0500
-Received: from mail.op5.se ([193.201.96.20]:38061 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751411AbXLLPfW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 10:35:22 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 6B8121F08016;
-	Wed, 12 Dec 2007 16:35:21 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qegCMoMBPHPu; Wed, 12 Dec 2007 16:35:20 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 45A5A1F08008;
-	Wed, 12 Dec 2007 16:35:20 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <20071212003813.GG29110@artemis.madism.org>
-Sender: git-owner@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, gcc@gcc.gnu.org,  Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: gcc-return-142934-gcc=m.gmane.org@gcc.gnu.org Wed Dec 12 16:49:50 2007
+Return-path: <gcc-return-142934-gcc=m.gmane.org@gcc.gnu.org>
+Envelope-to: gcc@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1J2TpT-0002xZ-WA
+	for gcc@gmane.org; Wed, 12 Dec 2007 16:49:00 +0100
+Received: (qmail 5163 invoked by alias); 12 Dec 2007 15:48:40 -0000
+Received: (qmail 5155 invoked by uid 22791); 12 Dec 2007 15:48:40 -0000
+X-Spam-Check-By: sourceware.org
+Received: from relais.videotron.ca (HELO relais.videotron.ca) (24.201.245.36)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Wed, 12 Dec 2007 15:48:29 +0000
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca  (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))  with ESMTP id <0JSY00LSQ18FT8G0@VL-MH-MR001.ip.videotron.ca> for  gcc@gcc.gnu.org; Wed, 12 Dec 2007 10:48:16 -0500 (EST)
+In-reply-to: <alpine.LFD.0.99999.0712112057390.555@xanadu.home>
+User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68053>
+List-Id: <gcc.gcc.gnu.org>
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Delivered-To: mailing list gcc@gcc.gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68054>
 
-Pierre Habouzit wrote:
->   That's an idea I have for quite some time, and I wonder why it's no=
-t
-> used in git tools as a general rule.
->=20
->   This idea is simple, git objects database has two (for this
-> discussion) very interesting features: its delta compressed cached th=
-at
-> is _very_ efficient, and the reflog.
->=20
->   I wonder if that would be possible to write some git porcelains (an=
-d
-> builtin API too) that would be more "map" oriented. I mean, we could =
-use
-> a reference as a pointer to a given tree that would be the map (where
-> keys have a path form, which is nice). When I say that, I'm thinking
-> about git-svn, that even with the recent improvements of its .rev_db'=
-s
-> still eats a lot of space with the unhandled.log _and_ the indexes it
-> stores for _each_ svn branch/tag. This way, instead of many:
->     foo/index
->     foo/.rev_map.6ef976f9-4de5-0310-a40d-91cae572ec18
->     foo/unhandled.log
-> we would just have a special refs/db/git-svn/foo reference that would=
- be
-> a tree with three blobs in it: index, rev_map.xxxx, unhandled.log.  (=
-or
-> probably index would even be a tree but that's another matter). This
-> way, all the unhandled.log that share a lot of common content would b=
-e
-> nicely compressed by the delta-compression algorithms, with a negligi=
-ble
-> overhead (git-svn is _very_ slow because of svn anyways, we don't rea=
-lly
-> care if it needs to get a blob contents instead opening a flat file).
->=20
->=20
->   Another nifty usage we could have is memoization databases that don=
-'t
-> require a specific tool to expire them, but use the reflog expiration
-> for that. I remember that we discussed quite some time ago, the idea =
-of
-> annotating objects. We could use such annotations to link some object=
-s
-> to memoized datas under different namespaces for each caching scheme
-> involved, and with one reference per namespace that will have in its
-> reflog each of the linked objects created over time for caching. Good
-> candidates to use that are the rr-cache, or git-annotate/blame cachin=
-g.
-> Of course that would need to write a tool that removes weak annotatio=
-ns
-> that point to objects that don't exist anymore. We could also cache t=
-he
-> rename/copies/=E2=80=A6 detection results, and make those really real=
-ly cheap to
-> use[0].
->=20
->=20
->   I know that some will say something about hammers, problems and nai=
-ls,
-> though it would allow to develop quite efficient tools with a generic
-> and easy to use API, that could directly benefit from already existin=
-g
-> infrastructure in git. I mean it's silly to write yet-another cache
-> expirer when you have the reflog. Or to speak about git-svn again, it
-> could even version its state per branch the way I propose, it'll end =
-up
-> using less disk that what it does now, with the immediate gain that i=
-t
-> would be fully clone-able[1] (which would be a _really_ nice feature)=
-=2E
->=20
->=20
->   So am I having crazy thoughts and should I throw my crack-pipe away=
- ?
-> Or does parts of this mumbling makes any sense to someone ?
->=20
+On Wed, 12 Dec 2007, Nicolas Pitre wrote:
 
-A bit of both ;-)
+> Add memory fragmentation to that and you have a clogged system.
+> 
+> Solution: 
+> 
+> 	pack.deltacachesize=1
+> 	pack.windowmemory=16M
+> 
+> Limiting the window memory to 16MB will automatically shrink the window 
+> size when big objects are encountered, therefore keeping much fewer of 
+> those objects at the same time in memory, which in turn means they will 
+> be processed much more quickly.  And somehow that must help with memory 
+> fragmentation as well.
 
-I like the idea to use the git object store, because that certainly
-has an API that can't be done away with by user config. The reflog
-and its expiration mechanism is subject to human control though, and
-everyone doesn't even have them enabled. I don't for some repos where
-I know I'll create a thousand-and-one loose objects by rebasing,
---amend'ing and otherwise fiddling with history rewrites.
+OK scrap that.
 
-Having a tool that works on some repos but not on others because it
-relies on me living with an auto-gc after pretty much every operation
-would be very tiresome indeed.
+When I returned to the computer this morning, the repack was 
+completed... with a 1.3GB pack instead.
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+So... The gcc repo apparently really needs a large window to efficiently 
+compress those large objects.
+
+But when those large objects are already well deltified and you repack 
+again with a large window, somehow the memory allocator is way more 
+involved, probably even 
+more so when there are several threads in parallel amplifying the issue, 
+and things probably get to a point of no return with regard to memory 
+fragmentation after a while.
+
+So... my conclusion is that the glibc allocator has fragmentation issues 
+with this work load, given the notable difference with the Google 
+allocator, which itself might not be completely immune to fragmentation 
+issues of its own.  And because the gcc repo requires a large window of 
+big objects to get good compression, then you're better not using 4 
+threads to repack it with -a -f.  The fact that the size of the source 
+pack has such an influence is probably only because the increased usage 
+of the delta base object cache is playing a role in the global memory 
+allocation pattern, allowing for the bad fragmentation issue to occur.
+
+If you could run one last test with the mallinfo patch I posted, without 
+the pack.windowmemory setting, and adding the reported values along with 
+those from top, then we could formally conclude to memory fragmentation 
+issues.
+
+So I don't think Git itself is actually bad.  The gcc repo most 
+certainly constitute a nasty use case for memory allocators, but I don't 
+think there is much we can do about it besides possibly implementing our 
+own memory allocator with active defragmentation where possible (read 
+memcpy) at some point to give glibc's allocator some chance to breathe a 
+bit more.
+
+In the mean time you might have to use only one thread and lots of 
+memory to repack the gcc repo, or find the perfect memory allocator to 
+be used with Git.  After all, packing the whole gcc history to around 
+230MB is quite a stunt but it requires sufficient resources to 
+achieve it. Fortunately, like Linus said, such a wholesale repack is not 
+something that most users have to do anyway.
+
+
+Nicolas
