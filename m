@@ -1,96 +1,74 @@
-From: Jon Loeliger <jdl@jdl.com>
-Subject: [BUG] Failed to make install-info
-Date: Thu, 13 Dec 2007 09:38:40 -0600
-Message-ID: <E1J2q92-0001YT-BZ@jdl.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 13 17:12:58 2007
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: unlink internal index files after operations
+Date: Thu, 13 Dec 2007 08:27:34 -0800
+Message-ID: <20071213162734.GA18433@soma>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 13 17:28:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2qgB-0004UC-Ey
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 17:12:55 +0100
+	id 1J2qun-0002rC-Gk
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 17:28:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753491AbXLMQMd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 11:12:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753186AbXLMQMd
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 11:12:33 -0500
-Received: from jdl.com ([208.123.74.7]:51227 "EHLO jdl.com"
+	id S1754058AbXLMQ1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 11:27:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755379AbXLMQ1h
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 11:27:37 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:59007 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753148AbXLMQMc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 11:12:32 -0500
-X-Greylist: delayed 2028 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Dec 2007 11:12:32 EST
-Received: from jdl (helo=jdl.com)
-	by jdl.com with local-esmtp (Exim 4.63)
-	(envelope-from <jdl@jdl.com>)
-	id 1J2q92-0001YT-BZ
-	for git@vger.kernel.org; Thu, 13 Dec 2007 09:38:41 -0600
-X-Spam-Score: -1.6 (-)
+	id S1752895AbXLMQ1h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 11:27:37 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id CC3317DC025;
+	Thu, 13 Dec 2007 08:27:35 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68170>
 
+Being git, we can generate these very quickly on the fly as
+needed, so there's no point in wasting space for these things
+for large projects.
 
-Guys,
-I managed to fail to install info files during:
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-    /usr/src/git# make prefix=/usr install-info
-
-The /usr/share/info/dir file is readable.  But it
-looks like our build isn't supplying a description
-that is needed by install-info?  Is my info really
-old or something?
-
-This is:
-
-    1693 % pwd
-    /usr/src/git
-    1694 % git describe
-    v1.5.4-rc0
-    1695 % git rev-parse HEAD
-    1e8df762b38e01685f3aa3613e2d61f73346fcbe
-
-and:
-
-    1698 % install-info --version
-    Debian install-info version 1.14.5.
-
-Thanks,
-jdl
-
-
-
-make -C Documentation install-info
-make[1]: Entering directory `/usr/src/git/Documentation'
-rm -f doc.dep+ doc.dep
-/usr/bin/perl ./build-docdep.perl >doc.dep+
-mv doc.dep+ doc.dep
-make -C ../ GIT-VERSION-FILE
-make[2]: Entering directory `/usr/src/git'
-make[2]: `GIT-VERSION-FILE' is up to date.
-make[2]: Leaving directory `/usr/src/git'
-make[1]: Leaving directory `/usr/src/git/Documentation'
-make[1]: Entering directory `/usr/src/git/Documentation'
-make -C ../ GIT-VERSION-FILE
-make[2]: Entering directory `/usr/src/git'
-make[2]: `GIT-VERSION-FILE' is up to date.
-make[2]: Leaving directory `/usr/src/git'
-install -d -m 755 /usr/share/info
-install -m 644 git.info gitman.info /usr/share/info
-if test -r /usr/share/info/dir; then \
-          install-info --info-dir=/usr/share/info git.info ;\
-          install-info --info-dir=/usr/share/info gitman.info ;\
-        else \
-          echo "No directory found in /usr/share/info" >&2 ; \
-        fi
-
-No `START-INFO-DIR-ENTRY' and no `This file documents'.
-install-info(git.info): unable to determine description for `dir' entry - giving up
-
-No `START-INFO-DIR-ENTRY' and no `This file documents'.
-install-info(gitman.info): unable to determine description for `dir' entry - giving up
-make[1]: *** [install-info] Error 1
-make[1]: Leaving directory `/usr/src/git/Documentation'
-make: *** [install-info] Error 2
+diff --git a/git-svn.perl b/git-svn.perl
+index 54d7844..fde39e2 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -396,6 +396,7 @@ sub cmd_set_tree {
+ 	}
+ 	$gs->set_tree($_) foreach @revs;
+ 	print "Done committing ",scalar @revs," revisions to SVN\n";
++	unlink $gs->{index};
+ }
+ 
+ sub cmd_dcommit {
+@@ -514,6 +515,7 @@ sub cmd_dcommit {
+ 			$last_rev = $cmt_rev;
+ 		}
+ 	}
++	unlink $gs->{index};
+ }
+ 
+ sub cmd_find_rev {
+@@ -1374,6 +1376,7 @@ sub fetch_all {
+ 
+ 	($base, $head) = parse_revision_argument($base, $head);
+ 	$ra->gs_fetch_loop_common($base, $head, \@gs, \@globs);
++	unlink $_->{index} foreach @gs;
+ }
+ 
+ sub read_all_remotes {
+-- 
+Eric Wong
