@@ -1,65 +1,77 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Something is broken in repack
-Date: Thu, 13 Dec 2007 17:39:32 +0100
-Message-ID: <47616044.7070504@viscovery.net>
-References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>	 <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>	 <9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com>	 <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>	 <alpine.LFD.0.99999.0712110832251.555@xanadu.home>	 <alpine.LFD.0.99999.0712110951070.555@xanadu.home>	 <alpine.LFD.0.99999.0712111117440.555@xanadu.home>	 <9e4733910712110821o7748802ag75d9df4be8b2c123@mail.gmail.com>	 <alpine.LFD.0.99999.0712112057390.555@xanadu.home>	 <alpine.LFD.0.99999.0712120743040.555@xanadu.home> <fcaeb9bf0712130532s79aa7afeve6f018f9430ab3b3@mail.gmail.com> <fjrj9k$n6k$1@ger.gmane.org>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [StGit RFC] Make "stg branch -l" faster by getting all git config information in one call
+Date: Thu, 13 Dec 2007 17:39:49 +0100
+Message-ID: <878x3yr1ka.fsf@lysator.liu.se>
+References: <20071213133653.13925.89254.stgit@krank>
+	<b0943d9e0712130604r6daf05d5n7afbadfe23831839@mail.gmail.com>
+	<20071213160432.GA30693@diana.vm.bytemark.co.uk>
+	<b0943d9e0712130810p35b33e6aj7756b1af1922992b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gcc@gcc.gnu.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Dec 13 17:40:10 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>,
+	Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 13 17:41:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2r6R-0008Rd-82
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 17:40:03 +0100
+	id 1J2r7l-0000iv-OH
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 17:41:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751989AbXLMQjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 11:39:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752671AbXLMQjh
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 11:39:37 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:47067 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751624AbXLMQjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 11:39:36 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1J2r6G-0001I1-21; Thu, 13 Dec 2007 17:39:54 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 53A1069F; Thu, 13 Dec 2007 17:39:32 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <fjrj9k$n6k$1@ger.gmane.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1754332AbXLMQlA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Dec 2007 11:41:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754212AbXLMQlA
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 11:41:00 -0500
+Received: from mail.lysator.liu.se ([130.236.254.3]:45476 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754133AbXLMQlA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Dec 2007 11:41:00 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id 82D6E200A1F8;
+	Thu, 13 Dec 2007 17:40:58 +0100 (CET)
+Received: from mail.lysator.liu.se ([127.0.0.1])
+	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 10138-01-66; Thu, 13 Dec 2007 17:40:57 +0100 (CET)
+Received: from krank (c83-253-242-75.bredband.comhem.se [83.253.242.75])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id 527C2200A299;
+	Thu, 13 Dec 2007 17:39:55 +0100 (CET)
+Received: by krank (Postfix, from userid 1000)
+	id 111447B4077; Thu, 13 Dec 2007 17:39:50 +0100 (CET)
+In-Reply-To: <b0943d9e0712130810p35b33e6aj7756b1af1922992b@mail.gmail.com> (Catalin Marinas's message of "Thu\, 13 Dec 2007 16\:10\:10 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68175>
 
-Paolo Bonzini schrieb:
-> Nguyen Thai Ngoc Duy wrote:
->> On Dec 12, 2007 10:48 PM, Nicolas Pitre <nico@cam.org> wrote:
->>> In the mean time you might have to use only one thread and lots of
->>> memory to repack the gcc repo, or find the perfect memory allocator to
->>> be used with Git.  After all, packing the whole gcc history to around
->>> 230MB is quite a stunt but it requires sufficient resources to
->>> achieve it. Fortunately, like Linus said, such a wholesale repack is not
->>> something that most users have to do anyway.
+"Catalin Marinas" <catalin.marinas@gmail.com> writes:
+
+> On 13/12/2007, Karl Hasselstr=C3=B6m <kha@treskal.com> wrote:
+>> On 2007-12-13 14:04:26 +0000, Catalin Marinas wrote:
 >>
->> Is there an alternative to "git repack -a -d" that repacks everything
->> but the first pack?
-> 
-> That would be a pretty good idea for big repositories.  If I were to
-> implement it, I would actually add a .git/config option like
-> pack.permanent so that more than one pack could be made permanent; then
-> to repack really really everything you'd need "git repack -a -a -d".
+>> > On 13/12/2007, David K=C3=A5gedal <davidk@lysator.liu.se> wrote:
+>> >
+>> > > Maybe someone can help me find a quicker replacement for the
+>> > > get_protected call?
+>> >
+>> > We can have the standard --list command which ignores the protecte=
+d
+>> > flag
+>>
+>> Exactly what is the p flag useful for anyway?
+>
+> It was added so that you don't rebase the stack by mistake. Yann
+> suggested to have a specific policy for this and make the protected
+> flag freeze the stack completely.
 
-It's already there: If you have a pack .git/objects/pack/pack-foo.pack, then
-"touch .git/objects/pack/pack-foo.keep" marks the pack as precious.
+I'd be much more interested in a flag that prevents me from running
+"git rebase" on a stg-controlled branch by mistake...
 
--- Hannes
+--=20
+David K=C3=A5gedal
