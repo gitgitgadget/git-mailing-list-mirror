@@ -1,71 +1,66 @@
-From: Wink Saville <wink@saville.com>
-Subject: Re: Using git with Eclipse
-Date: Thu, 13 Dec 2007 14:41:25 -0800
-Message-ID: <4761B515.5070805@saville.com>
-References: <475DC0CE.9070109@saville.com> <200712120129.43878.robin.rosenberg.lists@dewire.com> <475F7A94.4000209@saville.com> <200712132223.31109.robin.rosenberg.lists@dewire.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [egit] How-to use egit
+Date: Fri, 14 Dec 2007 00:24:20 +0100
+Message-ID: <200712140024.20667.robin.rosenberg.lists@dewire.com>
+References: <476032A2.9010308@saville.com> <20071213024735.GB7492@fawkes> <4761B3B2.4040807@saville.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Dec 13 23:42:30 2007
+Cc: git@vger.kernel.org
+To: Wink Saville <wink@saville.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 00:22:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2wl9-00023b-RB
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 23:42:28 +0100
+	id 1J2xO5-00009E-CQ
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 00:22:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763728AbXLMWlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 17:41:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763697AbXLMWla
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 17:41:30 -0500
-Received: from rv-out-0910.google.com ([209.85.198.191]:26872 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755492AbXLMWl3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 17:41:29 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so709184rvb.1
-        for <git@vger.kernel.org>; Thu, 13 Dec 2007 14:41:29 -0800 (PST)
-Received: by 10.140.171.4 with SMTP id t4mr1473262rve.187.1197585688684;
-        Thu, 13 Dec 2007 14:41:28 -0800 (PST)
-Received: from ?192.168.0.133? ( [70.91.206.233])
-        by mx.google.com with ESMTPS id g39sm4255016rvb.2007.12.13.14.41.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 13 Dec 2007 14:41:26 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <200712132223.31109.robin.rosenberg.lists@dewire.com>
+	id S1759689AbXLMXWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 18:22:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753394AbXLMXWQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 18:22:16 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:12469 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1759689AbXLMXWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 18:22:16 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 863D2802AB1;
+	Fri, 14 Dec 2007 00:12:45 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bm6vESodwXQR; Fri, 14 Dec 2007 00:12:45 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 15B568028A1;
+	Fri, 14 Dec 2007 00:12:43 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <4761B3B2.4040807@saville.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68200>
 
-Robin Rosenberg wrote:
-> onsdag 12 december 2007 skrev Wink Saville:
->   
->> Robin Rosenberg wrote:
->>     
->>> tisdag 11 december 2007 skrev Wink Saville:
->>>   
->>> <snip>
->>> -- robin
->>>   
->>>       
->> I case I'll take the bait and a guinea pig:)
->> Please send me a link to what you'd like me to test.
->>     
->
-> Great! Please start with http://repo.or.cz/w/egit.git and test the INSTALL
-> instructions first. We do not provide an updatesite or prebuilt plugins yet.
->
-> -- robin
->
->   
-Robin, I'm having a little trouble following the install instructions
-due to my inexperience with Eclipse. Anyway see my "[egit] How-to use egit".
-I might have it installed correctly now, but not sure how to use,
-I just made a reply to Jing with some details.
+torsdag 13 december 2007 skrev Wink Saville:
+> Yes, I selected them all and a single jar was created which
+Never seen that behaviour. I'm surprised that would be the default.
+When I export I get separate jars.
 
-Cheers,
+> I then started eclipse and now I see: Window/Preferences/Team/Git
+> When I select "Git" in the above, I see "Hi, I'm an empty preference page."
+That's all there is for now, but it means the plugin is activated.
 
-Wink
+> But again, I don't see any new menu items that
+> would allow me to look at history or make commits.
+> Is there more I need to to install the plugin, or
+> maybe I just need a little guidance on how to use it.
+
+We do not actually implement any menus in the menu bar. The only menus
+are in the context (right click) menu on resources.
+
+Try right-click on a project in the project explorer and the Team menu>Share project.
+
+-- robin
