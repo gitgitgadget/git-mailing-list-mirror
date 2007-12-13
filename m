@@ -1,52 +1,70 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
 Subject: Re: [StGit RFC] Make "stg branch -l" faster by getting all git config information in one call
-Date: Thu, 13 Dec 2007 17:08:53 +0100
-Message-ID: <20071213160853.GB30693@diana.vm.bytemark.co.uk>
-References: <20071213133653.13925.89254.stgit@krank> <b0943d9e0712130604r6daf05d5n7afbadfe23831839@mail.gmail.com> <87lk7yr7ib.fsf@lysator.liu.se>
+Date: Thu, 13 Dec 2007 16:10:10 +0000
+Message-ID: <b0943d9e0712130810p35b33e6aj7756b1af1922992b@mail.gmail.com>
+References: <20071213133653.13925.89254.stgit@krank>
+	 <b0943d9e0712130604r6daf05d5n7afbadfe23831839@mail.gmail.com>
+	 <20071213160432.GA30693@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Thu Dec 13 17:09:34 2007
+Cc: "=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Dec 13 17:11:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2qck-0002zR-T0
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 17:09:23 +0100
+	id 1J2qeS-0003jL-58
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 17:11:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754706AbXLMQI6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Dec 2007 11:08:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755010AbXLMQI6
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 11:08:58 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4836 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753218AbXLMQI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 11:08:58 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1J2qcH-00087N-00; Thu, 13 Dec 2007 16:08:53 +0000
+	id S1755618AbXLMQKO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Dec 2007 11:10:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755106AbXLMQKN
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 11:10:13 -0500
+Received: from rv-out-0910.google.com ([209.85.198.190]:35029 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754113AbXLMQKL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Dec 2007 11:10:11 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so608574rvb.1
+        for <git@vger.kernel.org>; Thu, 13 Dec 2007 08:10:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=uNgDE7+hKe7PHIzKdIQnPLzDTWu3VUN1NfutbDZawW0=;
+        b=gs2k0NhDLyHi82pRQcXu3WnO9jlyi2vw+2+214pfKszGmdU1QF7Ssp8Jva6sHGi6UmG7VPHggnUM1HcWZIVNe0v17QA990oQg6h9pVF5iHDJVVShqieuFBA2Ix4VC3KkURne7e7X3E9bPoAdIwmCwuTRtsALu9kQIkaqfXPATWE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qbqh0kJ2xq2j6XSvkMpxj42eGli3vJU+r0jIgPueePZPap5ZzTKHUzi4rwod+V+RUixFf1AMlTAhUwSsykuCxABeRq/fmRxjPuHCE7TMuqAniArHSxkTYLE3fYP2ioCQQPgRvdO5bi3Hj1aR9xCXWzVsOuX7xxPHFK1lYvYI/7c=
+Received: by 10.140.139.11 with SMTP id m11mr1193296rvd.211.1197562210286;
+        Thu, 13 Dec 2007 08:10:10 -0800 (PST)
+Received: by 10.141.186.5 with HTTP; Thu, 13 Dec 2007 08:10:10 -0800 (PST)
+In-Reply-To: <20071213160432.GA30693@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
-In-Reply-To: <87lk7yr7ib.fsf@lysator.liu.se>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68168>
 
-On 2007-12-13 15:31:24 +0100, David K=E5gedal wrote:
-
-> Hey, why not put the "protected" flag in the config? Then we can get
-> it the same way as the other stuff.
+On 13/12/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2007-12-13 14:04:26 +0000, Catalin Marinas wrote:
 >
-> Protecting a branch is a configuration action, so it makes sense to
-> put it in the config.
+> > On 13/12/2007, David K=E5gedal <davidk@lysator.liu.se> wrote:
+> >
+> > > Maybe someone can help me find a quicker replacement for the
+> > > get_protected call?
+> >
+> > We can have the standard --list command which ignores the protected
+> > flag
+>
+> Exactly what is the p flag useful for anyway?
 
-I agree; if we are to have such a flag, the config is the right place
-for it.
+It was added so that you don't rebase the stack by mistake. Yann
+suggested to have a specific policy for this and make the protected
+flag freeze the stack completely.
 
 --=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Catalin
