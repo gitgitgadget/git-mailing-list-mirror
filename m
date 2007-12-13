@@ -1,86 +1,69 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 2/2] parseopt: Add a gitcli(5) man page.
-Date: Thu, 13 Dec 2007 14:56:58 +0100
-Message-ID: <20071213135658.GA13802@artemis.madism.org>
-References: <20071213055226.GA3636@coredump.intra.peff.net> <20071213090604.GA12398@artemis.madism.org> <20071213091055.GA5674@coredump.intra.peff.net> <20071213093536.GC12398@artemis.madism.org> <20071213102636.GD12398@artemis.madism.org> <20071213102724.GE12398@artemis.madism.org> <A78DF383-1BD5-4AED-9DE8-60B8E96E54B5@wincent.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="ibTvN161/egqYuK8";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Thu Dec 13 14:57:36 2007
+From: Mark Levedahl <mdl123@verizon.net>
+Subject: [PATCH] git-gui - Unconditionally use absolute paths with Cygwin
+Date: Thu, 13 Dec 2007 09:02:26 -0500
+Message-ID: <1197554546-2260-1-git-send-email-mdl123@verizon.net>
+Cc: git@vger.kernel.org, Mark Levedahl <mdl123@verizon.net>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Thu Dec 13 15:03:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2oZA-0005J9-1p
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 14:57:32 +0100
+	id 1J2oec-0007dj-Od
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 15:03:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752469AbXLMN5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 08:57:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752454AbXLMN5E
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 08:57:04 -0500
-Received: from pan.madism.org ([88.191.52.104]:53670 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752141AbXLMN5C (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 08:57:02 -0500
-Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 6352019737;
-	Thu, 13 Dec 2007 14:57:00 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 8F440D5DC; Thu, 13 Dec 2007 14:56:58 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Wincent Colaiuta <win@wincent.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <A78DF383-1BD5-4AED-9DE8-60B8E96E54B5@wincent.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1753729AbXLMOCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 09:02:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753744AbXLMOCr
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 09:02:47 -0500
+Received: from vms044pub.verizon.net ([206.46.252.44]:64609 "EHLO
+	vms044pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753729AbXLMOCq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 09:02:46 -0500
+Received: from localhost.localdomain ([72.83.157.159])
+ by vms044.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
+ 3 2006)) with ESMTPA id <0JSZ006KDR04AL92@vms044.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 13 Dec 2007 08:02:29 -0600 (CST)
+X-Mailer: git-send-email 1.5.3.7.1167.g12f9a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68155>
 
+The mapping of Windows vs Cygwin/Posix paths is arbitrary and not knowable
+from the Posix side, so logic to determine whether to use relative paths
+to locate the git-gui library just does not work on Cygwin. Fix this to
+unconditionally use absolute path on Cygwin. (This fixes a regression
+from 1.5.4).
 
---ibTvN161/egqYuK8
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Mark Levedahl <mdl123@verizon.net>
+---
+ git-gui/Makefile |   10 ++++------
+ 1 files changed, 4 insertions(+), 6 deletions(-)
 
-On jeu, d=C3=A9c 13, 2007 at 11:04:08 +0000, Wincent Colaiuta wrote:
-> El 13/12/2007, a las 11:27, Pierre Habouzit escribi=C3=B3:
->=20
-> >This page should hold every information about the git ways to parse=20
-> >command
-> >lines, and best practices to be used for scripting.
->=20
-> Some feedback from a native English speaker follows...
-
-  FWIW, like always when it comes to documentation, you're welcome to
-send a patch superseding my 2/2. I'm not a good English writer, I won't
-be offended at all. I care about the page being here, not about it being
-written by me.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---ibTvN161/egqYuK8
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHYToqvGr7W6HudhwRAuYQAKCAo61Wfp8wTQx+JoASJhnX4r0wzQCcDNQ1
-04w3sAtYHt6ANjHxwzzfQwc=
-=1TDx
------END PGP SIGNATURE-----
-
---ibTvN161/egqYuK8--
+diff --git a/git-gui/Makefile b/git-gui/Makefile
+index 26ac4b6..c109eab 100644
+--- a/git-gui/Makefile
++++ b/git-gui/Makefile
+@@ -117,14 +117,12 @@ GITGUI_SCRIPT   := $$0
+ GITGUI_RELATIVE :=
+ GITGUI_MACOSXAPP :=
+ 
+-ifeq ($(exedir),$(gg_libdir))
+-	GITGUI_RELATIVE := 1
+-endif
+-
+ ifeq ($(uname_O),Cygwin)
+ 	GITGUI_SCRIPT := `cygpath --windows --absolute "$(GITGUI_SCRIPT)"`
+-	ifeq ($(GITGUI_RELATIVE),)
+-		gg_libdir := $(shell cygpath --windows --absolute "$(gg_libdir)")
++	gg_libdir := $(shell cygpath --windows --absolute "$(gg_libdir)")
++else
++	ifeq ($(exedir),$(gg_libdir))
++		GITGUI_RELATIVE := 1
+ 	endif
+ endif
+ ifeq ($(uname_S),Darwin)
+-- 
+1.5.3.7.1167.g12f9a
