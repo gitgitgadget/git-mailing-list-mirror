@@ -1,52 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] git-commit: squelch needless message during an empty
- merge
-Date: Thu, 13 Dec 2007 08:46:09 +0100
-Message-ID: <4760E341.4070309@viscovery.net>
-References: <20071022061115.GR14735@spearce.org>	<7vodeecyni.fsf@gitster.siamese.dyndns.org>	<7vpryqwtt7.fsf@gitster.siamese.dyndns.org>	<7vk5ot40w9.fsf@gitster.siamese.dyndns.org>	<7vy7d43ptc.fsf@gitster.siamese.dyndns.org>	<7vabpg9x5k.fsf@gitster.siamese.dyndns.org>	<7vy7cwsi3p.fsf@gitster.siamese.dyndns.org>	<7vk5o6jbq9.fsf@gitster.siamese.dyndns.org>	<7v63zjgoel.fsf@gitster.siamese.dyndns.org>	<7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>	<7vhcixtnm4.fsf@gitster.siamese.dyndns.org>	<7vfxye4yv7.fsf@gitster.siamese.dyndns.org>	<7vve78qhtf.fsf@gitster.siamese.dyndns.org>	<7vbq8v5n0u.fsf_-_@gitster.siamese.dyndns.org> <7v1w9r5m03.fsf_-_@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Teach git-gui to split hunks
+Date: Thu, 13 Dec 2007 02:48:25 -0500
+Message-ID: <20071213074825.GX14735@spearce.org>
+References: <402731c90712111254q1cb99c6al47538971d93b4592@mail.gmail.com> <31e9dd080712111329j2c8b22ebs38ab727a5fbe85fb@mail.gmail.com> <20071212041002.GN14735@spearce.org> <31e9dd080712112113u44b30c62ja012951fba958c5d@mail.gmail.com> <20071212052329.GR14735@spearce.org> <31e9dd080712120702k36a959cfh3e2a5c5fb076d922@mail.gmail.com> <Pine.LNX.4.64.0712121814260.27959@racer.site> <31e9dd080712121050i45981ed5u845b71f0e73aa8e2@mail.gmail.com> <Pine.LNX.4.64.0712121931050.27959@racer.site> <4760E0CF.1030805@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 13 08:46:40 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jason Sewall <jasonsewall@gmail.com>, David <davvid@gmail.com>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Dec 13 08:48:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2imB-00015x-Nb
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 08:46:36 +0100
+	id 1J2ioQ-0001ar-QG
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 08:48:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753819AbXLMHqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 02:46:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755815AbXLMHqN
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 02:46:13 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:57039 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752905AbXLMHqN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 02:46:13 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1J2im5-0008Ah-HA; Thu, 13 Dec 2007 08:46:29 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 8810969F; Thu, 13 Dec 2007 08:46:09 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7v1w9r5m03.fsf_-_@gitster.siamese.dyndns.org>
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1759527AbXLMHsc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 02:48:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759407AbXLMHsc
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 02:48:32 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:46928 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758802AbXLMHsb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 02:48:31 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1J2iny-0007y6-FV; Thu, 13 Dec 2007 02:48:26 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id E82F720FBAE; Thu, 13 Dec 2007 02:48:25 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <4760E0CF.1030805@viscovery.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68129>
 
-Junio C Hamano schrieb:
-> This introduces "nowarn" parameter to run_status() to avoid these
-> useless messages.
+Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Johannes Schindelin schrieb:
+> > When you select the context menu item "Split Hunk" in the diff area,
+> > git-gui will now split the current hunk so that a new hunk starts at
+> > the current position.
+> > 
+> > For this to work, apply has to be called with --unidiff-zero, since
+> > the new hunks can start or stop with a "-" or "+" line.
+> 
+> NACK! --unidiff-zero eats your data.
 
-Hmpf. We don't need no double negations, no?
+Yea, don't worry about that, I won't be applying any patch to git-gui
+that feeds data to git-apply with --undiff-zero.  Not unless its
+completely bullet-proof that the hunk headers will *never* be wrong.
 
--- Hannes
+I'd rather always apply with context and let git-apply do its thing
+to validate the hunks.  If you can get the hunk headers computed
+right you can also get the context computed right, which means
+git-apply can actually verify the patch can be applied, thus double
+checking the splitter.
+ 
+> Reason: --unidiff-zero can only look at the line numbers. And those are
+> wrong because it doesn't account for the shift in line numbers caused by the
+> first hunk.
+
+-- 
+Shawn.
