@@ -1,169 +1,89 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: git-svn init from Avogadro SVN repo - deleted files showing
-Date: Thu, 13 Dec 2007 19:13:12 +0100
-Message-ID: <20071213181312.GA4441@xp.machine.xx>
-References: <475C8748.6000005@cryos.net> <20071210104235.GA7521@xp.machine.xx> <20071213164134.GD18433@soma>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: [RFH] convert shortlog to use parse_options
+Date: Thu, 13 Dec 2007 13:28:41 -0500
+Message-ID: <1197570521.28742.0.camel@hinata.boston.redhat.com>
+References: <20071213055226.GA3636@coredump.intra.peff.net>
+	 <20071213090604.GA12398@artemis.madism.org>
+	 <20071213091055.GA5674@coredump.intra.peff.net>
+	 <20071213093536.GC12398@artemis.madism.org>
+	 <7vbq8u4ho8.fsf@gitster.siamese.dyndns.org>
+	 <20071213180347.GE1224@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Marcus D. Hanwell" <marcus@cryos.net>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Dec 13 19:13:51 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Dec 13 19:29:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2sZ5-0000Cd-UG
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 19:13:44 +0100
+	id 1J2soo-0007J5-Fu
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 19:29:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753764AbXLMSNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 13:13:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751940AbXLMSNT
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 13:13:19 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46065 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753198AbXLMSNT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 13:13:19 -0500
-Received: (qmail invoked by alias); 13 Dec 2007 18:13:15 -0000
-Received: from p54AA85A9.dip0.t-ipconnect.de (EHLO localhost) [84.170.133.169]
-  by mail.gmx.net (mp011) with SMTP; 13 Dec 2007 19:13:15 +0100
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1+PLH0ylhOP7K38Pj2e+kRuFC5/IQxmoIQ5fDi+sO
-	8kJsa7PC4mwSut
-Content-Disposition: inline
-In-Reply-To: <20071213164134.GD18433@soma>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Y-GMX-Trusted: 0
+	id S1756445AbXLMS3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 13:29:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756034AbXLMS3f
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 13:29:35 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:40297 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752473AbXLMS3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 13:29:35 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lBDISlot031909;
+	Thu, 13 Dec 2007 13:28:47 -0500
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lBDISluE009565;
+	Thu, 13 Dec 2007 13:28:47 -0500
+Received: from [192.168.1.100] (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lBDISkSC017446;
+	Thu, 13 Dec 2007 13:28:46 -0500
+In-Reply-To: <20071213180347.GE1224@artemis.madism.org>
+X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68183>
 
-On Thu, Dec 13, 2007 at 08:41:34AM -0800, Eric Wong wrote:
-> Peter Baumann <waste.manager@gmx.de> wrote:
-> > On Sun, Dec 09, 2007 at 07:24:40PM -0500, Marcus D. Hanwell wrote:
-> > > Hi,
+On Thu, 2007-12-13 at 19:03 +0100, Pierre Habouzit wrote:
+> On Thu, Dec 13, 2007 at 05:40:23PM +0000, Junio C Hamano wrote:
+> > Pierre Habouzit <madcoder@debian.org> writes:
+> > 
+> > > In fact we have kind of the issue for every single optional argument out
+> > > there:
 > > >
-> > > I am quite new to git and git-svn but have been using both for my 
-> > > development work recently. I imported the Avogadro subversion repository 
-> > > (hosted on Sourceforge) using the following commands,
+> > > $ git describe --abbrev HEAD
+> > > error: option `abbrev' expects a numerical value
+> > > [...]
 > > >
-> > > git svn init -t tags -b branches -T trunk 
-> > > https://avogadro.svn.sourceforge.net/svnroot/avogadro
+> > >   *ouch*
 > > >
-> > > git svn fetch
-> > >
-> > >
-> > > The files avogadro.pro and README in the trunk/ directory appear in my 
-> > > imported git repository but not in Avogadro subversion trunk. We also had 
-> > > trunk/src/ and all its files/subdirectories appearing in the git checkout 
-> > > but not in subversion trunk. We deleted this using git and git svn which 
-> > > removed it from the git checkouts too after r858.
-> > >
-> > > I have been talking to Peter who confirmed this and pointed out that the 
-> > > repo was reorganised several times in the past. Please CC me on replies as 
-> > > I am not on the list. There is a copy of my git repo at 
-> > > http://platinum.cryos.net/avogadro.git/ if you would rather skip the 
-> > > import. Other than that everything has been working great. It would be good 
-> > > to get rid of this bug if possible. Let me know if there is anything else I 
-> > > can do to help.
-> > >
+> > > So I believe that with optional arguments we must change the way we do
+> > > things, and that we _must_ enforce the argument to be sticked in that
+> > > case.
 > > 
-> > [ Eric Cc'ed, as the author of git-svn ]
+> > I think "Must" is a bit too strong an expression.
 > > 
-> > I can confirm that this looks like an import problem.
-> > (e.g see svn log -v -r33:78 https://avogadro.svn.sourceforge.net/svnroot/avogadro)
+> > 	git describe --abbrev 7 HEAD
+> >         git describe --abbrev HEAD
+> >         git describe --abbrev=HEAD
+> > 	git describe --abbrev=7 HEAD
+> > 	git describe --abbrev
 > > 
-> > I did my analysis on the file /trunk/avogadro.pro, because the error
-> > happens really early in the history so could just import up to revision 76
-> > to see what goes wrong. (The file gets never deleted in the import, as it
-> > should be!)
-> > 
-> > 
-> > 
-> > trunk/avogadro.pro is added here:
-> > 
-> >     ------------------------------------------------------------------------
-> >     r33 | dcurtis3 | 2006-08-21 07:34:10 +0200 (Mon, 21 Aug 2006) | 3 lines
-> >     Changed paths:
-> >        A /trunk/avogadro.pro
-> > 
-> >     Does a recursive build.
-> > 
-> > 
-> > Here the refactoring starts (a new directory not tracked by git is added):
-> >     ------------------------------------------------------------------------
-> >     r66 | dcurtis3 | 2007-01-03 06:42:45 +0100 (Wed, 03 Jan 2007) | 3 lines
-> >     Changed paths:
-> >        A /avogadro
-> > 
-> >     Making room for libavogadro.
-> > 
-> > 
-> > /branches is moved to /avogadro/branches
-> >     ------------------------------------------------------------------------
-> >     r67 | dcurtis3 | 2007-01-03 06:47:11 +0100 (Wed, 03 Jan 2007) | 3 lines
-> >     Changed paths:
-> >        A /avogadro/branches (from /branches:66)
-> >        D /branches
-> > 
-> >     Making room for libavogadro
-> > 
-> > 
-> > 
-> > 
-> > ERROR HAPPENS HERE:
-> > ====================
-> > 
-> > /trunk and /tags are moved, too.
-> > (/trunk/avogadro.pro becomes /avogadro/trunk/avogadro.pro):
-> >     ------------------------------------------------------------------------
-> >     r68 | dcurtis3 | 2007-01-03 06:47:34 +0100 (Wed, 03 Jan 2007) | 3 lines
-> >     Changed paths:
-> >        A /avogadro/tags (from /tags:66)
-> >        A /avogadro/trunk (from /trunk:66)
-> >        D /tags
-> >        D /trunk
-> > 
-> >     Making room for libavogadro.
-> > 
-> > The above delete/move of trunk isn't recorded anywhere in the git svn import.
-> > 'git-svn find-rev r66' doesn't produce any output!
-> > And later git-svn thinks that /trunk and all its files are still there, so
-> > e.g. /trunk/avogadro.pro stays in the repo forever.
+> > The --abbrev parser in this case could be asked with this question: "You
+> > are on the command line.  There is a token after you.  Is it your
+> > parameter?".
 > 
-> Hi,
-> 
-> Thanks for the analysis, Peter.
-> 
-> git-svn ignores deletions to the directory we're tracking in order to
-> represent renames when the follow-parent case is hit.
-> 
-> Unfortunately, this never took into account the directory we're tracking
-> reappearing later in history.  I'll try to have a fix later tonight or
-> over the weekend.
-> 
-> > mv /avogadro/trunk/avogadro.pro /trunk/avogadro/avogadro.pro
-> >    ------------------------------------------------------------------------
-> >     r75 | dcurtis3 | 2007-01-03 20:49:35 +0100 (Wed, 03 Jan 2007) | 2 lines
-> >     Changed paths:
-> >        D /avogadro
-> >        D /avogadro-lib
-> >        A /branches
-> >        A /tags
-> >        A /trunk
-> >        A /trunk/avogadro (from /avogadro/trunk:74)
-> >        A /trunk/libavogadro (from /avogadro-lib/trunk:74)
-> > 
-> >     Moving things around.  Conforming to a more KDE-like layout in SVN.
-> >     I'm going nuts.  SOrry
-> 
-> Instead of handling the full delete of everything in r68, I think I'll
-> make it so importing r75 will clobber all the stuff in trunk/ we ignored
-> deleting in r68 before adding the contents of trunk/ in r75.
-> 
+>   I thought of that, but it's really convoluted and can definitely lead
+> to very subtle issues. The number of git commands with optional
+> arguments is quite low, mostly due to legacy, I don't expect _new_
+> commands to take optional arguments. I don't really like the ambiguity
+> it creates, and in some cases you just won't be able to disambiguate at
+> all. Here it looks nice because --abbrev takes an integer argument, and
+> it's likely that no branch nor reference names will be only made of
+> digits. Though for commands taking an optional string[0] argument this is
+> way more fishy.
 
-Sorry, that last sentence I can't parse/understand. But I trust you to do the
-right thing.
-
--Peter
+My 
