@@ -1,71 +1,84 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: Something is broken in repack
-Date: Thu, 13 Dec 2007 16:32:03 +0100
-Message-ID: <fjrj9k$n6k$1@ger.gmane.org>
-References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>	 <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>	 <9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com>	 <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>	 <alpine.LFD.0.99999.0712110832251.555@xanadu.home>	 <alpine.LFD.0.99999.0712110951070.555@xanadu.home>	 <alpine.LFD.0.99999.0712111117440.555@xanadu.home>	 <9e4733910712110821o7748802ag75d9df4be8b2c123@mail.gmail.com>	 <alpine.LFD.0.99999.0712112057390.555@xanadu.home>	 <alpine.LFD.0.99999.0712120743040.555@xanadu.home> <fcaeb9bf0712130532s79aa7afeve6f018f9430ab3b3@mail.gmail.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit RFC] Make "stg branch -l" faster by getting all git config information in one call
+Date: Thu, 13 Dec 2007 15:38:32 +0000
+Message-ID: <b0943d9e0712130738s18ad303fu17a8412097377900@mail.gmail.com>
+References: <20071213133653.13925.89254.stgit@krank>
+	 <b0943d9e0712130604r6daf05d5n7afbadfe23831839@mail.gmail.com>
+	 <87lk7yr7ib.fsf@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: gcc@gcc.gnu.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 13 16:34:03 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Thu Dec 13 16:39:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2q4S-0003la-1F
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 16:33:56 +0100
+	id 1J2q9b-0006Kj-PK
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 16:39:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755525AbXLMPdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 10:33:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754961AbXLMPdd
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 10:33:33 -0500
-Received: from main.gmane.org ([80.91.229.2]:49145 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753456AbXLMPdc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 10:33:32 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1J2q35-0000Oq-7f
-	for git@vger.kernel.org; Thu, 13 Dec 2007 15:32:31 +0000
-Received: from 195.176.178.209 ([195.176.178.209])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 13 Dec 2007 15:32:31 +0000
-Received: from bonzini by 195.176.178.209 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 13 Dec 2007 15:32:31 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 195.176.178.209
-User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
-In-Reply-To: <fcaeb9bf0712130532s79aa7afeve6f018f9430ab3b3@mail.gmail.com>
+	id S1762643AbXLMPig convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Dec 2007 10:38:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762631AbXLMPif
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 10:38:35 -0500
+Received: from nz-out-0506.google.com ([64.233.162.234]:26242 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762625AbXLMPie convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Dec 2007 10:38:34 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so392895nze.1
+        for <git@vger.kernel.org>; Thu, 13 Dec 2007 07:38:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=mapt/Dy35wGciGMwSFw2Gh+t++PdZzYhA859HBQ8WZc=;
+        b=IbEc1hCl0YQlvOM+zMHY6HX1vvCjC+AANDtloPQgllAcI/atbJJ20PZQTVRdVFHUE89f3tCR5U6YkKVGnvoVJS2iczRU7wVHre37SQRuUK9ZB47QprKjfzRN1gg++/1T4kWwmiAP2n7ig7z0RJynYAtDln3dvLhJDgSIF2wLFto=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NlC8e9cgcr6XNtfnNCKXG051EfqFzyqByCrdV8NxcSP7J5hFhk5T7eARA1sNB2aSaZmWEs1GLOEJyxzXJEso39BEBULY94ROoqonRNZIzURRHpeQ00XWyBjQtZXPa/Mru56gaYlhqWmb7OnByNiNLFWmy74Y/UxivFKKHM7nO7E=
+Received: by 10.141.2.19 with SMTP id e19mr1179743rvi.88.1197560312083;
+        Thu, 13 Dec 2007 07:38:32 -0800 (PST)
+Received: by 10.141.186.5 with HTTP; Thu, 13 Dec 2007 07:38:32 -0800 (PST)
+In-Reply-To: <87lk7yr7ib.fsf@lysator.liu.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 7.1 points;
- *  0.0 RCVD_BY_IP Received by mail server with no name
- *  0.1 FORGED_RCVD_HELO Received: contains a forged HELO
- *  4.0 RCVD_NUMERIC_HELO Received: contains an IP address used for HELO
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?195.176.178.209>]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68163>
 
-Nguyen Thai Ngoc Duy wrote:
-> On Dec 12, 2007 10:48 PM, Nicolas Pitre <nico@cam.org> wrote:
->> In the mean time you might have to use only one thread and lots of
->> memory to repack the gcc repo, or find the perfect memory allocator to
->> be used with Git.  After all, packing the whole gcc history to around
->> 230MB is quite a stunt but it requires sufficient resources to
->> achieve it. Fortunately, like Linus said, such a wholesale repack is not
->> something that most users have to do anyway.
-> 
-> Is there an alternative to "git repack -a -d" that repacks everything
-> but the first pack?
+On 13/12/2007, David K=E5gedal <davidk@lysator.liu.se> wrote:
+> "Catalin Marinas" <catalin.marinas@gmail.com> writes:
+>
+> > On 13/12/2007, David K=E5gedal <davidk@lysator.liu.se> wrote:
+> >> I have a fair amount of branches, and I noticed that "stg branch -=
+l"
+> >> takes ridiculously long to finish.
+> >
+> > I have the same problem.
+> >
+> >> Maybe someone can help me find a quicker replacement for the
+> >> get_protected call?
+>
+> Hey, why not put the "protected" flag in the config? Then we can get
+> it the same way as the other stuff.
+>
+> Protecting a branch is a configuration action, so it makes sense to
+> put it in the config.
 
-That would be a pretty good idea for big repositories.  If I were to 
-implement it, I would actually add a .git/config option like 
-pack.permanent so that more than one pack could be made permanent; then 
-to repack really really everything you'd need "git repack -a -a -d".
+Yes, I'm OK with this. The only problem I see is that we have to
+change the stgit.formatversion and provide an upgrade in the Series
+object. However, 'stg branch -l' no longer initialises the Series
+objects and the upgrade won't happen.
 
-Paolo
+The branch command would have to check format version and force the
+upgrade if it isn't the required one.
+
+BTW, have you run stg-prof to check where it spends most of the time?
+Is it caused by Python object creation or GIT calls invoked during the
+Series objects initialisation. If the latter, we can turn some
+variables into properties and access them lazily.
+
+--=20
+Catalin
