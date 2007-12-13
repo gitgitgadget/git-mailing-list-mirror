@@ -1,66 +1,126 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: git config --get-regexp exit status
-Date: Thu, 13 Dec 2007 14:42:31 +0100
-Message-ID: <871w9qsoc8.fsf@lysator.liu.se>
-References: <20071213133653.13925.89254.stgit@krank>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Wincent Colaiuta <win@wincent.com>
+Subject: [PATCH 2/5] New version of pre-commit hook
+Date: Thu, 13 Dec 2007 14:32:28 +0100
+Message-ID: <1197552751-53480-3-git-send-email-win@wincent.com>
+References: <1197552751-53480-1-git-send-email-win@wincent.com>
+ <1197552751-53480-2-git-send-email-win@wincent.com>
+Cc: gitster@pobox.com, Wincent Colaiuta <win@wincent.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 13 14:49:05 2007
+X-From: git-owner@vger.kernel.org Thu Dec 13 14:49:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2oQy-0001cT-1e
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 14:49:04 +0100
+	id 1J2oRU-0001rM-7s
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 14:49:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754144AbXLMNsX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Dec 2007 08:48:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753968AbXLMNsX
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 08:48:23 -0500
-Received: from main.gmane.org ([80.91.229.2]:54744 "EHLO ciao.gmane.org"
+	id S1753526AbXLMNtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 08:49:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753249AbXLMNtN
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 08:49:13 -0500
+Received: from wincent.com ([72.3.236.74]:47286 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752477AbXLMNsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 08:48:22 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1J2oOF-00047Z-82
-	for git@vger.kernel.org; Thu, 13 Dec 2007 13:46:15 +0000
-Received: from c83-253-242-75.bredband.comhem.se ([83.253.242.75])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 13 Dec 2007 13:46:15 +0000
-Received: from davidk by c83-253-242-75.bredband.comhem.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 13 Dec 2007 13:46:15 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: c83-253-242-75.bredband.comhem.se
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:N6CfIaxWSu8GD7kl+CalTKKdjyo=
+	id S1752005AbXLMNtN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 08:49:13 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBDDWZ4Z019847;
+	Thu, 13 Dec 2007 07:32:39 -0600
+X-Mailer: git-send-email 1.5.4.rc0.4.g50348
+In-Reply-To: <1197552751-53480-2-git-send-email-win@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68153>
 
-David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+Now that "git diff --check" indicates problems with its exit code the
+pre-commit hook becomes a trivial one-liner.
 
-> I made a patch that uses "git config --get-regexp" to get the
-> description and stgit.stackformatversion options for all branches at
-> once, and ignore the "protected" flag that I don't use. With this
-> change, I'm almost down to half a second, which almost makes it
-> usable.
+A side effect of this is that when "git diff --check" learns to detect
+problems according to core.whitespace in the future, the hook's
+behaviour will evolve to match without any changes required.
 
-One thing that annoyed me what that "git config --get-regexp" will
-return zero, one, or more matches, which are all valid reponses. But
-it treats the zero-match special and return an exit status of 1.
+Signed-off-by: Wincent Colaiuta <win@wincent.com>
+---
+ templates/hooks--pre-commit |   67 ++++--------------------------------------
+ 1 files changed, 7 insertions(+), 60 deletions(-)
 
-Is that a conscious choice, or just an effect of how "git config
---get" works?
-
-Since zero matches isn't really an error, I would like the exit status
-to be 0. At least for this use case :-)
-
---=20
-David K=C3=A5gedal
+diff --git a/templates/hooks--pre-commit b/templates/hooks--pre-commit
+index 7092bae..f8c7be7 100644
+--- a/templates/hooks--pre-commit
++++ b/templates/hooks--pre-commit
+@@ -7,64 +7,11 @@
+ #
+ # To enable this hook, make this file executable.
+ 
+-# This is slightly modified from Andrew Morton's Perfect Patch.
+-# Lines you introduce should not have trailing whitespace.
+-# Also check for an indentation that has SP before a TAB.
++git-diff-index -M --cached --check HEAD -- && exit 0
+ 
+-if git-rev-parse --verify HEAD 2>/dev/null
+-then
+-	git-diff-index -p -M --cached HEAD --
+-else
+-	# NEEDSWORK: we should produce a diff with an empty tree here
+-	# if we want to do the same verification for the initial import.
+-	:
+-fi |
+-perl -e '
+-    my $found_bad = 0;
+-    my $filename;
+-    my $reported_filename = "";
+-    my $lineno;
+-    sub bad_line {
+-	my ($why, $line) = @_;
+-	if (!$found_bad) {
+-	    print STDERR "*\n";
+-	    print STDERR "* You have some suspicious patch lines:\n";
+-	    print STDERR "*\n";
+-	    $found_bad = 1;
+-	}
+-	if ($reported_filename ne $filename) {
+-	    print STDERR "* In $filename\n";
+-	    $reported_filename = $filename;
+-	}
+-	print STDERR "* $why (line $lineno)\n";
+-	print STDERR "$filename:$lineno:$line\n";
+-    }
+-    while (<>) {
+-	if (m|^diff --git a/(.*) b/\1$|) {
+-	    $filename = $1;
+-	    next;
+-	}
+-	if (/^@@ -\S+ \+(\d+)/) {
+-	    $lineno = $1 - 1;
+-	    next;
+-	}
+-	if (/^ /) {
+-	    $lineno++;
+-	    next;
+-	}
+-	if (s/^\+//) {
+-	    $lineno++;
+-	    chomp;
+-	    if (/\s$/) {
+-		bad_line("trailing whitespace", $_);
+-	    }
+-	    if (/^\s* \t/) {
+-		bad_line("indent SP followed by a TAB", $_);
+-	    }
+-	    if (/^(?:[<>=]){7}/) {
+-		bad_line("unresolved merge conflict", $_);
+-	    }
+-	}
+-    }
+-    exit($found_bad);
+-'
++cat >&2 <<EOF
++fatal: commit aborted due to whitespace problems
++specify --no-verify to bypass these checks and commit anyway
++EOF
++
++exit 1
+-- 
+1.5.4.rc0.4.g50348
