@@ -1,64 +1,51 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Wed, 12 Dec 2007 22:22:22 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0712122219160.20487@xanadu.home>
-References: <20071022063222.GS14735@spearce.org>
- <7vzly84qwf.fsf@gitster.siamese.dyndns.org>
- <7vmytycykt.fsf@gitster.siamese.dyndns.org>
- <7vr6j6ve90.fsf@gitster.siamese.dyndns.org>
- <7vir4d40sw.fsf@gitster.siamese.dyndns.org>
- <7vwsso3poo.fsf@gitster.siamese.dyndns.org>
- <7vfxz89x9q.fsf@gitster.siamese.dyndns.org>
- <7vabpctx3b.fsf@gitster.siamese.dyndns.org>
- <7vsl30eyuk.fsf@gitster.siamese.dyndns.org>
- <7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
- <7v4pfakr4j.fsf@gitster.siamese.dyndns.org>
- <7vzlwv6sxr.fsf@gitster.siamese.dyndns.org>
- <7vy7ca6ea9.fsf@gitster.siamese.dyndns.org>
- <7vzlwps8zf.fsf@gitster.siamese.dyndns.org>
- <7vejdy4yuw.fsf@gitster.siamese.dyndns.org>
- <7v7ijorwnc.fsf@gitster.siamese.dyndns.org>
- <7vabof5mze.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-cvsexportcommit fails for huge commits
+Date: Wed, 12 Dec 2007 23:17:37 -0500
+Message-ID: <20071213041737.GA23624@coredump.intra.peff.net>
+References: <20071211200418.GA13815@mkl-desktop> <20071212083154.GB7676@coredump.intra.peff.net> <46a038f90712121158n674a9044t75ef99473314457c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 13 04:22:49 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Markus Klinik <markus.klinik@gmx.de>, git@vger.kernel.org
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 13 05:18:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2eeu-0001I6-6c
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 04:22:48 +0100
+	id 1J2fWN-0005E4-Oe
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 05:18:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751769AbXLMDWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 22:22:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751925AbXLMDWY
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 22:22:24 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:13284 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751653AbXLMDWX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 22:22:23 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JSY000ULXD9IJ90@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 12 Dec 2007 22:22:21 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vabof5mze.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1752173AbXLMERl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 23:17:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752442AbXLMERl
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 23:17:41 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2704 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751692AbXLMERk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 23:17:40 -0500
+Received: (qmail 7099 invoked by uid 111); 13 Dec 2007 04:17:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 12 Dec 2007 23:17:38 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Dec 2007 23:17:37 -0500
+Content-Disposition: inline
+In-Reply-To: <46a038f90712121158n674a9044t75ef99473314457c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68117>
 
-On Wed, 12 Dec 2007, Junio C Hamano wrote:
+On Thu, Dec 13, 2007 at 08:58:33AM +1300, Martin Langhoff wrote:
 
-> Here are the topics that have been cooking.
+> IOWs, the protocol *is* atomic, and this patch does make things
+> slightly more brittle. Perhaps require an option to be set before we
+> do this?
 
-What about the blame speedup patch from Linus (Message-ID: 
-<alpine.LFD.0.9999.0712111548200.25032@woody.linux-foundation.org>)
+I started writing a patch to let the user specify the limit, but it was
+just too ugly. What user knows the right limit? We are probably better
+off just setting the limit at something high and reasonable (like 64K --
+it would be nice to get feedback from Markus on what platform he is
+using and what is a reasonable value), or just using a tempfile with
+xargs, which should figure out the correct value.
 
-
-Nicolas
+-Peff
