@@ -1,77 +1,161 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [StGit RFC] Make "stg branch -l" faster by getting all git config information in one call
-Date: Thu, 13 Dec 2007 17:39:49 +0100
-Message-ID: <878x3yr1ka.fsf@lysator.liu.se>
-References: <20071213133653.13925.89254.stgit@krank>
-	<b0943d9e0712130604r6daf05d5n7afbadfe23831839@mail.gmail.com>
-	<20071213160432.GA30693@diana.vm.bytemark.co.uk>
-	<b0943d9e0712130810p35b33e6aj7756b1af1922992b@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn init from Avogadro SVN repo - deleted files showing
+Date: Thu, 13 Dec 2007 08:41:34 -0800
+Message-ID: <20071213164134.GD18433@soma>
+References: <475C8748.6000005@cryos.net> <20071210104235.GA7521@xp.machine.xx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>,
-	Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 13 17:41:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Marcus D. Hanwell" <marcus@cryos.net>, git@vger.kernel.org
+To: Peter Baumann <waste.manager@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Dec 13 17:42:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2r7l-0000iv-OH
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 17:41:26 +0100
+	id 1J2r8I-0000zW-Cm
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 17:41:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754332AbXLMQlA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Dec 2007 11:41:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754212AbXLMQlA
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 11:41:00 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:45476 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754133AbXLMQlA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Dec 2007 11:41:00 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 82D6E200A1F8;
-	Thu, 13 Dec 2007 17:40:58 +0100 (CET)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 10138-01-66; Thu, 13 Dec 2007 17:40:57 +0100 (CET)
-Received: from krank (c83-253-242-75.bredband.comhem.se [83.253.242.75])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 527C2200A299;
-	Thu, 13 Dec 2007 17:39:55 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id 111447B4077; Thu, 13 Dec 2007 17:39:50 +0100 (CET)
-In-Reply-To: <b0943d9e0712130810p35b33e6aj7756b1af1922992b@mail.gmail.com> (Catalin Marinas's message of "Thu\, 13 Dec 2007 16\:10\:10 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1754603AbXLMQlg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 11:41:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754530AbXLMQlg
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 11:41:36 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:59040 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754391AbXLMQlf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 11:41:35 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id CB90C7DC025;
+	Thu, 13 Dec 2007 08:41:34 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20071210104235.GA7521@xp.machine.xx>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68176>
 
-"Catalin Marinas" <catalin.marinas@gmail.com> writes:
+Peter Baumann <waste.manager@gmx.de> wrote:
+> On Sun, Dec 09, 2007 at 07:24:40PM -0500, Marcus D. Hanwell wrote:
+> > Hi,
+> >
+> > I am quite new to git and git-svn but have been using both for my 
+> > development work recently. I imported the Avogadro subversion repository 
+> > (hosted on Sourceforge) using the following commands,
+> >
+> > git svn init -t tags -b branches -T trunk 
+> > https://avogadro.svn.sourceforge.net/svnroot/avogadro
+> >
+> > git svn fetch
+> >
+> >
+> > The files avogadro.pro and README in the trunk/ directory appear in my 
+> > imported git repository but not in Avogadro subversion trunk. We also had 
+> > trunk/src/ and all its files/subdirectories appearing in the git checkout 
+> > but not in subversion trunk. We deleted this using git and git svn which 
+> > removed it from the git checkouts too after r858.
+> >
+> > I have been talking to Peter who confirmed this and pointed out that the 
+> > repo was reorganised several times in the past. Please CC me on replies as 
+> > I am not on the list. There is a copy of my git repo at 
+> > http://platinum.cryos.net/avogadro.git/ if you would rather skip the 
+> > import. Other than that everything has been working great. It would be good 
+> > to get rid of this bug if possible. Let me know if there is anything else I 
+> > can do to help.
+> >
+> 
+> [ Eric Cc'ed, as the author of git-svn ]
+> 
+> I can confirm that this looks like an import problem.
+> (e.g see svn log -v -r33:78 https://avogadro.svn.sourceforge.net/svnroot/avogadro)
+> 
+> I did my analysis on the file /trunk/avogadro.pro, because the error
+> happens really early in the history so could just import up to revision 76
+> to see what goes wrong. (The file gets never deleted in the import, as it
+> should be!)
+> 
+> 
+> 
+> trunk/avogadro.pro is added here:
+> 
+>     ------------------------------------------------------------------------
+>     r33 | dcurtis3 | 2006-08-21 07:34:10 +0200 (Mon, 21 Aug 2006) | 3 lines
+>     Changed paths:
+>        A /trunk/avogadro.pro
+> 
+>     Does a recursive build.
+> 
+> 
+> Here the refactoring starts (a new directory not tracked by git is added):
+>     ------------------------------------------------------------------------
+>     r66 | dcurtis3 | 2007-01-03 06:42:45 +0100 (Wed, 03 Jan 2007) | 3 lines
+>     Changed paths:
+>        A /avogadro
+> 
+>     Making room for libavogadro.
+> 
+> 
+> /branches is moved to /avogadro/branches
+>     ------------------------------------------------------------------------
+>     r67 | dcurtis3 | 2007-01-03 06:47:11 +0100 (Wed, 03 Jan 2007) | 3 lines
+>     Changed paths:
+>        A /avogadro/branches (from /branches:66)
+>        D /branches
+> 
+>     Making room for libavogadro
+> 
+> 
+> 
+> 
+> ERROR HAPPENS HERE:
+> ====================
+> 
+> /trunk and /tags are moved, too.
+> (/trunk/avogadro.pro becomes /avogadro/trunk/avogadro.pro):
+>     ------------------------------------------------------------------------
+>     r68 | dcurtis3 | 2007-01-03 06:47:34 +0100 (Wed, 03 Jan 2007) | 3 lines
+>     Changed paths:
+>        A /avogadro/tags (from /tags:66)
+>        A /avogadro/trunk (from /trunk:66)
+>        D /tags
+>        D /trunk
+> 
+>     Making room for libavogadro.
+> 
+> The above delete/move of trunk isn't recorded anywhere in the git svn import.
+> 'git-svn find-rev r66' doesn't produce any output!
+> And later git-svn thinks that /trunk and all its files are still there, so
+> e.g. /trunk/avogadro.pro stays in the repo forever.
 
-> On 13/12/2007, Karl Hasselstr=C3=B6m <kha@treskal.com> wrote:
->> On 2007-12-13 14:04:26 +0000, Catalin Marinas wrote:
->>
->> > On 13/12/2007, David K=C3=A5gedal <davidk@lysator.liu.se> wrote:
->> >
->> > > Maybe someone can help me find a quicker replacement for the
->> > > get_protected call?
->> >
->> > We can have the standard --list command which ignores the protecte=
-d
->> > flag
->>
->> Exactly what is the p flag useful for anyway?
->
-> It was added so that you don't rebase the stack by mistake. Yann
-> suggested to have a specific policy for this and make the protected
-> flag freeze the stack completely.
+Hi,
 
-I'd be much more interested in a flag that prevents me from running
-"git rebase" on a stg-controlled branch by mistake...
+Thanks for the analysis, Peter.
 
---=20
-David K=C3=A5gedal
+git-svn ignores deletions to the directory we're tracking in order to
+represent renames when the follow-parent case is hit.
+
+Unfortunately, this never took into account the directory we're tracking
+reappearing later in history.  I'll try to have a fix later tonight or
+over the weekend.
+
+> mv /avogadro/trunk/avogadro.pro /trunk/avogadro/avogadro.pro
+>    ------------------------------------------------------------------------
+>     r75 | dcurtis3 | 2007-01-03 20:49:35 +0100 (Wed, 03 Jan 2007) | 2 lines
+>     Changed paths:
+>        D /avogadro
+>        D /avogadro-lib
+>        A /branches
+>        A /tags
+>        A /trunk
+>        A /trunk/avogadro (from /avogadro/trunk:74)
+>        A /trunk/libavogadro (from /avogadro-lib/trunk:74)
+> 
+>     Moving things around.  Conforming to a more KDE-like layout in SVN.
+>     I'm going nuts.  SOrry
+
+Instead of handling the full delete of everything in r68, I think I'll
+make it so importing r75 will clobber all the stuff in trunk/ we ignored
+deleting in r68 before adding the contents of trunk/ in r75.
+
+-- 
+Eric Wong
