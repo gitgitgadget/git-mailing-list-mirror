@@ -1,70 +1,96 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit RFC] Make "stg branch -l" faster by getting all git config information in one call
-Date: Thu, 13 Dec 2007 16:10:10 +0000
-Message-ID: <b0943d9e0712130810p35b33e6aj7756b1af1922992b@mail.gmail.com>
-References: <20071213133653.13925.89254.stgit@krank>
-	 <b0943d9e0712130604r6daf05d5n7afbadfe23831839@mail.gmail.com>
-	 <20071213160432.GA30693@diana.vm.bytemark.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Dec 13 17:11:17 2007
+From: Jon Loeliger <jdl@jdl.com>
+Subject: [BUG] Failed to make install-info
+Date: Thu, 13 Dec 2007 09:38:40 -0600
+Message-ID: <E1J2q92-0001YT-BZ@jdl.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 13 17:12:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2qeS-0003jL-58
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 17:11:08 +0100
+	id 1J2qgB-0004UC-Ey
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 17:12:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755618AbXLMQKO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Dec 2007 11:10:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755106AbXLMQKN
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 11:10:13 -0500
-Received: from rv-out-0910.google.com ([209.85.198.190]:35029 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754113AbXLMQKL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Dec 2007 11:10:11 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so608574rvb.1
-        for <git@vger.kernel.org>; Thu, 13 Dec 2007 08:10:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=uNgDE7+hKe7PHIzKdIQnPLzDTWu3VUN1NfutbDZawW0=;
-        b=gs2k0NhDLyHi82pRQcXu3WnO9jlyi2vw+2+214pfKszGmdU1QF7Ssp8Jva6sHGi6UmG7VPHggnUM1HcWZIVNe0v17QA990oQg6h9pVF5iHDJVVShqieuFBA2Ix4VC3KkURne7e7X3E9bPoAdIwmCwuTRtsALu9kQIkaqfXPATWE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qbqh0kJ2xq2j6XSvkMpxj42eGli3vJU+r0jIgPueePZPap5ZzTKHUzi4rwod+V+RUixFf1AMlTAhUwSsykuCxABeRq/fmRxjPuHCE7TMuqAniArHSxkTYLE3fYP2ioCQQPgRvdO5bi3Hj1aR9xCXWzVsOuX7xxPHFK1lYvYI/7c=
-Received: by 10.140.139.11 with SMTP id m11mr1193296rvd.211.1197562210286;
-        Thu, 13 Dec 2007 08:10:10 -0800 (PST)
-Received: by 10.141.186.5 with HTTP; Thu, 13 Dec 2007 08:10:10 -0800 (PST)
-In-Reply-To: <20071213160432.GA30693@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1753491AbXLMQMd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 11:12:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753186AbXLMQMd
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 11:12:33 -0500
+Received: from jdl.com ([208.123.74.7]:51227 "EHLO jdl.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753148AbXLMQMc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 11:12:32 -0500
+X-Greylist: delayed 2028 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Dec 2007 11:12:32 EST
+Received: from jdl (helo=jdl.com)
+	by jdl.com with local-esmtp (Exim 4.63)
+	(envelope-from <jdl@jdl.com>)
+	id 1J2q92-0001YT-BZ
+	for git@vger.kernel.org; Thu, 13 Dec 2007 09:38:41 -0600
+X-Spam-Score: -1.6 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68169>
 
-On 13/12/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2007-12-13 14:04:26 +0000, Catalin Marinas wrote:
->
-> > On 13/12/2007, David K=E5gedal <davidk@lysator.liu.se> wrote:
-> >
-> > > Maybe someone can help me find a quicker replacement for the
-> > > get_protected call?
-> >
-> > We can have the standard --list command which ignores the protected
-> > flag
->
-> Exactly what is the p flag useful for anyway?
 
-It was added so that you don't rebase the stack by mistake. Yann
-suggested to have a specific policy for this and make the protected
-flag freeze the stack completely.
+Guys,
+I managed to fail to install info files during:
 
---=20
-Catalin
+    /usr/src/git# make prefix=/usr install-info
+
+The /usr/share/info/dir file is readable.  But it
+looks like our build isn't supplying a description
+that is needed by install-info?  Is my info really
+old or something?
+
+This is:
+
+    1693 % pwd
+    /usr/src/git
+    1694 % git describe
+    v1.5.4-rc0
+    1695 % git rev-parse HEAD
+    1e8df762b38e01685f3aa3613e2d61f73346fcbe
+
+and:
+
+    1698 % install-info --version
+    Debian install-info version 1.14.5.
+
+Thanks,
+jdl
+
+
+
+make -C Documentation install-info
+make[1]: Entering directory `/usr/src/git/Documentation'
+rm -f doc.dep+ doc.dep
+/usr/bin/perl ./build-docdep.perl >doc.dep+
+mv doc.dep+ doc.dep
+make -C ../ GIT-VERSION-FILE
+make[2]: Entering directory `/usr/src/git'
+make[2]: `GIT-VERSION-FILE' is up to date.
+make[2]: Leaving directory `/usr/src/git'
+make[1]: Leaving directory `/usr/src/git/Documentation'
+make[1]: Entering directory `/usr/src/git/Documentation'
+make -C ../ GIT-VERSION-FILE
+make[2]: Entering directory `/usr/src/git'
+make[2]: `GIT-VERSION-FILE' is up to date.
+make[2]: Leaving directory `/usr/src/git'
+install -d -m 755 /usr/share/info
+install -m 644 git.info gitman.info /usr/share/info
+if test -r /usr/share/info/dir; then \
+          install-info --info-dir=/usr/share/info git.info ;\
+          install-info --info-dir=/usr/share/info gitman.info ;\
+        else \
+          echo "No directory found in /usr/share/info" >&2 ; \
+        fi
+
+No `START-INFO-DIR-ENTRY' and no `This file documents'.
+install-info(git.info): unable to determine description for `dir' entry - giving up
+
+No `START-INFO-DIR-ENTRY' and no `This file documents'.
+install-info(gitman.info): unable to determine description for `dir' entry - giving up
+make[1]: *** [install-info] Error 1
+make[1]: Leaving directory `/usr/src/git/Documentation'
+make: *** [install-info] Error 2
