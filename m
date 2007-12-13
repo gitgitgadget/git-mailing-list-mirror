@@ -1,77 +1,101 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: Something is broken in repack
-Date: Thu, 13 Dec 2007 17:29:56 +0100
-Message-ID: <47615E04.8000400@gnu.org>
-References: <9e4733910712071505y6834f040k37261d65a2d445c4@mail.gmail.com>	 <9e4733910712102125w56c70c0cxb8b00a060b62077@mail.gmail.com>	 <9e4733910712102129v140c2affqf2e73e75855b61ea@mail.gmail.com>	 <9e4733910712102301p5e6c4165v6afb32d157478828@mail.gmail.com>	 <alpine.LFD.0.99999.0712110832251.555@xanadu.home>	 <alpine.LFD.0.99999.0712110951070.555@xanadu.home>	 <alpine.LFD.0.99999.0712111117440.555@xanadu.home>	 <9e4733910712110821o7748802ag75d9df4be8b2c123@mail.gmail.com>	 <alpine.LFD.0.99999.0712112057390.555@xanadu.home>	 <alpine.LFD.0.99999.0712120743040.555@xanadu.home> <fcaeb9bf0712130532s79aa7afeve6f018f9430ab3b3@mail.gmail.com> <fjrj9k$n6k$1@ger.gmane.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 0/2] [RFT] git-svn: more efficient revision -> commit mapping
+Date: Thu, 13 Dec 2007 08:30:03 -0800
+Message-ID: <20071213163003.GB18433@soma>
+References: <1197185262-16765-1-git-send-email-normalperson@yhbt.net> <1197233768.7185.6.camel@brick> <1197248646.7185.25.camel@brick> <20071212180510.GB18980@untitled> <47609BF9.4030005@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gcc@gcc.gnu.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Thu Dec 13 17:30:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Harvey Harrison <harvey.harrison@gmail.com>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Thu Dec 13 17:30:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2qxE-000422-0o
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 17:30:32 +0100
+	id 1J2qxD-000422-CC
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 17:30:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756759AbXLMQaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 11:30:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756513AbXLMQaK
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 11:30:10 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:57096 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756099AbXLMQaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 11:30:08 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so921068ugc.16
-        for <git@vger.kernel.org>; Thu, 13 Dec 2007 08:30:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        bh=G6cAlApBUVlHaCYH6Ep5vr8SeXOPHJ3itpKu61rR7sY=;
-        b=P/9AfSXk27yqUHYNLf4EZkkAHiDVC2s5i6UmcsnJ0OleIHN32grcFmxiMw5TZAsDVk+PXfWZmCLrgWlXV/mBgHFwp9sFF+y7ztBbz3wUc16NL1BmDUPXwvWBvqE511t35ZZ7+cAv+lYnAnBjmLzlcFDpjpYSuek999KksgxHvO4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        b=P4urFOapYiBtgew8XL618H5drWBxyRH4abZK1QIzj8yJrPptaEHO0FurXAKSpGm984j6CP4CvW/NICo0S25CwQMK5Y41PHnAOxjcGWjW+915NULdtrE1PlgBNcnISP5kk0zVtFsNf17wB9u/VUo+0P+c1h/1SaoXdlVGvInTJg4=
-Received: by 10.78.136.9 with SMTP id j9mr2590949hud.70.1197563406260;
-        Thu, 13 Dec 2007 08:30:06 -0800 (PST)
-Received: from scientist-2.local ( [195.176.178.209])
-        by mx.google.com with ESMTPS id e9sm18606663muf.2007.12.13.08.29.59
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 13 Dec 2007 08:29:59 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
-In-Reply-To: <fjrj9k$n6k$1@ger.gmane.org>
+	id S1755210AbXLMQaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 11:30:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755839AbXLMQaF
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 11:30:05 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:59015 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754261AbXLMQaE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 11:30:04 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 8F7577DC109;
+	Thu, 13 Dec 2007 08:30:03 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <47609BF9.4030005@vilain.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68172>
 
-
->> Is there an alternative to "git repack -a -d" that repacks everything
->> but the first pack?
+Sam Vilain <sam@vilain.net> wrote:
+> Eric Wong wrote:
+> > Sam (or anybody else using useSvmProps:
+> > 
+> >   Do you have any feedback with svmProps enabled?
 > 
-> That would be a pretty good idea for big repositories.  If I were to 
-> implement it, I would actually add a .git/config option like 
-> pack.permanent so that more than one pack could be made permanent; then 
-> to repack really really everything you'd need "git repack -a -a -d".
+> 3682645  120 -rw-rw-r--   1 samv     samv       121893 Dec 13 14:05
+> tags/debian_version_1_2_0beta1@2972/.rev_db.d29f7b36-84ff-0310-85ce-ba787dbd31ca
+> 
+>  =>
+> 
+> -3683050    4 -rw-rw-r--   1 samv     samv           48 Dec 13 14:26
+> ./tags/debian_version_1_2_0beta1@2972/.rev_map.d29f7b36-84ff-0310-85ce-ba787dbd31ca
+> 
+> git-log --all | grep git-svn | tail -3
+> 
+>     git-svn-id:
+> file:///home/samv/.svk/local/mirror/fai/branches/source-dist@2971
+> d29f7b36-84ff-0310-85ce-ba787dbd31ca
+>     git-svn-id: svn+ssh://svn.debian.org/svn/fai/trunk@2
+> ba5ec265-b0fb-0310-8e1a-cf9e4c2b1591
+>     git-svn-id: svn+ssh://svn.debian.org/svn/fai/trunk@1
+> ba5ec265-b0fb-0310-8e1a-cf9e4c2b1591
+> 
+> So, the remapping is still working fine.
 
-Actually there is something like this, as seen from the source of 
-git-repack:
+Hi Sam, nice.
 
-             for e in `cd "$PACKDIR" && find . -type f -name '*.pack' \
-                      | sed -e 's/^\.\///' -e 's/\.pack$//'`
-             do
-                     if [ -e "$PACKDIR/$e.keep" ]; then
-                             : keep
-                     else
-                             args="$args --unpacked=$e.pack"
-                             existing="$existing $e"
-                     fi
-             done
+> The one that failed there is not a new bug.  Here's the fix anyway
+> though :-)
+> 
+> Subject: [PATCH] git-svn: fix --use-svm-props and --follow-parent
+> 
+> If, when using --follow-parent, it finds that the parent is an SVM
+> path, *and* the SVM path is not at the root of the corresponding SVN
+> repository (the usual case when using SVK), then the logic in
+> Git::SVN::ra will not find the correct source repository.  This is
+> because the freshly created RA object is missing the path.  So, set
+> this after creation.
 
-So, just create a file named as the pack, but with extension ".keep".
+This seems to break the non-useSvmProps case (in t9104).  I'll look more
+at it later.
 
-Paolo
+> Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
+> ---
+>  git-svn.perl |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 54d7844..3e5fd82 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -2189,6 +2189,7 @@ sub find_parent_branch {
+>  		$ref_id .= '-' while find_ref($ref_id);
+>  		print STDERR "Initializing parent: $ref_id\n";
+>  		$gs = Git::SVN->init($new_url, '', $ref_id, $ref_id, 1);
+> +		$gs->{path} = $branch_from;
+>  	}
+>  	my ($r0, $parent) = $gs->find_rev_before($r, 1);
+>  	if (!defined $r0 || !defined $parent) {
+
+-- 
+Eric Wong
