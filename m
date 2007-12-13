@@ -1,97 +1,80 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [RFH] convert shortlog to use parse_options
-Date: Thu, 13 Dec 2007 10:35:36 +0100
-Message-ID: <20071213093536.GC12398@artemis.madism.org>
-References: <20071213055226.GA3636@coredump.intra.peff.net> <20071213090604.GA12398@artemis.madism.org> <20071213091055.GA5674@coredump.intra.peff.net>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [PATCH] clone: support cloning full bundles
+Date: Thu, 13 Dec 2007 10:37:34 +0100
+Message-ID: <8aa486160712130137l29409395va2b62f5d559ca54e@mail.gmail.com>
+References: <1197456485-22909-1-git-send-email-sbejar@gmail.com>
+	 <Pine.LNX.4.64.0712121449310.27959@racer.site>
+	 <8aa486160712120721k26158972qf11c889da98572c6@mail.gmail.com>
+	 <Pine.LNX.4.64.0712121846070.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="kVXhAStRUZ/+rrGn";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 13 10:35:59 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Dec 13 10:38:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2kU2-0005zx-Cc
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 10:35:58 +0100
+	id 1J2kVz-0006gT-5l
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 10:37:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756515AbXLMJfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 04:35:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754253AbXLMJfi
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 04:35:38 -0500
-Received: from pan.madism.org ([88.191.52.104]:44756 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753039AbXLMJfh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 04:35:37 -0500
-Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 058352FB87;
-	Thu, 13 Dec 2007 10:35:37 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 652753F68E; Thu, 13 Dec 2007 10:35:36 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
+	id S1755603AbXLMJhh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 04:37:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755826AbXLMJhh
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 04:37:37 -0500
+Received: from wr-out-0506.google.com ([64.233.184.231]:28665 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755603AbXLMJhf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 04:37:35 -0500
+Received: by wr-out-0506.google.com with SMTP id c49so291076wra.1
+        for <git@vger.kernel.org>; Thu, 13 Dec 2007 01:37:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=7kdw75sx+UhGpZl8C6z+hHemJOmYvGMA9ltyYyS+I5k=;
+        b=BOsaw5ZBOCRKfW7tH8v1/60Va7xCFpe8NO2FwEu601+BcQkvrpq4iyqq5YgDsOewSAgYAX73jMX9iTC1uMKQLoy+AY5lKmYzD7oilP4TP+eUjxPzMqOLAYg7pGdOcq7vu9d1xlPSoLPnJogvQGAe6H0dpZ5PB3kC2MoI0ZotQow=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=llVkpZJ9LDOhMqQUAW9CoyFd34y3yLq8hzhZuTukJNhijoAmQE6tVO3XTleaaHGkYo9j7hRDjuUXivk/nJafMVNNvS6Zqx9zkdmBUvTwv1vOR67xCV7hUtzL1XH4xzyqOAto2LY5v4xPVRzD9kIWYyRhgCWYSOh/YIIb+8LLhUo=
+Received: by 10.150.201.13 with SMTP id y13mr577046ybf.31.1197538654741;
+        Thu, 13 Dec 2007 01:37:34 -0800 (PST)
+Received: by 10.150.205.9 with HTTP; Thu, 13 Dec 2007 01:37:34 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0712121846070.27959@racer.site>
 Content-Disposition: inline
-In-Reply-To: <20071213091055.GA5674@coredump.intra.peff.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68137>
 
+On Dec 12, 2007 7:46 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Wed, 12 Dec 2007, Santi B?jar wrote:
+>
+> > On Dec 12, 2007 3:50 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > > On Wed, 12 Dec 2007, Santi B?jar wrote:
+> > >
+> > > > It still fails for incremental bundles.
+> > >
+> > > Of course it does.  The whole point of incremental bundles is that
+> > > they do _not_ contain all objects, but rely on some objects being
+> > > present on the "fetch" side.
+> >
+> > I know this. But then there is no bundle equivalent of the shallow
+> > clones, as with:
+> >
+> > git clone --depth <depth> <repo>
+>
+> Ah, thanks.  Completely forgot about this.
 
---kVXhAStRUZ/+rrGn
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+But you were right, I confused incremental and shadow. So the next step would be
 
-On Thu, Dec 13, 2007 at 09:10:56AM +0000, Jeff King wrote:
-> On Thu, Dec 13, 2007 at 10:06:04AM +0100, Pierre Habouzit wrote:
->=20
-> > No we can't. And I believe that such a thing is definitely bad practice
-> > :/ So if you really need to, we will have to add some PARSE_OPT_STICKARG
-> > or sth alike that would check that the argument was "sticked" to the
-> > option either with `-wA,B,C` or `--long-opt=3DA,B,C` depending on the f=
-act
-> > that an option is short or long.
->=20
-> Yes, I am not sure if the right solution is to just say "we are changing
-> how -w works". Because it either must change, or it must be inconsistent
-> with the rest of the option parsing for the rest of eternity.
+git bundle create --depth <depth> ...
 
-In fact we have kind of the issue for every single optional argument out
-there:
+I'll see what I can do.
 
-$ git describe --abbrev HEAD
-error: option `abbrev' expects a numerical value
-[...]
-
-  *ouch*
-
-So I believe that with optional arguments we must change the way we do
-things, and that we _must_ enforce the argument to be sticked in that
-case. Because this kind of backward incompatibility I totally missed in
-the first place is unacceptable. Patch on its way.
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---kVXhAStRUZ/+rrGn
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHYPzovGr7W6HudhwRAmckAJ93Eg02mU96xIrdJ9mZLs2WUoSjZgCfZfB+
-qw2YcYlNQ/+eKLt3nz6wFyc=
-=mLZ9
------END PGP SIGNATURE-----
-
---kVXhAStRUZ/+rrGn--
+Thanks
