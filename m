@@ -1,79 +1,75 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: git-svn: expand handling of From: and Signed-off-by:
-Date: Thu, 13 Dec 2007 06:58:15 +0000
-Message-ID: <20071213065815.GH30608@shadowen.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 2/2] pack-objects: fix threaded load balancing
+Date: Thu, 13 Dec 2007 08:15:16 +0100
+Message-ID: <4760DC04.6080402@viscovery.net>
+References: <alpine.LFD.0.99999.0712080000120.555@xanadu.home> <475EC2AB.60702@viscovery.net> <alpine.LFD.0.99999.0712111227080.555@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 13 07:58:39 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jon Smirl <jonsmirl@gmail.com>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Dec 13 08:17:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2i1n-0006Lp-61
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 07:58:39 +0100
+	id 1J2iJZ-0002Ht-IY
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 08:17:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762633AbXLMG5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 01:57:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762472AbXLMG5x
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 01:57:53 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:4170 "EHLO
-	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762633AbXLMG5w (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 01:57:52 -0500
-Received: from localhost ([127.0.0.1] helo=pinky)
-	by hellhawk.shadowen.org with esmtp (Exim 4.63)
-	(envelope-from <apw@shadowen.org>)
-	id 1J2i10-0001ck-VB; Thu, 13 Dec 2007 06:57:51 +0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1761172AbXLMHPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 02:15:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763029AbXLMHPS
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 02:15:18 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:8611 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762818AbXLMHPP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 02:15:15 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1J2iI6-0001fi-8K; Thu, 13 Dec 2007 08:15:30 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 5129269F; Thu, 13 Dec 2007 08:15:10 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <alpine.LFD.0.99999.0712111227080.555@xanadu.home>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68125>
 
-The current parsing for From: and Signed-off-by: lines handles fully
-specified names:
+Nicolas Pitre schrieb:
+> On Tue, 11 Dec 2007, Johannes Sixt wrote:
+> 
+>> Nicolas Pitre schrieb:
+>>> @@ -1612,10 +1620,10 @@ static void *threaded_find_deltas(void *arg)
+>>>  		pthread_mutex_lock(&data_ready);
+>>>  		pthread_mutex_unlock(&data_request);
+>>>  
+>>> -		if (!me->list_size)
+>>> +		if (!me->remaining)
+>>>  			return NULL;
+>>>  
+>>> -		find_deltas(me->list, me->list_size,
+>>> +		find_deltas(me->list, &me->remaining,
+>>>  			    me->window, me->depth, me->processed);
+>>>  	}
+>>>  }
+>> This hunk caught my attention. &data_ready is locked, but not released in
+>> this function.
+>>
+>> Looking more closely at the code surrounding this hunk, it seems that the
+>> lock is released in a *different* thread than the one that locked it. This
+>> works on Linux, but is not portable. We will have to use condition variables
+>> like every one else does in a producer-consumer-like scenario.
+> 
+> Are you willing to make a patch for it?
 
-	From: Full Name <email@address>
+I'm working on it, slowly.
 
-Expand this to include the raw email addresses and straight "names":
-
-	From: email@address       -> email <email@address>
-	From: Full Name           -> Full Name <unknown>
-
-Signed-off-by: Andy Whitcroft <apw@shadowen.org>
----
- git-svn.perl |   17 +++++++++++++----
- 1 files changed, 13 insertions(+), 4 deletions(-)
-diff --git a/git-svn.perl b/git-svn.perl
-index 54d7844..058f8e9 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2363,11 +2363,20 @@ sub make_log_entry {
- 
- 	my ($commit_name, $commit_email) = ($name, $email);
- 	if ($_use_log_author) {
--		if ($log_entry{log} =~ /From:\s+(.*?)\s+<(.*)>\s*\n/) {
--			($name, $email) = ($1, $2);
--		} elsif ($log_entry{log} =~
--		                      /Signed-off-by:\s+(.*?)\s+<(.*)>\s*\n/) {
-+		my $name_field;
-+		if ($log_entry{log} =~ /From:\s+(.*\S)\s*\n/i) {
-+			$name_field = $1;
-+		} elsif ($log_entry{log} =~ /Signed-off-by:\s+(.*\S)\s*\n/i) {
-+			$name_field = $1;
-+		}
-+		if (!defined $name_field) {
-+			#
-+		} elsif ($name_field =~ /(.*?)\s+<(.*)>/) {
- 			($name, $email) = ($1, $2);
-+        	} elsif ($name_field =~ /(.*)@/) {
-+			($name, $email) = ($1, $name_field);
-+		} else {
-+			($name, $email) = ($name_field, 'unknown');
- 		}
- 	}
- 	if (defined $headrev && $self->use_svm_props) {
+-- Hannes
