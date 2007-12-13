@@ -1,55 +1,61 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: git merge --no-commit <branch>; does commit
-Date: Thu, 13 Dec 2007 22:19:08 +0100
-Message-ID: <81b0412b0712131319h63609810m593f0e552d02a83c@mail.gmail.com>
-References: <alpine.LSU.0.99999.0712132151080.5326@castor.milkiway.cos>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Using git with Eclipse
+Date: Thu, 13 Dec 2007 22:23:30 +0100
+Message-ID: <200712132223.31109.robin.rosenberg.lists@dewire.com>
+References: <475DC0CE.9070109@saville.com> <200712120129.43878.robin.rosenberg.lists@dewire.com> <475F7A94.4000209@saville.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Michael Dressel" <MichaelTiloDressel@t-online.de>
-X-From: git-owner@vger.kernel.org Thu Dec 13 22:19:51 2007
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Wink Saville <wink@saville.com>
+X-From: git-owner@vger.kernel.org Thu Dec 13 22:22:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2vSy-0001Ga-4u
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 22:19:36 +0100
+	id 1J2vVB-0002M3-Hx
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 22:21:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763591AbXLMVTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 16:19:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762855AbXLMVTM
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 16:19:12 -0500
-Received: from wr-out-0506.google.com ([64.233.184.228]:2132 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752845AbXLMVTK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 16:19:10 -0500
-Received: by wr-out-0506.google.com with SMTP id c49so589386wra.1
-        for <git@vger.kernel.org>; Thu, 13 Dec 2007 13:19:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Q7nSkYYh6SF1EApK8UDXze7jVouvNzbM0SkMi4rLgT8=;
-        b=oRZFXDQKHnhOJGaXcY/NiNS6stUNfzNLt3SttqZO34Y3ulR8mV7f49PK5IWxtQEzjWnyE6A7ppRN7kMSaCHDl7X58+uTp2SXgjhyaZfQDb2WTEh+8F3DBldWsiK7UiAdnJACrozCuQo+7cXeC+MNxJ1IczLPY6fvrgdD9xuw0IE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gCtPemQ0pKRkLS+uqsjeV3ej3DZp+uea7k7EhVUkZxj9GGy2prCg7piABzakLxLXHnCBjgflTDav4romX8eFbWqoOWj1TtekQzsY+a2sOFrdTdgczMfSuVHnAcLsRmxF8pB/3ZibznitLXutjNHFWkbo5PuGeQOZVFiAdo6bD/A=
-Received: by 10.78.183.8 with SMTP id g8mr3147575huf.55.1197580748120;
-        Thu, 13 Dec 2007 13:19:08 -0800 (PST)
-Received: by 10.78.118.18 with HTTP; Thu, 13 Dec 2007 13:19:08 -0800 (PST)
-In-Reply-To: <alpine.LSU.0.99999.0712132151080.5326@castor.milkiway.cos>
+	id S932811AbXLMVV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 16:21:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932766AbXLMVV1
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 16:21:27 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:10782 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S932672AbXLMVV0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 16:21:26 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id DC58D802AB1;
+	Thu, 13 Dec 2007 22:11:54 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id F8J8l2LQnsKw; Thu, 13 Dec 2007 22:11:54 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 760178028A1;
+	Thu, 13 Dec 2007 22:11:52 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <475F7A94.4000209@saville.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68193>
 
-On 13/12/2007, Michael Dressel <MichaelTiloDressel@t-online.de> wrote:
-> git merge --no-commit <branch> does "create" a commit. At lesat the
-> head and index are moved to the new commit fetched from <branch>. Maybe
-> that is because git was able to do a fast forward?
+onsdag 12 december 2007 skrev Wink Saville:
+> Robin Rosenberg wrote:
+> > tisdag 11 december 2007 skrev Wink Saville:
+> >   
+> > <snip>
+> > -- robin
+> >   
+> 
+> I case I'll take the bait and a guinea pig:)
+> Please send me a link to what you'd like me to test.
 
-Yes. Because fast-forward is what it called: fast-forward.
-It does not do any commits at all.
+Great! Please start with http://repo.or.cz/w/egit.git and test the INSTALL
+instructions first. We do not provide an updatesite or prebuilt plugins yet.
+
+-- robin
