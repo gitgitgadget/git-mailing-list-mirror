@@ -1,120 +1,124 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: [PATCH 2/2] xdi_diff: trim common trailing lines
-Date: Thu, 13 Dec 2007 14:31:49 -0800
-Message-ID: <7vmysez0oa.fsf@gitster.siamese.dyndns.org>
-References: <20071022063222.GS14735@spearce.org>
-	<7vzly84qwf.fsf@gitster.siamese.dyndns.org>
-	<7vmytycykt.fsf@gitster.siamese.dyndns.org>
-	<7vr6j6ve90.fsf@gitster.siamese.dyndns.org>
-	<7vir4d40sw.fsf@gitster.siamese.dyndns.org>
-	<7vwsso3poo.fsf@gitster.siamese.dyndns.org>
-	<7vfxz89x9q.fsf@gitster.siamese.dyndns.org>
-	<7vabpctx3b.fsf@gitster.siamese.dyndns.org>
-	<7vsl30eyuk.fsf@gitster.siamese.dyndns.org>
-	<7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
-	<7v4pfakr4j.fsf@gitster.siamese.dyndns.org>
-	<7vzlwv6sxr.fsf@gitster.siamese.dyndns.org>
-	<7vy7ca6ea9.fsf@gitster.siamese.dyndns.org>
-	<7vzlwps8zf.fsf@gitster.siamese.dyndns.org>
-	<7vejdy4yuw.fsf@gitster.siamese.dyndns.org>
-	<7v7ijorwnc.fsf@gitster.siamese.dyndns.org>
-	<7vabof5mze.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.0.99999.0712122219160.20487@xanadu.home>
+From: Wink Saville <wink@saville.com>
+Subject: Re: [egit] How-to use egit
+Date: Thu, 13 Dec 2007 14:35:30 -0800
+Message-ID: <4761B3B2.4040807@saville.com>
+References: <476032A2.9010308@saville.com> <20071213024735.GB7492@fawkes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Dec 13 23:33:02 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 13 23:36:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2wbx-0006g3-B4
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 23:32:57 +0100
+	id 1J2wfg-00084r-Jy
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 23:36:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759090AbXLMWcF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 17:32:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762476AbXLMWcE
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 17:32:04 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61986 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758726AbXLMWcB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 17:32:01 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 44206852D;
-	Thu, 13 Dec 2007 17:31:56 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4454E851E;
-	Thu, 13 Dec 2007 17:31:52 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755761AbXLMWff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 17:35:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752285AbXLMWff
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 17:35:35 -0500
+Received: from rv-out-0910.google.com ([209.85.198.184]:16493 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757605AbXLMWfe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 17:35:34 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so707607rvb.1
+        for <git@vger.kernel.org>; Thu, 13 Dec 2007 14:35:32 -0800 (PST)
+Received: by 10.140.185.19 with SMTP id i19mr1457169rvf.296.1197585332609;
+        Thu, 13 Dec 2007 14:35:32 -0800 (PST)
+Received: from ?192.168.0.133? ( [70.91.206.233])
+        by mx.google.com with ESMTPS id c3sm3807842rvf.2007.12.13.14.35.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 13 Dec 2007 14:35:32 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <20071213024735.GB7492@fawkes>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68198>
 
-This implements earlier Linus's optimization to trim common lines at the
-end before passing them down to low level xdiff interface for all of our
-xdiff users.
+Jing Xue wrote:
+> On Wed, Dec 12, 2007 at 11:12:34AM -0800, Wink Saville wrote:
+>   
+>> Robin et. al,
+>>
+>>
+>> I cloned egit from git://repo.or.cz/egit and imported it into my workspace
+>> following the instructions in INSTALL I did successfully compile although
+>> there were 1115 warnings but no compilation errors.
+>>
+>> I then exported to a archive org.spearce.egit.jar and then copied this file
+>> to /usr/eclipse/plugin/ I then restarted Eclipse. But I don't see any 
+>> evidence
+>>     
+>
+> I have five jars:
+>
+> /opt/eclipse/plugins$ ll org.spearce*
+> -rw-r----- 1 jingxue jingxue 2.5K 2007-12-01 20:45 org.spearce.egit_0.3.0.200712020145.jar
+> -rw-r----- 1 jingxue jingxue  70K 2007-12-01 20:45 org.spearce.egit.core_0.3.0.200712020145.jar
+> -rw-r----- 1 jingxue jingxue  14K 2007-12-01 20:45 org.spearce.egit.core.test_0.3.0.200712020145.jar
+> -rw-r----- 1 jingxue jingxue 107K 2007-12-01 20:45 org.spearce.egit.ui_0.3.0.200712020145.jar
+> -rw-r----- 1 jingxue jingxue 223K 2007-12-01 20:45 org.spearce.jgit_0.3.0.200712020145.jar
+>
+> Did you select all the org.spearce projects before exporting?
+>
+>   
+Yes, I selected them all and a single jar was created which
+I put in /usr/eclipse/plughins, which apparently was a mistake.
+I've now unzipped the jar and placed the 5 jars in the plugin directory:
 
-We could later enhance this to also trim common leading lines, but that
-would need tweaking of the output function to add the number of lines
-trimmed at the beginning to line numbers that appear in the hunk
-headers.
+wink@ic2d1:$ pwd
+/usr/eclipse/plugins
+wink@ic2d1:$ ls -l *spearce*
+-rw-r--r-- 1 root root   2506 2007-12-13 13:54 
+org.spearce.egit_0.3.0.200712121008.jar
+-rw-r--r-- 1 root root  71396 2007-12-13 13:54 
+org.spearce.egit.core_0.3.0.200712121008.jar
+-rw-r--r-- 1 root root  13899 2007-12-13 13:54 
+org.spearce.egit.core.test_0.3.0.200712121008.jar
+-rw-r--r-- 1 root root 108661 2007-12-13 13:54 
+org.spearce.egit.ui_0.3.0.200712121008.jar
+-rw-r--r-- 1 root root 227877 2007-12-13 13:54 
+org.spearce.jgit_0.3.0.200712121008.jar
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- xdiff-interface.c |   34 +++++++++++++++++++++++++++++++++-
- 1 files changed, 33 insertions(+), 1 deletions(-)
+I then started eclipse and now I see: Window/Preferences/Team/Git
+When I select "Git" in the above, I see "Hi, I'm an empty preference page."
 
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 69a022c..f2cd488 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -103,9 +103,41 @@ int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
- 	return 0;
- }
- 
-+/*
-+ * Trim down common substring at the end of the buffers,
-+ * but leave at least ctx lines at the end.
-+ */
-+static void trim_common_tail(mmfile_t *a, mmfile_t *b, int ctx)
-+{
-+	const int blk = 1024;
-+	long trimmed = 0, recovered = 0;
-+	int i;
-+	char *ap = a->ptr + a->size;
-+	char *bp = b->ptr + b->size;
-+	long smaller = (a->size < b->size) ? a->size : b->size;
-+
-+	while (blk + trimmed <= smaller && !memcmp(ap - blk, bp - blk, blk)) {
-+		trimmed += blk;
-+		ap -= blk;
-+		bp -= blk;
-+	}
-+
-+	for (i = 0, recovered = 0; recovered < trimmed && i <= ctx; i++) {
-+		while (recovered < trimmed && ap[recovered] != '\n')
-+			recovered++;
-+	}
-+	a->size -= (trimmed - recovered);
-+	b->size -= (trimmed - recovered);
-+}
-+
- int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t const *xecfg, xdemitcb_t *xecb)
- {
--	return xdl_diff(mf1, mf2, xpp, xecfg, xecb);
-+	mmfile_t a = *mf1;
-+	mmfile_t b = *mf2;
-+
-+	trim_common_tail(&a, &b, xecfg->ctxlen);
-+
-+	return xdl_diff(&a, &b, xpp, xecfg, xecb);
- }
- 
- int read_mmfile(mmfile_t *ptr, const char *filename)
--- 
-1.5.4.rc0.1.g37d0
+Now what; currently I have my entire workspace in git:
+
+wink@ic2d1:$ ls -al
+total 36
+drwxr-xr-x  9 wink wink 4096 2007-12-12 14:54 .
+drwxr-xr-x 69 wink wink 4096 2007-12-13 14:22 ..
+drwxr-xr-x  9 wink wink 4096 2007-12-12 15:09 android
+drwxr-xr-x  3 wink wink 4096 2007-12-10 21:58 com
+drwxr-xr-x  8 wink wink 4096 2007-12-13 14:21 .git
+drwxr-xr-x  3 wink wink 4096 2007-12-12 10:45 .metadata
+drwxr-xr-x  4 wink wink 4096 2007-12-10 21:58 test0
+drwxr-xr-x  2 wink wink 4096 2007-12-10 21:58 test1
+drwxr-xr-x  5 wink wink 4096 2007-12-13 14:22 testStdJavaDebug
+
+But how do I tell the plugin where my repo is?
+I also tried making a git repo in testStdJavaDebug:
+
+wink@ic2d1:$ ls -al
+total 28
+drwxr-xr-x 5 wink wink 4096 2007-12-13 14:22 .
+drwxr-xr-x 9 wink wink 4096 2007-12-12 14:54 ..
+drwxr-xr-x 3 wink wink 4096 2007-12-10 22:03 bin
+-rw-r--r-- 1 wink wink  226 2007-12-10 21:58 .classpath
+drwxr-xr-x 8 wink wink 4096 2007-12-13 14:22 .git
+-rw-r--r-- 1 wink wink  375 2007-12-10 21:58 .project
+drwxr-xr-x 3 wink wink 4096 2007-12-10 21:58 src
+
+But again, I don't see any new menu items that
+would allow me to look at history or make commits.
+Is there more I need to to install the plugin, or
+maybe I just need a little guidance on how to use it.
+
+Thanks,
+
+Wink
