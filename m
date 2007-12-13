@@ -1,197 +1,154 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (topics)
-Date: Wed, 12 Dec 2007 18:48:05 -0800
-Message-ID: <7vabof5mze.fsf@gitster.siamese.dyndns.org>
-References: <20071022063222.GS14735@spearce.org>
-	<7vzly84qwf.fsf@gitster.siamese.dyndns.org>
-	<7vmytycykt.fsf@gitster.siamese.dyndns.org>
-	<7vr6j6ve90.fsf@gitster.siamese.dyndns.org>
-	<7vir4d40sw.fsf@gitster.siamese.dyndns.org>
-	<7vwsso3poo.fsf@gitster.siamese.dyndns.org>
-	<7vfxz89x9q.fsf@gitster.siamese.dyndns.org>
-	<7vabpctx3b.fsf@gitster.siamese.dyndns.org>
-	<7vsl30eyuk.fsf@gitster.siamese.dyndns.org>
-	<7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
-	<7v4pfakr4j.fsf@gitster.siamese.dyndns.org>
-	<7vzlwv6sxr.fsf@gitster.siamese.dyndns.org>
-	<7vy7ca6ea9.fsf@gitster.siamese.dyndns.org>
-	<7vzlwps8zf.fsf@gitster.siamese.dyndns.org>
-	<7vejdy4yuw.fsf@gitster.siamese.dyndns.org>
-	<7v7ijorwnc.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCH] git-commit: squelch needless message during an empty merge
+Date: Wed, 12 Dec 2007 19:09:16 -0800
+Message-ID: <7v1w9r5m03.fsf_-_@gitster.siamese.dyndns.org>
+References: <20071022061115.GR14735@spearce.org>
+	<7vodeecyni.fsf@gitster.siamese.dyndns.org>
+	<7vpryqwtt7.fsf@gitster.siamese.dyndns.org>
+	<7vk5ot40w9.fsf@gitster.siamese.dyndns.org>
+	<7vy7d43ptc.fsf@gitster.siamese.dyndns.org>
+	<7vabpg9x5k.fsf@gitster.siamese.dyndns.org>
+	<7vy7cwsi3p.fsf@gitster.siamese.dyndns.org>
+	<7vk5o6jbq9.fsf@gitster.siamese.dyndns.org>
+	<7v63zjgoel.fsf@gitster.siamese.dyndns.org>
+	<7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>
+	<7vhcixtnm4.fsf@gitster.siamese.dyndns.org>
+	<7vfxye4yv7.fsf@gitster.siamese.dyndns.org>
+	<7vve78qhtf.fsf@gitster.siamese.dyndns.org>
+	<7vbq8v5n0u.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Cc: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 13 03:48:40 2007
+X-From: git-owner@vger.kernel.org Thu Dec 13 04:10:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2e7r-0001Om-P8
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 03:48:40 +0100
+	id 1J2eSM-0006ZQ-Ac
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 04:09:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751671AbXLMCsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Dec 2007 21:48:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751659AbXLMCsP
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 21:48:15 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54239 "EHLO
+	id S1751863AbXLMDJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Dec 2007 22:09:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbXLMDJ2
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Dec 2007 22:09:28 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55448 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751429AbXLMCsO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Dec 2007 21:48:14 -0500
+	with ESMTP id S1751087AbXLMDJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Dec 2007 22:09:27 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 51B696826;
-	Wed, 12 Dec 2007 21:48:11 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CB1653B0;
+	Wed, 12 Dec 2007 22:09:22 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 73F926825;
-	Wed, 12 Dec 2007 21:48:08 -0500 (EST)
-In-Reply-To: <7v7ijorwnc.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 09 Dec 2007 02:27:03 -0800")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E3B2A53AB;
+	Wed, 12 Dec 2007 22:09:18 -0500 (EST)
+In-Reply-To: <7vbq8v5n0u.fsf_-_@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 12 Dec 2007 18:47:13 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68115>
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.  Others commits may be stashed in 'offcuts'.
+When recording a merge that conflicted and ends up in no changes after
+manual resolution, commit callchain looked like this:
 
-The topics list the commits in reverse chronological order.
+	cmd_commit() ->
+            prepare_log_message() ->
+                run_status() ->
+		    wt_status_print()
 
-----------------------------------------------------------------
-[New Topics]
+This invocation of run_status() is asked to find out if there is a
+committable change, but it unconditionally gave instructions such as
+"use git-add" at the same time.  When in merge, we do allow an empty
+change to be recorded, so after showing this message the code still went
+ahead and made a commit.
 
-* jc/git-symref (Tue Dec 11 16:42:46 2007 -0800) 1 commit
- . PARK: show-symref protocol extension.
+This introduces "nowarn" parameter to run_status() to avoid these
+useless messages.  If we are not allowed to create an empty commit, we
+already call run_status() again in the original codepath, and the
+message will be shown from that call anyway.
 
-This is a demonstration of a possible component in the future direction
-for HEAD discovery done by git-clone.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin-commit.c |    9 +++++----
+ wt-status.c      |    2 ++
+ wt-status.h      |    1 +
+ 3 files changed, 8 insertions(+), 4 deletions(-)
 
-----------------------------------------------------------------
-[Graduated to 'master']
-
-* jc/merge-recursive-gitlink (Mon Dec 10 11:22:05 2007 -0800) 1 commit
-* ew/svn-rev-db (Sat Dec 8 23:27:42 2007 -0800) 2 commits
-* jk/svn-color (Tue Dec 11 01:28:42 2007 -0500) 2 commits
-
-These got success stories and Acks.  Thanks for testing.
-
-* cc/help (Wed Dec 12 14:00:24 2007 -0800) 13 commits
-
-I've updated RPM git.spec.in minimally to adjust to the locations things
-are installed, and also made "browse-help" usable outside git repository.
-
-* jc/shortlog-e (Tue Dec 11 10:09:04 2007 -0800) 4 commits
-
-Ingo's wish resulted in reversal of numbers and names in short-summary
-output, which I think is much saner than the original one, and more
-importantly, a saner default behaviour when the user does not give
-sufficient parameters to it.
-
-----------------------------------------------------------------
-[Will cook further in 'next' and then merge to 'master' soon]
-
-We are at 1.5.4-rc0.  There is not much to see here ;-)
-
-----------------------------------------------------------------
-[Actively cooking]
-
-* jc/api-doc (Sat Nov 24 23:48:04 2007 -0800) 1 commit
- - Start preparing the API documents.
-
-The primary reason of this series is because I think we made the system
-a lot less approachable by losing hackability.  Although we still have
-sample scripts in contrib/example for use of plumbing in scripts, they
-will not help aspiring git-hacker-wannabees when our primary attention
-has already shifted to moving things to C.
-
-This currently consists of mostly stubs, although I wrote about a few
-topics as examples.  Nice to have in v1.5.4, but we need more writers.
-
-----------------------------------------------------------------
-[On hold]
-
-* nd/dashless (Wed Nov 28 23:21:57 2007 +0700) 1 commit
- - Move all dashed-form commands to libexecdir
-
-I think this is a sane thing to do in the longer term.  Will be in
-'next' after v1.5.4.  I think "leave porcelain on PATH" might be also a
-good thing as a transition measure.
-
-Incidentally, if we do not install dashed form of built-ins anywhere
-(which is not this series is about --- this is just moving them out of
-user's PATH), "git help -a" will stop showing them.  I am not enthused
-about removing the hardlinks to built-ins to begin with, but people who
-want such a change need to first modify help.c:list_commands() to pick
-up builtins without having git-foo hardlinks in gitexecdir.  This may
-need to happen anyway as mingw fallouts.
-
-* js/remote (Wed Dec 5 19:02:15 2007 +0000) 4 commits
- - Make git-remote a builtin
- - Test "git remote show" and "git remote prune"
- - parseopt: add flag to stop on first non option
- - path-list: add functions to work with unsorted lists
-
-This and Kristian's "git-clone in C" are on hold and post 1.5.4.
-
-----------------------------------------------------------------
-[Stalled]
-
-* ns/checkout-push-pop (Wed Dec 5 07:04:06 2007 +0900) 1 commit
- - git-checkout --push/--pop
-
-A reasonably cleanly written cute hack, and I do not see this breaking
-the normal codepath.  But I tend to agree with people that 'push' is
-too late for forgetful mortals, and just a single "previous" would be
-easier to use.
-
-* mh/http (Tue Dec 11 00:08:25 2007 +0100) 6 commits
- - Move fetch_ref from http-push.c and http-walker.c to http.c
- - Fix various memory leaks in http-push.c and http-walker.c
- - Use strbuf in http code
- + Avoid redundant declaration of missing_target()
- + Remove a CURLOPT_HTTPHEADER (un)setting
- + Remove the default_headers variable from http-push.c
-
-* js/reflog-delete (Wed Oct 17 02:50:45 2007 +0100) 1 commit
- + Teach "git reflog" a subcommand to delete single entries
-
-* jk/builtin-alias (Fri Nov 30 11:22:58 2007 -0500) 1 commit
- + Support builtin aliases
-
-Even the original author has slight NAK on this and I tend to agree.
-May want to eventurally revert from 'next' but we are not in a hurry
-even to do that.
-
-* jc/nu (Sun Oct 14 22:07:34 2007 -0700) 3 commits
- - merge-nu: a new merge backend without using unpack_trees()
- - read_tree: take an explicit index structure
- - gcc 4.2.1 -Werror -Wall -ansi -pedantic -std=c99: minimum fix
-
-* jc/diff-pathspec (Sun Nov 25 10:03:48 2007 -0800) 1 commit
- - Making ce_path_match() more useful by accepting globs
-
-This was to allow "git diff-files -- '*.h'" (currently diff family
-knows only the leading directory match and not fileglobs), but was shot
-down by Alex.  I tend to agree with him.
-
-* jc/diff-relative (Thu Dec 6 09:48:32 2007 -0800) 1 commit
- - Make "diff" Porcelain output paths as relative to subdirectory.
-
-* jc/cherry-pick (Tue Nov 13 12:38:51 2007 -0800) 1 commit
- . revert/cherry-pick: start refactoring call to merge_recursive
-
-* jc/pathspec (Thu Sep 13 13:38:19 2007 -0700) 3 commits
- . pathspec_can_match(): move it from builtin-ls-tree.c to tree.c
- . ls-tree.c: refactor show_recursive() and rename it.
- . tree-diff.c: split out a function to match a single pattern.
-
-* jc/dashless (Sat Dec 1 22:09:22 2007 -0800) 2 commits
- . Prepare execv_git_cmd() for removal of builtins from the
-   filesystem
- . git-shell: accept "git foo" form
-
-We do not plan to remove git-foo form completely from the filesystem at
-this point, so these are not strictly necessary.
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 9cb7589..ad9f921 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -280,7 +280,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
+ 	return false_lock.filename;
+ }
+ 
+-static int run_status(FILE *fp, const char *index_file, const char *prefix)
++static int run_status(FILE *fp, const char *index_file, const char *prefix, int nowarn)
+ {
+ 	struct wt_status s;
+ 
+@@ -296,6 +296,7 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix)
+ 	s.untracked = untracked_files;
+ 	s.index_file = index_file;
+ 	s.fp = fp;
++	s.nowarn = nowarn;
+ 
+ 	wt_status_print(&s);
+ 
+@@ -412,7 +413,7 @@ static int prepare_log_message(const char *index_file, const char *prefix)
+ 
+ 	saved_color_setting = wt_status_use_color;
+ 	wt_status_use_color = 0;
+-	commitable = run_status(fp, index_file, prefix);
++	commitable = run_status(fp, index_file, prefix, 1);
+ 	wt_status_use_color = saved_color_setting;
+ 
+ 	fclose(fp);
+@@ -606,7 +607,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 
+ 	index_file = prepare_index(argc, argv, prefix);
+ 
+-	commitable = run_status(stdout, index_file, prefix);
++	commitable = run_status(stdout, index_file, prefix, 0);
+ 
+ 	rollback_index_files();
+ 
+@@ -717,7 +718,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 
+ 	if (!prepare_log_message(index_file, prefix) && !in_merge &&
+ 	    !allow_empty && !(amend && is_a_merge(head_sha1))) {
+-		run_status(stdout, index_file, prefix);
++		run_status(stdout, index_file, prefix, 0);
+ 		rollback_index_files();
+ 		unlink(commit_editmsg);
+ 		return 1;
+diff --git a/wt-status.c b/wt-status.c
+index 51c1879..c0c2472 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -381,6 +381,8 @@ void wt_status_print(struct wt_status *s)
+ 	if (!s->commitable) {
+ 		if (s->amend)
+ 			fprintf(s->fp, "# No changes\n");
++		else if (s->nowarn)
++			; /* nothing */
+ 		else if (s->workdir_dirty)
+ 			printf("no changes added to commit (use \"git add\" and/or \"git commit -a\")\n");
+ 		else if (s->workdir_untracked)
+diff --git a/wt-status.h b/wt-status.h
+index 63d50f2..02afaa6 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -17,6 +17,7 @@ struct wt_status {
+ 	int verbose;
+ 	int amend;
+ 	int untracked;
++	int nowarn;
+ 	/* These are computed during processing of the individual sections */
+ 	int commitable;
+ 	int workdir_dirty;
