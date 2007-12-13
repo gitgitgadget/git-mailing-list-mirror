@@ -1,94 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Pierre Habouzit <madcoder@debian.org>
 Subject: Re: [RFH] convert shortlog to use parse_options
-Date: Thu, 13 Dec 2007 09:40:23 -0800
-Message-ID: <7vbq8u4ho8.fsf@gitster.siamese.dyndns.org>
-References: <20071213055226.GA3636@coredump.intra.peff.net>
-	<20071213090604.GA12398@artemis.madism.org>
-	<20071213091055.GA5674@coredump.intra.peff.net>
-	<20071213093536.GC12398@artemis.madism.org>
+Date: Thu, 13 Dec 2007 19:03:47 +0100
+Message-ID: <20071213180347.GE1224@artemis.madism.org>
+References: <20071213055226.GA3636@coredump.intra.peff.net> <20071213090604.GA12398@artemis.madism.org> <20071213091055.GA5674@coredump.intra.peff.net> <20071213093536.GC12398@artemis.madism.org> <7vbq8u4ho8.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; boundary="TiqCXmo5T1hvSQQg";
+	protocol="application/pgp-signature"; micalg=SHA1
 Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Dec 13 18:42:31 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 13 19:04:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2s4c-0003EB-NI
-	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 18:42:15 +0100
+	id 1J2sPt-0004bS-Ug
+	for gcvg-git-2@gmane.org; Thu, 13 Dec 2007 19:04:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765555AbXLMRkj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 12:40:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765550AbXLMRki
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 12:40:38 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41148 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765547AbXLMRkh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 12:40:37 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C45373AE;
-	Thu, 13 Dec 2007 12:40:30 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	id S1754802AbXLMSDv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 13:03:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754311AbXLMSDv
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 13:03:51 -0500
+Received: from pan.madism.org ([88.191.52.104]:34906 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754032AbXLMSDu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 13:03:50 -0500
+Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 65DC473AD;
-	Thu, 13 Dec 2007 12:40:25 -0500 (EST)
-In-Reply-To: <20071213093536.GC12398@artemis.madism.org> (Pierre Habouzit's
-	message of "Thu, 13 Dec 2007 10:35:36 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id D57B119737;
+	Thu, 13 Dec 2007 19:03:48 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id C8309684; Thu, 13 Dec 2007 19:03:47 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vbq8u4ho8.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68179>
 
-Pierre Habouzit <madcoder@debian.org> writes:
 
-> In fact we have kind of the issue for every single optional argument out
-> there:
->
-> $ git describe --abbrev HEAD
-> error: option `abbrev' expects a numerical value
-> [...]
->
->   *ouch*
->
-> So I believe that with optional arguments we must change the way we do
-> things, and that we _must_ enforce the argument to be sticked in that
-> case.
+--TiqCXmo5T1hvSQQg
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think "Must" is a bit too strong an expression.
+On Thu, Dec 13, 2007 at 05:40:23PM +0000, Junio C Hamano wrote:
+> Pierre Habouzit <madcoder@debian.org> writes:
+>=20
+> > In fact we have kind of the issue for every single optional argument out
+> > there:
+> >
+> > $ git describe --abbrev HEAD
+> > error: option `abbrev' expects a numerical value
+> > [...]
+> >
+> >   *ouch*
+> >
+> > So I believe that with optional arguments we must change the way we do
+> > things, and that we _must_ enforce the argument to be sticked in that
+> > case.
+>=20
+> I think "Must" is a bit too strong an expression.
+>=20
+> 	git describe --abbrev 7 HEAD
+>         git describe --abbrev HEAD
+>         git describe --abbrev=3DHEAD
+> 	git describe --abbrev=3D7 HEAD
+> 	git describe --abbrev
+>=20
+> The --abbrev parser in this case could be asked with this question: "You
+> are on the command line.  There is a token after you.  Is it your
+> parameter?".
 
-	git describe --abbrev 7 HEAD
-        git describe --abbrev HEAD
-        git describe --abbrev=HEAD
-	git describe --abbrev=7 HEAD
-	git describe --abbrev
+  I thought of that, but it's really convoluted and can definitely lead
+to very subtle issues. The number of git commands with optional
+arguments is quite low, mostly due to legacy, I don't expect _new_
+commands to take optional arguments. I don't really like the ambiguity
+it creates, and in some cases you just won't be able to disambiguate at
+all. Here it looks nice because --abbrev takes an integer argument, and
+it's likely that no branch nor reference names will be only made of
+digits. Though for commands taking an optional string[0] argument this is
+way more fishy.
 
-The --abbrev parser in this case could be asked with this question: "You
-are on the command line.  There is a token after you.  Is it your
-parameter?".
+  *I* (and it's my opinion, maybe other don't see it that way) see the
+parse-option module as a convenience given to people using the CLI UI in
+an interactive shell. So it tries to achieve a good balance between
+brevity and error detection. Here I think it's quite error prone and
+gives almost no help to the user: if there is a gain to type git repack
+-afd vs. git repack -a -f -d, I see no real gain in --abbrev 10 vs.
+--abbrev=3D10.
 
-Among the above cases, the third one through the last one will get slightly
-different questions.  The third and fourth ones get "You are given this
-parameter and it must be yours", and the last one gets "You are on the
-command line, and were not given any parameter."
 
-The parser can do one of these things:
+  [0] OTOH I'm not sure there will ever be optional arguments that
+      aren't integers in git, but I may be wrong.
 
- * Inspect the token, if exists, and see if it is appropriate for it.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-   * If not
+--TiqCXmo5T1hvSQQg
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-     - if it is optional, then take the default value, and answer "I
-       handled myself Ok, but that HEAD is not mine";
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-     - if it "must be yours" (the third case), barf.
+iD8DBQBHYXQDvGr7W6HudhwRAs/wAJ457UnEca7Ov4Ku9dya6fKXyN1VqACfV728
+/itD2pM3RwjxWVxMv8Xl1YY=
+=QX7D
+-----END PGP SIGNATURE-----
 
-   * If so
-
-     - Use that given value and answer "I handled myself Ok, and that
-       parameter 7 is mine";  this includes the fourth case as well.
-
-And this does not have to be callback for common types like integers.
+--TiqCXmo5T1hvSQQg--
