@@ -1,68 +1,62 @@
-From: Pieter de Bie <frim@frim.nl>
-Subject: [BUG?] git rebase -i
-Date: Fri, 14 Dec 2007 02:21:25 +0100
-Message-ID: <2791F15A-EB72-4FE4-8DB3-7A4B4DCB07B3@frim.nl>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 14 02:42:23 2007
+From: Jing Xue <jingxue@digizenstudio.com>
+Subject: git-send-email doesn't like me+git ML
+Date: Thu, 13 Dec 2007 20:47:53 -0500
+Message-ID: <20071214014753.GB8914@fawkes>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 14 02:48:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2zZC-0007Qm-FE
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 02:42:18 +0100
+	id 1J2zf7-0000Wn-Dm
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 02:48:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763863AbXLNBlg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 20:41:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760822AbXLNBlg
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 20:41:36 -0500
-Received: from [72.249.127.116] ([72.249.127.116]:57927 "EHLO
-	smtp.novowork.com" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1765238AbXLNBle (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 20:41:34 -0500
-X-Greylist: delayed 1198 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Dec 2007 20:41:34 EST
-Received: from [192.168.1.203] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by smtp.novowork.com (Postfix) with ESMTP id 0F18912600AC
-	for <git@vger.kernel.org>; Fri, 14 Dec 2007 02:21:32 +0100 (CET)
-X-Mailer: Apple Mail (2.752.3)
+	id S1761539AbXLNBsD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 20:48:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759027AbXLNBsB
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 20:48:01 -0500
+Received: from k2smtpout04-02.prod.mesa1.secureserver.net ([64.202.189.173]:58993
+	"HELO k2smtpout04-02.prod.mesa1.secureserver.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758610AbXLNBsB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 20:48:01 -0500
+Received: (qmail 12162 invoked from network); 14 Dec 2007 01:48:00 -0000
+Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
+  by k2smtpout04-02.prod.mesa1.secureserver.net (64.202.189.173) with ESMTP; 14 Dec 2007 01:48:00 -0000
+Received: from localhost (unknown [127.0.0.1])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 1F7DA100A37
+	for <git@vger.kernel.org>; Fri, 14 Dec 2007 01:48:00 +0000 (UTC)
+Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
+	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vyV1fQM7f+8M for <git@vger.kernel.org>;
+	Thu, 13 Dec 2007 20:47:54 -0500 (EST)
+Received: from fawkes.hq.digizenstudio.com (ip70-187-196-88.dc.dc.cox.net [70.187.196.88])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 5D523100099
+	for <git@vger.kernel.org>; Thu, 13 Dec 2007 20:47:54 -0500 (EST)
+Received: by fawkes.hq.digizenstudio.com (Postfix, from userid 1000)
+	id 50C0A9ACFB; Thu, 13 Dec 2007 20:47:53 -0500 (EST)
+Mail-Followup-To: git <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68212>
 
-Hi,
+OK, this is bewildering. I tried a couple of times sending a trivial
+patch (the one that makes git-stash show keep quiet when there aren't
+any stashes), but it never made it to the list every time I used
+git-send-email, yet as soon as I did it as a regular email, i.e.,
+starting a new message in mutt, pasting the patch into the body, and
+sending it, it worked just fine.
 
-I was just toying with git rebase -i -p, when I found the following:
+My mail log shows the mails (the one thru git-send-email) went out just
+fine.  And it always worked when I tried to use git-send-email to send
+the patch to my gmail address. It just doesn't work with the list - and
+that obviously can't be. 8-)
 
-Tirana:~/git pieter$ /opt/local/bin/git --version
-git version 1.5.3.5
-
-Tirana:~/git pieter$ time /opt/local/bin/git rebase -p -i HEAD~100
-Successfully rebased and updated refs/heads/master.
-
-real    0m17.816s
-user    0m3.927s
-sys     0m10.381s
-
-Tirana:~/git pieter$ git --version
-git version 1.5.4.rc0
-Tirana:~/git pieter$ time git rebase -p -i HEAD~100
-cat: /Users/pieter/git/.git/.dotest-merge/rewritten/ 
-1e8df762b38e01685f3aa3613e2d61f73346fcbe: No such file or directory
-
-real    0m20.427s
-user    0m4.449s
-sys     0m14.028s
-
-The rebase in 1.5.4.rc0 exists with an error. Another thing to note  
-is that the 1.5.4.rc0 tries to apply 215 patches, while the 1.5.3.5  
-tries to apply 206 patches. This test was done on the git master  
-branch (tagged 1.5.4.rc0). I did not change anything in the  
-interactive rebase editor (just hit :wq in vim).
-
-- Pieter
+-- 
+Jing Xue
