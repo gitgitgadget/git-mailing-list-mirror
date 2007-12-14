@@ -1,63 +1,160 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] xdi_diff: trim common trailing lines
-Date: Fri, 14 Dec 2007 11:15:40 -0800
-Message-ID: <7v8x3xrstf.fsf@gitster.siamese.dyndns.org>
-References: <7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
-	<7v4pfakr4j.fsf@gitster.siamese.dyndns.org>
-	<7vzlwv6sxr.fsf@gitster.siamese.dyndns.org>
-	<7vy7ca6ea9.fsf@gitster.siamese.dyndns.org>
-	<7vzlwps8zf.fsf@gitster.siamese.dyndns.org>
-	<7vejdy4yuw.fsf@gitster.siamese.dyndns.org>
-	<7v7ijorwnc.fsf@gitster.siamese.dyndns.org>
-	<7vabof5mze.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.0.99999.0712122219160.20487@xanadu.home>
-	<7vmysez0oa.fsf@gitster.siamese.dyndns.org>
-	<20071214090614.GB15610@xp.machine.xx>
+From: David Miller <davem@davemloft.net>
+Subject: Re: testsuite failures in mainline...
+Date: Fri, 14 Dec 2007 11:17:36 -0800 (PST)
+Message-ID: <20071214.111736.258936000.davem@davemloft.net>
+References: <20071214.104312.103638776.davem@davemloft.net>
+	<7vfxy5rsui.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Dec 14 20:16:19 2007
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Dec 14 20:18:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3G1D-0005qL-09
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 20:16:19 +0100
+	id 1J3G32-0006Z6-0b
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 20:18:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755537AbXLNTPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 14:15:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755439AbXLNTPz
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 14:15:55 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49520 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755166AbXLNTPy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 14:15:54 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 14ACB950A;
-	Fri, 14 Dec 2007 14:15:48 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 810549508;
-	Fri, 14 Dec 2007 14:15:42 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752301AbXLNTRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 14:17:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752307AbXLNTRo
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 14:17:44 -0500
+Received: from 74-93-104-97-Washington.hfc.comcastbusiness.net ([74.93.104.97]:34896
+	"EHLO sunset.davemloft.net" rhost-flags-OK-FAIL-OK-OK)
+	by vger.kernel.org with ESMTP id S1751876AbXLNTRn (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Dec 2007 14:17:43 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by sunset.davemloft.net (Postfix) with ESMTP id 14D5335C001;
+	Fri, 14 Dec 2007 11:17:37 -0800 (PST)
+In-Reply-To: <7vfxy5rsui.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Mew version 5.2 on Emacs 22.1 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68329>
 
-Peter Baumann <waste.manager@gmx.de> writes:
+From: Junio C Hamano <gitster@pobox.com>
+Date: Fri, 14 Dec 2007 11:15:01 -0800
 
-> So you are loosing some values in your trim_common_tail function by
-> making ctx only an int. (Not sure that it matters, but I noticed it
-> while glancing over your code).
+> When I can reproduce a breakage, in our tests, I'd run
+> 
+> 	cd t && sh -x t3200-branch.sh -i -v
+> 
+> (replace "t3200-*" with the failing test) and see which one of the steps
+> chained with && is breaking first.
 
-While it is true that this does not matter in practice (because the
-context value initially comes from the end user via -U parameter that is
-stored in a field of type int in diff_options structure), I agre that it
-is the right thing to do to use the same type as underlying xdiff
-library uses at the interface level.  From the layering point of view.
-xdiff-interface.[ch] are meant to be a thin usability wrapper, it should
-not needlessly deviate from how the underlying xdiff operates.
+Looks like a malloc() failure:
+
++ test_expect_success 'test tracking setup via config' 'git config branch.autosetupmerge true &&
+     git config remote.local.url . &&
+     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+     (git show-ref -q refs/remotes/local/master || git-fetch local) &&
+     git branch my3 local/master &&
+     test $(git config branch.my3.remote) = local &&
+     test $(git config branch.my3.merge) = refs/heads/master'
++ test 2 = 2
++ test_skip 'test tracking setup via config' 'git config branch.autosetupmerge true &&
+     git config remote.local.url . &&
+     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+     (git show-ref -q refs/remotes/local/master || git-fetch local) &&
+     git branch my3 local/master &&
+     test $(git config branch.my3.remote) = local &&
+     test $(git config branch.my3.merge) = refs/heads/master'
+++ expr ./t3200-branch.sh : '.*/\(t[0-9]*\)-[^/]*$'
++ this_test=t3200
+++ expr 19 + 1
++ this_test=t3200.20
++ to_skip=
++ case "$to_skip" in
++ false
++ say 'expecting success: git config branch.autosetupmerge true &&
+     git config remote.local.url . &&
+     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+     (git show-ref -q refs/remotes/local/master || git-fetch local) &&
+     git branch my3 local/master &&
+     test $(git config branch.my3.remote) = local &&
+     test $(git config branch.my3.merge) = refs/heads/master'
++ say_color info 'expecting success: git config branch.autosetupmerge true &&
+     git config remote.local.url . &&
+     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+     (git show-ref -q refs/remotes/local/master || git-fetch local) &&
+     git branch my3 local/master &&
+     test $(git config branch.my3.remote) = local &&
+     test $(git config branch.my3.merge) = refs/heads/master'
++ test -z info
++ shift
++ echo '* expecting success: git config branch.autosetupmerge true &&
+     git config remote.local.url . &&
+     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+     (git show-ref -q refs/remotes/local/master || git-fetch local) &&
+     git branch my3 local/master &&
+     test $(git config branch.my3.remote) = local &&
+     test $(git config branch.my3.merge) = refs/heads/master'
+* expecting success: git config branch.autosetupmerge true &&
+     git config remote.local.url . &&
+     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+     (git show-ref -q refs/remotes/local/master || git-fetch local) &&
+     git branch my3 local/master &&
+     test $(git config branch.my3.remote) = local &&
+     test $(git config branch.my3.merge) = refs/heads/master
++ test_run_ 'git config branch.autosetupmerge true &&
+     git config remote.local.url . &&
+     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+     (git show-ref -q refs/remotes/local/master || git-fetch local) &&
+     git branch my3 local/master &&
+     test $(git config branch.my3.remote) = local &&
+     test $(git config branch.my3.merge) = refs/heads/master'
++ eval 'git config branch.autosetupmerge true &&
+     git config remote.local.url . &&
+     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+     (git show-ref -q refs/remotes/local/master || git-fetch local) &&
+     git branch my3 local/master &&
+     test $(git config branch.my3.remote) = local &&
+     test $(git config branch.my3.merge) = refs/heads/master'
+++ git config branch.autosetupmerge true
+++ git config remote.local.url .
+++ git config remote.local.fetch 'refs/heads/*:refs/remotes/local/*'
+++ git show-ref -q refs/remotes/local/master
+++ git branch my3 local/master
+fatal: Out of memory, malloc failed
++ eval_ret=128
++ return 0
++ '[' 0 = 0 -a 128 = 0 ']'
++ test_failure_ 'test tracking setup via config' 'git config branch.autosetupmerge true &&
+     git config remote.local.url . &&
+     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+     (git show-ref -q refs/remotes/local/master || git-fetch local) &&
+     git branch my3 local/master &&
+     test $(git config branch.my3.remote) = local &&
+     test $(git config branch.my3.merge) = refs/heads/master'
+++ expr 19 + 1
++ test_count=20
+++ expr 0 + 1
++ test_failure=1
++ say_color error 'FAIL 20: test tracking setup via config'
++ test -z error
++ shift
++ echo '* FAIL 20: test tracking setup via config'
+* FAIL 20: test tracking setup via config
++ shift
++ echo 'git config branch.autosetupmerge true &&
+     git config remote.local.url . &&
+     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+     (git show-ref -q refs/remotes/local/master || git-fetch local) &&
+     git branch my3 local/master &&
+     test $(git config branch.my3.remote) = local &&
+     test $(git config branch.my3.merge) = refs/heads/master'
++ sed -e 's/^/	/'
+	git config branch.autosetupmerge true &&
+	     git config remote.local.url . &&
+	     git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+	     (git show-ref -q refs/remotes/local/master || git-fetch local) &&
+	     git branch my3 local/master &&
+	     test $(git config branch.my3.remote) = local &&
+	     test $(git config branch.my3.merge) = refs/heads/master
++ test t = ''
++ trap - exit
++ exit 1
