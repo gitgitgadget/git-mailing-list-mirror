@@ -1,90 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Don't use the pager when running "git diff --check"
-Date: Thu, 13 Dec 2007 21:11:45 -0800
-Message-ID: <7vmysdx3la.fsf@gitster.siamese.dyndns.org>
-References: <1197552751-53480-2-git-send-email-win@wincent.com>
-	<1197575138-58070-1-git-send-email-win@wincent.com>
-	<20071214045127.GC10169@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [Funky] "git -p cmd" inside a bare repository
+Date: Fri, 14 Dec 2007 00:12:23 -0500
+Message-ID: <20071214051223.GD10169@sigill.intra.peff.net>
+References: <20071129122139.GA11176@laptop> <7vmysexdvw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Wincent Colaiuta <win@wincent.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Dec 14 06:12:24 2007
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 06:12:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J32qU-00048W-68
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 06:12:22 +0100
+	id 1J32qt-0004DO-Q6
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 06:12:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751346AbXLNFL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 00:11:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751295AbXLNFL7
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 00:11:59 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56286 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751118AbXLNFL6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 00:11:58 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0096486E2;
-	Fri, 14 Dec 2007 00:11:52 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2831B86DC;
-	Fri, 14 Dec 2007 00:11:49 -0500 (EST)
-In-Reply-To: <20071214045127.GC10169@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 13 Dec 2007 23:51:27 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751419AbXLNFM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 00:12:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbXLNFMZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 00:12:25 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3796 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751366AbXLNFMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 00:12:25 -0500
+Received: (qmail 20112 invoked by uid 111); 14 Dec 2007 05:12:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 14 Dec 2007 00:12:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Dec 2007 00:12:23 -0500
+Content-Disposition: inline
+In-Reply-To: <7vmysexdvw.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68223>
 
-Jeff King <peff@peff.net> writes:
+On Thu, Dec 13, 2007 at 05:29:23PM -0800, Junio C Hamano wrote:
 
-> On Thu, Dec 13, 2007 at 08:45:38PM +0100, Wincent Colaiuta wrote:
->
->> In 89d07f75 "git diff" learnt to not run the pager if the user passes
->> the --exit-code switch. This commit does the same for the --check
->> switch for the same reason: we want the user to get the exit status
->> from "git diff", not the pager.
->
-> But --check is also producing useful output, which might need paged. So
-> you are sacrificing existing interactive use of --check for scriptable
-> exit-code uses. If you really want the exit code, why not "git diff
-> --check --exit-code"?
->
-> OTOH, I am not too sad to lose the paging behavior; it would take quite
-> a few whitespace errors to scroll off the screen.
+> I _think_ what is happening is that setup_pager() tries to run
+> git_config(), which runs setup(), and then RUN_SETUP set for "ls-tree"
+> (or "show") internal command runs setup again.  HEAD is given to
+> resolve_ref() and git_path("%s", ref) makes it to ".git/HEAD", even
+> though in a bare repository git_dir should be set to ".", and of course
+> we cannot find such a path in the git directory.
 
-You are right.  While I do not personally miss paging output, it is a
-regression not to page --check output by default.
+I think that there is perhaps a larger bug here, which is that running
+setup twice gives bad results, and should either be fixed or have its
+own "don't run me twice" guard.
 
-By the way, there is no reason to make --check and --exit-code mutually
-exclusive either.  You could say with --exit-code the command will exit
-with status 01 or'ed in if trees are not identical, and with --check the
-command will exit with status 02 or'ed in.  Loosely written scripted
-callers can continue doing:
+But it makes sense to always spawn the pager at the same time for
+consistency. As a bonus, this makes "git -p bogus" a little more
+friendly by not spawning the pager until we verify the command name.
 
-	if git --no-pager diff --exit-code
-        then
-        	they are different
-        fi
+-- >8 --
+delay "git -p" page spawning until command runtime
 
-	if git --no-pager diff --check
-	then
-        	there are funky blanks
-	fi
+This makes the timing consistent with those commands that always spawn a
+pager. It also avoids a funny interaction related to calling
+setup_pager() before setup().
 
-while the ones that are aware of the new behaviour of --check can:
-
-	git --no-pager diff --check --exit-code
-        case $? in
-        0)	all is well ;;
-        1)	clean difference there ;;
-        3)	dirty difference there ;;
-        2)	cannot happen ;;
-	*)	bombed out, as die exits with 128 ;;
-	esac
+---
+diff --git a/git.c b/git.c
+index c8b7e74..21d204f 100644
+--- a/git.c
++++ b/git.c
+@@ -6,6 +6,8 @@
+ const char git_usage_string[] =
+ 	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]";
+ 
++static int user_asked_for_pager;
++
+ static int handle_options(const char*** argv, int* argc, int* envchanged)
+ {
+ 	int handled = 0;
+@@ -35,7 +37,7 @@ static int handle_options(const char*** argv, int* argc, int* envchanged)
+ 				exit(0);
+ 			}
+ 		} else if (!strcmp(cmd, "-p") || !strcmp(cmd, "--paginate")) {
+-			setup_pager();
++			user_asked_for_pager = 1;
+ 		} else if (!strcmp(cmd, "--no-pager")) {
+ 			setenv("GIT_PAGER", "cat", 1);
+ 			if (envchanged)
+@@ -256,7 +258,7 @@ static int run_command(struct cmd_struct *p, int argc, const char **argv)
+ 	prefix = NULL;
+ 	if (p->option & RUN_SETUP)
+ 		prefix = setup_git_directory();
+-	if (p->option & USE_PAGER)
++	if (p->option & USE_PAGER || user_asked_for_pager)
+ 		setup_pager();
+ 	if (p->option & NEED_WORK_TREE)
+ 		setup_work_tree();
