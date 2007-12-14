@@ -1,61 +1,76 @@
 From: Wolfram Gloger <wmglo@dent.med.uni-muenchen.de>
 Subject: Re: Something is broken in repack
-Date: 14 Dec 2007 16:03:26 -0000
-Message-ID: <20071214160326.2424.qmail@md.dent.med.uni-muenchen.de>
-References: <4760E005.6040102@op5.se>
-Cc: nico@cam.org, jonsmirl@gmail.com, gitster@pobox.com, gcc@gcc.gnu.org,   git@vger.kernel.org
-To: ae@op5.se
-X-From: gcc-return-142986-gcc=m.gmane.org@gcc.gnu.org Fri Dec 14 17:04:17 2007
-Return-path: <gcc-return-142986-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J3D1F-0001M3-Tu
-	for gcc@gmane.org; Fri, 14 Dec 2007 17:04:10 +0100
-Received: (qmail 22156 invoked by alias); 14 Dec 2007 16:03:45 -0000
-Received: (qmail 22118 invoked by uid 22791); 14 Dec 2007 16:03:43 -0000
-X-Spam-Check-By: sourceware.org
-Received: from zep00a03.dent.med.uni-muenchen.de (HELO md.dent.med.uni-muenchen.de) (138.245.179.2)     by sourceware.org (qpsmtpd/0.31) with SMTP; Fri, 14 Dec 2007 16:03:29 +0000
-Received: (qmail 2429 invoked by uid 211); 14 Dec 2007 16:03:26 -0000
-In-reply-to: <4760E005.6040102@op5.se> (message from Andreas Ericsson on Thu, 	13 Dec 2007 08:32:21 +0100)
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Date: 14 Dec 2007 16:12:36 -0000
+Message-ID: <20071214161236.3080.qmail@md.dent.med.uni-muenchen.de>
+References: <alpine.LFD.0.9999.0712120826440.25032@woody.linux-foundation.org>
+Cc: nico@cam.org, jonsmirl@gmail.com, gitster@pobox.com,
+	gcc@gcc.gnu.org, git@vger.kernel.org
+To: torvalds@linux-foundation.org
+X-From: git-owner@vger.kernel.org Fri Dec 14 17:13:13 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J3D9p-0005CZ-8V
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 17:13:01 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756778AbXLNQMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 11:12:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754947AbXLNQMi
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 11:12:38 -0500
+Received: from md.dent.med.uni-muenchen.de ([138.245.179.2]:56362 "HELO
+	md.dent.med.uni-muenchen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1756241AbXLNQMi (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Dec 2007 11:12:38 -0500
+Received: (qmail 3081 invoked by uid 211); 14 Dec 2007 16:12:36 -0000
+In-reply-to: <alpine.LFD.0.9999.0712120826440.25032@woody.linux-foundation.org>
+	(message from Linus Torvalds on Wed, 12 Dec 2007 08:37:10 -0800 (PST))
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68313>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68314>
 
 Hi,
 
-> >>  	if (progress->total) {
-> >>  		unsigned percent = n * 100 / progress->total;
-> >>  		if (percent != progress->last_percent || progress_update) {
-> >> +			struct mallinfo m = mallinfo();
-> >>  			progress->last_percent = percent;
-> >> -			fprintf(stderr, "%s: %3u%% (%u/%u)%s%s",
-> >> -				progress->title, percent, n,
-> >> -				progress->total, tp, eol);
-> >> +			fprintf(stderr, "%s: %3u%% (%u/%u) %u/%uMB%s%s",
-> >> +				progress->title, percent, n, progress->total,
-> >> +				m.uordblks >> 18, m.fordblks >> 18,
-> >> +				tp, eol);
-> > 
-> > Note: I didn't know what unit of memory those blocks represents, so the 
-> > shift is most probably wrong.
-> > 
+> Note that delta following involves patterns something like
 > 
-> Me neither, but it appears to me as if hblkhd holds the actual memory
-> consumed by the process. It seems to store the information in bytes,
-> which I find a bit dubious unless glibc has some internal multiplier.
+>    allocate (small) space for delta
+>    for i in (1..depth) {
+> 	allocate large space for base
+> 	allocate large space for result
+> 	.. apply delta ..
+> 	free large space for base
+> 	free small space for delta
+>    }
+> 
+> so if you have some stupid heap algorithm that doesn't try to merge and 
+> re-use free'd spaces very aggressively (because that takes CPU time!),
 
-mallinfo() will only give you the used memory for the main arena.
-When you have separate arenas (likely when concurrent threads have
-been used), the only way to get the full picture is to call
-malloc_stats(), which prints to stderr.
+ptmalloc2 (in glibc) _per arena_ is basically best-fit.  This is the
+best known general strategy, but it certainly cannot be the best in
+every case.
 
-Regards,
+> you 
+> might have memory usage be horribly inflated by the heap having all those 
+> holes for all the objects that got free'd in the chain that don't get 
+> aggressively re-used.
+
+It depends how large 'large' is -- if it exceeds the mmap() threshold
+(settable with mallopt(M_MMAP_THRESHOLD, ...))
+the 'large' spaces will be allocated with mmap() and won't cause
+any internal fragmentation.
+It might pay to experiment with this parameter if it is hard to
+avoid the alloc/free large space sequence.
+
+> Threaded memory allocators then make this worse by probably using totally 
+> different heaps for different threads (in order to avoid locking), so they 
+> will *all* have the fragmentation issue.
+
+Indeed.
+
+Could someone perhaps try ptmalloc3
+(http://malloc.de/malloc/ptmalloc3-current.tar.gz) on this case?
+
+Thanks,
 Wolfram.
