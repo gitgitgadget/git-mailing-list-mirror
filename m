@@ -1,61 +1,150 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-gui: Move frequently used commands to the top of the context menu.
-Date: Fri, 14 Dec 2007 01:32:17 -0500
-Message-ID: <20071214063217.GG14735@spearce.org>
-References: <20071212052329.GR14735@spearce.org> <31e9dd080712120702k36a959cfh3e2a5c5fb076d922@mail.gmail.com> <Pine.LNX.4.64.0712121814260.27959@racer.site> <31e9dd080712121050i45981ed5u845b71f0e73aa8e2@mail.gmail.com> <Pine.LNX.4.64.0712121931050.27959@racer.site> <7vhcin3rv4.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0712131248500.27959@racer.site> <47613BA6.1060705@viscovery.net> <Pine.LNX.4.64.0712131417110.27959@racer.site> <47614419.3050604@viscovery.net>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH 4/5] Convert "stg commit" to new infrastructure
+Date: Fri, 14 Dec 2007 07:32:30 +0100
+Message-ID: <20071214063230.29290.22561.stgit@yoghurt>
+References: <20071214062618.29290.70792.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jason Sewall <jasonsewall@gmail.com>, David <davvid@gmail.com>,
-	Marco Costalba <mcostalba@gmail.com>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Dec 14 07:33:46 2007
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 07:33:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J347F-0003xt-Gk
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 07:33:45 +0100
+	id 1J347G-0003xt-Pq
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 07:33:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759825AbXLNGc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 01:32:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756551AbXLNGc1
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 01:32:27 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:37821 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759521AbXLNGc0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 01:32:26 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1J345r-0004R0-Ck; Fri, 14 Dec 2007 01:32:19 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0BA3220FBAE; Fri, 14 Dec 2007 01:32:18 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <47614419.3050604@viscovery.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1761475AbXLNGce convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Dec 2007 01:32:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758280AbXLNGce
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 01:32:34 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4235 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761438AbXLNGcd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 01:32:33 -0500
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1J3461-0002pR-00; Fri, 14 Dec 2007 06:32:29 +0000
+In-Reply-To: <20071214062618.29290.70792.stgit@yoghurt>
+User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68246>
 
-Johannes Sixt <j.sixt@viscovery.net> wrote:
-> "Stage/Unstage Hunk" is probably the most frequently used command of the
-> patch context menu *and* it is not available in some other form than
-> the context menu. Therefore, it should go to the top. "Less Context" and
-> "More Context" entries are also not easily available otherwise, and are
-> therefore, moved second. The other entries are available via key strokes
-> (Copy, Paste, Refresh) or rarly used (Font Size, Options) and can go last.
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-Thanks.  This will be in my repo.or.cz tree shortly.
+---
 
--- 
-Shawn.
+ stgit/commands/commit.py |   42 ++++++++++++++------------------------=
+----
+ stgit/lib/transaction.py |    7 ++++++-
+ 2 files changed, 20 insertions(+), 29 deletions(-)
+
+
+diff --git a/stgit/commands/commit.py b/stgit/commands/commit.py
+index e56f5a0..f822181 100644
+--- a/stgit/commands/commit.py
++++ b/stgit/commands/commit.py
+@@ -15,13 +15,9 @@ along with this program; if not, write to the Free S=
+oftware
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 US=
+A
+ """
+=20
+-import sys, os
+-from optparse import OptionParser, make_option
+-
+-from stgit.commands.common import *
+-from stgit.utils import *
++from stgit.commands import common
++from stgit.lib import transaction
+ from stgit.out import *
+-from stgit import stack, git
+=20
+ help =3D 'permanently store the applied patches into stack base'
+ usage =3D """%prog [options]
+@@ -32,7 +28,7 @@ remove them from the series while advancing the base.
+ Use this command only if you want to permanently store the applied
+ patches and no longer manage them with StGIT."""
+=20
+-directory =3D DirectoryGotoToplevel()
++directory =3D common.DirectoryHasRepositoryLib()
+ options =3D []
+=20
+=20
+@@ -43,25 +39,15 @@ def func(parser, options, args):
+     if len(args) !=3D 0:
+         parser.error('incorrect number of arguments')
+=20
+-    check_local_changes()
+-    check_conflicts()
+-    check_head_top_equal(crt_series)
+-
+-    applied =3D crt_series.get_applied()
+-    if not applied:
+-        raise CmdException, 'No patches applied'
+-
+-    if crt_series.get_protected():
+-        raise CmdException, 'This branch is protected.  Commit is not =
+permitted'
+-
+-    crt_head =3D git.get_head()
+-
+-    out.start('Committing %d patches' % len(applied))
+-
+-    crt_series.pop_patch(applied[0])
+-    git.switch(crt_head)
+-
+-    for patch in applied:
+-        crt_series.delete_patch(patch)
+-
++    stack =3D directory.repository.current_stack
++    patches =3D stack.patchorder.applied
++    if not patches:
++        raise CmdException('No patches to commit')
++    out.start('Committing %d patches' % len(patches))
++    trans =3D transaction.StackTransaction(stack, 'stg commit')
++    for pn in patches:
++        trans.patches[pn] =3D None
++    trans.applied =3D []
++    trans.base =3D stack.head
++    trans.run()
+     out.done()
+diff --git a/stgit/lib/transaction.py b/stgit/lib/transaction.py
+index 0ca647e..a7c4f7e 100644
+--- a/stgit/lib/transaction.py
++++ b/stgit/lib/transaction.py
+@@ -41,6 +41,7 @@ class StackTransaction(object):
+         self.__unapplied =3D list(self.__stack.patchorder.unapplied)
+         self.__error =3D None
+         self.__current_tree =3D self.__stack.head.data.tree
++        self.__base =3D self.__stack.base
+     stack =3D property(lambda self: self.__stack)
+     patches =3D property(lambda self: self.__patches)
+     def __set_applied(self, val):
+@@ -49,6 +50,10 @@ class StackTransaction(object):
+     def __set_unapplied(self, val):
+         self.__unapplied =3D list(val)
+     unapplied =3D property(lambda self: self.__unapplied, __set_unappl=
+ied)
++    def __set_base(self, val):
++        assert not self.__applied
++        self.__base =3D val
++    base =3D property(lambda self: self.__base, __set_base)
+     def __checkout(self, tree, iw):
+         if not self.__stack.head_top_equal():
+             out.error(
+@@ -76,7 +81,7 @@ class StackTransaction(object):
+         if self.__applied:
+             return self.__patches[self.__applied[-1]]
+         else:
+-            return self.__stack.base
++            return self.__base
+     def abort(self, iw =3D None):
+         # The only state we need to restore is index+worktree.
+         if iw:
