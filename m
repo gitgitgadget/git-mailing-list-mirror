@@ -1,50 +1,122 @@
-From: Harvey Harrison <harvey.harrison@gmail.com>
-Subject: Re: Something is broken in repack
-Date: Fri, 14 Dec 2007 01:01:52 -0800
-Message-ID: <1197622912.898.53.camel@brick>
-References: <alpine.LFD.0.99999.0712120743040.555@xanadu.home> 	 <fcaeb9bf0712130532s79aa7afeve6f018f9430ab3b3@mail.gmail.com> 	 <fjrj9k$n6k$1@ger.gmane.org> <47616044.7070504@viscovery.net> 	 <fjskqt$eap$1@ger.gmane.org> <fjt6vm$n7d$1@ger.gmane.org> 	 <fcaeb9bf0712132224u54ca845ap4836dfe1cda37b29@mail.gmail.com> 	 <fjtect$8qn$1@ger.gmane.org>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: [PATCH 2/2] xdi_diff: trim common trailing lines
+Date: Fri, 14 Dec 2007 10:06:14 +0100
+Message-ID: <20071214090614.GB15610@xp.machine.xx>
+References: <7vve7tuz3a.fsf@gitster.siamese.dyndns.org> <7v4pfakr4j.fsf@gitster.siamese.dyndns.org> <7vzlwv6sxr.fsf@gitster.siamese.dyndns.org> <7vy7ca6ea9.fsf@gitster.siamese.dyndns.org> <7vzlwps8zf.fsf@gitster.siamese.dyndns.org> <7vejdy4yuw.fsf@gitster.siamese.dyndns.org> <7v7ijorwnc.fsf@gitster.siamese.dyndns.org> <7vabof5mze.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.99999.0712122219160.20487@xanadu.home> <7vmysez0oa.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: gcc@gcc.gnu.org, git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: gcc-return-142980-gcc=m.gmane.org@gcc.gnu.org Fri Dec 14 10:02:25 2007
-Return-path: <gcc-return-142980-gcc=m.gmane.org@gcc.gnu.org>
-Envelope-to: gcc@gmane.org
-Received: from sourceware.org ([209.132.176.174])
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J36R4-00064n-H1
-	for gcc@gmane.org; Fri, 14 Dec 2007 10:02:22 +0100
-Received: (qmail 18041 invoked by alias); 14 Dec 2007 09:02:01 -0000
-Received: (qmail 18031 invoked by uid 22791); 14 Dec 2007 09:02:00 -0000
-X-Spam-Check-By: sourceware.org
-Received: from rv-out-0910.google.com (HELO rv-out-0910.google.com) (209.85.198.186)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Fri, 14 Dec 2007 09:01:49 +0000
-Received: by rv-out-0910.google.com with SMTP id f5so808749rvb.56         for <gcc@gcc.gnu.org>; Fri, 14 Dec 2007 01:01:47 -0800 (PST)
-Received: by 10.141.70.18 with SMTP id x18mr1691899rvk.284.1197622907650;         Fri, 14 Dec 2007 01:01:47 -0800 (PST)
-Received: from ?192.168.1.100? ( [216.19.190.48])         by mx.google.com with ESMTPS id c20sm54810rvf.2007.12.14.01.01.46         (version=TLSv1/SSLv3 cipher=RC4-MD5);         Fri, 14 Dec 2007 01:01:47 -0800 (PST)
-In-Reply-To: <fjtect$8qn$1@ger.gmane.org>
-X-Mailer: Evolution 2.12.1
-X-IsSubscribed: yes
-Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 10:06:51 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J36VH-0007Id-Vz
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 10:06:44 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756376AbXLNJGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 04:06:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756011AbXLNJGU
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 04:06:20 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41324 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756376AbXLNJGS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 04:06:18 -0500
+Received: (qmail invoked by alias); 14 Dec 2007 09:06:15 -0000
+Received: from p54AA85A9.dip0.t-ipconnect.de (EHLO localhost) [84.170.133.169]
+  by mail.gmx.net (mp055) with SMTP; 14 Dec 2007 10:06:15 +0100
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX1/ygN4AUt7yuBeFHHgjzLoeU21ZdTLJL6GWWBQWOt
+	+nXLJ9IlC8eBBX
+Content-Disposition: inline
+In-Reply-To: <7vmysez0oa.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Y-GMX-Trusted: 0
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Id: <gcc.gcc.gnu.org>
-List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
-List-Archive: <http://gcc.gnu.org/ml/gcc/>
-List-Post: <mailto:gcc@gcc.gnu.org>
-List-Help: <http://gcc.gnu.org/ml/>
-Sender: gcc-owner@gcc.gnu.org
-Delivered-To: mailing list gcc@gcc.gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68269>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68270>
 
-On Fri, 2007-12-14 at 09:20 +0100, Paolo Bonzini wrote:
-> > I'm thinking about "git clone --keep" to mark initial packs precious.
-> > But 'git clone' is under rewrite to C. Let's wait until C rewrite is
-> > done.
+On Thu, Dec 13, 2007 at 02:31:49PM -0800, Junio C Hamano wrote:
+> This implements earlier Linus's optimization to trim common lines at the
+> end before passing them down to low level xdiff interface for all of our
+> xdiff users.
 > 
-> It should be the default, IMHO.
+> We could later enhance this to also trim common leading lines, but that
+> would need tweaking of the output function to add the number of lines
+> trimmed at the beginning to line numbers that appear in the hunk
+> headers.
 > 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  xdiff-interface.c |   34 +++++++++++++++++++++++++++++++++-
+>  1 files changed, 33 insertions(+), 1 deletions(-)
+> 
+> diff --git a/xdiff-interface.c b/xdiff-interface.c
+> index 69a022c..f2cd488 100644
+> --- a/xdiff-interface.c
+> +++ b/xdiff-interface.c
+> @@ -103,9 +103,41 @@ int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
+>  	return 0;
+>  }
+>  
+> +/*
+> + * Trim down common substring at the end of the buffers,
+> + * but leave at least ctx lines at the end.
+> + */
+> +static void trim_common_tail(mmfile_t *a, mmfile_t *b, int ctx)
 
-While it doesn't mark the packs as .keep, git will reuse all of the old
-deltas you got in the original clone, so you're not losing anything.
+Should ctx be a long? (see comment below)
 
-Harvey
+> +{
+> +	const int blk = 1024;
+> +	long trimmed = 0, recovered = 0;
+> +	int i;
+> +	char *ap = a->ptr + a->size;
+> +	char *bp = b->ptr + b->size;
+> +	long smaller = (a->size < b->size) ? a->size : b->size;
+> +
+> +	while (blk + trimmed <= smaller && !memcmp(ap - blk, bp - blk, blk)) {
+> +		trimmed += blk;
+> +		ap -= blk;
+> +		bp -= blk;
+> +	}
+> +
+> +	for (i = 0, recovered = 0; recovered < trimmed && i <= ctx; i++) {
+> +		while (recovered < trimmed && ap[recovered] != '\n')
+> +			recovered++;
+> +	}
+> +	a->size -= (trimmed - recovered);
+> +	b->size -= (trimmed - recovered);
+> +}
+> +
+>  int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t const *xecfg, xdemitcb_t *xecb)
+>  {
+> -	return xdl_diff(mf1, mf2, xpp, xecfg, xecb);
+> +	mmfile_t a = *mf1;
+> +	mmfile_t b = *mf2;
+> +
+> +	trim_common_tail(&a, &b, xecfg->ctxlen);
+
+xdemitconf_t has the following definition
+
+	typedef struct s_xdemitconf {
+		long ctxlen;
+	        unsigned long flags;
+		find_func_t find_func;
+	        void *find_func_priv;
+	} xdemitconf_t;
+
+So you are loosing some values in your trim_common_tail function by making ctx
+only an int. (Not sure that it matters, but I noticed it while glancing over
+your code).
+
+> +
+> +	return xdl_diff(&a, &b, xpp, xecfg, xecb);
+>  }
+>  
+>  int read_mmfile(mmfile_t *ptr, const char *filename)
+
+-Peter
