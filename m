@@ -1,104 +1,83 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: testsuite failures in mainline...
-Date: Fri, 14 Dec 2007 22:45:33 +0100
-Message-ID: <20071214214533.GA4943@steel.home>
-References: <20071214.104312.103638776.davem@davemloft.net> <7vfxy5rsui.fsf@gitster.siamese.dyndns.org> <20071214.111736.258936000.davem@davemloft.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Joel Becker <Joel.Becker@oracle.com>
+Subject: Re: [PATCH] provide advance warning of some future pack default
+	changes
+Date: Fri, 14 Dec 2007 13:52:06 -0800
+Message-ID: <20071214215206.GB7300@mail.oracle.com>
+References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.99999.0712031258460.9605@xanadu.home> <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.999999.0712132227090.8467@xanadu.home> <m3fxy5qwbq.fsf@roke.D-201> <alpine.LFD.0.999999.0712140836140.8467@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: David Miller <davem@davemloft.net>
-X-From: git-owner@vger.kernel.org Fri Dec 14 22:46:08 2007
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Dec 14 22:53:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3IM3-0003to-OM
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 22:46:00 +0100
+	id 1J3ITN-0006jR-7B
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 22:53:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753740AbXLNVph (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 16:45:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753522AbXLNVph
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 16:45:37 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:61156 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751984AbXLNVpg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 16:45:36 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTvwij8=
-Received: from tigra.home (Fcaa0.f.strato-dslnet.de [195.4.202.160])
-	by post.webmailer.de (klopstock mo46) (RZmta 14.6)
-	with ESMTP id D03caajBEJGB7v ; Fri, 14 Dec 2007 22:45:34 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 0C5FF277AE;
-	Fri, 14 Dec 2007 22:45:34 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 774FD56D22; Fri, 14 Dec 2007 22:45:33 +0100 (CET)
+	id S1754788AbXLNVxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 16:53:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754565AbXLNVxD
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 16:53:03 -0500
+Received: from agminet01.oracle.com ([141.146.126.228]:40472 "EHLO
+	agminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753262AbXLNVxB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 16:53:01 -0500
+Received: from agmgw1.us.oracle.com (agmgw1.us.oracle.com [152.68.180.212])
+	by agminet01.oracle.com (Switch-3.2.4/Switch-3.1.7) with ESMTP id lBELqbnj006767;
+	Fri, 14 Dec 2007 15:52:37 -0600
+Received: from acsmt356.oracle.com (acsmt356.oracle.com [141.146.40.156])
+	by agmgw1.us.oracle.com (Switch-3.2.0/Switch-3.2.0) with ESMTP id lBE131sx014199;
+	Fri, 14 Dec 2007 14:52:36 -0700
+Received: from ca-server1.us.oracle.com by acsmt358.oracle.com
+	with ESMTP id 6372202561197669127; Fri, 14 Dec 2007 15:52:07 -0600
+Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.67)
+	(envelope-from <joel.becker@oracle.com>)
+	id 1J3IRz-0006MF-8Y; Fri, 14 Dec 2007 13:52:07 -0800
 Content-Disposition: inline
-In-Reply-To: <20071214.111736.258936000.davem@davemloft.net>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+In-Reply-To: <alpine.LFD.0.999999.0712140836140.8467@xanadu.home>
+X-Burt-Line: Trees are cool.
+X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever
+	come to perfection.
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Whitelist: TRUE
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68351>
 
-David Miller, Fri, Dec 14, 2007 20:17:36 +0100:
-> ++ git show-ref -q refs/remotes/local/master
-> ++ git branch my3 local/master
-> fatal: Out of memory, malloc failed
+On Fri, Dec 14, 2007 at 08:38:51AM -0500, Nicolas Pitre wrote:
+> On Fri, 14 Dec 2007, Jakub Narebski wrote:
+> > Which means what? Local clone with shortcut (hardlinking and remotes)?
+> > Dumb protocols (http, ftp, rsync)?
+> 
+> Right, or simply shared repo over NFS or the like.
+> 
+> The 1.5.5 release notes will contain a note reminding people to set the 
+> corresponding config variables if they wish to retain the legacy 
+> behaviors.
 
-Something unusual about the system? Like a malloc debugger in
-LD_PRELOAD configuration?
+	We've seen that release notes are a poor way to communicate
+this.  What will happen to a 1.4.4 user when they try to access the
+repository?  Corruption, cryptic error message, or clean "this repo is
+not compatible" message?
 
-Maybe you could retry with a little bit instrumentation?
-(The program last failed (git-branch) is normally very benign...)
+Joel
 
-Something like this:
+-- 
 
+"Depend on the rabbit's foot if you will, but remember, it didn't
+ help the rabbit."
+	- R. E. Shay
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 79eb10e..a9cc249 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -230,7 +230,8 @@ static inline char* xstrdup(const char *str)
- 	return ret;
- }
- 
--static inline void *xmalloc(size_t size)
-+#define xmalloc(size) xmalloc_((size),__FILE__,__LINE__)
-+static inline void *xmalloc_(size_t size, const char *file, int line)
- {
- 	void *ret = malloc(size);
- 	if (!ret && !size)
-@@ -241,7 +242,8 @@ static inline void *xmalloc(size_t size)
- 		if (!ret && !size)
- 			ret = malloc(1);
- 		if (!ret)
--			die("Out of memory, malloc failed");
-+			die("Out of memory, malloc(%u) at %s:%d failed",
-+			    size, file, line);
- 	}
- #ifdef XMALLOC_POISON
- 	memset(ret, 0xA5, size);
-@@ -263,7 +265,8 @@ static inline char *xstrndup(const char *str, size_t len)
- 	return xmemdupz(str, p ? p - str : len);
- }
- 
--static inline void *xrealloc(void *ptr, size_t size)
-+#define xrealloc(ptr,size) xrealloc_((ptr),(size),__FILE__,__LINE__)
-+static inline void *xrealloc_(void *ptr, size_t size, const char *file, int line)
- {
- 	void *ret = realloc(ptr, size);
- 	if (!ret && !size)
-@@ -274,7 +277,8 @@ static inline void *xrealloc(void *ptr, size_t size)
- 		if (!ret && !size)
- 			ret = realloc(ptr, 1);
- 		if (!ret)
--			die("Out of memory, realloc failed");
-+			die("Out of memory, realloc(%u) at %s:%d failed",
-+			    size, file, line);
- 	}
- 	return ret;
- }
+Joel Becker
+Principal Software Developer
+Oracle
+E-mail: joel.becker@oracle.com
+Phone: (650) 506-8127
