@@ -1,209 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Don't use the pager when running "git diff --check"
-Date: Thu, 13 Dec 2007 23:33:30 -0800
-Message-ID: <7vy7bxu3w5.fsf@gitster.siamese.dyndns.org>
-References: <1197552751-53480-2-git-send-email-win@wincent.com>
-	<1197575138-58070-1-git-send-email-win@wincent.com>
-	<20071214045127.GC10169@sigill.intra.peff.net>
-	<7vmysdx3la.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Fri Dec 14 08:34:37 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH 3/5] Unify whitespace checking
+Date: Fri, 14 Dec 2007 08:36:09 +0100
+Message-ID: <85B8B116-78F6-4D37-A9DB-30EECAB97956@wincent.com>
+References: <1197552751-53480-1-git-send-email-win@wincent.com> <1197552751-53480-2-git-send-email-win@wincent.com> <1197552751-53480-3-git-send-email-win@wincent.com> <1197552751-53480-4-git-send-email-win@wincent.com> <7vd4taywfw.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 08:36:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3545-0000nT-4W
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 08:34:33 +0100
+	id 1J356B-0001Jq-NN
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 08:36:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754740AbXLNHeK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 02:34:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754033AbXLNHeK
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 02:34:10 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64849 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751948AbXLNHeJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 02:34:09 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 720B387BF;
-	Fri, 14 Dec 2007 02:34:01 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 816F587BD;
-	Fri, 14 Dec 2007 02:33:37 -0500 (EST)
-In-Reply-To: <7vmysdx3la.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 13 Dec 2007 21:11:45 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755606AbXLNHgW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Dec 2007 02:36:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754823AbXLNHgV
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 02:36:21 -0500
+Received: from wincent.com ([72.3.236.74]:49748 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754033AbXLNHgV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Dec 2007 02:36:21 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBE7aAjK012634;
+	Fri, 14 Dec 2007 01:36:11 -0600
+In-Reply-To: <7vd4taywfw.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68256>
 
-Junio C Hamano <gitster@pobox.com> writes:
+El 14/12/2007, a las 1:03, Junio C Hamano escribi=F3:
 
-> By the way, there is no reason to make --check and --exit-code mutually
-> exclusive either.
+>> -	git diff --check | grep "space before tab"
+>> +	git diff --check | grep "Space in indent is followed by a tab"
+>>
+> Hmph.  I think with the multiple detection this rewording would make =
+=20
+> the
+> error message very long to read.  Was the rewording really necessary?
 
-Perhaps something like this.  Regardless of the exclusivity issue, I
-think the "diff_result_code()" helper function is a good clean-up.
+Well, that wording came from builtin-apply.c so it wasn't really a "re-=
+=20
+wording" but an extraction. The other string comes from "diff.c". So I =
+=20
+had to pick one of them in unifying them and basically the one from =20
+builtin-apply.c won because it was the site where I extracted from =20
+first. So basically it was arbitrary.
 
----
- builtin-diff-files.c       |    6 +-----
- builtin-diff-index.c       |    6 +-----
- builtin-diff-tree.c        |    6 ++----
- builtin-diff.c             |   11 ++++-------
- diff.c                     |   19 ++++++++++++++-----
- diff.h                     |    2 ++
- t/t4015-diff-whitespace.sh |    4 ++--
- 7 files changed, 26 insertions(+), 28 deletions(-)
+If I were to actually *re-word* the message I think something like =20
+this would be the compromise between clarity and conciseness:
 
-diff --git a/builtin-diff-files.c b/builtin-diff-files.c
-index 4afc872..9c04111 100644
---- a/builtin-diff-files.c
-+++ b/builtin-diff-files.c
-@@ -31,9 +31,5 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
- 	if (!rev.diffopt.output_format)
- 		rev.diffopt.output_format = DIFF_FORMAT_RAW;
- 	result = run_diff_files_cmd(&rev, argc, argv);
--	if (DIFF_OPT_TST(&rev.diffopt, EXIT_WITH_STATUS))
--		return DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES) != 0;
--	if (rev.diffopt.output_format & DIFF_FORMAT_CHECKDIFF)
--		return DIFF_OPT_TST(&rev.diffopt, CHECK_FAILED) != 0;
--	return result;
-+	return diff_result_code(&rev.diffopt, result);
- }
-diff --git a/builtin-diff-index.c b/builtin-diff-index.c
-index 532b284..0f2390a 100644
---- a/builtin-diff-index.c
-+++ b/builtin-diff-index.c
-@@ -44,9 +44,5 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
- 		return -1;
- 	}
- 	result = run_diff_index(&rev, cached);
--	if (DIFF_OPT_TST(&rev.diffopt, EXIT_WITH_STATUS))
--		return DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES) != 0;
--	if (rev.diffopt.output_format & DIFF_FORMAT_CHECKDIFF)
--		return DIFF_OPT_TST(&rev.diffopt, CHECK_FAILED) != 0;
--	return result;
-+	return diff_result_code(&rev.diffopt, result);
- }
-diff --git a/builtin-diff-tree.c b/builtin-diff-tree.c
-index 9ab90cb..ebc50ef 100644
---- a/builtin-diff-tree.c
-+++ b/builtin-diff-tree.c
-@@ -132,8 +132,6 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
- 				diff_tree_stdin(line);
- 		}
- 	}
--	if (opt->diffopt.output_format & DIFF_FORMAT_CHECKDIFF)
--		return DIFF_OPT_TST(&opt->diffopt, CHECK_FAILED) != 0;
--	return DIFF_OPT_TST(&opt->diffopt, EXIT_WITH_STATUS)
--		&& DIFF_OPT_TST(&opt->diffopt, HAS_CHANGES);
-+
-+	return diff_result_code(&opt->diffopt, 0);
- }
-diff --git a/builtin-diff.c b/builtin-diff.c
-index 9d878f6..29365a0 100644
---- a/builtin-diff.c
-+++ b/builtin-diff.c
-@@ -244,11 +244,11 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 	DIFF_OPT_SET(&rev.diffopt, ALLOW_EXTERNAL);
- 	DIFF_OPT_SET(&rev.diffopt, RECURSIVE);
- 
--	/* If the user asked for our exit code then don't start a
-+	/*
-+	 * If the user asked for our exit code then don't start a
- 	 * pager or we would end up reporting its exit code instead.
- 	 */
--	if (!DIFF_OPT_TST(&rev.diffopt, EXIT_WITH_STATUS) &&
--	    (!(rev.diffopt.output_format & DIFF_FORMAT_CHECKDIFF)))
-+	if (!DIFF_OPT_TST(&rev.diffopt, EXIT_WITH_STATUS))
- 		setup_pager();
- 
- 	/* Do we have --cached and not have a pending object, then
-@@ -352,10 +352,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 	else
- 		result = builtin_diff_combined(&rev, argc, argv,
- 					     ent, ents);
--	if (DIFF_OPT_TST(&rev.diffopt, EXIT_WITH_STATUS))
--		result = DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES) != 0;
--	if (rev.diffopt.output_format & DIFF_FORMAT_CHECKDIFF)
--		return DIFF_OPT_TST(&rev.diffopt, CHECK_FAILED) != 0;
-+	result = diff_result_code(&rev.diffopt, result);
- 	if (1 < rev.diffopt.skip_stat_unmatch)
- 		refresh_index_quietly();
- 	return result;
-diff --git a/diff.c b/diff.c
-index 8237075..3e46ff8 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2125,12 +2125,7 @@ int diff_setup_done(struct diff_options *options)
- 	if (options->output_format & DIFF_FORMAT_NAME_STATUS)
- 		count++;
- 	if (options->output_format & DIFF_FORMAT_CHECKDIFF)
--	{
- 		count++;
--		if (DIFF_OPT_TST(options, QUIET) ||
--		    DIFF_OPT_TST(options, EXIT_WITH_STATUS))
--			die("--check may not be used with --quiet or --exit-code");
--	}
- 	if (options->output_format & DIFF_FORMAT_NO_OUTPUT)
- 		count++;
- 	if (count > 1)
-@@ -3180,6 +3175,20 @@ void diffcore_std(struct diff_options *options)
- 		DIFF_OPT_CLR(options, HAS_CHANGES);
- }
- 
-+int diff_result_code(struct diff_options *opt, int status)
-+{
-+	int result = 0;
-+	if (!DIFF_OPT_TST(opt, EXIT_WITH_STATUS) &&
-+	    !(opt->output_format & DIFF_FORMAT_CHECKDIFF))
-+		return status;
-+	if (DIFF_OPT_TST(opt, EXIT_WITH_STATUS) &&
-+	    DIFF_OPT_TST(opt, HAS_CHANGES))
-+		result |= 01;
-+	if ((opt->output_format & DIFF_FORMAT_CHECKDIFF) &&
-+	    DIFF_OPT_TST(opt, CHECK_FAILED))
-+		result |= 02;
-+	return result;
-+}
- 
- void diff_addremove(struct diff_options *options,
- 		    int addremove, unsigned mode,
-diff --git a/diff.h b/diff.h
-index 5d50d93..7e8000a 100644
---- a/diff.h
-+++ b/diff.h
-@@ -247,4 +247,6 @@ extern int run_diff_index(struct rev_info *revs, int cached);
- extern int do_diff_cache(const unsigned char *, struct diff_options *);
- extern int diff_flush_patch_id(struct diff_options *, unsigned char *);
- 
-+extern int diff_result_code(struct diff_options *, int);
-+
- #endif /* DIFF_H */
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index dc538b3..757a27a 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -148,14 +148,14 @@ test_expect_failure 'check with space before tab in indent' '
- 
- '
- 
--test_expect_failure '--check and --exit-code are exclusive' '
-+test_expect_success '--check and --exit-code are not exclusive' '
- 
- 	git checkout x &&
- 	git diff --check --exit-code
- 
- '
- 
--test_expect_failure '--check and --quiet are exclusive' '
-+test_expect_success '--check and --quiet are not exclusive' '
- 
- 	git diff --check --quiet
- 
+"space before tab in indent"
+
+And in the same spirit, the other two strings extracted from builtin-=20
+apply.c into the new whitespace_error_string() function:
+
+"Adds trailing whitespace"
+"Indent more than 8 places with spaces"
+
+Could be shortened to:
+
+"trailing whitespace" (diff.c says "white space at end")
+"indent using spaces"
+
+But I personally have no strong conviction about this, so I'm happy =20
+for it to be whatever you want.
+
+>> +/* If stream is non-NULL, emits the line after checking. */
+>> +unsigned check_and_emit_line(const char *line, int len, unsigned =20
+>> ws_rule,
+>> +                             FILE *stream, const char *set,
+>> +                             const char *reset, const char *ws)
+>> +{
+>
+> Honestly, I regretted suggesting this, fearing that it might make the
+> checking too costly, but the code is clean, readable, and does not =20
+> look
+> costly at all.  Nice job.
+
+Thanks. The check_and_emit_line function itself is fairly clean =20
+internally (apart from the somewhat ugly parameter list, but that was =20
+mostly inherited from the emit_line_with_ws function which it =20
+replaces). It's the sites where check_and_emit_line is called that =20
+look a bit ugly, but those can hopefully be cleaned up at some point =20
+in the future.
+
+Cheers,
+Wincent
