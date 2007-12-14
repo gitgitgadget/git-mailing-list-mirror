@@ -1,57 +1,52 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH 2/5] New version of pre-commit hook
-Date: Fri, 14 Dec 2007 08:24:04 +0100
-Message-ID: <06C937AD-24B3-496B-AE76-B63CA007BEBB@wincent.com>
-References: <1197552751-53480-1-git-send-email-win@wincent.com> <1197552751-53480-2-git-send-email-win@wincent.com> <1197552751-53480-3-git-send-email-win@wincent.com> <fjsi37$7ji$1@ger.gmane.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [BUG?] git rebase -i
+Date: Fri, 14 Dec 2007 08:30:49 +0100
+Message-ID: <47623129.2030303@viscovery.net>
+References: <2791F15A-EB72-4FE4-8DB3-7A4B4DCB07B3@frim.nl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 14 08:24:44 2007
+To: Pieter de Bie <frim@frim.nl>
+X-From: git-owner@vger.kernel.org Fri Dec 14 08:31:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J34uZ-00074L-2x
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 08:24:43 +0100
+	id 1J350u-0008Um-Tj
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 08:31:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751615AbXLNHYT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Dec 2007 02:24:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754817AbXLNHYS
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 02:24:18 -0500
-Received: from wincent.com ([72.3.236.74]:49723 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750921AbXLNHYS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Dec 2007 02:24:18 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBE7OEFK012438;
-	Fri, 14 Dec 2007 01:24:16 -0600
-In-Reply-To: <fjsi37$7ji$1@ger.gmane.org>
-X-Mailer: Apple Mail (2.915)
+	id S1755829AbXLNHaz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 02:30:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755606AbXLNHaz
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 02:30:55 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:14740 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755199AbXLNHay (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 02:30:54 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1J350o-0007K3-K0; Fri, 14 Dec 2007 08:31:10 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 43D3A6B7; Fri, 14 Dec 2007 08:30:49 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <2791F15A-EB72-4FE4-8DB3-7A4B4DCB07B3@frim.nl>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68254>
 
-El 14/12/2007, a las 1:17, Jakub Narebski escribi=F3:
+Pieter de Bie schrieb:
+> Another thing to note is
+> that the 1.5.4.rc0 tries to apply 215 patches, while the 1.5.3.5 tries
+> to apply 206 patches.
 
-> Wincent Colaiuta wrote:
->
->> Now that "git diff --check" indicates problems with its exit code th=
-e
->> pre-commit hook becomes a trivial one-liner.
->
->> -         if (/^(?:[<>=3D]){7}/) {
->> -             bad_line("unresolved merge conflict", $_);
->> -         }
->
-> Aren't you losing this check with rewrite?
+This is to be expected: 1.5.3.5 counts the comment lines at the top of the
+action file, of which there are exactly 9, 1.5.4.rc0 does not count them.
 
-Yes. If that's a problem then this is definitely a "no-goer".
-
-Cheers,
-Wincent
+-- Hannes
