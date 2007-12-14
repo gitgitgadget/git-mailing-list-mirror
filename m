@@ -1,86 +1,74 @@
-From: David Miller <davem@davemloft.net>
-Subject: Re: testsuite failures in mainline...
-Date: Fri, 14 Dec 2007 14:24:48 -0800 (PST)
-Message-ID: <20071214.142448.52660507.davem@davemloft.net>
-References: <7vfxy5rsui.fsf@gitster.siamese.dyndns.org>
-	<20071214.111736.258936000.davem@davemloft.net>
-	<20071214214533.GA4943@steel.home>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: gitk graph routing problem
+Date: Fri, 14 Dec 2007 23:29:31 +0100
+Message-ID: <20071214222931.GB4943@steel.home>
+References: <20071104104618.GA3078@steel.home> <18271.3714.731136.272491@cargo.ozlabs.ibm.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: raa.lkml@gmail.com
-X-From: git-owner@vger.kernel.org Fri Dec 14 23:25:14 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Fri Dec 14 23:30:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3Iy0-0000xV-NE
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 23:25:13 +0100
+	id 1J3J2b-0002UJ-5T
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 23:29:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752696AbXLNWYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 17:24:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753262AbXLNWYu
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 17:24:50 -0500
-Received: from 74-93-104-97-Washington.hfc.comcastbusiness.net ([74.93.104.97]:39674
-	"EHLO sunset.davemloft.net" rhost-flags-OK-FAIL-OK-OK)
-	by vger.kernel.org with ESMTP id S1752407AbXLNWYt (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Dec 2007 17:24:49 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by sunset.davemloft.net (Postfix) with ESMTP id 11D64C8C182;
-	Fri, 14 Dec 2007 14:24:49 -0800 (PST)
-In-Reply-To: <20071214214533.GA4943@steel.home>
-X-Mailer: Mew version 5.2 on Emacs 22.1 / Mule 5.0 (SAKAKI)
+	id S1754468AbXLNW3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 17:29:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754080AbXLNW3f
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 17:29:35 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:34129 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753272AbXLNW3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 17:29:34 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTvwij8=
+Received: from tigra.home (Fcaa0.f.strato-dslnet.de [195.4.202.160])
+	by post.webmailer.de (mrclete mo6) (RZmta 14.6)
+	with ESMTP id z06a73jBEKg2Up ; Fri, 14 Dec 2007 23:29:32 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id F2313277AE;
+	Fri, 14 Dec 2007 23:29:31 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id D66C056D22; Fri, 14 Dec 2007 23:29:31 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <18271.3714.731136.272491@cargo.ozlabs.ibm.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68356>
 
-From: Alex Riesen <raa.lkml@gmail.com>
-Date: Fri, 14 Dec 2007 22:45:33 +0100
-
-> David Miller, Fri, Dec 14, 2007 20:17:36 +0100:
-> > ++ git show-ref -q refs/remotes/local/master
-> > ++ git branch my3 local/master
-> > fatal: Out of memory, malloc failed
+Paul Mackerras, Tue, Dec 11, 2007 23:26:10 +0100:
+> Alex Riesen writes:
 > 
-> Something unusual about the system? Like a malloc debugger in
-> LD_PRELOAD configuration?
-
-No, I'm not doing anything fancy like that.
-
-> Maybe you could retry with a little bit instrumentation?
-> (The program last failed (git-branch) is normally very benign...)
+> > To reproduce, try running in git repo:
+> > 
+> >     gitk 02f630448e5d48e..06ea6ba9cf46ef5
+> > 
+> > Than go some pages (around 5) forward. You should notice system load
+> > going up rapidly. Now try paging back - and graph starts stretching
+> > to the right, to the point nothing fits on the screen anymore.
 > 
-> Something like this:
+> I finally got back to look at this.  The problem is not so much the
+> layout algorithm per se as the fact that I haven't worked out a good
+> way to pack lots of downward-pointing arrows in without using up
+> arbitrarily large amounts of horizontal space.  You have managed to
+> find an example where just about every commit is a merge needing one
+> or more downward-pointing arrows.
+> 
+> Incidentally, gitk from the dev branch of my gitk.git repo does much
+> better on this example, since it is able to hoist the open-circle
+> (excluded) commits up to the row below their merge children, which
+> looks much nicer.
 
-Here is the output from the debugging patch:
+could you point to a specific commit where it does that?
 
-++ git branch my3 local/master
-fatal: Out of memory, malloc(4293963242) at git-compat-util.h:256 failed
-
-This bogus size value in hex is 0xfff0adea, FWIW.
-
-I added similar diags to xmemdupz() and xstrndup() and that gives us:
-
-fatal: Out of memory, xstrndup(0x103ebf:4293902657:4293902657) at remote.c:112 failed
-
-(the first three values are xstrndup() vars 'str', 'len', and
- the computed second argument to xmemdupz).
-
-That bogus length is being generated via the length argument
-passed to make_branch() by handle_config() in remote.c:
-
-	if (!prefixcmp(key, "branch.")) {
-		name = key + 7;
-		subkey = strrchr(name, '.');
-		branch = make_branch(name, subkey - name);
-
-What if 'subkey' is NULL?  I bet that's what happening here.
-
-I added a debugging check for this and indeed, subkey is NULL
-in handle_condig() and that's why 'subkey - name' generates that
-bogus negative length.
-
-The string 'key' is "branch.autosetupmerge" in this case.
+Because the current head of dev branch at //git.kernel.org/pub/scm/gitk/gitk
+(3de07118f0993e6f7bc7ce02276751795d80b877) does not look any
+different and still almost locks up drawing all the horizontal lines.
