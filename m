@@ -1,72 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] Fix config lockfile handling.
-Date: Fri, 14 Dec 2007 20:15:54 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712142015240.27959@racer.site>
-References: <1197660157-24109-1-git-send-email-krh@redhat.com>
- <1197660157-24109-2-git-send-email-krh@redhat.com> <Pine.LNX.4.64.0712141928240.27959@racer.site>
- <7vmysdqbui.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Funky] "git -p cmd" inside a bare repository
+Date: Fri, 14 Dec 2007 12:18:58 -0800
+Message-ID: <7vejdpqbbh.fsf@gitster.siamese.dyndns.org>
+References: <20071129122139.GA11176@laptop>
+	<7vmysexdvw.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0712141943280.27959@racer.site>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811741-475006500-1197663354=:27959"
-Cc: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 14 21:16:59 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Dec 14 21:19:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3Gxn-0004nS-Sd
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 21:16:52 +0100
+	id 1J3H0R-0005qY-5S
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 21:19:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755450AbXLNUQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 15:16:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754795AbXLNUQH
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 15:16:07 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53226 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754250AbXLNUQG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 15:16:06 -0500
-Received: (qmail invoked by alias); 14 Dec 2007 20:16:02 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp049) with SMTP; 14 Dec 2007 21:16:02 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX185m3xUyS85U6PWGKPZ/vskcxhtgxM1YR0sB1GDI9
-	8zS5cHUTt1GnVy
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vmysdqbui.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1754342AbXLNUTN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Dec 2007 15:19:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753704AbXLNUTN
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 15:19:13 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54651 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753476AbXLNUTM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Dec 2007 15:19:12 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DA07D9250;
+	Fri, 14 Dec 2007 15:19:05 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 62CA9924C;
+	Fri, 14 Dec 2007 15:19:02 -0500 (EST)
+In-Reply-To: <Pine.LNX.4.64.0712141943280.27959@racer.site> (Johannes
+	Schindelin's message of "Fri, 14 Dec 2007 19:44:10 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68338>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
----1463811741-475006500-1197663354=:27959
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+> I have no time left to work on git for a few days, so I cannot even r=
+eview=20
+> your patch.  But Jeff's patch being smaller, I could, and AFAICT it s=
+olves=20
+> the problem.
 
-Hi,
+We have more than a few days ;-) Hope you are feeling better now.
 
-On Fri, 14 Dec 2007, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Fri, 14 Dec 2007, Kristian Høgsberg wrote:
-> >
-> >> -	struct lock_file *lock = NULL;
-> >> +	struct lock_file lock;
-> >
-> > AFAICT this cannot work.  At least not reliably.  An atexit() handler 
-> > will access all (even closed) lockfiles.
-> 
-> Correct.  It cannot be on the stack.
-
-Note that this behaviour will be another obstacle to libification.
-
-Ciao,
-Dscho
-
----1463811741-475006500-1197663354=:27959--
+You got familialized yourself with the work-tree part because the
+initial round was so broken and you had to step in during the last roun=
+d
+(unfortuantely ;-), and Nguy=E1=BB=85n also is familiar with that part =
+of the
+code.  It would be nice if we can have a proper fix that is not paperin=
+g
+over deeper breakage.
