@@ -1,51 +1,88 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH 5/5] Name the exit codes to improve legibility
-Date: Fri, 14 Dec 2007 07:45:53 +0100
-Message-ID: <20071214064553.GB10278@diana.vm.bytemark.co.uk>
-References: <20071214062251.29148.86191.stgit@yoghurt> <20071214062527.29148.7928.stgit@yoghurt>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git gui blame utf-8 bugs
+Date: Fri, 14 Dec 2007 01:47:09 -0500
+Message-ID: <20071214064709.GH14735@spearce.org>
+References: <20071212091744.GA5377@pvv.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 14 07:46:20 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Finn Arne Gangstad <finnag@pvv.org>
+X-From: git-owner@vger.kernel.org Fri Dec 14 07:47:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J34JP-0006Y5-Jn
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 07:46:20 +0100
+	id 1J34Kf-0006pz-0F
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 07:47:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752870AbXLNGp5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Dec 2007 01:45:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752779AbXLNGp4
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 01:45:56 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2080 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752472AbXLNGp4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 01:45:56 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1J34Iz-0002tn-00; Fri, 14 Dec 2007 06:45:53 +0000
+	id S1752948AbXLNGrO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 01:47:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753378AbXLNGrO
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 01:47:14 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38385 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752691AbXLNGrN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 01:47:13 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1J34KE-0005RB-93; Fri, 14 Dec 2007 01:47:10 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 7DBF720FBAE; Fri, 14 Dec 2007 01:47:09 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <20071214062527.29148.7928.stgit@yoghurt>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20071212091744.GA5377@pvv.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68250>
 
-On 2007-12-14 07:25:27 +0100, Karl Hasselstr=F6m wrote:
+Finn Arne Gangstad <finnag@pvv.org> wrote:
+> git gui has some utf-8 bugs:
 
-> +# Exit codes.
-> +STGIT_SUCCESS =3D 0        # everything's OK
-> +STGIT_GENERAL_ERROR =3D 1  # seems to be non-command-specific error
-> +STGIT_COMMAND_ERROR =3D 2  # seems to be a command that failed
+It has several.  :-)
+ 
+> If you do git gui blame <file>, and the file contains utf-8 text,
+> the lines are not parsed as utf-8, but seemingly as iso-8859-1 instead.
 
-If anyone knows for sure, feel free to fix up these descriptions.
+Right.  git-gui is keying off the environment setting for LANG, so I
+guess its set to iso-8859-1 on your system but you are working with a
+utf-8 file.  We've talked about using something like .gitattributes
+to store encoding hints, or to just put a global gui setting in
+~/.gitconfig but neither has had any patches written for it.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+UTF-8 is seemingly the most common encoding that git-gui is mangling
+so maybe we should be defaulting to utf-8 until someone codes a
+more intelligent patch.
+
+> Also, the hovering comment is INITIALLY shown garbled (both Author and
+> commit message), but if you click on a line, so that the commit
+> message is shown in the bottom window, the hovering message is
+> magically corrected to utf-8.
+> 
+> The text in the lower window (showing specific commits) seems to
+> always be handled correctly.
+
+That's a "feature".  :-)
+
+What's happening here is the initial hovering message is obtained
+from the machine formatted output from `git blame --incremental`
+and in that format there is no encoding header so I'm just ignoring
+any encoding problems.
+
+Later when you click on a line it does `git cat-file commit $sha1`
+and gets the proper encoding, and corrects the strings it originally
+had gotten from git-blame.  So the hovering message "fixes" itself
+later on.
+
+Maybe here too we should be defaulting to utf-8 instead of the
+native encoding.
+
+-- 
+Shawn.
