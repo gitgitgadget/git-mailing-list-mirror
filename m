@@ -1,122 +1,141 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: [PATCH 2/2] xdi_diff: trim common trailing lines
-Date: Fri, 14 Dec 2007 10:06:14 +0100
-Message-ID: <20071214090614.GB15610@xp.machine.xx>
-References: <7vve7tuz3a.fsf@gitster.siamese.dyndns.org> <7v4pfakr4j.fsf@gitster.siamese.dyndns.org> <7vzlwv6sxr.fsf@gitster.siamese.dyndns.org> <7vy7ca6ea9.fsf@gitster.siamese.dyndns.org> <7vzlwps8zf.fsf@gitster.siamese.dyndns.org> <7vejdy4yuw.fsf@gitster.siamese.dyndns.org> <7v7ijorwnc.fsf@gitster.siamese.dyndns.org> <7vabof5mze.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.99999.0712122219160.20487@xanadu.home> <7vmysez0oa.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-cvsexportcommit fails for huge commits
+Date: Fri, 14 Dec 2007 04:15:47 -0500
+Message-ID: <20071214091546.GA20907@coredump.intra.peff.net>
+References: <20071211200418.GA13815@mkl-desktop> <20071212083154.GB7676@coredump.intra.peff.net> <7vir348e0l.fsf@gitster.siamese.dyndns.org> <20071212092512.GB20799@coredump.intra.peff.net> <7vzlwevu2k.fsf@gitster.siamese.dyndns.org> <20071214044554.GB10169@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 14 10:06:51 2007
+Cc: Markus Klinik <markus.klinik@gmx.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 10:16:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J36VH-0007Id-Vz
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 10:06:44 +0100
+	id 1J36eU-0001hB-GR
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 10:16:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756376AbXLNJGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 04:06:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756011AbXLNJGU
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 04:06:20 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41324 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756376AbXLNJGS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 04:06:18 -0500
-Received: (qmail invoked by alias); 14 Dec 2007 09:06:15 -0000
-Received: from p54AA85A9.dip0.t-ipconnect.de (EHLO localhost) [84.170.133.169]
-  by mail.gmx.net (mp055) with SMTP; 14 Dec 2007 10:06:15 +0100
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1/ygN4AUt7yuBeFHHgjzLoeU21ZdTLJL6GWWBQWOt
-	+nXLJ9IlC8eBBX
+	id S1759658AbXLNJPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 04:15:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759587AbXLNJPv
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 04:15:51 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1854 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758750AbXLNJPu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 04:15:50 -0500
+Received: (qmail 21933 invoked by uid 111); 14 Dec 2007 09:15:48 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 14 Dec 2007 04:15:48 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Dec 2007 04:15:47 -0500
 Content-Disposition: inline
-In-Reply-To: <7vmysez0oa.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20071214044554.GB10169@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68271>
 
-On Thu, Dec 13, 2007 at 02:31:49PM -0800, Junio C Hamano wrote:
-> This implements earlier Linus's optimization to trim common lines at the
-> end before passing them down to low level xdiff interface for all of our
-> xdiff users.
-> 
-> We could later enhance this to also trim common leading lines, but that
-> would need tweaking of the output function to add the number of lines
-> trimmed at the beginning to line numbers that appear in the hunk
-> headers.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  xdiff-interface.c |   34 +++++++++++++++++++++++++++++++++-
->  1 files changed, 33 insertions(+), 1 deletions(-)
-> 
-> diff --git a/xdiff-interface.c b/xdiff-interface.c
-> index 69a022c..f2cd488 100644
-> --- a/xdiff-interface.c
-> +++ b/xdiff-interface.c
-> @@ -103,9 +103,41 @@ int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
->  	return 0;
->  }
->  
-> +/*
-> + * Trim down common substring at the end of the buffers,
-> + * but leave at least ctx lines at the end.
-> + */
-> +static void trim_common_tail(mmfile_t *a, mmfile_t *b, int ctx)
+On Thu, Dec 13, 2007 at 11:45:54PM -0500, Jeff King wrote:
 
-Should ctx be a long? (see comment below)
+> So it seems that we could probably go with something more like 64K, and
+> then only truly pathological cases should trigger the behavior.
 
-> +{
-> +	const int blk = 1024;
-> +	long trimmed = 0, recovered = 0;
-> +	int i;
-> +	char *ap = a->ptr + a->size;
-> +	char *bp = b->ptr + b->size;
-> +	long smaller = (a->size < b->size) ? a->size : b->size;
-> +
-> +	while (blk + trimmed <= smaller && !memcmp(ap - blk, bp - blk, blk)) {
-> +		trimmed += blk;
-> +		ap -= blk;
-> +		bp -= blk;
-> +	}
-> +
-> +	for (i = 0, recovered = 0; recovered < trimmed && i <= ctx; i++) {
-> +		while (recovered < trimmed && ap[recovered] != '\n')
-> +			recovered++;
-> +	}
-> +	a->size -= (trimmed - recovered);
-> +	b->size -= (trimmed - recovered);
-> +}
-> +
->  int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t const *xecfg, xdemitcb_t *xecb)
->  {
-> -	return xdl_diff(mf1, mf2, xpp, xecfg, xecb);
-> +	mmfile_t a = *mf1;
-> +	mmfile_t b = *mf2;
-> +
-> +	trim_common_tail(&a, &b, xecfg->ctxlen);
+So here is a cleaned up patch. It bumps the maximum size to 64kB, adds
+scalar support (nobody uses it, but it makes sense for the interface to
+match that of safe_pipe_capture -- I am even tempted to just replace
+safe_pipe_capture entirely and convert the few other callers), and
+cleans up the unused safe_pipe_capture_blob.
 
-xdemitconf_t has the following definition
+-- >8 --
+cvsexportcommit: fix massive commits
 
-	typedef struct s_xdemitconf {
-		long ctxlen;
-	        unsigned long flags;
-		find_func_t find_func;
-	        void *find_func_priv;
-	} xdemitconf_t;
+Because we feed the changed filenames to CVS on the command
+line, it was possible for massive commits to overflow the
+system exec limits. Instead, we now do an xargs-like split
+of the arguments.
 
-So you are loosing some values in your trim_common_tail function by making ctx
-only an int. (Not sure that it matters, but I noticed it while glancing over
-your code).
+This means that we lose some of the atomicity of calling CVS
+in one shot. Since CVS commits are not atomic, but the CVS
+protocol is, the possible effects of this are not clear;
+however, since CVS doesn't provide a different interface,
+this is our only option for large commits (short of writing
+a CVS client library).
 
-> +
-> +	return xdl_diff(&a, &b, xpp, xecfg, xecb);
->  }
->  
->  int read_mmfile(mmfile_t *ptr, const char *filename)
+The argument size limit is arbitrarily set to 64kB. This
+should be high enough to trigger only in rare cases where it
+is necessary, so normal-sized commits are not affected by
+the atomicity change.
+---
+I think the atomicity might matter if you are using cvsexportcommit to
+talk to a CVS server backed by something besides CVS, like
+git-cvsserver. Which of course would be useless, but who is to say
+that other such systems don't exist with CVS as an SCM lingua franca?
 
--Peter
+ git-cvsexportcommit.perl |   37 +++++++++++++++++++++++--------------
+ 1 files changed, 23 insertions(+), 14 deletions(-)
+
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index 92e4162..d2e50c3 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -195,11 +195,11 @@ foreach my $f (@files) {
+ my %cvsstat;
+ if (@canstatusfiles) {
+     if ($opt_u) {
+-      my @updated = safe_pipe_capture(@cvs, 'update', @canstatusfiles);
++      my @updated = xargs_safe_pipe_capture([@cvs, 'update'], @canstatusfiles);
+       print @updated;
+     }
+     my @cvsoutput;
+-    @cvsoutput= safe_pipe_capture(@cvs, 'status', @canstatusfiles);
++    @cvsoutput = xargs_safe_pipe_capture([@cvs, 'status'], @canstatusfiles);
+     my $matchcount = 0;
+     foreach my $l (@cvsoutput) {
+         chomp $l;
+@@ -295,7 +295,7 @@ if ($dirtypatch) {
+ 
+ if ($opt_c) {
+     print "Autocommit\n  $cmd\n";
+-    print safe_pipe_capture(@cvs, 'commit', '-F', '.msg', @files);
++    print xargs_safe_pipe_capture([@cvs, 'commit', '-F', '.msg'], @files);
+     if ($?) {
+ 	die "Exiting: The commit did not succeed";
+     }
+@@ -335,15 +335,24 @@ sub safe_pipe_capture {
+     return wantarray ? @output : join('',@output);
+ }
+ 
+-sub safe_pipe_capture_blob {
+-    my $output;
+-    if (my $pid = open my $child, '-|') {
+-        local $/;
+-	undef $/;
+-	$output = (<$child>);
+-	close $child or die join(' ',@_).": $! $?";
+-    } else {
+-	exec(@_) or die "$! $?"; # exec() can fail the executable can't be found
+-    }
+-    return $output;
++sub xargs_safe_pipe_capture {
++	my $MAX_ARG_LENGTH = 65536;
++	my $cmd = shift;
++	my @output;
++	my $output;
++	while(@_) {
++		my @args;
++		my $length = 0;
++		while(@_ && $length < $MAX_ARG_LENGTH) {
++			push @args, shift;
++			$length += length($args[$#args]);
++		}
++		if (wantarray) {
++			push @output, safe_pipe_capture(@$cmd, @args);
++		}
++		else {
++			$output .= safe_pipe_capture(@$cmd, @args);
++		}
++	}
++	return wantarray ? @output : $output;
+ }
+-- 
+1.5.4.rc0.1088.g8a30-dirty
