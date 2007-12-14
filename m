@@ -1,113 +1,100 @@
-From: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-Subject: [PATCH 1/2] Fix config lockfile handling.
-Date: Fri, 14 Dec 2007 14:22:36 -0500
-Message-ID: <1197660157-24109-2-git-send-email-krh@redhat.com>
-References: <1197660157-24109-1-git-send-email-krh@redhat.com>
+From: David Miller <davem@davemloft.net>
+Subject: testsuite failures in mainline...
+Date: Fri, 14 Dec 2007 10:43:12 -0800 (PST)
+Message-ID: <20071214.104312.103638776.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Dec 14 19:42:28 2007
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 14 19:43:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3FUG-0000h5-Et
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 19:42:16 +0100
+	id 1J3FVb-0001Cf-5e
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 19:43:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752418AbXLNSlq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Dec 2007 13:41:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752477AbXLNSlq
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 13:41:46 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:55081 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750925AbXLNSlp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 13:41:45 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lBEIf95r018943;
-	Fri, 14 Dec 2007 13:41:09 -0500
-Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lBEIf8Zq019773;
-	Fri, 14 Dec 2007 13:41:08 -0500
-Received: from localhost.localdomain (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id lBEIf8en014282;
-	Fri, 14 Dec 2007 13:41:08 -0500
-X-Mailer: git-send-email 1.5.4.rc0.8.g8fc45-dirty
-In-Reply-To: <1197660157-24109-1-git-send-email-krh@redhat.com>
+	id S1752477AbXLNSnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 13:43:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752059AbXLNSnO
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 13:43:14 -0500
+Received: from 74-93-104-97-Washington.hfc.comcastbusiness.net ([74.93.104.97]:33751
+	"EHLO sunset.davemloft.net" rhost-flags-OK-FAIL-OK-OK)
+	by vger.kernel.org with ESMTP id S1750785AbXLNSnN (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Dec 2007 13:43:13 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by sunset.davemloft.net (Postfix) with ESMTP id DE24135C001
+	for <git@vger.kernel.org>; Fri, 14 Dec 2007 10:43:12 -0800 (PST)
+X-Mailer: Mew version 5.2 on Emacs 22.1 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68324>
 
-When we commit or roll back the lock file the fd is automatically close=
-d,
-so don't do that again.  Also, just keep the lock on the stack.
 
-Signed-off-by: Kristian H=C3=B8gsberg <krh@redhat.com>
----
- config.c |   22 +++++-----------------
- 1 files changed, 5 insertions(+), 17 deletions(-)
+I've been seeing this for I think a week or two, and I can't figure
+out if it's some local problem of mine.  I even reran the testsuite
+with "PATH=$(pwd):$PATH" just in case it was picking up my existing
+1.5.3.7 installation for some reason, but it still fails even in that
+case.
 
-diff --git a/config.c b/config.c
-index 49d2b42..0725563 100644
---- a/config.c
-+++ b/config.c
-@@ -754,7 +754,7 @@ int git_config_set_multivar(const char* key, const =
-char* value,
- 	int fd =3D -1, in_fd;
- 	int ret;
- 	char* config_filename;
--	struct lock_file *lock =3D NULL;
-+	struct lock_file lock;
- 	const char* last_dot =3D strrchr(key, '.');
-=20
- 	config_filename =3D getenv(CONFIG_ENVIRONMENT);
-@@ -811,8 +811,7 @@ int git_config_set_multivar(const char* key, const =
-char* value,
- 	 * The lock serves a purpose in addition to locking: the new
- 	 * contents of .git/config will be written into it.
- 	 */
--	lock =3D xcalloc(sizeof(struct lock_file), 1);
--	fd =3D hold_lock_file_for_update(lock, config_filename, 0);
-+	fd =3D hold_lock_file_for_update(&lock, config_filename, 0);
- 	if (fd < 0) {
- 		fprintf(stderr, "could not lock config file\n");
- 		free(store.key);
-@@ -955,28 +954,17 @@ int git_config_set_multivar(const char* key, cons=
-t char* value,
- 		munmap(contents, contents_sz);
- 	}
-=20
--	if (close(fd) || commit_lock_file(lock) < 0) {
-+	if (commit_lock_file(&lock) < 0) {
- 		fprintf(stderr, "Cannot commit config file!\n");
- 		ret =3D 4;
- 		goto out_free;
- 	}
-=20
--	/* fd is closed, so don't try to close it below. */
--	fd =3D -1;
--	/*
--	 * lock is committed, so don't try to roll it back below.
--	 * NOTE: Since lockfile.c keeps a linked list of all created
--	 * lock_file structures, it isn't safe to free(lock).  It's
--	 * better to just leave it hanging around.
--	 */
--	lock =3D NULL;
- 	ret =3D 0;
-=20
- out_free:
--	if (0 <=3D fd)
--		close(fd);
--	if (lock)
--		rollback_lock_file(lock);
-+	/* If we already committed the lock file, the rollback is a no-op. */
-+	rollback_lock_file(&lock);
- 	free(config_filename);
- 	return ret;
-=20
---=20
-1.5.3.4
+Is the following a known issue?
+
+*** t3200-branch.sh ***
+*   ok 1: prepare a trivial repository
+*   ok 2: git branch --help should not have created a bogus branch
+*   ok 3: git branch abc should create a branch
+*   ok 4: git branch a/b/c should create a branch
+*   ok 5: git branch -l d/e/f should create a branch and a log
+*   ok 6: git branch -d d/e/f should delete a branch and a log
+*   ok 7: git branch j/k should work after branch j has been deleted
+*   ok 8: git branch l should work after branch l/m has been deleted
+*   ok 9: git branch -m m m/m should work
+*   ok 10: git branch -m n/n n should work
+*   ok 11: git branch -m o/o o should fail when o/p exists
+*   ok 12: git branch -m q r/q should fail when r exists
+*   ok 13: git branch -m q q2 without config should succeed
+*   ok 14: git branch -m s/s s should work when s/t is deleted
+*   ok 15: config information was renamed, too
+*   ok 16: git branch -m u v should fail when the reflog for u is a symlink
+*   ok 17: test tracking setup via --track
+*   ok 18: test tracking setup (non-wildcard, matching)
+*   ok 19: test tracking setup (non-wildcard, not matching)
+* FAIL 20: test tracking setup via config
+        git config branch.autosetupmerge true &&
+             git config remote.local.url . &&
+             git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+             (git show-ref -q refs/remotes/local/master || git-fetch local) &&
+             git branch my3 local/master &&
+             test $(git config branch.my3.remote) = local &&
+             test $(git config branch.my3.merge) = refs/heads/master
+* FAIL 21: avoid ambiguous track
+        
+                git config branch.autosetupmerge true &&
+                git config remote.ambi1.url = lalala &&
+                git config remote.ambi1.fetch = refs/heads/lalala:refs/heads/master &&
+                git config remote.ambi2.url = lilili &&
+                git config remote.ambi2.fetch = refs/heads/lilili:refs/heads/master &&
+                git branch all1 master &&
+                test -z "$(git config branch.all1.merge)"
+        
+*   ok 22: test overriding tracking setup via --no-track
+* FAIL 23: no tracking without .fetch entries
+        git branch --track my6 s &&
+             test -z "$(git config branch.my6.remote)" &&
+             test -z "$(git config branch.my6.merge)"
+* FAIL 24: test tracking setup via --track but deeper
+        git config remote.local.url . &&
+             git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+             (git show-ref -q refs/remotes/local/o/o || git-fetch local) &&
+             git branch --track my7 local/o/o &&
+             test "$(git config branch.my7.remote)" = local &&
+             test "$(git config branch.my7.merge)" = refs/heads/o/o
+* FAIL 25: test deleting branch deletes branch config
+        git branch -d my7 &&
+             test -z "$(git config branch.my7.remote)" &&
+             test -z "$(git config branch.my7.merge)"
+*   ok 26: test deleting branch without config
+*   ok 27: git checkout -b g/h/i -l should create a branch and a log
+* failed 5 among 27 test(s)
