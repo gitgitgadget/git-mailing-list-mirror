@@ -1,100 +1,77 @@
-From: David Miller <davem@davemloft.net>
-Subject: testsuite failures in mainline...
-Date: Fri, 14 Dec 2007 10:43:12 -0800 (PST)
-Message-ID: <20071214.104312.103638776.davem@davemloft.net>
-Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 14 19:43:40 2007
+From: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+Subject: config.c fixes
+Date: Fri, 14 Dec 2007 14:22:35 -0500
+Message-ID: <1197660157-24109-1-git-send-email-krh@redhat.com>
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Dec 14 19:53:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3FVb-0001Cf-5e
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 19:43:39 +0100
+	id 1J3FfC-0005AJ-3z
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 19:53:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752477AbXLNSnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 13:43:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752059AbXLNSnO
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 13:43:14 -0500
-Received: from 74-93-104-97-Washington.hfc.comcastbusiness.net ([74.93.104.97]:33751
-	"EHLO sunset.davemloft.net" rhost-flags-OK-FAIL-OK-OK)
-	by vger.kernel.org with ESMTP id S1750785AbXLNSnN (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Dec 2007 13:43:13 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by sunset.davemloft.net (Postfix) with ESMTP id DE24135C001
-	for <git@vger.kernel.org>; Fri, 14 Dec 2007 10:43:12 -0800 (PST)
-X-Mailer: Mew version 5.2 on Emacs 22.1 / Mule 5.0 (SAKAKI)
+	id S1753503AbXLNSxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 13:53:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752696AbXLNSxJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 13:53:09 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:48988 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753233AbXLNSxG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 13:53:06 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lBEIf9VZ018939;
+	Fri, 14 Dec 2007 13:41:09 -0500
+Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lBEIf8KV019771;
+	Fri, 14 Dec 2007 13:41:08 -0500
+Received: from localhost.localdomain (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id lBEIf8em014282;
+	Fri, 14 Dec 2007 13:41:08 -0500
+X-Mailer: git-send-email 1.5.4.rc0.8.g8fc45-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68325>
 
+Hi,
 
-I've been seeing this for I think a week or two, and I can't figure
-out if it's some local problem of mine.  I even reran the testsuite
-with "PATH=$(pwd):$PATH" just in case it was picking up my existing
-1.5.3.7 installation for some reason, but it still fails even in that
-case.
+While strace'ing builtin-clone I saw this horror:
 
-Is the following a known issue?
+...
+write(3, "remote", 6)                   = 6
+write(3, " = ", 3)                      = 3
+write(3, "o", 1)                        = 1
+write(3, "r", 1)                        = 1
+write(3, "i", 1)                        = 1
+write(3, "g", 1)                        = 1
+write(3, "i", 1)                        = 1
+write(3, "n", 1)                        = 1
+write(3, "\n", 1)                       = 1
+munmap(0xb7f72000, 102)                 = 0
+close(3)                                = 0
+close(3)                                = -1 EBADF (Bad file descriptor)
+...
 
-*** t3200-branch.sh ***
-*   ok 1: prepare a trivial repository
-*   ok 2: git branch --help should not have created a bogus branch
-*   ok 3: git branch abc should create a branch
-*   ok 4: git branch a/b/c should create a branch
-*   ok 5: git branch -l d/e/f should create a branch and a log
-*   ok 6: git branch -d d/e/f should delete a branch and a log
-*   ok 7: git branch j/k should work after branch j has been deleted
-*   ok 8: git branch l should work after branch l/m has been deleted
-*   ok 9: git branch -m m m/m should work
-*   ok 10: git branch -m n/n n should work
-*   ok 11: git branch -m o/o o should fail when o/p exists
-*   ok 12: git branch -m q r/q should fail when r exists
-*   ok 13: git branch -m q q2 without config should succeed
-*   ok 14: git branch -m s/s s should work when s/t is deleted
-*   ok 15: config information was renamed, too
-*   ok 16: git branch -m u v should fail when the reflog for u is a symlink
-*   ok 17: test tracking setup via --track
-*   ok 18: test tracking setup (non-wildcard, matching)
-*   ok 19: test tracking setup (non-wildcard, not matching)
-* FAIL 20: test tracking setup via config
-        git config branch.autosetupmerge true &&
-             git config remote.local.url . &&
-             git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-             (git show-ref -q refs/remotes/local/master || git-fetch local) &&
-             git branch my3 local/master &&
-             test $(git config branch.my3.remote) = local &&
-             test $(git config branch.my3.merge) = refs/heads/master
-* FAIL 21: avoid ambiguous track
-        
-                git config branch.autosetupmerge true &&
-                git config remote.ambi1.url = lalala &&
-                git config remote.ambi1.fetch = refs/heads/lalala:refs/heads/master &&
-                git config remote.ambi2.url = lilili &&
-                git config remote.ambi2.fetch = refs/heads/lilili:refs/heads/master &&
-                git branch all1 master &&
-                test -z "$(git config branch.all1.merge)"
-        
-*   ok 22: test overriding tracking setup via --no-track
-* FAIL 23: no tracking without .fetch entries
-        git branch --track my6 s &&
-             test -z "$(git config branch.my6.remote)" &&
-             test -z "$(git config branch.my6.merge)"
-* FAIL 24: test tracking setup via --track but deeper
-        git config remote.local.url . &&
-             git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-             (git show-ref -q refs/remotes/local/o/o || git-fetch local) &&
-             git branch --track my7 local/o/o &&
-             test "$(git config branch.my7.remote)" = local &&
-             test "$(git config branch.my7.merge)" = refs/heads/o/o
-* FAIL 25: test deleting branch deletes branch config
-        git branch -d my7 &&
-             test -z "$(git config branch.my7.remote)" &&
-             test -z "$(git config branch.my7.merge)"
-*   ok 26: test deleting branch without config
-*   ok 27: git checkout -b g/h/i -l should create a branch and a log
-* failed 5 among 27 test(s)
+That's just terrible.  And hey, it turns out the code is terrible too.
+I think the best solution is to just parse up the entire config file
+up front and keep it in a data structure, make the changes and then
+write it all out at the end.  That makes it cheap to make a series of
+changes too:
+
+	config = open_config(file);
+	set_key(config, key1, value1);
+	set_key(config, key2, value2);
+	set_key(config, key3, value3);
+	commit_config(config);
+
+Or something.  Anyway, for 1.5.4 I wrote the following two patches that
+fixes the 1-bytes writes and the double close.
+
+ config.c |  113 +++++++++++++++++++++++--------------------------------------
+ 1 files changed, 43 insertions(+), 70 deletions(-)
+
+cheers,
+Kristian
