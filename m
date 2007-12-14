@@ -1,83 +1,60 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: [PATCH] provide advance warning of some future pack default
-	changes
-Date: Fri, 14 Dec 2007 13:52:06 -0800
-Message-ID: <20071214215206.GB7300@mail.oracle.com>
-References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.99999.0712031258460.9605@xanadu.home> <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.999999.0712132227090.8467@xanadu.home> <m3fxy5qwbq.fsf@roke.D-201> <alpine.LFD.0.999999.0712140836140.8467@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix config lockfile handling.
+Date: Fri, 14 Dec 2007 13:57:59 -0800
+Message-ID: <7vfxy5os60.fsf@gitster.siamese.dyndns.org>
+References: <1197665998-32386-1-git-send-email-krh@redhat.com>
+	<1197665998-32386-2-git-send-email-krh@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Dec 14 22:53:39 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 22:58:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3ITN-0006jR-7B
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 22:53:33 +0100
+	id 1J3IYT-0000El-HS
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 22:58:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754788AbXLNVxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 16:53:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754565AbXLNVxD
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 16:53:03 -0500
-Received: from agminet01.oracle.com ([141.146.126.228]:40472 "EHLO
-	agminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753262AbXLNVxB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 16:53:01 -0500
-Received: from agmgw1.us.oracle.com (agmgw1.us.oracle.com [152.68.180.212])
-	by agminet01.oracle.com (Switch-3.2.4/Switch-3.1.7) with ESMTP id lBELqbnj006767;
-	Fri, 14 Dec 2007 15:52:37 -0600
-Received: from acsmt356.oracle.com (acsmt356.oracle.com [141.146.40.156])
-	by agmgw1.us.oracle.com (Switch-3.2.0/Switch-3.2.0) with ESMTP id lBE131sx014199;
-	Fri, 14 Dec 2007 14:52:36 -0700
-Received: from ca-server1.us.oracle.com by acsmt358.oracle.com
-	with ESMTP id 6372202561197669127; Fri, 14 Dec 2007 15:52:07 -0600
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.67)
-	(envelope-from <joel.becker@oracle.com>)
-	id 1J3IRz-0006MF-8Y; Fri, 14 Dec 2007 13:52:07 -0800
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999999.0712140836140.8467@xanadu.home>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever
-	come to perfection.
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
-X-Whitelist: TRUE
+	id S1757056AbXLNV6Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Dec 2007 16:58:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761837AbXLNV6U
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 16:58:20 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63742 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759897AbXLNV6S convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Dec 2007 16:58:18 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D0229C8A;
+	Fri, 14 Dec 2007 16:58:08 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id ADC569C89;
+	Fri, 14 Dec 2007 16:58:03 -0500 (EST)
+In-Reply-To: <1197665998-32386-2-git-send-email-krh@redhat.com> (Kristian
+	=?utf-8?Q?H=C3=B8gsberg's?= message of "Fri, 14 Dec 2007 15:59:57 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68352>
 
-On Fri, Dec 14, 2007 at 08:38:51AM -0500, Nicolas Pitre wrote:
-> On Fri, 14 Dec 2007, Jakub Narebski wrote:
-> > Which means what? Local clone with shortcut (hardlinking and remotes)?
-> > Dumb protocols (http, ftp, rsync)?
-> 
-> Right, or simply shared repo over NFS or the like.
-> 
-> The 1.5.5 release notes will contain a note reminding people to set the 
-> corresponding config variables if they wish to retain the legacy 
-> behaviors.
+Kristian H=C3=B8gsberg <krh@redhat.com> writes:
 
-	We've seen that release notes are a poor way to communicate
-this.  What will happen to a 1.4.4 user when they try to access the
-repository?  Corruption, cryptic error message, or clean "this repo is
-not compatible" message?
+> When we commit or roll back the lock file the fd is automatically clo=
+sed,
+> so don't do that again.
 
-Joel
+With your change, we do not check the return status from close(2)
+anymore, which means that we may have run out of diskspace without
+noticing and renamed the incomplete file into the real place.  Oops?
 
--- 
+At least the original code wouldn't have had that problem.
 
-"Depend on the rabbit's foot if you will, but remember, it didn't
- help the rabbit."
-	- R. E. Shay
-
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+The right fix in the longer term would be to check the return value fro=
+m
+the close(2) in commit_lock_file(), but it currently does not check on
+purpose, because the callers may have already closed the fd.
