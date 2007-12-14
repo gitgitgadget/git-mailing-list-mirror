@@ -1,67 +1,61 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] Failed to make install-info
-Date: Thu, 13 Dec 2007 22:03:55 -0800
-Message-ID: <7vejdpvmlw.fsf@gitster.siamese.dyndns.org>
-References: <E1J2q92-0001YT-BZ@jdl.com>
-	<200712140635.39311.chriscool@tuxfamily.org>
+Subject: Re: [Funky] "git -p cmd" inside a bare repository
+Date: Thu, 13 Dec 2007 22:07:21 -0800
+Message-ID: <7vabodvmg6.fsf@gitster.siamese.dyndns.org>
+References: <20071129122139.GA11176@laptop>
+	<7vmysexdvw.fsf@gitster.siamese.dyndns.org>
+	<20071214051223.GD10169@sigill.intra.peff.net>
+	<20071214051434.GE10169@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jon Loeliger <jdl@jdl.com>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Dec 14 07:04:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 14 07:08:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J33fB-0005sP-9E
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 07:04:45 +0100
+	id 1J33iK-0006R9-NJ
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 07:08:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752669AbXLNGER convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Dec 2007 01:04:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752671AbXLNGEP
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 01:04:15 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59325 "EHLO
+	id S1758202AbXLNGHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 01:07:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758191AbXLNGHj
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 01:07:39 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59609 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752368AbXLNGEP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Dec 2007 01:04:15 -0500
+	with ESMTP id S1758176AbXLNGHi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 01:07:38 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E2294D94;
-	Fri, 14 Dec 2007 01:04:06 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E6F3F8149;
+	Fri, 14 Dec 2007 01:07:30 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 155F44D93;
-	Fri, 14 Dec 2007 01:04:02 -0500 (EST)
-In-Reply-To: <200712140635.39311.chriscool@tuxfamily.org> (Christian Couder's
-	message of "Fri, 14 Dec 2007 06:35:39 +0100")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D73248144;
+	Fri, 14 Dec 2007 01:07:24 -0500 (EST)
+In-Reply-To: <20071214051434.GE10169@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 14 Dec 2007 00:14:34 -0500")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68232>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Le jeudi 13 d=C3=A9cembre 2007, Jon Loeliger a =C3=A9crit :
->> Guys,
->> I managed to fail to install info files during:
->>
->>     /usr/src/git# make prefix=3D/usr install-info
+> On Fri, Dec 14, 2007 at 12:12:23AM -0500, Jeff King wrote:
 >
-> I am also struggling with "make install-info" to make it install in=20
-> ~/share/info/dir=20
+>> -- >8 --
+>> delay "git -p" page spawning until command runtime
 >
-> First it barfed because "~/share/info/dir" did not exist.
+> Hrmph. Bad timing. :)
 >
-> Then it doesn't find "install-info" because it's in "/usr/sbin" on my=
- debian=20
-> machine.
->
-> I well tell if I get the same error as you. But right now I cannot=20
-> invastigate more.
+> Your patch is much nicer, though, so please ignore mine.
 
-I personally feel that calling "install-info" is a bit too distro-ish
-and should not be done in our Makefile vanilla build-and-install
-procedure.
+It may look nicer, but I do not know if it is correct, though.  I do not
+do much "work tree" stuff, and would really appreciate testing by people
+who are more involved in that part of the system.
