@@ -1,62 +1,81 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] provide advance warning of some future pack default changes
-Date: Fri, 14 Dec 2007 17:46:14 -0500 (EST)
-Message-ID: <alpine.LFD.0.999999.0712141744460.8467@xanadu.home>
-References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.0.99999.0712031258460.9605@xanadu.home>
- <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.0.999999.0712132227090.8467@xanadu.home>
- <m3fxy5qwbq.fsf@roke.D-201>
- <alpine.LFD.0.999999.0712140836140.8467@xanadu.home>
- <20071214215206.GB7300@mail.oracle.com>
- <alpine.LFD.0.999999.0712141724260.8467@xanadu.home>
- <20071214223957.GC7300@mail.oracle.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: testsuite failures in mainline...
+Date: Fri, 14 Dec 2007 15:18:02 -0800
+Message-ID: <7v7ijgq311.fsf@gitster.siamese.dyndns.org>
+References: <7vfxy5rsui.fsf@gitster.siamese.dyndns.org>
+	<20071214.111736.258936000.davem@davemloft.net>
+	<20071214214533.GA4943@steel.home>
+	<20071214.142448.52660507.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Joel Becker <Joel.Becker@oracle.com>
-X-From: git-owner@vger.kernel.org Sat Dec 15 00:18:02 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: raa.lkml@gmail.com, git@vger.kernel.org
+To: David Miller <davem@davemloft.net>
+X-From: git-owner@vger.kernel.org Sat Dec 15 00:18:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3Jn7-0002rv-F6
-	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 00:18:01 +0100
+	id 1J3Jni-00036H-5M
+	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 00:18:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760679AbXLNXRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 18:17:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757130AbXLNXRI
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 18:17:08 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:26427 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761917AbXLNXRG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 18:17:06 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JT200MB39X2FQP0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 14 Dec 2007 17:46:14 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20071214223957.GC7300@mail.oracle.com>
-User-Agent: Alpine 0.999999 (LFD 847 2007-12-06)
+	id S1765327AbXLNXSR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 18:18:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764321AbXLNXSQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 18:18:16 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37457 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763379AbXLNXSO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 18:18:14 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 00DDA5B10;
+	Fri, 14 Dec 2007 18:18:08 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 587415B0E;
+	Fri, 14 Dec 2007 18:18:04 -0500 (EST)
+In-Reply-To: <20071214.142448.52660507.davem@davemloft.net> (David Miller's
+	message of "Fri, 14 Dec 2007 14:24:48 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68360>
 
-On Fri, 14 Dec 2007, Joel Becker wrote:
+David Miller <davem@davemloft.net> writes:
 
-> On Fri, Dec 14, 2007 at 05:34:49PM -0500, Nicolas Pitre wrote:
-> > But you know what? repositories with the change affecting 1.4.4 users 
-> > are _already_ out there and no one complained recently.  Anyone pushing 
-> 
-> 	I did, as did people I work with.  It's on git-list, even.  I'm
-> pretty sure it corrupted too.
+> 	if (!prefixcmp(key, "branch.")) {
+> 		name = key + 7;
+> 		subkey = strrchr(name, '.');
+> 		branch = make_branch(name, subkey - name);
+>
+> What if 'subkey' is NULL?  I bet that's what happening here.
 
-Could you please give me a reference to such message, so to verify that 
-we're actually talking about the same thing?
+Wow, good eyes.
 
+It makes me wonder what my C library has been returning during the
+tests...
 
-Nicolas
+---
+
+ remote.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/remote.c b/remote.c
+index 3fb0f99..0e00680 100644
+--- a/remote.c
++++ b/remote.c
+@@ -220,11 +220,11 @@ static int handle_config(const char *key, const char *value)
+ 	if (!prefixcmp(key, "branch.")) {
+ 		name = key + 7;
+ 		subkey = strrchr(name, '.');
+-		branch = make_branch(name, subkey - name);
+ 		if (!subkey)
+ 			return 0;
+ 		if (!value)
+ 			return 0;
++		branch = make_branch(name, subkey - name);
+ 		if (!strcmp(subkey, ".remote")) {
+ 			branch->remote_name = xstrdup(value);
+ 			if (branch == current_branch)
