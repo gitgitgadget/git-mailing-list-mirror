@@ -1,184 +1,117 @@
-From: linux@horizon.com
-Subject: Re: [PATCH] provide advance warning of some future pack default changes
-Date: 14 Dec 2007 06:28:14 -0500
-Message-ID: <20071214112814.11083.qmail@science.horizon.com>
-Cc: linux@horizon.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 14 12:28:42 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git gui blame utf-8 bugs
+Date: Fri, 14 Dec 2007 04:39:59 -0800 (PST)
+Message-ID: <m3k5nhqwkn.fsf@roke.D-201>
+References: <20071212091744.GA5377@pvv.org>
+	<20071214064709.GH14735@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Finn Arne Gangstad <finnag@pvv.org>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Dec 14 13:40:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J38ie-0003yx-Av
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 12:28:40 +0100
+	id 1J39qB-0003zf-Cj
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 13:40:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763014AbXLNL2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 06:28:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762997AbXLNL2Q
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 06:28:16 -0500
-Received: from science.horizon.com ([192.35.100.1]:13074 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1753942AbXLNL2Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 06:28:16 -0500
-Received: (qmail 11084 invoked by uid 1000); 14 Dec 2007 06:28:14 -0500
+	id S1761633AbXLNMkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 07:40:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760393AbXLNMkF
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 07:40:05 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:26345 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758107AbXLNMkD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 07:40:03 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so911495nfb.21
+        for <git@vger.kernel.org>; Fri, 14 Dec 2007 04:40:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=hece+VTDElAWwmx94mw8Nc5hyURvoAt9JA6byFbE8BU=;
+        b=rU0yyXCZKHeif7hpnokqs5iN/tXfMUMqp6I7i/HGqrfGsuULmv4b8UVUQOgXYtlHcsf7dubS16zpTqDVUbHAyaIGGv0211cvAr82uYBBs4mN9GC83oAXhA60egT0MaY6yFTo2p3GW5ZWwAJUA4Cko5TFfyvcW/WRpFUnrq72sOk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=vF62xG3PIKRmEIcl3Od0X6aGi+MYHC+vxfCXfe13IFORTsU5vMUPo6Zhfqh+flplXJmBM/VuPqhgw7jHtjKWygGeP/jDmnqoDSzihszIPdrSIY2D9HUBDkrr+nqP9PLM+bM0EcWDNYooFNGTv5Du5CSykUVwPJXmKzklalvZ5N4=
+Received: by 10.86.54.3 with SMTP id c3mr2987676fga.4.1197636000618;
+        Fri, 14 Dec 2007 04:40:00 -0800 (PST)
+Received: from roke.D-201 ( [83.8.245.165])
+        by mx.google.com with ESMTPS id 12sm12211488fks.2007.12.14.04.39.58
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 14 Dec 2007 04:39:59 -0800 (PST)
+Received: from roke (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lBECds9x004757;
+	Fri, 14 Dec 2007 13:39:55 +0100
+Received: (from jnareb@localhost)
+	by roke (8.13.4/8.13.4/Submit) id lBECdq1R004754;
+	Fri, 14 Dec 2007 13:39:53 +0100
+X-Authentication-Warning: roke: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <20071214064709.GH14735@spearce.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68299>
 
->+ * From v1.5.5, the pack.indexversion config option will default to 2,
->+   which is slightly more efficient, and makes repacking more immune to
->+   data corruptions.  Git older than version 1.5.2 may revert to version 1
->+   of the pack index with a manual "git index-pack" to be able to directly
->+   access corresponding pack files.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-You might want to mention that it's slightly more TIME efficient,
-but takes 16% more space (28 bytes per object rather than 24).
+> Finn Arne Gangstad <finnag@pvv.org> wrote:
+> > git gui has some utf-8 bugs:
+> 
+> It has several.  :-)
+>  
+> > If you do git gui blame <file>, and the file contains utf-8 text,
+> > the lines are not parsed as utf-8, but seemingly as iso-8859-1 instead.
+> 
+> Right.  git-gui is keying off the environment setting for LANG, so I
+> guess its set to iso-8859-1 on your system but you are working with a
+> utf-8 file.  We've talked about using something like .gitattributes
+> to store encoding hints, or to just put a global gui setting in
+> ~/.gitconfig but neither has had any patches written for it.
+> 
+> UTF-8 is seemingly the most common encoding that git-gui is mangling
+> so maybe we should be defaulting to utf-8 until someone codes a
+> more intelligent patch.
 
-If it helps, I documented the v2 index file format (a lot stolen
-from commit c553ca25bd60dc9fd50b8bc7bd329601b81cee66 message).
-(Public domain, copyright abandoned, if it breaks you get to keep both
-pieces, yadda yadda.)
+Currently there is no config variable for default encoding of file
+contents (of blobs) and of filenames (of trees) because those do not
+matter for core git.  But they do matter for GUI.
+ 
+> > Also, the hovering comment is INITIALLY shown garbled (both Author and
+> > commit message), but if you click on a line, so that the commit
+> > message is shown in the bottom window, the hovering message is
+> > magically corrected to utf-8.
+> > 
+> > The text in the lower window (showing specific commits) seems to
+> > always be handled correctly.
+> 
+> That's a "feature".  :-)
+> 
+> What's happening here is the initial hovering message is obtained
+> from the machine formatted output from `git blame --incremental`
+> and in that format there is no encoding header so I'm just ignoring
+> any encoding problems.
 
-diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
-index e5b31c8..a80baa4 100644
---- a/Documentation/technical/pack-format.txt
-+++ b/Documentation/technical/pack-format.txt
-@@ -1,9 +1,9 @@
- GIT pack format
- ===============
- 
--= pack-*.pack file has the following format:
-+= pack-*.pack files have the following format:
- 
--   - The header appears at the beginning and consists of the following:
-+   - A header appears at the beginning and consists of the following:
- 
-      4-byte signature:
-          The signature is: {'P', 'A', 'C', 'K'}
-@@ -34,18 +34,14 @@ GIT pack format
- 
-   - The trailer records 20-byte SHA1 checksum of all of the above.
- 
--= pack-*.idx file has the following format:
-+= Original (version 1) pack-*.idx files have the following format:
- 
-   - The header consists of 256 4-byte network byte order
-     integers.  N-th entry of this table records the number of
-     objects in the corresponding pack, the first byte of whose
--    object name are smaller than N.  This is called the
-+    object name is less than or equal to N.  This is called the
-     'first-level fan-out' table.
- 
--    Observation: we would need to extend this to an array of
--    8-byte integers to go beyond 4G objects per pack, but it is
--    not strictly necessary.
--
-   - The header is followed by sorted 24-byte entries, one entry
-     per object in the pack.  Each entry is:
- 
-@@ -55,10 +51,6 @@ GIT pack format
- 
-     20-byte object name.
- 
--    Observation: we would definitely need to extend this to
--    8-byte integer plus 20-byte object name to handle a packfile
--    that is larger than 4GB.
--
-   - The file is concluded with a trailer:
- 
-     A copy of the 20-byte SHA1 checksum at the end of
-@@ -68,31 +60,30 @@ GIT pack format
- 
- Pack Idx file:
- 
--	idx
--	    +--------------------------------+
--	    | fanout[0] = 2                  |-.
--	    +--------------------------------+ |
-+	--  +--------------------------------+
-+fanout	    | fanout[0] = 2 (for example)    |-.
-+table	    +--------------------------------+ |
- 	    | fanout[1]                      | |
- 	    +--------------------------------+ |
- 	    | fanout[2]                      | |
- 	    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ |
--	    | fanout[255]                    | |
--	    +--------------------------------+ |
--main	    | offset                         | |
--index	    | object name 00XXXXXXXXXXXXXXXX | |
--table	    +--------------------------------+ |
--	    | offset                         | |
--	    | object name 00XXXXXXXXXXXXXXXX | |
--	    +--------------------------------+ |
--	  .-| offset                         |<+
--	  | | object name 01XXXXXXXXXXXXXXXX |
--	  | +--------------------------------+
--	  | | offset                         |
--	  | | object name 01XXXXXXXXXXXXXXXX |
--	  | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--	  | | offset                         |
--	  | | object name FFXXXXXXXXXXXXXXXX |
--	  | +--------------------------------+
-+	    | fanout[255] = total objects    |---.
-+	--  +--------------------------------+ | |
-+main	    | offset                         | | |
-+index	    | object name 00XXXXXXXXXXXXXXXX | | |
-+table	    +--------------------------------+ | |
-+	    | offset                         | | |
-+	    | object name 00XXXXXXXXXXXXXXXX | | |
-+	    +--------------------------------+<+ |
-+	  .-| offset                         |   |
-+	  | | object name 01XXXXXXXXXXXXXXXX |   |
-+	  | +--------------------------------+   |
-+	  | | offset                         |   |
-+	  | | object name 01XXXXXXXXXXXXXXXX |   |
-+	  | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   |
-+	  | | offset                         |   |
-+	  | | object name FFXXXXXXXXXXXXXXXX |   |
-+	--| +--------------------------------+<--+
- trailer	  | | packfile checksum              |
- 	  | +--------------------------------+
- 	  | | idxfile checksum               |
-@@ -116,3 +107,40 @@ Pack file entry: <+
- 	  20-byte base object name SHA1 (the size above is the
- 		size of the delta data that follows).
-           delta data, deflated.
-+
-+
-+= Version 2 pack-*.idx files support packs larger than 4 GiB, and
-+  have some other reorganizations.  They have the format:
-+
-+  - A 4-byte magic number '\377tOc' which is an unreasonable
-+    fanout[0] value.
-+
-+  - A 4-byte version number (= 2)
-+
-+  - A 256-entry fan-out table just like v1.
-+
-+  - A table of sorted 20-byte SHA1 object names.  These are
-+    packed together without offset values to reduce the cache
-+    footprint of the binary search for a specific object name.
-+
-+  - A table of 4-byte CRC32 values of the packed object data.
-+    This is new in v2 so compressed data can be copied directly
-+    from pack to pack during repacking withough undetected
-+    data corruption.
-+
-+  - A table of 4-byte offset values (in network byte order).
-+    These are usually 31-bit pack file offsets, but large
-+    offsets are encoded as an index into the next table with
-+    the msbit set.
-+
-+  - A table of 8-byte offset entries (empty for pack files less
-+    than 2 GiB).  Pack files are organized with heavily used
-+    objects toward the front, so most object references should
-+    not need to refer to this table.
-+
-+  - The same trailer as a v1 pack file:
-+
-+    A copy of the 20-byte SHA1 checksum at the end of
-+    corresponding packfile.
-+
-+    20-byte SHA1-checksum of all of the above.
+So the correct solution would be to enhance "git blame --incremental"
+to output 'encoding' header when needed (when commit has encoding
+header and it is different from log output encoding).
+
+> Later when you click on a line it does `git cat-file commit $sha1`
+> and gets the proper encoding, and corrects the strings it originally
+> had gotten from git-blame.  So the hovering message "fixes" itself
+> later on.
+> 
+> Maybe here too we should be defaulting to utf-8 instead of the
+> native encoding.
+
+I think this is a good idea, as git repositories are meant to be
+cross-operating system (which means cross-delault-encodings)
+compatible.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
