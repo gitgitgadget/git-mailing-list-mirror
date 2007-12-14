@@ -1,83 +1,75 @@
-From: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
-Subject: config.c fixes
-Date: Fri, 14 Dec 2007 14:28:52 -0500
-Message-ID: <20071214192852.GA24187@bitplanet.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: testsuite failures in mainline...
+Date: Fri, 14 Dec 2007 11:15:01 -0800
+Message-ID: <7vfxy5rsui.fsf@gitster.siamese.dyndns.org>
+References: <20071214.104312.103638776.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Dec 14 19:54:06 2007
+To: David Miller <davem@davemloft.net>
+X-From: git-owner@vger.kernel.org Fri Dec 14 20:15:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3FfZ-0005Ib-Ru
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 19:53:58 +0100
+	id 1J3G0g-0005bt-1c
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 20:15:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753508AbXLNSxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 13:53:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752696AbXLNSxR
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 13:53:17 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:48996 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753416AbXLNSxQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 13:53:16 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lBEIlNFi021367;
-	Fri, 14 Dec 2007 13:47:23 -0500
-Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lBEIlNoI022832;
-	Fri, 14 Dec 2007 13:47:23 -0500
-Received: from localhost (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id lBEIlNVL015570;
-	Fri, 14 Dec 2007 13:47:23 -0500
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1753475AbXLNTPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 14:15:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753180AbXLNTPS
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 14:15:18 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49510 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752667AbXLNTPQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 14:15:16 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B4AE99503;
+	Fri, 14 Dec 2007 14:15:07 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FFC19500;
+	Fri, 14 Dec 2007 14:15:03 -0500 (EST)
+In-Reply-To: <20071214.104312.103638776.davem@davemloft.net> (David Miller's
+	message of "Fri, 14 Dec 2007 10:43:12 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68327>
 
-Hi,
+David Miller <davem@davemloft.net> writes:
 
-[ This should have gone out as a cover letter for the patch series
-  but some how I didn't manage to make that work ]
+> I've been seeing this for I think a week or two, and I can't figure
+> out if it's some local problem of mine.  I even reran the testsuite
+> with "PATH=$(pwd):$PATH" just in case it was picking up my existing
+> 1.5.3.7 installation for some reason, but it still fails even in that
+> case.
+>
+> Is the following a known issue?
 
-While strace'ing builtin-clone I saw this horror:
+No, you are the first to report it here.  I do not push out the tip of
+'master' and 'next' unless all tests pass in my primary repository on my
+private machine and in a repository under my k.org account, so you can
+at least assume all tests has passed for _some_ people.  It of course
+does not guarantee there isn't timing related bugs I am not catching. 
 
-...
-write(3, "remote", 6)                   = 6
-write(3, " = ", 3)                      = 3
-write(3, "o", 1)                        = 1
-write(3, "r", 1)                        = 1
-write(3, "i", 1)                        = 1
-write(3, "g", 1)                        = 1
-write(3, "i", 1)                        = 1
-write(3, "n", 1)                        = 1
-write(3, "\n", 1)                       = 1
-munmap(0xb7f72000, 102)                 = 0
-close(3)                                = 0
-close(3)                                = -1 EBADF (Bad file descriptor)
-...
+> *** t3200-branch.sh ***
+> ...
+> * FAIL 20: test tracking setup via config
+>         git config branch.autosetupmerge true &&
+>              git config remote.local.url . &&
+>              git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
+>              (git show-ref -q refs/remotes/local/master || git-fetch local) &&
+>              git branch my3 local/master &&
+>              test $(git config branch.my3.remote) = local &&
+>              test $(git config branch.my3.merge) = refs/heads/master
 
-That's just terrible.  And hey, it turns out the code is terrible too.
-I think the best solution is to just parse up the entire config file
-up front and keep it in a data structure, make the changes and then
-write it all out at the end.  That makes it cheap to make a series of
-changes too:
+When I can reproduce a breakage, in our tests, I'd run
 
-	config = open_config(file);
-	set_key(config, key1, value1);
-	set_key(config, key2, value2);
-	set_key(config, key3, value3);
-	commit_config(config);
+	cd t && sh -x t3200-branch.sh -i -v
 
-Or something.  Anyway, for 1.5.4 I wrote the following two patches that
-fixes the 1-bytes writes and the double close.
-
- config.c |  113 +++++++++++++++++++++++--------------------------------------
- 1 files changed, 43 insertions(+), 70 deletions(-)
-
-cheers,
-Kristian
+(replace "t3200-*" with the failing test) and see which one of the steps
+chained with && is breaking first.
