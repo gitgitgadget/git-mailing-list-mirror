@@ -1,60 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Fix random sha1 in error message in http-fetch and http-push
-Date: Fri, 14 Dec 2007 14:17:53 -0800
-Message-ID: <7vbq8sq5ta.fsf@gitster.siamese.dyndns.org>
-References: <1197667081-9909-1-git-send-email-mh@glandium.org>
-	<1197667081-9909-2-git-send-email-mh@glandium.org>
+From: David Miller <davem@davemloft.net>
+Subject: Re: testsuite failures in mainline...
+Date: Fri, 14 Dec 2007 14:24:48 -0800 (PST)
+Message-ID: <20071214.142448.52660507.davem@davemloft.net>
+References: <7vfxy5rsui.fsf@gitster.siamese.dyndns.org>
+	<20071214.111736.258936000.davem@davemloft.net>
+	<20071214214533.GA4943@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Fri Dec 14 23:18:32 2007
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: raa.lkml@gmail.com
+X-From: git-owner@vger.kernel.org Fri Dec 14 23:25:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3IrX-0007C4-8K
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 23:18:31 +0100
+	id 1J3Iy0-0000xV-NE
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 23:25:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933753AbXLNWSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 17:18:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932941AbXLNWSL
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 17:18:11 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65398 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757711AbXLNWSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 17:18:09 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D8FE07705;
-	Fri, 14 Dec 2007 17:18:04 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F9CC7704;
-	Fri, 14 Dec 2007 17:18:01 -0500 (EST)
-In-Reply-To: <1197667081-9909-2-git-send-email-mh@glandium.org> (Mike Hommey's
-	message of "Fri, 14 Dec 2007 22:18:01 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752696AbXLNWYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 17:24:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753262AbXLNWYu
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 17:24:50 -0500
+Received: from 74-93-104-97-Washington.hfc.comcastbusiness.net ([74.93.104.97]:39674
+	"EHLO sunset.davemloft.net" rhost-flags-OK-FAIL-OK-OK)
+	by vger.kernel.org with ESMTP id S1752407AbXLNWYt (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Dec 2007 17:24:49 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by sunset.davemloft.net (Postfix) with ESMTP id 11D64C8C182;
+	Fri, 14 Dec 2007 14:24:49 -0800 (PST)
+In-Reply-To: <20071214214533.GA4943@steel.home>
+X-Mailer: Mew version 5.2 on Emacs 22.1 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68355>
 
-Mike Hommey <mh@glandium.org> writes:
+From: Alex Riesen <raa.lkml@gmail.com>
+Date: Fri, 14 Dec 2007 22:45:33 +0100
 
-> Please note that this is already fixed in my strbuf patch for these files,
-> which had been applied in pu, but it seems to have disappeared from pu's
-> history. This also means the strbuf patch conflicts with this one. Please
-> tell me if you want a new strbuf patch made after this one.
+> David Miller, Fri, Dec 14, 2007 20:17:36 +0100:
+> > ++ git show-ref -q refs/remotes/local/master
+> > ++ git branch my3 local/master
+> > fatal: Out of memory, malloc failed
+> 
+> Something unusual about the system? Like a malloc debugger in
+> LD_PRELOAD configuration?
 
-The branch 'pu' almost always rewind and gets rebuilt from the tip of
-'next'.  Since I am more worried about master and next, even more so
-than usual these days, most of the backburnered topics are not even in
-'pu' but I still keep tips of them not to lose (they are found in
-'offcuts').
+No, I'm not doing anything fancy like that.
 
-Give me a few days to get back to your series.  I think it is a series
-of good clean-up patches, (I just read [1/2] which was trivially correct
-although I am not sure if it is the optimum fix to sprinkle free(url) to
-everywhere we have return), but I just haven't got around to them.
+> Maybe you could retry with a little bit instrumentation?
+> (The program last failed (git-branch) is normally very benign...)
+> 
+> Something like this:
+
+Here is the output from the debugging patch:
+
+++ git branch my3 local/master
+fatal: Out of memory, malloc(4293963242) at git-compat-util.h:256 failed
+
+This bogus size value in hex is 0xfff0adea, FWIW.
+
+I added similar diags to xmemdupz() and xstrndup() and that gives us:
+
+fatal: Out of memory, xstrndup(0x103ebf:4293902657:4293902657) at remote.c:112 failed
+
+(the first three values are xstrndup() vars 'str', 'len', and
+ the computed second argument to xmemdupz).
+
+That bogus length is being generated via the length argument
+passed to make_branch() by handle_config() in remote.c:
+
+	if (!prefixcmp(key, "branch.")) {
+		name = key + 7;
+		subkey = strrchr(name, '.');
+		branch = make_branch(name, subkey - name);
+
+What if 'subkey' is NULL?  I bet that's what happening here.
+
+I added a debugging check for this and indeed, subkey is NULL
+in handle_condig() and that's why 'subkey - name' generates that
+bogus negative length.
+
+The string 'key' is "branch.autosetupmerge" in this case.
