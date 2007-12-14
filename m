@@ -1,59 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: config.c fixes
-Date: Fri, 14 Dec 2007 11:43:00 -0800
-Message-ID: <7v3au5rrjv.fsf@gitster.siamese.dyndns.org>
-References: <20071214192852.GA24187@bitplanet.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [Funky] "git -p cmd" inside a bare repository
+Date: Fri, 14 Dec 2007 19:44:10 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712141943280.27959@racer.site>
+References: <20071129122139.GA11176@laptop> <7vmysexdvw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Dec 14 20:43:59 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 20:44:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3GRi-00085W-Kz
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 20:43:43 +0100
+	id 1J3GSi-0008SX-N0
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 20:44:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752402AbXLNTnT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Dec 2007 14:43:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbXLNTnT
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 14:43:19 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51828 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752316AbXLNTnT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Dec 2007 14:43:19 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 29BCD9DF5;
-	Fri, 14 Dec 2007 14:43:11 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 59A199DF2;
-	Fri, 14 Dec 2007 14:43:08 -0500 (EST)
-In-Reply-To: <20071214192852.GA24187@bitplanet.net> (Kristian =?utf-8?Q?H?=
- =?utf-8?Q?=C3=B8gsberg's?=
-	message of "Fri, 14 Dec 2007 14:28:52 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1764784AbXLNToV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 14:44:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765009AbXLNToV
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 14:44:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57436 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1764784AbXLNToU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 14:44:20 -0500
+Received: (qmail invoked by alias); 14 Dec 2007 19:44:18 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp002) with SMTP; 14 Dec 2007 20:44:18 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18NJPclma0NrPFJn50il9gxKLPHlz6JoEvT3oWsTc
+	9CYDDdsX0IXUNC
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vmysexdvw.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68333>
 
-Kristian H=C3=B8gsberg <krh@redhat.com> writes:
+Hi,
 
-> While strace'ing builtin-clone I saw this horror:
-> I think the best solution is to just parse up the entire config file
-> up front and keep it in a data structure, make the changes and then
-> write it all out at the end.
+On Thu, 13 Dec 2007, Junio C Hamano wrote:
 
-Yeah, that was what I suggested a few times when other people have done
-config writing side, but without successfully getting past their skulls
-(it is not Linus's nor my code).  It's about time somebody started to
-clean up that mess.
+> If you have a bare repository and try this there:
+> 
+> 	$ PAGER=head git show HEAD:gcc/ChangeLog
+> 
+> it works as expected, but if you explicitly ask for pagination, like
+> this:
+> 
+> 	$ PAGER=head git -p show HEAD:gcc/ChangeLog
 
-The timing is a bit unfortunate, though.  I would have preferred to hav=
-e
-a week or so to cook this in 'next' before merging it part of -rc0.
+I have no time left to work on git for a few days, so I cannot even review 
+your patch.  But Jeff's patch being smaller, I could, and AFAICT it solves 
+the problem.
+
+Ciao,
+Dscho
