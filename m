@@ -1,42 +1,48 @@
-From: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+From: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
 Subject: config.c fixes
-Date: Fri, 14 Dec 2007 14:22:35 -0500
-Message-ID: <1197660157-24109-1-git-send-email-krh@redhat.com>
+Date: Fri, 14 Dec 2007 14:28:52 -0500
+Message-ID: <20071214192852.GA24187@bitplanet.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Dec 14 19:53:46 2007
+X-From: git-owner@vger.kernel.org Fri Dec 14 19:54:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3FfC-0005AJ-3z
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 19:53:34 +0100
+	id 1J3FfZ-0005Ib-Ru
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 19:53:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753503AbXLNSxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 13:53:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752696AbXLNSxJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 13:53:09 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:48988 "EHLO mx1.redhat.com"
+	id S1753508AbXLNSxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 13:53:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752696AbXLNSxR
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 13:53:17 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:48996 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753233AbXLNSxG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 13:53:06 -0500
+	id S1753416AbXLNSxQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 13:53:16 -0500
 Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lBEIf9VZ018939;
-	Fri, 14 Dec 2007 13:41:09 -0500
+	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lBEIlNFi021367;
+	Fri, 14 Dec 2007 13:47:23 -0500
 Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lBEIf8KV019771;
-	Fri, 14 Dec 2007 13:41:08 -0500
-Received: from localhost.localdomain (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id lBEIf8em014282;
-	Fri, 14 Dec 2007 13:41:08 -0500
-X-Mailer: git-send-email 1.5.4.rc0.8.g8fc45-dirty
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lBEIlNoI022832;
+	Fri, 14 Dec 2007 13:47:23 -0500
+Received: from localhost (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id lBEIlNVL015570;
+	Fri, 14 Dec 2007 13:47:23 -0500
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68326>
 
 Hi,
+
+[ This should have gone out as a cover letter for the patch series
+  but some how I didn't manage to make that work ]
 
 While strace'ing builtin-clone I saw this horror:
 
