@@ -1,115 +1,78 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git gui blame utf-8 bugs
-Date: Fri, 14 Dec 2007 04:39:59 -0800 (PST)
-Message-ID: <m3k5nhqwkn.fsf@roke.D-201>
-References: <20071212091744.GA5377@pvv.org>
-	<20071214064709.GH14735@spearce.org>
+Subject: Re: [PATCH] provide advance warning of some future pack default changes
+Date: Fri, 14 Dec 2007 04:45:23 -0800 (PST)
+Message-ID: <m3fxy5qwbq.fsf@roke.D-201>
+References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.99999.0712031258460.9605@xanadu.home>
+	<7vsl2jh3rb.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.999999.0712132227090.8467@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Finn Arne Gangstad <finnag@pvv.org>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Dec 14 13:40:34 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Dec 14 13:45:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J39qB-0003zf-Cj
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 13:40:31 +0100
+	id 1J39vL-00067k-5b
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 13:45:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761633AbXLNMkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 07:40:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760393AbXLNMkF
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 07:40:05 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:26345 "EHLO
+	id S1752344AbXLNMp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 07:45:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763398AbXLNMp2
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 07:45:28 -0500
+Received: from nf-out-0910.google.com ([64.233.182.184]:34759 "EHLO
 	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758107AbXLNMkD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 07:40:03 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so911495nfb.21
-        for <git@vger.kernel.org>; Fri, 14 Dec 2007 04:40:00 -0800 (PST)
+	with ESMTP id S1751671AbXLNMp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 07:45:27 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so912910nfb.21
+        for <git@vger.kernel.org>; Fri, 14 Dec 2007 04:45:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=hece+VTDElAWwmx94mw8Nc5hyURvoAt9JA6byFbE8BU=;
-        b=rU0yyXCZKHeif7hpnokqs5iN/tXfMUMqp6I7i/HGqrfGsuULmv4b8UVUQOgXYtlHcsf7dubS16zpTqDVUbHAyaIGGv0211cvAr82uYBBs4mN9GC83oAXhA60egT0MaY6yFTo2p3GW5ZWwAJUA4Cko5TFfyvcW/WRpFUnrq72sOk=
+        bh=kVMBReQ4f3NQP5EOnOwQxtgYGnDH9zqejL+BP+//YvU=;
+        b=un03k1qIsiPgsBuM56TlZEg5ob6fyBu7rg5cp4uV3jB3GTlYL6bB1tG79HkXV9ybzCB5Z9Ifp7kBRIbc3rneDSyTY2yxy4313o4uL3em0VTsfeeKWq/27N3Xsl4hUmBgKLAuPNxIvJOzYL7drFquTtBm/xE5niqtlD5rZzMH+V8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=vF62xG3PIKRmEIcl3Od0X6aGi+MYHC+vxfCXfe13IFORTsU5vMUPo6Zhfqh+flplXJmBM/VuPqhgw7jHtjKWygGeP/jDmnqoDSzihszIPdrSIY2D9HUBDkrr+nqP9PLM+bM0EcWDNYooFNGTv5Du5CSykUVwPJXmKzklalvZ5N4=
-Received: by 10.86.54.3 with SMTP id c3mr2987676fga.4.1197636000618;
-        Fri, 14 Dec 2007 04:40:00 -0800 (PST)
+        b=LV8vA3453AcoCtkQNWRW39KMeMXi4mFkhdBVuEx7MmOV7CrwrHN9Lb0tZyeeRXfC5SUhtyehzzI+EaRe8rS2+mfGy1cmT9HGOSqrgOFHJTaNMPeh247hbbmUUkLSt32cPnrpz0FgDIYKPqtG4fYw9714o2efQleg5cRsXy5e9YM=
+Received: by 10.82.145.7 with SMTP id s7mr8776862bud.6.1197636325303;
+        Fri, 14 Dec 2007 04:45:25 -0800 (PST)
 Received: from roke.D-201 ( [83.8.245.165])
-        by mx.google.com with ESMTPS id 12sm12211488fks.2007.12.14.04.39.58
+        by mx.google.com with ESMTPS id v23sm12249638fkd.2007.12.14.04.45.22
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 14 Dec 2007 04:39:59 -0800 (PST)
+        Fri, 14 Dec 2007 04:45:23 -0800 (PST)
 Received: from roke (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lBECds9x004757;
-	Fri, 14 Dec 2007 13:39:55 +0100
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lBECjFxm004788;
+	Fri, 14 Dec 2007 13:45:19 +0100
 Received: (from jnareb@localhost)
-	by roke (8.13.4/8.13.4/Submit) id lBECdq1R004754;
-	Fri, 14 Dec 2007 13:39:53 +0100
+	by roke (8.13.4/8.13.4/Submit) id lBECjEsJ004785;
+	Fri, 14 Dec 2007 13:45:14 +0100
 X-Authentication-Warning: roke: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <20071214064709.GH14735@spearce.org>
+In-Reply-To: <alpine.LFD.0.999999.0712132227090.8467@xanadu.home>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68300>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Nicolas Pitre <nico@cam.org> writes:
 
-> Finn Arne Gangstad <finnag@pvv.org> wrote:
-> > git gui has some utf-8 bugs:
-> 
-> It has several.  :-)
->  
-> > If you do git gui blame <file>, and the file contains utf-8 text,
-> > the lines are not parsed as utf-8, but seemingly as iso-8859-1 instead.
-> 
-> Right.  git-gui is keying off the environment setting for LANG, so I
-> guess its set to iso-8859-1 on your system but you are working with a
-> utf-8 file.  We've talked about using something like .gitattributes
-> to store encoding hints, or to just put a global gui setting in
-> ~/.gitconfig but neither has had any patches written for it.
-> 
-> UTF-8 is seemingly the most common encoding that git-gui is mangling
-> so maybe we should be defaulting to utf-8 until someone codes a
-> more intelligent patch.
+> + * From v1.5.5, the repack.usedeltabaseoffset config option will default
+> +   to true, which will give denser packfile (i.e. more efficient storage).
+> +   The downside is that git older than version 1.4.4 will not be able
+> +   to directly use a repository packed using this setting.
+> +
+> + * From v1.5.5, the pack.indexversion config option will default to 2,
+> +   which is slightly more efficient, and makes repacking more immune to
+> +   data corruptions.  Git older than version 1.5.2 may revert to version 1
+> +   of the pack index with a manual "git index-pack" to be able to directly
+> +   access corresponding pack files.
 
-Currently there is no config variable for default encoding of file
-contents (of blobs) and of filenames (of trees) because those do not
-matter for core git.  But they do matter for GUI.
- 
-> > Also, the hovering comment is INITIALLY shown garbled (both Author and
-> > commit message), but if you click on a line, so that the commit
-> > message is shown in the bottom window, the hovering message is
-> > magically corrected to utf-8.
-> > 
-> > The text in the lower window (showing specific commits) seems to
-> > always be handled correctly.
-> 
-> That's a "feature".  :-)
-> 
-> What's happening here is the initial hovering message is obtained
-> from the machine formatted output from `git blame --incremental`
-> and in that format there is no encoding header so I'm just ignoring
-> any encoding problems.
-
-So the correct solution would be to enhance "git blame --incremental"
-to output 'encoding' header when needed (when commit has encoding
-header and it is different from log output encoding).
-
-> Later when you click on a line it does `git cat-file commit $sha1`
-> and gets the proper encoding, and corrects the strings it originally
-> had gotten from git-blame.  So the hovering message "fixes" itself
-> later on.
-> 
-> Maybe here too we should be defaulting to utf-8 instead of the
-> native encoding.
-
-I think this is a good idea, as git repositories are meant to be
-cross-operating system (which means cross-delault-encodings)
-compatible.
+Which means what? Local clone with shortcut (hardlinking and remotes)?
+Dumb protocols (http, ftp, rsync)?
 
 -- 
 Jakub Narebski
