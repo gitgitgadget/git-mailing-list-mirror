@@ -1,92 +1,173 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What to do if git-cvsimport/cvsps hangs?
-Date: Thu, 13 Dec 2007 17:56:02 -0800 (PST)
-Message-ID: <m3sl26qbth.fsf@roke.D-201>
-References: <824peojm4g.fsf@mid.bfk.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] "diff --check" should affect exit status
+Date: Thu, 13 Dec 2007 18:10:10 -0800
+Message-ID: <7vbq8uxbzx.fsf@gitster.siamese.dyndns.org>
+References: <1197552751-53480-1-git-send-email-win@wincent.com>
+	<1197552751-53480-2-git-send-email-win@wincent.com>
+	<7vir32ywyz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Florian Weimer <fweimer@bfk.de>
-X-From: git-owner@vger.kernel.org Fri Dec 14 02:56:42 2007
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 03:11:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2zn7-0002iC-QS
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 02:56:42 +0100
+	id 1J301K-0006J1-Gv
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 03:11:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761428AbXLNB4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 20:56:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761383AbXLNB4J
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 20:56:09 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:58229 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754855AbXLNB4F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 20:56:05 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so756819nfb.21
-        for <git@vger.kernel.org>; Thu, 13 Dec 2007 17:56:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=MH4/6aC3fxOl4dNe+odq63o8Vu7ct/WebQ13p3WhY2g=;
-        b=jbC7AKeASTJOlrVsASh6Sa7/DOfW8FrkcbjHJtyMhbll2wFgpqGoIM/fNW856fj6HUBHX4xhCI+lmlBWgQrN1n/hQpif26TJQhUgIzf2xwktAn/5Kn5/EU5I0CgWu8fquXvhTnFvyvPt+dm+Mzx665qzY2ChsQgd1Lz50TTMaks=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=SEtTHRsdLwFXqnC4Qtsw1rBi3nnVcXqQgskUMZiTRkm/7FCWuqZKsUP0nw427iajMbG4VPQ+kk/sEnmlZAsJHZVavRKIuhiF8xzRk9OiPuJjXJcweyejwkrJn7QycVeMfL62qKk8i3yHcuEiKeQpWCYy5rceMzo5qbpcNOSCR30=
-Received: by 10.86.90.2 with SMTP id n2mr2448766fgb.66.1197597363794;
-        Thu, 13 Dec 2007 17:56:03 -0800 (PST)
-Received: from roke.D-201 ( [83.8.245.165])
-        by mx.google.com with ESMTPS id b17sm11461424fka.2007.12.13.17.56.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 13 Dec 2007 17:56:02 -0800 (PST)
-Received: from roke (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lBE1tw2K000741;
-	Fri, 14 Dec 2007 02:55:59 +0100
-Received: (from jnareb@localhost)
-	by roke (8.13.4/8.13.4/Submit) id lBE1ttiw000738;
-	Fri, 14 Dec 2007 02:55:55 +0100
-X-Authentication-Warning: roke: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <824peojm4g.fsf@mid.bfk.de>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1763502AbXLNCKX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 21:10:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763936AbXLNCKW
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 21:10:22 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44158 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763276AbXLNCKU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 21:10:20 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 665008E96;
+	Thu, 13 Dec 2007 21:10:15 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6BB778E94;
+	Thu, 13 Dec 2007 21:10:12 -0500 (EST)
+In-Reply-To: <7vir32ywyz.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 13 Dec 2007 15:51:48 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68214>
 
-Florian Weimer <fweimer@bfk.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> This is probably more of a cvsps question than a GIT question, but
-> AFAICT, the cvsps upstream is mostly inactive these days.
-> 
-> I tried to import the PostgreSQL repository, using
-> 
->   git-cvsimport  -d :pserver:anoncvs@anoncvs.postgresql.org:/projects/cvsroot -k -C pgsql pgsql
-> 
-> However, after a bit of activity, git-cvsimport hangs at the following
-> line
-> 
->   cvs rlog: Logging pgsql/src/win32
-> 
-> strace doesn't show any system call activtiy in the cvsps process
-> (which consumes 100% CPU).  cvsps is Debian's 2.1-2 version.
-> 
-> Is there some kind of replacement for cvsps which works more reliably?
+> I think highjacking the "did we encounter problems" return value of the
+> entire callchain for the purpose of checkdiff is very ugly and wrong to
+> begin with,...
 
-You can try set of patches to cvsps there (see GitLinks at Git Wiki,
-or git-cvsimport entry at InterfacesFrontendsAndTools)
-  http://ydirson.free.fr/en/software/scm/cvsps.html
+How about this on top of your 1/5?  It mostly is about reverting the
+damage to the higher level callchain.  Instead, builtin_checkdiff()
+inspects the checkdiff data and sets the CHECK_FAILED flag to the
+diffopt structure.  The callers are already checking that flag so there
+is nothing to change for them.
 
-Or you can try other CVS importers (see InterfacesForntendsAndTools):
- - parsecvs by Keith Packard, used to import X.Org, seems to be
-   unmaintaned, requires access to *,v files (but check out cvssuck)
- - fromcvs by Simon 'corecode' Schubert, uses git-fast-import, 
-   IIRC in Ruby
- - cvs2svn has _experimental_ support for git export (git-fast-import?)
-   so you can try this as well.
+--
 
+diff --git a/diff.c b/diff.c
+index 39109a6..fc496bf 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1456,7 +1456,7 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 	diff_free_filespec_data(two);
+ }
+ 
+-static int builtin_checkdiff(const char *name_a, const char *name_b,
++static void builtin_checkdiff(const char *name_a, const char *name_b,
+ 			     struct diff_filespec *one,
+ 			     struct diff_filespec *two, struct diff_options *o)
+ {
+@@ -1464,7 +1464,7 @@ static int builtin_checkdiff(const char *name_a, const char *name_b,
+ 	struct checkdiff_t data;
+ 
+ 	if (!two)
+-		return 0;
++		return;
+ 
+ 	memset(&data, 0, sizeof(data));
+ 	data.xm.consume = checkdiff_consume;
+@@ -1493,7 +1493,8 @@ static int builtin_checkdiff(const char *name_a, const char *name_b,
+  free_and_return:
+ 	diff_free_filespec_data(one);
+ 	diff_free_filespec_data(two);
+-	return data.status;
++	if (data.status)
++		DIFF_OPT_SET(o, CHECK_FAILED);
+ }
+ 
+ struct diff_filespec *alloc_filespec(const char *path)
+@@ -2078,14 +2079,14 @@ static void run_diffstat(struct diff_filepair *p, struct diff_options *o,
+ 	builtin_diffstat(name, other, p->one, p->two, diffstat, o, complete_rewrite);
+ }
+ 
+-static int run_checkdiff(struct diff_filepair *p, struct diff_options *o)
++static void run_checkdiff(struct diff_filepair *p, struct diff_options *o)
+ {
+ 	const char *name;
+ 	const char *other;
+ 
+ 	if (DIFF_PAIR_UNMERGED(p)) {
+ 		/* unmerged */
+-		return 0;
++		return;
+ 	}
+ 
+ 	name = p->one->path;
+@@ -2094,7 +2095,7 @@ static int run_checkdiff(struct diff_filepair *p, struct diff_options *o)
+ 	diff_fill_sha1_info(p->one);
+ 	diff_fill_sha1_info(p->two);
+ 
+-	return builtin_checkdiff(name, other, p->one, p->two, o);
++	builtin_checkdiff(name, other, p->one, p->two, o);
+ }
+ 
+ void diff_setup(struct diff_options *options)
+@@ -2596,17 +2597,17 @@ static void diff_flush_stat(struct diff_filepair *p, struct diff_options *o,
+ 	run_diffstat(p, o, diffstat);
+ }
+ 
+-static int diff_flush_checkdiff(struct diff_filepair *p,
++static void diff_flush_checkdiff(struct diff_filepair *p,
+ 		struct diff_options *o)
+ {
+ 	if (diff_unmodified_pair(p))
+-		return 0;
++		return;
+ 
+ 	if ((DIFF_FILE_VALID(p->one) && S_ISDIR(p->one->mode)) ||
+ 	    (DIFF_FILE_VALID(p->two) && S_ISDIR(p->two->mode)))
+-		return 0; /* no tree diffs in patch format */
++		return; /* no tree diffs in patch format */
+ 
+-	return run_checkdiff(p, o);
++	run_checkdiff(p, o);
+ }
+ 
+ int diff_queue_is_empty(void)
+@@ -2725,19 +2726,16 @@ static int check_pair_status(struct diff_filepair *p)
+ 	}
+ }
+ 
+-static int flush_one_pair(struct diff_filepair *p, struct diff_options *opt)
++static void flush_one_pair(struct diff_filepair *p, struct diff_options *opt)
+ {
+ 	int fmt = opt->output_format;
+ 
+ 	if (fmt & DIFF_FORMAT_CHECKDIFF)
+-		return diff_flush_checkdiff(p, opt);
++		diff_flush_checkdiff(p, opt);
+ 	else if (fmt & (DIFF_FORMAT_RAW | DIFF_FORMAT_NAME_STATUS))
+ 		diff_flush_raw(p, opt);
+ 	else if (fmt & DIFF_FORMAT_NAME)
+ 		write_name_quoted(p->two->path, stdout, opt->line_termination);
+-
+-	/* return value only matters with DIFF_FORMAT_CHECKDIFF */
+-	return 0;
+ }
+ 
+ static void show_file_mode_name(const char *newdelete, struct diff_filespec *fs)
+@@ -2976,8 +2974,8 @@ void diff_flush(struct diff_options *options)
+ 			     DIFF_FORMAT_CHECKDIFF)) {
+ 		for (i = 0; i < q->nr; i++) {
+ 			struct diff_filepair *p = q->queue[i];
+-			if (check_pair_status(p) && flush_one_pair(p, options))
+-				DIFF_OPT_SET(options, CHECK_FAILED);
++			if (check_pair_status(p))
++				flush_one_pair(p, options);
+ 		}
+ 		separator++;
+ 	}
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.5.4.rc0.1.g37d0
