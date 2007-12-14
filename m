@@ -1,79 +1,46 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [RFH] convert shortlog to use parse_options
-Date: Fri, 14 Dec 2007 09:39:43 +0100
-Message-ID: <20071214083943.GA24475@artemis.madism.org>
-References: <20071213055226.GA3636@coredump.intra.peff.net> <20071213090604.GA12398@artemis.madism.org> <20071213091055.GA5674@coredump.intra.peff.net> <20071213093536.GC12398@artemis.madism.org> <7vbq8u4ho8.fsf@gitster.siamese.dyndns.org> <20071213180347.GE1224@artemis.madism.org> <1197570521.28742.0.camel@hinata.boston.redhat.com> <1197571656.28742.13.camel@hinata.boston.redhat.com> <20071214040803.GA10169@sigill.intra.peff.net> <7vir31vmsn.fsf@gitster.siamese.dyndns.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: Something is broken in repack
+Date: Fri, 14 Dec 2007 09:20:45 +0100
+Message-ID: <fjtect$8qn$1@ger.gmane.org>
+References: <alpine.LFD.0.99999.0712120743040.555@xanadu.home> 	 <fcaeb9bf0712130532s79aa7afeve6f018f9430ab3b3@mail.gmail.com> 	 <fjrj9k$n6k$1@ger.gmane.org> <47616044.7070504@viscovery.net> 	 <fjskqt$eap$1@ger.gmane.org> <fjt6vm$n7d$1@ger.gmane.org> <fcaeb9bf0712132224u54ca845ap4836dfe1cda37b29@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="yrj/dFKFPuw6o+aM";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Jeff King <peff@peff.net>,
-	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 14 09:40:14 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J365a-0000Do-4b
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 09:40:10 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756416AbXLNIjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 03:39:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757018AbXLNIjr
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 03:39:47 -0500
-Received: from pan.madism.org ([88.191.52.104]:51152 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756851AbXLNIjq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 03:39:46 -0500
-Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id C890B2FCD5;
-	Fri, 14 Dec 2007 09:39:44 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 8FA6CDDC; Fri, 14 Dec 2007 09:39:43 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vir31vmsn.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: gcc@gcc.gnu.org
+X-From: gcc-return-142979-gcc=m.gmane.org@gcc.gnu.org Fri Dec 14 09:43:24 2007
+Return-path: <gcc-return-142979-gcc=m.gmane.org@gcc.gnu.org>
+Envelope-to: gcc@gmane.org
+Received: from sourceware.org ([209.132.176.174])
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1J368h-00012P-Sd
+	for gcc@gmane.org; Fri, 14 Dec 2007 09:43:24 +0100
+Received: (qmail 23122 invoked by alias); 14 Dec 2007 08:42:56 -0000
+Received: (qmail 23114 invoked by uid 22791); 14 Dec 2007 08:42:55 -0000
+X-Spam-Check-By: sourceware.org
+Received: from main.gmane.org (HELO ciao.gmane.org) (80.91.229.2)     by sourceware.org (qpsmtpd/0.31) with ESMTP; Fri, 14 Dec 2007 08:42:43 +0000
+Received: from list by ciao.gmane.org with local (Exim 4.43) 	id 1J35zL-0003gG-Ur 	for gcc@gcc.gnu.org; Fri, 14 Dec 2007 08:33:43 +0000
+Received: from 195.176.178.209 ([195.176.178.209])         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))         id 1AlnuQ-0007hv-00         for <gcc@gcc.gnu.org>; Fri, 14 Dec 2007 08:33:43 +0000
+Received: from bonzini by 195.176.178.209 with local (Gmexim 0.1 (Debian))         id 1AlnuQ-0007hv-00         for <gcc@gcc.gnu.org>; Fri, 14 Dec 2007 08:33:43 +0000
+User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
+In-Reply-To: <fcaeb9bf0712132224u54ca845ap4836dfe1cda37b29@mail.gmail.com>
+X-IsSubscribed: yes
+Mailing-List: contact gcc-help@gcc.gnu.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68265>
+List-Id: <gcc.gcc.gnu.org>
+List-Unsubscribe: <mailto:gcc-unsubscribe-gcc=m.gmane.org@gcc.gnu.org>
+List-Archive: <http://gcc.gnu.org/ml/gcc/>
+List-Post: <mailto:gcc@gcc.gnu.org>
+List-Help: <http://gcc.gnu.org/ml/>
+Sender: gcc-owner@gcc.gnu.org
+Delivered-To: mailing list gcc@gcc.gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68266>
 
 
---yrj/dFKFPuw6o+aM
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I'm thinking about "git clone --keep" to mark initial packs precious.
+> But 'git clone' is under rewrite to C. Let's wait until C rewrite is
+> done.
 
-On Fri, Dec 14, 2007 at 05:59:52AM +0000, Junio C Hamano wrote:
-> 	git cmd --abbrev=3D10 -n=3D4
+It should be the default, IMHO.
 
-  actually -n=3D4 isn't understood atm, only -n4 and -n 4 are.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---yrj/dFKFPuw6o+aM
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHYkFPvGr7W6HudhwRAsY0AJ9goFV3CqvIqBdoWCXT4LBC4OQ45ACgiw4h
-Fk1SSFQKcu2gRKJwNOexv54=
-=TCIW
------END PGP SIGNATURE-----
-
---yrj/dFKFPuw6o+aM--
+Paolo
