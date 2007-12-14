@@ -1,75 +1,84 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: config.c fixes
-Date: Fri, 14 Dec 2007 15:19:44 -0500
-Message-ID: <1197663584.615.4.camel@hinata.boston.redhat.com>
-References: <20071214192852.GA24187@bitplanet.net>
-	 <7v3au5rrjv.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFH] convert shortlog to use parse_options
+Date: Fri, 14 Dec 2007 12:34:58 -0800
+Message-ID: <7v63z1qakt.fsf@gitster.siamese.dyndns.org>
+References: <20071213055226.GA3636@coredump.intra.peff.net>
+	<20071213090604.GA12398@artemis.madism.org>
+	<20071213091055.GA5674@coredump.intra.peff.net>
+	<20071213093536.GC12398@artemis.madism.org>
+	<7vbq8u4ho8.fsf@gitster.siamese.dyndns.org>
+	<20071213180347.GE1224@artemis.madism.org>
+	<1197570521.28742.0.camel@hinata.boston.redhat.com>
+	<1197571656.28742.13.camel@hinata.boston.redhat.com>
+	<20071214040803.GA10169@sigill.intra.peff.net>
+	<7vir31vmsn.fsf@gitster.siamese.dyndns.org>
+	<20071214083943.GA24475@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 14 21:27:05 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>,
+	git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Fri Dec 14 21:35:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3H7d-000066-Ch
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 21:27:01 +0100
+	id 1J3HG3-0003QU-LN
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 21:35:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755596AbXLNU0j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Dec 2007 15:26:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755568AbXLNU0j
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 15:26:39 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:50340 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754145AbXLNU0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 15:26:38 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lBEKJoRS024819;
-	Fri, 14 Dec 2007 15:19:50 -0500
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lBEKJn2S003367;
-	Fri, 14 Dec 2007 15:19:49 -0500
-Received: from [192.168.1.100] (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lBEKJnYY023428;
-	Fri, 14 Dec 2007 15:19:49 -0500
-In-Reply-To: <7v3au5rrjv.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
+	id S1752809AbXLNUfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 15:35:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752692AbXLNUfT
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 15:35:19 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55949 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752244AbXLNUfR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 15:35:17 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 124BA9714;
+	Fri, 14 Dec 2007 15:35:11 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 627BB9713;
+	Fri, 14 Dec 2007 15:35:06 -0500 (EST)
+In-Reply-To: <20071214083943.GA24475@artemis.madism.org> (Pierre Habouzit's
+	message of "Fri, 14 Dec 2007 09:39:43 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68342>
 
-On Fri, 2007-12-14 at 11:43 -0800, Junio C Hamano wrote:
-> Kristian H=C3=B8gsberg <krh@redhat.com> writes:
->=20
-> > While strace'ing builtin-clone I saw this horror:
-> > I think the best solution is to just parse up the entire config fil=
-e
-> > up front and keep it in a data structure, make the changes and then
-> > write it all out at the end.
->=20
-> Yeah, that was what I suggested a few times when other people have do=
-ne
-> config writing side, but without successfully getting past their skul=
-ls
-> (it is not Linus's nor my code).  It's about time somebody started to
-> clean up that mess.
->=20
-> The timing is a bit unfortunate, though.  I would have preferred to h=
-ave
-> a week or so to cook this in 'next' before merging it part of -rc0.
+Pierre Habouzit <madcoder@debian.org> writes:
 
-Right, what I was describing above was more of a long term thing.  I
-sent two patches more suitable for 1.5.4 that fixes the double close an=
-d
-the 1-byte writes in a less intrusive way.  Except as the Johanneses
-point out, I can't use the lock as a local variable, but must allocate
-so the atexit handler doesn't break.  If it has to be allocated, the AP=
-I
-should help/enforce that.  I've sent out a couple of new patches that
-fixes this.
+> On Fri, Dec 14, 2007 at 05:59:52AM +0000, Junio C Hamano wrote:
+>> 	git cmd --abbrev=10 -n=4
+>
+>   actually -n=4 isn't understood atm, only -n4 and -n 4 are.
 
-Kristian
+Ah, my mistake.  And I do not think accepting -n=4 is a good idea (it is
+not historically done).
+
+After thinking about it a bit more, I think I was worried too much about
+burdening the users to remember the differences between options with,
+without and optional option-arguments [*1*].  They need to know the
+difference between options with and without option-arguments already
+because single letter options can be combined if they are without
+option-arguments, and they have to write "shortlog -new72" but not
+"shortlog -wen72".  If they want to be extra sure, they can be more
+explicit and say "shortlog -n -e -w72".
+
+So let's go with the version you outlined --- options that take optional
+option-arguments must get their option-arguments stuck to them, but
+otherwise option-arguments can also be given as a separate word that
+follows the option.
+
+[Footnote]
+
+*1* The fact some of our commands support options with optional
+option-arguments is already against Guideline #7 in "12.2 Utility Syntax
+Guidelines", so other POSIX guidelines are not useful for us in deciding
+what behaviour to model after.
