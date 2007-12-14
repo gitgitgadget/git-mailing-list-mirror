@@ -1,71 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] Add tests for "git diff --check" with core.whitespace options
-Date: Thu, 13 Dec 2007 16:55:47 -0800
-Message-ID: <7vsl26xffw.fsf@gitster.siamese.dyndns.org>
-References: <1197552751-53480-1-git-send-email-win@wincent.com>
-	<1197552751-53480-2-git-send-email-win@wincent.com>
-	<1197552751-53480-3-git-send-email-win@wincent.com>
-	<1197552751-53480-4-git-send-email-win@wincent.com>
-	<1197552751-53480-5-git-send-email-win@wincent.com>
-	<1197552751-53480-6-git-send-email-win@wincent.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Something is broken in repack
+Date: Fri, 14 Dec 2007 02:04:29 +0100
+Organization: At home
+Message-ID: <fjskqt$eap$1@ger.gmane.org>
+References: <alpine.LFD.0.99999.0712120743040.555@xanadu.home> <fcaeb9bf0712130532s79aa7afeve6f018f9430ab3b3@mail.gmail.com> <fjrj9k$n6k$1@ger.gmane.org> <47616044.7070504@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Fri Dec 14 01:56:29 2007
+Content-Transfer-Encoding: 7Bit
+Cc: gcc@gcc.gnu.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 14 02:05:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2yqq-0003Ra-Er
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 01:56:28 +0100
+	id 1J2yzq-0005j8-T7
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 02:05:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935374AbXLNA4D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 19:56:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935366AbXLNA4D
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 19:56:03 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39067 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935337AbXLNA4B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 19:56:01 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 520DE4DE2;
-	Thu, 13 Dec 2007 19:55:55 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E4B44DE0;
-	Thu, 13 Dec 2007 19:55:49 -0500 (EST)
-In-Reply-To: <1197552751-53480-6-git-send-email-win@wincent.com> (Wincent
-	Colaiuta's message of "Thu, 13 Dec 2007 14:32:31 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1762827AbXLNBEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 20:04:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759269AbXLNBEq
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 20:04:46 -0500
+Received: from main.gmane.org ([80.91.229.2]:41435 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757258AbXLNBEp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 20:04:45 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1J2yyj-00072q-5q
+	for git@vger.kernel.org; Fri, 14 Dec 2007 01:04:37 +0000
+Received: from abwv165.neoplus.adsl.tpnet.pl ([83.8.245.165])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 14 Dec 2007 01:04:37 +0000
+Received: from jnareb by abwv165.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 14 Dec 2007 01:04:37 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abwv165.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68207>
 
-Wincent Colaiuta <win@wincent.com> writes:
+Johannes Sixt wrote:
+> Paolo Bonzini schrieb:
+>> Nguyen Thai Ngoc Duy wrote:
+>>>
+>>> Is there an alternative to "git repack -a -d" that repacks everything
+>>> but the first pack?
+>> 
+>> That would be a pretty good idea for big repositories.  If I were to
+>> implement it, I would actually add a .git/config option like
+>> pack.permanent so that more than one pack could be made permanent; then
+>> to repack really really everything you'd need "git repack -a -a -d".
+> 
+> It's already there: If you have a pack .git/objects/pack/pack-foo.pack, then
+> "touch .git/objects/pack/pack-foo.keep" marks the pack as precious.
 
-> +test_expect_success 'check spaces as indentation (indent-with-non-tab: off)' '
-> +
-> +	git config core.whitespace "-indent-with-non-tab"
-> +	echo "                foo ();" > x &&
-> +	git diff --check
-> +
-> +'
-> +
-> +test_expect_failure 'check spaces as indentation (indent-with-non-tab: on)' '
-> +
-> +	git config core.whitespace "indent-with-non-tab" &&
-> +	echo "                foo ();" > x &&
-> +	git diff --check
-> +
-> +'
-> +
->  test_done
+Actually you can (and probably should) put the one line with the _reason_
+pack is to be kept in the *.keep file.
 
-It is good to check both positive and negative cases, but I would prefer
-avoiding test_expect_failure.  You cannot tell if the "git config"
-before the real test failed or "git diff --check" correctly reported
-whitespace breakage --- both would cause the test to pass.
+Hmmm... it is even documented in git-gc(1)... and git-index-pack(1) of
+all things.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
