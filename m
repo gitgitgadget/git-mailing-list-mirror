@@ -1,58 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-cvsexportcommit fails for huge commits
-Date: Thu, 13 Dec 2007 19:22:43 -0800
-Message-ID: <7vzlwevu2k.fsf@gitster.siamese.dyndns.org>
-References: <20071211200418.GA13815@mkl-desktop>
-	<20071212083154.GB7676@coredump.intra.peff.net>
-	<7vir348e0l.fsf@gitster.siamese.dyndns.org>
-	<20071212092512.GB20799@coredump.intra.peff.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] provide advance warning of some future pack default changes
+Date: Thu, 13 Dec 2007 22:32:36 -0500 (EST)
+Message-ID: <alpine.LFD.0.999999.0712132227090.8467@xanadu.home>
+References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.0.99999.0712031258460.9605@xanadu.home>
+ <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Markus Klinik <markus.klinik@gmx.de>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Dec 14 04:23:29 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 04:33:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3195-0005rv-Kb
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 04:23:28 +0100
+	id 1J31IL-0007ie-5G
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 04:33:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755012AbXLNDXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 22:23:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755364AbXLNDXD
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 22:23:03 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49068 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754964AbXLNDXB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 22:23:01 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A2F288DA5;
-	Thu, 13 Dec 2007 22:22:55 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AA6D8DA4;
-	Thu, 13 Dec 2007 22:22:49 -0500 (EST)
-In-Reply-To: <20071212092512.GB20799@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 12 Dec 2007 04:25:12 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754703AbXLNDci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 22:32:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752895AbXLNDci
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 22:32:38 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:32676 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752005AbXLNDch (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 22:32:37 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JT00034YSI96X01@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 13 Dec 2007 22:32:34 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 0.999999 (LFD 847 2007-12-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68216>
 
-Jeff King <peff@peff.net> writes:
 
->> the path at the beginning happens to be longer than 1024 then you will
->> run path-less "cvs status"?
->
-> No, read the loop again. The length starts at 0, so we always go through
-> the loop body once.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-Sorry, you are right.
+---
 
-Perhaps pick a reasonably small but not insanely small value, like 16kB,
-forget about the atomicity issues for now, as an interim improvement
-patch?
+On Mon, 3 Dec 2007, Junio C Hamano wrote:
+
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > Two things I would like to see in the next version (1.5.5) as well, for 
+> > which we could provide early warnings now:
+> >
+> >  - repack.usedeltabaseoffset defaulting to true
+> >
+> >  - pack.indexversion defaulting to 2
+> 
+> I think the former would be sensible, the latter I fear might be a bit
+> too new but I do not recall the exact version dependency.
+> 
+> Could you draft a patch to ReleaseNotes to explain the consequences of
+> these changes using ordinary user's vocabulary, like:
+> 
+> 	Starting v1.5.5, repack.usedeltabaseoffset will default to true,
+> 	which will give denser packfile (i.e. more efficient storage).
+> 	The downside is that git older than version X will not be able
+> 	to use a repository packed using this setting.
+
+Here it is.
+
+diff --git a/Documentation/RelNotes-1.5.4.txt b/Documentation/RelNotes-1.5.4.txt
+index 6645565..d6fd3dd 100644
+--- a/Documentation/RelNotes-1.5.4.txt
++++ b/Documentation/RelNotes-1.5.4.txt
+@@ -43,6 +43,17 @@ Deprecation notices
+  * "git peek-remote" is deprecated, as "git ls-remote" was written in C
+    and works for all transports, and will be removed in the future.
+ 
++ * From v1.5.5, the repack.usedeltabaseoffset config option will default
++   to true, which will give denser packfile (i.e. more efficient storage).
++   The downside is that git older than version 1.4.4 will not be able
++   to directly use a repository packed using this setting.
++
++ * From v1.5.5, the pack.indexversion config option will default to 2,
++   which is slightly more efficient, and makes repacking more immune to
++   data corruptions.  Git older than version 1.5.2 may revert to version 1
++   of the pack index with a manual "git index-pack" to be able to directly
++   access corresponding pack files.
++
+ 
+ Updates since v1.5.3
+ --------------------
