@@ -1,61 +1,50 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Johannes Sixt <johannes.sixt@telecom.at>
 Subject: Re: [PATCH 1/2] Fix config lockfile handling.
-Date: Fri, 14 Dec 2007 19:29:03 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712141928240.27959@racer.site>
-References: <1197660157-24109-1-git-send-email-krh@redhat.com>
- <1197660157-24109-2-git-send-email-krh@redhat.com>
+Date: Fri, 14 Dec 2007 20:32:15 +0100
+Message-ID: <20071214193216.13C795A873@dx.sixt.local>
+References: <1197660157-24109-1-git-send-email-krh@redhat.com> <1197660157-24109-2-git-send-email-krh@redhat.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811741-1647359555-1197660543=:27959"
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Dec 14 20:31:27 2007
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Kristian =?ISO-8859-15?Q?H=F8gsberg?= <krh@redhat.com>,
+	git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Dec 14 20:36:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3GFg-00039G-HV
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 20:31:16 +0100
+	id 1J3GK1-0004vB-QC
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 20:35:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762911AbXLNT3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 14:29:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759438AbXLNT3Q
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 14:29:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42584 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760886AbXLNT3O (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 14:29:14 -0500
-Received: (qmail invoked by alias); 14 Dec 2007 19:29:12 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp046) with SMTP; 14 Dec 2007 20:29:12 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18PT+koB9UP7/6ZguCP+WwH6AJbsAeimtTq9QEHkQ
-	LXZbp3ihKGoZFh
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1197660157-24109-2-git-send-email-krh@redhat.com>
-X-Y-GMX-Trusted: 0
+	id S1759605AbXLNTcV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Dec 2007 14:32:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764886AbXLNTcU
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 14:32:20 -0500
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:47334 "EHLO
+	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763425AbXLNTcS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 14:32:18 -0500
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp5.srv.eunet.at (Postfix) with ESMTP id 486EC13A755;
+	Fri, 14 Dec 2007 20:32:16 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 13C795A873;
+	Fri, 14 Dec 2007 20:32:16 +0100 (CET)
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68331>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Kristian H=F8gsberg wrote:
 
----1463811741-1647359555-1197660543=:27959
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+> When we commit or roll back the lock file the fd is automatically clo=
+sed,
+> so don't do that again.  Also, just keep the lock on the stack.
 
-Hi,
+IIRC, locks are accessed from atexit(), e.g. during a die(). So you mus=
+t not
+put one on the stack.
 
-On Fri, 14 Dec 2007, Kristian Høgsberg wrote:
-
-> -	struct lock_file *lock = NULL;
-> +	struct lock_file lock;
-
-AFAICT this cannot work.  At least not reliably.  An atexit() handler will 
-access all (even closed) lockfiles.
-
-Ciao,
-Dscho
----1463811741-1647359555-1197660543=:27959--
+-- Hannes
