@@ -1,79 +1,73 @@
-From: Jing Xue <jingxue@digizenstudio.com>
-Subject: [PATCH] Makes 'git-stash show' stay quiet when there are no
-	stashes.
-Date: Thu, 13 Dec 2007 20:28:38 -0500
-Message-ID: <20071214012838.GA8914@fawkes>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [Funky] "git -p cmd" inside a bare repository
+Date: Thu, 13 Dec 2007 17:29:23 -0800
+Message-ID: <7vmysexdvw.fsf@gitster.siamese.dyndns.org>
+References: <20071129122139.GA11176@laptop>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 14 02:29:25 2007
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 02:30:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J2zMV-0003rm-UO
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 02:29:12 +0100
+	id 1J2zNS-00047O-RR
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 02:30:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756841AbXLNB2s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 20:28:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755101AbXLNB2s
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 20:28:48 -0500
-Received: from k2smtpout03-02.prod.mesa1.secureserver.net ([64.202.189.172]:34757
-	"HELO k2smtpout03-02.prod.mesa1.secureserver.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754523AbXLNB2r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 20:28:47 -0500
-Received: (qmail 30548 invoked from network); 14 Dec 2007 01:28:47 -0000
-Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
-  by k2smtpout03-02.prod.mesa1.secureserver.net (64.202.189.172) with ESMTP; 14 Dec 2007 01:28:47 -0000
-Received: from localhost (unknown [127.0.0.1])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id E5AC4100A37
-	for <git@vger.kernel.org>; Fri, 14 Dec 2007 01:28:46 +0000 (UTC)
-Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
-	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zVWV6ci5S1Cr for <git@vger.kernel.org>;
-	Thu, 13 Dec 2007 20:28:40 -0500 (EST)
-Received: from fawkes.hq.digizenstudio.com (ip70-187-196-88.dc.dc.cox.net [70.187.196.88])
-	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 01AF1100099
-	for <git@vger.kernel.org>; Thu, 13 Dec 2007 20:28:39 -0500 (EST)
-Received: by fawkes.hq.digizenstudio.com (Postfix, from userid 1000)
-	id BA1E99ACFB; Thu, 13 Dec 2007 20:28:38 -0500 (EST)
-Mail-Followup-To: git <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+	id S1756203AbXLNB3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Dec 2007 20:29:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756528AbXLNB3r
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 20:29:47 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41383 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755101AbXLNB3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 20:29:47 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E55F082E9;
+	Thu, 13 Dec 2007 20:29:35 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C7F6E82E4;
+	Thu, 13 Dec 2007 20:29:25 -0500 (EST)
+In-Reply-To: <20071129122139.GA11176@laptop> (=?utf-8?B?Tmd1eeG7hW4gVGg=?=
+ =?utf-8?B?w6FpIE5n4buNYw==?= Duy's message
+	of "Thu, 29 Nov 2007 19:21:39 +0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68209>
+
+If you have a bare repository and try this there:
+
+	$ PAGER=head git show HEAD:gcc/ChangeLog
+
+it works as expected, but if you explicitly ask for pagination, like
+this:
+
+	$ PAGER=head git -p show HEAD:gcc/ChangeLog
+
+you would get a very funky error message:
+
+	fatal: ambiguous argument 'HEAD:gcc/ChangeLog': unknown revision or path not in the working tree.
+	Use '--' to separate paths from revisions
+
+as if we are working with a repository with working tree.
+
+I originally noticed this with ls-tree.  The symptom is a bit different:
+
+	$ git -p ls-tree HEAD
+	fatal: Not a valid object name HEAD
 
 
-(I tried to send this trivial patch for a couple of times using
-git-send-email, but somehow it never turned up.)
 
-Currently when there are no stashes, 'git stash show' basically aborts with an
-error message from rev-parse: "fatal: Needed a single revision", which can be
-confusing. This patch makes git-stash keep quiet and exit gracefully in that
-case.
-
----
- git-stash.sh |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index f16fd9c..dbdaeaf 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -119,6 +119,10 @@ show_stash () {
- 		flags=--stat
- 	fi
- 	s=$(git rev-parse --revs-only --no-flags --default $ref_stash "$@")
-+	if test -z "$s"
-+	then
-+		exit 0
-+	fi
- 
- 	w_commit=$(git rev-parse --verify "$s") &&
- 	b_commit=$(git rev-parse --verify "$s^") &&
--- 
-1.5.4.rc0.1.g3696
+I _think_ what is happening is that setup_pager() tries to run
+git_config(), which runs setup(), and then RUN_SETUP set for "ls-tree"
+(or "show") internal command runs setup again.  HEAD is given to
+resolve_ref() and git_path("%s", ref) makes it to ".git/HEAD", even
+though in a bare repository git_dir should be set to ".", and of course
+we cannot find such a path in the git directory.
