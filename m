@@ -1,74 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Fix config lockfile handling.
-Date: Fri, 14 Dec 2007 13:18:30 -0800
-Message-ID: <7vwsrhotzt.fsf@gitster.siamese.dyndns.org>
-References: <1197660157-24109-1-git-send-email-krh@redhat.com>
-	<1197660157-24109-2-git-send-email-krh@redhat.com>
-	<Pine.LNX.4.64.0712141928240.27959@racer.site>
-	<7vmysdqbui.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0712142015240.27959@racer.site>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: testsuite failures in mainline...
+Date: Fri, 14 Dec 2007 22:45:33 +0100
+Message-ID: <20071214214533.GA4943@steel.home>
+References: <20071214.104312.103638776.davem@davemloft.net> <7vfxy5rsui.fsf@gitster.siamese.dyndns.org> <20071214.111736.258936000.davem@davemloft.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Dec 14 22:19:17 2007
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: David Miller <davem@davemloft.net>
+X-From: git-owner@vger.kernel.org Fri Dec 14 22:46:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3HwD-0002Oa-B1
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 22:19:17 +0100
+	id 1J3IM3-0003to-OM
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 22:46:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756303AbXLNVSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 16:18:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754587AbXLNVSw
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 16:18:52 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60688 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754044AbXLNVSv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 16:18:51 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 578358D90;
-	Fri, 14 Dec 2007 16:18:45 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 397B18D86;
-	Fri, 14 Dec 2007 16:18:40 -0500 (EST)
-In-Reply-To: <Pine.LNX.4.64.0712142015240.27959@racer.site> (Johannes
-	Schindelin's message of "Fri, 14 Dec 2007 20:15:54 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753740AbXLNVph (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 16:45:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753522AbXLNVph
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 16:45:37 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:61156 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751984AbXLNVpg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 16:45:36 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTvwij8=
+Received: from tigra.home (Fcaa0.f.strato-dslnet.de [195.4.202.160])
+	by post.webmailer.de (klopstock mo46) (RZmta 14.6)
+	with ESMTP id D03caajBEJGB7v ; Fri, 14 Dec 2007 22:45:34 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 0C5FF277AE;
+	Fri, 14 Dec 2007 22:45:34 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 774FD56D22; Fri, 14 Dec 2007 22:45:33 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20071214.111736.258936000.davem@davemloft.net>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68350>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+David Miller, Fri, Dec 14, 2007 20:17:36 +0100:
+> ++ git show-ref -q refs/remotes/local/master
+> ++ git branch my3 local/master
+> fatal: Out of memory, malloc failed
 
->> > AFAICT this cannot work.  At least not reliably.  An atexit() handler 
->> > will access all (even closed) lockfiles.
->> 
->> Correct.  It cannot be on the stack.
->
-> Note that this behaviour will be another obstacle to libification.
+Something unusual about the system? Like a malloc debugger in
+LD_PRELOAD configuration?
 
-By your definition of "obstacle", there is no work at all in
-libification if the system is obstacle free.
+Maybe you could retry with a little bit instrumentation?
+(The program last failed (git-branch) is normally very benign...)
 
-Libification is all about removing run-once-and-exit and atexit() is
-just a part of it.
+Something like this:
 
-I think we can do this step-by-step by first introducing a new function
-"get_lockfile()" that takes a list of active lockfiles (perhaps that
-would be a part of "client context" thing in the library) and gives back
-a lockfile structure allocated on heap, registers it to the list of
-lockfiles that need to be eventually cleaned up, and another function
-"rollback_lockfiles()" that take the list of lockfiles in the "client
-context" and rolls them all back.  Once there is such a "client contex",
-in the current unlibified "main" routines can then declare a global
-client context, obtain and use lockfiles for that context, and directly
-call rollback_lockfiles() from the atexit() handler.
 
-But that is all post 1.5.4.
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 79eb10e..a9cc249 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -230,7 +230,8 @@ static inline char* xstrdup(const char *str)
+ 	return ret;
+ }
+ 
+-static inline void *xmalloc(size_t size)
++#define xmalloc(size) xmalloc_((size),__FILE__,__LINE__)
++static inline void *xmalloc_(size_t size, const char *file, int line)
+ {
+ 	void *ret = malloc(size);
+ 	if (!ret && !size)
+@@ -241,7 +242,8 @@ static inline void *xmalloc(size_t size)
+ 		if (!ret && !size)
+ 			ret = malloc(1);
+ 		if (!ret)
+-			die("Out of memory, malloc failed");
++			die("Out of memory, malloc(%u) at %s:%d failed",
++			    size, file, line);
+ 	}
+ #ifdef XMALLOC_POISON
+ 	memset(ret, 0xA5, size);
+@@ -263,7 +265,8 @@ static inline char *xstrndup(const char *str, size_t len)
+ 	return xmemdupz(str, p ? p - str : len);
+ }
+ 
+-static inline void *xrealloc(void *ptr, size_t size)
++#define xrealloc(ptr,size) xrealloc_((ptr),(size),__FILE__,__LINE__)
++static inline void *xrealloc_(void *ptr, size_t size, const char *file, int line)
+ {
+ 	void *ret = realloc(ptr, size);
+ 	if (!ret && !size)
+@@ -274,7 +277,8 @@ static inline void *xrealloc(void *ptr, size_t size)
+ 		if (!ret && !size)
+ 			ret = realloc(ptr, 1);
+ 		if (!ret)
+-			die("Out of memory, realloc failed");
++			die("Out of memory, realloc(%u) at %s:%d failed",
++			    size, file, line);
+ 	}
+ 	return ret;
+ }
