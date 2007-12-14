@@ -1,77 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [Funky] "git -p cmd" inside a bare repository
-Date: Fri, 14 Dec 2007 20:37:15 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712142036290.27959@racer.site>
-References: <20071129122139.GA11176@laptop> <7vmysexdvw.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0712141943280.27959@racer.site> <7vejdpqbbh.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Don't use the pager when running "git diff --check"
+Date: Fri, 14 Dec 2007 12:54:30 -0800
+Message-ID: <7v1w9pq9o9.fsf@gitster.siamese.dyndns.org>
+References: <1197552751-53480-2-git-send-email-win@wincent.com>
+	<1197575138-58070-1-git-send-email-win@wincent.com>
+	<20071214045127.GC10169@sigill.intra.peff.net>
+	<7vmysdx3la.fsf@gitster.siamese.dyndns.org>
+	<26AEA0A9-9F15-4245-9D27-61050DA57E6F@wincent.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811741-21559708-1197664635=:27959"
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 14 21:37:56 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 21:55:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3HI4-00048t-He
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 21:37:48 +0100
+	id 1J3HYo-0001wo-1d
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 21:55:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754131AbXLNUh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 15:37:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753683AbXLNUh0
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 15:37:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36772 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753113AbXLNUhZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 15:37:25 -0500
-Received: (qmail invoked by alias); 14 Dec 2007 20:37:23 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp019) with SMTP; 14 Dec 2007 21:37:23 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19mMFtpfnVmSAKIL2RdorY0dgHFCmO8UVXL9g1jzq
-	fPWJ1OmKBs5h57
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vejdpqbbh.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1753751AbXLNUyo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Dec 2007 15:54:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753524AbXLNUyn
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 15:54:43 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57977 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752718AbXLNUyn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Dec 2007 15:54:43 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 559DF9D8C;
+	Fri, 14 Dec 2007 15:54:36 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id ADACF9D8B;
+	Fri, 14 Dec 2007 15:54:32 -0500 (EST)
+In-Reply-To: <26AEA0A9-9F15-4245-9D27-61050DA57E6F@wincent.com> (Wincent
+	Colaiuta's message of "Fri, 14 Dec 2007 08:47:44 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68345>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Wincent Colaiuta <win@wincent.com> writes:
 
----1463811741-21559708-1197664635=:27959
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+> El 14/12/2007, a las 6:11, Junio C Hamano escribi=C3=B3:
+>
+>> You are right.  While I do not personally miss paging output, it is =
+a
+>> regression not to page --check output by default.
+>
+> I thought this was ok because "git diff --exit-code" also produces
+> useful output and also turns off the pager.
 
-Hi,
-
-On Fri, 14 Dec 2007, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > I have no time left to work on git for a few days, so I cannot even 
-> > review your patch.  But Jeff's patch being smaller, I could, and 
-> > AFAICT it solves the problem.
-> 
-> We have more than a few days ;-) Hope you are feeling better now.
-> 
-> You got familialized yourself with the work-tree part because the 
-> initial round was so broken and you had to step in during the last round 
-> (unfortuantely ;-), and Nguyễn also is familiar with that part of the 
-> code.  It would be nice if we can have a proper fix that is not papering 
-> over deeper breakage.
-
-Like always, you are correct.
-
-Will look into it over the weekend (although I will only be able to report 
-back on Monday, due to the wonderful administrators who broke my internet 
-connection at home).
-
-Ciao,
-Dscho
-
----1463811741-21559708-1197664635=:27959--
+It is different.  --exit-code was that way from day one.  The primary
+use of --check has been (and I suspect it will continue to be) for
+people to _view_ the diff, spot problems so that they can fix them up,
+and for that use case, exit code does not matter but pageability does.
+You are introducing a new behaviour and a new use case --- that does no=
+t
+give you a license to break other existing use cases.
