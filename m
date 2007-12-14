@@ -1,69 +1,62 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] provide advance warning of some future pack default changes
-Date: Fri, 14 Dec 2007 08:38:51 -0500 (EST)
-Message-ID: <alpine.LFD.0.999999.0712140836140.8467@xanadu.home>
-References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.0.99999.0712031258460.9605@xanadu.home>
- <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.0.999999.0712132227090.8467@xanadu.home>
- <m3fxy5qwbq.fsf@roke.D-201>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: git-cvsexportcommit fails for huge commits
+Date: Fri, 14 Dec 2007 14:47:03 +0100
+Message-ID: <200712141447.05039.robin.rosenberg.lists@dewire.com>
+References: <20071211200418.GA13815@mkl-desktop> <20071214044554.GB10169@sigill.intra.peff.net> <20071214091546.GA20907@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 14 14:39:26 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Markus Klinik <markus.klinik@gmx.de>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Dec 14 14:46:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3Al0-0008Er-A6
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 14:39:14 +0100
+	id 1J3ArF-0002PM-NK
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 14:45:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751227AbXLNNiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 08:38:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750886AbXLNNiw
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 08:38:52 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:12033 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750804AbXLNNiw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 08:38:52 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JT1002NKKKRZG60@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 14 Dec 2007 08:38:51 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <m3fxy5qwbq.fsf@roke.D-201>
-User-Agent: Alpine 0.999999 (LFD 847 2007-12-06)
+	id S1751289AbXLNNpA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 08:45:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751287AbXLNNpA
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 08:45:00 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:22268 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1750872AbXLNNo7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 08:44:59 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 662808033AB;
+	Fri, 14 Dec 2007 14:35:28 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id lMnWN7VvJnO0; Fri, 14 Dec 2007 14:35:27 +0100 (CET)
+Received: from [10.9.0.9] (unknown [10.9.0.9])
+	by dewire.com (Postfix) with ESMTP id BDC0E80284D;
+	Fri, 14 Dec 2007 14:35:25 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20071214091546.GA20907@coredump.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68304>
 
-On Fri, 14 Dec 2007, Jakub Narebski wrote:
-
-> Nicolas Pitre <nico@cam.org> writes:
+fredag 14 december 2007 skrev Jeff King:
+> On Thu, Dec 13, 2007 at 11:45:54PM -0500, Jeff King wrote:
 > 
-> > + * From v1.5.5, the repack.usedeltabaseoffset config option will default
-> > +   to true, which will give denser packfile (i.e. more efficient storage).
-> > +   The downside is that git older than version 1.4.4 will not be able
-> > +   to directly use a repository packed using this setting.
-> > +
-> > + * From v1.5.5, the pack.indexversion config option will default to 2,
-> > +   which is slightly more efficient, and makes repacking more immune to
-> > +   data corruptions.  Git older than version 1.5.2 may revert to version 1
-> > +   of the pack index with a manual "git index-pack" to be able to directly
-> > +   access corresponding pack files.
+> > So it seems that we could probably go with something more like 64K, and
+> > then only truly pathological cases should trigger the behavior.
 > 
-> Which means what? Local clone with shortcut (hardlinking and remotes)?
-> Dumb protocols (http, ftp, rsync)?
+> So here is a cleaned up patch. It bumps the maximum size to 64kB, adds
+> scalar support (nobody uses it, but it makes sense for the interface to
+> match that of safe_pipe_capture -- I am even tempted to just replace
+> safe_pipe_capture entirely and convert the few other callers), and
+> cleans up the unused safe_pipe_capture_blob.
 
-Right, or simply shared repo over NFS or the like.
+Wouldn't using the POSIX::ARG_MAX constant work?
 
-The 1.5.5 release notes will contain a note reminding people to set the 
-corresponding config variables if they wish to retain the legacy 
-behaviors.
-
-
-Nicolas
+-- robin
