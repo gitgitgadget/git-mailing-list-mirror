@@ -1,92 +1,66 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] provide advance warning of some future pack default changes
-Date: Thu, 13 Dec 2007 22:32:36 -0500 (EST)
-Message-ID: <alpine.LFD.0.999999.0712132227090.8467@xanadu.home>
-References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.0.99999.0712031258460.9605@xanadu.home>
- <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFH] convert shortlog to use parse_options
+Date: Thu, 13 Dec 2007 23:08:03 -0500
+Message-ID: <20071214040803.GA10169@sigill.intra.peff.net>
+References: <20071213055226.GA3636@coredump.intra.peff.net> <20071213090604.GA12398@artemis.madism.org> <20071213091055.GA5674@coredump.intra.peff.net> <20071213093536.GC12398@artemis.madism.org> <7vbq8u4ho8.fsf@gitster.siamese.dyndns.org> <20071213180347.GE1224@artemis.madism.org> <1197570521.28742.0.camel@hinata.boston.redhat.com> <1197571656.28742.13.camel@hinata.boston.redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 14 04:33:01 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Dec 14 05:08:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J31IL-0007ie-5G
-	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 04:33:01 +0100
+	id 1J31qr-0007e4-FR
+	for gcvg-git-2@gmane.org; Fri, 14 Dec 2007 05:08:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754703AbXLNDci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Dec 2007 22:32:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752895AbXLNDci
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 22:32:38 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:32676 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752005AbXLNDch (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Dec 2007 22:32:37 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JT00034YSI96X01@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 13 Dec 2007 22:32:34 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 0.999999 (LFD 847 2007-12-06)
+	id S1761845AbXLNEII convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Dec 2007 23:08:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761798AbXLNEIH
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Dec 2007 23:08:07 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4481 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761288AbXLNEIG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Dec 2007 23:08:06 -0500
+Received: (qmail 14781 invoked by uid 111); 14 Dec 2007 04:08:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 13 Dec 2007 23:08:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Dec 2007 23:08:03 -0500
+Content-Disposition: inline
+In-Reply-To: <1197571656.28742.13.camel@hinata.boston.redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68217>
 
+On Thu, Dec 13, 2007 at 01:47:36PM -0500, Kristian H=F8gsberg wrote:
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+> Oops, sorry about that.  I just wanted to say we shouldn't jump throu=
+gh
+> all these hoops to make the option parser support every type of optio=
+n
+> there ever was in the git command line ui.  A lot of these were proba=
+bly
+> decided somewhat arbitrarily by whoever implemented the command.
+> Instead it's an opportunity to retroactively enforce some consistency
+> and predictability to the various option-styles that have been
+> hand-rolled over time in different git commands.
 
----
+I agree. I am already a little bit uncomfortable with the "--abbrev 10"
+won't work but "--foo 10" will, because it requires that the user
+remember which arguments are optional and which are required. But
+switching it to "--abbrev 10 works, but --abbrev $foo does not, unless
+of course $foo is an integer, in which case you must use --abbrev=3D$fo=
+o"
+is just a little bit too DWIM. E.g., if you are scripting, it's just on=
+e
+more source of error (if I have $foo, how must I write --abbrev $foo fo=
+r
+it to ensure that I _don't_ trigger the optional argument?).
 
-On Mon, 3 Dec 2007, Junio C Hamano wrote:
-
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > Two things I would like to see in the next version (1.5.5) as well, for 
-> > which we could provide early warnings now:
-> >
-> >  - repack.usedeltabaseoffset defaulting to true
-> >
-> >  - pack.indexversion defaulting to 2
-> 
-> I think the former would be sensible, the latter I fear might be a bit
-> too new but I do not recall the exact version dependency.
-> 
-> Could you draft a patch to ReleaseNotes to explain the consequences of
-> these changes using ordinary user's vocabulary, like:
-> 
-> 	Starting v1.5.5, repack.usedeltabaseoffset will default to true,
-> 	which will give denser packfile (i.e. more efficient storage).
-> 	The downside is that git older than version X will not be able
-> 	to use a repository packed using this setting.
-
-Here it is.
-
-diff --git a/Documentation/RelNotes-1.5.4.txt b/Documentation/RelNotes-1.5.4.txt
-index 6645565..d6fd3dd 100644
---- a/Documentation/RelNotes-1.5.4.txt
-+++ b/Documentation/RelNotes-1.5.4.txt
-@@ -43,6 +43,17 @@ Deprecation notices
-  * "git peek-remote" is deprecated, as "git ls-remote" was written in C
-    and works for all transports, and will be removed in the future.
- 
-+ * From v1.5.5, the repack.usedeltabaseoffset config option will default
-+   to true, which will give denser packfile (i.e. more efficient storage).
-+   The downside is that git older than version 1.4.4 will not be able
-+   to directly use a repository packed using this setting.
-+
-+ * From v1.5.5, the pack.indexversion config option will default to 2,
-+   which is slightly more efficient, and makes repacking more immune to
-+   data corruptions.  Git older than version 1.5.2 may revert to version 1
-+   of the pack index with a manual "git index-pack" to be able to directly
-+   access corresponding pack files.
-+
- 
- Updates since v1.5.3
- --------------------
+-Peff
