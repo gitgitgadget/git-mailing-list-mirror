@@ -1,62 +1,63 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] gitweb: Make config_to_multi return [] instead of
-	[undef]
-Date: Sat, 15 Dec 2007 16:05:01 +0100
-Message-ID: <20071215150501.GM10769@machine.or.cz>
-References: <200712151534.50951.jnareb@gmail.com> <200712151536.33296.jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: trim_common_tail bug?
+Date: Sat, 15 Dec 2007 10:51:50 -0500
+Message-ID: <20071215155150.GA24810@coredump.intra.peff.net>
+References: <20071215111621.GA8139@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 15 16:05:55 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 15 16:52:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3Ya8-0002R5-16
-	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 16:05:45 +0100
+	id 1J3ZJJ-00086P-4g
+	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 16:52:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757607AbXLOPFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2007 10:05:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756988AbXLOPFF
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Dec 2007 10:05:05 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:56588 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754212AbXLOPFE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Dec 2007 10:05:04 -0500
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 932B65A73C; Sat, 15 Dec 2007 16:05:01 +0100 (CET)
+	id S1754106AbXLOPvy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2007 10:51:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753653AbXLOPvy
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Dec 2007 10:51:54 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2006 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751989AbXLOPvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Dec 2007 10:51:54 -0500
+Received: (qmail 6269 invoked by uid 111); 15 Dec 2007 15:51:52 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 15 Dec 2007 10:51:52 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 15 Dec 2007 10:51:50 -0500
 Content-Disposition: inline
-In-Reply-To: <200712151536.33296.jnareb@gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <20071215111621.GA8139@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68392>
 
-On Sat, Dec 15, 2007 at 03:36:32PM +0100, Jakub Narebski wrote:
-> From: Petr Baudis <pasky@suse.cz>
-> Date: Sat, 8 Dec 2007 12:30:59 +0100
-> Subject: [PATCH] gitweb: Make config_to_multi return [] instead of [undef]
-> 
-> This is important for the list of clone urls, where if there are
-> no per-repository clone URL configured, the default base URLs
-> are never used for URL construction without this patch.
-> 
-> Add tests for different ways of setting project URLs, just in case.
-> Note that those tests in current form wouldn't detect breakage fixed
-> by this patch, as it only checks for errors and not for expected
-> output.
-> 
-> Signed-off-by: Petr Baudis <pasky@suse.cz>
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+On Sat, Dec 15, 2007 at 06:16:21AM -0500, Jeff King wrote:
 
-Acked-by: Petr Baudis <pasky@suse.cz>
+> Something seems to be not quite right with the trim_common_tail code in
+> xdiff-interface.c. The diff I just sent for contrib/completion looks
+> fine (as I sent it) when I comment out trim_common_tail. But using
+> the current master, it looks like this:
 
-Thank you all for catching the defined($val). :-)
+Hrm. It feels like there is an off-by-one when recovering the context
+lines; we end the inner loop at the newline, but then we never skip past
+it. So we end up counting only one line total, and even that ends up
+with a missing newline. Something like this fixes it for me, but
+somebody please double check.
 
--- 
-				Petr "Pasky" Baudis
-We don't know who it was that discovered water, but we're pretty sure
-that it wasn't a fish.		-- Marshall McLuhan
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index 700def2..eb60e88 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -124,6 +124,8 @@ static void trim_common_tail(mmfile_t *a, mmfile_t *b, long ctx)
+ 	for (i = 0, recovered = 0; recovered < trimmed && i <= ctx; i++) {
+ 		while (recovered < trimmed && ap[recovered] != '\n')
+ 			recovered++;
++		if (recovered < trimmed && ap[recovered] == '\n')
++			recovered++;
+ 	}
+ 	a->size -= (trimmed - recovered);
+ 	b->size -= (trimmed - recovered);
