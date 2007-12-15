@@ -1,47 +1,47 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Make config_to_multi return [] instead of [undef]
-Date: Sat, 15 Dec 2007 15:36:32 +0100
-Message-ID: <200712151536.33296.jnareb@gmail.com>
+Subject: [PATCH] gitweb: Teach "a=blob" action to be more lenient about blob/file mime type
+Date: Sat, 15 Dec 2007 15:41:49 +0100
+Message-ID: <200712151541.50404.jnareb@gmail.com>
 References: <200712151534.50951.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: Junio Hamano <gitster@pobox.com>, Petr Baudis <pasky@suse.cz>
+Cc: Junio Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 15 15:42:41 2007
+X-From: git-owner@vger.kernel.org Sat Dec 15 15:43:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3YDs-0004XE-8J
-	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 15:42:36 +0100
+	id 1J3YEH-0004eE-8i
+	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 15:43:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754332AbXLOOmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2007 09:42:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757323AbXLOOmK
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Dec 2007 09:42:10 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:18877 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754332AbXLOOmH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Dec 2007 09:42:07 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so72311fga.17
-        for <git@vger.kernel.org>; Sat, 15 Dec 2007 06:42:04 -0800 (PST)
+	id S1757429AbXLOOmS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2007 09:42:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757323AbXLOOmS
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Dec 2007 09:42:18 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:18451 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754212AbXLOOmK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Dec 2007 09:42:10 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so1336411ugc.16
+        for <git@vger.kernel.org>; Sat, 15 Dec 2007 06:42:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=iWKm1mMes6XjznD91M0bhbPkA+3CUU0QAh+Z8lj2+6g=;
-        b=wptWsJhzshCDrxjPKjitMkdX99LufV15/o6AZ826/Ox+2PlKgyRNMJM1/DjS38wpBAxBk6MbHJ3IrvcqU4GjxnhVRxi9eHh0YY43HyerMZKf4S4Hcaz69sfFRYziRWsUj9/E6wi/daDylH+arS38hMzkP9JyYjC7tMTv4gODZFo=
+        bh=Xu2t/iaLWOKQ4qj5fvTGs2ogV8DBxbkPnyXi4TIOY8I=;
+        b=piSC/X5PIJakF7LAliplv02JD30DXVkK54ZMoKvX8CrPZeEdCLSUtIIVvklG72EPSIDftuM/CpCPTtu/DIri7xIi5LcoqCpQFcBQ8G4aUU/PwL3weaiCy+Ku6RL113mBMLZsR/WfDE+7baHRsM8BBMpY2Ei+jgJoJVFQshLiVO8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Kor/vZ9QjuyZsyoPzMn571IP0zkN6ul3HEs/rUS2zZ3HIA3azq0yKLkkXz83ZOuGXGo3vw9mECmB+iQVvpUCMmojXZkIZoggUIRdccqPzwS3iZ1H/1jgsSjvFPHjjh4a+iSDZhUXm68B4uUeL9VxJ8PDDF88jZbrxRJsAx0zHAU=
-Received: by 10.86.89.4 with SMTP id m4mr4273195fgb.12.1197729724471;
-        Sat, 15 Dec 2007 06:42:04 -0800 (PST)
+        b=ojUVtfSMyc/Td+kjLmL5VYAqWI4Rc0h0sudMfUaffhOwrRw5Drrrw6cuj70VWNQAaPTfKTUXSOQ2MmZKdIwi4yoKU5Pj9FP/Yt/pJRYrP2I9/D4o36jITu5xGFrv+Q1/1jS8THKMUJ1OsP4iQ7+IdLwyw9Aqk+YTNnFEbSRFrek=
+Received: by 10.66.248.5 with SMTP id v5mr670253ugh.17.1197729728570;
+        Sat, 15 Dec 2007 06:42:08 -0800 (PST)
 Received: from ?192.168.1.11? ( [83.8.240.142])
-        by mx.google.com with ESMTPS id b17sm14288867fka.2007.12.15.06.42.02
+        by mx.google.com with ESMTPS id b17sm14288867fka.2007.12.15.06.42.06
         (version=SSLv3 cipher=OTHER);
-        Sat, 15 Dec 2007 06:42:03 -0800 (PST)
+        Sat, 15 Dec 2007 06:42:07 -0800 (PST)
 User-Agent: KMail/1.9.3
 In-Reply-To: <200712151534.50951.jnareb@gmail.com>
 Content-Disposition: inline
@@ -49,87 +49,74 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68389>
 
-From: Petr Baudis <pasky@suse.cz>
-Date: Sat, 8 Dec 2007 12:30:59 +0100
-Subject: [PATCH] gitweb: Make config_to_multi return [] instead of [undef]
+Since 930cf7dd7cc6b87d173f182230763e1f1913d319 'blob' action knows the
+file type; if the file type is not "text/*" or one of common network
+image formats/mimetypes (gif, png, jpeg) then the action "blob"
+defaulted to "blob_plain".  This caused the problem if mimetypes file
+was not well suited for web, for example returning "application/x-sh"
+for "*.sh" shell scripts, instead of "text/plain" (or other "text/*").
 
-This is important for the list of clone urls, where if there are
-no per-repository clone URL configured, the default base URLs
-are never used for URL construction without this patch.
+Now "blob" action defaults to "blob_plain" ('raw' view) only if file
+is of type which is neither "text/*" nor "image/{gif,png,jpeg}"
+AND it is binary file.  Otherwise it assumes that it can be displayed
+either in <img> tag ("image/*" mimetype), or can be displayed line by
+line (otherwise).
 
-Add tests for different ways of setting project URLs, just in case.
-Note that those tests in current form wouldn't detect breakage fixed
-by this patch, as it only checks for errors and not for expected
-output.
-
-Signed-off-by: Petr Baudis <pasky@suse.cz>
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-Originally by Petr Baudis, changed to use defined($val). I have also
-added parentheses for better readibility.
+Original version of the patch has a simple bug.
 
-I have added tests _then_ I have realized that in current form they
-cannot detect regression corrected by this patch. So if you want, you
-can not apply changes to test (and remove paragraph about test from
-commit message).
-
-The fact that patch was not applied might be cause by the lack of Ack
-from pasky.
-
- gitweb/gitweb.perl                     |    2 +-
- t/t9500-gitweb-standalone-no-errors.sh |   25 +++++++++++++++++++++++++
- 2 files changed, 26 insertions(+), 1 deletions(-)
+ gitweb/gitweb.perl |   22 +++++++++++-----------
+ 1 files changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 24b3158..a746a85 100755
+index 448dca7..6256641 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -1511,7 +1511,7 @@ sub config_to_int {
- sub config_to_multi {
-        my $val = shift;
- 
--       return ref($val) ? $val : [ $val ];
-+       return ref($val) ? $val : (defined($val) ? [ $val ] : []);
- }
- 
- sub git_get_project_config {
-diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
-index 35fff3d..2d3d4e8 100755
---- a/t/t9500-gitweb-standalone-no-errors.sh
-+++ b/t/t9500-gitweb-standalone-no-errors.sh
-@@ -558,6 +558,31 @@ test_expect_success \
- test_debug 'cat gitweb.log'
- 
- # ----------------------------------------------------------------------
-+# testing config_to_multi / cloneurl
-+
-+test_expect_success \
-+       'URL: no project URLs, no base URL' \
-+       'gitweb_run "p=.git;a=summary"'
-+test_debug 'cat gitweb.log'
-+
-+test_expect_success \
-+       'URL: project URLs via gitweb.url' \
-+       'git config --add gitweb.url git://example.com/git/trash.git &&
-+        git config --add gitweb.url http://example.com/git/trash.git &&
-+        gitweb_run "p=.git;a=summary"'
-+test_debug 'cat gitweb.log'
-+
-+cat >.git/cloneurl <<\EOF
-+git://example.com/git/trash.git
-+http://example.com/git/trash.git
-+EOF
-+
-+test_expect_success \
-+       'URL: project URLs via cloneurl file' \
-+       'gitweb_run "p=.git;a=summary"'
-+test_debug 'cat gitweb.log'
-+
-+# ----------------------------------------------------------------------
- # gitweb config and repo config
- 
- cat >>gitweb_config.perl <<EOF
+@@ -4290,7 +4290,7 @@ sub git_blob {
+ 	open my $fd, "-|", git_cmd(), "cat-file", "blob", $hash
+ 		or die_error(undef, "Couldn't cat $file_name, $hash");
+ 	my $mimetype = blob_mimetype($fd, $file_name);
+-	if ($mimetype !~ m!^(?:text/|image/(?:gif|png|jpeg)$)!) {
++	if ($mimetype !~ m!^(?:text/|image/(?:gif|png|jpeg)$)! && -B $fd) {
+ 		close $fd;
+ 		return git_blob_plain($mimetype);
+ 	}
+@@ -4331,16 +4331,7 @@ sub git_blob {
+ 	}
+ 	git_print_page_path($file_name, "blob", $hash_base);
+ 	print "<div class=\"page_body\">\n";
+-	if ($mimetype =~ m!^text/!) {
+-		my $nr;
+-		while (my $line = <$fd>) {
+-			chomp $line;
+-			$nr++;
+-			$line = untabify($line);
+-			printf "<div class=\"pre\"><a id=\"l%i\" href=\"#l%i\" class=\"linenr\">%4i</a> %s</div>\n",
+-			       $nr, $nr, $nr, esc_html($line, -nbsp=>1);
+-		}
+-	} elsif ($mimetype =~ m!^image/!) {
++	if ($mimetype =~ m!^image/!) {
+ 		print qq!<img type="$mimetype"!;
+ 		if ($file_name) {
+ 			print qq! alt="$file_name" title="$file_name"!;
+@@ -4349,6 +4340,15 @@ sub git_blob {
+ 		      href(action=>"blob_plain", hash=>$hash,
+ 		           hash_base=>$hash_base, file_name=>$file_name) .
+ 		      qq!" />\n!;
++	} else {
++		my $nr;
++		while (my $line = <$fd>) {
++			chomp $line;
++			$nr++;
++			$line = untabify($line);
++			printf "<div class=\"pre\"><a id=\"l%i\" href=\"#l%i\" class=\"linenr\">%4i</a> %s</div>\n",
++			       $nr, $nr, $nr, esc_html($line, -nbsp=>1);
++		}
+ 	}
+ 	close $fd
+ 		or print "Reading blob failed.\n";
 -- 
 1.5.3.7
