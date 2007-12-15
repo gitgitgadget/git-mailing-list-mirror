@@ -1,67 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC 1/4] Add diff-diff, which compares the diffs of two commits
-Date: Sat, 15 Dec 2007 11:34:49 -0800
-Message-ID: <7vzlwblpk6.fsf@gitster.siamese.dyndns.org>
-References: <1197737505128-git-send-email-prohaska@zib.de>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: git merge --no-commit <branch>; does commit
+Date: Sat, 15 Dec 2007 20:37:41 +0100
+Message-ID: <20071215193741.GB3021@steel.home>
+References: <alpine.LSU.0.99999.0712132151080.5326@castor.milkiway.cos> <81b0412b0712131319h63609810m593f0e552d02a83c@mail.gmail.com> <alpine.LSU.0.99999.0712132224280.5606@castor.milkiway.cos> <20071214074925.GA3525@steel.home> <alpine.LSU.0.99999.0712151905280.4341@castor.milkiway.cos>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sat Dec 15 20:35:39 2007
+To: Michael Dressel <MichaelTiloDressel@t-online.de>
+X-From: git-owner@vger.kernel.org Sat Dec 15 20:38:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3cnS-0000pz-Gd
-	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 20:35:38 +0100
+	id 1J3cpr-0001cv-RV
+	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 20:38:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753037AbXLOTfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2007 14:35:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753517AbXLOTfE
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Dec 2007 14:35:04 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55363 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753037AbXLOTfC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Dec 2007 14:35:02 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E5613D25;
-	Sat, 15 Dec 2007 14:34:55 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C05633D24;
-	Sat, 15 Dec 2007 14:34:52 -0500 (EST)
-In-Reply-To: <1197737505128-git-send-email-prohaska@zib.de> (Steffen
-	Prohaska's message of "Sat, 15 Dec 2007 17:51:42 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754525AbXLOThq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2007 14:37:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755979AbXLOThq
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Dec 2007 14:37:46 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:64641 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751933AbXLOThp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Dec 2007 14:37:45 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtozW3g==
+Received: from tigra.home (Faa31.f.strato-dslnet.de [195.4.170.49])
+	by post.webmailer.de (mrclete mo21) (RZmta 14.6)
+	with ESMTP id 6069cbjBFHA8FK ; Sat, 15 Dec 2007 20:37:42 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 153DC277AE;
+	Sat, 15 Dec 2007 20:37:42 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id F0B6156D22; Sat, 15 Dec 2007 20:37:41 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <alpine.LSU.0.99999.0712151905280.4341@castor.milkiway.cos>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68410>
 
-Steffen Prohaska <prohaska@zib.de> writes:
-
-> At this point, I'm only seeking comments about the general direction.
-> The patches should not be applied to git.git.
+Michael Dressel, Sat, Dec 15, 2007 19:14:48 +0100:
+>> Maybe. Or maybe you misunderstood the meaning of --squash, which also
+>> is not a merge.
 >
->  - Do you think something like this would be helpful?
->  - Are similar approaches already available?
->  - How do you use git to support code review; besides discussing
->    patches on mailing lists?
+> Since "git merge --squash <branch>" does a merge of <branch> into the 
+> working tree why would you not call it a merge?
 
-I think there are other good building blocks you can use outside git to
-help reviewing evolution of patches (interdiff comes to mind).
+Because merge, in Git language, means connection histories. That one
+just mixes the text. That's different operation, kind of editing a
+file.
 
-When I receive a replacement series to a topic, I use RP script
-(available in my 'todo' branch and checked out in Meta/ directory in my
-work area, together with other scripts from 'todo'), which:
+> Anyway that was what I wanted. Merging <branch> (a topic branch) into my 
+> current branch (the main branch) but being able to create commits that are
+> more suitable for keeping in the history of the current branch than the
+> commits I created during developing on <branch>.
+> Would you recommend a different way of doing this?
 
- * finds where the older series were applied;
- * detaches HEAD at that commit, and apply the new series;
- * runs diff between the old and new;
- * updates the tip of that topic with the new series.
-
-After it finishes, "diff topic@{1} topic" becomes the incremental diff
-between the old and the new series, and if I do not like the end result,
-I can reset --hard back to topic@{1}.
+I would not recommend doing it at all. If I must, I'd rather use
+git-rebase -i (interactive rebase).
