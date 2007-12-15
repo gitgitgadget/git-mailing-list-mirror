@@ -1,71 +1,62 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Windows binaries for qgit 2.0
-Date: Sat, 15 Dec 2007 16:02:18 +0100
-Message-ID: <e5bfff550712150702p2675da8axed1f3db6273f619@mail.gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] gitweb: Make config_to_multi return [] instead of
+	[undef]
+Date: Sat, 15 Dec 2007 16:05:01 +0100
+Message-ID: <20071215150501.GM10769@machine.or.cz>
+References: <200712151534.50951.jnareb@gmail.com> <200712151536.33296.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Dec 15 16:02:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 15 16:05:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3YXN-0001jZ-6U
-	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 16:02:45 +0100
+	id 1J3Ya8-0002R5-16
+	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 16:05:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754603AbXLOPCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2007 10:02:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754212AbXLOPCU
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Dec 2007 10:02:20 -0500
-Received: from rv-out-0910.google.com ([209.85.198.185]:46725 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751989AbXLOPCT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Dec 2007 10:02:19 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1284988rvb.1
-        for <git@vger.kernel.org>; Sat, 15 Dec 2007 07:02:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=ugcjEl7KOPkSniOkWyqdLIhB6A7ApgiAb57XH+0dndA=;
-        b=ouhvTCrIWYTQV8D4vb+vY3VfVtDVB0gBzTHcEWciumN+0QjrFNV4R3VP54jUZCsJa+opKI9fAwY/KKbPpy7gAf1SDEor67kRjkDlraIIM7vJXTZXigXfjhE+b9kE2MNbrllu4+L8z4m4XcUIkto6yUHi6O7DKDvZtTghpeiA9ao=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=UVMiN0tO3wDyc0Uh1uWAQX/uxymvjS5Jklb9oX8hp1BSOcfLCYymPBjuDcJ5S13YthBkknVI2RBihfwJgalQbpFWJfA/ZJc1wZ9SHRC4qASuc49qdBrpekWz78QrXyKoEzw+EeBJ5yV6UTCDP38RUAum+Cwg8G3Fx7zuRElSQkI=
-Received: by 10.140.82.38 with SMTP id f38mr127788rvb.27.1197730938885;
-        Sat, 15 Dec 2007 07:02:18 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Sat, 15 Dec 2007 07:02:18 -0800 (PST)
+	id S1757607AbXLOPFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2007 10:05:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756988AbXLOPFF
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Dec 2007 10:05:05 -0500
+Received: from w241.dkm.cz ([62.24.88.241]:56588 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754212AbXLOPFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Dec 2007 10:05:04 -0500
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 932B65A73C; Sat, 15 Dec 2007 16:05:01 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <200712151536.33296.jnareb@gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68391>
 
-Due to a feature request on sourceforge qgit account:
+On Sat, Dec 15, 2007 at 03:36:32PM +0100, Jakub Narebski wrote:
+> From: Petr Baudis <pasky@suse.cz>
+> Date: Sat, 8 Dec 2007 12:30:59 +0100
+> Subject: [PATCH] gitweb: Make config_to_multi return [] instead of [undef]
+> 
+> This is important for the list of clone urls, where if there are
+> no per-repository clone URL configured, the default base URLs
+> are never used for URL construction without this patch.
+> 
+> Add tests for different ways of setting project URLs, just in case.
+> Note that those tests in current form wouldn't detect breakage fixed
+> by this patch, as it only checks for errors and not for expected
+> output.
+> 
+> Signed-off-by: Petr Baudis <pasky@suse.cz>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 
-http://sourceforge.net/tracker/index.php?func=detail&aid=1759403&group_id=139897&atid=744830
+Acked-by: Petr Baudis <pasky@suse.cz>
 
-I have cooked and uploaded a qgit.exe file with Qt4.3.3 statically
-linked in so to let Windows users that just want to give a shot to
-qgit the possibility to try it easily.
+Thank you all for catching the defined($val). :-)
 
-Normally I use debug shared Qt libraries for development, so after
-some effort I finally managed to build the static ones and finally to
-build qgit.exe
-
-Problem is that _this_ qgit.exe shows strange misbehaviour like 20X
-slower then the one I normally build for development,  there is also
-some strange artifacts with file history graph.
-
-I have a clue that is due to static Qt + mingw 3.4 problems, I have
-read something on it somewhere, but I would like to ask if someone has
-experienced the same problems when running qgit2.0 under Windows.
-
-BTW if someone is interested, in the sourceforge thread above there is
-the link to download this zipped file, testing is very easy and quick,
-just extract files where git.exe is and start qgit.exe...
-
-Thanks for any help
-Marco
+-- 
+				Petr "Pasky" Baudis
+We don't know who it was that discovered water, but we're pretty sure
+that it wasn't a fish.		-- Marshall McLuhan
