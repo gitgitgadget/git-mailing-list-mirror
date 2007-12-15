@@ -1,79 +1,48 @@
-From: Michael Dressel <MichaelTiloDressel@t-online.de>
-Subject: Re: git merge --no-commit <branch>; does commit
-Date: Sat, 15 Dec 2007 21:33:20 +0100 (CET)
-Message-ID: <alpine.LSU.0.99999.0712152124220.5151@castor.milkiway.cos>
-References: <alpine.LSU.0.99999.0712132151080.5326@castor.milkiway.cos> <81b0412b0712131319h63609810m593f0e552d02a83c@mail.gmail.com> <alpine.LSU.0.99999.0712132224280.5606@castor.milkiway.cos> <20071214074925.GA3525@steel.home>
- <alpine.LSU.0.99999.0712151905280.4341@castor.milkiway.cos> <20071215193741.GB3021@steel.home>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Post-1.5.4 stuff: builtin-checkout
+Date: Sat, 15 Dec 2007 15:44:16 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0712151529300.5349@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: B.Steinbrink@gmx.de, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 15 21:34:24 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 15 21:44:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3diH-0000u5-TZ
-	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 21:34:22 +0100
+	id 1J3dsK-0003ha-VY
+	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 21:44:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757798AbXLOUdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2007 15:33:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757831AbXLOUdf
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Dec 2007 15:33:35 -0500
-Received: from mailout09.sul.t-online.de ([194.25.134.84]:48534 "EHLO
-	mailout09.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757610AbXLOUde (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Dec 2007 15:33:34 -0500
-Received: from fwd33.aul.t-online.de 
-	by mailout09.sul.t-online.com with smtp 
-	id 1J3dhU-0002sP-00; Sat, 15 Dec 2007 21:33:32 +0100
-Received: from [192.168.2.100] (Th9IuBZVghpTxqiLg0Q+ahz82UH1xYJr3q+gczEFbEqIEnElOlEZX+U4dFWZ-xKgzU@[84.163.243.66]) by fwd33.t-online.de
-	with esmtp id 1J3dhJ-1kn2eG0; Sat, 15 Dec 2007 21:33:21 +0100
-X-X-Sender: michael@castor.milkiway.cos
-In-Reply-To: <20071215193741.GB3021@steel.home>
-User-Agent: Alpine 0.99999 (LSU 796 2007-11-08)
-X-ID: Th9IuBZVghpTxqiLg0Q+ahz82UH1xYJr3q+gczEFbEqIEnElOlEZX+U4dFWZ-xKgzU
-X-TOI-MSGID: b016c00b-1b43-4836-94a3-3623e4855716
+	id S1757638AbXLOUoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2007 15:44:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757927AbXLOUoS
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Dec 2007 15:44:18 -0500
+Received: from iabervon.org ([66.92.72.58]:59146 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756445AbXLOUoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Dec 2007 15:44:17 -0500
+Received: (qmail 14259 invoked by uid 1000); 15 Dec 2007 20:44:16 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 15 Dec 2007 20:44:16 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68415>
 
+I've got my builtin-checkout implementation at:
 
+ git://iabervon.org/~barkalow/git.git builtin-checkout
 
-On Sat, 15 Dec 2007, Alex Riesen wrote:
+This may be interesting to some other people at this point, despite it not 
+being relevant to 1.5.4, because (a) it includes a slew of small 
+preliminary patches to other stuff that might be useful for making other 
+things builtin and (b) these changes reflect my debugging of my naive 
+implementation of builtin-checkout, and may suggest things that might be 
+wrong in existing builtins that do multiple operations in the same 
+process.
 
-> Michael Dressel, Sat, Dec 15, 2007 19:14:48 +0100:
->>> Maybe. Or maybe you misunderstood the meaning of --squash, which also
->>> is not a merge.
->>
->> Since "git merge --squash <branch>" does a merge of <branch> into the
->> working tree why would you not call it a merge?
->
-> Because merge, in Git language, means connection histories. That one
-> just mixes the text. That's different operation, kind of editing a
-> file.
+I'll actually send patches to the list post-1.5.4 of all this stuff.
 
-That's a nice clarification. In my case I wanted that "just mixes the 
-text" thing because I did aggressively do commits during development 
-trying out slightly different approaches and being able to go back to compare 
-them. These different games are not interesting to keep in the history 
-once a good solution has been found.
-
->
->> Anyway that was what I wanted. Merging <branch> (a topic branch) into my
->> current branch (the main branch) but being able to create commits that are
->> more suitable for keeping in the history of the current branch than the
->> commits I created during developing on <branch>.
->> Would you recommend a different way of doing this?
->
-> I would not recommend doing it at all. If I must, I'd rather use
-> git-rebase -i (interactive rebase).
->
->
-
-Yes I didn't use rebase sofar. I should consider it sometimes.
-
-Cheers,
-Michael
+	-Daniel
+*This .sig left intentionally blank*
