@@ -1,60 +1,91 @@
-From: =?ISO-8859-1?Q?Jos=E9?= Fonseca <jrfonseca@tungstengraphics.com>
-Subject: Re: [RFE/PATCH] git-fetch-rebase
-Date: Sat, 15 Dec 2007 00:37:05 +0000
-Message-ID: <1197679025.21175.40.camel@localhost>
-References: <1197670351.21175.33.camel@localhost>
-	 <7vy7bwomza.fsf@gitster.siamese.dyndns.org>
+From: Joel Becker <Joel.Becker@oracle.com>
+Subject: Re: [PATCH] provide advance warning of some future pack default
+	changes
+Date: Fri, 14 Dec 2007 16:42:30 -0800
+Message-ID: <20071215004230.GF7300@mail.oracle.com>
+References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.99999.0712031258460.9605@xanadu.home> <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.999999.0712132227090.8467@xanadu.home> <m3fxy5qwbq.fsf@roke.D-201> <alpine.LFD.0.999999.0712140836140.8467@xanadu.home> <20071214215206.GB7300@mail.oracle.com> <alpine.LFD.0.999999.0712141724260.8467@xanadu.home> <20071214223957.GC7300@mail.oracle.com> <alpine.LFD.0.999999.0712141744460.8467@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 15 01:38:10 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sat Dec 15 01:43:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3L2g-0000gY-9p
-	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 01:38:10 +0100
+	id 1J3L7v-0001u3-S5
+	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 01:43:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752336AbXLOAhr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Dec 2007 19:37:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751539AbXLOAhr
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 19:37:47 -0500
-Received: from fg-out-1718.google.com ([72.14.220.153]:12570 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750777AbXLOAhq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 19:37:46 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so12973fga.17
-        for <git@vger.kernel.org>; Fri, 14 Dec 2007 16:37:45 -0800 (PST)
-Received: by 10.86.50.8 with SMTP id x8mr3613232fgx.30.1197679064855;
-        Fri, 14 Dec 2007 16:37:44 -0800 (PST)
-Received: from ?192.168.0.105? ( [87.196.18.52])
-        by mx.google.com with ESMTPS id 4sm6699241fgg.2007.12.14.16.37.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 14 Dec 2007 16:37:44 -0800 (PST)
-In-Reply-To: <7vy7bwomza.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.12.2 
+	id S1755579AbXLOAnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 19:43:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755347AbXLOAnN
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 19:43:13 -0500
+Received: from rgminet01.oracle.com ([148.87.113.118]:50371 "EHLO
+	rgminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755478AbXLOAnL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 19:43:11 -0500
+Received: from agmgw2.us.oracle.com (agmgw2.us.oracle.com [152.68.180.213])
+	by rgminet01.oracle.com (Switch-3.2.4/Switch-3.1.6) with ESMTP id lBF0gmDN010419;
+	Fri, 14 Dec 2007 17:42:48 -0700
+Received: from acsmt356.oracle.com (acsmt356.oracle.com [141.146.40.156])
+	by agmgw2.us.oracle.com (Switch-3.2.0/Switch-3.2.0) with ESMTP id lBE5dDj5026863;
+	Fri, 14 Dec 2007 17:42:47 -0700
+Received: from ca-server1.us.oracle.com by acsmt355.oracle.com
+	with ESMTP id 6376808741197679352; Fri, 14 Dec 2007 16:42:32 -0800
+Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.67)
+	(envelope-from <joel.becker@oracle.com>)
+	id 1J3L6t-0000at-Gd; Fri, 14 Dec 2007 16:42:31 -0800
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999999.0712141744460.8467@xanadu.home>
+X-Burt-Line: Trees are cool.
+X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever
+	come to perfection.
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Whitelist: TRUE
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68366>
 
-On Fri, 2007-12-14 at 15:50 -0800, Junio C Hamano wrote:
-> Jos=E9 Fonseca <jrfonseca@tungstengraphics.com> writes:
->=20
-> > For those who use git as a better centralized SCM, it became a comm=
-on
-> > practice to do git-fetch + git-rebase instead of just git-pull, so =
-that
-> > the history is linear, instead of being full of tiny merges.=20
->=20
-> "git pull --rebase"?
+On Fri, Dec 14, 2007 at 05:46:14PM -0500, Nicolas Pitre wrote:
+> On Fri, 14 Dec 2007, Joel Becker wrote:
+> 
+> > On Fri, Dec 14, 2007 at 05:34:49PM -0500, Nicolas Pitre wrote:
+> > > But you know what? repositories with the change affecting 1.4.4 users 
+> > > are _already_ out there and no one complained recently.  Anyone pushing 
+> > 
+> > 	I did, as did people I work with.  It's on git-list, even.  I'm
+> > pretty sure it corrupted too.
+> 
+> Could you please give me a reference to such message, so to verify that 
+> we're actually talking about the same thing?
 
-I didn't find it before. It seems a very recent functionality. Anyway,
-I'm glad it exists now.
+	The relevant message is:
 
-Cheers,
+Message-ID: <7vveaindgp.fsf@gitster.siamese.dyndns.org>
 
-Jos=E9 Fonseca
+See the paragraphs at the bottom.  The thread, started by me, begins
+with:
+
+Message-ID: <20070910205429.GE27837@tasint.org>
+
+Joel
+
+-- 
+
+"You must remember this:
+ A kiss is just a kiss,
+ A sigh is just a sigh.
+ The fundamental rules apply
+ As time goes by."
+
+Joel Becker
+Principal Software Developer
+Oracle
+E-mail: joel.becker@oracle.com
+Phone: (650) 506-8127
