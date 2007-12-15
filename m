@@ -1,78 +1,59 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] provide advance warning of some future pack default changes
-Date: Fri, 14 Dec 2007 20:08:05 -0500 (EST)
-Message-ID: <alpine.LFD.0.999999.0712142004480.8467@xanadu.home>
-References: <7vk5nwu51x.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.0.99999.0712031258460.9605@xanadu.home>
- <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.0.999999.0712132227090.8467@xanadu.home>
- <m3fxy5qwbq.fsf@roke.D-201>
- <alpine.LFD.0.999999.0712140836140.8467@xanadu.home>
- <20071214215206.GB7300@mail.oracle.com>
- <alpine.LFD.0.999999.0712141724260.8467@xanadu.home>
- <20071214223957.GC7300@mail.oracle.com>
- <alpine.LFD.0.999999.0712141744460.8467@xanadu.home>
- <20071215004230.GF7300@mail.oracle.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: testsuite failures in mainline...
+Date: Sat, 15 Dec 2007 01:18:59 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712150117330.27959@racer.site>
+References: <20071214214533.GA4943@steel.home> <20071214.142448.52660507.davem@davemloft.net>
+ <7v7ijgq311.fsf@gitster.siamese.dyndns.org> <20071214.160845.185161708.davem@davemloft.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Joel Becker <Joel.Becker@oracle.com>
-X-From: git-owner@vger.kernel.org Sat Dec 15 02:08:31 2007
+Cc: gitster@pobox.com, raa.lkml@gmail.com, git@vger.kernel.org
+To: David Miller <davem@davemloft.net>
+X-From: git-owner@vger.kernel.org Sat Dec 15 02:19:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3LW3-0007s4-EZ
-	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 02:08:31 +0100
+	id 1J3Lgn-0001z9-VP
+	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 02:19:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753429AbXLOBIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 20:08:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751765AbXLOBII
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 20:08:08 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:24799 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751636AbXLOBIH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 20:08:07 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JT2004TGGHIEE80@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 14 Dec 2007 20:08:06 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20071215004230.GF7300@mail.oracle.com>
-User-Agent: Alpine 0.999999 (LFD 847 2007-12-06)
+	id S1754408AbXLOBTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Dec 2007 20:19:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754348AbXLOBTL
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 20:19:11 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50898 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752377AbXLOBTK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Dec 2007 20:19:10 -0500
+Received: (qmail invoked by alias); 15 Dec 2007 01:19:07 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp002) with SMTP; 15 Dec 2007 02:19:07 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/7wg5QJgX7tol1w8hka0RzYmVx/w1EN/ajuoF9gM
+	kLm/+XS2fy8XPf
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071214.160845.185161708.davem@davemloft.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68368>
 
-On Fri, 14 Dec 2007, Joel Becker wrote:
+Hi,
 
-> On Fri, Dec 14, 2007 at 05:46:14PM -0500, Nicolas Pitre wrote:
-> > On Fri, 14 Dec 2007, Joel Becker wrote:
-> > 
-> > > On Fri, Dec 14, 2007 at 05:34:49PM -0500, Nicolas Pitre wrote:
-> > > > But you know what? repositories with the change affecting 1.4.4 users 
-> > > > are _already_ out there and no one complained recently.  Anyone pushing 
-> > > 
-> > > 	I did, as did people I work with.  It's on git-list, even.  I'm
-> > > pretty sure it corrupted too.
-> > 
-> > Could you please give me a reference to such message, so to verify that 
-> > we're actually talking about the same thing?
-> 
-> 	The relevant message is:
-> 
-> Message-ID: <7vveaindgp.fsf@gitster.siamese.dyndns.org>
-> 
-> See the paragraphs at the bottom.  The thread, started by me, begins
-> with:
-> 
-> Message-ID: <20070910205429.GE27837@tasint.org>
+On Fri, 14 Dec 2007, David Miller wrote:
 
-I don't have such emails in my mail folders anymore.
+> -	char space[FLEX_ARRAY]; /* more */
+> +	uintmax_t space[FLEX_ARRAY]; /* more */
 
+Usually, a much better idea is to use
 
-Nicolas
+	union {
+		char cp[FLEX_ARRAY];
+		uintmax_t up[FLEX_ARRAY];
+	}
+
+because that is exactly the reason union was invented for.
+
+Ciao,
+Dscho
