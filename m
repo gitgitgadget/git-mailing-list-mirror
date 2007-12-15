@@ -1,250 +1,111 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2] git-help: add "help.format" config variable.
-Date: Sat, 15 Dec 2007 05:57:28 +0100
-Message-ID: <20071215055728.857b1924.chriscool@tuxfamily.org>
+From: Jing Xue <jingxue@digizenstudio.com>
+Subject: [PATCH] Replace the cryptic messages from "git stash show".
+Date: Sat, 15 Dec 2007 00:14:25 -0500
+Message-ID: <20071215051425.GA9118@fawkes>
+References: <20071214012838.GA8914@fawkes> <7vir32xdn3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Dec 15 05:51:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 15 06:15:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3Ozw-0000lM-IA
-	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 05:51:37 +0100
+	id 1J3PMd-0004if-1s
+	for gcvg-git-2@gmane.org; Sat, 15 Dec 2007 06:15:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753643AbXLOEvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Dec 2007 23:51:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754276AbXLOEvL
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Dec 2007 23:51:11 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:41737 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753643AbXLOEvJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Dec 2007 23:51:09 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 177FC1AB2B2;
-	Sat, 15 Dec 2007 05:51:08 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id C8DD71AB2C0;
-	Sat, 15 Dec 2007 05:51:07 +0100 (CET)
-X-Mailer: Sylpheed 2.4.7 (GTK+ 2.12.1; i486-pc-linux-gnu)
+	id S1750807AbXLOFOj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2007 00:14:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750800AbXLOFOj
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Dec 2007 00:14:39 -0500
+Received: from k2smtpout05-02.prod.mesa1.secureserver.net ([64.202.189.57]:38186
+	"HELO k2smtpout05-02.prod.mesa1.secureserver.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750799AbXLOFOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Dec 2007 00:14:38 -0500
+Received: (qmail 30935 invoked from network); 15 Dec 2007 05:14:38 -0000
+Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
+  by k2smtpout05-02.prod.mesa1.secureserver.net (64.202.189.57) with ESMTP; 15 Dec 2007 05:14:37 -0000
+Received: from localhost (unknown [127.0.0.1])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id E0501100B60;
+	Sat, 15 Dec 2007 05:14:37 +0000 (UTC)
+Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
+	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id A8F+jlWXgQrE; Sat, 15 Dec 2007 00:14:27 -0500 (EST)
+Received: from fawkes.hq.digizenstudio.com (ip70-187-196-88.dc.dc.cox.net [70.187.196.88])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 44091100A10;
+	Sat, 15 Dec 2007 00:14:27 -0500 (EST)
+Received: by fawkes.hq.digizenstudio.com (Postfix, from userid 1000)
+	id E45DA9ACFB; Sat, 15 Dec 2007 00:14:25 -0500 (EST)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <7vir32xdn3.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68374>
 
-This config variable makes it possible to choose the default format
-used to display help. This format will be used only if no option
-like -a|--all|-i|--info|-m|--man|-w|--web is passed to "git-help".
+On Thu, Dec 13, 2007 at 05:34:40PM -0800, Junio C Hamano wrote:
+> 
+> I agree "git stash show" should not give cryptic error message, but I
+> think you should do this only when the user did not explicitly say which
+> stash to show (that is, we should still give error message if the user
+> said "git stash show garbage").
 
-The following values are possible for this variable:
+Good point. Actually I found out that if there _are_ some stashes and an
+invalid name is given, the current behavior is still printing
+refs/stash, which I think is not quite right. So I also try to fix that
+while I'm at it.
 
-	- "man"  --> "man" program is used
-	- "info" --> "info" program is used
-	- "web"  --> "git-browse-help" is used
+Now "git stash show" will keep quiet and just exit if there are no
+stashes at all. "git stash show some-non-existent-stash" will always
+print a clear message indicating the case.
 
-By default we still show help using "man".
-
-By the way, this patch also adds -m|--man command line option to
-use "man" even if something else is set in the "help.format"
-config variable.
-
-Note that this patch also revert some recent changes in
-"git-browse-help" because they prevented to look for config
-variables in the global configuration file.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/git-help.txt |   37 +++++++++++++++++++++++++-
- git-browse-help.sh         |   10 +++---
- help.c                     |   61 ++++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 99 insertions(+), 9 deletions(-)
+ git-stash.sh |   23 ++++++++++++++++++++---
+ 1 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-index ac9e15d..31ec403 100644
---- a/Documentation/git-help.txt
-+++ b/Documentation/git-help.txt
-@@ -7,7 +7,7 @@ git-help - display help information about git
+diff --git a/git-stash.sh b/git-stash.sh
+index f16fd9c..40e93dd 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -116,13 +116,30 @@ show_stash () {
+ 	flags=$(git rev-parse --no-revs --flags "$@")
+ 	if test -z "$flags"
+ 	then
+-		flags=--stat
++		diff_flags=--stat
++	else
++		diff_flags=$flags
++	fi
++	s=$(git rev-parse --revs-only --no-flags "$@")
++	if test -z "$s"
++	then
++		arguments=$@
++		if test "${flags}" = "${arguments}"
++		then
++			s=$(git rev-parse --revs-only --no-flags $ref_stash)
++			if test -z "$s"
++			then
++				return 0
++			fi
++		else
++			eval stash_name=\$$#
++			die "Can't find any stash with name $stash_name"
++		fi
+ 	fi
+-	s=$(git rev-parse --revs-only --no-flags --default $ref_stash "$@")
  
- SYNOPSIS
- --------
--'git help' [-a|--all|-i|--info|-w|--web] [COMMAND]
-+'git help' [-a|--all|-i|--info|-m|--man|-w|--web] [COMMAND]
- 
- DESCRIPTION
- -----------
-@@ -21,7 +21,7 @@ printed on the standard output.
- 
- If a git command is named, a manual page for that command is brought
- up. The 'man' program is used by default for this purpose, but this
--can be overriden by other options.
-+can be overriden by other options or configuration variables.
- 
- Note that 'git --help ...' is identical as 'git help ...' because the
- former is internally converted into the latter.
-@@ -36,6 +36,11 @@ OPTIONS
- 	Use the 'info' program to display the manual page, instead of
- 	the 'man' program that is used by default.
- 
-+-m|--man::
-+	Use the 'man' program to display the manual page. This may be
-+	used to override a value set in the 'help.format'
-+	configuration variable.
-+
- -w|--web::
- 	Use a web browser to display the HTML manual page, instead of
- 	the 'man' program that is used by default.
-@@ -54,6 +59,34 @@ is available in PATH.
- Note that the script tries, as much as possible, to display the HTML
- page in a new tab on an already opened browser.
- 
-+CONFIGURATION VARIABLES
-+-----------------------
-+
-+If no command line option is passed, the 'help.format' configuration
-+variable will be checked. The following values are supported for this
-+variable; they make 'git-help' behave as their corresponding command
-+line option:
-+
-+* "man" corresponds to '-m|--man',
-+* "info" corresponds to '-i|--info',
-+* "web" or "html" correspond to '-w|--web',
-+
-+The 'help.browser', 'web.browser' and 'browser.<tool>.path' will also
-+be checked if the 'web' format is choosen (either by command line
-+option or configuration variable). See '-w|--web' in the OPTIONS
-+section above.
-+
-+Note that these configuration variables should probably be set using
-+the '--global' flag, for example like this:
-+
-+------------------------------------------------
-+$ git config --global help.format web
-+$ git config --global web.browser firefox
-+------------------------------------------------
-+
-+as they are probably more user specific than repository specific.
-+See gitlink:git-config[1] for more information about this.
-+
- Author
- ------
- Written by Junio C Hamano <gitster@pobox.com> and the git-list
-diff --git a/git-browse-help.sh b/git-browse-help.sh
-index b465911..6fdf041 100755
---- a/git-browse-help.sh
-+++ b/git-browse-help.sh
-@@ -39,7 +39,7 @@ valid_tool() {
+ 	w_commit=$(git rev-parse --verify "$s") &&
+ 	b_commit=$(git rev-parse --verify "$s^") &&
+-	git diff $flags $b_commit $w_commit
++	git diff $diff_flags $b_commit $w_commit
  }
  
- init_browser_path() {
--	test -z "$GIT_DIR" || browser_path=`git config browser.$1.path`
-+	browser_path=`git config browser.$1.path`
- 	test -z "$browser_path" && browser_path=$1
- }
- 
-@@ -71,7 +71,7 @@ do
-     shift
- done
- 
--if test -z "$browser" && test -n "$GIT_DIR"
-+if test -z "$browser"
- then
-     for opt in "help.browser" "web.browser"
-     do
-@@ -79,9 +79,9 @@ then
- 	test -z "$browser" || break
-     done
-     if test -n "$browser" && ! valid_tool "$browser"; then
--	    echo >&2 "git config option $opt set to unknown browser: $browser"
--	    echo >&2 "Resetting to default..."
--	    unset browser
-+	echo >&2 "git config option $opt set to unknown browser: $browser"
-+	echo >&2 "Resetting to default..."
-+	unset browser
-     fi
- fi
- 
-diff --git a/help.c b/help.c
-index c96b167..af0a433 100644
---- a/help.c
-+++ b/help.c
-@@ -8,6 +8,44 @@
- #include "exec_cmd.h"
- #include "common-cmds.h"
- 
-+static const char *help_default_format;
-+
-+static enum help_format {
-+	man_format,
-+	info_format,
-+	web_format,
-+} help_format = man_format;
-+
-+static void parse_help_format(const char *format)
-+{
-+	if (!format) {
-+		help_format = man_format;
-+		return;
-+	}
-+	if (!strcmp(format, "man")) {
-+		help_format = man_format;
-+		return;
-+	}
-+	if (!strcmp(format, "info")) {
-+		help_format = info_format;
-+		return;
-+	}
-+	if (!strcmp(format, "web") || !strcmp(format, "html")) {
-+		help_format = web_format;
-+		return;
-+	}
-+	die("unrecognized help format '%s'", format);
-+}
-+
-+static int git_help_config(const char *var, const char *value)
-+{
-+	if (!strcmp(var, "help.format")) {
-+		help_default_format = xstrdup(value);
-+		return 0;
-+	}
-+	return git_default_config(var, value);
-+}
-+
- /* most GUI terminals set COLUMNS (although some don't export it) */
- static int term_columns(void)
- {
-@@ -331,8 +369,27 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 		show_info_page(argc > 2 ? argv[2] : NULL);
- 	}
- 
--	else
--		show_man_page(help_cmd);
-+	else if (!strcmp(help_cmd, "--man") || !strcmp(help_cmd, "-m")) {
-+		show_man_page(argc > 2 ? argv[2] : NULL);
-+	}
-+
-+	else {
-+		git_config(git_help_config);
-+		if (help_default_format)
-+			parse_help_format(help_default_format);
-+
-+		switch (help_format) {
-+		case man_format:
-+			show_man_page(help_cmd);
-+			break;
-+		case info_format:
-+			show_info_page(help_cmd);
-+			break;
-+		case web_format:
-+			show_html_page(help_cmd);
-+			break;
-+		}
-+	}
- 
- 	return 0;
- }
+ apply_stash () {
 -- 
-1.5.4.rc0.1099.ga9f2-dirty
+1.5.4.rc0.8.gd381b
