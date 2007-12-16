@@ -1,88 +1,82 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] whitespace: fix initial-indent checking
-Date: Sun, 16 Dec 2007 11:26:37 -0500
-Message-ID: <20071216162637.GA3934@fieldses.org>
-References: <7vodd4fb2f.fsf@gitster.siamese.dyndns.org> <1197776919-16121-1-git-send-email-bfields@citi.umich.edu> <1197776919-16121-2-git-send-email-bfields@citi.umich.edu> <1197776919-16121-3-git-send-email-bfields@citi.umich.edu> <1197776919-16121-4-git-send-email-bfields@citi.umich.edu> <1197776919-16121-5-git-send-email-bfields@citi.umich.edu> <fk2pua$b4p$1@ger.gmane.org> <25FDB05F-3E85-4E08-90BE-1BE468C07805@wincent.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio Hamano <junkio@cox.net>
+From: "J. Bruce Fields" <bfields@citi.umich.edu>
+Subject: [PATCH 1/6] whitespace: fix off-by-one error in non-space-in-indent checking
+Date: Sun, 16 Dec 2007 11:31:37 -0500
+Message-ID: <1197822702-5262-2-git-send-email-bfields@citi.umich.edu>
+References: <B54C9483-90BE-4B45-A3B7-39FACF0E9F62@wincent.com>
+ <1197822702-5262-1-git-send-email-bfields@citi.umich.edu>
+Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@citi.umich.edu>
 To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Sun Dec 16 17:27:04 2007
+X-From: git-owner@vger.kernel.org Sun Dec 16 17:32:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3wKV-0004k1-Cz
-	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 17:27:03 +0100
+	id 1J3wPV-0006dk-AL
+	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 17:32:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763750AbXLPQ0l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Dec 2007 11:26:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754086AbXLPQ0l
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Dec 2007 11:26:41 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:43701 "EHLO fieldses.org"
+	id S933035AbXLPQbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2007 11:31:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933071AbXLPQbo
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Dec 2007 11:31:44 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:60077 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754007AbXLPQ0k (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2007 11:26:40 -0500
+	id S1765880AbXLPQbn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2007 11:31:43 -0500
 Received: from bfields by fieldses.org with local (Exim 4.68)
 	(envelope-from <bfields@fieldses.org>)
-	id 1J3wK5-0001Jw-Mo; Sun, 16 Dec 2007 11:26:37 -0500
-Content-Disposition: inline
-In-Reply-To: <25FDB05F-3E85-4E08-90BE-1BE468C07805@wincent.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id 1J3wP0-0001Qh-NJ; Sun, 16 Dec 2007 11:31:42 -0500
+X-Mailer: git-send-email debian.1.5.3.7.1-dirty
+In-Reply-To: <1197822702-5262-1-git-send-email-bfields@citi.umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68464>
 
-On Sun, Dec 16, 2007 at 11:00:55AM +0100, Wincent Colaiuta wrote:
-> El 16/12/2007, a las 10:08, Jakub Narebski escribi=C3=B3:
->
->> J. Bruce Fields wrote:
->>
->>> This allows catching initial indents like '\t        ' (a tab follo=
-wed
->>> by 8 spaces), while previously indent-with-non-tab caught only inde=
-nts
->>> that consisted entirely of spaces.
->>
->> I prefer to use tabs for indent, but _spaces_ for align. While previ=
-ous,
->> less strict version of check catches indent using spaces, this one a=
-lso
->> catches _align_ using spaces.
+If there were no tabs, and the last space was at position 7, then
+positions 0..7 had spaces, so there were 8 spaces.
 
-No, the previous version didn't work for the align-with-spaces case
-either.  Consider, for example,
+Update test to check exactly this case.
 
-struct widget *find_widget_by_color(struct color *color,
-                                    int nth_match, unsigned long flags)
+Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
+---
+ t/t4015-diff-whitespace.sh |    4 ++--
+ ws.c                       |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-If following a "indent-with-tabs, align-with-spaces" policy, then the
-initial whitespaace on the second line should be purely spaces
-(otherwise adjusting the tab stops would ruin the alignment).  But
-indent-with-non-tab would flag this as incorrect even before my fix.
-
-> I'd say that Jakub's is a fairly common use case (it's used in many p=
-laces=20
-> in the Git codebase too, I think) so it would be a bad thing to chang=
-e the=20
-> behaviour of "indent-with-non-tab".
->
-> If you also want to check for "align-with-non-tab" then it really sho=
-uld be=20
-> a separate, optional class of whitespace error.
-
-I would agree with you if it were not for the fact that if you're using
-an "indent-with-tabs, align-with-spaces" policy then the only indent
-whitespace problems that you can flag automatically are space-before-ta=
-b
-problems; anything else requires knowledge of the language syntax.
-
-So indent-with-non-tab has only ever been useful for projects that
-insist on tabs for all sequences of 8 spaces in the initial whitespace.
-
---b.
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 9bff8f5..0f16bca 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -298,7 +298,7 @@ test_expect_success 'check space before tab in indent (space-before-tab: on)' '
+ test_expect_success 'check spaces as indentation (indent-with-non-tab: off)' '
+ 
+ 	git config core.whitespace "-indent-with-non-tab"
+-	echo "                foo ();" > x &&
++	echo "        foo ();" > x &&
+ 	git diff --check
+ 
+ '
+@@ -306,7 +306,7 @@ test_expect_success 'check spaces as indentation (indent-with-non-tab: off)' '
+ test_expect_success 'check spaces as indentation (indent-with-non-tab: on)' '
+ 
+ 	git config core.whitespace "indent-with-non-tab" &&
+-	echo "                foo ();" > x &&
++	echo "        foo ();" > x &&
+ 	! git diff --check
+ 
+ '
+diff --git a/ws.c b/ws.c
+index 46cbdd6..5ebd109 100644
+--- a/ws.c
++++ b/ws.c
+@@ -159,5 +159,5 @@ unsigned check_and_emit_line(const char *line, int len, unsigned ws_rule,
+ 	}
+ 
+ 	/* Check for indent using non-tab. */
+-	if ((ws_rule & WS_INDENT_WITH_NON_TAB) && leading_space >= 8)
++	if ((ws_rule & WS_INDENT_WITH_NON_TAB) && leading_space >= 7)
+ 		result |= WS_INDENT_WITH_NON_TAB;
+\ No newline at end of file
+-- 
+1.5.4.rc0.41.gf723
