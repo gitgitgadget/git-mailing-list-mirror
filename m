@@ -1,73 +1,65 @@
-From: Abdelrazak Younes <younes.a@free.fr>
-Subject: Re: Windows binaries for qgit 2.0
-Date: Sun, 16 Dec 2007 10:10:03 +0100
-Message-ID: <fk2q1f$bbh$1@ger.gmane.org>
-References: <e5bfff550712150702p2675da8axed1f3db6273f619@mail.gmail.com>	 <fk2juf$t25$1@ger.gmane.org>	 <e5bfff550712152355o7c8ef2f3j95f239697f77ccef@mail.gmail.com>	 <fk2p0f$961$1@ger.gmane.org> <e5bfff550712160105w3817a460v3db1bde15969fcf2@mail.gmail.com>
+From: Luke Diamand <luke@vidanti.com>
+Subject: Re: One of my commits is missing
+Date: Sun, 16 Dec 2007 09:11:31 +0000
+Message-ID: <4764EBC3.4090800@vidanti.com>
+References: <47645232.7050502@vidanti.com> <cmu-lmtpd-1776-1197757787-0@salieri>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 16 10:11:14 2007
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Dec 16 10:12:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3pWh-0006RJ-Od
-	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 10:11:12 +0100
+	id 1J3pXo-0006ee-Gf
+	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 10:12:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755643AbXLPJKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2007 04:10:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755699AbXLPJKs
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Dec 2007 04:10:48 -0500
-Received: from main.gmane.org ([80.91.229.2]:45442 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755616AbXLPJKr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2007 04:10:47 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1J3pVn-0006ST-44
-	for git@vger.kernel.org; Sun, 16 Dec 2007 09:10:15 +0000
-Received: from gre92-5-82-237-199-162.fbx.proxad.net ([82.237.199.162])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 16 Dec 2007 09:10:14 +0000
-Received: from younes.a by gre92-5-82-237-199-162.fbx.proxad.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 16 Dec 2007 09:10:14 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: gre92-5-82-237-199-162.fbx.proxad.net
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <e5bfff550712160105w3817a460v3db1bde15969fcf2@mail.gmail.com>
+	id S1756665AbXLPJLs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2007 04:11:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756076AbXLPJLr
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Dec 2007 04:11:47 -0500
+Received: from c2bthomr13.btconnect.com ([213.123.20.131]:11006 "EHLO
+	c2bthomr13.btconnect.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755378AbXLPJLq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2007 04:11:46 -0500
+Received: from salieri.ballroom.vidanti.com 
+	by c2bthomr13.btconnect.com
+	with ESMTP id DQX61387;
+	Sun, 16 Dec 2007 09:11:37 GMT
+Received: from [10.9.0.18]
+	by salieri.ballroom.vidanti.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <luke@vidanti.com>)
+	id 1J3pX5-0000JA-9X; Sun, 16 Dec 2007 09:11:35 +0000
+User-Agent: Icedove 1.5.0.14pre (X11/20071018)
+In-Reply-To: <cmu-lmtpd-1776-1197757787-0@salieri>
+X-Junkmail-Status: score=10/50, host=c2bthomr13.btconnect.com
+X-Junkmail-SD-Raw: score=unknown,
+	refid=str=0001.0A0B0204.4764EAA0.0192,ss=1,fgs=0,
+	ip=0.0.0.0,
+	so=2006-12-09 10:45:40,
+	dmn=5.4.3/2007-11-16
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68450>
 
-Marco Costalba wrote:
-> On Dec 16, 2007 9:52 AM, Abdelrazak Younes <younes.a@free.fr> wrote:
->> Hum, I can't imagine this is the reason, it might be for another reason,
->> most certainly the static compiling.
->>
+Thanks! That found it.
+
+Shawn O. Pearce wrote:
+> Luke Diamand <luke@vidanti.com> wrote:
+>> My last commit seems to have vanished, and I wonder if anyone knows 
+>> where it might have gone.
+> ...
+>> Looking through my history I don't see any signs of errant git-reset's 
+>> so I'm baffled.
 > 
-> Static compiling is indeed a highly suspect. I'm now compiling as
-> shared libraries, we will see...
-
-Another suspect is that under Windows, at least with MSVC, it is 
-strongly advised to not mix debug and release libraries as they have 
-different memory models. I am not sure to what extend this advice is 
-valid for mingw compiled libraries.
-
 > 
->> Well, for the LyX project we used to use and distribute the patched
->> version of Qt in order to compile it with MSVC. Now, since Qt4.3.2 the
->> MSVC compilation support is enabled in the official release so you don't
->> even have to patch it anymore. I can send you precompiled dll if you
->> want.
+> I'm baffled too.  Have a look at your HEAD reflog and see if you
+> can find it there (`git log -g`) as if you actually did in fact
+> create it with git-commit it should appear in that reflog for at
+> least the next 90 days (by default config anyway).
 > 
-> Sorry for the stupid question, but, what ddl ??
-
-The MSVC compiled Qt dlls :-)
-Sorry too, I guess I was not clear enough.
-
-Abdel.
