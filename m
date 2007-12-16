@@ -1,70 +1,64 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Windows binaries for qgit 2.0
-Date: Sun, 16 Dec 2007 10:05:37 +0100
-Message-ID: <e5bfff550712160105w3817a460v3db1bde15969fcf2@mail.gmail.com>
-References: <e5bfff550712150702p2675da8axed1f3db6273f619@mail.gmail.com>
-	 <fk2juf$t25$1@ger.gmane.org>
-	 <e5bfff550712152355o7c8ef2f3j95f239697f77ccef@mail.gmail.com>
-	 <fk2p0f$961$1@ger.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] whitespace: fix initial-indent checking
+Date: Sun, 16 Dec 2007 10:08:25 +0100
+Organization: At home
+Message-ID: <fk2pua$b4p$1@ger.gmane.org>
+References: <7vodd4fb2f.fsf@gitster.siamese.dyndns.org> <1197776919-16121-1-git-send-email-bfields@citi.umich.edu> <1197776919-16121-2-git-send-email-bfields@citi.umich.edu> <1197776919-16121-3-git-send-email-bfields@citi.umich.edu> <1197776919-16121-4-git-send-email-bfields@citi.umich.edu> <1197776919-16121-5-git-send-email-bfields@citi.umich.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Abdelrazak Younes" <younes.a@free.fr>
-X-From: git-owner@vger.kernel.org Sun Dec 16 10:06:16 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 16 10:09:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3pRl-0005Jm-Tb
-	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 10:06:06 +0100
+	id 1J3pUl-0005wN-MT
+	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 10:09:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755385AbXLPJFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2007 04:05:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755554AbXLPJFj
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Dec 2007 04:05:39 -0500
-Received: from rv-out-0910.google.com ([209.85.198.187]:52029 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755179AbXLPJFh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2007 04:05:37 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1476349rvb.1
-        for <git@vger.kernel.org>; Sun, 16 Dec 2007 01:05:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=MpYY1X4xVwDjViuNFtmPx9M3lsZn3uwEpOBw1tw98qA=;
-        b=ragVkpHEwLa90ntKF+olQpsCVZYlOvtN1jwq1KUF/fRuw76Loo3W5AI0agHFVoiohvHgRPBhp+6gHXnBW4r5pQIDkNUIn7exjrd5mvFBNjypMeE2cVxQXB2d+2IltQmlffjHe5pZvhnmU4nUidK13ka/x4yoJa2UnOdK1rReNdo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VgePHRqI6+kVuz0SEGe7p1fNiZY4fbrP2JeKCjxmzGXUnP5D4/hYRQokpLK4/wmo2TPaaDG3sdQPic2U8uDT3Mt0RZazO/njo9hSKQ2knMyKnVQ/1BvJpXa6yytN0yUgzwHWfG4SrW0zaF9KGC/bWeSCmSfHHBceNWmK8CQS0cg=
-Received: by 10.140.125.21 with SMTP id x21mr3092244rvc.234.1197795937474;
-        Sun, 16 Dec 2007 01:05:37 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Sun, 16 Dec 2007 01:05:37 -0800 (PST)
-In-Reply-To: <fk2p0f$961$1@ger.gmane.org>
-Content-Disposition: inline
+	id S1755946AbXLPJIs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Dec 2007 04:08:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755616AbXLPJIr
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Dec 2007 04:08:47 -0500
+Received: from main.gmane.org ([80.91.229.2]:45166 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755554AbXLPJIq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2007 04:08:46 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1J3pUE-00068K-AR
+	for git@vger.kernel.org; Sun, 16 Dec 2007 09:08:38 +0000
+Received: from abur199.neoplus.adsl.tpnet.pl ([83.8.189.199])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 16 Dec 2007 09:08:38 +0000
+Received: from jnareb by abur199.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 16 Dec 2007 09:08:38 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abur199.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68448>
 
-On Dec 16, 2007 9:52 AM, Abdelrazak Younes <younes.a@free.fr> wrote:
->
-> Hum, I can't imagine this is the reason, it might be for another reason,
-> most certainly the static compiling.
->
+J. Bruce Fields wrote:
 
-Static compiling is indeed a highly suspect. I'm now compiling as
-shared libraries, we will see...
+> This allows catching initial indents like '\t =A0 =A0 =A0 =A0' (a tab=
+ followed
+> by 8 spaces), while previously indent-with-non-tab caught only indent=
+s
+> that consisted entirely of spaces.
 
->
-> Well, for the LyX project we used to use and distribute the patched
-> version of Qt in order to compile it with MSVC. Now, since Qt4.3.2 the
-> MSVC compilation support is enabled in the official release so you don't
-> even have to patch it anymore. I can send you precompiled dll if you
-> want.
+I prefer to use tabs for indent, but _spaces_ for align. While previous=
+,
+less strict version of check catches indent using spaces, this one also
+catches _align_ using spaces.
 
-Sorry for the stupid question, but, what ddl ??
-
-Marco
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
