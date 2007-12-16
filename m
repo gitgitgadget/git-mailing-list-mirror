@@ -1,182 +1,149 @@
-From: Abdelrazak Younes <younes.a@free.fr>
-Subject: Re: Windows binaries for qgit 2.0
-Date: Sun, 16 Dec 2007 12:11:27 +0100
-Message-ID: <fk3153$rtb$1@ger.gmane.org>
-References: <e5bfff550712150702p2675da8axed1f3db6273f619@mail.gmail.com>	 <fk2juf$t25$1@ger.gmane.org>	 <e5bfff550712152355o7c8ef2f3j95f239697f77ccef@mail.gmail.com>	 <fk2p0f$961$1@ger.gmane.org>	 <e5bfff550712160105w3817a460v3db1bde15969fcf2@mail.gmail.com>	 <fk2q1f$bbh$1@ger.gmane.org> <e5bfff550712160242v54ce284emd31a29964770179c@mail.gmail.com>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: [PATCH] threaded pack-objects: Use condition variables for
+	thread communication.
+Date: Sun, 16 Dec 2007 13:05:58 +0100
+Message-ID: <20071216120558.GA4999@xp.machine.xx>
+References: <200712160018.54171.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030106010101090105000107"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 16 12:12:23 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Sun Dec 16 13:06:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3rPw-0007sH-8T
-	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 12:12:20 +0100
+	id 1J3sGd-00033L-Nd
+	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 13:06:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762037AbXLPLL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2007 06:11:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760524AbXLPLL5
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Dec 2007 06:11:57 -0500
-Received: from main.gmane.org ([80.91.229.2]:42168 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760639AbXLPLLz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2007 06:11:55 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1J3rPI-0003nB-K7
-	for git@vger.kernel.org; Sun, 16 Dec 2007 11:11:40 +0000
-Received: from gre92-5-82-237-199-162.fbx.proxad.net ([82.237.199.162])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 16 Dec 2007 11:11:40 +0000
-Received: from younes.a by gre92-5-82-237-199-162.fbx.proxad.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 16 Dec 2007 11:11:40 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: gre92-5-82-237-199-162.fbx.proxad.net
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <e5bfff550712160242v54ce284emd31a29964770179c@mail.gmail.com>
+	id S934491AbXLPMGK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2007 07:06:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934488AbXLPMGI
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Dec 2007 07:06:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34327 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S934367AbXLPMGF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2007 07:06:05 -0500
+Received: (qmail invoked by alias); 16 Dec 2007 12:06:01 -0000
+Received: from p54AAB2DC.dip0.t-ipconnect.de (EHLO localhost) [84.170.178.220]
+  by mail.gmx.net (mp019) with SMTP; 16 Dec 2007 13:06:01 +0100
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX18sx75gXN8s8wUyAxVbDaNuKQ6zSroecxQdQox10S
+	ymrfFP8cosr1kt
+Content-Disposition: inline
+In-Reply-To: <200712160018.54171.johannes.sixt@telecom.at>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68458>
 
-This is a multi-part message in MIME format.
---------------030106010101090105000107
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-
-Marco Costalba wrote:
-> On Dec 16, 2007 10:10 AM, Abdelrazak Younes <younes.a@free.fr> wrote:
-
->> The MSVC compiled Qt dlls :-)
->> Sorry too, I guess I was not clear enough.
->>
+On Sun, Dec 16, 2007 at 12:18:53AM +0100, Johannes Sixt wrote:
+> In the threaded pack-objects code the main thread and the worker threads
+> must mutually signal that they have assigned a new pack of work or have
+> completed their work, respectively. Previously, the code used mutexes that
+> were locked in one thread and unlocked from a different thread, which is
+> bogus (and happens to work on Linux).
 > 
-> Yes please!
+> Here we rectify the implementation by using condition variables: There is
+> one condition variable on which the main thread waits until a thread
+> requests new work; and each worker thread has its own condition variable
+> on which it waits until it is assigned new work or signaled to terminate.
+> 
+> As a cleanup, the worker threads are spawned only after the initial work
+> packages have been assigned.
+> 
+> Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+> ---
+>  builtin-pack-objects.c |  129 +++++++++++++++++++++++++++++------------------
+>  1 files changed, 79 insertions(+), 50 deletions(-)
+> 
+> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+> index 7dd0d7f..451e48e 100644
+> --- a/builtin-pack-objects.c
+> +++ b/builtin-pack-objects.c
+> @@ -1594,6 +1594,15 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
+>  
+>  #ifdef THREADED_DELTA_SEARCH
+>  
+> +/*
+> + * The main thread waits on the condition that (at least) one of the workers
+> + * has stopped working (which is indicated in the .working member of
+> + * struct thread_params).
+> + * When a work thread has completed its work, it sets .working to 0 and
+> + * signals the main thread and waits on the condition that .data_ready
+> + * becomes 1.
+> + */
+> +
+>  struct thread_params {
+>  	pthread_t thread;
+>  	struct object_entry **list;
+> @@ -1601,37 +1610,50 @@ struct thread_params {
+>  	unsigned remaining;
+>  	int window;
+>  	int depth;
+> +	int working;
+> +	int data_ready;
+> +	pthread_mutex_t mutex;
+> +	pthread_cond_t cond;
+>  	unsigned *processed;
+>  };
+>  
+> -static pthread_mutex_t data_request  = PTHREAD_MUTEX_INITIALIZER;
+> -static pthread_mutex_t data_ready    = PTHREAD_MUTEX_INITIALIZER;
+> -static pthread_mutex_t data_provider = PTHREAD_MUTEX_INITIALIZER;
+> -static struct thread_params *data_requester;
+> +static pthread_cond_t progress_cond = PTHREAD_COND_INITIALIZER;
+>  
+>  static void *threaded_find_deltas(void *arg)
+>  {
+>  	struct thread_params *me = arg;
+>  
+> -	for (;;) {
+> -		pthread_mutex_lock(&data_request);
+> -		data_requester = me;
+> -		pthread_mutex_unlock(&data_provider);
+> -		pthread_mutex_lock(&data_ready);
+> -		pthread_mutex_unlock(&data_request);
+> -
+> -		if (!me->remaining)
+> -			return NULL;
+> -
+> +	while (me->remaining) {
+>  		find_deltas(me->list, &me->remaining,
+>  			    me->window, me->depth, me->processed);
+> +
+> +		progress_lock();
+> +		me->working = 0;
+> +		progress_unlock();
+> +		pthread_cond_signal(&progress_cond);
 
-Actually you might prefer to just use the LyX dependencies package that 
-we provide for Windows developers, it contains Qt. I paste here the 
-relevant part of our 'INSTALL.Win32':
+Shouldn't the pthread_cond_signal be inside the lock?
+e.g. swap progress_unlock() with pthread_cond_signal(&progress_cond)
 
-6	Install the dependencies
-Download ftp://ftp.lyx.org/pub/lyx/contrib/lyx-windows-deps-msvc-qt4.zip
-and extract in the root directory of your LyX files (so you will get
-a directory called lyx-windows-deps-msvc-qt4 next to the other 
-directories like src, development etc.).
+> +
+> +		/*
+> +		 * We must not set ->data_ready before we wait on the
+> +		 * condition because the main thread may have set it to 1
+> +		 * before we get here. In order to be sure that new
+> +		 * work is available if we see 1 in ->data_ready, it
+> +		 * was initialized to 0 before this thread was spawned
+> +		 * and we reset it to 0 right away.
+> +		 */
+> +		pthread_mutex_lock(&me->mutex);
+> +		while (!me->data_ready)
+> +			pthread_cond_wait(&me->cond, &me->mutex);
+> +		me->data_ready = 0;
+> +		pthread_mutex_unlock(&me->mutex);
+>  	}
+> +	/* leave ->working 1 so that this doesn't get more work assigned */
+> +	return NULL;
+>  }
 
-I also attach the complete file, you might find some interesting items 
-WRT compiling with MSVC.
-
-Abdel.
+[...]
 
 
---------------030106010101090105000107
-Content-Type: text/plain;
- name="INSTALL.Win32"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="INSTALL.Win32"
-
-Q29tcGlsaW5nIEx5WCAxLjUgZm9yIFdpbjMyDQo9PT09PT09PT09PT09PT09PT09PT09PT09
-PT0NCg0KTHlYIDEuNSBjYW4gYmUgY29tcGlsZWQgd2l0aCBNaWNyb3NvZnQgVmlzdWFsIEMr
-KyAyMDA1IChyZWNvbW1lbmRlZCkgb3IgTWluR1cuDQoNCkNvbXBpbGluZyB3aXRoIE1TVkMg
-MjAwNQ0KPT09PT09PT09PT09PT09PT09PT09PT09DQoNCjEJSW5zdGFsbCBNU1ZDIDIwMDUg
-U1AxDQoNCglJZiB5b3UgZG9uJ3QgaGF2ZSBNU1ZDIDIwMDUgaW5zdGFsbGVkLCBkb3dubG9h
-ZCBhbmQgaW5zdGFsbCB0aGUgZnJlZQ0KCUV4cHJlc3MgZWRpdGlvbiBmcm9tIGh0dHA6Ly9t
-c2RuLm1pY3Jvc29mdC5jb20vdnN0dWRpby9leHByZXNzL3Zpc3VhbGMvDQoJRnJvbSB0aGlz
-IHBhZ2UgeW91IHNob3VsZCBhbHNvIGRvd25sb2FkIGFuZCBpbnN0YWxsIFNlcnZpY2UgUGFj
-ayAxLg0KDQoJQSBob3RmaXggbmVlZHMgdG8gYmUgaW5zdGFsbGVkIGJlY2F1c2Ugb2YgYSBi
-dWcgaW4gdGhlIGNvbXBpbGVyLg0KCVNlYXJjaCBmb3IgVlM4MHNwMS1LQjkzMDg1OS1YODYt
-RU5VLmV4ZSBvbiBHb29nbGUgYW5kIGluc3RhbGwgaXQuDQoNCjIJSW5zdGFsbCB0aGUgV2lu
-ZG93cyBQbGF0Zm9ybSBTREsNCg0KCXNlZTogaHR0cDovL21zZG4ubWljcm9zb2Z0LmNvbS92
-c3R1ZGlvL2V4cHJlc3MvdmlzdWFsYy91c2luZ3BzZGsvDQoJKFlvdSBkb24ndCBuZWVkIHRv
-IGluc3RhbGwgdGhlIElJUywgTURBQywgYW5kIFRhYmxldCBQQyBTREsgdGhhdCBhcmUNCgkg
-ZGVsaXZlcmVkIHdpdGggdGhlIFBsYXRmb3JtIFNESy4pDQoNCjMJQ29uZmlndXJlIE1TVkMN
-Cg0KCUZvbGxvdyBleGFjdGx5IHRoZSBzdGVwcyBvZg0KCWh0dHA6Ly9tc2RuLm1pY3Jvc29m
-dC5jb20vdnN0dWRpby9leHByZXNzL3Zpc3VhbGMvdXNpbmdwc2RrLw0KCUluIFN0ZXAgMyBm
-b2xsb3cgYWxzbyB0aGUgdGhpbmdzIG5vdGVkIGFzIGFsdGVybmF0aXZlLg0KCShJZiB5b3Ug
-bGF0ZXIgZ2V0IGFuIGVycm9yIG1lc3NhZ2UgdGhhdCAid2luZG93cy5oIiBjYW5ub3QgYmUg
-Zm91bmQsDQogCSBjcmVhdGUgdGhlIGdsb2JhbCBXaW5kb3dzIGVudmlyb25tZW50IHZhcmlh
-YmxlcyAiSU5DTFVERSIgYW5kICJMSUIiLg0KCSBJTkNMVURFIGNvbnRhaW5zIHRoZSBwYXRo
-cyB0byB0aGUgImluY2x1ZGUiIGZvbGRlcnMgb2YgdGhlIGluc3RhbGxlZA0KCSBwbGF0Zm9y
-bSBTREsgYW5kIG9mIE1TVkMuIExJQiBjb250YWlucyB0aGUgY29ycmVzcG9uZGluZyAibGli
-IiBmb2xkZXJzLikNCg0KNAlJbnN0YWxsIFB5dGhvbg0KDQoJR2V0IHRoZSBsYXRlc3QgUHl0
-aG9uIDIuNSB2ZXJzaW9uIGF0DQoJaHR0cDovL3d3dy5weXRob24ub3JnL2Rvd25sb2FkL3Jl
-bGVhc2VzLzIuNS8NCg0KCUluc3RhbGwgaW4gQzpcUHl0aG9uMjUgYW5kIGFkZCB0aGlzIGRp
-cmVjdG9yeSB0byB0aGUgUEFUSCBlbnZpcm9ubWVudA0KCXZhcmlhYmxlIChTdGFydCA+IFNl
-dHRpbmdzID4gQ29udHJvbCBQYW5lbCA+IFN5c3RlbSA+IEFkdmFuY2VkID4NCglFbnZpcm9u
-bWVudCBWYXJpYWJsZXMpLg0KDQo1CUluc3RhbGwgU0NvbnMNCg0KCURvd25sb2FkIGFuZCBp
-bnN0YWxsIFNDb25zIDAuOTYuOTIgKG9yIG5ld2VyLCBidXQgbm90IDAuOTYuMSkgZnJvbSBo
-dHRwOi8vd3d3LnNjb25zLm9yZy9kb3dubG9hZC5waHANCg0KNglJbnN0YWxsIHRoZSBkZXBl
-bmRlbmNpZXMNCg0KCURvd25sb2FkIGZ0cDovL2Z0cC5seXgub3JnL3B1Yi9seXgvY29udHJp
-Yi9seXgtd2luZG93cy1kZXBzLW1zdmMtcXQ0LnppcA0KCWFuZCBleHRyYWN0IGluIHRoZSBy
-b290IGRpcmVjdG9yeSBvZiB5b3VyIEx5WCBmaWxlcyAoc28geW91IHdpbGwgZ2V0DQoJYSBk
-aXJlY3RvcnkgY2FsbGVkIGx5eC13aW5kb3dzLWRlcHMtbXN2Yy1xdDQgbmV4dCB0byB0aGUg
-b3RoZXIgZGlyZWN0b3JpZXMNCglsaWtlIHNyYywgZGV2ZWxvcG1lbnQgZXRjLikuDQoNCjcJ
-Q29tcGlsZQ0KDQoJRnJvbSBNUyBWaXN1YWwgU3R1ZGlvIGNvbW1hbmQgcHJvbXB0IChub3Qg
-dGhlIHJlZ3VsYXIgY21kLmV4ZSksIA0KCXJ1biANCgkgID4gY2QgPGx5eCByb290IGRpcmVj
-dG9yeT5cZGV2ZWxvcG1lbnRcV2luMzJccGFja2FnaW5nDQoJICA+IGJ1aWxkX21zdmMuYmF0
-DQoNCjgJRmlyc3Qgc3RhcnQgb2YgTHlYDQoNCglUbyBzdGFydCB0aGUganVzdCBjb21waWxl
-ZCBseXguZXhlLCBpdCBpcyBuZWNlc3NhcnkgdG8gY29weSB0aGUgZm9sbG93aW5nDQoJZmls
-ZXMgdG8gdGhlIGZvbGRlciB3aGVyZSB0aGUganVzdCBjb21waWxlZCAibHl4LmV4ZSIgaXM6
-DQoNCglBaWtzYXVydXMuZGxsDQoJYXNwZWxsLmRsbA0KCWljb252LmRsbA0KCWludGwuZGxs
-DQoJTWljcm9zb2Z0LlZDODAuQ1JULm1hbmlmZXN0DQoJbXN2Y3A4MC5kbGwNCgltc3Zjcjgw
-LmRsbA0KCVF0Q29yZTQuZGxsDQoJUXRHdWk0LmRsbA0KDQoJbXN2Y3A4MC5kbGwgYW5kIG1z
-dmNyODAuZGxsIGFyZSB0aGUgQyBSdW50aW1lIGFuZCBDKysgbGlicmFyaWVzDQoJc3VwcGxp
-ZWQgd2l0aCBNU1ZDIDIwMDUuIFRoZXkgYXJlIGZyZWVseSByZWRpc3RyaWJ1dGFibGUuDQoJ
-U2VlIGh0dHA6Ly9tc2RuMi5taWNyb3NvZnQuY29tL2VuLXVzL2xpYnJhcnkvOGtjaGU4YWgo
-VlMuODApLmFzcHgNCglmb3IgZGV0YWlscy4NCg0KCUFsbCBvZiB0aGUgb3RoZXIgLmRsbHMg
-YWJvdmUgYW5kIHRoZSBseXggZXhlY3V0YWJsZSBhcmUgY29tcGlsZWQNCglmcm9tIGNvZGUg
-cmVsZWFzZWQgdW5kZXIgdGhlIEdQTCB3aGljaCBzdGF0ZXMgKHNlY3Rpb24gMykgdGhhdA0K
-CUdQTCBzb2Z0d2FyZSBtYXkgYmUgbGlua2VkIGFnYWluc3Qgc3lzdGVtIGZpbGVzIHN1Y2gg
-YXMgbXN2Y3A4MC5kbGwNCglhbmQgbXN2Y3I4MC5kbGwuDQoNCkNvbXBpbGluZyB3aXRoIE1p
-bkdXDQo9PT09PT09PT09PT09PT09PT09PQ0KDQoJVGhlc2UgaW5zdHJ1Y3Rpb25zIGFsbG93
-IHlvdSB0byBjcmVhdGUgYSBiYXNpYyBMeVggYnVpbGQgd2l0aCBNaW5HVy4NCglUbyBiZSBh
-YmxlIHRvIHVzZSBhbGwgTHlYIGZlYXR1cmVzLCBjb21waWxpbmcgd2l0aCBNU1ZDIDIwMDUg
-aXMgcmVjb21tZW5kZWQuDQoJQ3JlYXRpbmcgYW4gaW5zdGFsbGVyIGZvciBNaW5HVyBidWls
-ZHMgaXMgbm8gbG9uZ2VyIHN1cHBvcnRlZC4NCg0KMQlJbnN0YWxsIE1pbkdXLCBhbmQgYWxs
-IHRoZSBnY2MtcmVsYXRlZCBzdHVmZiwgYW5kIHdpbjMyYXBpLiANCg0KMglkb3dubG9hZCBx
-dC13aW4tb3BlbnNvdXJjZS00LngueC1taW5ndy5leGUgYW5kIGluc3RhbGwgdG8gYzpccXRc
-NC4yLjIuDQoNCjMJaW5zdGFsbCBweXRob24gYW5kIHNjb25zIGFzIGluc3RydWN0ZWQgYWJv
-dmUuIFNldCAkcGF0aCBmb3IgcHl0aG9uDQoJICAgdG8gbWFrZSB5b3VyIGxpZmUgYSBiaXQg
-ZWFzaWVyLg0KDQo0CUNoZWNrIG91dCBseXggc3ZuIHRvIGM6XGx5eC1kZXZlbFxseXgtMS41
-LngNCg0KNQlEb3dubG9hZCB6bGliIGJpbmFyaWVzIGFuZCBkZXZlbG9wZXIgZmlsZXMgKHps
-aWItMS4yLjMtYmluLnppcCBhbmQNCgkgICB6bGliLTEuMi4zLWxpYi56aXApIGZyb20gaHR0
-cDovL2dudXdpbjMyLnNvdXJjZWZvcmdlLm5ldC9wYWNrYWdlcy96bGliLmh0bQ0KCSAgIGxp
-Ymljb252IGZyb20gaHR0cDovL2dudXdpbjMyLnNvdXJjZWZvcmdlLm5ldC9wYWNrYWdlcy9s
-aWJpY29udi5odG0NCgkgICBnZXR0ZXh0ICBmcm9tIGh0dHA6Ly9nbnV3aW4zMi5zb3VyY2Vm
-b3JnZS5uZXQvcGFja2FnZXMvZ2V0dGV4dC5odG0NCgkgICB1bnBhY2sgYWxsIG9mIHRoZW0g
-dG8gdGhlIHNhbWUgZGlyZWN0b3J5IGM6XGx5eC1kZXZlbFxtaW5nd19kZXBzLg0KDQo2CXN0
-YXJ0IGEgY29tbWFuZCB3aW5kb3csIHJ1biBjb21tYW5kczoNCgkgICAkIGNkIGM6XGx5eC1k
-ZXZlbFxseXgtMS41LngNCgkgICAkIHNjb25zIC1mIGRldmVsb3BtZW50XHNjb25zXFNDb25z
-dHJ1Y3QgXA0KCSAgICAgICBleHRyYV9saWJfcGF0aD0uLlxtaW5nd19kZXBzXGxpYiAgXA0K
-CQkgICBleHRyYV9pbmNfcGF0aD0uLlxtaW5nd19kZXBzXGluY2x1ZGUgXA0KCQkgICBleHRy
-YV9iaW5fcGF0aD0uLlxtaW5nd19kZXBzXGJpbiBcDQoJCSAgIHF0X2Rpcj1jOlxxdFw0LjIu
-MiBcDQoJCSAgIERFU1RESVI9Li5cbHl4LTEuNS1pbnN0YWxsIFwNCgkJICAgaW5zdGFsbA0K
-DQoNCkNyZWF0aW5nIHRoZSBJbnN0YWxsZXINCj09PT09PT09PT09PT09PT09PT09PT0NCg0K
-CVRvIGNyZWF0ZSBhbiBpbnN0YWxsZXIgd2l0aCBMeVggYW5kIGFsbCByZWxhdGVkIGNvbXBv
-bmVudHMsIGRvd25sb2FkDQoJYW5kIGluc3RhbGwgdGhlIGxhdGVzdCBOU0lTIGZyb20gaHR0
-cDovL25zaXMuc291cmNlZm9yZ2UubmV0DQoNCglPcGVuIGRldmVsb3BtZW50XFdpbjMyXHBh
-Y2thZ2luZ1xpbnN0YWxsZXJcc2V0dHRpbmdzLnVzZXIubnNoIGFuZCBtb2RpZnkNCgl0aGUg
-c2V0dGluZ3MgZGVwZW5kaW5nIG9uIHlvdXIgYnVpbGQgZW52aXJvbm1lbnQuDQoNCglGaW5h
-bGx5LCBnbyB0byBkZXZlbG9wbWVudFxXaW4zMlxwYWNrYWdpbmdcaW5zdGFsbGVyDQoJKGlu
-IGEgbm9ybWFsIFdpbmRvd3MgRXhwbG9yZXIpLCByaWdodC1jbGljayBvbiBseXgubnNpIGFu
-ZCBjbGljaw0KCSJDb21waWxlIE5TSVMgU2NyaXB0Ii4NCg0KCVlvdSBjYW4gYWxzbyB1c2Ug
-dGhlIGluc3RhbGxlciB0YXJnZXQgb2Ygc2NvbnMuIE5hbWVseSwgdXNlIGEgY29tbWFuZCBs
-aWtlDQoJICAgJCBzY29ucyAtZiBkZXZlbG9wbWVudFxzY29uc1xTQ29uc2NyaXB0IGluc3Rh
-bGxlcg0KCVRoaXMgd2lsbCBjcmVhdGUgJEJVSUxERElSXGx5eC12ZXJzaW9uLXRpbWVzdGFt
-cC1JbnN0YWxsZXIuZXhlIGZvciBhIGRldmVsIHZlcnNpb24sDQoJYW5kICRCVUlMRERJUlxs
-eXgtdmVyc2lvbi1JbnN0YWxsLmV4ZSBmb3IgYSByZWxlYXNlZCB2ZXJzaW9uIG9mIGx5eC4N
-Cg0KCUlmIHlvdSBhbHNvIHdhbnQgdG8gZ2VuZXJhdGUgYnVuZGxlZCBpbnN0YWxsZXIsIGRv
-d25sb2FkIA0KCWx5eC13aW5kb3dzLWJ1bmRsZS1kZXBzLnppcCBmcm9tIGh0dHA6Ly93d3cu
-bHl4Lm9yZy9+YnBlbmcsIHVucGFjaw0KCXRvIGx5eC13aW5kb3dzLWJ1bmRsZS1kZXBzIHVu
-ZGVyIHRoZSB0b3Agc291cmNlIGRpcmVjdG9yeSwgYW5kIHJ1bg0KCSAgJCBzY29ucyAtZiBk
-ZXZlbG9wbWVudFxzY29uc1xTQ29uc3RydWN0IGluc3RhbGxlciBidW5kbGU9MQ0KCUlmIHlv
-dSBwcmVmZXIgdG8gdXNlIGFub3RoZXIgZGlyZWN0b3J5LCB5b3UgY2FuIHVzZSBvcHRpb24g
-YnVuZGxlX2RpciBsaWtlDQoJICAkIHNjb25zIC1mIGRldmVsb3BtZW50XHNjb25zXFNDb25z
-dHJ1Y3QgaW5zdGFsbGVyIGJ1bmRsZT0xIGJ1bmRsZV9kaXI9YzpcYnVuZGxlDQo=
---------------030106010101090105000107--
+-Peter
