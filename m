@@ -1,84 +1,138 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: trim_common_tail bug?
-Date: Sun, 16 Dec 2007 02:06:14 -0500
-Message-ID: <20071216070614.GA5072@sigill.intra.peff.net>
-References: <20071215111621.GA8139@coredump.intra.peff.net> <20071215155150.GA24810@coredump.intra.peff.net> <7vprx7n90t.fsf@gitster.siamese.dyndns.org> <20071215200202.GA3334@sigill.intra.peff.net>
+Subject: Re: git-browse-help?
+Date: Sun, 16 Dec 2007 02:21:04 -0500
+Message-ID: <20071216072104.GA4892@sigill.intra.peff.net>
+References: <20071214092829.GA22725@coredump.intra.peff.net> <7vtzmlrxc2.fsf@gitster.siamese.dyndns.org> <20071215100811.GA1692@coredump.intra.peff.net> <20071215110153.GA3447@coredump.intra.peff.net> <7vabobn4i3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 16 08:06:48 2007
+X-From: git-owner@vger.kernel.org Sun Dec 16 08:21:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3naI-0002lD-G6
-	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 08:06:46 +0100
+	id 1J3nof-0005nQ-Sx
+	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 08:21:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752478AbXLPHGT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2007 02:06:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752306AbXLPHGT
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Dec 2007 02:06:19 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3165 "EHLO
+	id S1753921AbXLPHVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2007 02:21:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753521AbXLPHVI
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Dec 2007 02:21:08 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2260 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752274AbXLPHGS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2007 02:06:18 -0500
-Received: (qmail 20055 invoked by uid 111); 16 Dec 2007 07:06:16 -0000
+	id S1754125AbXLPHVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2007 02:21:07 -0500
+Received: (qmail 20918 invoked by uid 111); 16 Dec 2007 07:21:05 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 16 Dec 2007 02:06:16 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 16 Dec 2007 02:06:14 -0500
+  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 16 Dec 2007 02:21:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 16 Dec 2007 02:21:04 -0500
 Content-Disposition: inline
-In-Reply-To: <20071215200202.GA3334@sigill.intra.peff.net>
+In-Reply-To: <7vabobn4i3.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68442>
 
-On Sat, Dec 15, 2007 at 03:02:02PM -0500, Jeff King wrote:
+On Sat, Dec 15, 2007 at 11:26:44AM -0800, Junio C Hamano wrote:
 
-> >   	for (i = 0, recovered = 0; recovered < trimmed && i <= ctx; i++) {
-> > 		while (recovered < trimmed && ap[recovered++] != '\n')
-> > 	        	; /* nothing */
-> > 	}
-> > 
-> > then (warning: I haven't had my coffee yet)?
+> > Although I would have called it "git-help--browse" rather than
+> > "git-browse--help" since
 > 
-> Yes, I think that is equivalent. My sleep-deprived brain keeps thinking
-> there must be a more clear way of writing this whole loop, but it
-> escapes me at the moment.
+> Good point.
 
-And this came to me in a dream. :) It fixes the bug, and I think it is a
-bit simpler to see the termination conditions in a single loop. But
-please double-check correctness, and that you agree that it is more
-readable.
+And here is the patch (I based the change-sites off of the ones in your
+previous patch, plus a grep to double-check).
 
+-- >8 --
+rename git-browse--help to git-help--browse
+
+The convention for helper scripts has been
+git-$TOOL--$HELPER. Since this is a "browse" helper for the
+"help" tool, git-help--browse is a more sensible name.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 700def2..98b02ed 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -110,7 +110,7 @@ int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
- static void trim_common_tail(mmfile_t *a, mmfile_t *b, long ctx)
- {
- 	const int blk = 1024;
--	long trimmed = 0, recovered = 0, i;
-+	long trimmed = 0, recovered = 0;
- 	char *ap = a->ptr + a->size;
- 	char *bp = b->ptr + b->size;
- 	long smaller = (a->size < b->size) ? a->size : b->size;
-@@ -121,10 +121,9 @@ static void trim_common_tail(mmfile_t *a, mmfile_t *b, long ctx)
- 		bp -= blk;
- 	}
+ .gitignore                                 |    2 +-
+ Documentation/git-help.txt                 |    4 ++--
+ Makefile                                   |    2 +-
+ git-browse--help.sh => git-help--browse.sh |    0 
+ help.c                                     |    2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+ rename git-browse--help.sh => git-help--browse.sh (100%)
+
+diff --git a/.gitignore b/.gitignore
+index aef01c5..dab5bc2 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -12,7 +12,6 @@ git-archive
+ git-bisect
+ git-blame
+ git-branch
+-git-browse--help
+ git-bundle
+ git-cat-file
+ git-check-attr
+@@ -52,6 +51,7 @@ git-gc
+ git-get-tar-commit-id
+ git-grep
+ git-hash-object
++git-help--browse
+ git-http-fetch
+ git-http-push
+ git-imap-send
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index 8cd69e7..da3f718 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -47,13 +47,13 @@ OPTIONS
+ +
+ The web browser can be specified using the configuration variable
+ 'help.browser', or 'web.browser' if the former is not set. If none of
+-these config variables is set, the 'git-browse--help' helper script
++these config variables is set, the 'git-help--browse' helper script
+ (called by 'git-help') will pick a suitable default.
+ +
+ You can explicitly provide a full path to your prefered browser by
+ setting the configuration variable 'browser.<tool>.path'. For example,
+ you can configure the absolute path to firefox by setting
+-'browser.firefox.path'. Otherwise, 'git-browse--help' assumes the tool
++'browser.firefox.path'. Otherwise, 'git-help--browse' assumes the tool
+ is available in PATH.
+ +
+ Note that the script tries, as much as possible, to display the HTML
+diff --git a/Makefile b/Makefile
+index 62f1893..7776077 100644
+--- a/Makefile
++++ b/Makefile
+@@ -227,7 +227,7 @@ SCRIPT_SH = \
+ 	git-lost-found.sh git-quiltimport.sh git-submodule.sh \
+ 	git-filter-branch.sh \
+ 	git-stash.sh \
+-	git-browse--help.sh
++	git-help--browse.sh
  
--	for (i = 0, recovered = 0; recovered < trimmed && i <= ctx; i++) {
--		while (recovered < trimmed && ap[recovered] != '\n')
--			recovered++;
--	}
-+	while (recovered < trimmed && ctx)
-+		if (ap[recovered++] == '\n')
-+			ctx--;
- 	a->size -= (trimmed - recovered);
- 	b->size -= (trimmed - recovered);
+ SCRIPT_PERL = \
+ 	git-add--interactive.perl \
+diff --git a/git-browse--help.sh b/git-help--browse.sh
+similarity index 100%
+rename from git-browse--help.sh
+rename to git-help--browse.sh
+diff --git a/help.c b/help.c
+index f9ce6db..1302a61 100644
+--- a/help.c
++++ b/help.c
+@@ -331,7 +331,7 @@ static void show_info_page(const char *git_cmd)
+ static void show_html_page(const char *git_cmd)
+ {
+ 	const char *page = cmd_to_page(git_cmd);
+-	execl_git_cmd("browse--help", page, NULL);
++	execl_git_cmd("help--browse", page, NULL);
  }
+ 
+ void help_unknown_cmd(const char *cmd)
+-- 
+1.5.4.rc0.1122.g899d-dirty
