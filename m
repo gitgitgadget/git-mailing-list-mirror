@@ -1,75 +1,88 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: Problem with git-svn
-Date: Sun, 16 Dec 2007 16:40:07 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <476546D7.2030805@obry.net>
-References: <4764FE2C.1010103@obry.net> <20071216135625.GB4999@xp.machine.xx>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] whitespace: fix initial-indent checking
+Date: Sun, 16 Dec 2007 11:26:37 -0500
+Message-ID: <20071216162637.GA3934@fieldses.org>
+References: <7vodd4fb2f.fsf@gitster.siamese.dyndns.org> <1197776919-16121-1-git-send-email-bfields@citi.umich.edu> <1197776919-16121-2-git-send-email-bfields@citi.umich.edu> <1197776919-16121-3-git-send-email-bfields@citi.umich.edu> <1197776919-16121-4-git-send-email-bfields@citi.umich.edu> <1197776919-16121-5-git-send-email-bfields@citi.umich.edu> <fk2pua$b4p$1@ger.gmane.org> <25FDB05F-3E85-4E08-90BE-1BE468C07805@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Dec 16 16:40:42 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio Hamano <junkio@cox.net>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Sun Dec 16 17:27:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3vbd-00081r-Fv
-	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 16:40:41 +0100
+	id 1J3wKV-0004k1-Cz
+	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 17:27:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758384AbXLPPkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2007 10:40:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754860AbXLPPkT
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Dec 2007 10:40:19 -0500
-Received: from smtp20.orange.fr ([80.12.242.27]:26778 "EHLO smtp20.orange.fr"
+	id S1763750AbXLPQ0l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Dec 2007 11:26:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754086AbXLPQ0l
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Dec 2007 11:26:41 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:43701 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755012AbXLPPkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2007 10:40:17 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2008.orange.fr (SMTP Server) with ESMTP id 14ED21C000AA
-	for <git@vger.kernel.org>; Sun, 16 Dec 2007 16:40:15 +0100 (CET)
-Received: from [192.168.0.100] (AVelizy-151-1-60-249.w82-124.abo.wanadoo.fr [82.124.126.249])
-	by mwinf2008.orange.fr (SMTP Server) with ESMTP id BE9F51C0009C;
-	Sun, 16 Dec 2007 16:40:14 +0100 (CET)
-X-ME-UUID: 20071216154014780.BE9F51C0009C@mwinf2008.orange.fr
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <20071216135625.GB4999@xp.machine.xx>
-X-Enigmail-Version: 0.95.5
+	id S1754007AbXLPQ0k (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2007 11:26:40 -0500
+Received: from bfields by fieldses.org with local (Exim 4.68)
+	(envelope-from <bfields@fieldses.org>)
+	id 1J3wK5-0001Jw-Mo; Sun, 16 Dec 2007 11:26:37 -0500
+Content-Disposition: inline
+In-Reply-To: <25FDB05F-3E85-4E08-90BE-1BE468C07805@wincent.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68463>
 
+On Sun, Dec 16, 2007 at 11:00:55AM +0100, Wincent Colaiuta wrote:
+> El 16/12/2007, a las 10:08, Jakub Narebski escribi=C3=B3:
+>
+>> J. Bruce Fields wrote:
+>>
+>>> This allows catching initial indents like '\t        ' (a tab follo=
+wed
+>>> by 8 spaces), while previously indent-with-non-tab caught only inde=
+nts
+>>> that consisted entirely of spaces.
+>>
+>> I prefer to use tabs for indent, but _spaces_ for align. While previ=
+ous,
+>> less strict version of check catches indent using spaces, this one a=
+lso
+>> catches _align_ using spaces.
 
-Pete,
+No, the previous version didn't work for the align-with-spaces case
+either.  Consider, for example,
 
-> Eric made a fix[1] this week so git-svn won't get confused if e.g. trunk
-> gets deleted and later created (or e.g. moved). Could you check if it
-> also fixes your problem? At least there is some familiarity, because your
-> trunk/PROJ also get moved from outside a path git-svn isn't tracking.
-> 
-> -Peter
-> 
-> [1]: See this thread for more details
->      http://thread.gmane.org/gmane.comp.version-control.git/67665
+struct widget *find_widget_by_color(struct color *color,
+                                    int nth_match, unsigned long flags)
 
-This fix is already installed into the Git version I'm using which is:
+If following a "indent-with-tabs, align-with-spaces" policy, then the
+initial whitespaace on the second line should be purely spaces
+(otherwise adjusting the tab stops would ruin the alignment).  But
+indent-with-non-tab would flag this as incorrect even before my fix.
 
-   git version 1.5.4.rc0.36.g7680
+> I'd say that Jakub's is a fairly common use case (it's used in many p=
+laces=20
+> in the Git codebase too, I think) so it would be a bad thing to chang=
+e the=20
+> behaviour of "indent-with-non-tab".
+>
+> If you also want to check for "align-with-non-tab" then it really sho=
+uld be=20
+> a separate, optional class of whitespace error.
 
-So there is something else...
+I would agree with you if it were not for the fact that if you're using
+an "indent-with-tabs, align-with-spaces" policy then the only indent
+whitespace problems that you can flag automatically are space-before-ta=
+b
+problems; anything else requires knowledge of the language syntax.
 
-Thanks,
-Pascal.
+So indent-with-non-tab has only ever been useful for projects that
+insist on tabs for all sequences of 8 spaces in the initial whitespace.
 
--- 
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+--b.
