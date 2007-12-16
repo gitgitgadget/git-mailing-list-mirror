@@ -1,90 +1,55 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: [PATCH] Allow commit (and tag) messages to be edited when $EDITOR has arguments
-Date: Sat, 15 Dec 2007 17:12:01 -0800
-Message-ID: <20071216011201.GA10867@midwinter.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Allow commit (and tag) messages to be edited when $EDITOR
+ has arguments
+Date: Sun, 16 Dec 2007 01:41:20 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712160139580.27959@racer.site>
+References: <20071216011201.GA10867@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 16 02:12:33 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Sun Dec 16 02:41:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J3i3T-0007YQ-KP
-	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 02:12:32 +0100
+	id 1J3iVy-00059W-4k
+	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 02:41:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756493AbXLPBMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Dec 2007 20:12:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756483AbXLPBME
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Dec 2007 20:12:04 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:47056 "HELO midwinter.com"
+	id S1754108AbXLPBle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Dec 2007 20:41:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753974AbXLPBle
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Dec 2007 20:41:34 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53774 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756002AbXLPBMB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Dec 2007 20:12:01 -0500
-Received: (qmail 10969 invoked by uid 1001); 16 Dec 2007 01:12:01 -0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753782AbXLPBld (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Dec 2007 20:41:33 -0500
+Received: (qmail invoked by alias); 16 Dec 2007 01:41:31 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp007) with SMTP; 16 Dec 2007 02:41:31 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19isw9o5lpiDwZutxXl/BPYzUGYL3dxY3leE+/U5C
+	j8iBu8at5o32aj
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071216011201.GA10867@midwinter.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68424>
 
-Users who do EDITOR="/usr/bin/emacs -nw" or similar were left unable to
-edit commit messages once commit became a builtin, because the editor
-launch code assumed that $EDITOR was a single pathname.
+Hi,
 
-Signed-off-by: Steven Grimm <koreth@midwinter.com>
----
+On Sat, 15 Dec 2007, Steven Grimm wrote:
 
-	Looked around but didn't see an existing "build a char* array
-	out of a delimited string" function in the git source; if one
-	exists, of course it should be used instead of my pair of loops
-	here.
+> 	Looked around but didn't see an existing "build a char* array
+> 	out of a delimited string" function in the git source; if one
+> 	exists, of course it should be used instead of my pair of loops
+> 	here.
 
- builtin-tag.c |   27 ++++++++++++++++++++++++++-
- 1 files changed, 26 insertions(+), 1 deletions(-)
+Did you look for split_cmdline() in git.c?  IMHO it should move to 
+run-command.c and be made public.
 
-diff --git a/builtin-tag.c b/builtin-tag.c
-index 274901a..dace758 100644
---- a/builtin-tag.c
-+++ b/builtin-tag.c
-@@ -47,10 +47,35 @@ void launch_editor(const char *path, struct strbuf *buffer, const char *const *e
- 		editor = "vi";
- 
- 	if (strcmp(editor, ":")) {
--		const char *args[] = { editor, path, NULL };
-+		char *editor_copy, *c;
-+		int args_size = 3, args_pos = 0;
-+		char **args;
-+
-+		/* Parse the editor command, since it can contain arguments.
-+		 * First count the number of arguments so we can allocate an
-+		 * appropriately-sized arg array.
-+		 */
-+		editor_copy = xstrdup(editor);
-+		for (c = editor_copy; *c != '\0'; c++) {
-+			if (*c == ' ') {
-+				args_size++;
-+			}
-+		}
-+
-+		args = xmalloc(sizeof(char *) * args_size);
-+		for (c = strtok(editor_copy, " "); c != NULL;
-+		     c = strtok(NULL, " ")) {
-+			args[args_pos++] = c;
-+		}
-+
-+		args[args_pos++] = path;
-+		args[args_pos++] = NULL;
- 
- 		if (run_command_v_opt_cd_env(args, 0, NULL, env))
- 			die("There was a problem with the editor %s.", editor);
-+
-+		free(args);
-+		free(editor_copy);
- 	}
- 
- 	if (!buffer)
--- 
-1.5.4.rc0
+Thanks,
+Dscho
