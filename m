@@ -1,77 +1,74 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Re-re-re-fix common tail optimization
-Date: Sun, 16 Dec 2007 17:15:45 -0500
-Message-ID: <20071216221545.GA32596@coredump.intra.peff.net>
-References: <20071215111621.GA8139@coredump.intra.peff.net> <20071215155150.GA24810@coredump.intra.peff.net> <7vprx7n90t.fsf@gitster.siamese.dyndns.org> <20071215200202.GA3334@sigill.intra.peff.net> <20071216070614.GA5072@sigill.intra.peff.net> <7v8x3ul927.fsf@gitster.siamese.dyndns.org> <7v7ijejq6j.fsf@gitster.siamese.dyndns.org> <20071216212104.GA32307@coredump.intra.peff.net> <7v3au2joo2.fsf_-_@gitster.siamese.dyndns.org>
+Date: Sun, 16 Dec 2007 14:23:27 -0800
+Message-ID: <7vtzmii8io.fsf@gitster.siamese.dyndns.org>
+References: <20071215111621.GA8139@coredump.intra.peff.net>
+	<20071215155150.GA24810@coredump.intra.peff.net>
+	<7vprx7n90t.fsf@gitster.siamese.dyndns.org>
+	<20071215200202.GA3334@sigill.intra.peff.net>
+	<20071216070614.GA5072@sigill.intra.peff.net>
+	<7v8x3ul927.fsf@gitster.siamese.dyndns.org>
+	<7v7ijejq6j.fsf@gitster.siamese.dyndns.org>
+	<20071216212104.GA32307@coredump.intra.peff.net>
+	<7v3au2joo2.fsf_-_@gitster.siamese.dyndns.org>
+	<20071216221545.GA32596@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 16 23:16:18 2007
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Dec 16 23:24:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J41mM-0003yh-TE
-	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 23:16:11 +0100
+	id 1J41u6-0006io-Cj
+	for gcvg-git-2@gmane.org; Sun, 16 Dec 2007 23:24:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759727AbXLPWPt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Dec 2007 17:15:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759178AbXLPWPt
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Dec 2007 17:15:49 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1681 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757197AbXLPWPs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Dec 2007 17:15:48 -0500
-Received: (qmail 3812 invoked by uid 111); 16 Dec 2007 22:15:47 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 16 Dec 2007 17:15:47 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 16 Dec 2007 17:15:45 -0500
-Content-Disposition: inline
-In-Reply-To: <7v3au2joo2.fsf_-_@gitster.siamese.dyndns.org>
+	id S1757910AbXLPWXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Dec 2007 17:23:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758213AbXLPWXr
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Dec 2007 17:23:47 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63760 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757013AbXLPWXq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Dec 2007 17:23:46 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E89A65716;
+	Sun, 16 Dec 2007 17:23:37 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 586005715;
+	Sun, 16 Dec 2007 17:23:34 -0500 (EST)
+In-Reply-To: <20071216221545.GA32596@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 16 Dec 2007 17:15:45 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68496>
 
-On Sun, Dec 16, 2007 at 01:49:17PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Kind'a embarrassing that both of us cannot get this right without so
-> many rounds, isn't it?
+> This would probably work better as 'cat'.
 
-Good thing we can just delete the emails and nobody will be the wiser...
+Yeah, I amended it without adding another "re-" to the title ;-)  The
+result has been already pushed out.
 
-> +echo >expect <<\EOF
+>> +test_expect_success 'diff -U0' '
+>> +
+>> +	git diff -U0 | sed -e "/^index/d" -e "s/$z2047/Z/g" >actual &&
+>> +	diff -u expect actual
+>
+> Aren't we using "git diff" for the second diff there nowadays?
 
-This would probably work better as 'cat'.
+Some people seem to think that is a good idea, but I generally do not
+like using "git diff" between expect and actual (both untracked) inside
+tests.  The last "diff" is about validating what git does and using "git
+diff" there would make the test meaningless when "git diff" itself is
+broken.
 
-> +test_expect_success 'diff -U0' '
-> +
-> +	git diff -U0 | sed -e "/^index/d" -e "s/$z2047/Z/g" >actual &&
-> +	diff -u expect actual
-
-Aren't we using "git diff" for the second diff there nowadays?
-
-> -	while (recovered < trimmed && ctx)
-> +	while (recovered < trimmed && 0 <= ctx)
->  		if (ap[recovered++] == '\n')
->  			ctx--;
->  	a->size -= (trimmed - recovered);
-
-Oops (I think maybe I misunderstood what you were asking in the last
-email). This fix is correct, though the code is now kind of subtle. I
-think it would be more obvious as:
-
-  /* finish off any changed line we are in */
-  while (recovered < trimmed && ap[recovered++] != '\n')
-    /* nothing */;
-  /* recover context lines */
-  while (recovered < trimmed && ctx)
-    if (ap[recovered++] == '\n')
-      ctx--;
-
-Your loop does both actions in the same loop, which is correct, but took
-me 10 minutes of thinking and staring to realize what was going on.
-
--Peff
+This is especially so because comparison between untracked files is a
+bolted-on afterthought and I am least confident about among the
+codepaths in the whole "git diff" (it is not even my nor Linus's code).
