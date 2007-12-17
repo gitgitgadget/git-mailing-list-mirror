@@ -1,129 +1,87 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: [PATCH] provide advance warning of some future pack default
-	changes
-Date: Mon, 17 Dec 2007 13:13:18 -0800
-Message-ID: <20071217211317.GC19816@mail.oracle.com>
-References: <m3fxy5qwbq.fsf@roke.D-201> <alpine.LFD.0.999999.0712140836140.8467@xanadu.home> <20071214215206.GB7300@mail.oracle.com> <alpine.LFD.0.999999.0712141724260.8467@xanadu.home> <20071214223957.GC7300@mail.oracle.com> <alpine.LFD.0.999999.0712141744460.8467@xanadu.home> <20071215004230.GF7300@mail.oracle.com> <alpine.LFD.0.999999.0712142114400.8467@xanadu.home> <20071217200920.GB19816@mail.oracle.com> <alpine.LFD.0.999999.0712171517320.8467@xanadu.home>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] builtin-tag: fix fallouts from recent parsopt  restriction.
+Date: Mon, 17 Dec 2007 22:24:33 +0100
+Message-ID: <20071217212433.GD13004@artemis.madism.org>
+References: <7vd4t5eq52.fsf@gitster.siamese.dyndns.org> <20071217090749.GC7453@artemis.madism.org> <7vir2xa8z7.fsf@gitster.siamese.dyndns.org> <20071217105834.GG7453@artemis.madism.org> <7v1w9la7o8.fsf@gitster.siamese.dyndns.org> <20071217123307.GK7453@artemis.madism.org> <7vy7bt6qv6.fsf@gitster.siamese.dyndns.org> <20071217203143.GA2105@coredump.intra.peff.net> <7vhcih6oj8.fsf@gitster.siamese.dyndns.org> <20071217205355.GC2105@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Dec 17 22:24:30 2007
+Content-Type: multipart/signed; boundary="VV4b6MQE+OnNyhkM";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Dec 17 22:25:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4NRr-0000EY-EX
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 22:24:27 +0100
+	id 1J4NSX-0000X6-Qq
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 22:25:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760695AbXLQVXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 16:23:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760536AbXLQVXd
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 16:23:33 -0500
-Received: from rgminet01.oracle.com ([148.87.113.118]:51183 "EHLO
-	rgminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760644AbXLQVXc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 16:23:32 -0500
-Received: from rgmgw1.us.oracle.com (rgmgw1.us.oracle.com [138.1.186.110])
-	by rgminet01.oracle.com (Switch-3.2.4/Switch-3.1.6) with ESMTP id lBHLEl1g022578;
-	Mon, 17 Dec 2007 14:14:48 -0700
-Received: from acsmt354.oracle.com (acsmt354.oracle.com [141.146.40.154])
-	by rgmgw1.us.oracle.com (Switch-3.2.4/Switch-3.2.4) with ESMTP id lBHLEkms013995;
-	Mon, 17 Dec 2007 14:14:46 -0700
-Received: from ca-server1.us.oracle.com by acsmt354.oracle.com
-	with ESMTP id 6406558331197926001; Mon, 17 Dec 2007 13:13:21 -0800
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.67)
-	(envelope-from <joel.becker@oracle.com>)
-	id 1J4NH6-0008RM-J0; Mon, 17 Dec 2007 13:13:20 -0800
+	id S934370AbXLQVYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 16:24:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934282AbXLQVYi
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 16:24:38 -0500
+Received: from pan.madism.org ([88.191.52.104]:41332 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934113AbXLQVYh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 16:24:37 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 8901130A1F;
+	Mon, 17 Dec 2007 22:24:34 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 04A212A2250; Mon, 17 Dec 2007 22:24:34 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999999.0712171517320.8467@xanadu.home>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever
-	come to perfection.
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
-X-Whitelist: TRUE
+In-Reply-To: <20071217205355.GC2105@coredump.intra.peff.net>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68627>
 
-On Mon, Dec 17, 2007 at 03:41:24PM -0500, Nicolas Pitre wrote:
-> On Mon, 17 Dec 2007, Joel Becker wrote:
-> > 	You may not see a case for actual corruptions, but my coworker
-> > updated his tree on a box with 1.5.x, then tried to work on a box with
-> > 1.4.x (I think 1.4.2 back then), and ended up with a tree that was
-> > unusable.  He had to re-clone, and I think he got lucky recovering
-> > pending changes (probably using 1.5.x on the branches with the changes,
-> > as master was what got broken).
-> 
-> I still claim that there wasn't any corruptions.
-> 
-> Just for fun, just edit some document with Microsoft Office 95, then 
-> open the same document with Office 2007 and save it with default 
-> settings.  Now try to open it back with Office 95.  It won't work.  
-> Does that mean that the document got corrupted?
 
-	No, but when you try to re-open it with Office 2007, you expect
-it to work, don't you?  His master was messed up even for 1.5.x.  It was
-now months ago, so I don't quite remember all the details, but I think
-you'd agree that "1.5.x no longer works" is not correct.
+--VV4b6MQE+OnNyhkM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I'm telling you that there won't be any such corruption.  Just like in 
-> the M$ Office case, it is expected that newer versions make data 
-> unusable by older versions at some point -- that's the inevitable side 
-> effect of progress.
+On Mon, Dec 17, 2007 at 08:53:55PM +0000, Jeff King wrote:
+> On Mon, Dec 17, 2007 at 12:42:51PM -0800, Junio C Hamano wrote:
+>=20
+> > You forgot one case.
+> >=20
+> >     4. Everybody who does _not_ know that we traditionally did not
+> >        support the form would expect "--abbrev 10" and "-n 4" to work.
+>=20
+> I would expect "-n 4" to work, but not "--abbrev 10". But perhaps that
+> is just me. If that is the expectation, I think the behavior you
+> outlined is sensible.
 
-	Sure, we're not complaining about that.  We complain some about
-the fast pace (at the time he had his problem, 1.4 installs were not
-unusual, and Junio's response suggested that "I use NFS" wasn't strongly
-considered as a use case), but more we complain about the obscurity of
-the reason.  If it's obvious what happened (not the specifics, just
-"please upgrade" or "repository format changed" or something), the user
-moves along.
+FWIW that's exactly the opposite for me. -n4 is easy to type, and I
+always do that. Though on a keyboard, ' ' is under the thumb, '=3D' is
+harder to catch, so I tend to prefer when CLIs don't force me to use =3D.
 
-> And we cannot always anticipate what kind of incompatibility will be 
-> worth making in the future, so it is hard to come with proper error 
-> messages in all cases today.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-	How hard is it?  We have core.repositoryformatversion.  We
-undoubtably have headers on our files.  As an example, an older version
-should be able to ascertain 1) this is a pack file 2) I don't know how
-to read it.  Thus, it should always be able to tell the user as such.
-This is different from reporting "invalid pack file" or "corrupt pack
-file", or "garbage in tree".  Filesystems, as an example, set
-compatibility bits or version levels.  When an old kernel tries to mount
-it, it does not say "corrupt filesystem", it says "this filesystem has a
-feature I don't understand, I'm going to be nice and not do anything,
-please upgrade".  This is clear, even though the older kernel doesn't
-have any specifics about what the new feature is.
+--VV4b6MQE+OnNyhkM
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-> So I don't see how we could do better in that regard.  Carving the 
-> repository format in stone to keep ancient versions working forever is 
-> _not_ a solution.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-	Once again, we're not asking for that.  We're asking that you
-think ahead to what can change, and plan for it, so you can tell the
-user.  If the user has a clear idea where to go next, the can solve the
-rest themselves.
-	Look, not everyone reads this mailing list.  No one outside of
-this list reads the Release Notes.  They get their upgrade via yum or
-apt-get, along with 100 other packages.  You can't assume that 3 months
-of feature discussion here is going to be known to your average user.
+iD8DBQBHZukRvGr7W6HudhwRAuIsAKCGb1GFyNiXZEXtP1Vh59T3KF2P1wCeIfxw
+u6vqxfnWLlDeU0eMlLih2tc=
+=NfYg
+-----END PGP SIGNATURE-----
 
-Joel
-
--- 
-
-"Vote early and vote often." 
-        - Al Capone
-
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+--VV4b6MQE+OnNyhkM--
