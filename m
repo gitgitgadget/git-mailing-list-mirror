@@ -1,108 +1,85 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Have a flag to stop the option parsing at the first argument.
-Date: Mon, 17 Dec 2007 13:40:18 +0100
-Message-ID: <26962818-F702-44D2-BD26-95D74CE21F0D@wincent.com>
-References: <20071217095014.GF7453@artemis.madism.org> <30351C09-8BED-4D81-ABDD-2E079B4D54D2@wincent.com> <20071217114703.GH7453@artemis.madism.org> <Pine.LNX.4.64.0712171149540.9446@racer.site> <3CF3CEA5-72F1-47D1-ADB9-37F5C2E292A8@wincent.com> <Pine.LNX.4.64.0712171223210.9446@racer.site>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Dec 17 13:46:10 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Re-re-re-fix common tail optimization
+Date: Mon, 17 Dec 2007 12:51:29 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712171250550.9446@racer.site>
+References: <20071215155150.GA24810@coredump.intra.peff.net>
+ <7vprx7n90t.fsf@gitster.siamese.dyndns.org> <20071215200202.GA3334@sigill.intra.peff.net>
+ <20071216070614.GA5072@sigill.intra.peff.net> <7v8x3ul927.fsf@gitster.siamese.dyndns.org>
+ <7v7ijejq6j.fsf@gitster.siamese.dyndns.org> <20071216212104.GA32307@coredump.intra.peff.net>
+ <7v3au2joo2.fsf_-_@gitster.siamese.dyndns.org> <20071216221545.GA32596@coredump.intra.peff.net>
+ <7vtzmii8io.fsf@gitster.siamese.dyndns.org> <20071216222919.GA2260@coredump.intra.peff.net>
+ <EBD73F46-810F-4605-972C-54EED0EF9A63@wincent.com> <Pine.LNX.4.64.0712171038130.9446@racer.site>
+ <36E62F9B-26FF-4DC0-99B8-D6DC2B960E67@wincent.com> <Pine.LNX.4.64.0712171151490.9446@racer.site>
+ <57245FA1-361B-4333-B490-A2CC99ED4F9C@wincent.com> <476669A7.1050407@viscovery.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Wincent Colaiuta <win@wincent.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Dec 17 13:52:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4FMH-0001Fp-8T
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 13:46:09 +0100
+	id 1J4FS3-0002vk-Tq
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 13:52:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752510AbXLQMpr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Dec 2007 07:45:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752763AbXLQMpq
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 07:45:46 -0500
-Received: from wincent.com ([72.3.236.74]:58156 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751528AbXLQMpq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Dec 2007 07:45:46 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBHCeJI1021548;
-	Mon, 17 Dec 2007 06:40:20 -0600
-In-Reply-To: <Pine.LNX.4.64.0712171223210.9446@racer.site>
-X-Mailer: Apple Mail (2.915)
+	id S1753442AbXLQMvp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 07:51:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753168AbXLQMvp
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 07:51:45 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60388 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753114AbXLQMvo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 07:51:44 -0500
+Received: (qmail invoked by alias); 17 Dec 2007 12:51:42 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp005) with SMTP; 17 Dec 2007 13:51:42 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+6BVVr1fy6ee0udfbg+Iljtx5a/fNR9nELveO6jX
+	FlL+Ai70lqYiak
+X-X-Sender: gene099@racer.site
+In-Reply-To: <476669A7.1050407@viscovery.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68560>
 
-El 17/12/2007, a las 13:26, Johannes Schindelin escribi=F3:
+Hi,
 
-> Hi,
->
-> On Mon, 17 Dec 2007, Wincent Colaiuta wrote:
->
->> Yes, we know what it does because we know that "git ... log ..." is
->> actually two commands and each one handles one of the -p switches, =20
->> but
->> it is much easier to present git as a single tool to the newcomer =20
->> (and I
->> guess I don't need to argue that case here seeing as the decision ha=
-s
->> already been taken long ago to talk using dashless forms), and it is
->> much easier to explain to a newcomer something like:
->>
->> git log --paginate -p
->>
->> Than:
->>
->> git -p log -p
->
-> How about
->
-> 	git log -p
->
-> Hmm?
->
-> Fact is: you make the tool easier by having sane defaults.  Not by =20
-> moving
-> around command line options.  The option "-p" for git is an option =20
-> that
-> holds for _all_ subcommands.  That's why it belongs _before_ the
-> subcommand.
->
->> But it doesn't really matter. The proposed changes allow old-timers =
-=20
->> to
->> continue putting their special options between the "git" and the
->> "command". If you don't want to deprecate the -p special because of =
-=20
->> the
->> confusion it might cause, I think we should at least not give it a =20
->> very
->> prominent place in the documentation, nor use it any examples.
->
-> I think it is wrong to go out of our way to support "git status -p" =20
-> as a
-> synonym to "git -p status".  I simply do not believe that newcomers =20
-> are
-> not intelligent enough to understand that "git -p <subcommand>" =20
-> means that
-> the output goes into their pager.
+On Mon, 17 Dec 2007, Johannes Sixt wrote:
 
-But the point is, of all the special options, -p is the *only* that =20
-can't unambiguously go after the subcommand.
+> Wincent Colaiuta schrieb:
+> > El 17/12/2007, a las 12:57, Johannes Schindelin escribi?:
+> > 
+> >> Hmm.  There is some chicken-and-egg problem here (I read the thread, but
+> >> did not really see a problem, as I assumed that _other_ tests would
+> >> assure
+> >> that "git diff --no-index" works as expected).
+> >>
+> >> But as at least one released version of GNU diff has a pretty serious
+> >> bug,
+> >> I would rather not rely too much on diff.  (BTW this was the reason I
+> >> wanted --no-index so badly.)
+> >>
+> >> So yeah, the second "diff" cannot be "git diff".  Maybe "cmp", but not
+> >> "git diff".
+> > 
+> > Well cmp would be fine as well, seeing all we want is a boolean "is 
+> > this the same or not" answer. (I'm not familiar with the GNU diff bug 
+> > you speak of, but was it so bad that it couldn't even get *that* 
+> > answer right?)
+> 
+> Heh, there's at least one distribution out there (Suse 10.1) that comes 
+> with a *cmp* that doesn't get that answer right if its output is 
+> connected to /dev/null, which is the case when you simply 'make test'.
 
-I'm arguing that the world would be a simpler place, friendlier to =20
-newcomers if *all* git commands looked like "git subcommand opts...", =20
-and at the moment -p is the only obstacle to making this so. And just =20
-in case it's necessary to restate this, I am not proposing removing =20
-support for the git specials subcommand opts..." form; I'm just trying =
-=20
-to make it so that we don't have to advertise it so prominently. This =20
-seems to be the natural complement to the move to dashless forms.
+Yeah.  That's what it was.  I even posted a patch to GNU diff, only to 
+find out that it was already fixed in CVS.  Sigh.
 
-Cheers,
-Wincent
+Ciao,
+Dscho
