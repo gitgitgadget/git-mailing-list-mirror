@@ -1,77 +1,126 @@
-From: "Marco Costalba" <mcostalba-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-Subject: Re: Windows binaries for qgit 2.0
-Date: Mon, 17 Dec 2007 20:17:32 +0100
-Message-ID: <e5bfff550712171117ka671594t7c35e8a3d2aeefe9@mail.gmail.com>
-References: <e5bfff550712150702p2675da8axed1f3db6273f619@mail.gmail.com> <fk2p0f$961$1@ger.gmane.org> <e5bfff550712160105w3817a460v3db1bde15969fcf2@mail.gmail.com> <fk2q1f$bbh$1@ger.gmane.org> <e5bfff550712160242v54ce284emd31a29964770179c@mail.gmail.com> <fk3153$rtb$1@ger.gmane.org> <e5bfff550712161426y101c77efl4f5321d3440fed3f@mail.gmail.com> <fk5grp$7il$2@ger.gmane.org> <e5bfff550712171105k62b90853w1c5eed64bd11fb23@mail.gmail.com> <Pine.LNX.4.64.0712171911070.9446@racer.site>
-Reply-To: mcostalba-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin-tag: fix fallouts from recent parsopt restriction.
+Date: Mon, 17 Dec 2007 11:52:29 -0800
+Message-ID: <7vy7bt6qv6.fsf@gitster.siamese.dyndns.org>
+References: <20071213055226.GA3636@coredump.intra.peff.net>
+	<20071213090604.GA12398@artemis.madism.org>
+	<20071213091055.GA5674@coredump.intra.peff.net>
+	<20071213093536.GC12398@artemis.madism.org>
+	<20071213102636.GD12398@artemis.madism.org>
+	<7vd4t5eq52.fsf@gitster.siamese.dyndns.org>
+	<20071217090749.GC7453@artemis.madism.org>
+	<7vir2xa8z7.fsf@gitster.siamese.dyndns.org>
+	<20071217105834.GG7453@artemis.madism.org>
+	<7v1w9la7o8.fsf@gitster.siamese.dyndns.org>
+	<20071217123307.GK7453@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Abdelrazak Younes" <younes.a-GANU6spQydw@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org,  msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-To: "Johannes Schindelin" <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Dec 17 20:20:00 2007
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from ug-out-1516.google.com ([66.249.92.160])
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Mon Dec 17 20:55:33 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4LTQ-0000DV-Lq
-	for gcvm-msysgit@m.gmane.org; Mon, 17 Dec 2007 20:17:56 +0100
-Received: by ug-out-1516.google.com with SMTP id 1so86210uga.9
-        for <gcvm-msysgit@m.gmane.org>; Mon, 17 Dec 2007 11:17:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:dkim-signature:domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=ihBM8RU+owFpQqqByesz9MyiNG8z0x/PZs8EBak3s/A=;
-        b=p7V+RNEssQktqtrl9PV7GoNFyeEsfnxfbArfENvHhOc1GeTTknDzCCf1NbVZ357JporA9ecfaZ9+gjiXUwSxETbeKL//ECQC8pc757sWM/iKQPFAuiwKsc035cbGQOq5PSksUuoS9xv13v2Jc8taVTY6Hf9PJ6unEw6gAjsdRy8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:dkim-signature:domainkey-signature:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=bdAoA66wcBkYHd3AWt+SdUDlVsT8/l5+kaQB+xtdeLCDVfY6rUIEyf1v1243CIxQ97yy2Hb1y8WMIw+l8XlWZNNukYljolYbcREGKXo9w9nQ3sPZEIhl2JXzsr+NtVDkpowh9BPvu/SgUfYKXfO7arZD01B0bWDC0jq/Dh6E5OU=
-Received: by 10.86.70.8 with SMTP id s8mr135701fga.19.1197919054441;
-        Mon, 17 Dec 2007 11:17:34 -0800 (PST)
-Received: by 10.107.115.27 with SMTP id s27gr1260prm;
-	Mon, 17 Dec 2007 11:17:34 -0800 (PST)
-X-Sender: mcostalba-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.114.192.1 with SMTP id p1mr2584566waf.14.1197919053135; Mon, 17 Dec 2007 11:17:33 -0800 (PST)
-Received: from rv-out-0910.google.com (rv-out-0910.google.com [209.85.198.187]) by mx.google.com with ESMTP id k36si6180099waf.2007.12.17.11.17.32; Mon, 17 Dec 2007 11:17:33 -0800 (PST)
-Received-SPF: pass (google.com: domain of mcostalba-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 209.85.198.187 as permitted sender) client-ip=209.85.198.187;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of mcostalba-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 209.85.198.187 as permitted sender) smtp.mail=mcostalba-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org; dkim=pass (test mode) header.i=@gmail.com
-Received: by rv-out-0910.google.com with SMTP id c27so2039899rvf.8 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Mon, 17 Dec 2007 11:17:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references; bh=YXRw1AChrXvwP7TiPmRzIrEI6QaVfJagU7EID4XlwHU=; b=suSziE0l46wnAWXAcUU1DVdH6BEGFIL/SioIlAvqboYy1zxXZjHXm/fn5vG8cYF0D38vVM40uEJeiuGJqpDvIedsywQ7C120e5ty3BfUO2+zPgiv1IRPkLrKxWDOyHcDIdAuDEPkU8ftvncYyMeyI9B4SXwjjn9S6C413PiESjs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references; b=WzJsItnXfzP8QTTcAEAX4uwXPIcnBlMjvc8/frC3YzMGyd+zoiWcBe2X7CkmumSTyeBbAul9mdPqH4oMFYZRcUmai4adN1AceYLZcCQlfZl8KxEZT7ZU2y+2WbXvxfPV2jUYCMhU/AYyq4nFp76Z3cVac/djmZ3YcSdjHRJVlhk=
-Received: by 10.140.144.4 with SMTP id r4mr1548726rvd.15.1197919052071; Mon, 17 Dec 2007 11:17:32 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Mon, 17 Dec 2007 11:17:32 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0712171911070.9446-OGWIkrnhIhzN0uC3ymp8PA@public.gmane.org>
-Content-Disposition: inline
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1J4M1n-0001Bd-Ag
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 20:53:27 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S935817AbXLQTwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 14:52:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765238AbXLQTwn
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 14:52:43 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53210 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935840AbXLQTwl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 14:52:41 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 17AC53E59;
+	Mon, 17 Dec 2007 14:52:35 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D9033E58;
+	Mon, 17 Dec 2007 14:52:31 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68605>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68606>
 
+Pierre Habouzit <madcoder@debian.org> writes:
 
-On Dec 17, 2007 8:13 PM, Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org> wrote:
+> After having written this mail 4 time already, I came up with an idea I
+> kind of like: like find, we could make {} be a placeholder for the
+> "default" argument. For example:
 >
-> It is generally a good idea to provide the server-info for dumb protocols,
-> because not everybody is fortunate enough (like you, evidently, because
-> you do not seem to care all that much...) to control her outbound firewall
-> restrictions.
+>   $ git foo --abbrev {} 10
+>   $ git log -M {} 1
+>   ...
 >
+> {} would have the same semantics as your --long-opt-default. It tells the
+> option parser that "no there isn't anything to grok for that command thank you
+> very much". Of course if for some reason you really want to pass "{}" to the
+> command, the stuck form holds:
+>
+>   $ git foo --long-opt={}
+>   $ git foo -o{}
+>
+> What do you think ?
 
-I have taken note of Peter suggestion's to do a
+1. {} means a completely different thing to find ("place the real value
+   here"); there is no similarity.  I would strongly oppose to it.  If
+   you want to invoke opt with default but still want to pass "{}" as an
+   argument unrelated to that opt, you would do "--opt={} {}".  That's
+   double ugly.
 
-chmod +x foo.git/hooks/post-update
+2. For a long option with optional option-argument, --abbrev-default (or
+   in the other order, --default-abbrev) to mark "there is no option
+   argument, do not do your context sensitive parsing" and using an
+   explicit '=' (e.g. --abbrev=<value>) to mark "this is the argument,
+   do not do your context sensitive parsing" is much more readable.
 
-on kernel repository, I don't remember if I have already done it many
-months ago, but I'm planning to redo for safety as soon as I reach my
-development box.
+3. There are only handful options with optional option-argument that
+   does not have long format.  I think it is reasonable to require
+   "stuck argument" to them.  For most of the short options that take
+   optional option-argument, traditionally we did not allow them to be
+   spelled as separate words, so there is no regression to introduce
+   such a behaviour.  -B/-M/-C options to diff family would be handled
+   sanely this way.
 
-Thanks
-Marco
+   Another possibility, which I do not like very much, is to add long
+   format to them, if only for paranoid scripters who want rename
+   detection with the default threshold and cannot say "diff -M $foo".
+   They can say "diff --detect-rename-default $foo" instead ("-M" is a
+   bad example here, as giving a single path never makes sense for -M so
+   $foo cannot be a file whose name is e.g. "20", and default number of
+   abbreviated commit object name is longer than 2 which means it would
+   make it longer than "percentage" form of threshold).
+
+So in short, for an option that takes optional option-argument:
+
+   - if it is given as "--<long-name>-default", there is no optional
+     argument, period.
+
+   - if it is given as "--long-name" but there is no next word, there is
+     no optional argument, either.
+
+   - if it is given as "--long-name=value", that "value" is the
+     argument.  Barf if it does not validate.
+
+   - if it is given as "--long-name", and there is a next word, see if
+     that is plausible as its argument.  Get it and signal the caller
+     you consumed it, if it is.  Ignore it and signal the caller you
+     didn't, if it isn't.
+
+   - if it is given as "-svalue", that "value" is the argument.  Barf if
+     it does not validate.
+
+   - if it is given as "-s", and there is a next word, and if the option
+     has long format counterpart as well, then see if the next word is
+     plausible as its argument.  Get it and signal the caller you
+     consumed it, if it is.  Ignore it and signal the caller you didn't,
+     if it isn't.
+
+   - if it is given as "-s" but the previous rule did not trigger, there
+     is no optional argument.
