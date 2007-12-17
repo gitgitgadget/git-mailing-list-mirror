@@ -1,95 +1,98 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] builtin-tag: fix fallouts from recent parsopt  restriction.
-Date: Mon, 17 Dec 2007 22:01:16 +0100
-Message-ID: <20071217210116.GB13004@artemis.madism.org>
-References: <20071213102636.GD12398@artemis.madism.org> <7vd4t5eq52.fsf@gitster.siamese.dyndns.org> <20071217090749.GC7453@artemis.madism.org> <7vir2xa8z7.fsf@gitster.siamese.dyndns.org> <20071217105834.GG7453@artemis.madism.org> <7v1w9la7o8.fsf@gitster.siamese.dyndns.org> <20071217123307.GK7453@artemis.madism.org> <7vy7bt6qv6.fsf@gitster.siamese.dyndns.org> <20071217203143.GA2105@coredump.intra.peff.net> <20071217204204.GA13004@artemis.madism.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH w/ test] rebase -p -i: handle "no changes" gracefully
+Date: Mon, 17 Dec 2007 21:01:25 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712172100450.9446@racer.site>
+References: <2791F15A-EB72-4FE4-8DB3-7A4B4DCB07B3@frim.nl> <47623129.2030303@viscovery.net>
+ <9CC305E7-3325-4D17-A43E-0A2072F52084@ai.rug.nl> <Pine.LNX.4.64.0712171649420.9446@racer.site>
+ <7vprx56pfn.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="9zSXsLTf0vkW971A";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 17 22:01:57 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Pieter de Bie <pdebie@ai.rug.nl>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 17 22:02:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4N5r-0007n6-J7
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 22:01:44 +0100
+	id 1J4N6J-0007zc-KL
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 22:02:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761537AbXLQVBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 16:01:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761523AbXLQVBT
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 16:01:19 -0500
-Received: from pan.madism.org ([88.191.52.104]:55542 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761484AbXLQVBS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 16:01:18 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id E50D6309FE;
-	Mon, 17 Dec 2007 22:01:16 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 472E83E117F; Mon, 17 Dec 2007 22:01:16 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20071217204204.GA13004@artemis.madism.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1761523AbXLQVBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 16:01:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761350AbXLQVBp
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 16:01:45 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38323 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754607AbXLQVBo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 16:01:44 -0500
+Received: (qmail invoked by alias); 17 Dec 2007 21:01:43 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp018) with SMTP; 17 Dec 2007 22:01:43 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19YZqdrQoxYYic1QrDZYHulWWxO67LFFlZ3X7t60k
+	AzLr58+scXiJIb
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vprx56pfn.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68621>
 
 
---9zSXsLTf0vkW971A
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Since commit 376ccb8cbb453343998e734d8a1ce79f57a4e092, unchanged
+SHA-1s are no longer mapped via $REWRITTEN.  But the updating
+phase was not prepared for the old head not being rewritten.
 
-On Mon, Dec 17, 2007 at 08:42:04PM +0000, Pierre Habouzit wrote:
-> On Mon, Dec 17, 2007 at 08:31:43PM +0000, Jeff King wrote:
-> > On Mon, Dec 17, 2007 at 11:52:29AM -0800, Junio C Hamano wrote:
-> >=20
-> > > So in short, for an option that takes optional option-argument:
-> >=20
-> > I agree with everything you said, except...
-> >=20
-> > >    - if it is given as "--long-name", and there is a next word, see if
-> > >      that is plausible as its argument.  Get it and signal the caller
-> > >      you consumed it, if it is.  Ignore it and signal the caller you
-> > >      didn't, if it isn't.
-> >=20
-> > This "plausible" makes me a little nervous, and I wonder why we want to
-> > support this at all. Is it
-> >=20
-> >   1. We have traditionally supported "--abbrev 10"? I don't think this
-> >      is the case.
->=20
->   Yes, that's why the restriction bugs me a bit too.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-  Err I misread your point, _yes_ we do, see builtin-show-ref.c, or see
---start-number in builtin-log.c. There is a precedent.
+	On Mon, 17 Dec 2007, Junio C Hamano wrote:
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+	> Hmph, care to add a test to t3404?
 
---9zSXsLTf0vkW971A
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+	How about this?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+ git-rebase--interactive.sh    |    7 ++++++-
+ t/t3404-rebase-interactive.sh |    6 ++++++
+ 2 files changed, 12 insertions(+), 1 deletions(-)
 
-iD8DBQBHZuOcvGr7W6HudhwRAiAeAJ9fhEAcGt4MVZr/tZIGaNtYsaJQPgCfbt9S
-N91kuS0fzYn24HjjO9Fi7/o=
-=Hxwd
------END PGP SIGNATURE-----
-
---9zSXsLTf0vkW971A--
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index f83e00f..cd7e43f 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -322,7 +322,12 @@ do_next () {
+ 		test -f "$DOTEST"/current-commit &&
+ 			current_commit=$(cat "$DOTEST"/current-commit) &&
+ 			git rev-parse HEAD > "$REWRITTEN"/$current_commit
+-		NEWHEAD=$(cat "$REWRITTEN"/$OLDHEAD)
++		if test -f "$REWRITTEN"/$OLDHEAD
++		then
++			NEWHEAD=$(cat "$REWRITTEN"/$OLDHEAD)
++		else
++			NEWHEAD=$OLDHEAD
++		fi
+ 	else
+ 		NEWHEAD=$(git rev-parse HEAD)
+ 	fi &&
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 907c7f9..74a7eb3 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -184,6 +184,12 @@ test_expect_success 'retain authorship when squashing' '
+ 	git show HEAD | grep "^Author: Twerp Snog"
+ '
+ 
++test_expect_success '-p handles "no changes" gracefully' '
++	HEAD=$(git rev-parse HEAD) &&
++	git rebase -i -p HEAD^ &&
++	test $HEAD = $(git rev-parse HEAD)
++'
++
+ test_expect_success 'preserve merges with -p' '
+ 	git checkout -b to-be-preserved master^ &&
+ 	: > unrelated-file &&
+-- 
+1.5.4.rc0.59.g1d10d
