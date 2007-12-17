@@ -1,122 +1,105 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] builtin-tag: fix fallouts from recent parsopt restriction.
-Date: Mon, 17 Dec 2007 13:33:07 +0100
-Message-ID: <20071217123307.GK7453@artemis.madism.org>
-References: <20071213055226.GA3636@coredump.intra.peff.net> <20071213090604.GA12398@artemis.madism.org> <20071213091055.GA5674@coredump.intra.peff.net> <20071213093536.GC12398@artemis.madism.org> <20071213102636.GD12398@artemis.madism.org> <7vd4t5eq52.fsf@gitster.siamese.dyndns.org> <20071217090749.GC7453@artemis.madism.org> <7vir2xa8z7.fsf@gitster.siamese.dyndns.org> <20071217105834.GG7453@artemis.madism.org> <7v1w9la7o8.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-clone: Unobvious error messages when update-server-info
+	has not been run
+Date: Mon, 17 Dec 2007 07:43:59 -0500
+Message-ID: <20071217124359.GA20800@coredump.intra.peff.net>
+References: <20071217105541.GG14889@albany.tokkee.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="ibvzjYYg+QDzMCy1";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 17 13:33:50 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Gerrit Pape <pape@smarden.org>,
+	git@vger.kernel.org
+To: Sebastian Harl <sh@tokkee.org>
+X-From: git-owner@vger.kernel.org Mon Dec 17 13:44:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4FAJ-00065q-DA
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 13:33:47 +0100
+	id 1J4FKf-0000jj-Lu
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 13:44:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753197AbXLQMdM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 07:33:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752992AbXLQMdK
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 07:33:10 -0500
-Received: from pan.madism.org ([88.191.52.104]:33380 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753105AbXLQMdJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 07:33:09 -0500
-Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 137CC30837;
-	Mon, 17 Dec 2007 13:33:08 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 80FAB4BE7F4; Mon, 17 Dec 2007 13:33:07 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
+	id S1754225AbXLQMoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 07:44:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754645AbXLQMoF
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 07:44:05 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1411 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753091AbXLQMoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 07:44:04 -0500
+Received: (qmail 8835 invoked by uid 111); 17 Dec 2007 12:44:01 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 17 Dec 2007 07:44:01 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Dec 2007 07:43:59 -0500
 Content-Disposition: inline
-In-Reply-To: <7v1w9la7o8.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <20071217105541.GG14889@albany.tokkee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68558>
 
+On Mon, Dec 17, 2007 at 11:55:41AM +0100, Sebastian Harl wrote:
 
---ibvzjYYg+QDzMCy1
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I was just trying to clone a repository using http but missed to run
+> git-update-server-info on the server side. git-clone aborted with the
+> following error messages:
+> 
+>   % git clone http://some/repo.git
+>   Initialized empty Git repository in /path/repo/.git/
+>   cat: /path/repo/.git/refs/remotes/origin/master: No such file or directory
+>   cd: 482: can't cd to /path/repo/.git/refs/remotes/origin
+>   fatal: : not a valid SHA1
+>   fatal: Not a valid object name HEAD
+> 
+> It's kind of hard to guess where the error comes from in this case (I blamed
+> Git at first). Is there some way to improve the error message in a case like
+> this?
 
-On Mon, Dec 17, 2007 at 11:21:11AM +0000, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> > On Mon, Dec 17, 2007 at 10:53:00AM +0000, Junio C Hamano wrote:
-> > ...
-> >> This is just a quick idea before I go back to sleep, but your earlier
-> >> comment on "--no-<an-option-that-is-not-even-boolean>" made me realize
-> >> that the alternative I was suggesting earlier would actually work much
-> >> nicer, if you introduce "--<an-option-that-take-optional-arg>-default"
-> >> magic.
-> >
-> >   meeeow I love the idea !
->=20
-> There is a bit more serious issue than coding, actually.
->=20
-> Short options.
->=20
-> A script wants to use default rename detection threshold for unknown
-> commit $foo whose name might look like a number.  IOW, this
->=20
-> 	git diff -M $foo
->=20
-> could be ambiguous.  Obviously, "git diff -M-default $foo" would not fly
-> very well.
+git-clone is supposed to detect this condition, but there was a bug in
+the error checking code. Can you confirm that this patch fixes it?
 
-Yes, I thought about that too actually.
+Gerrit, I think was caused by your f28dd477 (it is a funny shell
+interaction that the non-followed case branch resets $?, but it behaves
+the same with bash and dash).
 
-After having written this mail 4 time already, I came up with an idea I
-kind of like: like find, we could make {} be a placeholder for the
-"default" argument. For example:
+-- >8 --
+clone: correctly report http_fetch errors
 
-  $ git foo --abbrev {} 10
-  $ git log -M {} 1
-  ...
+The exit status from curl was accidentally lost by the
+'case' statement. We need to explicitly save it so that $?
+doesn't get overwritten.
 
-{} would have the same semantics as your --long-opt-default. It tells the
-option parser that "no there isn't anything to grok for that command thank =
-you
-very much". Of course if for some reason you really want to pass "{}" to the
-command, the stuck form holds:
+This improves the error message when fetching from an http
+repository which has never had update-server-info run.
+Previously, it would fail to note the fetch error and
+produce multiple errors about the lack of origin branches.
+It now correctly suggests running git-update-server-info.
 
-  $ git foo --long-opt=3D{}
-  $ git foo -o{}
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ git-clone.sh |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
 
-What do you think ?
-
-PS: I know that in some shells {} needs escaping, which isn't nice. I chose=
- it
-    because it's the same as find(1) but we could e.g. use '_' that is less
-    "conventional" (if it even makes sense) but is a bit easier to type tha=
-n \{}.
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---ibvzjYYg+QDzMCy1
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHZmyDvGr7W6HudhwRAlEDAJ9Z6Pd0dn6k9FTKYDxO3rCY/BEJHwCcDnzT
-0R1deJOdNg5YYNo96YTI5AA=
-=J1Jh
------END PGP SIGNATURE-----
-
---ibvzjYYg+QDzMCy1--
+diff --git a/git-clone.sh b/git-clone.sh
+index 68085a3..9a160ee 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -56,11 +56,12 @@ fi
+ 
+ http_fetch () {
+ 	# $1 = Remote, $2 = Local
+-	curl -nsfL $curl_extra_args "$1" >"$2" ||
+-		case $? in
+-		126|127) exit ;;
+-		*)	 return $? ;;
+-		esac
++	curl -nsfL $curl_extra_args "$1" >"$2"
++	curl_exit_status=$?
++	case $curl_exit_status in
++	126|127) exit ;;
++	*)	 return $curl_exit_status ;;
++	esac
+ }
+ 
+ clone_dumb_http () {
+-- 
+1.5.4.rc0.1145.gef733-dirty
