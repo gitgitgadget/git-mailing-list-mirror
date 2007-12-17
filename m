@@ -1,72 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git.c option parsing
-Date: Mon, 17 Dec 2007 00:48:23 -0800
-Message-ID: <7vsl21aeqw.fsf@gitster.siamese.dyndns.org>
-References: <1197631424-52586-1-git-send-email-win@wincent.com>
-	<1197631424-52586-2-git-send-email-win@wincent.com>
-	<7vejdml92c.fsf@gitster.siamese.dyndns.org>
-	<F6F3247E-4E71-4977-9626-F0571278E1E6@wincent.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] (squashme) gitcli documentation fixups
+Date: Mon, 17 Dec 2007 09:51:06 +0100
+Message-ID: <20071217085106.GA7453@artemis.madism.org>
+References: <20071213055226.GA3636@coredump.intra.peff.net> <20071213090604.GA12398@artemis.madism.org> <20071213091055.GA5674@coredump.intra.peff.net> <20071213093536.GC12398@artemis.madism.org> <20071213102636.GD12398@artemis.madism.org> <20071213102724.GE12398@artemis.madism.org> <7v7ijdeq4w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Mon Dec 17 09:48:56 2007
+Content-Type: multipart/signed; boundary="bg08WKrSYDhXBjb5";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 17 09:51:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4Beh-0000u7-Vx
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 09:48:56 +0100
+	id 1J4BhG-0001dB-AQ
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 09:51:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754180AbXLQIse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 03:48:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752804AbXLQIsd
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 03:48:33 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60653 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751899AbXLQIsd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 03:48:33 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id EAB88185F;
-	Mon, 17 Dec 2007 03:48:28 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	id S1754510AbXLQIvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 03:51:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750711AbXLQIvL
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 03:51:11 -0500
+Received: from pan.madism.org ([88.191.52.104]:51301 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752852AbXLQIvK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 03:51:10 -0500
+Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 737E1185E;
-	Mon, 17 Dec 2007 03:48:25 -0500 (EST)
-In-Reply-To: <F6F3247E-4E71-4977-9626-F0571278E1E6@wincent.com> (Wincent
-	Colaiuta's message of "Mon, 17 Dec 2007 09:27:12 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id A8B9730612;
+	Mon, 17 Dec 2007 09:51:08 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id E6419F0A; Mon, 17 Dec 2007 09:51:06 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7v7ijdeq4w.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68522>
 
-Wincent Colaiuta <win@wincent.com> writes:
 
-> Of course, the above plan will only work for builtins, not for  
-> scripts. An additional step would be needed to enable scripts to  
-> handle these options; perhaps teaching "git rev-parse" something...
+--bg08WKrSYDhXBjb5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-As long as special options stay special and we make a rule not to allow
-any subcommand to assign its own meaning to them, the git wrapper can
-lookahead and reorder, when seeing a command line:
+On Mon, Dec 17, 2007 at 07:28:47AM +0000, Junio C Hamano wrote:
+> This comes directly on top of gitcli documentation patch and is intended
+> to be squashed into it.
 
-	git scripted-command --special
+  I obviously ack.
+> -Another things to keep in mind is that long options can be negated. For
+> +Boolean options with long option names can be negated by prefixing `"--n=
+o-"`. For
+   ^^^^^^^
+Though this isn't correct: you can negate any kind of option, even one
+with strings arguments, and it does makes sense. E.g. if you have some:
 
-into
+  foo.stringOpt =3D "value"
 
-	git --special scripted-command
+in your gitconfig file, then it's very handy to be able to write:
 
-And that approach would work well for built-ins as well, I would
-imagine.
+  $ git foo --no-string-opt
 
-There is one minor detail, though.  There could be an option-parameter
-that is literally --special.  E.g.
+to be sure the gitconfig from the user won't mess with what you intend
+to do. The negation of commands can be disabled (in the recent
+iterations of parseopt) using a flag I don't recall the name, but it's
+on by default even for non boolean options. It may make sense to do a
+re-read pass of all options and see which ones it makes sense to negate
+and which not.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-	git grep -e --no-paginate
+--bg08WKrSYDhXBjb5
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-should not be reordered to
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-	git --no-paginate grep -e
+iD8DBQBHZjh6vGr7W6HudhwRAmz3AJ458ybHkPXPT/mGfpQj1pFEVzB6GwCfU/Pg
+tG4TWNjBUTFRfDsbHDc/prQ=
+=MOmI
+-----END PGP SIGNATURE-----
+
+--bg08WKrSYDhXBjb5--
