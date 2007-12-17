@@ -1,105 +1,108 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-clone: Unobvious error messages when update-server-info
-	has not been run
-Date: Mon, 17 Dec 2007 07:43:59 -0500
-Message-ID: <20071217124359.GA20800@coredump.intra.peff.net>
-References: <20071217105541.GG14889@albany.tokkee.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Gerrit Pape <pape@smarden.org>,
-	git@vger.kernel.org
-To: Sebastian Harl <sh@tokkee.org>
-X-From: git-owner@vger.kernel.org Mon Dec 17 13:44:30 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH] Have a flag to stop the option parsing at the first argument.
+Date: Mon, 17 Dec 2007 13:40:18 +0100
+Message-ID: <26962818-F702-44D2-BD26-95D74CE21F0D@wincent.com>
+References: <20071217095014.GF7453@artemis.madism.org> <30351C09-8BED-4D81-ABDD-2E079B4D54D2@wincent.com> <20071217114703.GH7453@artemis.madism.org> <Pine.LNX.4.64.0712171149540.9446@racer.site> <3CF3CEA5-72F1-47D1-ADB9-37F5C2E292A8@wincent.com> <Pine.LNX.4.64.0712171223210.9446@racer.site>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Dec 17 13:46:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4FKf-0000jj-Lu
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 13:44:30 +0100
+	id 1J4FMH-0001Fp-8T
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 13:46:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754225AbXLQMoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 07:44:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754645AbXLQMoF
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 07:44:05 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1411 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753091AbXLQMoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 07:44:04 -0500
-Received: (qmail 8835 invoked by uid 111); 17 Dec 2007 12:44:01 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 17 Dec 2007 07:44:01 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Dec 2007 07:43:59 -0500
-Content-Disposition: inline
-In-Reply-To: <20071217105541.GG14889@albany.tokkee.org>
+	id S1752510AbXLQMpr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Dec 2007 07:45:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752763AbXLQMpq
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 07:45:46 -0500
+Received: from wincent.com ([72.3.236.74]:58156 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751528AbXLQMpq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Dec 2007 07:45:46 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBHCeJI1021548;
+	Mon, 17 Dec 2007 06:40:20 -0600
+In-Reply-To: <Pine.LNX.4.64.0712171223210.9446@racer.site>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68559>
 
-On Mon, Dec 17, 2007 at 11:55:41AM +0100, Sebastian Harl wrote:
+El 17/12/2007, a las 13:26, Johannes Schindelin escribi=F3:
 
-> I was just trying to clone a repository using http but missed to run
-> git-update-server-info on the server side. git-clone aborted with the
-> following error messages:
-> 
->   % git clone http://some/repo.git
->   Initialized empty Git repository in /path/repo/.git/
->   cat: /path/repo/.git/refs/remotes/origin/master: No such file or directory
->   cd: 482: can't cd to /path/repo/.git/refs/remotes/origin
->   fatal: : not a valid SHA1
->   fatal: Not a valid object name HEAD
-> 
-> It's kind of hard to guess where the error comes from in this case (I blamed
-> Git at first). Is there some way to improve the error message in a case like
-> this?
+> Hi,
+>
+> On Mon, 17 Dec 2007, Wincent Colaiuta wrote:
+>
+>> Yes, we know what it does because we know that "git ... log ..." is
+>> actually two commands and each one handles one of the -p switches, =20
+>> but
+>> it is much easier to present git as a single tool to the newcomer =20
+>> (and I
+>> guess I don't need to argue that case here seeing as the decision ha=
+s
+>> already been taken long ago to talk using dashless forms), and it is
+>> much easier to explain to a newcomer something like:
+>>
+>> git log --paginate -p
+>>
+>> Than:
+>>
+>> git -p log -p
+>
+> How about
+>
+> 	git log -p
+>
+> Hmm?
+>
+> Fact is: you make the tool easier by having sane defaults.  Not by =20
+> moving
+> around command line options.  The option "-p" for git is an option =20
+> that
+> holds for _all_ subcommands.  That's why it belongs _before_ the
+> subcommand.
+>
+>> But it doesn't really matter. The proposed changes allow old-timers =
+=20
+>> to
+>> continue putting their special options between the "git" and the
+>> "command". If you don't want to deprecate the -p special because of =
+=20
+>> the
+>> confusion it might cause, I think we should at least not give it a =20
+>> very
+>> prominent place in the documentation, nor use it any examples.
+>
+> I think it is wrong to go out of our way to support "git status -p" =20
+> as a
+> synonym to "git -p status".  I simply do not believe that newcomers =20
+> are
+> not intelligent enough to understand that "git -p <subcommand>" =20
+> means that
+> the output goes into their pager.
 
-git-clone is supposed to detect this condition, but there was a bug in
-the error checking code. Can you confirm that this patch fixes it?
+But the point is, of all the special options, -p is the *only* that =20
+can't unambiguously go after the subcommand.
 
-Gerrit, I think was caused by your f28dd477 (it is a funny shell
-interaction that the non-followed case branch resets $?, but it behaves
-the same with bash and dash).
+I'm arguing that the world would be a simpler place, friendlier to =20
+newcomers if *all* git commands looked like "git subcommand opts...", =20
+and at the moment -p is the only obstacle to making this so. And just =20
+in case it's necessary to restate this, I am not proposing removing =20
+support for the git specials subcommand opts..." form; I'm just trying =
+=20
+to make it so that we don't have to advertise it so prominently. This =20
+seems to be the natural complement to the move to dashless forms.
 
--- >8 --
-clone: correctly report http_fetch errors
-
-The exit status from curl was accidentally lost by the
-'case' statement. We need to explicitly save it so that $?
-doesn't get overwritten.
-
-This improves the error message when fetching from an http
-repository which has never had update-server-info run.
-Previously, it would fail to note the fetch error and
-produce multiple errors about the lack of origin branches.
-It now correctly suggests running git-update-server-info.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-clone.sh |   11 ++++++-----
- 1 files changed, 6 insertions(+), 5 deletions(-)
-
-diff --git a/git-clone.sh b/git-clone.sh
-index 68085a3..9a160ee 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -56,11 +56,12 @@ fi
- 
- http_fetch () {
- 	# $1 = Remote, $2 = Local
--	curl -nsfL $curl_extra_args "$1" >"$2" ||
--		case $? in
--		126|127) exit ;;
--		*)	 return $? ;;
--		esac
-+	curl -nsfL $curl_extra_args "$1" >"$2"
-+	curl_exit_status=$?
-+	case $curl_exit_status in
-+	126|127) exit ;;
-+	*)	 return $curl_exit_status ;;
-+	esac
- }
- 
- clone_dumb_http () {
--- 
-1.5.4.rc0.1145.gef733-dirty
+Cheers,
+Wincent
