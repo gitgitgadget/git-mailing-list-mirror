@@ -1,76 +1,114 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] builtin-tag: fix fallouts from recent parsopt
-	restriction.
-Date: Mon, 17 Dec 2007 15:31:43 -0500
-Message-ID: <20071217203143.GA2105@coredump.intra.peff.net>
-References: <20071213091055.GA5674@coredump.intra.peff.net> <20071213093536.GC12398@artemis.madism.org> <20071213102636.GD12398@artemis.madism.org> <7vd4t5eq52.fsf@gitster.siamese.dyndns.org> <20071217090749.GC7453@artemis.madism.org> <7vir2xa8z7.fsf@gitster.siamese.dyndns.org> <20071217105834.GG7453@artemis.madism.org> <7v1w9la7o8.fsf@gitster.siamese.dyndns.org> <20071217123307.GK7453@artemis.madism.org> <7vy7bt6qv6.fsf@gitster.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] provide advance warning of some future pack default changes
+Date: Mon, 17 Dec 2007 15:41:24 -0500 (EST)
+Message-ID: <alpine.LFD.0.999999.0712171517320.8467@xanadu.home>
+References: <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org>
+ <alpine.LFD.0.999999.0712132227090.8467@xanadu.home>
+ <m3fxy5qwbq.fsf@roke.D-201>
+ <alpine.LFD.0.999999.0712140836140.8467@xanadu.home>
+ <20071214215206.GB7300@mail.oracle.com>
+ <alpine.LFD.0.999999.0712141724260.8467@xanadu.home>
+ <20071214223957.GC7300@mail.oracle.com>
+ <alpine.LFD.0.999999.0712141744460.8467@xanadu.home>
+ <20071215004230.GF7300@mail.oracle.com>
+ <alpine.LFD.0.999999.0712142114400.8467@xanadu.home>
+ <20071217200920.GB19816@mail.oracle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 17 21:32:23 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Joel Becker <Joel.Becker@oracle.com>
+X-From: git-owner@vger.kernel.org Mon Dec 17 21:42:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4MdI-0002ly-JS
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 21:32:13 +0100
+	id 1J4Mmi-0007fz-MP
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 21:41:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758059AbXLQUbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 15:31:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756854AbXLQUbq
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 15:31:46 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2170 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757428AbXLQUbq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 15:31:46 -0500
-Received: (qmail 12972 invoked by uid 111); 17 Dec 2007 20:31:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 17 Dec 2007 15:31:44 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Dec 2007 15:31:43 -0500
-Content-Disposition: inline
-In-Reply-To: <7vy7bt6qv6.fsf@gitster.siamese.dyndns.org>
+	id S1757557AbXLQUl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 15:41:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759206AbXLQUl0
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 15:41:26 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:30557 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757557AbXLQUlZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 15:41:25 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JT700492O50YQ90@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 17 Dec 2007 15:41:24 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20071217200920.GB19816@mail.oracle.com>
+User-Agent: Alpine 0.999999 (LFD 847 2007-12-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68614>
 
-On Mon, Dec 17, 2007 at 11:52:29AM -0800, Junio C Hamano wrote:
+On Mon, 17 Dec 2007, Joel Becker wrote:
 
-> So in short, for an option that takes optional option-argument:
+> On Fri, Dec 14, 2007 at 09:23:38PM -0500, Nicolas Pitre wrote:
+> > On Fri, 14 Dec 2007, Joel Becker wrote:
+> > > 	The relevant message is:
+> > > 
+> > > Message-ID: <7vveaindgp.fsf@gitster.siamese.dyndns.org>
+> > > 
+> > > See the paragraphs at the bottom.  The thread, started by me, begins
+> > > with:
+> > > 
+> > > Message-ID: <20070910205429.GE27837@tasint.org>
+> > 
+> > OK.  From those emails Junio forwarded to me, I don't see any case for 
+> > actual _corruptions_.  Git does indeed refuse to work with unknown pack 
+> > index or unknown objects in a pack.  Really old versions were not overly 
+> > clueful as to why they refused to work, but they should never corrupt a 
+> > pack which, for all purposes, is always read-only anyway.
+> 
+> 	You may not see a case for actual corruptions, but my coworker
+> updated his tree on a box with 1.5.x, then tried to work on a box with
+> 1.4.x (I think 1.4.2 back then), and ended up with a tree that was
+> unusable.  He had to re-clone, and I think he got lucky recovering
+> pending changes (probably using 1.5.x on the branches with the changes,
+> as master was what got broken).
 
-I agree with everything you said, except...
+I still claim that there wasn't any corruptions.
 
->    - if it is given as "--long-name", and there is a next word, see if
->      that is plausible as its argument.  Get it and signal the caller
->      you consumed it, if it is.  Ignore it and signal the caller you
->      didn't, if it isn't.
+Just for fun, just edit some document with Microsoft Office 95, then 
+open the same document with Office 2007 and save it with default 
+settings.  Now try to open it back with Office 95.  It won't work.  
+Does that mean that the document got corrupted?
 
-This "plausible" makes me a little nervous, and I wonder why we want to
-support this at all. Is it
+> 	My point is not that change is always bad, but that we should
+> really look forward to what we're doing, and that "it's in the release
+> notes" is not sufficient if an older git gives an incomprehensible error
+> or a silent problem.  I was responding to the cavalier statement "well,
+> it's in the release notes, so don't worry about older versions".
 
-  1. We have traditionally supported "--abbrev 10"? I don't think this
-     is the case.
-  2. Consistency with "--non-optional-arg foo"? Do we have any such
-     non-optional long arguments? I didn't see any; I think we stick
-     with --non-optional-arg=foo everywhere.
-  3. More convenience to the user? I don't see how " " is easier than
-     "=".
+Your allegation of corruptions is cavalier just as well.
 
->    - if it is given as "-s", and there is a next word, and if the option
->      has long format counterpart as well, then see if the next word is
->      plausible as its argument.  Get it and signal the caller you
->      consumed it, if it is.  Ignore it and signal the caller you didn't,
->      if it isn't.
+I'm telling you that there won't be any such corruption.  Just like in 
+the M$ Office case, it is expected that newer versions make data 
+unusable by older versions at some point -- that's the inevitable side 
+effect of progress.
 
-Similarly, what is the goal here?
+And we cannot always anticipate what kind of incompatibility will be 
+worth making in the future, so it is hard to come with proper error 
+messages in all cases today.
 
-  1. Have we ever supported "-s foo"? Not for -B/-M/-C, nor for
-     shortlog's -w.
-  2. This would add consistency to non-optional arguments.
-  3. It's longer to type.
+Recent enough Git versions do suggest upgrading when they refuse to 
+access repositories though, and later Git versions can be configured to 
+remain compatible with old Git versions.  And we also document it.
 
-So I see a slight case for "-s foo", but none at all for "--long foo".
+And when you still cannot figure it out on your own, then there is that 
+free support available on a public mailing list, and even an IRC 
+channel.
 
--Peff
+So I don't see how we could do better in that regard.  Carving the 
+repository format in stone to keep ancient versions working forever is 
+_not_ a solution.
+
+
+Nicolas
