@@ -1,184 +1,194 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: git.c option parsing (was: [PATCH 1/3] Revert changes and extend diff option documentation)
-Date: Mon, 17 Dec 2007 09:27:12 +0100
-Message-ID: <F6F3247E-4E71-4977-9626-F0571278E1E6@wincent.com>
-References: <1197631424-52586-1-git-send-email-win@wincent.com> <1197631424-52586-2-git-send-email-win@wincent.com> <7vejdml92c.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's in git.git (stable frozen)
+Date: Mon, 17 Dec 2007 00:40:06 -0800
+Message-ID: <7vy7btaf4p.fsf@gitster.siamese.dyndns.org>
+References: <20071022061115.GR14735@spearce.org>
+	<7vodeecyni.fsf@gitster.siamese.dyndns.org>
+	<7vpryqwtt7.fsf@gitster.siamese.dyndns.org>
+	<7vk5ot40w9.fsf@gitster.siamese.dyndns.org>
+	<7vy7d43ptc.fsf@gitster.siamese.dyndns.org>
+	<7vabpg9x5k.fsf@gitster.siamese.dyndns.org>
+	<7vy7cwsi3p.fsf@gitster.siamese.dyndns.org>
+	<7vk5o6jbq9.fsf@gitster.siamese.dyndns.org>
+	<7v63zjgoel.fsf@gitster.siamese.dyndns.org>
+	<7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>
+	<7vhcixtnm4.fsf@gitster.siamese.dyndns.org>
+	<7vfxye4yv7.fsf@gitster.siamese.dyndns.org>
+	<7vve78qhtf.fsf@gitster.siamese.dyndns.org>
+	<7vbq8v5n0u.fsf_-_@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 17 09:28:11 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 17 09:40:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4BKS-0004aD-ES
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 09:28:01 +0100
+	id 1J4BWp-0007T7-CI
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 09:40:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753308AbXLQI1h convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Dec 2007 03:27:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbXLQI1h
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 03:27:37 -0500
-Received: from wincent.com ([72.3.236.74]:57572 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752701AbXLQI1g convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Dec 2007 03:27:36 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBH8RDpR014851;
-	Mon, 17 Dec 2007 02:27:14 -0600
-In-Reply-To: <7vejdml92c.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.915)
+	id S1753882AbXLQIkX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Dec 2007 03:40:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752351AbXLQIkX
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 03:40:23 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60561 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751890AbXLQIkV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Dec 2007 03:40:21 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 03D951827;
+	Mon, 17 Dec 2007 03:40:17 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 14E601826;
+	Mon, 17 Dec 2007 03:40:13 -0500 (EST)
+X-maint-at: 6281f394674bf2db861967da6c2215cfc3fc78af
+X-master-at: 6fbe42c7ee99b4cafa792b46a16b0158d305fe29
+In-Reply-To: <7vbq8v5n0u.fsf_-_@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 12 Dec 2007 18:47:13 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68518>
 
-El 16/12/2007, a las 20:43, Junio C Hamano escribi=F3:
+Sorry for the "\No newline at the end" brown paper bag bug, which
+happened soon after -rc0 but now fixed.  Thanks Jeff.
 
-> Wincent Colaiuta <win@wincent.com> writes:
->
->> diff --git a/Documentation/diff-options.txt b/Documentation/diff-=20
->> options.txt
->> index 9ecc1d7..54207f0 100644
->> --- a/Documentation/diff-options.txt
->> +++ b/Documentation/diff-options.txt
->> @@ -92,10 +92,10 @@ endif::git-format-patch[]
->> 	file gives the default to do so.
->>
->> --check::
->> -	Warn if changes introduce trailing whitespace
->> -	or an indent that uses a space before a tab. Exits with
->> -	non-zero status if problems are found. Not compatible with
->> -	--exit-code.
->> +	Warn if changes introduce whitespace problems (such as
->> +	trailing whitespace). Configuration and per-path attributes
->> +	control what git classifies as a whitespace problem (see
->> +	gitlink:git-config[1] and gitlink:gitattributes[5]).
->
-> This is not quite right, is it?  The command still exits with exit =20
-> code.
-> It is just that the calling process does not see it if you let it =20
-> spawn
-> the pager.
+"git diff --check" was inconsistent with the highlighting of whitespace
+problems and was harder to use from scripts (which makes it a usability
+bug).  Both have been fixed.  Thanks Wincent.
 
-Yes, I know, but I thought that in the interests of brevity it would =20
-be best not to clutter up the man page with that kind of detail. If a =20
-user is interested in the exit code they will probably do a search of =20
-the man page for "exit" and find the --exit-code section, which gives =20
-them the answer they want. Adding a line like "Also, if you pass --no-=20
-pager will exit with a non-zero exit code" doesn't really add much =20
-other than clutter IMO.
+A handful "gitweb" fixes I forgot to apply earlier are now in.  Thanks
+Jakub.
 
-Incidentally, and this is really tangential, I find the whole "--no-=20
-pager" UI pretty horrendous, along with all the other switches parsed =20
-by git.c. Basically, understanding these switches requires the user to =
-=20
-know internal implementation details that he/she should most =20
-definitely not have to know.
+A "git commit" regression has been noticed --- the post-commit summary
+was inconsistent with what is shown by git-status before making the
+commit.  Thanks Daniel.
 
-=46or example, "git --no-pager diff --check" works as expected but "git=
- =20
-diff --no-pager --check" carps with "error: invalid option: --no-=20
-pager". To understand why this is so, the user needs to know too many =20
-things which should be internal implementation details:
+A workaround for massive commit that exceeds command line limit when
+issuing "cvs status list-of-files" has been added.  Thanks Jeff.
 
-- that "git" is just a wrapper tool that chooses a low level command =20
-to run and runs it
+Hopefully the final round of clean-up until 1.5.4 in whitespace area ha=
+s
+been applied.  Thanks Wincent and Bruce.
 
-- that there are some parameters that affect the way all the other =20
-commands run and should be passed to "git" only, prior to the =20
-"subcommand" part
+I am reasonably happy that we are finding and fixing bugs.  Please keep
+the fixes, including documentation updates, flowing in.
 
-- that those parameters can't be passed after the "subcommand" =20
-specification
+ * "git -p ls-tree HEAD" in a bare repository is still not fixed.
 
-And seeing as we are actively encouraging users to always use the "git =
-=20
-diff" form rather than "git-diff", in a sense we are actively =20
-encourage them to think of Git as a single tool rather than a =20
-collection of commands, it seems like an ugly wart that we then have =20
-to teach them that some parameters must go *between* the "git" and the =
-=20
-"diff" but not after. And of course, if you always use the "git-diff" =20
-then there's no way to use the --no-pager switch at all; you instead =20
-have to use an environment variable.
+   http://thread.gmane.org/gmane.comp.version-control.git/68209?focus=3D=
+68221
+   http://thread.gmane.org/gmane.comp.version-control.git/68209?focus=3D=
+68338
 
-I've been thinking about ways to iron out these wrinkles and unify =20
-things. Here's my thinking about a possible cause of action:
+ * Hannes says "thread pack-objects" improvements needs a follow-up
+   patch; it hasn't been applied here yet.
 
-1. Factor out the code in git.c which handles the common arguments =20
-into separate functions; at this stage it's just a refactoring and the =
-=20
-behaviour is unchanged, but those separate functions will later be =20
-used from the builtins.
+ * option parser regression fix really needs to be in by -rc1, but I
+   just applied the initial round of Pierre's patches today.  See
+   "What's cooking" for the list.
 
-2. Teach the builtin commands to handle those common arguments by =20
-using the common functions. For example, we teach "git diff" to =20
-understand the --no-pager option by leveraging the functions we just =20
-factored out in the previous step.
+I need to coordinate with subsystem people and pull in changes for
+gitk, git-gui, user manual and git-svn.
 
-3. Now, when git.c sees an argument that would normally go before a =20
-"subcommand" it no longer needs to handle it directly itself but can =20
-instead pass it along to the subcommand. In other words, where it =20
-formerly saw "git --no-pager diff args..." and handled the --no-pager =20
-part itself, it can instead just pass "--no-pager args..." to the =20
-builtin diff. This gives us backward compatibility with the old =20
-format, but the new format (user types "git diff --no-pager args...") =20
-will work also.
+----------------------------------------------------------------
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-4. Update the docs: make a common-options.txt page which is included =20
-in all other manual pages either listing the options explicitly or =20
-directing users to the git(7) manpage (which should probably become =20
-git(1) if we are talking about Git as a single tool) to learn about =20
-them.
+Andy Whitcroft (1):
+  git-svn: expand handling of From: and Signed-off-by:
 
-Benefits of this approach: we'd have a consistent UI which didn't =20
-require too much knowledge of the internals of Git, and all of the =20
-following would work:
+Christian Couder (1):
+  git-help: add "help.format" config variable.
 
-git diff --no-pager args...
-git-diff --no-pager args...
-git --no-pager diff args...
+David S. Miller (1):
+  fast-import: fix unalinged allocation and access
 
-Looking at the options currently parsed by git.c, I think most of them =
-=20
-would be very straightforward to support in the way described above:
+Eric Wong (2):
+  git-svn: unlink internal index files after operations
+  git-svn: handle our top-level path being deleted and later re-added
 
---paginate
---no-pager
---git-dir
---work-tree
---bare
+J. Bruce Fields (8):
+  whitespace: fix off-by-one error in non-space-in-indent checking
+  whitespace: reorganize initial-indent check
+  whitespace: minor cleanup
+  whitespace: fix initial-indent checking
+  whitespace: more accurate initial-indent highlighting
+  whitespace: fix config.txt description of indent-with-non-tab
+  builtin-apply: minor cleanup of whitespace detection
+  builtin-apply: stronger indent-with-on-tab fixing
 
-Existing special cases:
+Jakub Narebski (2):
+  gitweb: disambiguate heads and tags withs the same name
+  gitweb: Teach "a=3Dblob" action to be more lenient about blob/file mi=
+me
+    type
 
---help (calls "git help foo")
---version
+Jeff King (4):
+  cvsexportcommit: fix massive commits
+  trim_common_tail: brown paper bag fix.
+  teach bash completion to treat commands with "--" as a helper
+  rename git-browse--help to git-help--browse
 
-Problematic:
+Johannes Sixt (1):
+  threaded pack-objects: Use condition variables for thread communicati=
+on.
 
--p (short form of --paginate: seeing as -p is already used to mean =20
-other things by other commands, I think this should be deprecated as a =
-=20
-synonym for --paginate)
+Junio C Hamano (15):
+  git-commit: squelch needless message during an empty merge
+  xdl_diff: identify call sites.
+  xdi_diff: trim common trailing lines
+  diff --check: minor fixups
+  xdiff tail trimming: use correct type.
+  commit: allow --amend to reuse message from another commit
+  remote: Fix bogus make_branch() call in configuration reader.
+  Rename git-browse-help helper to git-browse--help
+  Retire git-runstatus for real.
+  Start preparing the API documents.
+  Update draft release notes for 1.5.4
+  Re-re-re-fix common tail optimization
+  builtin-commit: fix summary output.
+  builtin-commit: make summary output consistent with status
+  Documentation/git-submodule: refer to gitmodules(5)
 
-Tricky:
+Kristian H=C3=B8gsberg (1):
+  Use a strbuf for building up section header and key/value pair string=
+s.
 
---exec-path (this is the only one which git.c *must* handle before =20
-passing control to the "subcommand", so it actually has to look ahead =20
-past the "subcommand" part in order to see it and act upon it. =20
-Basically it would just have to look at all the arguments up to but =20
-not including a "--" pathspec marker checking to see if --exec-path is =
-=20
-supplied)
+Li Hong (1):
+  Fix a memory leak
 
-Of course, the above plan will only work for builtins, not for =20
-scripts. An additional step would be needed to enable scripts to =20
-handle these options; perhaps teaching "git rev-parse" something...
+Mike Hommey (8):
+  Fix some more memory leaks in http-push.c
+  Fix random sha1 in error message in http-fetch and http-push
+  Remove the default_headers variable from http-push.c
+  Remove a CURLOPT_HTTPHEADER (un)setting
+  Avoid redundant declaration of missing_target()
+  Use strbuf in http code
+  Fix various memory leaks in http-push.c and http-walker.c
+  Move fetch_ref from http-push.c and http-walker.c to http.c
 
-Cheers,
-Wincent
+Nicolas Pitre (1):
+  provide advance warning of some future pack default changes
+
+Petr Baudis (1):
+  gitweb: Make config_to_multi return [] instead of [undef]
+
+Shawn Bohrer (1):
+  Fix spelling mistakes in user manual
+
+Wincent Colaiuta (6):
+  "diff --check" should affect exit status
+  Unify whitespace checking
+  Make "diff --check" output match "git apply"
+  Add tests for "git diff --check" with core.whitespace options
+  Use shorter error messages for whitespace problems
+  Test interaction between diff --check and --exit-code
+
+anonymous (1):
+  Documentation: describe pack idx v2
