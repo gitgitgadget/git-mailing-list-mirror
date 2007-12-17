@@ -1,80 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin-tag: fix fallouts from recent parsopt restriction.
-Date: Mon, 17 Dec 2007 12:42:51 -0800
-Message-ID: <7vhcih6oj8.fsf@gitster.siamese.dyndns.org>
-References: <20071213091055.GA5674@coredump.intra.peff.net>
-	<20071213093536.GC12398@artemis.madism.org>
-	<20071213102636.GD12398@artemis.madism.org>
-	<7vd4t5eq52.fsf@gitster.siamese.dyndns.org>
-	<20071217090749.GC7453@artemis.madism.org>
-	<7vir2xa8z7.fsf@gitster.siamese.dyndns.org>
-	<20071217105834.GG7453@artemis.madism.org>
-	<7v1w9la7o8.fsf@gitster.siamese.dyndns.org>
-	<20071217123307.GK7453@artemis.madism.org>
-	<7vy7bt6qv6.fsf@gitster.siamese.dyndns.org>
-	<20071217203143.GA2105@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] include/asm-arm/: Spelling fixes
+Date: Mon, 17 Dec 2007 15:51:34 -0500
+Message-ID: <20071217205134.GB2105@coredump.intra.peff.net>
+References: <5703e57f925f31fc0eb38873bd7f10fc44f99cb4.1197918889.git.joe@perches.com> <20071217195658.GB13515@fieldses.org> <1197921847.27386.16.camel@localhost> <20071217201219.GC13515@fieldses.org> <1197922971.27386.32.camel@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 17 21:43:44 2007
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"J. Bruce Fields" <bfields@fieldses.org>, git <git@vger.kernel.org>
+To: Joe Perches <joe@perches.com>
+X-From: git-owner@vger.kernel.org Mon Dec 17 21:52:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4MoH-0008QZ-Uv
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 21:43:34 +0100
+	id 1J4MwU-0003gP-9q
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 21:52:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760634AbXLQUnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 15:43:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760558AbXLQUnI
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 15:43:08 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55728 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759857AbXLQUnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 15:43:07 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D74BC46D4;
-	Mon, 17 Dec 2007 15:43:01 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4514646D3;
-	Mon, 17 Dec 2007 15:42:58 -0500 (EST)
-In-Reply-To: <20071217203143.GA2105@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 17 Dec 2007 15:31:43 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756718AbXLQUvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 15:51:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752964AbXLQUvi
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 15:51:38 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3393 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751882AbXLQUvh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 15:51:37 -0500
+Received: (qmail 13246 invoked by uid 111); 17 Dec 2007 20:51:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 17 Dec 2007 15:51:35 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Dec 2007 15:51:34 -0500
+Content-Disposition: inline
+In-Reply-To: <1197922971.27386.32.camel@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68617>
 
-Jeff King <peff@peff.net> writes:
+On Mon, Dec 17, 2007 at 12:22:51PM -0800, Joe Perches wrote:
 
-> On Mon, Dec 17, 2007 at 11:52:29AM -0800, Junio C Hamano wrote:
->
->> So in short, for an option that takes optional option-argument:
->
-> I agree with everything you said, except...
->
->>    - if it is given as "--long-name", and there is a next word, see if
->>      that is plausible as its argument.  Get it and signal the caller
->>      you consumed it, if it is.  Ignore it and signal the caller you
->>      didn't, if it isn't.
->
-> This "plausible" makes me a little nervous, and I wonder why we want to
-> support this at all. Is it
->
->   1. We have traditionally supported "--abbrev 10"? I don't think this
->      is the case.
->   2. Consistency with "--non-optional-arg foo"? Do we have any such
->      non-optional long arguments? I didn't see any; I think we stick
->      with --non-optional-arg=foo everywhere.
->   3. More convenience to the user? I don't see how " " is easier than
->      "=".
+> $ let count=0 ; for line in $(cat patch_order) ; do ((count++)); \
+> 	printf -v tmp "%04u-Spelling-%s" $count $line ; \
+> 	tmp=${tmp//\//-} ; tmp=${tmp// /}; \
+> 	git-format-patch -N --thread --start-number $count -s \
+> 	-o patch3 \
+> 	--subject-prefix="[PATCH] Spelling: $line" master $line  ; done
+> [converted the subjects appropriately]
+> $ git-send-email --smtp-server <foo> --smtp-user <bar> \
+> 	--from "Joe Perches <joe@perches.com>" \
+> 	--to "linux-kernel@vger.kernel.org" \
+> 	--cc "Andrew Morton <akpm@linux-foundation.org>" \
+> 	--cc-cmd "../get_maintainer.pl --nogit" \
+> 	--no-thread --suppress-from patch3
 
-You forgot one case.
+Ah. The problem is that git-send-email unconditionally adds a
+message-id. Usually git-format-patch doesn't add one, but for obvious
+reasons, it must when doing --thread. Here is a fix.
 
-    4. Everybody who does _not_ know that we traditionally did not
-       support the form would expect "--abbrev 10" and "-n 4" to work.
+-- >8 --
+git-send-email: avoid duplicate message-ids
+
+We used to unconditionally add a message-id to the outgoing
+email without bothering to check if it already had one.
+Instead, let's use the existing one.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+It will also happily add duplicate --in-reply-to and --references
+headers, but those can be suppressed with --no-thread. Arguably, it
+should detect this case and turn on --no-thread, but looking at
+git-send-email makes me want to claw my eyes out.
+
+ git-send-email.perl |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 1d6f466..083466a 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -580,7 +580,7 @@ sub send_message
+ 		$ccline = "\nCc: $cc";
+ 	}
+ 	my $sanitized_sender = sanitize_address($sender);
+-	make_message_id();
++	make_message_id() unless defined($message_id);
+ 
+ 	my $header = "From: $sanitized_sender
+ To: $to${ccline}
+@@ -718,6 +718,9 @@ foreach my $t (@files) {
+ 					}
+ 					push @xh, $_;
+ 				}
++				elsif (/^Message-Id: (.*)/i) {
++					$message_id = $1;
++				}
+ 				elsif (!/^Date:\s/ && /^[-A-Za-z]+:\s+\S/) {
+ 					push @xh, $_;
+ 				}
+-- 
+1.5.4.rc0.1146.gc97f-dirty
