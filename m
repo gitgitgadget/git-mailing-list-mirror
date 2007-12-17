@@ -1,54 +1,94 @@
-From: Nicholas Clark <nick@ccl4.org>
-Subject: Re: The Reposithon!  Take 2 [URL FIX]
-Date: Mon, 17 Dec 2007 18:03:41 +0000
-Message-ID: <20071217180341.GZ23703@plum.flirble.org>
-References: <47664617.9010106@vilain.net> <4766582F.4030207@vilain.net> <20071217111433.GN23703@plum.flirble.org> <4766620A.6050704@vilain.net> <20071217115450.GR23703@plum.flirble.org> <476664EB.5030500@vilain.net> <7vmys98ali.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Re-re-re-fix common tail optimization
+Date: Mon, 17 Dec 2007 18:05:48 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712171804040.9446@racer.site>
+References: <20071215155150.GA24810@coredump.intra.peff.net>
+ <7vprx7n90t.fsf@gitster.siamese.dyndns.org> <20071215200202.GA3334@sigill.intra.peff.net>
+ <20071216070614.GA5072@sigill.intra.peff.net> <7v8x3ul927.fsf@gitster.siamese.dyndns.org>
+ <7v7ijejq6j.fsf@gitster.siamese.dyndns.org> <20071216212104.GA32307@coredump.intra.peff.net>
+ <7v3au2joo2.fsf_-_@gitster.siamese.dyndns.org> <20071216221545.GA32596@coredump.intra.peff.net>
+ <7vtzmii8io.fsf@gitster.siamese.dyndns.org> <20071216222919.GA2260@coredump.intra.peff.net>
+ <EBD73F46-810F-4605-972C-54EED0EF9A63@wincent.com> <Pine.LNX.4.64.0712171038130.9446@racer.site>
+ <36E62F9B-26FF-4DC0-99B8-D6DC2B960E67@wincent.com> <Pine.LNX.4.64.0712171151490.9446@racer.site>
+ <57245FA1-361B-4333-B490-A2CC99ED4F9C@wincent.com> <476669A7.1050407@viscovery.net>
+ <Pine.LNX.4.64.0712171250550.9446@racer.site> <7vsl218aqd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sam Vilain <sam@vilain.net>, Perl 5 Porters <perl5-porters@perl.org>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Wincent Colaiuta <win@wincent.com>, Jeff King <peff@peff.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: perl5-porters-return-131590-gclppp-perl5-porters=m.gmane.org@perl.org Mon Dec 17 19:04:54 2007
-Return-path: <perl5-porters-return-131590-gclppp-perl5-porters=m.gmane.org@perl.org>
-Envelope-to: gclppp-perl5-porters@gmane.org
-Received: from x6.develooper.com ([63.251.223.186] helo=lists.develooper.com)
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1J4KK6-0001cu-NM
-	for gclppp-perl5-porters@gmane.org; Mon, 17 Dec 2007 19:04:15 +0100
-Received: (qmail 16942 invoked by uid 514); 17 Dec 2007 18:03:53 -0000
-Mailing-List: contact perl5-porters-help@perl.org; run by ezmlm
+X-From: git-owner@vger.kernel.org Mon Dec 17 19:08:38 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1J4KMd-0002m6-4T
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 19:06:51 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755480AbXLQSGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 13:06:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754314AbXLQSGG
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 13:06:06 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35472 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752029AbXLQSGF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 13:06:05 -0500
+Received: (qmail invoked by alias); 17 Dec 2007 18:06:02 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp027) with SMTP; 17 Dec 2007 19:06:02 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18FJfJEcWMFqWFnLzf2gqv2Ua35PweVbswJiGeeTx
+	vrRF+ACqqNup1e
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vsl218aqd.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-list-help: <mailto:perl5-porters-help@perl.org>
-list-unsubscribe: <mailto:perl5-porters-unsubscribe@perl.org>
-list-post: <mailto:perl5-porters@perl.org>
-X-List-Archive: <http://nntp.perl.org/group/perl.perl5.porters/131590>
-List-Id: <perl5-porters.perl.org>
-Delivered-To: mailing list perl5-porters@perl.org
-Received: (qmail 16930 invoked from network); 17 Dec 2007 18:03:52 -0000
-Delivered-To: perl5-porters@perl.org
-X-Spam-Status: No, hits=-2.6 required=8.0
-	tests=BAYES_00,SPF_HELO_PASS,SPF_PASS
-X-Spam-Check-By: la.mx.develooper.com
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>,
-	Sam Vilain <sam@vilain.net>,
-	Perl 5 Porters <perl5-porters@perl.org>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <7vmys98ali.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.4.2.1i
-X-Organisation: Tetrachloromethane
-Sender: Nicholas Clark <nick@flirble.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68586>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68587>
 
-On Mon, Dec 17, 2007 at 10:00:57AM -0800, Junio C Hamano wrote:
-> Sam Vilain <sam@vilain.net> writes:
+Hi,
+
+On Mon, 17 Dec 2007, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > The error message isn't the best, no.
+> >> >> But as at least one released version of GNU diff has a pretty 
+> >> >> serious bug, I would rather not rely too much on diff.  (BTW this 
+> >> >> was the reason I wanted --no-index so badly.)
+> >> >>
+> >> >> So yeah, the second "diff" cannot be "git diff".  Maybe "cmp", but 
+> >> >> not "git diff".
+> >> > 
+> >> > Well cmp would be fine as well, seeing all we want is a boolean "is 
+> >> > this the same or not" answer. (I'm not familiar with the GNU diff 
+> >> > bug you speak of, but was it so bad that it couldn't even get 
+> >> > *that* answer right?)
+> >> 
+> >> Heh, there's at least one distribution out there (Suse 10.1) that 
+> >> comes with a *cmp* that doesn't get that answer right if its output 
+> >> is connected to /dev/null, which is the case when you simply 'make 
+> >> test'.
 > >
-> > Junio, any chance of this going in?
+> > Yeah.  That's what it was.  I even posted a patch to GNU diff, only to 
+> > find out that it was already fixed in CVS.  Sigh.
 > 
-> Looks innocuous and an obvious improvement to me.
+> Wait.  Are you still talking about diff or cmp, or are you saying that 
+> your earlier statement about avoiding GNU diff due to its bugs is 
+> unfounded?
 
-Cool. Thanks to you both for addressing this concern of mine so rapidly.
+I do not remember offhand.  I only remembered that it was the GNU diff 
+package.  But maybe it was only the "cmp" tool.  Symptoms were that tests 
+were failing without "-i", but succeeding with "-i".
 
-Nicholas Clark
+Okay, I found the mail:
+
+http://article.gmane.org/gmane.comp.version-control.git/25107/match=cmp
+
+Seems it was only "cmp".
+
+Sorry for the noise,
+Dscho
