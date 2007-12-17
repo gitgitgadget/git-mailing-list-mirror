@@ -1,64 +1,50 @@
-From: Pieter de Bie <pdebie@ai.rug.nl>
-Subject: Re: [BUG?] git rebase -i
-Date: Mon, 17 Dec 2007 17:04:58 +0100
-Message-ID: <9CC305E7-3325-4D17-A43E-0A2072F52084@ai.rug.nl>
-References: <2791F15A-EB72-4FE4-8DB3-7A4B4DCB07B3@frim.nl> <47623129.2030303@viscovery.net>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 17 17:06:48 2007
+From: Jeff King <peff@peff.net>
+Subject: Re: Solaris install error: didn't get git-init link was [Fwd: Re:
+	The Reposithon!  Take 2]
+Date: Mon, 17 Dec 2007 11:07:17 -0500
+Message-ID: <20071217160717.GA28303@coredump.intra.peff.net>
+References: <47668ABB.9000504@vilain.net> <20071217151829.GP32704@skl-net.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Sam Vilain <sam@vilain.net>, Git Mailing List <git@vger.kernel.org>
+To: Andre Noll <maan@systemlinux.org>
+X-From: git-owner@vger.kernel.org Mon Dec 17 17:12:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4ITV-0008VG-5U
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 17:05:50 +0100
+	id 1J4IVM-00013Y-Hq
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 17:07:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932165AbXLQQFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 11:05:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932139AbXLQQFT
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 11:05:19 -0500
-Received: from smtp-3.orange.nl ([193.252.22.243]:9978 "EHLO smtp-3.orange.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758987AbXLQQFS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 11:05:18 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf6203.orange.nl (SMTP Server) with ESMTP id C8CEA1C000A5
-	for <git@vger.kernel.org>; Mon, 17 Dec 2007 17:05:13 +0100 (CET)
-Received: from [192.168.1.11] (s5591931c.adsl.wanadoo.nl [85.145.147.28])
-	by mwinf6203.orange.nl (SMTP Server) with ESMTP id 232DC1C0009A;
-	Mon, 17 Dec 2007 17:04:59 +0100 (CET)
-X-ME-UUID: 20071217160502144.232DC1C0009A@mwinf6203.orange.nl
-In-Reply-To: <47623129.2030303@viscovery.net>
-X-Mailer: Apple Mail (2.915)
+	id S1759854AbXLQQHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 11:07:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932139AbXLQQHV
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 11:07:21 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4105 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758987AbXLQQHU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 11:07:20 -0500
+Received: (qmail 9872 invoked by uid 111); 17 Dec 2007 16:07:18 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 17 Dec 2007 11:07:18 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Dec 2007 11:07:17 -0500
+Content-Disposition: inline
+In-Reply-To: <20071217151829.GP32704@skl-net.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68574>
 
-Hi,
+On Mon, Dec 17, 2007 at 04:18:29PM +0100, Andre Noll wrote:
 
-On Dec 14, 2007, at 8:30 AM, Johannes Sixt wrote:
-> Pieter de Bie schrieb:
->> Another thing to note is
->> that the 1.5.4.rc0 tries to apply 215 patches, while the 1.5.3.5  
->> tries
->> to apply 206 patches.
->
-> This is to be expected: 1.5.3.5 counts the comment lines at the top  
-> of the
-> action file, of which there are exactly 9, 1.5.4.rc0 does not count  
-> them.
->
+> > Refer attached ... 1.5.3.6 install, didn't get git-init link to git.
+> > Ring any bells?
+> 
+> /usr/sbin/install does not accept all options that git's "make install"
+> is using?
 
-Ok, but what about the error in the rebase?
+/usr/sbin/install doesn't seem to work at all on Solaris. Using
+/usr/ucb/install does correctly create the hardlinks.
 
-On Dec 14, 2007, at 2:21 AM, Pieter de Bie wrote:
-> Tirana:~/git pieter$ time git rebase -p -i HEAD~100
-> cat: /Users/pieter/git/.git/.dotest-merge/rewritten/ 
-> 1e8df762b38e01685f3aa3613e2d61f73346fcbe: No such file or directory
-
-
-- Pieter
+-Peff
