@@ -1,123 +1,105 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] builtin-tag: fix fallouts from recent parsopt restriction.
-Date: Mon, 17 Dec 2007 11:58:34 +0100
-Message-ID: <20071217105834.GG7453@artemis.madism.org>
-References: <20071213055226.GA3636@coredump.intra.peff.net> <20071213090604.GA12398@artemis.madism.org> <20071213091055.GA5674@coredump.intra.peff.net> <20071213093536.GC12398@artemis.madism.org> <20071213102636.GD12398@artemis.madism.org> <7vd4t5eq52.fsf@gitster.siamese.dyndns.org> <20071217090749.GC7453@artemis.madism.org> <7vir2xa8z7.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="7uYPyRQQ5N0D02nI";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 17 11:59:12 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH] Re-re-re-fix common tail optimization
+Date: Mon, 17 Dec 2007 11:59:22 +0100
+Message-ID: <36E62F9B-26FF-4DC0-99B8-D6DC2B960E67@wincent.com>
+References: <20071215155150.GA24810@coredump.intra.peff.net> <7vprx7n90t.fsf@gitster.siamese.dyndns.org> <20071215200202.GA3334@sigill.intra.peff.net> <20071216070614.GA5072@sigill.intra.peff.net> <7v8x3ul927.fsf@gitster.siamese.dyndns.org> <7v7ijejq6j.fsf@gitster.siamese.dyndns.org> <20071216212104.GA32307@coredump.intra.peff.net> <7v3au2joo2.fsf_-_@gitster.siamese.dyndns.org> <20071216221545.GA32596@coredump.intra.peff.net> <7vtzmii8io.fsf@gitster.siamese.dyndns.org> <20071216222919.GA2260@coredump.intra.peff.net> <EBD73F46-810F-4605-972C-54EED0EF9A63@wincent.com> <Pine.LNX.4.64.0712171038130.9446@racer.site>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Dec 17 12:01:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4Dgl-0003s5-2G
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 11:59:11 +0100
+	id 1J4DiU-0004Rh-Hq
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 12:00:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935430AbXLQK6j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 05:58:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935360AbXLQK6j
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 05:58:39 -0500
-Received: from pan.madism.org ([88.191.52.104]:44097 "EHLO hermes.madism.org"
+	id S935628AbXLQLAE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Dec 2007 06:00:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935549AbXLQLAB
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 06:00:01 -0500
+Received: from wincent.com ([72.3.236.74]:57938 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934854AbXLQK6h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 05:58:37 -0500
-Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id D6334197CB;
-	Mon, 17 Dec 2007 11:58:36 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 42A8A46670D; Mon, 17 Dec 2007 11:58:35 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vir2xa8z7.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S935453AbXLQK76 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Dec 2007 05:59:58 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBHAxNjC018926;
+	Mon, 17 Dec 2007 04:59:39 -0600
+In-Reply-To: <Pine.LNX.4.64.0712171038130.9446@racer.site>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68538>
+
+El 17/12/2007, a las 11:39, Johannes Schindelin escribi=F3:
+
+> Hi,
+>
+> On Mon, 17 Dec 2007, Wincent Colaiuta wrote:
+>
+>> El 16/12/2007, a las 23:29, Jeff King escribi?:
+>>
+>>> On Sun, Dec 16, 2007 at 02:23:27PM -0800, Junio C Hamano wrote:
+>>>
+>>>>> Aren't we using "git diff" for the second diff there nowadays?
+>>>>
+>>>> Some people seem to think that is a good idea, but I generally do
+>>>> not like using "git diff" between expect and actual (both =20
+>>>> untracked)
+>>>> inside tests.  The last "diff" is about validating what git does =20
+>>>> and
+>>>> using "git diff" there would make the test meaningless when "git
+>>>> diff" itself is broken.
+>>>
+>>> I think that is a valid concern. But ISTR that were some issues wit=
+h
+>>> using GNU diff. Commit 5bd74506 mentions getting rid of the =20
+>>> dependency
+>>> in all existing tests, but gives no reason.
+>>
+>> I'd say it's safe and sensible to use "git diff" in all tests =20
+>> *except*
+>> for tests of "git diff" itself.
+>
+> To the contrary.  It has to test "git diff", so it must use "git =20
+> diff".
+
+Obviously, you can only test "git diff" by actually running it.
+
+> As for the reference output: we include the expected diffs as texts, =
+=20
+> and
+> therefore do not really have to rely on having GNU diff installed.
+>
+> Besides, we cannot even test the goodies like "rename from" by =20
+> comparing
+> to GNU diff's output.
+
+Sorry, I didn't make myself clear. That's not what I was proposing at =20
+all. I was talking about this kind of example:
+
+> +	git diff -U0 | sed -e "/^index/d" -e "s/$z2047/Z/g" >actual &&
+> +	diff -u expect actual
 
 
---7uYPyRQQ5N0D02nI
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+=46irst line uses "git diff", if the second line uses "git diff" as wel=
+l =20
+and "git diff" happens to be broken then you're using a broken tool to =
+=20
+test a broken tool, as Junio already pointed out. I presumed that if =20
+you had read the whole thread then that would be obvious (look at the =20
+quoted section from Junio above).
 
-On Mon, Dec 17, 2007 at 10:53:00AM +0000, Junio C Hamano wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->=20
-> >   Okay this is kind of disgusting, and I'm absolutely not pleased with
-> > it (I mean I'm not pleased that parse_opt forces us to write things like
-> > that).
-> > ...
-> > I'll try to think harder about what we can do about it. Though for now,
-> > we will have to go for it for a while.
->=20
-> This is just a quick idea before I go back to sleep, but your earlier
-> comment on "--no-<an-option-that-is-not-even-boolean>" made me realize
-> that the alternative I was suggesting earlier would actually work much
-> nicer, if you introduce "--<an-option-that-take-optional-arg>-default"
-> magic.
+In the example you're not interested in the details of the output =20
+format, only in the exit status, so it is appropriate to use diff =20
+instead of "git diff".
 
-  meeeow I love the idea !
-
-> Then, normal users who know what the value of $foo is (iow, not scripts)
-> can say:
->=20
-> 	git cmd --abbrev 10
->         git cmd --abbrev HEAD
->         git cmd --abbrev=3D10 HEAD
->=20
-> and scripts that want to have $foo to be treated as rev, even when it
-> consists entirely of digits, can say:
->=20
-> 	git cmd --abbrev-default $foo
->=20
-> to disambiguate (i.e.  like "--no-" magic, "-default" is a magic, and it
-> tells the parser that "there is no option-argument given to this").
->=20
-> To make sure $foo is treated as the precision, the script can say:
->=20
-> 	git cmd --abbrev=3D$foo
->=20
-> If the script wants DWIM just like human users want, it can do:
->=20
-> 	git cmd --abbrev $foo
->=20
-> There of course is a little details called coding, but I think this is
-> probably the most user friendly to the users and the scripts alike.  It
-> certainly is nicer than what the current parse_options() does, and/or
-> the git-tag workaround does.
-
-I like the idea, this way we can do the "let's pass the argument as an
-option to the callback and let it say if it likes it or not, and have a
-quite not so bad way to help the guy scripting this disambiguate. I like
-it a lot, and it shouldn't be that hard to deal with. I'll work on it,
-and propose new patches ASAP.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---7uYPyRQQ5N0D02nI
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHZlZavGr7W6HudhwRAqWDAJ0cA4oihaucL/kNFJMoCbzlwC/LNwCfewnR
-HXBIGjt7p48rsb8YidgGEow=
-=AIAa
------END PGP SIGNATURE-----
-
---7uYPyRQQ5N0D02nI--
+Wincent
