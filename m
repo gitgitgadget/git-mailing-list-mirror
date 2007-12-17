@@ -1,194 +1,204 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (stable frozen)
-Date: Mon, 17 Dec 2007 00:40:06 -0800
-Message-ID: <7vy7btaf4p.fsf@gitster.siamese.dyndns.org>
-References: <20071022061115.GR14735@spearce.org>
-	<7vodeecyni.fsf@gitster.siamese.dyndns.org>
-	<7vpryqwtt7.fsf@gitster.siamese.dyndns.org>
-	<7vk5ot40w9.fsf@gitster.siamese.dyndns.org>
-	<7vy7d43ptc.fsf@gitster.siamese.dyndns.org>
-	<7vabpg9x5k.fsf@gitster.siamese.dyndns.org>
-	<7vy7cwsi3p.fsf@gitster.siamese.dyndns.org>
-	<7vk5o6jbq9.fsf@gitster.siamese.dyndns.org>
-	<7v63zjgoel.fsf@gitster.siamese.dyndns.org>
-	<7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>
-	<7vhcixtnm4.fsf@gitster.siamese.dyndns.org>
-	<7vfxye4yv7.fsf@gitster.siamese.dyndns.org>
-	<7vve78qhtf.fsf@gitster.siamese.dyndns.org>
-	<7vbq8v5n0u.fsf_-_@gitster.siamese.dyndns.org>
+Subject: What's cooking in git.git (topics)
+Date: Mon, 17 Dec 2007 00:40:54 -0800
+Message-ID: <7vwsrdaf3d.fsf@gitster.siamese.dyndns.org>
+References: <20071022063222.GS14735@spearce.org>
+	<7vzly84qwf.fsf@gitster.siamese.dyndns.org>
+	<7vmytycykt.fsf@gitster.siamese.dyndns.org>
+	<7vr6j6ve90.fsf@gitster.siamese.dyndns.org>
+	<7vir4d40sw.fsf@gitster.siamese.dyndns.org>
+	<7vwsso3poo.fsf@gitster.siamese.dyndns.org>
+	<7vfxz89x9q.fsf@gitster.siamese.dyndns.org>
+	<7vabpctx3b.fsf@gitster.siamese.dyndns.org>
+	<7vsl30eyuk.fsf@gitster.siamese.dyndns.org>
+	<7vve7tuz3a.fsf@gitster.siamese.dyndns.org>
+	<7v4pfakr4j.fsf@gitster.siamese.dyndns.org>
+	<7vzlwv6sxr.fsf@gitster.siamese.dyndns.org>
+	<7vy7ca6ea9.fsf@gitster.siamese.dyndns.org>
+	<7vzlwps8zf.fsf@gitster.siamese.dyndns.org>
+	<7vejdy4yuw.fsf@gitster.siamese.dyndns.org>
+	<7v7ijorwnc.fsf@gitster.siamese.dyndns.org>
+	<7vabof5mze.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 17 09:40:49 2007
+X-From: git-owner@vger.kernel.org Mon Dec 17 09:41:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4BWp-0007T7-CI
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 09:40:48 +0100
+	id 1J4BXX-0007fb-Gw
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 09:41:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753882AbXLQIkX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Dec 2007 03:40:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752351AbXLQIkX
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 03:40:23 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60561 "EHLO
+	id S1754471AbXLQIlI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 03:41:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753717AbXLQIlH
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 03:41:07 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60572 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751890AbXLQIkV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Dec 2007 03:40:21 -0500
+	with ESMTP id S1752351AbXLQIlG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 03:41:06 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 03D951827;
-	Mon, 17 Dec 2007 03:40:17 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DA8FE182F;
+	Mon, 17 Dec 2007 03:41:02 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 14E601826;
-	Mon, 17 Dec 2007 03:40:13 -0500 (EST)
-X-maint-at: 6281f394674bf2db861967da6c2215cfc3fc78af
-X-master-at: 6fbe42c7ee99b4cafa792b46a16b0158d305fe29
-In-Reply-To: <7vbq8v5n0u.fsf_-_@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 12 Dec 2007 18:47:13 -0800")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id F3542182E;
+	Mon, 17 Dec 2007 03:41:00 -0500 (EST)
+In-Reply-To: <7vabof5mze.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 12 Dec 2007 18:48:05 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68519>
 
-Sorry for the "\No newline at the end" brown paper bag bug, which
-happened soon after -rc0 but now fixed.  Thanks Jeff.
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  Others commits may be stashed in 'offcuts'.
 
-"git diff --check" was inconsistent with the highlighting of whitespace
-problems and was harder to use from scripts (which makes it a usability
-bug).  Both have been fixed.  Thanks Wincent.
-
-A handful "gitweb" fixes I forgot to apply earlier are now in.  Thanks
-Jakub.
-
-A "git commit" regression has been noticed --- the post-commit summary
-was inconsistent with what is shown by git-status before making the
-commit.  Thanks Daniel.
-
-A workaround for massive commit that exceeds command line limit when
-issuing "cvs status list-of-files" has been added.  Thanks Jeff.
-
-Hopefully the final round of clean-up until 1.5.4 in whitespace area ha=
-s
-been applied.  Thanks Wincent and Bruce.
-
-I am reasonably happy that we are finding and fixing bugs.  Please keep
-the fixes, including documentation updates, flowing in.
-
- * "git -p ls-tree HEAD" in a bare repository is still not fixed.
-
-   http://thread.gmane.org/gmane.comp.version-control.git/68209?focus=3D=
-68221
-   http://thread.gmane.org/gmane.comp.version-control.git/68209?focus=3D=
-68338
-
- * Hannes says "thread pack-objects" improvements needs a follow-up
-   patch; it hasn't been applied here yet.
-
- * option parser regression fix really needs to be in by -rc1, but I
-   just applied the initial round of Pierre's patches today.  See
-   "What's cooking" for the list.
-
-I need to coordinate with subsystem people and pull in changes for
-gitk, git-gui, user manual and git-svn.
+The topics list the commits in reverse chronological order.
 
 ----------------------------------------------------------------
-* The 'master' branch has these since the last announcement
-  in addition to the above.
+[New Topics]
 
-Andy Whitcroft (1):
-  git-svn: expand handling of From: and Signed-off-by:
+* ph/parseopt (Sun Dec 16 22:45:00 2007 -0800) 4 commits
+ - builtin-tag: fix fallouts from recent parsopt restriction.
+ - (squashme) gitcli documentation fixups
+ - parseopt: Add a gitcli(5) man page.
+ - parseopt: Enforce the use of the sticked form for optional
+   arguments.
 
-Christian Couder (1):
-  git-help: add "help.format" config variable.
+This series is needed by 1.5.4-rc1 for fixing regression relative to
+1.5.3 series in the option parser: "git describe --abbrev HEAD" does not
+work.  The current approach is taken by this series (discussed on the
+list) to work it around by forbidding "git describe --abbrev 10 HEAD"
+and requiring it be written as "git describe --abbrev=10 HEAD", but
+taking that limitation literally will introduce serious usability
+regressions.  We need careful auditing of all the commands that adopted
+parse_options() API.
 
-David S. Miller (1):
-  fast-import: fix unalinged allocation and access
+* ab/pserver (Fri Dec 14 04:08:51 2007 +0000) 1 commit
+ - Authentication support for pserver
 
-Eric Wong (2):
-  git-svn: unlink internal index files after operations
-  git-svn: handle our top-level path being deleted and later re-added
+This came somewhat late; I think cvsserver is in its own little corner
+and the change seems to be quite isolated, so with enough user requests
+and Ack from primary people who have been involved with cvsserver I do
+not think we mind to make an exception and make it a part of 1.5.4-rc1.
 
-J. Bruce Fields (8):
-  whitespace: fix off-by-one error in non-space-in-indent checking
-  whitespace: reorganize initial-indent check
-  whitespace: minor cleanup
-  whitespace: fix initial-indent checking
-  whitespace: more accurate initial-indent highlighting
-  whitespace: fix config.txt description of indent-with-non-tab
-  builtin-apply: minor cleanup of whitespace detection
-  builtin-apply: stronger indent-with-on-tab fixing
 
-Jakub Narebski (2):
-  gitweb: disambiguate heads and tags withs the same name
-  gitweb: Teach "a=3Dblob" action to be more lenient about blob/file mi=
-me
-    type
+----------------------------------------------------------------
+[Graduated to 'master']
 
-Jeff King (4):
-  cvsexportcommit: fix massive commits
-  trim_common_tail: brown paper bag fix.
-  teach bash completion to treat commands with "--" as a helper
-  rename git-browse--help to git-help--browse
+* mh/http (Tue Dec 11 00:08:25 2007 +0100)
 
-Johannes Sixt (1):
-  threaded pack-objects: Use condition variables for thread communicati=
-on.
+Big thanks to Daniel who helped reviewing this series which is about
+clean-ups and fixes in http transport.
 
-Junio C Hamano (15):
-  git-commit: squelch needless message during an empty merge
-  xdl_diff: identify call sites.
-  xdi_diff: trim common trailing lines
-  diff --check: minor fixups
-  xdiff tail trimming: use correct type.
-  commit: allow --amend to reuse message from another commit
-  remote: Fix bogus make_branch() call in configuration reader.
-  Rename git-browse-help helper to git-browse--help
-  Retire git-runstatus for real.
-  Start preparing the API documents.
-  Update draft release notes for 1.5.4
-  Re-re-re-fix common tail optimization
-  builtin-commit: fix summary output.
-  builtin-commit: make summary output consistent with status
-  Documentation/git-submodule: refer to gitmodules(5)
+----------------------------------------------------------------
+[Will cook further in 'next' and then merge to 'master' soon]
 
-Kristian H=C3=B8gsberg (1):
-  Use a strbuf for building up section header and key/value pair string=
-s.
+Again, we are post -rc0 and there is nothing interesting to see here.
 
-Li Hong (1):
-  Fix a memory leak
+----------------------------------------------------------------
+[Actively cooking]
 
-Mike Hommey (8):
-  Fix some more memory leaks in http-push.c
-  Fix random sha1 in error message in http-fetch and http-push
-  Remove the default_headers variable from http-push.c
-  Remove a CURLOPT_HTTPHEADER (un)setting
-  Avoid redundant declaration of missing_target()
-  Use strbuf in http code
-  Fix various memory leaks in http-push.c and http-walker.c
-  Move fetch_ref from http-push.c and http-walker.c to http.c
+Again, we are post -rc0 and there is nothing interesting to see here.
 
-Nicolas Pitre (1):
-  provide advance warning of some future pack default changes
+----------------------------------------------------------------
+[On hold]
 
-Petr Baudis (1):
-  gitweb: Make config_to_multi return [] instead of [undef]
+* jc/api-doc (Sat Nov 24 23:48:04 2007 -0800) 1 commit
 
-Shawn Bohrer (1):
-  Fix spelling mistakes in user manual
+The primary reason of this series is because I think we made the system
+a lot less approachable by losing hackability.  Although we still have
+sample scripts in contrib/example for use of plumbing in scripts, they
+will not help aspiring git-hacker-wannabees when our primary attention
+has already shifted to moving things to C.
 
-Wincent Colaiuta (6):
-  "diff --check" should affect exit status
-  Unify whitespace checking
-  Make "diff --check" output match "git apply"
-  Add tests for "git diff --check" with core.whitespace options
-  Use shorter error messages for whitespace problems
-  Test interaction between diff --check and --exit-code
+This currently consists of mostly stubs, although I wrote about a few
+topics as examples.  Nice to have in v1.5.4, but we need more writers.
 
-anonymous (1):
-  Documentation: describe pack idx v2
+* nd/dashless (Wed Nov 28 23:21:57 2007 +0700) 1 commit
+ - Move all dashed-form commands to libexecdir
+
+I think this is a sane thing to do in the longer term.  Will be in
+'next' after v1.5.4.  I think "leave porcelain on PATH" might be also a
+good thing as a transition measure.
+
+Incidentally, if we do not install dashed form of built-ins anywhere
+(which is not this series is about --- this is just moving them out of
+user's PATH), "git help -a" will stop showing them.  I am not enthused
+about removing the hardlinks to built-ins to begin with, but people who
+want such a change need to first modify help.c:list_commands() to pick
+up builtins without having git-foo hardlinks in gitexecdir.  This may
+need to happen anyway as mingw fallouts.
+
+* js/remote (Wed Dec 5 19:02:15 2007 +0000) 4 commits
+ - Make git-remote a builtin
+ - Test "git remote show" and "git remote prune"
+ - parseopt: add flag to stop on first non option
+ - path-list: add functions to work with unsorted lists
+
+This and Kristian's "git-clone in C" are on hold and post 1.5.4.
+
+----------------------------------------------------------------
+[Stalled]
+
+* ns/checkout-push-pop (Wed Dec 5 07:04:06 2007 +0900) 1 commit
+ - git-checkout --push/--pop
+
+A reasonably cleanly written cute hack, and I do not see this breaking
+the normal codepath.  But I tend to agree with people that 'push' is
+too late for forgetful mortals, and just a single "previous" would be
+easier to use.
+
+* jc/git-symref (Tue Dec 11 16:42:46 2007 -0800) 1 commit
+ - PARK: show-symref protocol extension.
+
+This is a demonstration of a possible component in the future direction
+for HEAD discovery done by git-clone.
+
+* js/reflog-delete (Wed Oct 17 02:50:45 2007 +0100) 1 commit
+ + Teach "git reflog" a subcommand to delete single entries
+
+* jk/builtin-alias (Fri Nov 30 11:22:58 2007 -0500) 1 commit
+ + Support builtin aliases
+
+Even the original author has slight NAK on this and I tend to agree.
+May want to eventurally revert from 'next' but we are not in a hurry
+even to do that.
+
+* jc/diff-pathspec (Sun Nov 25 10:03:48 2007 -0800) 1 commit
+ - Making ce_path_match() more useful by accepting globs
+
+This was to allow "git diff-files -- '*.h'" (currently diff family
+knows only the leading directory match and not fileglobs), but was shot
+down by Alex.  I tend to agree with him.
+
+* jc/dashless (Sat Dec 1 22:09:22 2007 -0800) 2 commits
+ - Prepare execv_git_cmd() for removal of builtins from the
+   filesystem
+ - git-shell: accept "git foo" form
+
+We do not plan to remove git-foo form completely from the filesystem at
+this point, so these are not strictly necessary.
+
+* jc/diff-relative (Thu Dec 6 09:48:32 2007 -0800) 1 commit
+ . Make "diff" Porcelain output paths as relative to subdirectory.
+
+* jc/pathspec (Thu Sep 13 13:38:19 2007 -0700) 3 commits
+ . pathspec_can_match(): move it from builtin-ls-tree.c to tree.c
+ . ls-tree.c: refactor show_recursive() and rename it.
+ . tree-diff.c: split out a function to match a single pattern.
+
+* jc/cherry-pick (Sun Dec 16 21:00:03 2007 -0800) 2 commits
+ . beginning of use of replay merge in revert
+ . revert/cherry-pick: start refactoring call to merge_recursive
+
+* jc/nu (Sun Oct 14 22:07:34 2007 -0700) 3 commits
+ . merge-nu: a new merge backend without using unpack_trees()
+ . read_tree: take an explicit index structure
+ . gcc 4.2.1 -Werror -Wall -ansi -pedantic -std=c99: minimum fix
