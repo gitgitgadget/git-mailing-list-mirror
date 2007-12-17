@@ -1,74 +1,72 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Re-re-re-fix common tail optimization
-Date: Mon, 17 Dec 2007 09:42:20 +0100
-Message-ID: <EBD73F46-810F-4605-972C-54EED0EF9A63@wincent.com>
-References: <20071215155150.GA24810@coredump.intra.peff.net> <7vprx7n90t.fsf@gitster.siamese.dyndns.org> <20071215200202.GA3334@sigill.intra.peff.net> <20071216070614.GA5072@sigill.intra.peff.net> <7v8x3ul927.fsf@gitster.siamese.dyndns.org> <7v7ijejq6j.fsf@gitster.siamese.dyndns.org> <20071216212104.GA32307@coredump.intra.peff.net> <7v3au2joo2.fsf_-_@gitster.siamese.dyndns.org> <20071216221545.GA32596@coredump.intra.peff.net> <7vtzmii8io.fsf@gitster.siamese.dyndns.org> <20071216222919.GA2260@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 17 09:43:07 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git.c option parsing
+Date: Mon, 17 Dec 2007 00:48:23 -0800
+Message-ID: <7vsl21aeqw.fsf@gitster.siamese.dyndns.org>
+References: <1197631424-52586-1-git-send-email-win@wincent.com>
+	<1197631424-52586-2-git-send-email-win@wincent.com>
+	<7vejdml92c.fsf@gitster.siamese.dyndns.org>
+	<F6F3247E-4E71-4977-9626-F0571278E1E6@wincent.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Mon Dec 17 09:48:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4BZ4-00081t-6f
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 09:43:06 +0100
+	id 1J4Beh-0000u7-Vx
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 09:48:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754856AbXLQImo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Dec 2007 03:42:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753830AbXLQImo
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 03:42:44 -0500
-Received: from wincent.com ([72.3.236.74]:57591 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753717AbXLQImn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Dec 2007 03:42:43 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBH8gLTD015216;
-	Mon, 17 Dec 2007 02:42:22 -0600
-In-Reply-To: <20071216222919.GA2260@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.915)
+	id S1754180AbXLQIse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 03:48:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752804AbXLQIsd
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 03:48:33 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60653 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751899AbXLQIsd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 03:48:33 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id EAB88185F;
+	Mon, 17 Dec 2007 03:48:28 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 737E1185E;
+	Mon, 17 Dec 2007 03:48:25 -0500 (EST)
+In-Reply-To: <F6F3247E-4E71-4977-9626-F0571278E1E6@wincent.com> (Wincent
+	Colaiuta's message of "Mon, 17 Dec 2007 09:27:12 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68521>
 
-El 16/12/2007, a las 23:29, Jeff King escribi=F3:
+Wincent Colaiuta <win@wincent.com> writes:
 
-> On Sun, Dec 16, 2007 at 02:23:27PM -0800, Junio C Hamano wrote:
->
->> Yeah, I amended it without adding another "re-" to the title ;-)  Th=
-e
->> result has been already pushed out.
->
-> OK. Too late, but it has my ack. ;)
->
->>> Aren't we using "git diff" for the second diff there nowadays?
->>
->> Some people seem to think that is a good idea, but I generally do no=
-t
->> like using "git diff" between expect and actual (both untracked) =20
->> inside
->> tests.  The last "diff" is about validating what git does and using =
-=20
->> "git
->> diff" there would make the test meaningless when "git diff" itself i=
-s
->> broken.
->
-> I think that is a valid concern. But ISTR that were some issues with
-> using GNU diff. Commit 5bd74506 mentions getting rid of the dependenc=
-y
-> in all existing tests, but gives no reason.
+> Of course, the above plan will only work for builtins, not for  
+> scripts. An additional step would be needed to enable scripts to  
+> handle these options; perhaps teaching "git rev-parse" something...
 
-I'd say it's safe and sensible to use "git diff" in all tests *except* =
-=20
-for tests of "git diff" itself.
+As long as special options stay special and we make a rule not to allow
+any subcommand to assign its own meaning to them, the git wrapper can
+lookahead and reorder, when seeing a command line:
 
-Wincent
+	git scripted-command --special
+
+into
+
+	git --special scripted-command
+
+And that approach would work well for built-ins as well, I would
+imagine.
+
+There is one minor detail, though.  There could be an option-parameter
+that is literally --special.  E.g.
+
+	git grep -e --no-paginate
+
+should not be reordered to
+
+	git --no-paginate grep -e
