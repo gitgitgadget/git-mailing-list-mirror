@@ -1,95 +1,82 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: [PATCH] provide advance warning of some future pack default
-	changes
-Date: Mon, 17 Dec 2007 12:09:21 -0800
-Message-ID: <20071217200920.GB19816@mail.oracle.com>
-References: <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.999999.0712132227090.8467@xanadu.home> <m3fxy5qwbq.fsf@roke.D-201> <alpine.LFD.0.999999.0712140836140.8467@xanadu.home> <20071214215206.GB7300@mail.oracle.com> <alpine.LFD.0.999999.0712141724260.8467@xanadu.home> <20071214223957.GC7300@mail.oracle.com> <alpine.LFD.0.999999.0712141744460.8467@xanadu.home> <20071215004230.GF7300@mail.oracle.com> <alpine.LFD.0.999999.0712142114400.8467@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 7/7] git-tag: fix -l switch handling regression.
+Date: Mon, 17 Dec 2007 12:13:12 -0800
+Message-ID: <7vtzmh6pwn.fsf@gitster.siamese.dyndns.org>
+References: <1197915797-30679-1-git-send-email-madcoder@debian.org>
+	<1197915797-30679-2-git-send-email-madcoder@debian.org>
+	<1197915797-30679-3-git-send-email-madcoder@debian.org>
+	<1197915797-30679-4-git-send-email-madcoder@debian.org>
+	<1197915797-30679-5-git-send-email-madcoder@debian.org>
+	<1197915797-30679-6-git-send-email-madcoder@debian.org>
+	<1197915797-30679-7-git-send-email-madcoder@debian.org>
+	<1197915797-30679-8-git-send-email-madcoder@debian.org>
+	<20071217185652.GE22554@artemis.madism.org>
+	<20071217190328.GF22554@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Dec 17 21:13:31 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Mon Dec 17 21:16:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4MKd-0001yz-Q6
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 21:12:56 +0100
+	id 1J4MNT-0003OL-Vk
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 21:15:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757146AbXLQULO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 15:11:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937024AbXLQULN
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 15:11:13 -0500
-Received: from agminet01.oracle.com ([141.146.126.228]:52756 "EHLO
-	agminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936773AbXLQULK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 15:11:10 -0500
-Received: from agmgw1.us.oracle.com (agmgw1.us.oracle.com [152.68.180.212])
-	by agminet01.oracle.com (Switch-3.2.4/Switch-3.1.7) with ESMTP id lBHKAe9H027281;
-	Mon, 17 Dec 2007 14:10:40 -0600
-Received: from acsmt357.oracle.com (acsmt357.oracle.com [141.146.40.157])
-	by agmgw1.us.oracle.com (Switch-3.2.0/Switch-3.2.0) with ESMTP id lBH5SRjK000590;
-	Mon, 17 Dec 2007 13:10:39 -0700
-Received: from ca-server1.us.oracle.com by acsmt353.oracle.com
-	with ESMTP id 6405995441197922164; Mon, 17 Dec 2007 12:09:24 -0800
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.67)
-	(envelope-from <joel.becker@oracle.com>)
-	id 1J4MHD-0007Pj-AY; Mon, 17 Dec 2007 12:09:23 -0800
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999999.0712142114400.8467@xanadu.home>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever
-	come to perfection.
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
-X-Whitelist: TRUE
+	id S933341AbXLQUN0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Dec 2007 15:13:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757576AbXLQUNZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 15:13:25 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54170 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S937175AbXLQUNX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Dec 2007 15:13:23 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E9AD3B3E;
+	Mon, 17 Dec 2007 15:13:17 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E6D5B3B3B;
+	Mon, 17 Dec 2007 15:13:14 -0500 (EST)
+In-Reply-To: <20071217190328.GF22554@artemis.madism.org> (Pierre Habouzit's
+	message of "Mon, 17 Dec 2007 20:03:28 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68609>
 
-On Fri, Dec 14, 2007 at 09:23:38PM -0500, Nicolas Pitre wrote:
-> On Fri, 14 Dec 2007, Joel Becker wrote:
-> > 	The relevant message is:
-> > 
-> > Message-ID: <7vveaindgp.fsf@gitster.siamese.dyndns.org>
-> > 
-> > See the paragraphs at the bottom.  The thread, started by me, begins
-> > with:
-> > 
-> > Message-ID: <20070910205429.GE27837@tasint.org>
-> 
-> OK.  From those emails Junio forwarded to me, I don't see any case for 
-> actual _corruptions_.  Git does indeed refuse to work with unknown pack 
-> index or unknown objects in a pack.  Really old versions were not overly 
-> clueful as to why they refused to work, but they should never corrupt a 
-> pack which, for all purposes, is always read-only anyway.
+Pierre Habouzit <madcoder@debian.org> writes:
 
-	You may not see a case for actual corruptions, but my coworker
-updated his tree on a box with 1.5.x, then tried to work on a box with
-1.4.x (I think 1.4.2 back then), and ended up with a tree that was
-unusable.  He had to re-clone, and I think he got lucky recovering
-pending changes (probably using 1.5.x on the branches with the changes,
-as master was what got broken).
-	My point is not that change is always bad, but that we should
-really look forward to what we're doing, and that "it's in the release
-notes" is not sufficient if an older git gives an incomprehensible error
-or a silent problem.  I was responding to the cavalier statement "well,
-it's in the release notes, so don't worry about older versions".
+> On Mon, Dec 17, 2007 at 06:56:52PM +0000, Pierre Habouzit wrote:
+>>   And I managed to resend the broken version, hurray myself.
+>>=20
+>> > +		OPT_INTEGER('l', NULL, &list, "list tag names"),
+>>                 OPT_BOOLEAN
+>>=20
+>>=20
+>>=20
+>> Both these last minute fixes are applied to my public git.git.
+>>=20
+>> Let's now write 1000 times: I will run the test-suite before I send
+>> patches, I will rune the test-suite before I send patches, =E2=80=A6
+>
+>   oh and t7004 doesn't pass anymore because of the:
+>
+>   git -n xxx -l or git -n "" -l tests. If we really want to allow tha=
+t
+> (but it _REALLY_ feels wrong to me) we have to make '-l' a callback t=
+hat
+> groks non integers as 0. Else the test also has to be fixed, I'm not
+> sure what to do here.
 
-Joel
+I did not understand what "git tag -n xxx" was meant to do, either.
+Time to run blame and ask the responsible party?
 
--- 
-
-"Vote early and vote often." 
-        - Al Capone
-
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+I suspect "-n ''" there might be meant as a way to spell the "no
+argument here -- use our default" instruction.  It looks slightly nicer
+than that '{}' but not quite.
