@@ -1,87 +1,75 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] builtin-tag: fix fallouts from recent parsopt  restriction.
-Date: Mon, 17 Dec 2007 22:24:33 +0100
-Message-ID: <20071217212433.GD13004@artemis.madism.org>
-References: <7vd4t5eq52.fsf@gitster.siamese.dyndns.org> <20071217090749.GC7453@artemis.madism.org> <7vir2xa8z7.fsf@gitster.siamese.dyndns.org> <20071217105834.GG7453@artemis.madism.org> <7v1w9la7o8.fsf@gitster.siamese.dyndns.org> <20071217123307.GK7453@artemis.madism.org> <7vy7bt6qv6.fsf@gitster.siamese.dyndns.org> <20071217203143.GA2105@coredump.intra.peff.net> <7vhcih6oj8.fsf@gitster.siamese.dyndns.org> <20071217205355.GC2105@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] include/asm-arm/: Spelling fixes
+Date: Mon, 17 Dec 2007 13:27:20 -0800
+Message-ID: <7vy7bt57wn.fsf@gitster.siamese.dyndns.org>
+References: <5703e57f925f31fc0eb38873bd7f10fc44f99cb4.1197918889.git.joe@perches.com>
+	<20071217195658.GB13515@fieldses.org>
+	<1197921847.27386.16.camel@localhost>
+	<20071217201219.GC13515@fieldses.org>
+	<1197922971.27386.32.camel@localhost>
+	<20071217205134.GB2105@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="VV4b6MQE+OnNyhkM";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Joe Perches <joe@perches.com>,
+	"J. Bruce Fields" <bfields@fieldses.org>, git <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Dec 17 22:25:14 2007
+X-From: git-owner@vger.kernel.org Mon Dec 17 22:29:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4NSX-0000X6-Qq
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 22:25:10 +0100
+	id 1J4NWE-0001s1-TY
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 22:28:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934370AbXLQVYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 16:24:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934282AbXLQVYi
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 16:24:38 -0500
-Received: from pan.madism.org ([88.191.52.104]:41332 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934113AbXLQVYh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 16:24:37 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
+	id S1765364AbXLQV1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 16:27:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765354AbXLQV1h
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 16:27:37 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57992 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765309AbXLQV1g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 16:27:36 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 726DC236F;
+	Mon, 17 Dec 2007 16:27:28 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 8901130A1F;
-	Mon, 17 Dec 2007 22:24:34 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 04A212A2250; Mon, 17 Dec 2007 22:24:34 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20071217205355.GC2105@coredump.intra.peff.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id AF5D1236C;
+	Mon, 17 Dec 2007 16:27:22 -0500 (EST)
+In-Reply-To: <20071217205134.GB2105@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 17 Dec 2007 15:51:34 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68628>
 
+Jeff King <peff@peff.net> writes:
 
---VV4b6MQE+OnNyhkM
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Ah. The problem is that git-send-email unconditionally adds a
+> message-id. Usually git-format-patch doesn't add one, but for obvious
+> reasons, it must when doing --thread. Here is a fix.
 
-On Mon, Dec 17, 2007 at 08:53:55PM +0000, Jeff King wrote:
-> On Mon, Dec 17, 2007 at 12:42:51PM -0800, Junio C Hamano wrote:
->=20
-> > You forgot one case.
-> >=20
-> >     4. Everybody who does _not_ know that we traditionally did not
-> >        support the form would expect "--abbrev 10" and "-n 4" to work.
->=20
-> I would expect "-n 4" to work, but not "--abbrev 10". But perhaps that
-> is just me. If that is the expectation, I think the behavior you
-> outlined is sensible.
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 1d6f466..083466a 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -580,7 +580,7 @@ sub send_message
+>  		$ccline = "\nCc: $cc";
+>  	}
+>  	my $sanitized_sender = sanitize_address($sender);
+> -	make_message_id();
+> +	make_message_id() unless defined($message_id);
 
-FWIW that's exactly the opposite for me. -n4 is easy to type, and I
-always do that. Though on a keyboard, ' ' is under the thumb, '=3D' is
-harder to catch, so I tend to prefer when CLIs don't force me to use =3D.
+Isn't this called inside a loop?  If the outgoing message does not
+originally have "Message-Id:", does the loop correctly reinitialize
+$message_id to undef, or does this change make everybody reuse the same
+$message_id over and over again?
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+I have a feeling that --thread to format-patch is a misfeature.  Why is
+it needed if you are feeding the output to send-email?
 
---VV4b6MQE+OnNyhkM
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHZukRvGr7W6HudhwRAuIsAKCGb1GFyNiXZEXtP1Vh59T3KF2P1wCeIfxw
-u6vqxfnWLlDeU0eMlLih2tc=
-=NfYg
------END PGP SIGNATURE-----
-
---VV4b6MQE+OnNyhkM--
+I wonder if stripping existing "Message-Id:" away just like we strip
+away "Date:" from @xh would be a much saner fix.
