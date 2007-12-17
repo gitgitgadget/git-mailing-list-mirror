@@ -1,190 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] (squashme) gitcli documentation fixups
-Date: Sun, 16 Dec 2007 23:28:47 -0800
-Message-ID: <7v7ijdeq4w.fsf@gitster.siamese.dyndns.org>
-References: <20071213055226.GA3636@coredump.intra.peff.net>
-	<20071213090604.GA12398@artemis.madism.org>
-	<20071213091055.GA5674@coredump.intra.peff.net>
-	<20071213093536.GC12398@artemis.madism.org>
-	<20071213102636.GD12398@artemis.madism.org>
-	<20071213102724.GE12398@artemis.madism.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [RFH] convert shortlog to use parse_options
+Date: Mon, 17 Dec 2007 08:36:53 +0100
+Message-ID: <47662715.9070200@op5.se>
+References: <20071213091055.GA5674@coredump.intra.peff.net>	<20071213093536.GC12398@artemis.madism.org>	<7vbq8u4ho8.fsf@gitster.siamese.dyndns.org>	<20071213180347.GE1224@artemis.madism.org>	<1197570521.28742.0.camel@hinata.boston.redhat.com>	<1197571656.28742.13.camel@hinata.boston.redhat.com>	<20071214040803.GA10169@sigill.intra.peff.net>	<7vir31vmsn.fsf@gitster.siamese.dyndns.org>	<20071214083943.GA24475@artemis.madism.org>	<7v63z1qakt.fsf@gitster.siamese.dyndns.org>	<20071215110311.GA11321@artemis.madism.org> <7vir2xeq76.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Mon Dec 17 08:29:38 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Pierre Habouzit <madcoder@debian.org>, Jeff King <peff@peff.net>,
+	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 17 08:37:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4APw-0000XG-HM
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 08:29:37 +0100
+	id 1J4AXR-00025m-67
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 08:37:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760499AbXLQH3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 02:29:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760374AbXLQH3B
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 02:29:01 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57880 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758457AbXLQH26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 02:28:58 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5349E558D;
-	Mon, 17 Dec 2007 02:28:53 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DBA5558C;
-	Mon, 17 Dec 2007 02:28:49 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757409AbXLQHg7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 02:36:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751890AbXLQHg7
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 02:36:59 -0500
+Received: from mail.op5.se ([193.201.96.20]:37134 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751228AbXLQHg6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 02:36:58 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id E6E911F08038;
+	Mon, 17 Dec 2007 08:36:56 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id hydYxdOuVEux; Mon, 17 Dec 2007 08:36:56 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id 320E61F08033;
+	Mon, 17 Dec 2007 08:36:54 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <7vir2xeq76.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68511>
 
-This comes directly on top of gitcli documentation patch and is intended
-to be squashed into it.
+Junio C Hamano wrote:
+> Pierre Habouzit <madcoder@debian.org> writes:
+> 
+>>   Yep, let's do it then. Note that's the reason why I felt we need a
+>> manual page about this, because we should give some guidelines of what
+>> is safe for scripting.
+> 
+> There are some fallouts from the series, though.  I've fixed up git-tag
+> but I strongly suspect all of parseopt users now need careful auditing.
+> If we cannot be confident with the parseoptified commands within
+> reasonably short timeframe by -rc1, we may end up having to revert the
+> parseopt changes from them, which I'd rather avoid, but if you look at
+> the git-tag change (especially for -l) you would understand it.  The
+> "must stick" restriction feels Ok on paper but in practice it looks
+> rather draconian and very user unfriendly.
+> 
 
-I looked around to see if there is a good place to add gitlink:gitcli[5]
-but unfortunately I did not find any.  One possibility, once this
-document is enhanced enough to be usable as "introduction to scripting
-using plumbing", we could add it to near the top of git(7) where we
-refer to the tutorial, user manual and the everyday document, but in the
-current form it is too sketchy and does not cover enough.  But we have
-to start somewhere.
+Usually, optional arguments warrant adding a second parameter. This can
+often even improve usability, as it's never unclear or ambiguous what's
+happening. For the 'git tag -l' case, I'd use something like
+'git tag -l --match="regex"' or some such, or perhaps make "-l" its own
+subcommand ("list") with a built-in alias of -l. That means "-l" has to
+be the first argument after "git tag" on the command-line, but I suspect
+it doesn't make much sense to use it along with other options anyway, so
+perhaps that's not much of an issue.
 
-I think we should add the first rule in the bulletted list.
-
- * avoid reinventing the wheel.
-
-but it needs a bit more explanation.  Quite a few people seem to try to
-reinvent "git rev-parse --verify HEAD" in their scripts using much
-higher level "git show -s -1 --pretty=format:xxx", which is unfortunate
-and disgusting at the same time.
-
----
-
- Documentation/gitcli.txt |   45 +++++++++++++++++++++++++++------------------
- Makefile                 |    1 +
- 2 files changed, 28 insertions(+), 18 deletions(-)
-
-diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
-index 3b3f5e4..f790b78 100644
---- a/Documentation/gitcli.txt
-+++ b/Documentation/gitcli.txt
-@@ -3,7 +3,7 @@ gitcli(5)
- 
- NAME
- ----
--gitcli - git command line interface and its usual conventions
-+gitcli - git command line interface and conventions
- 
- SYNOPSIS
- --------
-@@ -12,31 +12,40 @@ gitcli
- 
- DESCRIPTION
- -----------
--This manual intends to describe best practice in how to use git CLI.  Here are
-+
-+This manual describes best practice in how to use git CLI.  Here are
- the rules that you should follow when you are scripting git:
- 
-  * it's preferred to use the non dashed form of git commands, which means that
-    you should prefer `"git foo"` to `"git-foo"`.
- 
-- * splitting short option switches in separate atoms (prefer `"git foo -a -b"`
-+ * splitting short options to separate words (prefer `"git foo -a -b"`
-    to `"git foo -ab"`, the latter may not even work).
- 
-- * when a command line switch takes an argument, use the 'sticked' form, which
--   means that you must prefer `"git foo -oArg"` to `"git foo -o Arg"` for short
--   option switches, and `"git foo --long-opt=Arg"` to `"git foo --long-opt Arg"`
--   for long switches.
-+ * when a command line option takes an argument, use the 'sticked' form.  In
-+   other words, write `"git foo -oArg"` instead of `"git foo -o Arg"` for short
-+   options, and `"git foo --long-opt=Arg"` instead of `"git foo --long-opt Arg"`
-+   for long options.  An option that takes optional option-argument must be
-+   written in the 'sticked' form.
-+
-+ * when you give a revision parameter to a command, make sure the parameter is
-+   not ambiguous with a name of a file in the work tree.  E.g. do not write
-+   `"git log -1 HEAD"` but write `"git log -1 HEAD --"`; the former will not work
-+   if you happen to have a file called `HEAD` in the work tree.
- 
- 
- ENHANCED CLI
- ------------
--From the git 1.5.4 series and further, git commands (not all of them at the
--time of the writing though) come with an enhanced option parser with nice
--facilities. Here is an exhaustive list of them
-+From the git 1.5.4 series and further, many git commands (not all of them at the
-+time of the writing though) come with an enhanced option parser.
-+
-+Here is an exhaustive list of the facilities provided by this option parser.
-+
- 
- Magic Options
- ~~~~~~~~~~~~~
- Commands which have the enhanced option parser activated all understand a
--couple of magic command line switches:
-+couple of magic command line options:
- 
- -h::
- 	gives a pretty printed usage of the command.
-@@ -54,14 +63,14 @@ usage: git-describe [options] <committish>*
- ---------------------------------------------
- 
- --help-all::
--	Some git commands takes options that are only used for plumbing or that
-+	Some git commands take options that are only used for plumbing or that
- 	are deprecated, and such options are hidden from the default usage. This
--	switch gives the full list of options.
-+	option gives the full list of options.
- 
- 
- Negating options
- ~~~~~~~~~~~~~~~~
--Another things to keep in mind is that long options can be negated. For
-+Boolean options with long option names can be negated by prefixing `"--no-"`. For
- example, `"git branch"` has the option `"--track"` which is 'on' by default. You
- can use `"--no-track"` to override that behaviour. The same goes for `"--color"`
- and `"--no-color"`.
-@@ -74,10 +83,10 @@ options. This means that you can for example use `"git rm -rf"` or
- `"git clean -fdx"`.
- 
- 
--Separating argument from the switch
-+Separating argument from the option
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--Also for option switches that take a mandatory argument, you can separate it
--from the switch. That means that all the following uses are correct:
-+You can write the mandatory option parameter to an option as a separate
-+word on the command line.  That means that all the following uses work:
- 
- ----------------------------
- $ git foo --long-opt=Arg
-@@ -86,7 +95,7 @@ $ git foo -oArg
- $ git foo -o Arg
- ----------------------------
- 
--However, this is *NOT* possible for switches with an optionnal value, where the
-+However, this is *NOT* allowed for switches with an optionnal value, where the
- 'sticked' form must be used:
- ----------------------------
- $ git describe --abbrev HEAD     # correct
-diff --git a/Makefile b/Makefile
-index 617e5f5..fd9b939 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1172,6 +1172,7 @@ check-docs::
- 		documented,gitattributes | \
- 		documented,gitignore | \
- 		documented,gitmodules | \
-+		documented,gitcli | \
- 		documented,git-tools | \
- 		sentinel,not,matching,is,ok ) continue ;; \
- 		esac; \
 -- 
-1.5.4.rc0.54.g3eb2
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
