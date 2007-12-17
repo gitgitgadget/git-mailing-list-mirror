@@ -1,86 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] provide advance warning of some future pack default changes
-Date: Mon, 17 Dec 2007 14:17:01 -0800
-Message-ID: <7vtzmh55lu.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.0.999999.0712141724260.8467@xanadu.home>
-	<20071214223957.GC7300@mail.oracle.com>
-	<alpine.LFD.0.999999.0712141744460.8467@xanadu.home>
-	<20071215004230.GF7300@mail.oracle.com>
-	<alpine.LFD.0.999999.0712142114400.8467@xanadu.home>
-	<20071217200920.GB19816@mail.oracle.com>
-	<alpine.LFD.0.999999.0712171517320.8467@xanadu.home>
-	<20071217211317.GC19816@mail.oracle.com>
-	<20071217213049.GG13515@fieldses.org>
-	<alpine.LFD.0.999999.0712171646230.8467@xanadu.home>
-	<20071217215709.GH13515@fieldses.org>
+From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Subject: Re: [PATCH] HP-UX does not have select.h
+Date: Mon, 17 Dec 2007 23:22:59 +0100
+Message-ID: <20071217232259.0b41a3bf@pc09.procura.nl>
+References: <20071217192306.5da48540@pc09.procura.nl>
+	<7v8x3t6nq1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, Joel Becker <Joel.Becker@oracle.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Mon Dec 17 23:17:47 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 17 23:25:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4OHQ-0003Up-J8
-	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 23:17:45 +0100
+	id 1J4OOu-0006dX-OG
+	for gcvg-git-2@gmane.org; Mon, 17 Dec 2007 23:25:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757580AbXLQWRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 17:17:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757484AbXLQWRV
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 17:17:21 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60356 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757179AbXLQWRU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 17:17:20 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DC9BC4BBA;
-	Mon, 17 Dec 2007 17:17:10 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2549B4BB7;
-	Mon, 17 Dec 2007 17:17:04 -0500 (EST)
-In-Reply-To: <20071217215709.GH13515@fieldses.org> (J. Bruce Fields's message
-	of "Mon, 17 Dec 2007 16:57:09 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933333AbXLQWZB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 17:25:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932986AbXLQWZB
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 17:25:01 -0500
+Received: from smtp-vbr5.xs4all.nl ([194.109.24.25]:4367 "EHLO
+	smtp-vbr5.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932175AbXLQWY7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 17:24:59 -0500
+Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
+	(authenticated bits=0)
+	by smtp-vbr5.xs4all.nl (8.13.8/8.13.8) with ESMTP id lBHMMxtx095440
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 17 Dec 2007 23:23:03 +0100 (CET)
+	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <7v8x3t6nq1.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.2.0 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68638>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
+On Mon, 17 Dec 2007 13:00:22 -0800, Junio C Hamano <gitster@pobox.com> wrote:
 
-> On Mon, Dec 17, 2007 at 04:52:16PM -0500, Nicolas Pitre wrote:
->> On Mon, 17 Dec 2007, J. Bruce Fields wrote:
->> 
->> > By the way, just as a data point: I do keep some git repositories on
->> > NFS, and access them from multiple machines with different git versions
->> > (not on purpose--it's just that the machines don't all run the same
->> > distro, so it'd be extra work to give them all the same version).  I
->> > don't use anything older than 1.5.0.  If the repository became unusable
->> > on one of those machines without warning it'd be annoying.
->> 
->> What the v1.5.5 release notes will say is that you'll have to set 
->> pack.indexversion=1 to remain compatible with pre-1.5.2 Git versions.  
->
-> Is there any reason not to make pack.indexversion=1 the default (for
-> preexisting repositories at the very least) and suggest in the release
-> notes that people set something else if they want the features the new
-> version provides?
+> "H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
+> 
+> > HP-UX does not have select.h, but it offers all select () functionality.
+> > The defines are in <sys/types.h> and <X11/fd.h>
+> 
+> Will apply the patch as-is for now, only because I do not want major
+> surgery during rc period, but I think is can be improved.
 
-That's a judgement call.
+Probably. but there is so much to be improved :)
 
-Pack-idx format v2 is by design much safer in the face of bitflip (do we
-have a test case to make sure this is indeed true?).  But from the end
-user's point of view, all the usual "I do not want to be forced to
-update that old box I do not want to touch" applies.
+> POSIX.1-2001 expects <sys/select.h> declares select(2).  With earlier
+> standards, including <sys/time.h>, <sys/types.h> and <unistd.h> would
+> have given it.
 
-And the people who needs to suffer from the dilemma are only the ones
-who access a single repository across NFS with git from different
-vintage.  If that is a minority and/or tends to be more clueful people,
-the inconvenience factor may be outweighed by the advantage v2 offers,
-and pushing adoption of v2 harder the way Nico is driving at would
-generally be a good thing.
+Those three are there. I have 10.20 through 11.23 on PA-RISC and
+11.23 on Itanium 2.
+
+10.20, 11.00, and 11.11 (11i v1) do not have sys/select.h. 11.23 and
+on do have it. The problem for now is that git on HP-UX does not build
+with HP's C-ANSI-C compiler. I need to use gcc. Up to and including
+11.11, I cannot use 4.x, as that has serious problems when used in 64bit
+mode, so I'm stuck with gcc-3.4.6
+
+> HP-UX cannot be the only pre-POSIX system; "#ifndef _HPUX_SOURCE" feels
+> very wrong.
+
+HP-UX 11.23/IPC, which is rather recent, does include sys/select.h
+I didn't sent my HP-UX patch yet for the Makefile, as that is still
+very premature. It is OK for 11.00, but as I need 64bit on 11.23,
+because I only have 64bit OpenSSL and other util libraries, the 32bit
+addition would not work.
+
+> Besides, isn't _HPUX_SOURCE a feature-test macro?  Feature test macros
+
+That is defined in GNU gcc. I did not pass it with -D...
+
+> are for the application to define, and for the implementation (iow, the
+> header files) to find out what set of names the application wants to
+> see.  You are making the application examine the symbol to see what
+> implementation it is on, which feels backwards to me.
+
+-- 
+H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
+using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
+& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
+http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
+                        http://www.goldmark.org/jeff/stupid-disclaimers/
