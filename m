@@ -1,126 +1,59 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: log/show: relative pathnames do not work in rev:path
-Date: Tue, 18 Dec 2007 23:20:32 +0100
-Message-ID: <20071218222032.GH2875@steel.home>
-References: <20071218173321.GB2875@steel.home> <m3d4t3q4e5.fsf@roke.D-201> <20071218204623.GC2875@steel.home> <200712182224.28152.jnareb@gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-stash: RFC: Adopt the default behavior to other commands
+Date: Tue, 18 Dec 2007 14:22:45 -0800
+Message-ID: <7vabo7y762.fsf@gitster.siamese.dyndns.org>
+References: <20071217110322.GH14889@albany.tokkee.org>
+	<506C6191-655D-46AE-A5C2-1335A9044F44@lrde.epita.fr>
+	<7vk5nd53lp.fsf@gitster.siamese.dyndns.org>
+	<57F403E7-AF5B-40F1-AE9D-8EA036675A67@lrde.epita.fr>
+	<7vfxy04ze7.fsf@gitster.siamese.dyndns.org>
+	<20071218154211.GB12549@alea.gnuu.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Dana How <danahow@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 18 23:21:17 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>
+X-From: git-owner@vger.kernel.org Tue Dec 18 23:23:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4koL-0002My-V8
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 23:21:14 +0100
+	id 1J4kqW-0003BO-Pw
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 23:23:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755137AbXLRWUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 17:20:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754754AbXLRWUg
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 17:20:36 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:42119 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752712AbXLRWUf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 17:20:35 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+a72E=
-Received: from tigra.home (Fc89a.f.strato-dslnet.de [195.4.200.154])
-	by post.webmailer.de (klopstock mo39) (RZmta 14.6)
-	with ESMTP id q03c6bjBIGiqXy ; Tue, 18 Dec 2007 23:20:33 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id D8CCC277AE;
-	Tue, 18 Dec 2007 23:20:32 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id B034256D22; Tue, 18 Dec 2007 23:20:32 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <200712182224.28152.jnareb@gmail.com>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+	id S1755641AbXLRWXI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Dec 2007 17:23:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755660AbXLRWXH
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 17:23:07 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63894 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755628AbXLRWXG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Dec 2007 17:23:06 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 07A7B56F5;
+	Tue, 18 Dec 2007 17:23:00 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 21B3656EE;
+	Tue, 18 Dec 2007 17:22:53 -0500 (EST)
+In-Reply-To: <20071218154211.GB12549@alea.gnuu.de> (=?utf-8?Q?J=C3=B6rg?=
+ Sommer's message of
+	"Tue, 18 Dec 2007 16:42:11 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68833>
 
-Jakub Narebski, Tue, Dec 18, 2007 22:24:26 +0100:
-> On Tue, 18 Dec 2007, Alex Riesen wrote:
-> > I think that we have parsing of the blob locators at the wrong level:
-> > so that git-show, git-log and git-diff can handle its pathnames as
-> > they handle path filters (relative to cwd),
-> 
-> What cwd? <path> in <tree-ish>:<path> syntax is "relative" to <tree-ish>.
+J=C3=B6rg Sommer <joerg@alea.gnuu.de> writes:
 
-But the act of running "git-show <tree-ish>:<path>" does have a
-working directory relative to the project root. And usually the
-relative directory makes a lot of sense in git-show commands.
+> When it should go quick why don't use an alias. git stash can print t=
+he
+> list and everyone who wants a quick stash can create an alias for thi=
+s.
 
-> What should git do in your proposal when we are on master branch in
-> Documentation subdirectory, and want to check TODO file in todo branch?
-> "git show todo:TODO" is most natural IMHO.
-
-Yes, and that's why I NAKed the patches in the mail to Dana. I just
-hope the problem gets some attention. Maybe I even get something out
-of it, maybe not. It is not that hard to keep the patches in my tree.
-
-> Note that for true <tree> as <tree-ish> you just don't know where
-> in the working area directory hierarchy <tree> can be. This means you
-> do't know relation of <tree> and <path> in <tree>:<path> to cwd.
-
-I understand. But... How often do you think people use git show with a
-tree which was not pointed by a commit?
-
-> > and git-cat-file, 
-> > git-diff-tree, git-rev-list, etc can handle theirs always relative to
-> > the project root.
-> 
-> Not "relative to project root". Relative to tree-ish used on right hand
-> side in <tree-ish>:<path> extended SHA-1 syntax. It is usually project
-> root, because when you specify <commit> or <tag> as <tree-ish> it refers
-> to top/root directory of a project.
-
-I know. My problem: it is also awkward. git-show :test-l<Tab>ib.sh just
-does not do what I expect. Nor does git cat-file HEAD:test-l<Tab>ib.sh.
-And git cat-file HEAD:t/test-l<Tab> does not work at all. And this is
-very simple example. Normally the pathnames are about 100 characters
-long.
-
-You know, it maybe as much correct as you wish, but is not very
-usable (and no, I can't use the contributed completion. For lots of
-reasons).
-
-> > I actually do not see any problem for git-show (being porcelain-level
-> > program) to treat *each and every* path anywhere relatively to the
-> > current directory. It is just more comfortable.
-> 
-> This breaks backward compatibility, hard. And IMHO breaks layers.
-
-Maybe they should be broken in porcelain...
-
-> But if (big if) it was to be implemented, default behavior should be
-> unchanged, and relative to the cwd (layers!) should use new syntax,
-> for example
-> 
->      $ cd $GIT/t
->      $ git show 570f32266:t/test-lib.sh    # works
->      $ git show 570f32266:test-lib.sh      # should not work
-
-Well... Frankly, I suggest changing this for porcelain-level
-commands (show and diff) and leave it as it is for plumbing.
-
->      $ git show 570f32266:./test-lib.sh    # should work
-
-Definitely. I even implemented a patch to allow just this, but scraped
-it: it looked a bit small and the syntax is not obvious to the user.
-Maybe that is what I end up with, though.
-
->      $ git show 570f32266:/t/test-lib.sh   # should perhaps work
-> Currently ":/<text>" (but not "<ref>:/<text>") is taken; see
-
-Yes, and it becomes more and more an obstacle. With just one user
-standing, AFAICS (/me considers Dscho's assassination for moment...
-Nah... Maybe poison?)
+You are taking this completely backwards.  The stash mechanism is all
+about creating a quickie temporary pair of commits.  Anybody who wants
+otherwise can use alias or choose not to use stash at all.
