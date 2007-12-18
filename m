@@ -1,144 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] HP-UX does not have select.h
-Date: Mon, 17 Dec 2007 21:29:31 -0800
-Message-ID: <7vbq8o370k.fsf@gitster.siamese.dyndns.org>
-References: <20071217192306.5da48540@pc09.procura.nl>
-	<7v8x3t6nq1.fsf@gitster.siamese.dyndns.org>
-	<20071217232259.0b41a3bf@pc09.procura.nl>
+From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+Subject: [PATCH] Fix some documentation typos.
+Date: Tue, 18 Dec 2007 07:07:36 +0100
+Organization: Department of Numerical Simulation, University of Bonn
+Message-ID: <20071218060736.GA24024@ins.uni-bonn.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Tue Dec 18 06:30:11 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 18 07:08:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4V1t-0002Mq-R9
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 06:30:10 +0100
+	id 1J4Vcx-0001z4-86
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 07:08:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750869AbXLRF3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 00:29:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbXLRF3p
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 00:29:45 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46782 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750844AbXLRF3p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 00:29:45 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 181FD2D10;
-	Tue, 18 Dec 2007 00:29:39 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 51E832D0E;
-	Tue, 18 Dec 2007 00:29:34 -0500 (EST)
-In-Reply-To: <20071217232259.0b41a3bf@pc09.procura.nl> (H. Merijn Brand's
-	message of "Mon, 17 Dec 2007 23:22:59 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751719AbXLRGH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 01:07:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751573AbXLRGH7
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 01:07:59 -0500
+Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:54973 "EHLO
+	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751168AbXLRGH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 01:07:58 -0500
+Received: from localhost.localdomain (xdsl-87-78-134-196.netcologne.de [87.78.134.196])
+	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id 90878400002A2
+	for <git@vger.kernel.org>; Tue, 18 Dec 2007 07:07:56 +0100 (CET)
+Received: from ralf by localhost.localdomain with local (Exim 4.63)
+	(envelope-from <Ralf.Wildenhues@gmx.de>)
+	id 1J4Vc8-0006Kd-Sx
+	for git@vger.kernel.org; Tue, 18 Dec 2007 07:07:36 +0100
+Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68701>
 
-"H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
+Signed-off-by: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+---
+ Documentation/config.txt         |    2 +-
+ Documentation/git-help.txt       |    6 +++---
+ Documentation/git-rev-list.txt   |    2 +-
+ Documentation/git-send-email.txt |    2 +-
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-> On Mon, 17 Dec 2007 13:00:22 -0800, Junio C Hamano <gitster@pobox.com> wrote:
->
->> "H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
->> 
->> > HP-UX does not have select.h, but it offers all select () functionality.
->> > The defines are in <sys/types.h> and <X11/fd.h>
->> 
->> Will apply the patch as-is for now, only because I do not want major
->> surgery during rc period, but I think is can be improved.
-> ...
->> Besides, isn't _HPUX_SOURCE a feature-test macro?  Feature test macros
->
-> That is defined in GNU gcc. I did not pass it with -D...
-
-Actually I changed my mind.  I won't be applying this as is.
-
-For the selective inclusion of <sys/select.h>, I would prefer it see it
-done like the attached.
-
-The main point is to limit the "platform" dependency to configure and
-Makefile, and keep #ifdef in the actual header files expressed in more
-generic terms (e.g. "do we need to (and can we) include sys/select.h
-here?").
-
-I am fuzzy about the uname_S part, so I won't be applying the attached
-patch either; the attached is for demonstration purposes only.
-
-diff --git a/Makefile b/Makefile
-index 617e5f5..f9f724a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -100,6 +100,9 @@ all::
- #
- # Define NO_DEFLATE_BOUND if your zlib does not have deflateBound.
- #
-+# Define NO_SYS_SELECT_H if your C library header files do not have <sys/select.h>
-+# but you do have select(2) (pre POSIX.1-2001 systems, e.g. HP-UX before 11.23).
-+#
- # Define NO_R_TO_GCC_LINKER if your gcc does not like "-R/path/lib"
- # that tells runtime paths to dynamic libraries;
- # "-Wl,-rpath=/path/lib" is used instead.
-@@ -504,6 +507,9 @@ endif
- ifneq (,$(findstring arm,$(uname_M)))
- 	ARM_SHA1 = YesPlease
- endif
-+ifeq ($(uname_S),HP-UX)
-+	NO_SYS_SELECT_H = YesPlease
-+endif
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ce16fc7..75ed4d3 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -469,7 +469,7 @@ fetch.unpackLimit::
  
- -include config.mak.autogen
- -include config.mak
-@@ -676,6 +682,10 @@ ifdef NO_DEFLATE_BOUND
- 	BASIC_CFLAGS += -DNO_DEFLATE_BOUND
- endif
+ format.numbered::
+ 	A boolean which can enable sequence numbers in patch subjects.
+-	Seting this option to "auto" will enable it only if there is
++	Setting this option to "auto" will enable it only if there is
+ 	more than one patch.  See --numbered option in
+ 	gitlink:git-format-patch[1].
  
-+ifdef NO_SYS_SELECT_H
-+	BASIC_CFLAGS += -DNO_SYS_SELECT_H
-+endif
-+
- ifdef PPC_SHA1
- 	SHA1_HEADER = "ppc/sha1.h"
- 	LIB_OBJS += ppc/sha1.o ppc/sha1ppc.o
-diff --git a/config.mak.in b/config.mak.in
-index 15fb26c..e8890e0 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -44,3 +44,4 @@ NO_MKDTEMP=@NO_MKDTEMP@
- NO_ICONV=@NO_ICONV@
- OLD_ICONV=@OLD_ICONV@
- NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
-+NO_SYS_SELECT_H=@NO_SYS_SELECT_H@
-diff --git a/configure.ac b/configure.ac
-index 6f641e3..3bfd0b6 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -256,6 +256,8 @@ AC_COMPILE_IFELSE(OLDICONVTEST_SRC,
- 	OLD_ICONV=UnfortunatelyYes])
- AC_SUBST(OLD_ICONV)
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index da3f718..c370ee9 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -21,7 +21,7 @@ printed on the standard output.
  
-+AC_CHECK_HEADER([sys/select.h], [], [NO_SYS_SELECT_H=YesPlease])
-+AC_SUBST(NO_SYS_SELECT_H)
+ If a git command is named, a manual page for that command is brought
+ up. The 'man' program is used by default for this purpose, but this
+-can be overriden by other options or configuration variables.
++can be overridden by other options or configuration variables.
  
- ## Checks for typedefs, structures, and compiler characteristics.
- AC_MSG_NOTICE([CHECKS for typedefs, structures, and compiler characteristics])
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 79eb10e..ec3585e 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -68,7 +68,9 @@
- #include <sys/poll.h>
- #include <sys/socket.h>
- #include <sys/ioctl.h>
-+#ifndef NO_SYS_SELECT_H
- #include <sys/select.h>
-+#endif
- #include <assert.h>
- #include <regex.h>
- #include <netinet/in.h>
+ Note that 'git --help ...' is identical as 'git help ...' because the
+ former is internally converted into the latter.
+@@ -30,7 +30,7 @@ OPTIONS
+ -------
+ -a|--all::
+ 	Prints all the available commands on the standard output. This
+-	option superseeds any other option.
++	option supersedes any other option.
+ 
+ -i|--info::
+ 	Use the 'info' program to display the manual page, instead of
+@@ -50,7 +50,7 @@ The web browser can be specified using the configuration variable
+ these config variables is set, the 'git-help--browse' helper script
+ (called by 'git-help') will pick a suitable default.
+ +
+-You can explicitly provide a full path to your prefered browser by
++You can explicitly provide a full path to your preferred browser by
+ setting the configuration variable 'browser.<tool>.path'. For example,
+ you can configure the absolute path to firefox by setting
+ 'browser.firefox.path'. Otherwise, 'git-help--browse' assumes the tool
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index 989fbf3..a03f9fe 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -274,7 +274,7 @@ limiting may be applied.
+ --quiet::
+ 
+ 	Don't print anything to standard output.  This form of
+-	git-rev-list is primarly meant to allow the caller to
++	git-rev-list is primarily meant to allow the caller to
+ 	test the exit status to see if a range of objects is fully
+ 	connected (or not).  It is faster than redirecting stdout
+ 	to /dev/null as the output does not have to be formatted.
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 659215a..f0bd285 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -148,7 +148,7 @@ sendemail.identity::
+ 	'sendemail.<identity>.<item>' will have higher precedence than
+ 	'sendemail.<item>'. This is useful to declare multiple SMTP
+ 	identities and to hoist sensitive authentication information
+-	out of the repository and into the global configuation file.
++	out of the repository and into the global configuration file.
+ 
+ sendemail.aliasesfile::
+ 	To avoid typing long email addresses, point this to one or more
+-- 
+1.5.3.6.950.g92b7b
