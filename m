@@ -1,81 +1,109 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: git with custom diff for commits
-Date: Tue, 18 Dec 2007 09:57:48 +0100
-Message-ID: <vpqk5ncz8fn.fsf@bauges.imag.fr>
-References: <60687a7d0712171456p14328817y5aa229f0df23c02f@mail.gmail.com>
-	<Pine.LNX.4.64.0712172300510.9446@racer.site>
-	<vpq1w9kaphg.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0712172310090.9446@racer.site>
-	<7vbq8o6gxw.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix segfault in diff-delta.c when FLEX_ARRAY is 1
+Date: Tue, 18 Dec 2007 01:07:01 -0800
+Message-ID: <7vwsrc1idm.fsf@gitster.siamese.dyndns.org>
+References: <1197941997-11421-1-git-send-email-madcoder@debian.org>
+	<20071218014455.GB14981@artemis.madism.org>
+	<alpine.LFD.0.9999.0712172032090.21557@woody.linux-foundation.org>
+	<alpine.LFD.0.9999.0712172146070.21557@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Gerald Gutierrez <ggmlfs@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 18 10:06:08 2007
+Cc: Pierre Habouzit <madcoder@debian.org>, spearce@spearce.org,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Dec 18 10:07:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4YOD-0001TS-DL
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 10:05:51 +0100
+	id 1J4YQP-00029C-Nk
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 10:07:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751435AbXLRJEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 04:04:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751366AbXLRJEy
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 04:04:54 -0500
-Received: from imag.imag.fr ([129.88.30.1]:47142 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751260AbXLRJEw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 04:04:52 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lBI8vmLQ021066
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 18 Dec 2007 09:57:49 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1J4YGq-0001R1-5X; Tue, 18 Dec 2007 09:57:48 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1J4YGq-0006Ab-3K; Tue, 18 Dec 2007 09:57:48 +0100
-In-Reply-To: <7vbq8o6gxw.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 17 Dec 2007 15\:26\:51 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 18 Dec 2007 09:57:49 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751659AbXLRJHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 04:07:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751938AbXLRJHS
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 04:07:18 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55329 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751555AbXLRJHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 04:07:16 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 455FE4111;
+	Tue, 18 Dec 2007 04:07:08 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 745884110;
+	Tue, 18 Dec 2007 04:07:03 -0500 (EST)
+In-Reply-To: <alpine.LFD.0.9999.0712172146070.21557@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Mon, 17 Dec 2007 22:12:03 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68711>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> But there's a few that aren't obviously allocations (this is a list done 
+> with grep and sparse, I didn't look at whether the values used are then 
+> all allocation-related):
 >
->>> It will show an empty output for "git diff", but I doubt thit will 
->>> change anything at commit time. Probably the "filter" thing on the same 
->>> file (also "man gitattributes") can help though.
->>
->> Ah, right.  I completely missed that you were talking about git-commit, 
->> not git-log on git commits.
->>
->> Yes, setting up a "clean" filter that removes the timestamps is probably 
->> the reasonable thing to do here.
->
-> I wouldn't do filters for something like that.  Can you guarantee that
-> the output from corresopnding smudge filter will load cleanly back to
-> the mysql database?
+>  - builtin-blame.c:128     memset(o, 0, sizeof(*o));
 
-The original poster said the date was an SQL comment, so, it should be
-safe to strip it. That said, precommit hook is probably a good or
-better solution. At least, if you're not sure you didn't make a
-mistake writting it, you'll notice either a good commit or no commit
-at all. With filters, you might well notice you corrupted the commit
-too late :-(.
+This is harmless and in fact unnecessary clearing, immediately before
+calling free(3).
 
--- 
-Matthieu
+>  - diff-delta.c:250        memsize = sizeof(*index)
+
+I haven't studied this codepath.
+
+>  - object-refs.c:23        size_t size = sizeof(*refs) + count*sizeof(struct object *);
+
+Overallocation to have at least "count" pointers to "struct object".
+
+>  - object-refs.c:61        size_t size = sizeof(*refs) + j*sizeof(struct object *);
+
+Ditto for "j" pointers.
+
+>  - attr.c:220              sizeof(*res) +
+
+Overallocation to have at least "num_attr" instances of "struct
+attr_state" (plus name string if needed, which is stored using location
+past state[num_attr]).
+
+>  - remote.c:467            memset(ret, 0, sizeof(struct ref) + namelen);
+
+Clearing an arena that was overallocated to have at least namelen
+elements of char[] on the line immediately before this, with matching
+size.  All callers pass namelen = strlen(name) + 1 so we are Ok even
+when FLEX_ARRAY gives no extra space.
+
+>  - remote.c:474            memcpy(ret, ref, sizeof(struct ref) + strlen(ref->name) + 1);
+
+Ditto.
+
+>  - transport.c:491         memset(ref, 0, sizeof(struct ref));
+
+A line above overallocates to have enough room for strlen(ref_name) plus
+terminating NUL, and after this lines clears the non-flex part, name is
+copied.  So this overclears a bit, but is harmless.
+
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index e9eb795..aa2513e 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -590,7 +590,7 @@ static int merged_entry(struct cache_entry *merge, struct cache_entry *old,
+>  		 * a match.
+>  		 */
+>  		if (same(old, merge)) {
+> -			*merge = *old;
+> +			memcpy(merge, old, offsetof(struct cache_entry, name));
+>  		} else {
+>  			verify_uptodate(old, o);
+>  			invalidate_ce_path(old);
+
+Portability of offsetof() is slightly worrisome, but giving a
+compatibility macro is trivial if this turns out to be problematic for
+some people.
