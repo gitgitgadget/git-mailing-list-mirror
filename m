@@ -1,87 +1,82 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: kha/safe and kha/experimental updated
-Date: Tue, 18 Dec 2007 16:52:18 +0000
-Message-ID: <b0943d9e0712180852y62c5bea2x61463b235b26ca04@mail.gmail.com>
-References: <20071214105238.18066.23281.stgit@krank>
-	 <b0943d9e0712170309n415dc6cs9d1c1f8a9c687bf8@mail.gmail.com>
-	 <20071217224812.GA6342@diana.vm.bytemark.co.uk>
-	 <20071218052115.GA13422@diana.vm.bytemark.co.uk>
-	 <b0943d9e0712180809l4d2d01b8j32ab2a410885cc5e@mail.gmail.com>
-	 <m3hcigot3h.fsf@roke.D-201>
+From: Christoph Duelli <duelli@melosgmbh.de>
+Subject: Re: preventing a push
+Date: Tue, 18 Dec 2007 17:53:10 +0100
+Message-ID: <4767FAF6.6050204@melosgmbh.de>
+References: <4767BDD8.9080404@melosgmbh.de> <alpine.LFD.0.9999.0712180819480.21557@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	"=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 18 17:52:49 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 18 17:55:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4fgU-0005Rm-VX
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 17:52:47 +0100
+	id 1J4fix-0006Zt-7D
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 17:55:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758033AbXLRQwW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Dec 2007 11:52:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756948AbXLRQwW
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 11:52:22 -0500
-Received: from wr-out-0506.google.com ([64.233.184.226]:19649 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755763AbXLRQwV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Dec 2007 11:52:21 -0500
-Received: by wr-out-0506.google.com with SMTP id c49so1739657wra.1
-        for <git@vger.kernel.org>; Tue, 18 Dec 2007 08:52:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=PvaARQ41e3vnRi1v+giZpvvRyE92FgW5frQUWsHky6g=;
-        b=bJ4nAUGL2bm+L28rRT/CRC8JheYaZBOjPbQXfBxDd+ndhZ0RgB6vOb+LwL+2vDA7aOBb0AK15VTBARwGzIQwuXRquo0071nc3cCLZc3vMzHCnCte8YX5G6LF2iD8ECGrIGRDGVm3T6HVSSIrp+giq+ayf4tqE5pgJ5NjjKuac10=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lpr7P1o8XBeaeWyGr8JZwuQ7clRhNNsQE4gi3CFqyRaIEei3Kgl/kblB8nEzPlKT1uqHC6HAs5JbvFyg4Os3NM31yxJgs1CGB63mlAJe97owl5587U8Xb93ZQlvaPvYPoB1KCmDnPt5mRpYXE3EyPhIH2atxzRyKnPjjYhRRaNk=
-Received: by 10.140.207.16 with SMTP id e16mr5064177rvg.297.1197996738833;
-        Tue, 18 Dec 2007 08:52:18 -0800 (PST)
-Received: by 10.141.186.5 with HTTP; Tue, 18 Dec 2007 08:52:18 -0800 (PST)
-In-Reply-To: <m3hcigot3h.fsf@roke.D-201>
-Content-Disposition: inline
+	id S1761448AbXLRQyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 11:54:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760927AbXLRQyg
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 11:54:36 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:16375 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761419AbXLRQye (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 11:54:34 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: hvKqOO6Ph79JHUJJIwMxXgzUdNi97hMDGc5n+ojdbo9B56/YXBytmKws+HDNT6n5rcY=
+Received: from mail.melosgmbh.de (p5B07A85D.dip0.t-ipconnect.de [91.7.168.93])
+	by post.webmailer.de (klopstock mo41) (RZmta 14.6)
+	with ESMTP id i03c76jBIF7HST ; Tue, 18 Dec 2007 17:54:32 +0100 (MET)
+	(envelope-from: <duelli@melosgmbh.de>)
+X-Spam-Status: No, hits=0.0 required=4.0
+	tests=AWL: 0.032,BAYES_00: -1.665,TOTAL_SCORE: -1.633
+X-Spam-Level: 
+Received: from [172.27.1.229] ([172.27.1.229])
+	(authenticated user duelli@melosgmbh.de)
+	by mail.melosgmbh.de (Kerio MailServer 6.4.1 patch 1);
+	Tue, 18 Dec 2007 17:54:30 +0100
+User-Agent: Thunderbird 2.0.0.0 (X11/20070326)
+In-Reply-To: <alpine.LFD.0.9999.0712180819480.21557@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68780>
 
-On 18/12/2007, Jakub Narebski <jnareb@gmail.com> wrote:
-> "Catalin Marinas" <catalin.marinas@gmail.com> writes:
->
-> > Thanks again for maintaining these branches.
-> >
-> > On 18/12/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> > >   git://repo.or.cz/stgit/kha.git safe
->
-> > >       Remove "stg resolved"
-> >
-> > I'd like to keep this command. git-mergetool doesn't support the to=
-ol
-> > I use (emacs + ediff and more stgit-specific file extensions like
-> > current, patch etc.). I also don't find 'git add' to be meaningful =
-for
-> > marking a conflict as solved.
->
-> I also would like to have this command kept (and shown in 'stg help'!=
-).
-> Contrary to 'git add' it can check and add to index / update index
-> only for files with conflict; we have -r (ancestor|current|patched)
-> to choose one side, and we could add --check to check if there are
-> no conflict markers with files (useful with -a/--all).
+Linus Torvalds schrieb:
+> 
+> On Tue, 18 Dec 2007, Christoph Duelli wrote:
+>> Is there a (recommended?) way to prevent accidental pushing (or pulling) from
+>> one repository into another (like the level command from bk days)?
+> 
+> I used BK for years, never knew about any level thing. I assume that was 
+> some way to introduce an "ordering" between repositories, where you could 
+> only push/pull in a controlled manner?
+Indeed, you can not move changes to a repo with a lower level.
 
-I'd also like to re-add the stgit.keeporig option and additional
-functionality so that the *.{ancestor,current,patched} can be left in
-the working tree. Some people might use them when manually fixing
-conflicts (I have a look at them from time to time when the emacs +
-ediff shows a hard to understand conflict).
+> There's no obvious way to do exactly that, but the hooks git has may or 
+> may not be ok. For example, if you want to disallow pushing into some 
+> repository entirely (because you _only_ expect people to pull into it), 
+> you should be able to just make a "pre-receive" hook that always returns 
+> false. See Documentation/hooks.txt.
+Ok, I will give hooks a try here.
 
---=20
-Catalin
+> NOTE! There is no way to figure out what the pushing repository status is, 
+> which is why I say there is no way to do a "level"-equivalent thing 
+> (assuming I guessed what "level" does from the name). However, depending 
+> on how you allow people to access the machine, the hook obviously can look 
+> at things like $USER or other environment variables (ie you could make it 
+> look at what machine the user connected from etc).
+> 
+> But nothing really ever identifies the source repository (on a "git 
+> level") for a push: as far as git is concerned, all repositories are 
+> equal, and your hooks would invariably have to use non-git knowledge to 
+> figure out whether some operation should be allowed or not.
+Perhaps it would be more git-like to use branches here. An accidental 
+merge from a branch to another is probably less likely than an 
+accidental push.
+
+Thanks, and best regards
+
+Christoph
