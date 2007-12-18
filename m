@@ -1,130 +1,82 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] fix style of a few comments in diff-delta.c
-Date: Tue, 18 Dec 2007 10:15:39 -0500 (EST)
-Message-ID: <alpine.LFD.0.999999.0712181012350.8467@xanadu.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-stash: RFC: Adopt the default behavior to other commands
+Date: Tue, 18 Dec 2007 15:15:37 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712181513060.23902@racer.site>
+References: <20071217110322.GH14889@albany.tokkee.org>
+ <506C6191-655D-46AE-A5C2-1335A9044F44@lrde.epita.fr>
+ <7vk5nd53lp.fsf@gitster.siamese.dyndns.org> <57F403E7-AF5B-40F1-AE9D-8EA036675A67@lrde.epita.fr>
+ <7vfxy04ze7.fsf@gitster.siamese.dyndns.org> <20071218105941.GA17251@albany.tokkee.org>
+ <Pine.LNX.4.64.0712181231420.23902@racer.site> <4767D7A2.30703@op5.se>
+ <Pine.LNX.4.64.0712181445420.23902@racer.site> <4767E07A.2020100@op5.se>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 18 16:16:26 2007
+Cc: Sebastian Harl <sh@tokkee.org>, Junio C Hamano <gitster@pobox.com>,
+	Benoit Sigoure <tsuna@lrde.epita.fr>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Dec 18 16:16:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4eB2-0005de-Ck
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 16:16:12 +0100
+	id 1J4eBN-0005kV-Iy
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 16:16:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756602AbXLRPPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 10:15:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756559AbXLRPPl
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 10:15:41 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:58386 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756693AbXLRPPk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 10:15:40 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JT9007UG3Q3NU70@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 18 Dec 2007 10:15:40 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-User-Agent: Alpine 0.999999 (LFD 847 2007-12-06)
+	id S1753862AbXLRPPy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 10:15:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756559AbXLRPPy
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 10:15:54 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39976 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753667AbXLRPPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 10:15:53 -0500
+Received: (qmail invoked by alias); 18 Dec 2007 15:15:51 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp044) with SMTP; 18 Dec 2007 16:15:51 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Qmq0+chsQVnb+WzXG0lNseHHpuaLEhkDRtG+9nh
+	wAZxNCnWyUAG8p
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4767E07A.2020100@op5.se>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68760>
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
-diff --git a/diff-delta.c b/diff-delta.c
-index 601b49e..a4e28df 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -212,11 +212,24 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 		if (hash_count[i] <= HASH_LIMIT)
- 			continue;
- 
--		entries -= hash_count[i] - HASH_LIMIT;
- 		/* We leave exactly HASH_LIMIT entries in the bucket */
-+		entries -= hash_count[i] - HASH_LIMIT;
- 
- 		entry = hash[i];
- 		acc = 0;
-+
-+		/*
-+		 * Assume that this loop is gone through exactly
-+		 * HASH_LIMIT times and is entered and left with
-+		 * acc==0.  So the first statement in the loop
-+		 * contributes (hash_count[i]-HASH_LIMIT)*HASH_LIMIT
-+		 * to the accumulator, and the inner loop consequently
-+		 * is run (hash_count[i]-HASH_LIMIT) times, removing
-+		 * one element from the list each time.  Since acc
-+		 * balances out to 0 at the final run, the inner loop
-+		 * body can't be left with entry==NULL.  So we indeed
-+		 * encounter entry==NULL in the outer loop only.
-+		 */
- 		do {
- 			acc += hash_count[i] - HASH_LIMIT;
- 			if (acc > 0) {
-@@ -229,30 +242,17 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 			}
- 			entry = entry->next;
- 		} while (entry);
--
--		/* Assume that this loop is gone through exactly
--		 * HASH_LIMIT times and is entered and left with
--		 * acc==0.  So the first statement in the loop
--		 * contributes (hash_count[i]-HASH_LIMIT)*HASH_LIMIT
--		 * to the accumulator, and the inner loop consequently
--		 * is run (hash_count[i]-HASH_LIMIT) times, removing
--		 * one element from the list each time.  Since acc
--		 * balances out to 0 at the final run, the inner loop
--		 * body can't be left with entry==NULL.  So we indeed
--		 * encounter entry==NULL in the outer loop only.
--		 */
- 	}
- 	free(hash_count);
- 
--	/* Now create the packed index in array form rather than
--	 * linked lists */
--
-+	/*
-+	 * Now create the packed index in array form
-+	 * rather than linked lists.
-+	 */
- 	memsize = sizeof(*index)
- 		+ sizeof(*packed_hash) * (hsize+1)
- 		+ sizeof(*packed_entry) * entries;
--
- 	mem = malloc(memsize);
--
- 	if (!mem) {
- 		free(hash);
- 		return NULL;
-@@ -269,19 +269,19 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 	mem = packed_hash + (hsize+1);
- 	packed_entry = mem;
- 
--	/* Coalesce all entries belonging to one linked list into
--	 * consecutive array entries */
--
- 	for (i = 0; i < hsize; i++) {
-+		/*
-+		 * Coalesce all entries belonging to one linked list
-+		 * into consecutive array entries.
-+		 */
- 		packed_hash[i] = packed_entry;
- 		for (entry = hash[i]; entry; entry = entry->next)
- 			*packed_entry++ = entry->entry;
- 	}
- 
--	/* Sentinel value to indicate the length of the last hash
--	 * bucket */
--
-+	/* Sentinel value to indicate the length of the last hash bucket */
- 	packed_hash[hsize] = packed_entry;
-+
- 	assert(packed_entry - (struct index_entry *)mem == entries);
- 	free(hash);
- 
+Hi,
+
+On Tue, 18 Dec 2007, Andreas Ericsson wrote:
+
+> Johannes Schindelin wrote:
+>
+> > In the alternative, you could just scrap all those default actions, 
+> > showing synopses instead.  For all commands, including "git commit", 
+> > "git log", "git fetch", etc.
+> 
+> Like we do for the git wrapper, you mean? Yes, that would be one 
+> solution, although not a very good one for all commands.
+
+Exactly.  Not a good one.
+
+> It's probably not a bad idea for commands where the primary use is 
+> something else than producing visual output though, such as tag or 
+> branch, but those handle creation/deletion of stuff, so the default 
+> action for them is to list stuff of the kind they operate on. I fail to 
+> see why stash should be any different.
+
+I also fail to see why stash should be any different.  And that's why I 
+expect it to have a default operation, which is -- you guessed it -- 
+"stash the changes!"
+
+If I am not sure what I am about to do, there is -- wonder of wonders -- 
+the "-h" option!  And indeed:
+
+	$ git stash -h
+	Usage: /home/gitte/bin/git-stash [  | save | list | show | apply | 
+		clear | create ]
+
+So what exactly was your point again?
+
+Ciao,
+Dscho
