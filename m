@@ -1,84 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] git show <tag>: show the tagger
-Date: Tue, 18 Dec 2007 13:33:59 -0800 (PST)
-Message-ID: <m38x3rpu0t.fsf@roke.D-201>
-References: <Pine.LNX.4.64.0712181800250.23902@racer.site>
-	<7vfxxzzrv8.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Authentication support for pserver
+Date: Tue, 18 Dec 2007 13:37:19 -0800
+Message-ID: <7vmys7y99s.fsf@gitster.siamese.dyndns.org>
+References: <87wsrhex4c.fsf@cpan.org>
+	<7vd4t9x2lw.fsf@gitster.siamese.dyndns.org> <87mysdepeh.fsf@cpan.org>
+	<7vir31u210.fsf@gitster.siamese.dyndns.org> <877ijhm1b5.fsf@cpan.org>
+	<46a038f90712180141x2f27e6cei5ef53339fd3f90dc@mail.gmail.com>
+	<46a038f90712181238p7529a02bmde21c89956a3f641@mail.gmail.com>
+	<51dd1af80712181310q38255593t989be64799be2e0e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 18 22:34:40 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Martin Langhoff" <martin.langhoff@gmail.com>,
+	=?utf-8?Q?=C3=86var_Ar?= =?utf-8?Q?nfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avar@cpan.org>, git@vger.kernel.org
+To: =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 22:38:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4k55-00087b-4t
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 22:34:27 +0100
+	id 1J4k8V-0001BJ-Cz
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 22:37:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753050AbXLRVeF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 16:34:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753963AbXLRVeE
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 16:34:04 -0500
-Received: from fg-out-1718.google.com ([72.14.220.154]:2155 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753050AbXLRVeB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 16:34:01 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so417387fga.17
-        for <git@vger.kernel.org>; Tue, 18 Dec 2007 13:34:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=cOcsf6MSNlUci4Ac9htudTfQ05wCsN15vp1W6jfdTMw=;
-        b=MA6/BchlagXWqJh2WWliYmJD2LuaXG27Er+eZLFM0V6nN0jkiyKNpBhcbLejHZTAASJE82Fo79RQgZxct/j4yryW9YUDZtlqcJW1RF/iwh390Tey6qCTFM4SDRMrV9ZmVXBiPBKxOxDThFvRJIxpXBpp0JnkRWg6yKJixRCMmvs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=iojnefuHoquVj+PB9UseoJVrx9hFPpXE9qnyYj0TZND8MoMwsFkdTlkx4Xa8xaZ8s1uJcUUAOGgzjcKZFvGLu1/LXY/bf3g96C9clddjsjByDvapTSua9fB+8rtrY+qPSrGHjgPEoDN7qBuL3MZMHjFuRRuQtBf33u1mpWFhr9E=
-Received: by 10.86.26.11 with SMTP id 11mr8121302fgz.72.1198013640255;
-        Tue, 18 Dec 2007 13:34:00 -0800 (PST)
-Received: from roke.D-201 ( [83.8.255.201])
-        by mx.google.com with ESMTPS id 4sm4497090fgg.2007.12.18.13.33.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 18 Dec 2007 13:33:59 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lBILXvTr020123;
-	Tue, 18 Dec 2007 22:33:57 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id lBILXtsH020119;
-	Tue, 18 Dec 2007 22:33:55 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <7vfxxzzrv8.fsf@gitster.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752594AbXLRVhg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Dec 2007 16:37:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752019AbXLRVhg
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 16:37:36 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61236 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751787AbXLRVhf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Dec 2007 16:37:35 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DDD06C8A;
+	Tue, 18 Dec 2007 16:37:28 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 305296C87;
+	Tue, 18 Dec 2007 16:37:23 -0500 (EST)
+In-Reply-To: <51dd1af80712181310q38255593t989be64799be2e0e@mail.gmail.com>
+	(=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason's message of "Tue, 18 Dec
+ 2007 21:10:28
+	+0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68821>
 
-Junio C Hamano <gitster@pobox.com> writes:
+"=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason"  <avarab@gmail.com> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > For commit objects, the Author is shown, so do the equivalent for
-> > tag objects, too.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >
-> > 	I know, it's feature freeze period.  But this is arguably a 
-> > 	usability bug.
-> 
-> I'll wait for people to argue this fixes a usability bug, then.
+>> On this aspect, I see no reason why we wouldn't have the passwords
+>> crypt()ed or SHA1'd. Perl includes crypt() in the default
+>> distribution, so it wouldn't add any dependency.
+>
+> It also includes Digest::SHA in the default distribution as of today:=
+)
+>
+> I could add another option for allowing users to choose their passwor=
+d
+> storage, e.g.:
+>
+> [gitcvs]
+>     password_storage =3D plaintext # or sha1, crypt, ...
 
-IMHO the fact that currently "git show <tag>" _doesn't_ show
-author and date of tag is a (usability) bug.
+I personally feel that selectable password storage format is going
+overboard.  Pick a reasonable one and use it everywhere.
 
-Fortunately "git cat-file -p <tag>" (or "git cat <tag>" with my
-current alias) works, and dos show date in human-readable form.
+Using some form of crypt is a good idea but then we would need a
+separate mode of operation to gitcvs to generate user password.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+	$ gitcvs adduser junio
+        Password: ******
+        Retype password: ******
+	Added user 'junio' to .git/config
+	$ exit
+
+I personally do not care about deluser or change-password subcommands,
+as you can always go directly to .git/config to remove the user and
+recreate anew, but adding them might be nice finishing touches.
+
+	$ gitcvs password junio
+        New password: ******
+        Retype password: ******
+	Changed password for user 'junio' in .git/config       =20
+	$ gitcvs deluser junio
+        Are you sure you want to remove user 'junio' [y/N]? Y
+	Removed user 'junio' from .git/config
+	$ exit
