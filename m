@@ -1,7 +1,7 @@
-From: "=?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?=" <andre.goddard@gmail.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: git-stash: RFC: Adopt the default behavior to other commands
-Date: Tue, 18 Dec 2007 21:32:36 -0200
-Message-ID: <b8bf37780712181532q5d05615bh78c99c80a87c2169@mail.gmail.com>
+Date: Wed, 19 Dec 2007 12:41:24 +1300
+Message-ID: <46a038f90712181541x781c3ebcq6d85b88dbf5cbe23@mail.gmail.com>
 References: <20071217110322.GH14889@albany.tokkee.org>
 	 <506C6191-655D-46AE-A5C2-1335A9044F44@lrde.epita.fr>
 	 <7vk5nd53lp.fsf@gitster.siamese.dyndns.org>
@@ -13,88 +13,65 @@ Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: "=?ISO-8859-1?Q?J=F6rg_Sommer?=" <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Wed Dec 19 00:33:04 2007
+X-From: git-owner@vger.kernel.org Wed Dec 19 00:41:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4lvp-0002TO-Bn
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 00:33:01 +0100
+	id 1J4m4L-0005YM-6O
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 00:41:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754268AbXLRXcj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Dec 2007 18:32:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754223AbXLRXcj
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 18:32:39 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:2048 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753800AbXLRXci convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Dec 2007 18:32:38 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1486585nfb.21
-        for <git@vger.kernel.org>; Tue, 18 Dec 2007 15:32:36 -0800 (PST)
+	id S1754381AbXLRXl0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Dec 2007 18:41:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754270AbXLRXl0
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 18:41:26 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:48557 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753880AbXLRXlZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Dec 2007 18:41:25 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so206822ugc.16
+        for <git@vger.kernel.org>; Tue, 18 Dec 2007 15:41:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Qgw1V3jbjL3NSSO2Auf4bCb9I23XaazmFHtstAOfRfM=;
-        b=G/YaJcN6yKYTQ+9oH0ZwoISx+Iac3+iOlmCOuoHNBPmna6zVD0YZ6ceXcgSKyWBCWQggwm4PJ7JCo31l5J8jv2QN+no2F8AZSxa5t7PiM+0PK1cjdCZHWFPdKJzteJDzSrPRpn6JUBaU5+wbJBaNA6zKwX5j6T43pvG5SYaeB9M=
+        bh=XifJC8ydN/hO6gZVZimUFP8esu7Kk6b/zrFC0+FKuRk=;
+        b=YCX9Q5MnYQ1RXpucVYmzMyQYNTORvzyr6NMVz7mJJCyqRxrHUzTdGroAYw+qPjzuq8HxhNa6bTjslZ3NaCoTJ8sJNRgrkFWiZK5bcOU5Xq1OCZBi+lqZPDIrGnfFeBqOCQX0gz0h0AenKvAnmeQWPF/3NrOeYd38Ra3/0qa1E9M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rSlMf+6Bwq8f2Dgx86nX6IUE4HUUgzmN2qrSUF3aZ9DS/ViZrSveIsgSyIzHiKBythR0cqfTEM6cB7qgCIfjGYLkkxi2gyMKHmDeJyA6JIL47rBj+fCHM3SAZxYv2tXBXkdh/bfUcfRp/mHkHSTTWMiKk+uUbB7Ub4cjGVHtqcs=
-Received: by 10.78.137.7 with SMTP id k7mr11284431hud.68.1198020756389;
-        Tue, 18 Dec 2007 15:32:36 -0800 (PST)
-Received: by 10.78.100.6 with HTTP; Tue, 18 Dec 2007 15:32:36 -0800 (PST)
+        b=KRWWp6+QH2ULKQdWnJs5r911DCm5lk9JIbEhhXv7YjBKGjwmjyQONxFPjDngVyAY01ui0zLQwLpMKRi7cc9KQ+5MyDnSUEz+U7z7PPzVZhs/ptvKUwjV92AKmOnj7GaFNkqfeLqt2l8+sqNvi0BCZfjWW4bBtJ7f0AMwLj6v54I=
+Received: by 10.67.116.2 with SMTP id t2mr1450721ugm.62.1198021284372;
+        Tue, 18 Dec 2007 15:41:24 -0800 (PST)
+Received: by 10.66.252.2 with HTTP; Tue, 18 Dec 2007 15:41:24 -0800 (PST)
 In-Reply-To: <20071218154211.GB12549@alea.gnuu.de>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68849>
 
-On Dec 18, 2007 1:42 PM, J=F6rg Sommer <joerg@alea.gnuu.de> wrote:
-> Hi,
->
-> Junio C Hamano schrieb am Mon 17. Dec, 16:31 (-0800):
-> > Benoit Sigoure <tsuna@lrde.epita.fr> writes:
-> >
-> > >> Benoit Sigoure <tsuna@lrde.epita.fr> writes:
-> > >>
-> > >>> ...  The current behavior of git stash is very
-> > >>> dangerous ...
-> > > ...
-> > >> This is a plain FUD, isn't it?  The first Oops should not happen=
- these
-> > >> days.
-> >
-> > But the original point by Sebastian hasn't been answered.  He wante=
-d to
-> > make the command list the stash without arguments.
-> >
-> > This was discussed already in the early days of stash and there ind=
-eed
-> > was a suggestion to do so (I think I sided with that), but the user=
-s did
-> > not want it.  IIRC, the argument went like: "when I say 'stash', th=
-at is
-> > because I want a quick and immediate way to stash, and I do not wan=
-t a
-> > list.  If I do not have to have a quick way, I would create a tempo=
-rary
-> > commit on the current branch, or switch to a temporary branch and c=
-ommit
-> > there."
->
-> When it should go quick why don't use an alias. git stash can print t=
-he
-> list and everyone who wants a quick stash can create an alias for thi=
-s.
->
+On Dec 19, 2007 4:42 AM, J=F6rg Sommer <joerg@alea.gnuu.de> wrote:
 > I vote for stash print the list, because I dropped in the pitfall.
->
 
-I got caught by this default too. One vote more!
+I've dropped there myself, and work with a large team where we are
+both fans of stash, and scarred by it. Any newcomer to git that
+"discovers" stash gets hit by it a dozen times, this is completely
+unnecesary.
 
-Regards,
---=20
-[]s,
-Andr=E9 Goddard
+All state-changing commands need parameters or are interactive (as
+it's the case with git-commit). That Johannes & early adopters,
+including me, have gotten used to the unintuitive (and dangerously
+surprising) behaviour of stash is no excuse to inflict it upon actual
+end users. It's way too early for git and the stash command to stick
+to a misfeature in the name of backwards compat. We'll adapt, as we
+have in the past, to an evolving ui.
+
+And if -- in a new repo -- the list is empty, we can just say so:
+Nothing has been stashed yet. Which looks completely different from a
+successful stash 'save' command.
+
+cheers,
+
+
+m
