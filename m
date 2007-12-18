@@ -1,131 +1,73 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Fix segfault in diff-delta.c when FLEX_ARRAY is 1
-Date: Mon, 17 Dec 2007 20:46:55 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712172032090.21557@woody.linux-foundation.org>
-References: <1197941997-11421-1-git-send-email-madcoder@debian.org> <20071218014455.GB14981@artemis.madism.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] provide advance warning of some future pack default changes
+Date: Mon, 17 Dec 2007 21:01:49 -0800
+Message-ID: <7vlk7s38aq.fsf@gitster.siamese.dyndns.org>
+References: <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.999999.0712141744460.8467@xanadu.home>
+	<20071215004230.GF7300@mail.oracle.com>
+	<alpine.LFD.0.999999.0712142114400.8467@xanadu.home>
+	<20071217200920.GB19816@mail.oracle.com>
+	<alpine.LFD.0.999999.0712171517320.8467@xanadu.home>
+	<7v3au16myj.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.999999.0712171641460.8467@xanadu.home>
+	<7vbq8o4yxc.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.999999.0712172212110.8467@xanadu.home>
+	<46a038f90712171952i4f53876fv55b0e6993d5f4b0a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-2022-JP
-Cc: gitster@pobox.com, spearce@spearce.org, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Tue Dec 18 05:48:00 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Nicolas Pitre" <nico@cam.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Joel Becker" <Joel.Becker@oracle.com>,
+	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 06:02:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4UN6-0001u6-H0
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 05:48:00 +0100
+	id 1J4UbD-000580-0B
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 06:02:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754181AbXLRErh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 23:47:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753402AbXLRErh
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 23:47:37 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:42669 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751838AbXLRErg (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Dec 2007 23:47:36 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBI4kudM020538
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 17 Dec 2007 20:46:57 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBI4ktfC019458;
-	Mon, 17 Dec 2007 20:46:56 -0800
-In-Reply-To: <20071218014455.GB14981@artemis.madism.org>
-X-Spam-Status: No, hits=-4.712 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1750932AbXLRFCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 00:02:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbXLRFCM
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 00:02:12 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45705 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750750AbXLRFCL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 00:02:11 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id BB97943BF;
+	Tue, 18 Dec 2007 00:02:03 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E82C943BE;
+	Tue, 18 Dec 2007 00:01:55 -0500 (EST)
+In-Reply-To: <46a038f90712171952i4f53876fv55b0e6993d5f4b0a@mail.gmail.com>
+	(Martin Langhoff's message of "Tue, 18 Dec 2007 16:52:22 +1300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68698>
 
+"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
+> If cvs 1.11 doesn't talk with 1.12 I'll say there are nuts - minor
+> revisions should interoperate with end users not even thinking about
+> it. But 1.5.5 has in its changelog lots of deprecations and interop
+> changes.
+>
+> It's not good communication to label it 1.5.5.
 
-On Tue, 18 Dec 2007, Pierre Habouzit wrote:
-> 
->   I wonder if we could teach sparse to prevent us from using pointer
-> arithmetics on some types… because I obviously didn't read all the git
-> code, and I wouldn't be surprised an instance of this still remains
-> somehwere.
+There indeed are handful scheduled removals.  I do not mind declaring
+that 1.6.0 comes after 1.5.4, or just relabel the removal schedule for
+1.6.0 and keep the scheduled change on hold a bit longer.
 
-This should do it.
-
-What this does is:
- - make flex structures not have a size at all (so "sizeof()" will fail)
- - add warnings for trying to add or subtract unsized pointers
-
-so now you can try it on git with
-
-	make CC=cgcc
-
-and while it finds a fair number of "sizeof(..)" things and complains 
-about them, the only invalid pointer arithmetic it finds is the 
-
-	mem = index + 1;
-
-line in diff-delta.c.
-
-Whether it is worth fixing all the "sizeof()" calls too, I dunno. They 
-result in a slight waste of memory (ie we allocate too much memory), but 
-I guess they should be harmless.
-
-However, one indication that there may still be something wrong is that if 
-you re-make git with FLEX_ARRAY set to some big insane value (say, 1234), 
-then git will still fail the test-suite. So maybe there's a "sizeof()" 
-that isn't just used for allocation sizes. I didn't check them all, 
-there's something like 44 complaints like
-
-	builtin-fetch.c:306:21: error: cannot size expression
-
-from sparse with this patch.
-
-		Linus
-
----
- evaluate.c |    8 ++++++++
- symbol.c   |    2 ++
- 2 files changed, 10 insertions(+), 0 deletions(-)
-
-diff --git a/evaluate.c b/evaluate.c
-index 54fcd3f..cd816a8 100644
---- a/evaluate.c
-+++ b/evaluate.c
-@@ -576,6 +576,10 @@ static struct symbol *evaluate_ptr_add(struct expression *expr, struct symbol *i
- 		expression_error(expr, "arithmetics on pointers to functions");
- 		return NULL;
- 	}
-+	if (base->bit_size & 7) {
-+		expression_error(expr, "arithmetic on unsized pointers");
-+		return NULL;
-+	}
- 
- 	/* Get the size of whatever the pointer points to */
- 	multiply = base->bit_size >> 3;
-@@ -820,6 +824,10 @@ static struct symbol *evaluate_ptr_sub(struct expression *expr)
- 		expression_error(expr, "subtraction of functions? Share your drugs");
- 		return NULL;
- 	}
-+	if (lbase->bit_size & 7) {
-+		expression_error(expr, "subtracting unsized pointers");
-+		return NULL;
-+	}
- 
- 	expr->ctype = ssize_t_ctype;
- 	if (lbase->bit_size > bits_in_char) {
-diff --git a/symbol.c b/symbol.c
-index 7539817..8b390ac 100644
---- a/symbol.c
-+++ b/symbol.c
-@@ -124,8 +124,10 @@ static void lay_out_struct(struct symbol *sym, struct struct_union_info *info)
- 	 * structure size
- 	 */
- 	if (base_size < 0) {
-+		info->bit_size = -1;
- 		info->align_size = 0;
- 		base_size = 0;
-+		return;
- 	}
- 
- 	align_bit_mask = (sym->ctype.alignment << 3) - 1;
+By the way, I'd appreciate an Ack or comment on the recent pserver
+authentication enhancements in c934dca22ee07cb3ca146a249bdb73ab0f30b2b1
+(Authentication support for pserver); I do not mind merging this in
+1.5.4 as the change is fairly isolated and should not affect people who
+do not use the feature.
