@@ -1,104 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Alex Riesen <raa.lkml@gmail.com>
 Subject: Re: log/show: relative pathnames do not work in rev:path
-Date: Tue, 18 Dec 2007 14:20:25 -0800
-Message-ID: <7vejdjy79y.fsf@gitster.siamese.dyndns.org>
-References: <20071218173321.GB2875@steel.home> <m3d4t3q4e5.fsf@roke.D-201>
-	<20071218204623.GC2875@steel.home>
-	<200712182224.28152.jnareb@gmail.com>
-	<alpine.LFD.0.9999.0712181347140.21557@woody.linux-foundation.org>
+Date: Tue, 18 Dec 2007 23:20:32 +0100
+Message-ID: <20071218222032.GH2875@steel.home>
+References: <20071218173321.GB2875@steel.home> <m3d4t3q4e5.fsf@roke.D-201> <20071218204623.GC2875@steel.home> <200712182224.28152.jnareb@gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Dana How <danahow@gmail.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Dec 18 23:21:16 2007
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 23:21:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4koM-0002My-Jh
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 23:21:15 +0100
+	id 1J4koL-0002My-V8
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 23:21:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755299AbXLRWUs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 17:20:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754754AbXLRWUs
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 17:20:48 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63831 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755282AbXLRWUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 17:20:48 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F96556E2;
-	Tue, 18 Dec 2007 17:20:39 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7987B403E;
-	Tue, 18 Dec 2007 17:20:28 -0500 (EST)
-In-Reply-To: <alpine.LFD.0.9999.0712181347140.21557@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Tue, 18 Dec 2007 13:53:20 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755137AbXLRWUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 17:20:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754754AbXLRWUg
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 17:20:36 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:42119 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752712AbXLRWUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 17:20:35 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+a72E=
+Received: from tigra.home (Fc89a.f.strato-dslnet.de [195.4.200.154])
+	by post.webmailer.de (klopstock mo39) (RZmta 14.6)
+	with ESMTP id q03c6bjBIGiqXy ; Tue, 18 Dec 2007 23:20:33 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id D8CCC277AE;
+	Tue, 18 Dec 2007 23:20:32 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id B034256D22; Tue, 18 Dec 2007 23:20:32 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <200712182224.28152.jnareb@gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68832>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Jakub Narebski, Tue, Dec 18, 2007 22:24:26 +0100:
+> On Tue, 18 Dec 2007, Alex Riesen wrote:
+> > I think that we have parsing of the blob locators at the wrong level:
+> > so that git-show, git-log and git-diff can handle its pathnames as
+> > they handle path filters (relative to cwd),
+> 
+> What cwd? <path> in <tree-ish>:<path> syntax is "relative" to <tree-ish>.
 
-> On Tue, 18 Dec 2007, Jakub Narebski wrote:
->> 
->> What cwd? <path> in <tree-ish>:<path> syntax is "relative" to <tree-ish>.
->> IMHO "<tree-ish>:<path>" should be considered (and is considered) as
->> one object: current working directory doesn't matter at all there,
->> contrary to "<tree-ish> -- <pathspec>" where it is natural that <pathspec>
->> is relative to current working directory.
->
-> Indeed.
->
-> The <treeish>:<path> syntax *is* relative, but it's relative to the exact 
-> *treeish* that is given. It has nothing what-so-ever to do with the 
-> current working directory, since the user has explicitly given an exact 
-> tree object, and trying to fake that out would be actively wrong.
->
-> That said, I can kind of understand the wish for something like this, and 
-> I suspect that we could make the "commit->tree" translation take the 
-> current path into account. In other words, maybe we should have something 
-> like this:
->
-> 	/*
-> 	 * This sequence currently works
-> 	 */
-> 	[torvalds@woody git]$ git rev-parse HEAD
-> 	f9c5a80cdf2265f2df7712fad9f1fb7ef68b4768
->
-> 	[torvalds@woody git]$ git rev-parse HEAD^{tree}
-> 	051fb0c0dff4371f97f8ad9407f9f1fd335b1682
->
-> 	[torvalds@woody git]$ git rev-parse HEAD^{tree}:t
-> 	49d8bcd7a2df5c17193b1d002c4a8489d4fa990c
->
-> 	/*
-> 	 * .. but this would be new
-> 	 */
-> 	[torvalds@woody git]$ cd t
-> 	[torvalds@woody t]$ git rev-parse HEAD^{tree}
-> 	49d8bcd7a2df5c17193b1d002c4a8489d4fa990c
->
-> where the magic is *not* done by any "SHA1 path lookup" at all, but is 
-> simply done by the commit->tree lookup. At least at that point it would 
-> make logical sense (although it would probably be quite painful to 
-> implement).
+But the act of running "git-show <tree-ish>:<path>" does have a
+working directory relative to the project root. And usually the
+relative directory makes a lot of sense in git-show commands.
 
-It is not just painful to implement.
+> What should git do in your proposal when we are on master branch in
+> Documentation subdirectory, and want to check TODO file in todo branch?
+> "git show todo:TODO" is most natural IMHO.
 
-Although I can buy that purely from the user (read: people who do not
-know how the world works) experience point of view, you have to be extra
-careful if you do this.  There are existing codepaths that take a string
-that names a treeish from the end user, appends "^{tree}" to that
-string, and passes the result to get_sha1() to obtain a tree object name
-they want to operate on (the alternative is parse_tree_indirect() but it
-forces them to go through the object layer).  You will need to update
-these callers to keep them working from subdirectories.
+Yes, and that's why I NAKed the patches in the mail to Dana. I just
+hope the problem gets some attention. Maybe I even get something out
+of it, maybe not. It is not that hard to keep the patches in my tree.
+
+> Note that for true <tree> as <tree-ish> you just don't know where
+> in the working area directory hierarchy <tree> can be. This means you
+> do't know relation of <tree> and <path> in <tree>:<path> to cwd.
+
+I understand. But... How often do you think people use git show with a
+tree which was not pointed by a commit?
+
+> > and git-cat-file, 
+> > git-diff-tree, git-rev-list, etc can handle theirs always relative to
+> > the project root.
+> 
+> Not "relative to project root". Relative to tree-ish used on right hand
+> side in <tree-ish>:<path> extended SHA-1 syntax. It is usually project
+> root, because when you specify <commit> or <tag> as <tree-ish> it refers
+> to top/root directory of a project.
+
+I know. My problem: it is also awkward. git-show :test-l<Tab>ib.sh just
+does not do what I expect. Nor does git cat-file HEAD:test-l<Tab>ib.sh.
+And git cat-file HEAD:t/test-l<Tab> does not work at all. And this is
+very simple example. Normally the pathnames are about 100 characters
+long.
+
+You know, it maybe as much correct as you wish, but is not very
+usable (and no, I can't use the contributed completion. For lots of
+reasons).
+
+> > I actually do not see any problem for git-show (being porcelain-level
+> > program) to treat *each and every* path anywhere relatively to the
+> > current directory. It is just more comfortable.
+> 
+> This breaks backward compatibility, hard. And IMHO breaks layers.
+
+Maybe they should be broken in porcelain...
+
+> But if (big if) it was to be implemented, default behavior should be
+> unchanged, and relative to the cwd (layers!) should use new syntax,
+> for example
+> 
+>      $ cd $GIT/t
+>      $ git show 570f32266:t/test-lib.sh    # works
+>      $ git show 570f32266:test-lib.sh      # should not work
+
+Well... Frankly, I suggest changing this for porcelain-level
+commands (show and diff) and leave it as it is for plumbing.
+
+>      $ git show 570f32266:./test-lib.sh    # should work
+
+Definitely. I even implemented a patch to allow just this, but scraped
+it: it looked a bit small and the syntax is not obvious to the user.
+Maybe that is what I end up with, though.
+
+>      $ git show 570f32266:/t/test-lib.sh   # should perhaps work
+> Currently ":/<text>" (but not "<ref>:/<text>") is taken; see
+
+Yes, and it becomes more and more an obstacle. With just one user
+standing, AFAICS (/me considers Dscho's assassination for moment...
+Nah... Maybe poison?)
