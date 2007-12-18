@@ -1,75 +1,82 @@
 From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git-stash: RFC: Adopt the default behavior to other commands
-Date: Wed, 19 Dec 2007 12:41:24 +1300
-Message-ID: <46a038f90712181541x781c3ebcq6d85b88dbf5cbe23@mail.gmail.com>
-References: <20071217110322.GH14889@albany.tokkee.org>
-	 <506C6191-655D-46AE-A5C2-1335A9044F44@lrde.epita.fr>
-	 <7vk5nd53lp.fsf@gitster.siamese.dyndns.org>
-	 <57F403E7-AF5B-40F1-AE9D-8EA036675A67@lrde.epita.fr>
-	 <7vfxy04ze7.fsf@gitster.siamese.dyndns.org>
-	 <20071218154211.GB12549@alea.gnuu.de>
+Subject: Re: git with custom diff for commits
+Date: Wed, 19 Dec 2007 12:52:58 +1300
+Message-ID: <46a038f90712181552i46ecb1aof55c7cdfe0f5c079@mail.gmail.com>
+References: <60687a7d0712171456p14328817y5aa229f0df23c02f@mail.gmail.com>
+	 <7vbq8o6gxw.fsf@gitster.siamese.dyndns.org>
+	 <vpqk5ncz8fn.fsf@bauges.imag.fr>
+	 <7vodco1him.fsf@gitster.siamese.dyndns.org>
+	 <000001c841b5$89fcef00$762a14ac@na.acco.com>
+	 <7vzlw7ybx7.fsf@gitster.siamese.dyndns.org>
+	 <000101c841b7$5f1d1060$762a14ac@na.acco.com>
+	 <vpqsl1zfz8r.fsf@bauges.imag.fr>
+	 <000d01c841c5$386f7350$762a14ac@na.acco.com>
+	 <Pine.LNX.4.64.0712182246230.23902@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?J=F6rg_Sommer?=" <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Wed Dec 19 00:41:53 2007
+Content-Transfer-Encoding: 7bit
+Cc: "Gerald Gutierrez" <ggmlfs@gmail.com>,
+	"Matthieu Moy" <Matthieu.Moy@imag.fr>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Dec 19 00:53:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4m4L-0005YM-6O
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 00:41:49 +0100
+	id 1J4mFa-0000rK-38
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 00:53:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754381AbXLRXl0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Dec 2007 18:41:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754270AbXLRXl0
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 18:41:26 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:48557 "EHLO
+	id S1754114AbXLRXxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 18:53:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754051AbXLRXxA
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 18:53:00 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:63901 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753880AbXLRXlZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Dec 2007 18:41:25 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so206822ugc.16
-        for <git@vger.kernel.org>; Tue, 18 Dec 2007 15:41:24 -0800 (PST)
+	with ESMTP id S1753527AbXLRXw7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 18:52:59 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so208427ugc.16
+        for <git@vger.kernel.org>; Tue, 18 Dec 2007 15:52:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=XifJC8ydN/hO6gZVZimUFP8esu7Kk6b/zrFC0+FKuRk=;
-        b=YCX9Q5MnYQ1RXpucVYmzMyQYNTORvzyr6NMVz7mJJCyqRxrHUzTdGroAYw+qPjzuq8HxhNa6bTjslZ3NaCoTJ8sJNRgrkFWiZK5bcOU5Xq1OCZBi+lqZPDIrGnfFeBqOCQX0gz0h0AenKvAnmeQWPF/3NrOeYd38Ra3/0qa1E9M=
+        bh=qNotBc2mIwPxjBBBeHBu57Zc/KCTEmLJGdM2xlV5k1E=;
+        b=QkmRs4Yjk/01VhrUHzDZ4+YvIXzl306cF7jTO9qhYSvBs9dTY7tB9UKJlMgyJ0ggIqs5sDQ15R4GOlAY6ICTMGgXBtY2cfFH5Y3W8hGthNAVdS+itGy1T8qorll6Q6FaiS7qS1iHts+tKIJkJFdRQZcRZl6Lc7DqvaL9rlKeWfA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KRWWp6+QH2ULKQdWnJs5r911DCm5lk9JIbEhhXv7YjBKGjwmjyQONxFPjDngVyAY01ui0zLQwLpMKRi7cc9KQ+5MyDnSUEz+U7z7PPzVZhs/ptvKUwjV92AKmOnj7GaFNkqfeLqt2l8+sqNvi0BCZfjWW4bBtJ7f0AMwLj6v54I=
-Received: by 10.67.116.2 with SMTP id t2mr1450721ugm.62.1198021284372;
-        Tue, 18 Dec 2007 15:41:24 -0800 (PST)
-Received: by 10.66.252.2 with HTTP; Tue, 18 Dec 2007 15:41:24 -0800 (PST)
-In-Reply-To: <20071218154211.GB12549@alea.gnuu.de>
+        b=fbZtOhcD+8w6wxkGbjf/dcENqp+p/V4UyfpfDcfrwVC+Xe3ND5ODGehTte9c35/uAdjNfRTZ+4C9vsuObad0LHum9uQ9Hepsmroz3S6H3JyAJpJ4xuN3lwvGS/XjSsLJBDNRQABm9ZBn4pe93kXhaTW7wSBsu5hsFuojjlxCJwQ=
+Received: by 10.66.249.8 with SMTP id w8mr1449520ugh.75.1198021978128;
+        Tue, 18 Dec 2007 15:52:58 -0800 (PST)
+Received: by 10.66.252.2 with HTTP; Tue, 18 Dec 2007 15:52:58 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0712182246230.23902@racer.site>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68850>
 
-On Dec 19, 2007 4:42 AM, J=F6rg Sommer <joerg@alea.gnuu.de> wrote:
-> I vote for stash print the list, because I dropped in the pitfall.
+On Dec 19, 2007 11:48 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Yes.  Changes, as in "take this _file_ instead".  Not "edit this file,
+> remove those lines, add these here, etc.".
 
-I've dropped there myself, and work with a large team where we are
-both fans of stash, and scarred by it. Any newcomer to git that
-"discovers" stash gets hit by it a dozen times, this is completely
-unnecesary.
+Exactly. GIT is a "content tracker" that doesn't care about any
+semantic meaning in your files. Here's the file, git will store it, as
+is. No conversions, not fancy interpretations. Strict, safe and fast.
+(There's a small exception there for DOS-style newlines, which was
+much resisted.)
 
-All state-changing commands need parameters or are interactive (as
-it's the case with git-commit). That Johannes & early adopters,
-including me, have gotten used to the unintuitive (and dangerously
-surprising) behaviour of stash is no excuse to inflict it upon actual
-end users. It's way too early for git and the stash command to stick
-to a misfeature in the name of backwards compat. We'll adapt, as we
-have in the past, to an evolving ui.
+You can add external machinery that is aware of your content semantics
+-- as you've done with calling GNU diff with ignore patterns to decide
+whether to commit or not. But when you tell GIT to commit something,
+there's no guessing or transformation involved.
 
-And if -- in a new repo -- the list is empty, we can just say so:
-Nothing has been stashed yet. Which looks completely different from a
-successful stash 'save' command.
+A lot of what GIT achieves is based on that founding principle. Remove
+it, and we're toast. For starters, the internal machinery is based on
+SHA1 digests that change if you flip a single byte. That's what makes
+git fast and realiable. It's not merely an end-user thing.
 
 cheers,
 
