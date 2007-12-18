@@ -1,109 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix segfault in diff-delta.c when FLEX_ARRAY is 1
-Date: Tue, 18 Dec 2007 01:07:01 -0800
-Message-ID: <7vwsrc1idm.fsf@gitster.siamese.dyndns.org>
-References: <1197941997-11421-1-git-send-email-madcoder@debian.org>
-	<20071218014455.GB14981@artemis.madism.org>
-	<alpine.LFD.0.9999.0712172032090.21557@woody.linux-foundation.org>
-	<alpine.LFD.0.9999.0712172146070.21557@woody.linux-foundation.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH 00/17] Series short description
+Date: Tue, 18 Dec 2007 09:11:00 +0000
+Message-ID: <b0943d9e0712180111l3294e1adj60b5271b9820c60c@mail.gmail.com>
+References: <20071214105238.18066.23281.stgit@krank>
+	 <b0943d9e0712170309n415dc6cs9d1c1f8a9c687bf8@mail.gmail.com>
+	 <20071217224812.GA6342@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>, spearce@spearce.org,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Dec 18 10:07:49 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 10:11:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4YQP-00029C-Nk
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 10:07:42 +0100
+	id 1J4YU4-0003AV-Dr
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 10:11:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751659AbXLRJHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 04:07:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751938AbXLRJHS
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 04:07:18 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55329 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751555AbXLRJHQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 04:07:16 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 455FE4111;
-	Tue, 18 Dec 2007 04:07:08 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 745884110;
-	Tue, 18 Dec 2007 04:07:03 -0500 (EST)
-In-Reply-To: <alpine.LFD.0.9999.0712172146070.21557@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Mon, 17 Dec 2007 22:12:03 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752089AbXLRJLF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Dec 2007 04:11:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752083AbXLRJLF
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 04:11:05 -0500
+Received: from rv-out-0910.google.com ([209.85.198.186]:53717 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751496AbXLRJLB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Dec 2007 04:11:01 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so2199883rvb.1
+        for <git@vger.kernel.org>; Tue, 18 Dec 2007 01:11:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=s2AMcxbsD4Ph1RVYSIpoefRs1IvhIpI/xeVvgVszm7o=;
+        b=jjbeK8CGQvsGCO6xVdJDiIs0/b8YA9MKhtLqVtHlj462b9oN+bI9X4vxVLJsLYvpvPniJIW9MeGiou5b7gfdl1Zy2QBSB3tONRhsw1kTUFcLQSIDK7KVJaN9+PS3pVh5fgQ0RsQP9gMoCIY1GHaP8G7M7QYT9QkbaX4ioapv7do=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=reOrPrcvz0l5aymezVQuobDZExRo3CGsV7i8NweEQcx3kNuo3CZiO9d+gENmYkkcjksWlbOcDjCdwtPwzvldrYm5dw18f3+iELYu807BZje8K6uYwtvfBvJZaFOEwK9+9WOmefK02y3oAXvGt4ZVSynPfiiE+up+15nIVY4Kr6s=
+Received: by 10.140.158.4 with SMTP id g4mr3495310rve.44.1197969060187;
+        Tue, 18 Dec 2007 01:11:00 -0800 (PST)
+Received: by 10.141.186.5 with HTTP; Tue, 18 Dec 2007 01:11:00 -0800 (PST)
+In-Reply-To: <20071217224812.GA6342@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68712>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
-
-> But there's a few that aren't obviously allocations (this is a list done 
-> with grep and sparse, I didn't look at whether the values used are then 
-> all allocation-related):
+On 17/12/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2007-12-17 11:09:06 +0000, Catalin Marinas wrote:
 >
->  - builtin-blame.c:128     memset(o, 0, sizeof(*o));
+> > On 14/12/2007, David K=E5gedal <davidk@lysator.liu.se> wrote:
+> >
+> > > The following series an emacs interface to stgit patch stacks. It
+> > > shows a buffer with the the output of "stg series" and allows you
+> > > to do some common operations on it, such as push/pop,
+> > > commit/uncommit, edit, rename, repair, and coalesce.
+> >
+> > That's really cool stuff! Thanks.
+>
+> Yes, incredibly useful.
 
-This is harmless and in fact unnecessary clearing, immediately before
-calling free(3).
+Other useful commands would be support for 'patches' and a local
+diff/status (and maybe a menu).
 
->  - diff-delta.c:250        memsize = sizeof(*index)
+> Be careful about merging past the "goto" patch -- I'm pretty sure it
+> breaks when called from a subdirectory, and I don't have time to fix
+> that right now. (It should be a clean fix, though -- just adjust the
+> cwd for precisely those git subprocesses that need it, which is very
+> few. I think.)
 
-I haven't studied this codepath.
+Why not just change the cwd when the command starts and it should be
+safe for all the git subprocesses.
 
->  - object-refs.c:23        size_t size = sizeof(*refs) + count*sizeof(struct object *);
+> If you like, I can advance "safe" to include as many patches as I
+> think you should merge right now.
 
-Overallocation to have at least "count" pointers to "struct object".
+OK, thanks.
 
->  - object-refs.c:61        size_t size = sizeof(*refs) + j*sizeof(struct object *);
-
-Ditto for "j" pointers.
-
->  - attr.c:220              sizeof(*res) +
-
-Overallocation to have at least "num_attr" instances of "struct
-attr_state" (plus name string if needed, which is stored using location
-past state[num_attr]).
-
->  - remote.c:467            memset(ret, 0, sizeof(struct ref) + namelen);
-
-Clearing an arena that was overallocated to have at least namelen
-elements of char[] on the line immediately before this, with matching
-size.  All callers pass namelen = strlen(name) + 1 so we are Ok even
-when FLEX_ARRAY gives no extra space.
-
->  - remote.c:474            memcpy(ret, ref, sizeof(struct ref) + strlen(ref->name) + 1);
-
-Ditto.
-
->  - transport.c:491         memset(ref, 0, sizeof(struct ref));
-
-A line above overallocates to have enough room for strlen(ref_name) plus
-terminating NUL, and after this lines clears the non-flex part, name is
-copied.  So this overclears a bit, but is harmless.
-
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index e9eb795..aa2513e 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -590,7 +590,7 @@ static int merged_entry(struct cache_entry *merge, struct cache_entry *old,
->  		 * a match.
->  		 */
->  		if (same(old, merge)) {
-> -			*merge = *old;
-> +			memcpy(merge, old, offsetof(struct cache_entry, name));
->  		} else {
->  			verify_uptodate(old, o);
->  			invalidate_ce_path(old);
-
-Portability of offsetof() is slightly worrisome, but giving a
-compatibility macro is trivial if this turns out to be problematic for
-some people.
+--=20
+Catalin
