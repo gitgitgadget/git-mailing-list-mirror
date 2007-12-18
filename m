@@ -1,188 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Teach diff machinery to display other prefixes than "a/"
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: [PATCH] Teach diff machinery to display other prefixes than "a/"
  and "b/"
-Date: Tue, 18 Dec 2007 18:56:19 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712181855020.23902@racer.site>
-References: <1197992574-3464-1-git-send-email-pascal@obry.net>
- <4767ED52.9010004@viscovery.net> <4767EE6D.5070509@obry.net>
- <alpine.LFD.0.9999.0712180840060.21557@woody.linux-foundation.org>
- <Pine.LNX.4.64.0712181703560.23902@racer.site> <476809EA.6080608@obry.net>
+Date: Tue, 18 Dec 2007 20:03:28 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <47681980.6050603@obry.net>
+References: <1197992574-3464-1-git-send-email-pascal@obry.net> <4767ED52.9010004@viscovery.net> <4767EE6D.5070509@obry.net> <alpine.LFD.0.9999.0712180840060.21557@woody.linux-foundation.org> <Pine.LNX.4.64.0712181703560.23902@racer.site> <476809EA.6080608@obry.net> <Pine.LNX.4.64.0712181855020.23902@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pascal Obry <pascal@obry.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, Linus Torvalds <torvalds@linux-foundation.org>,
 	Johannes Sixt <j.sixt@viscovery.net>,
 	Pascal Obry <pascal.obry@gmail.com>, git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Dec 18 19:57:18 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 18 20:04:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4hcl-0002Ms-45
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 19:57:03 +0100
+	id 1J4hjS-0005Wg-Sm
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 20:03:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750777AbXLRS4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 13:56:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750711AbXLRS4h
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 13:56:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52260 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750716AbXLRS4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 13:56:36 -0500
-Received: (qmail invoked by alias); 18 Dec 2007 18:56:34 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp055) with SMTP; 18 Dec 2007 19:56:34 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+BvlMWqQKBPp1KjZcPFAiBKTpTrLYQndxrSHwOfz
-	AbxIOorAUVoyub
-X-X-Sender: gene099@racer.site
-In-Reply-To: <476809EA.6080608@obry.net>
-X-Y-GMX-Trusted: 0
+	id S1750788AbXLRTDc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Dec 2007 14:03:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750785AbXLRTDc
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 14:03:32 -0500
+Received: from smtp2a.orange.fr ([80.12.242.139]:23799 "EHLO smtp2a.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750711AbXLRTDb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 14:03:31 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2a12.orange.fr (SMTP Server) with ESMTP id 30A567000093
+	for <git@vger.kernel.org>; Tue, 18 Dec 2007 20:03:30 +0100 (CET)
+Received: from [192.168.0.100] (AVelizy-151-1-60-249.w82-124.abo.wanadoo.fr [82.124.126.249])
+	by mwinf2a12.orange.fr (SMTP Server) with ESMTP id B70B1700008A;
+	Tue, 18 Dec 2007 20:03:29 +0100 (CET)
+X-ME-UUID: 20071218190329749.B70B1700008A@mwinf2a12.orange.fr
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <Pine.LNX.4.64.0712181855020.23902@racer.site>
+X-Enigmail-Version: 0.95.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68793>
 
+Johannes Schindelin a =E9crit :
+> With the new options "--src-prefix <prefix>", "--dst-prefix <prefix>"
+> and "--no-prefix", you can now control the path prefixes of the diff
+> machinery.  These used to by hardwired to "a/" for the source prefix
+> and "b/" for the destination prefix.
+>=20
+> Initial patch by Pascal Obry.  Sane option names suggested by Linus.
+>=20
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-With the new options "--src-prefix <prefix>", "--dst-prefix <prefix>"
-and "--no-prefix", you can now control the path prefixes of the diff
-machinery.  These used to by hardwired to "a/" for the source prefix
-and "b/" for the destination prefix.
+Thanks this looks good to me.
 
-Initial patch by Pascal Obry.  Sane option names suggested by Linus.
+Pascal.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+--=20
 
-	On Tue, 18 Dec 2007, Pascal Obry wrote:
-
-	> Johannes Schindelin a ?crit :
-	> > If this is preferred, please squash this:
-	> 
-	> Work fine for me.
-	> 
-	> We just need a consolidated patch with proper change log.
-
-	How does this grab you?
-
- Documentation/diff-options.txt |    9 +++++++++
- diff.c                         |   33 +++++++++++++++++++++++++--------
- diff.h                         |    1 +
- 3 files changed, 35 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 9ecc1d7..0d3dccc 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -211,5 +211,14 @@ endif::git-format-patch[]
- --no-ext-diff::
- 	Disallow external diff drivers.
- 
-+--src-prefix <prefix>::
-+	Show the given source prefix instead of "a/".
-+
-+--dst-prefix <prefix>::
-+	Show the given destination prefix instead of "b/".
-+
-+--no-prefix::
-+	Do not show any source or destination prefix.
-+
- For more detailed explanation on these common options, see also
- link:diffcore.html[diffcore documentation].
-diff --git a/diff.c b/diff.c
-index e26584c..43f62d8 100644
---- a/diff.c
-+++ b/diff.c
-@@ -290,9 +290,10 @@ static void emit_rewrite_diff(const char *name_a,
- 			      const char *name_b,
- 			      struct diff_filespec *one,
- 			      struct diff_filespec *two,
--			      int color_diff)
-+			      struct diff_options *o)
- {
- 	int lc_a, lc_b;
-+	int color_diff = DIFF_OPT_TST(o, COLOR_DIFF);
- 	const char *name_a_tab, *name_b_tab;
- 	const char *metainfo = diff_get_color(color_diff, DIFF_METAINFO);
- 	const char *fraginfo = diff_get_color(color_diff, DIFF_FRAGINFO);
-@@ -309,9 +310,9 @@ static void emit_rewrite_diff(const char *name_a,
- 	diff_populate_filespec(two, 0);
- 	lc_a = count_lines(one->data, one->size);
- 	lc_b = count_lines(two->data, two->size);
--	printf("%s--- a/%s%s%s\n%s+++ b/%s%s%s\n%s@@ -",
--	       metainfo, name_a, name_a_tab, reset,
--	       metainfo, name_b, name_b_tab, reset, fraginfo);
-+	printf("%s--- %s%s%s%s\n%s+++ %s%s%s%s\n%s@@ -",
-+	       metainfo, o->a_prefix, name_a, name_a_tab, reset,
-+	       metainfo, o->b_prefix, name_b, name_b_tab, reset, fraginfo);
- 	print_line_count(lc_a);
- 	printf(" +");
- 	print_line_count(lc_b);
-@@ -1212,8 +1213,8 @@ static void builtin_diff(const char *name_a,
- 	const char *set = diff_get_color_opt(o, DIFF_METAINFO);
- 	const char *reset = diff_get_color_opt(o, DIFF_RESET);
- 
--	a_one = quote_two("a/", name_a + (*name_a == '/'));
--	b_two = quote_two("b/", name_b + (*name_b == '/'));
-+	a_one = quote_two(o->a_prefix, name_a + (*name_a == '/'));
-+	b_two = quote_two(o->b_prefix, name_b + (*name_b == '/'));
- 	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
- 	lbl[1] = DIFF_FILE_VALID(two) ? b_two : "/dev/null";
- 	printf("%sdiff --git %s %s%s\n", set, a_one, b_two, reset);
-@@ -1242,8 +1243,7 @@ static void builtin_diff(const char *name_a,
- 		if ((one->mode ^ two->mode) & S_IFMT)
- 			goto free_ab_and_return;
- 		if (complete_rewrite) {
--			emit_rewrite_diff(name_a, name_b, one, two,
--					DIFF_OPT_TST(o, COLOR_DIFF));
-+			emit_rewrite_diff(name_a, name_b, one, two, o);
- 			o->found_changes = 1;
- 			goto free_ab_and_return;
- 		}
-@@ -2020,6 +2020,9 @@ void diff_setup(struct diff_options *options)
- 	else
- 		DIFF_OPT_CLR(options, COLOR_DIFF);
- 	options->detect_rename = diff_detect_rename_default;
-+
-+	options->a_prefix = "a/";
-+	options->b_prefix = "b/";
- }
- 
- int diff_setup_done(struct diff_options *options)
-@@ -2291,6 +2294,20 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		else if (40 < options->abbrev)
- 			options->abbrev = 40;
- 	}
-+	else if (!strcmp(arg, "--src-prefix")) {
-+		if (ac < 2)
-+			return error("--src-prefix needs a parameter");
-+		options->a_prefix = arg + 1;
-+		return 2;
-+	}
-+	else if (!strcmp(arg, "--dst-prefix")) {
-+		if (ac < 2)
-+			return error("--dst-prefix needs a parameter");
-+		options->b_prefix = arg + 1;
-+		return 2;
-+	}
-+	else if (!strcmp(arg, "--no-prefix"))
-+		options->a_prefix = options->b_prefix = "";
- 	else
- 		return 0;
- 	return 1;
-diff --git a/diff.h b/diff.h
-index 7e8000a..beccf85 100644
---- a/diff.h
-+++ b/diff.h
-@@ -69,6 +69,7 @@ struct diff_options {
- 	const char *orderfile;
- 	const char *pickaxe;
- 	const char *single_follow;
-+	const char *a_prefix, *b_prefix;
- 	unsigned flags;
- 	int context;
- 	int break_opt;
--- 
-1.5.4.rc0.70.g30f7
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
