@@ -1,110 +1,121 @@
-From: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
-Subject: Re: Question about git-svn import
-Date: Tue, 18 Dec 2007 16:31:59 +0100
-Message-ID: <20071218153159.GA12549@alea.gnuu.de>
-References: <4766AF65.5060706@obry.net> <20071218034836.GA27080@dervierte> <4767724A.9040207@obry.net>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: log/show: relative pathnames do not work in rev:path
+Date: Tue, 18 Dec 2007 14:08:33 -0800
+Message-ID: <56b7f5510712181408g4aee55d2j2a7f0f13bf90323d@mail.gmail.com>
+References: <20071218173321.GB2875@steel.home> <m3d4t3q4e5.fsf@roke.D-201>
+	 <20071218204623.GC2875@steel.home>
+	 <200712182224.28152.jnareb@gmail.com>
+	 <alpine.LFD.0.9999.0712181347140.21557@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="EVF5PPMfhYS0aIcm"
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 18 23:06:13 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jakub Narebski" <jnareb@gmail.com>,
+	"Alex Riesen" <raa.lkml@gmail.com>, git@vger.kernel.org,
+	"Junio C Hamano" <junkio@cox.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	danahow@gmail.com
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Dec 18 23:09:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4kZK-0004xs-Gb
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 23:05:47 +0100
+	id 1J4kcu-0006XM-Le
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 23:09:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756320AbXLRWFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 17:05:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756220AbXLRWFR
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 17:05:17 -0500
-Received: from banki.eumelnet.de ([83.246.114.63]:1293 "EHLO uucp.gnuu.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756159AbXLRWFO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 17:05:14 -0500
-X-Greylist: delayed 1391 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Dec 2007 17:05:14 EST
-Received: by uucp.gnuu.de (Postfix, from userid 10)
-	id 499AE48807A; Tue, 18 Dec 2007 22:42:00 +0100 (CET)
-Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
-	by alea.gnuu.de with esmtp (Exim 4.63)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1J4kAk-0000gI-Vm
-	for git@vger.kernel.org; Tue, 18 Dec 2007 22:40:23 +0100
-Received: from joerg by alea.gnuu.de with local (Exim 4.68)
-	(envelope-from <joerg@alea.gnuu.de>)
-	id 1J4eQK-0003po-8K
-	for git@vger.kernel.org; Tue, 18 Dec 2007 16:32:00 +0100
+	id S1755226AbXLRWIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 17:08:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754891AbXLRWIj
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 17:08:39 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:32097 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755226AbXLRWIh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 17:08:37 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1473886nfb.21
+        for <git@vger.kernel.org>; Tue, 18 Dec 2007 14:08:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=nmAlU2KIsBhHuqWxp4D+ull6QOpiJLx9qjFIpf+cmPw=;
+        b=sFsK5dDRsDReDFTeayWvZ8Qurheyc6Xrac7MIQBHd0+v/ycYKCwjOklLyE9KZK6OJDU06Mlne5B+mi4nNSxo92zfyCayHpJ1U8GF+U2kdUdP7yXSkME9W37kZEY791W6OTj3dWXUyi0j32MIlTnY2FBsCFKHePOdhsHVdnfFnRA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WdDEbVCkLbvWQ3FfBvhZZ3zDyiqYmsgswb2pOoToikX/XvQ39tGq8rMXBe3ONrKNeAtXU6HBGWYB+EscWOHNOvea90yQ4h+rbZ7BMjb7anEAMB/8QvGmrYmjN1h3KwTncjgQkxEnsp+rf4DQa5hrA/1ADaCW1d83RoQ2Ju8NY0s=
+Received: by 10.78.160.4 with SMTP id i4mr7286216hue.35.1198015714057;
+        Tue, 18 Dec 2007 14:08:34 -0800 (PST)
+Received: by 10.78.130.1 with HTTP; Tue, 18 Dec 2007 14:08:33 -0800 (PST)
+In-Reply-To: <alpine.LFD.0.9999.0712181347140.21557@woody.linux-foundation.org>
 Content-Disposition: inline
-In-Reply-To: <4767724A.9040207@obry.net>
-User-Agent: mutt-ng/devel-r804 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68829>
 
+On Dec 18, 2007 1:53 PM, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> On Tue, 18 Dec 2007, Jakub Narebski wrote:
+> >
+> > What cwd? <path> in <tree-ish>:<path> syntax is "relative" to <tree-ish>.
+> > IMHO "<tree-ish>:<path>" should be considered (and is considered) as
+> > one object: current working directory doesn't matter at all there,
+> > contrary to "<tree-ish> -- <pathspec>" where it is natural that <pathspec>
+> > is relative to current working directory.
+>
+> Indeed.
+>
+> The <treeish>:<path> syntax *is* relative, but it's relative to the exact
+> *treeish* that is given. It has nothing what-so-ever to do with the
+> current working directory, since the user has explicitly given an exact
+> tree object, and trying to fake that out would be actively wrong.
 
---EVF5PPMfhYS0aIcm
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think the solution is to use the cwd only when the tree-ish refers
+to a commit.
+If it refers explicitly to a tree (or to a tree through a tag w/o
+going through a commit)
+then you don't make any modification.
 
-Hello Pascal,
+When it *does* refer to a commit,  then for commit:relpath you prefix
+relpath with the suffix of the cwd which is an extension beyond the root
+of the working tree.
 
-Pascal Obry schrieb am Tue 18. Dec, 08:10 (+0100):
-> Steven Walter a =E9crit :
-> > Not sure if this is the best way, but I would recommend cloning into two
-> > repositories, then combining them. =20
->=20
-> I feared that :)
+At the time I thought this through submodules didn't exist.
+Clearly that case needs to be thought through as well.
 
-It's not as complicated as you might think.
+> That said, I can kind of understand the wish for something like this, and
+> I suspect that we could make the "commit->tree" translation take the
+> current path into account. In other words, maybe we should have something
+> like this:
+>
+>         /*
+>          * This sequence currently works
+>          */
+>         [torvalds@woody git]$ git rev-parse HEAD
+>         f9c5a80cdf2265f2df7712fad9f1fb7ef68b4768
+>
+>         [torvalds@woody git]$ git rev-parse HEAD^{tree}
+>         051fb0c0dff4371f97f8ad9407f9f1fd335b1682
+>
+>         [torvalds@woody git]$ git rev-parse HEAD^{tree}:t
+>         49d8bcd7a2df5c17193b1d002c4a8489d4fa990c
+>
+>         /*
+>          * .. but this would be new
+>          */
+>         [torvalds@woody git]$ cd t
+>         [torvalds@woody t]$ git rev-parse HEAD^{tree}
+>         49d8bcd7a2df5c17193b1d002c4a8489d4fa990c
+>
+> where the magic is *not* done by any "SHA1 path lookup" at all, but is
+> simply done by the commit->tree lookup. At least at that point it would
+> make logical sense (although it would probably be quite painful to
+> implement).
 
-> > So you already have the newer
-> > changes with the standard layout.  You would now:
-> >=20
-> >     $ git svn init <repo>
-> >=20
-> > And only fetch the revisions before the layout change.  You could then
-> > combine the two repositories using .git/info/grafts and
-> > git-rewrite-branch.
->=20
-> Hum, looks like something not easy to do (at least for a Git beginner
-> like me) ! Any documentation on this ? Would you mind showing this on
-> the example script I sent ?
+I must be missing something.  The old patch I submitted did this.
+Its defect was that it did NOT make the cwd insertion conditional
+on whether the tree-ish involved a commit or not (a test which also
+_seems_ doable,  but I don't think I finished it & sent it in).
 
-I had the same problem. We changed the structure of our SVN repository
-=66rom /trunk/pkg to /pkg/trunk and git-svn couldn't deal with this.
-
-I used the script posted in
-http://lists.alioth.debian.org/pipermail/pkg-jed-devel/2007-December/001719=
-=2Ehtml
-to do the switch.
-
-Some suggestions:
-1. Import both parts into one git repo into their own branches. (use
-   --prefix)
-
-2. Use gitk to insprect the history to find bad commits, e.g. empty
-   commits or things git-svn imported wrong.
-
-3. Use git-filter-branch with the --parent-filter to join the branches.
-
-HTH, J=F6rg.
---=20
-Die am Lautesten reden, haben stets am wenigsten zu sagen.
-
---EVF5PPMfhYS0aIcm
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHZ+fvwe0mZwH1VIARAiu7AJwJJy538Wp5bGVJ6J4aCp4SnOU/JACfZ4x4
-wvS5G6TZuOlX+PCq1mjJP+M=
-=lUvu
------END PGP SIGNATURE-----
-
---EVF5PPMfhYS0aIcm--
+Thanks,
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
