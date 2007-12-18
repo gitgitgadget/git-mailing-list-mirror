@@ -1,90 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git with custom diff for commits
-Date: Tue, 18 Dec 2007 01:25:37 -0800
-Message-ID: <7vodco1him.fsf@gitster.siamese.dyndns.org>
-References: <60687a7d0712171456p14328817y5aa229f0df23c02f@mail.gmail.com>
-	<Pine.LNX.4.64.0712172300510.9446@racer.site>
-	<vpq1w9kaphg.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0712172310090.9446@racer.site>
-	<7vbq8o6gxw.fsf@gitster.siamese.dyndns.org>
-	<vpqk5ncz8fn.fsf@bauges.imag.fr>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] HP-UX does not have select.h
+Date: Tue, 18 Dec 2007 10:30:55 +0100
+Message-ID: <4767934F.7070706@op5.se>
+References: <20071217192306.5da48540@pc09.procura.nl> <7v8x3t6nq1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Gerald Gutierrez <ggmlfs@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Dec 18 10:26:20 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 10:31:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4YiO-0007IY-P9
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 10:26:17 +0100
+	id 1J4YnM-0000NW-H6
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 10:31:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752170AbXLRJZx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 04:25:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752134AbXLRJZx
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 04:25:53 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56117 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752165AbXLRJZw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 04:25:52 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 41A54513C;
-	Tue, 18 Dec 2007 04:25:46 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6FDCB513B;
-	Tue, 18 Dec 2007 04:25:40 -0500 (EST)
-In-Reply-To: <vpqk5ncz8fn.fsf@bauges.imag.fr> (Matthieu Moy's message of "Tue,
-	18 Dec 2007 09:57:48 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752110AbXLRJbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 04:31:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751366AbXLRJa7
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 04:30:59 -0500
+Received: from mail.op5.se ([193.201.96.20]:56108 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751098AbXLRJa6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 04:30:58 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id A5ACE1F0803F;
+	Tue, 18 Dec 2007 10:30:57 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id zG346PHignKO; Tue, 18 Dec 2007 10:30:56 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 5EA3C1F08025;
+	Tue, 18 Dec 2007 10:30:56 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <7v8x3t6nq1.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68718>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Junio C Hamano wrote:
+> 
+> Besides, isn't _HPUX_SOURCE a feature-test macro?  Feature test macros
+> are for the application to define, and for the implementation (iow, the
+> header files) to find out what set of names the application wants to
+> see.  You are making the application examine the symbol to see what
+> implementation it is on, which feels backwards to me.
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> ...
->> I wouldn't do filters for something like that.  Can you guarantee that
->> the output from corresopnding smudge filter will load cleanly back to
->> the mysql database?
->
-> The original poster said the date was an SQL comment, so, it should be
-> safe to strip it. That said, precommit hook is probably a good or
-> better solution. At least, if you're not sure you didn't make a
-> mistake writting it, you'll notice either a good commit or no commit
-> at all. With filters, you might well notice you corrupted the commit
-> too late :-(.
 
-Yeah.  After writing the message you are responding to, I realized that
-I already do something like that to manage html/man branches that are
-autogenerated, and it is exactly the same situation as Gerald is in.
+  #if defined(hpux) || defined(_hpux) || defined(__hpux)
 
-The autogeneration of documentation and updating of html/man branches is
-controlled by dodoc.sh script in 'todo' branch, installed as post-update
-hook in my public repository.  It builds the documentation in a checkout
-of 'master' branch, installs the result into another checkout of 'html'
-and 'man' branches, and commits.
+should work ok, although as you say, trying
 
-The twist is in the "install" step (this is different from my suggestion
-of preventing the commit in pre-commit hook).  When the newly generated
-documentation files are different from the previously generated ones
-only by datestamp, they are not installed into 'html'/'man' checkouts,
-and such a change is not included in the commits.
+  #if _POSIX_VERSION < 200112
+  # include <non-POSIX.1-2001 headers>
+  #else
+  # include <sys/select.h>
+  #endif
 
-So my updated suggestion would be:
+would probably be more suitable.
 
- - Keep a checkout of that mysql dump;
-
- - Make the dump procedure to dump to that checkout area;
-
- - Run "git diff HEAD", perhaps with the external diff that filters out
-   the cruft as suggested in the thread, and run "git checkout $path"
-   for paths that had only meaningless changes;
-
- - Run "git commit" if the above step did not nuke all changes.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
