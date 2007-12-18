@@ -1,101 +1,93 @@
-From: "Gerald Gutierrez" <ggmlfs@gmail.com>
-Subject: RE: git with custom diff for commits
-Date: Tue, 18 Dec 2007 13:51:38 -0800
-Message-ID: <000201c841c0$2e5e08e0$762a14ac@na.acco.com>
-References: <60687a7d0712171456p14328817y5aa229f0df23c02f@mail.gmail.com><Pine.LNX.4.64.0712172300510.9446@racer.site><vpq1w9kaphg.fsf@bauges.imag.fr><Pine.LNX.4.64.0712172310090.9446@racer.site><7vbq8o6gxw.fsf@gitster.siamese.dyndns.org><vpqk5ncz8fn.fsf@bauges.imag.fr><7vodco1him.fsf@gitster.siamese.dyndns.org><000001c841b5$89fcef00$762a14ac@na.acco.com> <7vzlw7ybx7.fsf@gitster.siamese.dyndns.org> <000101c841b7$5f1d1060$762a14ac@na.acco.com> <Pine.LNX.4.64.0712182124410.23902@racer.site>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: log/show: relative pathnames do not work in rev:path
+Date: Tue, 18 Dec 2007 13:53:20 -0800 (PST)
+Message-ID: <alpine.LFD.0.9999.0712181347140.21557@woody.linux-foundation.org>
+References: <20071218173321.GB2875@steel.home> <m3d4t3q4e5.fsf@roke.D-201> <20071218204623.GC2875@steel.home> <200712182224.28152.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-Cc: "'Junio C Hamano'" <gitster@pobox.com>,
-	"'Matthieu Moy'" <Matthieu.Moy@imag.fr>, <git@vger.kernel.org>
-To: "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Dec 18 22:51:08 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Dana How <danahow@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 22:54:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4kL0-0007sa-EQ
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 22:50:54 +0100
+	id 1J4kON-0000xv-Jv
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 22:54:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752566AbXLRVub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 16:50:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753522AbXLRVua
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 16:50:30 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:60774 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753022AbXLRVu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 16:50:29 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so4297344wah.23
-        for <git@vger.kernel.org>; Tue, 18 Dec 2007 13:50:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:references:subject:date:message-id:mime-version:content-type:content-transfer-encoding:x-mailer:in-reply-to:thread-index:x-mimeole;
-        bh=rlt9quS/iVEWLRDrtEZRzyM44NZm9SyliWUbAX/vk/4=;
-        b=L1PFflbGzxZgOz3UfTl6flRUgYCwLCwbCLMy1YgjKpogoVb+lGEpfDJi0oPdcR1XytXIgdq0uj3HLrxC82LtzE4yhq/bN7aLRAev8HUyl+nW7NXu6Hvc6J2odmSIFYyrGt69fhZ5MwBtG5t4c4NBQgKuLpXE916fqWSUJGmS0W8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:references:subject:date:message-id:mime-version:content-type:content-transfer-encoding:x-mailer:in-reply-to:thread-index:x-mimeole;
-        b=MoDaRNC9eeGg1VN6czK1QUnkmXdHzpj/F9xrsJDt7hX2ZLnzSiOFtq8jiyZ2lSwyPnDwksXBZc1I/QOk/9vCtxRfIvnQOyYSJSLBDTU3rCghoJq4ztFy9ut6fd08p5kZV+RSGkZK67kMalUuH38hDSpcQ6RbjLOlJKP1vJ5JYFM=
-Received: by 10.115.76.1 with SMTP id d1mr4804302wal.108.1198014628845;
-        Tue, 18 Dec 2007 13:50:28 -0800 (PST)
-Received: from BURGXGUTIERNB ( [63.87.154.251])
-        by mx.google.com with ESMTPS id y78sm38992025pyg.2007.12.18.13.50.25
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 18 Dec 2007 13:50:27 -0800 (PST)
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: <Pine.LNX.4.64.0712182124410.23902@racer.site>
-Thread-Index: AchBvMcYz19UHL/jSbaVtjBZVy1yFgAAHZfg
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
+	id S1752371AbXLRVxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 16:53:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751118AbXLRVxp
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 16:53:45 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:46276 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751767AbXLRVxo (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Dec 2007 16:53:44 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBILrL30008195
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 18 Dec 2007 13:53:22 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBILrKVX023681;
+	Tue, 18 Dec 2007 13:53:20 -0800
+In-Reply-To: <200712182224.28152.jnareb@gmail.com>
+X-Spam-Status: No, hits=-2.414 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_34
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68824>
 
- 
-> -----Original Message-----
-> From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de] 
-> Sent: Tuesday, December 18, 2007 1:27 PM
-> To: Gerald Gutierrez
-> Cc: 'Junio C Hamano'; 'Matthieu Moy'; git@vger.kernel.org
-> Subject: RE: git with custom diff for commits
-> 
-> Hi,
-> 
-> On Tue, 18 Dec 2007, Gerald Gutierrez wrote:
-> 
-> > Yes, but wouldn't it be slick to actually teach git's 
-> internal diff to 
-> > do things like GNU diff can, like the ignore option -I, case 
-> > insensitivity, etc. I thought that's what the external diff 
-> capability 
-> > is for, but it is not so.
-> 
-> I disagree.  Your statement is misleading when you say you 
-> want the internal diff to do things like GNU diff can.
-> 
-> What you want to do _in fact_ is not only modify the diff 
-> _output_, but the commit _input_.
-> 
-> And I am not so keen on such filters.  If I do not want to 
-> commit,  I do not change it to begin with.  Yes, your 
-> mysqldump is a special case here.  
-> But it is special anyway, as it is not source code.
 
-I don't understand how it is a benefit to have "git commit" and "git diff"
-do different diff functions. It confuses me. A scenario: I keep doing git
-diff's and it says there is no difference, but then git commit keeps telling
-me there is.
 
-While I understand it was built for the kernel and everybody likes the plain
-text format, it is not a stretch of the imagination to have files that are
-semantically identical but have byte-wise differences. OpenDocument files,
-image files, XML, etc. Cases can be made either way that "the same" means
-semantically or byte-wise. It's perfectly fine that the default is
-byte-wise. But, if the user takes the time to build a custom diff, then
-wouldn't it be reasonable to assume that user means for git to do semantic
-comparisons for diff, commit and other git functions, even if there are
-inconsequential byte-wise differences in the file itself?
+On Tue, 18 Dec 2007, Jakub Narebski wrote:
+> 
+> What cwd? <path> in <tree-ish>:<path> syntax is "relative" to <tree-ish>.
+> IMHO "<tree-ish>:<path>" should be considered (and is considered) as
+> one object: current working directory doesn't matter at all there,
+> contrary to "<tree-ish> -- <pathspec>" where it is natural that <pathspec>
+> is relative to current working directory.
 
-Gerald.
+Indeed.
+
+The <treeish>:<path> syntax *is* relative, but it's relative to the exact 
+*treeish* that is given. It has nothing what-so-ever to do with the 
+current working directory, since the user has explicitly given an exact 
+tree object, and trying to fake that out would be actively wrong.
+
+That said, I can kind of understand the wish for something like this, and 
+I suspect that we could make the "commit->tree" translation take the 
+current path into account. In other words, maybe we should have something 
+like this:
+
+	/*
+	 * This sequence currently works
+	 */
+	[torvalds@woody git]$ git rev-parse HEAD
+	f9c5a80cdf2265f2df7712fad9f1fb7ef68b4768
+
+	[torvalds@woody git]$ git rev-parse HEAD^{tree}
+	051fb0c0dff4371f97f8ad9407f9f1fd335b1682
+
+	[torvalds@woody git]$ git rev-parse HEAD^{tree}:t
+	49d8bcd7a2df5c17193b1d002c4a8489d4fa990c
+
+	/*
+	 * .. but this would be new
+	 */
+	[torvalds@woody git]$ cd t
+	[torvalds@woody t]$ git rev-parse HEAD^{tree}
+	49d8bcd7a2df5c17193b1d002c4a8489d4fa990c
+
+where the magic is *not* done by any "SHA1 path lookup" at all, but is 
+simply done by the commit->tree lookup. At least at that point it would 
+make logical sense (although it would probably be quite painful to 
+implement).
+
+			Linus
