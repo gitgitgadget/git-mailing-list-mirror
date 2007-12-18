@@ -1,78 +1,128 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Teach diff machinery to display other prefixes than "a/" and "b/"
-Date: Tue, 18 Dec 2007 18:02:43 +0100
-Message-ID: <vpqprx4uea4.fsf@bauges.imag.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add format-patch option --no-name-prefix.
+Date: Tue, 18 Dec 2007 17:06:07 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712181703560.23902@racer.site>
 References: <1197992574-3464-1-git-send-email-pascal@obry.net>
-	<Pine.LNX.4.64.0712181619550.23902@racer.site>
-	<4767F935.8060207@obry.net>
+ <4767ED52.9010004@viscovery.net> <4767EE6D.5070509@obry.net>
+ <alpine.LFD.0.9999.0712180840060.21557@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Pascal Obry <pascal@obry.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
 	Pascal Obry <pascal.obry@gmail.com>, git@vger.kernel.org
-To: Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Tue Dec 18 18:03:22 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Dec 18 18:07:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4fqf-0001pd-Jo
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 18:03:18 +0100
+	id 1J4fu6-0003Jy-6k
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 18:06:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756139AbXLRRCz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Dec 2007 12:02:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753310AbXLRRCz
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 12:02:55 -0500
-Received: from harmonie.imag.fr ([147.171.130.40]:53689 "EHLO harmonie.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752099AbXLRRCy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 12:02:54 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id lBIH2hDp029457;
-	Tue, 18 Dec 2007 18:02:44 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1J4fq7-0008Tf-SA; Tue, 18 Dec 2007 18:02:43 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1J4fq7-0007i9-Pe; Tue, 18 Dec 2007 18:02:43 +0100
-In-Reply-To: <4767F935.8060207@obry.net> (Pascal Obry's message of "Tue\, 18 Dec 2007 17\:45\:41 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Tue, 18 Dec 2007 18:02:44 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1757726AbXLRRG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 12:06:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757892AbXLRRG0
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 12:06:26 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45574 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757180AbXLRRGZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 12:06:25 -0500
+Received: (qmail invoked by alias); 18 Dec 2007 17:06:24 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp050) with SMTP; 18 Dec 2007 18:06:24 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/u4wlxL4nuj4qsPlYYVR79R0TQyzY0uIRlxthx5z
+	ogI8taoUSBHEZp
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.0.9999.0712180840060.21557@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68784>
 
-Pascal Obry <pascal@obry.net> writes:
+Hi,
 
-> Johannes Schindelin a =E9crit :
->> With the new option "--prefix=3D<prefix1>[:<prefix2>]" you can chang=
-e
->> the shown prefix, or suppress it (by specifying the empty string).
->
-> Why not ? But do you have a motivation for this change ? I mean why
-> would you want to use a completely different prefix ?
+On Tue, 18 Dec 2007, Linus Torvalds wrote:
 
-It can make sense when you send the patch to someone who might not
-know the context in which you wrote the patch, and who's not using
-git. Then
+> But I obviously think the version by Dscho is better (exactly because it's 
+> *not* enough to just clear the name prefix entirely), although I think 
+> that one is broken too - using ':' to separate the prefixes is *not* 
+> acceptable, since ':' is very possibly part of the prefix.
+> 
+> So I think you'd need separate arguments for the from/to prefixes, and not 
+> try to shoehorn it into one argument. With possibly some simple form to 
+> say "no prefix". So maybe something like
+> 
+>   --src-prefix=<string>		// default "a/"
+>   --dst-prefix=<string>		// default "b/"
+>   --no-prefix			// shorthand for --src-prefix="" --dst-prefix=""
+> 
+> would work for everybody?
 
---- your-version/foo.c
-+++ my-version/foo.c
+If this is preferred, please squash this:
 
-can be more expressive than a/ and b/. Some people like to have orig/
-and mod/ also.
+-- snipsnap --
 
-I can live without --prefix=3D... option, but doing it general at once
-is a good idea, since adding this backward-compatibly on top of your
-patch would mean having several redundant options.
+ Documentation/diff-options.txt |   11 ++++++++---
+ diff.c                         |   24 ++++++++++++++----------
+ 2 files changed, 22 insertions(+), 13 deletions(-)
 
---=20
-Matthieu
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 672a2d0..0d3dccc 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -211,9 +211,14 @@ endif::git-format-patch[]
+ --no-ext-diff::
+ 	Disallow external diff drivers.
+ 
+---prefix=<prefix1>[:<prefix2>]::
+-	Show the given path prefixes instead of "a/" and "b/".  Leave
+-	it empty to show no prefix at all.
++--src-prefix <prefix>::
++	Show the given source prefix instead of "a/".
++
++--dst-prefix <prefix>::
++	Show the given destination prefix instead of "b/".
++
++--no-prefix::
++	Do not show any source or destination prefix.
+ 
+ For more detailed explanation on these common options, see also
+ link:diffcore.html[diffcore documentation].
+diff --git a/diff.c b/diff.c
+index 095bbb5..9bc5fea 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2317,16 +2317,20 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		else if (40 < options->abbrev)
+ 			options->abbrev = 40;
+ 	}
+-	else if (!strcmp(arg, "--prefix=")) {
+-		char *colon = strchr(arg + 9, ':');
+-		options->a_prefix = arg + 9;
+-		if (colon) {
+-			*colon = '\0';
+-			options->b_prefix = colon + 1;
+-		}
+-		else
+-			options->b_prefix = options->a_prefix;
+-	}
++	else if (!strcmp(arg, "--src-prefix")) {
++		if (ac < 2)
++			return error("--src-prefix needs a parameter");
++		options->a_prefix = arg + 1;
++		return 2;
++	}
++	else if (!strcmp(arg, "--dst-prefix")) {
++		if (ac < 2)
++			return error("--dst-prefix needs a parameter");
++		options->b_prefix = arg + 1;
++		return 2;
++	}
++	else if (!strcmp(arg, "--no-prefix"))
++		options->a_prefix = options->b_prefix = "";
+ 	else
+ 		return 0;
+ 	return 1;
