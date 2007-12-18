@@ -1,121 +1,135 @@
-From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: [PATCH] Fix some documentation typos.
-Date: Tue, 18 Dec 2007 07:07:36 +0100
-Organization: Department of Numerical Simulation, University of Bonn
-Message-ID: <20071218060736.GA24024@ins.uni-bonn.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Fix segfault in diff-delta.c when FLEX_ARRAY is 1
+Date: Mon, 17 Dec 2007 22:12:03 -0800 (PST)
+Message-ID: <alpine.LFD.0.9999.0712172146070.21557@woody.linux-foundation.org>
+References: <1197941997-11421-1-git-send-email-madcoder@debian.org> <20071218014455.GB14981@artemis.madism.org> <alpine.LFD.0.9999.0712172032090.21557@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 18 07:08:38 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, spearce@spearce.org,
+	Git Mailing List <git@vger.kernel.org>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Tue Dec 18 07:19:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4Vcx-0001z4-86
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 07:08:27 +0100
+	id 1J4VnJ-0004U4-UI
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 07:19:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751719AbXLRGH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 01:07:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751573AbXLRGH7
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 01:07:59 -0500
-Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:54973 "EHLO
-	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751168AbXLRGH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 01:07:58 -0500
-Received: from localhost.localdomain (xdsl-87-78-134-196.netcologne.de [87.78.134.196])
-	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id 90878400002A2
-	for <git@vger.kernel.org>; Tue, 18 Dec 2007 07:07:56 +0100 (CET)
-Received: from ralf by localhost.localdomain with local (Exim 4.63)
-	(envelope-from <Ralf.Wildenhues@gmx.de>)
-	id 1J4Vc8-0006Kd-Sx
-	for git@vger.kernel.org; Tue, 18 Dec 2007 07:07:36 +0100
-Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751240AbXLRGSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 01:18:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750836AbXLRGSo
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 01:18:44 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:59516 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751080AbXLRGSn (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Dec 2007 01:18:43 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBI6C3O6023367
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 17 Dec 2007 22:12:04 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBI6C3H3022284;
+	Mon, 17 Dec 2007 22:12:03 -0800
+In-Reply-To: <alpine.LFD.0.9999.0712172032090.21557@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-3.513 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_61,J_CHICKENPOX_63,J_CHICKENPOX_65,J_CHICKENPOX_66,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68702>
 
-Signed-off-by: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+
+
+On Mon, 17 Dec 2007, Linus Torvalds wrote:
+> 
+> However, one indication that there may still be something wrong is that if 
+> you re-make git with FLEX_ARRAY set to some big insane value (say, 1234), 
+> then git will still fail the test-suite. So maybe there's a "sizeof()" 
+> that isn't just used for allocation sizes.
+
+No, that's a different thing. In at least unpack-trees.c (line 593), we do
+
+	..
+	if (same(old, merge)) {
+		*merge = *old;
+	} else {
+	..
+
+and that "merge" is a cache_entry pointer. If we have a non-zero 
+FLEX_ARRAY size, it will cause us to copy the first few bytes of the name 
+too.
+
+That is technically wrong even for FLEX_ARRAY being 1, but you'll never 
+notice, since the names are always at least one byte, and the filenames 
+should basically always be the same. But if we do the same thing for a 
+rename, we'd be screwed.
+
+So we probably should look out for those things too. A quick hack to 
+sparse shows that that was the only such occurrence in the current tree, 
+though.
+
+Anyway, with this patch to current git, it passes all the test-suite with 
+FLEX_ARRAY artificially set to 123, and the only complaints from my 
+hacked-up sparse are about "sizeof()" calls (ie no pointer arithmetic, and 
+no assignments to flex-array-structures).
+
+*Most* of the remaining sizeof() uses, in turn, are allocation-size 
+related, ie passed in to calloc() and friends, and while I didn't check 
+them all, such uses of sizeof() is fine (even if it causes some 
+unnecessarily big allocations).
+
+But there's a few that aren't obviously allocations (this is a list done 
+with grep and sparse, I didn't look at whether the values used are then 
+all allocation-related):
+
+ - builtin-blame.c:128     memset(o, 0, sizeof(*o));
+ - diff-delta.c:250        memsize = sizeof(*index)
+ - object-refs.c:23        size_t size = sizeof(*refs) + count*sizeof(struct object *);
+ - object-refs.c:61        size_t size = sizeof(*refs) + j*sizeof(struct object *);
+ - attr.c:220              sizeof(*res) +
+ - remote.c:467            memset(ret, 0, sizeof(struct ref) + namelen);
+ - remote.c:474            memcpy(ret, ref, sizeof(struct ref) + strlen(ref->name) + 1);
+ - transport.c:491         memset(ref, 0, sizeof(struct ref));
+
+maybe somebody else can check them out (I've not sent out the hacky patch 
+to 'sparse' that found that assignment in unpack-trees.c, but since that 
+one was the only one it found, nobody should care - and it really was 
+pretty hacky).
+
+		Linus
+
 ---
- Documentation/config.txt         |    2 +-
- Documentation/git-help.txt       |    6 +++---
- Documentation/git-rev-list.txt   |    2 +-
- Documentation/git-send-email.txt |    2 +-
- 4 files changed, 6 insertions(+), 6 deletions(-)
+ diff-delta.c   |    2 +-
+ unpack-trees.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ce16fc7..75ed4d3 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -469,7 +469,7 @@ fetch.unpackLimit::
+diff --git a/diff-delta.c b/diff-delta.c
+index 9e440a9..601b49e 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -264,7 +264,7 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 	index->src_size = bufsize;
+ 	index->hash_mask = hmask;
  
- format.numbered::
- 	A boolean which can enable sequence numbers in patch subjects.
--	Seting this option to "auto" will enable it only if there is
-+	Setting this option to "auto" will enable it only if there is
- 	more than one patch.  See --numbered option in
- 	gitlink:git-format-patch[1].
- 
-diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
-index da3f718..c370ee9 100644
---- a/Documentation/git-help.txt
-+++ b/Documentation/git-help.txt
-@@ -21,7 +21,7 @@ printed on the standard output.
- 
- If a git command is named, a manual page for that command is brought
- up. The 'man' program is used by default for this purpose, but this
--can be overriden by other options or configuration variables.
-+can be overridden by other options or configuration variables.
- 
- Note that 'git --help ...' is identical as 'git help ...' because the
- former is internally converted into the latter.
-@@ -30,7 +30,7 @@ OPTIONS
- -------
- -a|--all::
- 	Prints all the available commands on the standard output. This
--	option superseeds any other option.
-+	option supersedes any other option.
- 
- -i|--info::
- 	Use the 'info' program to display the manual page, instead of
-@@ -50,7 +50,7 @@ The web browser can be specified using the configuration variable
- these config variables is set, the 'git-help--browse' helper script
- (called by 'git-help') will pick a suitable default.
- +
--You can explicitly provide a full path to your prefered browser by
-+You can explicitly provide a full path to your preferred browser by
- setting the configuration variable 'browser.<tool>.path'. For example,
- you can configure the absolute path to firefox by setting
- 'browser.firefox.path'. Otherwise, 'git-help--browse' assumes the tool
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 989fbf3..a03f9fe 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -274,7 +274,7 @@ limiting may be applied.
- --quiet::
- 
- 	Don't print anything to standard output.  This form of
--	git-rev-list is primarly meant to allow the caller to
-+	git-rev-list is primarily meant to allow the caller to
- 	test the exit status to see if a range of objects is fully
- 	connected (or not).  It is faster than redirecting stdout
- 	to /dev/null as the output does not have to be formatted.
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 659215a..f0bd285 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -148,7 +148,7 @@ sendemail.identity::
- 	'sendemail.<identity>.<item>' will have higher precedence than
- 	'sendemail.<item>'. This is useful to declare multiple SMTP
- 	identities and to hoist sensitive authentication information
--	out of the repository and into the global configuation file.
-+	out of the repository and into the global configuration file.
- 
- sendemail.aliasesfile::
- 	To avoid typing long email addresses, point this to one or more
--- 
-1.5.3.6.950.g92b7b
+-	mem = index + 1;
++	mem = index->hash;
+ 	packed_hash = mem;
+ 	mem = packed_hash + (hsize+1);
+ 	packed_entry = mem;
+diff --git a/unpack-trees.c b/unpack-trees.c
+index e9eb795..aa2513e 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -590,7 +590,7 @@ static int merged_entry(struct cache_entry *merge, struct cache_entry *old,
+ 		 * a match.
+ 		 */
+ 		if (same(old, merge)) {
+-			*merge = *old;
++			memcpy(merge, old, offsetof(struct cache_entry, name));
+ 		} else {
+ 			verify_uptodate(old, o);
+ 			invalidate_ce_path(old);
