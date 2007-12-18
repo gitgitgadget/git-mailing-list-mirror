@@ -1,98 +1,130 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: [PATCH] Fix test failure due to broken sed on Leopard
-Date: Tue, 18 Dec 2007 16:11:15 +0100
-Message-ID: <1197990675-41698-1-git-send-email-win@wincent.com>
-Cc: gitster@pobox.com, Wincent Colaiuta <win@wincent.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 18 16:13:17 2007
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] fix style of a few comments in diff-delta.c
+Date: Tue, 18 Dec 2007 10:15:39 -0500 (EST)
+Message-ID: <alpine.LFD.0.999999.0712181012350.8467@xanadu.home>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 16:16:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4e8C-0004WX-Rs
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 16:13:17 +0100
+	id 1J4eB2-0005de-Ck
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 16:16:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756417AbXLRPMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 10:12:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755072AbXLRPMx
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 10:12:53 -0500
-Received: from wincent.com ([72.3.236.74]:33290 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752661AbXLRPMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 10:12:52 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBIFBGBN025333;
-	Tue, 18 Dec 2007 09:11:17 -0600
-X-Mailer: git-send-email 1.5.4.rc0.1099.g76fa0-dirty
+	id S1756602AbXLRPPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 10:15:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756559AbXLRPPl
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 10:15:41 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:58386 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756693AbXLRPPk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 10:15:40 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JT9007UG3Q3NU70@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 18 Dec 2007 10:15:40 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+User-Agent: Alpine 0.999999 (LFD 847 2007-12-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68759>
 
-The newly-added common-tail-optimization test fails on Leopard because
-the broken sed implementation bails with a spurious "unterminated
-substitute pattern" error because of the length of one of the
-arguments.
-
-So halve the size of the argument (to 1024 - 1, down from the previous
-2048 - 1) to get the test passing again.
-
-Signed-off-by: Wincent Colaiuta <win@wincent.com>
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- t/t4024-diff-optimize-common.sh |   22 +++++++++++-----------
- 1 files changed, 11 insertions(+), 11 deletions(-)
-
-diff --git a/t/t4024-diff-optimize-common.sh b/t/t4024-diff-optimize-common.sh
-index 20fe87b..bbda816 100755
---- a/t/t4024-diff-optimize-common.sh
-+++ b/t/t4024-diff-optimize-common.sh
-@@ -7,26 +7,26 @@ test_description='common tail optimization'
- z=zzzzzzzz ;# 8
- z="$z$z$z$z$z$z$z$z" ;# 64
- z="$z$z$z$z$z$z$z$z" ;# 512
--z="$z$z$z$z" ;# 2048
--z2047=$(expr "$z" : '.\(.*\)') ; #2047
-+z="$z$z" ;# 1024
-+z1023=$(expr "$z" : '.\(.*\)') ; #1023
+diff --git a/diff-delta.c b/diff-delta.c
+index 601b49e..a4e28df 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -212,11 +212,24 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 		if (hash_count[i] <= HASH_LIMIT)
+ 			continue;
  
- test_expect_success setup '
+-		entries -= hash_count[i] - HASH_LIMIT;
+ 		/* We leave exactly HASH_LIMIT entries in the bucket */
++		entries -= hash_count[i] - HASH_LIMIT;
  
--	echo "a$z2047" >file-a &&
-+	echo "a$z1023" >file-a &&
- 	echo "b" >file-b &&
--	echo "$z2047" >>file-b &&
--	echo "c$z2047" | tr -d "\012" >file-c &&
-+	echo "$z1023" >>file-b &&
-+	echo "c$z1023" | tr -d "\012" >file-c &&
- 	echo "d" >file-d &&
--	echo "$z2047" | tr -d "\012" >>file-d &&
-+	echo "$z1023" | tr -d "\012" >>file-d &&
+ 		entry = hash[i];
+ 		acc = 0;
++
++		/*
++		 * Assume that this loop is gone through exactly
++		 * HASH_LIMIT times and is entered and left with
++		 * acc==0.  So the first statement in the loop
++		 * contributes (hash_count[i]-HASH_LIMIT)*HASH_LIMIT
++		 * to the accumulator, and the inner loop consequently
++		 * is run (hash_count[i]-HASH_LIMIT) times, removing
++		 * one element from the list each time.  Since acc
++		 * balances out to 0 at the final run, the inner loop
++		 * body can't be left with entry==NULL.  So we indeed
++		 * encounter entry==NULL in the outer loop only.
++		 */
+ 		do {
+ 			acc += hash_count[i] - HASH_LIMIT;
+ 			if (acc > 0) {
+@@ -229,30 +242,17 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 			}
+ 			entry = entry->next;
+ 		} while (entry);
+-
+-		/* Assume that this loop is gone through exactly
+-		 * HASH_LIMIT times and is entered and left with
+-		 * acc==0.  So the first statement in the loop
+-		 * contributes (hash_count[i]-HASH_LIMIT)*HASH_LIMIT
+-		 * to the accumulator, and the inner loop consequently
+-		 * is run (hash_count[i]-HASH_LIMIT) times, removing
+-		 * one element from the list each time.  Since acc
+-		 * balances out to 0 at the final run, the inner loop
+-		 * body can't be left with entry==NULL.  So we indeed
+-		 * encounter entry==NULL in the outer loop only.
+-		 */
+ 	}
+ 	free(hash_count);
  
- 	git add file-a file-b file-c file-d &&
+-	/* Now create the packed index in array form rather than
+-	 * linked lists */
+-
++	/*
++	 * Now create the packed index in array form
++	 * rather than linked lists.
++	 */
+ 	memsize = sizeof(*index)
+ 		+ sizeof(*packed_hash) * (hsize+1)
+ 		+ sizeof(*packed_entry) * entries;
+-
+ 	mem = malloc(memsize);
+-
+ 	if (!mem) {
+ 		free(hash);
+ 		return NULL;
+@@ -269,19 +269,19 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 	mem = packed_hash + (hsize+1);
+ 	packed_entry = mem;
  
--	echo "A$z2047" >file-a &&
-+	echo "A$z1023" >file-a &&
- 	echo "B" >file-b &&
--	echo "$z2047" >>file-b &&
--	echo "C$z2047" | tr -d "\012" >file-c &&
-+	echo "$z1023" >>file-b &&
-+	echo "C$z1023" | tr -d "\012" >file-c &&
- 	echo "D" >file-d &&
--	echo "$z2047" | tr -d "\012" >>file-d
-+	echo "$z1023" | tr -d "\012" >>file-d
+-	/* Coalesce all entries belonging to one linked list into
+-	 * consecutive array entries */
+-
+ 	for (i = 0; i < hsize; i++) {
++		/*
++		 * Coalesce all entries belonging to one linked list
++		 * into consecutive array entries.
++		 */
+ 		packed_hash[i] = packed_entry;
+ 		for (entry = hash[i]; entry; entry = entry->next)
+ 			*packed_entry++ = entry->entry;
+ 	}
  
- '
+-	/* Sentinel value to indicate the length of the last hash
+-	 * bucket */
+-
++	/* Sentinel value to indicate the length of the last hash bucket */
+ 	packed_hash[hsize] = packed_entry;
++
+ 	assert(packed_entry - (struct index_entry *)mem == entries);
+ 	free(hash);
  
-@@ -61,7 +61,7 @@ EOF
- 
- test_expect_success 'diff -U0' '
- 
--	git diff -U0 | sed -e "/^index/d" -e "s/$z2047/Z/g" >actual &&
-+	git diff -U0 | sed -e "/^index/d" -e "s/$z1023/Z/g" >actual &&
- 	diff -u expect actual
- 
- '
--- 
-1.5.4.rc0.1099.g76fa0-dirty
