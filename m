@@ -1,69 +1,62 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] Authentication support for pserver
-Date: Wed, 19 Dec 2007 09:39:20 +1300
-Message-ID: <46a038f90712181239g3c6fe69bs822fd689d4628b5@mail.gmail.com>
-References: <87wsrhex4c.fsf@cpan.org>
-	 <7vd4t9x2lw.fsf@gitster.siamese.dyndns.org> <87mysdepeh.fsf@cpan.org>
-	 <7vir31u210.fsf@gitster.siamese.dyndns.org> <877ijhm1b5.fsf@cpan.org>
-	 <46a038f90712180141x2f27e6cei5ef53339fd3f90dc@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git with custom diff for commits
+Date: Tue, 18 Dec 2007 12:40:04 -0800
+Message-ID: <7vzlw7ybx7.fsf@gitster.siamese.dyndns.org>
+References: <60687a7d0712171456p14328817y5aa229f0df23c02f@mail.gmail.com>
+	<Pine.LNX.4.64.0712172300510.9446@racer.site>
+	<vpq1w9kaphg.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0712172310090.9446@racer.site>
+	<7vbq8o6gxw.fsf@gitster.siamese.dyndns.org>
+	<vpqk5ncz8fn.fsf@bauges.imag.fr>
+	<7vodco1him.fsf@gitster.siamese.dyndns.org>
+	<000001c841b5$89fcef00$762a14ac@na.acco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	martyn@catalyst.net.nz, martin@catalyst.net.nz
-To: "=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?=" <avar@cpan.org>
-X-From: git-owner@vger.kernel.org Tue Dec 18 21:39:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "'Junio C Hamano'" <gitster@pobox.com>,
+	"'Matthieu Moy'" <Matthieu.Moy@imag.fr>,
+	"'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
+	<git@vger.kernel.org>
+To: "Gerald Gutierrez" <ggmlfs@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 21:41:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4jE8-0000XW-PF
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 21:39:45 +0100
+	id 1J4jFK-00018o-Pr
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 21:40:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752744AbXLRUjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 15:39:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752768AbXLRUjV
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 15:39:21 -0500
-Received: from an-out-0708.google.com ([209.85.132.247]:2785 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751740AbXLRUjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 15:39:21 -0500
-Received: by an-out-0708.google.com with SMTP id d31so671721and.103
-        for <git@vger.kernel.org>; Tue, 18 Dec 2007 12:39:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=em/fYxsDXP3lNBLlVbA3ixj5pI0Eh+/aio6M9zWB3SE=;
-        b=LdCnEXJu+ELaEi6y71c2tKrE4UVLT0jVtrWWvZ9jd1A+uBEIZL9Ym7IrIdrwVa6WP8TamUXwdeFQ+RjzqBauusb5eJMEEa07/xRfkEhs+g+otUdaaNMadNXG6uiMb064j8UqCIvOAZdTgpTl4SD2YgkgnnM7qcFy9i30gQIkQL8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VctoSEkPkUQzADz8ML0MnAVBMFxMf/PvMGGy6kSFKcRUoNQMZbu/EXlDkoPMX5LYTfxlNfS6zZZO29T6q8OjuoTs3wla1YITVulTMtoiAx/axGDeaZk0dBHTBBHubf3HOO3ZiteQ4CWZrlaZp2MezpZuJk7NmHIHrsy7r6/uzTo=
-Received: by 10.100.205.9 with SMTP id c9mr18500633ang.17.1198010360291;
-        Tue, 18 Dec 2007 12:39:20 -0800 (PST)
-Received: by 10.100.172.20 with HTTP; Tue, 18 Dec 2007 12:39:20 -0800 (PST)
-In-Reply-To: <46a038f90712180141x2f27e6cei5ef53339fd3f90dc@mail.gmail.com>
-Content-Disposition: inline
+	id S1752692AbXLRUke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 15:40:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752284AbXLRUke
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 15:40:34 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58261 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752190AbXLRUkd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 15:40:33 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 1DA88641A;
+	Tue, 18 Dec 2007 15:40:27 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 52D206414;
+	Tue, 18 Dec 2007 15:40:07 -0500 (EST)
+In-Reply-To: <000001c841b5$89fcef00$762a14ac@na.acco.com> (Gerald Gutierrez's
+	message of "Tue, 18 Dec 2007 12:35:28 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68808>
 
-On Dec 18, 2007 10:41 PM, Martin Langhoff <martin.langhoff@gmail.com> wrote:
->  - git/config is very likely to be readable if the site is served via
-> other means, like dumb http protocol, or git+ssh. So even if the
-> password scrambling is mickey-mouse. it might make sense to force the
-> password data to live elsewhere.
+"Gerald Gutierrez" <ggmlfs@gmail.com> writes:
 
-On this aspect, I see no reason why we wouldn't have the passwords
-crypt()ed or SHA1'd. Perl includes crypt() in the default
-distribution, so it wouldn't add any dependency.
+> I ended up doing the following, which sounds similar to the above. Instead
+> of doing mysqldump into data.sql, it goes into data.sql.2 which I compare
+> with the checked in data.sql using "diff -I <timestamp RE>". If there are no
+> differences, I delete data.sql.2. If there are differences, I move
+> data.sql.2 into data.sql and check in. Perhaps not as elegant but certainly
+> works.
 
-The protocol may be ROT13'ing the passwords, but we don't have to
-double-ROT13 them in our storage format ;-)
-
-cheers,
-
-
-martin
+Heh, that's essentially how automated html/man branches are managed ;-)
