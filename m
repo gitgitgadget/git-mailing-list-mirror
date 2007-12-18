@@ -1,83 +1,100 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] provide advance warning of some future pack default changes
-Date: Tue, 18 Dec 2007 14:47:35 +0100
-Message-ID: <200712181447.36228.jnareb@gmail.com>
-References: <20071215004230.GF7300@mail.oracle.com> <20071218111136.GA6266@coredump.intra.peff.net> <Pine.LNX.4.64.0712181204500.23902@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] HP-UX does not have select.h
+Date: Tue, 18 Dec 2007 13:53:00 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712181351270.23902@racer.site>
+References: <20071217192306.5da48540@pc09.procura.nl>
+ <7v8x3t6nq1.fsf@gitster.siamese.dyndns.org> <20071217232259.0b41a3bf@pc09.procura.nl>
+ <7vbq8o370k.fsf@gitster.siamese.dyndns.org> <476781C6.6050507@viscovery.net>
+ <Pine.LNX.4.64.0712181234520.23902@racer.site> <4767C105.8080607@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Nicolas Pitre <nico@cam.org>,
-	Joel Becker <Joel.Becker@oracle.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Dec 18 14:48:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Dec 18 14:54:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4cny-00055k-SW
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 14:48:19 +0100
+	id 1J4ctN-0007Jn-8Z
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 14:53:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755206AbXLRNrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 08:47:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754839AbXLRNrm
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 08:47:42 -0500
-Received: from fk-out-0910.google.com ([209.85.128.189]:32085 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755202AbXLRNrl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 08:47:41 -0500
-Received: by fk-out-0910.google.com with SMTP id z23so2065835fkz.5
-        for <git@vger.kernel.org>; Tue, 18 Dec 2007 05:47:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=iR/IAfQX8PKgyoEA09jI8+vqSN8WpSau2cfoG86wICE=;
-        b=WwaX6i6nUBMxhl68FHN19mAffC1c/x2NZ79z3ttakHhGF6RGDPWX+5dlpon/L1z5mjlpYtGkiD6IzYMHiXSCaonJpfqm0c5mzJMO/b5Acan76hZl5IB5kd3y9xKs/16aXJ0nzGWNcY4F9JJAhhxuCwDnMIQd/npM9pv7qBTQhqM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=uCVcQZ8yprfrqrEYJJTop7e411ye9QLF5ex8nDtsGnY1lPbZ/oHOvnEa6yUW66Y5D46ryIDRhs7hvT7zVN2kz6jKnYoFCXbW6fi3/Xg7Aud3/WEUBESp8em+/0uk5S6SBdu9FComiFFkFLbgkVVaodWlOHmkZKua8dGIXjF7qJw=
-Received: by 10.82.177.3 with SMTP id z3mr7654823bue.35.1197985659900;
-        Tue, 18 Dec 2007 05:47:39 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.255.201])
-        by mx.google.com with ESMTPS id b30sm1772078ika.2007.12.18.05.47.37
-        (version=SSLv3 cipher=OTHER);
-        Tue, 18 Dec 2007 05:47:39 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.64.0712181204500.23902@racer.site>
-Content-Disposition: inline
+	id S1755373AbXLRNxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 08:53:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755353AbXLRNxR
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 08:53:17 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51562 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755200AbXLRNxP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 08:53:15 -0500
+Received: (qmail invoked by alias); 18 Dec 2007 13:53:13 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp055) with SMTP; 18 Dec 2007 14:53:13 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/j7nhU/GHj0meZAyCMGHnoml+wNioylkKZq1b99W
+	1yLqr2GwuM5Meb
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4767C105.8080607@viscovery.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68747>
 
-Johannes Schindelin wrote:
-> On Tue, 18 Dec 2007, Jeff King wrote:
+Hi,
+
+On Tue, 18 Dec 2007, Johannes Sixt wrote:
+
+> Johannes Schindelin schrieb:
+> > 
+> > On Tue, 18 Dec 2007, Johannes Sixt wrote:
+> > 
+> >> Junio C Hamano schrieb:
+> >>> "H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
+> >>>
+> >>>> On Mon, 17 Dec 2007 13:00:22 -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> >>>>
+> >>>>> "H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
+> >>>>>
+> >>>>>> HP-UX does not have select.h, but it offers all select () 
+> >>>>>> functionality. The defines are in <sys/types.h> and <X11/fd.h>
+> >>>>> Will apply the patch as-is for now, only because I do not want 
+> >>>>> major surgery during rc period, but I think is can be improved.
+> >>>> ...
+> >>>>> Besides, isn't _HPUX_SOURCE a feature-test macro?  Feature test 
+> >>>>> macros
+> >>>> That is defined in GNU gcc. I did not pass it with -D...
+> >>> Actually I changed my mind.  I won't be applying this as is.
+> >>>
+> >>> For the selective inclusion of <sys/select.h>, I would prefer it see 
+> >>> it done like the attached.
+> >> Is select() actually needed? The one instance in pager.c can easily 
+> >> be replaced by poll(), which I've already done in my own tree. The 
+> >> other one in http.c is only used as a timer, but I don't know how to 
+> >> get rid of that. Maybe a setitimer()/pause() combo?
+> > 
+> > I'd be cautious about using poll().  AFAIK MacOSX 10.2.8 does not have 
+> > poll(), and IIRC I had problems finding it in MinGW, too.  I know, we 
+> > use it in daemon, upload-archive and upload-pack, but these are not 
+> > typically functions performed by a client, so I would not know if it 
+> > worked on my (now-dead) iBook, or on msysGit.
 > 
->>   - moving dashed forms out of paths
-> 
-> Playing it safe, and waiting with this after announcing it more obviously, 
-> is something that I appreciate.  Too many scripts can break, and I am sure 
-> quite a few of mine will; I simply do not have the time right now to audit 
-> them.
+> So what? If we use poll() already in daemon, upload-archive and 
+> upload-pack, and no MacOSX 10.2.8 user has spoken up with a proposal for 
+> replacement, then yet another use won't raise a complaint, either.
 
-We could do it IMVHO in two (or two an a half :-)) steps:
+daemon, upload-archive and upload-pack are server-side functions, so they 
+are substantially less well tested.
 
-1. Decide where separate exec-path area should be, following FHS. Create
-   it during install. Install helper scripts there, moving it out of PATH.
-   Test those tools which use helper scripts (helper commands), which
-   should be _much_ easier than testing whole git for "moving dashed forms
-   out of path" breakage.
+> And if it were a problem for msysGit, I wouldn't have suggested it ;) 
+> The particular use in pager.c would be inside #ifndef __MINGW32__ #endif 
+> anyway.
 
-2. Move dashed forms out of PATH, perhaps leaving (or with option of
-   leaving) dashed forms of porcelain in PATH. Test all scripts and tests
-   ;-)
-   
-I think that the first step can be done before 1.6.0, perhaps even
-before 1.5.4
--- 
-Jakub Narebski
-Poland
+We still did not integrate the 'daemon' branch of 4msysgit, correct?
+
+I'm just wary to replace a tried-and-tested select() with a poll() that I 
+had plenty of problems with.
+
+Ciao,
+Dscho
