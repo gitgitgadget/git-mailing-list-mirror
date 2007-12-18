@@ -1,95 +1,75 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] Authentication support for pserver
-Date: Tue, 18 Dec 2007 22:41:03 +1300
-Message-ID: <46a038f90712180141x2f27e6cei5ef53339fd3f90dc@mail.gmail.com>
-References: <87wsrhex4c.fsf@cpan.org>
-	 <7vd4t9x2lw.fsf@gitster.siamese.dyndns.org> <87mysdepeh.fsf@cpan.org>
-	 <7vir31u210.fsf@gitster.siamese.dyndns.org> <877ijhm1b5.fsf@cpan.org>
+From: "Hannes Eder" <hannes.eder@gmail.com>
+Subject: [PATCH] allow a single form feed in pre commit hook
+Date: Tue, 18 Dec 2007 10:47:27 +0100
+Message-ID: <5d2716640712180147x36aa3178ja8658e30842c4e52@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	martyn@catalyst.net.nz, martin@catalyst.net.nz
-To: "=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?=" <avar@cpan.org>
-X-From: git-owner@vger.kernel.org Tue Dec 18 10:41:35 2007
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_12894_10769016.1197971247964"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 18 10:47:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4YxA-0003N7-Fm
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 10:41:32 +0100
+	id 1J4Z3K-0005EH-HS
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 10:47:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752311AbXLRJlJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Dec 2007 04:41:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752178AbXLRJlI
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 04:41:08 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:21682 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752134AbXLRJlF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Dec 2007 04:41:05 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so72462ugc.16
-        for <git@vger.kernel.org>; Tue, 18 Dec 2007 01:41:03 -0800 (PST)
+	id S1752403AbXLRJrb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 04:47:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752323AbXLRJrb
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 04:47:31 -0500
+Received: from wa-out-1112.google.com ([209.85.146.183]:9179 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752114AbXLRJra (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 04:47:30 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so3962623wah.23
+        for <git@vger.kernel.org>; Tue, 18 Dec 2007 01:47:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=LmtKdzMVOxZtGmVmeicLumzk9ajMV15BjWaVxE5RkXU=;
-        b=IueoStQwmibUEGhylLjWoW788gmwN93IsPMVo7cO7jkwAv5V4vBlR2k8XmKrU0ByvBgzI5Hf0BI16xhlwMxzZ66IvacRf0A5uuz+0Px0RJ9kC86vF1oNGvkkKI0YsS26XDw6afZDggecjfpIYlrSJF+Z7bQu4P8pJU5FiCTrgHA=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type;
+        bh=uFuUeOf7Hp+X+qroOK00crXimHeGeW677TKAbw11pZ8=;
+        b=Mg00YW0p2oto0KmOA/ts8VefzzqV3wtpV8nEHTfWU7cGLV1B2m8JobDW0V6yhPfMOhM6Ra2ZX6RjkkR5eMzq/tkzu8w4SdABlUxCF5RTUH42Ofl2YtYuFXUlajTLChuKhJr8syy/Vgth/IIZm5RWmB84MX7/XQUwdub57I2d9jU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FUugrbhIl5z57c4fgHMf0Oqa8pDj5h4muPPJ9S4fIj9+eFYKs0bMzC1sC1s0eHyhRCa7SvxW/+ytBu61wYzjXr9nWwTb6co2mdZQcbf6XEYsqD7H7kkK4isGJI6CVpw2AlggjkzHHeXZqWBsyV1NJH3NztIK5pIrGbwm3r48+uI=
-Received: by 10.67.116.15 with SMTP id t15mr617359ugm.21.1197970863314;
-        Tue, 18 Dec 2007 01:41:03 -0800 (PST)
-Received: by 10.66.252.2 with HTTP; Tue, 18 Dec 2007 01:41:03 -0800 (PST)
-In-Reply-To: <877ijhm1b5.fsf@cpan.org>
-Content-Disposition: inline
+        h=message-id:date:from:to:subject:mime-version:content-type;
+        b=gAWihZ0NJ6VrgcBPz+Gx+U6VLCgU7D0DA3+mQF7CNSN59DgTvwNjq3bBvUIY4pIlSYhzQfZKx/rLQDv8ghRptL3LE+PoTVgQa4DHzuDNUagWIN9fsPUbpo/AhcdMZVjQETZX5aolE+F4LCAAL5lt/JqB4xRATHECjLt7iUCGU9s=
+Received: by 10.115.54.1 with SMTP id g1mr4802192wak.133.1197971247972;
+        Tue, 18 Dec 2007 01:47:27 -0800 (PST)
+Received: by 10.114.156.7 with HTTP; Tue, 18 Dec 2007 01:47:27 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68720>
 
-On Dec 15, 2007 10:08 AM, =C6var Arnfj=F6r=F0 Bjarmason <avar@cpan.org>=
- wrote:
-> > Looks good.  I'll queue only so that I won't lose it and wait for A=
-cks
-> > from Mart[iy]ns.  Please sign off your patch.
+------=_Part_12894_10769016.1197971247964
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-I have been mulling a bit about this change. Seems correct from a code
-flow POV. But anon pserver support was added with a lot of
-trepidation. Authenticated, write-enabled pserver support fills me
-with dread ;-)
+It's not uncommon to have a lines with a single form feed in it, e.g.
+the default GPL COPYING and also in .c files and others. Attached
+patch allows this in the pre-commit hook.
 
-A few things that come to mind
+-Hannes
 
- - git/config is very likely to be readable if the site is served via
-other means, like dumb http protocol, or git+ssh. So even if the
-password scrambling is mickey-mouse. it might make sense to force the
-password data to live elsewhere.
+------=_Part_12894_10769016.1197971247964
+Content-Type: text/x-diff;
+ name=pre-commit-hook-allow-form-feed-200712181.patch
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fac910w10
+Content-Disposition: attachment;
+ filename=pre-commit-hook-allow-form-feed-200712181.patch
 
- - umasks/file permissions will probably be handled by the underlying
-git tools and core.sharedrepository, since we no longer update refs
-"manually". So after a bit of thinking, this should not be an issue.
-
- - I still worry about running cvsserver with an acct that has write
-privileges. With anon, all we need write access is the sqlite db, and
-that's not even based on user input. And it can be relocated elsewhere
-via git/config.
-
-So, wondering about input validation and related matters re-read most
-of cvsserver. The only suspicious bit I find is a caller to
-transmitfile @ lines 1117, where the 2nd parameter doesn't come from
-tempfile() - if a nasty filename sneaked in, we could (perhaps) be in
-for a surprise. We do that for diff header prettyness - we could use
---label / -L instead. Will try and prep a patch for that tomorrow if
-noone beats me to it (bedtime in nz!).
-
-Hmmm. Does "worried ACK" count as an ACK? Can we add big fat warnings
-along the lines of "run this in a locked down environment, pretty
-please"?
-
-cheers,
-
-
-
-m
+RnJvbSA0NTRlZGU4M2Y3YTQ1NzQxZDgyNWYwYjZjYmRiMGJlMmFjMjM1ZmRiIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBIYW5uZXMgRWRlciA8SGFubmVzQEhhbm5lc0VkZXIubmV0PgpE
+YXRlOiBUdWUsIDE4IERlYyAyMDA3IDEwOjIxOjExICswMTAwClN1YmplY3Q6IFtQQVRDSF0gYWxs
+b3cgYSBsaW5lcyB3aXRoIGp1c3Qgb25lIGZvcm0gZmVlZCBpbiBwcmUtY29tbWl0IGhvb2sKCgpk
+aWZmIC0tZ2l0IGEvdGVtcGxhdGVzL2hvb2tzLS1wcmUtY29tbWl0IGIvdGVtcGxhdGVzL2hvb2tz
+LS1wcmUtY29tbWl0CmluZGV4IDcwOTJiYWUuLmE3NTlmOTIgMTAwNjQ0Ci0tLSBhL3RlbXBsYXRl
+cy9ob29rcy0tcHJlLWNvbW1pdAorKysgYi90ZW1wbGF0ZXMvaG9va3MtLXByZS1jb21taXQKQEAg
+LTU1LDcgKzU1LDcgQEAgcGVybCAtZSAnCiAJaWYgKHMvXlwrLy8pIHsKIAkgICAgJGxpbmVubysr
+OwogCSAgICBjaG9tcDsKLQkgICAgaWYgKC9ccyQvKSB7CisJICAgIGlmICghL15cZiQvICYmIC9c
+cyQvKSB7CiAJCWJhZF9saW5lKCJ0cmFpbGluZyB3aGl0ZXNwYWNlIiwgJF8pOwogCSAgICB9CiAJ
+ICAgIGlmICgvXlxzKiBcdC8pIHsK
+------=_Part_12894_10769016.1197971247964--
