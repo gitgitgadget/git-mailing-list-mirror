@@ -1,80 +1,101 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Fix segfault in diff-delta.c when FLEX_ARRAY is 1
-Date: Tue, 18 Dec 2007 02:44:55 +0100
-Message-ID: <20071218014455.GB14981@artemis.madism.org>
-References: <1197941997-11421-1-git-send-email-madcoder@debian.org>
+From: David Kastrup <dak@gnu.org>
+Subject: [PATCH] diff-delta.c: make FLEX_ARRAY=1 work.
+Date: Tue, 18 Dec 2007 02:32:14 +0100
+Message-ID: <85wsrclqmi.fsf_-_@lola.goethe.zz>
+References: <20071218010126.GP14735@spearce.org>
+	<7vtzmg3j37.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="JP+T4n/bALQSJXh8";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: gitster@pobox.com, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Tue Dec 18 02:45:51 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 02:48:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4RWg-00028J-Ts
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 02:45:43 +0100
+	id 1J4RZb-0002t9-Fy
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 02:48:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S937494AbXLRBo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 20:44:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S937216AbXLRBo6
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 20:44:58 -0500
-Received: from pan.madism.org ([88.191.52.104]:43918 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S937078AbXLRBo5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 20:44:57 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id B16513092B;
-	Tue, 18 Dec 2007 02:44:56 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 895CB2A2253; Tue, 18 Dec 2007 02:44:55 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>, gitster@pobox.com,
-	spearce@spearce.org, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1197941997-11421-1-git-send-email-madcoder@debian.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1752228AbXLRBsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 20:48:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751307AbXLRBsH
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 20:48:07 -0500
+Received: from mail-in-09.arcor-online.net ([151.189.21.49]:59477 "EHLO
+	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751518AbXLRBsD (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Dec 2007 20:48:03 -0500
+Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id DE10B3029C1;
+	Tue, 18 Dec 2007 02:48:00 +0100 (CET)
+Received: from mail-in-12.arcor-online.net (mail-in-12.arcor-online.net [151.189.21.52])
+	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id D2313ABAEC;
+	Tue, 18 Dec 2007 02:48:00 +0100 (CET)
+Received: from lola.goethe.zz (dslb-084-061-010-216.pools.arcor-ip.net [84.61.10.216])
+	by mail-in-12.arcor-online.net (Postfix) with ESMTP id AE9888C463;
+	Tue, 18 Dec 2007 02:47:55 +0100 (CET)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 37CEF1C4CE33; Tue, 18 Dec 2007 02:48:37 +0100 (CET)
+In-Reply-To: <7vtzmg3j37.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 17 Dec 2007 17:08:44 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/5161/Tue Dec 18 00:18:49 2007 on mail-in-12.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68687>
 
 
---JP+T4n/bALQSJXh8
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I remarked previously that diff-delta.c does not work with FLEX_ARRAY=1.
+Here is one attempt to change this.  It conceivably still suffers from
+potential misalignment problems (which would likely need some union type
+magic to avoid 100%), but at least the index calculation should not go
+as horribly wrong as previously.
 
-On Tue, Dec 18, 2007 at 01:39:57AM +0000, Pierre Habouzit wrote:
-> aka don't do pointer arithmetics on structs that have a FLEX_ARRAY member,
-> or you'll end up believing your array is 1 cell off its real address.
+---
+Junio C Hamano <gitster@pobox.com> writes:
 
-  I wonder if we could teach sparse to prevent us from using pointer
-arithmetics on some types=E2=80=A6 because I obviously didn't read all the =
-git
-code, and I wouldn't be surprised an instance of this still remains
-somehwere.
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>
+>> I'll try to track it down tomorrow.  But the immediate workaround was
+>> to just add '-DFLEX_ARRAY=/* empty */' to my CFLAGS and recompile
+>> the world.  This compiler accepts the empty FLEX_ARRAY macro but
+>> I'm not sure what feature test(s) would be necessary to make Git
+>> able to automatically set that, seeing as how the tests defined in
+>> 8e97 are perfectly reasonable and didn't pass.
+>> ..., but will try to come up with a reasonable
+>> detection patch....
+>
+> Actually I would be more worried about the breakage in FLEX_ARRAY=1 case
+> than misdetection.  Even if your compiler supports the flexible array
+> members, the fallback to FLEX_ARRAY=1 ought to work and you are seeing a
+> case where it doesn't.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+ diff-delta.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
---JP+T4n/bALQSJXh8
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHZyYXvGr7W6HudhwRAqXWAKCVzWREMIKSt941xrqyxLBnIM9jiQCdHzP3
-lClZn5k1LCNKhb5Mgvnezeg=
-=zGam
------END PGP SIGNATURE-----
-
---JP+T4n/bALQSJXh8--
+diff --git a/diff-delta.c b/diff-delta.c
+index 9e440a9..099235c 100644
+--- a/diff-delta.c
++++ b/diff-delta.c
+@@ -247,7 +247,7 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 	/* Now create the packed index in array form rather than
+ 	 * linked lists */
+ 
+-	memsize = sizeof(*index)
++	memsize = (char *)&index->hash - (char *)index
+ 		+ sizeof(*packed_hash) * (hsize+1)
+ 		+ sizeof(*packed_entry) * entries;
+ 
+@@ -264,7 +264,7 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
+ 	index->src_size = bufsize;
+ 	index->hash_mask = hmask;
+ 
+-	mem = index + 1;
++	mem = &index->hash;
+ 	packed_hash = mem;
+ 	mem = packed_hash + (hsize+1);
+ 	packed_entry = mem;
+-- 
+1.5.3.6.995.ge8abd
