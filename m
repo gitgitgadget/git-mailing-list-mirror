@@ -1,115 +1,89 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Use pathexpand to preparse the relative pathnames in blob
-	references
-Date: Tue, 18 Dec 2007 21:52:53 +0100
-Message-ID: <20071218205253.GF2875@steel.home>
-References: <20071218173321.GB2875@steel.home> <m3d4t3q4e5.fsf@roke.D-201> <20071218204623.GC2875@steel.home> <20071218204752.GD2875@steel.home> <20071218204947.GE2875@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH] Simple support for tree entry specification with relative pathnames
+Date: Tue, 18 Dec 2007 13:03:04 -0800
+Message-ID: <56b7f5510712181303h1e7ae35dpa0adfd6804a7cecd@mail.gmail.com>
+References: <20071218173321.GB2875@steel.home> <m3d4t3q4e5.fsf@roke.D-201>
+	 <20071218204623.GC2875@steel.home> <20071218204752.GD2875@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 18 21:53:20 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
+	"Junio C Hamano" <junkio@cox.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>, danahow@gmail.com
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 22:03:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4jRH-0006Xc-RI
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 21:53:20 +0100
+	id 1J4jbB-0002rQ-UC
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 22:03:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751851AbXLRUw5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 15:52:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751118AbXLRUw4
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 15:52:56 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:39793 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751248AbXLRUw4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 15:52:56 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBsGSh4=
-Received: from tigra.home (Fcb97.f.strato-dslnet.de [195.4.203.151])
-	by post.webmailer.de (klopstock mo7) (RZmta 14.6)
-	with ESMTP id 603ccbjBIHXLCk ; Tue, 18 Dec 2007 21:52:54 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 5E2B8277AE;
-	Tue, 18 Dec 2007 21:52:54 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 98FC556D22; Tue, 18 Dec 2007 21:52:53 +0100 (CET)
+	id S1752905AbXLRVDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 16:03:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752658AbXLRVDJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 16:03:09 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:1521 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752624AbXLRVDG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 16:03:06 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1460165nfb.21
+        for <git@vger.kernel.org>; Tue, 18 Dec 2007 13:03:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Jtttl4W26/2QwJ9yNDDYFi1zjyRzdWm67NPnbNKyxHQ=;
+        b=M9pa6ZMt8qR+hWNZLAk1Gdxg4APFQtC9ErXKXfWRAeYyVx1xiZexXdq22JgpEy8S6EhiCR+fvXIs6rYKIUNmdka/k578ux+JRtYTHCmdFs7utp0+cauXmWVr7nqrtmgK7GuZJjlXtXuEaTN5PVtDSzSozQjZNF87+myosbhuN/E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=EP6ovS4uNjU7aNE7A7/78hPcr77KsJtupMFxl5wpoHoIDFFUAJ5e4wU3LroE/JhUqRbYlFtXMwwLBTbCENpe8oBr8ZADvr5UNS9C1FvMdHgVI7xOG8lXz6BSAHKt1+juWqQ12it7ySrw3dnilPffzB/NmmmFaPpuCQRwxweBeA4=
+Received: by 10.78.204.20 with SMTP id b20mr10530112hug.33.1198011784735;
+        Tue, 18 Dec 2007 13:03:04 -0800 (PST)
+Received: by 10.78.130.1 with HTTP; Tue, 18 Dec 2007 13:03:04 -0800 (PST)
+In-Reply-To: <20071218204752.GD2875@steel.home>
 Content-Disposition: inline
-In-Reply-To: <20071218204947.GE2875@steel.home>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68814>
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+ACK from me...
 
-This, OTOH, is a bit intrusive and changes the current behaviour a bit
-too far. git-show cannot use the absolute pathnames in blob locators
-at all now, which I consider bad. An obvious way to use rev:/path is
-blocked by Johannes' get_sha1_oneline. It would have worked, though.
+I submitted a similar patch last May 4 which also
+changed sha1_name.c to do this.  The patch
+added a config variable to control this
+(probably not desirable).  The patch also handled
+leading/embedded . and .. .
 
- sha1_name.c |   21 +++++++--------------
- 1 files changed, 7 insertions(+), 14 deletions(-)
+In p4 you can say
+  p4 <operation> file#rev
+and file is interpreted relatively.
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 358aab7..369e7d0 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -661,7 +661,7 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
- 
- int get_sha1_with_prefix(const char *prefix, const char *name, unsigned char *sha1, unsigned *mode)
- {
--	char *prefixpath;
-+	char *prefixpath = NULL;
- 	int ret, bracket_depth;
- 	int namelen = strlen(name);
- 	const char *cp;
-@@ -671,8 +671,6 @@ int get_sha1_with_prefix(const char *prefix, const char *name, unsigned char *sh
- 	if (!ret)
- 		return ret;
- 
--	prefixpath = prefix ? xmalloc(strlen(prefix) + namelen + 1): NULL;
--
- 	/* sha1:path --> object name of path in ent sha1
- 	 * :path -> object name of path in index
- 	 * :[0-3]:path -> object name of path in index at stage
-@@ -694,10 +692,9 @@ int get_sha1_with_prefix(const char *prefix, const char *name, unsigned char *sh
- 		namelen = namelen - (cp - name);
- 		if (!active_cache)
- 			read_cache();
--		if (prefix) {
--			namelen = sprintf(prefixpath, "%s%s", prefix, cp);
--			cp = prefixpath;
--		}
-+		prefixpath = pathexpand(prefix, cp);
-+		namelen = strlen(prefixpath);
-+		cp = prefixpath;
- 		pos = cache_name_pos(cp, namelen);
- 		if (pos < 0)
- 			pos = -pos - 1;
-@@ -728,13 +725,9 @@ int get_sha1_with_prefix(const char *prefix, const char *name, unsigned char *sh
- 	if (*cp == ':') {
- 		unsigned char tree_sha1[20];
- 		if (!get_sha1_1(name, cp-name, tree_sha1)) {
--			if (!prefix)
--				ret = get_tree_entry(tree_sha1, cp + 1, sha1, mode);
--			else {
--				sprintf(prefixpath, "%s%s", prefix, cp + 1);
--				ret = get_tree_entry(tree_sha1, prefixpath, sha1, mode);
--				free(prefixpath);
--			}
-+			prefixpath = pathexpand(prefix, cp + 1);
-+			ret = get_tree_entry(tree_sha1, prefixpath, sha1, mode);
-+			free(prefixpath);
- 		}
- 	}
- 	return ret;
+I wanted to be able to say
+  git <operation> tree:file
+and have file interpreted relatively.
+This should only happen when you are inside the work tree.
+
+Good luck!
+
+Dana
+
+On Dec 18, 2007 12:47 PM, Alex Riesen <raa.lkml@gmail.com> wrote:
+> This allows git show to understand something like this:
+>
+>     $ test -f DIR/file && cd DIR &&  git show rev:file
+>
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> ---
+>
+> This is a bit too simplistic and can be fooled easily:
+>
+>     .../t$ git show HEAD:../t/test-lib.sh
+>
+> wont work. It is short, though.
+
 -- 
-1.5.4.rc0.86.g30f5
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
