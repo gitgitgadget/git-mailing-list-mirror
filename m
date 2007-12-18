@@ -1,93 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 5/6] whitespace: more accurate initial-indent highlighting
-Date: Mon, 17 Dec 2007 16:32:09 -0800 (PST)
-Message-ID: <m3y7bsq1vo.fsf@roke.D-201>
-References: <B54C9483-90BE-4B45-A3B7-39FACF0E9F62@wincent.com>
-	<1197822702-5262-1-git-send-email-bfields@citi.umich.edu>
-	<1197822702-5262-2-git-send-email-bfields@citi.umich.edu>
-	<1197822702-5262-3-git-send-email-bfields@citi.umich.edu>
-	<1197822702-5262-4-git-send-email-bfields@citi.umich.edu>
-	<1197822702-5262-5-git-send-email-bfields@citi.umich.edu>
-	<1197822702-5262-6-git-send-email-bfields@citi.umich.edu>
-	<ACA0791E-189F-4E19-AE87-C7D1163C0366@wincent.com>
-	<7vwsrdd9wa.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] provide advance warning of some future pack default changes
+Date: Mon, 17 Dec 2007 16:41:19 -0800
+Message-ID: <7vbq8o4yxc.fsf@gitster.siamese.dyndns.org>
+References: <7vsl2jh3rb.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.999999.0712132227090.8467@xanadu.home>
+	<m3fxy5qwbq.fsf@roke.D-201>
+	<alpine.LFD.0.999999.0712140836140.8467@xanadu.home>
+	<20071214215206.GB7300@mail.oracle.com>
+	<alpine.LFD.0.999999.0712141724260.8467@xanadu.home>
+	<20071214223957.GC7300@mail.oracle.com>
+	<alpine.LFD.0.999999.0712141744460.8467@xanadu.home>
+	<20071215004230.GF7300@mail.oracle.com>
+	<alpine.LFD.0.999999.0712142114400.8467@xanadu.home>
+	<20071217200920.GB19816@mail.oracle.com>
+	<alpine.LFD.0.999999.0712171517320.8467@xanadu.home>
+	<7v3au16myj.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.999999.0712171641460.8467@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Wincent Colaiuta <win@wincent.com>,
-	"J. Bruce Fields" <bfields@citi.umich.edu>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 18 01:32:45 2007
+Cc: Joel Becker <Joel.Becker@oracle.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Dec 18 01:42:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4QO3-0000Ej-09
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 01:32:43 +0100
+	id 1J4QXC-00032S-N9
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 01:42:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754219AbXLRAcO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 19:32:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757303AbXLRAcO
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 19:32:14 -0500
-Received: from fk-out-0910.google.com ([209.85.128.190]:52552 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753646AbXLRAcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 19:32:12 -0500
-Received: by fk-out-0910.google.com with SMTP id z23so1734212fkz.5
-        for <git@vger.kernel.org>; Mon, 17 Dec 2007 16:32:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=t1DBAqPKxdgd+dkBhf3fss0ORpTTwcHS2P3l16Xpcdk=;
-        b=VcPk17+zifVouYR9ie0vAWDiowpCY5O4WRIOjzNne2RqKErJ5cLTPEXjb/OuWEdmSHi8Xzxy9BMqZzlSEMA2YDu/Kza3uivFQGCTMxm+nQJ3qK0rU5bhlbjGHkkAqsWdMjA8VOaqdrMj2jXuEpDyVVceUqng9X8bn8EvQUERCo8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=I/EGDGG1rsFVGys2Fi2EuJzuOcJrcWn057jrl9Ij1Hr4ntpJC+rwzG4+1dI7EklXsTP1IwjJkRAO8QgV34ZwQLhl0Hn4f6orOMOaTVKK0tH7mfuhbVLFs/v+LYQCsIb7C5VoLM44WDncMIfe8oawTNp+g4GKm4LCZsfGtgMUtYE=
-Received: by 10.82.158.12 with SMTP id g12mr16799589bue.21.1197937931255;
-        Mon, 17 Dec 2007 16:32:11 -0800 (PST)
-Received: from roke.D-201 ( [83.8.196.52])
-        by mx.google.com with ESMTPS id f8sm17130664nfh.2007.12.17.16.32.08
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 17 Dec 2007 16:32:09 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lBI0Vw3N006438;
-	Tue, 18 Dec 2007 01:31:59 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id lBI0VuTw006435;
-	Tue, 18 Dec 2007 01:31:56 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <7vwsrdd9wa.fsf@gitster.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1756317AbXLRAlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 19:41:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759968AbXLRAlp
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 19:41:45 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34302 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756317AbXLRAlo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 19:41:44 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F95740D2;
+	Mon, 17 Dec 2007 19:41:38 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8728940D0;
+	Mon, 17 Dec 2007 19:41:32 -0500 (EST)
+In-Reply-To: <alpine.LFD.0.999999.0712171641460.8467@xanadu.home> (Nicolas
+	Pitre's message of "Mon, 17 Dec 2007 16:45:26 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68674>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Nicolas Pitre <nico@cam.org> writes:
 
-> Wincent Colaiuta <win@wincent.com> writes:
-> 
-> > Basically I would have proposed extracting out each type of whitespace  
-> > error into an inline function in ws.c, where it could be used by both  
-> > check_and_emit_line() in ws.c and apply_one_fragment() in builtin- 
-> > apply.c.
-> >
-> > Unfortunately, mixing checking and emission phases makes this proposed  
-> > refactoring a little bit ugly.
-> 
-> The right refactoring would be what JBF hinted in his message, to record
-> and return a list of suspicious ranges from the checker function and
-> have the highlighter and the fixer make use of that list.
-> 
-> Such a refactoring is still possible but I think it is beyond the scope
-> of pre 1.5.4 clean-up.
+> On Mon, 17 Dec 2007, Junio C Hamano wrote:
+> ...
+>> Instead we unconditionally said "if you are downloading with the new
+>> client, we assume you would never be using older client to access that
+>> repository locally, if you did so, you are screwed."
+>> 
+>> IOW, I think e4fe4b8ef7cdde842a9e5e2594d0fba1367d9dd3 (let the GIT
+>> native protocol use offsets to delta base when possible) could have been
+>> a bit more careful in this respect.
+>
+> Probably.  But this can hardly be called a "corruption" since nothing 
+> was actually lost, rather an incompatibility problem.
 
-By the way, does "trailing empty lines at the end of file" whitespace
-error get detected and hightlighted with refactored whitespace checking?
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+It is not a corruption, but the distinction doesn't matter much to the
+end user who wants to get the job done with the data right now.  The
+data that was made inaccessible is inaccessible.  The only difference is
+that it is recoverable once the user upgrades, but that may be painful,
+even though it may be rewarding afterwards and worth doing so, and the
+user may not be able to afford doing so right at that moment.
