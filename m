@@ -1,119 +1,97 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git-stash: RFC: Adopt the default behavior to other commands
-Date: Tue, 18 Dec 2007 17:06:18 +0100
-Message-ID: <4767EFFA.1070909@op5.se>
-References: <20071217110322.GH14889@albany.tokkee.org>	<506C6191-655D-46AE-A5C2-1335A9044F44@lrde.epita.fr>	<7vk5nd53lp.fsf@gitster.siamese.dyndns.org>	<57F403E7-AF5B-40F1-AE9D-8EA036675A67@lrde.epita.fr>	<7vfxy04ze7.fsf@gitster.siamese.dyndns.org>	<20071218105941.GA17251@albany.tokkee.org>	<Pine.LNX.4.64.0712181231420.23902@racer.site> <4767D7A2.30703@op5.se>	<Pine.LNX.4.64.0712181445420.23902@racer.site>	<4767E07A.2020100@op5.se>	<Pine.LNX.4.64.0712181513060.23902@racer.site>	<4767E717.2060902@op5.se> <m3lk7sovt0.fsf@roke.D-201>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: kha/safe and kha/experimental updated
+Date: Tue, 18 Dec 2007 16:09:24 +0000
+Message-ID: <b0943d9e0712180809l4d2d01b8j32ab2a410885cc5e@mail.gmail.com>
+References: <20071214105238.18066.23281.stgit@krank>
+	 <b0943d9e0712170309n415dc6cs9d1c1f8a9c687bf8@mail.gmail.com>
+	 <20071217224812.GA6342@diana.vm.bytemark.co.uk>
+	 <20071218052115.GA13422@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sebastian Harl <sh@tokkee.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Benoit Sigoure <tsuna@lrde.epita.fr>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 18 17:06:56 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 17:09:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4exz-0001sP-Ec
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 17:06:47 +0100
+	id 1J4f0w-0003RV-Bt
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 17:09:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757518AbXLRQGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 11:06:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757373AbXLRQGY
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 11:06:24 -0500
-Received: from mail.op5.se ([193.201.96.20]:60235 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754506AbXLRQGX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 11:06:23 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 60DAA1F08049;
-	Tue, 18 Dec 2007 17:06:21 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qkJbG9DT9-Al; Tue, 18 Dec 2007 17:06:20 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id ADC891F08043;
-	Tue, 18 Dec 2007 17:06:19 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <m3lk7sovt0.fsf@roke.D-201>
+	id S1756976AbXLRQJ1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Dec 2007 11:09:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756841AbXLRQJ1
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 11:09:27 -0500
+Received: from rv-out-0910.google.com ([209.85.198.189]:63960 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755401AbXLRQJ0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Dec 2007 11:09:26 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so2318843rvb.1
+        for <git@vger.kernel.org>; Tue, 18 Dec 2007 08:09:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Is5pJbjbDaed6Rv7wQD/YK+YBBtWp48yB9p/4NNj/+A=;
+        b=ROYSJ7MujOYuo7PSSg8rP+NXNhnRq9vCTXKJjJNKqUUOi4kZP3o0PhKpf1Rrl6AC7xA2kOlZwSM0pb+U884WusJJw76ukq3y7Kk4sPKQJ3tiiEY2iLJcSBoVj9rmAMY0/WfGzzXzFgQPKIXXnT8lKlZJ7UWIqR75SMafiW3lDNs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KF7T57wuCPOMh+gIBH+s9jIt8eNLBaH45PIB+GGkC2pLCkWsMyTpoPJKpqT++Xz7KeRw5WY4RQoPG/vt8awi2znZn7gJv3PjcH4GDkBd9FdIZUZtZVJdyMcHEromowkn/1oiGJWCOw7NRcpYnDVxEFBesdn4teaYOu6sAlubFh4=
+Received: by 10.140.158.4 with SMTP id g4mr2805500rve.64.1197994164966;
+        Tue, 18 Dec 2007 08:09:24 -0800 (PST)
+Received: by 10.141.186.5 with HTTP; Tue, 18 Dec 2007 08:09:24 -0800 (PST)
+In-Reply-To: <20071218052115.GA13422@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68770>
 
-Jakub Narebski wrote:
-> Andreas Ericsson <ae@op5.se> writes:
->> Johannes Schindelin wrote:
->>> On Tue, 18 Dec 2007, Andreas Ericsson wrote:
->>>> Johannes Schindelin wrote:
->>>>
->>>>> In the alternative, you could just scrap all those default
->>>>> actions, showing synopses instead.  For all commands, including
->>>>> "git commit", "git log", "git fetch", etc.
->>>> Like we do for the git wrapper, you mean? Yes, that would be one
->>>> solution, although not a very good one for all commands.
->>> Exactly.  Not a good one.
->>>
->>>> It's probably not a bad idea for commands where the primary use is
->>>> something else than producing visual output though, such as tag or
->>>> branch, but those handle creation/deletion of stuff, so the default
->>>> action for them is to list stuff of the kind they operate on. I
->>>> fail to see why stash should be any different.
->>> I also fail to see why stash should be any different.  And that's why
->>> I expect it to have a default operation, which is -- you guessed it -- 
->>> "stash the changes!"
->> Actually, I guessed "list the stashes".
->>
->>> If I am not sure what I am about to do, there is -- wonder of wonders -- 
->>> the "-h" option!  And indeed:
->>> 	$ git stash -h
->>> 	Usage: /home/gitte/bin/git-stash [  | save | list | show |
->>> apply | 		clear | create ]
->>> So what exactly was your point again?
->>>
->> My point is that it would be nice if all git commands that actually
->> manipulate objects (create/delete/modify) had a safe default, and
->> that experienced users such as yourself could endure the insufferable
->> agony of retraining your fingers to type five more chars so that
->> people won't have to get bitten by surprises.
-> 
-> Also for "git commit"?
-> 
+Thanks again for maintaining these branches.
 
-git commit has a very safe default; It runs "git status" and exits.
+On 18/12/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+>   git://repo.or.cz/stgit/kha.git safe
+>
+> David K=E5gedal (17):
+[...]
+>       Simplify merge_recursive
+>       Use the output from merge-recursive to list conflicts
 
-> In my opinion _basic_ usage of git-stash is simply using it with
-> one stash only: "git stash" / "git unstash" (i.e. "git stash apply";
-> by the way this is one (beside "git view") use case for builtin
-> predefined aliases).  Using it with multiple stashes (only then
-> "git stash list" is needed) is advanced usage; and for advanced
-> usage longer form is preferred, I think.
-> 
+I'll drop git.merge() entirely since it is only used by the 'sync'
+command due to the performance issues I had in the past with rename
+detection in git-merge-recursive. Hopefully, these are gone now.
 
-Perhaps. I'll stop quibbling about it. I don't care very deeply
-about it anyway.
+I'll try to fix the automatic invocation of the interactive merger in
+case of conflicts (it is only present in git.merge()).
 
-> "git branch", "git log" and "git remote" are horse of differenc color
-> because the _cannot_ function without name of branch/tag/remote given,
-> so hey provide "list" when no name was given.
-> 
+> Karl Hasselstr=F6m (24):
+>       Fix "stg resolved" to work with new conflict representation
 
-git stash takes a name too. It's optional though, and has caused any
-number of source lines to be rewritten by grumbling authors who just
-started to like git a little less because of it (yes, I know that has
-been fixed, but it makes me look twice when discussing defaults for
-git stash).
+=46or some reason, the interactive resolving keeps invoking the merger.
+I'll have a look.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+>       "stg status --reset" is not needed anymore
+
+I would keep this as an alias for 'git reset --hard' (see below as well=
+).
+
+>       Remove "stg add"
+>       Remove "stg rm"
+>       Remove "stg cp"
+
+I plan to add a generic command for these kind of aliases. The reason
+is that I don't really like mixing GIT and StGIT commands (I think at
+some point I'll get confused and try to run stg commands with git).
+
+>       Remove "stg resolved"
+
+I'd like to keep this command. git-mergetool doesn't support the tool
+I use (emacs + ediff and more stgit-specific file extensions like
+current, patch etc.). I also don't find 'git add' to be meaningful for
+marking a conflict as solved.
+
+--=20
+Catalin
