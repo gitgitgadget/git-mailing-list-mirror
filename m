@@ -1,128 +1,240 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add format-patch option --no-name-prefix.
-Date: Tue, 18 Dec 2007 17:06:07 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0712181703560.23902@racer.site>
-References: <1197992574-3464-1-git-send-email-pascal@obry.net>
- <4767ED52.9010004@viscovery.net> <4767EE6D.5070509@obry.net>
- <alpine.LFD.0.9999.0712180840060.21557@woody.linux-foundation.org>
+From: "Kelvie Wong" <kelvie@ieee.org>
+Subject: Re: git-svn rebase issues (the commiter gets changed)
+Date: Tue, 18 Dec 2007 09:16:04 -0800
+Message-ID: <94ccbe710712180916x10fc53fane4aae7cc60877e36@mail.gmail.com>
+References: <94ccbe710711220815j663d22e0v3c744244d0a87b66@mail.gmail.com>
+	 <20071129075205.GB32277@soma>
+	 <94ccbe710711290816t7a6ba9b1o8f37ecf583305a51@mail.gmail.com>
+	 <20071216032523.GA17666@muzzle>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pascal Obry <pascal@obry.net>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Pascal Obry <pascal.obry@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Dec 18 18:07:07 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Eric Wong" <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue Dec 18 18:16:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4fu6-0003Jy-6k
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 18:06:50 +0100
+	id 1J4g3X-0007gN-H1
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 18:16:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757726AbXLRRG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 12:06:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757892AbXLRRG0
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 12:06:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45574 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757180AbXLRRGZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 12:06:25 -0500
-Received: (qmail invoked by alias); 18 Dec 2007 17:06:24 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp050) with SMTP; 18 Dec 2007 18:06:24 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/u4wlxL4nuj4qsPlYYVR79R0TQyzY0uIRlxthx5z
-	ogI8taoUSBHEZp
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.0.9999.0712180840060.21557@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S1757588AbXLRRQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 12:16:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756690AbXLRRQK
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 12:16:10 -0500
+Received: from wa-out-1112.google.com ([209.85.146.176]:47988 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751919AbXLRRQG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 12:16:06 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so4174635wah.23
+        for <git@vger.kernel.org>; Tue, 18 Dec 2007 09:16:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=Txe2lkPK1Iuh30Oljy3bk2+wdiUWM2+KFHstbGvHLHc=;
+        b=q0Ku3qCCv/n10D0uELVAcrmj6fEeJDJJCH/whciqlll+4Cfw0FySJm7HvJrLxd03191DAUx7/KQ9ZuXsP5m+1WduUuJdcB5zlc0+EQzeTN3ChCDUQVKUgkI+dVupP5eKmyC+8EFSqvNH0Gsy8HbRA59wPA1wS+J6HRm9uUaaB2I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=FsCUaty5xEf+oZ+xvMjAe/vjnEg4XOM6qoWqNEQ7qoCn2HelV0HQDrrTYuxWUg7a6CQ3LQTRlFsh095zscWPhziQloGpaBS2l1COXP+ErIY8fU/QcPhCThs6nNZRMQC2viJJCmwUNgwLjP410K1MVGTMfeoSnJ6n88Xx1/Kqfes=
+Received: by 10.114.159.1 with SMTP id h1mr2635462wae.122.1197998165055;
+        Tue, 18 Dec 2007 09:16:05 -0800 (PST)
+Received: by 10.114.149.15 with HTTP; Tue, 18 Dec 2007 09:16:04 -0800 (PST)
+In-Reply-To: <20071216032523.GA17666@muzzle>
+Content-Disposition: inline
+X-Google-Sender-Auth: 3c4de1a843f0a21a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68785>
 
-Hi,
+On Dec 15, 2007 7:27 PM, Eric Wong <normalperson@yhbt.net> wrote:
+> Sorry for the late reply, I've been all over the place lately.
+>
+> Kelvie Wong <kelvie@ieee.org> wrote:
+>
+> > Just did it again this morning, with a clean test branch:
+> >
+> > kelvie@mudd (text-edit) qt $ git checkout -b test git-svn
+> > Switched to a new branch "test"
+> > kelvie@mudd (test) qt $ touch test
+> > kelvie@mudd (test) qt $ git add test
+> > kelvie@mudd (test) qt $ git commit -a -m 'Test!'
+> > Created commit 05c4016: Test!
+> >  0 files changed, 0 insertions(+), 0 deletions(-)
+> >  create mode 100644 apps/qt/test
+> > kelvie@mudd (test) qt $ git-cat-file commit HEAD
+> > tree 867c0aa4c814542f0752b5d4c85fc96ba2279aac
+> > parent 831ffbf25057ed30274d4216269c572cfce12184
+> > author Kelvie Wong <Kelvie.Wong@safe.com> 1196352603 -0800
+> > committer Kelvie Wong <Kelvie.Wong@safe.com> 1196352603 -0800
+> >
+> > Test!
+> > kelvie@mudd (test) qt $ git svn rebase
+> > <snip>
+> > HEAD is now at 7319c2a... (svn commit message)
+> > kelvie@mudd (test) qt $ git-cat-file commit HEAD
+> > tree 4edacbd41af76ac243099467b33350887c0fb03d
+> > parent 7319c2a810554aab25a688bcc2b16fc60529b59d
+> > author Kelvie Wong <Kelvie.Wong@safe.com> 1196352603 -0800
+> > committer ogibbins <ogibbins@e2d93294-a71b-0410-9dca-e2ea525a67c9>
+> > 1196346907 +0000
+> >
+> > Test!
+> > kelvie@mudd (test) qt $ git --version
+> > git version 1.5.3.6.736.gb7f30
+> >
+> > And again, the committer of a local commit gets changed.
+> >
+> > Now, this part is more interesting:
+> >
+> > kelvie@mudd (test) qt $ git checkout working
+> > Switched to branch "working"
+> > kelvie@mudd (working) qt $ git svn rebase
+> > <no fetch, just a checkout and rebase>
+> >
+> > And when I cat-file the commit, this time it's preserved.  Wild guess
+> > here (this behaviour seems kind of inconsistent), but it has to do
+> > with the transition between fetch and rebase?  Or is this a bug in
+> > git-rebase somewhere?
+>
+> Ah, it looks like a bug in git-svn.  The following should fix it:
+>
+> From 84e99bffc72c10ec7db6d5ae7af6a795b75ef724 Mon Sep 17 00:00:00 2001
+> From: Eric Wong <normalperson@yhbt.net>
+> Date: Sat, 15 Dec 2007 19:08:22 -0800
+> Subject: [PATCH] git-svn: avoid leaving leftover committer/author info in rebase
+>
+> We set the 6 environment variables for controlling
+> committer/author email/name/time for every commit.
+>
+> We do this in the parent process to be passed to
+> git-commit-tree, because open3() doesn't afford us the control
+> of doing it only in the child process.  This means we leave them
+> hanging around in the main process until the next revision comes
+> around and all 6 environment variables are overwridden again.
+>
+> Unfortunately, for the last commit, leaving them hanging around
+> means the git-rebase invocation will pick it up, rewriting the
+> rebased commit with incorrect author information.  This should fix
+> it.
+>
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> ---
+>  git-svn.perl |   50 +++++++++++++++++++++++++++++++++++++++-----------
+>  1 files changed, 39 insertions(+), 11 deletions(-)
+>
+> diff --git a/git-svn.perl b/git-svn.perl
+> index d411a34..7cd62fc 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -2052,18 +2052,16 @@ sub full_url {
+>         $self->{url} . (length $self->{path} ? '/' . $self->{path} : '');
+>  }
+>
+> -sub do_git_commit {
+> -       my ($self, $log_entry) = @_;
+> -       my $lr = $self->last_rev;
+> -       if (defined $lr && $lr >= $log_entry->{revision}) {
+> -               die "Last fetched revision of ", $self->refname,
+> -                   " was r$lr, but we are about to fetch: ",
+> -                   "r$log_entry->{revision}!\n";
+> -       }
+> -       if (my $c = $self->rev_map_get($log_entry->{revision})) {
+> -               croak "$log_entry->{revision} = $c already exists! ",
+> -                     "Why are we refetching it?\n";
+> +
+> +sub set_commit_header_env {
+> +       my ($log_entry) = @_;
+> +       my %env;
+> +       foreach my $ned (qw/NAME EMAIL DATE/) {
+> +               foreach my $ac (qw/AUTHOR COMMITTER/) {
+> +                       $env{"GIT_${ac}_${ned}"} = $ENV{"GIT_${ac}_${ned}"};
+> +               }
+>         }
+> +
+>         $ENV{GIT_AUTHOR_NAME} = $log_entry->{name};
+>         $ENV{GIT_AUTHOR_EMAIL} = $log_entry->{email};
+>         $ENV{GIT_AUTHOR_DATE} = $ENV{GIT_COMMITTER_DATE} = $log_entry->{date};
+> @@ -2074,7 +2072,36 @@ sub do_git_commit {
+>         $ENV{GIT_COMMITTER_EMAIL} = (defined $log_entry->{commit_email})
+>                                                 ? $log_entry->{commit_email}
+>                                                 : $log_entry->{email};
+> +       \%env;
+> +}
+>
+> +sub restore_commit_header_env {
+> +       my ($env) = @_;
+> +       foreach my $ned (qw/NAME EMAIL DATE/) {
+> +               foreach my $ac (qw/AUTHOR COMMITTER/) {
+> +                       my $k = "GIT_${ac}_${ned}";
+> +                       if (defined $env->{$k}) {
+> +                               $ENV{$k} = $env->{$k};
+> +                       } else {
+> +                               delete $ENV{$k};
+> +                       }
+> +               }
+> +       }
+> +}
+> +
+> +sub do_git_commit {
+> +       my ($self, $log_entry) = @_;
+> +       my $lr = $self->last_rev;
+> +       if (defined $lr && $lr >= $log_entry->{revision}) {
+> +               die "Last fetched revision of ", $self->refname,
+> +                   " was r$lr, but we are about to fetch: ",
+> +                   "r$log_entry->{revision}!\n";
+> +       }
+> +       if (my $c = $self->rev_map_get($log_entry->{revision})) {
+> +               croak "$log_entry->{revision} = $c already exists! ",
+> +                     "Why are we refetching it?\n";
+> +       }
+> +       my $old_env = set_commit_header_env($log_entry);
+>         my $tree = $log_entry->{tree};
+>         if (!defined $tree) {
+>                 $tree = $self->tmp_index_do(sub {
+> @@ -2089,5 +2116,6 @@ sub do_git_commit {
+>         defined(my $pid = open3(my $msg_fh, my $out_fh, '>&STDERR', @exec))
+>                                                                    or croak $!;
+>         print $msg_fh $log_entry->{log} or croak $!;
+> +       restore_commit_header_env($old_env);
+>         unless ($self->no_metadata) {
+>                 print $msg_fh "\ngit-svn-id: $log_entry->{metadata}\n"
+> \ No newline at end of file
+> --
+> Eric Wong
+>
 
-On Tue, 18 Dec 2007, Linus Torvalds wrote:
+kelvie@mudd (test) qt $ git cat-file commit HEAD
+tree 20adec5e5b186ea4360b5866586af7cfa5e3d88a
+parent 15f3ab6b0c667b4900d5a7be0e80ef4e20b5bac2
+author Kelvie Wong <Kelvie.Wong@safe.com> 1197990883 -0800
+committer Kelvie Wong <Kelvie.Wong@safe.com> 1197990883 -0800
 
-> But I obviously think the version by Dscho is better (exactly because it's 
-> *not* enough to just clear the name prefix entirely), although I think 
-> that one is broken too - using ':' to separate the prefixes is *not* 
-> acceptable, since ':' is very possibly part of the prefix.
-> 
-> So I think you'd need separate arguments for the from/to prefixes, and not 
-> try to shoehorn it into one argument. With possibly some simple form to 
-> say "no prefix". So maybe something like
-> 
->   --src-prefix=<string>		// default "a/"
->   --dst-prefix=<string>		// default "b/"
->   --no-prefix			// shorthand for --src-prefix="" --dst-prefix=""
-> 
-> would work for everybody?
+test
+kelvie@mudd (test) qt $ git svn rebase
+<snip>
+HEAD is now at ebd86b2... SnappingFactory: Fixed bizarre omission from
+previous commit for this bug. (PR#12838) <omg>
+Applying test
+kelvie@mudd (test) qt $ git cat-file commit HEAD
+tree 2f242f83496f707758a863634a803f60a77c2786
+parent ebd86b245505a18603fd114862eb97ea9609d7e1
+author Kelvie Wong <Kelvie.Wong@safe.com> 1197990883 -0800
+committer Kelvie Wong <Kelvie.Wong@safe.com> 1197998130 +0000
 
-If this is preferred, please squash this:
+test
+kelvie@mudd (test) qt $ git --version
+git version 1.5.4.rc0.57.g4d99a
+kelvie@mudd (test) qt $ git svn --version
+Use of uninitialized value in pattern match (m//) at /usr/bin/git-svn line 202.
+git-svn version 1.5.4.rc0.57.g4d99a (svn 1.4.4)
+kelvie@mudd (test) qt $
 
--- snipsnap --
 
- Documentation/diff-options.txt |   11 ++++++++---
- diff.c                         |   24 ++++++++++++++----------
- 2 files changed, 22 insertions(+), 13 deletions(-)
+Looks like it did it. Thanks for the fix.
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 672a2d0..0d3dccc 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -211,9 +211,14 @@ endif::git-format-patch[]
- --no-ext-diff::
- 	Disallow external diff drivers.
- 
----prefix=<prefix1>[:<prefix2>]::
--	Show the given path prefixes instead of "a/" and "b/".  Leave
--	it empty to show no prefix at all.
-+--src-prefix <prefix>::
-+	Show the given source prefix instead of "a/".
-+
-+--dst-prefix <prefix>::
-+	Show the given destination prefix instead of "b/".
-+
-+--no-prefix::
-+	Do not show any source or destination prefix.
- 
- For more detailed explanation on these common options, see also
- link:diffcore.html[diffcore documentation].
-diff --git a/diff.c b/diff.c
-index 095bbb5..9bc5fea 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2317,16 +2317,20 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		else if (40 < options->abbrev)
- 			options->abbrev = 40;
- 	}
--	else if (!strcmp(arg, "--prefix=")) {
--		char *colon = strchr(arg + 9, ':');
--		options->a_prefix = arg + 9;
--		if (colon) {
--			*colon = '\0';
--			options->b_prefix = colon + 1;
--		}
--		else
--			options->b_prefix = options->a_prefix;
--	}
-+	else if (!strcmp(arg, "--src-prefix")) {
-+		if (ac < 2)
-+			return error("--src-prefix needs a parameter");
-+		options->a_prefix = arg + 1;
-+		return 2;
-+	}
-+	else if (!strcmp(arg, "--dst-prefix")) {
-+		if (ac < 2)
-+			return error("--dst-prefix needs a parameter");
-+		options->b_prefix = arg + 1;
-+		return 2;
-+	}
-+	else if (!strcmp(arg, "--no-prefix"))
-+		options->a_prefix = options->b_prefix = "";
- 	else
- 		return 0;
- 	return 1;
+-- 
+Kelvie Wong
