@@ -1,106 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Explain what 'ginstall' is
-Date: Tue, 18 Dec 2007 10:14:38 +0100
-Message-ID: <200712181014.38986.jnareb@gmail.com>
-References: <Pine.LNX.4.64.0712171641370.24957@fractal.phys.lafayette.edu> <200712180920.39633.jnareb@gmail.com> <20071218093819.0b1caf16@pc09.procura.nl>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [StGit PATCH 00/17] Series short description
+Date: Tue, 18 Dec 2007 10:20:04 +0100
+Message-ID: <871w9kmkaj.fsf@lysator.liu.se>
+References: <20071214105238.18066.23281.stgit@krank>
+	<b0943d9e0712170309n415dc6cs9d1c1f8a9c687bf8@mail.gmail.com>
+	<20071217224812.GA6342@diana.vm.bytemark.co.uk>
+	<b0943d9e0712180111l3294e1adj60b5271b9820c60c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Andy Dougherty <doughera@lafayette.edu>, git@vger.kernel.org
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Tue Dec 18 10:15:16 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>,
+	Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 10:20:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4YXj-0004Ad-VM
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 10:15:16 +0100
+	id 1J4YcU-0005VO-DR
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 10:20:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752098AbXLRJOx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 04:14:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751580AbXLRJOw
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 04:14:52 -0500
-Received: from fk-out-0910.google.com ([209.85.128.187]:6108 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750912AbXLRJOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 04:14:50 -0500
-Received: by fk-out-0910.google.com with SMTP id z23so1948168fkz.5
-        for <git@vger.kernel.org>; Tue, 18 Dec 2007 01:14:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=NwommJ+mCr7gn3LSPIFuK5NewnRUdHeGRG63mYjW75U=;
-        b=wah3HwRVLWdMi1pUj/PubC/w3WNZrl9d6vw7pLj+IqtSEnSlcJpZTBjtMGqLmIxyYk3fnZX2asw714nOv7LcY02tFDC5w8zd+YcUtaX3c4tFXBWu324B3RmhgpneDYyUAi6QtjhsgOCg9Egjpg1PoREc7AoSR48+kg620BY4l/s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=JdmBozW8GvTIcs2c5bljAaCCeJEgBJNBsj+Fv4ezaygKpK/GpxS3WWr2D7GEjVClQDVVEGT6v6BjVaG9e5yRTUk6UrEqzxSaJUCoVEflNcdGRhvSNPtg5KXkIiVeriMasOM9s/9YyFH90KzQpkeE0M4UmSnxU1mf4y4s19mpeq4=
-Received: by 10.82.152.16 with SMTP id z16mr17872546bud.17.1197969285473;
-        Tue, 18 Dec 2007 01:14:45 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.255.201])
-        by mx.google.com with ESMTPS id y34sm17049873iky.2007.12.18.01.14.42
-        (version=SSLv3 cipher=OTHER);
-        Tue, 18 Dec 2007 01:14:43 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20071218093819.0b1caf16@pc09.procura.nl>
-Content-Disposition: inline
+	id S1752108AbXLRJTr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Dec 2007 04:19:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752105AbXLRJTq
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 04:19:46 -0500
+Received: from mail.lysator.liu.se ([130.236.254.3]:54995 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752101AbXLRJTp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Dec 2007 04:19:45 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id 479E1200A244;
+	Tue, 18 Dec 2007 10:19:44 +0100 (CET)
+Received: from mail.lysator.liu.se ([127.0.0.1])
+	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 05925-01-40; Tue, 18 Dec 2007 10:19:43 +0100 (CET)
+Received: from krank (c83-253-242-75.bredband.comhem.se [83.253.242.75])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id 8F2D7200A240;
+	Tue, 18 Dec 2007 10:19:43 +0100 (CET)
+Received: by krank (Postfix, from userid 1000)
+	id 8A68C7B4077; Tue, 18 Dec 2007 10:20:04 +0100 (CET)
+In-Reply-To: <b0943d9e0712180111l3294e1adj60b5271b9820c60c@mail.gmail.com> (Catalin Marinas's message of "Tue\, 18 Dec 2007 09\:11\:00 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68714>
 
-On Tue, 18 Dec 2007, H.Merijn Brand wrote:
-> On Tue, 18 Dec 2007 09:20:38 +0100, Jakub Narebski <jnareb@gmail.com> wrote:
->> On Tue, 18 Dec 2007, H.Merijn Brand wrote:
->>> On Mon, 17 Dec 2007 17:21:08 -0800 (PST), Jakub Narebski wrote:
->>>>
->>>> Second, the default autoconf macro AC_PROG_INSTALL *requires* that
->>>> there is BSD-compatible `install' program (as 'install-sh' or
->>>> 'install.sh') in the sources.  Adding such script is (I think) not a
->>>> problem; finding minimal portable[*1*] script is.  
->>>> So if you know one... 
->> 
->> [...]. There is need for BSD-compatibile
->> `install` program as 'install-sh', not 'make-install' script. The idea
->> is to use system-provided 'install' if it exists and is compatibile,
-> 
-> There lies the problem. HP-UX does have an 'install', but it is not
-> compatible, and chances are (very) small that people have installed
-> the GNU or any other BSD compliant install.
-> 
->> because it should be faster than script version, and fallback to 
->> provided install-sh only if system install is not found.
-> 
-> The problem again. It *does* find install, but it turns out to be
-> unusable.
+"Catalin Marinas" <catalin.marinas@gmail.com> writes:
 
-Could you check if ./configure correctly uses install-sh in your case?
-Copy install-sh from for example autotools[*1*] (e.g. libtool has one)
-to the git sources, uncomment line with AC_PROG_INSTALL in configure.ac,
-generate configure script using "make configure" and check what
-./configure chooses.
+> On 17/12/2007, Karl Hasselstr=C3=B6m <kha@treskal.com> wrote:
+>> On 2007-12-17 11:09:06 +0000, Catalin Marinas wrote:
+>>
+>> > On 14/12/2007, David K=C3=A5gedal <davidk@lysator.liu.se> wrote:
+>> >
+>> > > The following series an emacs interface to stgit patch stacks. I=
+t
+>> > > shows a buffer with the the output of "stg series" and allows yo=
+u
+>> > > to do some common operations on it, such as push/pop,
+>> > > commit/uncommit, edit, rename, repair, and coalesce.
+>> >
+>> > That's really cool stuff! Thanks.
+>>
+>> Yes, incredibly useful.
+>
+> Other useful commands would be support for 'patches' and a local
+> diff/status (and maybe a menu).
 
-In my case it is:
+I have some ideas for some way of showing the current status, but
+nothing is implemented yet. For some of the more complex cases, I'd
+like to refer to git.el, although I think that needs some
+improvements.
 
-  $ cp /usr/share/libtool/install-sh .
-  $ make configure
-  GIT_VERSION = 1.5.4.rc0.56.g6fbe-dirty
-      GEN configure
-  $ ./configure
-  configure: CHECKS for programs
-  [...]
-  checking for a BSD-compatible install... /usr/bin/install -c
+I don't think I ever used the 'patches' command, so I'm not sure what
+the best way to implement it would be.
 
-What is ./configure output in your case?
+And my emacs has no menu, so I'm probably not the best person to adda
+menu, either :-)
 
-Footnotes:
-----------
-[*1*] Or for example http://svn.scheffers.net/zlib/tclconfig/install-sh
-which is smaller (2189 bytes vs. 9233 autotools one, or 10970 from
-kapptemplate (kdesdk 3.5.3)).
-
--- 
-Jakub Narebski
-Poland
+--=20
+David K=C3=A5gedal
