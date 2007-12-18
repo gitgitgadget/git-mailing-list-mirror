@@ -1,86 +1,72 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git-stash: RFC: Adopt the default behavior to other commands
-Date: Tue, 18 Dec 2007 15:22:26 +0100
-Message-ID: <4767D7A2.30703@op5.se>
-References: <20071217110322.GH14889@albany.tokkee.org> <506C6191-655D-46AE-A5C2-1335A9044F44@lrde.epita.fr> <7vk5nd53lp.fsf@gitster.siamese.dyndns.org> <57F403E7-AF5B-40F1-AE9D-8EA036675A67@lrde.epita.fr> <7vfxy04ze7.fsf@gitster.siamese.dyndns.org> <20071218105941.GA17251@albany.tokkee.org> <Pine.LNX.4.64.0712181231420.23902@racer.site>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] HP-UX does not have select.h
+Date: Tue, 18 Dec 2007 15:22:37 +0100
+Message-ID: <4767D7AD.7030101@viscovery.net>
+References: <20071217192306.5da48540@pc09.procura.nl> <7v8x3t6nq1.fsf@gitster.siamese.dyndns.org> <20071217232259.0b41a3bf@pc09.procura.nl> <7vbq8o370k.fsf@gitster.siamese.dyndns.org> <476781C6.6050507@viscovery.net> <Pine.LNX.4.64.0712181234520.23902@racer.site> <4767C105.8080607@viscovery.net> <Pine.LNX.4.64.0712181351270.23902@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Sebastian Harl <sh@tokkee.org>, Junio C Hamano <gitster@pobox.com>,
-	Benoit Sigoure <tsuna@lrde.epita.fr>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Dec 18 15:23:00 2007
+X-From: git-owner@vger.kernel.org Tue Dec 18 15:23:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4dLU-0001Hx-3l
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 15:22:56 +0100
+	id 1J4dLk-0001Of-0W
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 15:23:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754603AbXLROWb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 09:22:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754106AbXLROWa
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 09:22:30 -0500
-Received: from mail.op5.se ([193.201.96.20]:33719 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753850AbXLROWa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 09:22:30 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 7F2E01F08043;
-	Tue, 18 Dec 2007 15:22:28 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 2UBIZn19OQim; Tue, 18 Dec 2007 15:22:27 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id BE8E81F0803F;
-	Tue, 18 Dec 2007 15:22:26 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <Pine.LNX.4.64.0712181231420.23902@racer.site>
+	id S1755467AbXLROWl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 09:22:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755256AbXLROWl
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 09:22:41 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:38933 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753846AbXLROWk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 09:22:40 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1J4dLR-00030j-FM; Tue, 18 Dec 2007 15:22:53 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 3953154D; Tue, 18 Dec 2007 15:22:37 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <Pine.LNX.4.64.0712181351270.23902@racer.site>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68752>
 
-Johannes Schindelin wrote:
-> Hi,
+Johannes Schindelin schrieb:
+> On Tue, 18 Dec 2007, Johannes Sixt wrote:
+>> Johannes Schindelin schrieb:
+>>> I'd be cautious about using poll().  AFAIK MacOSX 10.2.8 does not have 
+>>> poll(), and IIRC I had problems finding it in MinGW, too.  I know, we 
+>>> use it in daemon, upload-archive and upload-pack, but these are not 
+>>> typically functions performed by a client, so I would not know if it 
+>>> worked on my (now-dead) iBook, or on msysGit.
+>> So what? If we use poll() already in daemon, upload-archive and 
+>> upload-pack, and no MacOSX 10.2.8 user has spoken up with a proposal for 
+>> replacement, then yet another use won't raise a complaint, either.
 > 
-> On Tue, 18 Dec 2007, Sebastian Harl wrote:
-> 
->> On Mon, Dec 17, 2007 at 04:31:12PM -0800, Junio C Hamano wrote:
->>> But the original point by Sebastian hasn't been answered.  He wanted 
->>> to make the command list the stash without arguments.
->>>
->>> This was discussed already in the early days of stash and there indeed 
->>> was a suggestion to do so (I think I sided with that), but the users 
->>> did not want it.  IIRC, the argument went like: "when I say 'stash', 
->>> that is because I want a quick and immediate way to stash, and I do 
->>> not want a list.  If I do not have to have a quick way, I would create 
->>> a temporary commit on the current branch, or switch to a temporary 
->>> branch and commit there."
->> Well, "git stash save" is just five characters more - I really don't see 
->> why this would be less comfortable (and for the really lazy people there 
->> are still aliases...). On the other hand (if "list" is the default), 
->> we'd get a more consistent interface which imho is imho more important 
->> than typing five characters less.
-> 
-> It's more about what you're used to.  I had an alias named 'stash' long 
-> before it became a git command.  And now guess how _annoying_ it would be 
-> to type "git stash<Return><Curse out loud at my mouse>git stash 
-> save<Return>".
-> 
+> daemon, upload-archive and upload-pack are server-side functions, so they 
+> are substantially less well tested.
 
-Not nearly as annoying as losing work because of it, and you obviously
-*know* what to do when you're done cursing, while clueless-newbie-X just
-hops away and uses subversion.
+upload-pack is used for local fetches and, therefore, should be
+well-tested on all systems.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+>> And if it were a problem for msysGit, I wouldn't have suggested it ;) 
+>> The particular use in pager.c would be inside #ifndef __MINGW32__ #endif 
+>> anyway.
+> 
+> We still did not integrate the 'daemon' branch of 4msysgit, correct?
+
+No, we didn't.
+
+-- Hannes
