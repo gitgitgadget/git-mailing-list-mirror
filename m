@@ -1,62 +1,84 @@
-From: "Sverre Johansen" <sverre.johansen@gmail.com>
-Subject: git-svn fix for broken symlinks
-Date: Tue, 18 Dec 2007 17:11:56 +0100
-Message-ID: <a74c0d680712180811m216699a4h7123039c3158c2ed@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-stash: RFC: Adopt the default behavior to other commands
+Date: Tue, 18 Dec 2007 16:11:43 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712181610080.23902@racer.site>
+References: <20071217110322.GH14889@albany.tokkee.org>
+ <506C6191-655D-46AE-A5C2-1335A9044F44@lrde.epita.fr>
+ <7vk5nd53lp.fsf@gitster.siamese.dyndns.org> <57F403E7-AF5B-40F1-AE9D-8EA036675A67@lrde.epita.fr>
+ <7vfxy04ze7.fsf@gitster.siamese.dyndns.org> <20071218105941.GA17251@albany.tokkee.org>
+ <Pine.LNX.4.64.0712181231420.23902@racer.site> <4767D7A2.30703@op5.se>
+ <Pine.LNX.4.64.0712181445420.23902@racer.site> <4767E07A.2020100@op5.se>
+ <Pine.LNX.4.64.0712181513060.23902@racer.site> <4767E717.2060902@op5.se>
+ <m3lk7sovt0.fsf@roke.D-201> <4767EFFA.1070909@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 18 17:12:39 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, Sebastian Harl <sh@tokkee.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Benoit Sigoure <tsuna@lrde.epita.fr>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Dec 18 17:12:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4f3d-0004d8-Lp
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 17:12:38 +0100
+	id 1J4f3d-0004d8-11
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 17:12:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757092AbXLRQMD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 11:12:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757361AbXLRQMB
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 11:12:01 -0500
-Received: from wr-out-0506.google.com ([64.233.184.236]:47543 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757092AbXLRQL7 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1757145AbXLRQMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 11:12:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757140AbXLRQMA
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 11:12:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55019 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757071AbXLRQL7 (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 18 Dec 2007 11:11:59 -0500
-Received: by wr-out-0506.google.com with SMTP id c49so1717353wra.1
-        for <git@vger.kernel.org>; Tue, 18 Dec 2007 08:11:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=z/TiKXwZwogisJOjk+XCOPoEY/5Z9q84qr8pplinM6M=;
-        b=TABamkqf0p+lp63kIQtqtVGzfdmGWnQmX2ADRSzWggv70yItAWBpRcMaEoLcJBiSOJJq1aJ+12tHRKierqQ6MLoT1/U28c6pZQGMkl2wluMwDrcMQQSdcLdX9A5G1lqVNgh2soPRtLS+A66qyz1OHE+kwl3N/KG0kRV8Cp1tEbY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=vk8kGSwIGbLLTcDnZK7n+C1tT1CvTXaN8CQcUHELAb5jgEpFEyFh0brIxV+af30kDEgBYSpGRh2r37HEqwScJ0M5JvyFNc2cPEE0H7sArNYQfrnjbyxkxTGuxRUQJhd/QZAyKqeeWbGYJKqmh+zffHjICMbK/4tfaOfONhoCA0Y=
-Received: by 10.115.79.1 with SMTP id g1mr5270220wal.43.1197994316759;
-        Tue, 18 Dec 2007 08:11:56 -0800 (PST)
-Received: by 10.114.77.3 with HTTP; Tue, 18 Dec 2007 08:11:56 -0800 (PST)
-Content-Disposition: inline
+Received: (qmail invoked by alias); 18 Dec 2007 16:11:57 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp053) with SMTP; 18 Dec 2007 17:11:57 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Pg1UVUE9Py38ZLb4a5TlJlDYAEUTlchG8Qpj5dn
+	9etX65Fwz8zuv1
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4767EFFA.1070909@op5.se>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68773>
 
 Hi,
 
-There is a bug in older versions of SVN that makes it possible to create
-symlinks where the target is not the path to the file, but instead the
-content of the target file. The bug is described here [0].
+On Tue, 18 Dec 2007, Andreas Ericsson wrote:
 
-This breaks git-svn because it expects files which is marked as symlinks
-to have the content "link: <filename>".
+> Jakub Narebski wrote:
+>
+> > Andreas Ericsson <ae@op5.se> writes:
+> >
+> > > My point is that it would be nice if all git commands that actually 
+> > > manipulate objects (create/delete/modify) had a safe default, and 
+> > > that experienced users such as yourself could endure the 
+> > > insufferable agony of retraining your fingers to type five more 
+> > > chars so that people won't have to get bitten by surprises.
+> > 
+> > Also for "git commit"?
+> 
+> git commit has a very safe default; It runs "git status" and exits.
 
-There was a thread about this back in July, resulting in this patch [1]. Is that
-patch planned to be merged anytime soon? I'm using it, and it works great
-for me.
+Not in my universe.  It starts an editor, and then commits what I staged.
 
-[0]: http://subversion.tigris.org/issues/show_bug.cgi?id=2692
-[1]: http://kerneltrap.org/mailarchive/git/2007/7/19/252025
--- 
-           Sverre Johansen
+> > In my opinion _basic_ usage of git-stash is simply using it with one 
+> > stash only: "git stash" / "git unstash" (i.e. "git stash apply"; by 
+> > the way this is one (beside "git view") use case for builtin 
+> > predefined aliases).  Using it with multiple stashes (only then "git 
+> > stash list" is needed) is advanced usage; and for advanced usage 
+> > longer form is preferred, I think.
+> > 
+> 
+> Perhaps. I'll stop quibbling about it. I don't care very deeply about it 
+> anyway.
+
+Ah.  That explains why you made a case against the default operation ;-)
+
+Ciao,
+Dscho
