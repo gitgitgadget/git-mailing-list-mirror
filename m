@@ -1,115 +1,98 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git-stash: RFC: Adopt the default behavior to other commands
-Date: Tue, 18 Dec 2007 16:00:10 +0100
-Message-ID: <4767E07A.2020100@op5.se>
-References: <20071217110322.GH14889@albany.tokkee.org> <506C6191-655D-46AE-A5C2-1335A9044F44@lrde.epita.fr> <7vk5nd53lp.fsf@gitster.siamese.dyndns.org> <57F403E7-AF5B-40F1-AE9D-8EA036675A67@lrde.epita.fr> <7vfxy04ze7.fsf@gitster.siamese.dyndns.org> <20071218105941.GA17251@albany.tokkee.org> <Pine.LNX.4.64.0712181231420.23902@racer.site> <4767D7A2.30703@op5.se> <Pine.LNX.4.64.0712181445420.23902@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Sebastian Harl <sh@tokkee.org>, Junio C Hamano <gitster@pobox.com>,
-	Benoit Sigoure <tsuna@lrde.epita.fr>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Dec 18 16:01:03 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: [PATCH] Fix test failure due to broken sed on Leopard
+Date: Tue, 18 Dec 2007 16:11:15 +0100
+Message-ID: <1197990675-41698-1-git-send-email-win@wincent.com>
+Cc: gitster@pobox.com, Wincent Colaiuta <win@wincent.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 18 16:13:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4dw1-00081P-BM
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 16:00:41 +0100
+	id 1J4e8C-0004WX-Rs
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 16:13:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756250AbXLRPAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 10:00:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756247AbXLRPAR
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 10:00:17 -0500
-Received: from mail.op5.se ([193.201.96.20]:40695 "EHLO mail.op5.se"
+	id S1756417AbXLRPMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 10:12:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755072AbXLRPMx
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 10:12:53 -0500
+Received: from wincent.com ([72.3.236.74]:33290 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756246AbXLRPAQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 10:00:16 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id F2F741F08046;
-	Tue, 18 Dec 2007 16:00:13 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id iWGXMuo5JQkm; Tue, 18 Dec 2007 16:00:12 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id EA7001F08043;
-	Tue, 18 Dec 2007 16:00:11 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <Pine.LNX.4.64.0712181445420.23902@racer.site>
+	id S1752661AbXLRPMw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 10:12:52 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBIFBGBN025333;
+	Tue, 18 Dec 2007 09:11:17 -0600
+X-Mailer: git-send-email 1.5.4.rc0.1099.g76fa0-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68758>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Tue, 18 Dec 2007, Andreas Ericsson wrote:
-> 
->> Johannes Schindelin wrote:
->>
->>> On Tue, 18 Dec 2007, Sebastian Harl wrote:
->>>
->>>> On Mon, Dec 17, 2007 at 04:31:12PM -0800, Junio C Hamano wrote:
->>>>> But the original point by Sebastian hasn't been answered.  He 
->>>>> wanted to make the command list the stash without arguments.
->>>>>
->>>>> This was discussed already in the early days of stash and there 
->>>>> indeed was a suggestion to do so (I think I sided with that), but 
->>>>> the users did not want it.  IIRC, the argument went like: "when I 
->>>>> say 'stash', that is because I want a quick and immediate way to 
->>>>> stash, and I do not want a list.  If I do not have to have a quick 
->>>>> way, I would create a temporary commit on the current branch, or 
->>>>> switch to a temporary branch and commit there."
->>>> Well, "git stash save" is just five characters more - I really don't 
->>>> see why this would be less comfortable (and for the really lazy 
->>>> people there are still aliases...). On the other hand (if "list" is 
->>>> the default), we'd get a more consistent interface which imho is 
->>>> imho more important than typing five characters less.
->>> It's more about what you're used to.  I had an alias named 'stash' 
->>> long before it became a git command.  And now guess how _annoying_ it 
->>> would be to type "git stash<Return><Curse out loud at my mouse>git 
->>> stash save<Return>".
->> Not nearly as annoying as losing work because of it, and you obviously 
->> *know* what to do when you're done cursing, while clueless-newbie-X just 
->> hops away and uses subversion.
-> 
-> Really?  Clueless-newbie-X certainly knows how to apply the stash, 
-> otherwise she would not have used the command, right?
-> 
+The newly-added common-tail-optimization test fails on Leopard because
+the broken sed implementation bails with a spurious "unterminated
+substitute pattern" error because of the length of one of the
+arguments.
 
-Far too many times I've seen people expect help output if the command
-they're running is even remotely dangerous, so they go ahead and run
-it without arguments to see what it does.
+So halve the size of the argument (to 1024 - 1, down from the previous
+2048 - 1) to get the test passing again.
 
+Signed-off-by: Wincent Colaiuta <win@wincent.com>
+---
+ t/t4024-diff-optimize-common.sh |   22 +++++++++++-----------
+ 1 files changed, 11 insertions(+), 11 deletions(-)
 
-> In the alternative, you could just scrap all those default actions, 
-> showing synopses instead.  For all commands, including "git commit", "git 
-> log", "git fetch", etc.
-> 
-
-Like we do for the git wrapper, you mean? Yes, that would be one solution,
-although not a very good one for all commands.
-
-It's probably not a bad idea for commands where the primary use is
-something else than producing visual output though, such as tag or branch,
-but those handle creation/deletion of stuff, so the default action for them
-is to list stuff of the kind they operate on. I fail to see why stash should
-be any different.
-
-> See?
-> 
-
-Not really, no. What was your point?
-
+diff --git a/t/t4024-diff-optimize-common.sh b/t/t4024-diff-optimize-common.sh
+index 20fe87b..bbda816 100755
+--- a/t/t4024-diff-optimize-common.sh
++++ b/t/t4024-diff-optimize-common.sh
+@@ -7,26 +7,26 @@ test_description='common tail optimization'
+ z=zzzzzzzz ;# 8
+ z="$z$z$z$z$z$z$z$z" ;# 64
+ z="$z$z$z$z$z$z$z$z" ;# 512
+-z="$z$z$z$z" ;# 2048
+-z2047=$(expr "$z" : '.\(.*\)') ; #2047
++z="$z$z" ;# 1024
++z1023=$(expr "$z" : '.\(.*\)') ; #1023
+ 
+ test_expect_success setup '
+ 
+-	echo "a$z2047" >file-a &&
++	echo "a$z1023" >file-a &&
+ 	echo "b" >file-b &&
+-	echo "$z2047" >>file-b &&
+-	echo "c$z2047" | tr -d "\012" >file-c &&
++	echo "$z1023" >>file-b &&
++	echo "c$z1023" | tr -d "\012" >file-c &&
+ 	echo "d" >file-d &&
+-	echo "$z2047" | tr -d "\012" >>file-d &&
++	echo "$z1023" | tr -d "\012" >>file-d &&
+ 
+ 	git add file-a file-b file-c file-d &&
+ 
+-	echo "A$z2047" >file-a &&
++	echo "A$z1023" >file-a &&
+ 	echo "B" >file-b &&
+-	echo "$z2047" >>file-b &&
+-	echo "C$z2047" | tr -d "\012" >file-c &&
++	echo "$z1023" >>file-b &&
++	echo "C$z1023" | tr -d "\012" >file-c &&
+ 	echo "D" >file-d &&
+-	echo "$z2047" | tr -d "\012" >>file-d
++	echo "$z1023" | tr -d "\012" >>file-d
+ 
+ '
+ 
+@@ -61,7 +61,7 @@ EOF
+ 
+ test_expect_success 'diff -U0' '
+ 
+-	git diff -U0 | sed -e "/^index/d" -e "s/$z2047/Z/g" >actual &&
++	git diff -U0 | sed -e "/^index/d" -e "s/$z1023/Z/g" >actual &&
+ 	diff -u expect actual
+ 
+ '
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.5.4.rc0.1099.g76fa0-dirty
