@@ -1,68 +1,70 @@
-From: "Gerald Gutierrez" <ggmlfs@gmail.com>
-Subject: RE: git with custom diff for commits
-Date: Tue, 18 Dec 2007 14:29:55 -0800
-Message-ID: <000e01c841c5$8c9e0c70$762a14ac@na.acco.com>
-References: <60687a7d0712171456p14328817y5aa229f0df23c02f@mail.gmail.com><Pine.LNX.4.64.0712172300510.9446@racer.site><vpq1w9kaphg.fsf@bauges.imag.fr><Pine.LNX.4.64.0712172310090.9446@racer.site><7vbq8o6gxw.fsf@gitster.siamese.dyndns.org><vpqk5ncz8fn.fsf@bauges.imag.fr><7vodco1him.fsf@gitster.siamese.dyndns.org><000001c841b5$89fcef00$762a14ac@na.acco.com><7vzlw7ybx7.fsf@gitster.siamese.dyndns.org><000101c841b7$5f1d1060$762a14ac@na.acco.com> <vpqsl1zfz8r.fsf@bauges.imag.fr>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: log/show: relative pathnames do not work in rev:path
+Date: Tue, 18 Dec 2007 23:29:55 +0100
+Message-ID: <20071218222955.GI2875@steel.home>
+References: <20071218173321.GB2875@steel.home> <m3d4t3q4e5.fsf@roke.D-201> <20071218204623.GC2875@steel.home> <200712182224.28152.jnareb@gmail.com> <alpine.LFD.0.9999.0712181347140.21557@woody.linux-foundation.org> <56b7f5510712181408g4aee55d2j2a7f0f13bf90323d@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-Cc: "'Junio C Hamano'" <gitster@pobox.com>,
-	"'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
-	<git@vger.kernel.org>
-To: "'Matthieu Moy'" <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Dec 18 23:29:23 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 23:30:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4kwE-0005RH-0r
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 23:29:22 +0100
+	id 1J4kxB-0005ny-ET
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 23:30:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752011AbXLRW26 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 17:28:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751736AbXLRW26
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 17:28:58 -0500
-Received: from py-out-1112.google.com ([64.233.166.181]:42688 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751227AbXLRW25 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 17:28:57 -0500
-Received: by py-out-1112.google.com with SMTP id u77so4316580pyb.16
-        for <git@vger.kernel.org>; Tue, 18 Dec 2007 14:28:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:references:subject:date:message-id:mime-version:content-type:content-transfer-encoding:x-mailer:in-reply-to:thread-index:x-mimeole;
-        bh=FC5DLi/2tT4KdHHLGV2GoBz8qzRvPyLnsVY+qT6LKjE=;
-        b=qe/D11Af9HST4rXWHd/PhYLUkNLpdc7tF8HvvYWTjT2h9DjHwbGOReB1hKwg6+tTpVr3kjYxDxlsBpWWU2B4jNyUiwgtUYaKjNI+cO601q+0kZE4FBR5w2CTjzm2x5NSFobtasn8U9jF0GghadiEW5Rcv/cF8Fw5SEHZ1PTZ1H0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:references:subject:date:message-id:mime-version:content-type:content-transfer-encoding:x-mailer:in-reply-to:thread-index:x-mimeole;
-        b=a+moefW6EI1PdFs5zMdnlDej39ps6wIVnVOlBvYee48FtJsqjXm9A73qynDmFQGq9cRFGB9lFbedF/BMTFgE0Ikj1Lf+WTTcMZtKivUvqDMKGDi8RPaNiE4ujskTHCdZ0Z1I619tEU5w68k2Os+ohGSXpH8lPUyS+SGH7Uwn4Ag=
-Received: by 10.35.111.14 with SMTP id o14mr9060427pym.24.1198016934619;
-        Tue, 18 Dec 2007 14:28:54 -0800 (PST)
-Received: from BURGXGUTIERNB ( [63.87.154.251])
-        by mx.google.com with ESMTPS id n67sm14498377pyh.2007.12.18.14.28.45
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 18 Dec 2007 14:28:53 -0800 (PST)
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: 
-Thread-Index: AchBwDUSR6tc9ZbMTe2tF1KKsV9vhQAAs5NgAACWtKA=
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
+	id S1751842AbXLRW36 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 17:29:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752017AbXLRW36
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 17:29:58 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:25929 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751736AbXLRW35 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 17:29:57 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+a72E=
+Received: from tigra.home (Fc89a.f.strato-dslnet.de [195.4.200.154])
+	by post.webmailer.de (fruni mo14) (RZmta 14.6)
+	with ESMTP id d03628jBIJr8NM ; Tue, 18 Dec 2007 23:29:55 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id AFF33277AE;
+	Tue, 18 Dec 2007 23:29:55 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 37B7256D22; Tue, 18 Dec 2007 23:29:55 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <56b7f5510712181408g4aee55d2j2a7f0f13bf90323d@mail.gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68836>
 
- 
-> if (user_redefined_changed)
->   if (user_defn_of_changed(work, head)) commit(work); else
->   if (builtin_changed(work, head)) commit(work);
+Dana How, Tue, Dec 18, 2007 23:08:33 +0100:
+> When it *does* refer to a commit,  then for commit:relpath you prefix
+> relpath with the suffix of the cwd which is an extension beyond the root
+> of the working tree.
 
-That didn't come out quite right. It should be:
+...universally known as "prefix" (the last argument of builtin
+commands) :)
 
-if (user_redefined_changed) {
-  if (user_defn_of_changed(work, head)) { commit(work); }
-} else {
-  if (builtin_changed(work, head)) { commit(work); }
-}
+> > where the magic is *not* done by any "SHA1 path lookup" at all, but is
+> > simply done by the commit->tree lookup. At least at that point it would
+> > make logical sense (although it would probably be quite painful to
+> > implement).
+> 
+> I must be missing something.  The old patch I submitted did this.
+> Its defect was that it did NOT make the cwd insertion conditional
+> on whether the tree-ish involved a commit or not (a test which also
+> _seems_ doable,  but I don't think I finished it & sent it in).
+
+It is also a bit painful: lots of funtions (sha1_name.c) will have
+their prototypes changed to get the prefix (aka suffix). And their
+callers...
