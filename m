@@ -1,55 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] provide advance warning of some future pack default
-	changes
-Date: Tue, 18 Dec 2007 06:11:36 -0500
-Message-ID: <20071218111136.GA6266@coredump.intra.peff.net>
-References: <20071215004230.GF7300@mail.oracle.com> <alpine.LFD.0.999999.0712142114400.8467@xanadu.home> <20071217200920.GB19816@mail.oracle.com> <alpine.LFD.0.999999.0712171517320.8467@xanadu.home> <7v3au16myj.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.999999.0712171641460.8467@xanadu.home> <7vbq8o4yxc.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.999999.0712172212110.8467@xanadu.home> <46a038f90712171952i4f53876fv55b0e6993d5f4b0a@mail.gmail.com> <7vlk7s38aq.fsf@gitster.siamese.dyndns.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Fix segfault in diff-delta.c when FLEX_ARRAY is 1
+Date: Tue, 18 Dec 2007 12:15:04 +0100
+Message-ID: <85ir2wjltz.fsf@lola.goethe.zz>
+References: <1197941997-11421-1-git-send-email-madcoder@debian.org>
+	<20071218014455.GB14981@artemis.madism.org>
+	<alpine.LFD.0.9999.0712172032090.21557@woody.linux-foundation.org>
+	<alpine.LFD.0.9999.0712172146070.21557@woody.linux-foundation.org>
+	<7vwsrc1idm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Nicolas Pitre <nico@cam.org>,
-	Joel Becker <Joel.Becker@oracle.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Pierre Habouzit <madcoder@debian.org>, spearce@spearce.org,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 18 12:12:11 2007
+X-From: git-owner@vger.kernel.org Tue Dec 18 12:15:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4aMs-0005c1-M8
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 12:12:11 +0100
+	id 1J4aPb-0006SO-IL
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 12:14:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753760AbXLRLLk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 06:11:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753746AbXLRLLj
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 06:11:39 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4528 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752517AbXLRLLj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 06:11:39 -0500
-Received: (qmail 18582 invoked by uid 111); 18 Dec 2007 11:11:37 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 18 Dec 2007 06:11:37 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Dec 2007 06:11:36 -0500
-Content-Disposition: inline
-In-Reply-To: <7vlk7s38aq.fsf@gitster.siamese.dyndns.org>
+	id S1753281AbXLRLOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 06:14:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753429AbXLRLOh
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 06:14:37 -0500
+Received: from mail-in-12.arcor-online.net ([151.189.21.52]:52995 "EHLO
+	mail-in-12.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753028AbXLRLOg (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Dec 2007 06:14:36 -0500
+Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
+	by mail-in-12.arcor-online.net (Postfix) with ESMTP id 897F94C509;
+	Tue, 18 Dec 2007 12:14:34 +0100 (CET)
+Received: from mail-in-04.arcor-online.net (mail-in-04.arcor-online.net [151.189.21.44])
+	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id 711052D37E7;
+	Tue, 18 Dec 2007 12:14:34 +0100 (CET)
+Received: from lola.goethe.zz (dslb-084-061-004-197.pools.arcor-ip.net [84.61.4.197])
+	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 366E71C72CA;
+	Tue, 18 Dec 2007 12:14:20 +0100 (CET)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 3BDE71C4CE33; Tue, 18 Dec 2007 12:15:04 +0100 (CET)
+In-Reply-To: <7vwsrc1idm.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 18 Dec 2007 01:07:01 -0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/5164/Tue Dec 18 10:56:45 2007 on mail-in-04.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68731>
 
-On Mon, Dec 17, 2007 at 09:01:49PM -0800, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> There indeed are handful scheduled removals.  I do not mind declaring
-> that 1.6.0 comes after 1.5.4, or just relabel the removal schedule for
-> 1.6.0 and keep the scheduled change on hold a bit longer.
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>
+>>  - diff-delta.c:250        memsize = sizeof(*index)
+>
+> I haven't studied this codepath.
 
-I can think of two other user-visible changes which have been discussed
-that might warrant such a version bump:
-  - option parsing tweaks (hopefully these should be minor, but it is
-    clear that we cannot be 100% consistent while retaining the
-    identical previous behavior)
-  - moving dashed forms out of paths
+My proposed patch should have addressed this as well.
 
--Peff
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
