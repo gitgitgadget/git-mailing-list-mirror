@@ -1,46 +1,45 @@
 From: Mark Fasheh <mark.fasheh@oracle.com>
 Subject: Re: [PATCH] provide advance warning of some future pack default
 	changes
-Date: Mon, 17 Dec 2007 18:15:56 -0800
+Date: Mon, 17 Dec 2007 18:23:23 -0800
 Organization: Oracle Corporation
-Message-ID: <20071218021556.GC13821@ca-server1.us.oracle.com>
-References: <m3fxy5qwbq.fsf@roke.D-201> <alpine.LFD.0.999999.0712140836140.8467@xanadu.home> <20071214215206.GB7300@mail.oracle.com> <alpine.LFD.0.999999.0712141724260.8467@xanadu.home> <20071214223957.GC7300@mail.oracle.com> <alpine.LFD.0.999999.0712141744460.8467@xanadu.home> <20071215004230.GF7300@mail.oracle.com> <alpine.LFD.0.999999.0712142114400.8467@xanadu.home> <20071217200920.GB19816@mail.oracle.com> <alpine.LFD.0.999999.0712171517320.8467@xanadu.home>
+Message-ID: <20071218022323.GD13821@ca-server1.us.oracle.com>
+References: <alpine.LFD.0.999999.0712141724260.8467@xanadu.home> <20071214223957.GC7300@mail.oracle.com> <alpine.LFD.0.999999.0712141744460.8467@xanadu.home> <20071215004230.GF7300@mail.oracle.com> <alpine.LFD.0.999999.0712142114400.8467@xanadu.home> <20071217200920.GB19816@mail.oracle.com> <alpine.LFD.0.999999.0712171517320.8467@xanadu.home> <7v3au16myj.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.999999.0712171641460.8467@xanadu.home> <7vbq8o4yxc.fsf@gitster.siamese.dyndns.org>
 Reply-To: Mark Fasheh <mark.fasheh@oracle.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Joel Becker <Joel.Becker@oracle.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Dec 18 03:18:32 2007
+Cc: Nicolas Pitre <nico@cam.org>, Joel Becker <Joel.Becker@oracle.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 18 03:24:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4S2P-0001rf-Ps
-	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 03:18:30 +0100
+	id 1J4S8H-0003Ez-8d
+	for gcvg-git-2@gmane.org; Tue, 18 Dec 2007 03:24:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751792AbXLRCSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Dec 2007 21:18:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751371AbXLRCSF
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 21:18:05 -0500
-Received: from rgminet01.oracle.com ([148.87.113.118]:37631 "EHLO
-	rgminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751638AbXLRCSE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Dec 2007 21:18:04 -0500
-Received: from agmgw1.us.oracle.com (agmgw1.us.oracle.com [152.68.180.212])
-	by rgminet01.oracle.com (Switch-3.2.4/Switch-3.1.6) with ESMTP id lBI2HXXI012095;
-	Mon, 17 Dec 2007 19:17:33 -0700
-Received: from acsmt354.oracle.com (acsmt354.oracle.com [141.146.40.154])
-	by agmgw1.us.oracle.com (Switch-3.2.0/Switch-3.2.0) with ESMTP id lBHIPCI1029609;
-	Mon, 17 Dec 2007 19:17:32 -0700
-Received: from ca-server1.us.oracle.com by acsmt354.oracle.com
-	with ESMTP id 6412098191197944156; Mon, 17 Dec 2007 18:15:56 -0800
+	id S1751607AbXLRCYG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Dec 2007 21:24:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751492AbXLRCYF
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Dec 2007 21:24:05 -0500
+Received: from agminet01.oracle.com ([141.146.126.228]:20372 "EHLO
+	agminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751003AbXLRCYE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Dec 2007 21:24:04 -0500
+Received: from agmgw2.us.oracle.com (agmgw2.us.oracle.com [152.68.180.213])
+	by agminet01.oracle.com (Switch-3.2.4/Switch-3.1.7) with ESMTP id lBI2NaNj029878;
+	Mon, 17 Dec 2007 20:23:36 -0600
+Received: from acsmt355.oracle.com (acsmt355.oracle.com [141.146.40.155])
+	by agmgw2.us.oracle.com (Switch-3.2.0/Switch-3.2.0) with ESMTP id lBHIVnb3028385;
+	Mon, 17 Dec 2007 19:23:35 -0700
+Received: from ca-server1.us.oracle.com by acsmt355.oracle.com
+	with ESMTP id 6411398331197944604; Mon, 17 Dec 2007 18:23:24 -0800
 Received: from mfasheh by ca-server1.us.oracle.com with local (Exim 4.67)
 	(envelope-from <mark.fasheh@oracle.com>)
-	id 1J4Rzw-0005t2-A5; Mon, 17 Dec 2007 18:15:56 -0800
+	id 1J4S79-0005yT-Ha; Mon, 17 Dec 2007 18:23:23 -0800
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999999.0712171517320.8467@xanadu.home>
+In-Reply-To: <7vbq8o4yxc.fsf@gitster.siamese.dyndns.org>
 User-Agent: Mutt/1.5.16 (2007-06-11)
 X-Brightmail-Tracker: AAAAAQAAAAI=
 X-Brightmail-Tracker: AAAAAQAAAAI=
@@ -50,42 +49,19 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68691>
 
-Hi,
+On Mon, Dec 17, 2007 at 04:41:19PM -0800, Junio C Hamano wrote:
+> It is not a corruption, but the distinction doesn't matter much to the
+> end user who wants to get the job done with the data right now.  The
+> data that was made inaccessible is inaccessible.  The only difference is
+> that it is recoverable once the user upgrades, but that may be painful,
+> even though it may be rewarding afterwards and worth doing so, and the
+> user may not be able to afford doing so right at that moment.
 
-	Just to "out" myself, I'm the "co-worker" whose name Joel has been
-(politely) keeping anonymous.
-
-On Mon, Dec 17, 2007 at 03:41:24PM -0500, Nicolas Pitre wrote:
-> > 	You may not see a case for actual corruptions, but my coworker
-> > updated his tree on a box with 1.5.x, then tried to work on a box with
-> > 1.4.x (I think 1.4.2 back then), and ended up with a tree that was
-> > unusable.  He had to re-clone, and I think he got lucky recovering
-> > pending changes (probably using 1.5.x on the branches with the changes,
-> > as master was what got broken).
-> 
-> I still claim that there wasn't any corruptions.
-
-The following description is really vague because this was a while ago:
-
-Something made my ocfs2.git tree unusable in that I could no longer do
-common tasks, such as git-log, etc without getting messages about corrupted
-refs.
-
-I wish I had saved off some of the messages. Sorry.
-
-I had to re-create my git tree several times before I learned by deduction
-that it was the older versions of git on some of the machines that were
-writing some sort of incompatible format.
-
-
-> Just for fun, just edit some document with Microsoft Office 95, then 
-> open the same document with Office 2007 and save it with default 
-> settings.  Now try to open it back with Office 95.  It won't work.  
-> Does that mean that the document got corrupted?
-
-Boy, I hope Microsoft Office isn't our bar for compatiblity here...
+Junio, I agree 100% with your description here. This is all about user
+experience and data which is silently made inaccessible makes them feel
+pretty bad.
 	--Mark
 
 --
