@@ -1,57 +1,68 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: git-stash: RFC: Adopt the default behavior to other commands
-Date: Wed, 19 Dec 2007 13:07:49 +0100
-Message-ID: <0FC1BEA1-3A1E-4316-BF1D-40522E355553@wincent.com>
-References: <20071217110322.GH14889@albany.tokkee.org>  <506C6191-655D-46AE-A5C2-1335A9044F44@lrde.epita.fr>  <7vk5nd53lp.fsf@gitster.siamese.dyndns.org>  <57F403E7-AF5B-40F1-AE9D-8EA036675A67@lrde.epita.fr> <7vfxy04ze7.fsf@gitster.siamese.dyndns.org>  <20071218154211.GB12549@alea.gnuu.de> <46a038f90712181541x781c3ebcq6d85b88dbf5cbe23@mail.gmail.com>  <38C1471E-0927-4B43-AF73-70735820F8F9@wincent.com> <46a038f90712182346t5309448egebfd3726f4d493c5@mail.gmail.com> <Pine.LNX.4.64.0712191150240.23902@racer.site>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Dec 19 13:08:18 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git with custom diff for commits
+Date: Wed, 19 Dec 2007 12:09:41 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0712191209140.23902@racer.site>
+References: <60687a7d0712171456p14328817y5aa229f0df23c02f@mail.gmail.com>
+ <Pine.LNX.4.64.0712172300510.9446@racer.site> <vpq1w9kaphg.fsf@bauges.imag.fr>
+ <Pine.LNX.4.64.0712172310090.9446@racer.site> <7vbq8o6gxw.fsf@gitster.siamese.dyndns.org>
+ <vpqk5ncz8fn.fsf@bauges.imag.fr> <7vodco1him.fsf@gitster.siamese.dyndns.org>
+ <000001c841b5$89fcef00$762a14ac@na.acco.com> <7vzlw7ybx7.fsf@gitster.siamese.dyndns.org>
+ <000101c841b7$5f1d1060$762a14ac@na.acco.com> <vpqsl1zfz8r.fsf@bauges.imag.fr>
+ <000d01c841c5$386f7350$762a14ac@na.acco.com> <Pine.LNX.4.64.0712182246230.23902@racer.site>
+ <vpqtzmfvz1d.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Gerald Gutierrez <ggmlfs@gmail.com>,
+	'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Dec 19 13:10:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4xij-0003yE-TV
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 13:08:18 +0100
+	id 1J4xkl-0004ZZ-Rp
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 13:10:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752875AbXLSMHz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 07:07:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752860AbXLSMHz
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 07:07:55 -0500
-Received: from wincent.com ([72.3.236.74]:35587 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752596AbXLSMHy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2007 07:07:54 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBJC7o8R019560;
-	Wed, 19 Dec 2007 06:07:51 -0600
-In-Reply-To: <Pine.LNX.4.64.0712191150240.23902@racer.site>
-X-Mailer: Apple Mail (2.915)
+	id S1752887AbXLSMKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 07:10:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752896AbXLSMKA
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 07:10:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55720 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752673AbXLSMJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 07:09:59 -0500
+Received: (qmail invoked by alias); 19 Dec 2007 12:09:57 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp057) with SMTP; 19 Dec 2007 13:09:57 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/wL5UguLTws2JHGmv/1zbg0415XtqdMTS1TZVeNy
+	ygXXleEhQjzwki
+X-X-Sender: gene099@racer.site
+In-Reply-To: <vpqtzmfvz1d.fsf@bauges.imag.fr>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68899>
 
-El 19/12/2007, a las 13:01, Johannes Schindelin escribi=F3:
+Hi,
 
-> But stash really is about things like
->
-> 	$ git stash
-> 	$ git pull
-> 	$ git stash apply
->
-> I do not _want_ to see the stash list in _most_ cases, because I do =20
-> not
-> stash away million dirty changes.
->
-> And that workflow was what "git stash" was designed for.
+On Wed, 19 Dec 2007, Matthieu Moy wrote:
 
-+1.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> Here's what the git-commit manpage on kernel.org says: "git-commit - 
+> >> Record changes to the repository".
+> >
+> > Yes.  Changes, as in "take this _file_ instead".  Not "edit this file, 
+> > remove those lines, add these here, etc.".
+> 
+> That said, I think the wording of the man page could be better.
+> Perhaps "Record new snapshot to the repository" or "Record current
+> state of the working tree to the repository".
 
-Wincent
+How about "record a new revision"?
+
+Ciao,
+Dscho
