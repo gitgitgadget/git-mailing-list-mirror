@@ -1,66 +1,84 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: kha/safe and kha/experimental updated
-Date: Wed, 19 Dec 2007 11:47:17 +0000
-Message-ID: <b0943d9e0712190347k30971ef1tfd0457589e140542@mail.gmail.com>
-References: <20071214105238.18066.23281.stgit@krank>
-	 <m3hcigot3h.fsf@roke.D-201>
-	 <20071219093816.GB4361@diana.vm.bytemark.co.uk>
-	 <200712191144.59747.jnareb@gmail.com>
-	 <20071219114021.GB5565@diana.vm.bytemark.co.uk>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH] Fix git-instaweb breakage on MacOS X due to the limited sed functionality
+Date: Wed, 19 Dec 2007 11:48:23 +0000
+Message-ID: <20071219114823.GA28273@hashpling.org>
+References: <20071219105752.GA23932@hashpling.org> <23306E3C-24F1-4626-A956-02531644B786@wincent.com> <20071219113617.GA26520@hashpling.org> <CA30F61D-4AE1-4100-A632-20B5587EB4D0@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Jakub Narebski" <jnareb@gmail.com>,
-	"=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 12:47:43 2007
+Cc: git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 12:48:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4xOo-0004WI-6b
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 12:47:42 +0100
+	id 1J4xPw-0004qn-MF
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 12:48:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752135AbXLSLrT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 06:47:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751668AbXLSLrS
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 06:47:18 -0500
-Received: from rv-out-0910.google.com ([209.85.198.187]:41026 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751394AbXLSLrS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2007 06:47:18 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2624824rvb.1
-        for <git@vger.kernel.org>; Wed, 19 Dec 2007 03:47:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=RaK4EZFVymIbpccFH7a9kYjpPAro8F3yACvFzt6pRaQ=;
-        b=QlYV1ZVdVHAARg7qv3MBOvbGUeV/svURDpufY/d9/9tlVYjh54yfH+SXtTWDoAw+aqROzh6PKvq/7h3taNbekYxQ4X/KskgAcg47IFYvSKop2JQIpQ5OGugW1Rki6081TXLZG5oRjzO0uEowlSus/um7um5HbsTXprScr3Y5gEI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Z8YqRk3qTP/ihzDIn295ISh6lC3KQkafgIb2Ly63c2BoYBfvO2RzQ9vIv9quy49Iz5RNDZGCSVAissL43hNY6X1pi3tHUSubSHXwEJXypQS3bMSGoFWJP0L/vVNEKJl2/bl/IHH1Bip68RqlP/8g8G6J8YAl8huO9sSBrw+HpOA=
-Received: by 10.141.74.17 with SMTP id b17mr1737596rvl.14.1198064837334;
-        Wed, 19 Dec 2007 03:47:17 -0800 (PST)
-Received: by 10.141.186.5 with HTTP; Wed, 19 Dec 2007 03:47:17 -0800 (PST)
-In-Reply-To: <20071219114021.GB5565@diana.vm.bytemark.co.uk>
+	id S1752593AbXLSLs3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 06:48:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752582AbXLSLs3
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 06:48:29 -0500
+Received: from pih-relay08.plus.net ([212.159.14.134]:58207 "EHLO
+	pih-relay08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752142AbXLSLs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 06:48:28 -0500
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by pih-relay08.plus.net with esmtp (Exim) id 1J4xPV-0000Cv-LN; Wed, 19 Dec 2007 11:48:25 +0000
+Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
+	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id lBJBmN3E028566;
+	Wed, 19 Dec 2007 11:48:23 GMT
+Received: (from charles@localhost)
+	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id lBJBmN2C028565;
+	Wed, 19 Dec 2007 11:48:23 GMT
 Content-Disposition: inline
+In-Reply-To: <CA30F61D-4AE1-4100-A632-20B5587EB4D0@wincent.com>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68894>
 
-On 19/12/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> You and others like what "stg resolved" does,
-> but I don't want it in StGit because it's a generic git enhancement
-> that has nothing to with patch stacks. People who don't use StGit
-> would presumably like it as well.
+On Wed, Dec 19, 2007 at 12:43:12PM +0100, Wincent Colaiuta wrote:
+> El 19/12/2007, a las 12:36, Charles Bailey escribi=F3:
+>=20
+> >
+> >I agree completely, but all the generated scripts output hard coded
+> >paths so it would seem inconsistent not to qualify the path in this
+> >case too.
+>=20
+> It's not hard-coded, it's dynamic. Witness:
+>=20
 
-The --reset option would never be added to git, at least not with the
-same name for arguments since git doesn't manage patches. As I said, I
-would have to remember what stage my 'patched' file is in.
+It's *output* hardcoded, it's dynamic during script generation.
 
---=20
-Catalin
+A raw 'perl' in a shell script is dynamic during script run.
+
+
+> $ make PERL_PATH=3D/Volumes/Clon/usr/bin/perl
+> $ head -1 git-add--interactive
+> #!/Volumes/Clon/usr/bin/perl -w
+>=20
+> > Would  @@PERL_PATH@@perl -p -e work, do you know?
+>=20
+> I don't think so, but judging from the following section of the =20
+> Makefile, I think @@PERL@@ would. Why don't you give it a try?
+>=20
+> $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
+>         $(QUIET_GEN)$(RM) $@ $@+ && \
+>         sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+>             -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
+>             -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+>             -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
+>             -e 's|@@HTMLDIR@@|$(htmldir_SQ)|g' \
+>             $@.sh >$@+ && \
+>         chmod +x $@+ && \
+>         mv $@+ $@
+>=20
+
+git-instaweb is treated specially, so the answer is 'no, not yet', but
+I have a patch on the way.
+
+Charles.
