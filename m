@@ -1,70 +1,123 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Use pathexpand to preparse the relative pathnames in
-	blob references
-Date: Wed, 19 Dec 2007 09:37:04 -0500
-Message-ID: <20071219143704.GA13942@coredump.intra.peff.net>
-References: <20071218173321.GB2875@steel.home> <m3d4t3q4e5.fsf@roke.D-201> <20071218204623.GC2875@steel.home> <20071218204752.GD2875@steel.home> <20071218204947.GE2875@steel.home> <20071218205253.GF2875@steel.home>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH] Re-re-re-fix common tail optimization
+Date: Wed, 19 Dec 2007 14:37:12 +0000
+Message-ID: <20071219143712.GA3483@hashpling.org>
+References: <20071215155150.GA24810@coredump.intra.peff.net> <7vprx7n90t.fsf@gitster.siamese.dyndns.org> <20071215200202.GA3334@sigill.intra.peff.net> <20071216070614.GA5072@sigill.intra.peff.net> <7v8x3ul927.fsf@gitster.siamese.dyndns.org> <7v7ijejq6j.fsf@gitster.siamese.dyndns.org> <20071216212104.GA32307@coredump.intra.peff.net> <7v3au2joo2.fsf_-_@gitster.siamese.dyndns.org> <20071219141845.GA2146@hashpling.org> <20071219142715.GB14187@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 15:37:36 2007
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 19 15:38:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J503A-0000TU-8R
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 15:37:32 +0100
+	id 1J503e-0000gH-4E
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 15:38:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752809AbXLSOhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2007 09:37:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752716AbXLSOhI
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 09:37:08 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3772 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751280AbXLSOhH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 09:37:07 -0500
-Received: (qmail 31641 invoked by uid 111); 19 Dec 2007 14:37:06 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 19 Dec 2007 09:37:06 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Dec 2007 09:37:04 -0500
+	id S1753072AbXLSOhh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 09:37:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752716AbXLSOhh
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 09:37:37 -0500
+Received: from pih-relay08.plus.net ([212.159.14.134]:59010 "EHLO
+	pih-relay08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752706AbXLSOhg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 09:37:36 -0500
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by pih-relay08.plus.net with esmtp (Exim) id 1J502s-0006nM-RW; Wed, 19 Dec 2007 14:37:15 +0000
+Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
+	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id lBJEbC31003772;
+	Wed, 19 Dec 2007 14:37:12 GMT
+Received: (from charles@localhost)
+	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id lBJEbCm7003771;
+	Wed, 19 Dec 2007 14:37:12 GMT
 Content-Disposition: inline
-In-Reply-To: <20071218205253.GF2875@steel.home>
+In-Reply-To: <20071219142715.GB14187@coredump.intra.peff.net>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68912>
 
-On Tue, Dec 18, 2007 at 09:52:53PM +0100, Alex Riesen wrote:
+On Wed, Dec 19, 2007 at 09:27:15AM -0500, Jeff King wrote:
+> On Wed, Dec 19, 2007 at 02:18:45PM +0000, Charles Bailey wrote:
+> 
+> > Just to add to the woe on this one, this test breaks on MacOS X due to
+> > the pattern length limitations of the default sed on that platform.
+> > 
+> > Interested in a patch?
+> 
+> Somebody beat you to it. :) Can you confirm that the fix in
+> 
+>   <1198007158-27576-1-git-send-email-win@wincent.com>
+> 
+> works for you?
+> 
+> -Peff
 
-> This, OTOH, is a bit intrusive and changes the current behaviour a bit
-> too far. git-show cannot use the absolute pathnames in blob locators
-> at all now, which I consider bad. An obvious way to use rev:/path is
-> blocked by Johannes' get_sha1_oneline. It would have worked, though.
 
-IMO, this is backwards. The default should be absolute naming (after
-all, you have already rooted it at a tree by saying HEAD:), and you
-should treat '.' as a short-hand for "my current prefix". IOW, this
-works as before:
+Ooh, the excitement, I've never had the opportunity to "git am"
+before.
 
-  cd t && git show HEAD:t/test-lib.sh
+Yes, I can confirm.  It works for me.
 
-but this would now work:
+For reference I had the following, which is fewer lines but not
+inherently better in any other way.
 
-  cd t && git show HEAD:./test-lib.sh
+Charles.
 
-and of course supporting '..' could be added, as well.
 
-This works under the assumption that you don't have tree entries of '.'
-or '..'; I don't think the data structure enforces any such assumption,
-but I doubt you could easily create such a tree without hacking the git
-tools (and you would have to be insane to do so anyway).
 
--Peff
-
-PS I didn't just think of this...I'm pretty sure this discussion came up
-sometime in the past year and somebody more clever than I thought of it.
+diff --git a/t/t4024-diff-optimize-common.sh b/t/t4024-diff-optimize-common.sh
+index 20fe87b..ffb2c8f 100755
+--- a/t/t4024-diff-optimize-common.sh
++++ b/t/t4024-diff-optimize-common.sh
+@@ -7,8 +7,9 @@ test_description='common tail optimization'
+ z=zzzzzzzz ;# 8
+ z="$z$z$z$z$z$z$z$z" ;# 64
+ z="$z$z$z$z$z$z$z$z" ;# 512
+-z="$z$z$z$z" ;# 2048
+-z2047=$(expr "$z" : '.\(.*\)') ; #2047
++z="$z$z" ;# 1024
++z1023=$(expr "$z" : '.\(.*\)') ; #1023
++z2047=$z$z1023
+ 
+ test_expect_success setup '
+ 
+@@ -35,8 +36,8 @@ diff --git a/file-a b/file-a
+ --- a/file-a
+ +++ b/file-a
+ @@ -1 +1 @@
+--aZ
+-+AZ
++-aZZz
+++AZZz
+ diff --git a/file-b b/file-b
+ --- a/file-b
+ +++ b/file-b
+@@ -47,9 +48,9 @@ diff --git a/file-c b/file-c
+ --- a/file-c
+ +++ b/file-c
+ @@ -1 +1 @@
+--cZ
++-cZZz
+ \ No newline at end of file
+-+CZ
+++CZZz
+ \ No newline at end of file
+ diff --git a/file-d b/file-d
+ --- a/file-d
+@@ -61,7 +62,7 @@ EOF
+ 
+ test_expect_success 'diff -U0' '
+ 
+-	git diff -U0 | sed -e "/^index/d" -e "s/$z2047/Z/g" >actual &&
++	git diff -U0 | sed -e "/^index/d" -e "s/$z1023/Z/g" >actual &&
+ 	diff -u expect actual
+ 
+ '
+-- 
+1.5.3.7.11.ga3d7
