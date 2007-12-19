@@ -1,119 +1,110 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: kha/safe and kha/experimental updated
-Date: Wed, 19 Dec 2007 12:20:35 +0100
-Message-ID: <20071219112035.GA5565@diana.vm.bytemark.co.uk>
-References: <20071214105238.18066.23281.stgit@krank> <b0943d9e0712170309n415dc6cs9d1c1f8a9c687bf8@mail.gmail.com> <20071217224812.GA6342@diana.vm.bytemark.co.uk> <20071218052115.GA13422@diana.vm.bytemark.co.uk> <b0943d9e0712180809l4d2d01b8j32ab2a410885cc5e@mail.gmail.com> <20071219093400.GA4361@diana.vm.bytemark.co.uk> <b0943d9e0712190209y485bc2f8w806bd2cad309e74b@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: log/show: relative pathnames do not work in rev:path
+Date: Wed, 19 Dec 2007 12:23:41 +0100
+Message-ID: <200712191223.42446.jnareb@gmail.com>
+References: <20071218173321.GB2875@steel.home> <alpine.LFD.0.9999.0712181711100.21557@woody.linux-foundation.org> <56b7f5510712181752s7ecebca9m32794c635cba9fd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 12:21:17 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Alex Riesen" <raa.lkml@gmail.com>, git@vger.kernel.org
+To: "Dana How" <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 12:24:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4wz5-0003jf-9V
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 12:21:07 +0100
+	id 1J4x24-0004lE-Ur
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 12:24:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752414AbXLSLUn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 06:20:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752338AbXLSLUn
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 06:20:43 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4749 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752059AbXLSLUm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 06:20:42 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1J4wya-0001VM-00; Wed, 19 Dec 2007 11:20:36 +0000
+	id S1752364AbXLSLXt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 06:23:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752430AbXLSLXt
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 06:23:49 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:58522 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752244AbXLSLXs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 06:23:48 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so268660ugc.16
+        for <git@vger.kernel.org>; Wed, 19 Dec 2007 03:23:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=fWz/L5rpb/+8lv84rI4sBG8aezN844vf/Mnu/2baNLY=;
+        b=x9qEzqP9G66Fg305TacgxaEEg2XUkGY0CJIlgnelyHejSPmefc6Vx5qOYn24/ih9rG1gXc8We8d6TUI+dASPzjl0nV66aH0GGF+m7ioLJoE1TiwXoFnRczYu+evrLGBrtQs8vB5cVSQmVDbx9LFrNvMXoTt4d+QFm8nY+k8UnNk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=SvEbNa6drLD+IdX9yIibnX1Xdu8vVAgR+ntW8Goe+1nntg1/2xKBQDRsDN8Kune+1GyR+SEYxRdtIARweT+bCM71FXr+nUzV4mNva0PLEoIQkgRsLdqPXWv3Dw3URBNzYBML5LA8EILt+9RbscF2YQdUogxXb/gxJMpmlNzzVIY=
+Received: by 10.67.30.13 with SMTP id h13mr2041612ugj.45.1198063426946;
+        Wed, 19 Dec 2007 03:23:46 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.252.93])
+        by mx.google.com with ESMTPS id s7sm4580886uge.86.2007.12.19.03.23.44
+        (version=SSLv3 cipher=OTHER);
+        Wed, 19 Dec 2007 03:23:45 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <56b7f5510712181752s7ecebca9m32794c635cba9fd@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0712190209y485bc2f8w806bd2cad309e74b@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68884>
 
-On 2007-12-19 10:09:40 +0000, Catalin Marinas wrote:
+On Wed, 19 Dec 2007, Dana How wrote:
+> On Dec 18, 2007 5:16 PM, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>> On Tue, 18 Dec 2007, Dana How wrote:
+>>
+>>> The cases we are talking about are all subtrees of the working tree.
+>>> There is a useful cwd suffix.
+>>
+>> No.
+>>
+>> The cases we're talking of are *not* subtrees of the working tree.
+>>
+>> The SHA1 of a commit may well be a totally disjoint tree. Try it in the
+>> git repository with something like
+> 
+> Agreed,  but note you wrote *may*.
+> 
+> I'd like to move some stuff currently in a p4 repository into git.
+> The directory structure within the repo is 13 levels deep;
+> I didn't design it nor can I change it.
+> 
+> For the majority of the cases of interest to me git already accepts
+> relative paths.  However,  one thing people do often in p4 (or any SCM)
+> is look at (or compare, etc) specific revisions.  Unfortunately,  these are
+> not part of branches or commits,  they are just file-specific revisions
+> (don't get me started on p4 "branches").  The equivalent in git is
+> to use a commit name (or a tag) and then name the file.  The
+> basic commit:file syntax doesn't accept relative paths.  I am not
+> specifically hung up on the commit:./path syntax;  I just want some
+> notation that will get those 13 directories from $cwd instead of
+> making me type them again.  Yes,  sometimes that might not make
+> sense to request.
+[...]
 
-> For the 'status --reset', I'll keep it if we have a separate
-> 'resolved' command.
+I think new feature like this should be postponed after 1.5.4 is out;
+we are now in feature freeze (only bugfixes are accepted).
 
-?
+That said, does git-showrel solution proposed by  Johannes Schindelin
+in
+  Message-ID: <Pine.LNX.4.64.0712182250040.23902@racer.site>
+  http://permalink.gmane.org/gmane.comp.version-control.git/68840
+work for you?
 
-> In the past, StGIT only used the core git functionality and stayed
-> away from the porcelain scripts. We now started to use some of the
-> built-in commands more and more and I think it is fine but the git
-> scripts look more volatile to me than the C code (look at the many
-> variants the git merging went through, from shell scripts to python
-> and only now seems to be stabilised with the recursive merge as a
-> built-in command).
+Below version of git-showrel script which uses proposed 'commit:./relpath'
+syntax (it could be improved, of course):
 
-Hmm? Have we started to use more porcelain lately?
+cat > git-showrel <<\EOF
+#!/bin/sh
 
-> Adding the functionality I need to git-mergetool would also mean
-> always using the latest GIT with StGIT.
+rel=$(git rev-parse --show-prefix 2>/dev/null)
+git show $(echo "$@" | sed -e "s!:./!:${rel}!")
 
-It wouldn't keep being the latest git version, though.
-
-> Anyway, if you like git-mergetool, I think you can easily change the
-> StGIT configuration to
-
-I don't use interactive merging at all. What I wanted was to get rid
-of StGit's own interactive merging.
-
-> On 19/12/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
->
-> > On 2007-12-18 16:09:24 +0000, Catalin Marinas wrote:
-> >
-> > > I also don't find 'git add' to be meaningful for marking a
-> > > conflict as solved.
-> >
-> > So maybe let "stg resolved" be an alias for "git add"?
->
-> It's not a simple alias, if you use 'stg resolved -a'. Now, if we
-> allow stgit.keeporig, it needs even more functionality.
-
-Hmm, yes.
-
-(I still don't quite like it, because I think that if there's anything
-that "stg resolved" does that "git add" can't do, then "git add"
-should learn to do it. But until it has learned it, it's a
-hypothetical argument.)
-
-> > I think it'd be more productive to let stg do one thing -- patch
-> > stacks -- and do it well, and rely on git for everything else.
->
-> In principle, yes, but I have some minor problems with the UI of GIT
-> (like resolved =3D=3D add). I think there is also a fundamental
-> difference between 'git commit' and 'stg refresh'. The former
-> requires explicit marking of the files to commit (or use the -a
-> option) while the latter always adds all the local changes to the
-> current patch. Maybe GIT users are more used to running 'git add'
-> after fixing a conflict but I use StGIT almost exclusively.
-
-So you want StGit to do two things: patch stacks, and fix some git UI
-warts. Hey, I can live with that. :-) But I firmly believe that the
-wart fixing parts of StGit should be (1) optional, so that the same
-job can easily be done with just git; and (2) as thin as possible, to
-make them easy to explain in terms of git, and cheap to maintain.
-
-> > Of course, if stuff like "stg add" and "stg resolved" are really
-> > implemented as three-line wrappers around git commands, we don't
-> > have that problem.
->
-> For add/rm/cp, they should just be a generic wrapper which doesn't
-> even parse the command line options.
-
-OK.
-
-> That's not the case with 'resolved'.
-
-No, I see.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+EOF
+-- 
+Jakub Narebski
+Poland
