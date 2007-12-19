@@ -1,58 +1,65 @@
-From: Haavard Skinnemoen <hskinnemoen@atmel.com>
-Subject: Re: [PATCH] Fix interactive rebase to preserve author email address
-Date: Wed, 19 Dec 2007 23:11:55 +0100
-Organization: Atmel
-Message-ID: <20071219231155.258f8d80@siona>
-References: <1197997575-13292-1-git-send-email-hskinnemoen@atmel.com>
-	<1197997575-13292-2-git-send-email-hskinnemoen@atmel.com>
-	<1197997575-13292-3-git-send-email-hskinnemoen@atmel.com>
-	<1197997575-13292-4-git-send-email-hskinnemoen@atmel.com>
-	<1197997575-13292-5-git-send-email-hskinnemoen@atmel.com>
-	<20071218181019.2af46418@dhcp-252-066.norway.atmel.com>
-	<alpine.LFD.0.9999.0712181318300.27475@localhost.localdomain>
-	<20071219124008.4945e592@dhcp-252-066.norway.atmel.com>
-	<20071219150734.50b1f847@dhcp-252-066.norway.atmel.com>
-	<BAYC1-PASMTP13613FE244FF93DC2BF613AE5C0@CEZ.ICE>
-	<20071219220223.7c5b3887@siona>
-	<BAYC1-PASMTP022BE21217030117EF2156AE5C0@CEZ.ICE>
+From: Thomas Harning <harningt@gmail.com>
+Subject: Git-to-svn convert
+Date: Wed, 19 Dec 2007 17:14:25 -0500
+Message-ID: <476997C1.2080506@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Sean <seanlkml@sympatico.ca>
-X-From: git-owner@vger.kernel.org Wed Dec 19 23:12:34 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 23:17:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J579M-0007Zr-8r
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 23:12:24 +0100
+	id 1J57E8-00012r-1b
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 23:17:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755192AbXLSWMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2007 17:12:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754905AbXLSWMA
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 17:12:00 -0500
-Received: from nat-132.atmel.no ([80.232.32.132]:63370 "EHLO relay.atmel.no"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754438AbXLSWL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 17:11:59 -0500
-Received: from siona (vpn-000-018.norway.atmel.com [172.21.0.18])
-	by relay.atmel.no (8.13.4/8.13.4) with ESMTP id lBJMBqHd023212;
-	Wed, 19 Dec 2007 23:11:52 +0100 (CET)
-	(envelope-from hskinnemoen@atmel.com)
-In-Reply-To: <BAYC1-PASMTP022BE21217030117EF2156AE5C0@CEZ.ICE>
-X-Mailer: Claws Mail 2.10.0 (GTK+ 2.12.0; x86_64-pc-linux-gnu)
+	id S1753883AbXLSWQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 17:16:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753758AbXLSWQ5
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 17:16:57 -0500
+Received: from rv-out-0910.google.com ([209.85.198.185]:54744 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753526AbXLSWQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 17:16:56 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so2792930rvb.1
+        for <git@vger.kernel.org>; Wed, 19 Dec 2007 14:16:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        bh=Z17Z6VVJVq3oYKz9wi9b90zNVjGblpoG7Z+PMbEX334=;
+        b=EZy39aNP0ilAzibTtzIawJdXgqvvtfRTeAl1/YeWzf1EfXoAWou5pPkKaMMGbOkasi0F0rfgRWDW3qhE4CDsF3rteXj02deJKaLvej6QssFOYCmEY2+qfe9SFGFXR6EpgV9ot3Gz2sjnNwZOKBnik2dpjNQm+CrSNs7ejBiKSvA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        b=vC3JWHbONzrWY58Qu+OOAA/Cj3kzQFdZTlMuks+kWWLiuOVTBtyEpqXdAq/7yaPFPDFvbthOMRhapGrz7wibVXeC4ItjMGh+TZiJ8MKjUihtpIyeMAQTVi3nLQg+SNh9OvJb4hrCTUp6DkwE1sN8w32rXdxLfcznhucLLamufS4=
+Received: by 10.141.122.20 with SMTP id z20mr3588717rvm.160.1198102615998;
+        Wed, 19 Dec 2007 14:16:55 -0800 (PST)
+Received: from ?192.168.24.40? ( [149.164.193.61])
+        by mx.google.com with ESMTPS id g34sm18281369rob.2007.12.19.14.16.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 19 Dec 2007 14:16:55 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070716)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68944>
 
-On Wed, 19 Dec 2007 16:34:27 -0500
-Sean <seanlkml@sympatico.ca> wrote:
+Is there a reasonable way to convert a Git project to Subversion...
+Yeah, I know, blasphemy :-P... but I worked on a project in Git and my 
+boss wants me to put it into Subversion.
 
-> This simple typo fix should hopefully make it work for you Haavard.
+git-svn looks to be the tool for this.. however I had some non-linear 
+dev, which doesn't look like it'd commit (In the past I think I tried 
+this and it failed to deal w/ a branch-and-merge...).
 
-It does indeed. Thanks!
+Example of what I mean...:
 
-Haavard
+a - b -
+ `c'
+
+
+As to how to pull the repository into subversion.. how would I do that?
+git-svn init ?
