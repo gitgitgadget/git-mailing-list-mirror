@@ -1,58 +1,71 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Fix git-instaweb breakage on MacOS X due to the limited sed functionality
-Date: Wed, 19 Dec 2007 12:28:04 +0100
-Message-ID: <23306E3C-24F1-4626-A956-02531644B786@wincent.com>
-References: <20071219105752.GA23932@hashpling.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
+From: Pascal Obry <pascal.obry@gmail.com>
+Subject: Re: Question about git-svn import
+Date: Wed, 19 Dec 2007 12:29:27 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <47690097.6070603@obry.net>
+References: <4766AF65.5060706@obry.net> <20071218034836.GA27080@dervierte> <4767724A.9040207@obry.net> <20071218153159.GA12549@alea.gnuu.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Wed Dec 19 12:28:38 2007
+Cc: git list <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>
+X-From: git-owner@vger.kernel.org Wed Dec 19 12:30:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4x6J-0006UQ-Cv
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 12:28:35 +0100
+	id 1J4x7d-0006zh-9p
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 12:29:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752500AbXLSL2K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 06:28:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752463AbXLSL2J
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 06:28:09 -0500
-Received: from wincent.com ([72.3.236.74]:35506 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752202AbXLSL2I convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2007 06:28:08 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBJBS5SE018632;
-	Wed, 19 Dec 2007 05:28:06 -0600
-In-Reply-To: <20071219105752.GA23932@hashpling.org>
-X-Mailer: Apple Mail (2.915)
+	id S1752377AbXLSL3d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 06:29:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752353AbXLSL3d
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 06:29:33 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:2865 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751691AbXLSL3c (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 06:29:32 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so478761fga.17
+        for <git@vger.kernel.org>; Wed, 19 Dec 2007 03:29:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:organization:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:from;
+        bh=auDOVN/McLsNszf0iROvOGyXuyKivjCSDrLbozipBCg=;
+        b=IvJhwfav3X4KRh83mf/9RZI9+LcVktagCmjTpV/QZyvAMMbNbGjOcCvBUGlQD7IRt7y0WFEBMKojEbfA1IzzDXpWmyFGtNQc5XkhFG53WOHB3vJG/sb4OvrBShFxFULtfI+TeBzTl9uRGj30nmUXs5U2n+RycwDMSwMBMW8N2rI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:organization:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding:from;
+        b=CwitTrccKnsyCfOlxUzio7gbfww09MPFOdf/xfYGXMN1X1lv2oGj0OQVR78dTX3nbVQA3LQbiW/8wfzKkw5FeyKfnJKBG7D/XLjU5UezwydYhfXfAlFMz5ueblOmxrf/lSBPH8IzVvFt8aGNbZm3vqR0GVrNjY0XGp9kFDrXNSk=
+Received: by 10.86.36.11 with SMTP id j11mr8787167fgj.34.1198063770667;
+        Wed, 19 Dec 2007 03:29:30 -0800 (PST)
+Received: from ?10.10.127.189? ( [212.99.106.127])
+        by mx.google.com with ESMTPS id 3sm6565769fge.2007.12.19.03.29.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 19 Dec 2007 03:29:29 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <20071218153159.GA12549@alea.gnuu.de>
+X-Enigmail-Version: 0.95.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68887>
 
-El 19/12/2007, a las 11:57, Charles Bailey escribi=F3:
+J=F6rg,
 
-> -	sed "$script" "$1.tmp"  > "$1"
-> +	# The generated scripts assume that perl is /usr/bin/perl
-> +	# so the assumption here should be no more harmful
-> +	/usr/bin/perl -p -e "$script" "$1.tmp"  > "$1"
+> It's not as complicated as you might think.
 
-I think it's a bad idea to hard-code the perl path there; the =20
-generated scripts only assume /usr/bin/perl if the user hasn't =20
-overridden it at build time:
+Ok, thanks for the pointers. I'll have a look.
 
-	PERL_PATH=3D/foo/perl make ...
+Pascal.
 
-Using just this should work fine anyway:
+--=20
 
-	perl -p -e ...
-
-Cheers,
-Wincent
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
