@@ -1,70 +1,64 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: kha/safe updated
-Date: Thu, 20 Dec 2007 00:24:11 +0100
-Message-ID: <87r6hijmjo.fsf@lysator.liu.se>
-References: <20071219221848.29455.50676.stgit@yoghurt>
-	<20071219221957.29455.27315.stgit@yoghurt>
-	<20071219224638.GB15119@diana.vm.bytemark.co.uk>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Serious bug with pretty format strings & empty bodies?
+Date: Thu, 20 Dec 2007 00:23:39 +0100
+Message-ID: <4769A7FB.1070904@lsrfire.ath.cx>
+References: <57518fd10712190632o490af924n61326fddf1819014@mail.gmail.com>	 <20071219184457.GC3015@steel.home> <57518fd10712191437s6f192feds50d006fdfc624444@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>,
-	Karl =?utf-8?Q?Hasselstr?= =?utf-8?Q?=C3=B6m?= 
-	<kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Dec 20 00:24:20 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Jonathan del Strother <maillist@steelskies.com>
+X-From: git-owner@vger.kernel.org Thu Dec 20 00:24:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J58Gu-0002wG-HP
-	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 00:24:16 +0100
+	id 1J58H9-00032e-Gy
+	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 00:24:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753522AbXLSXXw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 18:23:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753488AbXLSXXv
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 18:23:51 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:46170 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753505AbXLSXXv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2007 18:23:51 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 11741200A22E;
-	Thu, 20 Dec 2007 00:23:50 +0100 (CET)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 25269-01-65; Thu, 20 Dec 2007 00:23:49 +0100 (CET)
-Received: from krank (c83-253-242-75.bredband.comhem.se [83.253.242.75])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id A906E200A229;
-	Thu, 20 Dec 2007 00:23:49 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id 503697B4077; Thu, 20 Dec 2007 00:24:11 +0100 (CET)
-In-Reply-To: <20071219224638.GB15119@diana.vm.bytemark.co.uk> ("Karl
- =?utf-8?Q?Hasselstr=C3=B6m=22's?= message of "Wed\, 19 Dec 2007 23\:46\:38
- +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1753720AbXLSXX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 18:23:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753524AbXLSXX5
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 18:23:57 -0500
+Received: from india601.server4you.de ([85.25.151.105]:40677 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753488AbXLSXX4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 18:23:56 -0500
+Received: from [10.0.1.201] (p57B7E072.dip.t-dialin.net [87.183.224.114])
+	by india601.server4you.de (Postfix) with ESMTP id 5FF642F8072;
+	Thu, 20 Dec 2007 00:23:55 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <57518fd10712191437s6f192feds50d006fdfc624444@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68957>
 
-Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
+Jonathan del Strother schrieb:
+> On Dec 19, 2007 6:44 PM, Alex Riesen <raa.lkml@gmail.com> wrote:
+>> Could you try
+>>
+>>     git cat-file 18d2480ab689b483ef1ebbdb3f7420904049ba0b
+>>
+>> (or any other problematic commit) and post its output here?
+> 
+> You mean git cat-file commit ... ?
+> I get the normal output, but the problematic commits don't show a
+> newline character at the end of the cat-file output.
 
-> On 2007-12-19 23:24:49 +0100, Karl Hasselstr=C3=B6m wrote:
->
->> And here it is!
->
-> And with that, I don't see any reason to not recommend that you pull
-> every patch I have. Which is:
+Just a shot in the dark: does this patch on top of master make a difference?
 
-The conflict series of patches from me works for me, but I know that I
-don't use all the merging features that other users use, so I can't
-guarantee that everything works. But it seems that Catalin has been
-looking over it, so I guess it's ok.
-
---=20
-David K=C3=A5gedal
+diff --git a/pretty.c b/pretty.c
+index 9db75b4..5f95a59 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -412,7 +412,7 @@ static void parse_commit_header(struct format_commit_context *context)
+ 		if (i == eol) {
+ 			state++;
+ 			/* strip empty lines */
+-			while (msg[eol + 1] == '\n')
++			while (msg[eol] == '\n' && msg[eol + 1] == '\n')
+ 				eol++;
+ 		} else if (!prefixcmp(msg + i, "author ")) {
+ 			context->author.off = i + 7;
