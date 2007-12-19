@@ -1,98 +1,103 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git-stash: RFC: Adopt the default behavior to other commands
-Date: Wed, 19 Dec 2007 20:46:53 +1300
-Message-ID: <46a038f90712182346t5309448egebfd3726f4d493c5@mail.gmail.com>
-References: <20071217110322.GH14889@albany.tokkee.org>
-	 <506C6191-655D-46AE-A5C2-1335A9044F44@lrde.epita.fr>
-	 <7vk5nd53lp.fsf@gitster.siamese.dyndns.org>
-	 <57F403E7-AF5B-40F1-AE9D-8EA036675A67@lrde.epita.fr>
-	 <7vfxy04ze7.fsf@gitster.siamese.dyndns.org>
-	 <20071218154211.GB12549@alea.gnuu.de>
-	 <46a038f90712181541x781c3ebcq6d85b88dbf5cbe23@mail.gmail.com>
-	 <38C1471E-0927-4B43-AF73-70735820F8F9@wincent.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Problem with git-svn
+Date: Wed, 19 Dec 2007 00:27:51 -0800
+Message-ID: <20071219082751.GA17787@muzzle>
+References: <4764FE2C.1010103@obry.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Wincent Colaiuta" <win@wincent.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 08:47:21 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Wed Dec 19 09:28:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4teB-0000jr-Qs
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 08:47:20 +0100
+	id 1J4uHo-0001cx-GD
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 09:28:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752605AbXLSHq4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 02:46:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751664AbXLSHq4
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 02:46:56 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:25385 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751134AbXLSHqz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2007 02:46:55 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so247179ugc.16
-        for <git@vger.kernel.org>; Tue, 18 Dec 2007 23:46:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=/cPjCCZfu09gDjEgdaR8q3Hlj1SA4WWML/XrW+YNgWs=;
-        b=XreY+sdykGVv3ptJulJs6msqD0kXGd8rjQ6yefVzKS/mI6CaeJPlMoUR81pq43B3lii4QXvZD/OrEBTnllUc07hl6uVNUpcGFQVCAo+T16pPYqHLJLBvyElDJ66ZWpKTenkf9NOzoPs8rJV+Wqf3OsU8EPnf5YLPBOf/V4dOw4Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZeqXeEHnZX8EKEVhwU8H8KSOWnN2Bf+z90DWj17i66QpI8qgwn8RtdUMZDufGqHIb/n4S9gBLkyoZ9bG+wMy9pytA+bFoObwabnWWlcVGxs3KGfox7AFYAoGVUVjtHPvfx93E0grsJ55VnF2PW25t7itVP+nMeeRTrPEirTkD8s=
-Received: by 10.66.243.2 with SMTP id q2mr1419599ugh.14.1198050413393;
-        Tue, 18 Dec 2007 23:46:53 -0800 (PST)
-Received: by 10.66.252.2 with HTTP; Tue, 18 Dec 2007 23:46:53 -0800 (PST)
-In-Reply-To: <38C1471E-0927-4B43-AF73-70735820F8F9@wincent.com>
+	id S1751140AbXLSI1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 03:27:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750918AbXLSI1x
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 03:27:53 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:39596 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750842AbXLSI1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 03:27:52 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id D347C7DC122;
+	Wed, 19 Dec 2007 00:27:51 -0800 (PST)
 Content-Disposition: inline
+In-Reply-To: <4764FE2C.1010103@obry.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68864>
 
-On Dec 19, 2007 8:33 PM, Wincent Colaiuta <win@wincent.com> wrote:
-> El 19/12/2007, a las 0:41, Martin Langhoff escribi=F3:
->
-> > On Dec 19, 2007 4:42 AM, J=F6rg Sommer <joerg@alea.gnuu.de> wrote:
-> >> I vote for stash print the list, because I dropped in the pitfall.
-> >
-> > I've dropped there myself, and work with a large team where we are
-> > both fans of stash, and scarred by it. Any newcomer to git that
-> > "discovers" stash gets hit by it a dozen times, this is completely
-> > unnecesary.
->
-> I may be missing something here, but what's the danger here? An
+Pascal Obry <pascal@obry.net> wrote:
+> 
+> I'm trying to use a Subversion repository with Git. I had
+> great success with many repositories except one. This one
+> live since long time and as been migrated from CVS to
+> Subversion.
+> 
+> The current Subversion repository contains multiple projects.
+> Each project is under /trunk. While trying to import the project
+> PROJ:
+> 
+>   $ git svn clone svn+ssh://myserver/trunk/PROJ
+> 
+> I get:
+> 
+> Initialized empty Git repository in .git/
+> W: Ignoring error from SVN, path probably does not exist: (160013):
+> Filesystem has no item: File not found: revision 100, path '/trunk/PROJ'
+> Found possible branch point: svn+ssh://myserver/importfromcvs/trunk =>
+> svn+ssh://myserver/trunk/PROJ, 48467
+> Initializing parent: git-svn@48467
+> W: Ignoring error from SVN, path probably does not exist: (160013):
+> Filesystem has no item: File not found: revision 101, path
+> '/importfromcvs/trunk'
+> r9458 = b90789186c85a19a9f32ea6dc8a4259e2eadef67 (git-svn@48467)
+>         A       file.el
+> 
+> But file.el is not part of this project, it is part of another one
+> on the same Subversion repository. It looks like git-svn get confused
+> at some point. I've been trying to track this down, but since I've
+> never written a single Perl script that's not easy :(
 
-Surprise. Your working directory has *just* changed under your feet.
-Maybe you have an editor with further unsaved changes that is about to
-act confused whether you undo the stash or not.
+Hi,
 
-> unexpected stash is incredibly easy to revert, unless I'm missing
+Can you show me the output of `svn log -v -r9458 svn+ssh://myserver/' ?
 
-Once you know about it, yes it is. Once you know about the reflog, you
-can sing and dance and never be worried. But for starting users, it's
-a dangerous command.
+Thanks.
 
-> And nobody commented on the idea I posted earlier which
-> seems to address the concerns about newbies not knowing what "git
-> stash" with no params does:
+> Note that AFAIK each CVS modules have been imported into
+> /importfromcvs/trunk then move into /trunk/<MODULE_NAME>.
+> 
+> r48467 seem ok as a branch point:
+> 
+> <<
+> ------------------------------------------------------------------------
+> r48468 | svn | 2007-05-09 15:10:54 +0200 (Wed, 09 May 2007) | 1 line
+> Changed paths:
+>    D /importfromcvs/trunk
+>    A /trunk/PROJ (from /importfromcvs/trunk:48467)
+> 
+> Importing module PROJ into SVN.
+> >>
 
-I agree with making stash more verbose -- if the unlucky new user is
-paying close attention, they'll have instructions on to how to get out
-of trouble. But I agree more with making it "just verbose, no action"
-by default. There are two strong hints:
+So did svn+ssh://importfromcvs/trunk/file.el at r9458?  If so, git-svn
+is behaving as expected.  If not, can you tell me where "file.el" was at
+r9458?
 
- - all other state-changing commands take parameters
- - quite a few people in this list have gotten burned with it
+> 
+> So I'm looking for hints about the possible problem.
+> 
+> Note that I have tried to reproduce this with a small
+> script (using the same repository structure) but I was
+> not able.
 
-Even after knowing pretty well how stash works, I still get mixed up
-sometimes with the 'clear/clean/list' stuff. Or have a typo in the
-command.
-
-cheers,
-
-
-martin
+-- 
+Eric Wong
