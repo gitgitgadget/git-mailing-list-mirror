@@ -1,68 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Catch and handle git-commit failures in git-rebase --interactive
-Date: Tue, 18 Dec 2007 23:03:59 -0800
-Message-ID: <7vr6hjw4gw.fsf@gitster.siamese.dyndns.org>
-References: <20071219064500.GB8915@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Dec 19 08:04:46 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: git-stash: RFC: Adopt the default behavior to other commands
+Date: Wed, 19 Dec 2007 08:33:02 +0100
+Message-ID: <38C1471E-0927-4B43-AF73-70735820F8F9@wincent.com>
+References: <20071217110322.GH14889@albany.tokkee.org> <506C6191-655D-46AE-A5C2-1335A9044F44@lrde.epita.fr> <7vk5nd53lp.fsf@gitster.siamese.dyndns.org> <57F403E7-AF5B-40F1-AE9D-8EA036675A67@lrde.epita.fr> <7vfxy04ze7.fsf@gitster.siamese.dyndns.org> <20071218154211.GB12549@alea.gnuu.de> <46a038f90712181541x781c3ebcq6d85b88dbf5cbe23@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 08:33:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4syy-0007jP-BQ
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 08:04:44 +0100
+	id 1J4tQr-0005oT-Ce
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 08:33:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752455AbXLSHEV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2007 02:04:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbXLSHEV
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 02:04:21 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58197 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751169AbXLSHEU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 02:04:20 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 71E056915;
-	Wed, 19 Dec 2007 02:04:15 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D90846911;
-	Wed, 19 Dec 2007 02:04:11 -0500 (EST)
-In-Reply-To: <20071219064500.GB8915@spearce.org> (Shawn O. Pearce's message of
-	"Wed, 19 Dec 2007 01:45:00 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752553AbXLSHdK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 02:33:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752473AbXLSHdJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 02:33:09 -0500
+Received: from wincent.com ([72.3.236.74]:35078 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752154AbXLSHdI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2007 02:33:08 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBJ7X4Iq013002;
+	Wed, 19 Dec 2007 01:33:05 -0600
+In-Reply-To: <46a038f90712181541x781c3ebcq6d85b88dbf5cbe23@mail.gmail.com>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68859>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+El 19/12/2007, a las 0:41, Martin Langhoff escribi=F3:
 
->  Comments welcome.  This is on top of my 1/2 patch but we could
->  drop my 1/2 and rewrite this to not use --no-verify, but handle
->  the git-commit error correctly.
+> On Dec 19, 2007 4:42 AM, J=F6rg Sommer <joerg@alea.gnuu.de> wrote:
+>> I vote for stash print the list, because I dropped in the pitfall.
 >
->  However that would force users to fix whitespace errors in later
->  patches in a series if they use -i, even though non-i wouldn't
->  require that sort of fix-up.  So I think we should do both patches
->  in the series.
+> I've dropped there myself, and work with a large team where we are
+> both fans of stash, and scarred by it. Any newcomer to git that
+> "discovers" stash gets hit by it a dozen times, this is completely
+> unnecesary.
 
-I agree with both patches.
+I may be missing something here, but what's the danger here? An =20
+unexpected stash is incredibly easy to revert, unless I'm missing =20
+something. And nobody commented on the idea I posted earlier which =20
+seems to address the concerns about newbies not knowing what "git =20
+stash" with no params does:
 
-When one wants to use rebase to fix-up whitespace breakage in patches in
-bulk, you can set apply.whitespace to "fix".  One bad side effect of
-this is that if you usually have apply.whitespace set to "fix" (because
-you need to accept a lot of patches but your contributers tend to give
-crappy patches), you need to temporarily change the configuration while
-rebasing if you do not want to preserve intentional whitespace breakages
-(e.g. ones in test scripts).  This can be argued either a feature or a
-misfeature.
+http://marc.info/?l=3Dgit&m=3D119799257404542&w=3D2
 
-But rebase -i breaking and squashing upon commit failure (including
-pre-commit safety) cannot be called either feature nor misfeature --- it
-is an outright bug.
+Cheers,
+Wincent
