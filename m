@@ -1,103 +1,101 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Problem with git-svn
-Date: Wed, 19 Dec 2007 00:27:51 -0800
-Message-ID: <20071219082751.GA17787@muzzle>
-References: <4764FE2C.1010103@obry.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git-stash: RFC: Adopt the default behavior to other commands
+Date: Wed, 19 Dec 2007 09:29:56 +0100
+Message-ID: <4768D684.5060300@op5.se>
+References: <20071217110322.GH14889@albany.tokkee.org>	 <506C6191-655D-46AE-A5C2-1335A9044F44@lrde.epita.fr>	 <7vk5nd53lp.fsf@gitster.siamese.dyndns.org>	 <57F403E7-AF5B-40F1-AE9D-8EA036675A67@lrde.epita.fr>	 <7vfxy04ze7.fsf@gitster.siamese.dyndns.org>	 <20071218154211.GB12549@alea.gnuu.de>	 <46a038f90712181541x781c3ebcq6d85b88dbf5cbe23@mail.gmail.com>	 <38C1471E-0927-4B43-AF73-70735820F8F9@wincent.com> <46a038f90712182346t5309448egebfd3726f4d493c5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Wed Dec 19 09:28:21 2007
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 09:30:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4uHo-0001cx-GD
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 09:28:16 +0100
+	id 1J4uJu-00029D-2Z
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 09:30:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751140AbXLSI1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2007 03:27:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750918AbXLSI1x
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 03:27:53 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:39596 "EHLO hand.yhbt.net"
+	id S1751654AbXLSIaD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 03:30:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751730AbXLSIaB
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 03:30:01 -0500
+Received: from mail.op5.se ([193.201.96.20]:37752 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750842AbXLSI1w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 03:27:52 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id D347C7DC122;
-	Wed, 19 Dec 2007 00:27:51 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4764FE2C.1010103@obry.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751605AbXLSIaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 03:30:00 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 07C8F1F08054;
+	Wed, 19 Dec 2007 09:29:59 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id sGZzOfLa3W99; Wed, 19 Dec 2007 09:29:57 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 7B5F21F08049;
+	Wed, 19 Dec 2007 09:29:57 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <46a038f90712182346t5309448egebfd3726f4d493c5@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68865>
 
-Pascal Obry <pascal@obry.net> wrote:
-> 
-> I'm trying to use a Subversion repository with Git. I had
-> great success with many repositories except one. This one
-> live since long time and as been migrated from CVS to
-> Subversion.
-> 
-> The current Subversion repository contains multiple projects.
-> Each project is under /trunk. While trying to import the project
-> PROJ:
-> 
->   $ git svn clone svn+ssh://myserver/trunk/PROJ
-> 
-> I get:
-> 
-> Initialized empty Git repository in .git/
-> W: Ignoring error from SVN, path probably does not exist: (160013):
-> Filesystem has no item: File not found: revision 100, path '/trunk/PROJ'
-> Found possible branch point: svn+ssh://myserver/importfromcvs/trunk =>
-> svn+ssh://myserver/trunk/PROJ, 48467
-> Initializing parent: git-svn@48467
-> W: Ignoring error from SVN, path probably does not exist: (160013):
-> Filesystem has no item: File not found: revision 101, path
-> '/importfromcvs/trunk'
-> r9458 = b90789186c85a19a9f32ea6dc8a4259e2eadef67 (git-svn@48467)
->         A       file.el
-> 
-> But file.el is not part of this project, it is part of another one
-> on the same Subversion repository. It looks like git-svn get confused
-> at some point. I've been trying to track this down, but since I've
-> never written a single Perl script that's not easy :(
+Martin Langhoff wrote:
+> On Dec 19, 2007 8:33 PM, Wincent Colaiuta <win@wincent.com> wrote:
+>> El 19/12/2007, a las 0:41, Martin Langhoff escribi=F3:
+>>
+>>> On Dec 19, 2007 4:42 AM, J=F6rg Sommer <joerg@alea.gnuu.de> wrote:
+>>>> I vote for stash print the list, because I dropped in the pitfall.
+>>> I've dropped there myself, and work with a large team where we are
+>>> both fans of stash, and scarred by it. Any newcomer to git that
+>>> "discovers" stash gets hit by it a dozen times, this is completely
+>>> unnecesary.
+>> I may be missing something here, but what's the danger here? An
+>=20
+> Surprise. Your working directory has *just* changed under your feet.
+> Maybe you have an editor with further unsaved changes that is about t=
+o
+> act confused whether you undo the stash or not.
+>=20
+>> unexpected stash is incredibly easy to revert, unless I'm missing
+>=20
+> Once you know about it, yes it is. Once you know about the reflog, yo=
+u
+> can sing and dance and never be worried. But for starting users, it's
+> a dangerous command.
+>=20
+>> And nobody commented on the idea I posted earlier which
+>> seems to address the concerns about newbies not knowing what "git
+>> stash" with no params does:
+>=20
+> I agree with making stash more verbose -- if the unlucky new user is
+> paying close attention, they'll have instructions on to how to get ou=
+t
+> of trouble. But I agree more with making it "just verbose, no action"
+> by default. There are two strong hints:
+>=20
+>  - all other state-changing commands take parameters
+>  - quite a few people in this list have gotten burned with it
+>=20
+> Even after knowing pretty well how stash works, I still get mixed up
+> sometimes with the 'clear/clean/list' stuff. Or have a typo in the
+> command.
+>=20
 
-Hi,
+The clear vs clean confusion has been remedied though, and you can no
+longer create a named stash without using "git stash save" with a
+recent enough version of git.
 
-Can you show me the output of `svn log -v -r9458 svn+ssh://myserver/' ?
-
-Thanks.
-
-> Note that AFAIK each CVS modules have been imported into
-> /importfromcvs/trunk then move into /trunk/<MODULE_NAME>.
-> 
-> r48467 seem ok as a branch point:
-> 
-> <<
-> ------------------------------------------------------------------------
-> r48468 | svn | 2007-05-09 15:10:54 +0200 (Wed, 09 May 2007) | 1 line
-> Changed paths:
->    D /importfromcvs/trunk
->    A /trunk/PROJ (from /importfromcvs/trunk:48467)
-> 
-> Importing module PROJ into SVN.
-> >>
-
-So did svn+ssh://importfromcvs/trunk/file.el at r9458?  If so, git-svn
-is behaving as expected.  If not, can you tell me where "file.el" was at
-r9458?
-
-> 
-> So I'm looking for hints about the possible problem.
-> 
-> Note that I have tried to reproduce this with a small
-> script (using the same repository structure) but I was
-> not able.
-
--- 
-Eric Wong
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
