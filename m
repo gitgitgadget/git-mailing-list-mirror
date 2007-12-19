@@ -1,60 +1,105 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH v0] sha1_name: grok <revision>:./<relative-path>
-Date: Wed, 19 Dec 2007 19:09:14 +0100
-Message-ID: <20071219180914.GB3015@steel.home>
-References: <20071218204623.GC2875@steel.home> <200712182224.28152.jnareb@gmail.com> <20071218222032.GH2875@steel.home> <Pine.LNX.4.64.0712182239500.23902@racer.site> <56b7f5510712181503l1e5dcacds23511d968f98aedb@mail.gmail.com> <alpine.LFD.0.9999.0712181711100.21557@woody.linux-foundation.org> <56b7f5510712181752s7ecebca9m32794c635cba9fd@mail.gmail.com> <Pine.LNX.4.64.0712191334460.23902@racer.site> <20071219150510.GB13942@coredump.intra.peff.net> <56b7f5510712190940g2a377f4tfe3ca897561ed446@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Serious bug with pretty format strings & empty bodies?
+Date: Wed, 19 Dec 2007 19:28:37 +0100
+Message-ID: <476962D5.3050409@lsrfire.ath.cx>
+References: <57518fd10712190632o490af924n61326fddf1819014@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 19:09:46 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonathan del Strother <maillist@steelskies.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 19:29:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J53MT-0005yI-QB
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 19:09:42 +0100
+	id 1J53fe-0006ue-Co
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 19:29:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752048AbXLSSJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2007 13:09:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751263AbXLSSJS
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 13:09:18 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:35610 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751918AbXLSSJR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 13:09:17 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+a72E=
-Received: from tigra.home (Fc89a.f.strato-dslnet.de [195.4.200.154])
-	by post.webmailer.de (klopstock mo44) (RZmta 14.6)
-	with ESMTP id j03c89jBJEmtKQ ; Wed, 19 Dec 2007 19:09:14 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 5FE80277AE;
-	Wed, 19 Dec 2007 19:09:14 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 147C456D22; Wed, 19 Dec 2007 19:09:14 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <56b7f5510712190940g2a377f4tfe3ca897561ed446@mail.gmail.com>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+	id S1752126AbXLSS3G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 13:29:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752252AbXLSS3F
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 13:29:05 -0500
+Received: from india601.server4you.de ([85.25.151.105]:49642 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751547AbXLSS3E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 13:29:04 -0500
+Received: from [10.0.1.201] (p57B7FDB3.dip.t-dialin.net [87.183.253.179])
+	by india601.server4you.de (Postfix) with ESMTP id B74A82F8072;
+	Wed, 19 Dec 2007 19:28:55 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <57518fd10712190632o490af924n61326fddf1819014@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68928>
 
-Dana How, Wed, Dec 19, 2007 18:40:04 +0100:
-> If there were additional /./ or /../ patterns in the result,  I think it
-> would be more useful (e.g. for script writers who forgot to run
-> their file arguments thru something like "readlink -f") for them
-> to be squashed out (e.g. in Perl:
->   s#/(\./)+#/#g;
->   s#/([^/]*[^./][^/]*/\.\./)+#/#g;
-> ).  But this is something that could be added later if desired to
-> the interpretation of all paths,  and so seems like a different issue.
+Jonathan del Strother schrieb:
+> I'm struggling to come up with a minimal test case that confirms this=
+,
+> but I seem to be hitting a bug in the pretty string formatter when
+> trying to print bodies of commits that don't have bodies.
+>=20
+> For example, on a private repository, I'm trying to print the subject
+> & body of a commit.  This particular commit doesn't actually have a
+> body, so I'm expecting to see this output :
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> commit 18d2480ab689b483ef1ebbdb3f7420904049ba0b
+> Try to flush log files before terminating the app
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> However, when I actually run the command, I get gibberish in place of=
+ %b :
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> $ git rev-list -1- --pretty=3Dformat:"%s%n%b"
+> 18d2480ab689b483ef1ebbdb3f7420904049ba0b
+> commit 18d2480ab689b483ef1ebbdb3f7420904049ba0b
+> Try to flush log files before terminating the app
+> tree 57bc7cf30a10aee96251852125cf30fd2c81d7aa
+> parent 04c833865828538315fcdf6e187da077869ce444
+> author Jonathan del Strother <jon.delStrother@bestbefore.tv> 11979017=
+55 +0000
+> committer Jonathan del Strother <jon.delStrother@bestbefore.tv> 11979=
+01755 +0000
+>=20
+> Check that ThreadWorker's work method actually returns a value with
+> method signatures
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> So here you can see that the full details of a different commit is
+> appearing in place of the requested commit's (empty) body.  Rerunning
+> the rev-list produces the same output - the same string appears in
+> place of %b every time, but it's different for each commit.  Often yo=
+u
+> only get a small fragment of another commit's message, rather than th=
+e
+> full commit as seen above.
+>=20
+> When I use --pretty=3Dfull, it works fine.
+>=20
+> This appears in quite a few places in my repository's history.
+> Repacking the repo semi-fixes it - I still get junk bodies, but not
+> quite so many.
+>=20
+> It doesn't always happen when a commit message body is empty, but I'v=
+e
+> never seen it happen where the message body has something in.
+>=20
+> This happens with both git 1.5.3.7 and 1.5.4.rc0.1162.g3bfea, though
+> the output is slightly different - the former has a number of
+> <unknown> markers in it.  This is on OS X 10.5.1
 
-This is what the pathexpand in pathexpand-patch does.
+That's strange.  Could you check if this happens with e52a5de, too?
+That's the commit that introduced --pretty=3Dformat.  If it doesn't, co=
+uld
+you then please try to bisect the bug?
+
+How many '<unknown>' markers are there in the output of version 1.5.3.7
+(and e52a5de)?  One per %b?  Are they the only output or are they
+combined with parts of unrelated commits, too?
+
+Thanks,
+Ren=E9
