@@ -1,88 +1,93 @@
-From: Bill Priest <priestwilliaml@yahoo.com>
-Subject: git svn dcommit -n rebuilds revmap w/ 1.5.4.rc0.1187.gc1e8d
-Date: Wed, 19 Dec 2007 11:04:40 -0800 (PST)
-Message-ID: <784879.48443.qm@web55007.mail.re4.yahoo.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] HP-UX does not have select.h
+Date: Wed, 19 Dec 2007 11:57:21 -0800
+Message-ID: <7vr6hiv4ny.fsf@gitster.siamese.dyndns.org>
+References: <20071217192306.5da48540@pc09.procura.nl>
+	<7v8x3t6nq1.fsf@gitster.siamese.dyndns.org> <4767934F.7070706@op5.se>
+	<7vir2w1ghi.fsf@gitster.siamese.dyndns.org>
+	<20071218114949.711ba447@pc09.procura.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 19 20:06:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+X-From: git-owner@vger.kernel.org Wed Dec 19 20:58:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J54E6-0006AL-4p
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 20:05:26 +0100
+	id 1J553T-0006Y0-4W
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 20:58:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752347AbXLSTEn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2007 14:04:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752380AbXLSTEm
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 14:04:42 -0500
-Received: from web55007.mail.re4.yahoo.com ([206.190.58.141]:23950 "HELO
-	web55007.mail.re4.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751715AbXLSTEm (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2007 14:04:42 -0500
-Received: (qmail 48515 invoked by uid 60001); 19 Dec 2007 19:04:40 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=JKVISQF0n+vXSV0dOI3j/2Tx645ohai0Fe3HZQ5ulVwbqB+8zbbNq6AdxfZN4QSU1deTUNpREOe6WlD59CrpAFlSUlgVpok2VVwjPK6aW+OJFlZB9021dpbd4NomQCNCwrh/oiYI3wxmePuJ+1pvlX2zrHEx4kFMqcbMKMpRCRw=;
-X-YMail-OSG: Vjxo0UQVM1mo5DGggJ1dFe_0YZ0pndjFVSkil8kOtIO6kJGPyvtsrI4GQRe9xfKXuWQRkiMUuMvbjzgWVOAi4DoMLwZuW.1sh9o7gCs2IIpPUnO8rFjyfprZYnphDg--
-Received: from [12.44.137.148] by web55007.mail.re4.yahoo.com via HTTP; Wed, 19 Dec 2007 11:04:40 PST
+	id S1754473AbXLST5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 14:57:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753932AbXLST5n
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 14:57:43 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39210 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756091AbXLST5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 14:57:42 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id BF3C572CD;
+	Wed, 19 Dec 2007 14:57:32 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 089C272CB;
+	Wed, 19 Dec 2007 14:57:28 -0500 (EST)
+In-Reply-To: <20071218114949.711ba447@pc09.procura.nl> (H. Merijn Brand's
+	message of "Tue, 18 Dec 2007 11:49:49 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68932>
 
-All,
-  I had been experiencing commit slow downs (> 15
-seconds) so I decided to test it out on 1.5.4.rc0.  I
-use committed a file and it too ~5 seconds which is
-slower than it used to be but much better (I'll need
-to do an apples to apples test to quantify it better;
-e.g. check in the same file w/ a repository in the
-same state).  In the course of using 1.5.4.rc0 I did a
-git svn dcommit -n and observed the following:
+"H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
 
-> git svn dcommit -n
-Rebuilding
-.git/svn/mss_release_2.1B3/.rev_map.59aec714-b326-0410-a24e-830352df6fdd
-...
-r2918 = 992aa04a75fffdbdb65bae815905f96d5e3ef6bd
-r2920 = e68e7f5aead05fc9e7a151e95f43b8283b0ed670
-Done rebuilding
-.git/svn/mss_release_2.1B3/.rev_map.59aec714-b326-0410-a24e-830352df6fdd
-Committing to
-svn://lucille/var/lib/svnrepos/svnMSS/branches/mss_release_2.1B3
-...
-diff-tree b7cc4c3d32478277c1cdf13e3abdc9dd4a225826~1
-b7cc4c3d32478277c1cdf13e3abdc9dd4a225826
-diff-tree 0bbb656391f5a888d07c98ccce01a4c753ef4997~1
-0bbb656391f5a888d07c98ccce01a4c753ef4997
-> git svn dcommit -n
-Committing to
-svn://lucille/var/lib/svnrepos/svnMSS/branches/mss_release_2.1B3
-...
-diff-tree b7cc4c3d32478277c1cdf13e3abdc9dd4a225826~1
-b7cc4c3d32478277c1cdf13e3abdc9dd4a225826
-diff-tree 0bbb656391f5a888d07c98ccce01a4c753ef4997~1
-0bbb656391f5a888d07c98ccce01a4c753ef4997
-> git --version
-git version 1.5.4.rc0.1187.gc1e8d
+> On Tue, 18 Dec 2007 01:47:53 -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+>> Merijn, discarding the earlier patch I did to configure it out for
+>> HP-UX, does the following patch based on Andreas's idea work for you?
+>
+> Probably not:
+>
+> HP-UX 10.20, 11.00, 11.11, 11.23/PA, and 11.23/IPF all have:
+>
+> /usr/include 103 > grep -r POSIX_VERSION *
+> sys/unistd.h:#    define _POSIX_VERSION _POSIX1_VERSION_88
+> sys/unistd.h:#      define _POSIX_VERSION       _POSIX1_VERSION_90
+> sys/unistd.h:#      define _POSIX_VERSION       _POSIX1_VERSION_93
+> sys/unistd.h:#  define _SC_1_VERSION_88    7     /* _POSIX_VERSION: Date of POSIX.1-1988 */
+> sys/unistd.h:#  define _SC_1_VERSION_90   102 /* _POSIX_VERSION: Date of POSIX.1-1990 */
+> sys/unistd.h:#  define _SC_1_VERSION_93   103 /* _POSIX_VERSION: Date of POSIX.1b-1993 */
+> sys/unistd.h:#  if (_POSIX_VERSION == _POSIX1_VERSION_88)
+> sys/unistd.h:#    if (_POSIX_VERSION == _POSIX1_VERSION_90)
+>
+> and the two 11.23 do have select.h
 
-Notice the Rebuilding doesn't seem to be honoring the
--n "dry run" switch.
+Does that prove anything?  unistd.h seem to define _POSIX_VERSION to
+various values but we do not see surrounding "#ifdef WE_DO_NOT_KNOW"
+from the grep output above unfortunately.
 
-I'm not sure of the implications.  Is this something
-that I should worry about the .revmap being out of
-sync w/ what has actually been dcommit'ed?
+If the folllowing actually works I think that is the cleanest fix for
+this issue (note that I added defined(_POSIX_VERSION) there just to be
+safe if it is not defined at all).
 
-Bill
-PS.  The new path relative status is nice.
+ git-compat-util.h |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-
-
-      ____________________________________________________________________________________
-Be a better friend, newshound, and 
-know-it-all with Yahoo! Mobile.  Try it now.  http://mobile.yahoo.com/;_ylt=Ahu06i62sR8HDtDypao8Wcj9tAcJ 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 79eb10e..68a580f 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -68,7 +68,9 @@
+ #include <sys/poll.h>
+ #include <sys/socket.h>
+ #include <sys/ioctl.h>
++#if defined(_POSIX_VERSION) && _POSIX_VERSION >= 200112L
+ #include <sys/select.h>
++#endif
+ #include <assert.h>
+ #include <regex.h>
+ #include <netinet/in.h>
