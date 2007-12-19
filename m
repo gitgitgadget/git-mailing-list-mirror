@@ -1,91 +1,108 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: kha/safe and kha/experimental updated
-Date: Wed, 19 Dec 2007 10:19:23 +0000
-Message-ID: <b0943d9e0712190219oa6ebe5bk321f090e4fe0469a@mail.gmail.com>
-References: <20071214105238.18066.23281.stgit@krank>
-	 <b0943d9e0712170309n415dc6cs9d1c1f8a9c687bf8@mail.gmail.com>
-	 <20071217224812.GA6342@diana.vm.bytemark.co.uk>
-	 <20071218052115.GA13422@diana.vm.bytemark.co.uk>
-	 <b0943d9e0712180809l4d2d01b8j32ab2a410885cc5e@mail.gmail.com>
-	 <m3hcigot3h.fsf@roke.D-201>
-	 <b0943d9e0712180852y62c5bea2x61463b235b26ca04@mail.gmail.com>
-	 <87bq8nkoma.fsf@lysator.liu.se>
+Date: Wed, 19 Dec 2007 11:44:57 +0100
+Message-ID: <200712191144.59747.jnareb@gmail.com>
+References: <20071214105238.18066.23281.stgit@krank> <m3hcigot3h.fsf@roke.D-201> <20071219093816.GB4361@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org,
-	"=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-To: "=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Wed Dec 19 11:20:11 2007
+Cc: Catalin Marinas <catalin.marinas@gmail.com>,
+	David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+To: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 11:45:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4w21-0000zV-Pp
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 11:20:06 +0100
+	id 1J4wQs-00012z-95
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 11:45:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752978AbXLSKTZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 05:19:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752972AbXLSKTZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 05:19:25 -0500
-Received: from rv-out-0910.google.com ([209.85.198.184]:4044 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752623AbXLSKTY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2007 05:19:24 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2602461rvb.1
-        for <git@vger.kernel.org>; Wed, 19 Dec 2007 02:19:23 -0800 (PST)
+	id S1751020AbXLSKpO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 05:45:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751189AbXLSKpO
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 05:45:14 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:13997 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750966AbXLSKpM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 05:45:12 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1523689nfb.21
+        for <git@vger.kernel.org>; Wed, 19 Dec 2007 02:45:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Ts721IHF2bbG6+GvTlFzjW9VKLKSvpCrqmqvJiRYo14=;
-        b=IAl2ohS5A63pd5xTmKmt0vFhPxWFFAQtpFk73E0CR2gR49cOc3yPe2vjPOctKwGelG3z+sK/ZfNPuosOgDOoKmr0ClUkti07w0PyA8UXMv6u2qhKvmAhWm/FbAamKwMsdv4PgWLU5hp5LzOMoA5avfDXwAmUbS7u0Mo1FNbRDd8=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=a+a/nOLfTdh4GZRrom2jp+3RVNzaZmwyvS0Pt3U4G6s=;
+        b=J8yToz4YBhhdbGBnMLSrcxWR+BZF9kIN9zno8JJZPxusJpmDyB73asMBdp32q5146HNT7s5UeWnTVcYybM/O56dS5Eu0mMY3yZgDySSRRTsxrZR09kRpoG0hmkcj6hM2xkEB+tdE2gPkpzWph+0xj826kgxAO0LeISlKThiOrls=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=u+NuoGpMAAkUYylJ5n0+zp3gAWkAmoUPvzICmtuQvi1fVkUBYT+PKPAEwik8a0CIV5HYhK+OSRlLIc/aIH2Pr/VRNTQEcZqHn5PKzIbZ3GsLnv+BVWq+bTfcpczXxZhk/phSjG2m3LbShhC7KOsfwH5D2+G0rrGw6zMiY7JvH+c=
-Received: by 10.141.132.8 with SMTP id j8mr1313511rvn.125.1198059563444;
-        Wed, 19 Dec 2007 02:19:23 -0800 (PST)
-Received: by 10.141.186.5 with HTTP; Wed, 19 Dec 2007 02:19:23 -0800 (PST)
-In-Reply-To: <87bq8nkoma.fsf@lysator.liu.se>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=PckayIr1UaccAtIh/692WitU0vPOncbmp5WfLDizsu39zx9DxZw18nHtrB4q01h+ht29ST8G6dN1i5bzaj3k04RUiQrL57wxcWoOcCNtGXWC1VEONDEn/lK6oNgldAMoAkRsk8O2mzjQ3rSvPOI+JKSeXA/XEYe5JXt9aPUMs0s=
+Received: by 10.78.204.7 with SMTP id b7mr11211675hug.54.1198061110761;
+        Wed, 19 Dec 2007 02:45:10 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.252.93])
+        by mx.google.com with ESMTPS id k10sm19357934nfh.2007.12.19.02.45.08
+        (version=SSLv3 cipher=OTHER);
+        Wed, 19 Dec 2007 02:45:09 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20071219093816.GB4361@diana.vm.bytemark.co.uk>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68881>
 
-On 19/12/2007, David K=E5gedal <davidk@lysator.liu.se> wrote:
-> "Catalin Marinas" <catalin.marinas@gmail.com> writes:
-> > I'd also like to re-add the stgit.keeporig option and additional
-> > functionality so that the *.{ancestor,current,patched} can be left =
-in
-> > the working tree. Some people might use them when manually fixing
-> > conflicts (I have a look at them from time to time when the emacs +
-> > ediff shows a hard to understand conflict).
->
-> Since all the information is in git, it is of course easy to recreate
-> it. But the important question to ask is: how do you use these extra
-> files? git.el provides a way to diff against both parent versions, an=
-d
-> maybe that is actually what you need.
->
-> I don't mind that you want these files, but they are mostly clutter t=
-o
-> me.
+On Wed, 19 Dec 2007, Karl Hasselstr=C3=B6m wrote:
+> On 2007-12-18 08:39:52 -0800, Jakub Narebski wrote:
+> > "Catalin Marinas" <catalin.marinas@gmail.com> writes:
+> >
+> > > On 18/12/2007, Karl Hasselstr=C3=B6m <kha@treskal.com> wrote:
+> > >
+> > > >       Remove "stg resolved"
+> > >
+> > > I'd like to keep this command. git-mergetool doesn't support the
+> > > tool I use (emacs + ediff and more stgit-specific file extensions
+> > > like current, patch etc.). I also don't find 'git add' to be
+> > > meaningful for marking a conflict as solved.
+> >
+> > I also would like to have this command kept (and shown in 'stg
+> > help'!). Contrary to 'git add' it can check and add to index /
+> > update index only for files with conflict; we have -r
+> > (ancestor|current|patched) to choose one side, and we could add
+> > --check to check if there are no conflict markers with files (usefu=
+l
+> > with -a/--all).
+>=20
+> This too sounds like stuff that could profitably be added to "git
+> add". Except for the ancestor/current/patched words, it is not
+> specific to patch stacks, so the implementation should be in git and
+> not in stg.
 
-You can set stgit.keeporig to 'no' if you don't want these files.
+No it cannot, at least the '-r (ancestor|current|patched)' part for
+resetting file to given version, even if we change the wording to
+ancestor, ours and theirs. The git-add command is about adding contents=
+,=20
+which updates index, which almost as a intended side-effect clears=20
+merge state, i.e. stages; and not about resetting to stage.
 
-=46or people not using emacs + git.el, the files might be useful. As yo=
-u
-said, you could use 'git diff -2/-3' but, in various occasions I just
-wanted to copy a block of code from one of the checked-out stages.
-Without this feature, I would have to use plain git and remember what
-stage corresponds to my patch.
+Besides with "stg resolved" you can update index _only_ for files
+which were in the conflict, also for -a/--all, and not all the files
+not only those which were in the conflict like "git add -u" does.
 
-Note that there are other users (apart from me) that use StGIT almost
-exclusively. I really don't like forcing them to use more and more
-plain git commands (at some point, they might even discover 'git
-rebase -i' to be good enough and give up on StGIT :-)).
+"stg resolved --check" could happily ignore things that only look
+like conflict markers, but must have been intended, because they are
+in files not in conflict.
+
+
+Unless you are talking about adding "resolve"/"resolved" command
+to git-core, as a porcelain wrapper around git-update-index, like
+"git add"...
+
+
+P.S. I have just noticed that 'git-checkout' [<tree-ish>] <paths>...
+form of operation is not documented; you can derive what it do
+only from examples.
 
 --=20
-Catalin
+Jakub Narebski
+Poland
