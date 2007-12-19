@@ -1,84 +1,112 @@
 From: Charles Bailey <charles@hashpling.org>
 Subject: Re: [PATCH] Fix git-instaweb breakage on MacOS X due to the limited sed functionality
-Date: Wed, 19 Dec 2007 11:48:23 +0000
-Message-ID: <20071219114823.GA28273@hashpling.org>
-References: <20071219105752.GA23932@hashpling.org> <23306E3C-24F1-4626-A956-02531644B786@wincent.com> <20071219113617.GA26520@hashpling.org> <CA30F61D-4AE1-4100-A632-20B5587EB4D0@wincent.com>
+Date: Wed, 19 Dec 2007 11:53:19 +0000
+Message-ID: <20071219115319.GA29184@hashpling.org>
+References: <20071219114823.GA28273@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 12:48:53 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 19 12:54:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4xPw-0004qn-MF
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 12:48:53 +0100
+	id 1J4xUl-00076X-OM
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 12:53:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752593AbXLSLs3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 06:48:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752582AbXLSLs3
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 06:48:29 -0500
-Received: from pih-relay08.plus.net ([212.159.14.134]:58207 "EHLO
-	pih-relay08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752142AbXLSLs2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 06:48:28 -0500
+	id S1752837AbXLSLx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 06:53:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752829AbXLSLx0
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 06:53:26 -0500
+Received: from fhw-relay07.plus.net ([212.159.14.215]:51346 "EHLO
+	fhw-relay07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752826AbXLSLx0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 06:53:26 -0500
 Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay08.plus.net with esmtp (Exim) id 1J4xPV-0000Cv-LN; Wed, 19 Dec 2007 11:48:25 +0000
+	 by fhw-relay07.plus.net with esmtp (Exim) id 1J4xUH-0007Mz-02
+	for git@vger.kernel.org; Wed, 19 Dec 2007 11:53:21 +0000
 Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
-	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id lBJBmN3E028566;
-	Wed, 19 Dec 2007 11:48:23 GMT
+	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id lBJBrJIu029461
+	for <git@vger.kernel.org>; Wed, 19 Dec 2007 11:53:19 GMT
 Received: (from charles@localhost)
-	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id lBJBmN2C028565;
-	Wed, 19 Dec 2007 11:48:23 GMT
+	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id lBJBrJ2L029460
+	for git@vger.kernel.org; Wed, 19 Dec 2007 11:53:19 GMT
 Content-Disposition: inline
-In-Reply-To: <CA30F61D-4AE1-4100-A632-20B5587EB4D0@wincent.com>
+In-Reply-To: <20071219114823.GA28273@hashpling.org>
 User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68895>
 
-On Wed, Dec 19, 2007 at 12:43:12PM +0100, Wincent Colaiuta wrote:
-> El 19/12/2007, a las 12:36, Charles Bailey escribi=F3:
->=20
-> >
-> >I agree completely, but all the generated scripts output hard coded
-> >paths so it would seem inconsistent not to qualify the path in this
-> >case too.
->=20
-> It's not hard-coded, it's dynamic. Witness:
->=20
+git-instaweb relied on a pipe in a sed script, but this is not supported
+by MacOS X sed when using BREs.  git-instaweb relies on a working perl
+in any case, and perl re are more consistent between platforms, so
+replace sed invocation with an equivalent perl invocation.
 
-It's *output* hardcoded, it's dynamic during script generation.
+Also, fix the documented -b "" to work without giving a spurious 'command
+not found' error.
 
-A raw 'perl' in a shell script is dynamic during script run.
+Signed-off-by: Charles Bailey <charles@hashpling.org>
+---
+ Makefile        |    1 +
+ git-instaweb.sh |   15 +++++++++------
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
-
-> $ make PERL_PATH=3D/Volumes/Clon/usr/bin/perl
-> $ head -1 git-add--interactive
-> #!/Volumes/Clon/usr/bin/perl -w
->=20
-> > Would  @@PERL_PATH@@perl -p -e work, do you know?
->=20
-> I don't think so, but judging from the following section of the =20
-> Makefile, I think @@PERL@@ would. Why don't you give it a try?
->=20
-> $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
->         $(QUIET_GEN)$(RM) $@ $@+ && \
->         sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
->             -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
->             -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
->             -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
->             -e 's|@@HTMLDIR@@|$(htmldir_SQ)|g' \
->             $@.sh >$@+ && \
->         chmod +x $@+ && \
->         mv $@+ $@
->=20
-
-git-instaweb is treated specially, so the answer is 'no, not yet', but
-I have a patch on the way.
-
-Charles.
+diff --git a/Makefile b/Makefile
+index 617e5f5..d6d3d65 100644
+--- a/Makefile
++++ b/Makefile
+@@ -880,6 +880,7 @@ git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css
+ 	    -e '/@@GITWEB_CGI@@/d' \
+ 	    -e '/@@GITWEB_CSS@@/r gitweb/gitweb.css' \
+ 	    -e '/@@GITWEB_CSS@@/d' \
++	    -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
+ 	    $@.sh > $@+ && \
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index 42d8d7f..9f86709 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -3,6 +3,7 @@
+ # Copyright (c) 2006 Eric Wong
+ #
+ 
++PERL='@@PERL@@'
+ OPTIONS_KEEPDASHDASH=
+ OPTIONS_SPEC="\
+ git-instaweb [options] (--start | --stop | --restart)
+@@ -232,16 +233,18 @@ EOF
+ }
+ 
+ script='
+-s#^\(my\|our\) $projectroot =.*#\1 $projectroot = "'$(dirname "$fqgitdir")'";#
+-s#\(my\|our\) $gitbin =.*#\1 $gitbin = "'$GIT_EXEC_PATH'";#
+-s#\(my\|our\) $projects_list =.*#\1 $projects_list = $projectroot;#
+-s#\(my\|our\) $git_temp =.*#\1 $git_temp = "'$fqgitdir/gitweb/tmp'";#'
++s#^(my|our) \$projectroot =.*#$1 \$projectroot = "'$(dirname "$fqgitdir")'";#;
++s#(my|our) \$gitbin =.*#$1 \$gitbin = "'$GIT_EXEC_PATH'";#;
++s#(my|our) \$projects_list =.*#$1 \$projects_list = \$projectroot;#;
++s#(my|our) \$git_temp =.*#$1 \$git_temp = "'$fqgitdir/gitweb/tmp'";#;'
+ 
+ gitweb_cgi () {
+ 	cat > "$1.tmp" <<\EOFGITWEB
+ @@GITWEB_CGI@@
+ EOFGITWEB
+-	sed "$script" "$1.tmp"  > "$1"
++	# The generated scripts assume that perl is /usr/bin/perl
++	# so the assumption here should be no more harmful
++	"$PERL" -p -e "$script" "$1.tmp"  > "$1"
+ 	chmod +x "$1"
+ 	rm -f "$1.tmp"
+ }
+@@ -273,4 +276,4 @@ esac
+ 
+ start_httpd
+ url=http://127.0.0.1:$port
+-"$browser" $url || echo $url
++test -n "$browser" && "$browser" $url || echo $url
+-- 
+1.5.4.rc0
