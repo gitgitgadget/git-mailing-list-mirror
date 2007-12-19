@@ -1,74 +1,60 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: Re: git-svn and migration
-Date: Wed, 19 Dec 2007 12:54:47 -0500
-Message-ID: <20071219175447.GB15898@dervierte>
-References: <320075ff0712190849u2c40cc46pf01fa2a75f557482@mail.gmail.com> <320075ff0712190850r35263bcfv1d8f84e699208e15@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH v0] sha1_name: grok <revision>:./<relative-path>
+Date: Wed, 19 Dec 2007 19:09:14 +0100
+Message-ID: <20071219180914.GB3015@steel.home>
+References: <20071218204623.GC2875@steel.home> <200712182224.28152.jnareb@gmail.com> <20071218222032.GH2875@steel.home> <Pine.LNX.4.64.0712182239500.23902@racer.site> <56b7f5510712181503l1e5dcacds23511d968f98aedb@mail.gmail.com> <alpine.LFD.0.9999.0712181711100.21557@woody.linux-foundation.org> <56b7f5510712181752s7ecebca9m32794c635cba9fd@mail.gmail.com> <Pine.LNX.4.64.0712191334460.23902@racer.site> <20071219150510.GB13942@coredump.intra.peff.net> <56b7f5510712190940g2a377f4tfe3ca897561ed446@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nigel Magnay <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 18:55:15 2007
+Cc: Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 19:09:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J538S-00088A-Jg
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 18:55:13 +0100
+	id 1J53MT-0005yI-QB
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 19:09:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752107AbXLSRyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2007 12:54:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751547AbXLSRyu
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 12:54:50 -0500
-Received: from wa-out-1112.google.com ([209.85.146.183]:10593 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751100AbXLSRyt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 12:54:49 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so4851650wah.23
-        for <git@vger.kernel.org>; Wed, 19 Dec 2007 09:54:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=Vp1uE0HXaCrANQ8ZX0ZOB7Ife4HK8qt7/d8Amv0pT2A=;
-        b=fMRRVUz899uKBGcZVPaTDWmJBNGoT7PiVSGEKRyRtSNz30PRfgY4bWBk/Scewm1ZgwIK7bQq+mXfMkioazHDdsaY5OIEHgajjQlactqrJK/IJkCreyevHW6tozKsGvWi7avcG4TQMgEwpQ5F5NmB6gEhF1oytvC1QWCCDBkqXCQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=XeCTcpX8q3MhJcaou63XSSLbbcivQqGsYut8AlR07SeE9yApYN7qPpacangjRhB0yRbJYYYnUqIEu+XPVckZ6zzr5U9LwuTOk5pMcKNrn7dNe23i3Te1jQhQPfawQNzrTYJoBlGqpqbV3iugssVUaUXi8M5kg/if/shQQWQtPSE=
-Received: by 10.140.133.10 with SMTP id g10mr2708876rvd.151.1198086888912;
-        Wed, 19 Dec 2007 09:54:48 -0800 (PST)
-Received: from dasbrennen.isa-geek.org ( [76.177.39.93])
-        by mx.google.com with ESMTPS id 9sm20030707wrl.2007.12.19.09.54.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 19 Dec 2007 09:54:47 -0800 (PST)
-Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
-	id 2B1EBDF7B25; Wed, 19 Dec 2007 12:54:47 -0500 (EST)
+	id S1752048AbXLSSJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 13:09:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751263AbXLSSJS
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 13:09:18 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:35610 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751918AbXLSSJR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 13:09:17 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+a72E=
+Received: from tigra.home (Fc89a.f.strato-dslnet.de [195.4.200.154])
+	by post.webmailer.de (klopstock mo44) (RZmta 14.6)
+	with ESMTP id j03c89jBJEmtKQ ; Wed, 19 Dec 2007 19:09:14 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 5FE80277AE;
+	Wed, 19 Dec 2007 19:09:14 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 147C456D22; Wed, 19 Dec 2007 19:09:14 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <320075ff0712190850r35263bcfv1d8f84e699208e15@mail.gmail.com>
+In-Reply-To: <56b7f5510712190940g2a377f4tfe3ca897561ed446@mail.gmail.com>
 User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68927>
 
-On Wed, Dec 19, 2007 at 04:50:30PM +0000, Nigel Magnay wrote:
-> Has anyone got any tips as I'm sure it's a path trodden before? I've
-> seen examples of keeping a read-only svn, but that's not really what
-> I'm after. I'm considering whether to have a central git repo
-> regularly pull from svn so that it's up to date, and having us
-> possibly push to svn (or git if it's not merged to trunk) as an
-> interim step..
+Dana How, Wed, Dec 19, 2007 18:40:04 +0100:
+> If there were additional /./ or /../ patterns in the result,  I think it
+> would be more useful (e.g. for script writers who forgot to run
+> their file arguments thru something like "readlink -f") for them
+> to be squashed out (e.g. in Perl:
+>   s#/(\./)+#/#g;
+>   s#/([^/]*[^./][^/]*/\.\./)+#/#g;
+> ).  But this is something that could be added later if desired to
+> the interpretation of all paths,  and so seems like a different issue.
 
-Using a central git repo that is kept uptodate with svn is the approach
-I've used.  git-svn isn't especially keen on this mode of operation,
-however.  After every fetch, you have to reset refs/remotes/trunk to
-origin/master, which it turn puts .git/svn out of date (you can blow it
-away and run "git svn fetch" to regenerate it).
-
-I wrote a script that automates most of this stuff (including doing
-incremental additions to git-svn's revdb/revmap).  If there's interest,
-I can see about cleaning it up for general consumption.
--- 
--Steven Walter <stevenrwalter@gmail.com>
-Freedom is the freedom to say that 2 + 2 = 4
-B2F1 0ECC E605 7321 E818  7A65 FC81 9777 DC28 9E8F 
+This is what the pathexpand in pathexpand-patch does.
