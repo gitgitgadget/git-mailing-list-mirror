@@ -1,81 +1,82 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: more than 20 commands in everyday.txt
-Date: Wed, 19 Dec 2007 23:56:18 +0100
-Message-ID: <20071219225618.GA7378@genesis.frugalware.org>
+Subject: Re: Git-to-svn convert
+Date: Thu, 20 Dec 2007 00:16:43 +0100
+Message-ID: <20071219231643.GB7378@genesis.frugalware.org>
+References: <476997C1.2080506@gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="nFreZHaLTZJo0R7j"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 19 23:56:53 2007
+	protocol="application/pgp-signature"; boundary="8GpibOaaTibBMecb"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Harning <harningt@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 20 00:17:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J57qJ-0000TP-Hs
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 23:56:48 +0100
+	id 1J58AA-0000Ca-4I
+	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 00:17:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752390AbXLSW4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2007 17:56:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752660AbXLSW4U
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 17:56:20 -0500
-Received: from virgo.iok.hu ([193.202.89.103]:16135 "EHLO virgo.iok.hu"
+	id S1758120AbXLSXQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 18:16:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757656AbXLSXQr
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 18:16:47 -0500
+Received: from virgo.iok.hu ([193.202.89.103]:16142 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752196AbXLSW4T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 17:56:19 -0500
+	id S1757647AbXLSXQq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 18:16:46 -0500
 Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id A95911B24FB
-	for <git@vger.kernel.org>; Wed, 19 Dec 2007 23:56:18 +0100 (CET)
+	by virgo.iok.hu (Postfix) with ESMTP id E38F21B24FB;
+	Thu, 20 Dec 2007 00:16:44 +0100 (CET)
 Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 50D6A4465C
-	for <git@vger.kernel.org>; Wed, 19 Dec 2007 23:55:00 +0100 (CET)
+	by kag.elte.hu (Postfix) with ESMTP id 55F8A4465C;
+	Thu, 20 Dec 2007 00:15:26 +0100 (CET)
 Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 5B198119019C; Wed, 19 Dec 2007 23:56:18 +0100 (CET)
+	id 106F3119019C; Thu, 20 Dec 2007 00:16:43 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <476997C1.2080506@gmail.com>
 User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68952>
 
 
---nFreZHaLTZJo0R7j
+--8GpibOaaTibBMecb
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-hi,
+On Wed, Dec 19, 2007 at 05:14:25PM -0500, Thomas Harning <harningt@gmail.co=
+m> wrote:
+> Example of what I mean...:
+>=20
+> a - b -
+> `c'
+>=20
+>=20
+> As to how to pull the repository into subversion.. how would I do that?
+> git-svn init ?
 
-this might seem to be a bit bikesheding, but i hope it isn't. today i
-teched git to someone who never used any scm so far. i showed him the
-"everyday with git" document, as i think it's a great start for newbies.
-actually i read it once but it was in the past, now i did it again and i
-think there are some commands listed there which is not something we use
-"every day". of course it may be only me, that's why i ask. here are the
-commands i rarely use and are in everyday.txt:
+i think you have two options:
 
-- git-prune and git-repack: usually i use git-gc only. maybe prune and
-  repack could be removed from everyday.txt?
+- use some 3rd-party tool like tailor
 
-- git-show-branch: what about mentioning gitk instead? i think it's much
-  more used - compared to git-show-branch
+- first you should rewrite your history by creating a linear history
+  then git-svn can dcommit your changes to svn
 
-what do you think about this? maybe i'm wrong, but if i'm right, then i
-would provide a patch to update everyday.txt according to these
-suggestions.
-
-thanks,
 - VMiklos
 
---nFreZHaLTZJo0R7j
+--8GpibOaaTibBMecb
 Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.7 (GNU/Linux)
 
-iD8DBQFHaaGSe81tAgORUJYRAunTAJ9mebelZTRtoxLXZFg+t64IvxAUuQCcCNEq
-7JI5op8lh5HzQ0dX1mUgZHY=
-=ybDQ
+iD8DBQFHaaZbe81tAgORUJYRAthhAJ4zrpNP+xC5x4hGkjMPevPjbc2zMQCeMs+l
+O+PzQz6LLPmvOZB5yWVhLHQ=
+=ZOwQ
 -----END PGP SIGNATURE-----
 
---nFreZHaLTZJo0R7j--
+--8GpibOaaTibBMecb--
