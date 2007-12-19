@@ -1,73 +1,71 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Add format-patch option --no-name-prefix.
-Date: Wed, 19 Dec 2007 10:21:53 +0100
-Message-ID: <4768E2B1.7030405@viscovery.net>
-References: <1197992574-3464-1-git-send-email-pascal@obry.net> <4767EF5B.3010600@op5.se> <4767F145.3030109@obry.net> <4768DC78.9010304@op5.se>
+From: Marco Roeland <marco.roeland@xs4all.nl>
+Subject: [PATCH] clone: fix options '-o' and '--origin' to be recognised
+	again
+Date: Wed, 19 Dec 2007 10:15:15 +0100
+Message-ID: <20071219091515.GA20707@fiberbit.xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pascal Obry <pascal.obry@gmail.com>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>, Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Wed Dec 19 10:22:21 2007
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 19 10:26:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4v87-00009C-WE
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 10:22:20 +0100
+	id 1J4vBq-0001MU-Hn
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 10:26:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752370AbXLSJV5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 04:21:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752336AbXLSJV5
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 04:21:57 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:8003 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752299AbXLSJV4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2007 04:21:56 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1J4v7w-0002TF-RR; Wed, 19 Dec 2007 10:22:09 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 47A0869F; Wed, 19 Dec 2007 10:21:53 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <4768DC78.9010304@op5.se>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753494AbXLSJZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 04:25:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753893AbXLSJZm
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 04:25:42 -0500
+Received: from smtp-vbr9.xs4all.nl ([194.109.24.29]:1452 "EHLO
+	smtp-vbr9.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753494AbXLSJZk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 04:25:40 -0500
+X-Greylist: delayed 579 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Dec 2007 04:25:40 EST
+Received: from fiberbit.xs4all.nl (fiberbit.xs4all.nl [213.84.224.214])
+	by smtp-vbr9.xs4all.nl (8.13.8/8.13.8) with ESMTP id lBJ9FGIK051337;
+	Wed, 19 Dec 2007 10:15:21 +0100 (CET)
+	(envelope-from marco.roeland@xs4all.nl)
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.67)
+	(envelope-from <marco.roeland@xs4all.nl>)
+	id 1J4v1H-0005R3-UZ; Wed, 19 Dec 2007 10:15:15 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68872>
 
-Andreas Ericsson schrieb:
-> Pascal Obry wrote:
->> Andreas Ericsson a =E9crit :
->>> Pascal Obry wrote:
->>>>      int thread =3D 0;
->>>> +    int no_name_prefix =3D 0;
->>> Do we not need no double negations, yes?
->>
->> Not sure, looks clearer to use variable name corresponding to the op=
-tion
->> name to me...
+Due to a subtle typo in a shell case pattern neither alternative worked.
 
-Sure. Only that the option name is --name-prefix, and the no- part of i=
-t
-is just the negation (that many other long option names also offer).
+Signed-off-by: Marco Roeland <marco.roeland@xs4all.nl>
+---
 
-> Perhaps. We just had this discussion on the list where multiple peopl=
-e had
-> extended a negative-sounding option. Personally I find it hard to par=
-se
-> and bug-prone to write (and edit) something like
->=20
->     if (!no_prefix)
->         add_the_prefix();",
->=20
-> but perhaps that's just me.
+ This is a regression in 'next', introduced on Nov 4th by commit 94362599
+ "Migrate git-clone to use git-rev-parse --parseopt". Added Kristian as
+ he works on the builtin version; perhaps nice for a test case (!).
 
-Oh, no, you are not alone!
+ git-clone.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Johannes "We-don't-need-no-steenkin'-duuble-negations" Sixt
+diff --git a/git-clone.sh b/git-clone.sh
+index 9a160ee..b4e858c 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -152,7 +152,7 @@ do
+ 		die "clones are always made with separate-remote layout" ;;
+ 	--reference)
+ 		shift; reference="$1" ;;
+-	-o,--origin)
++	-o|--origin)
+ 		shift;
+ 		case "$1" in
+ 		'')
+-- 
+1.5.4.rc0.1162.g3bfea
