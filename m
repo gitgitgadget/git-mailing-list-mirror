@@ -1,86 +1,94 @@
-From: Seth Falcon <seth@userprimary.net>
-Subject: Re: git-svn and migration
-Date: Wed, 19 Dec 2007 13:14:46 -0800
-Message-ID: <m28x3qv12x.fsf@userprimary.net>
-References: <320075ff0712190849u2c40cc46pf01fa2a75f557482@mail.gmail.com>
-	<320075ff0712190850r35263bcfv1d8f84e699208e15@mail.gmail.com>
-	<20071219175447.GB15898@dervierte>
-	<20071219202333.GD4390@genesis.frugalware.org>
-	<320075ff0712191246r46cd76f7r1d8edc1adf35ae57@mail.gmail.com>
-	<320075ff0712191247m132ecd95o46a7778d8bd4f42b@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] HP-UX does not have select.h
+Date: Wed, 19 Dec 2007 13:31:58 -0800
+Message-ID: <7vzlw6tlpt.fsf@gitster.siamese.dyndns.org>
+References: <20071217192306.5da48540@pc09.procura.nl>
+	<7v8x3t6nq1.fsf@gitster.siamese.dyndns.org> <4767934F.7070706@op5.se>
+	<7vir2w1ghi.fsf@gitster.siamese.dyndns.org>
+	<20071218114949.711ba447@pc09.procura.nl>
+	<7vr6hiv4ny.fsf@gitster.siamese.dyndns.org>
+	<20071219211226.41920430@pc09.procura.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: "Nigel Magnay" <nigel.magnay@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 22:15:18 2007
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+X-From: git-owner@vger.kernel.org Wed Dec 19 22:32:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J56G2-0007cS-Oe
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 22:15:15 +0100
+	id 1J56Ws-00071P-FV
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 22:32:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220AbXLSVOv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2007 16:14:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753000AbXLSVOv
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 16:14:51 -0500
-Received: from qmta06.emeryville.ca.mail.comcast.net ([76.96.30.56]:35159 "EHLO
-	QMTA06.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751679AbXLSVOu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2007 16:14:50 -0500
-Received: from OMTA10.emeryville.ca.mail.comcast.net ([76.96.30.28])
-	by QMTA06.emeryville.ca.mail.comcast.net with comcast
-	id SlDL1Y0010cQ2SL0A00E00; Wed, 19 Dec 2007 21:14:55 +0000
-Received: from ziti.local ([69.17.40.82])
-	by OMTA10.emeryville.ca.mail.comcast.net with comcast
-	id SlEt1Y00H1mMH6D8W00000; Wed, 19 Dec 2007 21:14:55 +0000
-X-Authority-Analysis: v=1.0 c=1 a=Z4mJgif-AAAA:8 a=OaBim6T8yWDOUFZ9tAYA:9 a=N3byJWunjKYbr4TcofEEZq8RUkEA:4 a=MSl-tDqOz04A:10 a=F-J2dRE9H3gA:10 a=5nwwK3GRrp0A:10
-In-Reply-To: <320075ff0712191247m132ecd95o46a7778d8bd4f42b@mail.gmail.com> (Nigel Magnay's message of "Wed\, 19 Dec 2007 20\:47\:24 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (darwin)
+	id S1753098AbXLSVcP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 16:32:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753218AbXLSVcP
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 16:32:15 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46192 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753042AbXLSVcP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 16:32:15 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 64B2E7DB3;
+	Wed, 19 Dec 2007 16:32:07 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 802CA7DAC;
+	Wed, 19 Dec 2007 16:32:03 -0500 (EST)
+In-Reply-To: <20071219211226.41920430@pc09.procura.nl> (H. Merijn Brand's
+	message of "Wed, 19 Dec 2007 21:12:26 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68940>
 
-"Nigel Magnay" <nigel.magnay@gmail.com> writes:
+"H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
 
-> I was prepared to put up with it not being a bare repository (asides
-> the extra /.git/ in the URL it's pretty much the same).
+> On Wed, 19 Dec 2007 11:57:21 -0800, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On the git host I'd set refs/heads/trunk to be
->  ref: refs/remotes/svn/trunk
+>> "H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
+>> 
+>> > On Tue, 18 Dec 2007 01:47:53 -0800, Junio C Hamano <gitster@pobox.com> wrote:
+>> > ...
+>> >> Merijn, discarding the earlier patch I did to configure it out for
+>> >> HP-UX, does the following patch based on Andreas's idea work for you?
+>> >
+>> > Probably not:
+>> >
+>> > HP-UX 10.20, 11.00, 11.11, 11.23/PA, and 11.23/IPF all have:
+>> >
+>> > /usr/include 103 > grep -r POSIX_VERSION *
+>> > sys/unistd.h:#    define _POSIX_VERSION _POSIX1_VERSION_88
+>> > sys/unistd.h:#      define _POSIX_VERSION       _POSIX1_VERSION_90
+>> > sys/unistd.h:#      define _POSIX_VERSION       _POSIX1_VERSION_93
+>> > sys/unistd.h:#  define _SC_1_VERSION_88    7     /* _POSIX_VERSION: Date of POSIX.1-1988 */
+>> > sys/unistd.h:#  define _SC_1_VERSION_90   102 /* _POSIX_VERSION: Date of POSIX.1-1990 */
+>> > sys/unistd.h:#  define _SC_1_VERSION_93   103 /* _POSIX_VERSION: Date of POSIX.1b-1993 */
+>> > sys/unistd.h:#  if (_POSIX_VERSION == _POSIX1_VERSION_88)
+>> > sys/unistd.h:#    if (_POSIX_VERSION == _POSIX1_VERSION_90)
+>> >
+>> > and the two 11.23 do have select.h
+>> 
+>> Does that prove anything?  unistd.h seem to define _POSIX_VERSION to
+>> various values but we do not see surrounding "#ifdef WE_DO_NOT_KNOW"
+>> from the grep output above unfortunately.
 >
-> And I'm hoping that a cron of git svn fetch ; git-update-server-info
-> will do the trick.  It appeared to keep it in sync when I fetch
-> downstream. I don't know if I'm being naive though expecting that to
-> work as I don't grok all that git-svn needs to work properly - but I'm
-> working on it ;-)
+> What I tried to demonstrate is that I have no clue about the actual value
+> of this define, and if values like 88, 90, and 93 (7, 102, and 103)  do
+> have any relation with the higher value of 200112L that you use.
 >
-> My current plan is for developers to push/pull to git to share amongst
-> the git-devs, and to push to svn when wanting to share with everyone
-> else..
+> Also because these are the *only* _POSIX_VERSION defines in the entire
+> include tree, and 11.23 does have a select.h, which makes the patch below
+> to be not OK on 11.23. I'm not stating that HP follows the rules in any
+> correct way, but if this is to be sure that select.h gets included if the
+> OS supports it, it will fail.
 >
-> [svn user] ---(ci/co)--->[svn] --pull--> [git]
->                             ^               ^
->                            |               |
->                           push          push/pull
->                             |               |
->                            ---[git user]----
+>> If the folllowing actually works I think that is the cleanest fix for
+>> this issue (note that I added defined(_POSIX_VERSION) there just to be
+>> safe if it is not defined at all).
 
-I suspect having the git users push/fetch only from svn
-would be more reliable.  Won't there be problems if git users
-do merges and push to the git repo?
-
-Also, seems like it makes the transition more complicateds for git
-users since they have to figure out git-svn _and_ the git push/pull.
-
-Perhaps avoid the central git repo until everyone is on git.  Then
-people have to learn not to use git-svn and to use push/pull instead.
-
-My $0.02
-
-+ seth
-
--- 
-Seth Falcon | seth@userprimary.net | blog: http://userprimary.net/user/
+But your grep did not catch their definition of _POSIX1_VERSION_$YEAR
+which are used to define the actual value of _POSIX_VERSION.
