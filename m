@@ -1,78 +1,84 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git-svn and migration
-Date: Wed, 19 Dec 2007 21:23:33 +0100
-Message-ID: <20071219202333.GD4390@genesis.frugalware.org>
-References: <320075ff0712190849u2c40cc46pf01fa2a75f557482@mail.gmail.com> <320075ff0712190850r35263bcfv1d8f84e699208e15@mail.gmail.com> <20071219175447.GB15898@dervierte>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [PATCH 4/5] atmel_serial: Split the interrupt handler
+Date: Wed, 19 Dec 2007 15:37:45 -0500
+Message-ID: <BAYC1-PASMTP13613FE244FF93DC2BF613AE5C0@CEZ.ICE>
+References: <1197997575-13292-1-git-send-email-hskinnemoen@atmel.com>
+	<1197997575-13292-2-git-send-email-hskinnemoen@atmel.com>
+	<1197997575-13292-3-git-send-email-hskinnemoen@atmel.com>
+	<1197997575-13292-4-git-send-email-hskinnemoen@atmel.com>
+	<1197997575-13292-5-git-send-email-hskinnemoen@atmel.com>
+	<20071218181019.2af46418@dhcp-252-066.norway.atmel.com>
+	<alpine.LFD.0.9999.0712181318300.27475@localhost.localdomain>
+	<20071219124008.4945e592@dhcp-252-066.norway.atmel.com>
+	<20071219150734.50b1f847@dhcp-252-066.norway.atmel.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="dkEUBIird37B8yKS"
-Cc: Nigel Magnay <nigel.magnay@gmail.com>, git@vger.kernel.org
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 21:25:52 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Haavard Skinnemoen <hskinnemoen@atmel.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 21:38:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J55SW-00016t-RG
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 21:24:05 +0100
+	id 1J55gC-0008Q2-FJ
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 21:38:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756216AbXLSUXn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2007 15:23:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755608AbXLSUXk
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 15:23:40 -0500
-Received: from virgo.iok.hu ([193.202.89.103]:16003 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755449AbXLSUXg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 15:23:36 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 050771B24FB;
-	Wed, 19 Dec 2007 21:23:33 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id A9A3A4465C;
-	Wed, 19 Dec 2007 21:22:15 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id AE083119019C; Wed, 19 Dec 2007 21:23:33 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20071219175447.GB15898@dervierte>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752273AbXLSUht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 15:37:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752190AbXLSUhs
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 15:37:48 -0500
+Received: from bay0-omc2-s11.bay0.hotmail.com ([65.54.246.147]:39927 "EHLO
+	bay0-omc2-s11.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751896AbXLSUhr (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2007 15:37:47 -0500
+Received: from BAYC1-PASMTP13 ([65.54.191.186]) by bay0-omc2-s11.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 19 Dec 2007 12:37:47 -0800
+X-Originating-IP: [74.15.76.104]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([74.15.76.104]) by BAYC1-PASMTP13.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Wed, 19 Dec 2007 12:37:46 -0800
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with smtp (Exim 4.43)
+	id 1J55ff-0006lM-0r; Wed, 19 Dec 2007 15:37:39 -0500
+In-Reply-To: <20071219150734.50b1f847@dhcp-252-066.norway.atmel.com>
+X-Mailer: Sylpheed 2.4.5 (GTK+ 2.12.1; i686-pc-linux-gnu)
+X-OriginalArrivalTime: 19 Dec 2007 20:37:46.0531 (UTC) FILETIME=[03654F30:01C8427F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68935>
 
+On Wed, 19 Dec 2007 15:07:34 +0100
+Haavard Skinnemoen <hskinnemoen@atmel.com> wrote:
 
---dkEUBIird37B8yKS
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> On Wed, 19 Dec 2007 12:40:08 +0100
+> Haavard Skinnemoen <hskinnemoen@atmel.com> wrote:
+> 
+> > Btw, the funny thing is that, looking at my shell history, I think I
+> > actually did the right thing when committing your patches:
+> > 
+> > git commit -s --author 'Remy Bohmer <linux@bohmer.net>'
+> > git commit -s --author 'Chip Coldwell <coldwell@frank.harvard.edu>'
+> > 
+> > But for some reason only your names stuck, not your e-mail addresses...
+> 
+> It just happened again. Seems like if git-rebase hits a conflict, and I
+> just do "git-rebase --continue" after resolving it (and updating the
+> index), the original author's name is used, but not his e-mail address.
+> 
+> Looks like a bug in git-rebase...?
+> 
 
-On Wed, Dec 19, 2007 at 12:54:47PM -0500, Steven Walter <stevenrwalter@gmail.com> wrote:
-> Using a central git repo that is kept uptodate with svn is the approach
-> I've used.  git-svn isn't especially keen on this mode of operation,
-> however.  After every fetch, you have to reset refs/remotes/trunk to
-> origin/master, which it turn puts .git/svn out of date (you can blow it
-> away and run "git svn fetch" to regenerate it).
+Hi Haavard,
 
-an other problem is that you probably want to have a bare repo while
-git-svn needs a working dir. a possible solution:
+Can't reproduce this here with the version of Git you're using (1.5.3.4).
+Can you figure out a small test case that shows the problem?  Perhaps the
+problem only shows up in your environment or with your particular config
+file settings.
 
-http://blogs.frugalware.org/vmiklos/2007/12/09/p320
+Regards,
+Sean
 
-(it works for me fine, but maybe there are problems with it so use with
-care :) )
-
-- VMiklos
-
---dkEUBIird37B8yKS
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFHaX3Fe81tAgORUJYRAsyMAKCGmcQ8oyZbF3SpPXU8DG2XCdHJ8wCdET6z
-8kKTAAu9U20o4fspQPcm9H8=
-=5OeO
------END PGP SIGNATURE-----
-
---dkEUBIird37B8yKS--
+P.S. Trimmed CC list.
