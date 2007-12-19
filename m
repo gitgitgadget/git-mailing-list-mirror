@@ -1,65 +1,55 @@
-From: Thomas Harning <harningt@gmail.com>
-Subject: Git-to-svn convert
-Date: Wed, 19 Dec 2007 17:14:25 -0500
-Message-ID: <476997C1.2080506@gmail.com>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH 0/2] Make new infrastructure subdirectory safe
+Date: Wed, 19 Dec 2007 23:19:23 +0100
+Message-ID: <20071219221848.29455.50676.stgit@yoghurt>
+References: <20071218092419.GA16029@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 23:17:22 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 23:20:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J57E8-00012r-1b
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 23:17:20 +0100
+	id 1J57Gg-0001vj-R9
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 23:19:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753883AbXLSWQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2007 17:16:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753758AbXLSWQ5
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 17:16:57 -0500
-Received: from rv-out-0910.google.com ([209.85.198.185]:54744 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753526AbXLSWQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 17:16:56 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2792930rvb.1
-        for <git@vger.kernel.org>; Wed, 19 Dec 2007 14:16:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        bh=Z17Z6VVJVq3oYKz9wi9b90zNVjGblpoG7Z+PMbEX334=;
-        b=EZy39aNP0ilAzibTtzIawJdXgqvvtfRTeAl1/YeWzf1EfXoAWou5pPkKaMMGbOkasi0F0rfgRWDW3qhE4CDsF3rteXj02deJKaLvej6QssFOYCmEY2+qfe9SFGFXR6EpgV9ot3Gz2sjnNwZOKBnik2dpjNQm+CrSNs7ejBiKSvA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=vC3JWHbONzrWY58Qu+OOAA/Cj3kzQFdZTlMuks+kWWLiuOVTBtyEpqXdAq/7yaPFPDFvbthOMRhapGrz7wibVXeC4ItjMGh+TZiJ8MKjUihtpIyeMAQTVi3nLQg+SNh9OvJb4hrCTUp6DkwE1sN8w32rXdxLfcznhucLLamufS4=
-Received: by 10.141.122.20 with SMTP id z20mr3588717rvm.160.1198102615998;
-        Wed, 19 Dec 2007 14:16:55 -0800 (PST)
-Received: from ?192.168.24.40? ( [149.164.193.61])
-        by mx.google.com with ESMTPS id g34sm18281369rob.2007.12.19.14.16.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 19 Dec 2007 14:16:55 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070716)
+	id S1752903AbXLSWTg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 17:19:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752934AbXLSWTg
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 17:19:36 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3259 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752903AbXLSWTf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 17:19:35 -0500
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1J57GE-0003wB-00; Wed, 19 Dec 2007 22:19:30 +0000
+In-Reply-To: <20071218092419.GA16029@diana.vm.bytemark.co.uk>
+User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68945>
 
-Is there a reasonable way to convert a Git project to Subversion...
-Yeah, I know, blasphemy :-P... but I worked on a project in Git and my 
-boss wants me to put it into Subversion.
+---
 
-git-svn looks to be the tool for this.. however I had some non-linear 
-dev, which doesn't look like it'd commit (In the past I think I tried 
-this and it failed to deal w/ a branch-and-merge...).
-
-Example of what I mean...:
-
-a - b -
- `c'
+Karl Hasselstr=C3=B6m (2):
+      Make "stg goto" subdirectory safe
+      Test that "stg goto" can be called from a subdirectory
 
 
-As to how to pull the repository into subversion.. how would I do that?
-git-svn init ?
+ stgit/lib/git.py       |    5 ++--
+ stgit/run.py           |    9 +++++--
+ t/t2800-goto-subdir.sh |   59 ++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 3 files changed, 68 insertions(+), 5 deletions(-)
+ create mode 100755 t/t2800-goto-subdir.sh
+
+--=20
+Karl Hasselstr=C3=B6m, kha@treskal.com
+      www.treskal.com/kalle
