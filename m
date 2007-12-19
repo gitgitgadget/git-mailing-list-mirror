@@ -1,89 +1,119 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: [PATCH] Fix git-instaweb breakage on MacOS X due to the limited sed functionality
-Date: Wed, 19 Dec 2007 10:57:52 +0000
-Message-ID: <20071219105752.GA23932@hashpling.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: kha/safe and kha/experimental updated
+Date: Wed, 19 Dec 2007 12:20:35 +0100
+Message-ID: <20071219112035.GA5565@diana.vm.bytemark.co.uk>
+References: <20071214105238.18066.23281.stgit@krank> <b0943d9e0712170309n415dc6cs9d1c1f8a9c687bf8@mail.gmail.com> <20071217224812.GA6342@diana.vm.bytemark.co.uk> <20071218052115.GA13422@diana.vm.bytemark.co.uk> <b0943d9e0712180809l4d2d01b8j32ab2a410885cc5e@mail.gmail.com> <20071219093400.GA4361@diana.vm.bytemark.co.uk> <b0943d9e0712190209y485bc2f8w806bd2cad309e74b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 19 11:58:22 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 19 12:21:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4wd3-0005D9-DI
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 11:58:21 +0100
+	id 1J4wz5-0003jf-9V
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 12:21:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752147AbXLSK56 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2007 05:57:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752091AbXLSK56
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 05:57:58 -0500
-Received: from ptb-relay03.plus.net ([212.159.14.214]:37362 "EHLO
-	ptb-relay03.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752070AbXLSK55 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 05:57:57 -0500
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by ptb-relay03.plus.net with esmtp (Exim) id 1J4wcc-0000YI-Jy
-	for git@vger.kernel.org; Wed, 19 Dec 2007 10:57:54 +0000
-Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
-	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id lBJAvq9t024222
-	for <git@vger.kernel.org>; Wed, 19 Dec 2007 10:57:52 GMT
-Received: (from charles@localhost)
-	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id lBJAvqE7024221
-	for git@vger.kernel.org; Wed, 19 Dec 2007 10:57:52 GMT
+	id S1752414AbXLSLUn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 06:20:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752338AbXLSLUn
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 06:20:43 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4749 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752059AbXLSLUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 06:20:42 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1J4wya-0001VM-00; Wed, 19 Dec 2007 11:20:36 +0000
 Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
+In-Reply-To: <b0943d9e0712190209y485bc2f8w806bd2cad309e74b@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68883>
 
-git-instaweb relied on a pipe in a sed script, but this is not supported
-by MacOS X sed when using BREs.  git-instaweb relies on a working perl
-in any case, and perl re are more consistent between platforms, so
-replace sed invocation with an equivalent perl invocation.
+On 2007-12-19 10:09:40 +0000, Catalin Marinas wrote:
 
-Also, fix the documented -b "" to work without giving a spurious 'command
-not found' error.
+> For the 'status --reset', I'll keep it if we have a separate
+> 'resolved' command.
 
-Signed-off-by: Charles Bailey <charles@hashpling.org>
----
- git-instaweb.sh |   14 ++++++++------
- 1 files changed, 8 insertions(+), 6 deletions(-)
+?
 
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 42d8d7f..3565734 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -232,16 +232,18 @@ EOF
- }
- 
- script='
--s#^\(my\|our\) $projectroot =.*#\1 $projectroot = "'$(dirname "$fqgitdir")'";#
--s#\(my\|our\) $gitbin =.*#\1 $gitbin = "'$GIT_EXEC_PATH'";#
--s#\(my\|our\) $projects_list =.*#\1 $projects_list = $projectroot;#
--s#\(my\|our\) $git_temp =.*#\1 $git_temp = "'$fqgitdir/gitweb/tmp'";#'
-+s#^(my|our) \$projectroot =.*#$1 \$projectroot = "'$(dirname "$fqgitdir")'";#;
-+s#(my|our) \$gitbin =.*#$1 \$gitbin = "'$GIT_EXEC_PATH'";#;
-+s#(my|our) \$projects_list =.*#$1 \$projects_list = \$projectroot;#;
-+s#(my|our) \$git_temp =.*#$1 \$git_temp = "'$fqgitdir/gitweb/tmp'";#;'
- 
- gitweb_cgi () {
- 	cat > "$1.tmp" <<\EOFGITWEB
- @@GITWEB_CGI@@
- EOFGITWEB
--	sed "$script" "$1.tmp"  > "$1"
-+	# The generated scripts assume that perl is /usr/bin/perl
-+	# so the assumption here should be no more harmful
-+	/usr/bin/perl -p -e "$script" "$1.tmp"  > "$1"
- 	chmod +x "$1"
- 	rm -f "$1.tmp"
- }
-@@ -273,4 +275,4 @@ esac
- 
- start_httpd
- url=http://127.0.0.1:$port
--"$browser" $url || echo $url
-+test -n "$browser" && "$browser" $url || echo $url
--- 
-1.5.4.rc0
+> In the past, StGIT only used the core git functionality and stayed
+> away from the porcelain scripts. We now started to use some of the
+> built-in commands more and more and I think it is fine but the git
+> scripts look more volatile to me than the C code (look at the many
+> variants the git merging went through, from shell scripts to python
+> and only now seems to be stabilised with the recursive merge as a
+> built-in command).
+
+Hmm? Have we started to use more porcelain lately?
+
+> Adding the functionality I need to git-mergetool would also mean
+> always using the latest GIT with StGIT.
+
+It wouldn't keep being the latest git version, though.
+
+> Anyway, if you like git-mergetool, I think you can easily change the
+> StGIT configuration to
+
+I don't use interactive merging at all. What I wanted was to get rid
+of StGit's own interactive merging.
+
+> On 19/12/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+>
+> > On 2007-12-18 16:09:24 +0000, Catalin Marinas wrote:
+> >
+> > > I also don't find 'git add' to be meaningful for marking a
+> > > conflict as solved.
+> >
+> > So maybe let "stg resolved" be an alias for "git add"?
+>
+> It's not a simple alias, if you use 'stg resolved -a'. Now, if we
+> allow stgit.keeporig, it needs even more functionality.
+
+Hmm, yes.
+
+(I still don't quite like it, because I think that if there's anything
+that "stg resolved" does that "git add" can't do, then "git add"
+should learn to do it. But until it has learned it, it's a
+hypothetical argument.)
+
+> > I think it'd be more productive to let stg do one thing -- patch
+> > stacks -- and do it well, and rely on git for everything else.
+>
+> In principle, yes, but I have some minor problems with the UI of GIT
+> (like resolved =3D=3D add). I think there is also a fundamental
+> difference between 'git commit' and 'stg refresh'. The former
+> requires explicit marking of the files to commit (or use the -a
+> option) while the latter always adds all the local changes to the
+> current patch. Maybe GIT users are more used to running 'git add'
+> after fixing a conflict but I use StGIT almost exclusively.
+
+So you want StGit to do two things: patch stacks, and fix some git UI
+warts. Hey, I can live with that. :-) But I firmly believe that the
+wart fixing parts of StGit should be (1) optional, so that the same
+job can easily be done with just git; and (2) as thin as possible, to
+make them easy to explain in terms of git, and cheap to maintain.
+
+> > Of course, if stuff like "stg add" and "stg resolved" are really
+> > implemented as three-line wrappers around git commands, we don't
+> > have that problem.
+>
+> For add/rm/cp, they should just be a generic wrapper which doesn't
+> even parse the command line options.
+
+OK.
+
+> That's not the case with 'resolved'.
+
+No, I see.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
