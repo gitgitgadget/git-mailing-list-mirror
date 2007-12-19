@@ -1,108 +1,78 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: kha/safe and kha/experimental updated
-Date: Wed, 19 Dec 2007 13:10:23 +0100
-Message-ID: <20071219121023.GA6272@diana.vm.bytemark.co.uk>
-References: <20071214105238.18066.23281.stgit@krank> <b0943d9e0712170309n415dc6cs9d1c1f8a9c687bf8@mail.gmail.com> <20071217224812.GA6342@diana.vm.bytemark.co.uk> <20071218052115.GA13422@diana.vm.bytemark.co.uk> <b0943d9e0712180809l4d2d01b8j32ab2a410885cc5e@mail.gmail.com> <20071219093400.GA4361@diana.vm.bytemark.co.uk> <b0943d9e0712190209y485bc2f8w806bd2cad309e74b@mail.gmail.com> <20071219112035.GA5565@diana.vm.bytemark.co.uk> <b0943d9e0712190340p23341dd8lb9ebbbce9b29cb8e@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: git with custom diff for commits
+Date: Wed, 19 Dec 2007 13:13:08 +0100
+Message-ID: <vpq1w9iopbf.fsf@bauges.imag.fr>
+References: <60687a7d0712171456p14328817y5aa229f0df23c02f@mail.gmail.com>
+	<Pine.LNX.4.64.0712172300510.9446@racer.site>
+	<vpq1w9kaphg.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0712172310090.9446@racer.site>
+	<7vbq8o6gxw.fsf@gitster.siamese.dyndns.org>
+	<vpqk5ncz8fn.fsf@bauges.imag.fr>
+	<7vodco1him.fsf@gitster.siamese.dyndns.org>
+	<000001c841b5$89fcef00$762a14ac@na.acco.com>
+	<7vzlw7ybx7.fsf@gitster.siamese.dyndns.org>
+	<000101c841b7$5f1d1060$762a14ac@na.acco.com>
+	<vpqsl1zfz8r.fsf@bauges.imag.fr>
+	<000d01c841c5$386f7350$762a14ac@na.acco.com>
+	<Pine.LNX.4.64.0712182246230.23902@racer.site>
+	<vpqtzmfvz1d.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0712191209140.23902@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 19 13:11:01 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Gerald Gutierrez <ggmlfs@gmail.com>,
+	"'Junio C Hamano'" <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Dec 19 13:20:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4xlG-0004nF-UO
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 13:10:56 +0100
+	id 1J4xuB-0007gG-8N
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 13:20:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752942AbXLSMKb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 07:10:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752896AbXLSMKb
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 07:10:31 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2851 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752836AbXLSMKb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 07:10:31 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1J4xkl-0001jF-00; Wed, 19 Dec 2007 12:10:23 +0000
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0712190340p23341dd8lb9ebbbce9b29cb8e@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753101AbXLSMTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 07:19:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753025AbXLSMTo
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 07:19:44 -0500
+Received: from imag.imag.fr ([129.88.30.1]:55332 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752777AbXLSMTn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 07:19:43 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lBJCD91v008427
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 19 Dec 2007 13:13:09 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1J4xnQ-0000wq-7b; Wed, 19 Dec 2007 13:13:08 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1J4xnQ-0000yt-54; Wed, 19 Dec 2007 13:13:08 +0100
+In-Reply-To: <Pine.LNX.4.64.0712191209140.23902@racer.site> (Johannes Schindelin's message of "Wed\, 19 Dec 2007 12\:09\:41 +0000 \(GMT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 19 Dec 2007 13:13:12 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68901>
 
-On 2007-12-19 11:40:41 +0000, Catalin Marinas wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On 19/12/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On Wed, 19 Dec 2007, Matthieu Moy wrote:
 >
-> > On 2007-12-19 10:09:40 +0000, Catalin Marinas wrote:
-> >
-> > > For the 'status --reset', I'll keep it if we have a separate
-> > > 'resolved' command.
-> >
-> > ?
+>> That said, I think the wording of the man page could be better.
+>> Perhaps "Record new snapshot to the repository" or "Record current
+>> state of the working tree to the repository".
 >
-> It needs to call the resolved_all to remove checked-out stages if
-> stgit.keeporig =3D=3D 'yes'.
+> How about "record a new revision"?
 
-Ah, right.
+Sounds good, yes.
 
-> Maybe it could also do some sanity check if HEAD !=3D top. With 'git
-> reset --hard', people might easily add an argument and break the
-> whole stack.
-
-True.
-
-> > Hmm? Have we started to use more porcelain lately?
->
-> I think Yann was complaining about using git-show since it looks
-> more like a porcelain command.
-
-We should probably use cat-file or something instead.
-
-> > It wouldn't keep being the latest git version, though.
->
-> Yes, but at least initially it should be pretty recent.
-
-:-)
-
-> > I don't use interactive merging at all. What I wanted was to get
-> > rid of StGit's own interactive merging.
->
-> I use it quite often and I even invoke it automatically
-> (stgit.autoimerge). I'll push some patches tonight together with
-> most of your safe branch and we can alter them afterwards.
-
-Jolly good! My stack was getting unwieldy ...
-
-> > So you want StGit to do two things: patch stacks, and fix some git
-> > UI warts. Hey, I can live with that. :-) But I firmly believe that
-> > the wart fixing parts of StGit should be (1) optional, so that the
-> > same job can easily be done with just git; and (2) as thin as
-> > possible, to make them easy to explain in terms of git, and cheap
-> > to maintain.
->
-> Unless you need the keeporig functionality, you can now always use
-> plain git for solving merges, add/rm/cp, 'reset --hard' etc.
-
-Yes, with David's conflict series.
-
-> At some point, we could make it safe for 'git rebase' but I think we
-> need the DAG patches.
-
-I wouldn't resurrect the DAG patches for this; I'd just invoke "stg
-repair" automatically when we detect that top !=3D HEAD.
-
-But I think that for "git rebase", we'd want to teach "repair" to
-detect that the patches' commits have been changed, rather than just
-marking them unapplied.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+Matthieu
