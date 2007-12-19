@@ -1,84 +1,77 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git with custom diff for commits
-Date: Wed, 19 Dec 2007 12:52:58 +1300
-Message-ID: <46a038f90712181552i46ecb1aof55c7cdfe0f5c079@mail.gmail.com>
-References: <60687a7d0712171456p14328817y5aa229f0df23c02f@mail.gmail.com>
-	 <7vbq8o6gxw.fsf@gitster.siamese.dyndns.org>
-	 <vpqk5ncz8fn.fsf@bauges.imag.fr>
-	 <7vodco1him.fsf@gitster.siamese.dyndns.org>
-	 <000001c841b5$89fcef00$762a14ac@na.acco.com>
-	 <7vzlw7ybx7.fsf@gitster.siamese.dyndns.org>
-	 <000101c841b7$5f1d1060$762a14ac@na.acco.com>
-	 <vpqsl1zfz8r.fsf@bauges.imag.fr>
-	 <000d01c841c5$386f7350$762a14ac@na.acco.com>
-	 <Pine.LNX.4.64.0712182246230.23902@racer.site>
+From: ulrik <ulrik.sverdrup@gmail.com>
+Subject: [BUG] Invalid rebase command leaves unclean status
+Date: Wed, 19 Dec 2007 01:47:12 +0100
+Message-ID: <a1b6cb1b0712181647v34822692t4a3d88f90cd7346@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Gerald Gutierrez" <ggmlfs@gmail.com>,
-	"Matthieu Moy" <Matthieu.Moy@imag.fr>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Dec 19 00:53:26 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 19 01:47:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J4mFa-0000rK-38
-	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 00:53:26 +0100
+	id 1J4n62-0007xq-4e
+	for gcvg-git-2@gmane.org; Wed, 19 Dec 2007 01:47:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754114AbXLRXxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Dec 2007 18:53:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754051AbXLRXxA
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 18:53:00 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:63901 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753527AbXLRXw7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Dec 2007 18:52:59 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so208427ugc.16
-        for <git@vger.kernel.org>; Tue, 18 Dec 2007 15:52:58 -0800 (PST)
+	id S1755847AbXLSArO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Dec 2007 19:47:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753360AbXLSArO
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Dec 2007 19:47:14 -0500
+Received: from fk-out-0910.google.com ([209.85.128.185]:31503 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755599AbXLSArN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Dec 2007 19:47:13 -0500
+Received: by fk-out-0910.google.com with SMTP id z23so2330288fkz.5
+        for <git@vger.kernel.org>; Tue, 18 Dec 2007 16:47:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=qNotBc2mIwPxjBBBeHBu57Zc/KCTEmLJGdM2xlV5k1E=;
-        b=QkmRs4Yjk/01VhrUHzDZ4+YvIXzl306cF7jTO9qhYSvBs9dTY7tB9UKJlMgyJ0ggIqs5sDQ15R4GOlAY6ICTMGgXBtY2cfFH5Y3W8hGthNAVdS+itGy1T8qorll6Q6FaiS7qS1iHts+tKIJkJFdRQZcRZl6Lc7DqvaL9rlKeWfA=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=SaDVtmYSsJ/ioGmz8zerr7l0mnO6CDgejna0rVMYifU=;
+        b=BSZHgCc6Vsi4kEnRnATpPtFWotga9086xeeCkTwSw+6ab26G9vdWXviM00c/HS4eah16jCNWeOldatURok6Ec6tqtLyAmupc00C2R3wqkEHzFOitt24hZtAtWYk3d3Dx5Od5qMSw6EPgMrKuhfe/oPw2DUBPHCMn4ZNlKPVv+BA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fbZtOhcD+8w6wxkGbjf/dcENqp+p/V4UyfpfDcfrwVC+Xe3ND5ODGehTte9c35/uAdjNfRTZ+4C9vsuObad0LHum9uQ9Hepsmroz3S6H3JyAJpJ4xuN3lwvGS/XjSsLJBDNRQABm9ZBn4pe93kXhaTW7wSBsu5hsFuojjlxCJwQ=
-Received: by 10.66.249.8 with SMTP id w8mr1449520ugh.75.1198021978128;
-        Tue, 18 Dec 2007 15:52:58 -0800 (PST)
-Received: by 10.66.252.2 with HTTP; Tue, 18 Dec 2007 15:52:58 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0712182246230.23902@racer.site>
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=mWJB8w0M3LmEXHLwubUhtE6csVjKG42Hejlb9mTmHicMFQPMn957Xq5FN2qYW82sld6MVFgf29coSEhaeLCOIBCMY4f7BbR7Qc941ntt63qnqBhKK2zKVJi2Gljr13hankh7l476/VjVpeQbalCddI+ilWYDhd3qBCZ+XcVTTmw=
+Received: by 10.82.112.3 with SMTP id k3mr6052796buc.15.1198025232109;
+        Tue, 18 Dec 2007 16:47:12 -0800 (PST)
+Received: by 10.82.112.8 with HTTP; Tue, 18 Dec 2007 16:47:12 -0800 (PST)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68851>
 
-On Dec 19, 2007 11:48 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Yes.  Changes, as in "take this _file_ instead".  Not "edit this file,
-> remove those lines, add these here, etc.".
+Hello git list
 
-Exactly. GIT is a "content tracker" that doesn't care about any
-semantic meaning in your files. Here's the file, git will store it, as
-is. No conversions, not fancy interpretations. Strict, safe and fast.
-(There's a small exception there for DOS-style newlines, which was
-much resisted.)
+A bug in rebase -i: A typo in the command (for example in the branch
+name) still makes later invocations of rebase think a rebase is
+already in process.
 
-You can add external machinery that is aware of your content semantics
--- as you've done with calling GNU diff with ignore patterns to decide
-whether to commit or not. But when you tell GIT to commit something,
-there's no guessing or transformation involved.
+I found this bug in master, and it was already reported to the mailing
+list under version 1.5.3.5, but there were no follow-ups to that mail.
+I'm using 1.5.3.7 and it is still present, and looking at the maint
+branch it does not seem to be mentioned in post-x.3.7 changes there.
+So I am now reporting this bug again. I'm sorry for not checking this
+in master, I'll have to ask someone on the list to do that.
 
-A lot of what GIT achieves is based on that founding principle. Remove
-it, and we're toast. For starters, the internal machinery is based on
-SHA1 digests that change if you flip a single byte. That's what makes
-git fast and realiable. It's not merely an end-user thing.
+Original email:
+http://marc.info/?l=git&m=119410951019002&w=2
+Date:       2007-11-03 17:04:51
+Message-ID: 200711031804.52259.elendil () planet ! nl
 
-cheers,
+# A sample session:
+# Invoking rebase with a typo, there is no "muster" branch
+$ git rebase -i muster
+fatal: Needed a single revision
+Invalid base
+$ git rebase -i master
+Interactive rebase already started
+$ git rebase --abort
+fatal: Needed a single revision
+# Even though rebase --abort reports an error, rebase's internal state
+is now cleared
 
-
-m
+Regards,
+Ulrik Sverdrup
