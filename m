@@ -1,114 +1,141 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH] Re-re-re-fix common tail optimization
-Date: Thu, 20 Dec 2007 09:23:15 +0000
-Message-ID: <20071220092315.GA31337@hashpling.org>
-References: <20071215200202.GA3334@sigill.intra.peff.net> <20071216070614.GA5072@sigill.intra.peff.net> <7v8x3ul927.fsf@gitster.siamese.dyndns.org> <7v7ijejq6j.fsf@gitster.siamese.dyndns.org> <20071216212104.GA32307@coredump.intra.peff.net> <7v3au2joo2.fsf_-_@gitster.siamese.dyndns.org> <20071219141845.GA2146@hashpling.org> <20071219142715.GB14187@coredump.intra.peff.net> <20071219143712.GA3483@hashpling.org> <7vy7bqrzat.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Reallow git-rebase --interactive --continue if commit is unnecessary
+Date: Thu, 20 Dec 2007 01:35:03 -0800
+Message-ID: <7vy7bppv3s.fsf@gitster.siamese.dyndns.org>
+References: <87r6hias5s.fsf@gollum.intra.norang.ca>
+	<20071220071212.GA20534@spearce.org>
+	<7vzlw5rg53.fsf@gitster.siamese.dyndns.org>
+	<20071220073113.GJ14735@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Wincent Colaiuta <win@wincent.com>, Jeff King <peff@peff.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 20 10:24:32 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Bernt Hansen <bernt@alumni.uwaterloo.ca>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Dec 20 10:35:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5Hdb-0006FL-Qw
-	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 10:24:20 +0100
+	id 1J5Hoe-00014p-4D
+	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 10:35:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755897AbXLTJX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2007 04:23:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753767AbXLTJX5
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Dec 2007 04:23:57 -0500
-Received: from pih-relay05.plus.net ([212.159.14.132]:35423 "EHLO
-	pih-relay05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754209AbXLTJX4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2007 04:23:56 -0500
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay05.plus.net with esmtp (Exim) id 1J5Hcg-0006Pj-KL; Thu, 20 Dec 2007 09:23:22 +0000
-Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
-	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id lBK9NI5K031676;
-	Thu, 20 Dec 2007 09:23:18 GMT
-Received: (from charles@localhost)
-	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id lBK9NFRQ031675;
-	Thu, 20 Dec 2007 09:23:15 GMT
-Content-Disposition: inline
-In-Reply-To: <7vy7bqrzat.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.4.2.1i
+	id S1754470AbXLTJfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2007 04:35:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754495AbXLTJfV
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Dec 2007 04:35:21 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62232 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754304AbXLTJfT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2007 04:35:19 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 36CB78275;
+	Thu, 20 Dec 2007 04:35:12 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id BE4AA826F;
+	Thu, 20 Dec 2007 04:35:05 -0500 (EST)
+In-Reply-To: <20071220073113.GJ14735@spearce.org> (Shawn O. Pearce's message
+	of "Thu, 20 Dec 2007 02:31:14 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68984>
 
-On Wed, Dec 19, 2007 at 04:21:30PM -0800, Junio C Hamano wrote:
-> 
-> By the way, how does this rewrite look?
-> 
+Will do, but the code looks quite bad (not entirely your fault).
 
-It looks good and the test works on my fedora and Mac OS X boxes.
-(Just for reference I'm on 10.4.3, not 'Leopard'.)
+Line by line comment to show my puzzlement.
 
-I've snipped everything except zc that I wanted to comment on.
+ 		# commit if necessary
 
-The only two really minor nits I have is that zc does bizarre things
-without warning for more than 9999 "z" ( e.g. 17000 = 9000 + 8000 =
-98000 (!) ) and that, from a function responsibility point of view,
-the /^index/d looks rather out of place.
+Ok, the user has prepared the index for us, and we are going to do some
+tests and conditionally create commit.
 
-Perhaps a comment saying tha zc is designed for <= 9999 z's?  Given
-this, a lot of the /g are redundant.
+ 		git rev-parse --verify HEAD > /dev/null &&
 
-But hey, it's a test script and it works and I don't have any better
-suggestions. :)
+Do we have HEAD commit?  Why check this --- we do not want to rebase
+from the beginning of time?  No, that's not it.  If this fails, there is
+something seriously wrong.  This is not about "will we make a commit?"
+check at all.  This is a basic sanity check and if it fails we must
+abort, not just skip.
 
-Charles.
+ 		git update-index --refresh &&
+ 		git diff-files --quiet &&
 
-> +zc () {
-> +	sed -e "/^index/d" \
-> +		-e "s/$z1000/Q/g" \
-> +		-e "s/QQQQQQQQQ/Z9000/g" \
-> +		-e "s/QQQQQQQQ/Z8000/g" \
-> +		-e "s/QQQQQQQ/Z7000/g" \
-> +		-e "s/QQQQQQ/Z6000/g" \
-> +		-e "s/QQQQQ/Z5000/g" \
-> +		-e "s/QQQQ/Z4000/g" \
-> +		-e "s/QQQ/Z3000/g" \
-> +		-e "s/QQ/Z2000/g" \
-> +		-e "s/Q/Z1000/g" \
-> +		-e "s/$z100/Q/g" \
-> +		-e "s/QQQQQQQQQ/Z900/g" \
-> +		-e "s/QQQQQQQQ/Z800/g" \
-> +		-e "s/QQQQQQQ/Z700/g" \
-> +		-e "s/QQQQQQ/Z600/g" \
-> +		-e "s/QQQQQ/Z500/g" \
-> +		-e "s/QQQQ/Z400/g" \
-> +		-e "s/QQQ/Z300/g" \
-> +		-e "s/QQ/Z200/g" \
-> +		-e "s/Q/Z100/g" \
-> +		-e "s/000Z//g" \
-> +		-e "s/$z10/Q/g" \
-> +		-e "s/QQQQQQQQQ/Z90/g" \
-> +		-e "s/QQQQQQQQ/Z80/g" \
-> +		-e "s/QQQQQQQ/Z70/g" \
-> +		-e "s/QQQQQQ/Z60/g" \
-> +		-e "s/QQQQQ/Z50/g" \
-> +		-e "s/QQQQ/Z40/g" \
-> +		-e "s/QQQ/Z30/g" \
-> +		-e "s/QQ/Z20/g" \
-> +		-e "s/Q/Z10/g" \
-> +		-e "s/00Z//g" \
-> +		-e "s/z/Q/g" \
-> +		-e "s/QQQQQQQQQ/Z9/g" \
-> +		-e "s/QQQQQQQQ/Z8/g" \
-> +		-e "s/QQQQQQQ/Z7/g" \
-> +		-e "s/QQQQQQ/Z6/g" \
-> +		-e "s/QQQQQ/Z5/g" \
-> +		-e "s/QQQQ/Z4/g" \
-> +		-e "s/QQQ/Z3/g" \
-> +		-e "s/QQ/Z2/g" \
-> +		-e "s/Q/Z1/g" \
-> +		-e "s/0Z//g" \
-> +	;
-> +}
+Is the work tree clean with respect to the index?  Why check this --- we
+want to skip the commit if work tree is dirty?  Or is this trying to
+enforce the invariant that during the rebase the work tree and index and
+HEAD should all match?  If the latter, failure from this again is a
+reason to abort.
+
+ 		! git diff-index --cached --quiet HEAD -- &&
+
+Do we have something to commit?  This needs to be checked so that we can
+skip a commit that results in emptyness, so using this as a check to see
+if we should commit makes sense.
+
+ 		. "$DOTEST"/author-script && {
+ 			test ! -f "$DOTEST"/amend || git reset --soft HEAD^
+ 		} &&
+
+Find GIT_AUTHOR_* variables and if we are amending rewind the HEAD.  The
+failure from this is a grave problem and reason to abort, isn't it?
+
+ 		export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
+		git commit --no-verify -F "$DOTEST"/message -e
+
+Then we go on to create commit.  As you said, failure from this is a
+grave error.
+
+If my commentary above is right, how many bugs did we find in these 10
+lines?
+
+Grumpy I am...
+
+---
+ git-rebase--interactive.sh |   29 +++++++++++++++++++----------
+ 1 files changed, 19 insertions(+), 10 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 090c3e5..7aa4278 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -363,17 +363,26 @@ do
+ 
+ 		test -d "$DOTEST" || die "No interactive rebase running"
+ 
+-		# commit if necessary
+-		git rev-parse --verify HEAD > /dev/null &&
+-		git update-index --refresh &&
+-		git diff-files --quiet &&
+-		! git diff-index --cached --quiet HEAD -- &&
+-		. "$DOTEST"/author-script && {
+-			test ! -f "$DOTEST"/amend || git reset --soft HEAD^
+-		} &&
+-		export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
+-		if ! git commit --no-verify -F "$DOTEST"/message -e
++		# Sanity check
++		git rev-parse --verify HEAD >/dev/null ||
++			die "Cannot read HEAD"
++		git update-index --refresh && git diff-files --quiet ||
++			die "Working tree is dirty"
++
++		# do we have anything to commit?
++		if git diff-index --cached --quiet HEAD --
+ 		then
++			: Nothing to commit -- skip this
++		else
++			. "$DOTEST"/author-script ||
++				die "Cannot find the author identity"
++			if test -f "$DOTEST"/amend
++			then
++				git reset --soft HEAD^ ||
++				die "Cannot rewind the HEAD"
++			fi
++			export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
++			git commit --no-verify -F "$DOTEST"/message -e ||
+ 			die "Could not commit staged changes."
+ 		fi
+ 
