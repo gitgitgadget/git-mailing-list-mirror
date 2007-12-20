@@ -1,58 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Luciano Rocha <luciano@eurotux.com>
 Subject: Re: [PATCH v2] builtin-tag.c: allow arguments in $EDITOR
-Date: Thu, 20 Dec 2007 12:58:59 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0712201255510.14355@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <20071219232326.GA4135@bit.office.eurotux.com>
- <20071220095706.GA9685@bit.office.eurotux.com>
+Date: Thu, 20 Dec 2007 12:06:01 +0000
+Message-ID: <20071220120601.GA15290@bit.office.eurotux.com>
+References: <20071219232326.GA4135@bit.office.eurotux.com> <20071220095706.GA9685@bit.office.eurotux.com> <Pine.LNX.4.64.0712201255510.14355@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="YZ5djTAD1cGYuMQK"
 Cc: git@vger.kernel.org
-To: Luciano Rocha <luciano@eurotux.com>
-X-From: git-owner@vger.kernel.org Thu Dec 20 12:59:32 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Dec 20 13:07:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5K3j-0005GO-Kz
-	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 12:59:28 +0100
+	id 1J5KB0-0007oE-KN
+	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 13:06:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752082AbXLTL7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2007 06:59:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751917AbXLTL7D
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Dec 2007 06:59:03 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44272 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752082AbXLTL7B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2007 06:59:01 -0500
-Received: (qmail invoked by alias); 20 Dec 2007 11:58:59 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp054) with SMTP; 20 Dec 2007 12:58:59 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18KsZcr/koKNdjku71WPcFfkaJ2wevYlBWCiX2UIs
-	gGjJZVdX/p47Bd
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20071220095706.GA9685@bit.office.eurotux.com>
-X-Y-GMX-Trusted: 0
+	id S1761875AbXLTMGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2007 07:06:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762329AbXLTMGN
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Dec 2007 07:06:13 -0500
+Received: from os.eurotux.com ([216.75.63.6]:59189 "EHLO os.eurotux.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762230AbXLTMGI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2007 07:06:08 -0500
+Received: (qmail 1529 invoked from network); 20 Dec 2007 12:06:06 -0000
+Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
+  by os.eurotux.com with AES256-SHA encrypted SMTP; 20 Dec 2007 12:06:06 -0000
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0712201255510.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.14 (2007-03-31)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68995>
 
-Hi,
 
-On Thu, 20 Dec 2007, Luciano Rocha wrote:
+--YZ5djTAD1cGYuMQK
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> The previous sh version of git-commit evaluated the value of the defined 
-> editor, thus allowing arguments.
-> 
-> Make the builtin version work the same, by adding an explicit check for 
-> arguments in the editor command, and extract them to an additional 
-> argument.
+On Thu, Dec 20, 2007 at 12:58:59PM +0100, Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Thu, 20 Dec 2007, Luciano Rocha wrote:
+>=20
+> > The previous sh version of git-commit evaluated the value of the define=
+d=20
+> > editor, thus allowing arguments.
+> >=20
+> > Make the builtin version work the same, by adding an explicit check for=
+=20
+> > arguments in the editor command, and extract them to an additional=20
+> > argument.
+>=20
+> Anything wrong with that patch?
+>=20
+> http://article.gmane.org/gmane.comp.version-control.git/68444
 
-Anything wrong with that patch?
+No, I just missed it in the mailing list. That patch also supports any
+number of whitespace/arguments.
 
-http://article.gmane.org/gmane.comp.version-control.git/68444
+--=20
+Luciano Rocha <luciano@eurotux.com>
+Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
 
-Ciao,
-Dscho
+--YZ5djTAD1cGYuMQK
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFHalqpinSul6a7oB8RAuDxAJ9j2BI9pF7NHjkPN/oyb2yaxYKIAQCeOAu7
+kgKXzPAk1AiDysSVkNuoTyM=
+=xXRX
+-----END PGP SIGNATURE-----
+
+--YZ5djTAD1cGYuMQK--
