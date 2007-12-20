@@ -1,96 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v0] sha1_name: grok <revision>:./<relative-path>
-Date: Thu, 20 Dec 2007 11:51:50 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0712201145390.14355@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <20071218173321.GB2875@steel.home> <m3d4t3q4e5.fsf@roke.D-201>
- <20071218204623.GC2875@steel.home> <200712182224.28152.jnareb@gmail.com>
- <20071218222032.GH2875@steel.home> <Pine.LNX.4.64.0712182239500.23902@racer.site>
- <56b7f5510712181503l1e5dcacds23511d968f98aedb@mail.gmail.com>
- <alpine.LFD.0.9999.0712181711100.21557@woody.linux-foundation.org>
- <56b7f5510712181752s7ecebca9m32794c635cba9fd@mail.gmail.com>
- <Pine.LNX.4.64.0712191334460.23902@racer.site> <7vr6hirx5l.fsf@gitster.siamese.dyndns.org>
+From: "Jonathan del Strother" <maillist@steelskies.com>
+Subject: Re: Serious bug with pretty format strings & empty bodies?
+Date: Thu, 20 Dec 2007 11:38:25 +0000
+Message-ID: <57518fd10712200338m19c1def9n747dc9353ae41615@mail.gmail.com>
+References: <57518fd10712190632o490af924n61326fddf1819014@mail.gmail.com>
+	 <20071219184457.GC3015@steel.home>
+	 <57518fd10712191437s6f192feds50d006fdfc624444@mail.gmail.com>
+	 <4769A7FB.1070904@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Dana How <danahow@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 20 11:52:19 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Alex Riesen" <raa.lkml@gmail.com>, git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Ren=E9_Scharfe?=" <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Thu Dec 20 12:39:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5J0k-00008R-1D
-	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 11:52:18 +0100
+	id 1J5Jjp-0007Fs-7V
+	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 12:38:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753969AbXLTKvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2007 05:51:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753688AbXLTKvz
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Dec 2007 05:51:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45524 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752548AbXLTKvy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2007 05:51:54 -0500
-Received: (qmail invoked by alias); 20 Dec 2007 10:51:52 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp051) with SMTP; 20 Dec 2007 11:51:52 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18iZ1gEx9ci+1wm2MS2X2q0LesVaUJfgIR1jEsARW
-	r5cjkiSuU0iYin
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vr6hirx5l.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1756993AbXLTLi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2007 06:38:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756798AbXLTLi0
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Dec 2007 06:38:26 -0500
+Received: from rv-out-0910.google.com ([209.85.198.189]:14320 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756536AbXLTLiZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2007 06:38:25 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so3013651rvb.1
+        for <git@vger.kernel.org>; Thu, 20 Dec 2007 03:38:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=CqHxmNhcXFNWiaGrtXkqPVpgmY27Px4yOBebKPRTHfI=;
+        b=oWwa/VGookVQPc9P23+ie917MoneIe+HyqzzjG/VDqe53AIw7rksKzWCxgMeRiiQVUjpwJJN0NicwtXsoiw8ePNNH/LX56hgPYMMON+n3S1LFXjsmoP8B54064tblSBBARt2ZgQK6J4S5HBhvTYKi9fIxrVSuvvitEttgy8lb0Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=He9tpSYMFEJtpHNEk6iz9utalFVG/KeD148ME87NTW3XzV0UV2XN1JHmh3ivCmGD3/GzqwrCLh0Ehqk8x8PK1XwE2oQSeYIz4io3T122Ge/TpFmgHiPv0xneT2DnvRuBkq+NxgXzCUCEV82yIw4Bq5YuD9ct9GxH/O5byAqlbwg=
+Received: by 10.141.107.13 with SMTP id j13mr4532445rvm.276.1198150705287;
+        Thu, 20 Dec 2007 03:38:25 -0800 (PST)
+Received: by 10.140.134.14 with HTTP; Thu, 20 Dec 2007 03:38:25 -0800 (PST)
+In-Reply-To: <4769A7FB.1070904@lsrfire.ath.cx>
+Content-Disposition: inline
+X-Google-Sender-Auth: 4c213c422bdbb710
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68992>
 
-Hi,
+I ended up trying to filter-branch my repository, see if I could come
+up with a version stripped of all our private code, suitable for
+making public.  Disappointingly, filter-branch magically fixes all the
+commits, even when simply run as "git filter-branch HEAD".
 
-On Wed, 19 Dec 2007, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > diff --git a/cache.h b/cache.h
-> > index 39331c2..83a2c31 100644
-> > --- a/cache.h
-> > +++ b/cache.h
-> > @@ -225,6 +225,7 @@ extern char *get_index_file(void);
-> >  extern char *get_graft_file(void);
-> >  extern int set_git_dir(const char *path);
-> >  extern const char *get_git_work_tree(void);
-> > +extern const char *get_current_prefix(void);
-> >  
-> >  #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
-> >  
-> > diff --git a/setup.c b/setup.c
-> > index b59dbe7..fb9b680 100644
-> > --- a/setup.c
-> > +++ b/setup.c
-> > @@ -3,6 +3,12 @@
-> >  
-> >  static int inside_git_dir = -1;
-> >  static int inside_work_tree = -1;
-> > +static const char *current_prefix;
-> > +
-> > +const char *get_current_prefix()
-> > +{
-> > +	return current_prefix;
-> > +}
-> 
-> Didn't you just make libification harder?
-
-Well, yes.
-
-Actually, no:
-
-	- I marked this explicitely not ready for application,
-	- it is not entirely clear if a libgit.a user would not want to 
-	  set a default prefix, and
-	- I decided that I will not be the only one who tries to make 
-		  libification easy. ;-)
-
-Ciao,
-Dscho
+However, looking at the rewritten repository vs the original, they
+share a lot of commits, then diverge halfway through their history.  I
+can't see anything notable about the commit where they diverge, with
+the exception that the rewritten commit has a newline after the
+subject and the original doesn't.  Neither has a commit message body.
