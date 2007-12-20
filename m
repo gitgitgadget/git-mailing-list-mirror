@@ -1,81 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v0] sha1_name: grok <revision>:./<relative-path>
-Date: Wed, 19 Dec 2007 17:07:50 -0800
-Message-ID: <7vr6hirx5l.fsf@gitster.siamese.dyndns.org>
-References: <20071218173321.GB2875@steel.home> <m3d4t3q4e5.fsf@roke.D-201>
-	<20071218204623.GC2875@steel.home>
-	<200712182224.28152.jnareb@gmail.com>
-	<20071218222032.GH2875@steel.home>
-	<Pine.LNX.4.64.0712182239500.23902@racer.site>
-	<56b7f5510712181503l1e5dcacds23511d968f98aedb@mail.gmail.com>
-	<alpine.LFD.0.9999.0712181711100.21557@woody.linux-foundation.org>
-	<56b7f5510712181752s7ecebca9m32794c635cba9fd@mail.gmail.com>
-	<Pine.LNX.4.64.0712191334460.23902@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dana How <danahow@gmail.com>,
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH] Re-re-re-fix common tail optimization
+Date: Thu, 20 Dec 2007 02:38:24 +0100
+Message-ID: <C152371B-7BFE-4EDB-93C3-78805E58A773@wincent.com>
+References: <20071215155150.GA24810@coredump.intra.peff.net> <7vprx7n90t.fsf@gitster.siamese.dyndns.org> <20071215200202.GA3334@sigill.intra.peff.net> <20071216070614.GA5072@sigill.intra.peff.net> <7v8x3ul927.fsf@gitster.siamese.dyndns.org> <7v7ijejq6j.fsf@gitster.siamese.dyndns.org> <20071216212104.GA32307@coredump.intra.peff.net> <7v3au2joo2.fsf_-_@gitster.siamese.dyndns.org> <20071219141845.GA2146@hashpling.org> <20071219142715.GB14187@coredump.intra.peff.net> <20071219143712.GA3483@hashpling.org> <7vy7bqrzat.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Charles Bailey <charles@hashpling.org>, Jeff King <peff@peff.net>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Dec 20 02:08:43 2007
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 20 02:40:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J59tz-0002Sp-5h
-	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 02:08:43 +0100
+	id 1J5AP0-0002GX-8g
+	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 02:40:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753526AbXLTBIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2007 20:08:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753141AbXLTBIT
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 20:08:19 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61589 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752694AbXLTBIS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 20:08:18 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CE54381F3;
-	Wed, 19 Dec 2007 20:08:09 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BFD781E2;
-	Wed, 19 Dec 2007 20:08:00 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759065AbXLTBjZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Dec 2007 20:39:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760044AbXLTBjX
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 20:39:23 -0500
+Received: from wincent.com ([72.3.236.74]:37524 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759865AbXLTBjW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Dec 2007 20:39:22 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBK1cPcC006402;
+	Wed, 19 Dec 2007 19:38:26 -0600
+In-Reply-To: <7vy7bqrzat.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68965>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+El 20/12/2007, a las 1:21, Junio C Hamano escribi=F3:
 
-> diff --git a/cache.h b/cache.h
-> index 39331c2..83a2c31 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -225,6 +225,7 @@ extern char *get_index_file(void);
->  extern char *get_graft_file(void);
->  extern int set_git_dir(const char *path);
->  extern const char *get_git_work_tree(void);
-> +extern const char *get_current_prefix(void);
->  
->  #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
->  
-> diff --git a/setup.c b/setup.c
-> index b59dbe7..fb9b680 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -3,6 +3,12 @@
->  
->  static int inside_git_dir = -1;
->  static int inside_work_tree = -1;
-> +static const char *current_prefix;
-> +
-> +const char *get_current_prefix()
-> +{
-> +	return current_prefix;
-> +}
+> Charles Bailey <charles@hashpling.org> writes:
+>
+>> On Wed, Dec 19, 2007 at 09:27:15AM -0500, Jeff King wrote:
+>> ...
+>>> Somebody beat you to it. :) Can you confirm that the fix in
+>>>
+>>>  <1198007158-27576-1-git-send-email-win@wincent.com>
+>>>
+>>> works for you?
+>>
+>> Ooh, the excitement, I've never had the opportunity to "git am"
+>> before.
+>
+> Well, if Wincent had sent the patch as plain text without MIME
+> quoted-printable, you did not have to even have the excitement of
+> running "git am", but a simple "git apply" would have sufficed.
 
-Didn't you just make libification harder?
+Well, I sent it using "git send-email", so I guess it didn't have MIME =
+=20
+quoted-printable.
+
+Cheers,
+Wincent
