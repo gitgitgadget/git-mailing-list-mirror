@@ -1,91 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] fix git commit --amend -m "new message"
-Date: Wed, 19 Dec 2007 19:23:03 -0800
-Message-ID: <7v8x3qrqw8.fsf@gitster.siamese.dyndns.org>
+From: "Dan McGee" <dpmcgee@gmail.com>
+Subject: git commit does not show all added files in subdirectories
+Date: Wed, 19 Dec 2007 21:47:57 -0600
+Message-ID: <449c10960712191947y3125f782t6ce7ec7b25ded30f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 20 04:23:39 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 20 04:48:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5C0Y-0000M5-KG
-	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 04:23:39 +0100
+	id 1J5COX-0005Iy-OS
+	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 04:48:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752944AbXLTDXP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Dec 2007 22:23:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753595AbXLTDXP
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 22:23:15 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37950 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752885AbXLTDXO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Dec 2007 22:23:14 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6272A8E76;
-	Wed, 19 Dec 2007 22:23:08 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C018A8E73;
-	Wed, 19 Dec 2007 22:23:05 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753748AbXLTDr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Dec 2007 22:47:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753815AbXLTDr7
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Dec 2007 22:47:59 -0500
+Received: from rv-out-0910.google.com ([209.85.198.188]:37308 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753691AbXLTDr6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Dec 2007 22:47:58 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so2880832rvb.1
+        for <git@vger.kernel.org>; Wed, 19 Dec 2007 19:47:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=INmp/5I72o6/iz9naY2Tn9RmKaN95tndaYw9OfM9sFY=;
+        b=eIROkfvIhjBM+Okcfk0wjpKX422w0o1N3uq7ufjZWCYSoqCxFS7R1CYSxg8XfW3k1QUfchbNywFoe6xEP/okLvTcsssiSiru1EDkPHNwWRBzsKdyKBP03CxcZ73gS1KESGEop/QWoezRM9APdnAzruNN5nyEyQkWVydW2mMM9Bs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=cmzYTmhPWL4OJZj55MNNRIXiAOkFVrUCJPbT6eDcB8I8BQ+UYMT48o809v3OBnuKmF6O0gopYaEXnlMpEHDwgUXXEqVvT1TiOtx9bGGja4stmunfNSswz0saSyD8vP/80gEzxnUe/RonUIR3LXhaTncknta94czGG9u7tJ54ZUo=
+Received: by 10.141.212.5 with SMTP id o5mr6500642rvq.20.1198122477794;
+        Wed, 19 Dec 2007 19:47:57 -0800 (PST)
+Received: by 10.141.212.3 with HTTP; Wed, 19 Dec 2007 19:47:57 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68969>
 
-The prepare_log_message() function serves two purposes:
+The output below should help explain this bug better than words can.
+This is with version 1.5.4.rc0.
 
- - Prepares the commit log message template, to be given to the end
-   user;
+Note that all files were added with git add before the below output begins.
 
- - Return true if there is something committable;
+dmcgee@dublin ~/projects/abs
+$ git status
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	new file: abs
+#	new file: etc/abs/abs.conf
+#	new file: etc/abs/supfile.community
+#	new file: etc/abs/supfile.core
+#	new file: etc/abs/supfile.extra
+#	new file: etc/abs/supfile.testing
+#	new file: etc/abs/supfile.unstable
+#
 
-7168624c3530d8c7ee32f930f8fb2ba302b9801f (Do not generate full commit
-log message if it is not going to be used) cheated to omit the former
-when we know the log message template is not going to be used.  However,
-its replacement logic to see if there is something committable was
-botched.  When amending, it should compare the index with the parent of
-the HEAD, not the current HEAD.  Otherwise you cannot run --amend to
-fix only the message without changing the tree.
+dmcgee@dublin ~/projects/abs
+$ git commit -s
+Created initial commit 5f5f8d3: Initial creation of abs git repository
+ 1 files changed, 171 insertions(+), 0 deletions(-)
+ create mode 100755 abs
+ create mode 040000 etc
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+I assume that all files should be listed by git commit, but they are
+not. I'm willing to look into fixing this if someone could point me in
+the right direction.
 
- * I think the other cheat to return !!active_nr is checking if it is
-   the initial commit, and its test that appear in the context of this
-   patch should be replaced with "if (initial_commit)", but I wanted to
-   first fix the bug.
-
- builtin-commit.c |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 0a91013..96410de 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -375,6 +375,7 @@ static int prepare_log_message(const char *index_file, const char *prefix)
- 	if (no_edit) {
- 		struct rev_info rev;
- 		unsigned char sha1[40];
-+		const char *parent = "HEAD";
- 
- 		fclose(fp);
- 
-@@ -384,9 +385,12 @@ static int prepare_log_message(const char *index_file, const char *prefix)
- 		if (get_sha1("HEAD", sha1) != 0)
- 			return !!active_nr;
- 
-+		if (amend)
-+			parent = "HEAD^1";
-+
- 		init_revisions(&rev, "");
- 		rev.abbrev = 0;
--		setup_revisions(0, NULL, &rev, "HEAD");
-+		setup_revisions(0, NULL, &rev, parent);
- 		DIFF_OPT_SET(&rev.diffopt, QUIET);
- 		DIFF_OPT_SET(&rev.diffopt, EXIT_WITH_STATUS);
- 		run_diff_index(&rev, 1 /* cached */);
+-Dan
