@@ -1,55 +1,96 @@
-From: "Jonathan del Strother" <maillist@steelskies.com>
-Subject: Re: Serious bug with pretty format strings & empty bodies?
-Date: Thu, 20 Dec 2007 10:46:15 +0000
-Message-ID: <57518fd10712200246qdc1062btb5c20de946468995@mail.gmail.com>
-References: <57518fd10712190632o490af924n61326fddf1819014@mail.gmail.com>
-	 <476962D5.3050409@lsrfire.ath.cx>
-	 <57518fd10712200243o26641b3bjf9be3898a2f0c7e1@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v0] sha1_name: grok <revision>:./<relative-path>
+Date: Thu, 20 Dec 2007 11:51:50 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0712201145390.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <20071218173321.GB2875@steel.home> <m3d4t3q4e5.fsf@roke.D-201>
+ <20071218204623.GC2875@steel.home> <200712182224.28152.jnareb@gmail.com>
+ <20071218222032.GH2875@steel.home> <Pine.LNX.4.64.0712182239500.23902@racer.site>
+ <56b7f5510712181503l1e5dcacds23511d968f98aedb@mail.gmail.com>
+ <alpine.LFD.0.9999.0712181711100.21557@woody.linux-foundation.org>
+ <56b7f5510712181752s7ecebca9m32794c635cba9fd@mail.gmail.com>
+ <Pine.LNX.4.64.0712191334460.23902@racer.site> <7vr6hirx5l.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Ren=E9_Scharfe?=" <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Thu Dec 20 11:46:49 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dana How <danahow@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 20 11:52:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5IvL-0006gE-Cy
-	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 11:46:43 +0100
+	id 1J5J0k-00008R-1D
+	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 11:52:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755888AbXLTKqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2007 05:46:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756040AbXLTKqU
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Dec 2007 05:46:20 -0500
-Received: from rv-out-0910.google.com ([209.85.198.189]:44196 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752372AbXLTKqU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2007 05:46:20 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2999781rvb.1
-        for <git@vger.kernel.org>; Thu, 20 Dec 2007 02:46:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=1cVSd4h9K25DFppfVd4JFQDLfS1nfsqkvn5ILmDnqxk=;
-        b=LN8Pn9TnhhoZ/Ey5MkIbshJaGTL8bV+4nn2sK57dlkiHtDjwLo+EOWV5aBmuuwILnHqBRlAXf/muHHiPqlOeOmLDKxesN9Hh6s/JciwlIS1vNDuVTBojJ9hrqVHJG2mHyrc3Jx9Apj7N2XRjHBwpXI/8wky2u26MdUqUzRyuaf0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=vXHNvML4L98jZCu45FX6E15fL2Wzg2mKEzQjiTnQdfxeZr+SqfiLwYF9NsuQTLxfZctdcvT1Y2pgDUBCrM6yptTq2t0E/oZiOIg0zTsuq9AFCNwREZ9coPl78dyzJ6jstUEcRAi2fC7kgmHadfpyRcM05CwxfO8J0vWCkBXe5Ig=
-Received: by 10.141.195.18 with SMTP id x18mr2043412rvp.171.1198147575325;
-        Thu, 20 Dec 2007 02:46:15 -0800 (PST)
-Received: by 10.140.134.14 with HTTP; Thu, 20 Dec 2007 02:46:15 -0800 (PST)
-In-Reply-To: <57518fd10712200243o26641b3bjf9be3898a2f0c7e1@mail.gmail.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: 5cd37380fb429b99
+	id S1753969AbXLTKvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2007 05:51:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753688AbXLTKvz
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Dec 2007 05:51:55 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45524 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752548AbXLTKvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2007 05:51:54 -0500
+Received: (qmail invoked by alias); 20 Dec 2007 10:51:52 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+  by mail.gmx.net (mp051) with SMTP; 20 Dec 2007 11:51:52 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18iZ1gEx9ci+1wm2MS2X2q0LesVaUJfgIR1jEsARW
+	r5cjkiSuU0iYin
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vr6hirx5l.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68991>
 
-> Hmmm.   I wonder if it's coincidence that I can only seem to spot this
-> problem in my repos that have been set up via submodule init...
+Hi,
 
-Ignore that last bit, red herring.
+On Wed, 19 Dec 2007, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > diff --git a/cache.h b/cache.h
+> > index 39331c2..83a2c31 100644
+> > --- a/cache.h
+> > +++ b/cache.h
+> > @@ -225,6 +225,7 @@ extern char *get_index_file(void);
+> >  extern char *get_graft_file(void);
+> >  extern int set_git_dir(const char *path);
+> >  extern const char *get_git_work_tree(void);
+> > +extern const char *get_current_prefix(void);
+> >  
+> >  #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
+> >  
+> > diff --git a/setup.c b/setup.c
+> > index b59dbe7..fb9b680 100644
+> > --- a/setup.c
+> > +++ b/setup.c
+> > @@ -3,6 +3,12 @@
+> >  
+> >  static int inside_git_dir = -1;
+> >  static int inside_work_tree = -1;
+> > +static const char *current_prefix;
+> > +
+> > +const char *get_current_prefix()
+> > +{
+> > +	return current_prefix;
+> > +}
+> 
+> Didn't you just make libification harder?
+
+Well, yes.
+
+Actually, no:
+
+	- I marked this explicitely not ready for application,
+	- it is not entirely clear if a libgit.a user would not want to 
+	  set a default prefix, and
+	- I decided that I will not be the only one who tries to make 
+		  libification easy. ;-)
+
+Ciao,
+Dscho
