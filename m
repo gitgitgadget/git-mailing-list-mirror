@@ -1,61 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Re-re-re-fix common tail optimization
-Date: Thu, 20 Dec 2007 01:40:24 -0800
-Message-ID: <7vtzmdpuuv.fsf@gitster.siamese.dyndns.org>
-References: <20071215200202.GA3334@sigill.intra.peff.net>
-	<20071216070614.GA5072@sigill.intra.peff.net>
-	<7v8x3ul927.fsf@gitster.siamese.dyndns.org>
-	<7v7ijejq6j.fsf@gitster.siamese.dyndns.org>
-	<20071216212104.GA32307@coredump.intra.peff.net>
-	<7v3au2joo2.fsf_-_@gitster.siamese.dyndns.org>
-	<20071219141845.GA2146@hashpling.org>
-	<20071219142715.GB14187@coredump.intra.peff.net>
-	<20071219143712.GA3483@hashpling.org>
-	<7vy7bqrzat.fsf@gitster.siamese.dyndns.org>
-	<20071220092315.GA31337@hashpling.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Wincent Colaiuta <win@wincent.com>, Jeff King <peff@peff.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Thu Dec 20 10:41:18 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: fix whitespace in config_to_multi (indent with tab)
+Date: Thu, 20 Dec 2007 10:48:09 +0100
+Message-ID: <1198144089-2983-1-git-send-email-jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 20 10:48:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5Htz-0002mL-O9
-	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 10:41:16 +0100
+	id 1J5I1D-0005Fd-Hd
+	for gcvg-git-2@gmane.org; Thu, 20 Dec 2007 10:48:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754552AbXLTJkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Dec 2007 04:40:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753842AbXLTJkt
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Dec 2007 04:40:49 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62622 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751510AbXLTJkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2007 04:40:47 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 1666E8523;
-	Thu, 20 Dec 2007 04:40:39 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B85E8520;
-	Thu, 20 Dec 2007 04:40:31 -0500 (EST)
-In-Reply-To: <20071220092315.GA31337@hashpling.org> (Charles Bailey's message
-	of "Thu, 20 Dec 2007 09:23:15 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756639AbXLTJsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Dec 2007 04:48:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756153AbXLTJsU
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Dec 2007 04:48:20 -0500
+Received: from mu-out-0910.google.com ([209.85.134.189]:13729 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756000AbXLTJsT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Dec 2007 04:48:19 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so4839932mue.5
+        for <git@vger.kernel.org>; Thu, 20 Dec 2007 01:48:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=uM5TPZj+Lg0gA8+Prd0VxSmVEGUUXLvsCsTYAkaDdJ8=;
+        b=wqZFwTwd7kGdTAi+OGtmCF19rW31hXG4xdo/RSsR2ld7bP3mtl8zlUAyk0KF4gqOseJFDrx2lnHSjQm9AHeD8u2w/RyuBMtjvGr9fUgvmqxDiMUuw/HOy/0IN6psE+bcrprvg9DK8Ek3NshoTpHaEloPp7Snh0QZOTbS/ESRO3c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=W83535DUt61oXxOmN7XFOy0ULYdFaNICeNEiVMCMRqvxpadAcUvlncg72pkX7UR3fP3/ZLrTFfQOrz34s7qnk6gSIAvCKKDrdBDbDuPyjk3Zu1OXzuu66lCx5nd/uOUWX6bBot6yojQ9/2KMQwa8LhsUILd0wsft8z+DwCqICVo=
+Received: by 10.86.33.10 with SMTP id g10mr9955453fgg.8.1198144097109;
+        Thu, 20 Dec 2007 01:48:17 -0800 (PST)
+Received: from roke.D-201 ( [83.8.192.140])
+        by mx.google.com with ESMTPS id e11sm3093769fga.2007.12.20.01.48.15
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 20 Dec 2007 01:48:16 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lBK9mBN8002999;
+	Thu, 20 Dec 2007 10:48:12 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id lBK9mAmD002998;
+	Thu, 20 Dec 2007 10:48:10 +0100
+X-Mailer: git-send-email 1.5.3.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/68986>
 
-Charles Bailey <charles@hashpling.org> writes:
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+I'm very sorry for sending whitespace-mangled patch in first place.
 
-> Perhaps a comment saying tha zc is designed for <= 9999 z's?  Given
-> this, a lot of the /g are redundant.
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Yeah, /g redundancy is a leftover from the time when it did not have
-these sawtooth patterns.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 28bb8c3..6256641 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1511,7 +1511,7 @@ sub config_to_int {
+ sub config_to_multi {
+ 	my $val = shift;
+ 
+-       return ref($val) ? $val : (defined($val) ? [ $val ] : []);
++	return ref($val) ? $val : (defined($val) ? [ $val ] : []);
+ }
+ 
+ sub git_get_project_config {
+-- 
+1.5.3.7
