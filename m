@@ -1,144 +1,106 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] git-commit: add --verbatim to allow unstripped commit
-	messages
-Date: Fri, 21 Dec 2007 01:14:49 +0100
-Message-ID: <20071221001449.GA10607@atjola.homenet>
-References: <20071220211835.GA3052@steel.home> <alpine.LFD.0.9999.0712201324270.21557@woody.linux-foundation.org> <20071220233324.GB3052@steel.home> <alpine.LFD.0.9999.0712201545450.21557@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: 1.5.4-rc2 plans
+Date: Thu, 20 Dec 2007 16:32:28 -0800
+Message-ID: <7vwsr8lwf7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Dec 21 01:15:21 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 21 01:33:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5VXs-0001Eq-MI
-	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 01:15:21 +0100
+	id 1J5Vox-0006Pm-GB
+	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 01:32:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752543AbXLUAOy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Dec 2007 19:14:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752451AbXLUAOy
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Dec 2007 19:14:54 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48621 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751142AbXLUAOy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Dec 2007 19:14:54 -0500
-Received: (qmail invoked by alias); 21 Dec 2007 00:14:50 -0000
-Received: from i577B9A5D.versanet.de (EHLO localhost) [87.123.154.93]
-  by mail.gmx.net (mp006) with SMTP; 21 Dec 2007 01:14:50 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19GAo0pIZ9GauNWkeWABUrgFOhhbR2c0PGtaYpduk
-	2fdpX/h/IkIZm2
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0712201545450.21557@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Y-GMX-Trusted: 0
+	id S1755912AbXLUAce convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Dec 2007 19:32:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755569AbXLUAce
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Dec 2007 19:32:34 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56173 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755220AbXLUAcd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Dec 2007 19:32:33 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 53BC63A9D;
+	Thu, 20 Dec 2007 19:32:32 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A55323A9C;
+	Thu, 20 Dec 2007 19:32:30 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69033>
 
-On 2007.12.20 15:55:18 -0800, Linus Torvalds wrote:
->=20
->=20
-> On Fri, 21 Dec 2007, Alex Riesen wrote:
-> >=20
-> > Yes, I afraid I need both. I use "git commit -t" almost (submission=
- in
-> > perforce takes careful planning) every day. I also would like to ke=
-ep
-> > the empty leading and trailing lines (perforce default GUI P4Win do=
-es
-> > not show them, but our scripts which check the descriptions will te=
-st
-> > the description text according to template which does have trailing
-> > empty lines).
->=20
-> Hmm. I think your updated patch was pretty good, although I still thi=
-nk it=20
-> could be improved a bit. In particular, thinking more about it, I thi=
-nk we=20
-> have more than an "on/off" switch - we really have three cases:
->=20
->  a) strip whitespace _and_ comments
->  b) strip unnecessary whitespace only
->  c) leave things _totally_ alone
->=20
-> and on top of that we also have the issue of an editor.
->=20
-> So my patch basically said that in the absense of an editor, we'll st=
-ill=20
-> clean up whitespace, but not comments (ie "no_edit" implies doing (b)=
-=20
-> rather than (b)), while your patch basically results in (c) regardles=
-s of=20
-> whether we run an editor or not.
->=20
-> But that still leaves one case: do we ever want to do (b) even *if* w=
-e use=20
-> an editor? There's another possible choice: our old behaviour of (a) =
-in=20
-> the presense of an editor is now gone.
->=20
-> Now, that last choice (ie "case (a) without an editor") is not only=20
-> unlikely to be anything people want to do anyway, it's also easy enou=
-gh to=20
-> do by just using "git stripspace -s" on whatever non-editor thing you=
- feed=20
-> to "git commit", so I don't think we need to worry about that one.
->=20
-> But the "maybe you want to run an editor, and you _do_ want case (b)"=
-=20
-> sounds like a case that is not at all unlikely. I could easily see th=
-e=20
-> case where you want to have a template that uses '#', and *despite* t=
-hat=20
-> you want to (a) allow the user to edit things _and_ (b) clean up=20
-> whitespace too.
->=20
-> So I'd almost suggest you make the "--verbatim" flag a three-way swit=
-ch,=20
-> to allow "totally verbatim" (leave everything in place) and a "don't =
-touch=20
-> comments" (just fix up whitespace) mode.
->=20
-> Hmm? Does that make sense to you?
+I've tagged -rc1 last night.  The changes are mostly fixes.  There are
+some remaining issues I'd like to see fixed/decided before 1.5.4.
 
-Hm, this is a bit more intrusive, but should catch most cases.
+One important issue is to identify and fix regressions since 1.5.3
+series.  No "rewrite scripted git-foo completely in C" can be regressio=
+n
+free, and we had quite a few internal changes during 1.5.4 cycle (not
+just rewrite to C, but C level uses new and improved API such as strbuf
+and parse-options).  Currently I am aware of these regressions:
 
-At the top of the comments in the commit message template add:
-#GIT CUT HERE
-(And adjust the descriptive text)
+ * handling of options, "--abbrev 10 HEAD", "--abbrev=3D10 HEAD" and
+   "--abbrev HEAD".  The last one does not work for commands that use
+   parse-options.  Pierre is on top of this, I hope.
 
-That line hopefully being uncommon enough to not affect any existing
-stuff.
+ * handling of EDITOR in git commit and git tag is currently different.
+   It expects "vi" not "vi --some-funny-option".  I sent out a
+   for-discussion patch after seeing Steven's and Luciano's.
 
-If that line is present, comment lines above it are kept, otherwise
-they're removed. Whitespace is always fixed(?).
+but I am sure there must be others that we haven't even identified.
 
-Results:
- - git commit -m "# Foo and bar"
-   * keeps the comment, looks like the expected thing
+Also there have been handful usability issues, which can be solved
+without incompatible changes:
 
- - git commit with editor
-   * Comments that are manually added are kept
-   * For the (probably seldom) case, that you want manually added
-     comments to be stripped, you can still remove the "#GIT CUR HERE"
-     line
+ * Should "git stash" stop doing anything useful?  I think the patch
+   from Nana today may be a reasonable compromise, although I still
+   think fundamentally different behaviour for the same command
+   configurable per-user is not very nice (we have precedent in "git
+   clean" already, though, but "git clean" is inherently dangerous
+   command, and "git stash" is much more useful and the issue impacts
+   more people).
 
- - git commit with template
-   * The existing templates probably won't have a "#GIT CUT HERE" line,
-     so we're backwards compatible
-   * Templates that want to keep the comments can simple get a "#GIT CU=
-T
-     HERE" line at the end and Just Work, regardless of whether or not
-     you forget to pass --verbatim.
+ * Introduction of "<tree>:./path" (Dscho).  I could be talked into
+   accepting the patch if it is useful to people who live deep within
+   subdirectories.
 
+ * Making commit log message cleansing optionally less aggressive.  I d=
+o
+   not think we have seen the end of the thread yet, but I think Linus'=
+s
+   "three cleansing levels" approach is on the right track.
 
-Hmm?
+I'd like to see the above resolved and hopefully 12 other regressions
+identified and fixed before the end of the year, when -rc2 can hopefull=
+y
+happen.
 
-thanks,
-Bj=F6rn
+The following technical issues have been raised but not resolved and I
+do not expect the resolution to be part of 1.5.4.
+
+ * Authenticated pserver (=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason).  It =
+needs security
+   audit of the code and also the password storage needs to be decided.
+   This can wait post 1.5.4.
+
+ * Threaded "repack -a -d -f" when having a verify tight pack suffers
+   from massive malloc(3) memory fragmentation, which we cannot do much
+   about.
+
+ * Rebase using "format-patch | am" machinery has issues when dealing
+   with a mostly-text change that includes NUL (or anything you cannot
+   e-mail patch for).  The workaround is "rebase -m" which unfortunatly
+   is slow.  I am working on rewriting cherry-pick whenever I find time
+   to address it, though.
+
+ * Handling of trailing blank lines does not mesh well with the way dif=
+f
+   and apply whitespace logic is done.
