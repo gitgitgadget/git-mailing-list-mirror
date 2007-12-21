@@ -1,71 +1,549 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: cvs -> git tools?
-Date: Fri, 21 Dec 2007 14:07:29 -0800 (PST)
-Message-ID: <m3ve6rog69.fsf@roke.D-201>
-References: <476C1D9E.4060700@advancedsl.com.ar>
+From: Jim Meyering <jim@meyering.net>
+Subject: [PATCH] Don't dereference NULL upon lookup_tree failure.
+Date: Fri, 21 Dec 2007 23:32:45 +0100
+Message-ID: <873atvwueq.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-15?q?Gonzalo_Garramu=F1o?= <ggarra@advancedsl.com.ar>
-X-From: git-owner@vger.kernel.org Fri Dec 21 23:07:58 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthew Farrellee <mfarrellee@redhat.com>
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 21 23:33:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5q28-0004Y4-PK
-	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 23:07:57 +0100
+	id 1J5qQb-0004Dk-9J
+	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 23:33:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755294AbXLUWHd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Dec 2007 17:07:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753476AbXLUWHd
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 17:07:33 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:8877 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753354AbXLUWHc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Dec 2007 17:07:32 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so690227ugc.16
-        for <git@vger.kernel.org>; Fri, 21 Dec 2007 14:07:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:content-transfer-encoding:from:date;
-        bh=Co0XclVi5bUY4QWPfjq68q/ftbFHqK0s755iHRSzjqo=;
-        b=Grzhau/oKEHSpPnR4NHNLTQbmaVX1UdttczhRbjx+3k+aAUQCjnIDvpw2hdvinVU7Q96v/R61gV86TEYZoCIPBSrfFc7oDSnwng/jvGkGA2Sgd9dXdyEn1aOhxp+2FwgiO92T+blQP8m6+HwqEuY4MDC9R6LIdMgAhj5ltQHctM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:content-transfer-encoding:from:date;
-        b=EV0PIodw7uNNsP9v6LkYOLfUiPCb0m4PO99jydP70R7jvm2Fky+sUq3YI0MxqMHvQfI122UPRVJizvr+PVWscCL0kMq3NYC98nExV4S/lLW2gl/X1CXrFLHzVp4H5db6VvupK8+CcD6EzVyakaZmy8sCxrBEuqiBZ6qCIVmHRyw=
-Received: by 10.67.25.6 with SMTP id c6mr373495ugj.65.1198274851450;
-        Fri, 21 Dec 2007 14:07:31 -0800 (PST)
-Received: from roke.D-201 ( [83.8.189.110])
-        by mx.google.com with ESMTPS id i40sm4067350ugf.4.2007.12.21.14.07.28
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 21 Dec 2007 14:07:30 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lBLM7Soa015652;
-	Fri, 21 Dec 2007 23:07:28 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id lBLM7QEg015649;
-	Fri, 21 Dec 2007 23:07:26 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <476C1D9E.4060700@advancedsl.com.ar>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1755012AbXLUWct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2007 17:32:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755112AbXLUWct
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 17:32:49 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:37790 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754851AbXLUWcs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2007 17:32:48 -0500
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 23F4717B564
+	for <git@vger.kernel.org>; Fri, 21 Dec 2007 23:32:46 +0100 (CET)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id EDF1B17B561
+	for <git@vger.kernel.org>; Fri, 21 Dec 2007 23:32:45 +0100 (CET)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id CDA7F371A6; Fri, 21 Dec 2007 23:32:45 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69101>
 
-Gonzalo Garramu=F1o <ggarra@advancedsl.com.ar> writes:
+While Matthew Farrellee was working on converting the Condor repository
+from cvs to git, he managed to make git segfault (with help from parsecvs)
+while producing a 100MB .git repository.  He found the single offending
+,v file that led parsecvs to generate a bogus repository, and deduced
+that adding a single well-placed branch tag[*] was enough to avoid
+the problem.  I fixed the bug in git along with a few in parsecvs that
+were exposed while paring the ,v file down from a 150KB monstrosity to
+something manageable.
 
-> Are there any good websites that can host a git repository?  Somethin=
-g
-> equivalent to sourceforge but for git.
+[*] Adding this tag avoids the problem: FOO:1.30.2.5.0.8
 
-Check out the end of the GitProjects page on GitWiki:
-  http://git.or.cz/gitwiki/GitProjects
+First, here's how to reproduce the git segfault, using the file, "min,v"
+included below.  Run this in an empty directory:
 
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+  rm -rf k .git .git-cvs
+  parsecvs min,v >& log
+  git clone -q . k
+
+I noticed that while I get a segfault both on x86 and x86_64, I see
+clear evidence of it only on x86:
+
+  0 blocks
+  error: Object 0d57588da39d10795486bd5451bc2660832228e6 is a commit, not a tree
+  Segmentation fault
+  fatal: The remote end hung up unexpectedly
+  [Exit 1]
+
+When running on an x86_64 system (either debian unstable or rawhide)
+I see only this:
+
+  0 blocks
+  error: Object 0d57588da39d10795486bd5451bc2660832228e6 is a commit, not a tree
+  fatal: The remote end hung up unexpectedly
+
+Of course, valgrind shows you the segfault in both cases.
+
+The above was using git version 1.5.4.rc1.3.gec692
+and the latest parsecvs from here:
+git://people.freedesktop.org/~keithp/parsecvs
+
+    commit 2b0113ffb0055620193397c025d6f6bca3b110cd
+    Author: Finn Arne Gangstad <finnag@pvv.org>
+    Date:   Sun Nov 18 15:26:35 2007 -0800
+
+This patch avoids the NULL dereference by treating a failed lookup_tree the
+same way an invalid "type" is handled in the "else" block just below.
+The only difference is that for a failed lookup_tree, the failing
+function has already produced a diagnostic.
+
+-----------------------------------------------------
+From 4cd649160d8174b23727b3d7276f1bd7246d0aff Mon Sep 17 00:00:00 2001
+From: Jim Meyering <meyering@redhat.com>
+Date: Fri, 21 Dec 2007 11:56:32 +0100
+Subject: [PATCH] Don't dereference NULL upon lookup_tree failure.
+
+
+Signed-off-by: Jim Meyering <meyering@redhat.com>
+---
+ object.c |   12 ++++++++----
+ 1 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/object.c b/object.c
+index 16793d9..eb59550 100644
+--- a/object.c
++++ b/object.c
+@@ -142,10 +142,14 @@ struct object *parse_object_buffer(const unsigned char *sha1, enum object_type t
+ 		obj = &blob->object;
+ 	} else if (type == OBJ_TREE) {
+ 		struct tree *tree = lookup_tree(sha1);
+-		obj = &tree->object;
+-		if (!tree->object.parsed) {
+-			parse_tree_buffer(tree, buffer, size);
+-			eaten = 1;
++		if (!tree)
++		    obj = NULL;
++		else {
++		    obj = &tree->object;
++		    if (!tree->object.parsed) {
++			    parse_tree_buffer(tree, buffer, size);
++			    eaten = 1;
++		    }
+ 		}
+ 	} else if (type == OBJ_COMMIT) {
+ 		struct commit *commit = lookup_commit(sha1);
+--
+1.5.4.rc0.76.g55ee
+
+
+Here's the contents of min,v
+------------------------------------------------
+head	1.31;
+access;
+symbols
+	a:1.30.2.18.4.14.4.29.0.6
+	b:1.30.2.18.4.14.4.29.0.4
+	c:1.30.2.18.4.14.4.29.0.2
+	d:1.30.2.18.4.14.4.27.0.6
+	e:1.30.2.18.4.14.4.27.0.4
+	f:1.30.2.18.4.14.4.27.0.2
+	g:1.30.2.18.4.14.4.25.0.6
+	h:1.30.2.18.4.14.4.25.0.4
+	i:1.30.2.18.4.14.4.25.0.2
+	j:1.30.2.18.4.14.4.24.0.24
+	k:1.30.2.18.4.14.4.24.0.22
+	l:1.30.2.18.4.14.4.24.0.20
+	m:1.30.2.18.4.14.4.24.0.18
+	n:1.30.2.18.4.14.4.24.0.16
+	o:1.30.2.18.4.14.4.24.0.14
+	p:1.30.2.18.4.14.4.24.0.12
+	q:1.30.2.18.4.14.4.24.0.10
+	r:1.30.2.18.4.14.4.24.0.8
+	s:1.30.2.18.4.14.4.24.0.6
+	t:1.30.2.18.4.14.4.24.0.4
+	u:1.30.2.18.4.14.4.24.0.2
+	a0:1.30.2.18.4.14.4.23.0.10
+	a1:1.30.2.18.4.14.4.23.0.8
+	a2:1.30.2.18.4.14.4.23.0.6
+	a3:1.30.2.18.4.14.4.23.0.4
+	a4:1.30.2.18.4.14.4.23.0.2
+	a5:1.30.2.18.4.14.4.22.0.2
+	a6:1.30.2.18.4.14.4.21.0.2
+	a7:1.30.2.18.4.14.4.18.4.1.0.2
+	a8:1.30.2.18.4.14.4.18.0.6
+	a9:1.30.2.18.4.14.4.18.0.4
+	a10:1.30.2.18.4.14.4.17.0.12
+	a11:1.30.2.18.4.14.4.18.0.2
+	a12:1.30.2.18.4.14.4.17.0.10
+	a13:1.30.2.18.4.14.4.17.0.8
+	a14:1.30.2.18.4.14.4.17.0.6
+	a15:1.30.2.18.4.14.4.17.0.4
+	a16:1.30.2.18.4.14.4.17.0.2
+	a17:1.30.2.18.4.14.4.16.0.2
+	a18:1.30.2.18.4.14.4.15.0.2
+	a19:1.30.2.18.4.14.4.14.0.10
+	a20:1.30.2.18.4.14.4.14.0.8
+	a21:1.30.2.18.4.14.4.14.0.6
+	a22:1.30.2.18.4.14.4.14.0.4
+	a23:1.30.2.18.4.14.4.14.0.2
+	a24:1.30.2.18.4.14.4.13.0.4
+	a25:1.30.2.18.4.14.4.13.0.2
+	a26:1.30.2.18.4.14.4.7.0.6
+	a27:1.30.2.18.4.14.4.12.0.8
+	a28:1.30.2.18.4.14.4.12.0.6
+	a29:1.30.2.18.4.14.4.12.0.4
+	a30:1.30.2.18.4.14.4.12.0.2
+	a31:1.30.2.18.4.14.4.11.0.4
+	a32:1.30.2.18.4.14.4.11.0.2
+	a33:1.30.2.18.4.14.4.9.0.16
+	a34:1.30.2.18.4.14.4.9.0.14
+	a35:1.30.2.18.4.14.4.9.0.12
+	a36:1.30.2.18.4.14.4.9.0.10
+	a37:1.30.2.18.4.14.4.9.0.8
+	a38:1.30.2.18.4.14.4.9.0.6
+	a39:1.30.2.18.4.14.4.9.0.4
+	a40:1.30.2.18.4.14.4.9.0.2
+	a41:1.30.2.18.4.14.4.8.0.16
+	a42:1.30.2.18.4.14.4.8.0.14
+	a43:1.30.2.18.4.14.4.8.0.12
+	a44:1.30.2.18.4.14.4.8.0.10
+	a45:1.30.2.18.4.14.4.8.0.8
+	a46:1.30.2.18.4.14.4.8.0.6
+	a47:1.30.2.18.4.14.4.8.0.4
+	a48:1.30.2.18.4.14.4.8.0.2
+	a49:1.30.2.18.4.14.4.7.0.4
+	a50:1.30.2.18.4.14.4.7.0.2
+	a51:1.30.2.18.4.14.4.6.0.2
+	a52:1.30.2.18.4.14.4.3.4.1.0.2
+	a53:1.30.2.18.4.14.4.5.0.2
+	a54:1.30.2.18.4.14.4.5.0.14
+	a55:1.30.2.18.4.14.4.5.0.12
+	a56:1.30.2.18.4.14.4.5.0.10
+	a57:1.30.2.18.4.14.4.5.0.8
+	a58:1.30.2.18.4.14.4.5.0.6
+	a59:1.30.2.18.4.14.4.5.0.4
+	a60:1.30.2.18.4.14.4.3.0.4
+	a61:1.30.2.18.4.14.4.3.0.2
+	a62:1.30.2.18.4.14.4.2.0.16
+	a63:1.30.2.18.4.14.4.2.0.14
+	a64:1.30.2.18.4.14.4.2.0.12
+	a65:1.30.2.18.4.14.4.2.0.10
+	a66:1.30.2.18.4.14.4.2.0.8
+	a67:1.30.2.18.4.14.4.2.0.6
+	a68:1.30.2.18.4.14.4.2.0.4
+	a69:1.30.2.18.4.14.4.2.0.2
+	a70:1.30.2.18.4.14.4.1.0.4
+	a71:1.30.2.18.4.14.4.1.0.2
+	a72:1.30.2.18.4.14.0.4
+	a73:1.30.2.18.4.14.0.2
+	a74:1.30.2.18.4.13.0.2
+	a75:1.30.2.18.4.11.0.4
+	a76:1.30.2.18.4.11.0.2
+	a77:1.30.2.18.4.10.0.2
+	a78:1.30.2.18.4.6.0.2
+	a79:1.30.2.18.4.3.0.4
+	a80:1.30.2.18.4.5.0.4
+	a81:1.30.2.18.4.5.0.2
+	a82:1.30.2.18.4.3.0.2
+	a83:1.30.2.18.2.8.0.2
+	a84:1.30.2.18.4.1.0.8
+	a85:1.30.2.18.4.1.0.6
+	a86:1.30.2.18.4.1.0.4
+	a87:1.30.2.18.4.1.0.2
+	a88:1.30.2.18.0.4
+	a89:1.30.2.18.0.2
+	a90:1.30.2.14.0.2
+	a91:1.31.0.4
+	a92:1.31.0.2
+	a93:1.30.2.5.0.14
+	a94:1.30.2.5.0.12
+	a95:1.30.2.5.0.10
+	a96:1.30.2.5.0.6
+	a97:1.30.2.5.0.4
+	a98:1.30.2.5.0.2
+	a99:1.30.2.4.0.2
+	a100:1.30.2.3.0.8
+	a101:1.30.2.3.0.6
+	a102:1.30.2.3.0.2
+	a103:1.30.2.3.0.4
+	a104:1.30.2.1.0.2
+	a105:1.30.0.2
+	new-syscall-branch:1.14.0.2
+	V6_0-branch:1.6.0.2;
+locks; strict;
+comment	@ * @;
+
+
+1.31
+date	2000.07.06.19.46.55;	author x;	state Exp;
+branches
+	1.31.4.1;
+next	1.30;
+
+1.30
+date	2000.07.06.17.21.26;	author x;	state Exp;
+branches
+	1.30.2.1;
+next	1.14;
+
+1.14
+date	99.03.09.23.33.53;	author x;	state Exp;
+branches
+	1.14.6.1;
+next	;
+
+1.14.6.1
+date	99.03.17.05.07.10;	author x;	state Exp;
+branches;
+next	;
+
+1.30.2.1
+date	2000.12.13.20.13.52;	author x;	state Exp;
+branches;
+next	1.30.2.3;
+
+1.30.2.3
+date	2001.03.28.18.40.01;	author x;	state Exp;
+branches;
+next	1.30.2.4;
+
+1.30.2.4
+date	2001.08.21.21.14.44;	author x;	state Exp;
+branches;
+next	1.30.2.5;
+
+1.30.2.5
+date	2001.10.17.20.05.09;	author x;	state Exp;
+branches
+	1.30.2.5.8.1;
+next	1.30.2.14;
+
+1.30.2.14
+date	2002.06.13.17.02.53;	author x;	state Exp;
+branches;
+next	1.30.2.18;
+
+1.30.2.18
+date	2002.07.18.22.25.03;	author x;	state Exp;
+branches;
+next	;
+
+1.30.2.5.8.1
+date	2002.01.29.00.03.25;	author x;	state Exp;
+branches;
+next	;
+
+1.31.4.1
+date	2002.04.16.22.46.40;	author x;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.31
+log
+@6.5.0 version string, on the trunk.
+@
+text
+@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@
+
+
+1.31.4.1
+log
+@
+@
+text
+@d35 1
+a35 1
+
+@
+
+
+1.30
+log
+@
+@
+text
+@d35 1
+a35 1
+
+@
+
+
+1.30.2.1
+log
+@
+@
+text
+@d35 1
+a35 1
+
+@
+
+
+1.30.2.3
+log
+@
+@
+text
+@d35 1
+a35 1
+
+@
+
+
+1.30.2.4
+log
+@
+@
+text
+@d35 1
+a35 1
+
+@
+
+
+1.30.2.5
+log
+@
+@
+text
+@d35 1
+a35 1
+
+@
+
+
+1.30.2.14
+log
+@
+@
+text
+@d35 1
+a35 1
+
+@
+
+
+1.30.2.18
+log
+@
+@
+text
+@d35 1
+a35 1
+
+@
+
+
+1.30.2.5.8.1
+log
+@
+@
+text
+@d35 1
+a35 1
+
+@
+
+
+1.14
+log
+@
+@
+text
+@d25 43
+a67 1
+s
+d72 1
+a72 1
+C
+d77 6
+d84 1
+@
+
+
+1.14.6.1
+log
+@
+@
+text
+@d25 1
+a25 1
+
+@
