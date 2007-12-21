@@ -1,89 +1,145 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: Re: unexpected git-cherry-pick conflict
-Date: Fri, 21 Dec 2007 10:37:43 +0000
-Message-ID: <20071221103743.2210.qmail@80f7ec9d6d380d.315fe32.mid.smarden.org>
-References: <20070405071615.2915.6837.reportbug@acer> <20070607074357.27760.qmail@69aef7b888effd.315fe32.mid.smarden.org> <6b8a91420706070252y3fd581a3w427d91e5b982d29d@mail.gmail.com> <20070613091624.26463.qmail@353090644b4917.315fe32.mid.smarden.org> <Pine.LNX.4.64.0706131354250.4059@racer.site> <20070613134336.13661.qmail@c61f4fed932273.315fe32.mid.smarden.org> <Pine.LNX.4.64.0706131543140.4059@racer.site> <20070625071819.8091.qmail@5e4088a43a10fd.315fe32.mid.smarden.org> <Pine.LNX.4.64.0707071949440.4093@racer.site>
+From: Pierre Habouzit <madcoder@artemis.madism.org>
+Subject: Re: 1.5.4-rc2 plans
+Date: Fri, 21 Dec 2007 11:47:04 +0100
+Message-ID: <20071221104704.GC17701@artemis.madism.org>
+References: <7vwsr8lwf7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; boundary="Clx92ZfkiYIKRjnr";
+	protocol="application/pgp-signature"; micalg=SHA1
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Dec 21 11:37:52 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 21 11:47:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5fGH-0005hD-PG
-	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 11:37:50 +0100
+	id 1J5fPh-0000EK-PR
+	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 11:47:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751077AbXLUKh1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2007 05:37:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751048AbXLUKh0
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 05:37:26 -0500
-Received: from a.ns.smarden.org ([212.42.242.37]:59523 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750920AbXLUKh0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2007 05:37:26 -0500
-Received: (qmail 2211 invoked by uid 1000); 21 Dec 2007 10:37:43 -0000
+	id S1754820AbXLUKrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2007 05:47:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754502AbXLUKrJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 05:47:09 -0500
+Received: from pan.madism.org ([88.191.52.104]:42604 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754732AbXLUKrH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2007 05:47:07 -0500
+Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 4C9A51D425;
+	Fri, 21 Dec 2007 11:47:05 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 51A0A322FE6; Fri, 21 Dec 2007 11:47:04 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@artemis.madism.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0707071949440.4093@racer.site>
+In-Reply-To: <7vwsr8lwf7.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69053>
 
-On Sat, Jul 07, 2007 at 09:58:08PM +0100, Johannes Schindelin wrote:
-> On Mon, 25 Jun 2007, Gerrit Pape wrote:
-> > Hi, did you get to this yet?, not to stress you, just to make sure we 
-> > don't forget about it.
-> 
-> Okay. Since now both you and Junio asked for it, and I made today a Git 
-> day for me, I looked into this.
 
-Hi, the discussion on this topic unfortunately didn't result in a patch.
-The problem is still true with current master, here's again how to
-reproduce it
+--Clx92ZfkiYIKRjnr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- $ mkdir repo && cd repo
- $ git init
- Initialized empty Git repository in .git/
- $ echo foo >file
- $ ln -s dangling link
- $ git add .
- $ git commit -mfoo
- Created initial commit c6a9189: foo
-  2 files changed, 2 insertions(+), 0 deletions(-)
-  create mode 100644 file
-  create mode 120000 link
- $ git checkout -b branch
- Switched to a new branch "branch"
- $ git rm link
- rm 'link'
- $ git commit -mremovelink
- Created commit 2c60f15: removelink
-  1 files changed, 0 insertions(+), 1 deletions(-)
-  delete mode 120000 link
- $ mkdir link
- $ echo bar >link/file
- $ git add link
- $ git commit -m adddir
- Created commit d3b30b5: adddir
-  1 files changed, 1 insertions(+), 0 deletions(-)
-  create mode 100644 link/file
- $ echo bar >>file
- $ git commit -mfile file
- Created commit 8ddc4d5: file
-  1 files changed, 1 insertions(+), 0 deletions(-)
- $ git checkout master
- Switched to branch "master"
- $ git cherry-pick 8ddc4d5
- CONFLICT (file/directory): There is a directory with name link in
- 8ddc4d5... file. Added link as link~HEAD
- Automatic cherry-pick failed.  After resolving the conflicts,
- mark the corrected paths with 'git-add <paths>'
- and commit the result.
- When commiting, use the option '-c 8ddc4d5' to retain authorship and
- message.
- $ 
+On Fri, Dec 21, 2007 at 12:32:28AM +0000, Junio C Hamano wrote:
+> I've tagged -rc1 last night.  The changes are mostly fixes.  There are
+> some remaining issues I'd like to see fixed/decided before 1.5.4.
+>=20
+> One important issue is to identify and fix regressions since 1.5.3
+> series.  No "rewrite scripted git-foo completely in C" can be regression
+> free, and we had quite a few internal changes during 1.5.4 cycle (not
+> just rewrite to C, but C level uses new and improved API such as strbuf
+> and parse-options).  Currently I am aware of these regressions:
+>=20
+>  * handling of options, "--abbrev 10 HEAD", "--abbrev=3D10 HEAD" and
+>    "--abbrev HEAD".  The last one does not work for commands that use
+>    parse-options.  Pierre is on top of this, I hope.
 
-Thanks, Gerrit.
+Hmm now I'm confused, I believed we settled for the: --abbrev 10 HEAD is
+forbidden, --abbrev=3D10 HEAD works, and --abbrev HEAD too. This would
+introduce no regressions _yet_ as none of the commands that use
+parse-options and take --abbrev accepted the --abbrev 10 form before. I
+already sent this once, and assumed you took it, hence me being silent
+the last days. Here is it again then.  Of course this does not affects
+other long options for which `--long-option arg` still works (if they do
+take an argument).
+
+I'd also like to see any kind of form of gitcli(5) be merged for 1.5.4
+too, I believe the first version I ever sent. In the thread where I
+posted the proposal using `{}` the patch introducing it is the version
+formed using:
+  * my first proposal for it ;
+  * your english fixes squashed on top of it ;
+  * a fix wrt the '--no-' prefix and Boolean options that we discussed.
+This version describes the current state of things properly IMHO. I can
+find the message id if you need, but I don't have the commit locally
+anymore atm.
+
+Cheers,
+
+=46rom 37c7baaa82f36d16697fa190635f5d3efbe2a83d Mon Sep 17 00:00:00 2001
+=46rom: Pierre Habouzit <madcoder@debian.org>
+Date: Fri, 21 Dec 2007 11:41:41 +0100
+Subject: [PATCH] Force the sticked form for options with optional arguments.
+
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+---
+ parse-options.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/parse-options.c b/parse-options.c
+index 574ed31..4f5c55e 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -89,7 +89,7 @@ static int get_value(struct optparse_t *p,
+ 			*(const char **)opt->value =3D NULL;
+ 			return 0;
+ 		}
+-		if (opt->flags & PARSE_OPT_OPTARG && (!arg || *arg =3D=3D '-')) {
++		if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
+ 			*(const char **)opt->value =3D (const char *)opt->defval;
+ 			return 0;
+ 		}
+@@ -103,7 +103,7 @@ static int get_value(struct optparse_t *p,
+ 			return (*opt->callback)(opt, NULL, 1);
+ 		if (opt->flags & PARSE_OPT_NOARG)
+ 			return (*opt->callback)(opt, NULL, 0);
+-		if (opt->flags & PARSE_OPT_OPTARG && (!arg || *arg =3D=3D '-'))
++		if (opt->flags & PARSE_OPT_OPTARG && !p->opt)
+ 			return (*opt->callback)(opt, NULL, 0);
+ 		if (!arg)
+ 			return opterror(opt, "requires a value", flags);
+@@ -114,7 +114,7 @@ static int get_value(struct optparse_t *p,
+ 			*(int *)opt->value =3D 0;
+ 			return 0;
+ 		}
+-		if (opt->flags & PARSE_OPT_OPTARG && (!arg || !isdigit(*arg))) {
++		if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
+ 			*(int *)opt->value =3D opt->defval;
+ 			return 0;
+ 		}
+--=20
+1.5.4.rc1.1096.g37c7b
+
+
+--Clx92ZfkiYIKRjnr
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHa5movGr7W6HudhwRAqk/AJ0aDGf3NRZFz0dIB88m8e2whQ7OoACghlzh
+8/mxChLd0HKtDTYgoMM3EdQ=
+=XIsz
+-----END PGP SIGNATURE-----
+
+--Clx92ZfkiYIKRjnr--
