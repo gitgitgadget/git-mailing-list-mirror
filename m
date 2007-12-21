@@ -1,87 +1,64 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: [PATCH] git-send-email: Add --suppress-all-from option.
-Date: Fri, 21 Dec 2007 11:21:20 -0800
-Message-ID: <20071221192120.GA13171@mail.oracle.com>
-References: <1198216860-487-1-git-send-email-git@davidb.org> <7vfxxw7xkb.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] Make git send-email accept $EDITOR with arguments
+Date: Fri, 21 Dec 2007 14:23:59 -0500
+Message-ID: <20071221192359.GA10660@coredump.intra.peff.net>
+References: <20071220203211.GA12296@bit.office.eurotux.com> <1198237002-21470-1-git-send-email-hendeby@isy.liu.se> <20071221133412.GA15198@sigill.intra.peff.net> <476BDA5F.4070306@isy.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Brown <git@davidb.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 20:23:49 2007
+Cc: luciano@eurotux.com, git@vger.kernel.org, gitster@pobox.com
+To: Gustaf Hendeby <hendeby@isy.liu.se>
+X-From: git-owner@vger.kernel.org Fri Dec 21 20:24:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5nTJ-0005QS-39
-	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 20:23:49 +0100
+	id 1J5nTy-0005f3-1Y
+	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 20:24:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753296AbXLUTXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2007 14:23:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753293AbXLUTXW
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 14:23:22 -0500
-Received: from rgminet01.oracle.com ([148.87.113.118]:57577 "EHLO
-	rgminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753233AbXLUTXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2007 14:23:21 -0500
-Received: from agmgw1.us.oracle.com (agmgw1.us.oracle.com [152.68.180.212])
-	by rgminet01.oracle.com (Switch-3.2.4/Switch-3.1.6) with ESMTP id lBLJMtVG008997;
-	Fri, 21 Dec 2007 12:22:56 -0700
-Received: from acsmt356.oracle.com (acsmt356.oracle.com [141.146.40.156])
-	by agmgw1.us.oracle.com (Switch-3.2.0/Switch-3.2.0) with ESMTP id lBKLecV4024388;
-	Fri, 21 Dec 2007 12:22:54 -0700
-Received: from ca-server1.us.oracle.com by acsmt356.oracle.com
-	with ESMTP id 6501210631198264880; Fri, 21 Dec 2007 11:21:20 -0800
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.67)
-	(envelope-from <joel.becker@oracle.com>)
-	id 1J5nQu-0006F9-0u; Fri, 21 Dec 2007 11:21:20 -0800
+	id S1753293AbXLUTYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2007 14:24:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752720AbXLUTYE
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 14:24:04 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4296 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752399AbXLUTYC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2007 14:24:02 -0500
+Received: (qmail 2883 invoked by uid 111); 21 Dec 2007 19:24:00 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 21 Dec 2007 14:24:00 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Dec 2007 14:23:59 -0500
 Content-Disposition: inline
-In-Reply-To: <7vfxxw7xkb.fsf@gitster.siamese.dyndns.org>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever
-	come to perfection.
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
-X-Whitelist: TRUE
+In-Reply-To: <476BDA5F.4070306@isy.liu.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69085>
 
-On Fri, Dec 21, 2007 at 09:43:48AM -0800, Junio C Hamano wrote:
-> The option name feels as if it is somehow affecting From: but
-> this is all about recipients.  It needs to be named better.
+On Fri, Dec 21, 2007 at 04:23:11PM +0100, Gustaf Hendeby wrote:
+
+> > If you are going to do it that way, I suspect you want to quotemeta
+> > $compose_filename.
+> Generally that would be true, but is that really necessary when I know
+> $compose_filename is defined as:
 > 
-> Even more importantly, git-send-email has too many places that
-> pick up additional recipients.  I doubt --suppress-foo to
-> suppress one such source "foo" is sustainable.  We should try to
-> clean up the mess, not adding to it.
+> my $compose_filename = ".msg.$$";
 
-	Yay, even better that we're going to evaluate the sucker (I was
-just complaining about this yesterday to someone, so how apropos that it
-comes up on-list).
-	First and foremost, I think git-send-email should not default to
-anything.  It was quite a surprise, the first time I tried to use it, to
-discover I had to add two options to ~/.gitconfig just for sane
-behavior.  Never mind that I couldn't suppress the author-cc.  I think
-that a naive "git send-email --to bob@bob.com foo.patch" should only go
-to bob, period.
-	We can then add ways to auto-cc.  I don't mind typing the extra
-bits.  Heck, we could even define a --review that does what is currently
-the default - cc-everyone-who-might-care-as-we-go-upstream.
+I know; it is just easier to see that it is correct with the quotemeta
+(and correct in the face of somebody changing the message later).
 
-Joel
+> Or, should I take it that you prefer the version using split?  I didn't
+> really feel good about the possibility of splitting paths with spaces
+> that came with that one though.
 
--- 
+I am fine with using the shell. Though keep in mind that the two
+solutions will behave differently with
 
-Life's Little Instruction Book #99
+  EDITOR='foo; bar'
 
-	"Think big thoughts, but relish small pleasures."
+That is, system("$editor $message") will actually invoke the shell,
+whereas system(split(/ /, $editor), $message) will _just_ split on
+whitespace. We should do whatever is consistent with the rest of the git
+commands (off the top of my head, I don't know).
 
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+-Peff
