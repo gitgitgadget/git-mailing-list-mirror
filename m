@@ -1,144 +1,75 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Linux 2.6.24-rc6
-Date: Fri, 21 Dec 2007 09:45:16 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712210935130.21557@woody.linux-foundation.org>
-References: <alpine.LFD.0.9999.0712201731010.21557@woody.linux-foundation.org> <20071221024805.GB8535@fattire.cabal.ca> <20071221030152.GC8535@fattire.cabal.ca> <alpine.LFD.0.9999.0712201937470.21557@woody.linux-foundation.org>
- <alpine.LFD.0.9999.0712202009290.21557@woody.linux-foundation.org> <alpine.LFD.0.9999.0712202054350.21557@woody.linux-foundation.org> <alpine.LFD.0.9999.0712202110350.21557@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v0] sha1_name: grok <revision>:./<relative-path>
+Date: Fri, 21 Dec 2007 09:50:34 -0800
+Message-ID: <7vbq8k7x91.fsf@gitster.siamese.dyndns.org>
+References: <20071218173321.GB2875@steel.home> <m3d4t3q4e5.fsf@roke.D-201>
+	<20071218204623.GC2875@steel.home>
+	<200712182224.28152.jnareb@gmail.com>
+	<20071218222032.GH2875@steel.home>
+	<Pine.LNX.4.64.0712182239500.23902@racer.site>
+	<56b7f5510712181503l1e5dcacds23511d968f98aedb@mail.gmail.com>
+	<alpine.LFD.0.9999.0712181711100.21557@woody.linux-foundation.org>
+	<56b7f5510712181752s7ecebca9m32794c635cba9fd@mail.gmail.com>
+	<Pine.LNX.4.64.0712191334460.23902@racer.site>
+	<fcaeb9bf0712210617x2bafa33cp15815a59fc631f45@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 21 18:46:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Dana How" <danahow@gmail.com>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Alex Riesen" <raa.lkml@gmail.com>,
+	"Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 21 18:51:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5lxQ-0003U5-Gl
-	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 18:46:48 +0100
+	id 1J5m1f-0004zI-55
+	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 18:51:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753438AbXLURqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2007 12:46:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752234AbXLURqY
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 12:46:24 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:44080 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753264AbXLURqY (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Dec 2007 12:46:24 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBLHjHf4009754
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 21 Dec 2007 09:45:18 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBLHjGwl025044;
-	Fri, 21 Dec 2007 09:45:17 -0800
-In-Reply-To: <alpine.LFD.0.9999.0712202110350.21557@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-2.711 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1753181AbXLURus (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2007 12:50:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752352AbXLURus
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 12:50:48 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38754 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751316AbXLURur (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2007 12:50:47 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 58F823321;
+	Fri, 21 Dec 2007 12:50:45 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A58D0295B;
+	Fri, 21 Dec 2007 12:50:36 -0500 (EST)
+In-Reply-To: <fcaeb9bf0712210617x2bafa33cp15815a59fc631f45@mail.gmail.com>
+	(Nguyen Thai Ngoc Duy's message of "Fri, 21 Dec 2007 21:17:45 +0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69080>
 
+"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
 
+>> Note that this patch does not handle "../", and neither do I plan to.
+>
+> Junio's rc1 announcement got me to read this. It would be indeed
+> useful as I usually work in deep subdirs. However, from my user
+> perspective, the right approach is to make <treeish>:path always be
+> relative to current directory. If you want absolute path, use
+> <treeish>:/path. More intuitive but it breaks current behavior.
 
-On Thu, 20 Dec 2007, Linus Torvalds wrote:
-> 
-> Both answers are *correct*, though. The particular choice of "insert at 
-> line 489, after line 488" is a bit odd, but is because we don't actually 
-> search to exactly the beginning of where the differences started, we 
-> search in blocks of 1kB and then we go forward to the next newline.
+I do not know if you followed the discussion thread, but the
+<treeish>:relative-path has been shown to be broken semantics,
+so even if it may be "intuitive", it is intuitive only to people
+who do not understand the brokenness.  Please read the one that
+Dscho talks about windows drive letter and Linus agrees that is
+a good analogy.
 
-This slightly more involved diff does a better job at this particular 
-issue. Whether the complexity is worth it or not, I dunno, but it changes 
-the "remove common lines at the end" to do an exact job, which for this 
-particular test-case means that the end result of adding a thousand lines 
-of 'y' will look like
-
-	[torvalds@woody ~]$ git diff -U0 a b | grep @@
-	@@ -0,0 +1,1000 @@
-
-instead - ie it will say that they were added at the very beginning of the 
-file rather than added at some arbitrary point in the middle.
-
-Whether this is really worth it, I dunno.
-
-Also, I'm kind of debating with myself whether it would make most sense to 
-only do this kind of optimization when (pick arbitrary cut-off here) 
-something like more than half of the file is identical at the end. If we 
-don't have a noticeable fraction of the file being the same, it may not 
-make sense to really bother with this, since it really is meant for just 
-things like ChangeLog files etc that have data added at the beginning.
-
-That would make this whole optimization a lot more targeted to the case 
-where it really matters and really helps.
-
-I also do have an incling of a really evil way to make xdiff handle the 
-case of having multiple lines of context right too, and basically just 
-move all of this logic into xdiff itself rather than have this 
-interface-level hack, but I'll have to let that idea brew for a while yet. 
-
-			Linus
-
----
- xdiff-interface.c |   38 ++++++++++++++++++++++++++++++--------
- 1 files changed, 30 insertions(+), 8 deletions(-)
-
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 9ee877c..54a53d2 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -109,21 +109,43 @@ int xdiff_outf(void *priv_, mmbuffer_t *mb, int nbuf)
-  */
- static void trim_common_tail(mmfile_t *a, mmfile_t *b, long ctx)
- {
--	const int blk = 1024;
-+	int blk = 1024;
- 	long trimmed = 0, recovered = 0;
- 	char *ap = a->ptr + a->size;
- 	char *bp = b->ptr + b->size;
- 	long smaller = (a->size < b->size) ? a->size : b->size;
- 
--	while (blk + trimmed <= smaller && !memcmp(ap - blk, bp - blk, blk)) {
--		trimmed += blk;
--		ap -= blk;
--		bp -= blk;
--	}
-+	if (ctx)
-+		return;
-+
-+	do {
-+		while (blk + trimmed <= smaller && !memcmp(ap - blk, bp - blk, blk)) {
-+			trimmed += blk;
-+			ap -= blk;
-+			bp -= blk;
-+		}
-+		blk /= 2;
-+	} while (blk);
-+
-+	/* Did we trim one of them all away? */
-+	if (trimmed == smaller) {
-+		char *bigger;
-+		if (a->size == b->size)
-+			return;
-+		bigger = a->ptr;
-+		if (a->size > b->size)
-+			bigger = b->ptr;
-+
-+		/* Did the other one end in a newline? */
-+		if (bigger[trimmed-1] == '\n')
-+			goto done;
-+	}		
- 
--	while (recovered < trimmed && 0 <= ctx)
-+	/* Find the next newline */
-+	while (recovered < trimmed)
- 		if (ap[recovered++] == '\n')
--			ctx--;
-+			break;
-+done:
- 	a->size -= (trimmed - recovered);
- 	b->size -= (trimmed - recovered);
- }
+It might be possible to do <commit>:relative and apply that only
+to direct user input, but I do not think it is worth the
+compatibility and complexity hassle.
