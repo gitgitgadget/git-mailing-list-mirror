@@ -1,84 +1,62 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: [PATCH v2] Make git send-email accept $EDITOR with arguments
-Date: Fri, 21 Dec 2007 12:36:42 +0100
-Message-ID: <1198237002-21470-1-git-send-email-hendeby@isy.liu.se>
-References: <20071220203211.GA12296@bit.office.eurotux.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Gustaf Hendeby <hendeby@isy.liu.se>
-To: luciano@eurotux.com
-X-From: git-owner@vger.kernel.org Fri Dec 21 12:37:11 2007
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] git-pull: don't complain about branch merge config if only
+	fetching tags
+Date: Fri, 21 Dec 2007 12:44:00 +0000
+Message-ID: <20071221124400.20725.qmail@db93e79e204cd8.315fe32.mid.smarden.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 21 13:44:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5gBh-0007Ao-Ly
-	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 12:37:10 +0100
+	id 1J5hEd-0003Ok-Qb
+	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 13:44:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750782AbXLULgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2007 06:36:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750695AbXLULgq
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 06:36:46 -0500
-Received: from bogotron.isy.liu.se ([130.236.48.26]:46785 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750736AbXLULgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2007 06:36:45 -0500
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 97F6C25A9B;
-	Fri, 21 Dec 2007 12:36:43 +0100 (MET)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 27458-01; Fri, 21 Dec 2007 12:36:42 +0100 (MET)
-Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id AE8ED25A99;
-	Fri, 21 Dec 2007 12:36:42 +0100 (MET)
-Received: by pluring.isy.liu.se (Postfix, from userid 2087)
-	id 9EA891779C; Fri, 21 Dec 2007 12:36:42 +0100 (CET)
-X-Mailer: git-send-email 1.5.4.rc1.4.gb8173-dirty
-In-Reply-To: <20071220203211.GA12296@bit.office.eurotux.com>
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1761046AbXLUMno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2007 07:43:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760972AbXLUMno
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 07:43:44 -0500
+Received: from a.ns.smarden.org ([212.42.242.37]:60199 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1760796AbXLUMnn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2007 07:43:43 -0500
+Received: (qmail 20726 invoked by uid 1000); 21 Dec 2007 12:44:00 -0000
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69063>
 
-Currently git send-email does not accept $EDITOR with arguments, eg,
-emacs -nw, when starting an editor to produce a cover letter.  This
-fix uses perl's implicit splitting to perform the task and that should
-hopefully cover most interesting cases.
+When running git pull with the -t switch, it properly fetches tags, but
+complains about missing information on how to merge.  Since there's
+nothing to merge, make git-pull simply exit after fetching the tags.
 
-Signed-off-by:  Gustaf Hendeby <hendeby@isy.liu.se>
+The problem has been reported by Joey Hess through
+ http://bugs.debian.org/456035
+
+Signed-off-by: Gerrit Pape <pape@smarden.org>
 ---
+ git-pull.sh |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-Thanks to Luciano for the tip to use the internal splitting in perl,
-that should be a better solution than to split on all spaces.  I don't
-think it is necessary, though, to add an extra error message if the
-system call fails, system in it self already produces something that
-should be clear enough.  If anyone got a strong oppinion for another
-error message I'll fix that.
-
-Junio, even if this is technically not a bug fix, it would be nice to
-get this fix into the 1.5.4 so that the usage of $EDITOR becomes more
-consistent throughout git.
-
-/Gustaf
-
- git-send-email.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 248d035..5764668 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -400,7 +400,7 @@ EOT
- 	close(C);
+diff --git a/git-pull.sh b/git-pull.sh
+index 698e82b..43be0bd 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -112,6 +112,11 @@ case "$merge_head" in
+ 	     exit 1;;
+ 	  *) exit $?;;
+ 	esac
++	# exit if only tags have been fetched
++	not_for_merge=$(sed -e '/	not-for-merge	tag/d' \
++			"$GIT_DIR"/FETCH_HEAD)
++	test "$not_for_merge" != '' || exit 0
++
+ 	curr_branch=${curr_branch#refs/heads/}
  
- 	my $editor = $ENV{GIT_EDITOR} || $repo->config("core.editor") || $ENV{VISUAL} || $ENV{EDITOR} || "vi";
--	system($editor, $compose_filename);
-+	system("$editor $compose_filename");
- 
- 	open(C2,">",$compose_filename . ".final")
- 		or die "Failed to open $compose_filename.final : " . $!;
+ 	echo >&2 "You asked me to pull without telling me which branch you"
 -- 
-1.5.4.rc1.4.gb8173-dirty
+1.5.3.7
