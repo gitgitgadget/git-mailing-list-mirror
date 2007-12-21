@@ -1,86 +1,117 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Linux 2.6.24-rc6
-Date: Thu, 20 Dec 2007 21:21:40 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0712202110350.21557@woody.linux-foundation.org>
-References: <alpine.LFD.0.9999.0712201731010.21557@woody.linux-foundation.org> <20071221024805.GB8535@fattire.cabal.ca> <20071221030152.GC8535@fattire.cabal.ca> <alpine.LFD.0.9999.0712201937470.21557@woody.linux-foundation.org>
- <alpine.LFD.0.9999.0712202009290.21557@woody.linux-foundation.org> <alpine.LFD.0.9999.0712202054350.21557@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 21 06:22:33 2007
+From: David Brown <git@davidb.org>
+Subject: [PATCH] git-send-email: Add --suppress-all-from option.
+Date: Thu, 20 Dec 2007 22:01:00 -0800
+Message-ID: <1198216860-487-1-git-send-email-git@davidb.org>
+Cc: David Brown <git@davidb.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 21 07:33:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5aKz-0003mm-Rn
-	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 06:22:22 +0100
+	id 1J5bRL-00015J-8R
+	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 07:32:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750942AbXLUFVt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2007 00:21:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750962AbXLUFVt
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 00:21:49 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:53560 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750942AbXLUFVs (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Dec 2007 00:21:48 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBL5LfrD008092
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 20 Dec 2007 21:21:42 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBL5Leda031278;
-	Thu, 20 Dec 2007 21:21:40 -0800
-In-Reply-To: <alpine.LFD.0.9999.0712202054350.21557@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-2.712 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751690AbXLUGcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2007 01:32:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751321AbXLUGcf
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 01:32:35 -0500
+Received: from mail.davidb.org ([66.93.32.219]:32895 "EHLO mail.davidb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751160AbXLUGce (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2007 01:32:34 -0500
+X-Greylist: delayed 1890 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Dec 2007 01:32:34 EST
+Received: from davidb by mail.davidb.org with local (Exim 4.68 #1 (Debian))
+	id 1J5awO-000085-BG; Thu, 20 Dec 2007 22:01:00 -0800
+X-Mailer: git-send-email 1.5.3.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69043>
 
+Sometimes, it is useful to be able to send a patch to a third party
+without the author of the patch being copied on the message.  An
+common example would be an internal discussion at a company to ask if
+a particular patch should be applied.  Some environments may even have
+policy against such mail being sent outside of the company.
 
+Add the --suppress-all-from/--no-suppress-all-from options to avoid
+sending patches to the patch author, even if different from the
+sender.  Add the sendemail.suppressallfrom config option to allow this
+to have a different default.
 
-On Thu, 20 Dec 2007, Linus Torvalds wrote:
-> 
-> Not that it matters in real life, since nobody uses -U0, and "git blame" 
-> won't care. But let's get it right anyway ;)
+Signed-off-by: David Brown <git@davidb.org>
+---
+ Documentation/git-send-email.txt |    7 +++++++
+ git-send-email.perl              |    9 ++++++++-
+ 2 files changed, 15 insertions(+), 1 deletions(-)
 
-.. and here's a test-case to see the *impact* of this whole issue:
-
-	yes | head -1000 > a
-	yes | head -2000 > b
-	git diff -U0 a b | grep @@
-	diff -U0 a b | grep @@
-
-and notice the differences.
-
-Both will add a thousand lines of "y", but the "git diff" will add it at a 
-different point, ie git says:
-
-	@@ -488,0 +489,1000 @@ y
-
-while a non-tail-optimizing diff will say
-
-	@@ -1000,0 +1001,1000 @@
-
-which may be a bit more obvious.
-
-Both answers are *correct*, though. The particular choice of "insert at 
-line 489, after line 488" is a bit odd, but is because we don't actually 
-search to exactly the beginning of where the differences started, we 
-search in blocks of 1kB and then we go forward to the next newline.
-
-(We could also go to exactly where the differences started, and if the 
-previous character was a newline or the beginning of the file, we'd not 
-move forward at all, and then we'd get a more "logical" diff of inserting 
-at the beginning).
-
-Considering that the answer is correct, and this only happens for insane 
-cases anyway, I don't really think anybody cares, but it's an interesting 
-case nonetheless.
-
-			Linus
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index f0bd285..5d06264 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -117,6 +117,13 @@ The --cc option must be repeated for each user you want on the cc list.
+         Default is the value of 'sendemail.suppressfrom' configuration value;
+         if that is unspecified, default to --no-suppress-from.
+ 
++--suppress-all-from, --no-suppress-all-from::
++        If this is set, do not add the From: address to the cc: list,
++        even if it is different than the person sending the email.
++        Default is the value of the 'sendemail.suppressallfrom'
++        configuration value; if that is unspecified, default to
++        -no-suppress-all-from.
++
+ --thread, --no-thread::
+ 	If this is set, the In-Reply-To header will be set on each email sent.
+ 	If disabled with "--no-thread", no emails will have the In-Reply-To
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 248d035..80265b5 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -90,6 +90,9 @@ Options:
+ 
+    --suppress-from Suppress sending emails to yourself. Defaults to off.
+ 
++   --suppress-all-from Never automatically send to a patch author.
++                  Defaults to off.
++
+    --thread       Specify that the "In-Reply-To:" header should be set on all
+                   emails. Defaults to on.
+ 
+@@ -174,7 +177,8 @@ if ($@) {
+ my ($quiet, $dry_run) = (0, 0);
+ 
+ # Variables with corresponding config settings
+-my ($thread, $chain_reply_to, $suppress_from, $signed_off_cc, $cc_cmd);
++my ($thread, $chain_reply_to, $suppress_from, $suppress_all_from);
++my ($signed_off_cc, $cc_cmd);
+ my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_authpass, $smtp_ssl);
+ my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts);
+ 
+@@ -182,6 +186,7 @@ my %config_bool_settings = (
+     "thread" => [\$thread, 1],
+     "chainreplyto" => [\$chain_reply_to, 1],
+     "suppressfrom" => [\$suppress_from, 0],
++    "suppressallfrom" => [\$suppress_all_from, 0],
+     "signedoffcc" => [\$signed_off_cc, 1],
+     "smtpssl" => [\$smtp_ssl, 0],
+ );
+@@ -218,6 +223,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
+ 		    "quiet" => \$quiet,
+ 		    "cc-cmd=s" => \$cc_cmd,
+ 		    "suppress-from!" => \$suppress_from,
++		    "suppress-all-from!" => \$suppress_all_from,
+ 		    "signed-off-cc|signed-off-by-cc!" => \$signed_off_cc,
+ 		    "dry-run" => \$dry_run,
+ 		    "envelope-sender=s" => \$envelope_sender,
+@@ -700,6 +706,7 @@ foreach my $t (@files) {
+ 					$subject = $1;
+ 
+ 				} elsif (/^(Cc|From):\s+(.*)$/) {
++					next if ($suppress_all_from);
+ 					if (unquote_rfc2047($2) eq $sender) {
+ 						next if ($suppress_from);
+ 					}
+-- 
+1.5.3.7
