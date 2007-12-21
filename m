@@ -1,157 +1,88 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [FIXED PATCH] git-describe: Add a --match option to limit considered tags.
-Date: Fri, 21 Dec 2007 22:49:54 +0100
-Message-ID: <20071221214954.GA16481@artemis.madism.org>
-References: <1198253900-31502-1-git-send-email-madcoder@debian.org> <7v7ij87x5u.fsf@gitster.siamese.dyndns.org> <20071221212212.GB10318@artemis.madism.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: cvs -> git tools?
+Date: Fri, 21 Dec 2007 14:02:44 -0800 (PST)
+Message-ID: <m3zlw3oged.fsf@roke.D-201>
+References: <476C1D9E.4060700@advancedsl.com.ar>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="RnlQjJ0d97Da+TV1";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 21 22:50:23 2007
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-15?q?Gonzalo_Garramu=F1o?= <ggarra@advancedsl.com.ar>
+X-From: git-owner@vger.kernel.org Fri Dec 21 23:03:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5pl7-00079u-92
-	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 22:50:21 +0100
+	id 1J5pxc-00032q-0w
+	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 23:03:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754539AbXLUVt5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2007 16:49:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753421AbXLUVt4
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 16:49:56 -0500
-Received: from pan.madism.org ([88.191.52.104]:43663 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753354AbXLUVt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2007 16:49:56 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 1EC3B24933;
-	Fri, 21 Dec 2007 22:49:55 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 78F484E50; Fri, 21 Dec 2007 22:49:54 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20071221212212.GB10318@artemis.madism.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1754102AbXLUWCu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Dec 2007 17:02:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754542AbXLUWCu
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 17:02:50 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:3281 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753768AbXLUWCs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Dec 2007 17:02:48 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so689707ugc.16
+        for <git@vger.kernel.org>; Fri, 21 Dec 2007 14:02:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:content-transfer-encoding:from:date;
+        bh=7ff2BsmUVKvSYdnVJvUzvKVOXj2p/LkMLlSEqIKt4VA=;
+        b=WmRR1j3ozV2bN9rWIbzSZCdTwVVQU6CNEf111iuuHopEenhCfsc89qQRqGyF2MXCYfNdba6kCvFqccsVYrZFmgc0BrwlJFQRTgoO40hkrYuBJFYHQZqaiTiB4thEYBFvzSDnW3qPXq3nC92OwGKNbnQBVnqg0c3jgmqEMMKf68s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:content-transfer-encoding:from:date;
+        b=nAlYM/ka7a+ERxII/5E5sGrmA4jko4gJx3D6TD5KcttjxG6ZkYq2GwRykrndsmKRaqZKrw/qgqXC9kfZB2kjQIPQmyUui+8xjjVrxAfFpRlExJcHSIDAEk1Fj8vqfpP9HEgE1uVawMugAWz4dTCU2Kkn3B13coxFA/UM5tHVdRg=
+Received: by 10.67.116.16 with SMTP id t16mr357828ugm.55.1198274566579;
+        Fri, 21 Dec 2007 14:02:46 -0800 (PST)
+Received: from roke.D-201 ( [83.8.189.110])
+        by mx.google.com with ESMTPS id j4sm4070008ugf.49.2007.12.21.14.02.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 21 Dec 2007 14:02:45 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lBLM2b6G015597;
+	Fri, 21 Dec 2007 23:02:39 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id lBLM2ZB9015594;
+	Fri, 21 Dec 2007 23:02:35 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <476C1D9E.4060700@advancedsl.com.ar>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69099>
 
+Gonzalo Garramu=F1o <ggarra@advancedsl.com.ar> writes:
 
---RnlQjJ0d97Da+TV1
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I was wondering if there were any tools to keep a mirror repository o=
+f
+> CVS as a git repository.
+>=20
+> Basically, I would like to mirror a CVS repository (that I don't
+> control) as a git "main" branch.  This CVS repository is live and
+> expected to remain so.
+>=20
+> I would then work on another git branch and would do merges from the
+> main branch to mine as I see fit to develop some stuff.
+>=20
+> Is there anything like that?   Basically, I'm looking for the
+> equivalent of Tailor for Mercurial.
 
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
+Tailor supports Git, too.
 
-    On Fri, Dec 21, 2007 at 09:22:12PM +0000, Pierre Habouzit wrote:
-    > On Fri, Dec 21, 2007 at 05:52:29PM +0000, Junio C Hamano wrote:
-    > > Does it work with "describe --contains" as well?
+There are many CVS -> git tools: git-cvsimport (uses cvsps), parsecvs
+(accesses ,v files directly), fromcvs (in Ruby), cvs2svn development
+branch. But I think only git-cvsimport allows incremental import.
 
-    Okay, you're right =E2=80=A6 Here is an updated patch.
+Another solution would be to set Git repository as a fake CVS
+repository using git-cvsserver (now with beginning of authenticated
+pserver access!).
 
- Documentation/git-describe.txt |    4 ++++
- builtin-describe.c             |   21 ++++++++++++++++-----
- 2 files changed, 20 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index ac23e28..cb869e9 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -51,6 +51,10 @@ OPTIONS
- 	being employed to standard error.  The tag name will still
- 	be printed to standard out.
-=20
-+--match <pattern>::
-+        Only consider tags matching the given pattern (can be used to avoid
-+        leaking private tags made from the repository).
-+
- EXAMPLES
- --------
-=20
-diff --git a/builtin-describe.c b/builtin-describe.c
-index 7a148a2..dd44df9 100644
---- a/builtin-describe.c
-+++ b/builtin-describe.c
-@@ -19,6 +19,7 @@ static int all;	/* Default to annotated tags only */
- static int tags;	/* But allow any tags if --tags is specified */
- static int abbrev =3D DEFAULT_ABBREV;
- static int max_candidates =3D 10;
-+const char *pattern =3D NULL;
-=20
- struct commit_name {
- 	int prio; /* annotated tag =3D 2, tag =3D 1, head =3D 0 */
-@@ -57,9 +58,11 @@ static int get_name(const char *path, const unsigned cha=
-r *sha1, int flag, void
- 	 * Otherwise only annotated tags are used.
- 	 */
- 	if (!prefixcmp(path, "refs/tags/")) {
--		if (object->type =3D=3D OBJ_TAG)
-+		if (object->type =3D=3D OBJ_TAG) {
- 			prio =3D 2;
--		else
-+			if (pattern && fnmatch(pattern, path + 10, 0))
-+				prio =3D 0;
-+		} else
- 			prio =3D 1;
- 	}
- 	else
-@@ -253,7 +256,9 @@ int cmd_describe(int argc, const char **argv, const cha=
-r *prefix)
- 		OPT_BOOLEAN(0, "tags",       &tags, "use any tag in .git/refs/tags"),
- 		OPT__ABBREV(&abbrev),
- 		OPT_INTEGER(0, "candidates", &max_candidates,
--					"consider <n> most recent tags (default: 10)"),
-+		            "consider <n> most recent tags (default: 10)"),
-+		OPT_STRING(0, "match",       &pattern, "pattern",
-+		           "only consider tags matching <pattern>"),
- 		OPT_END(),
- 	};
-=20
-@@ -266,12 +271,18 @@ int cmd_describe(int argc, const char **argv, const c=
-har *prefix)
- 	save_commit_buffer =3D 0;
-=20
- 	if (contains) {
--		const char **args =3D xmalloc((4 + argc) * sizeof(char*));
-+		const char **args =3D xmalloc((5 + argc) * sizeof(char*));
- 		int i =3D 0;
- 		args[i++] =3D "name-rev";
- 		args[i++] =3D "--name-only";
--		if (!all)
-+		if (!all) {
- 			args[i++] =3D "--tags";
-+			if (pattern) {
-+				char *s =3D xmalloc(strlen("--refs=3Drefs/tags/") + strlen(pattern) + =
-1);
-+				sprintf(s, "--refs=3Drefs/tags/%s", pattern);
-+				args[i++] =3D s;
-+			}
-+		}
- 		memcpy(args + i, argv, argc * sizeof(char*));
- 		args[i + argc] =3D NULL;
- 		return cmd_name_rev(i + argc, args, prefix);
 --=20
-1.5.4.rc1.1097.gd122b-dirty
-
-
---RnlQjJ0d97Da+TV1
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHbDUCvGr7W6HudhwRAoKrAKCblnOK2OKIML1HVJdZsb5R8w6MDwCdGn8B
-W5XEJjrs5pwU//JyLjIjPcM=
-=xTrJ
------END PGP SIGNATURE-----
-
---RnlQjJ0d97Da+TV1--
+Jakub Narebski
+Poland
+ShadeHawk on #git
