@@ -1,56 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Make git send-email accept $EDITOR with arguments
-Date: Fri, 21 Dec 2007 09:02:44 -0800
-Message-ID: <7vhcic9e17.fsf@gitster.siamese.dyndns.org>
-References: <20071220203211.GA12296@bit.office.eurotux.com>
-	<1198237002-21470-1-git-send-email-hendeby@isy.liu.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: luciano@eurotux.com, git@vger.kernel.org, gitster@pobox.com
-To: Gustaf Hendeby <hendeby@isy.liu.se>
-X-From: git-owner@vger.kernel.org Fri Dec 21 18:03:39 2007
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: [PATCH] Make "git stash" configurable
+Date: Fri, 21 Dec 2007 09:23:47 -0800
+Message-ID: <2AB285BD-DA6E-49D1-B664-B1A8B552DD76@midwinter.com>
+References: <200712211026.lBLAQWWM014059@mi0.bluebottle.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?UTF-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>
+X-From: git-owner@vger.kernel.org Fri Dec 21 18:24:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5lHK-000374-43
-	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 18:03:18 +0100
+	id 1J5lbY-0002zx-V9
+	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 18:24:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753102AbXLURCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2007 12:02:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752900AbXLURCz
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 12:02:55 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35282 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751091AbXLURCy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2007 12:02:54 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 28DC45B0E;
-	Fri, 21 Dec 2007 12:02:53 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A587B5B0D;
-	Fri, 21 Dec 2007 12:02:46 -0500 (EST)
-In-Reply-To: <1198237002-21470-1-git-send-email-hendeby@isy.liu.se> (Gustaf
-	Hendeby's message of "Fri, 21 Dec 2007 12:36:42 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751016AbXLURXt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Dec 2007 12:23:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751463AbXLURXt
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 12:23:49 -0500
+Received: from tater.midwinter.com ([216.32.86.90]:57559 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751000AbXLURXt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Dec 2007 12:23:49 -0500
+Received: (qmail 12084 invoked from network); 21 Dec 2007 17:23:48 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=c6TkOWkgnAMD+KWMOtPP3EKVQ7jMzN2Iq8Msy6rTEXtjIbU7+ibHmyfmVjqXBDPD  ;
+Received: from localhost (127.0.0.1)
+  by localhost with SMTP; 21 Dec 2007 17:23:48 -0000
+In-Reply-To: <200712211026.lBLAQWWM014059@mi0.bluebottle.com>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69075>
 
-Gustaf Hendeby <hendeby@isy.liu.se> writes:
+On Dec 21, 2007, at 2:22 AM, =E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=
+=AA=E3=81=AA=E3=81=93 wrote:
 
-> Junio, even if this is technically not a bug fix, it would be nice to
-> get this fix into the 1.5.4 so that the usage of $EDITOR becomes more
-> consistent throughout git.
+> "git stash" without argument originally created an unnamed
+> stash, but some people felt this can be confusing to new
+> users.  This introduces per-user config variable stash.quick to
+> control this behavior.
 
-I can buy that, but at least a single line comment in front of that
-system() explaining why this is safe to do so would be beneficial.  I
-suspect that somebody would propose moving $compse_filename inside
-$GIT_DIR, now people realized $compose_filename is currently "./.msg.$$",
-and $GIT_DIR could be anything.  Quotemeta would probably be better as the
-code you are touching won't be affected by a future change to the value of
-that constant defined far away in the source.
+This whole thing smells of indecision to me. We should figure out a =20
+behavior we want and go with it. Git's command line interface is =20
+already confusing enough without adding this kind of variability -- =20
+any new user is going to look at this and say, "Why couldn't they just =
+=20
+make up their minds?"
+
+My vote is to require "save". We already have an alias mechanism that =20
+people can use to turn "git stash save" into a two-word command. And I =
+=20
+say this as someone who runs "git stash" and will have to retrain his =20
+fingers.
+
+-Steve (who thinks "trying to please everyone at all times" is usually =
+=20
+a source of bad UI design decisions)
