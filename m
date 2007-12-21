@@ -1,62 +1,66 @@
-From: "Jonathan del Strother" <maillist@steelskies.com>
-Subject: Re: Serious bug with pretty format strings & empty bodies?
-Date: Fri, 21 Dec 2007 10:47:45 +0000
-Message-ID: <57518fd10712210247s2fcbbf61ke67bbdc0f5ffe70b@mail.gmail.com>
-References: <57518fd10712190632o490af924n61326fddf1819014@mail.gmail.com>
-	 <20071219184457.GC3015@steel.home>
-	 <57518fd10712191437s6f192feds50d006fdfc624444@mail.gmail.com>
-	 <4769A7FB.1070904@lsrfire.ath.cx>
-	 <57518fd10712200244o656c7f44j426cc71c89515de3@mail.gmail.com>
-	 <476A5DFF.40803@lsrfire.ath.cx>
-	 <57518fd10712200508x4b15f9acy10aed83a3cebeba@mail.gmail.com>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: [PATCH 4/9] gitk i18n: Initial German translation.
+Date: Fri, 21 Dec 2007 11:50:25 +0100
+Organization: Alumni Technische =?iso-8859-1?q?Universit=E4t?= Hamburg-Harburg
+Message-ID: <200712211150.25753.stimming@tuhh.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 21 11:48:12 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Fri Dec 21 11:51:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5fQI-0000S4-HO
-	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 11:48:10 +0100
+	id 1J5fT2-0001Kj-9J
+	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 11:51:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754812AbXLUKrr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Dec 2007 05:47:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754089AbXLUKrr
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 05:47:47 -0500
-Received: from rv-out-0910.google.com ([209.85.198.187]:23863 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751091AbXLUKrq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Dec 2007 05:47:46 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so290135rvb.1
-        for <git@vger.kernel.org>; Fri, 21 Dec 2007 02:47:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=ghAAsccEccibdFhlB0wUGsStR/7pF9syY3Av9MegJ94=;
-        b=JTZN4NKqxfHPJ0xQRIYmA8ZFslzBvJasFD075yMgIBSgrHcKyuY/QiQt8nK1CHBZ8XxQFf0iDInVx1YICzGANZSmgHpzyjgqfzOw4MxaThbkDwX2oD+Zi6whCJ5lovFA+ej0tZjRskXSjFahCmIFIhI3cUkITW2zu8duVkT+0u4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=rr4IQXtubO5rRDrIVO1p1VvLyFzLQCu3sU5MLhtSVGV9gVLLTVD2Q4XbReAiPCzC5xmUeQyuuYWGpU70FdD0gIoZ2WMQvV101QGnwl+DFI4goaDPoaBN0rqXpr34VcgCHL06vO50Y1AZj4z8ZMBIuU6AopFJSkMLcWjBoRONc94=
-Received: by 10.140.207.2 with SMTP id e2mr616619rvg.271.1198234065600;
-        Fri, 21 Dec 2007 02:47:45 -0800 (PST)
-Received: by 10.140.134.14 with HTTP; Fri, 21 Dec 2007 02:47:45 -0800 (PST)
-In-Reply-To: <57518fd10712200508x4b15f9acy10aed83a3cebeba@mail.gmail.com>
+	id S1751102AbXLUKuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2007 05:50:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751801AbXLUKuh
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 05:50:37 -0500
+Received: from smtp1.rz.tu-harburg.de ([134.28.202.166]:56309 "EHLO
+	smtp1.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750938AbXLUKug (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2007 05:50:36 -0500
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp1.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id lBLAoR6i002397
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Fri, 21 Dec 2007 11:50:27 +0100
+Received: from [192.168.2.102] (p54903361.dip0.t-ipconnect.de [84.144.51.97])
+	(user=alucst mech=LOGIN bits=0)
+	by mail2.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id lBLAoQHB031985
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 21 Dec 2007 11:50:27 +0100
+User-Agent: KMail/1.9.5
 Content-Disposition: inline
-X-Google-Sender-Auth: c0df46aa5c6a9ef9
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.166
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69055>
 
-Has anyone actually managed to reproduce my problem?  I've got
-multiple repos here that show the problem in several commits, made by
-different people.  However, I can't actually come up with a way to
-reproduce it at will...
+Dear Paul,
 
-I'd really like to see Ren=E9's patch accepted as it seems to magically
-fix all my problems, but it's a bit hard to justify if I'm the only
-one that's seeing these broken commit messages.
+thanks a lot for applying the i18n patches to the gitk master at 
+git.kernel.org. This looks all fine, except for one mistake that slipped in: 
+The character encoding of the newly added po/de.po translation was messed up. 
+The file must be in UTF-8 encoding (and I submitted it this way), but the one 
+that ended up in the repository is in ISO-8859 encoding.
+
+Could you please do 
+
+  recode latin1..utf8 po/de.po
+
+and commit the result? Otherwise a simple "make" will fail, because when 
+msgfmt tries to "compile" the de.po it rightfully complains about the file 
+not being in valid utf8, although the po file header claims "Content-Type: 
+text/plain; charset=UTF-8".
+
+Thank you very much.
+
+Christian
