@@ -1,145 +1,62 @@
-From: Pierre Habouzit <madcoder@artemis.madism.org>
-Subject: Re: 1.5.4-rc2 plans
-Date: Fri, 21 Dec 2007 11:47:04 +0100
-Message-ID: <20071221104704.GC17701@artemis.madism.org>
-References: <7vwsr8lwf7.fsf@gitster.siamese.dyndns.org>
+From: "Jonathan del Strother" <maillist@steelskies.com>
+Subject: Re: Serious bug with pretty format strings & empty bodies?
+Date: Fri, 21 Dec 2007 10:47:45 +0000
+Message-ID: <57518fd10712210247s2fcbbf61ke67bbdc0f5ffe70b@mail.gmail.com>
+References: <57518fd10712190632o490af924n61326fddf1819014@mail.gmail.com>
+	 <20071219184457.GC3015@steel.home>
+	 <57518fd10712191437s6f192feds50d006fdfc624444@mail.gmail.com>
+	 <4769A7FB.1070904@lsrfire.ath.cx>
+	 <57518fd10712200244o656c7f44j426cc71c89515de3@mail.gmail.com>
+	 <476A5DFF.40803@lsrfire.ath.cx>
+	 <57518fd10712200508x4b15f9acy10aed83a3cebeba@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="Clx92ZfkiYIKRjnr";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 11:47:37 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 21 11:48:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5fPh-0000EK-PR
-	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 11:47:34 +0100
+	id 1J5fQI-0000S4-HO
+	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 11:48:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754820AbXLUKrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2007 05:47:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754502AbXLUKrJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 05:47:09 -0500
-Received: from pan.madism.org ([88.191.52.104]:42604 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754732AbXLUKrH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2007 05:47:07 -0500
-Received: from madism.org (beacon-free1.intersec.eu [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 4C9A51D425;
-	Fri, 21 Dec 2007 11:47:05 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 51A0A322FE6; Fri, 21 Dec 2007 11:47:04 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@artemis.madism.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	id S1754812AbXLUKrr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Dec 2007 05:47:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754089AbXLUKrr
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 05:47:47 -0500
+Received: from rv-out-0910.google.com ([209.85.198.187]:23863 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751091AbXLUKrq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Dec 2007 05:47:46 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so290135rvb.1
+        for <git@vger.kernel.org>; Fri, 21 Dec 2007 02:47:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=ghAAsccEccibdFhlB0wUGsStR/7pF9syY3Av9MegJ94=;
+        b=JTZN4NKqxfHPJ0xQRIYmA8ZFslzBvJasFD075yMgIBSgrHcKyuY/QiQt8nK1CHBZ8XxQFf0iDInVx1YICzGANZSmgHpzyjgqfzOw4MxaThbkDwX2oD+Zi6whCJ5lovFA+ej0tZjRskXSjFahCmIFIhI3cUkITW2zu8duVkT+0u4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=rr4IQXtubO5rRDrIVO1p1VvLyFzLQCu3sU5MLhtSVGV9gVLLTVD2Q4XbReAiPCzC5xmUeQyuuYWGpU70FdD0gIoZ2WMQvV101QGnwl+DFI4goaDPoaBN0rqXpr34VcgCHL06vO50Y1AZj4z8ZMBIuU6AopFJSkMLcWjBoRONc94=
+Received: by 10.140.207.2 with SMTP id e2mr616619rvg.271.1198234065600;
+        Fri, 21 Dec 2007 02:47:45 -0800 (PST)
+Received: by 10.140.134.14 with HTTP; Fri, 21 Dec 2007 02:47:45 -0800 (PST)
+In-Reply-To: <57518fd10712200508x4b15f9acy10aed83a3cebeba@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vwsr8lwf7.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+X-Google-Sender-Auth: c0df46aa5c6a9ef9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69054>
 
+Has anyone actually managed to reproduce my problem?  I've got
+multiple repos here that show the problem in several commits, made by
+different people.  However, I can't actually come up with a way to
+reproduce it at will...
 
---Clx92ZfkiYIKRjnr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Dec 21, 2007 at 12:32:28AM +0000, Junio C Hamano wrote:
-> I've tagged -rc1 last night.  The changes are mostly fixes.  There are
-> some remaining issues I'd like to see fixed/decided before 1.5.4.
->=20
-> One important issue is to identify and fix regressions since 1.5.3
-> series.  No "rewrite scripted git-foo completely in C" can be regression
-> free, and we had quite a few internal changes during 1.5.4 cycle (not
-> just rewrite to C, but C level uses new and improved API such as strbuf
-> and parse-options).  Currently I am aware of these regressions:
->=20
->  * handling of options, "--abbrev 10 HEAD", "--abbrev=3D10 HEAD" and
->    "--abbrev HEAD".  The last one does not work for commands that use
->    parse-options.  Pierre is on top of this, I hope.
-
-Hmm now I'm confused, I believed we settled for the: --abbrev 10 HEAD is
-forbidden, --abbrev=3D10 HEAD works, and --abbrev HEAD too. This would
-introduce no regressions _yet_ as none of the commands that use
-parse-options and take --abbrev accepted the --abbrev 10 form before. I
-already sent this once, and assumed you took it, hence me being silent
-the last days. Here is it again then.  Of course this does not affects
-other long options for which `--long-option arg` still works (if they do
-take an argument).
-
-I'd also like to see any kind of form of gitcli(5) be merged for 1.5.4
-too, I believe the first version I ever sent. In the thread where I
-posted the proposal using `{}` the patch introducing it is the version
-formed using:
-  * my first proposal for it ;
-  * your english fixes squashed on top of it ;
-  * a fix wrt the '--no-' prefix and Boolean options that we discussed.
-This version describes the current state of things properly IMHO. I can
-find the message id if you need, but I don't have the commit locally
-anymore atm.
-
-Cheers,
-
-=46rom 37c7baaa82f36d16697fa190635f5d3efbe2a83d Mon Sep 17 00:00:00 2001
-=46rom: Pierre Habouzit <madcoder@debian.org>
-Date: Fri, 21 Dec 2007 11:41:41 +0100
-Subject: [PATCH] Force the sticked form for options with optional arguments.
-
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
- parse-options.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/parse-options.c b/parse-options.c
-index 574ed31..4f5c55e 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -89,7 +89,7 @@ static int get_value(struct optparse_t *p,
- 			*(const char **)opt->value =3D NULL;
- 			return 0;
- 		}
--		if (opt->flags & PARSE_OPT_OPTARG && (!arg || *arg =3D=3D '-')) {
-+		if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
- 			*(const char **)opt->value =3D (const char *)opt->defval;
- 			return 0;
- 		}
-@@ -103,7 +103,7 @@ static int get_value(struct optparse_t *p,
- 			return (*opt->callback)(opt, NULL, 1);
- 		if (opt->flags & PARSE_OPT_NOARG)
- 			return (*opt->callback)(opt, NULL, 0);
--		if (opt->flags & PARSE_OPT_OPTARG && (!arg || *arg =3D=3D '-'))
-+		if (opt->flags & PARSE_OPT_OPTARG && !p->opt)
- 			return (*opt->callback)(opt, NULL, 0);
- 		if (!arg)
- 			return opterror(opt, "requires a value", flags);
-@@ -114,7 +114,7 @@ static int get_value(struct optparse_t *p,
- 			*(int *)opt->value =3D 0;
- 			return 0;
- 		}
--		if (opt->flags & PARSE_OPT_OPTARG && (!arg || !isdigit(*arg))) {
-+		if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
- 			*(int *)opt->value =3D opt->defval;
- 			return 0;
- 		}
---=20
-1.5.4.rc1.1096.g37c7b
-
-
---Clx92ZfkiYIKRjnr
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHa5movGr7W6HudhwRAqk/AJ0aDGf3NRZFz0dIB88m8e2whQ7OoACghlzh
-8/mxChLd0HKtDTYgoMM3EdQ=
-=XIsz
------END PGP SIGNATURE-----
-
---Clx92ZfkiYIKRjnr--
+I'd really like to see Ren=E9's patch accepted as it seems to magically
+fix all my problems, but it's a bit hard to justify if I'm the only
+one that's seeing these broken commit messages.
