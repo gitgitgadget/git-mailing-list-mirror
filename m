@@ -1,76 +1,123 @@
-From: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
-Subject: Re: msysgit Git-1.5.4-rc1 available
-Date: Fri, 21 Dec 2007 20:25:12 +0100
-Message-ID: <942A66A8-7E8F-483C-ACCB-6EDD3BBA034A@zib.de>
-References: <0F6939E0-686C-4526-85D1-447C080230A5@zib.de>
-Reply-To: prohaska-wjoc1KHpMeg@public.gmane.org
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Dec 21 20:24:48 2007
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wr-out-0708.google.com ([64.233.184.249])
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make "git stash" configurable
+Date: Fri, 21 Dec 2007 11:48:44 -0800
+Message-ID: <7vmys36d7n.fsf@gitster.siamese.dyndns.org>
+References: <200712211026.lBLAQWWM014059@mi0.bluebottle.com>
+	<2AB285BD-DA6E-49D1-B664-B1A8B552DD76@midwinter.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>,
+	git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Fri Dec 21 20:49:35 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5nU6-0005hA-Fq
-	for gcvm-msysgit@m.gmane.org; Fri, 21 Dec 2007 20:24:39 +0100
-Received: by wr-out-0708.google.com with SMTP id 56so2991851wra.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 21 Dec 2007 11:24:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:in-reply-to:references:mime-version:content-type:message-id:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=GLA4fNscQri2AFWiu5iMEjg9GhFuQuyvLUfr82HcrbE=;
-        b=ytY9lBftIiACO70ZM2gSykdB0MFgmeCAHq3sV/DzDKipxpvmLtnrRQJlcuXERRUn6sC/qDedjsl3uzeFrWrn02i2cqkr5XEQgYT1Nn/PPcPALXRfOVQ/dFSZJ7wB80LMM+y1fZSxHecudUIfw73zt1DwkU4pe0hs1mlz50ah3eU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:in-reply-to:references:mime-version:content-type:message-id:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=2xWYwAG7gchhSbsVXyYpDcNBlF2QTAaZmCySR5z+88dunTPi1au50IRyqt3yEdonDMbew1XdbU8WbausuessyMDUPbJf3mXm8mKSvCzbB8pswvYqr/JOcutWT+GzfZ9uWozWferWDmuioEBH612epkmRZ3Q3650GxyZ0Ge4uKiE=
-Received: by 10.100.168.18 with SMTP id q18mr21187ane.9.1198265049461;
-        Fri, 21 Dec 2007 11:24:09 -0800 (PST)
-Received: by 10.107.65.8 with SMTP id s8gr1274prk;
-	Fri, 21 Dec 2007 11:24:09 -0800 (PST)
-X-Sender: prohaska-wjoc1KHpMeg@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.114.106.1 with SMTP id e1mr439929wac.28.1198265049267; Fri, 21 Dec 2007 11:24:09 -0800 (PST)
-Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id v28si5126313nzb.4.2007.12.21.11.24.08; Fri, 21 Dec 2007 11:24:09 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
-Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) smtp.mail=prohaska-wjoc1KHpMeg@public.gmane.org
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lBLJO7QC000426; Fri, 21 Dec 2007 20:24:07 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db82207.pool.einsundeins.de [77.184.34.7]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lBLJO6lx027404 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO); Fri, 21 Dec 2007 20:24:06 +0100 (MET)
-In-Reply-To: <0F6939E0-686C-4526-85D1-447C080230A5-wjoc1KHpMeg@public.gmane.org>
-X-Mailer: Apple Mail (2.752.3)
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1J5nsE-00069k-4N
+	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 20:49:34 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753642AbXLUTsy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Dec 2007 14:48:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752878AbXLUTsy
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 14:48:54 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45682 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753254AbXLUTsx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Dec 2007 14:48:53 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D80F520E;
+	Fri, 21 Dec 2007 14:48:51 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B31EB520A;
+	Fri, 21 Dec 2007 14:48:47 -0500 (EST)
+In-Reply-To: <2AB285BD-DA6E-49D1-B664-B1A8B552DD76@midwinter.com> (Steven
+	Grimm's message of "Fri, 21 Dec 2007 09:23:47 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69086>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69087>
 
+Steven Grimm <koreth@midwinter.com> writes:
 
-
-On Dec 21, 2007, at 11:05 AM, Steffen Prohaska wrote:
-
-> for download from
+> On Dec 21, 2007, at 2:22 AM, =E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=
+=AA=E3=81=AA=E3=81=93 wrote:
 >
-> http://msysgit.googlecode.com/files/Git-1.5.4-rc1-preview20071221.exe
+>> "git stash" without argument originally created an unnamed
+>> stash, but some people felt this can be confusing to new
+>> users.  This introduces per-user config variable stash.quick to
+>> control this behavior.
+>
+> This whole thing smells of indecision to me.
 
-I recognized that this installer does not contain
-all new binaries.
+If you want to force me to decide, you know what the decision it
+would be.  Here are the guiding principles and decisions based
+on them.
 
-I uploaded a corrected version
+ (1) A tool should be optimized for people who know what it does
+     and how to use it.
 
-    Git-1.5.4-rc1-preview20071221-corrected.exe
+     While forbidding "git stash" without argument and forcing
+     people who want to have a quick stash to type "git stash
+     save" may appear not to be adding too many keystrokes, it
+     actually is a regression.  Because "git stash save" without
+     arguments make a much less descriptive stash than the
+     current quickie "git stash", doing so slows them down by
+     forcing them to think of what message to give.
 
-which is available from
+     The decision would be to keep "git stash" quickie stash
+     creation.  An alternative decision could be to do nothing
+     when "git stash" is given, and make "git stash save" (and
+     "git stash create") without the actual message to come up
+     with a better default message.
 
-    http://code.google.com/p/msysgit/downloads
+ (2) A tool should not change its behaviour too drastically
+     depending on who the user is.
 
-Sorry for the confusion.
+     Otherwise it makes it harder for people with mid-level
+     experience to teach less experienced people.  The decision
+     would be that "stash.quick=3Dask" and "stash.quick=3Dno" are
+     unacceptable.
 
-	Steffen
+ (3) A tool should support safety for a mistaken use by who know
+     the tool (even they can make mistakes).
+
+     I listed this mostly because we made "git clean" to violate
+     principle (2) above.  Even when you know what that command
+     does, it is easy to mean "make clean" and type "git clean"
+     by mistake.  And "git clean" is very destructive --- there
+     is no "oops, I take it back".  This principle has led us to
+     introduce clean.requireforce that defaults to true.
+
+     For "git stash", there is no "make stash" or "xyzzy stash"
+     that can easily induce mistyping.  Even if it were typed by
+     mistake, there is no such destructive "oops, I cannot take
+     it back" problem with "git stash", either.  "git stash
+     apply" will get you back to where you were.  The decision
+     would again be that "stash.quick=3Dno" is unwanted.
+
+ (4) A tool should support safety for clueless people when it is
+     reasonable.
+
+     Even though "I did not know what command foo does, so I
+     tried running it and it did something unexpected" is a
+     silly excuse to rob quickie "git stash" from people who
+     know better, we cannot avoid the fact that there are
+     clueless people.  I think checking stash.iknowwhatitdoes to
+     detect first-time users, and explaining what it does to
+     them, may make sense.  And we can take hints from the patch
+     that started this thread how to do this.
+
+     The decision here is that I am open to a change that
+     implements the one-time safety instruction.
+
+Note that in the above guiding principles, I used "should" in
+RFC2119/BCP0014 sense: there may exist valid reasons in
+particular circumstances to ignore a particular item, but the
+full implications must be understood and carefully weighed
+before choosing a different course.
