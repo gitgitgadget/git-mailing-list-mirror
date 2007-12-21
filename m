@@ -1,106 +1,83 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: [PATCH] Don't dereference NULL upon lookup_tree failure.
-Date: Fri, 21 Dec 2007 23:54:02 +0100
-Message-ID: <87hcibveut.fsf@rho.meyering.net>
-References: <873atvwueq.fsf@rho.meyering.net>
-	<7v4peb4qbj.fsf@gitster.siamese.dyndns.org>
+From: "Dmitry V. Levin" <ldv@altlinux.org>
+Subject: Re: Failed binary detection.
+Date: Sat, 22 Dec 2007 02:00:45 +0300
+Message-ID: <20071221230045.GA9442@wo.int.altlinux.org>
+References: <20071221195019.GA20668@old.davidb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>,
-	Matthew Farrellee <mfarrellee@redhat.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 21 23:54:31 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="gKMricLos+KVdGMg"
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Dec 22 00:01:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5qlA-000334-S6
-	for gcvg-git-2@gmane.org; Fri, 21 Dec 2007 23:54:29 +0100
+	id 1J5qrf-0005IN-D2
+	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 00:01:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755297AbXLUWyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2007 17:54:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757603AbXLUWyF
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 17:54:05 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:45891 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754947AbXLUWyE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2007 17:54:04 -0500
-Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id D60EB17B550
-	for <git@vger.kernel.org>; Fri, 21 Dec 2007 23:54:02 +0100 (CET)
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id BD7D517B544
-	for <git@vger.kernel.org>; Fri, 21 Dec 2007 23:54:02 +0100 (CET)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 9718A371A6; Fri, 21 Dec 2007 23:54:02 +0100 (CET)
-In-Reply-To: <7v4peb4qbj.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 21 Dec 2007 14:48:32 -0800")
+	id S1759756AbXLUXAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2007 18:00:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758980AbXLUXAs
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 18:00:48 -0500
+Received: from vint.altlinux.org ([194.107.17.35]:45242 "EHLO
+	vint.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758098AbXLUXAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2007 18:00:47 -0500
+Received: from wo.int.altlinux.org (wo.int.altlinux.org [192.168.1.4])
+	by vint.altlinux.org (Postfix) with ESMTP id 950DCB48711
+	for <git@vger.kernel.org>; Sat, 22 Dec 2007 02:00:45 +0300 (MSK)
+Received: by wo.int.altlinux.org (Postfix, from userid 508)
+	id 89175B45487; Sat, 22 Dec 2007 02:00:45 +0300 (MSK)
+Content-Disposition: inline
+In-Reply-To: <20071221195019.GA20668@old.davidb.org>
+X-fingerprint: FE4C 93AB E19A 2E4C CB5D  3E4E 7CAB E6AC 9E35 361E
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69105>
 
-Junio C Hamano <gitster@pobox.com> wrote:
 
-> Jim Meyering <jim@meyering.net> writes:
->
->> When running on an x86_64 system (either debian unstable or rawhide)
->> I see only this:
->>
->>   0 blocks
->>   error: Object 0d57588da39d10795486bd5451bc2660832228e6 is a commit, not a tree
->>   fatal: The remote end hung up unexpectedly
->>...
->> diff --git a/object.c b/object.c
->> index 16793d9..eb59550 100644
->> --- a/object.c
->> +++ b/object.c
->> @@ -142,10 +142,14 @@ struct object *parse_object_buffer(const unsigned char *sha1, enum object_type t
->>  		obj = &blob->object;
->>  	} else if (type == OBJ_TREE) {
->>  		struct tree *tree = lookup_tree(sha1);
->> -		obj = &tree->object;
->> -		if (!tree->object.parsed) {
->> -			parse_tree_buffer(tree, buffer, size);
->> -			eaten = 1;
->> +		if (!tree)
->> +		    obj = NULL;
->> +		else {
->> +		    obj = &tree->object;
->> +		    if (!tree->object.parsed) {
->> +			    parse_tree_buffer(tree, buffer, size);
->> +			    eaten = 1;
->> +		    }
->>  		}
->>  	} else if (type == OBJ_COMMIT) {
->>  		struct commit *commit = lookup_commit(sha1);
->
-> While this change may be a prudent safeguard, there is something
-> else going on.  Can you provide the callchain that led to the
-> parse_object_buffer() that gave SHA1 of a commit object with
-> type set to OBJ_TREE?  Which caller does that bogus combination?
+--gKMricLos+KVdGMg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sure.
-Here's valgrind output from running this (from my reproducer):
+On Fri, Dec 21, 2007 at 11:50:19AM -0800, David Brown wrote:
+> A coworker has a branch with some large binary files (video test streams).
+> Git doesn't seem to be detecting this file is binary, and is causing thin=
+gs
+> that try to generate diffs to fail.
+>=20
+> Specifically, he is unable to rebase his branch, getting an error:
+>=20
+> .dotest/patch:3241:LD   :=3D ld
+> fatal: corrupt patch at line 84682
+> Patch failed at 0001.
+>=20
+> Line 84682 is in the middle of what appear to be the binary contents of t=
+he
+> large media file, with pluses inserted after newline.
+>=20
+> Any advice on where to look or possibly how to fix this?
 
-    valgrind --trace-children=yes git clone . k
----------------
-  error: Object 0d57588da39d10795486bd5451bc2660832228e6 is a commit, not a tree
-  ==9483== Invalid read of size 1
-  ==9483==    at 0x405C27: parse_object_buffer (object.c:146)
-  ==9483==    by 0x405CE4: parse_object (object.c:187)
-  ==9483==    by 0x403185: send_ref (upload-pack.c:561)
-  ==9483==    by 0x408EEF: do_for_each_ref (refs.c:546)
-  ==9483==    by 0x4036EC: main (upload-pack.c:587)
-  ==9483==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
-  ==9483==
-  ==9483== Process terminating with default action of signal 11 (SIGSEGV)
-  ==9483==  Access not within mapped region at address 0x0
-  ==9483==    at 0x405C27: parse_object_buffer (object.c:146)
-  ==9483==    by 0x405CE4: parse_object (object.c:187)
-  ==9483==    by 0x403185: send_ref (upload-pack.c:561)
-  ==9483==    by 0x408EEF: do_for_each_ref (refs.c:546)
-  ==9483==    by 0x4036EC: main (upload-pack.c:587)
-  ...
-  fatal: The remote end hung up unexpectedly
+See discussion of this issue in git archives, e.g.
+http://marc.info/?t=3D119652720900002
+
+
+--=20
+ldv
+
+--gKMricLos+KVdGMg
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFHbEWdfKvmrJ41Nh4RAlXcAJ9JznBO0ULuIT9CU5tN2oN6HLjNcgCgpRX6
+AMEOBn76rhItJlsj58Vud78=
+=oU9h
+-----END PGP SIGNATURE-----
+
+--gKMricLos+KVdGMg--
