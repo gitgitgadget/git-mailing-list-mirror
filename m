@@ -1,95 +1,56 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Commit a series of patches to SVN without rebase
-Date: Fri, 21 Dec 2007 20:53:40 -0800
-Message-ID: <20071222045340.GA21524@soma>
-References: <20071220164044.GA22683@alea.gnuu.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Move git send-email cover letter temporary file to $GIT_DIR
+Date: Fri, 21 Dec 2007 22:49:29 -0800
+Message-ID: <7vhcib2phi.fsf@gitster.siamese.dyndns.org>
+References: <7vhcic9e17.fsf@gitster.siamese.dyndns.org>
+	<1198284202-20666-1-git-send-email-hendeby@isy.liu.se>
+	<7vmys3358v.fsf@gitster.siamese.dyndns.org>
+	<ee77f5c20712211718g230802b6jb70e5db1f6a43973@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-To: =?iso-8859-1?Q?J=F6rg?= Sommer <joerg@alea.gnuu.de>
-X-From: git-owner@vger.kernel.org Sat Dec 22 05:54:06 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Gustaf Hendeby" <hendeby@isy.liu.se>, luciano@eurotux.com,
+	git@vger.kernel.org
+To: "David Symonds" <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 22 07:50:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5wNB-0005pG-73
-	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 05:54:05 +0100
+	id 1J5yBQ-0000N5-Qo
+	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 07:50:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751823AbXLVExm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Dec 2007 23:53:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbXLVExm
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 23:53:42 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:43545 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750756AbXLVExl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2007 23:53:41 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 85BCF7DC122;
-	Fri, 21 Dec 2007 20:53:40 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20071220164044.GA22683@alea.gnuu.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751070AbXLVGtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2007 01:49:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751229AbXLVGtk
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 01:49:40 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46226 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751059AbXLVGtj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2007 01:49:39 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C47D6059;
+	Sat, 22 Dec 2007 01:49:36 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E56796058;
+	Sat, 22 Dec 2007 01:49:30 -0500 (EST)
+In-Reply-To: <ee77f5c20712211718g230802b6jb70e5db1f6a43973@mail.gmail.com>
+	(David Symonds's message of "Sat, 22 Dec 2007 12:18:08 +1100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69121>
 
-J=F6rg Sommer <joerg@alea.gnuu.de> wrote:
-> Hi,
->=20
-> I've a number of patches in git I want to send to a SVN repository. g=
-it
-> svn dcommit does a rebase after each commit which makes the whole com=
-mit
-> takes very long. Is it possible to skip the rebase? All patches are i=
-n
-> one branch without merges, a simple chain. Is it save to use --no-reb=
-ase
-> in this case?
+"David Symonds" <dsymonds@gmail.com> writes:
 
-Right now, only if the changes don't depend on each other (they all
-modify different files).
+> On Dec 22, 2007 12:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Don't you have $repo (an instance of Git) at that point?  You
+>> should be able to ask repo_path() about it, shouldn't you?
+>
+> Isn't git-send-email still useful outside a Git repo?
 
-The following patch should allow dcommit of multiple changes that depen=
-d
-on each other with --no-rebase.  --no-rebase was Karl's idea, and I've
-never used it myself so I don't know how it works.
-
-I don't have time to write a test case for --no-rebase at the
-moment, but any reports/feedback would be helpful.  Thanks.
-
-diff --git a/git-svn.perl b/git-svn.perl
-index c51f1e7..9b1113a 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -418,7 +418,7 @@ sub cmd_dcommit {
- 		warn "Attempting to commit more than one change while ",
- 		     "--no-rebase is enabled.\n",
- 		     "If these changes depend on each other, re-running ",
--		     "without --no-rebase will be required."
-+		     "without --no-rebase may be required."
- 	}
- 	while (1) {
- 		my $d =3D shift @$linear_refs or last;
-@@ -453,6 +453,7 @@ sub cmd_dcommit {
- 				                               $parents->{$d};
- 			}
- 			$_fetch_all ? $gs->fetch_all : $gs->fetch;
-+			$last_rev =3D $cmt_rev;
- 			next if $_no_rebase;
-=20
- 			# we always want to rebase against the current HEAD,
-@@ -512,7 +513,6 @@ sub cmd_dcommit {
- 				$parents =3D \%p;
- 				$linear_refs =3D \@l;
- 			}
--			$last_rev =3D $cmt_rev;
- 		}
- 	}
- 	unlink $gs->{index};
-
---=20
-Eric Wong
+Then why does it run "rev-parse --git-dir"?
