@@ -1,91 +1,69 @@
-From: Gustaf Hendeby <hendeby@isy.liu.se>
-Subject: Re: [PATCH v3] Make git send-email accept $EDITOR with arguments
-Date: Sat, 22 Dec 2007 09:47:50 +0100
-Message-ID: <476CCF36.3010109@isy.liu.se>
-References: <7vd4sz4uii.fsf@gitster.siamese.dyndns.org>	<1198284052-20590-1-git-send-email-hendeby@isy.liu.se> <7vr6hf35fh.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Move git send-email cover letter temporary file to $GIT_DIR
+Date: Sat, 22 Dec 2007 00:52:09 -0800
+Message-ID: <7vd4szyuva.fsf@gitster.siamese.dyndns.org>
+References: <7vhcic9e17.fsf@gitster.siamese.dyndns.org>
+	<1198284202-20666-1-git-send-email-hendeby@isy.liu.se>
+	<7vmys3358v.fsf@gitster.siamese.dyndns.org>
+	<ee77f5c20712211718g230802b6jb70e5db1f6a43973@mail.gmail.com>
+	<7vhcib2phi.fsf@gitster.siamese.dyndns.org>
+	<ee77f5c20712212304s598d344dg41d03f58084d794e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: peff@peff.net, luciano@eurotux.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 22 09:48:23 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Gustaf Hendeby" <hendeby@isy.liu.se>, luciano@eurotux.com,
+	git@vger.kernel.org
+To: "David Symonds" <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 22 09:52:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J601s-0003XU-J8
-	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 09:48:21 +0100
+	id 1J606B-0004Mz-FI
+	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 09:52:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751933AbXLVIrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2007 03:47:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750882AbXLVIrz
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 03:47:55 -0500
-Received: from bogotron.isy.liu.se ([130.236.48.26]:56925 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750780AbXLVIrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2007 03:47:55 -0500
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 4D99D25A9B;
-	Sat, 22 Dec 2007 09:47:53 +0100 (MET)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 04264-02; Sat, 22 Dec 2007 09:47:52 +0100 (MET)
-Received: from [192.168.13.34] (85.8.6.119.static.se.wasadata.net [85.8.6.119])
+	id S1752043AbXLVIwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2007 03:52:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750936AbXLVIwX
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 03:52:23 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51656 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750825AbXLVIwX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2007 03:52:23 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id F30AA672E;
+	Sat, 22 Dec 2007 03:52:21 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 8303025A99;
-	Sat, 22 Dec 2007 09:47:52 +0100 (MET)
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <7vr6hf35fh.fsf@gitster.siamese.dyndns.org>
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 59A65672D;
+	Sat, 22 Dec 2007 03:52:16 -0500 (EST)
+In-Reply-To: <ee77f5c20712212304s598d344dg41d03f58084d794e@mail.gmail.com>
+	(David Symonds's message of "Sat, 22 Dec 2007 18:04:03 +1100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69128>
 
-Junio C Hamano wrote:
-> Gustaf Hendeby <hendeby@isy.liu.se> writes:
-> 
->> Currently git send-email does not accept $EDITOR with arguments, eg,
->> emacs -nw, when starting an editor to produce a cover letter.  This
->> patch changes this by letting the shell handle the option parsing.
->>
->> Signed-off-by:  Gustaf Hendeby <hendeby@isy.liu.se>
->> ---
->>
->> This is based on Junio's suggestion on most readable and compatible
->> solution.  I'm not sure if it is identical to the C solution for git
->> tag, but it seems to be a reasonable solution.
->>
->>  git-send-email.perl |    2 +-
->>  1 files changed, 1 insertions(+), 1 deletions(-)
->>
->> diff --git a/git-send-email.perl b/git-send-email.perl
->> index 248d035..e47994a 100755
->> --- a/git-send-email.perl
->> +++ b/git-send-email.perl
->> @@ -400,7 +400,7 @@ EOT
->>  	close(C);
->>  
->>  	my $editor = $ENV{GIT_EDITOR} || $repo->config("core.editor") || $ENV{VISUAL} || $ENV{EDITOR} || "vi";
->> -	system($editor, $compose_filename);
->> +	system('sh', '-c', '$0 $@', $editor, $compose_filename);
->>  
->>  	open(C2,">",$compose_filename . ".final")
->>  		or die "Failed to open $compose_filename.final : " . $!;
->> -- 
->> 1.5.4.rc1.16.gc817f
-> 
-> Thanks.  Has this been tested?  IOW, did you compose this
-> message with this patch?
+"David Symonds" <dsymonds@gmail.com> writes:
 
-Yes, I sent out the patch with git send-email, with git including the 
-patch itself and EDITOR=emacsclient -a emacs.  I have also played around 
-with it a bit trying to make sure it is valid, but no more rigorous 
-testing that that.  I'm not really sure how I would do that.
+> On Dec 22, 2007 5:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> "David Symonds" <dsymonds@gmail.com> writes:
+>>
+>> > On Dec 22, 2007 12:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> >> Don't you have $repo (an instance of Git) at that point?  You
+>> >> should be able to ask repo_path() about it, shouldn't you?
+>> >
+>> > Isn't git-send-email still useful outside a Git repo?
+>>
+>> Then why does it run "rev-parse --git-dir"?
+>
+> I'm suggesting that it should still function just fine without being
+> inside a repo, so it should adequately handle "rev-parse --git-dir"
+> returning 128.
 
-Thanks for all comments from everyone, I have learned a lot!
-
-/Gustaf
+Ah, true.  Then the current behaviour to use the $(pwd) for
+temporary file area would be Ok for now.
