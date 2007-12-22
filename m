@@ -1,64 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Emit helpful status for accidental "git stash" save
-Date: Sat, 22 Dec 2007 08:22:34 -0800
-Message-ID: <7vmys2ya0l.fsf@gitster.siamese.dyndns.org>
-References: <7vmys36d7n.fsf@gitster.siamese.dyndns.org>
-	<1198333369-17788-1-git-send-email-win@wincent.com>
+From: David Soria Parra <sn_@gmx.net>
+Subject: Re: cvs -> git tools?
+Date: Sat, 22 Dec 2007 17:00:10 +0100
+Message-ID: <fkjcaa$e3l$1@ger.gmane.org>
+References: <476C1D9E.4060700@advancedsl.com.ar> <m3zlw3oged.fsf@roke.D-201>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Sat Dec 22 17:23:22 2007
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 22 17:28:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J678B-0006XS-CY
-	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 17:23:19 +0100
+	id 1J67DK-00086M-My
+	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 17:28:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753631AbXLVQWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2007 11:22:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753336AbXLVQWr
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 11:22:47 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40810 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752881AbXLVQWp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2007 11:22:45 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E1D37630E;
-	Sat, 22 Dec 2007 11:22:43 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 72946630B;
-	Sat, 22 Dec 2007 11:22:41 -0500 (EST)
-In-Reply-To: <1198333369-17788-1-git-send-email-win@wincent.com> (Wincent
-	Colaiuta's message of "Sat, 22 Dec 2007 15:22:49 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752009AbXLVQ2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2007 11:28:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752129AbXLVQ2O
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 11:28:14 -0500
+Received: from main.gmane.org ([80.91.229.2]:37406 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751059AbXLVQ2N (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2007 11:28:13 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1J672q-0004fp-3a
+	for git@vger.kernel.org; Sat, 22 Dec 2007 16:17:48 +0000
+Received: from p57aedda5.dip.t-dialin.net ([87.174.221.165])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 22 Dec 2007 16:17:48 +0000
+Received: from sn_ by p57aedda5.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 22 Dec 2007 16:17:48 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: p57aedda5.dip.t-dialin.net
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <m3zlw3oged.fsf@roke.D-201>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69142>
 
-Wincent Colaiuta <win@wincent.com> writes:
 
-> diff --git a/git-stash.sh b/git-stash.sh
-> index f16fd9c..a2f3723 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -99,7 +99,8 @@ save_stash () {
->  
->  	git update-ref -m "$stash_msg" $ref_stash $w_commit ||
->  		die "Cannot save the current status"
-> -	printf >&2 'Saved "%s"\n' "$stash_msg"
-> +	printf >&2 'Saved working directory and index state "%s"\n' "$stash_msg"
-> +	echo >&2 '(To restore them type "git stash apply")'
->  }
->  
->  have_stash () {
+> There are many CVS -> git tools: git-cvsimport (uses cvsps), parsecvs
+> (accesses ,v files directly), fromcvs (in Ruby), cvs2svn development
+> branch. But I think only git-cvsimport allows incremental import.
 
-I like that "To restore them..." insn, and I like that this is
-much less invasive than anything we have seen during the
-discussion.  But can we do this only for an accidental "git
-stash" not for a deliberate "git stash save"?
+there is also gc-utils (http://sf.net/projects/gcutils) which wraps
+git-cvsimport and git-cvsexportcommit to make commiting back into CVS a
+little bit easier.
