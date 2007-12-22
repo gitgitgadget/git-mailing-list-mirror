@@ -1,71 +1,183 @@
-From: "Mike Frysinger" <vapier.adi@gmail.com>
-Subject: Re: git-svn: pulling from local mirror but committing via svn+ssh
-Date: Sat, 22 Dec 2007 04:32:36 -0500
-Message-ID: <8bd0f97a0712220132w6fdfd7ddud96811d4af8b431f@mail.gmail.com>
-References: <8bd0f97a0712200821j778c12a9g9d42bf02482d953c@mail.gmail.com>
-	 <20071222043528.GB18812@soma> <476CD5E1.9020204@vilain.net>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: [PATCH] Don't dereference NULL upon lookup_tree failure.
+Date: Sat, 22 Dec 2007 14:41:55 +0100
+Message-ID: <87prwyu9r0.fsf@rho.meyering.net>
+References: <873atvwueq.fsf@rho.meyering.net>
+	<7v4peb4qbj.fsf@gitster.siamese.dyndns.org>
+	<87hcibveut.fsf@rho.meyering.net>
+	<7vzlw33a1o.fsf@gitster.siamese.dyndns.org>
+	<87bq8jvd1g.fsf@rho.meyering.net>
+	<7vve6r39bp.fsf@gitster.siamese.dyndns.org>
+	<8763yrvb3g.fsf@rho.meyering.net>
+	<7vzlw3xeqy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Eric Wong" <normalperson@yhbt.net>, git@vger.kernel.org
-To: "Sam Vilain" <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Sat Dec 22 10:33:06 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>,
+	Matthew Farrellee <mfarrellee@redhat.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 22 14:42:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J60j7-00051A-6Z
-	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 10:33:01 +0100
+	id 1J64cP-0001Ag-R1
+	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 14:42:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750932AbXLVJci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2007 04:32:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751082AbXLVJci
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 04:32:38 -0500
-Received: from wa-out-1112.google.com ([209.85.146.180]:37406 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750882AbXLVJcg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2007 04:32:36 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1087488wah.23
-        for <git@vger.kernel.org>; Sat, 22 Dec 2007 01:32:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=wmo4f/JOyQeuAJ5jnmFdMMyNO985HuQEVWAE287aO0M=;
-        b=RLnZAYky7fSNcBfMXPbARdT1XzvqPdTzOg4QMMu6cjCrOTSTSE6Vgvj7vY7GA4GDRwHAUMXEcekU9xznAyMrotSjYlkLACRWVTCzWzv8FI04m52GTYdtGG5TjXn5HzZVHz3xzML18WvMD4a8jaGIXTZgDuIchBpD9HA7gHTgM8A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MgHzptn4JgoBhK3LaLgt7lMu3z9koxd5R48z6bIhMPETeAz+yNSIEzyXsNIiXP9OmnP1KxuExAVD0F+JIF1xkBoAjGSpBOCZMkHsxZ4RB0O0+BRDb4IIJ4QFODGhMreXdMQo6NR6clZNMTkhl4/HKtplJN2fD+NjDYb4Tl0Ty1M=
-Received: by 10.142.239.11 with SMTP id m11mr563850wfh.165.1198315956368;
-        Sat, 22 Dec 2007 01:32:36 -0800 (PST)
-Received: by 10.142.165.7 with HTTP; Sat, 22 Dec 2007 01:32:36 -0800 (PST)
-In-Reply-To: <476CD5E1.9020204@vilain.net>
-Content-Disposition: inline
+	id S1751098AbXLVNl6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2007 08:41:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750828AbXLVNl6
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 08:41:58 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:44559 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750780AbXLVNl5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2007 08:41:57 -0500
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id E17A917B57A
+	for <git@vger.kernel.org>; Sat, 22 Dec 2007 14:41:55 +0100 (CET)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id C3BC717B561
+	for <git@vger.kernel.org>; Sat, 22 Dec 2007 14:41:55 +0100 (CET)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 69A9C33610; Sat, 22 Dec 2007 14:41:55 +0100 (CET)
+In-Reply-To: <7vzlw3xeqy.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sat, 22 Dec 2007 01:25:41 -0800")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69133>
 
-On Dec 22, 2007 4:16 AM, Sam Vilain <sam@vilain.net> wrote:
-> Eric Wong wrote:
-> > > i have local (fast) mirrors of the svn trees i use, so i normally keep
-> > > everything pointing at those.  when i need to commit, i use `svn
-> > > switch --relocate ...` to flip to the svn+ssh master, and then flop
-> > > back to the local mirror.  it actually works out nicely.
-> >
-> > Can useSvmProps handle this?  I honestly forgot how that stuff
-> > was supposed to work with SVK/svn-mirror.
->
-> It's precisely this use case.  If you are syncing with SVN::Mirror, part
-> of SVK, or via svnsync, these tools leave breadcrumbs as svn properties
-> that point to where the repository was copied from.  So, in your commit
-> log the message will be the URL of the immediately[*] upstream
-> repository.  SVN didn't ever really support clone per se, what did you
-> use to copy the repository?
+Junio C Hamano <gitster@pobox.com> wrote:
+...
+> Your fix is all we can sensibly do. I however think you would
+> need similar fix to the same function for other object types, as
+> they dereference a potentially NULL pointer the same way.
 
-we publish the raw svn tree via rsync so people can create their own svn mirrors
+Good point.  Patch below.  I wondered if these lookup functions have
+always been able to return NULL, since there are many remaining uses
+where the possibility of a NULL return value is not handled.
+Here are a few that stood out in the output of a quick search:
 
-sounds like it's just easier to mirror the original and since this
-isnt a terribly large repo (~50 meg w/out any scm stuff), that's ok
--mike
+  git-grep -E -A3 'lookup_(commit|tag|blob|tree) *\('
+
+Note: I did not look at cases where the return value is an argument
+to some other function.
+
+------------------
+builtin-fmt-merge-msg.c:
+		head = lookup_commit(head_sha1);
+		...
+		for (i = 0; i < origins.nr; i++)
+			shortlog(origins.list[i], origins.payload[i],
+					head, &rev, limit);
+------------------
+builtin-read-tree.c:                    struct tree *subtree = lookup_tree(entry.
+sha1);
+builtin-read-tree.c-                    if (!subtree->object.parsed)
+
+------------------
+combine-diff.c: struct commit *commit = lookup_commit(sha1);
+combine-diff.c- struct commit_list *parents;
+
+------------------
+http-push.c:    struct commit *head = lookup_commit(head_sha1);
+http-push.c:    struct commit *branch = lookup_commit(branch_sha1);
+http-push.c-    struct commit_list *merge_bases = get_merge_bases(head, branch, 1);
+
+------------------
+reachable.c:    struct tree *tree = lookup_tree(sha1);
+reachable.c-    add_pending_object(revs, &tree->object, "");
+
+------------------
+tag.c:          item->tagged = &lookup_blob(sha1)->object;
+tag.c-  } else if (!strcmp(type, tree_type)) {
+tag.c:          item->tagged = &lookup_tree(sha1)->object;
+tag.c-  } else if (!strcmp(type, commit_type)) {
+tag.c:          item->tagged = &lookup_commit(sha1)->object;
+tag.c-  } else if (!strcmp(type, tag_type)) {
+tag.c:          item->tagged = &lookup_tag(sha1)->object;
+tag.c-  } else {
+
+--------------------------
+unpack-trees.c:                         struct tree *tree = lookup_tree(posns[i]->sha1);
+...
+unpack-trees.c-                         parse_tree(tree);
+
+
+Here's the revised patch:
+
+==================================================================
+From 94152217e8e57d3932b4ba6f7ee014da1f4346d3 Mon Sep 17 00:00:00 2001
+From: Jim Meyering <meyering@redhat.com>
+Date: Fri, 21 Dec 2007 11:56:32 +0100
+Subject: [PATCH] Don't dereference NULL upon lookup failure.
+
+
+Signed-off-by: Jim Meyering <meyering@redhat.com>
+---
+ object.c |   42 +++++++++++++++++++++++++++++-------------
+ 1 files changed, 29 insertions(+), 13 deletions(-)
+
+diff --git a/object.c b/object.c
+index 16793d9..9945b25 100644
+--- a/object.c
++++ b/object.c
+@@ -138,27 +138,43 @@ struct object *parse_object_buffer(const unsigned char *sha1, enum object_type t
+
+ 	if (type == OBJ_BLOB) {
+ 		struct blob *blob = lookup_blob(sha1);
+-		parse_blob_buffer(blob, buffer, size);
+-		obj = &blob->object;
++		if (!blob)
++		    obj = NULL;
++		else {
++		    parse_blob_buffer(blob, buffer, size);
++		    obj = &blob->object;
++		}
+ 	} else if (type == OBJ_TREE) {
+ 		struct tree *tree = lookup_tree(sha1);
+-		obj = &tree->object;
+-		if (!tree->object.parsed) {
+-			parse_tree_buffer(tree, buffer, size);
+-			eaten = 1;
++		if (!tree)
++		    obj = NULL;
++		else {
++		    obj = &tree->object;
++		    if (!tree->object.parsed) {
++			    parse_tree_buffer(tree, buffer, size);
++			    eaten = 1;
++		    }
+ 		}
+ 	} else if (type == OBJ_COMMIT) {
+ 		struct commit *commit = lookup_commit(sha1);
+-		parse_commit_buffer(commit, buffer, size);
+-		if (!commit->buffer) {
+-			commit->buffer = buffer;
+-			eaten = 1;
++		if (!commit)
++		    obj = NULL;
++		else {
++		    parse_commit_buffer(commit, buffer, size);
++		    if (!commit->buffer) {
++			    commit->buffer = buffer;
++			    eaten = 1;
++		    }
++		    obj = &commit->object;
+ 		}
+-		obj = &commit->object;
+ 	} else if (type == OBJ_TAG) {
+ 		struct tag *tag = lookup_tag(sha1);
+-		parse_tag_buffer(tag, buffer, size);
+-		obj = &tag->object;
++		if (!tag)
++		    obj = NULL;
++		else {
++		    parse_tag_buffer(tag, buffer, size);
++		    obj = &tag->object;
++		}
+ 	} else {
+ 		warning("object %s has unknown type id %d\n", sha1_to_hex(sha1), type);
+ 		obj = NULL;
+--
+1.5.4.rc1.16.g60f3b
