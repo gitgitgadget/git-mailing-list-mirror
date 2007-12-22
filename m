@@ -1,59 +1,105 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [PATCH] Move git send-email cover letter temporary file to $GIT_DIR
-Date: Sat, 22 Dec 2007 12:18:08 +1100
-Message-ID: <ee77f5c20712211718g230802b6jb70e5db1f6a43973@mail.gmail.com>
-References: <7vhcic9e17.fsf@gitster.siamese.dyndns.org>
-	 <1198284202-20666-1-git-send-email-hendeby@isy.liu.se>
-	 <7vmys3358v.fsf@gitster.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Problem with git-svn
+Date: Fri, 21 Dec 2007 20:29:24 -0800
+Message-ID: <20071222042924.GA18812@soma>
+References: <4764FE2C.1010103@obry.net> <20071219082751.GA17787@muzzle> <47690031.7090409@obry.net> <20071220183007.GA26767@untitled> <476AD1AB.8040406@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Gustaf Hendeby" <hendeby@isy.liu.se>, luciano@eurotux.com,
-	git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 22 02:18:39 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Pascal Obry <pascal.obry@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 22 05:29:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J5t0d-0000EI-7a
-	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 02:18:35 +0100
+	id 1J5vzj-0001X3-El
+	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 05:29:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751019AbXLVBSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Dec 2007 20:18:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750842AbXLVBSK
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 20:18:10 -0500
-Received: from rv-out-0910.google.com ([209.85.198.187]:47921 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750758AbXLVBSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Dec 2007 20:18:09 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so591934rvb.1
-        for <git@vger.kernel.org>; Fri, 21 Dec 2007 17:18:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=k8l9eUMbTsK4Ty95VkamSaCMhbXgxq+Nwkkt/UTKFTA=;
-        b=EkWDIDnMyg6x4swPCoHp9QLnWB0ApAiSpa6UgdvZ8OLfQM02PDUELJYyd1xfHwxJufE4TafFvNhRde/PKnlIzHDpXO4Ptuh3CoyeWCucK7wSug1bF+fK098jFYk1eCUUG+3XxjaAXcX3BhFY+qQ/QNr+BlXvOOD/E8FOVBdIeL4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UXYrExIR7Qeit4x5rcy2Q7qoIxRiSlf1ij/1TKDjWJ+Wg93BjNzApE9Gl2k+oXz0TmYFPYHYQTB5oXKOQqlFWbMS67bRVhFJpMCVaUc48vETzDsQELZXUnjfxLhRSTiuEqfpl9lpusztKQ0QbFon0C4h/qtk9tm8RgpYGf8nYzs=
-Received: by 10.141.123.4 with SMTP id a4mr1137109rvn.172.1198286288173;
-        Fri, 21 Dec 2007 17:18:08 -0800 (PST)
-Received: by 10.141.115.4 with HTTP; Fri, 21 Dec 2007 17:18:08 -0800 (PST)
-In-Reply-To: <7vmys3358v.fsf@gitster.siamese.dyndns.org>
+	id S1751822AbXLVE31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Dec 2007 23:29:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751631AbXLVE31
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Dec 2007 23:29:27 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:43518 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751167AbXLVE31 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Dec 2007 23:29:27 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 20B6C7DC122;
+	Fri, 21 Dec 2007 20:29:26 -0800 (PST)
 Content-Disposition: inline
+In-Reply-To: <476AD1AB.8040406@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69118>
 
-On Dec 22, 2007 12:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Don't you have $repo (an instance of Git) at that point?  You
-> should be able to ask repo_path() about it, shouldn't you?
+Pascal Obry <pascal.obry@gmail.com> wrote:
+> Eric,
+> 
+> > Ah, oops, I was off-by-one with the revision number.  But git-svn does
+> > look to be doing the right thing here, because it followed history into
+> > /importfromcvs/trunk/ and file.el was part of it.
+> 
+> Yes part of it but before the creation of the /importfromcvs/trunk/ that
+> was moved later as /trunk/PROJ.
+> 
+> < I meant moved as /trunk/PROJ1 then /trunk/PROJ2... and so on.
+>
+> In /importfromcvs/trunk/ there was many projects imported. One per one,
+> each time moving it into /trunk/PROJ.
+> 
+> If I look at history of /trunk/PROJ:
+> 
+>    $ svn log svn+ssh://myserver/trunk/PROJ
+> 
+> The last revision is 45775, so I think git-svn should not look past this
+> revision. So I'm very surprised by the current behavior and think it is
+> a bug to import file.el at revision 9458. Note that the workaround for
+> me is to use:
 
-Isn't git-send-email still useful outside a Git repo?
+Since r48468 was where /importfromcvs/trunk got renamed into /trunk/PROJ
+(from your previous message http://mid.gmane.org/4764FE2C.1010103@obry.net)
 
+/importfromcvs/trunk exists at r45775, but /trunk/PROJ does not; and
+git-svn at least follows that (which is what I suppose everybody wants).
 
-Dave.
+However...
+
+Did /importfromcvs/trunk exist all the way between r9458 and r48468?  Or
+was that directory replaced entirely by something else along the way?
+
+git-svn may be following copy history too aggressively, in this case.
+
+On the other hand, this was somewhat intended because it could also
+be a way to track merges as "moving" tags[1].
+
+>    $ git svn clone svn+ssh://myserver/trunk/PROJ --revision=45775:HEAD
+> 
+> But it would be lot cleaner to have git-svn handling this properly I think.
+
+Does --no-follow-parent work in your case?  Or does it go too far
+in stopping at r48468 (probably).
+
+[1] - I follow a project that has a RELEASE branch that is occasionally
+deleted and replaced with the contents of trunk.   git-svn will actually
+import this as a merge commit with two parents:
+
+  1. trunk (obviously)
+  2. the previous RELEASE, which was deleted
+
+This allows old (but deleted) history to still be visible, which is what
+*I* always want.  However, it could cause undesired behavior in your
+case...
+
+Note that running 'svn log <URL of #2 case>' will NOT show what git-svn
+log will show for two; and I think it's nice that git-svn will track
+history that is harder to find with SVN
+
+(which would require svn log -v <URL of #2 case>@<rev>).
+
+Maybe another switch should be added (--merge-foster-parent?)
+
+-- 
+Eric Wong
