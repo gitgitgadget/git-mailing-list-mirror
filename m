@@ -1,70 +1,85 @@
-From: "Mike Frysinger" <vapier.adi@gmail.com>
-Subject: Re: 1.5.4-rc2 plans
-Date: Sat, 22 Dec 2007 12:54:04 -0500
-Message-ID: <8bd0f97a0712220954v54dd31c3j19d8835b8813a742@mail.gmail.com>
-References: <7vwsr8lwf7.fsf@gitster.siamese.dyndns.org>
-	 <476B6ABB.6040009@viscovery.net>
-	 <8bd0f97a0712210109q7805d967sc9b4cd13d4131360@mail.gmail.com>
-	 <Pine.LNX.4.64.0712221554030.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Emit helpful status for accidental "git stash" save
+Date: Sat, 22 Dec 2007 09:58:09 -0800
+Message-ID: <7vabo2y5la.fsf@gitster.siamese.dyndns.org>
+References: <7vmys2ya0l.fsf@gitster.siamese.dyndns.org>
+	<1198344685-24156-1-git-send-email-win@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Sixt" <j.sixt@viscovery.net>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Dec 22 18:54:40 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Sat Dec 22 18:58:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J68YU-0000R2-J6
-	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 18:54:35 +0100
+	id 1J68cX-0001mB-FE
+	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 18:58:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752569AbXLVRyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2007 12:54:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752416AbXLVRyG
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 12:54:06 -0500
-Received: from wa-out-1112.google.com ([209.85.146.176]:4975 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752212AbXLVRyF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2007 12:54:05 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1341399wah.23
-        for <git@vger.kernel.org>; Sat, 22 Dec 2007 09:54:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=EuFb5CMaiGEC+oYOiGzGvP591rOHWBCfUZUDKUilgf8=;
-        b=AYshmiRdpr6y8URIFgPlgxZ2FzFkI+MYaubwnHblV4AbV3hOrn3nIGHGwYLELE+SwOaKtyzq00iP8evfLDtC/FZ2zuR1VS+GXF3RVPFdfbbFgh5N5KsRRJDOmjdWI1I9XPgacPUvbWdzhIQbR5GGtHyIiCQU2tLPEKeG+XRg7mc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Qop8H1VjCpac0cwe6bfpkm1IFiuU7z8U8ezc/+cHhMjL9SZZPooWDjXLtZ5KahxYcSaDR7tb3dxcXuqay2fOC6uNNSOtwKsSPVr/2Al1Z6ntuphheB+S05xBjOC8KLE1CVMKDoT6ZOwQk0SKuc6POz5oJsUEEg6o4uTFsSCT4gQ=
-Received: by 10.142.245.10 with SMTP id s10mr1172509wfh.12.1198346044680;
-        Sat, 22 Dec 2007 09:54:04 -0800 (PST)
-Received: by 10.142.165.7 with HTTP; Sat, 22 Dec 2007 09:54:04 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0712221554030.14355@wbgn129.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1752337AbXLVR6W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Dec 2007 12:58:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752201AbXLVR6W
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 12:58:22 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46141 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751919AbXLVR6W convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Dec 2007 12:58:22 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B545D68F0;
+	Sat, 22 Dec 2007 12:58:20 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 291A968E5;
+	Sat, 22 Dec 2007 12:58:16 -0500 (EST)
+In-Reply-To: <1198344685-24156-1-git-send-email-win@wincent.com> (Wincent
+	Colaiuta's message of "Sat, 22 Dec 2007 18:31:25 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69150>
 
-On Dec 22, 2007 10:04 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Fri, 21 Dec 2007, Mike Frysinger wrote:
-> > ive started to transition from using svn everywhere to trying out git,
-> > and saw reference to this "stash" command on another list.  i wanted to
-> > learn more about it, so i started off with `git-stash` to get some info,
-> > and wondered what just happened.  then i typoed the --help option and
-> > wondered even more what just happened :).
->
-> I'm very sorry for you, but I, for one, refuse to let decisions be
-> influenced by people who did not have so much as a glimpse in the
-> documentation.
->
-> <snip pointless garbage>
+Wincent Colaiuta <win@wincent.com> writes:
 
-why do you insist on wasting people's time if your point is merely to
-insult ?  if that is your goal, go somewhere else.
--mike
+> El 22/12/2007, a las 17:22, Junio C Hamano escribi=C3=83=C2=B3:
+>
+>> I like that "To restore them..." insn, and I like that this is
+>> much less invasive than anything we have seen during the
+>> discussion.  But can we do this only for an accidental "git
+>> stash" not for a deliberate "git stash save"?
+>
+> Something like this then?
+
+Sure, even like this.
+
+ git-stash.sh |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/git-stash.sh b/git-stash.sh
+index f16fd9c..ade300c 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -99,7 +99,7 @@ save_stash () {
+=20
+ 	git update-ref -m "$stash_msg" $ref_stash $w_commit ||
+ 		die "Cannot save the current status"
+-	printf >&2 'Saved "%s"\n' "$stash_msg"
++	printf >&2 'Saved working directory and index state "%s"\n' "$stash_m=
+sg"
+ }
+=20
+ have_stash () {
+@@ -228,7 +228,9 @@ create)
+ *)
+ 	if test $# -eq 0
+ 	then
+-		save_stash && git-reset --hard
++		save_stash &&=20
++		echo >&2 '(To restore them type "git stash apply")' &&
++		git-reset --hard
+ 	else
+ 		usage
+ 	fi
