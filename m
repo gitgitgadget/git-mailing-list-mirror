@@ -1,55 +1,68 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] builtin-tag.c: allow arguments in $EDITOR
-Date: Sat, 22 Dec 2007 15:50:07 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0712221548540.14355@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <20071219232326.GA4135@bit.office.eurotux.com>
- <20071220095706.GA9685@bit.office.eurotux.com>
- <Pine.LNX.4.64.0712201255510.14355@wbgn129.biozentrum.uni-wuerzburg.de>
- <7vhcidovxt.fsf@gitster.siamese.dyndns.org>
+Subject: Re: 1.5.4-rc2 plans
+Date: Sat, 22 Dec 2007 16:04:50 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0712221554030.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <7vwsr8lwf7.fsf@gitster.siamese.dyndns.org>  <476B6ABB.6040009@viscovery.net>
+ <8bd0f97a0712210109q7805d967sc9b4cd13d4131360@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Luciano Rocha <luciano@eurotux.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 22 15:50:39 2007
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Mike Frysinger <vapier.adi@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 22 16:05:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J65gS-0003ee-Ch
-	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 15:50:36 +0100
+	id 1J65ul-0007dP-JL
+	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 16:05:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751061AbXLVOuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2007 09:50:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbXLVOuL
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 09:50:11 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50921 "HELO mail.gmx.net"
+	id S1751841AbXLVPEy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2007 10:04:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752015AbXLVPEy
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 10:04:54 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59893 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750884AbXLVOuJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2007 09:50:09 -0500
-Received: (qmail invoked by alias); 22 Dec 2007 14:50:08 -0000
+	id S1751555AbXLVPEy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2007 10:04:54 -0500
+Received: (qmail invoked by alias); 22 Dec 2007 15:04:51 -0000
 Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp021) with SMTP; 22 Dec 2007 15:50:08 +0100
+  by mail.gmx.net (mp008) with SMTP; 22 Dec 2007 16:04:51 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Wba4zfzJW8RwVjwYIfKHxuja8/ncsxnKlKbwqtq
-	vaNVNE2tSpS+cA
+X-Provags-ID: V01U2FsdGVkX18I16kjzhYIIxOTQ7JqZVT+HZytFNHBOOAspKu7Fb
+	/Jcw0IZEQ7YExN
 X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vhcidovxt.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <8bd0f97a0712210109q7805d967sc9b4cd13d4131360@mail.gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69138>
 
 Hi,
 
-On Thu, 20 Dec 2007, Junio C Hamano wrote:
+On Fri, 21 Dec 2007, Mike Frysinger wrote:
 
-> I think something like this patch is probably more appropriate.
+> ive started to transition from using svn everywhere to trying out git, 
+> and saw reference to this "stash" command on another list.  i wanted to 
+> learn more about it, so i started off with `git-stash` to get some info, 
+> and wondered what just happened.  then i typoed the --help option and 
+> wondered even more what just happened :).
 
-Looks obviously fine, especially thinking about this:
+I'm very sorry for you, but I, for one, refuse to let decisions be 
+influenced by people who did not have so much as a glimpse in the 
+documentation.
 
-> 	GIT_EDITOR='emacs -l $HOME/my-customization.el'
+It may be okay for a certain nation state to award people spilling that 
+hot coffee that they ordered over there laps, but the rest of the world 
+laughs about such a behaviour.
+
+If you got rope, stuck your neck through the noose, and jumped, without 
+reading the manual first, well, that's not my problem.
+
+But I guess that we'll get that no-default-action behaviour, and I will 
+have to change my ways.  Sigh.
 
 Ciao,
 Dscho
