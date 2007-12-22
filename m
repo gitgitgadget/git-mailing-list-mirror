@@ -1,112 +1,99 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: cvsimport: trying to convert freebsd cvs to git
-Date: Sat, 22 Dec 2007 18:18:01 +0100
-Message-ID: <20071222171801.GE15286@genesis.frugalware.org>
+From: Wincent Colaiuta <win@wincent.com>
+Subject: [PATCH v2] Emit helpful status for accidental "git stash" save
+Date: Sat, 22 Dec 2007 18:31:25 +0100
+Message-ID: <1198344685-24156-1-git-send-email-win@wincent.com>
+References: <7vmys2ya0l.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="T7mxYSe680VjQnyC"
-Cc: Stefan Sperling <stsp@stsp.name>
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, Wincent Colaiuta <win@wincent.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 22 18:18:37 2007
+X-From: git-owner@vger.kernel.org Sat Dec 22 18:32:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J67zf-0006kj-8C
-	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 18:18:35 +0100
+	id 1J68Ci-0002Ph-EE
+	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 18:32:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752134AbXLVRSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2007 12:18:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752129AbXLVRSF
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 12:18:05 -0500
-Received: from virgo.iok.hu ([193.202.89.103]:19870 "EHLO virgo.iok.hu"
+	id S1752625AbXLVRbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2007 12:31:41 -0500
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbXLVRbl
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 12:31:41 -0500
+Received: from wincent.com ([72.3.236.74]:45528 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751919AbXLVRSE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2007 12:18:04 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 5DC8E1B2504;
-	Sat, 22 Dec 2007 18:18:02 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 30E324465C;
-	Sat, 22 Dec 2007 18:16:41 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id D09381190215; Sat, 22 Dec 2007 18:18:01 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1752588AbXLVRbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2007 12:31:40 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBMHVQLk030571;
+	Sat, 22 Dec 2007 11:31:27 -0600
+X-Mailer: git-send-email 1.5.4.rc0.68.g15eb8-dirty
+In-Reply-To: <7vmys2ya0l.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69146>
 
+El 22/12/2007, a las 17:22, Junio C Hamano escribi=C3=B3:
 
---T7mxYSe680VjQnyC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> I like that "To restore them..." insn, and I like that this is
+> much less invasive than anything we have seen during the
+> discussion.  But can we do this only for an accidental "git
+> stash" not for a deliberate "git stash save"?
 
-hi,
+Something like this then?
 
-recently Stefan reported that he tried to convert the freebsd cvs' src
-module to git and he failed. i tried to help him, but i failed, too.
-here are my efforts:
+-- 8< --
+Emit helpful status for accidental "git stash" save
 
-he made the cvs available on a (relatively) fast rsync mirror at:
+If the user types "git stash" mistakenly thinking that this will list
+their stashes he/she may be surprised to see that it actually saved
+a new stash and reset their working tree and index.
 
-rsync://ftp.spline.de/FreeBSD-CVS
+In the worst case they might not know how to recover the state. So
+help them by telling them exactly what was saved and also how to
+restore it immediately.
 
-(so you don't have to use cvsup if it's a problem for you)
+Signed-off-by: Wincent Colaiuta <win@wincent.com>
+---
+ git-stash.sh |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-so after mirroring it, i had:
-
-$ ls cvs
-CVSROOT/  CVSROOT-ports/  CVSROOT-src/  ports/  src/
-
-then i tried:
-
-$ time git cvsimport -d `pwd`/cvs -C src.git src
-Initialized empty Git repository in /home/vmiklos/git/freebsd/src.git/.git/
-malformed revision
-fatal: refs/heads/origin: not a valid SHA1
-fatal: master: not a valid SHA1
-warning: You appear to be on a branch yet to be born.
-warning: Forcing checkout of HEAD.
-fatal: just how do you expect me to merge 0 trees?
-checkout failed: 256
-
-real    15m11.529s
-user    0m46.212s
-sys     0m6.680s
-
-my questions:
-
-1) does cvsimport supports the case when the source if on the local
-filesystem, and not in not on a cvs server?
-
-first i wanted to make sure that cvsimport itself works properly here:
-
-$ git cvsimport -d :pserver:anonymous@tcpflow.cvs.sourceforge.net:/cvsroot/tcpflow -C tcpflow tcpflow
-
-and it converted this small repo fine
-
-2) if it supports, then i think the real error message is 'malformed
-revision'. what is the proper way to see where is that revision?
-
-of course if cvsimport is not the right tool to incrementally convert
-such a big repo, then i would be interested in other advices, too.
-
-thanks,
-- VMiklos
-
---T7mxYSe680VjQnyC
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFHbUbJe81tAgORUJYRAnDCAJ48cYSQQcv33H4DDLfXOF8eSjKDrACgo/JB
-1/whk8ektNa0UhKnNXa3CZk=
-=wq+C
------END PGP SIGNATURE-----
-
---T7mxYSe680VjQnyC--
+diff --git a/git-stash.sh b/git-stash.sh
+index f16fd9c..ab52b6f 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -13,6 +13,7 @@ TMP=3D"$GIT_DIR/.git-stash.$$"
+ trap 'rm -f "$TMP-*"' 0
+=20
+ ref_stash=3Drefs/stash
++ARGC=3D$#
+=20
+ no_changes () {
+ 	git diff-index --quiet --cached HEAD -- &&
+@@ -99,7 +100,9 @@ save_stash () {
+=20
+ 	git update-ref -m "$stash_msg" $ref_stash $w_commit ||
+ 		die "Cannot save the current status"
+-	printf >&2 'Saved "%s"\n' "$stash_msg"
++	printf >&2 'Saved working directory and index state "%s"\n' "$stash_m=
+sg"
++	test $ARGC -eq 0 &&
++		echo >&2 '(To restore them type "git stash apply")'
+ }
+=20
+ have_stash () {
+--=20
+1.5.4.rc0.68.g15eb8-dirty
