@@ -1,53 +1,55 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: Pushing and fetching sha1s directly
-Date: Sat, 22 Dec 2007 22:13:08 +0100
-Message-ID: <20071222211308.GA27281@pvv.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Pushing and fetching sha1s directly
+Date: Sat, 22 Dec 2007 15:12:05 -0800
+Message-ID: <7vlk7mwchm.fsf@gitster.siamese.dyndns.org>
+References: <20071222211308.GA27281@pvv.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Dec 22 22:14:13 2007
+Cc: git@vger.kernel.org
+To: Finn Arne Gangstad <finnag@pvv.org>
+X-From: git-owner@vger.kernel.org Sun Dec 23 00:12:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J6Bfg-0006ZK-VQ
-	for gcvg-git-2@gmane.org; Sat, 22 Dec 2007 22:14:13 +0100
+	id 1J6DWU-0004WD-8v
+	for gcvg-git-2@gmane.org; Sun, 23 Dec 2007 00:12:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753029AbXLVVNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2007 16:13:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752751AbXLVVNL
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 16:13:11 -0500
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:59865 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751698AbXLVVNK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2007 16:13:10 -0500
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.60)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1J6Bee-0003VM-VR
-	for git@vger.kernel.org; Sat, 22 Dec 2007 22:13:08 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
+	id S1753195AbXLVXMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2007 18:12:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753123AbXLVXMN
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 18:12:13 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62920 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752722AbXLVXMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2007 18:12:12 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B2F26433D;
+	Sat, 22 Dec 2007 18:12:10 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 52C6B433C;
+	Sat, 22 Dec 2007 18:12:07 -0500 (EST)
+In-Reply-To: <20071222211308.GA27281@pvv.org> (Finn Arne Gangstad's message of
+	"Sat, 22 Dec 2007 22:13:08 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69158>
 
-Currently there seems to be no way of pusing a sha1 directly, or to
-fetch a sha1 directly. When working with submodules, it is convenient
-to be able to work with detached HEADs, so it would be good if this
-could be supported also by fetch and push.
+Finn Arne Gangstad <finnag@pvv.org> writes:
 
-What would be a resonable syntax for this? I'm thinking something like
-git fetch --sha1 <repository> <sha1>
-git push --sha1 <repository> <sha1>
+> Currently there seems to be no way of pusing a sha1 directly, or to
+> fetch a sha1 directly. When working with submodules, it is convenient
+> to be able to work with detached HEADs, so it would be good if this
+> could be supported also by fetch and push.
 
-Where <sha1> could really be a <commit> I guess, but the option name
-"--commit" seems wrong somehow. Another option is to extend refspecs
-so sha1s can be allowed in there directly, so this would just work:
+At least push of an arbitrary commit is already supported, I
+think.
 
-git fetch <repository> <sha1>
-
-What do you prefer?
-
-- Finn Arne
+For fetch, I would normally say "check the list archives", but
+it was very long time ago that it was proposed and discussed.
+It has some security and performance implications.
