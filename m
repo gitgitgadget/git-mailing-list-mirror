@@ -1,55 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Pushing and fetching sha1s directly
-Date: Sat, 22 Dec 2007 15:12:05 -0800
-Message-ID: <7vlk7mwchm.fsf@gitster.siamese.dyndns.org>
-References: <20071222211308.GA27281@pvv.org>
+From: Zenaan Harkness <zen@freedbms.net>
+Subject: sane, stable renames; when a commit should commit twice
+Date: Sun, 23 Dec 2007 13:03:10 +1100
+Message-ID: <20071223020310.GA22450@freedbms.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Sun Dec 23 00:12:55 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 23 03:13:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J6DWU-0004WD-8v
-	for gcvg-git-2@gmane.org; Sun, 23 Dec 2007 00:12:50 +0100
+	id 1J6GL8-0007rg-5R
+	for gcvg-git-2@gmane.org; Sun, 23 Dec 2007 03:13:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753195AbXLVXMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2007 18:12:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753123AbXLVXMN
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 18:12:13 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62920 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752722AbXLVXMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2007 18:12:12 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B2F26433D;
-	Sat, 22 Dec 2007 18:12:10 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 52C6B433C;
-	Sat, 22 Dec 2007 18:12:07 -0500 (EST)
-In-Reply-To: <20071222211308.GA27281@pvv.org> (Finn Arne Gangstad's message of
-	"Sat, 22 Dec 2007 22:13:08 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754521AbXLWCMv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2007 21:12:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754523AbXLWCMv
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 21:12:51 -0500
+Received: from mx06.syd.iprimus.net.au ([210.50.76.235]:46404 "EHLO
+	mx06.syd.iprimus.net.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754282AbXLWCMu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2007 21:12:50 -0500
+X-Greylist: delayed 601 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Dec 2007 21:12:50 EST
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ao8CAGZQbUfKQ0+P/2dsb2JhbACpVA
+X-IronPort-AV: E=Sophos;i="4.24,199,1196600400"; 
+   d="scan'208";a="85725418"
+Received: from unknown (HELO zen700m.freedbms.net) ([202.67.79.143])
+  by smtp06.syd.iprimus.net.au with ESMTP; 23 Dec 2007 13:02:48 +1100
+Received: by zen700m.freedbms.net (Postfix, from userid 1001)
+	id 8B6DF136336; Sun, 23 Dec 2007 13:03:10 +1100 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69159>
 
-Finn Arne Gangstad <finnag@pvv.org> writes:
+When should a commit, commit twice?
 
-> Currently there seems to be no way of pusing a sha1 directly, or to
-> fetch a sha1 directly. When working with submodules, it is convenient
-> to be able to work with detached HEADs, so it would be good if this
-> could be supported also by fetch and push.
+When one or more git mv file renames/ moves are involved.
 
-At least push of an arbitrary commit is already supported, I
-think.
+In such a case the commit ought to be split into two. Perhaps move the
+files in the first commit, then make the changes needed to support the
+move in the build chain (including changes in the moved files) in the
+second commit.
 
-For fetch, I would normally say "check the list archives", but
-it was very long time ago that it was proposed and discussed.
-It has some security and performance implications.
+This keeps a clean record of the move, making the move, and the
+associated changes (as two commits) a clean cherry.
+
+Does this make sense?
+
+I develop in the java world, and we use packages (directories, and
+subdirectories, sub-sub... etc) a lot, and so it is not uncommon in my
+10 years development, to decide to reorganise some package/dir every now
+and then, and files, and whole dirs, get moved.
+
+I've only been using git for a few weeks, but finding it truly awesome!
+A little demanding in the initial learning curve - took me three days of
+reading and a little experiementation here and there, before I finally
+felt comfortable with rebasing, branching, etc, to effect my work
+pattern.
+
+Have used arch/tla, a little bzr, aegis for a couple of years long time
+ago, some cvs, and bk for four months or so.
+
+I'm hoping that the above workflow, which has just crystallized for me
+in the last two days, makes sense.
+
+zen
+
+-- 
+Homepage: www.SoulSound.net -- Free Australia: www.UPMART.org
+Please respect the confidentiality of this email as sensibly warranted.
