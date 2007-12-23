@@ -1,72 +1,70 @@
-From: "David Symonds" <dsymonds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: sane, stable renames; when a commit should commit twice
-Date: Sun, 23 Dec 2007 13:26:24 +1100
-Message-ID: <ee77f5c20712221826r5945a6d0x8a84eae98c85b25b@mail.gmail.com>
+Date: Sat, 22 Dec 2007 18:50:58 -0800
+Message-ID: <7v4peaw2ct.fsf@gitster.siamese.dyndns.org>
 References: <20071223020310.GA22450@freedbms.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Zenaan Harkness" <zen@freedbms.net>
-X-From: git-owner@vger.kernel.org Sun Dec 23 03:26:50 2007
+To: Zenaan Harkness <zen@freedbms.net>
+X-From: git-owner@vger.kernel.org Sun Dec 23 03:51:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J6GYE-0001zh-3m
-	for gcvg-git-2@gmane.org; Sun, 23 Dec 2007 03:26:50 +0100
+	id 1J6GwG-0006X0-4R
+	for gcvg-git-2@gmane.org; Sun, 23 Dec 2007 03:51:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754147AbXLWC00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2007 21:26:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752855AbXLWC00
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 21:26:26 -0500
-Received: from rv-out-0910.google.com ([209.85.198.187]:53635 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752745AbXLWC0Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2007 21:26:25 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so985999rvb.1
-        for <git@vger.kernel.org>; Sat, 22 Dec 2007 18:26:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ZY6QOmvg17RCRAY5a0w3SLQlLAM3U6GW7Q2t1ZYyQQU=;
-        b=w87tLdgnXykdUkV/jgdx3B2U5/e1UDLUMNp1v+xFpWocVIDS3U3hN1i2HxWGBXJcSmBDIvTIemv+DZKsIkCFHjvPdMJgTuGNrdVItPTW86k0wRSorbWaaLzAdqS54Np5Fc6oPKWz+KT8DEjUF0ic5DWfly0wPx8IJu1I9Z4H64c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=f92qwreizuz/JGTszLCSVPo5fEs/51bTotdFV2sqsh/j8NoACm7zwM8NPGh5nyD6dTy0+VjpbIO85piL3J606k5SJOcB71rA+YOYynQYzQzeK63fydKrC0KzGSNHZu+X3onBLLGWDhjy7gfe3QpqiNnCGcOdUMDCD6aG2WV9tos=
-Received: by 10.141.142.15 with SMTP id u15mr1663996rvn.53.1198376784533;
-        Sat, 22 Dec 2007 18:26:24 -0800 (PST)
-Received: by 10.141.115.4 with HTTP; Sat, 22 Dec 2007 18:26:24 -0800 (PST)
-In-Reply-To: <20071223020310.GA22450@freedbms.net>
-Content-Disposition: inline
+	id S1753372AbXLWCvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2007 21:51:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753395AbXLWCvK
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 21:51:10 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42175 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753358AbXLWCvJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2007 21:51:09 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AE887630;
+	Sat, 22 Dec 2007 21:51:03 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 135DA762E;
+	Sat, 22 Dec 2007 21:51:00 -0500 (EST)
+In-Reply-To: <20071223020310.GA22450@freedbms.net> (Zenaan Harkness's message
+	of "Sun, 23 Dec 2007 13:03:10 +1100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69162>
 
-On Dec 23, 2007 1:03 PM, Zenaan Harkness <zen@freedbms.net> wrote:
+Zenaan Harkness <zen@freedbms.net> writes:
+
 > When should a commit, commit twice?
 >
 > When one or more git mv file renames/ moves are involved.
->
-> In such a case the commit ought to be split into two. Perhaps move the
-> files in the first commit, then make the changes needed to support the
-> move in the build chain (including changes in the moved files) in the
-> second commit.
->
-> This keeps a clean record of the move, making the move, and the
-> associated changes (as two commits) a clean cherry.
->
+> ...
 > Does this make sense?
 
-Not particularly. Git commits are not (conceptually) changes or
-deltas; they are snapshots of a tree of files at a particular time.
-How does the tree state at your above first commit make any sense? It
-is broken. Git's rename/move detection is smart enough to notice that
-a rename + small-changes is close enough to a rename, so just trust
-that to get it right.
+Anything that feels right to you is right for _your_ project, so
+asking that question does not add much value, but I would not
+personally do that myself.  I may have pure rename commits that
+move files around without changing any contents in my history,
+but that is only because there happened to be no need to change
+the contents in those commits, not because I followed an
+artificial "a rename-only commit, followed by a commit that
+edits" dogma you seem to be suggesting.
 
+If I move file common.c to lib/common.c and common.h to
+include/common.h, I would definitely NOT record that as two
+events, if common.c used to include common.h.  My commit that
+moves these two files will definitely contain edit to common.c
+(now lib/common.c) that changes at least one line:
 
-Dave.
+	-#include "common.h"
+        +#include "../include/common.h"
+
+in the same commit.  If you split this as two events, your first
+"rename only" commit would not even build.
