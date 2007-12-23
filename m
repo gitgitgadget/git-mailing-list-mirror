@@ -1,272 +1,132 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 4/4] Allow selection of different cleanup modes for commit messages
-Date: Sat, 22 Dec 2007 19:55:36 -0800
-Message-ID: <1198382136-15724-4-git-send-email-gitster@pobox.com>
-References: <1198382136-15724-1-git-send-email-gitster@pobox.com>
- <1198382136-15724-2-git-send-email-gitster@pobox.com>
- <1198382136-15724-3-git-send-email-gitster@pobox.com>
-Cc: Alex Riesen <raa.lkml@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 23 04:56:30 2007
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [PATCH] HP-UX does not have select.h
+Date: Sun, 23 Dec 2007 09:37:08 +0100
+Message-ID: <20071223083708.GA3563@efreet.light.src>
+References: <20071217192306.5da48540@pc09.procura.nl> <7v8x3t6nq1.fsf@gitster.siamese.dyndns.org> <4767934F.7070706@op5.se> <7vir2w1ghi.fsf@gitster.siamese.dyndns.org> <20071218114949.711ba447@pc09.procura.nl> <7vr6hiv4ny.fsf@gitster.siamese.dyndns.org> <20071219211226.41920430@pc09.procura.nl> <7vzlw6tlpt.fsf@gitster.siamese.dyndns.org> <20071220081806.0ccdf636@pc09.procura.nl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org
+To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+X-From: git-owner@vger.kernel.org Sun Dec 23 09:37:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J6Hwz-0008FK-Fj
-	for gcvg-git-2@gmane.org; Sun, 23 Dec 2007 04:56:29 +0100
+	id 1J6MLA-0002kp-I4
+	for gcvg-git-2@gmane.org; Sun, 23 Dec 2007 09:37:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754727AbXLWD4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2007 22:56:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754716AbXLWD4B
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 22:56:01 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45738 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754660AbXLWDz7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2007 22:55:59 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E3852594;
-	Sat, 22 Dec 2007 22:55:59 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 19A2C2593;
-	Sat, 22 Dec 2007 22:55:55 -0500 (EST)
-X-Mailer: git-send-email 1.5.4.rc1.19.g9151fa
-In-Reply-To: <1198382136-15724-3-git-send-email-gitster@pobox.com>
+	id S1751865AbXLWIhU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Dec 2007 03:37:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbXLWIhU
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Dec 2007 03:37:20 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:33678 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751273AbXLWIhS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Dec 2007 03:37:18 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id B50CE57463;
+	Sun, 23 Dec 2007 09:37:16 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id uUJ5cQLhQYMV; Sun, 23 Dec 2007 09:37:14 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 4695A57457;
+	Sun, 23 Dec 2007 09:37:13 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1J6MKa-0006oo-3t; Sun, 23 Dec 2007 09:37:08 +0100
+Content-Disposition: inline
+In-Reply-To: <20071220081806.0ccdf636@pc09.procura.nl>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69169>
 
-From: Alex Riesen <raa.lkml@gmail.com>
+On Thu, Dec 20, 2007 at 08:18:06 +0100, H.Merijn Brand wrote:
+> On Wed, 19 Dec 2007 13:31:58 -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> > "H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
+> > > On Wed, 19 Dec 2007 11:57:21 -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> > >> "H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
+> > >> > On Tue, 18 Dec 2007 01:47:53 -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> > >> > ...
+> > >> >> Merijn, discarding the earlier patch I did to configure it out for
+> > >> >> HP-UX, does the following patch based on Andreas's idea work for you?
+> > >> >
+> > >> > Probably not:
+> > >> >
+> > >> > HP-UX 10.20, 11.00, 11.11, 11.23/PA, and 11.23/IPF all have:
+> > >> >
+> > >> > /usr/include 103 > grep -r POSIX_VERSION *
+> > >> > sys/unistd.h:#    define _POSIX_VERSION _POSIX1_VERSION_88
+> > >> > sys/unistd.h:#      define _POSIX_VERSION       _POSIX1_VERSION_90
+> > >> > sys/unistd.h:#      define _POSIX_VERSION       _POSIX1_VERSION_93
 
-From: Alex Riesen <raa.lkml@gmail.com>
-Date: Sat, 22 Dec 2007 19:46:24 +0100
+Please, note that the defines are _POSIX1_VERSION_*
+                                        ^
 
-Although we traditionally stripped away excess blank lines, trailing
-whitespaces and lines that begin with "#" from the commit log message,
-sometimes the message just has to be the way user wants it.
+> > >> > sys/unistd.h:#  define _SC_1_VERSION_88    7     /* _POSIX_VERSION: Date of POSIX.1-1988 */
+> > >> > sys/unistd.h:#  define _SC_1_VERSION_90   102 /* _POSIX_VERSION: Date of POSIX.1-1990 */
+> > >> > sys/unistd.h:#  define _SC_1_VERSION_93   103 /* _POSIX_VERSION: Date of POSIX.1b-1993 */
+> > >> > sys/unistd.h:#  if (_POSIX_VERSION == _POSIX1_VERSION_88)
+> > >> > sys/unistd.h:#    if (_POSIX_VERSION == _POSIX1_VERSION_90)
+> > >> >
+> > >> > and the two 11.23 do have select.h
+> [...]
+> 
+> If it is used to *define* _POSIX_VERSION, it should have come up too,
+> wouldn't it?
+> 
+> The only define that comes close to something like YYYYMM is:
 
-For instance, a commit message template can contain lines that begin with
-"#", the message must be kept as close to its original source as possible
-if you are converting from a foreign SCM, or maybe the message has a shell
-script including its comments for future reference.
+No, it's not the only one. The _POSIX1_VERSION_* macros we are looking for
+are there below and they are defined this way too (did you miss them because
+of the trailing comment?)
 
-The cleanup modes are default, verbatim, whitespace and strip. The
-default mode depends on if the message is being edited and will either
-strip whitespace and comments (if editor active) or just strip the
-whitespace (for where the message is given explicitely).
+> X11/Xosdefs.h:#define X_POSIX_C_SOURCE 199300L
+> 
+> usr/include 111 > grep -r POSIX.*YEAR .
+> Exit 1
+> 
+> /usr/include 112 > grep -P -r 'POSIX.*\b(19\d\d|200\d)' .
+> ./sys/buf.h:#if         (_POSIX_C_SOURCE >= 199309)
+> ./sys/buf.h:#endif      /* (_POSIX_C_SOURCE >= 199309) */
+> ./sys/stdsyms.h:/* XPG3 semantics gets POSIX.1-1988 semantics by default */
+> ./sys/stdsyms.h: * This usage is obsolescent, "-D_POSIX_C_SOURCE=199506" is preferred */
+> ./sys/stdsyms.h:#  if (_POSIX_C_SOURCE >= 199506) && !defined(_INCLUDE_POSIX1C_SOURCE)
+> ./sys/stdsyms.h:#  endif /* _POSIX_C_SOURCE >= 199506 && !_INCLUDE_POSIX1C_SOURCE */
+> ./sys/stdsyms.h:#  if (_POSIX_C_SOURCE >= 199506) && !defined(_REENTRANT)
+> ./sys/stdsyms.h:#  endif /* _POSIX_C_SOURCE >= 199506 && !_REENTRANT */
+> ./sys/stdsyms.h:#  if (_POSIX_C_SOURCE >= 199309) && !defined(_INCLUDE_POSIX4_SOURCE)
+> ./sys/stdsyms.h:#  endif /* _POSIX_C_SOURCE >= 199309 && !_INCLUDE_POSIX4_SOURCE */
+> ./sys/unistd.h:#  define _POSIX1_VERSION_88     198808L    /* We support POSIX.1-1988 */
+> ./sys/unistd.h:#  define _POSIX1_VERSION_90     199009L    /* We support POSIX.1-1990 */
+> ./sys/unistd.h:#  define _POSIX1_VERSION_93     199309L    /* We support POSIX.1b-1993 */
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+And they are defined HERE.
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-commit.txt |   12 +++++++-
- builtin-commit.c             |   42 ++++++++++++++++++++++++--
- t/t7502-commit.sh            |   65 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 114 insertions(+), 5 deletions(-)
+Obviously, there is no value for the 2001 standard, so if this is from HP-UX
+version that already has sys/select.h, it does not claim conformance to the
+posix standard. But than it might be that sys/select.h is not required, so
+the test might still work.
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 4261384..96383b6 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- 'git-commit' [-a | --interactive] [-s] [-v] [-u]
- 	   [(-c | -C) <commit> | -F <file> | -m <msg> | --amend]
- 	   [--allow-empty] [--no-verify] [-e] [--author <author>]
--	   [--] [[-i | -o ]<file>...]
-+	   [--cleanup=<mode>] [--] [[-i | -o ]<file>...]
- 
- DESCRIPTION
- -----------
-@@ -95,6 +95,16 @@ OPTIONS
- 	from making such a commit.  This option bypasses the safety, and
- 	is primarily for use by foreign scm interface scripts.
- 
-+--cleanup=<mode>::
-+	This option sets how the commit message is cleaned up.
-+	The  '<mode>' can be one of 'verbatim', 'whitespace', 'strip',
-+	and 'default'. The 'default' mode will strip leading and
-+	trailing empty lines and #commentary from the commit message
-+	only if the message is to be edited. Otherwise only whitespace
-+	removed. The 'verbatim' mode does not change message at all,
-+	'whitespace' removes just leading/trailing whitespace lines
-+	and 'strip' removes both whitespace and commentary.
-+
- -e|--edit::
- 	The message taken from file with `-F`, command line with
- 	`-m`, and from file with `-C` are usually used as the
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 200eb9d..0e827d7 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -47,6 +47,19 @@ static char *logfile, *force_author, *template_file;
- static char *edit_message, *use_message;
- static int all, edit_flag, also, interactive, only, amend, signoff;
- static int quiet, verbose, untracked_files, no_verify, allow_empty;
-+/*
-+ * The default commit message cleanup mode will remove the lines
-+ * beginning with # (shell comments) and leading and trailing
-+ * whitespaces (empty lines or containing only whitespaces)
-+ * if editor is used, and only the whitespaces if the message
-+ * is specified explicitly.
-+ */
-+static enum {
-+	CLEANUP_SPACE,
-+	CLEANUP_NONE,
-+	CLEANUP_ALL,
-+} cleanup_mode;
-+static char *cleanup_arg;
- 
- static int use_editor = 1, initial_commit, in_merge;
- const char *only_include_assumed;
-@@ -88,6 +101,7 @@ static struct option builtin_commit_options[] = {
- 	OPT_BOOLEAN(0, "amend", &amend, "amend previous commit"),
- 	OPT_BOOLEAN(0, "untracked-files", &untracked_files, "show all untracked files"),
- 	OPT_BOOLEAN(0, "allow-empty", &allow_empty, "ok to record an empty change"),
-+	OPT_STRING(0, "cleanup", &cleanup_arg, "default", "how to strip spaces and #comments from message"),
- 
- 	OPT_END()
- };
-@@ -346,7 +360,8 @@ static int prepare_log_message(const char *index_file, const char *prefix)
- 	if (fp == NULL)
- 		die("could not open %s", git_path(commit_editmsg));
- 
--	stripspace(&sb, 0);
-+	if (cleanup_mode != CLEANUP_NONE)
-+		stripspace(&sb, 0);
- 
- 	if (signoff) {
- 		struct strbuf sob;
-@@ -411,7 +426,12 @@ static int prepare_log_message(const char *index_file, const char *prefix)
- 	fprintf(fp,
- 		"\n"
- 		"# Please enter the commit message for your changes.\n"
--		"# (Comment lines starting with '#' will not be included)\n");
-+		"# (Comment lines starting with '#' will ");
-+	if (cleanup_mode == CLEANUP_ALL)
-+		fprintf(fp, "not be included)\n");
-+	else /* CLEANUP_SPACE, that is. */
-+		fprintf(fp, "be kept.\n"
-+			"# You can remove them yourself if you want to)\n");
- 	if (only_include_assumed)
- 		fprintf(fp, "# %s\n", only_include_assumed);
- 
-@@ -435,10 +455,13 @@ static int message_is_empty(struct strbuf *sb, int start)
- 	const char *nl;
- 	int eol, i;
- 
-+	if (cleanup_mode == CLEANUP_NONE && sb->len)
-+		return 0;
-+
- 	/* See if the template is just a prefix of the message. */
- 	strbuf_init(&tmpl, 0);
- 	if (template_file && strbuf_read_file(&tmpl, template_file, 0) > 0) {
--		stripspace(&tmpl, 1);
-+		stripspace(&tmpl, cleanup_mode == CLEANUP_ALL);
- 		if (start + tmpl.len <= sb->len &&
- 		    memcmp(tmpl.buf, sb->buf + start, tmpl.len) == 0)
- 			start += tmpl.len;
-@@ -591,6 +614,16 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 		only_include_assumed = "Explicit paths specified without -i nor -o; assuming --only paths...";
- 		also = 0;
- 	}
-+	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
-+		cleanup_mode = use_editor ? CLEANUP_ALL : CLEANUP_SPACE;
-+	else if (!strcmp(cleanup_arg, "verbatim"))
-+		cleanup_mode = CLEANUP_NONE;
-+	else if (!strcmp(cleanup_arg, "whitespace"))
-+		cleanup_mode = CLEANUP_SPACE;
-+	else if (!strcmp(cleanup_arg, "strip"))
-+		cleanup_mode = CLEANUP_ALL;
-+	else
-+		die("Invalid cleanup mode %s", cleanup_arg);
- 
- 	if (all && argc > 0)
- 		die("Paths with -a does not make sense.");
-@@ -817,7 +850,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	if (p != NULL)
- 		strbuf_setlen(&sb, p - sb.buf + 1);
- 
--	stripspace(&sb, 1);
-+	if (cleanup_mode != CLEANUP_NONE)
-+		stripspace(&sb, cleanup_mode == CLEANUP_ALL);
- 	if (sb.len < header_len || message_is_empty(&sb, header_len)) {
- 		rollback_index_files();
- 		die("no commit message?  aborting commit.");
-diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-index 21ac785..aaf497e 100755
---- a/t/t7502-commit.sh
-+++ b/t/t7502-commit.sh
-@@ -89,4 +89,69 @@ test_expect_success 'verbose' '
- 
- '
- 
-+test_expect_success 'cleanup commit messages (verbatim,-t)' '
-+
-+	echo >>negative &&
-+	{ echo;echo "# text";echo; } >expect &&
-+	git commit --cleanup=verbatim -t expect -a &&
-+	git cat-file -p HEAD |sed -e "1,/^\$/d" |head -n 3 >actual &&
-+	diff -u expect actual
-+
-+'
-+
-+test_expect_success 'cleanup commit messages (verbatim,-F)' '
-+
-+	echo >>negative &&
-+	git commit --cleanup=verbatim -F expect -a &&
-+	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
-+	diff -u expect actual
-+
-+'
-+
-+test_expect_success 'cleanup commit messages (verbatim,-m)' '
-+
-+	echo >>negative &&
-+	git commit --cleanup=verbatim -m "$(cat expect)" -a &&
-+	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
-+	diff -u expect actual
-+
-+'
-+
-+test_expect_success 'cleanup commit messages (whitespace,-F)' '
-+
-+	echo >>negative &&
-+	{ echo;echo "# text";echo; } >text &&
-+	echo "# text" >expect &&
-+	git commit --cleanup=whitespace -F text -a &&
-+	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
-+	diff -u expect actual
-+
-+'
-+
-+test_expect_success 'cleanup commit messages (strip,-F)' '
-+
-+	echo >>negative &&
-+	{ echo;echo "# text";echo sample;echo; } >text &&
-+	echo sample >expect &&
-+	git commit --cleanup=strip -F text -a &&
-+	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
-+	diff -u expect actual
-+
-+'
-+
-+echo "sample
-+
-+# Please enter the commit message for your changes.
-+# (Comment lines starting with '#' will not be included)" >expect
-+
-+test_expect_success 'cleanup commit messages (strip,-F,-e)' '
-+
-+	echo >>negative &&
-+	{ echo;echo sample;echo; } >text &&
-+	git commit -e -F text -a &&
-+	head -n 4 .git/COMMIT_EDITMSG >actual &&
-+	diff -u expect actual
-+
-+'
-+
- test_done
+> ./sys/unistd.h:#    if !defined(_POSIX_C_SOURCE) || (_POSIX_C_SOURCE < 199309L)
+> ./sys/unistd.h:#    else /* _POSIX_C_SOURCE && _POSIX_C_SOURCE >= 199309L */
+> ./sys/unistd.h:#    endif /* _POSIX_C_SOURCE && _POSIX_C_SOURCE >= 199309L */
+> ./sys/unistd.h:/* Symbolic constants for sysconf() variables defined by POSIX.1-1988: 0-7 */
+> ./sys/unistd.h:#  define _SC_1_VERSION_88    7   /* _POSIX_VERSION: Date of POSIX.1-1988 */
+> ./sys/unistd.h:/* Symbolic constants for sysconf() variables added by POSIX.1-1990: 100-199 */
+> ./sys/unistd.h:#  define _SC_1_VERSION_90   102 /* _POSIX_VERSION: Date of POSIX.1-1990 */
+> ./sys/unistd.h:#  define _SC_1_VERSION_93   103 /* _POSIX_VERSION: Date of POSIX.1b-1993 */
+> ./sys/unistd.h:#  define _POSIX2_VERSION   199209L  /* IEEE POSIX.2-1992 base standard */
+> ./sys/unistd.h:#  define _POSIX2_C_VERSION 199209L  /* IEEE POSIX.2-1992 C language binding */
+> ./limits.h:#  define _POSIX_CLOCKRES_MIN        20000000 /* The CLOCK_REALTIME clock
+> ./X11/Xosdefs.h:#define X_POSIX_C_SOURCE 199300L
+> ./dce/cdsclerk.h:#if _POSIX_C_SOURCE >= 199506L
+> ./dce/rpcexc.h:#if _POSIX_C_SOURCE >= 199506L
+> ./dce/stubbase.h:#if _POSIX_C_SOURCE >= 199506L
+
 -- 
-1.5.4.rc1.19.g9151fa
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
