@@ -1,76 +1,73 @@
-From: Abdelrazak Younes <younes.a@free.fr>
-Subject: Re: [msysgit] how to detect git.exe directory?
-Date: Sun, 23 Dec 2007 20:45:34 +0100
-Message-ID: <476EBADE.6080805@free.fr>
-References: <e5bfff550712230825o5e73bd3dm31057847106b8722@mail.gmail.com>
+From: Abdelrazak Younes <younes.a-GANU6spQydw@public.gmane.org>
+Subject: Re: how to detect git.exe directory?
+Date: Sun, 23 Dec 2007 20:51:33 +0100
+Message-ID: <fkme88$rc1$1@ger.gmane.org>
+References: <e5bfff550712230825o5e73bd3dm31057847106b8722@mail.gmail.com> <200712231735.00336.johannes.sixt@telecom.at> <e5bfff550712230853u1bc0160ap936c2d0a6fe0203b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: msysgit@googlegroups.com, Git Mailing List <git@vger.kernel.org>
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 23 20:46:06 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Sun Dec 23 20:52:21 2007
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from wa-out-0708.google.com ([209.85.146.244])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J6Wlx-0000cB-KB
-	for gcvg-git-2@gmane.org; Sun, 23 Dec 2007 20:46:06 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754268AbXLWTpk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Dec 2007 14:45:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753944AbXLWTpk
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Dec 2007 14:45:40 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:49290 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753216AbXLWTpk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Dec 2007 14:45:40 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 6D8E21AB339;
-	Sun, 23 Dec 2007 20:45:38 +0100 (CET)
-Received: from [192.168.0.1] (gre92-5-82-237-199-162.fbx.proxad.net [82.237.199.162])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 251871AB304;
-	Sun, 23 Dec 2007 20:45:38 +0100 (CET)
+	id 1J6Ws0-00025f-EF
+	for gcvm-msysgit@m.gmane.org; Sun, 23 Dec 2007 20:52:21 +0100
+Received: by wa-out-0708.google.com with SMTP id n36so768867wag.21
+        for <gcvm-msysgit@m.gmane.org>; Sun, 23 Dec 2007 11:51:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:received:x-injected-via-gmane:to:from:subject:date:lines:message-id:references:mime-version:content-type:content-transfer-encoding:x-complaints-to:x-gmane-nntp-posting-host:user-agent:in-reply-to:cc:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=Tfji/8CpQwAEn1pt/0rFc/sc6/NkPhqFhYOh43206PY=;
+        b=gi3Pi5po9dSl1dEoYQMH3PzXNXDPEunduBAskXMtKC86BlDtIoefwUJNj/Dcw0SYyjxOmrosZIvDEdxZGsswwQu31B/ZsGZKjuKe68DNXbH7pplqAOSfoxbA/RbZ1Y9z3SH7H/yijlztwCnFLMFKjyp70mTHheiGymj8gGpk+tA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:x-injected-via-gmane:to:from:subject:date:lines:message-id:references:mime-version:content-type:content-transfer-encoding:x-complaints-to:x-gmane-nntp-posting-host:user-agent:in-reply-to:cc:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=hNSY9Qyb6eK+zIhtZKGv7+ZoAg3UrRjDtxf4V5EHHmfNvBH9moyjPi9BfWZyLY53TGNz3zjTgGF2NBaqaWhwAiPPnUmRec5pyyhWPMDK8jnYfqSDflibRcIhirYUDXFbTtMuZT+m3kub23Fuiw0FNYEX2st4+VnpZiCrWwcUiMk=
+Received: by 10.114.146.1 with SMTP id t1mr119587wad.4.1198439515903;
+        Sun, 23 Dec 2007 11:51:55 -0800 (PST)
+Received: by 10.107.100.4 with SMTP id c4gr1279prm;
+	Sun, 23 Dec 2007 11:51:55 -0800 (PST)
+X-Sender: gcvm-msysgit@m.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.114.161.11 with SMTP id j11mr1718615wae.29.1198439515796; Sun, 23 Dec 2007 11:51:55 -0800 (PST)
+Received: from ciao.gmane.org (main.gmane.org [80.91.229.2]) by mx.google.com with ESMTP id h71si6274806nzf.3.2007.12.23.11.51.55; Sun, 23 Dec 2007 11:51:55 -0800 (PST)
+Received-SPF: pass (google.com: domain of gcvm-msysgit@m.gmane.org designates 80.91.229.2 as permitted sender) client-ip=80.91.229.2;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of gcvm-msysgit@m.gmane.org designates 80.91.229.2 as permitted sender) smtp.mail=gcvm-msysgit@m.gmane.org
+Received: from list by ciao.gmane.org with local (Exim 4.43) id 1J6WrV-0004He-Vf for msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; Sun, 23 Dec 2007 19:51:49 +0000
+Received: from gre92-5-82-237-199-162.fbx.proxad.net ([82.237.199.162]) by main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Sun, 23 Dec 2007 19:51:49 +0000
+Received: from younes.a by gre92-5-82-237-199-162.fbx.proxad.net with local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Sun, 23 Dec 2007 19:51:49 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet-dbVV3NMTNubNLxjTenLetw@public.gmane.org
+X-Gmane-NNTP-Posting-Host: gre92-5-82-237-199-162.fbx.proxad.net
 User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <e5bfff550712230825o5e73bd3dm31057847106b8722@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+In-Reply-To: <e5bfff550712230853u1bc0160ap936c2d0a6fe0203b-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69193>
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69194>
+
 
 Marco Costalba wrote:
-> Hi all,
 > 
->    I'm progressing on qgit installer for windows, I have switched to
-> MSVC for compiling Qt4 and qgit sources and I have to say that first
-> results are very good, qgit.exe now seems to work without problems or
-> artifacts and the speed is much more similar to what we achieve under
-> the Linux platform (read much higher).
-
-Glad you manage to do it by yourself. Sorry for not going further with 
-compilation as I promised but the git repository had only a MSVC2008 
-solution file and I have only MSVC2005 here. I tried to adapt our CMake 
-files to qgit but failed...
-
+> What I'm looking for is git.exe itself. If I run "git --exec-path" I
+> get something along the lines "git executable not found..."
 > 
-> So it seems Qt+mingw is not the _best_ possible solution.
+> I don't use dashed command inside qgit, so I run "git log ..." not
+> "git-log ...", but the git.exe should be known to qgit or in path.
 
-I told you that ;-)
-
-> 
-> Anyhow, under Vista you cannot simply copy qgit.exe in the git
-> directory (OS barfs regarding some administrative rights, note that *I
-> am* the administartor!), so to make qgit.exe work git.exe file must be
-> in PATH.
-> 
-> To easy the user and allowing to call qgit.exe double clicking on a
-> nice desktop icon I need a way to know where git.exe is installed *at
-> runtime*.
-> 
-> So my question is: "What is the preferred way to detect git directory
-> at runtime for msysgit files?"
-
-If you use QProcess to launch git, maybe you could just use 
-QProcess::workingDirectory()?
+If you're planning to create an installer for qgit, a good solution 
+would be to ask the user to manually point to the msysgit installation 
+directory if not found in the path. Then the installer could just save 
+the directory to an ini file along 'qgit.exe'.
 
 Abdel.
