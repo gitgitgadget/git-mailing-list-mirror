@@ -1,80 +1,64 @@
-From: "Robert P. J. Day" <rpjday@crashcourse.ca>
-Subject: Re: Updated Kernel Hacker's guide to git
-Date: Sun, 23 Dec 2007 12:23:39 -0500 (EST)
-Message-ID: <alpine.LFD.0.9999.0712231222370.29681@localhost.localdomain>
-References: <200612241807.kBOI746w008739@laptop13.inf.utfsm.cl> <476E42BF.1010300@garzik.org> <alpine.LFD.0.9999.0712230701520.14863@localhost.localdomain> <476E50DC.1040701@garzik.org> <alpine.LFD.0.9999.0712230715490.15596@localhost.localdomain>
- <476E5CFC.5070301@gmx.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: cvsimport: trying to convert freebsd cvs to git
+Date: Sun, 23 Dec 2007 12:29:13 -0500
+Message-ID: <20071223172913.GA9297@sigill.intra.peff.net>
+References: <20071222171801.GE15286@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff Garzik <jeff@garzik.org>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dieter Ries <clip3@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Dec 23 18:24:08 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Stefan Sperling <stsp@stsp.name>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Sun Dec 23 18:29:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J6UYZ-0005Ud-UZ
-	for gcvg-git-2@gmane.org; Sun, 23 Dec 2007 18:24:08 +0100
+	id 1J6Udw-0006zQ-F0
+	for gcvg-git-2@gmane.org; Sun, 23 Dec 2007 18:29:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754010AbXLWRXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Dec 2007 12:23:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753685AbXLWRXo
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Dec 2007 12:23:44 -0500
-Received: from astoria.ccjclearline.com ([64.235.106.9]:47535 "EHLO
-	astoria.ccjclearline.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753215AbXLWRXn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Dec 2007 12:23:43 -0500
-Received: from [99.236.111.198] (helo=crashcourse.ca)
-	by astoria.ccjclearline.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <rpjday@crashcourse.ca>)
-	id 1J6UY9-0001to-9J; Sun, 23 Dec 2007 12:23:41 -0500
-X-X-Sender: rpjday@localhost.localdomain
-In-Reply-To: <476E5CFC.5070301@gmx.de>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - astoria.ccjclearline.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1753226AbXLWR3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Dec 2007 12:29:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbXLWR3R
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Dec 2007 12:29:17 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4956 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752839AbXLWR3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Dec 2007 12:29:16 -0500
+Received: (qmail 17028 invoked by uid 111); 23 Dec 2007 17:29:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 23 Dec 2007 12:29:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 23 Dec 2007 12:29:13 -0500
+Content-Disposition: inline
+In-Reply-To: <20071222171801.GE15286@genesis.frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69189>
 
-On Sun, 23 Dec 2007, Dieter Ries wrote:
+On Sat, Dec 22, 2007 at 06:18:01PM +0100, Miklos Vajna wrote:
 
-> Robert P. J. Day schrieb:
+> then i tried:
+> 
+> $ time git cvsimport -d `pwd`/cvs -C src.git src
+> Initialized empty Git repository in /home/vmiklos/git/freebsd/src.git/.git/
+> malformed revision
 
-> > just to be clear, i'm not complaining about the quality of the
-> > document above, but when i got started with git, what i really
-> > wanted was a list of what i (as a simple, non-developer user)
-> > could do once i cloned a repository.
-> >
-> > to that end, i put together my own little reference list of git
-> > commands.  for example, i collected ways to examine my repository
-> > -- git commands like branch, tag, log/shortlog, what-changed,
-> > show, grep, blame, that sort of thing.  exactly the kind of stuff
-> > a new user might want to know about, even without the ability to
-> > change anything.
->
-> Could you perhaps publish your reference list as kind of a christmas
-> gift to all basic users like me?
+This is the actual error; everything else is git-cvsimport failing to
+notice the problem and continuing anyway.
 
-if you give me a day or two (or three), i may put an updated version
-of that up on my wiki.
+I will take a look and see if it is simple to stop the process here and
+produce a better error message.
 
-rday
+> 1) does cvsimport supports the case when the source if on the local
+> filesystem, and not in not on a cvs server?
 
-========================================================================
-Robert P. J. Day
-Linux Consulting, Training and Annoying Kernel Pedantry
-Waterloo, Ontario, CANADA
+Yes, it should work fine (it will still call cvsps and CVS, so it should
+look the same to git-cvsimport).
 
-http://crashcourse.ca
-========================================================================
+> 2) if it supports, then i think the real error message is 'malformed
+> revision'. what is the proper way to see where is that revision?
+
+Try git-cvsimport -v.
+
+-Peff
