@@ -1,103 +1,272 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/4] builtin-commit: avoid double-negation in the code.
-Date: Sat, 22 Dec 2007 19:55:35 -0800
-Message-ID: <1198382136-15724-3-git-send-email-gitster@pobox.com>
+Subject: [PATCH 4/4] Allow selection of different cleanup modes for commit messages
+Date: Sat, 22 Dec 2007 19:55:36 -0800
+Message-ID: <1198382136-15724-4-git-send-email-gitster@pobox.com>
 References: <1198382136-15724-1-git-send-email-gitster@pobox.com>
  <1198382136-15724-2-git-send-email-gitster@pobox.com>
+ <1198382136-15724-3-git-send-email-gitster@pobox.com>
+Cc: Alex Riesen <raa.lkml@gmail.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sun Dec 23 04:56:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J6Hwy-0008FK-Py
+	id 1J6Hwz-0008FK-Fj
 	for gcvg-git-2@gmane.org; Sun, 23 Dec 2007 04:56:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754711AbXLWDz4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Dec 2007 22:55:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754660AbXLWDzz
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 22:55:55 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45734 "EHLO
+	id S1754727AbXLWD4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Dec 2007 22:56:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754716AbXLWD4B
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Dec 2007 22:56:01 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45738 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754702AbXLWDzy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Dec 2007 22:55:54 -0500
+	with ESMTP id S1754660AbXLWDz7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Dec 2007 22:55:59 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 592312592;
-	Sat, 22 Dec 2007 22:55:54 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E3852594;
+	Sat, 22 Dec 2007 22:55:59 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id BEF452591;
-	Sat, 22 Dec 2007 22:55:52 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 19A2C2593;
+	Sat, 22 Dec 2007 22:55:55 -0500 (EST)
 X-Mailer: git-send-email 1.5.4.rc1.19.g9151fa
-In-Reply-To: <1198382136-15724-2-git-send-email-gitster@pobox.com>
+In-Reply-To: <1198382136-15724-3-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69168>
 
-The flag no_edit meant "we have got final message from the user
-and will not editing it any further", but there were quite a few
-places that needed to check !no_edit.  Rename the variable to
-use_editor and reverse the logic everywhere.
+From: Alex Riesen <raa.lkml@gmail.com>
 
+From: Alex Riesen <raa.lkml@gmail.com>
+Date: Sat, 22 Dec 2007 19:46:24 +0100
+
+Although we traditionally stripped away excess blank lines, trailing
+whitespaces and lines that begin with "#" from the commit log message,
+sometimes the message just has to be the way user wants it.
+
+For instance, a commit message template can contain lines that begin with
+"#", the message must be kept as close to its original source as possible
+if you are converting from a foreign SCM, or maybe the message has a shell
+script including its comments for future reference.
+
+The cleanup modes are default, verbatim, whitespace and strip. The
+default mode depends on if the message is being edited and will either
+strip whitespace and comments (if editor active) or just strip the
+whitespace (for where the message is given explicitely).
+
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin-commit.c |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
+ Documentation/git-commit.txt |   12 +++++++-
+ builtin-commit.c             |   42 ++++++++++++++++++++++++--
+ t/t7502-commit.sh            |   65 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 114 insertions(+), 5 deletions(-)
 
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 4261384..96383b6 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ 'git-commit' [-a | --interactive] [-s] [-v] [-u]
+ 	   [(-c | -C) <commit> | -F <file> | -m <msg> | --amend]
+ 	   [--allow-empty] [--no-verify] [-e] [--author <author>]
+-	   [--] [[-i | -o ]<file>...]
++	   [--cleanup=<mode>] [--] [[-i | -o ]<file>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -95,6 +95,16 @@ OPTIONS
+ 	from making such a commit.  This option bypasses the safety, and
+ 	is primarily for use by foreign scm interface scripts.
+ 
++--cleanup=<mode>::
++	This option sets how the commit message is cleaned up.
++	The  '<mode>' can be one of 'verbatim', 'whitespace', 'strip',
++	and 'default'. The 'default' mode will strip leading and
++	trailing empty lines and #commentary from the commit message
++	only if the message is to be edited. Otherwise only whitespace
++	removed. The 'verbatim' mode does not change message at all,
++	'whitespace' removes just leading/trailing whitespace lines
++	and 'strip' removes both whitespace and commentary.
++
+ -e|--edit::
+ 	The message taken from file with `-F`, command line with
+ 	`-m`, and from file with `-C` are usually used as the
 diff --git a/builtin-commit.c b/builtin-commit.c
-index d8f0dfd..200eb9d 100644
+index 200eb9d..0e827d7 100644
 --- a/builtin-commit.c
 +++ b/builtin-commit.c
-@@ -48,7 +48,7 @@ static char *edit_message, *use_message;
+@@ -47,6 +47,19 @@ static char *logfile, *force_author, *template_file;
+ static char *edit_message, *use_message;
  static int all, edit_flag, also, interactive, only, amend, signoff;
  static int quiet, verbose, untracked_files, no_verify, allow_empty;
++/*
++ * The default commit message cleanup mode will remove the lines
++ * beginning with # (shell comments) and leading and trailing
++ * whitespaces (empty lines or containing only whitespaces)
++ * if editor is used, and only the whitespaces if the message
++ * is specified explicitly.
++ */
++static enum {
++	CLEANUP_SPACE,
++	CLEANUP_NONE,
++	CLEANUP_ALL,
++} cleanup_mode;
++static char *cleanup_arg;
  
--static int no_edit, initial_commit, in_merge;
-+static int use_editor = 1, initial_commit, in_merge;
+ static int use_editor = 1, initial_commit, in_merge;
  const char *only_include_assumed;
- struct strbuf message;
+@@ -88,6 +101,7 @@ static struct option builtin_commit_options[] = {
+ 	OPT_BOOLEAN(0, "amend", &amend, "amend previous commit"),
+ 	OPT_BOOLEAN(0, "untracked-files", &untracked_files, "show all untracked files"),
+ 	OPT_BOOLEAN(0, "allow-empty", &allow_empty, "ok to record an empty change"),
++	OPT_STRING(0, "cleanup", &cleanup_arg, "default", "how to strip spaces and #comments from message"),
  
-@@ -372,7 +372,7 @@ static int prepare_log_message(const char *index_file, const char *prefix)
+ 	OPT_END()
+ };
+@@ -346,7 +360,8 @@ static int prepare_log_message(const char *index_file, const char *prefix)
+ 	if (fp == NULL)
+ 		die("could not open %s", git_path(commit_editmsg));
  
- 	strbuf_release(&sb);
+-	stripspace(&sb, 0);
++	if (cleanup_mode != CLEANUP_NONE)
++		stripspace(&sb, 0);
  
--	if (no_edit) {
-+	if (!use_editor) {
- 		struct rev_info rev;
- 		unsigned char sha1[20];
- 		const char *parent = "HEAD";
-@@ -398,7 +398,7 @@ static int prepare_log_message(const char *index_file, const char *prefix)
- 		return !!DIFF_OPT_TST(&rev.diffopt, HAS_CHANGES);
+ 	if (signoff) {
+ 		struct strbuf sob;
+@@ -411,7 +426,12 @@ static int prepare_log_message(const char *index_file, const char *prefix)
+ 	fprintf(fp,
+ 		"\n"
+ 		"# Please enter the commit message for your changes.\n"
+-		"# (Comment lines starting with '#' will not be included)\n");
++		"# (Comment lines starting with '#' will ");
++	if (cleanup_mode == CLEANUP_ALL)
++		fprintf(fp, "not be included)\n");
++	else /* CLEANUP_SPACE, that is. */
++		fprintf(fp, "be kept.\n"
++			"# You can remove them yourself if you want to)\n");
+ 	if (only_include_assumed)
+ 		fprintf(fp, "# %s\n", only_include_assumed);
+ 
+@@ -435,10 +455,13 @@ static int message_is_empty(struct strbuf *sb, int start)
+ 	const char *nl;
+ 	int eol, i;
+ 
++	if (cleanup_mode == CLEANUP_NONE && sb->len)
++		return 0;
++
+ 	/* See if the template is just a prefix of the message. */
+ 	strbuf_init(&tmpl, 0);
+ 	if (template_file && strbuf_read_file(&tmpl, template_file, 0) > 0) {
+-		stripspace(&tmpl, 1);
++		stripspace(&tmpl, cleanup_mode == CLEANUP_ALL);
+ 		if (start + tmpl.len <= sb->len &&
+ 		    memcmp(tmpl.buf, sb->buf + start, tmpl.len) == 0)
+ 			start += tmpl.len;
+@@ -591,6 +614,16 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 		only_include_assumed = "Explicit paths specified without -i nor -o; assuming --only paths...";
+ 		also = 0;
  	}
++	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
++		cleanup_mode = use_editor ? CLEANUP_ALL : CLEANUP_SPACE;
++	else if (!strcmp(cleanup_arg, "verbatim"))
++		cleanup_mode = CLEANUP_NONE;
++	else if (!strcmp(cleanup_arg, "whitespace"))
++		cleanup_mode = CLEANUP_SPACE;
++	else if (!strcmp(cleanup_arg, "strip"))
++		cleanup_mode = CLEANUP_ALL;
++	else
++		die("Invalid cleanup mode %s", cleanup_arg);
  
--	if (in_merge && !no_edit)
-+	if (in_merge)
- 		fprintf(fp,
- 			"#\n"
- 			"# It looks like you may be committing a MERGE.\n"
-@@ -513,9 +513,9 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	argc = parse_options(argc, argv, builtin_commit_options, usage, 0);
+ 	if (all && argc > 0)
+ 		die("Paths with -a does not make sense.");
+@@ -817,7 +850,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	if (p != NULL)
+ 		strbuf_setlen(&sb, p - sb.buf + 1);
  
- 	if (logfile || message.len || use_message)
--		no_edit = 1;
-+		use_editor = 0;
- 	if (edit_flag)
--		no_edit = 0;
-+		use_editor = 1;
+-	stripspace(&sb, 1);
++	if (cleanup_mode != CLEANUP_NONE)
++		stripspace(&sb, cleanup_mode == CLEANUP_ALL);
+ 	if (sb.len < header_len || message_is_empty(&sb, header_len)) {
+ 		rollback_index_files();
+ 		die("no commit message?  aborting commit.");
+diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+index 21ac785..aaf497e 100755
+--- a/t/t7502-commit.sh
++++ b/t/t7502-commit.sh
+@@ -89,4 +89,69 @@ test_expect_success 'verbose' '
  
- 	if (get_sha1("HEAD", head_sha1))
- 		initial_commit = 1;
-@@ -796,7 +796,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ '
  
- 	/* Get the commit message and validate it */
- 	header_len = sb.len;
--	if (!no_edit) {
-+	if (use_editor) {
- 		char index[PATH_MAX];
- 		const char *env[2] = { index, NULL };
- 		snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", index_file);
++test_expect_success 'cleanup commit messages (verbatim,-t)' '
++
++	echo >>negative &&
++	{ echo;echo "# text";echo; } >expect &&
++	git commit --cleanup=verbatim -t expect -a &&
++	git cat-file -p HEAD |sed -e "1,/^\$/d" |head -n 3 >actual &&
++	diff -u expect actual
++
++'
++
++test_expect_success 'cleanup commit messages (verbatim,-F)' '
++
++	echo >>negative &&
++	git commit --cleanup=verbatim -F expect -a &&
++	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
++	diff -u expect actual
++
++'
++
++test_expect_success 'cleanup commit messages (verbatim,-m)' '
++
++	echo >>negative &&
++	git commit --cleanup=verbatim -m "$(cat expect)" -a &&
++	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
++	diff -u expect actual
++
++'
++
++test_expect_success 'cleanup commit messages (whitespace,-F)' '
++
++	echo >>negative &&
++	{ echo;echo "# text";echo; } >text &&
++	echo "# text" >expect &&
++	git commit --cleanup=whitespace -F text -a &&
++	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
++	diff -u expect actual
++
++'
++
++test_expect_success 'cleanup commit messages (strip,-F)' '
++
++	echo >>negative &&
++	{ echo;echo "# text";echo sample;echo; } >text &&
++	echo sample >expect &&
++	git commit --cleanup=strip -F text -a &&
++	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
++	diff -u expect actual
++
++'
++
++echo "sample
++
++# Please enter the commit message for your changes.
++# (Comment lines starting with '#' will not be included)" >expect
++
++test_expect_success 'cleanup commit messages (strip,-F,-e)' '
++
++	echo >>negative &&
++	{ echo;echo sample;echo; } >text &&
++	git commit -e -F text -a &&
++	head -n 4 .git/COMMIT_EDITMSG >actual &&
++	diff -u expect actual
++
++'
++
+ test_done
 -- 
 1.5.4.rc1.19.g9151fa
