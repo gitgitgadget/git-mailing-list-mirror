@@ -1,85 +1,99 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: [PATCH] git-send-email: Generalize auto-cc recipient mechanism.
-Date: Mon, 24 Dec 2007 13:03:25 -0800
-Message-ID: <20071224210325.GA7242@mail.oracle.com>
-References: <1198216860-487-1-git-send-email-git@davidb.org> <1198522902-12117-1-git-send-email-git@davidb.org>
+From: David Brown <git@davidb.org>
+Subject: [PATCH] git-send-email: Add --suppress-cc all
+Date: Mon, 24 Dec 2007 13:26:48 -0800
+Message-ID: <20071224212648.GA21070@old.davidb.org>
+References: <1198216860-487-1-git-send-email-git@davidb.org> <1198522902-12117-1-git-send-email-git@davidb.org> <20071224210325.GA7242@mail.oracle.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Cc: git@vger.kernel.org
-To: David Brown <git@davidb.org>
-X-From: git-owner@vger.kernel.org Mon Dec 24 22:04:11 2007
+To: Joel Becker <Joel.Becker@oracle.com>
+X-From: git-owner@vger.kernel.org Mon Dec 24 22:27:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J6uT4-0001nT-Bv
-	for gcvg-git-2@gmane.org; Mon, 24 Dec 2007 22:04:10 +0100
+	id 1J6upM-0008Sz-Mr
+	for gcvg-git-2@gmane.org; Mon, 24 Dec 2007 22:27:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751714AbXLXVDr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Dec 2007 16:03:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751541AbXLXVDq
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Dec 2007 16:03:46 -0500
-Received: from rgminet01.oracle.com ([148.87.113.118]:34723 "EHLO
-	rgminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751416AbXLXVDq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Dec 2007 16:03:46 -0500
-Received: from agmgw2.us.oracle.com (agmgw2.us.oracle.com [152.68.180.213])
-	by rgminet01.oracle.com (Switch-3.2.4/Switch-3.1.6) with ESMTP id lBOL3b3F026456;
-	Mon, 24 Dec 2007 14:03:38 -0700
-Received: from acsmt354.oracle.com (acsmt354.oracle.com [141.146.40.154])
-	by agmgw2.us.oracle.com (Switch-3.2.0/Switch-3.2.0) with ESMTP id lBO8PEHm023312;
-	Mon, 24 Dec 2007 14:03:36 -0700
-Received: from ca-server1.us.oracle.com by acsmt354.oracle.com
-	with ESMTP id 6523260061198530207; Mon, 24 Dec 2007 13:03:27 -0800
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.67)
-	(envelope-from <joel.becker@oracle.com>)
-	id 1J6uSN-0003Qq-89; Mon, 24 Dec 2007 13:03:27 -0800
+	id S1751589AbXLXV0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Dec 2007 16:26:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751434AbXLXV0t
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Dec 2007 16:26:49 -0500
+Received: from mail.davidb.org ([66.93.32.219]:54645 "EHLO mail.davidb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751274AbXLXV0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Dec 2007 16:26:48 -0500
+Received: from davidb by mail.davidb.org with local (Exim 4.68 #1 (Debian))
+	id 1J6uoy-0005ve-3y; Mon, 24 Dec 2007 13:26:48 -0800
+Mail-Followup-To: Joel Becker <Joel.Becker@oracle.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <1198522902-12117-1-git-send-email-git@davidb.org>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever
-	come to perfection.
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
-X-Whitelist: TRUE
+In-Reply-To: <20071224210325.GA7242@mail.oracle.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69222>
 
-On Mon, Dec 24, 2007 at 11:01:42AM -0800, David Brown wrote:
-> There are a few options to git-send-email to suppress the automatic
-> generation of 'Cc' fields: --suppress-from, and --signed-off-cc.  However,
-> there are other times that git-send-email automatically includes Cc'd
-> recipients.  This is not desirable for all development environments.
-> 
-> Add a new option --suppress-cc, which can be specified one or more times to
-> list the categories of auto-cc fields that should be suppressed.  If not
-> specified, it defaults to values to give the same behavior as specified
-> by --suppress-from, and --signed-off-cc.  The categories are:
-> 
->   self   - patch sender.  Same as --suppress-from.
->   author - patch author.
->   cc     - cc lines mentioned in the patch.
->   cccmd  - avoid running the cccmd.
->   sob    - signed off by lines.
+Add the 'all' option to --suppress-cc, allowing easier suppression of
+everything.
 
-+   all    - all of the above, thus only honoring '--to', '--cc', and
-             '--bcc'
+Signed-off-by: David Brown <git@davidb.org>
+---
+On Mon, Dec 24, 2007 at 01:03:25PM -0800, Joel Becker wrote:
 
-Joel
+>+   all    - all of the above, thus only honoring '--to', '--cc', and
+>             '--bcc'
 
+I can squash this with the other patch if that would be cleaner.
+
+Dave
+
+  Documentation/git-send-email.txt |    2 +-
+  git-send-email.perl              |   11 ++++++++++-
+  2 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 432f336..fdfb56e 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -125,7 +125,7 @@ The --cc option must be repeated for each user you want on the cc list.
+  	avoid including the patch author, 'cc' will avoid including anyone
+  	mentioned in Cc lines in the patch, 'sob' will avoid including
+  	anyone mentioned in Signed-off-by lines, and 'cccmd' will avoid
+-	running the --cc-cmd.
++	running the --cc-cmd.  'all' will suppress all auto cc values.
+  	Default is the value of 'sendemail.suppresscc' configuration value;
+  	if that is unspecified, default to 'self' if --suppress-from is
+  	specified, as well as 'sob' if --no-signed-off-cc is specified.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index cb9adf2..ef16824 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -275,7 +275,7 @@ my(%suppress_cc);
+  if (@suppress_cc) {
+  	foreach my $entry (@suppress_cc) {
+  		die "Unknown --suppress-cc field: '$entry'\n"
+-			unless $entry =~ /^(cccmd|cc|author|self|sob)$/;
++			unless $entry =~ /^(all|cccmd|cc|author|self|sob)$/;
+  		$suppress_cc{$entry} = 1;
+  	}
+  } else {
+@@ -284,6 +284,15 @@ if (@suppress_cc) {
+  	$suppress_cc{'sob'} = 1 unless $signed_off_cc;
+  }
+  
++if ($suppress_cc{'all'}) {
++	foreach my $entry (qw (ccmd cc author self sob)) {
++		$suppress_cc{$entry} = 1;
++	}
++	delete $suppress_cc{'all'};
++}
++
++printf "Suppressions: %s\n", join(',', keys(%suppress_cc));
++
+  my ($repoauthor) = $repo->ident_person('author');
+  my ($repocommitter) = $repo->ident_person('committer');
+  
 -- 
-
-"The nice thing about egotists is that they don't talk about other
- people."
-         - Lucille S. Harper
-
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+1.5.3.7
