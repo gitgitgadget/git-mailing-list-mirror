@@ -1,59 +1,77 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [ANNOUNCE] qgit2.1rc1_win.exe
-Date: Mon, 24 Dec 2007 10:13:17 +0100
-Message-ID: <e5bfff550712240113y4acdaa11y3483705172a5980e@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Document git rev-list --first-parent
+Date: Mon, 24 Dec 2007 01:13:25 -0800
+Message-ID: <7vprwwsbey.fsf@gitster.siamese.dyndns.org>
+References: <1198484450-16454-1-git-send-email-avi@qumranet.com>
+	<7v3atstry4.fsf@gitster.siamese.dyndns.org>
+	<476F6F95.1030506@qumranet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: msysGit <msysgit@googlegroups.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Dec 24 10:13:45 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Avi Kivity <avi@qumranet.com>
+X-From: git-owner@vger.kernel.org Mon Dec 24 10:14:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J6jNY-00055s-GT
-	for gcvg-git-2@gmane.org; Mon, 24 Dec 2007 10:13:44 +0100
+	id 1J6jNp-0005AZ-Mm
+	for gcvg-git-2@gmane.org; Mon, 24 Dec 2007 10:14:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751594AbXLXJNT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Dec 2007 04:13:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750778AbXLXJNT
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Dec 2007 04:13:19 -0500
-Received: from rv-out-0910.google.com ([209.85.198.191]:37956 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751398AbXLXJNS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Dec 2007 04:13:18 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1437622rvb.1
-        for <git@vger.kernel.org>; Mon, 24 Dec 2007 01:13:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=A2zb8D7VRA1OLTxbs6hlLFFDaY9qppRgFJ47BZcdJPw=;
-        b=mYqIo6Acj01FKrbplIrFeKZV8b0AIkA5x/vevLUhu7V5rbVLPSOaKyHyzb7LdPM/DFvJpLGbcVfPx6uIISv2aV7Z3ATGy5RKX5upWdVQbaeB/GzBBhrdtFLHbVNlIafoQFuW12gxfmnRg4fVimjELAMWV6yjSrtRqeHvgTsoOoc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=fj6Rq+AoyFpdVo5BtqQsCdFKXXapghtRKBy63OmjhV05LzouX/N8Vq8+bTc/ULRA+BQrP0QFFHOowvEo/XUobtrI2JLN7Vt53ro0/eUNfhvbnVaGGthXM26VC3nOal7qmeEv5+1b0iU5bzftOMaBbptPF3sYAg2CXpDr+9ah8c0=
-Received: by 10.141.210.21 with SMTP id m21mr2193978rvq.158.1198487597854;
-        Mon, 24 Dec 2007 01:13:17 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Mon, 24 Dec 2007 01:13:17 -0800 (PST)
-Content-Disposition: inline
+	id S1751697AbXLXJNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Dec 2007 04:13:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751610AbXLXJNe
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Dec 2007 04:13:34 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48172 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751325AbXLXJNd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Dec 2007 04:13:33 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D08F7AA6;
+	Mon, 24 Dec 2007 04:13:30 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CED4D7AA5;
+	Mon, 24 Dec 2007 04:13:27 -0500 (EST)
+In-Reply-To: <476F6F95.1030506@qumranet.com> (Avi Kivity's message of "Mon, 24
+	Dec 2007 10:36:37 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69208>
 
-Here
+Avi Kivity <avi@qumranet.com> writes:
 
-http://digilander.libero.it/mcostalba/qgit2.1rc1_win.exe
+> Junio C Hamano wrote:
+>> Avi Kivity <avi@qumranet.com> writes:
+>>
+>>> Document git rev-list's --first-parent option.  Documentation taken from
+>>> git log.
+>>> ...
+>>> +--first-parent::
+>>> +	Follow only the first parent commit upon seeing a merge
+>>> +	commit.  This  option gives a better overview of the
+>>> +	evolution of a particular branch.
+>>> +
+>>>
+>>
+>> I am afraid that this description is not sufficient.  The
+>> history given by --first-parent is useful only in a very limited
+>> use case, and the user needs to be aware of it.
+>
+> I don't know which use case you are referring to...
 
-You can find an auto-extract zip file with a version of qgit built for
-Windows (Vista).
+Please read the commit log message you snarfed the description
+again.
 
-Requires msysgit (http://code.google.com/p/msysgit/)
+First-parent is useful only if you are the primary integrator
+and do not fast-forward from other people.  Only in that case,
+you will see the overview of "the primary integration branch".
+Otherwise you will observe the history viewed by whoever
+happened to make a merge, which would switch every time you
+cross the fast-forward boundary.
 
-Is  not a real installation, no registry or other Windows resources
-touched, just decompress in a directory, read the README and have fun.
-
-Marco
+Making it sound as if it always will give a better overview is
+misleading.
