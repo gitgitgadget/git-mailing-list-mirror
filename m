@@ -1,135 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-send-email: Generalize auto-cc recipient mechanism.
-Date: Tue, 25 Dec 2007 13:04:54 -0800
-Message-ID: <7vk5n2o58p.fsf@gitster.siamese.dyndns.org>
-References: <1198216860-487-1-git-send-email-git@davidb.org>
-	<1198532163-25308-1-git-send-email-git@davidb.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Fix "git log --diff-filter" bug
+Date: Tue, 25 Dec 2007 14:44:29 -0800 (PST)
+Message-ID: <m3r6hao0nu.fsf@roke.D-201>
+References: <1198580807-18802-1-git-send-email-arjen@yaph.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Joel Becker <Joel.Becker@oracle.com>
-To: David Brown <git@davidb.org>
-X-From: git-owner@vger.kernel.org Tue Dec 25 22:05:56 2007
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Arjen Laarhoven <arjen@yaph.org>
+X-From: git-owner@vger.kernel.org Tue Dec 25 23:45:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J7Gy5-0004tJ-Np
-	for gcvg-git-2@gmane.org; Tue, 25 Dec 2007 22:05:52 +0100
+	id 1J7IWE-00020g-6B
+	for gcvg-git-2@gmane.org; Tue, 25 Dec 2007 23:45:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751067AbXLYVFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Dec 2007 16:05:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751091AbXLYVFF
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Dec 2007 16:05:05 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44841 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751066AbXLYVFD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Dec 2007 16:05:03 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7AC8C4412;
-	Tue, 25 Dec 2007 16:05:00 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id BA9654411;
-	Tue, 25 Dec 2007 16:04:56 -0500 (EST)
-In-Reply-To: <1198532163-25308-1-git-send-email-git@davidb.org> (David Brown's
-	message of "Mon, 24 Dec 2007 13:36:03 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751168AbXLYWof (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Dec 2007 17:44:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751152AbXLYWof
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Dec 2007 17:44:35 -0500
+Received: from fk-out-0910.google.com ([209.85.128.188]:4627 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751133AbXLYWoe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Dec 2007 17:44:34 -0500
+Received: by fk-out-0910.google.com with SMTP id z23so2487874fkz.5
+        for <git@vger.kernel.org>; Tue, 25 Dec 2007 14:44:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=kqvnBKYilkpCrloU19ynhfEonXGvb6JstNiH93yXY/8=;
+        b=e4Uhuqnqkd0NikxcuVUyDFnSbRV83aQuaVkMqaxBO3D0KPEA44XtQeGYjS7uX26AO5CUUZbc24ZYmfv2C2c+9sIdZuFWE2Om+4JEYPwt5LjFMXbEdnof79GNKxfzmhxoK8zk9FNa/zy2v5unaZV9fUZqIVOHXeS3ZaUGwepUzAs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=ndwTCl/u84Cb5hz+LWzNJMhB/Tskc9SBlyhEBKs5paOcnlR/+ERAlJuc2G5KktGLFB8N9wwC5xFvIM35JgN/TOq2vcAxjhMaQ1PAbWyJ5gEQqKsUT5M0PJbSB+mpUcn4GWLKZ/wyt8QNdMQ/swFik5zU08M4JqiQ0KgRochGWYw=
+Received: by 10.78.168.1 with SMTP id q1mr7468596hue.76.1198622671416;
+        Tue, 25 Dec 2007 14:44:31 -0800 (PST)
+Received: from roke.D-201 ( [83.8.190.186])
+        by mx.google.com with ESMTPS id d2sm2765514nfc.11.2007.12.25.14.44.28
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 25 Dec 2007 14:44:29 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lBPMiHfV031470;
+	Tue, 25 Dec 2007 23:44:18 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id lBPMhn2p031465;
+	Tue, 25 Dec 2007 23:43:49 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <1198580807-18802-1-git-send-email-arjen@yaph.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69238>
 
-David Brown <git@davidb.org> writes:
+Arjen Laarhoven <arjen@yaph.org> writes:
 
-> ...
->   self   - patch sender.  Same as --suppress-from.
->   author - patch author.
->   cc     - cc lines mentioned in the patch.
->   cccmd  - avoid running the cccmd.
->   sob    - signed off by lines.
->   all    - all non-explicit recipients
->
-> Signed-off-by: David Brown <git@davidb.org>
-> ...
-> What bothers me most about this change is that --signed-of-cc
-> and --suppress-from are silently ignored if --suppress-cc is given, either
-> on the command line, or in the config.
+> In commit b7bb760d5ed4881422673d32f869d140221d3564 an optimization
+> was made to avoid unnecessary diff generation.  This was partly fixed
+> in 99516e35d096f41e7133cacde8fbed8ee9a3ecd0, but obviously the
+> '--diff-filter' option also needs the diff machinery in action.
 
-The order in which various variables are set in the current code
-before your patch is like this:
-
- * my ($var) introduces them -- they are undefined at the
-   beginning;
-
- * GetOptions() may set them to explicit values;
-
- * read_config(), first for the specific sendemail identity and
-   then for the generic ones, fill the ones that are still
-   undefined;
-
- * the built-in default from %config_bool_settings are used to
-   fill the ones that are still undefined at this point;
-
-Now, I think you can build on top of the above by adding the
-following after that sequence:
-
- * fill %suppress_cc with explicit @suppress_cc GetOptions and
-   read_config() read;
-
- * if the --suppress-from and/or --signed-off-by-cc, either from
-   GetOptions() or from read_config() are given, make them
-   override what @suppress_cc says.  So giving --suppress-cc=all
-   and --signed-off-by-cc at the same time will still send cc to
-   people who signed off the patch (because these old-style ones
-   are more specific).
-
-Perhaps something like this (untested, of course!) patch on top
-of yours.
-
-
- git-send-email.perl |   16 +++++++++-------
- 1 files changed, 9 insertions(+), 7 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 1f03d12..cde5ffb 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -188,8 +188,8 @@ my (@suppress_cc);
- my %config_bool_settings = (
-     "thread" => [\$thread, 1],
-     "chainreplyto" => [\$chain_reply_to, 1],
--    "suppressfrom" => [\$suppress_from, 0],
--    "signedoffcc" => [\$signed_off_cc, 1],
-+    "suppressfrom" => [\$suppress_from, undef],
-+    "signedoffcc" => [\$signed_off_cc, undef],
-     "smtpssl" => [\$smtp_ssl, 0],
- );
- 
-@@ -279,18 +279,20 @@ if (@suppress_cc) {
- 			unless $entry =~ /^(all|cccmd|cc|author|self|sob)$/;
- 		$suppress_cc{$entry} = 1;
- 	}
--} else {
--	# Convert the old-style options.
--	$suppress_cc{'self'} = 1 if $suppress_from;
--	$suppress_cc{'sob'} = 1 unless $signed_off_cc;
- }
--
- if ($suppress_cc{'all'}) {
- 	foreach my $entry (qw (ccmd cc author self sob)) {
- 		$suppress_cc{$entry} = 1;
- 	}
- 	delete $suppress_cc{'all'};
- }
-+# If explicit old-style ones are specified, they trump supress-cc
-+if (defined $suppress_from) {
-+	$suppress_cc{'self'} = $suppress_from;
-+}
-+if (defined $signed_off_cc) {
-+	$suppress_cc{'sob'} = !$signed_off_cc;
-+}
- 
- my ($repoauthor) = $repo->ident_person('author');
- my ($repocommitter) = $repo->ident_person('committer');
+Thanks a lot! I was wondering why 'git log --diff-filter=M' didn't
+find anything...
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
