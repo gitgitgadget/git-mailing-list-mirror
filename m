@@ -1,129 +1,107 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: [PATCH] git-send-email: Add --suppress-cc all
-Date: Mon, 24 Dec 2007 13:59:10 -0800
-Message-ID: <20071224215910.GK7242@mail.oracle.com>
-References: <1198216860-487-1-git-send-email-git@davidb.org> <1198522902-12117-1-git-send-email-git@davidb.org> <20071224210325.GA7242@mail.oracle.com> <20071224212648.GA21070@old.davidb.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Force new line at end of commit message
+Date: Mon, 24 Dec 2007 23:42:02 -0500
+Message-ID: <20071225044202.GO14735@spearce.org>
+References: <87ve6ub3u7.fsf@gollum.intra.norang.ca> <8763yof9lg.fsf@gollum.intra.norang.ca> <Pine.LNX.4.64.0712241835210.14355@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 24 23:01:07 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Bernt Hansen <bernt@alumni.uwaterloo.ca>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 25 05:42:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J6vLz-0001Ft-7s
-	for gcvg-git-2@gmane.org; Mon, 24 Dec 2007 23:00:55 +0100
+	id 1J71ch-0000pm-TA
+	for gcvg-git-2@gmane.org; Tue, 25 Dec 2007 05:42:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751781AbXLXWAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Dec 2007 17:00:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751746AbXLXWAa
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Dec 2007 17:00:30 -0500
-Received: from agminet01.oracle.com ([141.146.126.228]:13281 "EHLO
-	agminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751580AbXLXWAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Dec 2007 17:00:30 -0500
-Received: from agmgw2.us.oracle.com (agmgw2.us.oracle.com [152.68.180.213])
-	by agminet01.oracle.com (Switch-3.2.4/Switch-3.1.7) with ESMTP id lBOM0RlI000884
-	for <git@vger.kernel.org>; Mon, 24 Dec 2007 16:00:27 -0600
-Received: from acsmt354.oracle.com (acsmt354.oracle.com [141.146.40.154])
-	by agmgw2.us.oracle.com (Switch-3.2.0/Switch-3.2.0) with ESMTP id lBO8PEIO023312
-	for <git@vger.kernel.org>; Mon, 24 Dec 2007 15:00:27 -0700
-Received: from ca-server1.us.oracle.com by acsmt354.oracle.com
-	with ESMTP id 6523990901198533552; Mon, 24 Dec 2007 13:59:12 -0800
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.67)
-	(envelope-from <joel.becker@oracle.com>)
-	id 1J6vKJ-00044J-Ne
-	for git@vger.kernel.org; Mon, 24 Dec 2007 13:59:11 -0800
+	id S1751488AbXLYEmK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Dec 2007 23:42:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751403AbXLYEmI
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Dec 2007 23:42:08 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:44616 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751226AbXLYEmH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Dec 2007 23:42:07 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1J71bz-0001CC-9v; Mon, 24 Dec 2007 23:41:51 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3911E20FBAE; Mon, 24 Dec 2007 23:42:02 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <20071224212648.GA21070@old.davidb.org>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever
-	come to perfection.
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
-X-Whitelist: TRUE
+In-Reply-To: <Pine.LNX.4.64.0712241835210.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69225>
 
-On Mon, Dec 24, 2007 at 01:26:48PM -0800, David Brown wrote:
-> Add the 'all' option to --suppress-cc, allowing easier suppression of
-> everything.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Mon, 24 Dec 2007, Bernt Hansen wrote:
+> 
+> > git rebase --interactive formats the combined commit log message 
+> > incorrectly when squashing 3 or more commits which have no newline on 
+> > the last line of the commit message.
+> 
+> This is a patch for git-gui, so why not make that clear in the subject?  
+> (And I have a hunch that Shawn would have liked the patch relative to 
+> git-gui.git, not git.git...)
 
-	Thank you!
->
-> Signed-off-by: David Brown <git@davidb.org>
-> ---
-> On Mon, Dec 24, 2007 at 01:03:25PM -0800, Joel Becker wrote:
->
->> +   all    - all of the above, thus only honoring '--to', '--cc', and
->>             '--bcc'
->
-> I can squash this with the other patch if that would be cleaner.
->
-> Dave
->
->  Documentation/git-send-email.txt |    2 +-
->  git-send-email.perl              |   11 ++++++++++-
->  2 files changed, 11 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index 432f336..fdfb56e 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -125,7 +125,7 @@ The --cc option must be repeated for each user you want on the cc list.
->  	avoid including the patch author, 'cc' will avoid including anyone
->  	mentioned in Cc lines in the patch, 'sob' will avoid including
->  	anyone mentioned in Signed-off-by lines, and 'cccmd' will avoid
-> -	running the --cc-cmd.
-> +	running the --cc-cmd.  'all' will suppress all auto cc values.
->  	Default is the value of 'sendemail.suppresscc' configuration value;
->  	if that is unspecified, default to 'self' if --suppress-from is
->  	specified, as well as 'sob' if --no-signed-off-cc is specified.
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index cb9adf2..ef16824 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -275,7 +275,7 @@ my(%suppress_cc);
->  if (@suppress_cc) {
->  	foreach my $entry (@suppress_cc) {
->  		die "Unknown --suppress-cc field: '$entry'\n"
-> -			unless $entry =~ /^(cccmd|cc|author|self|sob)$/;
-> +			unless $entry =~ /^(all|cccmd|cc|author|self|sob)$/;
->  		$suppress_cc{$entry} = 1;
->  	}
->  } else {
-> @@ -284,6 +284,15 @@ if (@suppress_cc) {
->  	$suppress_cc{'sob'} = 1 unless $signed_off_cc;
->  }
->  +if ($suppress_cc{'all'}) {
-> +	foreach my $entry (qw (ccmd cc author self sob)) {
-> +		$suppress_cc{$entry} = 1;
-> +	}
-> +	delete $suppress_cc{'all'};
-> +}
-> +
-> +printf "Suppressions: %s\n", join(',', keys(%suppress_cc));
-> +
->  my ($repoauthor) = $repo->ident_person('author');
->  my ($repocommitter) = $repo->ident_person('committer');
->  
-> -- 
-> 1.5.3.7
->
+Indeed.
+
+Most git-gui changes have a subject that starts with "git-gui:" so
+its clear in both the email and in the commit log that the change is
+a git-gui change.  Remember, git-gui's logs show up in the core Git
+logs (as its merged with -s subtree) so having that git-gui: prefix
+does help people to localize the change within the overall suite.
+
+git-am -3 does a reasonable job at correcting patches that are like
+this one is (that aren't relative to git-gui.git) so that's less
+of an issue for me.  And what git-am -3 cannot correct git-apply
+-p2 usually does.  If that can't fix the patch then I'll usually
+throw it back as its then most likely a true conflict.
+ 
+> Further, there are other tools than rebase -i that like commit messages 
+> better when terminated by a newline, and _that_ is what I would like to 
+> read in the commit message for this patch.
+
+Hmmph.  For that reason alone I'm tempted to *not* apply Bernt's
+patch.
+
+There is nothing that requires that a commit object end with an LF.
+So tools that make this assumption (that there is a trailing LF)
+while processing the body of a commit message are quite simply
+broken.
+
+Its easy in fast-import to generate commits without a trailing LF.
+Or in many text editors its possible to save a file with no trailing
+LF on the last line.  My favorite VI clone does that; if the file
+doesn't end with an LF when it opens its *damned* hard to get a
+trailing LF onto that last line.  And yes, that's the editor I use
+for commit messages when I'm not using git-gui.
+
+IMHO git-gui is producing valid commit messages, and always does
+so with no trailing LF, and any tool that is assuming a trailing
+LF is always present is broken.
+
+Keeping git-gui behavior like this actually highlights the other
+tools that are broken (here Bernt found git-rebase--interactive).
+
+
+I'd like to hear Junio's or Linus' two cents on the matter, but
+if we really want to say that all commits must end with an LF then
+maybe git-commit-tree, git-hash-object and git-fast-import should be
+performing that sort of validation before creating such an object in
+the ODB.  Which is probably a change that shouldn't be made before
+1.6.0 as its somewhat likely to break people's existing scripts.
 
 -- 
-
-"Can any of you seriously say the Bill of Rights could get through
- Congress today?  It wouldn't even get out of committee."
-	- F. Lee Bailey
-
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+Shawn.
