@@ -1,66 +1,82 @@
-From: Arjen Laarhoven <arjen@yaph.org>
-Subject: [PATCH] Fix "git log --diff-filter" bug
-Date: Tue, 25 Dec 2007 12:06:47 +0100
-Message-ID: <1198580807-18802-1-git-send-email-arjen@yaph.org>
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Dec 25 12:16:44 2007
+From: Salikh Zakirov <salikh@gmail.com>
+Subject: Re: Updated Kernel Hacker's guide to git
+Date: Tue, 25 Dec 2007 22:08:11 +0900
+Message-ID: <477100BB.6020301@gmail.com>
+References: <200612241807.kBOI746w008739@laptop13.inf.utfsm.cl> <476E42BF.1010300@garzik.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff Garzik <jeff@garzik.org>
+X-From: git-owner@vger.kernel.org Tue Dec 25 14:08:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J77m4-0000LO-Gz
-	for gcvg-git-2@gmane.org; Tue, 25 Dec 2007 12:16:40 +0100
+	id 1J79WV-0008OI-Lx
+	for gcvg-git-2@gmane.org; Tue, 25 Dec 2007 14:08:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751443AbXLYLQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Dec 2007 06:16:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751274AbXLYLQH
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Dec 2007 06:16:07 -0500
-Received: from smtp-vbr4.xs4all.nl ([194.109.24.24]:4524 "EHLO
-	smtp-vbr4.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751226AbXLYLQH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Dec 2007 06:16:07 -0500
-X-Greylist: delayed 531 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 Dec 2007 06:16:06 EST
-Received: from libellus.local (aragorndsl.demon.nl [82.161.19.32])
-	by smtp-vbr4.xs4all.nl (8.13.8/8.13.8) with ESMTP id lBPB6mXs047569;
-	Tue, 25 Dec 2007 12:06:48 +0100 (CET)
-	(envelope-from arjen@yaph.org)
-Received: by libellus.local (Postfix, from userid 501)
-	id 7157E27822D; Tue, 25 Dec 2007 12:06:47 +0100 (CET)
-X-Mailer: git-send-email 1.5.4.rc1.21.g0e545
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1751063AbXLYNIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Dec 2007 08:08:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751067AbXLYNIQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Dec 2007 08:08:16 -0500
+Received: from wx-out-0506.google.com ([66.249.82.225]:43154 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751029AbXLYNIP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Dec 2007 08:08:15 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so619964wxd.4
+        for <git@vger.kernel.org>; Tue, 25 Dec 2007 05:08:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        bh=hlR9jbpOwNkKTrIdLUqSum03qrHiuUP9+hayG0Q1r3c=;
+        b=fXSIXhBTgyyKS33Lm91NFck0l42QLjmTfiYAvd3GrPp0cEXyLpL74DU5rXANzovEI2KwR6lKFxg/eTBXYaLWzKdLE4CQGFqxpIpXYW8V/v+DZRm1ED0RewEpMrknmCQ8tGNVojlgodoSjBX/TS3n2pIaowRdg//vlQxAVzDysZ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=cf7ZGkxXdS537GO0E1HjgVtVwUVfreg3npeC3B/1Cv+qbOeWyWtL9/MiWaJ4guRMSeh69YwLXVvn4EsjG8saoLh1fNH3DXe4ay+Qe/vIt+vtN8sS60whCtBEX5Cw5nLh04JKFpedkqRgg3upMrREj42SIcOADLXAc6eytSXy6qg=
+Received: by 10.70.76.18 with SMTP id y18mr3901911wxa.53.1198588095024;
+        Tue, 25 Dec 2007 05:08:15 -0800 (PST)
+Received: from ?221.115.75.108? ( [221.115.75.108])
+        by mx.google.com with ESMTPS id h35sm21811369wxd.20.2007.12.25.05.08.13
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 25 Dec 2007 05:08:14 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071205)
+In-Reply-To: <476E42BF.1010300@garzik.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69233>
 
-In commit b7bb760d5ed4881422673d32f869d140221d3564 an optimization
-was made to avoid unnecessary diff generation.  This was partly fixed
-in 99516e35d096f41e7133cacde8fbed8ee9a3ecd0, but obviously the
-'--diff-filter' option also needs the diff machinery in action.
+Jeff Garzik wrote:
+> The kernel hacker's guide to git has received some updates: 
+> http://linux.yyz.us/git-howto.html
 
-Signed-off-by: Arjen Laarhoven <arjen@yaph.org>
----
- revision.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+I have some comments on the contents, though  I need to warn, 
+that  I've been following git development for about year and a half now,
+and I am not a kernel hacker, so my comments may have wrong bias.
 
-diff --git a/revision.c b/revision.c
-index 7e2f4f1..6e85aaa 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1290,8 +1290,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 	if (revs->diffopt.output_format & ~DIFF_FORMAT_NO_OUTPUT)
- 		revs->diff = 1;
- 
--	/* Pickaxe and rename following needs diffs */
--	if (revs->diffopt.pickaxe || DIFF_OPT_TST(&revs->diffopt, FOLLOW_RENAMES))
-+	/* Pickaxe, diff-filter and rename following need diffs */
-+	if (revs->diffopt.pickaxe ||
-+	    revs->diffopt.filter ||
-+	    DIFF_OPT_TST(&revs->diffopt, FOLLOW_RENAMES))
- 		revs->diff = 1;
- 
- 	if (revs->topo_order)
--- 
-1.5.4.rc1.21.g0e545
+>     Obtain a diff between current branch, and master branch
+> 
+> In most trees with branches, .git/refs/heads/master contains the
+> current 'vanilla' upstream tree, for easy diffing and merging. (in
+> trees without branches, 'master' simply contains your latest changes)
+> 
+> $ git diff master..HEAD
+
+IMHO, syntax 'git diff master HEAD' is preferable, in order to avoid
+confusion with 'git log master..HEAD' usage, which has quite different
+meaning, roughly expressible as
+
+  git diff `git merge-base master HEAD` HEAD
+
+for getting one big diff of the changes in HEAD since master)
+
+> (this is equivalent to git diff HEAD, when used with HEAD branch)
+
+This seems incorrect to me, as 'git diff master HEAD' compares two
+revisions, while 'git diff HEAD' compares working tree with HEAD revision.
+
+Besides, expression 'HEAD branch' is misleading, because HEAD is not a branch by itself,
+but rather a link to the latest state of the current branch.
