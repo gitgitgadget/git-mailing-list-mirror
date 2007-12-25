@@ -1,202 +1,135 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH] Add a script to run test scripts using valgrind.
-Date: Tue, 25 Dec 2007 21:29:14 +0100
-Message-ID: <20071225212914.c4bb3f87.chriscool@tuxfamily.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-send-email: Generalize auto-cc recipient mechanism.
+Date: Tue, 25 Dec 2007 13:04:54 -0800
+Message-ID: <7vk5n2o58p.fsf@gitster.siamese.dyndns.org>
+References: <1198216860-487-1-git-send-email-git@davidb.org>
+	<1198532163-25308-1-git-send-email-git@davidb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Dec 25 21:23:38 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Joel Becker <Joel.Becker@oracle.com>
+To: David Brown <git@davidb.org>
+X-From: git-owner@vger.kernel.org Tue Dec 25 22:05:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J7GJN-00044q-TI
-	for gcvg-git-2@gmane.org; Tue, 25 Dec 2007 21:23:38 +0100
+	id 1J7Gy5-0004tJ-Np
+	for gcvg-git-2@gmane.org; Tue, 25 Dec 2007 22:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751025AbXLYUXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Dec 2007 15:23:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751066AbXLYUXE
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Dec 2007 15:23:04 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:55016 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750967AbXLYUXD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Dec 2007 15:23:03 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id AC3F41AB2C3;
-	Tue, 25 Dec 2007 21:22:59 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 6BCDD1AB2CC;
-	Tue, 25 Dec 2007 21:22:59 +0100 (CET)
-X-Mailer: Sylpheed 2.4.7 (GTK+ 2.12.1; i486-pc-linux-gnu)
+	id S1751067AbXLYVFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Dec 2007 16:05:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751091AbXLYVFF
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Dec 2007 16:05:05 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44841 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751066AbXLYVFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Dec 2007 16:05:03 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7AC8C4412;
+	Tue, 25 Dec 2007 16:05:00 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id BA9654411;
+	Tue, 25 Dec 2007 16:04:56 -0500 (EST)
+In-Reply-To: <1198532163-25308-1-git-send-email-git@davidb.org> (David Brown's
+	message of "Mon, 24 Dec 2007 13:36:03 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69237>
 
-This patch adds a Perl script 'run_valgrind.pl' that runs
-the test scripts passed as arguments using valgrind.
+David Brown <git@davidb.org> writes:
 
-To use valgrind, we use a shell alias like:
+> ...
+>   self   - patch sender.  Same as --suppress-from.
+>   author - patch author.
+>   cc     - cc lines mentioned in the patch.
+>   cccmd  - avoid running the cccmd.
+>   sob    - signed off by lines.
+>   all    - all non-explicit recipients
+>
+> Signed-off-by: David Brown <git@davidb.org>
+> ...
+> What bothers me most about this change is that --signed-of-cc
+> and --suppress-from are silently ignored if --suppress-cc is given, either
+> on the command line, or in the config.
 
-alias git='valgrind <options> git'
+The order in which various variables are set in the current code
+before your patch is like this:
 
-and we source a test script in the same system call.
+ * my ($var) introduces them -- they are undefined at the
+   beginning;
 
-The valgrind logs are then parsed for errors and the errors
-found are hashed so that they appear only once at the end.
+ * GetOptions() may set them to explicit values;
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/run_valgrind.pl |  138 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 138 insertions(+), 0 deletions(-)
- create mode 100755 t/run_valgrind.pl
+ * read_config(), first for the specific sendemail identity and
+   then for the generic ones, fill the ones that are still
+   undefined;
 
-diff --git a/t/run_valgrind.pl b/t/run_valgrind.pl
-new file mode 100755
-index 0000000..cb965c9
---- /dev/null
-+++ b/t/run_valgrind.pl
-@@ -0,0 +1,138 @@
-+#!/usr/bin/perl
-+
-+use strict;
-+use warnings;
-+
-+# All arguments should be test scripts.
-+my @scripts = @ARGV;
-+
-+my $vg_vers = valgrind_version();
-+
-+print "Using valgrind version: $vg_vers\n";
-+
-+my $log_base = '/tmp/vg_log';
-+my $log_opt = ($vg_vers < '3.3') ? $log_base : "$log_base.%p";
-+my $vg_opts = "--log-file=$log_opt --trace-children=yes";
-+my $alias = "alias git='valgrind $vg_opts git'";
-+
-+# Remove previous log files.
-+system("rm -rf $log_base.*");
-+
-+# Run the scripts using an alias for Git.
-+foreach my $file (@scripts) {
-+	system("$alias \n . ./$file");
+ * the built-in default from %config_bool_settings are used to
+   fill the ones that are still undefined at this point;
+
+Now, I think you can build on top of the above by adding the
+following after that sequence:
+
+ * fill %suppress_cc with explicit @suppress_cc GetOptions and
+   read_config() read;
+
+ * if the --suppress-from and/or --signed-off-by-cc, either from
+   GetOptions() or from read_config() are given, make them
+   override what @suppress_cc says.  So giving --suppress-cc=all
+   and --signed-off-by-cc at the same time will still send cc to
+   people who signed off the patch (because these old-style ones
+   are more specific).
+
+Perhaps something like this (untested, of course!) patch on top
+of yours.
+
+
+ git-send-email.perl |   16 +++++++++-------
+ 1 files changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 1f03d12..cde5ffb 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -188,8 +188,8 @@ my (@suppress_cc);
+ my %config_bool_settings = (
+     "thread" => [\$thread, 1],
+     "chainreplyto" => [\$chain_reply_to, 1],
+-    "suppressfrom" => [\$suppress_from, 0],
+-    "signedoffcc" => [\$signed_off_cc, 1],
++    "suppressfrom" => [\$suppress_from, undef],
++    "signedoffcc" => [\$signed_off_cc, undef],
+     "smtpssl" => [\$smtp_ssl, 0],
+ );
+ 
+@@ -279,18 +279,20 @@ if (@suppress_cc) {
+ 			unless $entry =~ /^(all|cccmd|cc|author|self|sob)$/;
+ 		$suppress_cc{$entry} = 1;
+ 	}
+-} else {
+-	# Convert the old-style options.
+-	$suppress_cc{'self'} = 1 if $suppress_from;
+-	$suppress_cc{'sob'} = 1 unless $signed_off_cc;
+ }
+-
+ if ($suppress_cc{'all'}) {
+ 	foreach my $entry (qw (ccmd cc author self sob)) {
+ 		$suppress_cc{$entry} = 1;
+ 	}
+ 	delete $suppress_cc{'all'};
+ }
++# If explicit old-style ones are specified, they trump supress-cc
++if (defined $suppress_from) {
++	$suppress_cc{'self'} = $suppress_from;
 +}
-+
-+# Error lines from log files.
-+my @log_files = glob("$log_base.*");
-+my @errs = `grep 'ERROR SUMMARY' $log_base.*`;
-+chomp @errs;
-+
-+print "\nNumber of log files: " . scalar(@log_files) . "\n";
-+print "Number of error lines: " . scalar(@errs) . "\n";
-+
-+my @logs;
-+for (@errs) {
-+	if (m/^([^:]+):.*ERROR SUMMARY: (\d+) errors/) {
-+		push @logs, $1 if ($2 > 0);
-+	} else {
-+		print STDERR "strange line: $_\n";
-+	}
++if (defined $signed_off_cc) {
++	$suppress_cc{'sob'} = !$signed_off_cc;
 +}
-+
-+print "\nResulting files with errors:\n\n", join("\n", @logs), "\n\n";
-+
-+# Parse error files.
-+my @info = ();
-+for (@logs) {
-+	my @new = parse_error_file($_);
-+	push @info, @new;
-+}
-+
-+# Get only uniq errors.
-+my @uniq = ();
-+my %stack = ();
-+for (@info) {
-+	my $key = stack_info($_, 1);
-+	if (exists $stack{$key}) {
-+		push @{$stack{$key}}, $_->{file};
-+	} else {
-+		$stack{$key} = [ $_->{file} ];
-+		$_->{file} = $stack{$key};
-+		push @uniq, $_;
-+	}
-+}
-+
-+# Print uniq errors.
-+print "Uniq errors:\n";
-+for (@uniq) {
-+	print "\n" . stack_info($_);
-+	print "Files: " . join(", ", @{$_->{file}}) . "\n";
-+}
-+
-+sub valgrind_version {
-+	system("which valgrind > /dev/null 2>&1") == 0
-+	  or die "'which valgrind' failed.";
-+
-+	my $version = `valgrind --version`;
-+	chomp $version;
-+
-+	if ($version =~ m/(\d+)\.(\d+)\.(\d+)/) {
-+		return "$1.$2";
-+	} else {
-+		die "Could not find valgrind version.";
-+	}
-+}
-+
-+sub stack_info {
-+	$_ = shift;
-+	my ($key) = @_;
-+
-+	my $msg = $_->{msg};
-+	$msg =~ s/0x[0-9A-F]+// if ($key);
-+
-+	my @places = map { $_->[1] } @{$_->{stack}};
-+	return "$msg\n" . join("\n", @places) . "\n";
-+}
-+
-+sub clean_line {
-+	my ($line) = @_;
-+
-+	$line =~ s/^==\d+==\s+//;
-+
-+	return $line;
-+}
-+
-+sub parse_error_file {
-+	my ($file) = @_;
-+
-+	# Slurp file.
-+	open(IN, "< $file") or die "Could not open '$file' for reading: $!";
-+	my @content = <IN>;
-+	chomp @content;
-+	close IN;
-+
-+	# Parse errors in file.
-+	my @errs = ();
-+	my $stack = 0;
-+	my $prev = '';
-+	my $cur;
-+	for (@content) {
-+		if (not $stack and m/    at 0x([0-9A-F]+): (.*)$/) {
-+			$stack = 1;
-+			$cur = { msg => $prev,
-+				 file => $file,
-+				 stack => [ [$1, $2] ] };
-+		} elsif ($stack) {
-+			if (m/    by 0x([0-9A-F]+): (.*)$/) {
-+				push @{$cur->{stack}}, [$1, $2];
-+			} else {
-+				push @errs, $cur;
-+				$stack = 0;
-+			}
-+		}
-+		$prev = clean_line($_);
-+	}
-+
-+	return @errs;
-+}
--- 
-1.5.3.7.2270.g786cf-dirty
+ 
+ my ($repoauthor) = $repo->ident_person('author');
+ my ($repocommitter) = $repo->ident_person('committer');
