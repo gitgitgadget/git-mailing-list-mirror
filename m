@@ -1,103 +1,81 @@
-From: "Peter Klavins" <klavins-ooduxAEi7gXtt0EhB6fy4g@public.gmane.org>
-Subject: Re: [ANNOUNCE] qgit2.1rc1_win.exe
-Date: Wed, 26 Dec 2007 22:22:39 +0100
-Message-ID: <fkugn8$d2s$1@ger.gmane.org>
-References: <e5bfff550712240113y4acdaa11y3483705172a5980e@mail.gmail.com>
-Reply-To: klavins-ooduxAEi7gXtt0EhB6fy4g@public.gmane.org
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Using git for file archival/backup purposes - deletion strategy
+Date: Thu, 27 Dec 2007 11:43:48 +1300
+Message-ID: <46a038f90712261443t6aa0cd76u46d8ae88fc7c1eba@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="utf-8"; reply-type=original
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Wed Dec 26 23:20:49 2007
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.249])
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 26 23:44:16 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J7ecJ-0007Rl-3m
-	for gcvm-msysgit@m.gmane.org; Wed, 26 Dec 2007 23:20:47 +0100
-Received: by wa-out-0708.google.com with SMTP id n36so1125920wag.21
-        for <gcvm-msysgit@m.gmane.org>; Wed, 26 Dec 2007 14:20:25 -0800 (PST)
+	id 1J7ez1-0004ie-2C
+	for gcvg-git-2@gmane.org; Wed, 26 Dec 2007 23:44:15 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751733AbXLZWnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Dec 2007 17:43:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751709AbXLZWnu
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Dec 2007 17:43:50 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:64586 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751603AbXLZWnu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Dec 2007 17:43:50 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so1541855ugc.16
+        for <git@vger.kernel.org>; Wed, 26 Dec 2007 14:43:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:received:x-injected-via-gmane:to:from:subject:date:lines:message-id:references:mime-version:content-type:content-transfer-encoding:x-complaints-to:x-gmane-nntp-posting-host:in-reply-to:x-msmail-priority:x-newsreader:x-mimeole:cc:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=A6/EWiMViF81OL/abnN1PaQMJquNxWxvbuMfuzncH74=;
-        b=DPqCxUqFcbdPQyac3gqMDu9MAJgDYqy9BE4cP2LSc5qAAtNAKO2i2MPEJfL8XVi2krYiz2tKu59lCU1v2vbjxDy7o7p37RYjnyN91RCgC+wllJLGMf2r0gDInFezgs9b0FV9ubX8CiU6pcXfbMN0EdFBznUaMZMWxuuQXw9a/Mg=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=4DNnu+qhco7v2Ow2+mcRJA6nVwPDibZ/OtbaUJZ1/Lw=;
+        b=QMoVaSexhL/x2J5RXjTWNWwsemdxYHUHB0CWkWKEgCfHWnsUhr+zbk2f8F79lVuWYUMb7IgGewXBiJ8oeIQzvlhILTYSZeu1bNMIhxii+xfu2iSk5KnTz+fp284muZC0cPmhX8ydZV3mvpBAUkMCrItJsdco0lVlUcUISvL4gdM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:x-injected-via-gmane:to:from:subject:date:lines:message-id:references:mime-version:content-type:content-transfer-encoding:x-complaints-to:x-gmane-nntp-posting-host:in-reply-to:x-msmail-priority:x-newsreader:x-mimeole:cc:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=FC1w1bLfIMSqe6vsu4sCDL5VDGeIgyuDELXf7UuBEi4OHp0DWCFSxfuey4WRUFkx6dIBbPTDPunMhioyjOBjGa+VjOI+fSVMv0aoh/ZHf7hgNccvr12fJ4i9DAcCDNADnX9YhaW32T5+s5xQ2ePi4kT2G5MDxKANmyE0kZHmLL8=
-Received: by 10.114.107.19 with SMTP id f19mr244293wac.26.1198707621986;
-        Wed, 26 Dec 2007 14:20:21 -0800 (PST)
-Received: by 10.107.94.14 with SMTP id w14gr1282prl;
-	Wed, 26 Dec 2007 14:20:21 -0800 (PST)
-X-Sender: gcvm-msysgit@m.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.114.193.1 with SMTP id q1mr3841176waf.27.1198707621808; Wed, 26 Dec 2007 14:20:21 -0800 (PST)
-Received: from ciao.gmane.org (main.gmane.org [80.91.229.2]) by mx.google.com with ESMTP id h71si8146958nzf.3.2007.12.26.14.20.20; Wed, 26 Dec 2007 14:20:21 -0800 (PST)
-Received-SPF: pass (google.com: domain of gcvm-msysgit@m.gmane.org designates 80.91.229.2 as permitted sender) client-ip=80.91.229.2;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of gcvm-msysgit@m.gmane.org designates 80.91.229.2 as permitted sender) smtp.mail=gcvm-msysgit@m.gmane.org
-Received: from root by ciao.gmane.org with local (Exim 4.43) id 1J7ebb-0001jm-5B for msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; Wed, 26 Dec 2007 22:20:03 +0000
-Received: from 217-133-15-180.b2b.tiscali.it ([217.133.15.180]) by main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Wed, 26 Dec 2007 22:20:03 +0000
-Received: from klavins by 217-133-15-180.b2b.tiscali.it with local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Wed, 26 Dec 2007 22:20:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet-dbVV3NMTNubNLxjTenLetw@public.gmane.org
-X-Gmane-NNTP-Posting-Host: 217-133-15-180.b2b.tiscali.it
-In-Reply-To: <e5bfff550712240113y4acdaa11y3483705172a5980e-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Windows Mail 6.0.6000.16480
-X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16545
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=LaRe/nbwx5nNP+Kbopm/MdypAh2RAWC0bj+6LflGnETaRKt0UZ01CyjwOghbP4RqBhTlbwD0B5AHFe8rEU/FnC60uvz7mnYQD5w9SLetcGyiT6nY244/kP7hkh/O3B+GPSNEeESd3UDVgPM0ESs+M6NzGsPvT5J+CvMq4yRQfZM=
+Received: by 10.66.252.18 with SMTP id z18mr6463161ugh.37.1198709028456;
+        Wed, 26 Dec 2007 14:43:48 -0800 (PST)
+Received: by 10.66.250.13 with HTTP; Wed, 26 Dec 2007 14:43:48 -0800 (PST)
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69246>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69247>
+
+Hi list!
+
+I am drafting a tool to use GIT as a behind-the-scenes archival/backup
+tool for web applications. There's been countless threads covering
+generic file archival, discussing /etc and homedirs, so I am pretty
+comfortable with the mechanics and the whole idea. This is a fairly
+narrow use, where the web apps are reasonable well behaved -- most
+(all?) of the caveats in ~ and /etc archival seem to be under control.
+
+What I am not 100% clear on is the "old history" deletion strategy.
+The history will be *strictly* linear, so my intention is to keep the
+last N commits, by overriding the parent of the Nth commit that git
+log lists with a "shallow" entry in $GIT_DIR/shallow as documented in
+Documentation/technical/shallow.txt , and call gc after that.
+
+Is that the correct way to "forget" old history? Searching high and
+low in the list, I fail to find a definitive answer. Shallow and
+grafts entries are discussed as ways of doing this, but I can't find a
+"correct" way of doing this.
+
+BTW I've just done a git clone --depth 10 ~/src/git and while I do get
+a clearly "shallow" checkout, with a tiny .git/objects directory, I
+can't find any file called shallow, or grafts. .git/config doesn't say
+anything either, and alternates is empty. I frankly cannot tell how
+git recognizes it as a shallow repo.
+
+Ah! Local clones won't honour --depth!. A clone from git.kernel.org
+does get its .git/shallow file.
+
+So the question is: is it safe (and enough) to add the SHA1 to the
+.git/shallow file and call git gc? Is there a better way?
+
+cheers,
 
 
-> You can find an auto-extract zip file with a version of qgit built for
-> Windows (Vista).
-
-I found it a bit obscure as to how to rebuild qgit from scratch on Vista, so 
-just for the record:
-
-# Set up VS2008
-1. Install Visual Studio 2008
-
-# Set up Qt4
-2. Download qt-win-opensource-src-4.3.3.zip from 
-http://trolltech.com/developer/downloads/qt/windows and unzip into directory 
-(e.g.,) C:\qt-win-opensource-src-4.3.3
-3. cd C:\qt-win-opensource-src-4.3.3
-4. configure                 (takes significant time, around 10 minutes from 
-memory)
-5. nmake                     (takes over an hour on a Core 2 Duo 2 GHz, 
-consumes 2 GByte of disk)
-
-# Install git and use it to get qgit4 source
-6. Download Git-1.5.4-rc1-preview20071221-corrected.exe from 
-http://code.google.com/p/msysgit/downloads/ and install (default directory 
-C:\Program Files\Git is fine)
-7. Open Git Bash from Start menu, set up Src directory (e.g., mkdir Src, cd 
-Src)
-8. git clone git://git.kernel.org/pub/scm/qgit/qgit4.git        (to get qgit 
-sources into Src/qgit4)
-9. Exit Git Bash shell
-
-# Build and run qgit
-10. Open VS2008 command prompt, ensuring that VS tools are on the PATH by 
-test invoking 'nmake'
-11. Add qmake to path with PATH=C:\qt-win-opensource-src-4.3.3\bin;%PATH%
-12. Add git to path with PATH=C:\Program Files\Git\bin;%PATH%
-13. Navigate to qgit4 directory (e.g., cd C:\Users\<you>\Src\qgit4)
-14. qmake              (to preprocess with Qt4)
-15. nmake              (to build debug version)
-16. bin\qgit             (to run qgit to browse qgit4's own repository!)
-
-------------------------------------------------------------------------
- Peter Klavins 
+m
