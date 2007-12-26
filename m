@@ -1,79 +1,141 @@
-From: "Peter Klavins" <klavins-ooduxAEi7gXtt0EhB6fy4g@public.gmane.org>
-Subject: Re: [ANNOUNCE] qgit2.1rc1_win.exe
-Date: Thu, 27 Dec 2007 00:37:51 +0100
-Message-ID: <fkuoko$1vg$1@ger.gmane.org>
-References: <e5bfff550712240113y4acdaa11y3483705172a5980e@mail.gmail.com> <fkugn8$d2s$1@ger.gmane.org> <e5bfff550712261523g7aab6e76nd37257e7b21d1653@mail.gmail.com>
-Reply-To: klavins-ooduxAEi7gXtt0EhB6fy4g@public.gmane.org
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Reallow git-rebase --interactive --continue if commit is unnecessary
+Date: Wed, 26 Dec 2007 15:48:56 -0800
+Message-ID: <7vr6h9m2zb.fsf@gitster.siamese.dyndns.org>
+References: <87r6hias5s.fsf@gollum.intra.norang.ca>
+	<20071220071212.GA20534@spearce.org>
+	<7vzlw5rg53.fsf@gitster.siamese.dyndns.org>
+	<20071220073113.GJ14735@spearce.org>
+	<7vy7bppv3s.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed; charset="utf-8"; reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Dec 27 00:39:01 2007
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.240])
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Bernt Hansen <bernt@alumni.uwaterloo.ca>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Dec 27 00:49:41 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J7fq1-00019r-BT
-	for gcvm-msysgit@m.gmane.org; Thu, 27 Dec 2007 00:39:01 +0100
-Received: by wa-out-0708.google.com with SMTP id n36so1181360wag.21
-        for <gcvm-msysgit@m.gmane.org>; Wed, 26 Dec 2007 15:38:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:received:x-injected-via-gmane:to:from:subject:date:lines:message-id:references:mime-version:content-type:content-transfer-encoding:x-complaints-to:x-gmane-nntp-posting-host:in-reply-to:x-msmail-priority:x-newsreader:x-mimeole:cc:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=x60HM9rWjczv1z3zmG2vkmbLRiW8cvPeGUDjwCqZ5jQ=;
-        b=5jTheietqpscZ8TuSZeKiH4QRFtWwTUmBnY0ecHjLthYdXCf945llIAHwSF5yTd4N/6cRkf1d3BVuhRkdzJABoJ9uovFizkvopnbOYCThGd5C5PZANKez7PvsGudCqxvGqAFKRpdmqqZtVmVetR64aPMHGlKTvGgEEH8crEhzqg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:x-injected-via-gmane:to:from:subject:date:lines:message-id:references:mime-version:content-type:content-transfer-encoding:x-complaints-to:x-gmane-nntp-posting-host:in-reply-to:x-msmail-priority:x-newsreader:x-mimeole:cc:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=IT1XjoDSOVXz+1g2wzAsLaLYYknpdij3DcCOsvOEJEtv/ACrXl5omt120czR7t0joDdQUojkms4RYv+UUESzBzzy63jXmERhHEF09wdrvPOSgwY6grTfuTJ2F9UDe+A+cqpydItci1FagfXG44tVUDfI+H4fxI1hplx7FfGsS1U=
-Received: by 10.140.144.4 with SMTP id r4mr245912rvd.16.1198712317492;
-        Wed, 26 Dec 2007 15:38:37 -0800 (PST)
-Received: by 10.106.179.39 with SMTP id b39gr1284prf;
-	Wed, 26 Dec 2007 15:38:37 -0800 (PST)
-X-Sender: gcvm-msysgit@m.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.114.179.1 with SMTP id b1mr3897630waf.4.1198712317237; Wed, 26 Dec 2007 15:38:37 -0800 (PST)
-Received: from ciao.gmane.org (main.gmane.org [80.91.229.2]) by mx.google.com with ESMTP id y6si8184718nzg.1.2007.12.26.15.38.36; Wed, 26 Dec 2007 15:38:37 -0800 (PST)
-Received-SPF: pass (google.com: domain of gcvm-msysgit@m.gmane.org designates 80.91.229.2 as permitted sender) client-ip=80.91.229.2;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of gcvm-msysgit@m.gmane.org designates 80.91.229.2 as permitted sender) smtp.mail=gcvm-msysgit@m.gmane.org
-Received: from list by ciao.gmane.org with local (Exim 4.43) id 1J7fpM-0005el-3x for msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; Wed, 26 Dec 2007 23:38:20 +0000
-Received: from 217-133-15-180.b2b.tiscali.it ([217.133.15.180]) by main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Wed, 26 Dec 2007 23:38:20 +0000
-Received: from klavins by 217-133-15-180.b2b.tiscali.it with local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Wed, 26 Dec 2007 23:38:20 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet-dbVV3NMTNubNLxjTenLetw@public.gmane.org
-X-Gmane-NNTP-Posting-Host: 217-133-15-180.b2b.tiscali.it
-In-Reply-To: <e5bfff550712261523g7aab6e76nd37257e7b21d1653-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Windows Mail 6.0.6000.16480
-X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16545
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1J7g0K-0003d6-JJ
+	for gcvg-git-2@gmane.org; Thu, 27 Dec 2007 00:49:41 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751691AbXLZXtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Dec 2007 18:49:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbXLZXtI
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Dec 2007 18:49:08 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44585 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751673AbXLZXtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Dec 2007 18:49:07 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 79B1B5219;
+	Wed, 26 Dec 2007 18:49:03 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 93C635214;
+	Wed, 26 Dec 2007 18:48:58 -0500 (EST)
+In-Reply-To: <7vy7bppv3s.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Thu, 20 Dec 2007 01:35:03 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69249>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69250>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Just a question. How about using the auto-extract zip I advertise in
-> this thread? With this both Qt and qgit are already compiled and
-> should be ready to go.
+> Will do, but the code looks quite bad (not entirely your fault).
+>
+> Line by line comment to show my puzzlement.
+>
+>  		# commit if necessary
+>
+> Ok, the user has prepared the index for us, and we are going to do some
+> tests and conditionally create commit.
+>
+>  		git rev-parse --verify HEAD > /dev/null &&
+>
+> Do we have HEAD commit?  Why check this --- we do not want to rebase
+> from the beginning of time?  No, that's not it.  If this fails, there is
+> something seriously wrong.  This is not about "will we make a commit?"
+> check at all.  This is a basic sanity check and if it fails we must
+> abort, not just skip.
+>
+>  		git update-index --refresh &&
+>  		git diff-files --quiet &&
+>
+> Is the work tree clean with respect to the index?  Why check this --- we
+> want to skip the commit if work tree is dirty?  Or is this trying to
+> enforce the invariant that during the rebase the work tree and index and
+> HEAD should all match?  If the latter, failure from this again is a
+> reason to abort.
+>
+>  		! git diff-index --cached --quiet HEAD -- &&
+>
+> Do we have something to commit?  This needs to be checked so that we can
+> skip a commit that results in emptyness, so using this as a check to see
+> if we should commit makes sense.
+>
+>  		. "$DOTEST"/author-script && {
+>  			test ! -f "$DOTEST"/amend || git reset --soft HEAD^
+>  		} &&
+>
+> Find GIT_AUTHOR_* variables and if we are amending rewind the HEAD.  The
+> failure from this is a grave problem and reason to abort, isn't it?
+>
+>  		export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
+> 		git commit --no-verify -F "$DOTEST"/message -e
+>
+> Then we go on to create commit.  As you said, failure from this is a
+> grave error.
 
-I did use your auto-extract utility, and it worked as advertised, thanks. 
-Just as an aside, I think it would be better for it to also package git 
-(msysgit version), so there's no need to search for git and pre-download it.
+Any response to this or problems in the clean-up patch?
 
-But being and old engineer at heart, I had to understand how to build qgit 
-from scratch, and not being at all familiar with Qt, it was difficult to get 
-it working, thus I wrote the note just in case others were having similar 
-difficulties. I appreciate your clarification of the build steps.
-
-Do you think it's worthwhile adding this info into your README?
-
-------------------------------------------------------------------------
- Peter Klavins 
+> ---
+>  git-rebase--interactive.sh |   29 +++++++++++++++++++----------
+>  1 files changed, 19 insertions(+), 10 deletions(-)
+>
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index 090c3e5..7aa4278 100755
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -363,17 +363,26 @@ do
+>  
+>  		test -d "$DOTEST" || die "No interactive rebase running"
+>  
+> -		# commit if necessary
+> -		git rev-parse --verify HEAD > /dev/null &&
+> -		git update-index --refresh &&
+> -		git diff-files --quiet &&
+> -		! git diff-index --cached --quiet HEAD -- &&
+> -		. "$DOTEST"/author-script && {
+> -			test ! -f "$DOTEST"/amend || git reset --soft HEAD^
+> -		} &&
+> -		export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
+> -		if ! git commit --no-verify -F "$DOTEST"/message -e
+> +		# Sanity check
+> +		git rev-parse --verify HEAD >/dev/null ||
+> +			die "Cannot read HEAD"
+> +		git update-index --refresh && git diff-files --quiet ||
+> +			die "Working tree is dirty"
+> +
+> +		# do we have anything to commit?
+> +		if git diff-index --cached --quiet HEAD --
+>  		then
+> +			: Nothing to commit -- skip this
+> +		else
+> +			. "$DOTEST"/author-script ||
+> +				die "Cannot find the author identity"
+> +			if test -f "$DOTEST"/amend
+> +			then
+> +				git reset --soft HEAD^ ||
+> +				die "Cannot rewind the HEAD"
+> +			fi
+> +			export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE &&
+> +			git commit --no-verify -F "$DOTEST"/message -e ||
+>  			die "Could not commit staged changes."
+>  		fi
+>  
