@@ -1,64 +1,60 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Using git for file archival/backup purposes - deletion strategy
-Date: Fri, 28 Dec 2007 11:08:20 +1300
-Message-ID: <46a038f90712271408k7763d60ai93491f59c75d0e35@mail.gmail.com>
-References: <46a038f90712261443t6aa0cd76u46d8ae88fc7c1eba@mail.gmail.com>
-	 <4773D498.8040204@hashpling.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC] Distributing Windows binary package compiled with non gpl
+ code
+Date: Thu, 27 Dec 2007 17:08:04 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0712271647130.13593@iabervon.org>
+References: <e5bfff550712271032q25d135e7y47d68337e937d401@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Charles Bailey" <charles@hashpling.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Marco Costalba <mcostalba@gmail.com>
 X-From: git-owner@vger.kernel.org Thu Dec 27 23:08:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J80uQ-0000wx-9S
-	for gcvg-git-2@gmane.org; Thu, 27 Dec 2007 23:08:58 +0100
+	id 1J80uA-0000rS-1C
+	for gcvg-git-2@gmane.org; Thu, 27 Dec 2007 23:08:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752451AbXL0WIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Dec 2007 17:08:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752643AbXL0WIW
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Dec 2007 17:08:22 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:54592 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752194AbXL0WIV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Dec 2007 17:08:21 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so1716760ugc.16
-        for <git@vger.kernel.org>; Thu, 27 Dec 2007 14:08:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=A5q6O+Iz3BhU3m/7HsNdYW/4cdtn15GAk9NPNTFnEoo=;
-        b=lHFBHe2p00edM9Vx8AU1vFi3MVT80oZQLWWj/ha97ye9EWCXJ/4skpV12Zp3xItkDAwVrb9n6WVQ3uyvYyU2mg04xNQeey1/4dI93hUD8lYr0wbgECjudrMFlLRNA6IgaA2ozzwaxqCjVuX3UwqF+WFUxoSoRKLX3bE4YaZUaL8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=oIXl5enVnzSnJ1J99Fr6zD8+ucTYzdH8QSBuaX1hXSVhPtmJ2GBLRfWeCz1t+4+ZTFuXybM9gufc02T6FB+ZZCeJ9j8+CUIuKqNpRtDH3cUOvuaFUYCXz6JWck1qejmyTn0mwW0yeITfyGS71NgwRjxRbru44sq2sfC9l8RHlng=
-Received: by 10.66.239.16 with SMTP id m16mr7600740ugh.11.1198793300294;
-        Thu, 27 Dec 2007 14:08:20 -0800 (PST)
-Received: by 10.66.250.13 with HTTP; Thu, 27 Dec 2007 14:08:20 -0800 (PST)
-In-Reply-To: <4773D498.8040204@hashpling.org>
-Content-Disposition: inline
+	id S1752485AbXL0WIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Dec 2007 17:08:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752194AbXL0WII
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Dec 2007 17:08:08 -0500
+Received: from iabervon.org ([66.92.72.58]:60612 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752032AbXL0WIH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Dec 2007 17:08:07 -0500
+Received: (qmail 17418 invoked by uid 1000); 27 Dec 2007 22:08:04 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 27 Dec 2007 22:08:04 -0000
+In-Reply-To: <e5bfff550712271032q25d135e7y47d68337e937d401@mail.gmail.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69266>
 
-On Dec 28, 2007 5:36 AM, Charles Bailey <charles@hashpling.org> wrote:
-> Martin Langhoff wrote:
-> > Ah! Local clones won't honour --depth!. A clone from git.kernel.org
-> > does get its .git/shallow file.
->
-> This should be fixed in git v1.5.4-rc0 and later.  For reference
-> what version of git are you using?
+On Thu, 27 Dec 2007, Marco Costalba wrote:
 
-Good point. I was using a 1.5.3xx. I can confirm it's fixed with
-1.5.4.rc1.1136.g2794f - I get the shallow clone I expected.
+> Packaged together with qgit.exe there are the necessary Micorsoft
+> Visual C dll's. Is this a problem for someone?
 
-cheers!
+It depends on how they're packaged together. If it's possible to unpack 
+them (into a bunch of separate files, where each is either all GPL or no 
+GPL), then this is "mere aggregation" and perfectly fine (assuming you're 
+allowed to distribute the Visual C dlls, of course). IIRC, bundled 
+libraries for Windows programs are stored on the user's disk as separate 
+files anyway, so this is automatically okay.
 
+I'd actually be more concerned about whether you can (or should) 
+distribute GPL code compiled with a proprietary compiler; people who get 
+the binaries and the source still couldn't edit the source and generate a 
+corresponding binary, because they don't necessarily have the build 
+environment you used. On the other hand, nothing you could do differently 
+would be any better for anyone with the right to complain, so it shouldn't 
+be an issue in practice. (And a user of qgit for Windows is more likely 
+than usual to have MSVC anyway)
 
-m
+	-Daniel
+*This .sig left intentionally blank*
