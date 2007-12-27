@@ -1,152 +1,126 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Fix rewrite_diff() name quoting.
-Date: Wed, 26 Dec 2007 17:19:27 -0800
-Message-ID: <7vir2lkk80.fsf_-_@gitster.siamese.dyndns.org>
-References: <477109A5.9040000@gmail.com>
-	<7vodcdkl82.fsf@gitster.siamese.dyndns.org>
+Subject: [ANNOUNCE] GIT 1.5.4-rc2
+Date: Wed, 26 Dec 2007 19:36:28 -0800
+Message-ID: <7v1w98lsg3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Salikh Zakirov <salikh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 27 02:20:28 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 27 04:37:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J7hQA-0005Nc-W6
-	for gcvg-git-2@gmane.org; Thu, 27 Dec 2007 02:20:27 +0100
+	id 1J7jYc-0005HA-Mf
+	for gcvg-git-2@gmane.org; Thu, 27 Dec 2007 04:37:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751863AbXL0BTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Dec 2007 20:19:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751856AbXL0BTj
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Dec 2007 20:19:39 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51634 "EHLO
+	id S1752009AbXL0Dgq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Dec 2007 22:36:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751999AbXL0Dgq
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Dec 2007 22:36:46 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62644 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751830AbXL0BTi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Dec 2007 20:19:38 -0500
+	with ESMTP id S1751929AbXL0Dgp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Dec 2007 22:36:45 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 110347D6F;
-	Wed, 26 Dec 2007 20:19:37 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B643599A;
+	Wed, 26 Dec 2007 22:36:42 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3CF7A7D6E;
-	Wed, 26 Dec 2007 20:19:34 -0500 (EST)
-In-Reply-To: <7vodcdkl82.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 26 Dec 2007 16:57:49 -0800")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9781D5999;
+	Wed, 26 Dec 2007 22:36:40 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69255>
 
-This moves the logic to quote two paths (prefix + path) in
-C-style introduced in the previous commit from the
-dump_quoted_path() in combine-diff.c to quote.c, and uses it to
-fix rewrite_diff() that never C-quoted the pathnames correctly.
+GIT 1.5.4-rc2 is available at the usual places:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- combine-diff.c |   11 +----------
- diff.c         |   12 +++++++++---
- quote.c        |   16 ++++++++++++++++
- quote.h        |    1 +
- 4 files changed, 27 insertions(+), 13 deletions(-)
+  http://www.kernel.org/pub/software/scm/git/
 
-diff --git a/combine-diff.c b/combine-diff.c
-index 7d71033..0e19cba 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -656,16 +656,7 @@ static void dump_quoted_path(const char *head,
- 	strbuf_reset(&buf);
- 	strbuf_addstr(&buf, c_meta);
- 	strbuf_addstr(&buf, head);
--	if (quote_c_style(prefix, NULL, NULL, 0) ||
--	    quote_c_style(path, NULL, NULL, 0)) {
--		strbuf_addch(&buf, '"');
--		quote_c_style(prefix, &buf, NULL, 1);
--		quote_c_style(path, &buf, NULL, 1);
--		strbuf_addch(&buf, '"');
--	} else {
--		strbuf_addstr(&buf, prefix);
--		strbuf_addstr(&buf, path);
--	}
-+	quote_two_c_style(&buf, prefix, path, 0);
- 	strbuf_addstr(&buf, c_reset);
- 	puts(buf.buf);
- }
-diff --git a/diff.c b/diff.c
-index 61fd492..5bdc111 100644
---- a/diff.c
-+++ b/diff.c
-@@ -300,19 +300,25 @@ static void emit_rewrite_diff(const char *name_a,
- 	const char *old = diff_get_color(color_diff, DIFF_FILE_OLD);
- 	const char *new = diff_get_color(color_diff, DIFF_FILE_NEW);
- 	const char *reset = diff_get_color(color_diff, DIFF_RESET);
-+	static struct strbuf a_name = STRBUF_INIT, b_name = STRBUF_INIT;
- 
- 	name_a += (*name_a == '/');
- 	name_b += (*name_b == '/');
- 	name_a_tab = strchr(name_a, ' ') ? "\t" : "";
- 	name_b_tab = strchr(name_b, ' ') ? "\t" : "";
- 
-+	strbuf_reset(&a_name);
-+	strbuf_reset(&b_name);
-+	quote_two_c_style(&a_name, o->a_prefix, name_a, 0);
-+	quote_two_c_style(&b_name, o->b_prefix, name_b, 0);
-+
- 	diff_populate_filespec(one, 0);
- 	diff_populate_filespec(two, 0);
- 	lc_a = count_lines(one->data, one->size);
- 	lc_b = count_lines(two->data, two->size);
--	printf("%s--- %s%s%s%s\n%s+++ %s%s%s%s\n%s@@ -",
--	       metainfo, o->a_prefix, name_a, name_a_tab, reset,
--	       metainfo, o->b_prefix, name_b, name_b_tab, reset, fraginfo);
-+	printf("%s--- %s%s%s\n%s+++ %s%s%s\n%s@@ -",
-+	       metainfo, a_name.buf, name_a_tab, reset,
-+	       metainfo, b_name.buf, name_b_tab, reset, fraginfo);
- 	print_line_count(lc_a);
- 	printf(" +");
- 	print_line_count(lc_b);
-diff --git a/quote.c b/quote.c
-index 6986b44..d061626 100644
---- a/quote.c
-+++ b/quote.c
-@@ -213,6 +213,22 @@ size_t quote_c_style(const char *name, struct strbuf *sb, FILE *fp, int nodq)
- 	return quote_c_style_counted(name, -1, sb, fp, nodq);
- }
- 
-+void quote_two_c_style(struct strbuf *sb, const char *prefix, const char *path, int nodq)
-+{
-+	if (quote_c_style(prefix, NULL, NULL, 0) ||
-+	    quote_c_style(path, NULL, NULL, 0)) {
-+		if (!nodq)
-+			strbuf_addch(sb, '"');
-+		quote_c_style(prefix, sb, NULL, 1);
-+		quote_c_style(path, sb, NULL, 1);
-+		if (!nodq)
-+			strbuf_addch(sb, '"');
-+	} else {
-+		strbuf_addstr(sb, prefix);
-+		strbuf_addstr(sb, path);
-+	}
-+}
-+
- void write_name_quoted(const char *name, FILE *fp, int terminator)
- {
- 	if (terminator) {
-diff --git a/quote.h b/quote.h
-index ab7596f..4da110e 100644
---- a/quote.h
-+++ b/quote.h
-@@ -41,6 +41,7 @@ extern char *sq_dequote(char *);
- 
- extern int unquote_c_style(struct strbuf *, const char *quoted, const char **endp);
- extern size_t quote_c_style(const char *name, struct strbuf *, FILE *, int no_dq);
-+extern void quote_two_c_style(struct strbuf *, const char *, const char *, int);
- 
- extern void write_name_quoted(const char *name, FILE *, int terminator);
- extern void write_name_quotedpfx(const char *pfx, size_t pfxlen,
--- 
-1.5.4.rc1.23.g3a969
+  git-1.5.4.rc2.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.5.4.rc2.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.5.4.rc2.tar.{gz,bz2}		(preformatted docs)
+  testing/*-1.5.4.rc2-1.*.rpm			(RPM)
+
+This round we still did not manage to keep non-fixes out, and
+you can now tell "git commit" to keep the "# comment" lines in
+the message, but otherwise the changes are all fixes, fixes and
+fixes.
+
+----------------------------------------------------------------
+
+Changes since v1.5.4-rc1 are as follows:
+
+Alex Riesen (1):
+      Allow selection of different cleanup modes for commit messages
+
+Arjen Laarhoven (1):
+      Fix "git log --diff-filter" bug
+
+Charles Bailey (1):
+      Remove old generated files from .gitignore.
+
+Gustaf Hendeby (2):
+      Make git send-email accept $EDITOR with arguments
+      shortlog manpage documentation: work around asciidoc markup issue=
+s
+
+Jakub Narebski (1):
+      gitweb: fix whitespace in config_to_multi (indent with tab)
+
+Jeff King (2):
+      clean up 1.5.4 release notes
+      cvsimport: die on cvsps errors
+
+Jim Meyering (1):
+      Don't dereference NULL upon lookup failure.
+
+Johannes Schindelin (2):
+      Teach diff machinery to display other prefixes than "a/" and "b/"
+      Mention git-shell's "cvs" substitution in the RelNotes
+
+Junio C Hamano (14):
+      t4024: fix test script to use simpler sed pattern
+      fix git commit --amend -m "new message"
+      shell-scripts usage(): consistently exit with non-zero
+      Documentation: ls-files -v is about "assume unchanged".
+      Fix $EDITOR regression introduced by rewrite in C.
+      t7005: do not exit inside test.
+      builtin-commit: fix amending of the initial commit
+      builtin-commit: avoid double-negation in the code.
+      Documentation: describe 'union' low-level merge driver
+      Fix documentation of --first-parent in git-log and copy it to git=
+-rev-list
+      combine-diff: Fix path quoting
+      Fix rewrite_diff() name quoting.
+      contrib: resurrect scripted git-revert.
+      GIT 1.5.4-rc2
+
+Linus Torvalds (1):
+      Re(-re)*fix trim_common_tail()
+
+Miklos Vajna (1):
+      everyday: replace 'prune' and 'repack' with 'gc'
+
+Pierre Habouzit (3):
+      git-tag: fix -l switch handling regression.
+      Force the sticked form for options with optional arguments.
+      parse-options: Add a gitcli(5) man page.
+
+Ren=C3=A9 Scharfe (1):
+      Make "--pretty=3Dformat" parser a bit more careful.
+
+Shawn O. Pearce (2):
+      Reallow git-rebase --interactive --continue if commit is unnecess=
+ary
+      Improve error messages when int/long cannot be parsed from config
+
+Stefan Sperling (1):
+      Small comment fix for git-cvsimport.
+
+Wincent Colaiuta (1):
+      Emit helpful status for accidental "git stash" save
