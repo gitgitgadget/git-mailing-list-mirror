@@ -1,64 +1,49 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Using git for file archival/backup purposes - deletion strategy
-Date: Thu, 27 Dec 2007 10:18:29 +0100
-Message-ID: <47736DE5.40509@viscovery.net>
-References: <46a038f90712261443t6aa0cd76u46d8ae88fc7c1eba@mail.gmail.com>
+From: Gerrit Pape <pape@smarden.org>
+Subject: Re: [PATCH] git-pull: don't complain about branch merge config if
+	only fetching tags
+Date: Thu, 27 Dec 2007 09:30:16 +0000
+Message-ID: <20071227093016.18337.qmail@e6d9fb481b7087.315fe32.mid.smarden.org>
+References: <20071221124400.20725.qmail@db93e79e204cd8.315fe32.mid.smarden.org> <7v8x3oatvi.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 27 10:22:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 27 10:30:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J7owr-0001z4-Ob
-	for gcvg-git-2@gmane.org; Thu, 27 Dec 2007 10:22:42 +0100
+	id 1J7p4K-0003be-71
+	for gcvg-git-2@gmane.org; Thu, 27 Dec 2007 10:30:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751471AbXL0JWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Dec 2007 04:22:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750991AbXL0JWM
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Dec 2007 04:22:12 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:9958 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750989AbXL0JWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Dec 2007 04:22:12 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1J7osx-00060y-G9; Thu, 27 Dec 2007 10:22:18 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id B872D6EF; Thu, 27 Dec 2007 10:18:29 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <46a038f90712261443t6aa0cd76u46d8ae88fc7c1eba@mail.gmail.com>
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751664AbXL0JaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Dec 2007 04:30:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751584AbXL0JaA
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Dec 2007 04:30:00 -0500
+Received: from a.ns.smarden.org ([212.42.242.37]:49254 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751155AbXL0J37 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Dec 2007 04:29:59 -0500
+Received: (qmail 18338 invoked by uid 1000); 27 Dec 2007 09:30:16 -0000
+Content-Disposition: inline
+In-Reply-To: <7v8x3oatvi.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69260>
 
-Martin Langhoff schrieb:
-> What I am not 100% clear on is the "old history" deletion strategy.
-> The history will be *strictly* linear, so my intention is to keep the
-> last N commits, by overriding the parent of the Nth commit that git
-> log lists with a "shallow" entry in $GIT_DIR/shallow as documented in
-> Documentation/technical/shallow.txt , and call gc after that.
-> 
-> Is that the correct way to "forget" old history? Searching high and
-> low in the list, I fail to find a definitive answer. Shallow and
-> grafts entries are discussed as ways of doing this, but I can't find a
-> "correct" way of doing this.
+On Fri, Dec 21, 2007 at 08:35:13AM -0800, Junio C Hamano wrote:
+> Gerrit Pape <pape@smarden.org> writes:
+> > When running git pull with the -t switch, it properly fetches tags, but
+> > complains about missing information on how to merge.  Since there's
+> > nothing to merge, make git-pull simply exit after fetching the tags.
 
-I'm doing something like this. Basically:
+> I've seen this patch on this list in the past, but isn't "git
+> pull -t" a user-error?
 
-   git rev-parse "HEAD~$N" > .git/info/grafts
-   git filter-branch -f HEAD
+If so, we shouldn't advertise the -t switch in the git-pull(1) manpage.
+As it stands, I'd understand 'git pull -t' as 'fetch _all_ tags and
+branch heads and merge according to the configuration'.
 
-If you omit filter-branch, then a repack -a -d will corrupt the repository
-(I think) unless you keep the grafts file with it and in all its clones
-forever.
-
--- Hannes
+Regards, Gerrit.
