@@ -1,62 +1,55 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: checkout without touching HEAD
-Date: Fri, 28 Dec 2007 11:22:41 +1300
-Message-ID: <46a038f90712271422o7a831c09s463735ec41356b59@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: checkout without touching HEAD
+Date: Thu, 27 Dec 2007 14:38:06 -0800
+Message-ID: <7vsl1nix0x.fsf@gitster.siamese.dyndns.org>
+References: <46a038f90712271422o7a831c09s463735ec41356b59@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Dec 27 23:23:12 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 27 23:38:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J8189-0005Dq-Vi
-	for gcvg-git-2@gmane.org; Thu, 27 Dec 2007 23:23:10 +0100
+	id 1J81N9-000141-Gk
+	for gcvg-git-2@gmane.org; Thu, 27 Dec 2007 23:38:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753269AbXL0WWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Dec 2007 17:22:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753158AbXL0WWo
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Dec 2007 17:22:44 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:8614 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751977AbXL0WWn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Dec 2007 17:22:43 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so1718542ugc.16
-        for <git@vger.kernel.org>; Thu, 27 Dec 2007 14:22:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=Rw0gQ66aWp1gaQK5FESciAXXSFOZnkJR/G2uoZA6O9I=;
-        b=dGLIGqK9w6rL7Hl1MnaI7xmWXK4cva+bLzq/NAkO02nZPX4E3eZXq6Tu3wN3XEGXDY6gqM3LA3NzLd4B3M6zzuiqIqAeJEtCJDoPhRUzCFtuAcucW3Fe3iz0va4OqRegZxk6I/zW21Sx7A3F6TmkEKJW0mQVi2KA6uUOsjmUHzI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=X6EPX/F7F9UphMq8zP4vMg94iOasgvO8ssm9HaG2qmgF+YKtFPzE4uJVKN2lgmRJ+tADcUH9SkPL4uHRCviC1taeJH29XmKrYJ5M1fzyBSxwHj2eDX/+ePnaRjve7pMYwJZmiQpJEYNipkQ+QJtqWPQfteO7eYvaKDmV8rWM4J4=
-Received: by 10.66.254.19 with SMTP id b19mr7627782ugi.7.1198794161981;
-        Thu, 27 Dec 2007 14:22:41 -0800 (PST)
-Received: by 10.66.250.13 with HTTP; Thu, 27 Dec 2007 14:22:41 -0800 (PST)
-Content-Disposition: inline
+	id S1752828AbXL0WiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Dec 2007 17:38:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752151AbXL0WiO
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Dec 2007 17:38:14 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34706 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752017AbXL0WiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Dec 2007 17:38:14 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CC541641A;
+	Thu, 27 Dec 2007 17:38:10 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A4B3640D;
+	Thu, 27 Dec 2007 17:38:08 -0500 (EST)
+In-Reply-To: <46a038f90712271422o7a831c09s463735ec41356b59@mail.gmail.com>
+	(Martin Langhoff's message of "Fri, 28 Dec 2007 11:22:41 +1300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69268>
 
-Is there a way to get a 'checkout' of a treeish _directly_ from git to
-an empty (or 'no conflicting paths'-guaranteed) directory, without
-touching HEAD?
+"Martin Langhoff" <martin.langhoff@gmail.com> writes:
 
-Using `git-archive ... | tar -x` is a waste of time and resources -- I
-do want this to be fast for large datasets. I have hacked it a bit by
-backing up HEAD, using git checkout with a temporary index, and then
-restoring HEAD, which I can do because my script has a big fat lock
-around it. But it's very un-gittish to need a big lock around me.
+> Is there a way to get a 'checkout' of a treeish _directly_ from git to
+> an empty (or 'no conflicting paths'-guaranteed) directory, without
+> touching HEAD?
+>
+> Using `git-archive ... | tar -x` is a waste of time and resources -- I
+> do want this to be fast for large datasets. I have hacked it a bit by
+> backing up HEAD, using git checkout with a temporary index, and then
+> restoring HEAD, which I can do because my script has a big fat lock
+> around it. But it's very un-gittish to need a big lock around me.
 
-Maybe there's a command I'm missing? Or a zikrit option to checkout I
-haven't found?
-
-cheers,
-
-
-m
+git read-tree -m -u HEAD $treeish
