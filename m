@@ -1,95 +1,94 @@
-From: Luciano Rocha <luciano@eurotux.com>
-Subject: Re: [ANNOUNCE] GIT 1.5.4-rc2
-Date: Fri, 28 Dec 2007 15:26:54 +0000
-Message-ID: <20071228152654.GD19928@bit.office.eurotux.com>
-References: <7v1w98lsg3.fsf@gitster.siamese.dyndns.org> <AAB76121-7F18-4506-809F-EFCAAD76F8BC@zib.de> <20071228150240.GC19928@bit.office.eurotux.com> <87sl1m6e9h.fsf@wine.dyndns.org>
+From: adr3nald0s@gmail.com
+Subject: Re: Anomalous conflicts during git rebase
+Date: Fri, 28 Dec 2007 09:35:34 -0600
+Message-ID: <m3odca7ry1.fsf@euroclydon.lan>
+References: <m3ir2ju5ce.fsf@euroclydon.lan>
+	<20071227225703.B33A25A709@dx.sixt.local>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="7DO5AaGCk89r4vaK"
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Fri Dec 28 16:27:33 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: adr3nald0s@gmail.com, git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Fri Dec 28 16:31:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J8H7R-00062O-HS
-	for gcvg-git-2@gmane.org; Fri, 28 Dec 2007 16:27:29 +0100
+	id 1J8HBO-0007OS-Q8
+	for gcvg-git-2@gmane.org; Fri, 28 Dec 2007 16:31:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753631AbXL1P1E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Dec 2007 10:27:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753588AbXL1P1E
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Dec 2007 10:27:04 -0500
-Received: from os.eurotux.com ([216.75.63.6]:55258 "EHLO os.eurotux.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752841AbXL1P1D (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Dec 2007 10:27:03 -0500
-Received: (qmail 18310 invoked from network); 28 Dec 2007 15:27:00 -0000
-Received: from nc.eurotux.com (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
-  by os.eurotux.com with AES256-SHA encrypted SMTP; 28 Dec 2007 15:27:00 -0000
-Content-Disposition: inline
-In-Reply-To: <87sl1m6e9h.fsf@wine.dyndns.org>
-User-Agent: Mutt/1.5.14 (2007-03-31)
+	id S1755399AbXL1PbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Dec 2007 10:31:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755381AbXL1PbG
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Dec 2007 10:31:06 -0500
+Received: from an-out-0708.google.com ([209.85.132.242]:23797 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755253AbXL1PbE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Dec 2007 10:31:04 -0500
+Received: by an-out-0708.google.com with SMTP id d31so614244and.103
+        for <git@vger.kernel.org>; Fri, 28 Dec 2007 07:31:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:to:cc:subject:in-reply-to:user-agent:references:from:date:message-id:mime-version:content-type;
+        bh=xEadsMTdvV6jOPif4L6bHSQpNLMHsXfmOpvvESZbTCg=;
+        b=S9/hdrxLR1pIs9VU6N3cg/R7pQpbNWF8RlO4V2wApx7xKOQK5+G7jHF4AbQQx/AXSL0P1jU61esG04WKZfN55r5kkON73EudNCQNp1i0aDnhe8V5cfUFUVgez+m4G9CUEYXy0vsPmsxLcDNZF/LPX9KTzSSRB+w2bvTWNG/403M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=to:cc:subject:in-reply-to:user-agent:references:from:date:message-id:mime-version:content-type;
+        b=pj6arRcufnCRcFycbl4e+pCXp2X1HTR/mEaUloKCbZqLbiXVfoNMj4csqHlqC4nyjJolSlONr+MUugoGTJjjtZ43Bfk2NKPNlQSMz3Z2zoIjCEphNPQ1thTWNBlw+XQXbid01fB1PDSVnNSM59tEYTBpNFo3lA/UD9T9vjTF9+g=
+Received: by 10.100.194.17 with SMTP id r17mr11846200anf.92.1198855862900;
+        Fri, 28 Dec 2007 07:31:02 -0800 (PST)
+Received: from euroclydon.lan ( [66.148.187.210])
+        by mx.google.com with ESMTPS id b18sm11794966ana.14.2007.12.28.07.31.01
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 28 Dec 2007 07:31:02 -0800 (PST)
+In-Reply-To: <20071227225703.B33A25A709@dx.sixt.local> (Johannes Sixt's message of "Thu\, 27 Dec 2007 23\:57\:03 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69288>
 
+Johannes Sixt <johannes.sixt@telecom.at> writes:
 
---7DO5AaGCk89r4vaK
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> adr3nald0s@gmail.com wrote:
+>> On a clone of linux-2.6:
+>> 
+>>     git checkout -b topic/test v2.6.15
+>>     touch drivers/a-file.c
+>>     git add drivers/a-file.c
+>>     git commit -m 'Add a file'
+>>     git checkout -b temp0 v2.6.16
+>>     git rebase topic/test
+>> 
+>> I get the following:
+>> 
+>>     Applying [ACPI] handle ACPICA 20050916's acpi_resource.type rename
+> ..
+>>     CONFLICT (content): Merge conflict in drivers/char/hpet.c
+> ..
+>> Is this a bug, or is there a reason I am seeing conflicts in files
+>> I've never touched?
+>
 
-On Fri, Dec 28, 2007 at 04:16:26PM +0100, Alexandre Julliard wrote:
-> Luciano Rocha <luciano@eurotux.com> writes:
->=20
-> > On Fri, Dec 28, 2007 at 11:43:53AM +0100, Steffen Prohaska wrote:
-> >>=20
-> >>  On Dec 27, 2007, at 4:36 AM, Junio C Hamano wrote:
-> >>=20
-> >> > GIT 1.5.4-rc2 is available at the usual places:
-> >>=20
-> >>=20
-> >>  The msysgit installer is now available at
-> >>=20
-> >>     http://code.google.com/p/msysgit/downloads
-> >>=20
-> >
-> > Trying to install it in wine ends with:
-> >
-> > Runtime Error (at -1:0):
-> >
-> > Cannot Import dll:Kernel32.dll.
-> >
-> > That popup appears immediately after running wine
-> > Git-1.5.4-rc2-preview20071228.exe and the installation ends.
->=20
-> That's because it doesn't find CreateHardLinkA. The following Wine patch
-> should enable the installer to succeed.
->=20
+I am not picking on you, Johannes, but I was expecting a response like
+this:
 
-Thanks. I won't have time to test it in the comming days, but it makes
-sense.
+> You are using the rebase the wrong way round.
 
---=20
-Luciano Rocha <luciano@eurotux.com>
-Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
+I am very well aware of how rebase is intended to be used.  The
+components of git are not always used for their semantic purpose.  As
+recommended frequently on this list, it is common to bend them to your
+purpose and use them in non-intuitive ways.
 
---7DO5AaGCk89r4vaK
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+The purpose of the commands above is to have a git repository from
+2.6.15 forward that has our code, XEN and some cherry-pick'd
+back-ported fixes integrated throughout.  We will be doing a lot of
+git-bisect'ing to find where various things changed that break our
+code and certain edge-case usages of XEN.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
+So my question stands and it is not, "Adr3nalD0S, why _would_ you do
+this?"  It is, "Why does git report conflicts that do not exist?"
 
-iD8DBQFHdRW+inSul6a7oB8RAjn6AJ0f2vEVTt1jc7164T5xvHaDYjRTqwCfTPnW
-XeuVWIe+01IF8Of2Okx6Fe4=
-=DS4J
------END PGP SIGNATURE-----
-
---7DO5AaGCk89r4vaK--
+P.S.  This isn't the first project I have run into this on.  It's just
+the first one where I decided to try and do something about it.
