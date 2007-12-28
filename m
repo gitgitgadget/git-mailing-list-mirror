@@ -1,67 +1,45 @@
-From: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.4-rc2
-Date: Fri, 28 Dec 2007 11:43:53 +0100
-Message-ID: <AAB76121-7F18-4506-809F-EFCAAD76F8BC@zib.de>
-References: <7v1w98lsg3.fsf@gitster.siamese.dyndns.org>
-Reply-To: prohaska-wjoc1KHpMeg@public.gmane.org
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Hunk splitting in "git gui"
+Date: Fri, 28 Dec 2007 13:26:26 +0100
+Message-ID: <3F129AD6-EA27-4584-B5C8-2866964AB93E@wincent.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-To: Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Dec 28 11:43:22 2007
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from py-out-1314.google.com ([64.233.166.173])
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Dec 28 13:27:01 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J8CgO-0005TV-DZ
-	for gcvm-msysgit@m.gmane.org; Fri, 28 Dec 2007 11:43:16 +0100
-Received: by py-out-1314.google.com with SMTP id p69so894179pyb.5
-        for <gcvm-msysgit@m.gmane.org>; Fri, 28 Dec 2007 02:42:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=xxCMrsQR1ccVPS2mohybF5DCnt3fgbwpWEuLOd8qOMM=;
-        b=IKd8en8QZE9YihSuL8KgJHWrE58/ikwxUiMMkU9XG27fvgKUlU3LHiLAjs1CuAHJJWwZrBhMmRjV0p9D7o8oeuIXXLd0MDyy8E4+lgpO/+J/olkmREWM0olxJXx7NfMpcITzrygXfIOtb0Pp3Gqe2HBiyV0vuvToDrIch+uWkXw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=F/pAhYWik+/nl8CW4Me4zCZgJrGkeh2tUr6Kls7YR4iEOAkt0sFCn7Dp95HJyAczwRrzAiB2s5AfAhA9dMeKHuQfHyVWVWrY686ygMItgjkTfm0ZKPqHRWLDzp4CTuo8xUk7oswJQg2XbxrsFazXli110PnJOT/WpcDSdcEy0Tw=
-Received: by 10.35.64.7 with SMTP id r7mr393060pyk.2.1198838571548;
-        Fri, 28 Dec 2007 02:42:51 -0800 (PST)
-Received: by 10.107.114.37 with SMTP id r37gr1291prm;
-	Fri, 28 Dec 2007 02:42:51 -0800 (PST)
-X-Sender: prohaska-wjoc1KHpMeg@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.64.76.15 with SMTP id y15mr20576090qba.1.1198838570998; Fri, 28 Dec 2007 02:42:50 -0800 (PST)
-Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id x35si13273773nzg.2.2007.12.28.02.42.49; Fri, 28 Dec 2007 02:42:50 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
-Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) smtp.mail=prohaska-wjoc1KHpMeg@public.gmane.org
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lBSAgm7q007176; Fri, 28 Dec 2007 11:42:48 +0100 (CET)
-Received: from [192.168.178.22] (p5499C94F.dip.t-dialin.net [84.153.201.79]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lBSAgkMB019398 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO); Fri, 28 Dec 2007 11:42:47 +0100 (MET)
-In-Reply-To: <7v1w98lsg3.fsf-jO8aZxhGsIagbBziECNbOZn29agUkmeCHZ5vskTnxNA@public.gmane.org>
-X-Mailer: Apple Mail (2.753)
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1J8EIl-0006Wx-MU
+	for gcvg-git-2@gmane.org; Fri, 28 Dec 2007 13:27:00 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752574AbXL1M0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Dec 2007 07:26:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752242AbXL1M0a
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Dec 2007 07:26:30 -0500
+Received: from wincent.com ([72.3.236.74]:34851 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752170AbXL1M03 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Dec 2007 07:26:29 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lBSCQROc007117
+	for <git@vger.kernel.org>; Fri, 28 Dec 2007 06:26:28 -0600
+X-Mailer: Apple Mail (2.915)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69280>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69281>
 
+I'd use "git gui" a lot more if I could split hunks in it (like you  
+can in "git add --interactive").
 
+Problem is, I have zero knowledge of Tcl/Tk. Can someone who has  
+knowledge of this offer an opinion on whether this would be a feasible  
+project for a beginner? I'm willing to have a shot at it, but before I  
+embark on this I'd like to know if others consider it useful and doable!
 
-On Dec 27, 2007, at 4:36 AM, Junio C Hamano wrote:
-
-> GIT 1.5.4-rc2 is available at the usual places:
-
-
-The msysgit installer is now available at
-
-    http://code.google.com/p/msysgit/downloads
-
-	Steffen
+Cheers,
+Wincent
