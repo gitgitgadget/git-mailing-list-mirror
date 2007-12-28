@@ -1,73 +1,55 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-pull: warn if only fetching tags with the -t switch
-Date: Thu, 27 Dec 2007 23:19:00 -0800
-Message-ID: <7vodcbe17f.fsf@gitster.siamese.dyndns.org>
-References: <20071221124400.20725.qmail@db93e79e204cd8.315fe32.mid.smarden.org>
-	<7v8x3oatvi.fsf@gitster.siamese.dyndns.org>
-	<20071227093016.18337.qmail@e6d9fb481b7087.315fe32.mid.smarden.org>
-	<7vwsr0ifqi.fsf@gitster.siamese.dyndns.org>
-	<20071227144618.32373.qmail@5b51609f839e87.315fe32.mid.smarden.org>
-	<7vve6je349.fsf@gitster.siamese.dyndns.org>
+From: "Imran M Yousuf" <imyousuf@gmail.com>
+Subject: Committing, pushing and pulling for Multi-GIT-Module project
+Date: Fri, 28 Dec 2007 13:43:37 +0600
+Message-ID: <7bfdc29a0712272343j6c9b460eq97f17cea9f3a9c3b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Fri Dec 28 08:19:40 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 28 08:44:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J89VL-0002aA-2w
-	for gcvg-git-2@gmane.org; Fri, 28 Dec 2007 08:19:39 +0100
+	id 1J89sz-0007UU-15
+	for gcvg-git-2@gmane.org; Fri, 28 Dec 2007 08:44:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751798AbXL1HTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Dec 2007 02:19:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751540AbXL1HTL
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Dec 2007 02:19:11 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44295 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751170AbXL1HTK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Dec 2007 02:19:10 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 04657BD21;
-	Fri, 28 Dec 2007 02:19:09 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 577E7BD20;
-	Fri, 28 Dec 2007 02:19:04 -0500 (EST)
-In-Reply-To: <7vve6je349.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 27 Dec 2007 22:37:42 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752117AbXL1Hnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Dec 2007 02:43:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752133AbXL1Hnk
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Dec 2007 02:43:40 -0500
+Received: from fk-out-0910.google.com ([209.85.128.189]:50142 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751554AbXL1Hnk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Dec 2007 02:43:40 -0500
+Received: by fk-out-0910.google.com with SMTP id z23so3724328fkz.5
+        for <git@vger.kernel.org>; Thu, 27 Dec 2007 23:43:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=7bXjXXEwRKhZEc98tZGoiOn0yRBCq02Bz8aP1HgBLDY=;
+        b=nDEbMbfgDXD2QbY1SIWfO3O2SkETZNRot6+74W/nf5SmHGJmmcvkQmVfnDWrLRkSxhuJUiI6H8OlDHDVT7aZujTg5fiBLbsnVk6iRZa98UWqyV0DgLA/tCgladFmfGL4tPLIR7N152m3FVfaD7cGr4ULqUJt8PjokGpODBY8L/E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=DVaebNuqeqVHM6qsDXKi/AweujgjyYTIM2Q2SkBAdl5ABuKr3nmN6TEQmHwnIlVRJMxWFXnDFfbO0d2eI/Vp/7XYZ+BDDNURWF24YrrDpFsO1fZq/+2bBim6kVV8PfFmidj2p/aPEhZm08oFz2+dFHiNeBDT3a58+O1g4GUwxHQ=
+Received: by 10.78.133.2 with SMTP id g2mr10815424hud.26.1198827817846;
+        Thu, 27 Dec 2007 23:43:37 -0800 (PST)
+Received: by 10.78.50.5 with HTTP; Thu, 27 Dec 2007 23:43:37 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69278>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> It appears that the explicit case also needs documentation.
+Compliments of the new season.
 
-But with two "oops-correction"s.
+I am working with a multi-git-module project, I was wondering is it
+possible to commit, push and pull all the modules at once? For pull I
+think it is said explicitly that it has to be pulled individually. Is
+it the same for commit and push?
 
-> The refs fetched are:
->
->  + Having --tags on the command line is the same as replacing
->    remote.$remote.fetch with refs/tags/*:refs/tags/* in the
->    configuration.
->
->  + If refspecs are explicitly given from the command line, they
->    will be the ones that are fetched, and remotes.$remote.fetch
->    is consulted unless they come from the above --tags.
-
-s/is consulted/is ignored/;
-
->  * Otherwise, remotes.$remote.fetch (and its equivalent in
->    .git/remotes/$remote) are the ones that are fetched.
->
->  * In addition, if branch.$current_branch.merge is specified but
->    is not covered by the above, it also is fetched.
-
-s/if /if no explicit refspecs are given and /;
+Thank you & best regards,
