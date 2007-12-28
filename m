@@ -1,100 +1,87 @@
-From: Daniel Barkalow <barkalow-o/mKjEDNO/Bg9hUCZPvPmw@public.gmane.org>
-Subject: Re: [RFC] Distributing Windows binary package compiled with
- non gpl code
-Date: Thu, 27 Dec 2007 19:05:00 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0712271846380.13593@iabervon.org>
-References: <e5bfff550712271032q25d135e7y47d68337e937d401@mail.gmail.com> <alpine.LNX.1.00.0712271647130.13593@iabervon.org> <fl1bcn$k2h$1@ger.gmane.org>
+From: Bernt Hansen <bernt@norang.ca>
+Subject: [PATCH] git-gui: Make commit log messages end with a newline
+Date: Thu, 27 Dec 2007 21:15:56 -0500
+Organization: Norang Consulting Inc
+Message-ID: <87k5mzmun7.fsf_-_@gollum.intra.norang.ca>
+References: <87ve6ub3u7.fsf@gollum.intra.norang.ca>
+	<8763yof9lg.fsf@gollum.intra.norang.ca>
+	<Pine.LNX.4.64.0712241835210.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+	<20071225044202.GO14735@spearce.org>
+	<87myrxqrev.fsf@gollum.intra.norang.ca>
+	<20071227041902.GR14735@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-To: Abdelrazak Younes <younes.a-GANU6spQydw@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri Dec 28 01:05:49 2007
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.251])
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Dec 28 03:17:04 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J82j9-00061e-VD
-	for gcvm-msysgit@m.gmane.org; Fri, 28 Dec 2007 01:05:46 +0100
-Received: by wa-out-0708.google.com with SMTP id n36so196344wag.21
-        for <gcvm-msysgit@m.gmane.org>; Thu, 27 Dec 2007 16:05:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:date:from:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=wQGj4wpnT/t/mwNTG/g4t3uCrILhHvwBG8XCp7K9WW8=;
-        b=pQtZ/d2w0ugm/oHqFBrGsQxepdKtHGnWYB2gZ3Zrma2n6oJ/zdpexXfdnOJqQ/QphvuMKnhjKajWEa1bhJrj+GPyfqHgLM/Celrsh7oenzEAcAbmZ2hgGMPtDDM32pQz8erBPFCIgv+6JVdHb5cZ8IMay0S7Ocz2GFapwP3Hn8Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:date:from:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=RZ/X5x/mWrbG/MUynplkj3XIwelDL9Ti3gjyThEqAnwOrcGXwCiu+MQtg29E2I5WPpJKqetcNH5zQ7unI1btiPQvs6oG2Hj5bSCgThP1D2B0ofxGfcAAqnYQvMe9qEd/Mv3VJyJF8c3h6Fml+z+lOPg8HGXqbsjXbh7y4UqgIM4=
-Received: by 10.142.213.9 with SMTP id l9mr279762wfg.16.1198800302462;
-        Thu, 27 Dec 2007 16:05:02 -0800 (PST)
-Received: by 10.106.179.39 with SMTP id b39gr1289prf;
-	Thu, 27 Dec 2007 16:05:02 -0800 (PST)
-X-Sender: barkalow-o/mKjEDNO/Bg9hUCZPvPmw@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.82.147.6 with SMTP id u6mr158832bud.22.1198800302239; Thu, 27 Dec 2007 16:05:02 -0800 (PST)
-Received: from iabervon.org (iabervon.org [66.92.72.58]) by mx.google.com with ESMTP id v28si10152748nzb.4.2007.12.27.16.05.01; Thu, 27 Dec 2007 16:05:02 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of barkalow-o/mKjEDNO/Bg9hUCZPvPmw@public.gmane.org designates 66.92.72.58 as permitted sender) client-ip=66.92.72.58;
-Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of barkalow-o/mKjEDNO/Bg9hUCZPvPmw@public.gmane.org designates 66.92.72.58 as permitted sender) smtp.mail=barkalow-o/mKjEDNO/Bg9hUCZPvPmw@public.gmane.org
-Received: (qmail 22493 invoked by uid 1000); 28 Dec 2007 00:05:00 -0000
-Received: from localhost (sendmail-bs-savSHZN5Fh8qMp+WYRx65w@public.gmane.org) by localhost with SMTP; 28 Dec 2007 00:05:00 -0000
-In-Reply-To: <fl1bcn$k2h$1@ger.gmane.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1J84mV-000082-0Z
+	for gcvg-git-2@gmane.org; Fri, 28 Dec 2007 03:17:03 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753569AbXL1CQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Dec 2007 21:16:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753468AbXL1CQM
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Dec 2007 21:16:12 -0500
+Received: from mho-02-bos.mailhop.org ([63.208.196.179]:54057 "EHLO
+	mho-02-bos.mailhop.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752767AbXL1CQK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Dec 2007 21:16:10 -0500
+Received: from cpe000102d0fe75-cm0012256ecbde.cpe.net.cable.rogers.com ([99.239.148.180] helo=mail.norang.ca)
+	by mho-02-bos.mailhop.org with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <bernt@norang.ca>)
+	id 1J84lc-0003z6-2Y; Fri, 28 Dec 2007 02:16:08 +0000
+X-Mail-Handler: MailHop Outbound by DynDNS
+X-Originating-IP: 99.239.148.180
+X-Report-Abuse-To: abuse@dyndns.com (see http://www.mailhop.org/outbound/abuse.html for abuse reporting information)
+X-MHO-User: U2FsdGVkX1+u/bDwn/kJg1TKctw1VAIn
+Received-SPF: none (mail.norang.ca: bernt@gollum.intra.norang.ca does not designate permitted sender hosts) receiver=mail.norang.ca; client-ip=192.168.1.5; helo=gollum.intra.norang.ca; envelope-from=bernt@gollum.intra.norang.ca; x-software=spfmilter 0.97 http://www.acme.com/software/spfmilter/ with libspf-unknown;
+Received: from gollum.intra.norang.ca (gollum.intra.norang.ca [192.168.1.5])
+	by mail.norang.ca (8.13.8/8.13.8/Debian-3) with ESMTP id lBS2G1FS019262
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 27 Dec 2007 21:16:04 -0500
+Received: from gollum.intra.norang.ca (localhost [127.0.0.1])
+	by gollum.intra.norang.ca (8.14.2/8.14.2/Debian-1) with ESMTP id lBS2G1w2015952;
+	Thu, 27 Dec 2007 21:16:01 -0500
+Received: (from bernt@localhost)
+	by gollum.intra.norang.ca (8.14.2/8.14.2/Submit) id lBS2FuFZ015951;
+	Thu, 27 Dec 2007 21:15:56 -0500
+In-Reply-To: <20071227041902.GR14735@spearce.org> (Shawn O. Pearce's message of "Wed\, 26 Dec 2007 23\:19\:02 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69274>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69275>
 
+Concatenating commit log messages from multiple commits works better
+when all of the commits end with a clean line break.
 
-On Fri, 28 Dec 2007, Abdelrazak Younes wrote:
+Its good to be strict in what you create, and lenient in what you
+accept, and since we're creating here, we should always try to
+Do The Right Thing(tm).
 
-> Daniel Barkalow wrote:
-> > On Thu, 27 Dec 2007, Marco Costalba wrote:
-> > 
-> > > Packaged together with qgit.exe there are the necessary Micorsoft
-> > > Visual C dll's. Is this a problem for someone?
-> 
-> My two cents below; I hope you don't mind my interference.
+Signed-off-by: Bernt Hansen <bernt@alumni.uwaterloo.ca>
+---
+ lib/commit.tcl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Not at all.
-
-> > I'd actually be more concerned about whether you can (or should) distribute
-> > GPL code compiled with a proprietary compiler;
-> 
-> This is the exact same situation as with other proprietary platforms (Solaris,
-> HPUx, etc). You should not make a difference for Windows IMHO. Besides, many
-> open source projects have no problem at all with MSVC.
-
-The difference I see is that the project's build system can use the system 
-toolchain without caring whether it's a proprietary one or an open source 
-one. That is, you can call $CC or $LD based on the interface standard, and 
-it doesn't fundamentally matter whether you've got a proprietary compiler 
-or not (of course, you'll get a different result, but that's true of 
-different compiler versions anyway, and build timestamps and machine and 
-user name will be different, etc). MSVC's build system interface is 
-particular to itself.
-
-> > people who get the binaries and the source still couldn't edit the source
-> > and generate a corresponding binary, because they don't necessarily have the
-> > build environment you used.
-> 
-> This particular tool is free (as in beer) to download and use.
-
-It probably actually falls under the "system software" exception, in that 
-case (when distributing source, you have to include everything needed to 
-build the source, except for normal system software, which you can assume 
-the recipient has).
-
-In any case, not an actual problem; it's just that distributing 
-side-by-side (the original question) is even more clearly not a problem, 
-in my opinion.
-
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/lib/commit.tcl b/lib/commit.tcl
+index b2d2d53..1c0586c 100644
+--- a/lib/commit.tcl
++++ b/lib/commit.tcl
+@@ -303,7 +303,7 @@ A rescan will be automatically started now.
+ 		puts stderr [mc "warning: Tcl does not support encoding '%s'." $enc]
+ 		fconfigure $msg_wt -encoding utf-8
+ 	}
+-	puts -nonewline $msg_wt $msg
++	puts $msg_wt $msg
+ 	close $msg_wt
+ 
+ 	# -- Create the commit.
+-- 
+1.5.4.rc1.21.g0e545
