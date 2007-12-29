@@ -1,68 +1,60 @@
-From: Andy Parkins <andyparkins@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] Optimize prefixcmp()
-Date: Sat, 29 Dec 2007 21:54:43 +0000
-Message-ID: <200712292154.44169.andyparkins@gmail.com>
-References: <e5bfff550712291001q5f246ceah6700b98308fb96f1@mail.gmail.com> <Pine.LNX.4.64.0712292019450.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+Date: Sat, 29 Dec 2007 23:15:18 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0712292307210.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <e5bfff550712291001q5f246ceah6700b98308fb96f1@mail.gmail.com> 
+ <Pine.LNX.4.64.0712292019450.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+ <e5bfff550712291239y5648b923y8d332d9c40a8c97b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Dec 29 22:55:30 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 29 23:15:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J8jeT-0007PW-6k
-	for gcvg-git-2@gmane.org; Sat, 29 Dec 2007 22:55:29 +0100
+	id 1J8jy7-0004Bx-1K
+	for gcvg-git-2@gmane.org; Sat, 29 Dec 2007 23:15:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752006AbXL2VzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Dec 2007 16:55:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751986AbXL2VzD
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Dec 2007 16:55:03 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:15537 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751868AbXL2VzB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Dec 2007 16:55:01 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so2056261ugc.16
-        for <git@vger.kernel.org>; Sat, 29 Dec 2007 13:54:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=4pbzoxWdprayKkndaFq9DOiZDeTB7YuU0aw1zcZ5TpA=;
-        b=XTkeQgx0/K3pE9nLf6fZEzXTC3isUWAJ8ogQKeDxeYKGz13hWNTygNkmbWEDPoDrsLzGILiVy5ui2Nxi9BBhgOmL+Nwficvl02RyNi961HzHGrtSZaFm1yA9iZSu5YLkP9Cq73YELAnDxDBuwk5BnorbKZHtLqHDYoruPBG83tY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=NbE7iVep7iT/6geouE5FV2hQaYs+7pG9QVTlavc8zxdEC8zN0k6BLmlyJbqZ2lBol+zrkySHtd5pGroHIjPGkqaLEyfC6mBJwwqyKUHbrIo5IOdvpQURvQJHhhtA3pPG7HxGmhepo7SQJZozTSlqaoiKXOR8/iZLv9AnXf+Zmh0=
-Received: by 10.67.15.15 with SMTP id s15mr9003996ugi.27.1198965299259;
-        Sat, 29 Dec 2007 13:54:59 -0800 (PST)
-Received: from grissom.local ( [91.84.15.31])
-        by mx.google.com with ESMTPS id o30sm37432761ugd.84.2007.12.29.13.54.55
-        (version=SSLv3 cipher=OTHER);
-        Sat, 29 Dec 2007 13:54:55 -0800 (PST)
-User-Agent: KMail/1.9.7
-In-Reply-To: <Pine.LNX.4.64.0712292019450.14355@wbgn129.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1752359AbXL2WPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Dec 2007 17:15:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752209AbXL2WPW
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Dec 2007 17:15:22 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42484 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752079AbXL2WPV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Dec 2007 17:15:21 -0500
+Received: (qmail invoked by alias); 29 Dec 2007 22:15:19 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+  by mail.gmx.net (mp056) with SMTP; 29 Dec 2007 23:15:19 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+3SsYDgji3DlV/EmsUFZRQurrnEzMLZWCwJSebKI
+	Z4bgd7A1Lr5aHN
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <e5bfff550712291239y5648b923y8d332d9c40a8c97b@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69333>
 
-On Saturday 2007, December 29, Johannes Schindelin wrote:
+Hi,
 
-> 	Not only does it avoid the strlen() call also for longer prefixes;
-> 	it also avoids a C++ comment.
+On Sat, 29 Dec 2007, Marco Costalba wrote:
 
-I'm sure it doesn't matter; but they're allowed in C99.  So it's not a C++ 
-comment any more :-)
+> What your patch does not seem to avoid is a segfault if prefix or str 
+> are NULL pointers.
 
+I am quite certain that it is not allowed to pass NULL pointers to strcmp, 
+and even if it was, I maintain that it is bad style.
 
-Andy
+FWIW the test suite seems to agree with me, as it passes with my patch.
 
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+However, since you already seem to have a profiling setup ready, I would 
+be interested in some numbers, i.e. if this patch is faster for you or 
+slower, or shows no effect at all.
+
+Ciao,
+Dscho
