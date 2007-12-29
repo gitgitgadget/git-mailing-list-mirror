@@ -1,76 +1,69 @@
-From: David <davvid@gmail.com>
-Subject: [ANNOUNCE] ugit: the pythonic git gui
-Date: Fri, 28 Dec 2007 14:49:18 -0800
-Message-ID: <402731c90712281449g3d0c4f53w48c65dc8883bbbb3@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: reflog weirdness
+Date: Fri, 28 Dec 2007 16:06:36 -0800
+Message-ID: <7vprwqcqk3.fsf@gitster.siamese.dyndns.org>
+References: <87ve6iegny.fsf@ambire.localdomain>
+	<7vhci2ectr.fsf@gitster.siamese.dyndns.org>
+	<87prwqec4a.fsf@ambire.localdomain>
+	<7vtzm2cwbw.fsf@gitster.siamese.dyndns.org>
+	<87fxxme8x9.fsf@ambire.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 28 23:49:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Thien-Thi Nguyen <ttn@gnuvola.org>
+X-From: git-owner@vger.kernel.org Sat Dec 29 01:07:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J8O1T-0001z9-IS
-	for gcvg-git-2@gmane.org; Fri, 28 Dec 2007 23:49:47 +0100
+	id 1J8PER-0005Uz-28
+	for gcvg-git-2@gmane.org; Sat, 29 Dec 2007 01:07:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752180AbXL1WtV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Dec 2007 17:49:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752153AbXL1WtV
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Dec 2007 17:49:21 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:49794 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752054AbXL1WtU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Dec 2007 17:49:20 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so1898533ugc.16
-        for <git@vger.kernel.org>; Fri, 28 Dec 2007 14:49:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=xz6lyUKnDcaVlGlCUPgcWV8HQ0NHGgMzX50fjQ+pNNg=;
-        b=B4JvgYD5ZazzLygkpwRO9aXVQZOylsPjdssUZyxwlVMeRp2DljZUt5bXUr2OnO/S7NLzyOkKxwGiRI5vB8zzjneNsm/8ap9Jinh1JRBSFOMbs0P8sSLow4fAxFz3dxGwn7AfDbOf0/ddzRpnzaTz5h+s3M6vqbpoybonwZ0xn8c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=W7zaJ4rFgSRIrxeyjzg/s2Iw/gfPhwhHB+xE36X0IEd4doEhyojhhrOKAL26zCiDpM3oymQyBLAQeC6lQAjMl6SSZxsq8SS7xPL5pdjo0N+ZipRtTuKSYJZPUaPK9am3UlRClSvVKu85JhNwff1qg4p+47VGnToBNAx5jcbihlk=
-Received: by 10.67.116.2 with SMTP id t2mr8341688ugm.62.1198882158445;
-        Fri, 28 Dec 2007 14:49:18 -0800 (PST)
-Received: by 10.67.118.1 with HTTP; Fri, 28 Dec 2007 14:49:18 -0800 (PST)
-Content-Disposition: inline
+	id S1752688AbXL2AGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Dec 2007 19:06:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752678AbXL2AGs
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Dec 2007 19:06:48 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52178 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752671AbXL2AGs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Dec 2007 19:06:48 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 42F02362B;
+	Fri, 28 Dec 2007 19:06:46 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id BFD5D362A;
+	Fri, 28 Dec 2007 19:06:42 -0500 (EST)
+In-Reply-To: <87fxxme8x9.fsf@ambire.localdomain> (Thien-Thi Nguyen's message
+	of "Fri, 28 Dec 2007 23:44:34 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69303>
 
-ugit, the pyqt-based git gui, has been taking shape as of late.
+Thien-Thi Nguyen <ttn@gnuvola.org> writes:
 
-First off, I'd like to thank everyone that replied with suggestions
-and criticism.  This list is extremely helpful with regards to
-providing honest software critiques.
+> () Junio C Hamano <gitster@pobox.com>
+> () Fri, 28 Dec 2007 14:01:55 -0800
+>
+>    Was it a buggy "git commit" command, or a bad commit log
+>    message was fed to "git commit" by the user, and there is
+>    nothing for me to worry about?
+>
+> i'm sorry, even though it was only a couple days ago, the actual
+> events are far back in my memory, so i can't say.  i wouldn't
+> worry about it -- probably user error.  (i'm new w/ git.  most of
+> the time i drive it from w/in emacs, which is well behaved; it is
+> when i leave that comparative safety to do some flailing from the
+> command-line that things go weird.)
+>
+> i suppose one way to improve git would be to test how it handles
+> interruption (control-c in the middle of a commit, for example).
+> a bit tricky to arrange (reproducibly), though...
+>
+> now i go search the docs for how to replace that log message.
 
-New features since the last announcement (almost all of which were
-mentioned in one way or another on this list):
-
-* inotify support (we've removed the "Rescan" button)
-* Patch hunk un/staging
-* Allows un/staging selected patch hunk lines (without --unidiff-zero)
-* Prepped for i18n ("env LANG=ja_JP ugit" looks pretty cool now)
-* I'm a westerner, so the unstaged list is now on the left and the
-staged list is on the right (thanks Jason)
-* Optimizations to improve the interactivity of the patch browser
-* Misc. fixes for MacOS and Windows (thanks Steffan and Sebastian)
-* Uses default system colors whenever possible [no more darkness] (thanks Alex)
-* No longer requires PYTHONPATH
-
-Source code (requires pyqt4-dev-tools to build):
-http://repo.or.cz/w/ugit.git
-
-Tarballs (require a stock pyqt-4.3 installation):
-http://ugit.justroots.com/
-
-I'll try and get some .deb, .rpm, etc. action happening soon.
-
-p.s.
-If you read ugit as "(f)uh-git" or "ugly-git", then that's good since
-I think that falls in line with the git style ;-)
+"git-rebase -i"
