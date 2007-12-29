@@ -1,69 +1,107 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: libcrypto error
-Date: Sat, 29 Dec 2007 10:50:22 -0500
-Message-ID: <BAYC1-PASMTP13D19EDB82ED1407AC5886AE560@CEZ.ICE>
-References: <BLU129-W145F3EAD72285347BFF215B3560@phx.gbl>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: generated HTML contains broken links
+Date: Sat, 29 Dec 2007 16:57:05 +0100
+Message-ID: <20071229155705.GA23659@genesis.frugalware.org>
+References: <87sl1mqt10.fsf@offby1.atm01.sea.blarg.net> <4775B87D.4010507@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Hwasung Mars Lee <hwasungmars@hotmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 29 16:50:56 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="BtNCO5h84ExDStzY"
+Cc: Dan McGee <dpmcgee@gmail.com>, Eric Hanchrow <offby1@blarg.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 29 16:57:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J8dxf-000559-VQ
-	for gcvg-git-2@gmane.org; Sat, 29 Dec 2007 16:50:56 +0100
+	id 1J8e49-0006uL-TA
+	for gcvg-git-2@gmane.org; Sat, 29 Dec 2007 16:57:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753801AbXL2Pu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Dec 2007 10:50:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753810AbXL2Pu3
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Dec 2007 10:50:29 -0500
-Received: from bay0-omc2-s8.bay0.hotmail.com ([65.54.246.144]:52082 "EHLO
-	bay0-omc2-s8.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752226AbXL2Pu2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Dec 2007 10:50:28 -0500
-Received: from BAYC1-PASMTP13 ([65.54.191.186]) by bay0-omc2-s8.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sat, 29 Dec 2007 07:50:25 -0800
-X-Originating-IP: [74.15.76.104]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([74.15.76.104]) by BAYC1-PASMTP13.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Sat, 29 Dec 2007 07:50:24 -0800
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with smtp (Exim 4.43)
-	id 1J8dx2-0003gb-0b; Sat, 29 Dec 2007 10:50:16 -0500
-In-Reply-To: <BLU129-W145F3EAD72285347BFF215B3560@phx.gbl>
-X-Mailer: Sylpheed 2.4.5 (GTK+ 2.12.1; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 29 Dec 2007 15:50:24.0310 (UTC) FILETIME=[865CAD60:01C84A32]
+	id S1753893AbXL2P5K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Dec 2007 10:57:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753884AbXL2P5J
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Dec 2007 10:57:09 -0500
+Received: from virgo.iok.hu ([193.202.89.103]:31606 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753871AbXL2P5H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Dec 2007 10:57:07 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 134341B253F;
+	Sat, 29 Dec 2007 16:57:06 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 64C7C541E3;
+	Sat, 29 Dec 2007 16:55:37 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 87A10176C03D; Sat, 29 Dec 2007 16:57:05 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <4775B87D.4010507@gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69317>
 
-On Sat, 29 Dec 2007 15:05:58 +0000
-Hwasung Mars Lee <hwasungmars@hotmail.com> wrote:
 
-> I have some problems when using git remotely. When I git clone from Ubuntu or Mac to Debian, I get the following message:
-> 
-> git-upload-pack: error while loading shared libraries: libcrypto.so.0.9.8: cannot open shared object file: No such file or directory
-> fatal: unexpected EOF
-> fetch-pack from 'maths:~/Desktop/TeX' failed.
-> 
+--BtNCO5h84ExDStzY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Mars,
+On Fri, Dec 28, 2007 at 09:01:17PM -0600, Dan McGee <dpmcgee@gmail.com> wro=
+te:
+> Generated man pages from Junio:
+> HOOKS
+>        This command can run commit-msg, pre-commit, and post-commit hooks=
+=2E See
+>        [1]hooks for more information.
+>=20
+> SEE ALSO
+>        git-add(1), git-rm(1), git-mv(1), git-merge(1), git-commit-tree(1)
+>=20
+> AUTHOR
+>        Written by Linus Torvalds <torvalds@osdl.org> and Junio C Hamano
+>        <junkio@cox.net>
+>=20
+> GIT
+>        Part of the git(7) suite
+>=20
+> Man pages generated locally (with Asciidoc 8.2.3 or 8.2.5):
+> HOOKS
+>        This command can run commit-msg, pre-commit, and post-commit hooks=
+=2E See
+>        hooks[5] for more information.
+>=20
+> SEE ALSO
+>        git1[1], git1[2], git1[8], git1[6], git1[9]
+>=20
+> AUTHOR
+>        Written by Linus Torvalds <torvalds@osdl.org> and Junio C Hamano
+>        <junkio@cox.net>
+>=20
+> GIT
+>        Part of the git7[10] suite
 
-It appears the machine from which you're trying to clone is missing the proper libcrypto
-library.  You'll need to ensure it is installed using whatever package manager is
-appropriate for your Linux distribution.
+http://code.toofishes.net/gitweb.cgi?p=3Dpacman.git;a=3Dcommitdiff;h=3Db3c6=
+bdda38f7e370e1f80f02a61f1d3f08c1b57d
 
-The following command will show you which libraries git-upload-pack is using (and missing):
+here is the commit that fixed the problem for pacman. what do you think,
+should we rename gitlink to something else, too - or should we contact
+upstream to notify them about they caused a breakage?
 
-   ldd $(which git-upload-pack)
+thanks,
+- VMiklos
 
-That will likely report that the libcrypto library can't be found and needs to be
-installed.
+--BtNCO5h84ExDStzY
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Good luck,
-Sean
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFHdm5Re81tAgORUJYRAhWMAJ9BlHjH2EcEonGHgQfTsJVWl/ehPQCgoX04
+SfigoSxmq0Rnwo737uJvXiM=
+=zCpr
+-----END PGP SIGNATURE-----
+
+--BtNCO5h84ExDStzY--
