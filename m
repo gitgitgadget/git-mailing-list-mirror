@@ -1,64 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Force new line at end of commit message
-Date: Sun, 30 Dec 2007 12:03:28 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0712301201570.14355@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <87ve6ub3u7.fsf@gollum.intra.norang.ca> <8763yof9lg.fsf@gollum.intra.norang.ca>
- <Pine.LNX.4.64.0712241835210.14355@wbgn129.biozentrum.uni-wuerzburg.de>
- <20071225044202.GO14735@spearce.org> <7v4pe5nt8m.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0712291426500.14355@wbgn129.biozentrum.uni-wuerzburg.de>
- <7vodc99gpy.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0712301124510.14355@wbgn129.biozentrum.uni-wuerzburg.de>
- <7v63yga20u.fsf@gitster.siamese.dyndns.org>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: Why 'git commit --amend' generates different HEAD sha1 each time when no content changes
+Date: Sun, 30 Dec 2007 19:19:29 +0800
+Message-ID: <46dff0320712300319s72dfc865oc71463cfe4e20cd0@mail.gmail.com>
+References: <46dff0320712300256g36e825a2g711d98b565e361f9@mail.gmail.com>
+	 <1199012360.15996.6.camel@futex>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Bernt Hansen <bernt@alumni.uwaterloo.ca>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 30 12:04:04 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Matthias Kestenholz" <mk@spinlock.ch>
+X-From: git-owner@vger.kernel.org Sun Dec 30 12:20:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J8vxW-0007tz-Lw
-	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 12:03:59 +0100
+	id 1J8wD7-00031X-KQ
+	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 12:20:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751897AbXL3LDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Dec 2007 06:03:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751891AbXL3LDc
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 06:03:32 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36031 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751892AbXL3LDb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Dec 2007 06:03:31 -0500
-Received: (qmail invoked by alias); 30 Dec 2007 11:03:29 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp052) with SMTP; 30 Dec 2007 12:03:29 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19P+PERlNtPfGB6gLUcn754Ye/B1ZWgkRN4x96qCV
-	E7HDPTsOMpAT+D
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7v63yga20u.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1751827AbXL3LTb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Dec 2007 06:19:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751182AbXL3LTb
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 06:19:31 -0500
+Received: from py-out-1112.google.com ([64.233.166.182]:49655 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751246AbXL3LTa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Dec 2007 06:19:30 -0500
+Received: by py-out-1112.google.com with SMTP id u52so8547068pyb.10
+        for <git@vger.kernel.org>; Sun, 30 Dec 2007 03:19:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=s0TPXRZ1U/OC9mR+wtIpFY+tHQT2doN+QlSiOOBmObU=;
+        b=c4COElLKbHU6p5/8eOjDX1P/g0GbNjdVIBqpivpD2k7Wfr54E6mEKNdd5TOm5WgSsboKcufBLMrqQMQ5/0uWExmivSf74OgJvpLE55I0TfvvUxJBF6Go5muJY8kEQwCLSncYCxbDm7iTlXChZ9IdSWXOm+LTQvNk9k+A7fZZcNg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=wp6VqdphEZLv0Nd1pLbIj8oxEdqLd4u9aUdgmaky1B7o7vYd1jEbbnZOU3fum6qMJ8Eu8+yRZDYnuE6OezzGDKYBUmgpYmzSgZUBVOSI7Tk1tC3utAsNdqRcZNeU5Ui5k8w4K4i884WO/44F4//jrtX4hP2y7oKsFV/PsRd7z5Y=
+Received: by 10.35.34.19 with SMTP id m19mr9300193pyj.2.1199013569692;
+        Sun, 30 Dec 2007 03:19:29 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Sun, 30 Dec 2007 03:19:29 -0800 (PST)
+In-Reply-To: <1199012360.15996.6.camel@futex>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69351>
 
-Hi,
+On Dec 30, 2007 6:59 PM, Matthias Kestenholz <mk@spinlock.ch> wrote:
+>
+> On Sun, 2007-12-30 at 18:56 +0800, Ping Yin wrote:
+> > AFAIK, commit sha1 is only determined by commit object content (say
+> > parent commit, tree sha1 and so on). So why 'git commit --amend'
+> > changes the commit sha1 when no content changes as following shows.
+> >
+>
+> The full commit includes a timestamp too, which changed. Try setting the
+> GIT_AUTHOR_DATE and GIT_COMMITTER_DATE environment variables, you should
+> get the same SHA-1 everytime.
+>
 
-On Sun, 30 Dec 2007, Junio C Hamano wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > But if I understood the OP correctly, the problem was a missing 
-> > newline at the end of the commit message, no?
-> 
-> That's why the "echo" was moved out of the conditional, to make sure "# 
-> This is the $(nth)" begins on a fresh line.
 
-Not that I care too deeply, but does that not add a newline regardless 
-whether it is needed or not?
-
-Thanks,
-Dscho
+-- 
+Ping Yin
