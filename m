@@ -1,110 +1,116 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH] git-filter-branch could be confused by similar names
-Date: Sun, 30 Dec 2007 16:54:28 +0300
-Message-ID: <20071230135428.GW13968@dpotapov.dyndns.org>
-References: <1198593316-7712-1-git-send-email-dpotapov@gmail.com> <Pine.LNX.4.64.0712292334080.14355@wbgn129.biozentrum.uni-wuerzburg.de> <20071230103146.GU13968@dpotapov.dyndns.org> <Pine.LNX.4.64.0712301145360.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Optimize prefixcmp()
+Date: Sun, 30 Dec 2007 14:55:57 +0100
+Message-ID: <20071230135557.GA25917@artemis.madism.org>
+References: <e5bfff550712291001q5f246ceah6700b98308fb96f1@mail.gmail.com> <Pine.LNX.4.64.0712292019450.14355@wbgn129.biozentrum.uni-wuerzburg.de> <e5bfff550712291239y5648b923y8d332d9c40a8c97b@mail.gmail.com> <Pine.LNX.4.64.0712292307210.14355@wbgn129.biozentrum.uni-wuerzburg.de> <e5bfff550712300502p543680b9jbeb9469a5a970f0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Dec 30 14:55:08 2007
+Content-Type: multipart/signed; boundary="SLDf9lqlvOQaIe6s";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 30 14:57:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J8yd2-00036k-Pt
-	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 14:55:01 +0100
+	id 1J8yeu-0003YG-1c
+	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 14:56:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752226AbXL3Nyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Dec 2007 08:54:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752183AbXL3Nyb
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 08:54:31 -0500
-Received: from smtp01.mtu.ru ([62.5.255.48]:55841 "EHLO smtp01.mtu.ru"
+	id S1752431AbXL3N4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Dec 2007 08:56:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753429AbXL3N4B
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 08:56:01 -0500
+Received: from pan.madism.org ([88.191.52.104]:44027 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752017AbXL3Nya (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Dec 2007 08:54:30 -0500
-Received: from smtp01.mtu.ru (localhost [127.0.0.1])
-	by smtp01.mtu.ru (Postfix) with ESMTP id 26C6FADE6E9;
-	Sun, 30 Dec 2007 16:54:21 +0300 (MSK)
-Received: from dpotapov.dyndns.org (ppp85-141-191-14.pppoe.mtu-net.ru [85.141.191.14])
-	by smtp01.mtu.ru (Postfix) with ESMTP id EC0E2ADE5D6;
-	Sun, 30 Dec 2007 16:54:20 +0300 (MSK)
-Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
-	(envelope-from <dpotapov@gmail.com>)
-	id 1J8ycW-0006E3-PC; Sun, 30 Dec 2007 16:54:28 +0300
+	id S1752289AbXL3N4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Dec 2007 08:56:00 -0500
+Received: from madism.org (unknown [82.236.23.208])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id BA6BF2C1E8;
+	Sun, 30 Dec 2007 14:55:58 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id A81584ADE56; Sun, 30 Dec 2007 14:55:57 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0712301145360.14355@wbgn129.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-DCC-STREAM-Metrics: smtp01.mtu.ru 10002; Body=0 Fuz1=0 Fuz2=0
+In-Reply-To: <e5bfff550712300502p543680b9jbeb9469a5a970f0@mail.gmail.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69362>
 
-On Sun, Dec 30, 2007 at 11:46:59AM +0100, Johannes Schindelin wrote:
-> 
-> On Sun, 30 Dec 2007, Dmitry Potapov wrote:
-> 
-> > On Sat, Dec 29, 2007 at 11:36:51PM +0100, Johannes Schindelin wrote:
-> > > 
-> > > On Tue, 25 Dec 2007, Dmitry Potapov wrote:
-> > > 
-> > > > 'git-filter-branch branch' could fail producing the error: "Which 
-> > > > ref do you want to rewrite?" if existed another branch or tag, which 
-> > > > name was 'branch-something' or 'something/branch'.
-> > > > 
-> > > > Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
-> > > > ---
-> > > >  git-filter-branch.sh     |    2 +-
-> > > >  t/t7003-filter-branch.sh |   10 ++++++++++
-> > > >  2 files changed, 11 insertions(+), 1 deletions(-)
-> > > > 
-> > > > diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-> > > > index dbab1a9..b89a720 100755
-> > > > --- a/git-filter-branch.sh
-> > > > +++ b/git-filter-branch.sh
-> > > > @@ -219,7 +219,7 @@ do
-> > > >  	;;
-> > > >  	*)
-> > > >  		ref="$(git for-each-ref --format='%(refname)' |
-> > > > -			grep /"$ref")"
-> > > > +			grep '^refs/[^/]\+/'"$ref"'$')"
-> > > 
-> > > Hmm.  I wonder if this is a proper solution.  It still does not error 
-> > > out when you have a tag and a branch of the same name.
-> > 
-> > Are you sure? I had created a tag and a branch with the same name, and
-> > then tried git filter-branch on it, and it did error out:
-> > ===
-> > warning: refname 'test1' is ambiguous.
-> > Which ref do you want to rewrite?
-> > ===
-> 
-> Okay, bad example.  But try "heads/master". 
 
-You are right. Somehow, I forgot about this possibility. How about this:
+--SLDf9lqlvOQaIe6s
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-+			grep '^refs/\([^/]\+/\)\?'"$ref"'$')"
+On Sun, Dec 30, 2007 at 01:02:28PM +0000, Marco Costalba wrote:
+> Subject: [PATCH] Certain codepaths (notably "git log --pretty=3Dformat...=
+") use
+>=20
+> prefixcmp() extensively, with very short prefixes.  In those cases,
+> calling strlen() is a wasteful operation, so avoid it.
+>=20
+> Initial patch by Johannes Schindelin.
+>=20
+> Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+> ---
+>  git-compat-util.h |   11 ++++++++++-
+>  1 files changed, 10 insertions(+), 1 deletions(-)
+>=20
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 79eb10e..843a8f5 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -398,7 +398,16 @@ static inline int sane_case(int x, int high)
+>=20
+>  static inline int prefixcmp(const char *str, const char *prefix)
+>  {
+> -	return strncmp(str, prefix, strlen(prefix));
+> +	do {
+> +		if (*str !=3D *prefix)
+> +			return *(unsigned const char *)prefix - *(unsigned const char *)str;
+> +
+> +		if (!*(++prefix))
+> +			return 0;
+> +
+> +		str++;
+> +
+> +	} while (1);
 
-> Or "origin" in a repository 
-> which has "refs/remotes/origin/HEAD".
+  This code doesn't work if prefix is "". You want something like:
 
-Well, it does not work, but it would not work before either, because you
-are very likely to have something else in origin. Actually, I doubt that
-anyone will want to filter "origin", but if you insist, here is another
-grep expression, which should accommodate that case too:
+    for (; *prefix; prefix++, str++) {
+        if (*str !=3D *prefix)
+            return *(unsigned const char *)prefix - *(unsigned const char *=
+)str;
+    }
+    return 0;
 
-+			grep '^refs/\([^/]\+/\)\?'"$ref"'\(/HEAD\)\?$')"
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-In any case, I believe it would be better to have a more strict grep
-expression than one that is used by git-filter-branch now, because now
-you either have a very confusing error message, or accidentally you
-could filter a wrong branch. And as you said before, the proper C
-solution is not feasible for 1.5.4, so I believe a better grep
-expression is the right thing to do for now.
+--SLDf9lqlvOQaIe6s
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-If you have no other objection, I will resent the patch with the
-corrected version of the grep expression.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-Dmitry
+iD8DBQBHd6NtvGr7W6HudhwRAvmkAKCF4ABdIFxWep8Nn2fFKZOpr9+ZmQCdFMIY
+lxgFGe57Y48LpT6Kn4JjfEY=
+=dN2m
+-----END PGP SIGNATURE-----
+
+--SLDf9lqlvOQaIe6s--
