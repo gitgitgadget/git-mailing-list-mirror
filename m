@@ -1,69 +1,64 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Why 'git commit --amend' generates different HEAD sha1 each time when no content changes
-Date: Sun, 30 Dec 2007 18:56:26 +0800
-Message-ID: <46dff0320712300256g36e825a2g711d98b565e361f9@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Force new line at end of commit message
+Date: Sun, 30 Dec 2007 12:03:28 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0712301201570.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <87ve6ub3u7.fsf@gollum.intra.norang.ca> <8763yof9lg.fsf@gollum.intra.norang.ca>
+ <Pine.LNX.4.64.0712241835210.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+ <20071225044202.GO14735@spearce.org> <7v4pe5nt8m.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0712291426500.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+ <7vodc99gpy.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0712301124510.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+ <7v63yga20u.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Dec 30 11:57:02 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Bernt Hansen <bernt@alumni.uwaterloo.ca>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 30 12:04:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J8vql-0006Oe-4b
-	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 11:56:59 +0100
+	id 1J8vxW-0007tz-Lw
+	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 12:03:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751744AbXL3K42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Dec 2007 05:56:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbXL3K42
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 05:56:28 -0500
-Received: from py-out-1112.google.com ([64.233.166.182]:25962 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751713AbXL3K41 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Dec 2007 05:56:27 -0500
-Received: by py-out-1112.google.com with SMTP id u52so8540993pyb.10
-        for <git@vger.kernel.org>; Sun, 30 Dec 2007 02:56:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=N9FbY8smPPL7tR9d7Fcm3pV1R5138bEujlFbroAJMbc=;
-        b=LJM7cEy2pt9tK5KP8wxSPU/3A5LEqYAxJ/Q6NztXR2VvH+jSZfcfkALuDwtDB7S4FWN0IohTIeTqAHtNUolyUbGwVad1NUz7W1gZyI2S7AnqMAH7I3uEjd1eErTPd3iOUvrArePfse9eNVByqlUNH7BUo1emxwnEw62dES01WIM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=SkDP/ty5fp1L49Tp7+tI8wuD0Etu83Zm1WP54nSD5rBJ4nErkMp8NbPlJtNHlIYFkRsfNUAiqORicZNkyTfw+zOhl+k/p6c/t28TmSy66HXMXWpNej3wzIan6VPoGdsPJ5QejHJGbwHRqygo9+3PcpBgO4ekrdnQFFwuARqJSOM=
-Received: by 10.35.10.13 with SMTP id n13mr13556448pyi.29.1199012186778;
-        Sun, 30 Dec 2007 02:56:26 -0800 (PST)
-Received: by 10.35.108.1 with HTTP; Sun, 30 Dec 2007 02:56:26 -0800 (PST)
-Content-Disposition: inline
+	id S1751897AbXL3LDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Dec 2007 06:03:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751891AbXL3LDc
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 06:03:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36031 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751892AbXL3LDb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Dec 2007 06:03:31 -0500
+Received: (qmail invoked by alias); 30 Dec 2007 11:03:29 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+  by mail.gmx.net (mp052) with SMTP; 30 Dec 2007 12:03:29 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19P+PERlNtPfGB6gLUcn754Ye/B1ZWgkRN4x96qCV
+	E7HDPTsOMpAT+D
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7v63yga20u.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69350>
 
-AFAIK, commit sha1 is only determined by commit object content (say
-parent commit, tree sha1 and so on). So why 'git commit --amend'
-changes the commit sha1 when no content changes as following shows.
+Hi,
 
-$ mkdir A && cd A && echo foo >foo
+On Sun, 30 Dec 2007, Junio C Hamano wrote:
 
-$ git init && git add foo && git commit -m 'add file foo'
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > But if I understood the OP correctly, the problem was a missing 
+> > newline at the end of the commit message, no?
+> 
+> That's why the "echo" was moved out of the conditional, to make sure "# 
+> This is the $(nth)" begins on a fresh line.
 
-Created initial commit 8626800: add file foo
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 foo
+Not that I care too deeply, but does that not add a newline regardless 
+whether it is needed or not?
 
-$ git commit --amend
-Created commit 3591035: add file foo
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 foo
-
-$ git commit --amend
-Created commit 3927d9a: add file foo
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 foo
-
--- 
-Ping Yin
+Thanks,
+Dscho
