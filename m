@@ -1,53 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: How to find a commit containing a given sha1
-Date: Sun, 30 Dec 2007 11:56:16 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0712301153361.14355@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <46dff0320712300238p67e82c66r5bf49900dd21aefa@mail.gmail.com>
- <46dff0320712300239m54ab8280w9c1ec6347f095b40@mail.gmail.com>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Why 'git commit --amend' generates different HEAD sha1 each time when no content changes
+Date: Sun, 30 Dec 2007 18:56:26 +0800
+Message-ID: <46dff0320712300256g36e825a2g711d98b565e361f9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 30 11:56:46 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Dec 30 11:57:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J8vqX-0006Lr-1K
-	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 11:56:45 +0100
+	id 1J8vql-0006Oe-4b
+	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 11:56:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751734AbXL3K4T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Dec 2007 05:56:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751706AbXL3K4T
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 05:56:19 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44080 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750834AbXL3K4S (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Dec 2007 05:56:18 -0500
-Received: (qmail invoked by alias); 30 Dec 2007 10:56:16 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp058) with SMTP; 30 Dec 2007 11:56:16 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+j210Lb62jJ6zoi7fQBM5+evdaW/3VxOQI6WYAVL
-	9GOILOoQlSO2+Z
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <46dff0320712300239m54ab8280w9c1ec6347f095b40@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1751744AbXL3K42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Dec 2007 05:56:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751756AbXL3K42
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 05:56:28 -0500
+Received: from py-out-1112.google.com ([64.233.166.182]:25962 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751713AbXL3K41 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Dec 2007 05:56:27 -0500
+Received: by py-out-1112.google.com with SMTP id u52so8540993pyb.10
+        for <git@vger.kernel.org>; Sun, 30 Dec 2007 02:56:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=N9FbY8smPPL7tR9d7Fcm3pV1R5138bEujlFbroAJMbc=;
+        b=LJM7cEy2pt9tK5KP8wxSPU/3A5LEqYAxJ/Q6NztXR2VvH+jSZfcfkALuDwtDB7S4FWN0IohTIeTqAHtNUolyUbGwVad1NUz7W1gZyI2S7AnqMAH7I3uEjd1eErTPd3iOUvrArePfse9eNVByqlUNH7BUo1emxwnEw62dES01WIM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=SkDP/ty5fp1L49Tp7+tI8wuD0Etu83Zm1WP54nSD5rBJ4nErkMp8NbPlJtNHlIYFkRsfNUAiqORicZNkyTfw+zOhl+k/p6c/t28TmSy66HXMXWpNej3wzIan6VPoGdsPJ5QejHJGbwHRqygo9+3PcpBgO4ekrdnQFFwuARqJSOM=
+Received: by 10.35.10.13 with SMTP id n13mr13556448pyi.29.1199012186778;
+        Sun, 30 Dec 2007 02:56:26 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Sun, 30 Dec 2007 02:56:26 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69349>
 
-Hi,
+AFAIK, commit sha1 is only determined by commit object content (say
+parent commit, tree sha1 and so on). So why 'git commit --amend'
+changes the commit sha1 when no content changes as following shows.
 
-On Sun, 30 Dec 2007, Ping Yin wrote:
+$ mkdir A && cd A && echo foo >foo
 
-> Given a blob sha1, is there a simple way to find which file it 
-> corresponds to and which commit it is contained?
+$ git init && git add foo && git commit -m 'add file foo'
 
-Yes.  "git log --raw --abbrev=40 --all" and then search for the blob name 
-(SHA-1).
+Created initial commit 8626800: add file foo
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 foo
 
-Hth,
-Dscho
+$ git commit --amend
+Created commit 3591035: add file foo
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 foo
+
+$ git commit --amend
+Created commit 3927d9a: add file foo
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 foo
+
+-- 
+Ping Yin
