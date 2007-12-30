@@ -1,85 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH WIP] sha1-lookup: make selection of 'middle' less aggressive
-Date: Sun, 30 Dec 2007 13:49:11 -0800
-Message-ID: <7vodc77t0o.fsf@gitster.siamese.dyndns.org>
-References: <7vd4soa3cw.fsf@gitster.siamese.dyndns.org>
-	<7vtzm08l9w.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0712301150120.32517@woody.linux-foundation.org>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: How to bypass the post-commit hook?
+Date: Sun, 30 Dec 2007 22:50:08 +0100
+Message-ID: <20071230215008.GB20098@efreet.light.src>
+References: <46dff0320712300712l78c1cdaeya5fa105be01f6b74@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Dec 30 22:50:04 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="OwLcNYc0lM97+oe1"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 30 22:50:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J962j-0001fN-SX
-	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 22:50:02 +0100
+	id 1J963Q-0001uJ-IQ
+	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 22:50:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757685AbXL3VtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Dec 2007 16:49:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757600AbXL3VtY
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 16:49:24 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64953 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756579AbXL3VtX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Dec 2007 16:49:23 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 03F2A7032;
-	Sun, 30 Dec 2007 16:49:22 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 60B407030;
-	Sun, 30 Dec 2007 16:49:18 -0500 (EST)
-In-Reply-To: <alpine.LFD.1.00.0712301150120.32517@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Sun, 30 Dec 2007 11:58:02 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753215AbXL3VuT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Dec 2007 16:50:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752095AbXL3VuS
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 16:50:18 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:51029 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751132AbXL3VuR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Dec 2007 16:50:17 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id E2DDB573ED;
+	Sun, 30 Dec 2007 22:50:15 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id JeZLgKVGK3QS; Sun, 30 Dec 2007 22:50:13 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id E34C55733D;
+	Sun, 30 Dec 2007 22:50:12 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1J962q-00012d-Te; Sun, 30 Dec 2007 22:50:08 +0100
+Content-Disposition: inline
+In-Reply-To: <46dff0320712300712l78c1cdaeya5fa105be01f6b74@mail.gmail.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69380>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> On Sun, 30 Dec 2007, Junio C Hamano wrote:
->> 
->> With this patch, we actually see slight improvements in
->> execution time as well.  In the same partial kde repository
->> (3.0GB pack, 95MB idx; the numbers are from the same machine as
->> before, best of 5 runs):
->
-> Ok, I tried this a year ago, and never got any real improvement.
+--OwLcNYc0lM97+oe1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, I remember that one.
+On Sun, Dec 30, 2007 at 23:12:12 +0800, Ping Yin wrote:
+> --no-verify can bypass pre-commit hook? Then how to bypass post-commit ho=
+ok?
+>=20
+> Usually I want post-commit take effect. However, in the middle of
+> git-rebase, i want to bypass post-commit when 'git-commit --amend'
+> since my post-commit hooks will modify the working directory and so
+> make following rebase troubesome.
 
-> and I decided it wasn't worth it. Yours looks much better, and seems to 
-> get a real performance improvement, so go for it, but I doubt that the 
-> actual object lookup is really ever the main issue. I've never seen it 
-> stand out in the real profiles, although if it is able to cut down on IO 
-> (and your minor fault numbers are promising!), it might be more important 
-> than I'd otherwise think.
+There does not seem to be an option to do it, but you can always temporarily
+disable it (unset the executable permission on it).
 
-The cost of the key comparison done in each round is
-insignificant compared to the actual cost of accessing the
-object data through zlib.  The only potential performance
-benefit that could come from this patch to reduce the average
-number of rounds in the search is I/O reduction.
+By the way, what is your post-commit hook doing anyway? Modifying the work
+tree *after* a commit does not sound like a common thing to do.
 
-The only case I can think of that this may matter in real life
-is accessing only small number of objects in a history with a
-huge pack.  Once you dig down the history deep enough to check
-enough number of objects inside a single process, you would need
-to touch every page of the mapped idx and the minor-fault gain
-rapidly diminishes.
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
 
-Accessing only small number of objects in a huge history most
-often happens when building near the tip of the history
-(e.g. commit, rebase, merge), but these operations tend to deal
-with very young objects, often unpacked.  We check pack first
-and then loose objects, so the search for young loose objects
-will benefit from the patch because the negative look-up to
-notice that they do not live in any pack also becomes cheaper,
-but I do not think it is such a big deal.
+--OwLcNYc0lM97+oe1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHeBKQRel1vVwhjGURAoKmAJ94mYlx7chUulmeaUC01ma4YEuBiwCg4jlm
+lN9kTUyWhROD7XZkBgy7nmw=
+=GRB2
+-----END PGP SIGNATURE-----
+
+--OwLcNYc0lM97+oe1--
