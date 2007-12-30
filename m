@@ -1,82 +1,52 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach revision walker about reflog ranges
-Date: Sun, 30 Dec 2007 11:32:03 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0712301126560.14355@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.64.0712300000170.14355@wbgn129.biozentrum.uni-wuerzburg.de>
- <7vve6h9gvz.fsf@gitster.siamese.dyndns.org>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: How to find a commit containing a given sha1
+Date: Sun, 30 Dec 2007 18:39:34 +0800
+Message-ID: <46dff0320712300239m54ab8280w9c1ec6347f095b40@mail.gmail.com>
+References: <46dff0320712300238p67e82c66r5bf49900dd21aefa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 30 11:32:33 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Dec 30 11:40:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J8vT7-0000ys-6M
-	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 11:32:33 +0100
+	id 1J8vaL-0002YW-Kr
+	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 11:40:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751495AbXL3KcI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Dec 2007 05:32:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751467AbXL3KcI
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 05:32:08 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49223 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751350AbXL3KcF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Dec 2007 05:32:05 -0500
-Received: (qmail invoked by alias); 30 Dec 2007 10:32:04 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp048) with SMTP; 30 Dec 2007 11:32:04 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX195zgR/01p5Xk3hm8yp+aZvm0+nGKrfw/whRcnkED
-	4xI4fBvPzBh3nM
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vve6h9gvz.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1751501AbXL3Kjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Dec 2007 05:39:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751449AbXL3Kjf
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 05:39:35 -0500
+Received: from py-out-1112.google.com ([64.233.166.178]:8845 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751122AbXL3Kjf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Dec 2007 05:39:35 -0500
+Received: by py-out-1112.google.com with SMTP id u52so8536859pyb.10
+        for <git@vger.kernel.org>; Sun, 30 Dec 2007 02:39:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=kjhSMKS8hB/xml5Idhr3wEgjmVknpiTmiVPG0fyjFZY=;
+        b=RFYaR8b591vWmub/BNoxXTg4bE5CHDKSL2fEBKanAy7A5eKRfKy4ScFRzVIAbaZJ/A3upqOn04+Im1UDXRcnxsaWqPprwV2y9ZEyU9CXUCTG3e3i9ncfZrhZx2A6q+kE2nMeGdU4DCkpmUveoQpvI92dtg/iKvtYjBzMpWkQSPI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=O9h3tg+9T8iepegPwonB81paM8sN01/8ZIfPe5ZW+eA/mWj3nkyDdFgkxooFWgf9oY6amD9b3rMpv1ozcVfBtscVo57iPgsqCja2SkW1Qxbb8Msf1blYhSmk+XqhJYG1t1gRQ06Fj6JBZOL8WIdEBU7oqcV5NZwSpt3LwWBV08Y=
+Received: by 10.35.127.9 with SMTP id e9mr11135309pyn.21.1199011174605;
+        Sun, 30 Dec 2007 02:39:34 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Sun, 30 Dec 2007 02:39:34 -0800 (PST)
+In-Reply-To: <46dff0320712300238p67e82c66r5bf49900dd21aefa@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69345>
 
-Hi,
+Given a blob sha1, is there a simple way to find which file it
+corresponds to and which commit it is contained?
 
-On Sat, 29 Dec 2007, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Now you can ask for a revision range
-> >
-> > 	master@{2.weeks.ago..1.day.ago}
-> >
-> > or even something like
-> >
-> > 	HEAD@{20..yesterday}
-> 
-> You can _ask_ all you want, but it is not clear what it does from this 
-> description.  I guess you are rewriting master@{A..B} to 
-> master@{A}..master@{B}, but that is not clear from the commit log nor 
-> documentation (did I even see a documentation patch?).
-
-Oh, sorry, I meant to mark this as RFC-after-1.5.4.  It's just that I had 
-a need for it, and hacked it.
-
-> Also, I am not convinced that the rewrite gives the semantics the users 
-> naturally expect from @{A..B}.  I would even suspect that people would 
-> expect "git log master@{0..2}" to behave more like "git show master@{0} 
-> master@{1} master@{2}".
-
-Is that so?  I would have expected "git log -g master@{2..0}" like that.  
-It would be relatively easy to accomodate your wish (almost: it would not 
-handle 0..2, but only 2..0) by calling
-
-	init_reflog_walk(&revs->reflog_info);
-
-in the case that ".." was found inside "@{[...]}".
-
-But my use case was to make it easy to see what changed in a multi-branch 
-remote without much typing: "git log origin/master@{1..}", which would not 
-be helped by that change.
-
-Ciao,
-Dscho
+-- 
+Ping Yin
