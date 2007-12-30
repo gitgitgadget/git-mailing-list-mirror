@@ -1,67 +1,85 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH WIP] sha1-lookup: make selection of 'middle' less
- aggressive
-Date: Sun, 30 Dec 2007 11:58:02 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0712301150120.32517@woody.linux-foundation.org>
-References: <7vd4soa3cw.fsf@gitster.siamese.dyndns.org> <7vtzm08l9w.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH WIP] sha1-lookup: make selection of 'middle' less aggressive
+Date: Sun, 30 Dec 2007 13:49:11 -0800
+Message-ID: <7vodc77t0o.fsf@gitster.siamese.dyndns.org>
+References: <7vd4soa3cw.fsf@gitster.siamese.dyndns.org>
+	<7vtzm08l9w.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.1.00.0712301150120.32517@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 30 20:58:57 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Dec 30 22:50:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J94JD-0006vQ-Qb
-	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 20:58:56 +0100
+	id 1J962j-0001fN-SX
+	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 22:50:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753756AbXL3T62 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Dec 2007 14:58:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753751AbXL3T62
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 14:58:28 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:32953 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753609AbXL3T62 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 Dec 2007 14:58:28 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBUJw3qm004209
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 30 Dec 2007 11:58:04 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lBUJw2IU020923;
-	Sun, 30 Dec 2007 11:58:03 -0800
-In-Reply-To: <7vtzm08l9w.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.489 required=5 tests=AWL,BAYES_00,INFO_TLD,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1757685AbXL3VtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Dec 2007 16:49:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757600AbXL3VtY
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 16:49:24 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64953 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756579AbXL3VtX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Dec 2007 16:49:23 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 03F2A7032;
+	Sun, 30 Dec 2007 16:49:22 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 60B407030;
+	Sun, 30 Dec 2007 16:49:18 -0500 (EST)
+In-Reply-To: <alpine.LFD.1.00.0712301150120.32517@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Sun, 30 Dec 2007 11:58:02 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69379>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> On Sun, 30 Dec 2007, Junio C Hamano wrote:
+>> 
+>> With this patch, we actually see slight improvements in
+>> execution time as well.  In the same partial kde repository
+>> (3.0GB pack, 95MB idx; the numbers are from the same machine as
+>> before, best of 5 runs):
+>
+> Ok, I tried this a year ago, and never got any real improvement.
 
-On Sun, 30 Dec 2007, Junio C Hamano wrote:
-> 
-> With this patch, we actually see slight improvements in
-> execution time as well.  In the same partial kde repository
-> (3.0GB pack, 95MB idx; the numbers are from the same machine as
-> before, best of 5 runs):
+Yes, I remember that one.
 
-Ok, I tried this a year ago, and never got any real improvement. And mine 
-was buggy. See
+> and I decided it wasn't worth it. Yours looks much better, and seems to 
+> get a real performance improvement, so go for it, but I doubt that the 
+> actual object lookup is really ever the main issue. I've never seen it 
+> stand out in the real profiles, although if it is able to cut down on IO 
+> (and your minor fault numbers are promising!), it might be more important 
+> than I'd otherwise think.
 
-	http://marc.info/?l=git&m=117537594112450&w=2
+The cost of the key comparison done in each round is
+insignificant compared to the actual cost of accessing the
+object data through zlib.  The only potential performance
+benefit that could come from this patch to reduce the average
+number of rounds in the search is I/O reduction.
 
-and I decided it wasn't worth it. Yours looks much better, and seems to 
-get a real performance improvement, so go for it, but I doubt that the 
-actual object lookup is really ever the main issue. I've never seen it 
-stand out in the real profiles, although if it is able to cut down on IO 
-(and your minor fault numbers are promising!), it might be more important 
-than I'd otherwise think.
+The only case I can think of that this may matter in real life
+is accessing only small number of objects in a history with a
+huge pack.  Once you dig down the history deep enough to check
+enough number of objects inside a single process, you would need
+to touch every page of the mapped idx and the minor-fault gain
+rapidly diminishes.
 
-		Linus
+Accessing only small number of objects in a huge history most
+often happens when building near the tip of the history
+(e.g. commit, rebase, merge), but these operations tend to deal
+with very young objects, often unpacked.  We check pack first
+and then loose objects, so the search for young loose objects
+will benefit from the patch because the negative look-up to
+notice that they do not live in any pack also becomes cheaper,
+but I do not think it is such a big deal.
