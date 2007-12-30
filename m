@@ -1,52 +1,86 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: How to find a commit containing a given sha1
-Date: Sun, 30 Dec 2007 18:39:34 +0800
-Message-ID: <46dff0320712300239m54ab8280w9c1ec6347f095b40@mail.gmail.com>
-References: <46dff0320712300238p67e82c66r5bf49900dd21aefa@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-filter-branch could be confused by similar names
+Date: Sun, 30 Dec 2007 11:46:59 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0712301145360.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <1198593316-7712-1-git-send-email-dpotapov@gmail.com>
+ <Pine.LNX.4.64.0712292334080.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+ <20071230103146.GU13968@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Dec 30 11:40:03 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 30 11:47:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J8vaL-0002YW-Kr
-	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 11:40:02 +0100
+	id 1J8vhg-0004BT-1P
+	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 11:47:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751501AbXL3Kjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Dec 2007 05:39:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751449AbXL3Kjf
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 05:39:35 -0500
-Received: from py-out-1112.google.com ([64.233.166.178]:8845 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751122AbXL3Kjf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Dec 2007 05:39:35 -0500
-Received: by py-out-1112.google.com with SMTP id u52so8536859pyb.10
-        for <git@vger.kernel.org>; Sun, 30 Dec 2007 02:39:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=kjhSMKS8hB/xml5Idhr3wEgjmVknpiTmiVPG0fyjFZY=;
-        b=RFYaR8b591vWmub/BNoxXTg4bE5CHDKSL2fEBKanAy7A5eKRfKy4ScFRzVIAbaZJ/A3upqOn04+Im1UDXRcnxsaWqPprwV2y9ZEyU9CXUCTG3e3i9ncfZrhZx2A6q+kE2nMeGdU4DCkpmUveoQpvI92dtg/iKvtYjBzMpWkQSPI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=O9h3tg+9T8iepegPwonB81paM8sN01/8ZIfPe5ZW+eA/mWj3nkyDdFgkxooFWgf9oY6amD9b3rMpv1ozcVfBtscVo57iPgsqCja2SkW1Qxbb8Msf1blYhSmk+XqhJYG1t1gRQ06Fj6JBZOL8WIdEBU7oqcV5NZwSpt3LwWBV08Y=
-Received: by 10.35.127.9 with SMTP id e9mr11135309pyn.21.1199011174605;
-        Sun, 30 Dec 2007 02:39:34 -0800 (PST)
-Received: by 10.35.108.1 with HTTP; Sun, 30 Dec 2007 02:39:34 -0800 (PST)
-In-Reply-To: <46dff0320712300238p67e82c66r5bf49900dd21aefa@mail.gmail.com>
-Content-Disposition: inline
+	id S1751657AbXL3KrD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Dec 2007 05:47:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751608AbXL3KrD
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Dec 2007 05:47:03 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42171 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751389AbXL3KrB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Dec 2007 05:47:01 -0500
+Received: (qmail invoked by alias); 30 Dec 2007 10:46:59 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+  by mail.gmx.net (mp004) with SMTP; 30 Dec 2007 11:46:59 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18Qts5DnhcQlmHjDQhJokYTBBWrssZrBsFnswd5Ug
+	3mKcQ94XZrdFXM
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20071230103146.GU13968@dpotapov.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69346>
 
-Given a blob sha1, is there a simple way to find which file it
-corresponds to and which commit it is contained?
+Hi,
 
--- 
-Ping Yin
+On Sun, 30 Dec 2007, Dmitry Potapov wrote:
+
+> On Sat, Dec 29, 2007 at 11:36:51PM +0100, Johannes Schindelin wrote:
+> > 
+> > On Tue, 25 Dec 2007, Dmitry Potapov wrote:
+> > 
+> > > 'git-filter-branch branch' could fail producing the error: "Which 
+> > > ref do you want to rewrite?" if existed another branch or tag, which 
+> > > name was 'branch-something' or 'something/branch'.
+> > > 
+> > > Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+> > > ---
+> > >  git-filter-branch.sh     |    2 +-
+> > >  t/t7003-filter-branch.sh |   10 ++++++++++
+> > >  2 files changed, 11 insertions(+), 1 deletions(-)
+> > > 
+> > > diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+> > > index dbab1a9..b89a720 100755
+> > > --- a/git-filter-branch.sh
+> > > +++ b/git-filter-branch.sh
+> > > @@ -219,7 +219,7 @@ do
+> > >  	;;
+> > >  	*)
+> > >  		ref="$(git for-each-ref --format='%(refname)' |
+> > > -			grep /"$ref")"
+> > > +			grep '^refs/[^/]\+/'"$ref"'$')"
+> > 
+> > Hmm.  I wonder if this is a proper solution.  It still does not error 
+> > out when you have a tag and a branch of the same name.
+> 
+> Are you sure? I had created a tag and a branch with the same name, and
+> then tried git filter-branch on it, and it did error out:
+> ===
+> warning: refname 'test1' is ambiguous.
+> Which ref do you want to rewrite?
+> ===
+
+Okay, bad example.  But try "heads/master".  Or "origin" in a repository 
+which has "refs/remotes/origin/HEAD".
+
+Ciao,
+Dscho
