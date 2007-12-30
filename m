@@ -1,90 +1,81 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Teach revision walker about reflog ranges
-Date: Sun, 30 Dec 2007 00:02:11 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0712300000170.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Speedup prefixcmp() common case
+Date: Sat, 29 Dec 2007 16:05:57 -0800
+Message-ID: <7v1w95avx6.fsf@gitster.siamese.dyndns.org>
+References: <e5bfff550712291001q5f246ceah6700b98308fb96f1@mail.gmail.com>
+	<7v63yhb8kf.fsf@gitster.siamese.dyndns.org>
+	<e5bfff550712291214p7554ea52o875667906ce1a22d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Dec 30 00:02:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 30 01:06:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J8khX-0000ay-C9
-	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 00:02:43 +0100
+	id 1J8lhS-0007GL-6d
+	for gcvg-git-2@gmane.org; Sun, 30 Dec 2007 01:06:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752301AbXL2XCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Dec 2007 18:02:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752290AbXL2XCO
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Dec 2007 18:02:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60515 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752289AbXL2XCO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Dec 2007 18:02:14 -0500
-Received: (qmail invoked by alias); 29 Dec 2007 23:02:11 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp056) with SMTP; 30 Dec 2007 00:02:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/cqx5orgzcc1eBlCiPCWF4RIVUo/8qOQohXAXsf9
-	Dc7eSKuJyVb7YG
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-X-Y-GMX-Trusted: 0
+	id S1752632AbXL3AGK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Dec 2007 19:06:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752567AbXL3AGJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Dec 2007 19:06:09 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37722 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751580AbXL3AGI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Dec 2007 19:06:08 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2949C5127;
+	Sat, 29 Dec 2007 19:06:04 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 95C8B5125;
+	Sat, 29 Dec 2007 19:05:59 -0500 (EST)
+In-Reply-To: <e5bfff550712291214p7554ea52o875667906ce1a22d@mail.gmail.com>
+	(Marco Costalba's message of "Sat, 29 Dec 2007 21:14:55 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69337>
 
+"Marco Costalba" <mcostalba@gmail.com> writes:
 
-Now you can ask for a revision range
+> On Dec 29, 2007 8:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Why isn't it like this?
+>>
+>>         if (!prefix[1])
+>>
+>
+> well, what about if prefix == NULL ?
 
-	master@{2.weeks.ago..1.day.ago}
+What about it?  Do not trim what's relevant when your quote,
+please.
 
-or even something like
+Your slow path does this:
 
-	HEAD@{20..yesterday}
+>  	return strncmp(str, prefix, strlen(prefix));
+>  }
 
-It does this by allocating an strbuf to construct the second ref string
-(in the above examples "master@{1.day.ago}" and "HEAD@{yesterday}",
-respectively), which is never free()d.
+So it will barf when prefix == NULL anyway due to strlen().  I
+think passing NULL as prefix to prefixcmp() is a caller-error.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+I think my version is also buggy.  Passing "" as prefix to
+prefixcmp() is nonsense but is supported, and checking prefix[1]
+without looking at prefix[0] reads past the end of the string.
 
-	Another nail in the coffin of libification, but for the common 
-	one-shot command, it is the easiest way to support reflog ranges.
+So, in summary, I think the following is what we would want.
 
- revision.c |   14 ++++++++++++++
- 1 files changed, 14 insertions(+), 0 deletions(-)
-
-diff --git a/revision.c b/revision.c
-index 6e85aaa..3e7a834 100644
---- a/revision.c
-+++ b/revision.c
-@@ -794,10 +794,24 @@ int handle_revision_arg(const char *arg, struct rev_info *revs,
- 		const char *this = arg;
- 		int symmetric = *next == '.';
- 		unsigned int flags_exclude = flags ^ UNINTERESTING;
-+		const char *at;
- 
- 		*dotdot = 0;
- 		next += symmetric;
- 
-+		at = strstr(arg, "@{");
-+		if (at && !strchr(at + 2, '}')) {
-+			struct strbuf buf;
-+			strcpy(dotdot, "}");
-+			strbuf_init(&buf, 0);
-+			strbuf_insert(&buf, 0, arg, at + 2 - arg);
-+			if (!strcmp(next, "}"))
-+				strbuf_addch(&buf, '0');
-+			strbuf_addstr(&buf, next);
-+			/* we will not free() this buffer */
-+			next = buf.buf;
-+		}
+ static inline int prefixcmp(const char *str, const char *prefix)
+ {
++	// shortcut common case of a single char prefix
++	if (prefix[0] && !prefix[1])
++		return *str - *prefix;
 +
- 		if (!*next)
- 			next = "HEAD";
- 		if (dotdot == arg)
--- 
-1.5.4.rc2.5.g44b6d-dirty
+ 	return strncmp(str, prefix, strlen(prefix));
+ }
