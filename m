@@ -1,77 +1,81 @@
-From: Brian Swetland <swetland@google.com>
-Subject: observing changes to a git repository
-Date: Mon, 31 Dec 2007 14:28:20 -0800
-Organization: Google, Inc.
-Message-ID: <20071231222820.GA11278@bulgaria.corp.google.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH WIP] sha1-lookup: make selection of 'middle' less aggressive
+Date: Mon, 31 Dec 2007 17:40:15 -0500
+Message-ID: <20071231224015.GW14735@spearce.org>
+References: <7vd4soa3cw.fsf@gitster.siamese.dyndns.org> <7vtzm08l9w.fsf@gitster.siamese.dyndns.org> <e5bfff550712301106l133dd38btd2cc4be02159387d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 31 23:30:09 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 31 23:40:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J9T95-0007du-Np
-	for gcvg-git-2@gmane.org; Mon, 31 Dec 2007 23:30:08 +0100
+	id 1J9TJP-0001ag-Ix
+	for gcvg-git-2@gmane.org; Mon, 31 Dec 2007 23:40:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751152AbXLaW3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Dec 2007 17:29:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750989AbXLaW3j
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 17:29:39 -0500
-Received: from smtp-out.google.com ([216.239.45.13]:18273 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750797AbXLaW3j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Dec 2007 17:29:39 -0500
-Received: from zps77.corp.google.com (zps77.corp.google.com [172.25.146.77])
-	by smtp-out.google.com with ESMTP id lBVMTaaH023475
-	for <git@vger.kernel.org>; Mon, 31 Dec 2007 14:29:36 -0800
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:date:from:to:subject:message-id:mime-version:
-	content-type:content-disposition:organization:user-agent;
-	b=L038gBaR1Bhl/SVxIN6h3Awdw/JnFr5iemLJtau8FuT9sbdNwcTRQ8n6FFUCTcB5O
-	rDYdQQKm9aPCJPJSr9NXw==
-Received: from bulgaria (bulgaria.corp.google.com [172.18.102.38])
-	by zps77.corp.google.com with ESMTP id lBVMTaQ1026592
-	for <git@vger.kernel.org>; Mon, 31 Dec 2007 14:29:36 -0800
-Received: by bulgaria (Postfix, from userid 1000)
-	id 087D5122F92; Mon, 31 Dec 2007 14:28:19 -0800 (PST)
+	id S1751340AbXLaWkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Dec 2007 17:40:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751095AbXLaWkU
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 17:40:20 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:36784 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751085AbXLaWkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Dec 2007 17:40:20 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1J9TIm-000787-4R; Mon, 31 Dec 2007 17:40:08 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 820F820FBAE; Mon, 31 Dec 2007 17:40:15 -0500 (EST)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+In-Reply-To: <e5bfff550712301106l133dd38btd2cc4be02159387d@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69423>
 
+Marco Costalba <mcostalba@gmail.com> wrote:
+> Just for document the profiling I have uploaded a snapshot of
+> KCachegrind profiling data on a run of git-log on the git tree:
+> 
+> http://digilander.libero.it/mcostalba/callgrind_git_log1.png
+> 
+> From there you can see that pretty.c and strbuf.c, after all the
+> optimizations, account for less then 8% of total time.
+> The biggest part is that 86.64% that is due almost entirely to zlib.
+> 
+> In particular
+> 
+> st = inflate(&stream, Z_FINISH);
+> 
+> called from unpack_compressed_entry() in sha1_file.c accounts for 72%
+> of total time.
 
-Assuming I wanted to use a script (possibly run from cron) to observe
-and report changes to a git repository (instead of running something
-from the various hooks), does the following strategy seem workable:
+That's one of the areas where packv4 was actually a reasonably
+good gain.  It was faster for packv4 to convert a dict based commit
+or tree into the canonical raw format used by git than it was for
+zlib inflate to decompress the very same data.
 
-- for each branch to observe, record the initial position of that 
-  branch (sha1 commit id) -- call this Last
+It wasn't a huge gain, but if I recall we were saving a good half
+second on a 4 second "git log --raw >/dev/null" time.  And that
+was before we even tried to improve the tree walking APIs to
+take advantage of the smaller (and easier to read) dict based
+tree objects.
 
-- periodically:
-  - grab the current head (call this Current)
-  - if it's the same as Last stop
-  - do a git log Current ^Last to observe what has happened since
-    we last noticed a change.  report on these commits.
-  - Last = Current
+Linus already mentioned in another reply on this thread that the
+inflate time may be all page faults.  The savings we were seeing
+from the dict based format may have simply been due to less page
+faults; the dict based format was slightly smaller so we probably
+got a lot more in disk cache at once.
 
-If these branches can be updated such that history is rewritten (not
-a concern in my particular case), I assume that for correctness you'd
-have to make Last and Current actual branches (perhaps under
-refs/heads/observer/... or whatever) to ensure that they don't get gc'd
-out from under you.
-
-Am I correct in believing that the above strategy will (if history
-is not rewritten) correctly report all the commits between the last-
-observed and current state of the branch?  Even if history *is*
-rewritten, I think (assuming I ensure things aren't gc'd) I'd get
-still get it right.
-
-If I'm tracking several branches which can be merged between, I might
-want to keep track of which commits I've sent reports about if I don't
-want to re-report commits when they're merged into another branch.
-
-Brian
+-- 
+Shawn.
