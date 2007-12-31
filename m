@@ -1,72 +1,72 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: How to bypass the post-commit hook?
-Date: Mon, 31 Dec 2007 18:05:32 +0100
-Message-ID: <20071231170532.GB9214@efreet.light.src>
-References: <46dff0320712300712l78c1cdaeya5fa105be01f6b74@mail.gmail.com> <20071230215008.GB20098@efreet.light.src> <46dff0320712302108i61f3b868obb93f89c1c24062c@mail.gmail.com> <20071231093152.GC20098@efreet.light.src> <46dff0320712310222m64d86e95l1499a7ffb1fff65c@mail.gmail.com> <20071231105514.GA9214@efreet.light.src> <46dff0320712310526l2b801ed7xc52b7aae2d65048e@mail.gmail.com>
+From: Graham Barr <gbarr@pobox.com>
+Subject: Re: git over webdav: what can I do for improving http-push ?
+Date: Mon, 31 Dec 2007 10:57:52 -0600
+Message-ID: <47791F90.8030302@pobox.com>
+References: <477822C3.9060002@gbarbier.org> <alpine.LNX.1.00.0712302145500.13593@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 31 18:06:16 2007
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-15?Q?Gr=E9goire_Barbier?= <gb@gbarbier.org>,
+	git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Mon Dec 31 18:25:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J9O5e-0005zV-6V
-	for gcvg-git-2@gmane.org; Mon, 31 Dec 2007 18:06:14 +0100
+	id 1J9ONu-0002gq-LA
+	for gcvg-git-2@gmane.org; Mon, 31 Dec 2007 18:25:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751141AbXLaRFs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Dec 2007 12:05:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751067AbXLaRFs
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 12:05:48 -0500
-Received: from ns1.bluetone.cz ([212.158.128.13]:47231 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750942AbXLaRFs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Dec 2007 12:05:48 -0500
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id B2C89573F7;
-	Mon, 31 Dec 2007 18:05:46 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id Qrzvox8-Tx48; Mon, 31 Dec 2007 18:05:44 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id A6F4357472;
-	Mon, 31 Dec 2007 18:05:43 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1J9O4y-00033K-KW; Mon, 31 Dec 2007 18:05:32 +0100
-Content-Disposition: inline
-In-Reply-To: <46dff0320712310526l2b801ed7xc52b7aae2d65048e@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1750939AbXLaRYh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Dec 2007 12:24:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750853AbXLaRYh
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 12:24:37 -0500
+Received: from aa.67.1343.static.theplanet.com ([67.19.103.170]:47418 "EHLO
+	mail.goingon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750790AbXLaRYg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Dec 2007 12:24:36 -0500
+X-Greylist: delayed 1586 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 Dec 2007 12:24:36 EST
+Received: from zipper.x.goingon.net (client-63.249.42.207.dfw.buz.net [63.249.42.207])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.goingon.net (Postfix) with ESMTP id E625749196;
+	Mon, 31 Dec 2007 10:58:09 -0600 (CST)
+User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
+In-Reply-To: <alpine.LNX.1.00.0712302145500.13593@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69407>
 
-On Mon, Dec 31, 2007 at 21:26:21 +0800, Ping Yin wrote:
-> On Dec 31, 2007 6:55 PM, Jan Hudec <bulb@ucw.cz> wrote:
-> > Note, that you can -- and should -- add the foo.css to the commit. But the
-> > file might contain other changes in tree, that are not about to be commited,
-> > so prefered way would be to get the content from the index, modify that and
-> > update the index manually (with git update-index).
-> 
-> If pre-commit has modified files to be commited, it will abort this
-> commit and give a message to direct the user to commit again
-> with/without the changed content.
-> 
-> AFAIK, git add -i can add selected chunk to the index. As you said,
-> can git-update-index also do this job?
+Daniel Barkalow wrote:
+> On Sun, 30 Dec 2007, Gr=E9goire Barbier wrote:
 
-git update-index is the underlying plumbing for git add/git rm.
+>> I'm using Git for a rather short time but enough to fall in love wit=
+h it. For
+>> a few days I'm trying to use it over webdav, that is over http/https=
+ with
+>> write (push) access. As for me, the main rationale to use http(s) ra=
+ther than
+>> git or ssh is to get through corporate firewalls, otherwise I would =
+probably
+>> not bother with webdav.
 
-However, you should change foo.css in index even if the working tree copy
-does not match it and is not selected for commit. Only way I see to do that
-is to prepare a patch and apply it to both the working tree (git apply) and
-to the index (git apply --cached).
+> In general, we've been able to either get through firewalls with ssh =
+or=20
+> it's all in the same VPN. So it's kind of unloved at this point. Peop=
+le=20
+> poke at it occasionally, but mostly in the context of other fixes, I=20
+> think.
 
-It will probably work for you without such finesse, you will just have to be
-aware of it's quirks.
+If you have a http proxy that you can use, the you can use ssh via that=
+ with
+something like corkscrew. http://wiki.kartbuilding.net/index.php/Corksc=
+rew_-_ssh_over_https
 
--- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+A simple shell script wrapper around ssh to detect when you are behind =
+a firewall
+can inject the ProxyCommand into the command line arguments with -o
+
+Graham.
