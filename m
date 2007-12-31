@@ -1,81 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH WIP] sha1-lookup: make selection of 'middle' less aggressive
-Date: Mon, 31 Dec 2007 17:40:15 -0500
-Message-ID: <20071231224015.GW14735@spearce.org>
-References: <7vd4soa3cw.fsf@gitster.siamese.dyndns.org> <7vtzm08l9w.fsf@gitster.siamese.dyndns.org> <e5bfff550712301106l133dd38btd2cc4be02159387d@mail.gmail.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: On the many files problem
+Date: Tue, 1 Jan 2008 12:31:25 +1300
+Message-ID: <46a038f90712311531x17b6d94aua1bac2d3d186f186@mail.gmail.com>
+References: <87y7bdweca.fsf@enceladus.ygingras.net>
+	 <alpine.LFD.0.9999.0712291055470.2778@woody.linux-foundation.org>
+	 <873atjtbmu.fsf@enceladus.ygingras.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 31 23:40:50 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Yannick Gingras" <ygingras@ygingras.net>
+X-From: git-owner@vger.kernel.org Tue Jan 01 00:31:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J9TJP-0001ag-Ix
-	for gcvg-git-2@gmane.org; Mon, 31 Dec 2007 23:40:48 +0100
+	id 1J9U6w-0003pm-2A
+	for gcvg-git-2@gmane.org; Tue, 01 Jan 2008 00:31:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751340AbXLaWkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Dec 2007 17:40:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751095AbXLaWkU
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 17:40:20 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:36784 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751085AbXLaWkU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Dec 2007 17:40:20 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1J9TIm-000787-4R; Mon, 31 Dec 2007 17:40:08 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 820F820FBAE; Mon, 31 Dec 2007 17:40:15 -0500 (EST)
+	id S1750972AbXLaXb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Dec 2007 18:31:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750913AbXLaXb2
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 18:31:28 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:16692 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750748AbXLaXb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Dec 2007 18:31:27 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so2344731ugc.16
+        for <git@vger.kernel.org>; Mon, 31 Dec 2007 15:31:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=aNCHJfRb1m9TSQfTwXnNd3eQd4srnceNmFDbn8NqGT8=;
+        b=kxLDegmFpRamJWkfGypd7F8pdoM5smqr0/S/Vwbzk2ONFMg6Ntu47i8DThscoiqPe0M1yV2RMevy2nvMB0yiYmWEasDGEsCt1LxhZQ+1rIserIBkxSqBiLPInhF/Ng+/y6Ur4EMTbIdFF6Kka8xuvNwYNsGClxA+UlNN8akRpwc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=e2z4RCDQdOSraJDYj6yakcqriJ9gxd4TV4UNNE1tPi8kjlF3BEsbjPcGwCpUnqTu++VHftrAIEg+ylIk8nnQIw1qYLl5kiDFTqtGY3jzm8SjLqHbVzzMJGkuhujHxkXRu+29Rq/vFfXoXFyKp0XHCOygpxtWu8tfXpkOH+F8Urs=
+Received: by 10.67.19.17 with SMTP id w17mr11940946ugi.33.1199143886000;
+        Mon, 31 Dec 2007 15:31:26 -0800 (PST)
+Received: by 10.66.250.13 with HTTP; Mon, 31 Dec 2007 15:31:25 -0800 (PST)
+In-Reply-To: <873atjtbmu.fsf@enceladus.ygingras.net>
 Content-Disposition: inline
-In-Reply-To: <e5bfff550712301106l133dd38btd2cc4be02159387d@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69424>
 
-Marco Costalba <mcostalba@gmail.com> wrote:
-> Just for document the profiling I have uploaded a snapshot of
-> KCachegrind profiling data on a run of git-log on the git tree:
-> 
-> http://digilander.libero.it/mcostalba/callgrind_git_log1.png
-> 
-> From there you can see that pretty.c and strbuf.c, after all the
-> optimizations, account for less then 8% of total time.
-> The biggest part is that 86.64% that is due almost entirely to zlib.
-> 
-> In particular
-> 
-> st = inflate(&stream, Z_FINISH);
-> 
-> called from unpack_compressed_entry() in sha1_file.c accounts for 72%
-> of total time.
+On Dec 31, 2007 11:13 PM, Yannick Gingras <ygingras@ygingras.net> wrote:
+> >    but if you want to check odder cases, try creating a huge
+> >    directory, and then deleting most files, and then adding a few
+> >    new ones. Some filesystems will take a huge hit because they'll
+> >    still scan the whole directory, even though it's mostly empty!
+> >
+> >    (Also, a "readdir() + stat()" loop will often get *much* worse access
+> >    patterns if you've mixed deletions and creations)
+>
+> This is something that will be interesting to benchmark later on.  So,
+> an application with a lot of turnaround, say a mail server, should
+> delete and re-create the directories from time to time?  I assume this
+> is specific to some file system types.
 
-That's one of the areas where packv4 was actually a reasonably
-good gain.  It was faster for packv4 to convert a dict based commit
-or tree into the canonical raw format used by git than it was for
-zlib inflate to decompress the very same data.
+This is indeed the case. Directories with a lot of movement get
+fragmented on most FSs -- ext3 is a very bad case for this -- and
+there are no "directory defrag" tools other than regenarating them.
+The "Maildir" storage used for many IMAP servers these days shows the
+problem.
 
-It wasn't a huge gain, but if I recall we were saving a good half
-second on a 4 second "git log --raw >/dev/null" time.  And that
-was before we even tried to improve the tree walking APIs to
-take advantage of the smaller (and easier to read) dict based
-tree objects.
+This (longish) threads has some interesting tidbits on getdents() and
+directory fragmentation.
+http://kerneltrap.org/mailarchive/git/2007/1/7/235215
 
-Linus already mentioned in another reply on this thread that the
-inflate time may be all page faults.  The savings we were seeing
-from the dict based format may have simply been due to less page
-faults; the dict based format was slightly smaller so we probably
-got a lot more in disk cache at once.
+cheers,
 
--- 
-Shawn.
+
+m
