@@ -1,110 +1,187 @@
-From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [MinGW PATCH] spawn*: default extension to .exe if none is given
-Date: Mon, 31 Dec 2007 18:45:52 +0700
-Message-ID: <20071231114552.GA32421@laptop>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Fwd: qgit 2.1 questions about range selection
+Date: Mon, 31 Dec 2007 12:53:16 +0100
+Message-ID: <e5bfff550712310353k64ae0991vcd293dae565a0ce@mail.gmail.com>
+References: <771EDDAF-F479-45F7-AB85-F7B6603FB061@zib.de>
+	 <e5bfff550712310352j3245511chbbd301d35e09204b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Mon Dec 31 12:47:06 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Dec 31 12:53:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J9J6o-0001vN-82
-	for gcvg-git-2@gmane.org; Mon, 31 Dec 2007 12:47:06 +0100
+	id 1J9JDF-0003Oq-MB
+	for gcvg-git-2@gmane.org; Mon, 31 Dec 2007 12:53:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757185AbXLaLqf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Dec 2007 06:46:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756295AbXLaLqe
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 06:46:34 -0500
-Received: from rv-out-0910.google.com ([209.85.198.190]:42499 "EHLO
+	id S1757258AbXLaLxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Dec 2007 06:53:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757224AbXLaLxS
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 06:53:18 -0500
+Received: from rv-out-0910.google.com ([209.85.198.188]:56437 "EHLO
 	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754642AbXLaLqd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Dec 2007 06:46:33 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so4523905rvb.1
-        for <git@vger.kernel.org>; Mon, 31 Dec 2007 03:46:30 -0800 (PST)
+	with ESMTP id S1756314AbXLaLxQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Dec 2007 06:53:16 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so4525857rvb.1
+        for <git@vger.kernel.org>; Mon, 31 Dec 2007 03:53:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
-        bh=JuC26/2GdbFTOwAsBJIjGizg3mXkOTxSYpR12Uo/ixA=;
-        b=fiBC/C32/Xu2mssKeUG09eGqMFvNBNGWTMZu1yurKfJ4AJ4g/uay4F7Tf9ONX8TBeZwPumwhYAMaSXrMX/qWToPLFWhq758ozs2vS69okeOUqjaxM5dYN0+jJi9RoD4uoDZv8AmWcUXjV951nGoSGNYT1WZmM107n8tM6U9ZvTY=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=orir33Cz7kTKqoGWcX+D5Y484XNojMZqiAlJc4PFfcg=;
+        b=ZFgeecbgA5tYfasSeLlBLjav0wg15JzG9McIAb6veWw1Dt5ES1VfnkNw6evYLKZRYk5SuCo/Ld8LCFMDJmBDXlZWa2KZY1dZmAL8Qmw/iXX0audyV8XI1lOoWXkcaVva/ZBizQhWEuSXRXAsUdVREaqA7gDD0a37d+MC39rpS3M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
-        b=SV7hH9ctiZV0fJ5+k3qEEBUhoFrjn1yajzNauEpCOgkQ+RRDRgfqqnW8LIBkFnmn9MW4thZX49Cu87uv4vgxui/l+PNc9InYznLieb/1AS1EYosk6FnQZ5thMYxRd8FN1WjuAxCuavU6EwSwaRKGBGlYR48oMfcDhGmxr3/5s8Q=
-Received: by 10.141.203.7 with SMTP id f7mr6253093rvq.185.1199101590910;
-        Mon, 31 Dec 2007 03:46:30 -0800 (PST)
-Received: from pclouds@gmail.com ( [117.5.3.149])
-        by mx.google.com with ESMTPS id f21sm443057rvb.15.2007.12.31.03.46.17
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 31 Dec 2007 03:46:30 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 31 Dec 2007 18:45:52 +0700
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kB3dJZ1hJupJZNceDuSt1sBUCqoFKnU4M6AWl93InSy4GDw8Sm3Dbk54D+n+JsfO+89uGIxLwMiSPqyer9FWym1eGtYZ61Sazp4iBRCHYnBdqaFAY/Txyb4iAkIqE8rrTAK5vjFd9/FAfvKkQyfR8OZF5heY14dLnI4CVl4i1Ao=
+Received: by 10.141.178.5 with SMTP id f5mr6252686rvp.191.1199101996242;
+        Mon, 31 Dec 2007 03:53:16 -0800 (PST)
+Received: by 10.141.76.1 with HTTP; Mon, 31 Dec 2007 03:53:16 -0800 (PST)
+In-Reply-To: <e5bfff550712310352j3245511chbbd301d35e09204b@mail.gmail.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69401>
 
-This is the behavior of spawn* (or at least Wine source does it).
-CreateProcess() does not have such assumption.
+---------- Forwarded message ----------
+From: Marco Costalba <mcostalba@gmail.com>
+Date: Dec 31, 2007 12:52 PM
+Subject: Re: qgit 2.1 questions about range selection
+To: Steffen Prohaska <prohaska@zib.de>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- compat/mingw.c |   19 ++++++++++++++++++-
- 1 files changed, 18 insertions(+), 1 deletions(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 8bbe21b..dc54303 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -533,8 +533,9 @@ static pid_t mingw_spawnve(const char *cmd, const c=
-har **argv, char **env,
- {
- 	STARTUPINFO si;
- 	PROCESS_INFORMATION pi;
--	struct strbuf envblk, args;
-+	struct strbuf envblk, args, newcmd;
- 	unsigned flags;
-+	const char *basename;
- 	BOOL ret;
-=20
- 	/* Determine whether or not we are associated to a console */
-@@ -565,6 +566,21 @@ static pid_t mingw_spawnve(const char *cmd, const =
-char **argv, char **env,
- 	si.hStdOutput =3D (HANDLE) _get_osfhandle(1);
- 	si.hStdError =3D (HANDLE) _get_osfhandle(2);
-=20
-+	/* Assume .exe if there is no extension */
-+	strbuf_init(&newcmd, 0);
-+	basename =3D strrchr(cmd, '/');
-+	if (strrchr(cmd, '\\') > basename)
-+		basename =3D strrchr(cmd, '\\');
-+	if (basename)
-+		basename ++;
-+	else
-+		basename =3D cmd;
-+	if (!strchr(basename, '.')) {
-+		strbuf_addstr(&newcmd, cmd);
-+		strbuf_addstr(&newcmd, ".exe");
-+		cmd =3D newcmd.buf;
-+	}
-+
- 	/* concatenate argv, quoting args as we go */
- 	strbuf_init(&args, 0);
- 	if (prepend_cmd) {
-@@ -609,6 +625,7 @@ static pid_t mingw_spawnve(const char *cmd, const c=
-har **argv, char **env,
- 	if (env)
- 		strbuf_release(&envblk);
- 	strbuf_release(&args);
-+	strbuf_release(&newcmd);
-=20
- 	if (!ret) {
- 		errno =3D ENOENT;
---=20
-1.5.4.rc2.1097.gb6e0d
+On Dec 31, 2007 11:42 AM, Steffen Prohaska <prohaska@zib.de> wrote:
+> Hello Marco,
+
+Hi Steffen,
+
+   I hope you don't mind if I forward this also to the git list.
+
+Your questions are interesting, and I think could be useful also for
+other people.
+
+>
+> Here is a first impressions and some questions about the range
+> selection, which I find pretty hard to understand.
+>
+>   - The "Range select" dialog.
+>     * It is displayed upon startup or when I open a new
+>       repository.  But I haven't found a way to access "Range
+>       select" from the menus.  I'd expected to find it as
+>       "View > Range select".
+
+Currently the only way is to open (with File->open or "open folder"
+the tool button or with File->last opened repos list ) again the
+_same_ repository. I understand is not the best way. Your suggestion
+"View->range select" it seems a better idea.
+
+>     * The dialog's "Top:" and "Bottom:" drop downs apparently contain
+>       tags or "HEAD".  Why can't I select a specific branch?  I'd
+>       expected this here, too.
+
+You can write anything you want in top and bottom fields, they are not
+read-only, so you can write a branch name or anything understandable
+by 'git log'. You can also clear one filed, as example the bottom
+field to have all the revisions until the initial one.
+
+>     * The dialog's "Top:" and "Bottom:" fields are reset to a
+>       default each time the dialog opens.  Why aren't the last settings
+>       preserved?
+
+Mmmmm, why not? this goes in the same playfield of "View->Range select", thanks.
+
+>     * I find the toggles "Working dir" hard to understand.  Why
+>       not always showing the working dir?  Why not displaying
+>       differences to the index (as gitk does with the "green"
+>       commit)?
+
+Well differences in the index _are_ displayed with an "orange" commit
+(from a long time ago also, much more then gitk BTW). The reason is
+not selected by default is that on big repos, as Linux, checking for
+working dir changed files takes very long and is not useful for people
+that just wants to pull Linux and take a look atthe updates. Anyhow
+you can always toggle this directly right clicking anywhere in the
+main revision list. A pop up menu appears and "Check for modified
+files" is the first entry.
+
+
+>     * Similar for the toggles "All branches", "Whole history".
+>       Maybe "All branches" could be included in the "Top:" drop down
+>       and "Whole history" could be included in the "Bottom:" drop down.
+>
+
+There should be some tooltips that help here. But again Top and Bottom
+are only range delimiters, what happens is that if you write A in the
+top field and B in the bottom field git log is called with : git log
+A..B
+
+>   - The parameters of the current range selection are not obvious.
+>     After closing the "Range select" dialog the history is
+>     displayed.  But where can I see the parameters of the
+>     selection?  I'd have expected to see an indication which
+>     branches, tags, whole history, ...  I selected.  Indications
+>     of this are scattered over the GUI. For example, a filter can
+>     be toggled on in the tool menu bar and is greyed out if
+>     activated.  Or "FILTER ON" may be displayed in the window
+>     title.
+>
+
+Well there is already a "Filter ON" but is for a more advanced feature
+then range select. Simply, from main list, press key 't' to show tree
+view, then select some files/directories (multi selection is allowed),
+then press the magic wand toolbar button: that's the FILTER ON (and
+you see on the window caption BTW)
+
+>   - "Toggle filter by tree" seems to switch to "--all".  I see
+>     more commits than I expect.  I'd have expected that this
+>     toggle adds a boolean "and" to the selection; that is the
+>     current view would be restricted to commits touching the
+>     selected path.
+>
+
+Mmmmm, if this is the case it's a bug. Thanks I will investigate.
+
+> Maybe the range selection could be unified in the following way.
+> The selection is represented as multiple lines; each line
+> representing part of the selection parameters.  All lines together
+> act as a boolean expression selecting the commits.  Each line
+> contains drop down boxes and text fields (or other GUI elements).
+> The selection filter is displayed below the tool bar and the
+> tab containing the "Rev list"; or it should be included in the
+> "Rev list".  For example, the following lines would select the
+> commits on branch pu, not on master, touching file help.c
+>
+>   - Selection: [label]
+>   - Branch [drop down],         origin/pu [drop down],
+>   - Not on branch [drop down],  origin/master [drop down],
+>   - File [drop down],           help.c [text field],
+>
+> Each line contains "-", "+" buttons to remove this line or add a
+> line below.  The very first line has a button "+" to add a line
+> at the very bottom.  I attached a snapshot of the Mac OS X
+> Smartfolder GUI to illustrate this.
+>
+>
+
+That's nice!
+
+Currently you can use the "Additional options" field at the bottom of
+range select to write a free text that will be pasted directly to the
+git log command line arguments.
+
+
+>
+>
+> Btw, is the git mailing list the right forum to discuss such
+> suggestions?
+>
+> If so, feel free to reply with CC to git@vger.kernel.org.
+>
+
+Already done ;-)
+
+Thanks
+Marco
