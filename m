@@ -1,62 +1,65 @@
-From: David Soria Parra <sn_@gmx.net>
-Subject: Re: how to use git merge -s subtree?
-Date: Sun, 06 Jan 2008 02:22:47 +0100
-Message-ID: <flpah7$beg$2@ger.gmane.org>
-References: <20080105230004.GY29972@genesis.frugalware.org> <BAYC1-PASMTP12374B54BA370A1E1C6E78AE4E0@CEZ.ICE>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: How to bypass the post-commit hook?
+Date: Mon, 31 Dec 2007 10:50:27 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <4778BB63.6080908@obry.net>
+References: <46dff0320712300712l78c1cdaeya5fa105be01f6b74@mail.gmail.com> <20071230215008.GB20098@efreet.light.src>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 06 02:25:46 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ping Yin <pkufranky@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Sun Jan 06 02:35:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBKGg-0007I4-Jr
-	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 02:25:39 +0100
+	id 1JBKPl-0001Dq-Q7
+	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 02:35:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677AbYAFBZK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2008 20:25:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752530AbYAFBZK
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jan 2008 20:25:10 -0500
-Received: from main.gmane.org ([80.91.229.2]:48215 "EHLO ciao.gmane.org"
+	id S1754702AbYAFBe2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jan 2008 20:34:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752945AbYAFBe2
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jan 2008 20:34:28 -0500
+Received: from smtp2b.orange.fr ([80.12.242.146]:37374 "EHLO smtp2b.orange.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752191AbYAFBZI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2008 20:25:08 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1JBKG6-0007li-On
-	for git@vger.kernel.org; Sun, 06 Jan 2008 01:25:02 +0000
-Received: from p57aee59d.dip.t-dialin.net ([87.174.229.157])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 06 Jan 2008 01:25:02 +0000
-Received: from sn_ by p57aee59d.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 06 Jan 2008 01:25:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: p57aee59d.dip.t-dialin.net
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <BAYC1-PASMTP12374B54BA370A1E1C6E78AE4E0@CEZ.ICE>
+	id S1752698AbYAFBe1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2008 20:34:27 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2b21.orange.fr (SMTP Server) with ESMTP id 9C87270F3170
+	for <git@vger.kernel.org>; Fri,  4 Jan 2008 17:39:46 +0100 (CET)
+Received: from [127.0.0.1] (AVelizy-151-1-103-62.w90-35.abo.wanadoo.fr [90.35.81.62])
+	by mwinf2b21.orange.fr (SMTP Server) with ESMTP id 6581077D70D4;
+	Mon, 31 Dec 2007 10:50:31 +0100 (CET)
+X-ME-UUID: 20071231095032415.6581077D70D4@mwinf2b21.orange.fr
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <20071230215008.GB20098@efreet.light.src>
+X-Enigmail-Version: 0.95.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69699>
 
+Jan Hudec a =E9crit :
+> By the way, what is your post-commit hook doing anyway? Modifying the=
+ work
+> tree *after* a commit does not sound like a common thing to do.
 
-> Hi Miklos,
-> 
-> Here's another way that is perhaps a little cleaner:
-> 
-> $ git remote add -f B /path/to/B
-> $ git merge -s ours --no-commit B/master
-> $ git read-tree --prefix=sub/ -u B/master 
-> $ git commit -m "subtree merged B"
-> 
+Or just trigger a build via a built robot or record a commit informatio=
+n
+into an issue tracker...
 
-hi sean,
+Pascal.
 
-that works perfectly but it doesn't preserve the history, does it?
+--=20
 
-                    dsp
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
