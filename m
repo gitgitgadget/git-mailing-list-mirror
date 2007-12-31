@@ -1,71 +1,72 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Documentation/user-manual.txt: fix typo
-Date: Mon, 31 Dec 2007 11:28:07 -0500
-Message-ID: <20071231162807.GA3662@fieldses.org>
-References: <1198921945-25616-1-git-send-email-hendeby@isy.liu.se> <1199107895-25950-1-git-send-email-hendeby@isy.liu.se>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: How to bypass the post-commit hook?
+Date: Mon, 31 Dec 2007 18:05:32 +0100
+Message-ID: <20071231170532.GB9214@efreet.light.src>
+References: <46dff0320712300712l78c1cdaeya5fa105be01f6b74@mail.gmail.com> <20071230215008.GB20098@efreet.light.src> <46dff0320712302108i61f3b868obb93f89c1c24062c@mail.gmail.com> <20071231093152.GC20098@efreet.light.src> <46dff0320712310222m64d86e95l1499a7ffb1fff65c@mail.gmail.com> <20071231105514.GA9214@efreet.light.src> <46dff0320712310526l2b801ed7xc52b7aae2d65048e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Gustaf Hendeby <hendeby@isy.liu.se>
-X-From: git-owner@vger.kernel.org Mon Dec 31 17:28:47 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 31 18:06:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J9NVO-0004BP-E5
-	for gcvg-git-2@gmane.org; Mon, 31 Dec 2007 17:28:46 +0100
+	id 1J9O5e-0005zV-6V
+	for gcvg-git-2@gmane.org; Mon, 31 Dec 2007 18:06:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750944AbXLaQ2N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Dec 2007 11:28:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750789AbXLaQ2N
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 11:28:13 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:38753 "EHLO fieldses.org"
+	id S1751141AbXLaRFs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Dec 2007 12:05:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751067AbXLaRFs
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 12:05:48 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:47231 "EHLO ns1.bluetone.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750790AbXLaQ2M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Dec 2007 11:28:12 -0500
-Received: from bfields by fieldses.org with local (Exim 4.68)
-	(envelope-from <bfields@fieldses.org>)
-	id 1J9NUl-00012D-IE; Mon, 31 Dec 2007 11:28:07 -0500
+	id S1750942AbXLaRFs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Dec 2007 12:05:48 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id B2C89573F7;
+	Mon, 31 Dec 2007 18:05:46 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id Qrzvox8-Tx48; Mon, 31 Dec 2007 18:05:44 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id A6F4357472;
+	Mon, 31 Dec 2007 18:05:43 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1J9O4y-00033K-KW; Mon, 31 Dec 2007 18:05:32 +0100
 Content-Disposition: inline
-In-Reply-To: <1199107895-25950-1-git-send-email-hendeby@isy.liu.se>
+In-Reply-To: <46dff0320712310526l2b801ed7xc52b7aae2d65048e@mail.gmail.com>
 User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69406>
 
-On Mon, Dec 31, 2007 at 02:31:35PM +0100, Gustaf Hendeby wrote:
-> Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
-> ---
+On Mon, Dec 31, 2007 at 21:26:21 +0800, Ping Yin wrote:
+> On Dec 31, 2007 6:55 PM, Jan Hudec <bulb@ucw.cz> wrote:
+> > Note, that you can -- and should -- add the foo.css to the commit. But the
+> > file might contain other changes in tree, that are not about to be commited,
+> > so prefered way would be to get the content from the index, modify that and
+> > update the index manually (with git update-index).
 > 
-> I didn't see this one in the latest patches added to v1.5.4-rc2 so I
-> guess it was forgotten, or just dropped because it seems I forgot to
-> sign it the last time.  (Sorry about that, it should teach me not to
-> do anything important at 4 in the morning...)  I think the patch is
-> obviously correct so I'm resending.
+> If pre-commit has modified files to be commited, it will abort this
+> commit and give a message to direct the user to commit again
+> with/without the changed content.
+> 
+> AFAIK, git add -i can add selected chunk to the index. As you said,
+> can git-update-index also do this job?
 
-Yep, thanks!  Applied and pushed out to
+git update-index is the underlying plumbing for git add/git rm.
 
-	git://linux-nfs.org/~bfields/git.git maint
+However, you should change foo.css in index even if the working tree copy
+does not match it and is not selected for commit. Only way I see to do that
+is to prepare a patch and apply it to both the working tree (git apply) and
+to the index (git apply --cached).
 
---b.
+It will probably work for you without such finesse, you will just have to be
+aware of it's quirks.
 
-commit 57283291b55cdc4ab726231073450d185beb361a
-Author: Gustaf Hendeby <hendeby@isy.liu.se>
-Date:   Mon Dec 31 14:31:35 2007 +0100
-
-    Documentation/user-manual.txt: fix typo
-    
-    Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
-    Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
-
-commit f18b1c55e5b7478524c15685cd643555fc919f3f
-Author: J. Bruce Fields <bfields@citi.umich.edu>
-Date:   Fri Dec 21 19:57:16 2007 -0500
-
-    Documentation: fix remote.<name>.skipDefaultUpdate description
-    
-    Fix the subcommand name.
-    
-    Signed-off-by: J. Bruce Fields <bfields@citi.umich.edu>
+-- 
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
