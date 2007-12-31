@@ -1,99 +1,88 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [ANNOUNCE] qgit-2.1 and qgit-1.5.8
-Date: Mon, 31 Dec 2007 12:58:27 +0100
-Message-ID: <e5bfff550712310358g347d883fm9866f328f24e3ad0@mail.gmail.com>
-References: <e5bfff550712302335ie96e143g55c93e984fba6aaa@mail.gmail.com>
-	 <4778CB78.2010906@yahoo.it>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: How to bypass the post-commit hook?
+Date: Mon, 31 Dec 2007 21:26:21 +0800
+Message-ID: <46dff0320712310526l2b801ed7xc52b7aae2d65048e@mail.gmail.com>
+References: <46dff0320712300712l78c1cdaeya5fa105be01f6b74@mail.gmail.com>
+	 <20071230215008.GB20098@efreet.light.src>
+	 <46dff0320712302108i61f3b868obb93f89c1c24062c@mail.gmail.com>
+	 <20071231093152.GC20098@efreet.light.src>
+	 <46dff0320712310222m64d86e95l1499a7ffb1fff65c@mail.gmail.com>
+	 <20071231105514.GA9214@efreet.light.src>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Linux Kernel Development" <linux-kernel@vger.kernel.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Filippo Zangheri" <filippo.zangheri@yahoo.it>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1759081AbXLaL6l@vger.kernel.org Mon Dec 31 12:59:14 2007
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1759081AbXLaL6l@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Jan Hudec" <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Mon Dec 31 14:26:50 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J9JIU-0004VR-DK
-	for glk-linux-kernel-3@gmane.org; Mon, 31 Dec 2007 12:59:10 +0100
+	id 1J9KfJ-0006xp-1R
+	for gcvg-git-2@gmane.org; Mon, 31 Dec 2007 14:26:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759081AbXLaL6l (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 31 Dec 2007 06:58:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757457AbXLaL6a
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Mon, 31 Dec 2007 06:58:30 -0500
-Received: from rv-out-0910.google.com ([209.85.198.188]:1789 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757382AbXLaL62 (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 31 Dec 2007 06:58:28 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so4527408rvb.1
-        for <linux-kernel@vger.kernel.org>; Mon, 31 Dec 2007 03:58:28 -0800 (PST)
+	id S1752020AbXLaN0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Dec 2007 08:26:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751739AbXLaN0X
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 08:26:23 -0500
+Received: from hs-out-0708.google.com ([64.233.178.247]:61177 "EHLO
+	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751407AbXLaN0W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Dec 2007 08:26:22 -0500
+Received: by hs-out-2122.google.com with SMTP id 54so3098921hsz.5
+        for <git@vger.kernel.org>; Mon, 31 Dec 2007 05:26:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=S7CQd6YB25FYyeZmhGSHV5AW6n7SyxVZ+7pER+0hpP8=;
-        b=kHVPkvuHsaRBsgsDf7wStzV1eFTQEamFLrnLzpVoDbgIZxwp9NWbA1QYJWtX/5+ljk0rPaN79F4NSNNLb2EZ3OxxgDDolFN0Mjhi9Mk8A7mfw8wxfG0wAi7jf6J8X+luRRGl0gOXUZ2AEFZeqV3BkgOQCMLQdlHiCruuoAJ0zhU=
+        bh=uV/6Q7l9SL6GbkCXgUsVazaSfNd+qP6OuxuasHsayOU=;
+        b=vMsd8gtZUm+126AiDvh7Knc19ZqPE2zv0XGBuG/dEXditeA9bDrkQya79/DsrI2lqb+cJHbNxFTXv4jTNZnnq8/v5rrXif0zclg6T0hMd7B37RE3M7aZPqCaxuAIyd7uzQ3JBo+QdUHtZFGBwPF2ZcLrg5pyboXqTYNFCD34DL0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NoHqy7R15V9PwJ+c/oAIiCm8r2lqC6BiE4/8zk7jBYBMYPr2oondFxqxiqPer2lOxubNEmwUbt3C+OiGRmItv9B3FPMn/txjRZ/20vGUgD9Z3me6aF/ybsDnyzMrSZTJf0LhpULDJBg6GDWpcgVCGCOh9EuJT2OL7UHRZDQCzsM=
-Received: by 10.141.115.6 with SMTP id s6mr6289726rvm.4.1199102307970;
-        Mon, 31 Dec 2007 03:58:27 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Mon, 31 Dec 2007 03:58:27 -0800 (PST)
-In-Reply-To: <4778CB78.2010906@yahoo.it>
+        b=r4Td+ixY+s9RqmtQ5AWcMA8w688rOLi4aJ16BKGgcgsiZI/Gbc6gSzf2Nez4QLeLJS2VFLMutW1aFPxld30hrSSTGQnlyJ+MW/l0UbRDZ38+EwqcH5Nzolma2b2/dMn1RsDWCuAJks2jbl2MpgiGhgf2y38zELk2npLkx1tk+Sw=
+Received: by 10.150.97.20 with SMTP id u20mr1279014ybb.17.1199107581265;
+        Mon, 31 Dec 2007 05:26:21 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Mon, 31 Dec 2007 05:26:21 -0800 (PST)
+In-Reply-To: <20071231105514.GA9214@efreet.light.src>
 Content-Disposition: inline
-Sender: linux-kernel-owner@vger.kernel.org
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69402>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69403>
 
-On Dec 31, 2007 11:59 AM, Filippo Zangheri <filippo.zangheri@yahoo.it> wrote:
+On Dec 31, 2007 6:55 PM, Jan Hudec <bulb@ucw.cz> wrote:
+> On Mon, Dec 31, 2007 at 18:22:37 +0800, Ping Yin wrote:
+> > On Dec 31, 2007 5:31 PM, Jan Hudec <bulb@ucw.cz> wrote:
+> > > On Mon, Dec 31, 2007 at 13:08:05 +0800, Ping Yin wrote:
+> > > Note, that while you don't know the commit sha1 before the commit, you do
+> > > know the *blob* sha1s. So you can do this change in pre-commit hook.
+> >
+> > I chose post-commit because i used commit sha1 instead of blob sha1 as
+> > file version in the first time, and now pre-commit seems better. One
+> > more question,  I use 'git ls-files' to fetch the blob sha1, so is the
+> > got sha1  the same when pre-commit and post-commit?
 >
-> Hi,
->
-> I git-cloned qgit-2.1 from your repository, then ran `qmake qgit.pro`, but `make` gave me errors.
-
-Yes, you need qmake of Qt4 not the Qt3 one.
-
-> Afterwards I deleted src/Makefile, ran `qmake-qt4 qgit.pro` and `make` starts compiling some files but the process ends with other errors.
-> This is the command line:
->
-> filippo@master:/usr/src/git/qgit$ make
-> cd src && make -f Makefile
-> make[1]: Entering directory `/usr/src/git/qgit/src'
-> make -f Makefile.Release
-> make[2]: Entering directory `/usr/src/git/qgit/src'
-> g++ -c -pipe -O2 -g3 -O2 -Wno-non-virtual-dtor -Wno-long-long -pedantic -Wconversion -Wall -W -D_REENTRANT  -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -I../../../../share/qt4/mkspecs/linux-g++ -I. -I../../../../include/qt4/QtCore -I../../../../include/qt4/QtCore -I../../../../include/qt4/QtGui -I../../../../include/qt4/QtGui -I../../../../include/qt4 -I../src -I../build -I../build -o ../build/customactionimpl.o customactionimpl.cpp
-> make[2]: Leaving directory `/usr/src/git/qgit/src'
-> make[1]: Leaving directory `/usr/src/git/qgit/src'
-> ../build/ui_customaction.h: In member function 'void Ui_CustomActionBase::setupUi(QWidget*)':
-> ../build/ui_customaction.h:68: error: 'class QHBoxLayout' has no member named 'setLeftMargin'
-> ../build/ui_customaction.h:69: error: 'class QHBoxLayout' has no member named 'setTopMargin'
-
-This is because you need at least Qt 4.3 as written in the README.
-
->
->
->
-> I'm running Debian Etch 4.0 with vanilla kernel version 2.6.23.1 and I have the following packages installed:
->
-> filippo@master:/usr/src/git/qgit$ dpkg -l | grep qt4
-> ii libqt4-core                  4.2.1-2+etch1   Qt 4 core non-GUI functionality runtime library
-> ii libqt4-dev                   4.2.1-2+etch1   Qt 4 development files
-> ii libqt4-gui                   4.2.1-2+etch1   Qt 4 core GUI functionality runtime library
-> ii libqt4-qt3support    4.2.1-2+etch1   Qt 3 compatibility library for Qt 4
-> ii libqt4-sql                   4.2.1-2+etch1   Qt 4 SQL database module
-> ii qt4-dev-tools                4.2.1-2+etch1   Qt 4 development tools
->
->
-> what am I doing wrong?
+> Yes, it should be.
 >
 
-Please upgrade to Qt 4.3 and everything will be OK ;-)
+Good news. So pre-commit is actually the right choice.
+
+>
+> Note, that you can -- and should -- add the foo.css to the commit. But the
+> file might contain other changes in tree, that are not about to be commited,
+> so prefered way would be to get the content from the index, modify that and
+> update the index manually (with git update-index).
+
+If pre-commit has modified files to be commited, it will abort this
+commit and give a message to direct the user to commit again
+with/without the changed content.
+
+AFAIK, git add -i can add selected chunk to the index. As you said,
+can git-update-index also do this job?
 
 
-Happy new year
-Marco
+
+
+-- 
+Ping Yin
