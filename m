@@ -1,119 +1,117 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: How to bypass the post-commit hook?
-Date: Mon, 31 Dec 2007 10:31:52 +0100
-Message-ID: <20071231093152.GC20098@efreet.light.src>
-References: <46dff0320712300712l78c1cdaeya5fa105be01f6b74@mail.gmail.com> <20071230215008.GB20098@efreet.light.src> <46dff0320712302108i61f3b868obb93f89c1c24062c@mail.gmail.com>
+From: Yannick Gingras <ygingras@ygingras.net>
+Subject: Re: On the many files problem
+Date: Mon, 31 Dec 2007 05:13:45 -0500
+Message-ID: <873atjtbmu.fsf@enceladus.ygingras.net>
+References: <87y7bdweca.fsf@enceladus.ygingras.net>
+	<alpine.LFD.0.9999.0712291055470.2778@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="GPJrCs/72TxItFYR"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 31 10:32:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Dec 31 11:14:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J9H0U-0007As-GS
-	for gcvg-git-2@gmane.org; Mon, 31 Dec 2007 10:32:26 +0100
+	id 1J9HfA-0006pa-Ht
+	for gcvg-git-2@gmane.org; Mon, 31 Dec 2007 11:14:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755230AbXLaJcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Dec 2007 04:32:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754416AbXLaJcB
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 04:32:01 -0500
-Received: from ns1.bluetone.cz ([212.158.128.13]:50665 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753987AbXLaJcA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Dec 2007 04:32:00 -0500
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 4D2F2572A9;
-	Mon, 31 Dec 2007 10:31:59 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id EFiib9Z2UPsQ; Mon, 31 Dec 2007 10:31:56 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id B4FB257287;
-	Mon, 31 Dec 2007 10:31:55 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1J9Gzw-0002GD-2F; Mon, 31 Dec 2007 10:31:52 +0100
-Content-Disposition: inline
-In-Reply-To: <46dff0320712302108i61f3b868obb93f89c1c24062c@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1754566AbXLaKN6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Dec 2007 05:13:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753631AbXLaKN6
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 05:13:58 -0500
+Received: from mail.cooptel.qc.ca ([216.144.115.12]:45166 "EHLO
+	amy.cooptel.qc.ca" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751429AbXLaKN4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Dec 2007 05:13:56 -0500
+Received: (qmail 17346 invoked by uid 360); 31 Dec 2007 10:13:55 -0000
+Received: from 216.144.118.66 by amy (envelope-from <ygingras@ygingras.net>, uid 301) with qmail-scanner-2.01 
+ (clamdscan: 0.91.1/3957.  
+ Clear:RC:1(216.144.118.66):. 
+ Processed in 0.01907 secs); 31 Dec 2007 10:13:55 -0000
+Received: from unknown (HELO verdandi.ygingras.net) (216.144.118.66)
+  by smtp.cooptel.qc.ca with ESMTP; 31 Dec 2007 10:13:55 -0000
+Received: from [192.168.0.15] (helo=enceladus.ygingras.net)
+	by verdandi.ygingras.net with esmtp (Exim 4.50)
+	id 1J9HeU-0007GJ-2h; Mon, 31 Dec 2007 05:13:54 -0500
+Received: from enceladus (localhost [127.0.0.1])
+	by enceladus.ygingras.net (Postfix) with ESMTP id A6A7318503;
+	Mon, 31 Dec 2007 05:13:45 -0500 (EST)
+In-Reply-To: <alpine.LFD.0.9999.0712291055470.2778@woody.linux-foundation.org> (Linus Torvalds's message of "Sat\, 29 Dec 2007 11\:12\:38 -0800 \(PST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-SA-Exim-Connect-IP: 192.168.0.15
+X-SA-Exim-Rcpt-To: torvalds@linux-foundation.org, git@vger.kernel.org
+X-SA-Exim-Mail-From: ygingras@ygingras.net
+X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on 
+	verdandi.ygingras.net
+X-Spam-Level: 
+X-Spam-Status: No, score=0.0 required=3.5 tests=AWL autolearn=disabled 
+	version=3.1.7
+X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
+X-SA-Exim-Scanned: Yes (on verdandi.ygingras.net)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69396>
 
 
---GPJrCs/72TxItFYR
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks to you and to Junio for your replies, 
 
-On Mon, Dec 31, 2007 at 13:08:05 +0800, Ping Yin wrote:
-> On Dec 31, 2007 5:50 AM, Jan Hudec <bulb@ucw.cz> wrote:
-> >
-> > On Sun, Dec 30, 2007 at 23:12:12 +0800, Ping Yin wrote:
-> > > --no-verify can bypass pre-commit hook? Then how to bypass post-commi=
-t hook?
-> > >
-> > > Usually I want post-commit take effect. However, in the middle of
-> > > git-rebase, i want to bypass post-commit when 'git-commit --amend'
-> > > since my post-commit hooks will modify the working directory and so
-> > > make following rebase troubesome.
-> >
-> > There does not seem to be an option to do it, but you can always tempor=
-arily
-> > disable it (unset the executable permission on it).
-> >
-> > By the way, what is your post-commit hook doing anyway? Modifying the w=
-ork
-> > tree *after* a commit does not sound like a common thing to do.
-> >
-> I have already considered disabling hook temporarily, but it is a
-> little annoying.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
+> No, no. The fastest way to store a bunch of files is to basically:
+>
+>  - make the filenames as small as possible
+>
+>    This improves density, and thus performance. You'll get more files to 
+>    fit in a smaller directory, and filename compares etc will be faster 
+>    too.
+>
+>    If you don't need hashes, but can do with smaller names (for example, 
+>    your names are really just sequential, and you can use some base-64 
+>    encoding to make them smaller than numbers), you'll always be better 
+>    off.
 
-Well, I guess noone thought it would be useful to disable it.
+This is really interesting and I would not have suspected it.  But it
+begs the question: why does Git use the base-16 hash instead of the
+base-64 hash?  
 
-> I use post-commit because i don't find a better way to update imported
-> css version automatically
->=20
-> $ cat foo.css
-> @import url(bar.css?57e708)
-> ...
->=20
-> When i modify bar.css and then commit it ( with blob sha1 bf7059)=EF=BC=
-=8CI
-> use post-commit to modify foo.css
-> $ cat foo.css
-> @import url(bar.css?bf7059)
-> ...
+After your replies I took a serious look at Git's storage and there is
+indeed not that many loose objects in a typical repo: most is kept
+into packs.  So I guess Git doesn't need that much density and keeping
+the filename in the format that is used in the UI probably helps power
+users.
 
-But that file is not versioned, is it?
+>  - store them in a good final order. This is debatable, but depending on 
+>    your load and the filesystem, it can be better to make sure that you 
+>    create all files in order, because performance can plummet if you start 
+>    removing files later.
+>
+>    I suspect your benchmark *only* tested this case, 
 
-Because if it is, you want to commit it in the very same commit as bar.css
-and therefore want to do it in the *pre*-commit hook. Since obviously the
-foo.css wants to include the current version of bar.css, not the previous
-one.
+That is true.
 
-Note, that while you don't know the commit sha1 before the commit, you do
-know the *blob* sha1s. So you can do this change in pre-commit hook.
+>    but if you want to check odder cases, try creating a huge
+>    directory, and then deleting most files, and then adding a few
+>    new ones. Some filesystems will take a huge hit because they'll
+>    still scan the whole directory, even though it's mostly empty!
+>
+>    (Also, a "readdir() + stat()" loop will often get *much* worse access 
+>    patterns if you've mixed deletions and creations)
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+This is something that will be interesting to benchmark later on.  So,
+an application with a lot of turnaround, say a mail server, should
+delete and re-create the directories from time to time?  I assume this
+is specific to some file system types.
 
---GPJrCs/72TxItFYR
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+>  - it's generally *much* more efficient to have one large file that you 
+>    read and seek in than having many small ones, so if you can change your 
+>    load so that you don't have tons of files at all, you'll probably be 
+>    better off. 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+That makes a lot of sense.  
 
-iD8DBQFHeLcIRel1vVwhjGURApSDAKC+7ndIgy/SxZ73HN6B/usVYIIjtwCfUJBd
-aXj4dfOdZ4SuPPZy2dKKYIs=
-=kQrh
------END PGP SIGNATURE-----
+Thanks again for those clarifications.
 
---GPJrCs/72TxItFYR--
+-- 
+Yannick Gingras
