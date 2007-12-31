@@ -1,88 +1,73 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: How to bypass the post-commit hook?
-Date: Mon, 31 Dec 2007 21:26:21 +0800
-Message-ID: <46dff0320712310526l2b801ed7xc52b7aae2d65048e@mail.gmail.com>
-References: <46dff0320712300712l78c1cdaeya5fa105be01f6b74@mail.gmail.com>
-	 <20071230215008.GB20098@efreet.light.src>
-	 <46dff0320712302108i61f3b868obb93f89c1c24062c@mail.gmail.com>
-	 <20071231093152.GC20098@efreet.light.src>
-	 <46dff0320712310222m64d86e95l1499a7ffb1fff65c@mail.gmail.com>
-	 <20071231105514.GA9214@efreet.light.src>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Jan Hudec" <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Mon Dec 31 14:26:50 2007
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: [PATCH] Documentation/user-manual.txt: fix typo
+Date: Mon, 31 Dec 2007 14:31:35 +0100
+Message-ID: <1199107895-25950-1-git-send-email-hendeby@isy.liu.se>
+References: <1198921945-25616-1-git-send-email-hendeby@isy.liu.se>
+Cc: git@vger.kernel.org, Gustaf Hendeby <hendeby@isy.liu.se>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Dec 31 14:32:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J9KfJ-0006xp-1R
-	for gcvg-git-2@gmane.org; Mon, 31 Dec 2007 14:26:49 +0100
+	id 1J9KkP-0008HN-H7
+	for gcvg-git-2@gmane.org; Mon, 31 Dec 2007 14:32:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752020AbXLaN0X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Dec 2007 08:26:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751739AbXLaN0X
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 08:26:23 -0500
-Received: from hs-out-0708.google.com ([64.233.178.247]:61177 "EHLO
-	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751407AbXLaN0W (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Dec 2007 08:26:22 -0500
-Received: by hs-out-2122.google.com with SMTP id 54so3098921hsz.5
-        for <git@vger.kernel.org>; Mon, 31 Dec 2007 05:26:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=uV/6Q7l9SL6GbkCXgUsVazaSfNd+qP6OuxuasHsayOU=;
-        b=vMsd8gtZUm+126AiDvh7Knc19ZqPE2zv0XGBuG/dEXditeA9bDrkQya79/DsrI2lqb+cJHbNxFTXv4jTNZnnq8/v5rrXif0zclg6T0hMd7B37RE3M7aZPqCaxuAIyd7uzQ3JBo+QdUHtZFGBwPF2ZcLrg5pyboXqTYNFCD34DL0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=r4Td+ixY+s9RqmtQ5AWcMA8w688rOLi4aJ16BKGgcgsiZI/Gbc6gSzf2Nez4QLeLJS2VFLMutW1aFPxld30hrSSTGQnlyJ+MW/l0UbRDZ38+EwqcH5Nzolma2b2/dMn1RsDWCuAJks2jbl2MpgiGhgf2y38zELk2npLkx1tk+Sw=
-Received: by 10.150.97.20 with SMTP id u20mr1279014ybb.17.1199107581265;
-        Mon, 31 Dec 2007 05:26:21 -0800 (PST)
-Received: by 10.35.108.1 with HTTP; Mon, 31 Dec 2007 05:26:21 -0800 (PST)
-In-Reply-To: <20071231105514.GA9214@efreet.light.src>
-Content-Disposition: inline
+	id S1752554AbXLaNbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Dec 2007 08:31:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752350AbXLaNbk
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 08:31:40 -0500
+Received: from bogotron.isy.liu.se ([130.236.48.26]:56184 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751240AbXLaNbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Dec 2007 08:31:40 -0500
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 6797D25A5A;
+	Mon, 31 Dec 2007 14:31:36 +0100 (MET)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 05786-07; Mon, 31 Dec 2007 14:31:35 +0100 (MET)
+Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id AD45625A52;
+	Mon, 31 Dec 2007 14:31:35 +0100 (MET)
+Received: by pluring.isy.liu.se (Postfix, from userid 2087)
+	id A173E1779C; Mon, 31 Dec 2007 14:31:35 +0100 (CET)
+X-Mailer: git-send-email 1.5.4.rc2.8.g41c7c6
+In-Reply-To: <1198921945-25616-1-git-send-email-hendeby@isy.liu.se>
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69404>
 
-On Dec 31, 2007 6:55 PM, Jan Hudec <bulb@ucw.cz> wrote:
-> On Mon, Dec 31, 2007 at 18:22:37 +0800, Ping Yin wrote:
-> > On Dec 31, 2007 5:31 PM, Jan Hudec <bulb@ucw.cz> wrote:
-> > > On Mon, Dec 31, 2007 at 13:08:05 +0800, Ping Yin wrote:
-> > > Note, that while you don't know the commit sha1 before the commit, you do
-> > > know the *blob* sha1s. So you can do this change in pre-commit hook.
-> >
-> > I chose post-commit because i used commit sha1 instead of blob sha1 as
-> > file version in the first time, and now pre-commit seems better. One
-> > more question,  I use 'git ls-files' to fetch the blob sha1, so is the
-> > got sha1  the same when pre-commit and post-commit?
->
-> Yes, it should be.
->
+Signed-off-by: Gustaf Hendeby <hendeby@isy.liu.se>
+---
 
-Good news. So pre-commit is actually the right choice.
+I didn't see this one in the latest patches added to v1.5.4-rc2 so I
+guess it was forgotten, or just dropped because it seems I forgot to
+sign it the last time.  (Sorry about that, it should teach me not to
+do anything important at 4 in the morning...)  I think the patch is
+obviously correct so I'm resending.
 
->
-> Note, that you can -- and should -- add the foo.css to the commit. But the
-> file might contain other changes in tree, that are not about to be commited,
-> so prefered way would be to get the content from the index, modify that and
-> update the index manually (with git update-index).
+/Gustaf
 
-If pre-commit has modified files to be commited, it will abort this
-commit and give a message to direct the user to commit again
-with/without the changed content.
+ Documentation/user-manual.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-AFAIK, git add -i can add selected chunk to the index. As you said,
-can git-update-index also do this job?
-
-
-
-
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index f2b4206..3f552e9 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -74,7 +74,7 @@ version is called a <<def_commit,commit>>.
+ 
+ Those snapshots aren't necessarily all arranged in a single line from
+ oldest to newest; instead, work may simultaneously proceed along
+-parallel lines of development, called <def_branch,branches>>, which may
++parallel lines of development, called <<def_branch,branches>>, which may
+ merge and diverge.
+ 
+ A single git repository can track development on multiple branches.  It
 -- 
-Ping Yin
+1.5.4.rc2.8.g41c7c6
