@@ -1,79 +1,151 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: On the many files problem
-Date: Tue, 1 Jan 2008 12:31:25 +1300
-Message-ID: <46a038f90712311531x17b6d94aua1bac2d3d186f186@mail.gmail.com>
-References: <87y7bdweca.fsf@enceladus.ygingras.net>
-	 <alpine.LFD.0.9999.0712291055470.2778@woody.linux-foundation.org>
-	 <873atjtbmu.fsf@enceladus.ygingras.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "Yannick Gingras" <ygingras@ygingras.net>
-X-From: git-owner@vger.kernel.org Tue Jan 01 00:31:58 2008
+From: "David D. Kilzer" <ddkilzer@kilzer.net>
+Subject: [PATCH] Remove duplication in t9119-git-svn-info.sh
+Date: Mon, 31 Dec 2007 15:33:19 -0800
+Message-ID: <1199143999-6859-1-git-send-email-ddkilzer@kilzer.net>
+References: <7vodc65whw.fsf@gitster.siamese.dyndns.org>
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
+	"David D. Kilzer" <ddkilzer@kilzer.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 01 00:33:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J9U6w-0003pm-2A
-	for gcvg-git-2@gmane.org; Tue, 01 Jan 2008 00:31:58 +0100
+	id 1J9U8m-0004Cz-IE
+	for gcvg-git-2@gmane.org; Tue, 01 Jan 2008 00:33:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750972AbXLaXb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Dec 2007 18:31:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750913AbXLaXb2
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 18:31:28 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:16692 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750748AbXLaXb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Dec 2007 18:31:27 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so2344731ugc.16
-        for <git@vger.kernel.org>; Mon, 31 Dec 2007 15:31:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=aNCHJfRb1m9TSQfTwXnNd3eQd4srnceNmFDbn8NqGT8=;
-        b=kxLDegmFpRamJWkfGypd7F8pdoM5smqr0/S/Vwbzk2ONFMg6Ntu47i8DThscoiqPe0M1yV2RMevy2nvMB0yiYmWEasDGEsCt1LxhZQ+1rIserIBkxSqBiLPInhF/Ng+/y6Ur4EMTbIdFF6Kka8xuvNwYNsGClxA+UlNN8akRpwc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=e2z4RCDQdOSraJDYj6yakcqriJ9gxd4TV4UNNE1tPi8kjlF3BEsbjPcGwCpUnqTu++VHftrAIEg+ylIk8nnQIw1qYLl5kiDFTqtGY3jzm8SjLqHbVzzMJGkuhujHxkXRu+29Rq/vFfXoXFyKp0XHCOygpxtWu8tfXpkOH+F8Urs=
-Received: by 10.67.19.17 with SMTP id w17mr11940946ugi.33.1199143886000;
-        Mon, 31 Dec 2007 15:31:26 -0800 (PST)
-Received: by 10.66.250.13 with HTTP; Mon, 31 Dec 2007 15:31:25 -0800 (PST)
-In-Reply-To: <873atjtbmu.fsf@enceladus.ygingras.net>
-Content-Disposition: inline
+	id S1751036AbXLaXdW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Dec 2007 18:33:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750863AbXLaXdW
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Dec 2007 18:33:22 -0500
+Received: from mail-out3.apple.com ([17.254.13.22]:54467 "EHLO
+	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751002AbXLaXdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Dec 2007 18:33:22 -0500
+Received: from relay11.apple.com (relay11.apple.com [17.128.113.48])
+	by mail-out3.apple.com (Postfix) with ESMTP id 9E5421CB3CB0;
+	Mon, 31 Dec 2007 15:33:21 -0800 (PST)
+Received: from relay11.apple.com (unknown [127.0.0.1])
+	by relay11.apple.com (Symantec Mail Security) with ESMTP id 80DA228082;
+	Mon, 31 Dec 2007 15:33:21 -0800 (PST)
+X-AuditID: 11807130-a9e4ebb000004fb9-17-47797c41217a
+Received: from localhost.localdomain (unknown [17.151.86.187])
+	by relay11.apple.com (Apple SCV relay) with ESMTP id 1ED5E2804D;
+	Mon, 31 Dec 2007 15:33:21 -0800 (PST)
+X-Mailer: git-send-email 1.5.3.7
+In-Reply-To: <7vodc65whw.fsf@gitster.siamese.dyndns.org>
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69425>
 
-On Dec 31, 2007 11:13 PM, Yannick Gingras <ygingras@ygingras.net> wrote:
-> >    but if you want to check odder cases, try creating a huge
-> >    directory, and then deleting most files, and then adding a few
-> >    new ones. Some filesystems will take a huge hit because they'll
-> >    still scan the whole directory, even though it's mostly empty!
-> >
-> >    (Also, a "readdir() + stat()" loop will often get *much* worse access
-> >    patterns if you've mixed deletions and creations)
->
-> This is something that will be interesting to benchmark later on.  So,
-> an application with a lot of turnaround, say a mail server, should
-> delete and re-create the directories from time to time?  I assume this
-> is specific to some file system types.
+Simplify arguments to ptouch bash function.
+---
+ t/t9119-git-svn-info.sh |   27 +++++++++++++--------------
+ 1 files changed, 13 insertions(+), 14 deletions(-)
 
-This is indeed the case. Directories with a lot of movement get
-fragmented on most FSs -- ext3 is a very bad case for this -- and
-there are no "directory defrag" tools other than regenarating them.
-The "Maildir" storage used for many IMAP servers these days shows the
-problem.
-
-This (longish) threads has some interesting tidbits on getdents() and
-directory fragmentation.
-http://kerneltrap.org/mailarchive/git/2007/1/7/235215
-
-cheers,
-
-
-m
+diff --git a/t/t9119-git-svn-info.sh b/t/t9119-git-svn-info.sh
+index 6d9bec9..907058e 100755
+--- a/t/t9119-git-svn-info.sh
++++ b/t/t9119-git-svn-info.sh
+@@ -20,7 +20,7 @@ ptouch() {
+ 			my $atime = $mtime;
+ 			utime $atime, $mtime, $git_file;
+ 		}
+-	' "`svn info $1 | grep '^Text Last Updated:'`" "$2"
++	' "`svn info svnwc/$1 | grep '^Text Last Updated:'`" "gitwc/$1"
+ }
+ 
+ test_expect_success 'setup repository and import' "
+@@ -40,10 +40,10 @@ test_expect_success 'setup repository and import' "
+ 		git-svn fetch &&
+ 	cd .. &&
+ 	svn co $svnrepo svnwc &&
+-	ptouch svnwc/file gitwc/file &&
+-	ptouch svnwc/directory gitwc/directory &&
+-	ptouch svnwc/symlink-file gitwc/symlink-file &&
+-	ptouch svnwc/symlink-directory gitwc/symlink-directory
++	ptouch file &&
++	ptouch directory &&
++	ptouch symlink-file &&
++	ptouch symlink-directory
+ 	"
+ 
+ test_expect_success 'info' "
+@@ -116,7 +116,7 @@ test_expect_success 'info added-file' "
+ 		git add added-file &&
+ 	cd .. &&
+ 	cp gitwc/added-file svnwc/added-file &&
+-	ptouch svnwc/added-file gitwc/added-file &&
++	ptouch added-file &&
+ 	cd svnwc &&
+ 		svn add added-file > /dev/null &&
+ 	cd .. &&
+@@ -132,7 +132,7 @@ test_expect_success 'info --url added-file' '
+ 
+ test_expect_success 'info added-directory' "
+ 	mkdir gitwc/added-directory svnwc/added-directory &&
+-	ptouch svnwc/added-directory gitwc/added-directory &&
++	ptouch added-directory &&
+ 	touch gitwc/added-directory/.placeholder &&
+ 	cd svnwc &&
+ 		svn add added-directory > /dev/null &&
+@@ -161,7 +161,7 @@ test_expect_success 'info added-symlink-file' "
+ 		ln -s added-file added-symlink-file &&
+ 		svn add added-symlink-file > /dev/null &&
+ 	cd .. &&
+-	ptouch svnwc/added-symlink-file gitwc/added-symlink-file &&
++	ptouch added-symlink-file &&
+ 	(cd svnwc; svn info added-symlink-file) \
+ 		> expected.info-added-symlink-file &&
+ 	(cd gitwc; git-svn info added-symlink-file) \
+@@ -184,7 +184,7 @@ test_expect_success 'info added-symlink-directory' "
+ 		ln -s added-directory added-symlink-directory &&
+ 		svn add added-symlink-directory > /dev/null &&
+ 	cd .. &&
+-	ptouch svnwc/added-symlink-directory gitwc/added-symlink-directory &&
++	ptouch added-symlink-directory &&
+ 	(cd svnwc; svn info added-symlink-directory) \
+ 		> expected.info-added-symlink-directory &&
+ 	(cd gitwc; git-svn info added-symlink-directory) \
+@@ -295,7 +295,7 @@ test_expect_success 'info --url symlink-directory (deleted)' '
+ test_expect_success 'info unknown-file' "
+ 	echo two > gitwc/unknown-file &&
+ 	cp gitwc/unknown-file svnwc/unknown-file &&
+-	ptouch svnwc/unknown-file gitwc/unknown-file &&
++	ptouch unknown-file &&
+ 	(cd svnwc; svn info unknown-file) 2> expected.info-unknown-file &&
+ 	(cd gitwc; git-svn info unknown-file) 2> actual.info-unknown-file &&
+ 	git-diff expected.info-unknown-file actual.info-unknown-file
+@@ -309,7 +309,7 @@ test_expect_success 'info --url unknown-file' '
+ 
+ test_expect_success 'info unknown-directory' "
+ 	mkdir gitwc/unknown-directory svnwc/unknown-directory &&
+-	ptouch svnwc/unknown-directory gitwc/unknown-directory &&
++	ptouch unknown-directory &&
+ 	touch gitwc/unknown-directory/.placeholder &&
+ 	(cd svnwc; svn info unknown-directory) \
+ 		2> expected.info-unknown-directory &&
+@@ -332,7 +332,7 @@ test_expect_success 'info unknown-symlink-file' "
+ 	cd svnwc &&
+ 		ln -s unknown-file unknown-symlink-file &&
+ 	cd .. &&
+-	ptouch svnwc/unknown-symlink-file gitwc/unknown-symlink-file &&
++	ptouch unknown-symlink-file &&
+ 	(cd svnwc; svn info unknown-symlink-file) \
+ 		2> expected.info-unknown-symlink-file &&
+ 	(cd gitwc; git-svn info unknown-symlink-file) \
+@@ -355,8 +355,7 @@ test_expect_success 'info unknown-symlink-directory' "
+ 	cd svnwc &&
+ 		ln -s unknown-directory unknown-symlink-directory &&
+ 	cd .. &&
+-	ptouch svnwc/unknown-symlink-directory \
+-	       gitwc/unknown-symlink-directory &&
++	ptouch unknown-symlink-directory &&
+ 	(cd svnwc; svn info unknown-symlink-directory) \
+ 		2> expected.info-unknown-symlink-directory &&
+ 	(cd gitwc; git-svn info unknown-symlink-directory) \
+-- 
+1.5.3.7
