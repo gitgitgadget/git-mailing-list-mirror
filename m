@@ -1,66 +1,92 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH WIP] sha1-lookup: make selection of 'middle' less
-	aggressive
-Date: Tue, 1 Jan 2008 01:36:16 -0500
-Message-ID: <20080101063616.GA21605@coredump.intra.peff.net>
-References: <7vd4soa3cw.fsf@gitster.siamese.dyndns.org> <7vtzm08l9w.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0712301150120.32517@woody.linux-foundation.org> <7vodc77t0o.fsf@gitster.siamese.dyndns.org> <e5bfff550712301404g273dd092w9b36b48d94ed1e70@mail.gmail.com> <alpine.LFD.1.00.0712311232520.32517@woody.linux-foundation.org>
+Subject: Re: observing changes to a git repository
+Date: Tue, 1 Jan 2008 01:54:03 -0500
+Message-ID: <20080101065403.GA21912@coredump.intra.peff.net>
+References: <20071231222820.GA11278@bulgaria.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jan 01 07:36:57 2008
+Cc: git@vger.kernel.org
+To: Brian Swetland <swetland@google.com>
+X-From: git-owner@vger.kernel.org Tue Jan 01 07:58:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J9akB-0003dy-Nr
-	for gcvg-git-2@gmane.org; Tue, 01 Jan 2008 07:36:56 +0100
+	id 1J9b5F-0006fp-Fk
+	for gcvg-git-2@gmane.org; Tue, 01 Jan 2008 07:58:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751539AbYAAGgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jan 2008 01:36:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751406AbYAAGgU
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jan 2008 01:36:20 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4512 "EHLO
+	id S1751590AbYAAGyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jan 2008 01:54:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751376AbYAAGyJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jan 2008 01:54:09 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1526 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751376AbYAAGgT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jan 2008 01:36:19 -0500
-Received: (qmail 5227 invoked by uid 111); 1 Jan 2008 06:36:18 -0000
+	id S1751164AbYAAGyI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jan 2008 01:54:08 -0500
+Received: (qmail 5265 invoked by uid 111); 1 Jan 2008 06:54:05 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 01 Jan 2008 01:36:18 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Jan 2008 01:36:16 -0500
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 01 Jan 2008 01:54:05 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Jan 2008 01:54:03 -0500
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.00.0712311232520.32517@woody.linux-foundation.org>
+In-Reply-To: <20071231222820.GA11278@bulgaria.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69430>
 
-On Mon, Dec 31, 2007 at 12:37:36PM -0800, Linus Torvalds wrote:
+On Mon, Dec 31, 2007 at 02:28:20PM -0800, Brian Swetland wrote:
 
-> And quite honestly I'm not really even sure that the performance downside 
-> is entirely about zlib itself: I suspect a lot of the reason zlib shows up 
-> in the profiles is that the source data is usually cold in the cache, so 
-> it probably takes a lot of cache misses (it also will take all the page 
-> faults!).
+> - periodically:
+>   - grab the current head (call this Current)
+>   - if it's the same as Last stop
+>   - do a git log Current ^Last to observe what has happened since
+>     we last noticed a change.  report on these commits.
+>   - Last = Current
 
-zlib makes a noticeable impact in real world cases. On a git.git repo,
-fully packed with stock config, warm cache:
+Overall this makes sense. But in the case of history going backwards,
+you might want to show a log of "Current...Last". IOW, imagine this
+history:
 
-  $ /usr/bin/time git whatchanged >/dev/null
-  4.12user 0.37system 0:04.50elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-  0inputs+0outputs (0major+6452minor)pagefaults 0swaps
+  B-C
+ /
+A-D-E
 
-  $ git config pack.compression 0
-  $ git repack -a -d -f
-  $ /usr/bin/time git whatchanged >/dev/null
-  2.93user 0.43system 0:03.36elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
-  0inputs+0outputs (0major+8501minor)pagefaults 0swaps
+Last is set to 'C' from some iteration of your script. In one period,
+somebody does a git-reset back to A, then makes commits D and E. So you
+want to see not just B and C, but some representation that D and E are
+no longer of interest.  "gitk Last...Current" will show you a nice graph
+with a fork. git-log's --left-right option can represent the same
+information textually. What you want depends, I think, on the goal of
+your script.
 
-More pagefaults, but a 25% improvement in wall clock time.  The packfile
-is noticeably larger (55M versus 40M), so I'm sure the cold cache case
-sucks. It may also change with larger repos, where the packfile size
-difference kills your cache.
+> If these branches can be updated such that history is rewritten (not
+> a concern in my particular case), I assume that for correctness you'd
+> have to make Last and Current actual branches (perhaps under
+> refs/heads/observer/... or whatever) to ensure that they don't get gc'd
+> out from under you.
+
+Yes, although realistically the reflog will keep it intact (unless you
+have a bare repo without reflog).
+
+> If I'm tracking several branches which can be merged between, I might
+> want to keep track of which commits I've sent reports about if I don't
+> want to re-report commits when they're merged into another branch.
+
+What you have should work in the face of merges. Here's a history with
+some merges:
+
+  B-C     H-I <-- branch1
+ /   \   /   \
+A-D-E-F-G-J-K-L <-- master
+
+where 'F' and 'L' are our merges. Because ^H implies ^G, but not ^J, if
+we have something like Current=L, Last=H, you will see I, J, K, L.
+
+So you will see each commit only once, unless you are running this
+script per-branch, in which case you will see it once per branch. :) In
+that case, you can do something like "git log Current ^LastBranch1
+^LastBranch2 ...". IOW, Last* indicates "I've seen this and don't care
+about it anymore".
 
 -Peff
