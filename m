@@ -1,77 +1,111 @@
-From: Peter Oberndorfer <kumbayo84@arcor.de>
-Subject: Re: git config problem with strange config files
-Date: Tue, 1 Jan 2008 15:25:48 +0100
-Message-ID: <200801011525.48148.kumbayo84@arcor.de>
-References: <200712311847.41499.kumbayo84@arcor.de> <20080101061734.GA15453@coredump.intra.peff.net>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH WIP] sha1-lookup: make selection of 'middle' less  aggressive
+Date: Tue, 01 Jan 2008 15:51:30 +0100
+Message-ID: <20080101145130.GD3893@artemis.madism.org>
+References: <7vd4soa3cw.fsf@gitster.siamese.dyndns.org> <7vtzm08l9w.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0712301150120.32517@woody.linux-foundation.org> <7vodc77t0o.fsf@gitster.siamese.dyndns.org> <e5bfff550712301404g273dd092w9b36b48d94ed1e70@mail.gmail.com> <alpine.LFD.1.00.0712311232520.32517@woody.linux-foundation.org> <20080101063616.GA21605@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: multipart/signed; boundary="UfEAyuTBtIjiZzX6";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 01 15:25:54 2008
+X-From: git-owner@vger.kernel.org Tue Jan 01 15:52:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J9i3y-0007Qf-6Y
-	for gcvg-git-2@gmane.org; Tue, 01 Jan 2008 15:25:50 +0100
+	id 1J9iTM-0004E3-Dc
+	for gcvg-git-2@gmane.org; Tue, 01 Jan 2008 15:52:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753583AbYAAOZU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jan 2008 09:25:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753505AbYAAOZU
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jan 2008 09:25:20 -0500
-Received: from mail-in-04.arcor-online.net ([151.189.21.44]:45886 "EHLO
-	mail-in-04.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753482AbYAAOZT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Jan 2008 09:25:19 -0500
-Received: from mail-in-18-z2.arcor-online.net (mail-in-18-z2.arcor-online.net [151.189.8.35])
-	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 6F97917F938;
-	Tue,  1 Jan 2008 15:25:18 +0100 (CET)
-Received: from mail-in-11.arcor-online.net (mail-in-11.arcor-online.net [151.189.21.51])
-	by mail-in-18-z2.arcor-online.net (Postfix) with ESMTP id 5E511510040;
-	Tue,  1 Jan 2008 15:25:18 +0100 (CET)
-Received: from fnoheim52.netpark.at (fnoheim52.netpark.at [83.68.151.52])
-	(Authenticated sender: kumbayo84@arcor.de)
-	by mail-in-11.arcor-online.net (Postfix) with ESMTP id 23500114E4;
-	Tue,  1 Jan 2008 15:25:18 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <20080101061734.GA15453@coredump.intra.peff.net>
+	id S1752313AbYAAOve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jan 2008 09:51:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752290AbYAAOvd
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Jan 2008 09:51:33 -0500
+Received: from pan.madism.org ([88.191.52.104]:43105 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752216AbYAAOvc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jan 2008 09:51:32 -0500
+Received: from madism.org (unknown [82.236.23.208])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id A77E520FA0;
+	Tue,  1 Jan 2008 15:51:30 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 300D23388; Tue,  1 Jan 2008 15:51:30 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Jeff King <peff@peff.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.91.2/5327/Tue Jan  1 04:29:19 2008 on mail-in-11.arcor-online.net
-X-Virus-Status: Clean
+In-Reply-To: <20080101063616.GA21605@coredump.intra.peff.net>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69438>
 
-On Dienstag 01 Januar 2008, Jeff King wrote:
-> On Mon, Dec 31, 2007 at 06:47:41PM +0100, Peter Oberndorfer wrote:
-> 
-> > In case of a strange .git/config file "git config key value" can
-> > create a bogus config entry, where one old value is wrong and the new
-> > value resides in the wrong section until the config file is fixed up
-> > by hand
-> 
-> This patch fixes the test case you gave.
-> 
-> Junio, even though such a config file should be rare, I think this is
-> v1.5.4 material. But there is one tricky thing which I will point out in
-> a followup mail.
-> 
-Thank you for the patch
 
-I would also guess this is relative rare, but IIRC somebody posted a patch to 
-handle a bogus config with a better message,
-and the breakage example in the mail looked similar to mine.
+--UfEAyuTBtIjiZzX6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-How i came up with this bogus config is relative simple.
-I wanted to add a new remote so i copied the already existing remote and 
-branch sections down to the last line and somehow also added a trailing tab.
+On Tue, Jan 01, 2008 at 06:36:16AM +0000, Jeff King wrote:
+> zlib makes a noticeable impact in real world cases. On a git.git repo,
+> fully packed with stock config, warm cache:
 
-Then i did a stg init which uses git repo-config to add its
-stackformatversion = 2 setting
+On linux-2.6.git, with compressed packs:
 
-Greetings Peter
+    $ =3Dtime git whatchanged >|/dev/null
+    19.67user 1.24system 0:21.01elapsed 99%CPU (0avgtext+0avgdata 0maxresid=
+ent)k
+    0inputs+0outputs (0major+38556minor)pagefaults 0swaps
+
+Without compression:
+
+    $ =3Dtime git whatchanged >|/dev/null
+    14.41user 1.23system 0:15.67elapsed 99%CPU (0avgtext+0avgdata 0maxresid=
+ent)k
+    0inputs+0outputs (0major+44678minor)pagefaults 0swaps
+
+
+> More pagefaults, but a 25% improvement in wall clock time.  The packfile
+> is noticeably larger (55M versus 40M), so I'm sure the cold cache case
+> sucks. It may also change with larger repos, where the packfile size
+> difference kills your cache.
+
+  The packfile is _incredibly_ larger (~200Mo -> ~420, though I suppose
+the first one was packed with a larger window, coming from kernel.org).
+I experience the same 25% wall clock reduction here as well. Though,
+even if larger, linux-2.6.git still stays in RAM easily on my machine.
+
+  On an unrelated note, I wonder if it wouldn't be possible for git at
+fetch time to "share" a very efficient pack that was computed on some
+host. I mean, if I'm not mistaken, at clone time you get the efficient
+pack, but at fetch time only incremental parts. I wonder if there would
+be ways to say "hey, we recomputed here a very very very good pack, take
+it instead of yours.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--UfEAyuTBtIjiZzX6
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHelNyvGr7W6HudhwRAlosAJ9Dsd9Bdg1+ORUxmSfEpbZis1iOTwCfY3TH
+spRJK1zAiSQeM8xCN5K9qEY=
+=iFvX
+-----END PGP SIGNATURE-----
+
+--UfEAyuTBtIjiZzX6--
