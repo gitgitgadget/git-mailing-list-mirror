@@ -1,115 +1,105 @@
-From: Gregory Jefferis <jefferis@gmail.com>
-Subject: Stitching together private svn repo and public git repo
-Date: Wed, 02 Jan 2008 19:25:41 +0000
-Message-ID: <C3A195B5.10839%jefferis@gmail.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: Git and securing a repository
+Date: Wed, 2 Jan 2008 20:31:14 +0100
+Message-ID: <20080102193114.GA4608@efreet.light.src>
+References: <477B39B5.5010107@advancedsl.com.ar> <31e679430801012234x20bbebe7vb496a338bf2699d5@mail.gmail.com> <477B6199.6070601@advancedsl.com.ar>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 02 20:26:22 2008
+Cc: Felipe Balbi <felipebalbi@users.sourceforge.net>,
+	git@vger.kernel.org
+To: Gonzalo =?utf-8?Q?Garramu=C3=B1o?= <ggarra@advancedsl.com.ar>
+X-From: git-owner@vger.kernel.org Wed Jan 02 20:31:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JA9EI-000854-Nd
-	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 20:26:19 +0100
+	id 1JA9Jd-0001Uu-CP
+	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 20:31:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756908AbYABTZt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2008 14:25:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752889AbYABTZt
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 14:25:49 -0500
-Received: from mu-out-0910.google.com ([209.85.134.187]:26297 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756870AbYABTZs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Jan 2008 14:25:48 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so4335147mue.5
-        for <git@vger.kernel.org>; Wed, 02 Jan 2008 11:25:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:user-agent:date:subject:from:to:message-id:thread-topic:thread-index:mime-version:content-type:content-transfer-encoding;
-        bh=I8h2JJ9SFfDJ44RjtqKnvH68uDHgY7xWVJUM8AQN8i0=;
-        b=qlDUu5/I19vnJIx0DPW7UKwqYQI53+y/TvYxdPIb3h/tCK6MeWoG6rBSikWTEZblXJXh/I/HAzfmRsgiMnurBdYInN9vtLJ/yYSpzPocWF9BzvWw+BW8RygqsUY3dNRtIj8gU9A+nNGnp5Y92Qc8TJlfp2Z9fcUVU3bkOtZiiyk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=user-agent:date:subject:from:to:message-id:thread-topic:thread-index:mime-version:content-type:content-transfer-encoding;
-        b=OwM9wUqwsXStK66NUuPuwEXyhdbdXugoVNcmR4GI4HVqdG9Jcs4pZgFgIGCjNr7lTZSsmYJxQoc/pQSD+rEMYnPCt7cr11BDZLNJK+geMsjp4bFwxVeM+YSfLZV59BLh4GXMstTnvgdsfsW5TKz/dMc/2zSq8GZiCY5P6H2jGPw=
-Received: by 10.78.172.20 with SMTP id u20mr17259939hue.13.1199301946626;
-        Wed, 02 Jan 2008 11:25:46 -0800 (PST)
-Received: from ?81.98.250.69? ( [81.98.250.69])
-        by mx.google.com with ESMTPS id k7sm19288813nfh.0.2008.01.02.11.25.44
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 02 Jan 2008 11:25:45 -0800 (PST)
-User-Agent: Microsoft-Entourage/11.2.3.060209
-Thread-Topic: Stitching together private svn repo and public git repo 
-Thread-Index: AchNdUL2gbRDNbloEdyDSgAUURoPUg==
+	id S1752526AbYABTbY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2008 14:31:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752862AbYABTbY
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 14:31:24 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:56109 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751580AbYABTbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2008 14:31:23 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id B88BC5737D;
+	Wed,  2 Jan 2008 20:31:21 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id UNdITYS4I9Wv; Wed,  2 Jan 2008 20:31:18 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 0CF29572CA;
+	Wed,  2 Jan 2008 20:31:18 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1JA9J4-0001WZ-8i; Wed, 02 Jan 2008 20:31:14 +0100
+Content-Disposition: inline
+In-Reply-To: <477B6199.6070601@advancedsl.com.ar>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69487>
 
-Short Version:=20
+On Wed, Jan 02, 2008 at 07:04:09 -0300, Gonzalo Garramu=C3=B1o wrote:
+> Felipe Balbi wrote:
+>>
+>> it's easy on the full repository case, create different groups and
+>> share git repositories by groups, after that chmod o-rwx -R
+>> /path/to/repository.git.
+>>
+>
+> Thanks.  I'll admit what you describe is somewhat discouraging, as wh=
+at you=20
+> are just describing is just managing user accounts or groups on the=20
+> underlying OS.  That does not extend well to placing code on the net =
+and=20
+> has a bunch of administrative headaches.
+>
+> I was really looking for a permission based system that was part of g=
+it=20
+> itself (and thus more portable and easier to admin), and not the OS.=20
+> Something akin to what perforce or even CVS can do.
 
-Repo B is a completely linear repo that has been tracking public repo A=
- for
-some time.  A number of manual merges were done to bring new A releases
-into=A0B but there are no connections between the two repos.  (How) can=
- I
-stitch B to A to reflect this relationship?  I want to retain B's histo=
-ry
-and leave myself with an arrangement in which I can pull from A into B
-periodically?  Many thanks for your suggestions, Greg.
+You don't need to manage user accounts -- managing ssh public keys will=
+ do!
 
---
-Long Version:
+The git ssh access will always run one particular command (with path as
+argument) to push and another particular command (again with path as
+argument) to pull.
 
-I have been tracking my modifications of a public project released as t=
-ar
-balls with my own local svn repository.  My svn repo was completely lin=
-ear
-and I always merged in changes manually each time a new tar ball was
-released.  This started to get painful.
+Thus you can prepare two scripts -- git-read-only will only run
+$SSH_ORIGINAL_COMMAND if it is 'git-upload-pack <somearg>' and git-read=
+-write
+will also run it if it is 'git-receive-pack <somearg>'. The <somearg> i=
+s path
+to the repository, so you can further limit on that. (Note: for recent =
+git,
+you need to recognize the 'git upload-pack' and 'git receive-pack' vari=
+ants
+too).
 
-Now I want to do better.  I have set up a public git repository ("A") t=
-o
-track the tar ball releases from the public project.  I have converted =
-my
-svn repo with git-svn to a git repo ("B").
+Now you can have each user create a ssh public key. You will put this k=
+ey
+into the .ssh/authorized_keys file on the server (therefore you only ne=
+ed
+a single account there), with option command=3D specifying appropriate =
+script
+depending on what permissions the user should have. Than that user will=
+ be
+able to push/pull (as set) via ssh using that public key and will not h=
+ave
+any other access to the server.
 
-My goal is to end up with a (new?) git repo tracking the public repo (A=
-) so
-that I can pull in any changes and merge easily. Fine, but I also want =
-to
-keep the history that I have imported from my svn repository (B).  So m=
-y
-question is, can anyone suggest some pointers for how to stitch togethe=
-r A
-and B?
-
-Right now I have been trying to pull B into A to splice:
-
-A $ git checkout v1.91
-B $ git checkout v1.91-manualmerge
-B $ git pull --no-commit -s ours ../A
-
-This looks right when I run gitk, but if I repeat this for a second mer=
-ge
-point then the previous merge seems to disappear from history when I br=
-ing
-up gitk.
-
-I haven't found any docs/wiki info that has enlightened me yet.  Any
-suggestions, wisdom, links etc very much appreciated - I do want to try=
- to
-get this right now, so I don't have to rejig everything in the future. =
- Best
-wishes and many thanks,
-
-Greg.
+As a bonus, this way the users can't circumvent the pre-receive hooks
+(perhaps you will allow each user to only push to a particular branch o=
+r
+something) by manually changing the repository.
 
 --=20
-Gregory Jefferis, PhD                               and:
-Research Fellow
-Department of Zoology                               St John's College
-Downing Street                                      Cambridge
-Cambridge, CB2 3EJ                                  CB2 1TP
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
