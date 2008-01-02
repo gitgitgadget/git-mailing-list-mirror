@@ -1,95 +1,73 @@
-From: "Felipe Balbi" <felipebalbi@users.sourceforge.net>
-Subject: Re: Git and securing a repository
-Date: Wed, 2 Jan 2008 01:34:04 -0500
-Message-ID: <31e679430801012234x20bbebe7vb496a338bf2699d5@mail.gmail.com>
-References: <477B39B5.5010107@advancedsl.com.ar>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Gonzalo_Garramu=F1o?=" <ggarra@advancedsl.com.ar>
-X-From: git-owner@vger.kernel.org Wed Jan 02 07:34:36 2008
+From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH] receive-pack: check object type of sha1 before using them as commits
+Date: Wed,  2 Jan 2008 08:39:21 +0100
+Message-ID: <11992595612601-git-send-email-mkoegler@auto.tuwien.ac.at>
+Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 02 08:39:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J9xBT-0003ls-Vy
-	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 07:34:36 +0100
+	id 1J9yCe-0006D8-DF
+	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 08:39:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755273AbYABGeH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2008 01:34:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753723AbYABGeG
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 01:34:06 -0500
-Received: from rv-out-0910.google.com ([209.85.198.191]:23289 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753491AbYABGeF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Jan 2008 01:34:05 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so5153368rvb.1
-        for <git@vger.kernel.org>; Tue, 01 Jan 2008 22:34:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=LjiAP9uyQm1BW4tOtVwCwU+7q82GsDJj3Av6xxFeK0s=;
-        b=bJmyj3G3o5pIw3BCAdNU4NmW7LlKvDaQCFc0YCM8mUq+k1UsUYhDg01q8veeuZ8XraOmJL7+9lsAm/FKikwe654J+bvIZ1AcxDqVRkrrVdB1CXLeWwbhdyUJqJQMwfS3gG5VnNFBhlHgl0cjGuTh9FaCPwrQhASoVZOPXoxG4bU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=mE/svUwuDWPcTByd8F1PHooKuKJKe8fsk091BFjYSxeG2R5L50I7pySYnPYuLlS22YsG8+7E48nLvD6DsaKxl8bgdDCfZsG6Z7z9du2t4C2y5ZIl5T+aZoyCeFnfGD/5G7YNqPnPFrceTHbUHqbHyrBfHvAslCmyIgvcGpFw32A=
-Received: by 10.142.232.20 with SMTP id e20mr1161690wfh.198.1199255644554;
-        Tue, 01 Jan 2008 22:34:04 -0800 (PST)
-Received: by 10.143.158.13 with HTTP; Tue, 1 Jan 2008 22:34:04 -0800 (PST)
-In-Reply-To: <477B39B5.5010107@advancedsl.com.ar>
-Content-Disposition: inline
-X-Google-Sender-Auth: 8fbb85ab325c9ffa
+	id S1752230AbYABHjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2008 02:39:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752173AbYABHjX
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 02:39:23 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:49663 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752126AbYABHjW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2008 02:39:22 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 4BA45680BF61;
+	Wed,  2 Jan 2008 08:39:21 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id kmpH0yMv0Bk7; Wed,  2 Jan 2008 08:39:21 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id 295EB680BEA4; Wed,  2 Jan 2008 08:39:21 +0100 (CET)
+X-Mailer: git-send-email 1.5.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69460>
 
-On Jan 2, 2008 2:13 AM, Gonzalo Garramu=F1o <ggarra@advancedsl.com.ar> =
-wrote:
->
-> I've been using git for some time and love it.  For open source proje=
-cts
-> there's clearly nothing currently better.
->
-> However, I am now using git for proprietary elements, which in the
-> future I may need or want to partially restrict access to.  The idea
-> being that at my company some (junior) developers should not be given
-> access to some elements.  That means either that some full git
-> repository should be password protected or even portions of the same
-> repository.
->
-> Another desirable way to protect elements might be only giving
-> clone/pull access to a repository (or portion of it) but not permissi=
-ons
-> to push in changes.
+Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+---
+ receive-pack.c |   14 ++++++++++++--
+ 1 files changed, 12 insertions(+), 2 deletions(-)
 
-push access is only available through ssh, so if your developer
-doesn't have a ssh account on the server, he can't push code to it
-
->
-> I have not seen or read much about how git deals with accesses and
-> permissions.  Can anyone point me to some documentation if some or al=
-l
-> of this is possible?
-
-it's easy on the full repository case, create different groups and
-share git repositories by groups, after that chmod o-rwx -R
-/path/to/repository.git.
-
-If a user is not the owner nor is part of that group in particular, it
-wouldn't be able to push any code to the repository.
-
-btw, if you don't start git-daemon you could use ssh to pull code as we=
-ll.
-
-thinking on the partial repository access, maybe git submodule would
-help, but i've never used it.
-
---=20
-Best Regards,
-
-=46elipe Balbi
-felipebalbi@users.sourceforge.net
+diff --git a/receive-pack.c b/receive-pack.c
+index fba4cf8..d0a563d 100644
+--- a/receive-pack.c
++++ b/receive-pack.c
+@@ -178,11 +178,21 @@ static const char *update(struct command *cmd)
+ 	if (deny_non_fast_forwards && !is_null_sha1(new_sha1) &&
+ 	    !is_null_sha1(old_sha1) &&
+ 	    !prefixcmp(name, "refs/heads/")) {
++		struct object *old_object, *new_object;
+ 		struct commit *old_commit, *new_commit;
+ 		struct commit_list *bases, *ent;
+ 
+-		old_commit = (struct commit *)parse_object(old_sha1);
+-		new_commit = (struct commit *)parse_object(new_sha1);
++		old_object = parse_object(old_sha1);
++		new_object = parse_object(new_sha1);
++
++		if (!old_object || !new_object ||
++		    old_object->type != OBJ_COMMIT ||
++		    new_object->type != OBJ_COMMIT) {
++			error("bad sha1 objects for %s", name);
++			return "bad ref";
++		}
++		old_commit = (struct commit *)old_object;
++		new_commit = (struct commit *)new_object;
+ 		bases = get_merge_bases(old_commit, new_commit, 1);
+ 		for (ent = bases; ent; ent = ent->next)
+ 			if (!hashcmp(old_sha1, ent->item->object.sha1))
+-- 
+1.4.4.4
