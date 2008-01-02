@@ -1,84 +1,71 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Git and securing a repository
-Date: Wed, 2 Jan 2008 11:18:20 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0801021058030.13593@iabervon.org>
-References: <477B39B5.5010107@advancedsl.com.ar>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] Optimize prefixcmp()
+Date: Wed, 02 Jan 2008 17:59:06 +0100
+Message-ID: <477BC2DA.6000105@lsrfire.ath.cx>
+References: <e5bfff550712291001q5f246ceah6700b98308fb96f1@mail.gmail.com> <Pine.LNX.4.64.0712292019450.14355@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1092218702-1199290700=:13593"
-Cc: git@vger.kernel.org
-To: =?ISO-8859-15?Q?Gonzalo_Garramu=F1o?= <ggarra@advancedsl.com.ar>
-X-From: git-owner@vger.kernel.org Wed Jan 02 17:18:58 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marco Costalba <mcostalba@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 02 18:00:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JA6Iw-0002OO-LF
-	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 17:18:55 +0100
+	id 1JA6wo-00080Z-1n
+	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 18:00:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754038AbYABQSX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2008 11:18:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754023AbYABQSW
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 11:18:22 -0500
-Received: from iabervon.org ([66.92.72.58]:36291 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753493AbYABQSW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2008 11:18:22 -0500
-Received: (qmail 384 invoked by uid 1000); 2 Jan 2008 16:18:20 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 2 Jan 2008 16:18:20 -0000
-In-Reply-To: <477B39B5.5010107@advancedsl.com.ar>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1754425AbYABQ7c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2008 11:59:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754240AbYABQ7b
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 11:59:31 -0500
+Received: from india601.server4you.de ([85.25.151.105]:51834 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754140AbYABQ7b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2008 11:59:31 -0500
+Received: from [10.0.1.201] (p57B7F044.dip.t-dialin.net [87.183.240.68])
+	by india601.server4you.de (Postfix) with ESMTP id B8EE82F8037;
+	Wed,  2 Jan 2008 17:59:26 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <Pine.LNX.4.64.0712292019450.14355@wbgn129.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69477>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Johannes Schindelin schrieb:
+> Certain codepaths (notably "git log --pretty=3Dformat...") use
+> prefixcmp() extensively, with very short prefixes.  In those cases,
+> calling strlen() is a wasteful operation, so avoid it.
 
---1547844168-1092218702-1199290700=:13593
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+>  static inline int prefixcmp(const char *str, const char *prefix)
+>  {
+> -	return strncmp(str, prefix, strlen(prefix));
+> +	for (; ; str++, prefix++)
+> +		if (!*prefix)
+> +			return 0;
+> +		else if (*str !=3D *prefix)
+> +			return (unsigned char)*prefix - (unsigned char)*str;
+>  }
+> =20
+>  static inline int strtoul_ui(char const *s, int base, unsigned int *=
+result)
 
-On Wed, 2 Jan 2008, Gonzalo Garramuño wrote:
+prefixcmp() was already optimized before -- only for a different use
+case.  At a number of callsites the prefix is a string literal, which
+allowed the compiler to perform the strlen() call at compile time.
 
-> I've been using git for some time and love it.  For open source projects
-> there's clearly nothing currently better.
-> 
-> However, I am now using git for proprietary elements, which in the future I
-> may need or want to partially restrict access to.  The idea being that at my
-> company some (junior) developers should not be given access to some elements.
-> That means either that some full git repository should be password protected
-> or even portions of the same repository.
-> 
-> Another desirable way to protect elements might be only giving clone/pull
-> access to a repository (or portion of it) but not permissions to push in
-> changes.
+The patch increases the text size considerably: the file "git" is
+2,620,938 without and 2,640,450 with the patch in my build (there are
+136 callsites in builtin*.c).  The new version of prefixcmp() shouldn't
+be inlined any more, as the benefit of doing so is gone.
 
-In order to understand the security model, you have to remember that git 
-is designed as a distributed system. Authorization is fundamentally not at 
-a project level, but rather at a repository level, and clones are all 
-different repositories. This makes portability of the mechanism less 
-important, because a particular set of authorization rules only applies to 
-a particular repository, which is going to be on some single system.
+Is there a portable way to let the preprocessor decide if
+prefixcmp_literal() or prefixcmp_generic() is to be used, depending on
+the prefix being a string literal or not?
 
-For that matter, git doesn't run with any special privileges in general; 
-if a user can affect the repository with git operations, that user can 
-affect the repository by hand, so git-specific rules aren't helpful. 
-(Although I suppose it would be theoretically useful to make git-shell, 
-the shell that only runs git programs, able to apply restrictions, since 
-it is used in a context where the user doesn't have any other access to 
-the filesystem.)
-
-For read access restrictions, you want to use submodules (or entirely 
-separate projects); git is fundamentally unhappy running with less than 
-all of the project accessible, except for when a project references 
-another project with submodules. And, of course, if the code base is such 
-that users can do useful work without any access to some of the files, 
-those files must be optional and somewhat separate from the necessary 
-portions, and it makes sense to handle them separately anyway.
-
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-1092218702-1199290700=:13593--
+Ren=E9
