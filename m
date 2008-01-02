@@ -1,90 +1,67 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] Avoid a useless prefix lookup in strbuf_expand()
-Date: Wed, 02 Jan 2008 19:11:00 +0100
-Message-ID: <477BD3B4.2070708@lsrfire.ath.cx>
-References: <e5bfff550712300546o167c460bl4628d87f8a4e14db@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Optimize prefixcmp()
+Date: Wed, 02 Jan 2008 10:52:13 -0800
+Message-ID: <7v1w90xdpe.fsf@gitster.siamese.dyndns.org>
+References: <e5bfff550712291001q5f246ceah6700b98308fb96f1@mail.gmail.com>
+	<Pine.LNX.4.64.0712292019450.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+	<477BC2DA.6000105@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 02 19:12:09 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Wed Jan 02 19:52:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JA84T-0007Ym-2c
-	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 19:12:05 +0100
+	id 1JA8hw-0005Uv-NL
+	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 19:52:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752274AbYABSLU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2008 13:11:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752045AbYABSLU
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 13:11:20 -0500
-Received: from india601.server4you.de ([85.25.151.105]:51532 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751813AbYABSLT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2008 13:11:19 -0500
-Received: from [10.0.1.201] (p57B7C4DA.dip.t-dialin.net [87.183.196.218])
-	by india601.server4you.de (Postfix) with ESMTP id 7A3FB2F8037;
-	Wed,  2 Jan 2008 19:11:17 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <e5bfff550712300546o167c460bl4628d87f8a4e14db@mail.gmail.com>
+	id S1752549AbYABSw0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2008 13:52:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752542AbYABSw0
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 13:52:26 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47696 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752175AbYABSwZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Jan 2008 13:52:25 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 93621310E;
+	Wed,  2 Jan 2008 13:52:22 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id EA00830A9;
+	Wed,  2 Jan 2008 13:52:16 -0500 (EST)
+In-Reply-To: <477BC2DA.6000105@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
+ Scharfe's message of
+	"Wed, 02 Jan 2008 17:59:06 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69483>
 
-Marco Costalba schrieb:
-> Currently the --prett=3Dformat prefix is looked up in a
-> tight loop in strbuf_expand(), if found is passed as parameter
-> to format_commit_item() that does another search using a
-> switch statement to select the proper operation according to
-> the kind of prefix.
->=20
-> Because the switch statement is already able to discard unknown
-> matches we don't need the prefix lookup before to call format_commit_=
-item()
->=20
-> This patch removes an useless loop in a very fasth path,
-> used by, as example, by 'git log' with --pretty=3Dformat option
->=20
-> Signed-off-by: Marco Costalba <mcostalba@gmail.com>
-> ---
->=20
-> This patch is somewhat experimental and is not intended to be merged =
-as is.
->=20
-> That's what is missing:
->=20
-> - Matching of multi char prefixes is not 100% reliable, as example to=
- match
->   prefix "Cgreen" only the first 'C' and the third char 'e' is
-> checked, this could
->   lead to aliases in case of malformed prefixes, as example something=
- like
->   "Cxxexxxx" will match the same.
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-Well, you need to undo this optimization if you remove the loop that
-makes sure that only valid placeholders are passed to the callback
-function -- the result would be that you only move the prefixcmp() from
-strbuf_expand() into the callbacks.
+> prefixcmp() was already optimized before -- only for a different use
+> case.  At a number of callsites the prefix is a string literal, which
+> allowed the compiler to perform the strlen() call at compile time.
+>
+> The patch increases the text size considerably: the file "git" is
+> 2,620,938 without and 2,640,450 with the patch in my build (there are
+> 136 callsites in builtin*.c).  The new version of prefixcmp() shouldn=
+'t
+> be inlined any more, as the benefit of doing so is gone.
 
-A better way to speed up strbuf_expand() may be to require the list of
-placeholders to be sorted, their count to be passed on and then to
-replace the sequential lookup with a binary search.  --pretty=3Dformat
-currently recognizes 29 placeholders, which might be a high enough
-number for a more complicated search method to pay off.
+Yuck, you are absolutely right.  The late thread may have been
+well intentioned but resulted in this regression.  Sorry about
+that.
 
-> marco@localhost linux-2.6]$ time git log --topo-order --no-color
-> --parents -z --log-size --boundary
-> --pretty=3Dformat:"%m%HX%PX%n%an<%ae>%n%at%n%s%n%b" HEAD > /dev/null
-
-In your special case it would be even faster to simply reorder the list
-with decreasing number of occurrence.  Of course it's hard to guess how
-often a particular placeholder is used in the wild, but moving %n from
-next to last to first place should be a safe bet.
-
-Ren=C3=A9
+I presume that all callers with constant prefix are outside
+performance critical parts?  Can we simply uninline the function
+in that case?
