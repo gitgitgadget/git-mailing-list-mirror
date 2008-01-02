@@ -1,77 +1,113 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Retroactively change email signature?
-Date: Wed, 2 Jan 2008 13:24:49 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801021316080.3010@woody.linux-foundation.org>
-References: <9b3e2dc20801021237v4d5d236fn3d2643502b9bb78f@mail.gmail.com>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: Stitching together private svn repo and public git repo
+Date: Wed, 2 Jan 2008 21:40:05 +0000
+Message-ID: <20080102214005.GA10924@hashpling.org>
+References: <C3A195B5.10839%jefferis@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Stephen Sinclair <radarsat1@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 02 22:25:53 2008
+To: Gregory Jefferis <jefferis@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 02 22:40:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAB60-0006HG-CE
-	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 22:25:52 +0100
+	id 1JABKJ-0003Ak-Au
+	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 22:40:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753018AbYABVZD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2008 16:25:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752665AbYABVZB
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 16:25:01 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:38051 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758045AbYABVY6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Jan 2008 16:24:58 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m02LOoms006775
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 2 Jan 2008 13:24:51 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m02LOntt005918;
-	Wed, 2 Jan 2008 13:24:49 -0800
-In-Reply-To: <9b3e2dc20801021237v4d5d236fn3d2643502b9bb78f@mail.gmail.com>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.721 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1753029AbYABVkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2008 16:40:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752746AbYABVkM
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 16:40:12 -0500
+Received: from pih-relay04.plus.net ([212.159.14.131]:33611 "EHLO
+	pih-relay04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752565AbYABVkL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2008 16:40:11 -0500
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by pih-relay04.plus.net with esmtp (Exim) id 1JABJq-0004bd-TA; Wed, 02 Jan 2008 21:40:11 +0000
+Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
+	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m02Le6CZ013878;
+	Wed, 2 Jan 2008 21:40:06 GMT
+Received: (from charles@localhost)
+	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m02Le64S013877;
+	Wed, 2 Jan 2008 21:40:06 GMT
+Content-Disposition: inline
+In-Reply-To: <C3A195B5.10839%jefferis@gmail.com>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69493>
 
-
-
-On Wed, 2 Jan 2008, Stephen Sinclair wrote:
+On Wed, Jan 02, 2008 at 07:25:41PM +0000, Gregory Jefferis wrote:
 > 
-> Is it possible to retroactively change the author and email of several
-> commits?  Perhaps some sort of search-and-replace for the commit
-> metadata?  Even for older commits, I'd like to change the email
-> addresses to my current address.
+> Right now I have been trying to pull B into A to splice:
+> 
+> A $ git checkout v1.91
+> B $ git checkout v1.91-manualmerge
+> B $ git pull --no-commit -s ours ../A
 
-See
+So you have something like this in B:
 
-	man git-filter-branch
+Av1* -- Av1_b -- Av1_c -- Av1_d -- Av2_d* -- Av2_e -- Av3_e*
 
-and the "--env-filter" flag (and "--msg-filter" if you also want to change 
-things like Sign-off's etc in the message text itself)
+Where the * are manual merges of the offical Avn releases...
 
-BUT! See also the big bold-face warning: using "filter-branch" will not 
-change old commits, it will create a series of *new* commits that bear a 
-striking resemblance to the old ones, but are not the same. So you'll have 
-a totally new history.
+And you want this:
 
-That matters for things like
- - if you've already publicised the old history, you need to tell people 
-   that they should fetch things anew
- - if you refer to the commit SHA1's elsewhere (like in commit messages 
-   that revert previous commits), those SHA1's are still "valid", but they 
-   refer to the *old* history, not the new history you created.
+Av1   --       --       -- Av2   --      -- Av3
+  \                          \                \
+  Av1_b -- Av1_c -- Av1_d -- Av2_d -- Av2_e -- Av3_e  ???
 
-(I don't think git-filter-branch even exposes any easy way to remap the 
-"revert commit xyz" messages in the message format. It's not technically 
-hard to use a --msg-filter for it, but it seems a big bother).
+This is a "rewrite history" job as parent lists are part of each
+commit.  (See Linus' big bold-face warning about history re-writes.)
 
-		Linus
+First of all I would add a remote for the 'A' repository so that those
+commits are available in the 'B' repository.
+
+Something like:
+git remote add repoA /path/to/A
+git fetch repoA
+
+You could then do this with a 'git filter-branch --parent-filter' to
+rewrite the parents of the merge commits.  As far as I can see, you
+would need to call filter-branch once per merge to rewrite everything
+from the merge commit forwards.  At this point all later commits would
+have different ids, so attempting to rewrite subsequent parent-ids in
+the same filter-branch invocation is probably futile.
+
+It might be possible to use an intelligent script in a single
+--commit-filter invocation of filter-branch, but the script of the
+actual filter would have to be a bit (a lot!) more sophisticated,
+remember the ids of the new commits as it created them with 'git
+commit-tree' and merging in the repoA parents at the right points.
+
+Leaving that aside and concentrating on the multiple filter-branch
+invocation option... for example, the first parent-filter script could
+be:
+sed -e 's/^$/-p <commit id of Av1>/'
+
+( This is if you want your exisiting tree to branch from Av1 in the
+original repo.  If you wanted to replace your tree root with a root at
+Av1, because your current root is just a copy of Av1 then you want:
+sed -e 's/<commit id of repoB's Av1 copy>/<commit id of Av1 in A>/'
+)
+
+Then, for whatever the Av2_d commit's new id is, you could do a
+parent-filter of:
+sed -e 's/\(<new commit id of Av1_d>\)/\1 -p <commit id of Av2>/'
+
+This causes the Av2_d commit to be rewritten, maintaining its original
+parent and adding another parent which comes from repoA.  It then
+rewrites all the descendent commits of Av2_d to take account of this
+new commit id and all the subsequent new commit ids.
+
+Now you can do similar for the next merge commit:
+sed -e 's/\(<new commit id of Av2_e>\)/\1 -p <commit id of Av3>/'
+
+As noted, you end up with completely new commit objects with a
+completely new history, so you will screw everyone who is
+pulling/cloning from you.
+
+Charles.
