@@ -1,105 +1,249 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Git and securing a repository
-Date: Wed, 2 Jan 2008 20:31:14 +0100
-Message-ID: <20080102193114.GA4608@efreet.light.src>
-References: <477B39B5.5010107@advancedsl.com.ar> <31e679430801012234x20bbebe7vb496a338bf2699d5@mail.gmail.com> <477B6199.6070601@advancedsl.com.ar>
+From: Peter Oberndorfer <kumbayo84@arcor.de>
+Subject: [STG PATCH] refresh: add a --index option which takes the contents of the index as the new commit
+Date: Wed, 2 Jan 2008 20:39:27 +0100
+Message-ID: <200801022039.27611.kumbayo84@arcor.de>
+References: <200712302003.33478.kumbayo84@arcor.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Balbi <felipebalbi@users.sourceforge.net>,
-	git@vger.kernel.org
-To: Gonzalo =?utf-8?Q?Garramu=C3=B1o?= <ggarra@advancedsl.com.ar>
-X-From: git-owner@vger.kernel.org Wed Jan 02 20:31:53 2008
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>,
+	Catalin Marinas <catalin.marinas@gmail.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 02 20:41:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JA9Jd-0001Uu-CP
-	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 20:31:49 +0100
+	id 1JA9Sg-0004Sf-2g
+	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 20:41:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752526AbYABTbY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2008 14:31:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752862AbYABTbY
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 14:31:24 -0500
-Received: from ns1.bluetone.cz ([212.158.128.13]:56109 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751580AbYABTbX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2008 14:31:23 -0500
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id B88BC5737D;
-	Wed,  2 Jan 2008 20:31:21 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id UNdITYS4I9Wv; Wed,  2 Jan 2008 20:31:18 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 0CF29572CA;
-	Wed,  2 Jan 2008 20:31:18 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1JA9J4-0001WZ-8i; Wed, 02 Jan 2008 20:31:14 +0100
+	id S1757315AbYABTkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2008 14:40:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757148AbYABTko
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 14:40:44 -0500
+Received: from mail-in-09.arcor-online.net ([151.189.21.49]:41986 "EHLO
+	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757037AbYABTkm (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Jan 2008 14:40:42 -0500
+Received: from mail-in-10-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
+	by mail-in-09.arcor-online.net (Postfix) with ESMTP id 6C5ED3028EC;
+	Wed,  2 Jan 2008 20:40:40 +0100 (CET)
+Received: from mail-in-06.arcor-online.net (mail-in-06.arcor-online.net [151.189.21.46])
+	by mail-in-10-z2.arcor-online.net (Postfix) with ESMTP id 4736823D34E;
+	Wed,  2 Jan 2008 20:40:40 +0100 (CET)
+Received: from fnoheim52.netpark.at (fnoheim52.netpark.at [83.68.151.52])
+	(Authenticated sender: kumbayo84@arcor.de)
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 4A13A35E71B;
+	Wed,  2 Jan 2008 20:40:37 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <200712302003.33478.kumbayo84@arcor.de>
 Content-Disposition: inline
-In-Reply-To: <477B6199.6070601@advancedsl.com.ar>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Virus-Scanned: ClamAV 0.91.2/5343/Wed Jan  2 18:41:01 2008 on mail-in-06.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69488>
 
-On Wed, Jan 02, 2008 at 07:04:09 -0300, Gonzalo Garramu=C3=B1o wrote:
-> Felipe Balbi wrote:
->>
->> it's easy on the full repository case, create different groups and
->> share git repositories by groups, after that chmod o-rwx -R
->> /path/to/repository.git.
->>
->
-> Thanks.  I'll admit what you describe is somewhat discouraging, as wh=
-at you=20
-> are just describing is just managing user accounts or groups on the=20
-> underlying OS.  That does not extend well to placing code on the net =
-and=20
-> has a bunch of administrative headaches.
->
-> I was really looking for a permission based system that was part of g=
-it=20
-> itself (and thus more portable and easier to admin), and not the OS.=20
-> Something akin to what perforce or even CVS can do.
+just like git commit would do without the -a option
+---
+On Sonntag 30 Dezember 2007, Peter Oberndorfer wrote:
+> Hi,
+> I recently tried to split a stgit patch into 2 parts
+> and it was not as easy as i would like it to be.
+> 
+> How do i exclude a file from a patch(use version of file present in HEAD^)
+> without modifying the working dir?
+> 
+> with plain git i would use something like
+> git reset HEAD^ files_i_do_not_want_in_first_patch
+> git commit --amend
+> git add files_i_do_not_want_in_first_patch
+> git commit
+> 
+> So my idea was to add a --use-index [1] option to stg refresh
+> When it is passed stg refresh will use the current index for the contenst of the refreshed patch 
+> instead of looking at the working dir.
+> This would solve my problem[2] and also make it possible to use git-gui for 
+> staging hunks.
+> 
+OK, i got off my ass and hacked together the following patch
+based on git://repo.or.cz/stgit/kha.git experimental
+And i used it to create and update this commit a few times :-)
+Additionally it passes the (minimal) test i added.
+But since i am not a stgit expert it is highly recommend that somebody else carefully
+looks at the patch before going wild on real data.
 
-You don't need to manage user accounts -- managing ssh public keys will=
- do!
+> Do you think this would be a useful/good idea?
+> Or do we want a separate command for removing files from a patch anyway?
+The question is still open if this is useful for somebody else.
 
-The git ssh access will always run one particular command (with path as
-argument) to push and another particular command (again with path as
-argument) to pull.
+Greetings Peter
 
-Thus you can prepare two scripts -- git-read-only will only run
-$SSH_ORIGINAL_COMMAND if it is 'git-upload-pack <somearg>' and git-read=
--write
-will also run it if it is 'git-receive-pack <somearg>'. The <somearg> i=
-s path
-to the repository, so you can further limit on that. (Note: for recent =
-git,
-you need to recognize the 'git upload-pack' and 'git receive-pack' vari=
-ants
-too).
+PS: i hope i put the right people on CC
 
-Now you can have each user create a ssh public key. You will put this k=
-ey
-into the .ssh/authorized_keys file on the server (therefore you only ne=
-ed
-a single account there), with option command=3D specifying appropriate =
-script
-depending on what permissions the user should have. Than that user will=
- be
-able to push/pull (as set) via ssh using that public key and will not h=
-ave
-any other access to the server.
+ stgit/commands/refresh.py |   25 ++++++++++++++++---
+ stgit/stack.py            |    6 ++++
+ t/t2700-refresh.sh        |   57 ++++++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 83 insertions(+), 5 deletions(-)
 
-As a bonus, this way the users can't circumvent the pre-receive hooks
-(perhaps you will allow each user to only push to a particular branch o=
-r
-something) by manually changing the repository.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+diff --git a/stgit/commands/refresh.py b/stgit/commands/refresh.py
+index 6e8ed0c..0420b98 100644
+--- a/stgit/commands/refresh.py
++++ b/stgit/commands/refresh.py
+@@ -45,6 +45,9 @@ options = [make_option('-f', '--force',
+            make_option('--update',
+                        help = 'only update the current patch files',
+                        action = 'store_true'),
++           make_option('--index',
++                       help = 'use the current contents of the index instead of looking at the working directory',
++                       action = 'store_true'),
+            make_option('--undo',
+                        help = 'revert the commit generated by the last refresh',
+                        action = 'store_true'),
+@@ -76,6 +79,14 @@ def func(parser, options, args):
+         if not patch:
+             raise CmdException, 'No patches applied'
+ 
++    if options.index:
++        if args or options.update:
++            raise CmdException, \
++                  'Only full refresh is available with the --index option'
++        if options.patch:
++            raise CmdException, \
++                  '--patch is not (yet) compatible with --index option'
++
+     if not options.force:
+         check_head_top_equal(crt_series)
+ 
+@@ -85,9 +96,10 @@ def func(parser, options, args):
+         out.done()
+         return
+ 
+-    files = [path for (stat, path) in git.tree_status(files = args, verbose = True)]
++    if not options.index:
++        files = [path for (stat, path) in git.tree_status(files = args, verbose = True)]
+ 
+-    if files or not crt_series.head_top_equal():
++    if options.index or files or not crt_series.head_top_equal():
+         if options.patch:
+             applied = crt_series.get_applied()
+             between = applied[:applied.index(patch):-1]
+@@ -105,8 +117,13 @@ def func(parser, options, args):
+ 
+         if autoresolved == 'yes':
+             resolved_all()
+-        crt_series.refresh_patch(files = files,
+-                                 backup = True, notes = options.annotate)
++
++        if options.index:
++            crt_series.refresh_patch(use_index = True,
++                                     backup = True, notes = options.annotate)
++        else:
++            crt_series.refresh_patch(files = files,
++                                     backup = True, notes = options.annotate)
+ 
+         if crt_series.empty_patch(patch):
+             out.done('empty patch')
+diff --git a/stgit/stack.py b/stgit/stack.py
+index 4203931..7d14261 100644
+--- a/stgit/stack.py
++++ b/stgit/stack.py
+@@ -668,6 +668,7 @@ class Series(PatchSet):
+         config.remove_section('branch.%s.stgit' % self.get_name())
+ 
+     def refresh_patch(self, files = None, message = None, edit = False,
++                      use_index = False,
+                       empty = False,
+                       show_patch = False,
+                       cache_update = True,
+@@ -717,6 +718,11 @@ class Series(PatchSet):
+         else:
+             tree_id = None
+ 
++        if use_index:
++            tree_id = None
++            files = None
++            cache_update = False
++
+         commit_id = git.commit(files = files,
+                                message = descr, parents = [bottom],
+                                cache_update = cache_update,
+diff --git a/t/t2700-refresh.sh b/t/t2700-refresh.sh
+index 2e7901c..9eae85d 100755
+--- a/t/t2700-refresh.sh
++++ b/t/t2700-refresh.sh
+@@ -6,8 +6,10 @@ test_description='Run "stg refresh"'
+ 
+ test_expect_success 'Initialize StGit stack' '
+     stg init &&
+-    echo expected.txt >> .git/info/exclude &&
++    echo expected*.txt >> .git/info/exclude &&
+     echo patches.txt >> .git/info/exclude &&
++    echo show.txt >> .git/info/exclude &&
++    echo diff.txt >> .git/info/exclude &&
+     stg new p0 -m "base" &&
+     for i in 1 2 3; do
+         echo base >> foo$i.txt &&
+@@ -62,4 +64,57 @@ test_expect_success 'Refresh bottom patch' '
+     diff -u expected.txt patches.txt
+ '
+ 
++cat > expected.txt <<EOF
++p0
++p1
++p4
++EOF
++cat > expected2.txt <<EOF
++diff --git a/foo1.txt b/foo1.txt
++index 728535d..6f34984 100644
++--- a/foo1.txt
+++++ b/foo1.txt
++@@ -1,3 +1,4 @@
++ base
++ foo 1
++ bar 1
+++baz 1
++EOF
++cat > expected3.txt <<EOF
++diff --git a/foo1.txt b/foo1.txt
++index 6f34984..a80eb63 100644
++--- a/foo1.txt
+++++ b/foo1.txt
++@@ -2,3 +2,4 @@ base
++ foo 1
++ bar 1
++ baz 1
+++blah 1
++diff --git a/foo2.txt b/foo2.txt
++index 415c9f5..43168f2 100644
++--- a/foo2.txt
+++++ b/foo2.txt
++@@ -1,3 +1,4 @@
++ base
++ foo 2
++ bar 2
+++baz 2
++EOF
++test_expect_success 'Refresh --index' '
++    stg status &&
++    stg new p4 -m "refresh_index" &&
++    echo baz 1 >> foo1.txt &&
++    git add foo1.txt &&
++    echo blah 1 >> foo1.txt &&
++    echo baz 2 >> foo2.txt &&
++    stg refresh --index &&
++    stg patches foo1.txt > patches.txt &&
++    git diff HEAD^..HEAD > show.txt &&
++    stg diff > diff.txt &&
++    diff -u expected.txt patches.txt &&
++    diff -u expected2.txt show.txt &&
++    diff -u expected3.txt diff.txt &&
++    stg new p5 -m "cleanup again" &&
++    stg refresh
++'
+ test_done
+-- 
+1.5.4.rc2
