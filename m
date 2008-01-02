@@ -1,131 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: input validation in receive-pack
-Date: Wed, 02 Jan 2008 11:14:40 -0800
-Message-ID: <7vfxxgvy3j.fsf@gitster.siamese.dyndns.org>
-References: <20080101213451.GA26772@auto.tuwien.ac.at>
-	<7vzlvp3oya.fsf@gitster.siamese.dyndns.org>
-	<alpine.LNX.1.00.0801012353580.13593@iabervon.org>
-	<7vhchw3hkz.fsf@gitster.siamese.dyndns.org>
-	<alpine.LNX.1.00.0801021043220.13593@iabervon.org>
+From: Gregory Jefferis <jefferis@gmail.com>
+Subject: Stitching together private svn repo and public git repo
+Date: Wed, 02 Jan 2008 19:25:41 +0000
+Message-ID: <C3A195B5.10839%jefferis@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Jan 02 20:15:48 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 02 20:26:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JA93v-0004Xb-Om
-	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 20:15:36 +0100
+	id 1JA9EI-000854-Nd
+	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 20:26:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753319AbYABTO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2008 14:14:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752687AbYABTO4
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 14:14:56 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51039 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753265AbYABTOz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2008 14:14:55 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CF94EBAF5;
-	Wed,  2 Jan 2008 14:14:51 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id EF5F5BAF2;
-	Wed,  2 Jan 2008 14:14:46 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756908AbYABTZt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2008 14:25:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752889AbYABTZt
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 14:25:49 -0500
+Received: from mu-out-0910.google.com ([209.85.134.187]:26297 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756870AbYABTZs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Jan 2008 14:25:48 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so4335147mue.5
+        for <git@vger.kernel.org>; Wed, 02 Jan 2008 11:25:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:user-agent:date:subject:from:to:message-id:thread-topic:thread-index:mime-version:content-type:content-transfer-encoding;
+        bh=I8h2JJ9SFfDJ44RjtqKnvH68uDHgY7xWVJUM8AQN8i0=;
+        b=qlDUu5/I19vnJIx0DPW7UKwqYQI53+y/TvYxdPIb3h/tCK6MeWoG6rBSikWTEZblXJXh/I/HAzfmRsgiMnurBdYInN9vtLJ/yYSpzPocWF9BzvWw+BW8RygqsUY3dNRtIj8gU9A+nNGnp5Y92Qc8TJlfp2Z9fcUVU3bkOtZiiyk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=user-agent:date:subject:from:to:message-id:thread-topic:thread-index:mime-version:content-type:content-transfer-encoding;
+        b=OwM9wUqwsXStK66NUuPuwEXyhdbdXugoVNcmR4GI4HVqdG9Jcs4pZgFgIGCjNr7lTZSsmYJxQoc/pQSD+rEMYnPCt7cr11BDZLNJK+geMsjp4bFwxVeM+YSfLZV59BLh4GXMstTnvgdsfsW5TKz/dMc/2zSq8GZiCY5P6H2jGPw=
+Received: by 10.78.172.20 with SMTP id u20mr17259939hue.13.1199301946626;
+        Wed, 02 Jan 2008 11:25:46 -0800 (PST)
+Received: from ?81.98.250.69? ( [81.98.250.69])
+        by mx.google.com with ESMTPS id k7sm19288813nfh.0.2008.01.02.11.25.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 02 Jan 2008 11:25:45 -0800 (PST)
+User-Agent: Microsoft-Entourage/11.2.3.060209
+Thread-Topic: Stitching together private svn repo and public git repo 
+Thread-Index: AchNdUL2gbRDNbloEdyDSgAUURoPUg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69486>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Short Version:=20
 
-> It might be wise to make "default" the return NULL case, and list the two 
-> okay cases explicitly, so it doesn't need to be changed if 
-> check_ref_format() someday gets additional "okay for some purposes" 
-> values.
+Repo B is a completely linear repo that has been tracking public repo A=
+ for
+some time.  A number of manual merges were done to bring new A releases
+into=A0B but there are no connections between the two repos.  (How) can=
+ I
+stitch B to A to reflect this relationship?  I want to retain B's histo=
+ry
+and leave myself with an arrangement in which I can pull from A into B
+periodically?  Many thanks for your suggestions, Greg.
 
-Sounds sensible.
+--
+Long Version:
 
-> Aside from that, it looks good, except that builtin-send-pack.c and 
-> fast-import.c should probably use the symbolic constants, too. (All other 
-> callers only check whether the value is true or not).
+I have been tracking my modifications of a public project released as t=
+ar
+balls with my own local svn repository.  My svn repo was completely lin=
+ear
+and I always merged in changes manually each time a new tar ball was
+released.  This started to get painful.
 
-Also sensible.
+Now I want to do better.  I have set up a public git repository ("A") t=
+o
+track the tar ball releases from the public project.  I have converted =
+my
+svn repo with git-svn to a git repo ("B").
 
--- >8 --
-Update callers of check_ref_format()
+My goal is to end up with a (new?) git repo tracking the public repo (A=
+) so
+that I can pull in any changes and merge easily. Fine, but I also want =
+to
+keep the history that I have imported from my svn repository (B).  So m=
+y
+question is, can anyone suggest some pointers for how to stitch togethe=
+r A
+and B?
 
-This updates send-pack and fast-import to use symbolic constants
-for checking the return values from check_ref_format(), and also
-futureproof the logic in lock_any_ref_for_update() to explicitly
-name the case that is usually considered an error but is Ok for
-this particular use.
+Right now I have been trying to pull B into A to splice:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin-send-pack.c |   10 ++++++----
- fast-import.c       |    5 +++--
- refs.c              |    6 +++---
- 3 files changed, 12 insertions(+), 9 deletions(-)
+A $ git checkout v1.91
+B $ git checkout v1.91-manualmerge
+B $ git pull --no-commit -s ours ../A
 
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index 25ae1fe..8afb1d0 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -541,10 +541,12 @@ static void verify_remote_names(int nr_heads, const char **heads)
- 		remote = remote ? (remote + 1) : heads[i];
- 		switch (check_ref_format(remote)) {
- 		case 0: /* ok */
--		case -2: /* ok but a single level -- that is fine for
--			  * a match pattern.
--			  */
--		case -3: /* ok but ends with a pattern-match character */
-+		case CHECK_REF_FORMAT_ONELEVEL:
-+			/* ok but a single level -- that is fine for
-+			 * a match pattern.
-+			 */
-+		case CHECK_REF_FORMAT_WILDCARD:
-+			/* ok but ends with a pattern-match character */
- 			continue;
- 		}
- 		die("remote part of refspec is not a valid name in %s",
-diff --git a/fast-import.c b/fast-import.c
-index 4646c05..74597c9 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -642,8 +642,9 @@ static struct branch *new_branch(const char *name)
- 	if (b)
- 		die("Invalid attempt to create duplicate branch: %s", name);
- 	switch (check_ref_format(name)) {
--	case  0: break; /* its valid */
--	case -2: break; /* valid, but too few '/', allow anyway */
-+	case 0: break; /* its valid */
-+	case CHECK_REF_FORMAT_ONELEVEL:
-+		break; /* valid, but too few '/', allow anyway */
- 	default:
- 		die("Branch name doesn't conform to GIT standards: %s", name);
- 	}
-diff --git a/refs.c b/refs.c
-index 7484a46..58f6d17 100644
---- a/refs.c
-+++ b/refs.c
-@@ -822,10 +822,10 @@ struct ref_lock *lock_ref_sha1(const char *ref, const unsigned char *old_sha1)
- struct ref_lock *lock_any_ref_for_update(const char *ref, const unsigned char *old_sha1, int flags)
- {
- 	switch (check_ref_format(ref)) {
--	case CHECK_REF_FORMAT_ERROR:
--	case CHECK_REF_FORMAT_WILDCARD:
--		return NULL;
- 	default:
-+		return NULL;
-+	case 0:
-+	case CHECK_REF_FORMAT_ONELEVEL:
- 		return lock_ref_sha1_basic(ref, old_sha1, flags, NULL);
- 	}
- }
+This looks right when I run gitk, but if I repeat this for a second mer=
+ge
+point then the previous merge seems to disappear from history when I br=
+ing
+up gitk.
+
+I haven't found any docs/wiki info that has enlightened me yet.  Any
+suggestions, wisdom, links etc very much appreciated - I do want to try=
+ to
+get this right now, so I don't have to rejig everything in the future. =
+ Best
+wishes and many thanks,
+
+Greg.
+
+--=20
+Gregory Jefferis, PhD                               and:
+Research Fellow
+Department of Zoology                               St John's College
+Downing Street                                      Cambridge
+Cambridge, CB2 3EJ                                  CB2 1TP
