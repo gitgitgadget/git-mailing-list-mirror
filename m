@@ -1,60 +1,74 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: Stitching together private svn repo and public git repo
-Date: Wed, 2 Jan 2008 22:46:11 +0000
-Message-ID: <20080102224611.GA14984@hashpling.org>
-References: <C3A195B5.10839%jefferis@gmail.com> <20080102214005.GA10924@hashpling.org> <37fcd2780801021413g5f2a602dkb9fc289a13517375@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] receive-pack: check object type of sha1 before using them as commits
+Date: Wed, 02 Jan 2008 14:57:35 -0800
+Message-ID: <7vprwjvns0.fsf@gitster.siamese.dyndns.org>
+References: <11992595612601-git-send-email-mkoegler@auto.tuwien.ac.at>
+	<alpine.LFD.1.00.0801021418510.3010@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Gregory Jefferis <jefferis@gmail.com>, git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 02 23:46:52 2008
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jan 02 23:58:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JACMG-0007mT-W0
-	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 23:46:45 +0100
+	id 1JACXP-0002fs-8f
+	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 23:58:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754097AbYABWqS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2008 17:46:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753606AbYABWqS
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 17:46:18 -0500
-Received: from pih-relay05.plus.net ([212.159.14.132]:50343 "EHLO
-	pih-relay05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753308AbYABWqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2008 17:46:17 -0500
-Received: from [212.159.69.125] (helo=hashpling.plus.com)
-	 by pih-relay05.plus.net with esmtp (Exim) id 1JACLm-0000aC-R6; Wed, 02 Jan 2008 22:46:15 +0000
-Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
-	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m02MkB59015339;
-	Wed, 2 Jan 2008 22:46:11 GMT
-Received: (from charles@localhost)
-	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m02MkB1F015338;
-	Wed, 2 Jan 2008 22:46:11 GMT
-Content-Disposition: inline
-In-Reply-To: <37fcd2780801021413g5f2a602dkb9fc289a13517375@mail.gmail.com>
-User-Agent: Mutt/1.4.2.1i
+	id S1754479AbYABW5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2008 17:57:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753701AbYABW5t
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 17:57:49 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50138 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753169AbYABW5s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2008 17:57:48 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E7413D50;
+	Wed,  2 Jan 2008 17:57:47 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EFAB3D4C;
+	Wed,  2 Jan 2008 17:57:42 -0500 (EST)
+In-Reply-To: <alpine.LFD.1.00.0801021418510.3010@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Wed, 2 Jan 2008 14:21:51 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69501>
 
-On Thu, Jan 03, 2008 at 01:13:54AM +0300, Dmitry Potapov wrote:
-> I believe there is a much easier way to do that using .git/info/grafts
-> The first step is to create .git/info/grafts, which specifies commit-id
-> and its parents for each commit that you want to change. Then you
-> can check the result using gitk, and if you are satisfied with what
-> you see then you run git filter-branch on it to convert 'fake' parents
-> into real ones.
-> 
-> Dmitry
-> 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Oh yes, this is much easier.  Unless I'm missing something, the
-documentation on grafts is fairly sparse, though.  They are mentioned
-(almost in passing) in git help filter-branch but the file format is
-only documented in repository-layout.txt which seems more developer
-than user oriented.
+> On Wed, 2 Jan 2008, Martin Koegler wrote:
+>>  
+>> -		old_commit = (struct commit *)parse_object(old_sha1);
+>> -		new_commit = (struct commit *)parse_object(new_sha1);
+>> +		old_object = parse_object(old_sha1);
+>> +		new_object = parse_object(new_sha1);
+>
+> I think it would be better to use
+>
+> 	old_object = lookup_commit_reference(old_sha1);
+> 	if (!old_object)
+> 		return "bad ref";
+> 	new_object = lookup_commit_reference(new_sha1);
+> 	if (!new_object)
+> 		return "bad ref";
+>
+> which will write a slightly more useful error message if it's not a commit 
+> (ie it will use the "check_commit()" function in commit.c)
 
-Charles.
+Hmmm...  Three points.
+
+ * lookup_commit_reference() is silent if the object pointed at
+   by old/new SHA-1 is missing.
+
+ * when storing in refs/heads, we do not want to have committish
+   but we do want an actual commit object.
+
+ * returning like that the user cannot tell which ref had the
+   error.
