@@ -1,54 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: input validation in receive-pack
-Date: Wed, 02 Jan 2008 00:01:13 -0800
-Message-ID: <7v63yc3bcm.fsf@gitster.siamese.dyndns.org>
-References: <20080101213451.GA26772@auto.tuwien.ac.at>
-	<7vzlvp3oya.fsf@gitster.siamese.dyndns.org>
-	<20080102075152.GA24401@auto.tuwien.ac.at>
+From: =?ISO-8859-1?Q?Gonzalo_Garramu=F1o?= <ggarra@advancedsl.com.ar>
+Subject: Re: Git and securing a repository
+Date: Wed, 02 Jan 2008 07:04:09 -0300
+Message-ID: <477B6199.6070601@advancedsl.com.ar>
+References: <477B39B5.5010107@advancedsl.com.ar> <31e679430801012234x20bbebe7vb496a338bf2699d5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-X-From: git-owner@vger.kernel.org Wed Jan 02 09:01:53 2008
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Gonzalo_Garramu=F1o?= <ggarra@advancedsl.com.ar>,
+	git@vger.kernel.org
+To: Felipe Balbi <felipebalbi@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Wed Jan 02 10:03:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1J9yXw-0001D2-Er
-	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 09:01:52 +0100
+	id 1J9zV6-000332-R1
+	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 10:03:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752327AbYABIBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2008 03:01:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752342AbYABIBT
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 03:01:19 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63563 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752255AbYABIBT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2008 03:01:19 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A339FAC4E;
-	Wed,  2 Jan 2008 03:01:17 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BE84AC4D;
-	Wed,  2 Jan 2008 03:01:15 -0500 (EST)
-In-Reply-To: <20080102075152.GA24401@auto.tuwien.ac.at> (Martin Koegler's
-	message of "Wed, 2 Jan 2008 08:51:52 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753088AbYABJCW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2008 04:02:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753190AbYABJCV
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 04:02:21 -0500
+Received: from echunga.terra.com ([66.119.66.230]:51464 "EHLO
+	echunga.terra.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752926AbYABJCU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2008 04:02:20 -0500
+Received: from feluga.terra.com (feluga.terra.com [66.119.66.183])
+	by echunga.terra.com (Postfix) with ESMTP id A8DC59540CD;
+	Wed,  2 Jan 2008 04:02:19 -0500 (EST)
+X-Terra-Karma: 0%
+X-Terra-Hash: 5b899ef6120b051a92057c3d060cc6d6
+Received-SPF: none (feluga.terra.com: 66.119.66.183 is neither permitted nor denied by domain of advancedsl.com.ar) client-ip=66.119.66.183; envelope-from=ggarra@advancedsl.com.ar; helo=[192.168.1.3];
+Received: from [192.168.1.3] (unknown [201.255.33.238])
+	(authenticated user ggarra@advancedsl.com.ar)
+	by feluga.terra.com (Postfix) with ESMTP id 9179B2E293D;
+	Wed,  2 Jan 2008 04:02:18 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <31e679430801012234x20bbebe7vb496a338bf2699d5@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69463>
 
-mkoegler@auto.tuwien.ac.at (Martin Koegler) writes:
+=46elipe Balbi wrote:
+>=20
+> it's easy on the full repository case, create different groups and
+> share git repositories by groups, after that chmod o-rwx -R
+> /path/to/repository.git.
+>=20
 
-> Are there more refs outside "refs/", which somebody would want to push to?
+Thanks.  I'll admit what you describe is somewhat discouraging, as what=
+=20
+you are just describing is just managing user accounts or groups on the=
+=20
+underlying OS.  That does not extend well to placing code on the net an=
+d=20
+has a bunch of administrative headaches.
 
-As anything outside refs/ and not HEAD are subject to gc, I do
-not think it should even be allowed.
+I was really looking for a permission based system that was part of git=
+=20
+itself (and thus more portable and easier to admin), and not the OS.=20
+Something akin to what perforce or even CVS can do.
 
-But this is, as everybody should be aware, very late in 1.5.4
-cycle, so I'd rather avoid bahviour change to tighten things
-before post-1.5.4 opens.
+
+--=20
+Gonzalo Garramu=F1o
+ggarra@advancedsl.com.ar
+
+AMD4400 - ASUS48N-E
+GeForce7300GT
+Xubuntu Gutsy
