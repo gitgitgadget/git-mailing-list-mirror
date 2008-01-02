@@ -1,79 +1,90 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: unlink index files that were globbed, too
-Date: Wed,  2 Jan 2008 10:10:03 -0800
-Message-ID: <1199297404-20030-1-git-send-email-normalperson@yhbt.net>
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 02 19:10:41 2008
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] Avoid a useless prefix lookup in strbuf_expand()
+Date: Wed, 02 Jan 2008 19:11:00 +0100
+Message-ID: <477BD3B4.2070708@lsrfire.ath.cx>
+References: <e5bfff550712300546o167c460bl4628d87f8a4e14db@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 02 19:12:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JA830-00071t-GU
-	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 19:10:34 +0100
+	id 1JA84T-0007Ym-2c
+	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 19:12:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751619AbYABSKF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2008 13:10:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751651AbYABSKF
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 13:10:05 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:55863 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751072AbYABSKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2008 13:10:04 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 167322DC035;
-	Wed,  2 Jan 2008 10:10:04 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.rc2.16.g3ffc
+	id S1752274AbYABSLU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2008 13:11:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752045AbYABSLU
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 13:11:20 -0500
+Received: from india601.server4you.de ([85.25.151.105]:51532 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751813AbYABSLT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2008 13:11:19 -0500
+Received: from [10.0.1.201] (p57B7C4DA.dip.t-dialin.net [87.183.196.218])
+	by india601.server4you.de (Postfix) with ESMTP id 7A3FB2F8037;
+	Wed,  2 Jan 2008 19:11:17 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <e5bfff550712300546o167c460bl4628d87f8a4e14db@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69482>
 
-commit 3157dd9e89a71e80673d0bc21b5c0630f3b1fe68 introduced
-unlinking index files after fetching.  However, this missed
-indices for refs that were created by globbing branches and
-tags.  This will track all refs we ever touch during a fetch and
-unlink them at exit time.
+Marco Costalba schrieb:
+> Currently the --prett=3Dformat prefix is looked up in a
+> tight loop in strbuf_expand(), if found is passed as parameter
+> to format_commit_item() that does another search using a
+> switch statement to select the proper operation according to
+> the kind of prefix.
+>=20
+> Because the switch statement is already able to discard unknown
+> matches we don't need the prefix lookup before to call format_commit_=
+item()
+>=20
+> This patch removes an useless loop in a very fasth path,
+> used by, as example, by 'git log' with --pretty=3Dformat option
+>=20
+> Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+> ---
+>=20
+> This patch is somewhat experimental and is not intended to be merged =
+as is.
+>=20
+> That's what is missing:
+>=20
+> - Matching of multi char prefixes is not 100% reliable, as example to=
+ match
+>   prefix "Cgreen" only the first 'C' and the third char 'e' is
+> checked, this could
+>   lead to aliases in case of malformed prefixes, as example something=
+ like
+>   "Cxxexxxx" will match the same.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl |    9 ++++++---
- 1 files changed, 6 insertions(+), 3 deletions(-)
+Well, you need to undo this optimization if you remove the loop that
+makes sure that only valid placeholders are passed to the callback
+function -- the result would be that you only move the prefixcmp() from
+strbuf_expand() into the callbacks.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 9b1113a..2c97b05 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1283,8 +1283,11 @@ BEGIN {
- 	}
- }
- 
--my %LOCKFILES;
--END { unlink keys %LOCKFILES if %LOCKFILES }
-+my (%LOCKFILES, %INDEX_FILES);
-+END {
-+	unlink keys %LOCKFILES if %LOCKFILES;
-+	unlink keys %INDEX_FILES if %INDEX_FILES;
-+}
- 
- sub resolve_local_globs {
- 	my ($url, $fetch, $glob_spec) = @_;
-@@ -1376,7 +1379,6 @@ sub fetch_all {
- 
- 	($base, $head) = parse_revision_argument($base, $head);
- 	$ra->gs_fetch_loop_common($base, $head, \@gs, \@globs);
--	unlink $_->{index} foreach @gs;
- }
- 
- sub read_all_remotes {
-@@ -3945,6 +3947,7 @@ sub gs_fetch_loop_common {
- 				if ($log_entry) {
- 					$gs->do_git_commit($log_entry);
- 				}
-+				$INDEX_FILES{$gs->{index}} = 1;
- 			}
- 			foreach my $g (@$globs) {
- 				my $k = "svn-remote.$g->{remote}." .
--- 
-1.5.4.rc2.7.g6277-dirty
+A better way to speed up strbuf_expand() may be to require the list of
+placeholders to be sorted, their count to be passed on and then to
+replace the sequential lookup with a binary search.  --pretty=3Dformat
+currently recognizes 29 placeholders, which might be a high enough
+number for a more complicated search method to pay off.
+
+> marco@localhost linux-2.6]$ time git log --topo-order --no-color
+> --parents -z --log-size --boundary
+> --pretty=3Dformat:"%m%HX%PX%n%an<%ae>%n%at%n%s%n%b" HEAD > /dev/null
+
+In your special case it would be even faster to simply reorder the list
+with decreasing number of occurrence.  Of course it's hard to guess how
+often a particular placeholder is used in the wild, but moving %n from
+next to last to first place should be a safe bet.
+
+Ren=C3=A9
