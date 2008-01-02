@@ -1,63 +1,99 @@
-From: "Imran M Yousuf" <imyousuf@gmail.com>
-Subject: About the .gitmodules file
-Date: Wed, 2 Jan 2008 16:39:24 +0600
-Message-ID: <7bfdc29a0801020239w6f4133d3pc6f1aa325b1067db@mail.gmail.com>
+From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
+Subject: Re: [ANNOUNCE] ugit: the pythonic git gui
+Date: Wed, 2 Jan 2008 11:42:51 +0100
+Message-ID: <8b65902a0801020242x425b792xbfa5ee69a13c2573@mail.gmail.com>
+References: <402731c90712281449g3d0c4f53w48c65dc8883bbbb3@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 02 11:40:03 2008
+Cc: git@vger.kernel.org
+To: David <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 02 11:43:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JA10x-0007Dn-Nd
-	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 11:40:00 +0100
+	id 1JA14A-00082w-6c
+	for gcvg-git-2@gmane.org; Wed, 02 Jan 2008 11:43:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754083AbYABKj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2008 05:39:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754030AbYABKj0
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 05:39:26 -0500
-Received: from fk-out-0910.google.com ([209.85.128.190]:22729 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753950AbYABKj0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2008 05:39:26 -0500
-Received: by fk-out-0910.google.com with SMTP id z23so6061373fkz.5
-        for <git@vger.kernel.org>; Wed, 02 Jan 2008 02:39:24 -0800 (PST)
+	id S1754452AbYABKmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2008 05:42:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754396AbYABKmx
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 05:42:53 -0500
+Received: from an-out-0708.google.com ([209.85.132.249]:44257 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754146AbYABKmw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2008 05:42:52 -0500
+Received: by an-out-0708.google.com with SMTP id d31so963310and.103
+        for <git@vger.kernel.org>; Wed, 02 Jan 2008 02:42:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=ZN00MFWuvFtUILDtQiDHo4Y/h66B59QkLKdEiaGYGhM=;
-        b=TvSWat+v5BQaRAWHwPYA1yndCOVmGkBcPKsKHAprrDlxik4uBtxZxh17hBJ3LkML3o/bQyL1cdZMcOBasVfBnixliqLVKUUtaz5kaivWECMuT+usaWD12AgpAfkY+Oy0gzf61Rr/O0hYy+Bb3/68SIBeD9VXY2opi0rU3YHdCkY=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=rFr30r+OYtAl69VoVckLTMgDx1gX5zt+tTD/4Vx7Cfk=;
+        b=Irx+Z8jNOhwuAd0HDJW22iris447HC1a2b5Zp9nUyuKGeozNn+bg3vQamzrpi30snbDS9/FGsTR8gbzPgi0yO3ZgFKi1TcETG+axd7WlNazRrDavWPrLyfQoD8OvMfXQIllfOZdqVvS70ZAvh35HeLWFOongqaFmdt45CPxvtvs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=q3uhPb2q8eB1UpBOCPNVnlPnaFDPtbBV67kuou1JKf/o50j24bfqgHyytF2ZqcNpAt76IjIP07bW072GmmsQ88yNdMmuav4NgGCMHXUlx7dmiPfVNj9YcCt6yXQ2kyeisFtp8THaAT1WIPpKfX8mBiCalVdiQ3cniO+co6CtpNI=
-Received: by 10.78.145.14 with SMTP id s14mr16369506hud.58.1199270364454;
-        Wed, 02 Jan 2008 02:39:24 -0800 (PST)
-Received: by 10.78.50.5 with HTTP; Wed, 2 Jan 2008 02:39:24 -0800 (PST)
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=P2oytZEkzea4gu2ZtPEtRYP2WyCpoH8rVgcusCdTxXGhAnPnnp/AnGGnz0g2QzJweM0EAMuhjFm77Duj1SwkywthX+bNy3Fmca2+pUBLBPJcAOc3EsHmK7i2HH8AajwC44Thc0z30JMkCGIqSK7iQwT3FmB1lQx7hlc/kLCi0D8=
+Received: by 10.100.248.9 with SMTP id v9mr29913437anh.19.1199270571039;
+        Wed, 02 Jan 2008 02:42:51 -0800 (PST)
+Received: by 10.100.247.15 with HTTP; Wed, 2 Jan 2008 02:42:51 -0800 (PST)
+In-Reply-To: <402731c90712281449g3d0c4f53w48c65dc8883bbbb3@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69471>
 
-Hi All,
+Hi,
 
-I need a help in order to parse the .gitmodules file generated on
-"git-submodule add". An entry for a submodule in that file looks like:
+Good to learn a new GUI is available for Git.
 
-    [submodule "a"]
-            path = a
-            url = /home/imyousuf/projects/git-projs/smart-sip/submodules/a/.git
+But, for people like me, not enougth curious to install the software,
+do you have any screenshots somewhere?
 
-I want to parse this file to know the location of my module so that
-when I got git-commit on the parent project my script will also
-traverse the submodule hierarchy. I wanted to know whether path = a
-noted the relative path from the current directory or not.
+2007/12/28, David <davvid@gmail.com>:
+> ugit, the pyqt-based git gui, has been taking shape as of late.
+>
+> First off, I'd like to thank everyone that replied with suggestions
+> and criticism.  This list is extremely helpful with regards to
+> providing honest software critiques.
+>
+> New features since the last announcement (almost all of which were
+> mentioned in one way or another on this list):
+>
+> * inotify support (we've removed the "Rescan" button)
+> * Patch hunk un/staging
+> * Allows un/staging selected patch hunk lines (without --unidiff-zero)
+> * Prepped for i18n ("env LANG=ja_JP ugit" looks pretty cool now)
+> * I'm a westerner, so the unstaged list is now on the left and the
+> staged list is on the right (thanks Jason)
+> * Optimizations to improve the interactivity of the patch browser
+> * Misc. fixes for MacOS and Windows (thanks Steffan and Sebastian)
+> * Uses default system colors whenever possible [no more darkness] (thanks Alex)
+> * No longer requires PYTHONPATH
+>
+> Source code (requires pyqt4-dev-tools to build):
+> http://repo.or.cz/w/ugit.git
+>
+> Tarballs (require a stock pyqt-4.3 installation):
+> http://ugit.justroots.com/
+>
+> I'll try and get some .deb, .rpm, etc. action happening soon.
+>
+> p.s.
+> If you read ugit as "(f)uh-git" or "ugly-git", then that's good since
+> I think that falls in line with the git style ;-)
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-Thanks in advance,
 
 -- 
-Imran M Yousuf
+Guilhem BONNEFILLE
+-=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
+-=- mailto:guilhem.bonnefille@gmail.com
+-=- http://nathguil.free.fr/
