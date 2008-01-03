@@ -1,59 +1,128 @@
-From: David <davvid@gmail.com>
-Subject: Re: [PATCH ugit] Allow user to choose history browser tool
-Date: Thu, 3 Jan 2008 04:35:01 -0800
-Message-ID: <402731c90801030435h1d726e81sf24ad3eca5bd029f@mail.gmail.com>
-References: <e5bfff550801030408w1512e458x136f6be0371c13c2@mail.gmail.com>
+From: Jim Meyering <jim@meyering.net>
+Subject: [PATCH] Fix grammar nits in documentation and in code comments.
+Date: Thu, 03 Jan 2008 15:18:07 +0100
+Message-ID: <87wsqr802o.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 03 13:35:33 2008
+Content-Type: text/plain; charset=us-ascii
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 03 15:18:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAPIK-0000fu-Ts
-	for gcvg-git-2@gmane.org; Thu, 03 Jan 2008 13:35:33 +0100
+	id 1JAQu6-0002Q2-Fo
+	for gcvg-git-2@gmane.org; Thu, 03 Jan 2008 15:18:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752373AbYACMfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2008 07:35:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752339AbYACMfE
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jan 2008 07:35:04 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:33347 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752211AbYACMfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2008 07:35:03 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so2644134ugc.16
-        for <git@vger.kernel.org>; Thu, 03 Jan 2008 04:35:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=i4if7E6nrRXIttdLE6cvIAqm0ss7XpAO5pxasV2NfNo=;
-        b=c7lS1C0MX5GQMsnDIbN8xD9Dsy8vyvOMfc2E1XYC/1f9UorazKR3od9nMO7qQqRw2MLwmXdS+ufKjc/fl92w+DSxt+busNvrtdOSoPFiuZBZa+fmHYmiht7TWLF0UDqOhkUgkoceoPjjppIyNwfTtAc10LN+XzjywWuT+dN4GUc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Z8rpyyeSGU6hLTy8GaBSG2mTJB/AHZSA0xwXdVulXGnPQ35OzxUc6GjFHXrrbJnk4WmD7E95sWIPtakGpiXF00kzxJr0W6k1gjkIUIE3JhpxosR/4kbD08t6dKSLTFwEhhQ6rwoaxZ03cgZshsjXDRc0NxKfgAT8FZy8SmXAu/w=
-Received: by 10.66.254.19 with SMTP id b19mr15549683ugi.7.1199363701525;
-        Thu, 03 Jan 2008 04:35:01 -0800 (PST)
-Received: by 10.67.118.1 with HTTP; Thu, 3 Jan 2008 04:35:01 -0800 (PST)
-In-Reply-To: <e5bfff550801030408w1512e458x136f6be0371c13c2@mail.gmail.com>
-Content-Disposition: inline
+	id S1752129AbYACOSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jan 2008 09:18:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752080AbYACOSK
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jan 2008 09:18:10 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:32929 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751975AbYACOSJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jan 2008 09:18:09 -0500
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id B222317B5AC
+	for <git@vger.kernel.org>; Thu,  3 Jan 2008 15:18:07 +0100 (CET)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 7118317B5B4
+	for <git@vger.kernel.org>; Thu,  3 Jan 2008 15:18:07 +0100 (CET)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 4C36A58B6D; Thu,  3 Jan 2008 15:18:07 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69526>
 
-On Jan 3, 2008 4:08 AM, Marco Costalba <mcostalba@gmail.com> wrote:
->  Instead of hard linking gitk let the user set
->  the preferred history visualization tool in settings dialog.
->
-> Signed-off by:  Marco Costalba <mcostalba@gmail.com>
-> ---
->
 
-Very nice, thank you!
-I've applied this and fixed it so that the setting shows up on restart.
--David
+Signed-off-by: Jim Meyering <meyering@redhat.com>
+---
+ Documentation/i18n.txt |    2 +-
+ builtin-blame.c        |    2 +-
+ ident.c                |    2 +-
+ merge-recursive.c      |    2 +-
+ setup.c                |    2 +-
+ sha1_file.c            |    2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/i18n.txt b/Documentation/i18n.txt
+index b95f99b..1e188e6 100644
+--- a/Documentation/i18n.txt
++++ b/Documentation/i18n.txt
+@@ -22,7 +22,7 @@ does not forbid it.  However, there are a few things to keep in
+ mind.
+
+ . `git-commit-tree` (hence, `git-commit` which uses it) issues
+-  an warning if the commit log message given to it does not look
++  a warning if the commit log message given to it does not look
+   like a valid UTF-8 string, unless you explicitly say your
+   project uses a legacy encoding.  The way to say this is to
+   have i18n.commitencoding in `.git/config` file, like this:
+diff --git a/builtin-blame.c b/builtin-blame.c
+index d98caaf..9b4c02e 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -606,7 +606,7 @@ static void add_blame_entry(struct scoreboard *sb, struct blame_entry *e)
+
+ /*
+  * src typically is on-stack; we want to copy the information in it to
+- * an malloced blame_entry that is already on the linked list of the
++ * a malloced blame_entry that is already on the linked list of the
+  * scoreboard.  The origin of dst loses a refcnt while the origin of src
+  * gains one.
+  */
+diff --git a/ident.c b/ident.c
+index 892d77a..b839dcf 100644
+--- a/ident.c
++++ b/ident.c
+@@ -152,7 +152,7 @@ static int copy(char *buf, size_t size, int offset, const char *src)
+ 	/*
+ 	 * Copy the rest to the buffer, but avoid the special
+ 	 * characters '\n' '<' and '>' that act as delimiters on
+-	 * a identification line
++	 * an identification line
+ 	 */
+ 	for (i = 0; i < len; i++) {
+ 		c = *src++;
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 33ccc40..b34177d 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -289,7 +289,7 @@ static int get_files_dirs(struct tree *tree)
+ }
+
+ /*
+- * Returns a index_entry instance which doesn't have to correspond to
++ * Returns an index_entry instance which doesn't have to correspond to
+  * a real cache entry in Git's index.
+  */
+ static struct stage_data *insert_stage_data(const char *path,
+diff --git a/setup.c b/setup.c
+index b59dbe7..adede16 100644
+--- a/setup.c
++++ b/setup.c
+@@ -140,7 +140,7 @@ const char **get_pathspec(const char *prefix, const char **pathspec)
+  * Test if it looks like we're at a git directory.
+  * We want to see:
+  *
+- *  - either a objects/ directory _or_ the proper
++ *  - either an objects/ directory _or_ the proper
+  *    GIT_OBJECT_DIRECTORY environment variable
+  *  - a refs/ directory
+  *  - either a HEAD symlink or a HEAD file that is formatted as
+diff --git a/sha1_file.c b/sha1_file.c
+index b0c2435..6583797 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -148,7 +148,7 @@ static void fill_sha1_path(char *pathbuf, const unsigned char *sha1)
+
+ /*
+  * NOTE! This returns a statically allocated buffer, so you have to be
+- * careful about using it. Do a "xstrdup()" if you need to save the
++ * careful about using it. Do an "xstrdup()" if you need to save the
+  * filename.
+  *
+  * Also note that this returns the location for creating.  Reading
+--
+1.5.4.rc2.7.gcb27
