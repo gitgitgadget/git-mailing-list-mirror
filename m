@@ -1,74 +1,98 @@
-From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
-Subject: Re: [PATCH 3/3] Replace setenv(GIT_DIR_ENVIRONMENT, ...) with set_git_dir()
-Date: Wed, 2 Jan 2008 20:07:35 -0800
-Message-ID: <a1bbc6950801022007w164d050bhf8a8a8c0ad6736b@mail.gmail.com>
-References: <11956768414090-git-send-email-prohaska@zib.de>
-	 <11956768412755-git-send-email-prohaska@zib.de>
-	 <Pine.LNX.4.64.0711220121560.27959@racer.site>
-	 <7v63zv9fel.fsf@gitster.siamese.dyndns.org>
-	 <C50619A0-4A67-4968-8431-D7A685F723B7@zib.de>
-	 <7vsl2y90pm.fsf@gitster.siamese.dyndns.org>
-	 <52415F60-C080-4260-86CD-32A379482341@zib.de>
-	 <474552D6.5060305@viscovery.net>
-	 <3B6B19E6-255F-4D8F-B6A3-255A9E8E0AB0@zib.de>
-	 <0FFA1D0A-DB70-446C-9C43-A6FBAEFE7CA4@zib.de>
+From: =?UTF-8?B?R29uemFsbyBHYXJyYW11w7Fv?= <ggarra@advancedsl.com.ar>
+Subject: Re: Git and securing a repository
+Date: Thu, 03 Jan 2008 02:36:25 -0300
+Message-ID: <477C7459.3020402@advancedsl.com.ar>
+References: <477B39B5.5010107@advancedsl.com.ar> <31e679430801012234x20bbebe7vb496a338bf2699d5@mail.gmail.com> <477B6199.6070601@advancedsl.com.ar> <ee77f5c20801020126n1776d625ya6928c2e4bfdf497@mail.gmail.com> <477B69ED.3090107@advancedsl.com.ar> <m3ir2co5s4.fsf@roke.D-201> <20080103035838.GA24004@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Johannes Sixt" <j.sixt@viscovery.net>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: "Steffen Prohaska" <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Thu Jan 03 05:08:06 2008
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 03 05:34:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAHNC-00062N-MM
-	for gcvg-git-2@gmane.org; Thu, 03 Jan 2008 05:08:03 +0100
+	id 1JAHnE-0002cY-EX
+	for gcvg-git-2@gmane.org; Thu, 03 Jan 2008 05:34:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754496AbYACEHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jan 2008 23:07:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754150AbYACEHh
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 23:07:37 -0500
-Received: from an-out-0708.google.com ([209.85.132.251]:46069 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753867AbYACEHg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jan 2008 23:07:36 -0500
-Received: by an-out-0708.google.com with SMTP id d31so1030783and.103
-        for <git@vger.kernel.org>; Wed, 02 Jan 2008 20:07:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=KG6fSIzudHaY/v4Y3C43P4KtlxeTq7iowrX58kVvbAk=;
-        b=EpLDeJqpZbL2C7gR0yNhGC+cRqioysYE/cnqnsg7nzSSYykGBVyQCDwtQ5Z9O/v45kS6TCQLKmYyj3WjskS59cx/aSryc92YdWNxevgHhFT7LakLUpuZF0BYmc+8cxG51kZqvRXVp6vCfHSPmkCJP+QM5blXG13RrjgG2cxwN4k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Zx//8J2sjpDfsYRSBZToXFNB+qbm/+I9Iw9qbdi5hmoEIKyCx03SeVgXa6R59/JwJkDem9ICb2um4xjvqRuCHa/QXwAZwS8zbOeLpBVM54SXIBn39HjvgOCjPjvisiFVTNmjBGosVuUEYVRCXrmTN8zLMYPVmvehUJcoEnWP6Q8=
-Received: by 10.100.255.10 with SMTP id c10mr31879657ani.54.1199333255482;
-        Wed, 02 Jan 2008 20:07:35 -0800 (PST)
-Received: by 10.70.59.16 with HTTP; Wed, 2 Jan 2008 20:07:35 -0800 (PST)
-In-Reply-To: <0FFA1D0A-DB70-446C-9C43-A6FBAEFE7CA4@zib.de>
-Content-Disposition: inline
+	id S1754266AbYACEe3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2008 23:34:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753179AbYACEe3
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 23:34:29 -0500
+Received: from echunga.terra.com ([66.119.66.230]:38345 "EHLO
+	echunga.terra.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753378AbYACEe2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2008 23:34:28 -0500
+Received: from elimba.terra.com (elimba.terra.com [66.119.66.67])
+	by echunga.terra.com (Postfix) with ESMTP id 728929540A9;
+	Wed,  2 Jan 2008 23:34:27 -0500 (EST)
+X-Terra-Karma: 0%
+X-Terra-Hash: 01ae2625f2c4fe24d19c607a26072222
+Received-SPF: none (elimba.terra.com: 66.119.66.67 is neither permitted nor denied by domain of advancedsl.com.ar) client-ip=66.119.66.67; envelope-from=ggarra@advancedsl.com.ar; helo=[192.168.1.3];
+Received: from [192.168.1.3] (unknown [201.255.33.238])
+	(authenticated user ggarra@advancedsl.com.ar)
+	by elimba.terra.com (Postfix) with ESMTP id 537181BC056;
+	Wed,  2 Jan 2008 23:34:26 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <20080103035838.GA24004@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69508>
 
-On Jan 1, 2008 10:52 AM, Steffen Prohaska <prohaska@zib.de> wrote:
-> In conclusion, using setenv() as in the original code instead of
-> set_git_dir() should be safe and this patch is not needed.
->
-> I tend to revert the changes in msysgit and see if we hit any
-> problems.  But I'll wait until 1.5.4 is released.
->
->        Steffen
+Shawn O. Pearce wrote:
+>=20
+> If you read the documentation carefully you will note that the
+> pre-receive hook receives input on stdin; 1 line of data per ref
+> that is being pushed with the old/new SHA-1 values and the ref
+> name.  The hook exits 0 to allow all changes to take place and
+> can exit > 0 to abort and disallow all updates.
+>=20
 
-Please don't revert this change. I've made it in response to git clone
-failing, commit 855f254b2b5b083a63fc8d7709a42e2cbdc5a136.
+Sure, but I cannot pass any sort of authentication to the script other=20
+than rely on environment variables or system calls, as git will not=20
+provide anything else.
 
--- 
-- Dmitry
+To do proper authentication on a file or directory basis, I have to mix=
+=20
+two things then:
+
+A user/group base authentication/login based likely on unix permissions=
+=20
+and ssh AND a pre-receive hook script that finds the user/group name an=
+d=20
+then checks whether the user can change that particular file/directory.
+
+I hope the ref name is the (relative) path name to the file and not jus=
+t=20
+the file's basename.
+
+If so, I can see that most of what I want to do is possible.  It is jus=
+t=20
+pretty far from being elegant or easy to set up.
+
+To distinguish a bad commit due to tabs for example from an actual=20
+permission trouble.  I'm assuming that the stderr/stdout of git hooks i=
+s=20
+redirected back to the client?
+
+Even with all of that, it seems it is still not possible to limit pulls=
+=20
+to a certain directory only, right?
+
+Anyway, I think I more or less have the answer I (sadly) expected.=20
+Git's authorization mechanism is pretty much a roll your own type thing=
+=2E=20
+  I'll check out the python authorization script that Linus mentioned t=
+o=20
+see if that alleviates setup troubles a bit.
+
+--=20
+Gonzalo Garramu=C3=B1o
+ggarra@advancedsl.com.ar
+
+AMD4400 - ASUS48N-E
+GeForce7300GT
+Xubuntu Gutsy
