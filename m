@@ -1,103 +1,74 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git and securing a repository
-Date: Wed, 2 Jan 2008 22:58:38 -0500
-Message-ID: <20080103035838.GA24004@spearce.org>
-References: <477B39B5.5010107@advancedsl.com.ar> <31e679430801012234x20bbebe7vb496a338bf2699d5@mail.gmail.com> <477B6199.6070601@advancedsl.com.ar> <ee77f5c20801020126n1776d625ya6928c2e4bfdf497@mail.gmail.com> <477B69ED.3090107@advancedsl.com.ar> <m3ir2co5s4.fsf@roke.D-201>
+From: "Dmitry Kakurin" <dmitry.kakurin@gmail.com>
+Subject: Re: [PATCH 3/3] Replace setenv(GIT_DIR_ENVIRONMENT, ...) with set_git_dir()
+Date: Wed, 2 Jan 2008 20:07:35 -0800
+Message-ID: <a1bbc6950801022007w164d050bhf8a8a8c0ad6736b@mail.gmail.com>
+References: <11956768414090-git-send-email-prohaska@zib.de>
+	 <11956768412755-git-send-email-prohaska@zib.de>
+	 <Pine.LNX.4.64.0711220121560.27959@racer.site>
+	 <7v63zv9fel.fsf@gitster.siamese.dyndns.org>
+	 <C50619A0-4A67-4968-8431-D7A685F723B7@zib.de>
+	 <7vsl2y90pm.fsf@gitster.siamese.dyndns.org>
+	 <52415F60-C080-4260-86CD-32A379482341@zib.de>
+	 <474552D6.5060305@viscovery.net>
+	 <3B6B19E6-255F-4D8F-B6A3-255A9E8E0AB0@zib.de>
+	 <0FFA1D0A-DB70-446C-9C43-A6FBAEFE7CA4@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Gonzalo =?utf-8?Q?Garramu=C3=B1o?= <ggarra@advancedsl.com.ar>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 03 04:59:13 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Johannes Sixt" <j.sixt@viscovery.net>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Steffen Prohaska" <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Thu Jan 03 05:08:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAHEd-00043N-31
-	for gcvg-git-2@gmane.org; Thu, 03 Jan 2008 04:59:11 +0100
+	id 1JAHNC-00062N-MM
+	for gcvg-git-2@gmane.org; Thu, 03 Jan 2008 05:08:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754786AbYACD6o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jan 2008 22:58:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753910AbYACD6o
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 22:58:44 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:38642 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753527AbYACD6n convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Jan 2008 22:58:43 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JAHDw-0005lw-IM; Wed, 02 Jan 2008 22:58:28 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B4F7120FBAE; Wed,  2 Jan 2008 22:58:38 -0500 (EST)
+	id S1754496AbYACEHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jan 2008 23:07:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754150AbYACEHh
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Jan 2008 23:07:37 -0500
+Received: from an-out-0708.google.com ([209.85.132.251]:46069 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753867AbYACEHg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jan 2008 23:07:36 -0500
+Received: by an-out-0708.google.com with SMTP id d31so1030783and.103
+        for <git@vger.kernel.org>; Wed, 02 Jan 2008 20:07:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=KG6fSIzudHaY/v4Y3C43P4KtlxeTq7iowrX58kVvbAk=;
+        b=EpLDeJqpZbL2C7gR0yNhGC+cRqioysYE/cnqnsg7nzSSYykGBVyQCDwtQ5Z9O/v45kS6TCQLKmYyj3WjskS59cx/aSryc92YdWNxevgHhFT7LakLUpuZF0BYmc+8cxG51kZqvRXVp6vCfHSPmkCJP+QM5blXG13RrjgG2cxwN4k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Zx//8J2sjpDfsYRSBZToXFNB+qbm/+I9Iw9qbdi5hmoEIKyCx03SeVgXa6R59/JwJkDem9ICb2um4xjvqRuCHa/QXwAZwS8zbOeLpBVM54SXIBn39HjvgOCjPjvisiFVTNmjBGosVuUEYVRCXrmTN8zLMYPVmvehUJcoEnWP6Q8=
+Received: by 10.100.255.10 with SMTP id c10mr31879657ani.54.1199333255482;
+        Wed, 02 Jan 2008 20:07:35 -0800 (PST)
+Received: by 10.70.59.16 with HTTP; Wed, 2 Jan 2008 20:07:35 -0800 (PST)
+In-Reply-To: <0FFA1D0A-DB70-446C-9C43-A6FBAEFE7CA4@zib.de>
 Content-Disposition: inline
-In-Reply-To: <m3ir2co5s4.fsf@roke.D-201>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69507>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Gonzalo Garramu=C3=B1o <ggarra@advancedsl.com.ar> writes:
-> > David Symonds wrote:
-> >>
-> >> You can do arbitrarily-fine-grained authentication via the
-> >> pre-receive hook.
-> >=20
-> > Can you provide some more info?  Looking at the kernel.org git docs=
-,
-> > the pre-receive hook seems very limited as no parameters are allowe=
-d.
-> > So I'm not sure how an authentication system could be created.
+On Jan 1, 2008 10:52 AM, Steffen Prohaska <prohaska@zib.de> wrote:
+> In conclusion, using setenv() as in the original code instead of
+> set_git_dir() should be safe and this patch is not needed.
+>
+> I tend to revert the changes in msysgit and see if we hit any
+> problems.  But I'll wait until 1.5.4 is released.
+>
+>        Steffen
 
-If you read the documentation carefully you will note that the
-pre-receive hook receives input on stdin; 1 line of data per ref
-that is being pushed with the old/new SHA-1 values and the ref
-name.  The hook exits 0 to allow all changes to take place and
-can exit > 0 to abort and disallow all updates.
+Please don't revert this change. I've made it in response to git clone
+failing, commit 855f254b2b5b083a63fc8d7709a42e2cbdc5a136.
 
-This is a "batch" form of the update hook.
-
-> > It also seems to be a push hook only (not invoked on pulls).
->=20
-> Some of read-only (fetch only) access protocols do not support
-> authentication: http, ftp, rsync, git. Authentication is provided onl=
-y
-> for access via ssh and for push via https (WebDAV).
-
-Authentication could be supported for http, ftp, or ssh based fetch,
-but there you are relying on the server that provides access to do
-the authentication and authorization for you; typically that will
-boil down to UNIX filesystem read permission.  Though with HTTP
-and a fancy Apache config it doesn't have to be.
-=20
-> There is example update hook in contrib/hooks, named update-paranoid,
-> which could be base of what you want. Note that you probably rather
-> use newer pre-receive hook instead of older update hook.
-
-update-paranoid uses the update hook rather than pre-receive to
-allow it to allow/deny on a per-ref basis.  One of the flaws of
-the pre-receive hook "API" is it is an all-or-nothing proposition.
-
-So by using the "older" update hook update-paranoid can make its
-decision on a per-ref basis and allow some refs to change in this
-push but abort/deny others.  I find that useful but not everyone
-might.
-=20
-> AFAIK both update and pre-receive hooks are invoked also on fetch...
-> but I might be mistaken.
-
-No, they are *not* invoked on fetch.  Currently no hooks execute
-during fetch; either on the server *or* on the client side of
-the connection.
-
---=20
-Shawn.
+-- 
+- Dmitry
