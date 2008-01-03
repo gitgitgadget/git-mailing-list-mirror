@@ -1,128 +1,164 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: [PATCH] Fix grammar nits in documentation and in code comments.
-Date: Thu, 03 Jan 2008 15:18:07 +0100
-Message-ID: <87wsqr802o.fsf@rho.meyering.net>
+From: Gregory Jefferis <jefferis@gmail.com>
+Subject: Re: Stitching together private svn repo and public git repo
+Date: Thu, 03 Jan 2008 14:43:09 +0000
+Message-ID: <C3A2A4FD.1089D%jefferis@gmail.com>
+References: <20080102224611.GA14984@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 03 15:18:40 2008
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Charles Bailey <charles@hashpling.org>,
+	Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 03 15:43:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAQu6-0002Q2-Fo
-	for gcvg-git-2@gmane.org; Thu, 03 Jan 2008 15:18:38 +0100
+	id 1JARIQ-0002bo-T5
+	for gcvg-git-2@gmane.org; Thu, 03 Jan 2008 15:43:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752129AbYACOSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2008 09:18:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752080AbYACOSK
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jan 2008 09:18:10 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:32929 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751975AbYACOSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2008 09:18:09 -0500
-Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id B222317B5AC
-	for <git@vger.kernel.org>; Thu,  3 Jan 2008 15:18:07 +0100 (CET)
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 7118317B5B4
-	for <git@vger.kernel.org>; Thu,  3 Jan 2008 15:18:07 +0100 (CET)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 4C36A58B6D; Thu,  3 Jan 2008 15:18:07 +0100 (CET)
+	id S1751847AbYACOnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jan 2008 09:43:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751527AbYACOnU
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jan 2008 09:43:20 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:6138 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751472AbYACOnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jan 2008 09:43:19 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so390215nfb.21
+        for <git@vger.kernel.org>; Thu, 03 Jan 2008 06:43:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:user-agent:date:subject:from:to:cc:message-id:thread-topic:thread-index:in-reply-to:mime-version:content-type:content-transfer-encoding;
+        bh=DZf3h0WWd3L23KxHBSOB6gSHHDRdGS6kiEmgf0r2vH8=;
+        b=aK0FaX0SPxoAwQM+eLSxS83zUJmIQpdrOAbVpTRObb2TNCB4uCMuoQzHmmyRzl/2PcfLTAepp9z8z7YCLYqYuEdJb0xOEPPT4mPfqFAVBSWunqOsFts9bElcCpHQD0wcZotf+OjpB+h2f3RaSQqzPHGTSZOz9HsdJzqUY0NeO8k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=user-agent:date:subject:from:to:cc:message-id:thread-topic:thread-index:in-reply-to:mime-version:content-type:content-transfer-encoding;
+        b=MFefOxI6SnPqhSGb6FBLUf8sQe6kFHfOBLc+tWzGG64fr+WxROPqjmoB2+XfMhW5TBhPrbCz0va9lKoxa4ivGDVjEEphZ6TJkB+PvbI+zesKR2o69YXXoUaU9H4E4N2KdjI4BsljoOBt0abD2V3vhbNIoh24jkk9dGqjUq31RKo=
+Received: by 10.78.186.9 with SMTP id j9mr18138999huf.49.1199371396294;
+        Thu, 03 Jan 2008 06:43:16 -0800 (PST)
+Received: from ?81.98.250.69? ( [81.98.250.69])
+        by mx.google.com with ESMTPS id d27sm23198492nfh.34.2008.01.03.06.43.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 03 Jan 2008 06:43:14 -0800 (PST)
+User-Agent: Microsoft-Entourage/11.2.3.060209
+Thread-Topic: Stitching together private svn repo and public git repo
+Thread-Index: AchOFvUxM7AtGroKEdyDSgAUURoPUg==
+In-Reply-To: <20080102224611.GA14984@hashpling.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69527>
 
+Many thanks to both for your replies.  Starting from your comments and
+consulting:
 
-Signed-off-by: Jim Meyering <meyering@redhat.com>
----
- Documentation/i18n.txt |    2 +-
- builtin-blame.c        |    2 +-
- ident.c                |    2 +-
- merge-recursive.c      |    2 +-
- setup.c                |    2 +-
- sha1_file.c            |    2 +-
- 6 files changed, 6 insertions(+), 6 deletions(-)
+http://www.kernel.org/pub/software/scm/git/docs/repository-layout.html
 
-diff --git a/Documentation/i18n.txt b/Documentation/i18n.txt
-index b95f99b..1e188e6 100644
---- a/Documentation/i18n.txt
-+++ b/Documentation/i18n.txt
-@@ -22,7 +22,7 @@ does not forbid it.  However, there are a few things to keep in
- mind.
+for (fairly scant) details of .git/info/grafts and
+ 
+http://www.kernel.org/pub/software/scm/git/docs/git-filter-branch.html
 
- . `git-commit-tree` (hence, `git-commit` which uses it) issues
--  an warning if the commit log message given to it does not look
-+  a warning if the commit log message given to it does not look
-   like a valid UTF-8 string, unless you explicitly say your
-   project uses a legacy encoding.  The way to say this is to
-   have i18n.commitencoding in `.git/config` file, like this:
-diff --git a/builtin-blame.c b/builtin-blame.c
-index d98caaf..9b4c02e 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -606,7 +606,7 @@ static void add_blame_entry(struct scoreboard *sb, struct blame_entry *e)
+I think I have now been able to do the necessary.  Since I found this a
+trivial operation (in the true mathematical sense of quasi-impossible until
+someone helps you to figure it out and simple once you have) and I tripped
+over a couple of times, I thought I would share my final shell script below.
 
- /*
-  * src typically is on-stack; we want to copy the information in it to
-- * an malloced blame_entry that is already on the linked list of the
-+ * a malloced blame_entry that is already on the linked list of the
-  * scoreboard.  The origin of dst loses a refcnt while the origin of src
-  * gains one.
-  */
-diff --git a/ident.c b/ident.c
-index 892d77a..b839dcf 100644
---- a/ident.c
-+++ b/ident.c
-@@ -152,7 +152,7 @@ static int copy(char *buf, size_t size, int offset, const char *src)
- 	/*
- 	 * Copy the rest to the buffer, but avoid the special
- 	 * characters '\n' '<' and '>' that act as delimiters on
--	 * a identification line
-+	 * an identification line
- 	 */
- 	for (i = 0; i < len; i++) {
- 		c = *src++;
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 33ccc40..b34177d 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -289,7 +289,7 @@ static int get_files_dirs(struct tree *tree)
- }
+One point that I missed initially.  The graft file format is unforgiving.
+You are allowed comments but each regular line is:
 
- /*
-- * Returns a index_entry instance which doesn't have to correspond to
-+ * Returns an index_entry instance which doesn't have to correspond to
-  * a real cache entry in Git's index.
-  */
- static struct stage_data *insert_stage_data(const char *path,
-diff --git a/setup.c b/setup.c
-index b59dbe7..adede16 100644
---- a/setup.c
-+++ b/setup.c
-@@ -140,7 +140,7 @@ const char **get_pathspec(const char *prefix, const char **pathspec)
-  * Test if it looks like we're at a git directory.
-  * We want to see:
-  *
-- *  - either a objects/ directory _or_ the proper
-+ *  - either an objects/ directory _or_ the proper
-  *    GIT_OBJECT_DIRECTORY environment variable
-  *  - a refs/ directory
-  *  - either a HEAD symlink or a HEAD file that is formatted as
-diff --git a/sha1_file.c b/sha1_file.c
-index b0c2435..6583797 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -148,7 +148,7 @@ static void fill_sha1_path(char *pathbuf, const unsigned char *sha1)
+Commit-SHA-1 Parent1-SHA-1 Parent2-SHA-1\n
+      
+If you put e.g. more than a single space between your SHA-1s you will get
+"bad graft data:" - I missed one in the fake merge line and ran round in
+circles for a bit thinking it was something to do with the state of my
+trees.
 
- /*
-  * NOTE! This returns a statically allocated buffer, so you have to be
-- * careful about using it. Do a "xstrdup()" if you need to save the
-+ * careful about using it. Do an "xstrdup()" if you need to save the
-  * filename.
-  *
-  * Also note that this returns the location for creating.  Reading
---
-1.5.4.rc2.7.gcb27
+Anyway, boy did it feel great when I was able to git-pull the latest public
+release into my private repository:
+
+    34 files changed, 11563 insertions, 8399 deletions
+
+and only 2 simple conflicts to fix with git-mergetool.  That was not a merge
+I wanted to do by hand!
+
+Best wishes and thanks again,
+
+Greg.
+-- 
+
+#!/usr/bin/env bash
+# makemygitbygraft.sh
+# merge my private repo (converted from svn) with a public git repo
+# retains history of both and will allow 3 way merges etc in future
+
+# work on a copy of my svn imported repo just in case
+cd ~/dev/Physiology
+rm -rf ~/dev/Physiology/nm-graft
+cp -R nm-git-svn2 nm-graft
+cd nm-graft
+
+# Now get to work, bring in public repo as a remote
+git remote add nm-ucl ../nm-ucl
+git fetch nm-ucl
+
+# set up the grafts
+cat > .git/info/grafts <<EOF
+# connect r2 of git-svn to v1.86 of nm-ucl
+# r1 (which was an identical initial import) will now be detached (and
+forgotten)
+52b1933421ef524811407fa4c240da58ceec5749
+eca3db14fcf25744fdf585456f03599a9db2af96
+#
+# Make fake merge with Neuromatic v1.91b
+# svn-manualmerge1 svn-manualmerge1~1 public-v1.91b
+120282ee5275027312dde386c8995218f361cf35
+0962cb27f7ad92f44def04630e8e6a22b86e0699
+6735057f53dd57248c7ec23f6ae9f22085d98fba
+EOF
+
+# running git-status seems to stop git thinking that the working dir is
+dirty
+git-status
+# run git-filter-branch to instantiate the new parents
+# just use cat so that parent names are untouched by the process
+# but will be fed by .git/grafts/info as appropriate
+git-filter-branch --parent-filter cat HEAD
+
+Nicely formatted snippet also at
+http://pastie.textmate.org/private/pv1n1nbmcmtxnxbq4zd7w
+
+On 2/1/08 22:46, "Charles Bailey" <charles@hashpling.org> wrote:
+
+> On Thu, Jan 03, 2008 at 01:13:54AM +0300, Dmitry Potapov wrote:
+>> I believe there is a much easier way to do that using .git/info/grafts
+>> The first step is to create .git/info/grafts, which specifies commit-id
+>> and its parents for each commit that you want to change. Then you
+>> can check the result using gitk, and if you are satisfied with what
+>> you see then you run git filter-branch on it to convert 'fake' parents
+>> into real ones.
+>> 
+>> Dmitry
+>> 
+> 
+> Oh yes, this is much easier.  Unless I'm missing something, the
+> documentation on grafts is fairly sparse, though.  They are mentioned
+> (almost in passing) in git help filter-branch but the file format is
+> only documented in repository-layout.txt which seems more developer
+> than user oriented.
+> 
+> Charles.
+
+-- 
+Gregory Jefferis, PhD
+Division of Neurobiology
+MRC Laboratory of Molecular Biology,
+Hills Road,
+Cambridge, CB2 0QH, UK.
+
+http://www2.mrc-lmb.cam.ac.uk/NB/jefferis_g
+http://www.neuroscience.cam.ac.uk/directory/profile.php?gsxej2
+http://flybrain.stanford.edu
