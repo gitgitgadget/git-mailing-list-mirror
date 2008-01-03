@@ -1,130 +1,131 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git over webdav: what can I do for improving http-push ?
-Date: Thu, 3 Jan 2008 22:47:01 +0100
-Message-ID: <200801032247.02323.jnareb@gmail.com>
-References: <477822C3.9060002@gbarbier.org> <477D3401.2010005@gbarbier.org> <20080103211521.GA4225@efreet.light.src>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/2] attribute "coding": specify blob encoding
+Date: Thu, 03 Jan 2008 13:54:58 -0800
+Message-ID: <7vejcyo9ql.fsf@gitster.siamese.dyndns.org>
+References: <20080102.082014.02281301.tshibata@ab.jp.nec.com>
+	<7v1w904x29.fsf@gitster.siamese.dyndns.org>
+	<7vsl1gy2si.fsf@gitster.siamese.dyndns.org>
+	<200801032128.m03LSIn2022902@mi0.bluebottle.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Gr=C3=A9goire_Barbier?= <gb@gbarbier.org>,
-	git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Thu Jan 03 22:47:37 2008
+Cc: Tsugikazu Shibata <tshibata@ab.jp.nec.com>, git@vger.kernel.org
+To: =?utf-8?B?44GX44KJ44GE44GX44Gq44Gq44GT?= <nanako3@bluebottle.com>
+X-From: git-owner@vger.kernel.org Thu Jan 03 22:55:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAXua-0001RW-VK
-	for gcvg-git-2@gmane.org; Thu, 03 Jan 2008 22:47:37 +0100
+	id 1JAY2W-0004fP-0l
+	for gcvg-git-2@gmane.org; Thu, 03 Jan 2008 22:55:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752783AbYACVrL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jan 2008 16:47:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752739AbYACVrL
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jan 2008 16:47:11 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:21538 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752580AbYACVrK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2008 16:47:10 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so2708385ugc.16
-        for <git@vger.kernel.org>; Thu, 03 Jan 2008 13:47:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=99cl52hwF7e+FZh6CDX32QC53DO60mu5FtNValPIo2M=;
-        b=WwDzRX8yVzc/Ed+XW0Zlki9cBxteDYcNbhBJ3WkMCXsrktmKtdkg53hZpnChcbdrDmTnNrHImVHriN+nnswVt5iYbFkqDqJgoV9emzw79RmSJUuw6jPl/z7LMbVWHP07UdtO1At430kqKZFf3YHnKHL00JG/A/hTOHmokrGQL9I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=w+eWDJJzXPz9A3CgDAZnTbGhKXs/KCeBrD38kH5Px6HHB5j1UbH2zKy1NBThGKD5/hBoCQrwcK8te8HRrvLDCEimXAglLZMOPUPVeVZNpo3fQcEFkc/8u+HVl6fZriysrEn9gVy5zXacWd1D18bFRUBsWliafpdrF22FEbkWhsI=
-Received: by 10.67.116.11 with SMTP id t11mr15569075ugm.61.1199396825100;
-        Thu, 03 Jan 2008 13:47:05 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.189.34])
-        by mx.google.com with ESMTPS id x37sm16914317ugc.76.2008.01.03.13.47.02
-        (version=SSLv3 cipher=OTHER);
-        Thu, 03 Jan 2008 13:47:03 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20080103211521.GA4225@efreet.light.src>
-Content-Disposition: inline
+	id S1752816AbYACVzN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jan 2008 16:55:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752739AbYACVzN
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jan 2008 16:55:13 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51573 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752717AbYACVzL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Jan 2008 16:55:11 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DC64635E9;
+	Thu,  3 Jan 2008 16:55:09 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id EBCFB35E4;
+	Thu,  3 Jan 2008 16:55:05 -0500 (EST)
+In-Reply-To: <200801032128.m03LSIn2022902@mi0.bluebottle.com>
+	(nanako3@bluebottle.com's message of "Fri, 04 Jan 2008 06:23:25
+	+0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69541>
 
-Jan Hudec wrote:
-> On Thu, Jan 03, 2008 at 20:14:09 +0100, Gr=C3=A9goire Barbier wrote:
+=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93  <nanak=
+o3@bluebottle.com> writes:
+
+> Quoting Junio C Hamano <gitster@pobox.com>:
+>=20
+>> This teaches "diff hunk header" function about custom character
+>> encoding per path via gitattributes(5) so that it can sensibly
+>> chomp a line without truncating a character in the middle.
+>>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>
+>>  * This is not intended for serious inclusion, but was done more
+>>    as a demonstration of the concept, hence [3/2].
 >
-> > I had a quick look on bzr and hg, and it seems that bzr use the eas=
-y way=20
-> > (walker, no optimizations)
->=20
-> That's not quite true -- bzr has both dumb (walker over plain HTTP) a=
-nd smart
-> (CGI) methods. But their CGI is really just tunelling their custom pr=
-otocol
-> over HTTP and that protocol will not be anywhere near what we want fo=
-r git
-> because of vastly different design of the storage.
+> Why not?  It looks a useful addition for us Japanese people.
 
-Perhaps we could also simply tunnel git protocol over HTTP / HTTPS?
-=20
-> > and hg a cgi (therefore, maybe optimizations).=20
-> > By quick look I mean that I sniff the HTTP queries on the network d=
-uring a=20
-> > clone. I need to look harder...
->=20
-> Yes, mercurial uses a CGI. But I am not sure how similar their approa=
-ch is to
-> anything that would make sense for git, so looking at the details mig=
-ht or
-> might not be useful.
->=20
-> > BTW I never looked at the git:// protocol. Do you think that by tun=
-neling=20
-> > the git protocol in a cgi (hg uses URLs of the form=20
-> > "/mycgi?cmd=3Dmycommand&...", therefore I think "tunnel" is not a b=
-ad=20
-> > word...) the performance would be good?
->=20
-> It would be pretty hard to tunnel it and it would loose all it's nice
-> properties. The git protocol, for pull, basically works like this:
->=20
->  - server sends a list of it's refs
->  - client tells server which ones it wants
->  - client starts listing revisions it has, newest to oldest
->  - server tells client whenever it finds common ancestor with one of =
-the
->    heads desired
->  - client restarts the listing from next ref
->  - server starts sending the data when client runs out of refs to lis=
-t
->=20
-> The main point about the protocol is, that the client is listing the =
-refs, as
-> fast as it can and server will stop it when it sees a revision it kno=
-ws.
-> Therefore there will only be one round-trip to discover each common a=
-ncestor.
->=20
-> However, you can't do this over HTTP, because response won't be start=
-ed until
-> the request is received. You could be sending a lot of smallish reque=
-sts and
-> quick, often empty, responses to them. However, that will waste a lot=
- of
-> bandwidth (because of the HTTP overhead) and loose much of the speed =
-anyway.
-> Also the HTTP protocol is stateless, but this is inherently stateful,=
- so you
-> would have to work that around somehow too. Therefore a different app=
-roach is
-> preferable on HTTP.
+    (offtopic) I was once told that "us Japanese people" is a
+    bad thing to say in public because it sets an unfriendly
+    tone by creating a psychological divide between "us" and
+    "others".  After all I am one of you ;-)
 
-Perhaps we could use AJAX (XMLHttpRequest for communication, plain HTTP=
- or
-IFRAMES for sending data) or something like this for git protocol tunne=
-ling?
+The reason I do not like the patch as-is is because I have
+doubts about the way "coding" acts in the patch.
 
---=20
-Jakub Narebski
-Poland
+There already is clean/smudge filter mechanism.  Even if your
+work tree has files in euc-jp or Shift_JIS, you could choose to
+internally use UTF-8 at git object level.  Then the part that
+deals with diff hunk headers (the topic of the patch we are
+discussing) would have to work only on UTF-8 data.
+
+	Side note: when getting the data from a file in the work
+	tree, we convert into internal representation before
+	running diff (see diff.c::diff_populate_filespec()), but
+	we do not convert it back to external representation by
+	running the smudge filter on the diff output.  We might
+	optionally want to but if somebody is going to do this,
+	the patch accepting side also needs to be modified to
+	reverse the conversion.
+
+The solution with clean/smudge is not applicable to everybody.
+It needs to be agreed upon project-wide what encoding is used as
+the canonical encoding for the project, and when the project
+chooses to use UTF-8, the above would become a cleaner and
+workable approach.
+
+If the project, on the other hand, chooses to use a non UTF-8
+encoding (e.g. euc-jp) as the canonical representation,
+something like my patch may be necessary.
+
+Between these two ways to skin the cat, I do not want to close
+the door for either one of them too early, although I am
+somewhat partial to "internally everything is UTF-8" approach.
+
+Maybe we would want to use "coding" (short, sweet and nice name
+for an attribute) to mean a canned smudge/clean filter pair that
+runs to/from UTF-8 iconv, making the "internally, everything is
+UTF-8" approach a more officially supported option.  If we
+choose to go that route, the way "coding" attribute was used in
+the patch directly conflicts with that design, as the world view
+my "coding" patch takes is "whatever coding project chooses is
+used internally, and the attribute is used to teach coding
+specific actions to the underlying logic".
+
+>> +static struct {
+>> +	const char *coding;
+>> +	sane_truncate_fn fn;
+>> +} builtin_truncate_fn[] =3D {
+>> +	{ "euc-jp", truncate_euc_jp },
+>> +	{ "utf-8", NULL },
+>> +};
+>
+>Can you also do JIS and Shift JIS?  I ask because many of my
+>old notes are in Shift JIS and I think it is the same for many
+>other people.=20
+
+I guess somebody else could (hint, hint,...).  Shift_JIS should
+be more or less straightforward to add.
+
+With the current code structure, however, ISO-2022 (you said
+"JIS" -- Japanese often use that word to mean 7-bit ISO-2022 and
+so did you in this context) is a bit cumbersome to handle, as
+you cannot just truncate but also have to add a few escape bytes
+to go back to ASCII at the end of line.
