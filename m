@@ -1,137 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git weird pulling issue
-Date: Thu, 03 Jan 2008 09:51:25 -0800
-Message-ID: <7v4pdusspu.fsf@gitster.siamese.dyndns.org>
-References: <20080103121114.GE8046@cvg>
+From: =?UTF-8?B?R3LDqWdvaXJlIEJhcmJpZXI=?= <gb@gbarbier.org>
+Subject: Re: git over webdav: what can I do for improving http-push ?
+Date: Thu, 03 Jan 2008 20:14:09 +0100
+Message-ID: <477D3401.2010005@gbarbier.org>
+References: <477822C3.9060002@gbarbier.org> <alpine.LNX.1.00.0712302145500.13593@iabervon.org> <47791F90.8030302@pobox.com> <20080101113301.GC9214@efreet.light.src> <477A26FD.7020408@gbarbier.org> <m3myrpo1p0.fsf@roke.D-201> <20080101202352.GA4295@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Cyrill Gorcunov <gorcunov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 03 18:52:06 2008
+To: Jan Hudec <bulb@ucw.cz>, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 03 20:15:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAUEc-0007Jm-PV
-	for gcvg-git-2@gmane.org; Thu, 03 Jan 2008 18:52:03 +0100
+	id 1JAVXF-0005So-9V
+	for gcvg-git-2@gmane.org; Thu, 03 Jan 2008 20:15:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752095AbYACRvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2008 12:51:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752547AbYACRvg
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jan 2008 12:51:36 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51383 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750881AbYACRvf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2008 12:51:35 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6210746F5;
-	Thu,  3 Jan 2008 12:51:34 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DFB746F2;
-	Thu,  3 Jan 2008 12:51:29 -0500 (EST)
-In-Reply-To: <20080103121114.GE8046@cvg> (Cyrill Gorcunov's message of "Thu, 3
-	Jan 2008 15:11:14 +0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753980AbYACTOO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jan 2008 14:14:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753875AbYACTON
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jan 2008 14:14:13 -0500
+Received: from relay1-v.mail.gandi.net ([217.70.178.75]:51998 "EHLO
+	relay1-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752867AbYACTOL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jan 2008 14:14:11 -0500
+Received: from localhost (mfilter1-c.gandi.net [217.70.182.21])
+	by relay1-v.mail.gandi.net (Postfix) with ESMTP id D8C76362B5;
+	Thu,  3 Jan 2008 20:14:09 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mfilter1-c.mgt.gandi.net
+Received: from relay1-v.mail.gandi.net ([217.70.178.75])
+	by localhost (mfilter1-c.mgt.gandi.net [217.70.182.21]) (amavisd-new, port 10024)
+	with ESMTP id tkrLwWzjPNef; Thu,  3 Jan 2008 20:14:05 +0100 (CET)
+Received: from [192.168.79.1] (soy95-1-82-229-96-169.fbx.proxad.net [82.229.96.169])
+	by relay1-v.mail.gandi.net (Postfix) with ESMTP id BC234362AF;
+	Thu,  3 Jan 2008 20:14:05 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <20080101202352.GA4295@efreet.light.src>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69530>
 
-Cyrill Gorcunov <gorcunov@gmail.com> writes:
-
-> Hi git-list,
+Jan Hudec a =C3=A9crit :
+> On Tue, Jan 01, 2008 at 10:12:28 -0800, Jakub Narebski wrote:
+>  =20
+>> Gr=C3=A9goire Barbier <gb@gbarbier.org> writes:
+>>
+>>    =20
+>>> I think that real HTTP support is better than all workarounds we
+>>> will be able to find to get through firewalls (when CONNECT is not
+>>> available, some awful VPNs that send Etherne over HTTP may work
+>>> ;-)).  That's why I'm ok to work several hours on git code to
+>>> enhance real HTTP(S) support.
+>>>      =20
+>> There was also an idea to create a CGI program, or enhance gitweb
+>> to use for pushing. I don't know if it would be better way to pursue
+>> to work around corporate firewalls, or not...
+>>    =20
+I subscribe to this point of view.
+I will look at the list archive to search for what has been said before=
+=20
+about this.
 >
-> i've a weird problem with pulling remote tree. look i've linus's tree
-> as a base repo. then i've created x86 branch to which i pulled
-> ingo's x86 tree. So all further pulling is made over this branch.
-> And even having '--force' option at moment of pulling changes from
-> Ingo's tree i've got something like that:
+> It is what bzr and mercurial do and I think it would be quite good wa=
+y to go
+> for cases like this.
+Ok, I will have to look at bzr and mercurial...
+
+>  Eg. while our corporate firewall does allow anything
+> through connect on 443 (so I can use ssh that way), it does *not* sup=
+port
+> web-dav in non-ssl mode. So I eg. can't even get from public subversi=
+on
+> repositories at work.
 >
-> ---
-> cyrill@cvg linux-2.6-x86.git $ ./git-update.sh 
-> Updating "x86"
-> remote: Generating pack...
-> remote: Done counting 15 objects.
-> Result has 9 objects.
-> remote: Deltifying 9 objects...
-> remote: /9) done/9) done
-> remote: Total 9 (delta 7), reused 3 (delta 1)
-> Unpacking 9 objects...
->  100% (9/9) done
-> Auto-merged include/asm-x86/msr.h
-> CONFLICT (content): Merge conflict in include/asm-x86/msr.h
-> Auto-merged include/linux/ptrace.h
-> Auto-merged kernel/ptrace.c
-> Automatic merge failed; fix conflicts and then commit the result.
+> I have also thought about optimizing download using CGI, but than I t=
+hought,
+> that maybe there is a way to statically generate packs so, that if th=
+e client
+> wants n revisions, the number of revisions it downloads is O(n) and t=
+he
+> number of packs it gets them from (and thus number of round-trips) is
+> O(log(n)). Assuming the client always wants everything up to the tip,=
+ of
+> course. Now this is trivial with linear history (pack first half, tha=
+n half
+> of what's left, etc., gives logarithmic number of packs and you alway=
+s
+> download at most twice as much as you need), but it would be nice if =
+somebody
+> found a way (even one that satisfies the conditions on average only) =
+to do
+> this with non-linear history, it would be very nice improvement to th=
+e http
+> download -- native git server optimizes amount of data transfered ver=
+y well,
+> but at the cost of quite heavy CPU load on the server.
+>  =20
+Well... frankly I don't think I'm able of such things.
+Writing a walker over webdav or  a simple cgi is a thing I can do (I=20
+think),  but I'm not tought enough (or not ready to take the time=20
+needed) to have a look on the internals of packing revisions (whereas I=
+=20
+can imagine it would means that "my" walker would be suitable only for=20
+small projects in terms of code amount and commit frequency).
 
-To your readers, "./git-update.sh" is a mystery script; nobody
-knows what you are doing in there.
+I had a quick look on bzr and hg, and it seems that bzr use the easy wa=
+y=20
+(walker, no optimizations) and hg a cgi (therefore, maybe=20
+optimizations). By quick look I mean that I sniff the HTTP queries on=20
+the network during a clone. I need to look harder...
 
-A handful points that might help anybody who wants to be
-helpful.
+BTW I never looked at the git:// protocol. Do you think that by=20
+tunneling the git protocol in a cgi (hg uses URLs of the form=20
+"/mycgi?cmd=3Dmycommand&...", therefore I think "tunnel" is not a bad=20
+word...) the performance would be good?
+Maybe it's not that hard to write a performant HTTP/CGI protocol for Gi=
+t=20
+if it's based upon existing code such as the git protocol.
 
- * The state your repository is in is a bit vague.  Let me try
-   to rephrase your introductory part and see if I understood
-   your history.
-
-    * It started as a clone from Linus's
-      git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-
-    * You say you created x86 branch (local) to which you pull
-      Ingo's (I do not see any tree other than scheduler ones
-      under git/mingo/), but it is unclear what this branch's
-      history looks like.
-
-      Was it done by
-
-      	git checkout -b x86
-	git pull git://.../mingo/x86/ master
-
-      If so, (1) was the initial x86 before the first pull
-      pristine Linus tree? (2) was the initial x86 pull
-      fast-forward?
-
- * I am suspecting that git-update.sh is a wrapper around
-   git-pull that does something like:
-
-    git checkout x86 &&
-    git pull git://.../mingo/x86/ master
-
-   Do you have remote tracking information for Ingo's
-   repository?  If so how does it look like?
-
-   Do you have your own changes in your x86 branch?  Do they
-   conflict with Ingo's change, IOW, is the conflict above just
-   a normal thing to expect?  What makes you think there should
-   not be any conflict?
-
-There are a few reasons I can think of that can cause conflicts.
-
- - (obvious) you have your own changes that the tree you are
-   pulling from have colliding changes;
-
- * the tree you are pulling from has rebased;
-
-The --force is about allowing git-fetch to update the remote
-tracking branches (if you use them) even when the tracking
-information is not fast-forward.  Without --force, the fetch
-would refuse to operate (and because git-pull is git-fetch
-followed by git-merge, the entire operation would fail and the
-merge won't even happen --- hence you would not even see
-conflicts).  But the option does not change the fact that what
-you are going to merge has conflicting changes with the changes
-in your current branch.  It merely allows git-fetch to forcibly
-update the remote tracking information and git-pull to proceed
-with the merges.
-
-I am suspecting that (1) you have remote tracking information
-(perhaps set up with "git remote add"); and (2) Ingo's tree
-rebased between the time your last pull and this time.  If you
-do not have any local commits on the branch, resetting to the
-remote tracking branch you use to track Ingo's progress is an
-option.  If you do, then fetching and rebasing instead of
-pulling may make further development easier.  But I cannot
-really tell.
+--=20
+Gr=C3=A9goire Barbier - gb =C3=A0 gbarbier.org - +33 6 21 35 73 49
