@@ -1,67 +1,94 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Retroactively change email signature? [resend]
-Date: Sat, 05 Jan 2008 12:08:43 +1300
-Message-ID: <477EBC7B.2080606@vilain.net>
-References: <9b3e2dc20801021237v4d5d236fn3d2643502b9bb78f@mail.gmail.com> <alpine.LFD.1.00.0801021316080.3010@woody.linux-foundation.org> <477C7837.9000303@vilain.net> <alpine.LFD.1.00.0801041031590.2811@woody.linux-foundation.org> <477EBB92.605@vilain.net>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: Trouble importing from public CVS repo
+Date: Fri, 4 Jan 2008 18:17:59 -0500
+Message-ID: <BAYC1-PASMTP15EA2E9A1145CD66AF7C4DAE4C0@CEZ.ICE>
+References: <477EA7F6.1010608@garzik.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Junio Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jan 05 00:08:26 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Matthias Urlichs <smurf@smurf.noris.de>
+To: Jeff Garzik <jeff@garzik.org>
+X-From: git-owner@vger.kernel.org Sat Jan 05 00:18:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAveL-0007cb-6A
-	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 00:08:25 +0100
+	id 1JAvoK-0002Us-GI
+	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 00:18:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754480AbYADXH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2008 18:07:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754434AbYADXH7
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 18:07:59 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:35596 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754338AbYADXH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2008 18:07:58 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id 6503821D13A; Sat,  5 Jan 2008 12:07:57 +1300 (NZDT)
-Received: from [192.168.69.104] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id DAD4E21D13A;
-	Sat,  5 Jan 2008 12:07:53 +1300 (NZDT)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <477EBB92.605@vilain.net>
-X-Enigmail-Version: 0.95.0
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.3
+	id S1754434AbYADXSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2008 18:18:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753746AbYADXSE
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 18:18:04 -0500
+Received: from bay0-omc2-s25.bay0.hotmail.com ([65.54.246.161]:50966 "EHLO
+	bay0-omc2-s25.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753438AbYADXSD (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Jan 2008 18:18:03 -0500
+Received: from BAYC1-PASMTP15 ([65.54.191.189]) by bay0-omc2-s25.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 4 Jan 2008 15:18:02 -0800
+X-Originating-IP: [74.15.76.104]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([74.15.76.104]) by BAYC1-PASMTP15.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Fri, 4 Jan 2008 15:18:01 -0800
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with smtp (Exim 4.43)
+	id 1JAvnU-0004gQ-HR; Fri, 04 Jan 2008 18:17:52 -0500
+In-Reply-To: <477EA7F6.1010608@garzik.org>
+X-Mailer: Sylpheed 2.4.5 (GTK+ 2.12.1; i686-pc-linux-gnu)
+X-OriginalArrivalTime: 04 Jan 2008 23:18:01.0608 (UTC) FILETIME=[0D09A080:01C84F28]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69614>
 
-Sam Vilain wrote:
-> Linus Torvalds wrote:
->> I don't care. If some commit refers to another commit that isn't its 
->> ancestor, then that is undefined *anyway*. 
->>
->> So the only case that really matters is when you refer to your own strict 
->> ancestor.
->>
->> This is one reason why it was so crazy that "git cherry-pick" used to have 
->> "-x" by default - appending the original SHA1 (which is generally *not* an 
->> ancestor) is meaningless and stupid.
+On Fri, 04 Jan 2008 16:41:10 -0500
+Jeff Garzik <jeff@garzik.org> wrote:
+
+> $ git-cvsimport -v -d:pserver:anonymous@cvs.lysator.liu.se:/cvsroot/unfs3 unfs3
 > 
-> Not stupid at all.  It gives you an easily clickable link to the
-> previous version of the patch, which may be of interest, and is
-> otherwise irretrievable information if the patch needed resolving.
+> produces
+> 
+> Initialized empty Git repository in /spare/repo/unfs3/.git/
+> Running cvsps...
+> connect error: Network is unreachable
+> cvs rlog: Logging unfs3
+> cvs rlog: Logging unfs3/Config
+> cvs rlog: Logging unfs3/Extras
+> cvs rlog: Logging unfs3/contrib
+> cvs rlog: Logging unfs3/contrib/nfsotpclient
+> cvs rlog: Logging unfs3/contrib/nfsotpclient/mountclient
+> cvs rlog: Logging unfs3/contrib/rpcproxy
+> cvs rlog: Logging unfs3/doc
+> Fetching LICENSE   v 1.1
+> New LICENSE: 1416 bytes
+> Fetching Makefile.in   v 1.1
+> Unknown: error
+> 
 
-footnote: of course it is entirely meaningless if the referred SHA1 is
-not published anywhere, so I agree with the cherry-pick default setting.
+Hi Jeff,
 
-Sam.
+See the same problem here and it has something to do with how files are being fetched
+from the cvs server.  I'm not much inclined to research it further, however the ugly hack
+below appears to allow the repo to be imported.  At least importing the first 10 commits
+(-L 10) looked okay...  Perhaps it's a clue to how the issue could be resolved properly.
+
+HTH,
+Sean
+
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 6d8ff93..357665d 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -421,7 +421,7 @@ sub _line {
+ 			$res += $self->_fetchfile($fh, $cnt);
+ 		} else {
+ 			chomp $line;
+-			if ($line eq "ok") {
++			if ($line eq "ok" or $line =~ /^error/i) {
+ 				# print STDERR "S: ok (".length($res).")\n";
+ 				return $res;
+ 			} elsif ($line =~ s/^E //) {
+-- 
+1.5.4.rc2.17.g257f
