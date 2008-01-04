@@ -1,66 +1,69 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
+From: Pascal Obry <pascal@obry.net>
 Subject: Re: [PATCH] git stash: one bug and one feature request
-Date: Fri, 4 Jan 2008 10:36:01 -0600 (CST)
-Message-ID: <Pine.LNX.4.64.0801041030420.31161@torch.nrlssc.navy.mil>
-References: <e5bfff550801040814n82f34b2g17c485a207093440@mail.gmail.com>
+Date: Fri, 04 Jan 2008 18:30:14 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <477E6D26.9020809@obry.net>
+References: <e5bfff550801040814n82f34b2g17c485a207093440@mail.gmail.com> <Pine.LNX.4.64.0801041030420.31161@torch.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marco Costalba <mcostalba@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 04 18:10:23 2008
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Jan 04 18:30:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAq3n-0004lN-3l
-	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 18:10:19 +0100
+	id 1JAqNd-0005Y0-LS
+	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 18:30:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753752AbYADRJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2008 12:09:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753467AbYADRJv
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 12:09:51 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:37105 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753529AbYADRJu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2008 12:09:50 -0500
-X-Greylist: delayed 1984 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 Jan 2008 12:09:50 EST
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m04Ga22x019794;
-	Fri, 4 Jan 2008 10:36:02 -0600
-Received: from torch.nrlssc.navy.mil ([128.160.25.59]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 4 Jan 2008 10:36:02 -0600
-In-Reply-To: <e5bfff550801040814n82f34b2g17c485a207093440@mail.gmail.com>
-X-OriginalArrivalTime: 04 Jan 2008 16:36:02.0563 (UTC) FILETIME=[E4F76D30:01C84EEF]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15638001
-X-TM-AS-Result: : Yes--3.094000-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
-	=?us-ascii?B?MTAtNzAzNzMxLTcwOTU4NC03MDkxMzctNzA4MzM5LTcwMzQ1NC03?=
-	=?us-ascii?B?MDc0NTEtMTEzMjMwLTcwMDM5OC0xMDY0MjAtNzA4MTc5LTE0ODAz?=
-	=?us-ascii?B?OS0xNDgwNTAtMjAwNDA=?=
+	id S1752677AbYADRaV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Jan 2008 12:30:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752213AbYADRaV
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 12:30:21 -0500
+Received: from smtp23.orange.fr ([80.12.242.97]:16486 "EHLO smtp23.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752193AbYADRaU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2008 12:30:20 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2313.orange.fr (SMTP Server) with ESMTP id 507F87000089
+	for <git@vger.kernel.org>; Fri,  4 Jan 2008 18:30:18 +0100 (CET)
+Received: from [192.168.0.100] (unknown [90.35.18.118])
+	by mwinf2313.orange.fr (SMTP Server) with ESMTP id ECF0B7000084;
+	Fri,  4 Jan 2008 18:30:17 +0100 (CET)
+X-ME-UUID: 20080104173017970.ECF0B7000084@mwinf2313.orange.fr
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <Pine.LNX.4.64.0801041030420.31161@torch.nrlssc.navy.mil>
+X-Enigmail-Version: 0.95.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69585>
 
-On Fri, 4 Jan 2008, Marco Costalba wrote:
+Brandon Casey a =E9crit :
+> Not sure how often such a command would be used though, so
+> it may not be worth it.
 
-> Currently git-stash writes to stderr also if there is nothing to error
-> out, also it would be very nice ;-) if git 'stash clear command' would
-> support deleting of only one patch, so as example to write
->
-> stg stash clear stash@{0}
->
-> To remove only the last added.
+I've missed it many times. Especially in some scripts when I want to us=
+e
+the stash-stack to store current working tree and clear it before
+exiting. This is not possible today as all the stash-stack would be cle=
+ared.
 
-Maybe it should be named 'drop'. 'drop' sounds better than
-'clear' for this usage.
+I agree that drop seems better.
 
-   git stash drop [<stash>]
+Pascal.
 
-Not sure how often such a command would be used though, so
-it may not be worth it.
+--=20
 
--brandon
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
