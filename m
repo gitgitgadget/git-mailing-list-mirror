@@ -1,72 +1,68 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH] git stash: one bug and one feature request
-Date: Fri, 4 Jan 2008 19:05:35 +0100
-Message-ID: <e5bfff550801041005x3ab682dam8535c7bde75038dc@mail.gmail.com>
-References: <e5bfff550801040814n82f34b2g17c485a207093440@mail.gmail.com>
-	 <Pine.LNX.4.64.0801041030420.31161@torch.nrlssc.navy.mil>
-	 <477E6D26.9020809@obry.net>
-	 <e5bfff550801040944p7f8e722asfa726b34a4a712fa@mail.gmail.com>
-	 <477E7439.9090209@nrlssc.navy.mil>
+From: Jon Loeliger <jdl@freescale.com>
+Subject: Octopus?  Really?  Interesting...
+Date: Fri, 04 Jan 2008 12:28:41 -0600
+Message-ID: <1199471321.3133.22.camel@ld0161-tx32>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: "Pascal Obry" <pascal@obry.net>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Brandon Casey" <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Fri Jan 04 19:06:22 2008
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 04 19:29:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAqvk-0002n5-If
-	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 19:06:04 +0100
+	id 1JArIa-0004A8-Rr
+	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 19:29:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752704AbYADSFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2008 13:05:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752327AbYADSFj
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 13:05:39 -0500
-Received: from rv-out-0910.google.com ([209.85.198.185]:15930 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752035AbYADSFi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2008 13:05:38 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so6197573rvb.1
-        for <git@vger.kernel.org>; Fri, 04 Jan 2008 10:05:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=TY6aGc6DVfMhPlct8i4PG8ET3Yi4Fg2mHSX87la9tRo=;
-        b=nQ8YpFNfX7C7rvofmWlCnssSrJGSwdfGG68zVclxNi5U7oo0NiunVwDO9BIBaX4dACBhz1AwBL1OcFe6wf6Q5ceXeYVAV3ResWm4vX3HKmved+VHsf2/gbHHkRJPqxUfootoZ9IGLZVs/8/bnm2edMPG+pEjRMfMpMhXLP3M8iA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=G7kpYov4c07ZgOmcYOc6vJwqs80QwuhX7GGteBR+1MjjSZSKUctEF3gsU24pPsMIu+9PrU4WdPxHCRDB27dkyk7wMtbvhbtmH7IRw0ojmC2C9DncLIhsnyCTnughbwKY6oEh6lJIzPtKh9hS1XBpuMx3uTr/heaE/KOnJCwVrGY=
-Received: by 10.141.161.6 with SMTP id n6mr7683552rvo.41.1199469935929;
-        Fri, 04 Jan 2008 10:05:35 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Fri, 4 Jan 2008 10:05:35 -0800 (PST)
-In-Reply-To: <477E7439.9090209@nrlssc.navy.mil>
-Content-Disposition: inline
+	id S1752519AbYADS3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2008 13:29:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752450AbYADS3E
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 13:29:04 -0500
+Received: from az33egw02.freescale.net ([192.88.158.103]:35350 "EHLO
+	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752251AbYADS3D (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2008 13:29:03 -0500
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id m04ISg3Q010945
+	for <git@vger.kernel.org>; Fri, 4 Jan 2008 11:28:53 -0700 (MST)
+Received: from ld0161-tx32 (ld0161-tx32.am.freescale.net [10.82.19.111])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id m04ISfkK002997
+	for <git@vger.kernel.org>; Fri, 4 Jan 2008 12:28:42 -0600 (CST)
+X-Mailer: Ximian Evolution 1.4.5 (1.4.5-17) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69590>
 
-On Jan 4, 2008 7:00 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
-> Marco Costalba wrote:
-> > Ok, drop is better then clear, but, if we need to add a new command I
-> > vote for 'delete' or 'rm' to be consistent with git naming.
->
-> If the stash list is thought of as a stack, then drop makes sense.
->
+Guys,
 
-Yes, but is _not_ as a stack because you can say
+So, I brain-wedged a merge here just now
+and was surprised to see that a simple
+fetch-n-merge yielded an octopus merge.
+I was expecting a fast-forward.  So I went
+back and reviewed.  What actually happend
+was this:
 
-git stash apply stash@{3}
-git stash apply stash@{1}
-git stash apply stash@{4}
+    $ git checkout master
+    $ git fetch origin
+    # check it out... looks great ... let's merge it
+    $ git merge master origin/master
+    merge performed by octopus.
 
-i.e. you can access reflogs in any order, so thinking to a stack is
-misleading IMHO.
+Oh, yeah.  Duh.  I did name two branches.  Feh.
 
-Marco
+Couple questions:
+
+    Is it ever NOT the case, that if you are on one
+    branch ("master") and name it as a "to be merged"
+    branch along with some others, that we can simplify
+    the request by noting that it is the same as the
+    current "to be merged into" target branch?
+
+    Other than creating a log message with "merged
+    by octopus", will this merge be content-identical
+    to the obvious simplified merge?
+
+Thanks,
+jdl
