@@ -1,86 +1,96 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: wherefore art thou, git-applymbox? - Adding non-self signoffs
-Date: Thu, 3 Jan 2008 17:50:28 -0800
-Message-ID: <20080104015028.GC3989@mail.oracle.com>
+From: "Roger C. Soares" <rogersoares@intelinet.com.br>
+Subject: [EGIT PATCH] Remove directory entries from Structure Compare view.
+Date: Fri, 4 Jan 2008 00:11:17 -0200
+Organization: Intelinet
+Message-ID: <200801040011.17934.rogersoares@intelinet.com.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 04 02:52:23 2008
+X-From: git-owner@vger.kernel.org Fri Jan 04 03:22:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAbjS-00012D-Ga
-	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 02:52:22 +0100
+	id 1JAcCP-0007a6-7o
+	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 03:22:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752911AbYADBvt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jan 2008 20:51:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752862AbYADBvt
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jan 2008 20:51:49 -0500
-Received: from rgminet01.oracle.com ([148.87.113.118]:11347 "EHLO
-	rgminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752444AbYADBvs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jan 2008 20:51:48 -0500
-Received: from rgmgw2.us.oracle.com (rgmgw2.us.oracle.com [138.1.186.111])
-	by rgminet01.oracle.com (Switch-3.2.4/Switch-3.1.6) with ESMTP id m041pkQv009445
-	for <git@vger.kernel.org>; Thu, 3 Jan 2008 18:51:46 -0700
-Received: from acsmt358.oracle.com (acsmt358.oracle.com [141.146.40.158])
-	by rgmgw2.us.oracle.com (Switch-3.2.4/Switch-3.2.4) with ESMTP id m03LnDG0004878
-	for <git@vger.kernel.org>; Thu, 3 Jan 2008 18:51:46 -0700
-Received: from ca-server1.us.oracle.com by acsmt356.oracle.com
-	with ESMTP id 6633766231199411429; Thu, 03 Jan 2008 17:50:29 -0800
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.67)
-	(envelope-from <joel.becker@oracle.com>)
-	id 1JAbhd-0006fT-6R; Thu, 03 Jan 2008 17:50:29 -0800
+	id S1753275AbYADCVt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jan 2008 21:21:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752945AbYADCVt
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Jan 2008 21:21:49 -0500
+Received: from cvxbsd.convex.com.br ([200.152.177.10]:1306 "HELO
+	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752249AbYADCVs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jan 2008 21:21:48 -0500
+X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Jan 2008 21:21:47 EST
+Received: (qmail 42100 invoked by uid 0); 4 Jan 2008 00:17:55 -0200
+Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
+ (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
+ Processed in 0.011292 secs); 04 Jan 2008 02:17:55 -0000
+Received: from unknown (HELO ?192.168.1.2?) (189.5.219.143)
+  by cvxbsd.convex.com.br with SMTP; 4 Jan 2008 02:17:54 -0000
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
 Content-Disposition: inline
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever
-	come to perfection.
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
-X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69546>
 
-Junio, et al,
-	When git-applymbox disappeared, I didn't pay much attention.  I
-just learned git-am and went along.  Little did I know, there was a
-trap laid.
-	The ocfs2-tools.git repository is maintained by the entire ocfs2
-team.  It's a "shared" style repo.  A proposed change is posted to
-ocfs2-tools-devel, and when a teammate approves, they respond with a
-signoff.  The author then adds the signoff to the patch and pushes to
-the shared repo.
-	We used to do this very easily with git-applymbox:
-(from http://oss.oracle.com/osswiki/GitRepositories/ForMaintainers)
+Date: Wed, 2 Jan 2008 22:51:33 -0200
 
-$ echo "Julie Hacker <julieh@my.site.com>" > /tmp/signoff
-$ git branch to-push master
-$ git checkout to-push
-$ git format-patch -C -k --stdout master..workingbranch > /tmp/changes-to-push
-$ git applymbox -k /tmp/changes-to-push /tmp/signoff
-$ git push ssh://my.server.com/path/project.git to-push:master
+Signed-off-by: Roger C. Soares <rogersoares@intelinet.com.br>
+---
+Please evaluate.
 
-	The <signoff> file argument to applymbox allowed us to add the
-approvers signoff to an entire series in one go.  git-am does not have
-this feature.  As far as I can tell, I have to edit each patch by hand
-to add the new signoff.  Is there a better way?
+ .../GitCompareFileRevisionEditorInput.java         |   25 +++++++++++++++++++-
+ 1 files changed, 24 insertions(+), 1 deletions(-)
 
-Joel
-
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/GitCompareFileRevisionEditorInput.java 
+b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/GitCompareFileRevisionEditorInput.java
+index 82cd205..eaba1fa 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/GitCompareFileRevisionEditorInput.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/GitCompareFileRevisionEditorInput.java
+@@ -21,6 +21,7 @@ import org.eclipse.compare.ITypedElement;
+ import org.eclipse.compare.structuremergeviewer.DiffNode;
+ import org.eclipse.compare.structuremergeviewer.Differencer;
+ import org.eclipse.compare.structuremergeviewer.ICompareInput;
++import org.eclipse.compare.structuremergeviewer.IDiffElement;
+ import org.eclipse.compare.structuremergeviewer.IStructureComparator;
+ import org.eclipse.core.resources.IFile;
+ import org.eclipse.core.resources.IFileState;
+@@ -299,7 +300,29 @@ public class GitCompareFileRevisionEditorInput extends CompareEditorInput {
+ 		ensureContentsCached(getLeftRevision(), getRightRevision(), monitor);
+ 		initLabels(input);
+ 		setTitle(NLS.bind(TeamUIMessages.SyncInfoCompareInput_title, new String[] { input.getName() }));
+-		return input;
++
++		// The compare editor (Structure Compare) will show the diff filenames
++		// with their project relative path. So, no need to also show directory entries.
++		DiffNode flatDiffNode = new DiffNode(null,Differencer.CHANGE,null,left,right);
++		flatDiffView(flatDiffNode, (DiffNode) input);
++
++		return flatDiffNode;
++	}
++
++	private void flatDiffView(DiffNode rootNode, DiffNode currentNode) {
++		if(currentNode != null) {
++			IDiffElement[] dElems = currentNode.getChildren();
++			if(dElems != null) {
++				for(IDiffElement dElem : dElems) {
++					DiffNode dNode = (DiffNode) dElem;
++					if(dNode.getChildren() != null && dNode.getChildren().length > 0) {
++						flatDiffView(rootNode, dNode);
++					} else {
++						rootNode.add(dNode);
++					}
++				}
++			}
++		}
+ 	}
+ 
+ }
 -- 
-
-Life's Little Instruction Book #356
-
-	"Be there when people need you."
-
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+1.5.3.7
