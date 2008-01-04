@@ -1,52 +1,66 @@
-From: Christian Thaeter <ct@pipapo.org>
-Subject: libgit: git_setup_directory() is not reentrant
-Date: Fri, 04 Jan 2008 18:07:17 +0100
-Message-ID: <477E67C5.5020301@pipapo.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] git stash: one bug and one feature request
+Date: Fri, 4 Jan 2008 10:36:01 -0600 (CST)
+Message-ID: <Pine.LNX.4.64.0801041030420.31161@torch.nrlssc.navy.mil>
+References: <e5bfff550801040814n82f34b2g17c485a207093440@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 04 18:08:01 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 04 18:10:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAq1L-0003oR-T8
-	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 18:07:48 +0100
+	id 1JAq3n-0004lN-3l
+	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 18:10:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751847AbYADRHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2008 12:07:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751943AbYADRHU
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 12:07:20 -0500
-Received: from pipapo.org ([217.140.77.75]:4494 "EHLO mail.pipapo.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751750AbYADRHT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2008 12:07:19 -0500
-Received: from [10.20.70.10] (mercur.pipapo.org [10.20.70.10])
-	by mail.pipapo.org (Postfix) with ESMTP id 9F87A34F6B94D
-	for <git@vger.kernel.org>; Fri,  4 Jan 2008 18:07:17 +0100 (CET)
-User-Agent: Icedove 1.5.0.14pre (X11/20071018)
-X-Enigmail-Version: 0.94.2.0
+	id S1753752AbYADRJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2008 12:09:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753467AbYADRJv
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 12:09:51 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:37105 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753529AbYADRJu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2008 12:09:50 -0500
+X-Greylist: delayed 1984 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 Jan 2008 12:09:50 EST
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m04Ga22x019794;
+	Fri, 4 Jan 2008 10:36:02 -0600
+Received: from torch.nrlssc.navy.mil ([128.160.25.59]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 4 Jan 2008 10:36:02 -0600
+In-Reply-To: <e5bfff550801040814n82f34b2g17c485a207093440@mail.gmail.com>
+X-OriginalArrivalTime: 04 Jan 2008 16:36:02.0563 (UTC) FILETIME=[E4F76D30:01C84EEF]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15638001
+X-TM-AS-Result: : Yes--3.094000-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
+	=?us-ascii?B?MTAtNzAzNzMxLTcwOTU4NC03MDkxMzctNzA4MzM5LTcwMzQ1NC03?=
+	=?us-ascii?B?MDc0NTEtMTEzMjMwLTcwMDM5OC0xMDY0MjAtNzA4MTc5LTE0ODAz?=
+	=?us-ascii?B?OS0xNDgwNTAtMjAwNDA=?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69584>
 
-While working on a git-browser, I noticed that git_setup_directory() is
-not reentrant. Once called it initializes (by calling other functions in
-turn) several static/hidden variables which can't be altered afterwards.
-This is ugly when one wants  to iterate over different repositories
-(generating a list of available repos).
+On Fri, 4 Jan 2008, Marco Costalba wrote:
 
-How could we fix this?
-I would propose that subsequent 'git_setup_directory()' calls will
-reinit the setup completely.
+> Currently git-stash writes to stderr also if there is nothing to error
+> out, also it would be very nice ;-) if git 'stash clear command' would
+> support deleting of only one patch, so as example to write
+>
+> stg stash clear stash@{0}
+>
+> To remove only the last added.
 
-Another way would be to provide a 'git_setup_reset()' function which
-lets one cleanup all setup things before calling 'git_setup_directory()'
-again.
+Maybe it should be named 'drop'. 'drop' sounds better than
+'clear' for this usage.
 
-Comments?
+   git stash drop [<stash>]
 
-	Christian
+Not sure how often such a command would be used though, so
+it may not be worth it.
+
+-brandon
