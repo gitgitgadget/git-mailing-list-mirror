@@ -1,75 +1,57 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] git-am: Run git gc only once and not for every patch.
-Date: Fri, 04 Jan 2008 15:58:43 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0801041555220.2649@xanadu.home>
-References: <20080104185926.GA11912@redhat.com>
- <alpine.LFD.1.00.0801041437190.2649@xanadu.home> <477E9536.6050401@redhat.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git stash: one bug and one feature request
+Date: Fri, 4 Jan 2008 16:04:08 -0500
+Message-ID: <20080104210408.GA26248@coredump.intra.peff.net>
+References: <e5bfff550801040814n82f34b2g17c485a207093440@mail.gmail.com> <Pine.LNX.4.64.0801041030420.31161@torch.nrlssc.navy.mil> <477E6D26.9020809@obry.net> <m3abnlo4xv.fsf@roke.D-201>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Michael Stefaniuc <mstefani@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Jan 04 21:59:13 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Pascal Obry <pascal@obry.net>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 04 22:04:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAtdH-000218-Oe
-	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 21:59:12 +0100
+	id 1JAtie-000415-TU
+	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 22:04:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754066AbYADU6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2008 15:58:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754065AbYADU6o
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 15:58:44 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:14437 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754051AbYADU6o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2008 15:58:44 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JU500DOA0XVPTA0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 04 Jan 2008 15:58:43 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <477E9536.6050401@redhat.com>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1753560AbYADVEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2008 16:04:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753551AbYADVEM
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 16:04:12 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3865 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753076AbYADVEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2008 16:04:11 -0500
+Received: (qmail 19518 invoked by uid 111); 4 Jan 2008 21:04:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 04 Jan 2008 16:04:09 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Jan 2008 16:04:08 -0500
+Content-Disposition: inline
+In-Reply-To: <m3abnlo4xv.fsf@roke.D-201>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69606>
 
-On Fri, 4 Jan 2008, Michael Stefaniuc wrote:
+On Fri, Jan 04, 2008 at 09:51:05AM -0800, Jakub Narebski wrote:
 
-> Nicolas Pitre wrote:
-> > On Fri, 4 Jan 2008, Michael Stefaniuc wrote:
-> > 
-> >> With "too many unreachable loose objects" git gc --auto will always
-> >> trigger. This clutters the output of git am and thus git rebase.
-> >>
-> >> The work flow of the Wine project doesn't include git merge. git rebase
-> >> is therefor used to track the origin. This will produce soon too many
-> >> loose objects for git gc --auto's taste. Pruning the repository would
-> >> "fix" it. But we tell Wine developers new to git to NOT prune as long as
-> >> they aren't confident enough with git; just as a safety net in case they
-> >> have thrown away month of work.
-> > 
-> > The safety is the reflog.  What it refers to doesn't get pruned.
-> Then git gc --auto should just prune too and not spam, right?
+> or "git stash delete"
+> 
+> This probably would require the command to delete single reflog,
+> which was posted some time ago and is in either pu or in offcuts,
+> or in next.
+> 
+> But I guess this is post 1.5.4
 
-Pruning might be dangerous if some other operation is happening 
-concurrently, which is why it is not done by default.
+There is a "git reflog delete" in next (but not in master). See
+552cecc2. Using the same name makes sense, since they are equivalent
+actions (and "git stash delete" should be very easy, since it is
+implemented in terms of reflogs).
 
-> But the reflog is only there for branches that still exist; the rest is
-> gone. A git stash clear will also remove the reflog for the stash.
-
-But the reflog for HEAD remains nevertheless, and it contains everything 
-that happened to be the current branch.
-
-> Regardless of the safety of git prune i don't see a reason why git gc
-> --auto needs to be called for every patch in a git-am run and not once
-> at the end.
-
-Indeed.
-
-
-Nicolas
+-Peff
