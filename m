@@ -1,94 +1,67 @@
-From: Sean <seanlkml@sympatico.ca>
-Subject: Re: Trouble importing from public CVS repo
-Date: Fri, 4 Jan 2008 18:17:59 -0500
-Message-ID: <BAYC1-PASMTP15EA2E9A1145CD66AF7C4DAE4C0@CEZ.ICE>
-References: <477EA7F6.1010608@garzik.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+From: Pedro Melo <melo@simplicidade.org>
+Subject: Re: git-walkthrough-add script
+Date: Fri, 4 Jan 2008 23:26:41 +0000
+Message-ID: <2CC98B8C-CBB1-4C26-8C94-B152A4D02DDC@simplicidade.org>
+References: <1199426431-sup-6092@south>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Matthias Urlichs <smurf@smurf.noris.de>
-To: Jeff Garzik <jeff@garzik.org>
-X-From: git-owner@vger.kernel.org Sat Jan 05 00:18:46 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: William Morgan <wmorgan-git@masanjin.net>
+X-From: git-owner@vger.kernel.org Sat Jan 05 00:27:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAvoK-0002Us-GI
-	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 00:18:44 +0100
+	id 1JAvwV-0004zs-On
+	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 00:27:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754434AbYADXSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2008 18:18:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753746AbYADXSE
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 18:18:04 -0500
-Received: from bay0-omc2-s25.bay0.hotmail.com ([65.54.246.161]:50966 "EHLO
-	bay0-omc2-s25.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753438AbYADXSD (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Jan 2008 18:18:03 -0500
-Received: from BAYC1-PASMTP15 ([65.54.191.189]) by bay0-omc2-s25.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 4 Jan 2008 15:18:02 -0800
-X-Originating-IP: [74.15.76.104]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from linux1.attic.local ([74.15.76.104]) by BAYC1-PASMTP15.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
-	 Fri, 4 Jan 2008 15:18:01 -0800
-Received: from guru.attic.local ([10.10.10.28])
-	by linux1.attic.local with smtp (Exim 4.43)
-	id 1JAvnU-0004gQ-HR; Fri, 04 Jan 2008 18:17:52 -0500
-In-Reply-To: <477EA7F6.1010608@garzik.org>
-X-Mailer: Sylpheed 2.4.5 (GTK+ 2.12.1; i686-pc-linux-gnu)
-X-OriginalArrivalTime: 04 Jan 2008 23:18:01.0608 (UTC) FILETIME=[0D09A080:01C84F28]
+	id S1753873AbYADX0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2008 18:26:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753722AbYADX0l
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 18:26:41 -0500
+Received: from mail.sl.pt ([212.55.140.13]:46507 "EHLO sl.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753700AbYADX0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2008 18:26:41 -0500
+Received: (qmail 22199 invoked from network); 4 Jan 2008 23:26:33 -0000
+X-Virus-Status: Clean (0.00973 seconds) ; Version: 0.3-0.88.6
+X-Spam-Flag: NO
+X-Spam-Status: NO (0.0/5.0) (0.00007 seconds / 1.78630 sA)
+	Checked: by PTMail-AS v0.1 on mail.sl.pt
+Received: from unknown (HELO [192.168.1.65]) (melo@[85.240.127.49])
+          (envelope-sender <melo@simplicidade.org>)
+          by mail-sl (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 4 Jan 2008 23:26:33 -0000
+Received-SPF: neutral (mail-sl: domain of (null) is neutral about designating 85.240.127.49 as permitted sender)
+In-Reply-To: <1199426431-sup-6092@south>
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69615>
 
-On Fri, 04 Jan 2008 16:41:10 -0500
-Jeff Garzik <jeff@garzik.org> wrote:
+Hi,
 
-> $ git-cvsimport -v -d:pserver:anonymous@cvs.lysator.liu.se:/cvsroot/unfs3 unfs3
-> 
-> produces
-> 
-> Initialized empty Git repository in /spare/repo/unfs3/.git/
-> Running cvsps...
-> connect error: Network is unreachable
-> cvs rlog: Logging unfs3
-> cvs rlog: Logging unfs3/Config
-> cvs rlog: Logging unfs3/Extras
-> cvs rlog: Logging unfs3/contrib
-> cvs rlog: Logging unfs3/contrib/nfsotpclient
-> cvs rlog: Logging unfs3/contrib/nfsotpclient/mountclient
-> cvs rlog: Logging unfs3/contrib/rpcproxy
-> cvs rlog: Logging unfs3/doc
-> Fetching LICENSE   v 1.1
-> New LICENSE: 1416 bytes
-> Fetching Makefile.in   v 1.1
-> Unknown: error
-> 
+On Jan 4, 2008, at 6:14 AM, William Morgan wrote:
 
-Hi Jeff,
+> I've written a little script to do darcs-style hunk-by-hunk
+> walkthroughs. It's based on the git-hunk-commit script that was  
+> floating
+> around. Maybe someone else will find it useful.
+>
+> http://git-wt-commit.rubyforge.org/
 
-See the same problem here and it has something to do with how files are being fetched
-from the cvs server.  I'm not much inclined to research it further, however the ugly hack
-below appears to allow the repo to be imported.  At least importing the first 10 commits
-(-L 10) looked okay...  Perhaps it's a clue to how the issue could be resolved properly.
+Maybe I'm doing something wrong, but comparing git-add -p with your  
+script, git-add -p is more darcs'ish. With git-add, if I have several  
+changes in the same file, I get to choose per hunk.
 
-HTH,
-Sean
+You script asks me to add all the changes in the same file at once.
 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 6d8ff93..357665d 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -421,7 +421,7 @@ sub _line {
- 			$res += $self->_fetchfile($fh, $cnt);
- 		} else {
- 			chomp $line;
--			if ($line eq "ok") {
-+			if ($line eq "ok" or $line =~ /^error/i) {
- 				# print STDERR "S: ok (".length($res).")\n";
- 				return $res;
- 			} elsif ($line =~ s/^E //) {
+Best regards,
 -- 
-1.5.4.rc2.17.g257f
+Pedro Melo
+Blog: http://www.simplicidade.org/notes/
+XMPP ID: melo@simplicidade.org
+Use XMPP!
