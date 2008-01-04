@@ -1,79 +1,48 @@
-From: Yannick Gingras <ygingras@ygingras.net>
-Subject: Re: [PATCH] Documentation: rename gitlink macro to linkgit
-Date: Fri, 04 Jan 2008 01:11:41 -0500
-Message-ID: <87fxxexgpu.fsf@enceladus.ygingras.net>
-References: <87sl1mqt10.fsf@offby1.atm01.sea.blarg.net>
-	<4775B87D.4010507@gmail.com>
-	<20071229155705.GA23659@genesis.frugalware.org>
-	<449c10960712290824yd2c5783l8d0ba91bbad95789@mail.gmail.com>
-	<47767710.7040405@gmail.com>
-	<7vejcypqsp.fsf@gitster.siamese.dyndns.org>
-	<873ateyxjk.fsf@enceladus.ygingras.net>
-	<7vir2am95w.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: asciidoc-discuss@lists.metaperl.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 04 07:12:18 2008
+From: William Morgan <wmorgan-git@masanjin.net>
+Subject: git-walkthrough-add script
+Date: Thu, 03 Jan 2008 22:14:31 -0800
+Message-ID: <1199426431-sup-6092@south>
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 04 07:28:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAfmy-0004eF-OH
-	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 07:12:17 +0100
+	id 1JAg33-0007fg-Q5
+	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 07:28:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754044AbYADGLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2008 01:11:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754037AbYADGLt
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 01:11:49 -0500
-Received: from mail.cooptel.qc.ca ([216.144.115.12]:36991 "EHLO
-	amy.cooptel.qc.ca" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752804AbYADGLs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2008 01:11:48 -0500
-Received: (qmail 30146 invoked by uid 360); 4 Jan 2008 06:11:45 -0000
-Received: from 216.144.118.66 by amy (envelope-from <ygingras@ygingras.net>, uid 301) with qmail-scanner-2.01 
- (clamdscan: 0.91.1/3957.  
- Clear:RC:1(216.144.118.66):. 
- Processed in 0.029794 secs); 04 Jan 2008 06:11:45 -0000
-Received: from unknown (HELO verdandi.ygingras.net) (216.144.118.66)
-  by smtp.cooptel.qc.ca with ESMTP; 4 Jan 2008 06:11:45 -0000
-Received: from [192.168.0.15] (helo=enceladus.ygingras.net)
-	by verdandi.ygingras.net with esmtp (Exim 4.50)
-	id 1JAfmP-0001ns-H6; Fri, 04 Jan 2008 01:11:44 -0500
-Received: from enceladus (localhost [127.0.0.1])
-	by enceladus.ygingras.net (Postfix) with ESMTP id 2AD1918506;
-	Fri,  4 Jan 2008 01:11:41 -0500 (EST)
-In-Reply-To: <7vir2am95w.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 03 Jan 2008 21\:50\:19 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-SA-Exim-Connect-IP: 192.168.0.15
-X-SA-Exim-Rcpt-To: asciidoc-discuss@lists.metaperl.com, gitster@pobox.com, git@vger.kernel.org
-X-SA-Exim-Mail-From: ygingras@ygingras.net
-X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on 
-	verdandi.ygingras.net
-X-Spam-Level: 
-X-Spam-Status: No, score=0.0 required=3.5 tests=AWL autolearn=disabled 
-	version=3.1.7
-X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
-X-SA-Exim-Scanned: Yes (on verdandi.ygingras.net)
+	id S1753706AbYADG2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2008 01:28:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753676AbYADG2S
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 01:28:18 -0500
+Received: from nlpi015.sbcis.sbc.com ([207.115.36.44]:3232 "EHLO
+	nlpi015.prodigy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753171AbYADG2S (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2008 01:28:18 -0500
+X-Greylist: delayed 448 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 Jan 2008 01:28:18 EST
+X-ORBL: [68.127.149.88]
+Received: from south (adsl-68-127-149-88.dsl.pltn13.pacbell.net [68.127.149.88])
+	by nlpi015.prodigy.net (8.13.8 out.dk.spool/8.13.8) with ESMTP id m046Kj3J006399
+	for <git@vger.kernel.org>; Fri, 4 Jan 2008 00:20:45 -0600
+Received: from rubyist by south with local (Exim 4.63)
+	(envelope-from <rubyist@masanjin.net>)
+	id 1JAfp9-0004Ze-3P
+	for git@vger.kernel.org; Thu, 03 Jan 2008 22:14:31 -0800
+User-Agent: Sup/0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69552>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi all,
 
->> But the test suite can only catch obvious rendering failures so any
->> help in eyeballing the output will be appreciated.
->
-> You could go fancy like that, but I suspect that an automated
-> test to compare the text dump (e.g. "links -dump doc.html")
-> generated by before and after version, perhaps with minimum
-> massaging, would go a long enough way.  At least that would have
-> caught the "gitlink" breakage, wouldn't it?
+I've written a little script to do darcs-style hunk-by-hunk
+walkthroughs. It's based on the git-hunk-commit script that was floating
+around. Maybe someone else will find it useful.
 
-Yeah it would have caught it.  I'll hack something like that before
-the 9.0 release.
+http://git-wt-commit.rubyforge.org/
 
 -- 
-Yannick Gingras
+William <wmorgan-git@masanjin.net>
