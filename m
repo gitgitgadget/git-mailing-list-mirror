@@ -1,77 +1,94 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH] git stash: one bug and one feature request
-Date: Fri, 4 Jan 2008 19:46:51 +0100
-Message-ID: <e5bfff550801041046p534b4869l2919494a8e4ef711@mail.gmail.com>
-References: <e5bfff550801040814n82f34b2g17c485a207093440@mail.gmail.com>
-	 <Pine.LNX.4.64.0801041030420.31161@torch.nrlssc.navy.mil>
-	 <477E6D26.9020809@obry.net>
-	 <e5bfff550801040944p7f8e722asfa726b34a4a712fa@mail.gmail.com>
-	 <477E7439.9090209@nrlssc.navy.mil>
-	 <e5bfff550801041005x3ab682dam8535c7bde75038dc@mail.gmail.com>
-	 <477E7C3D.8030501@nrlssc.navy.mil>
+From: Michael Stefaniuc <mstefani@redhat.com>
+Subject: [PATCH] git-am: Run git gc only once and not for every patch.
+Date: Fri, 4 Jan 2008 19:59:26 +0100
+Message-ID: <20080104185926.GA11912@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Pascal Obry" <pascal@obry.net>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Brandon Casey" <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Fri Jan 04 19:47:30 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="5mCyUwZo2JvN/JJP"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 04 20:00:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JArZl-0002mb-KY
-	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 19:47:26 +0100
+	id 1JArlv-0007yJ-0P
+	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 19:59:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752073AbYADSqz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2008 13:46:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752120AbYADSqz
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 13:46:55 -0500
-Received: from rv-out-0910.google.com ([209.85.198.190]:26717 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751692AbYADSqy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2008 13:46:54 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so6207928rvb.1
-        for <git@vger.kernel.org>; Fri, 04 Jan 2008 10:46:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=8wH6lNK89v1EYPFdSQnEXkZlPyfirk/1aHnZcpEO1ac=;
-        b=VZcaf9G64RWKE5bp0fgcioFvYBzBqGPlHB1mYjI4khTli4/grxkc6Fz+qyPslQ458W8uJXUA5xjsB2VPSvUd6CzIE502XOQUz31NiXFhBydDRwb4pXYB6ojADz4rwk31rjfj1svGA6tlic3tihkd/j3tiAPE4xGc45WrDKGQGNk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jGo9C7ahKgrP3gCkTXc62sCVUXNWjaJX0UW1PkaLHFdTe1oBAMXCVnR71AeJao3JZpgdKcXLtlM1a314Hb+vkJXClULH/VL0B/pHY7HLadxiH3D4+KmJa6q8ub6ifBQXkJxEbBuRf3ISA5kWvahsTNGpa0maiZdzSOAVuajQ3kE=
-Received: by 10.141.22.1 with SMTP id z1mr9051575rvi.282.1199472411249;
-        Fri, 04 Jan 2008 10:46:51 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Fri, 4 Jan 2008 10:46:51 -0800 (PST)
-In-Reply-To: <477E7C3D.8030501@nrlssc.navy.mil>
+	id S1753366AbYADS73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2008 13:59:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753337AbYADS73
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 13:59:29 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:50414 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753273AbYADS72 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2008 13:59:28 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m04IxRJt024003
+	for <git@vger.kernel.org>; Fri, 4 Jan 2008 13:59:27 -0500
+Received: from brasov.str.redhat.com (brasov.str.redhat.com [10.32.0.1])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m04IxRuF007768
+	for <git@vger.kernel.org>; Fri, 4 Jan 2008 13:59:27 -0500
+Received: by brasov.str.redhat.com (Postfix, from userid 2500)
+	id C070A303E3; Fri,  4 Jan 2008 19:59:26 +0100 (CET)
 Content-Disposition: inline
+User-Agent: Mutt/1.4.2.2i
+X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69595>
 
-On Jan 4, 2008 7:34 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
->
-> Doesn't seem like too far of a stretch.
->
 
-I'm very bad at naming, so I don't argue any more.
+--5mCyUwZo2JvN/JJP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Just one thing (that is the only that matters) call this command as
-you want but let it take one argument, the name of the reflog to
-remove:
+With "too many unreachable loose objects" git gc --auto will always
+trigger. This clutters the output of git am and thus git rebase.
 
-git stash drop stash@{3}
+The work flow of the Wine project doesn't include git merge. git rebase
+is therefor used to track the origin. This will produce soon too many
+loose objects for git gc --auto's taste. Pruning the repository would
+"fix" it. But we tell Wine developers new to git to NOT prune as long as
+they aren't confident enough with git; just as a safety net in case they
+have thrown away month of work.
 
-should be allowed.
+Signed-off-by: Michael Stefaniuc <mstefani@redhat.com>
+---
+ git-am.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-git stash drop
+diff --git a/git-am.sh b/git-am.sh
+index 65c634f..5f0f241 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -469,9 +469,9 @@ do
+ 		"$GIT_DIR"/hooks/post-applypatch
+ 	fi
+=20
+-	git gc --auto
+-
+ 	go_next
+ done
+=20
++git gc --auto
++
+ rm -fr "$dotest"
+--=20
+1.5.4.rc2
 
-defaults to  stash@{0}
+--5mCyUwZo2JvN/JJP
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Thanks
-Marco
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFHfoIO08alQ5mXm14RAjPdAJ9QuE8HfnAKw75CiqqyVXPI6r16rQCfZeaT
+fgW0MEsF7zHOKyjMFr1fljc=
+=SUbW
+-----END PGP SIGNATURE-----
+
+--5mCyUwZo2JvN/JJP--
