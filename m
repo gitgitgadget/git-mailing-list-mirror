@@ -1,103 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] git-diff-* --color oddness
-Date: Fri, 4 Jan 2008 04:45:31 -0500
-Message-ID: <20080104094531.GA30122@coredump.intra.peff.net>
-References: <20080104081429.GA30635@coredump.intra.peff.net> <7vabnmm1ww.fsf@gitster.siamese.dyndns.org> <20080104083252.GB3300@coredump.intra.peff.net> <7vsl1ekmg5.fsf@gitster.siamese.dyndns.org> <20080104085934.GA3706@coredump.intra.peff.net> <20080104092505.GA2320@coredump.intra.peff.net> <7vodc2kk2d.fsf@gitster.siamese.dyndns.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: [PATCH] Document git-reset defaults to HEAD if no commit is given
+Date: Fri, 4 Jan 2008 10:53:32 +0100
+Message-ID: <e5bfff550801040153m433d9880g4a7a6d4168d5365f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, win@wincent.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 04 10:46:03 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 04 10:54:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAj7p-000122-5B
-	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 10:46:01 +0100
+	id 1JAjFZ-0003Jm-9D
+	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 10:54:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753433AbYADJpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2008 04:45:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752821AbYADJpe
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 04:45:34 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2537 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752804AbYADJpe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2008 04:45:34 -0500
-Received: (qmail 16416 invoked by uid 111); 4 Jan 2008 09:45:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 04 Jan 2008 04:45:32 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Jan 2008 04:45:31 -0500
+	id S1753408AbYADJxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2008 04:53:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752821AbYADJxd
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 04:53:33 -0500
+Received: from rv-out-0910.google.com ([209.85.198.187]:17872 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753211AbYADJxc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2008 04:53:32 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so6067416rvb.1
+        for <git@vger.kernel.org>; Fri, 04 Jan 2008 01:53:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=9T8b+dO4f2DW81H1CSxBY2phAjRNXnUwHXQe13Sfb/s=;
+        b=aZqpthcchX+DEftqBFRvREayRPGPT7zLzde2lC3njLa9P/XY7CUtIHlNNBqHfPM+BEXGsMiK1Cj1QDeE/h7GJQxVYaIJNvOJatfrwcRtcYVx3IaMBTPWnDg2cbQ7pX17NQ6VwvY/YRG6nsXoSEjfPqMRrVfYSS3gZ4KkpR+wMJA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=eDh7r0DGvM2cGFD88SMsdHJ4uCgK90YLrV/xTDrq47PM9Qq750uEHZmFZl/U2FAkaI3Yt1bLH0lnkyJROhsU9An4DfpKz83nwuRh3RsREkP1VXBVuv8vHJv2unJLoHPS8fps+ejg5twIb1s40Js8CAYMrRDPhWAtC3DA8LK0fGs=
+Received: by 10.141.153.16 with SMTP id f16mr8687009rvo.287.1199440412310;
+        Fri, 04 Jan 2008 01:53:32 -0800 (PST)
+Received: by 10.141.76.1 with HTTP; Fri, 4 Jan 2008 01:53:32 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <7vodc2kk2d.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69575>
 
-On Fri, Jan 04, 2008 at 01:37:46AM -0800, Junio C Hamano wrote:
-
-> > And it looks like the second call is already OK. We don't try parsing
-> > the config to get the external diff command unless ALLOW_EXTERNAL is
-> > set, which the plumbing already disallows (though I am still confused
-> > why it would need to be loaded lazily in the first place -- I wonder if
-> > read_config_if_needed is needed at all).
-> 
-> I think that was a premature optimization without benching.  It
-> is expected that most trees would not have attributes to define
-> custom low-level diff types, and without them we do not need to
-> parse the configuration to find out the external commands to be
-> used.
-
-Ah. But we were parsing them anyway in git_diff_ui_config at the
-beginning of the program (and we need to, since you will always have
-diff.default.*). So I think this is safe to do, and can replace my other
-"only read config once" patch from a few minutes ago:
-
--- >8 --
-diff: remove lazy config loading
-
-There is no point to this. Either:
-
-  1. The program has already loaded git_diff_ui_config, in
-     which case this is a noop.
-  2. The program didn't, which means it is plumbing that
-     does not _want_ git_diff_ui_config to be loaded.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off by: Marco Costalba <mcostalba@gmail.com>
 ---
- diff.c |   12 ------------
- 1 files changed, 0 insertions(+), 12 deletions(-)
+ Documentation/git-reset.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index ecf2fd6..2c78d74 100644
---- a/diff.c
-+++ b/diff.c
-@@ -59,17 +59,6 @@ static struct ll_diff_driver {
- 	char *cmd;
- } *user_diff, **user_diff_tail;
- 
--static void read_config_if_needed(void)
--{
--	static int done = 0;
--	if (done)
--		return;
--
--	user_diff_tail = &user_diff;
--	git_config(git_diff_ui_config);
--	done = 1;
--}
--
- /*
-  * Currently there is only "diff.<drivername>.command" variable;
-  * because there are "diff.color.<slot>" variables, we are parsing
-@@ -1825,7 +1814,6 @@ static const char *external_diff_attr(const char *name)
- 		    !ATTR_UNSET(value)) {
- 			struct ll_diff_driver *drv;
- 
--			read_config_if_needed();
- 			for (drv = user_diff; drv; drv = drv->next)
- 				if (!strcmp(drv->name, value))
- 					return drv->cmd;
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 050e4ea..69722d1 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git-reset' [--mixed | --soft | --hard] [-q] [<commit>]
+-'git-reset' [--mixed] [-q] <commit> [--] <paths>...
++'git-reset' [--mixed] [-q] [<commit>] [--] <paths>...
+
+ DESCRIPTION
+ -----------
+@@ -49,7 +49,7 @@ OPTIONS
+ 	Be quiet, only report errors.
+
+ <commit>::
+-	Commit to make the current HEAD.
++	Commit to make the current HEAD. If not given defaults to HEAD.
+
+ Examples
+ --------
 -- 
-1.5.4.rc2.1125.ga305e-dirty
+1.5.4.rc2.20.gab44
