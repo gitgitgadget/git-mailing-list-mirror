@@ -1,7 +1,7 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Yannick Gingras <ygingras@ygingras.net>
 Subject: Re: [PATCH] Documentation: rename gitlink macro to linkgit
-Date: Thu, 03 Jan 2008 21:50:19 -0800
-Message-ID: <7vir2am95w.fsf@gitster.siamese.dyndns.org>
+Date: Fri, 04 Jan 2008 01:11:41 -0500
+Message-ID: <87fxxexgpu.fsf@enceladus.ygingras.net>
 References: <87sl1mqt10.fsf@offby1.atm01.sea.blarg.net>
 	<4775B87D.4010507@gmail.com>
 	<20071229155705.GA23659@genesis.frugalware.org>
@@ -9,59 +9,71 @@ References: <87sl1mqt10.fsf@offby1.atm01.sea.blarg.net>
 	<47767710.7040405@gmail.com>
 	<7vejcypqsp.fsf@gitster.siamese.dyndns.org>
 	<873ateyxjk.fsf@enceladus.ygingras.net>
+	<7vir2am95w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: asciidoc-discuss@lists.metaperl.com, git@vger.kernel.org
-To: Yannick Gingras <ygingras@ygingras.net>
-X-From: git-owner@vger.kernel.org Fri Jan 04 06:51:00 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 04 07:12:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAfSN-0000vX-Pd
-	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 06:51:00 +0100
+	id 1JAfmy-0004eF-OH
+	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 07:12:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752535AbYADFu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2008 00:50:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752884AbYADFu0
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 00:50:26 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42259 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752312AbYADFu0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2008 00:50:26 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B7EFB2B18;
-	Fri,  4 Jan 2008 00:50:24 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 35E362B17;
-	Fri,  4 Jan 2008 00:50:21 -0500 (EST)
-In-Reply-To: <873ateyxjk.fsf@enceladus.ygingras.net> (Yannick Gingras's
-	message of "Fri, 04 Jan 2008 00:22:55 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754044AbYADGLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2008 01:11:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754037AbYADGLt
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 01:11:49 -0500
+Received: from mail.cooptel.qc.ca ([216.144.115.12]:36991 "EHLO
+	amy.cooptel.qc.ca" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752804AbYADGLs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2008 01:11:48 -0500
+Received: (qmail 30146 invoked by uid 360); 4 Jan 2008 06:11:45 -0000
+Received: from 216.144.118.66 by amy (envelope-from <ygingras@ygingras.net>, uid 301) with qmail-scanner-2.01 
+ (clamdscan: 0.91.1/3957.  
+ Clear:RC:1(216.144.118.66):. 
+ Processed in 0.029794 secs); 04 Jan 2008 06:11:45 -0000
+Received: from unknown (HELO verdandi.ygingras.net) (216.144.118.66)
+  by smtp.cooptel.qc.ca with ESMTP; 4 Jan 2008 06:11:45 -0000
+Received: from [192.168.0.15] (helo=enceladus.ygingras.net)
+	by verdandi.ygingras.net with esmtp (Exim 4.50)
+	id 1JAfmP-0001ns-H6; Fri, 04 Jan 2008 01:11:44 -0500
+Received: from enceladus (localhost [127.0.0.1])
+	by enceladus.ygingras.net (Postfix) with ESMTP id 2AD1918506;
+	Fri,  4 Jan 2008 01:11:41 -0500 (EST)
+In-Reply-To: <7vir2am95w.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 03 Jan 2008 21\:50\:19 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-SA-Exim-Connect-IP: 192.168.0.15
+X-SA-Exim-Rcpt-To: asciidoc-discuss@lists.metaperl.com, gitster@pobox.com, git@vger.kernel.org
+X-SA-Exim-Mail-From: ygingras@ygingras.net
+X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on 
+	verdandi.ygingras.net
+X-Spam-Level: 
+X-Spam-Status: No, score=0.0 required=3.5 tests=AWL autolearn=disabled 
+	version=3.1.7
+X-SA-Exim-Version: 4.2 (built Thu, 03 Mar 2005 10:44:12 +0100)
+X-SA-Exim-Scanned: Yes (on verdandi.ygingras.net)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69551>
 
-Yannick Gingras <ygingras@ygingras.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+>> But the test suite can only catch obvious rendering failures so any
+>> help in eyeballing the output will be appreciated.
 >
->> Stuart, is there anything we can help you to set up some automated
->> tests to catch AsciiDoc regression, so we do not have to suffer like
->> this again?
->
-> We considered adding a nose test suite.  The upcoming v9.0 release
-> involves quite a bit of code massaging and we will definitely need an
-> extensive test suite.  But the test suite can only catch obvious
-> rendering failures so any help in eyeballing the output will be
-> appreciated.
+> You could go fancy like that, but I suspect that an automated
+> test to compare the text dump (e.g. "links -dump doc.html")
+> generated by before and after version, perhaps with minimum
+> massaging, would go a long enough way.  At least that would have
+> caught the "gitlink" breakage, wouldn't it?
 
-You could go fancy like that, but I suspect that an automated
-test to compare the text dump (e.g. "links -dump doc.html")
-generated by before and after version, perhaps with minimum
-massaging, would go a long enough way.  At least that would have
-caught the "gitlink" breakage, wouldn't it?
+Yeah it would have caught it.  I'll hack something like that before
+the 9.0 release.
+
+-- 
+Yannick Gingras
