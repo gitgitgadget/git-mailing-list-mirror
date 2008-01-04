@@ -1,74 +1,82 @@
-From: Jeff Garzik <jeff@garzik.org>
-Subject: Trouble importing from public CVS repo
-Date: Fri, 04 Jan 2008 16:41:10 -0500
-Message-ID: <477EA7F6.1010608@garzik.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-am: Run git gc only once and not for every patch.
+Date: Fri, 04 Jan 2008 14:00:50 -0800
+Message-ID: <7vmyrli73h.fsf@gitster.siamese.dyndns.org>
+References: <20080104185926.GA11912@redhat.com>
+	<alpine.LFD.1.00.0801041437190.2649@xanadu.home>
+	<7vhchtjphk.fsf@gitster.siamese.dyndns.org>
+	<477EA06A.5090606@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Matthias Urlichs <smurf@smurf.noris.de>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 04 22:41:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+To: Michael Stefaniuc <mstefani@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Jan 04 23:01:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAuIO-0001qW-EC
-	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 22:41:40 +0100
+	id 1JAube-0000v0-25
+	for gcvg-git-2@gmane.org; Fri, 04 Jan 2008 23:01:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753902AbYADVlO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2008 16:41:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753896AbYADVlO
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 16:41:14 -0500
-Received: from srv5.dvmed.net ([207.36.208.214]:49079 "EHLO mail.dvmed.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753351AbYADVlN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2008 16:41:13 -0500
-Received: from cpe-069-134-071-233.nc.res.rr.com ([69.134.71.233] helo=core.yyz.us)
-	by mail.dvmed.net with esmtpsa (Exim 4.66 #1 (Red Hat Linux))
-	id 1JAuHv-00067T-Rk; Fri, 04 Jan 2008 21:41:12 +0000
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-X-Spam-Score: -4.4 (----)
-X-Spam-Report: SpamAssassin version 3.2.3 on srv5.dvmed.net summary:
-	Content analysis details:   (-4.4 points, 5.0 required)
+	id S1754346AbYADWBE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2008 17:01:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754340AbYADWBD
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 17:01:03 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39544 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754283AbYADWBB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2008 17:01:01 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E99AF6E81;
+	Fri,  4 Jan 2008 17:00:58 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A30C6E62;
+	Fri,  4 Jan 2008 17:00:52 -0500 (EST)
+In-Reply-To: <477EA06A.5090606@redhat.com> (Michael Stefaniuc's message of
+	"Fri, 04 Jan 2008 22:08:58 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69610>
 
-I'm trying to convert this public repo into a git repository:
+Michael Stefaniuc <mstefani@redhat.com> writes:
 
-    :pserver:anonymous@cvs.lysator.liu.se:/cvsroot/unfs3
+>> What Nico said.
+> Not sure if you read my reply to Nico but the reflog is not there for
+> deleted branches. Nor for a cleared stash. Common operations where one
+> can loose work by mistake.
 
-cvsps seems to produce a nice long list of patchesets for the "unfs3" 
-module, and running
+I am sure you read what Nico pointed out about HEAD reflog.
 
-   cvs -d:pserver:anonymous@cvs.lysator.liu.se:/cvsroot/unfs3 co -P unfs3
+> Nevertheless is there a reason why git gc needs to run after applying
+> each patch in git-am? Why can't it run just once at the end? git prune
+> is optional and there's no reason to penalize a user that doesn't feel
+> safe to run it by cluttering the output of git am/rebase. There is also
+> a time penalty: git gc --auto on a pruned tree runs so fast that it
+> isn't measurable but on my unpruned wine it took 1.5 seconds. Waiting
+> 1.5 seconds per am/rebase is acceptable; wasting 1.5 seconds per patch
+> in the mailbox/rebase isn't that much fun if there are more than a
+> handful of patches to apply.
 
-works as expected.  However, running
+"Optional" does not mean "whether you do it or not you will see
+identical behaviour".  Not pruning may slow things down but you
+may still choose not to prune and suffer the penalty --- that's
+your choice.  But we still produce the correct result (hopefully
+;-) --- and that is what "Optional" means.
 
-   [jgarzik@core unfs3]$ git-cvsimport -v 
--d:pserver:anonymous@cvs.lysator.liu.se:/cvsroot/unfs3 unfs3
+The message from "gc --auto" may serve as a coalmine canary for
+you to know when to prune.
 
-produces
-
-Initialized empty Git repository in /spare/repo/unfs3/.git/
-Running cvsps...
-connect error: Network is unreachable
-cvs rlog: Logging unfs3
-cvs rlog: Logging unfs3/Config
-cvs rlog: Logging unfs3/Extras
-cvs rlog: Logging unfs3/contrib
-cvs rlog: Logging unfs3/contrib/nfsotpclient
-cvs rlog: Logging unfs3/contrib/nfsotpclient/mountclient
-cvs rlog: Logging unfs3/contrib/rpcproxy
-cvs rlog: Logging unfs3/doc
-Fetching LICENSE   v 1.1
-New LICENSE: 1416 bytes
-Fetching Makefile.in   v 1.1
-Unknown: error
-
-This machines and package (git-cvs-1.5.3.3-3.fc7) work just fine with a 
-large number of other CVS repositories [nice work].
-
-	Jeff
+I do not think moving "gc --auto" outside the loop hurts in
+practice because you are not likely to be rebasing a truly huge
+series every day, but cruft can accumulate during "git am" run
+and the "gc --auto" inside loop was meant to clean them up.  The
+idea was taken from importers that run repack every once in a
+while (e.g. cvsimport runs every 1k commits), but "gc --auto"
+was designed to be much more lightweight than a full repack and
+that was the reason it was placed in the loop without counting
+"every N commits".
