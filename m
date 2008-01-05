@@ -1,70 +1,75 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] git stash: one bug and one feature request
-Date: Sat, 5 Jan 2008 09:31:50 +0100
-Message-ID: <e5bfff550801050031g17e0217dueaed3ad3a53ddee8@mail.gmail.com>
+Date: Sat, 05 Jan 2008 00:36:30 -0800
+Message-ID: <7vbq80d5yp.fsf@gitster.siamese.dyndns.org>
 References: <e5bfff550801040814n82f34b2g17c485a207093440@mail.gmail.com>
-	 <20080105064156.GA6954@blorf.net>
-	 <7vzlvkepd5.fsf@gitster.siamese.dyndns.org>
+	<7vy7b5glmr.fsf@gitster.siamese.dyndns.org>
+	<e5bfff550801050025g6758bfb6p751e69e93d4299be@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Wayne Davison" <wayne@opencoder.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 05 09:32:18 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 05 09:37:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JB4S1-0006cL-Fd
-	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 09:32:17 +0100
+	id 1JB4Wl-0007UD-QS
+	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 09:37:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752438AbYAEIbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2008 03:31:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752641AbYAEIbv
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jan 2008 03:31:51 -0500
-Received: from rv-out-0910.google.com ([209.85.198.187]:34456 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752410AbYAEIbv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2008 03:31:51 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so6397699rvb.1
-        for <git@vger.kernel.org>; Sat, 05 Jan 2008 00:31:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=9RsJaEdL9DVC1fKoZ29Nf9jIA2GM86dMV1LYdz+bX8s=;
-        b=WT8IhpqprLJ9OdLEbEWJO94WCdxR18f/XYrlxcBtKDI5rDSCjE12jawl9rqnY0lsB3eo3PByqtBvaJ+QEI8RVFp0LhYVH8KKHkyU//CublZWjZgYY/Pf+f2eO2ugibO+8PAit9Yd6lDm4ZzxpVHaxWTr+uZKNqyImQ+ealtBbXQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bvhddvnABI9MXu+vRGZJN+eTLp1lHZkGOr9hLsp7Kg/Ensp0CKzws+oYED6ddGHFVCKXN8VHywthi1yFTfHc7+b19ZggIUdfBKh1yDWggXVZCP3Ybwg4mOaQrRn0evo+ZRrhORTVE3FVf8Sy6Ds5yVvzIyDLRdO35+F86H3f/QQ=
-Received: by 10.141.163.12 with SMTP id q12mr9393514rvo.190.1199521910410;
-        Sat, 05 Jan 2008 00:31:50 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Sat, 5 Jan 2008 00:31:50 -0800 (PST)
-In-Reply-To: <7vzlvkepd5.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752704AbYAEIgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2008 03:36:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752700AbYAEIgm
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jan 2008 03:36:42 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54564 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752141AbYAEIgl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2008 03:36:41 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 00DEA7AFD;
+	Sat,  5 Jan 2008 03:36:40 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 78A7F7AFC;
+	Sat,  5 Jan 2008 03:36:37 -0500 (EST)
+In-Reply-To: <e5bfff550801050025g6758bfb6p751e69e93d4299be@mail.gmail.com>
+	(Marco Costalba's message of "Sat, 5 Jan 2008 09:25:59 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69652>
 
-On Jan 5, 2008 7:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Wayne Davison <wayne@opencoder.net> writes:
->
-> > On Fri, Jan 04, 2008 at 05:14:42PM +0100, Marco Costalba wrote:
-> >> -            echo >&2 'No local changes to save'
-> >> +            echo > 'No local changes to save'
-> >
-> > That change and the other two following it each put a newline in a
-> > strangely named file.  You should just drop the >&2 altogether if you
-> > want the output to go to stdout.
->
-> Lol...  Good eyes.  I did not even notice it ;-).
->
+"Marco Costalba" <mcostalba@gmail.com> writes:
 
-Very sorry for this, I should have been more careful. Please let me
-know if you want me to resend the patch.
+> This low level run() should know nothing about the semantic of the
+> command or the outputted data, but should detect command failing,
+> because failing reporting framework is unified and is the same for
+> each type of command.
 
-Marco
+That sounds like a framework generalized in a wrong way to me.
+
+> Please note that also gitk uses the same approach, indeed from
+> http://ftp.tcl.tk/man/tcl8.5/tutorial/Tcl26.html you can read:
+> ...
+
+Heh, as if tcl is a textbook of good programming style.
+
+> I can also black list not commonly behaving programs, but in case of
+> git-stash a fail to see why to choose a not standard behaviour when
+> not needed.
+
+I do not offhand see a reason it would _hurt_ for this
+particular case (git-stash) to write the diagnostics we
+currently spit out to stderr to stdout.  My objection is
+primarily because I do not think "never writing to stderr if
+there is no error" is standard behaviour AT ALL.
+
+IOW, I do have much less objections to what your patch actually
+does, than I have problems with the way the reason for the
+change is stated.  The change is not fixing anything to conform
+to some standard behaviour.  It is more about bending
+(admittedly only slightly) backwards to help broken callers.
+That is what I have most trouble with.
