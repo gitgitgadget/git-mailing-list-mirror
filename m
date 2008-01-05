@@ -1,103 +1,104 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-stash: add new 'drop' subcommand
-Date: Fri, 04 Jan 2008 17:47:43 -0800
-Message-ID: <7vtzltf3gg.fsf@gitster.siamese.dyndns.org>
-References: <1199495198-26270-1-git-send-email-casey@nrlssc.navy.mil>
-	<477EDDD4.5060509@nrlssc.navy.mil>
+Subject: Re: [PATCH] git-filter-branch could be confused by similar names
+Date: Fri, 04 Jan 2008 17:17:39 -0800
+Message-ID: <7v4pdtgjf0.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0712301700580.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+	<1199040667-31850-1-git-send-email-dpotapov@gmail.com>
+	<7v7iiqppkw.fsf@gitster.siamese.dyndns.org>
+	<20080104155114.GS3373@dpotapov.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Sat Jan 05 02:48:27 2008
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 05 03:14:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JAy9C-0007HO-U9
-	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 02:48:27 +0100
+	id 1JAyYo-0003kF-HL
+	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 03:14:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754470AbYAEBrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2008 20:47:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754473AbYAEBrz
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 20:47:55 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55493 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754370AbYAEBry (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2008 20:47:54 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F0384AD6;
-	Fri,  4 Jan 2008 20:47:50 -0500 (EST)
+	id S1754605AbYAECOY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jan 2008 21:14:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754591AbYAECOY
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 21:14:24 -0500
+Received: from lollipop.listbox.com ([208.210.124.78]:43112 "EHLO
+	lollipop.listbox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754492AbYAECOY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jan 2008 21:14:24 -0500
+X-Greylist: delayed 3397 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 Jan 2008 21:14:23 EST
+Received: from rune.pobox.com (rune.pobox.com [208.210.124.79])
+	by lollipop.listbox.com (Postfix) with ESMTP id 69D39468F6D
+	for <git@vger.kernel.org>; Fri,  4 Jan 2008 20:20:38 -0500 (EST)
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id 4B1D517E3B5;
+	Fri,  4 Jan 2008 20:18:07 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A1A764AD5;
-	Fri,  4 Jan 2008 20:47:47 -0500 (EST)
-In-Reply-To: <477EDDD4.5060509@nrlssc.navy.mil> (Brandon Casey's message of
-	"Fri, 04 Jan 2008 19:31:00 -0600")
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id EFA8617E3B2;
+	Fri,  4 Jan 2008 20:18:02 -0500 (EST)
+In-Reply-To: <20080104155114.GS3373@dpotapov.dyndns.org> (Dmitry Potapov's
+	message of "Fri, 4 Jan 2008 18:51:15 +0300")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69630>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+Dmitry Potapov <dpotapov@gmail.com> writes:
 
-> I'm not sure if there is a proper way to get 'stash@{0}' from
-> 'refs/stash' so I kept my usage of that former string outside
-> of the drop_stash() function.
+> On Thu, Jan 03, 2008 at 01:27:27PM -0800, Junio C Hamano wrote:
+>> ... I had an
+>> impression that we try to stick to a subset of BRE (namely, no
+>> \{m,n\}, [::], [==], nor [..]).
+>
+> I was not aware about this policy, and I am not aware about
+> existing any grep that does not grok the expressions I used
+> above. So, I thought they are commonly accepted, but I might
+> be wrong.
 
-Doesn't "$refs_stash@{0}" (which would give refs/stash@{0} not
-stash@{0}) work for you?
+Well I might be wrong too, as I did not vet all the existing use
+of grep in our code.  That's why I said I had "an impression".
 
-> diff --git a/git-stash.sh b/git-stash.sh
-> index 06cb177..a789a53 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -1,7 +1,7 @@
->  #!/bin/sh
->  # Copyright (c) 2007, Nanako Shiraishi
->  
-> -USAGE='[  | save | list | show | apply | clear | create ]'
-> +USAGE='[  | save | list | show | apply | clear | create | drop ]'
+Now I have ("git grep 'grep ' -- 'git-*.sh'"), and it seems to
+be that we do stick to a narrow subset of BRE.
 
-Might want to put drop next to clear, but that is minor.
+ * We do not use \{m,n\};
 
-> +drop_stash () {
-> +	if ! have_stash
-> +	then
-> +		echo >&2 'No stash entries to drop'
-> +		exit 0
-> +	fi
-> +
-> +	# Verify supplied argument looks like a stash entry
-> +	s=$(git rev-parse --revs-only --no-flags --default $ref_stash "$@") &&
-> +	git rev-parse --verify "$s:"   > /dev/null 2>&1 &&
-> +	git rev-parse --verify "$s^1:" > /dev/null 2>&1 &&
-> +	git rev-parse --verify "$s^2:" > /dev/null 2>&1 ||
-> +		die "$*: not a valid stashed state"
-> +
-> +	git reflog delete "$@" && echo "Dropped $@ ($s)" ||
+ * We do not use -E;
 
-The second $@ is inconsistent with the next line's use of $*; intentional?
+ * We do not use ? nor + (which are \{0,1\} and \{1,\}
+   respectively in BRE) but that goes without saying as these
+   are ERE elements not BRE (note that \? and \+ you wrote are
+   not even part of BRE -- making them accessible from BRE is a
+   GNU extension).
 
-> +		die "$*: Could not drop stash entry"
-> +}
+IOW, our scripts' use of grep is very 80'sh ;-)
 
-> +drop)
-> +	shift
-> +	if test $# = 0
-> +	then
-> +		set -- "stash@{0}"
-> +	fi
-> +	drop_stash "$@" &&
-> +	(git rev-parse --verify "stash@{0}" > /dev/null 2>&1 || clear_stash)
+I do not mind using things that are available in POSIX BRE, but
+let's not rely on GNU extension that may cause issues to other
+people.
 
-Curious.
+Other things I noticed while looking at "t/*.sh":
 
- (1) Why not do the clearing inside drop_stash?
+ * t/t3600-rm.sh and t/5401-update-hooks.sh have unnecessary
+   uses of egrep that can instead be grep;
 
- (2) Why is clearning necessary in the first place (iow,
-     shouldn't "reflog delete" take care of that)?
+ * t/t3800-mktag.sh uses egrep but I think it can be grep; also,
+   I think the use of temporary file expect.pat is unnecessary.
 
-Other than that, nicely done.
+ * t/t5510-fetch.sh does use '^[0-9a-f]\{40\} '.
+
+ * t/t7001-mv.sh uses -E only to use '.+' when it can just as
+   easily say '..*' instead.
+
+ * t/t7600-merge.sh has two occurrences of (GNU extended) " \+"
+   that should be "  *" for portability.  An alternative is to
+   use grep -E and say " +" instead, but then the other plus
+   sign on the same line needs to be quoted.
+
+Other than the one in 5510 I consider them log hanging fruits
+for janitors.
