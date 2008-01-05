@@ -1,121 +1,144 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git diff -B: splitting up complete renames
-Date: Sat, 05 Jan 2008 11:18:20 -0800
-Message-ID: <7vprwg84jn.fsf@gitster.siamese.dyndns.org>
-References: <200801051818.40009.jnareb@gmail.com>
+Subject: [PATCH 1/2] git-rev-parse --symbolic-full-name
+Date: Sat, 05 Jan 2008 12:23:44 -0800
+Message-ID: <7vk5mo81in.fsf_-_@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0712301700580.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+	<1199040667-31850-1-git-send-email-dpotapov@gmail.com>
+	<7v7iiqppkw.fsf@gitster.siamese.dyndns.org>
+	<20080104155114.GS3373@dpotapov.dyndns.org>
+	<7vr6gxjpyn.fsf@gitster.siamese.dyndns.org>
+	<alpine.LSU.1.00.0801051601490.10101@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 05 20:19:07 2008
+Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jan 05 21:24:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBEXw-000230-M7
-	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 20:19:05 +0100
+	id 1JBFZ9-0004UO-HL
+	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 21:24:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756176AbYAETS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2008 14:18:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756152AbYAETS3
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jan 2008 14:18:29 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44895 "EHLO
+	id S1756649AbYAEUX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2008 15:23:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756642AbYAEUX4
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jan 2008 15:23:56 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50610 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755884AbYAETS2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2008 14:18:28 -0500
+	with ESMTP id S1756636AbYAEUXz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2008 15:23:55 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C67974BA;
-	Sat,  5 Jan 2008 14:18:26 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CA984950;
+	Sat,  5 Jan 2008 15:23:50 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CE2474B9;
-	Sat,  5 Jan 2008 14:18:22 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A572494F;
+	Sat,  5 Jan 2008 15:23:46 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0801051601490.10101@racer.site> (Johannes
+	Schindelin's message of "Sat, 5 Jan 2008 16:03:55 +0000 (GMT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69682>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+The plumbing level can understand that the user meant
+"refs/heads/master" when the user says "master" or
+"heads/master", but there is no easy way for the scripts to
+figure it out without duplicating the dwim_ref() logic.
 
-> ...
->   and if it detects that the file "file0" is completely rewritten,
->   it changes it to:
->
->   ------------------------------------------------
->   :100644 000000 bcd1234... 0000000... D file0
->   :000000 100644 0000000... 0123456... A file0
->   ------------------------------------------------
->
-> Shouldn't the last block read for the modern git read:
->
->   ------------------------------------------------
->   :100644 000000 bcd1234... 0123456... M99 file0
->   ------------------------------------------------
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Correct.  The description is based on an earlier round of the
-code before 366175ef8c3b1e145f4ba846e63a1dea3ec3cacc (Rework -B
-output).  "git show" of that patch has description in its
-changes to Documentation/diffcore.txt.
+ * This is the same patch as I showed yesterday but with a doc
+   update.
 
-The original motivation of -B was not about helping three way
-renames it allows you when used with -M/-C.  It was about
-showing textual diff more readably for quite dissimilar
-filepairs.
+ Documentation/git-rev-parse.txt |    7 +++++++
+ builtin-rev-parse.c             |   37 ++++++++++++++++++++++++++++++++++---
+ 2 files changed, 41 insertions(+), 3 deletions(-)
 
-> Third: Do "git diff --no-index" (filesystem diff) can show breaking / 
-> use dissimilarity? I couldn't make it work...
-
-It doesn't, for two reasons.
-
- * Look at diffcore_break().  It breaks filepairs with identical
-   paths and nothing else.
-
-   The reason for this check is that the caller can call
-   diffcore_rename() _before_ diffcore_break() [*1*] and a
-   filepair that was detected as renamed pair ought to be
-   already found similar enough.  These days, I think you can
-   replace the check with p->renamed_pair.
-
- * Look at diffcore_merge_broken(), which is responsible for
-   re-merging a broken pair.  Because we match them by looking
-   at their names (iow, we do not use pointers to link halves of
-   a broken pair pointing at each other).
-
-   This was correct before "no-index" stuff because "git diff"
-   was about comparing pairs of blobs found at corresponding
-   paths in two tree-like things (i.e. "a/one" and "b/one"
-   corresponds to each other when you do "git diff -- one").
-   The modification to introduce no-index forgot to update this
-   logic.
-
-If you wanted to fix this, you can change p->broken_pair from a
-boolean to a pointer that points at the other half of the broken
-pair (and record that when we break a pair in diffcore_break()),
-and look at that pointer to decide which one to match up with
-which other one in diffcore_merge_broken().  Together with a
-change to look at p->renamed_pair instead of paths I mentioned,
-I think it would work more like the regular git diff for
-"no-index" case.
-
-I consider that "no-index" frontend more or less a bolted on
-half-baked hack that covers only minimally necessary cases to
-serve as non-git "diff" replacement, without sharing enough with
-the real "git diff" internals; I would not be surprised at all
-if there are more corner cases like this that does not work.
-But I do not think it is fundamentally unfixable.  The change to
-add "no-index" support just needed to be more careful, and it is
-not too late to make it so.
-
-
-[Footnote]
-
-*1* diffcore was designed as a generic library to allow
-experimenting more combinations of transformations than what
-then-current git used.  All of our existing callers ended up
-calling the transformations in the same order (i.e. the order
-diffcore_std() calls them), but individual transformations were
-written not to assume too much about the order they would be
-called.
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 329fce0..0cedc13 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -70,6 +70,13 @@ OPTIONS
+ 	possible '{caret}' prefix); this option makes them output in a
+ 	form as close to the original input as possible.
+ 
++--symbolic-full-name::
++	This is similar to \--symbolic, but it omits input that
++	are not refs (i.e. branch or tag names; or more
++	explicitly disambiguating "heads/master" form, when you
++	want to name the "master" branch when there is an
++	unfortunately named tag "master"), and show them as full
++	refnames (e.g. "refs/heads/master").
+ 
+ --all::
+ 	Show all refs found in `$GIT_DIR/refs`.
+diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
+index 20d1789..b9af1a5 100644
+--- a/builtin-rev-parse.c
++++ b/builtin-rev-parse.c
+@@ -21,6 +21,9 @@ static const char *def;
+ #define NORMAL 0
+ #define REVERSED 1
+ static int show_type = NORMAL;
++
++#define SHOW_SYMBOLIC_ASIS 1
++#define SHOW_SYMBOLIC_FULL 2
+ static int symbolic;
+ static int abbrev;
+ static int output_sq;
+@@ -103,8 +106,32 @@ static void show_rev(int type, const unsigned char *sha1, const char *name)
+ 
+ 	if (type != show_type)
+ 		putchar('^');
+-	if (symbolic && name)
+-		show(name);
++	if (symbolic && name) {
++		if (symbolic == SHOW_SYMBOLIC_FULL) {
++			unsigned char discard[20];
++			char *full;
++
++			switch (dwim_ref(name, strlen(name), discard, &full)) {
++			case 0:
++				/*
++				 * Not found -- not a ref.  We could
++				 * emit "name" here, but symbolic-full
++				 * users are interested in finding the
++				 * refs spelled in full, and they would
++				 * need to filter non-refs if we did so.
++				 */
++				break;
++			case 1: /* happy */
++				show(full);
++				break;
++			default: /* ambiguous */
++				error("refname '%s' is ambiguous", name);
++				break;
++			}
++		} else {
++			show(name);
++		}
++	}
+ 	else if (abbrev)
+ 		show(find_unique_abbrev(sha1, abbrev));
+ 	else
+@@ -421,7 +448,11 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--symbolic")) {
+-				symbolic = 1;
++				symbolic = SHOW_SYMBOLIC_ASIS;
++				continue;
++			}
++			if (!strcmp(arg, "--symbolic-full-name")) {
++				symbolic = SHOW_SYMBOLIC_FULL;
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--all")) {
+-- 
+1.5.4.rc2.38.gd6da3
