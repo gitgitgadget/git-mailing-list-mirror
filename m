@@ -1,82 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Multiple shared repositories (including svn) workflow
-Date: Sat, 05 Jan 2008 07:07:28 -0800 (PST)
-Message-ID: <m363y8nwf9.fsf@roke.D-201>
-References: <DA45FDDC-BEEB-47F6-A2B6-4FE4FFEF8B0D@vicaya.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-filter-branch could be confused by similar names
+Date: Sat, 5 Jan 2008 16:03:55 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801051601490.10101@racer.site>
+References: <Pine.LNX.4.64.0712301700580.14355@wbgn129.biozentrum.uni-wuerzburg.de> <1199040667-31850-1-git-send-email-dpotapov@gmail.com> <7v7iiqppkw.fsf@gitster.siamese.dyndns.org> <20080104155114.GS3373@dpotapov.dyndns.org>
+ <7vr6gxjpyn.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Luke Lu <git@vicaya.com>
-X-From: git-owner@vger.kernel.org Sat Jan 05 16:08:08 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 05 17:04:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBAd2-0004W0-KH
-	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 16:08:05 +0100
+	id 1JBBVf-00073P-7L
+	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 17:04:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754702AbYAEPHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2008 10:07:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754022AbYAEPHb
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jan 2008 10:07:31 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:16253 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754505AbYAEPHa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2008 10:07:30 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so2916374ugc.16
-        for <git@vger.kernel.org>; Sat, 05 Jan 2008 07:07:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=D2fgmjDfqOg1cUJmCR+WS6RTiUtb6kGbQHsfMsl4oJc=;
-        b=WDUw0NZehJK4TpEzeNwLkZItxnUArdLkzhdDcr7CruZGOIdekJ4QFqHU5XjFOXVRtNGFBMIXddUKl7ZDlUdAGR0EgUTs0d06+ZiLOeQzcxMzPzEjpV09OlR3vBwtrbVCB3flcYTDLcVaWGfSkiyIDlUuzuoKkUNNxAN7EJqbfCs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=LbMDUtnYS1P/rQNDixQCJ+Mhk8/i1u7mNNMgLfSAskBm0CI+RN424n+tJbnYByz1YpvrxnrUsPU+xwq5cSPfuGx2Sx22eiGN3a7bszXwqmmQPXT/sOwDmdhwKCKmngPwNNKxKwG0/JWkNhfMtuAOXq6nWSnJMH9r8EjD1pcJMqc=
-Received: by 10.66.221.17 with SMTP id t17mr13259939ugg.66.1199545649057;
-        Sat, 05 Jan 2008 07:07:29 -0800 (PST)
-Received: from roke.D-201 ( [83.8.240.50])
-        by mx.google.com with ESMTPS id l22sm18479860uga.30.2008.01.05.07.07.27
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 05 Jan 2008 07:07:28 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id m05F7N4O006668;
-	Sat, 5 Jan 2008 16:07:26 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m05F77Cb006664;
-	Sat, 5 Jan 2008 16:07:07 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <DA45FDDC-BEEB-47F6-A2B6-4FE4FFEF8B0D@vicaya.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1755369AbYAEQEA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2008 11:04:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755356AbYAEQEA
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jan 2008 11:04:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51275 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755324AbYAEQD7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2008 11:03:59 -0500
+Received: (qmail invoked by alias); 05 Jan 2008 16:03:57 -0000
+Received: from dslb-088-067-194-153.pools.arcor-ip.net (EHLO dslb-088-067-194-153.pools.arcor-ip.net) [88.67.194.153]
+  by mail.gmx.net (mp030) with SMTP; 05 Jan 2008 17:03:57 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+o4GpJ8LKorBZQNIDEazuCeDAgHijOaI4vdTofi2
+	+BoOvAqD9CxISd
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vr6gxjpyn.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69675>
 
-Luke Lu <git@vicaya.com> writes:
+Hi,
 
-> Anyway, I've been using git for only a few months. There might/must
-> be better ways to do it. As a user coming from cvs and svn, it seems
-> to me that the most confusing command is actually "git pull" as it
-> doesn't work with such workflow at all (conflicts with confusing
-> messages, until you really understand the implications of rebase). It
-> seems to me that if we create a new "git update" command which is
-> essentially "git fetch && git rebase <remotebranch>", it would
-> greatly alleviate such confusions. Some lessons learned from the
-> short experience:
+On Fri, 4 Jan 2008, Junio C Hamano wrote:
+
+> Dmitry Potapov <dpotapov@gmail.com> writes:
 > 
-> 1. commit first, ask question later.
-> 2. rebase is the new update
-> 3. reset --hard and reflog are your friends.
+> > It works only if the name "unambiguous" for git show-ref, which 
+> > interprets refname differently than rev-list as I wrote above. 
+> > Nevertheless, I believe we can use 'git show-ref' if we try something 
+> > like this:
+> 
+> Ahh.
+> 
+> But at that point I would say that exposing the refname dwimming
+> logic to the scripts could be a much cleaner solution.
 
-I don't remember if it would be in coming 1.5.4 release, but there
-is "git pull --rebase", which means fetch + rebase instead of default
-fetch + merge.
+I considered that when ripping the script from cogito, but it seemed to me 
+at that time that not requiring an up-to-date git for testing the script 
+would be better.
 
-HTH
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Now is a different situation, however, so I agree.
+
+Ciao,
+Dscho
