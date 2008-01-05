@@ -1,84 +1,94 @@
-From: Pedro Melo <melo@simplicidade.org>
-Subject: Re: git-walkthrough-add script
-Date: Sat, 5 Jan 2008 04:08:50 +0000
-Message-ID: <0F790B89-2FFB-4C54-A109-E55E1FB57D3B@simplicidade.org>
-References: <1199426431-sup-6092@south> <20080104072650.GA24685@coredump.intra.peff.net> <1199471454-sup-4786@south> <20080104210751.GB26248@coredump.intra.peff.net> <1199500441-sup-4067@south> <7vprwhf0kf.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH] git-stash: add new 'drop' subcommand
+Date: Sat, 5 Jan 2008 05:46:49 +0000 (UTC)
+Message-ID: <loom.20080105T053356-853@post.gmane.org>
+References: <1199495198-26270-1-git-send-email-casey@nrlssc.navy.mil> <477EDDD4.5060509@nrlssc.navy.mil> <7vtzltf3gg.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: William Morgan <wmorgan-git@masanjin.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 05 05:09:22 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 05 06:50:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JB0LX-0007jw-Vq
-	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 05:09:20 +0100
+	id 1JB1vb-0006iK-BT
+	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 06:50:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751667AbYAEEIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jan 2008 23:08:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751502AbYAEEIr
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Jan 2008 23:08:47 -0500
-Received: from mail.sl.pt ([212.55.140.13]:34404 "EHLO sl.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751500AbYAEEIq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jan 2008 23:08:46 -0500
-Received: (qmail 9688 invoked from network); 5 Jan 2008 04:08:42 -0000
-X-Virus-Status: Clean (0.01170 seconds) ; Version: 0.3-0.88.6
-X-Spam-Flag: NO
-X-Spam-Status: NO (0.0/5.0) (0.00007 seconds / 0.04719 sA)
-	Checked: by PTMail-AS v0.1 on mail.sl.pt
-Received: from unknown (HELO [192.168.1.65]) (melo@[85.241.127.244])
-          (envelope-sender <melo@simplicidade.org>)
-          by mail-sl (qmail-ldap-1.03) with SMTP
-          for <wmorgan-git@masanjin.net>; 5 Jan 2008 04:08:42 -0000
-Received-SPF: neutral (mail-sl: domain of (null) is neutral about designating 85.241.127.244 as permitted sender)
-In-Reply-To: <7vprwhf0kf.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.753)
+	id S1751771AbYAEFuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2008 00:50:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751723AbYAEFuH
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jan 2008 00:50:07 -0500
+Received: from main.gmane.org ([80.91.229.2]:50407 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751171AbYAEFuG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2008 00:50:06 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1JB1v0-0002Qm-My
+	for git@vger.kernel.org; Sat, 05 Jan 2008 05:50:03 +0000
+Received: from adsl-070-145-056-067.sip.bix.bellsouth.net ([70.145.56.67])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 05 Jan 2008 05:50:02 +0000
+Received: from drafnel by adsl-070-145-056-067.sip.bix.bellsouth.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 05 Jan 2008 05:50:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 70.145.56.67 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.12) Gecko/20050920 Firefox/1.0.7)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69640>
+
+Junio C Hamano <gitster <at> pobox.com> writes:
+
+> 
+> Brandon Casey <casey <at> nrlssc.navy.mil> writes:
+> 
+> > I'm not sure if there is a proper way to get 'stash@{0}' from
+> > 'refs/stash' so I kept my usage of that former string outside
+> > of the drop_stash() function.
+> 
+> Doesn't "$refs_stash@{0}" (which would give refs/stash@{0} not
+> stash@{0}) work for you?
+
+yep that works. much nicer.
+
+> > diff --git a/git-stash.sh b/git-stash.sh
+> > -USAGE='[  | save | list | show | apply | clear | create ]'
+> > +USAGE='[  | save | list | show | apply | clear | create | drop ]'
+> 
+> Might want to put drop next to clear, but that is minor.
+
+no problem.
 
 
-On Jan 5, 2008, at 2:50 AM, Junio C Hamano wrote:
-> They are meant to be different.
->
->     $ git reset --hard
->     $ echo >>Makefile
->     $ echo >>psql/Makefile
->     $ git add -p
->     diff --git a/Makefile b/Makefile
->     index a2177bc..eb250b0 100644
->     --- a/Makefile
->     +++ b/Makefile
->     @@ -54,3 +54,4 @@ snapdiff ::
->             latest=`ls -1dr $(_snap)/release-????-??-?? | head -n  
-> 1` &&
->             \
->             diff -X dontdiff -ru "$$latest" .
->
->     +
->     Stage this hunk [y/n/a/d/?]? ^C
+> > +	git reflog delete "$@" && echo "Dropped $@ ($s)" ||
+> 
+> The second $@ is inconsistent with the next line's use of $*; intentional?
 
-BTW, I'm using 1.5.4rc2 and this prompt shows:
+not intentional.
 
-Stage this hunk [y/n/a/d/j/J/?]?
+> > +		set -- "stash@{0}"
+> > +	fi
+> > +	drop_stash "$@" &&
+> > +	(git rev-parse --verify "stash@{0}" > /dev/null 2>&1 || clear_stash)
+> 
+> Curious.
+> 
+>  (1) Why not do the clearing inside drop_stash?
 
-but the help (after you press ?) also mentions:
+only because I didn't like stash@{0} notation and didn't want it
+buried inside a function.
 
-k - leave this hunk undecided, see previous undecided hunk
-K - leave this hunk undecided, see previous hunk
-s - split the current hunk into smaller hunks
+> 
+>  (2) Why is clearning necessary in the first place (iow,
+>      shouldn't "reflog delete" take care of that)?
 
-but those three options don't seem to work.
+clear_stash additionally deletes refs/stash and logs/refs/stash at least.
 
-Best regards,
--- 
-Pedro Melo
-Blog: http://www.simplicidade.org/notes/
-XMPP ID: melo@simplicidade.org
-Use XMPP!
+-brandon
