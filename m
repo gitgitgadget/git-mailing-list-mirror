@@ -1,145 +1,104 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] add--interactive: allow diff colors without
-	interactive colors
-Date: Sat, 5 Jan 2008 03:51:13 -0500
-Message-ID: <20080105085113.GA30598@coredump.intra.peff.net>
-References: <20080104083521.GB3354@coredump.intra.peff.net> <7v3atdi0na.fsf@gitster.siamese.dyndns.org> <20080105033713.GA26806@coredump.intra.peff.net> <7vk5mod7kg.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 05 09:51:52 2008
+From: Luke Lu <git@vicaya.com>
+Subject: Multiple shared repositories (including svn) workflow
+Date: Sat, 5 Jan 2008 00:54:04 -0800
+Message-ID: <DA45FDDC-BEEB-47F6-A2B6-4FE4FFEF8B0D@vicaya.com>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 05 09:54:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JB4kw-0002C0-1b
-	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 09:51:50 +0100
+	id 1JB4ng-0002fZ-Vp
+	for gcvg-git-2@gmane.org; Sat, 05 Jan 2008 09:54:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752750AbYAEIvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2008 03:51:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752708AbYAEIvR
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jan 2008 03:51:17 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2299 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752700AbYAEIvQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2008 03:51:16 -0500
-Received: (qmail 22844 invoked by uid 111); 5 Jan 2008 08:51:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 05 Jan 2008 03:51:14 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Jan 2008 03:51:13 -0500
-Content-Disposition: inline
-In-Reply-To: <7vk5mod7kg.fsf@gitster.siamese.dyndns.org>
+	id S1752798AbYAEIyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2008 03:54:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752776AbYAEIyN
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jan 2008 03:54:13 -0500
+Received: from rv-out-0910.google.com ([209.85.198.191]:2153 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752708AbYAEIyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2008 03:54:12 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so6401361rvb.1
+        for <git@vger.kernel.org>; Sat, 05 Jan 2008 00:54:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:mime-version:content-transfer-encoding:message-id:content-type:to:from:subject:date:x-mailer:sender;
+        bh=9JMifA8u8PDJQ+0Go27qn4Deuo4GzgerT3qEsW2UQro=;
+        b=mLUOJ5Fq0SJW9C0AuCr/OrkqJAqooM/s9nSPWopKGZI0XOPkOdv6VMWK6OuT6MX3X7G4nOnCBIPUKCW3JLbEkC4ekVlu/kkRQRdc1XzLyb6vVizpRGwtW6wQaCQR7ejtRQe/HFvjsJzvyiJTKYu5qlseiGaioj9gCCgrhXhcJcQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:content-transfer-encoding:message-id:content-type:to:from:subject:date:x-mailer:sender;
+        b=oFXxVRxmzQXdJ9cgPzasctAQNdzNj287u618XTWfSoADA+IuHUE7G4NaiagW4aqNMZynWnC4k7Aw7vT/2VdMf9TejjFrJOAgVnLHjuyKzFXrk4Kzr8ad25HkvlbKlF7u7aDupfdn++0zmRqPGn8GahyeEs5aPm8I44SzGfYQi7c=
+Received: by 10.141.49.6 with SMTP id b6mr5256542rvk.68.1199523249462;
+        Sat, 05 Jan 2008 00:54:09 -0800 (PST)
+Received: from ?192.168.15.20? ( [98.207.63.2])
+        by mx.google.com with ESMTPS id b34sm2060428rvf.22.2008.01.05.00.54.06
+        (version=SSLv3 cipher=OTHER);
+        Sat, 05 Jan 2008 00:54:07 -0800 (PST)
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69654>
 
-On Sat, Jan 05, 2008 at 12:01:51AM -0800, Junio C Hamano wrote:
+We have an existing project using subversion. Half of the committers  
+want to use git for its features and speed, another half (mostly  
+editors, graphic designers etc.) want to continue use svn for the  
+usual reasons -- advanced features of git doesn't really buy them  
+much. They just want to work as usual, especially with the ease of  
+TortoiseSVN (some swear by it). After some thought and experiment, I  
+proposed the following workflow:
 
-> I think I understood that part.  What I was saying was that it
-> is equally valid for other people to say "I like to interact
-> with 'git add -i' without colours because coloured output
-> distracts me when I have to think, even though I usually want to
-> view the whole diff in colours."  So yes, color.interactive-diff
+0. People who want to use svn can continue using svn as usual.
 
-Right. My contention is that I think such people will be in the minority
-(though obviously I have no numbers to back it up, and nobody else is
-participating in this thread).
+1. A maintainer uses git-svn to convert the subversion project into git:
+    git svn clone -s <project_url> project
 
-> To an end user, the fact that "git add -p" shows diff using the
-> underlying "git diff" machinery does not matter.  That's just an
-> implementation detail.
+2. He then creates a bare git repo as the "current" or "official"  
+tree for the brave git users.
+    git clone --bare project project.git
+    project.git is then hosted on server, say, scm
 
-But he doesn't have to care about that. He cares only that "color.diff"
-means "diffs are displayed in color." And "color.interactive" means
-"interactive menus are displayed in color." Period. There is no concern
-for the implementation detail of the diff machinery.
+3. Git users clone the "current" repo
+    git clone git://scm/repos/project.git
+    and work merrily ever after.
 
-> "git diff" shows the whole diff at once while "git add -p" shows it
-> hunk by hunk.  It is clear they are doing different things to the end
-> user.
+4. A maintainer (people or a cron job) would keep both official trees  
+synced:
+    a. He needs to add a git remote for the git-svn repo created at  
+step 1:
+       git remote add project ssh://scm/repos/project.git
+    b. To sync commits from git to svn:
+       git fetch && git rebase project/master
+       git svn rebase
+       git svn dcommit
+    c. To sync from svn to git:
+       git svn rebase
+       git rebase project/master
+       git push project
 
-I don't see that distinction as relevant. Diffs are diffs, whether you
-look at them with a small viewport or the whole thing. Would you expect
-"git diff -- file1 file2" to have different display options than "git
-diff -- file"?
+Preliminary tests showed that it seems to work well. Any problems  
+that I didn't foresee?
 
-> If he told "git add -p" to be monochrome, he has every right to expect
-> the part to pick hunks to also stay monochrome.  To people who know
+Anyway, I've been using git for only a few months. There might/must  
+be better ways to do it. As a user coming from cvs and svn, it seems  
+to me that the most confusing command is actually "git pull" as it  
+doesn't work with such workflow at all (conflicts with confusing  
+messages, until you really understand the implications of rebase). It  
+seems to me that if we create a new "git update" command which is  
+essentially "git fetch && git rebase <remotebranch>", it would  
+greatly alleviate such confusions. Some lessons learned from the  
+short experience:
 
-But he didn't. He said "git menus should be monochrome."
+1. commit first, ask question later.
+2. rebase is the new update
+3. reset --hard and reflog are your friends.
 
-And yes, that's not exactly what config.txt says that color.interactive
-does; but I think that is probably worth fixing.
+Again, comments welcome.
 
-> picker.  To others, it is counterintuitive if color.diff had any
-> effect to what "git add -i" did.
-
-Then why does it affect what "git log" does? Why does it affect what
-"git reflog" does? Why does the documentation for color.diff say "use
-colors in patch" without any reference to specific programs?
-
-> Perhaps a saner alternative would be:
-> 
->  * When color.interactive tells to use color, all interaction
->    with "add -i" will be in color.  There is no need to have
->    both color.diff and color.interactive set.
-> 
->  * When color.interactive tells not to use color, everything
->    including the diff output will be monochrome.  What you have
->    in color.diff does not matter.
-
-I think this is equally confusing. A user who sets color.diff will see
-color diffs from all porcelains _except_ "add -i".
-
-Moreover, this doesn't allow "I always want color in diffs, but I don't
-want menu coloring" which is the very thing I have been trying to
-accomplish (but yes, I can do that by individually setting
-color.interactive.* to plain).
-
-> The point of the third item is that you enable color.interactive
-> and set diff related entries of color.interactive.* palette to
-> plain, if you want some color while interacting with "add -i"
-> but do not like colored hunk picker.  This would parallel the
-> way you can selectively enable coloring in "git diff" output,
-> where you enable color.diff and set metainfo color to plain if
-> you want some color in diff output but do not like colored
-> metainfo.
-
-I fail to see how this is less confusing than just adding a separate
-interactive-diff knob, since you are asking them to individually set
-each color preference to plain. I.e., "set color.interactive to true and
-color.interactive-diff to false" versus "set color.interactive to true,
-but then for every type of diff colorization, set the color for it in
-color.interactive.* to false".
-
-I think the extra knob is not a problem; it is simply a matter of
-defaulting the knobs based on other knobs. The rules for knobs
-interacting may seem complex, but I think we can DWIM. E.g., given
-config options:
-
-  - color
-  - color.diff
-  - color.interactive
-  - color.interactive.diff
-
-The rules for "git add -i" diff coloring would be:
-
-  (1) if color.interactive.diff is set to TRUE/FALSE, use that
-  (2) otherwise, if color.interactive is set to TRUE/FALSE, use that
-  (3) otherwise, if color.diff is set to TRUE/FALSE, use that
-  (4) otherwise, if color is set to TRUE/FALSE, use that
-
-IOW, even though we _have_ all of those knobs, users which don't want to
-fine-tune can just use the higher-level knobs. Those that want to can
-negate the higher level with lower level knobs. It's flexible, and it's
-easy to tell users "just do 'git config color true'."
-
-> Admittedly, it's more work.
-
-Of course. ;) But I am willing to implement what I said above if you
-agree that it is sensible.
-
--Peff
+__Luke
