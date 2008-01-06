@@ -1,73 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's in git.git (stable frozen)
-Date: Sun, 06 Jan 2008 02:51:24 -0800
-Message-ID: <7vejcv5is3.fsf@gitster.siamese.dyndns.org>
-References: <7v63zjgoel.fsf@gitster.siamese.dyndns.org>
-	<7vsl2i6ea4.fsf@gitster.siamese.dyndns.org>
-	<7vhcixtnm4.fsf@gitster.siamese.dyndns.org>
-	<7vfxye4yv7.fsf@gitster.siamese.dyndns.org>
-	<7vve78qhtf.fsf@gitster.siamese.dyndns.org>
-	<7vbq8v5n0u.fsf_-_@gitster.siamese.dyndns.org>
-	<7vy7btaf4p.fsf@gitster.siamese.dyndns.org>
-	<7vfxxtu5ov.fsf@gitster.siamese.dyndns.org>
-	<7v63y8ble8.fsf@gitster.siamese.dyndns.org>
-	<20080106042409.GA4843@coredump.intra.peff.net>
-	<20080106042935.GB4843@coredump.intra.peff.net>
+From: Rogan Dawes <rogan@dawes.za.net>
+Subject: Re: [PATCH] Allow git-mergetool to handle paths with a leading space
+Date: Sun, 06 Jan 2008 12:51:41 +0200
+Message-ID: <4780B2BD.6020109@dawes.za.net>
+References: <47809E7E.2090708@dawes.za.net> <7vodbz5ka9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jan 06 11:52:19 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 06 11:53:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBT6x-0004bq-Ev
-	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 11:52:11 +0100
+	id 1JBT87-0004re-RF
+	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 11:53:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752550AbYAFKvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2008 05:51:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752208AbYAFKvg
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jan 2008 05:51:36 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60865 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752160AbYAFKvf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2008 05:51:35 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 719A9778D;
-	Sun,  6 Jan 2008 05:51:33 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E9D54778B;
-	Sun,  6 Jan 2008 05:51:30 -0500 (EST)
-In-Reply-To: <20080106042935.GB4843@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 5 Jan 2008 23:29:35 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752859AbYAFKw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2008 05:52:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752208AbYAFKw4
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jan 2008 05:52:56 -0500
+Received: from sd-green-bigip-207.dreamhost.com ([208.97.132.207]:41372 "EHLO
+	spunkymail-a9.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751480AbYAFKw4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Jan 2008 05:52:56 -0500
+X-Greylist: delayed 5116 seconds by postgrey-1.27 at vger.kernel.org; Sun, 06 Jan 2008 05:52:56 EST
+Received: from [192.168.201.100] (dsl-243-127-236.telkomadsl.co.za [41.243.127.236])
+	by spunkymail-a9.g.dreamhost.com (Postfix) with ESMTP id 09C2D21222;
+	Sun,  6 Jan 2008 02:52:52 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <7vodbz5ka9.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69725>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano wrote:
+> Rogan Dawes <rogan@dawes.za.net> writes:
+> 
+>> Signed-off-by: Rogan Dawes <rogan@dawes.za.net>
+>>
+>> ---
+>> I am working on a project which has the root directory constructed
+>> with a leading space. i.e. ./ dir/. "read" skips the leading space
+>> char, and ends up with an incorrect filename, which can then not be
+>> found. Setting IFS=\n solves this problem.
+> 
+> Does the project have a file that has letter 'n' (en) in its name?
+> Have you tested your patch while having a conflict in that file?
+> 
 
-> This is a little uglier than it could be because the "colored" function
-> does two things: correctly colorize a string, and check the global
-> $use_color.
+Yes, it works correctly.
 
-That fallout is a logical consequence of the semantics change of
-color.interactive, which used to color the whole user experience
-but now only covers about menus and stuff.  $use_color is still
-tied to the former semantics.
+$ git mergetool
+merge tool candidates: kdiff3 tkdiff xxdiff meld gvimdiff vimdiff 
+opendiff emerge vimdiff
+Merging the files: 
+webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/BackDoors.java 
+webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/BlindSqlInjection.java 
+webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/Challenge2Screen.java
 
-It may make more sense to:
+Normal merge conflict for ' 
+webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/BackDoors.java':
+   {local}: modified
+   {remote}: modified
+Hit return to start merge resolution tool (kdiff3):
+merge of 
+webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/BackDoors.java 
+failed
 
- * unset $prompt_color and friends when color.interactive says
-   "not to color the menus";
+$
 
- * unset $fraginfo_color and diff related ones when color.diff
-   says "diff is monochrome";
+My copy and paste does not show the spaces properly, since everything 
+gets wrapped. but the "Normal merge conflict for ' webgoat/" line would 
+have taken the ' to the next line if the space was not there. :-)
 
-upfront, and then change "sub colored" to just check if $color
-is unset, instead of checking $use_color.
+Note that the lines after "Merging the files" don't include the spaces, 
+but that is just cosmetic, IMO.
+
+Rogan
