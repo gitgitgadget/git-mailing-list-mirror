@@ -1,65 +1,85 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: How to bypass the post-commit hook?
-Date: Mon, 31 Dec 2007 10:50:27 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <4778BB63.6080908@obry.net>
-References: <46dff0320712300712l78c1cdaeya5fa105be01f6b74@mail.gmail.com> <20071230215008.GB20098@efreet.light.src>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] filter-branch: work correctly with ambiguous
+ refnames
+Date: Sun, 6 Jan 2008 01:57:39 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801060154150.10101@racer.site>
+References: <Pine.LNX.4.64.0712301700580.14355@wbgn129.biozentrum.uni-wuerzburg.de> <1199040667-31850-1-git-send-email-dpotapov@gmail.com> <7v7iiqppkw.fsf@gitster.siamese.dyndns.org> <20080104155114.GS3373@dpotapov.dyndns.org> <7vr6gxjpyn.fsf@gitster.siamese.dyndns.org>
+ <alpine.LSU.1.00.0801051601490.10101@racer.site> <7vabnk81aw.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ping Yin <pkufranky@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Sun Jan 06 02:35:02 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 06 02:58:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBKPl-0001Dq-Q7
-	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 02:35:02 +0100
+	id 1JBKmJ-0005iu-QV
+	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 02:58:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754702AbYAFBe2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jan 2008 20:34:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752945AbYAFBe2
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jan 2008 20:34:28 -0500
-Received: from smtp2b.orange.fr ([80.12.242.146]:37374 "EHLO smtp2b.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752698AbYAFBe1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2008 20:34:27 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2b21.orange.fr (SMTP Server) with ESMTP id 9C87270F3170
-	for <git@vger.kernel.org>; Fri,  4 Jan 2008 17:39:46 +0100 (CET)
-Received: from [127.0.0.1] (AVelizy-151-1-103-62.w90-35.abo.wanadoo.fr [90.35.81.62])
-	by mwinf2b21.orange.fr (SMTP Server) with ESMTP id 6581077D70D4;
-	Mon, 31 Dec 2007 10:50:31 +0100 (CET)
-X-ME-UUID: 20071231095032415.6581077D70D4@mwinf2b21.orange.fr
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <20071230215008.GB20098@efreet.light.src>
-X-Enigmail-Version: 0.95.5
+	id S1754253AbYAFB5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jan 2008 20:57:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753088AbYAFB5o
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jan 2008 20:57:44 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51531 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752438AbYAFB5n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jan 2008 20:57:43 -0500
+Received: (qmail invoked by alias); 06 Jan 2008 01:57:41 -0000
+Received: from R3e32.r.pppool.de (EHLO [192.168.220.101]) [89.54.62.50]
+  by mail.gmx.net (mp027) with SMTP; 06 Jan 2008 02:57:41 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/E3YcCOHbEBcpyQl6wtF8XIoWy5qmnh0yQFyGXKx
+	iIY/mPm4cWTfCM
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vabnk81aw.fsf_-_@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69700>
 
-Jan Hudec a =E9crit :
-> By the way, what is your post-commit hook doing anyway? Modifying the=
- work
-> tree *after* a commit does not sound like a common thing to do.
+Hi,
 
-Or just trigger a build via a built robot or record a commit informatio=
-n
-into an issue tracker...
+On Sat, 5 Jan 2008, Junio C Hamano wrote:
 
-Pascal.
+>  Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>  > Junio wrote:
+>  >
+>  >> But at that point I would say that exposing the refname dwimming
+>  >> logic to the scripts could be a much cleaner solution.
+>  >
+>  > I considered that when ripping the script from cogito, but it seemed 
+>  > to me at that time that not requiring an up-to-date git for testing 
+>  > the script would be better.
+>  >
+>  > Now is a different situation, however, so I agree.
+> 
+>  It was already tied to the specific git version when
+>  git-filter-branch became part of git.git ;-)
 
---=20
+Heh.  But that was not my intention (at least _before_ it was in git.git's 
+"master"), so that people could test it.
 
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+>  I do not use filter-branch myself very often, but I think this
+>  is worth fixing.  The additional --no-flags and sed are to deal
+>  with something like:
+> 
+> 	--topo-order master..next
+> 
+>  although I do not offhand know if filter-branch would work with
+>  things like --topo-order and --first-parent.
+
+Frankly, I have no idea, but --topo-order _should_ not matter, whereas 
+--first-parent _should_ rewrite only commits in the first-parent chain of 
+the given refs.
+
+In any case, from a cursory look I like the 2 patches (except for the 
+curly brackets around the single-line "else" clause, but I know your 
+opinion about this, so I will not object).
+
+Ciao,
+Dscho
