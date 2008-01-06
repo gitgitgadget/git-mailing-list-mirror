@@ -1,127 +1,143 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH 3/3] git.el: Display file types and type changes.
-Date: Sun, 06 Jan 2008 12:13:36 +0100
-Message-ID: <87y7b36wbj.fsf@wine.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's in git.git (stable frozen)
+Date: Sun, 6 Jan 2008 06:17:26 -0500
+Message-ID: <20080106111725.GA11603@coredump.intra.peff.net>
+References: <7vhcixtnm4.fsf@gitster.siamese.dyndns.org> <7vfxye4yv7.fsf@gitster.siamese.dyndns.org> <7vve78qhtf.fsf@gitster.siamese.dyndns.org> <7vbq8v5n0u.fsf_-_@gitster.siamese.dyndns.org> <7vy7btaf4p.fsf@gitster.siamese.dyndns.org> <7vfxxtu5ov.fsf@gitster.siamese.dyndns.org> <7v63y8ble8.fsf@gitster.siamese.dyndns.org> <20080106042409.GA4843@coredump.intra.peff.net> <20080106042935.GB4843@coredump.intra.peff.net> <7vejcv5is3.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 06 12:14:10 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 06 12:18:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBTSE-0001ZS-6l
-	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 12:14:10 +0100
+	id 1JBTWK-0002XK-Gf
+	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 12:18:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753310AbYAFLNm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2008 06:13:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753290AbYAFLNm
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jan 2008 06:13:42 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:59767 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753183AbYAFLNl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2008 06:13:41 -0500
-Received: from adsl-84-227-6-44.adslplus.ch ([84.227.6.44] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1JBTRj-0004jH-8t
-	for git@vger.kernel.org; Sun, 06 Jan 2008 05:13:40 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id F16BE1E7149; Sun,  6 Jan 2008 12:13:36 +0100 (CET)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-X-Spam-Score: -2.8
+	id S1753520AbYAFLRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2008 06:17:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752918AbYAFLRa
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jan 2008 06:17:30 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1537 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755791AbYAFLR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2008 06:17:28 -0500
+Received: (qmail 27917 invoked by uid 111); 6 Jan 2008 11:17:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 06 Jan 2008 06:17:27 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 06 Jan 2008 06:17:26 -0500
+Content-Disposition: inline
+In-Reply-To: <7vejcv5is3.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69729>
 
-Handle the T status from git-diff-index to display type changes
-between file/symlink/subproject. Also always show the file type for
-symlink and subprojects to indicate that they are not normal files.
+On Sun, Jan 06, 2008 at 02:51:24AM -0800, Junio C Hamano wrote:
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+> It may make more sense to:
+> 
+>  * unset $prompt_color and friends when color.interactive says
+>    "not to color the menus";
+> 
+>  * unset $fraginfo_color and diff related ones when color.diff
+>    says "diff is monochrome";
+> 
+> upfront, and then change "sub colored" to just check if $color
+> is unset, instead of checking $use_color.
+
+Something like this (instead of my last patch):
+
+-- >8 --
+add--interactive: fix "colored" function semantics
+
+Since color.interactive is just for the menus, the "colored"
+function can't use it to determine whether to show colors
+(this was visible as a bug in which the headers of split
+hunks were not colored if color.diff was set but
+color.interactive was not).
+
+The new semantics are:
+
+  - colors which are unused are set to undef; the "colored"
+    function knows not to do anything with them
+
+  - menu colors are set only when color.interactive is true
+
+  - diff colors are set only when color.diff is true
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- contrib/emacs/git.el |   34 +++++++++++++++++++++++++++++++---
- 1 files changed, 31 insertions(+), 3 deletions(-)
+ git-add--interactive.perl |   39 +++++++++++++++------------------------
+ 1 files changed, 15 insertions(+), 24 deletions(-)
 
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index 820df11..5f0d461 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -489,8 +489,7 @@ and returns the process output as a string."
-   "Set the state of a file info."
-   (unless (eq (git-fileinfo->state info) state)
-     (setf (git-fileinfo->state info) state
--          (git-fileinfo->old-perm info) 0
--          (git-fileinfo->new-perm info) 0
-+          (git-fileinfo->new-perm info) (git-fileinfo->old-perm info)
-           (git-fileinfo->rename-state info) nil
-           (git-fileinfo->orig-name info) nil
-           (git-fileinfo->needs-refresh info) t)))
-@@ -524,6 +523,7 @@ and returns the process output as a string."
-     (?A 'added)
-     (?D 'deleted)
-     (?U 'unmerged)
-+    (?T 'modified)
-     (t nil)))
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 5bdcca8..17ca5b8 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -3,38 +3,29 @@
+ use strict;
+ use Git;
  
- (defun git-status-code-as-string (code)
-@@ -538,6 +538,33 @@ and returns the process output as a string."
-     ('ignored  (propertize "Ignored " 'face 'git-ignored-face))
-     (t "?       ")))
+-# Prompt colors:
+-my ($prompt_color, $header_color, $help_color, $normal_color);
+-# Diff colors:
+-my ($fraginfo_color);
+-
+-my ($use_color, $diff_use_color);
+ my $repo = Git->repository();
  
-+(defun git-file-type-as-string (info)
-+  "Return a string describing the file type of INFO."
-+  (let* ((old-type (lsh (or (git-fileinfo->old-perm info) 0) -9))
-+         (new-type (lsh (or (git-fileinfo->new-perm info) 0) -9))
-+         (str (case new-type
-+                (?\100  ;; file
-+                 (case old-type
-+                   (?\100 nil)
-+                   (?\120 "   (type change symlink -> file)")
-+                   (?\160 "   (type change subproject -> file)")))
-+                 (?\120  ;; symlink
-+                  (case old-type
-+                    (?\100 "   (type change file -> symlink)")
-+                    (?\160 "   (type change subproject -> symlink)")
-+                    (t "   (symlink)")))
-+                  (?\160  ;; subproject
-+                   (case old-type
-+                     (?\100 "   (type change file -> subproject)")
-+                     (?\120 "   (type change symlink -> subproject)")
-+                     (t "   (subproject)")))
-+                  (?\000  ;; deleted or unknown
-+                   (case old-type
-+                     (?\120 "   (symlink)")
-+                     (?\160 "   (subproject)")))
-+                  (t (format "   (unknown type %o)" new-type)))))
-+    (if str (propertize str 'face 'git-status-face) "")))
-+
- (defun git-rename-as-string (info)
-   "Return a string describing the copy or rename associated with INFO, or an empty string if none."
-   (let ((state (git-fileinfo->rename-state info)))
-@@ -567,6 +594,7 @@ and returns the process output as a string."
-                   " " (git-status-code-as-string (git-fileinfo->state info))
-                   " " (git-permissions-as-string (git-fileinfo->old-perm info) (git-fileinfo->new-perm info))
-                   "  " (git-escape-file-name (git-fileinfo->name info))
-+                  (git-file-type-as-string info)
-                   (git-rename-as-string info))))
+-$use_color = $repo->get_colorbool('color.interactive');
+-
+-if ($use_color) {
+-	# Set interactive colors:
++my $menu_use_color = $repo->get_colorbool('color.interactive');
++my ($prompt_color, $header_color, $help_color) =
++	$menu_use_color ? (
++		$repo->get_color('color.interactive.prompt', 'bold blue'),
++		$repo->get_color('color.interactive.header', 'bold'),
++		$repo->get_color('color.interactive.help', 'red bold'),
++	) : ();
  
- (defun git-insert-info-list (status infolist)
-@@ -603,7 +631,7 @@ Return the list of files that haven't been handled."
-       (apply #'git-call-process-env t nil "diff-index" "-z" "-M" "HEAD" "--" files)
-       (goto-char (point-min))
-       (while (re-search-forward
--              ":\\([0-7]\\{6\\}\\) \\([0-7]\\{6\\}\\) [0-9a-f]\\{40\\} [0-9a-f]\\{40\\} \\(\\([ADMU]\\)\0\\([^\0]+\\)\\|\\([CR]\\)[0-9]*\0\\([^\0]+\\)\0\\([^\0]+\\)\\)\0"
-+              ":\\([0-7]\\{6\\}\\) \\([0-7]\\{6\\}\\) [0-9a-f]\\{40\\} [0-9a-f]\\{40\\} \\(\\([ADMUT]\\)\0\\([^\0]+\\)\\|\\([CR]\\)[0-9]*\0\\([^\0]+\\)\0\\([^\0]+\\)\\)\0"
-               nil t 1)
-         (let ((old-perm (string-to-number (match-string 1) 8))
-               (new-perm (string-to-number (match-string 2) 8))
+-	# Grab the 3 main colors in git color string format, with sane
+-	# (visible) defaults:
+-	$prompt_color = $repo->get_color("color.interactive.prompt", "bold blue");
+-	$header_color = $repo->get_color("color.interactive.header", "bold");
+-	$help_color = $repo->get_color("color.interactive.help", "red bold");
+-	$normal_color = $repo->get_color("", "reset");
+-}
++my $diff_use_color = $repo->get_colorbool('color.diff');
++my ($fraginfo_color) =
++	$diff_use_color ? (
++		$repo->get_color('color.diff.frag', 'cyan'),
++	) : ();
+ 
+-# Do we also set diff colors?
+-$diff_use_color = $repo->get_colorbool('color.diff');
+-if ($diff_use_color) {
+-	$fraginfo_color = $repo->get_color("color.diff.frag", "cyan");
+-}
++my $normal_color = $repo->get_color("", "reset");
+ 
+ sub colored {
+ 	my $color = shift;
+ 	my $string = join("", @_);
+ 
+-	if ($use_color) {
++	if (defined $color) {
+ 		# Put a color code at the beginning of each line, a reset at the end
+ 		# color after newlines that are not at the end of the string
+ 		$string =~ s/(\n+)(.)/$1$color$2/g;
+@@ -300,7 +291,7 @@ sub highlight_prefix {
+ 		return "$prefix$remainder";
+ 	}
+ 
+-	if (!$use_color) {
++	if (!$menu_use_color) {
+ 		return "[$prefix]$remainder";
+ 	}
+ 
 -- 
-1.5.4.rc2.53.gb6f8
-
--- 
-Alexandre Julliard
-julliard@winehq.org
+1.5.4.rc2.1148.gf9fe3-dirty
