@@ -1,84 +1,74 @@
-From: James Bowes <jbowes@dangerouslyinc.com>
-Subject: [PATCH] Make the git metapackage require the same version of the
-	subpackages.
-Date: Sun, 6 Jan 2008 12:35:02 -0500
-Message-ID: <20080106173501.GB9349@spitfire>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Jan 06 18:40:59 2008
+From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH] parse_tag_buffer: don't parse invalid tags
+Date: Sun,  6 Jan 2008 20:03:10 +0100
+Message-ID: <11996461912682-git-send-email-mkoegler@auto.tuwien.ac.at>
+Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 06 20:03:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBZUV-00084E-2F
-	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 18:40:55 +0100
+	id 1JBamZ-0006mk-HC
+	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 20:03:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755522AbYAFRk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2008 12:40:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755450AbYAFRk3
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jan 2008 12:40:29 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:51493 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754078AbYAFRk2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2008 12:40:28 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m06HZ6CS006480;
-	Sun, 6 Jan 2008 12:35:07 -0500
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m06HZ6ar006109;
-	Sun, 6 Jan 2008 12:35:06 -0500
-Received: from spitfire (vpn-6-14.fab.redhat.com [10.33.6.14])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m06HZ4vv011424;
-	Sun, 6 Jan 2008 12:35:05 -0500
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
+	id S1755174AbYAFTDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2008 14:03:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755189AbYAFTDO
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jan 2008 14:03:14 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:36294 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755174AbYAFTDN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2008 14:03:13 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 745E4680BED1;
+	Sun,  6 Jan 2008 20:03:11 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 1kjCXOyVSmRJ; Sun,  6 Jan 2008 20:03:11 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id 5A1A0680BEA0; Sun,  6 Jan 2008 20:03:11 +0100 (CET)
+X-Mailer: git-send-email 1.5.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69738>
 
-Without explicit version deps in the rpm spec file, 'yum update git'
-effectively does nothing. Require explicit versions of the subpackages, so that
-they get pulled in on an update.
+The current tag parsing code can access memory outside the tag buffer,
+if \n are missing. This patch prevent this behaviour.
 
-Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
+Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
 ---
- git.spec.in |   13 ++++++++++++-
- 1 files changed, 12 insertions(+), 1 deletions(-)
+ tag.c |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/git.spec.in b/git.spec.in
-index 3e5bebb..7f1bd5a 100644
---- a/git.spec.in
-+++ b/git.spec.in
-@@ -10,7 +10,15 @@ URL: 		http://kernel.org/pub/software/scm/git/
- Source: 	http://kernel.org/pub/software/scm/git/%{name}-%{version}.tar.gz
- BuildRequires:	zlib-devel >= 1.2, openssl-devel, curl-devel, expat-devel  %{!?_without_docs:, xmlto, asciidoc > 6.0.3}
- BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
--Requires:	git-core, git-svn, git-cvs, git-arch, git-email, gitk, git-gui, perl-Git
-+
-+Requires:	git-core = %{version}-%{release}
-+Requires:	git-svn = %{version}-%{release}
-+Requires:	git-cvs = %{version}-%{release}
-+Requires:	git-arch = %{version}-%{release}
-+Requires:	git-email = %{version}-%{release}
-+Requires:	gitk = %{version}-%{release}
-+Requires:	git-gui = %{version}-%{release}
-+Requires:	perl-Git = %{version}-%{release}
+diff --git a/tag.c b/tag.c
+index f62bcdd..fa22ae6 100644
+--- a/tag.c
++++ b/tag.c
+@@ -39,6 +39,7 @@ int parse_tag_buffer(struct tag *item, void *data, unsigned long size)
+ 	unsigned char sha1[20];
+ 	const char *type_line, *tag_line, *sig_line;
+ 	char type[20];
++	const char* start = data;
  
- %description
- Git is a fast, scalable, distributed revision control system with an
-@@ -172,6 +180,9 @@ rm -rf $RPM_BUILD_ROOT
- %{!?_without_docs: %doc Documentation/technical}
+         if (item->object.parsed)
+                 return 0;
+@@ -53,11 +54,11 @@ int parse_tag_buffer(struct tag *item, void *data, unsigned long size)
+ 	if (memcmp("\ntype ", type_line-1, 6))
+ 		return -1;
  
- %changelog
-+* Sun Jan 06 2008 James Bowes <jbowes@dangerouslyinc.com>
-+- Make the metapackage require the same version of the subpackages.
-+
- * Wed Dec 12 2007 Junio C Hamano <gitster@pobox.com>
- - Adjust htmldir to point at /usr/share/doc/git-core-$version/
+-	tag_line = strchr(type_line, '\n');
++	tag_line = memchr(type_line, '\n', size - (type_line - start));
+ 	if (!tag_line || memcmp("tag ", ++tag_line, 4))
+ 		return -1;
  
+-	sig_line = strchr(tag_line, '\n');
++	sig_line = memchr(tag_line, '\n', size - (tag_line - start));
+ 	if (!sig_line)
+ 		return -1;
+ 	sig_line++;
 -- 
-1.5.4.rc2.1141.g437b09
+1.4.4.4
