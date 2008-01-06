@@ -1,82 +1,92 @@
-From: Rogan Dawes <rogan@dawes.za.net>
-Subject: Re: [PATCH] Allow git-mergetool to handle paths with a leading space
-Date: Sun, 06 Jan 2008 12:51:41 +0200
-Message-ID: <4780B2BD.6020109@dawes.za.net>
-References: <47809E7E.2090708@dawes.za.net> <7vodbz5ka9.fsf@gitster.siamese.dyndns.org>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH 1/3] git.el: Support for getting diffs from inside the log-edit buffer.
+Date: Sun, 06 Jan 2008 12:12:24 +0100
+Message-ID: <877iin8axz.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 06 11:53:25 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 06 12:13:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBT87-0004re-RF
-	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 11:53:24 +0100
+	id 1JBTR4-0001NN-S8
+	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 12:12:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752859AbYAFKw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2008 05:52:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752208AbYAFKw4
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jan 2008 05:52:56 -0500
-Received: from sd-green-bigip-207.dreamhost.com ([208.97.132.207]:41372 "EHLO
-	spunkymail-a9.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751480AbYAFKw4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Jan 2008 05:52:56 -0500
-X-Greylist: delayed 5116 seconds by postgrey-1.27 at vger.kernel.org; Sun, 06 Jan 2008 05:52:56 EST
-Received: from [192.168.201.100] (dsl-243-127-236.telkomadsl.co.za [41.243.127.236])
-	by spunkymail-a9.g.dreamhost.com (Postfix) with ESMTP id 09C2D21222;
-	Sun,  6 Jan 2008 02:52:52 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <7vodbz5ka9.fsf@gitster.siamese.dyndns.org>
+	id S1753138AbYAFLMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2008 06:12:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753149AbYAFLMa
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jan 2008 06:12:30 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:59750 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753100AbYAFLM3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2008 06:12:29 -0500
+Received: from adsl-84-227-6-44.adslplus.ch ([84.227.6.44] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1JBTQY-0004fz-Q7
+	for git@vger.kernel.org; Sun, 06 Jan 2008 05:12:28 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 1F2D81E7149; Sun,  6 Jan 2008 12:12:24 +0100 (CET)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+X-Spam-Score: -2.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69726>
 
-Junio C Hamano wrote:
-> Rogan Dawes <rogan@dawes.za.net> writes:
-> 
->> Signed-off-by: Rogan Dawes <rogan@dawes.za.net>
->>
->> ---
->> I am working on a project which has the root directory constructed
->> with a leading space. i.e. ./ dir/. "read" skips the leading space
->> char, and ends up with an incorrect filename, which can then not be
->> found. Setting IFS=\n solves this problem.
-> 
-> Does the project have a file that has letter 'n' (en) in its name?
-> Have you tested your patch while having a conflict in that file?
-> 
+Take advantage of the new log-edit feature that allows to show a diff
+with C-c C-d while editing the log message.
 
-Yes, it works correctly.
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ contrib/emacs/git.el |   14 ++++++++++++--
+ 1 files changed, 12 insertions(+), 2 deletions(-)
 
-$ git mergetool
-merge tool candidates: kdiff3 tkdiff xxdiff meld gvimdiff vimdiff 
-opendiff emerge vimdiff
-Merging the files: 
-webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/BackDoors.java 
-webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/BlindSqlInjection.java 
-webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/Challenge2Screen.java
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 28a4899..e0e6316 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -1024,7 +1024,9 @@ Return the list of files that haven't been handled."
+       (setq default-directory dir)
+       (setq buffer-read-only t)))
+   (display-buffer buffer)
+-  (shrink-window-if-larger-than-buffer))
++  ; shrink window only if it displays the status buffer
++  (when (eq (window-buffer) (current-buffer))
++    (shrink-window-if-larger-than-buffer)))
+ 
+ (defun git-diff-file ()
+   "Diff the marked file(s) against HEAD."
+@@ -1097,6 +1099,11 @@ Return the list of files that haven't been handled."
+   (with-current-buffer log-edit-parent-buffer
+     (git-get-filenames (git-marked-files-state 'added 'deleted 'modified))))
+ 
++(defun git-log-edit-diff ()
++  "Run a diff of the current files being committed from a log-edit buffer."
++  (with-current-buffer log-edit-parent-buffer
++    (git-diff-file)))
++
+ (defun git-append-sign-off (name email)
+   "Append a Signed-off-by entry to the current buffer, avoiding duplicates."
+   (let ((sign-off (format "Signed-off-by: %s <%s>" name email))
+@@ -1169,7 +1176,10 @@ Return the list of files that haven't been handled."
+             (when (re-search-forward "^Date: \\(.*\\)$" nil t)
+               (setq date (match-string 1)))))
+         (git-setup-log-buffer buffer author-name author-email subject date))
+-      (log-edit #'git-do-commit nil #'git-log-edit-files buffer)
++      (if (boundp 'log-edit-diff-function)
++          (log-edit 'git-do-commit nil '((log-edit-listfun . git-log-edit-files)
++                                         (log-edit-diff-function . git-log-edit-diff)) buffer)
++        (log-edit 'git-do-commit nil 'git-log-edit-files buffer))
+       (setq font-lock-keywords (font-lock-compile-keywords git-log-edit-font-lock-keywords))
+       (setq buffer-file-coding-system coding-system)
+       (re-search-forward (regexp-quote (concat git-log-msg-separator "\n")) nil t))))
+-- 
+1.5.4.rc2.53.gb6f8
 
-Normal merge conflict for ' 
-webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/BackDoors.java':
-   {local}: modified
-   {remote}: modified
-Hit return to start merge resolution tool (kdiff3):
-merge of 
-webgoat/main/project/JavaSource/org/owasp/webgoat/lessons/BackDoors.java 
-failed
-
-$
-
-My copy and paste does not show the spaces properly, since everything 
-gets wrapped. but the "Normal merge conflict for ' webgoat/" line would 
-have taken the ' to the next line if the space was not there. :-)
-
-Note that the lines after "Merging the files" don't include the spaces, 
-but that is just cosmetic, IMO.
-
-Rogan
+-- 
+Alexandre Julliard
+julliard@winehq.org
