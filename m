@@ -1,106 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's in git.git (stable frozen)
-Date: Sat, 5 Jan 2008 23:29:35 -0500
-Message-ID: <20080106042935.GB4843@coredump.intra.peff.net>
-References: <7v63zjgoel.fsf@gitster.siamese.dyndns.org> <7vsl2i6ea4.fsf@gitster.siamese.dyndns.org> <7vhcixtnm4.fsf@gitster.siamese.dyndns.org> <7vfxye4yv7.fsf@gitster.siamese.dyndns.org> <7vve78qhtf.fsf@gitster.siamese.dyndns.org> <7vbq8v5n0u.fsf_-_@gitster.siamese.dyndns.org> <7vy7btaf4p.fsf@gitster.siamese.dyndns.org> <7vfxxtu5ov.fsf@gitster.siamese.dyndns.org> <7v63y8ble8.fsf@gitster.siamese.dyndns.org> <20080106042409.GA4843@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 06 05:30:07 2008
+From: Jon Hancock <redstarling@gmail.com>
+Subject: rm and mv commands: should I use them?
+Date: Sun, 6 Jan 2008 15:55:22 +0800
+Message-ID: <379EDA94-A67B-483A-BC5F-E961DD52AD0C@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=WINDOWS-1252;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 06 08:56:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBN9A-0007e6-Jx
-	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 05:30:05 +0100
+	id 1JBQMy-0006Xy-36
+	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 08:56:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753029AbYAFE3i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jan 2008 23:29:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753024AbYAFE3i
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Jan 2008 23:29:38 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3730 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752301AbYAFE3h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jan 2008 23:29:37 -0500
-Received: (qmail 26748 invoked by uid 111); 6 Jan 2008 04:29:36 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 05 Jan 2008 23:29:36 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Jan 2008 23:29:35 -0500
-Content-Disposition: inline
-In-Reply-To: <20080106042409.GA4843@coredump.intra.peff.net>
+	id S1751902AbYAFHzm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jan 2008 02:55:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752469AbYAFHzk
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jan 2008 02:55:40 -0500
+Received: from wa-out-1112.google.com ([209.85.146.176]:14550 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752602AbYAFHzi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Jan 2008 02:55:38 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so11683597wah.23
+        for <git@vger.kernel.org>; Sat, 05 Jan 2008 23:55:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
+        bh=oaeb6QZgz248AEoCO7jetTljRxKGUnZ6avxd9mgypyI=;
+        b=uU8C/yBSMKbU33HecAj/Hr3rW2+qUa7rLiJ9EWGKufUvgaoiwlFSqs4QLqKuO3m1TB4It9oDxu1OAl0ZEFsWO2lLuhuX6h8O/svW7LgYTmSkvjfoRcD+afYq0THhZWdz4Zn+iORPUOdSOKujDmC3HajkboT2dzri67OzOvjLqSI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:to:content-type:content-transfer-encoding:mime-version:subject:date:x-mailer;
+        b=nCAiTe8kw8FScrCb9yFnznj0Ebji9dDFxWe4U8gxyoVUZ60TjmroqjCU7Cwj+IjVhVWtRrI6fhNmQ3EXLFoP9DPw/O8H+o3vKwj07MHasa21phmDtf/Sa662oGt0UnKhLyIXmBnP2bzCCO/37SKKzviFpd/rrMt+i8al82a072o=
+Received: by 10.114.254.1 with SMTP id b1mr667703wai.140.1199606129505;
+        Sat, 05 Jan 2008 23:55:29 -0800 (PST)
+Received: from ?192.168.1.20? ( [58.33.231.141])
+        by mx.google.com with ESMTPS id l30sm32493875waf.53.2008.01.05.23.55.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 05 Jan 2008 23:55:28 -0800 (PST)
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69713>
 
-On Sat, Jan 05, 2008 at 11:24:09PM -0500, Jeff King wrote:
+Hello list,
+I'm fairly new to git and coming from svn and have tasted hg and bzr =20
+along the decision path.
 
-> >  * Jeff's git-add--interactive change to always honor color.diff
-> >    regardless of color.interactive.
-> > 
-> >    I'd probably apply this, along with the patch to redefine
-> >    what color.interactive means.  "git am -i" could also learn
-> >    to use colors in the future.
-> 
-> Here is the palette cleanup patch, on top of my others (it should still
+Here's my newbie issue:
 
-And while tracking down the $fraginfo usage, I noticed that my original
-patches introduce a bug. Fix is below (it is on top of palette cleanup).
+In reading Aristotle Pagaltzis's article http://plasmasturm.org/log/=20
+487/  the author stresses that a major difference between git and =20
+something like bzr or svn is that git tracks content and not metadata =20
+(or at least less metadata); meaning is inferred through content and =20
+less through metadata.
 
-I can also resubmit these in a more sensible order (palette cleanup,
-then the other three squashed together) if you prefer.
+The heart of Pagaltzis's argument copied here:
+<COPY>
+Among the systems I did look into, there are really just two =20
+contenders: git and Mercurial. All the other systems track metadata; =20
+git and hg just track content and infer the metadata.
 
--- >8 --
-add--interactive: colorize split hunk fragment headers
+By tracking metadata I mean that these systems keep a record of what =20
+steps were taken. =93This file had its name changed.=94 =93Those =20
+modifications came from that file in that branch.=94 =93This file was =20
+copied from that file.=94 Tracking content alone means doing none of =20
+that. When you commit, the VCS just records what the tree looks like. =20
+It doesn=92t care about how the tree got that way. When you ask it abou=
+t =20
+two revisions, it looks at the tree beforehand and the tree =20
+afterwards, and figures out what happened inbetween. A file is not a =20
+unit that defines any sort of boundary in this view. The VCS always =20
+looks at entire trees; files have no individual identity separate from =
+=20
+their trees at all.
 
-The only diff element which we still color in perl is the
-"fraginfo" for the split hunks. When honoring color.diff
-without color.interactive, we were failing to actually color
-this because the "colored" function checks for interactive
-color. Instead, let's just color it by hand (the simple
-approach is OK because we know we have a single line
-string).
+As a consequence, whether you used VCS tools to manipulate your =20
+working copy or regular command line utilities or applied a patch or =20
+whatever is irrelevant. The resulting history is always the same.
+</COPY>
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This is a little uglier than it could be because the "colored" function
-does two things: correctly colorize a string, and check the global
-$use_color. We could do something like:
+So, do I need to use git's mv and rm commands?  Can't I just rename, =20
+add, and remove files using any means I like and then just ensure my =20
+"index" is staged properly when I do a commit?  Additionally, is there =
+=20
+a simple procedure with git to say: "I want to version exactly what is =
+=20
+in my working tree.  If I removed something or added something, just =20
+handle it".  This is sort of what "git add ." does, but "git add" =20
+doesn't handling things I removed or moved, correct?
 
-  local $use_color = 1;
-  $display_head = colored($fraginfo_color, $head);
-
-which is arguably less ugly. Or we could refactor "colored", which is a
-larger change.
-
- git-add--interactive.perl |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 5bdcca8..76dc4e6 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -21,8 +21,8 @@ if ($use_color) {
- 	$prompt_color = $repo->get_color("color.interactive.prompt", "bold blue");
- 	$header_color = $repo->get_color("color.interactive.header", "bold");
- 	$help_color = $repo->get_color("color.interactive.help", "red bold");
--	$normal_color = $repo->get_color("", "reset");
- }
-+$normal_color = $repo->get_color("", "reset");
- 
- # Do we also set diff colors?
- $diff_use_color = $repo->get_colorbool('color.diff');
-@@ -648,7 +648,8 @@ sub split_hunk {
- 		my $display_head = $head;
- 		unshift @{$hunk->{TEXT}}, $head;
- 		if ($diff_use_color) {
--			$display_head = colored($fraginfo_color, $head);
-+			$display_head = join('', $fraginfo_color, $head,
-+				$normal_color, "\n");
- 		}
- 		unshift @{$hunk->{DISPLAY}}, $display_head;
- 	}
--- 
-1.5.4.rc2.1147.gaecdf-dirty
+thanks, Jon
