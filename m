@@ -1,97 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's in git.git (stable frozen)
-Date: Sun, 6 Jan 2008 15:59:46 -0500
-Message-ID: <20080106205946.GA17482@coredump.intra.peff.net>
-References: <7vve78qhtf.fsf@gitster.siamese.dyndns.org> <7vbq8v5n0u.fsf_-_@gitster.siamese.dyndns.org> <7vy7btaf4p.fsf@gitster.siamese.dyndns.org> <7vfxxtu5ov.fsf@gitster.siamese.dyndns.org> <7v63y8ble8.fsf@gitster.siamese.dyndns.org> <20080106042409.GA4843@coredump.intra.peff.net> <20080106042935.GB4843@coredump.intra.peff.net> <7vejcv5is3.fsf@gitster.siamese.dyndns.org> <20080106111725.GA11603@coredump.intra.peff.net> <7vy7b33zjk.fsf@gitster.siamese.dyndns.org>
+From: "James Bowes" <jbowes@dangerouslyinc.com>
+Subject: Re: [PATCH] Make the git metapackage require the same version of the subpackages.
+Date: Sun, 6 Jan 2008 16:13:26 -0500
+Message-ID: <3f80363f0801061313o514fa01bje354503483db47ab@mail.gmail.com>
+References: <20080106173501.GB9349@spitfire>
+	 <7vprwe4s8e.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 06 22:00:40 2008
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 06 22:14:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBcbn-0005Fh-5V
-	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 22:00:39 +0100
+	id 1JBcoi-0000YL-0c
+	for gcvg-git-2@gmane.org; Sun, 06 Jan 2008 22:14:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754024AbYAFU7u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2008 15:59:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754646AbYAFU7u
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jan 2008 15:59:50 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4892 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754691AbYAFU7t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2008 15:59:49 -0500
-Received: (qmail 1109 invoked by uid 111); 6 Jan 2008 20:59:47 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 06 Jan 2008 15:59:47 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 06 Jan 2008 15:59:46 -0500
+	id S1753226AbYAFVNb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2008 16:13:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753192AbYAFVNa
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jan 2008 16:13:30 -0500
+Received: from py-out-1112.google.com ([64.233.166.182]:32573 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753109AbYAFVNa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2008 16:13:30 -0500
+Received: by py-out-1112.google.com with SMTP id u52so12209451pyb.10
+        for <git@vger.kernel.org>; Sun, 06 Jan 2008 13:13:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=VTujILDCKqD9rltvrebQjGN4reWdKYc9MyT2HAqkV+Q=;
+        b=c7fdSQ60W4K1DWkSdI/KK9aHs3+NacaUZa4Z6PmMfaHbW6yBIMvoD0d09Zh2uWoocj4s0l2pX7jlb7ERCNt6L+D2JbKc1rubH031hJI0lYBTd3+LMIva5P5GI1h60H+Xe+BBOMa+wF6MqjZzL3IwiJAdD6NTXdd+u1vGcKWXvfM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=r86FFJdWLPfMvj1mtarPWvhe4esCcVpD1Jpd1OJwzCbEy2DgU++fN+jiDbooCkVufpEf4Z/LTaqCWs/MgMDOm6+WZhX/cPnqxHQuwnPfcR6BgF8SWpj7/p94D/eDAGbQFJ2ltdI3xlHQAmuKOHq6lqupv8NKtFAIN1YMOn7cWzc=
+Received: by 10.65.115.4 with SMTP id s4mr17361901qbm.47.1199654006833;
+        Sun, 06 Jan 2008 13:13:26 -0800 (PST)
+Received: by 10.64.149.10 with HTTP; Sun, 6 Jan 2008 13:13:26 -0800 (PST)
+In-Reply-To: <7vprwe4s8e.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7vy7b33zjk.fsf@gitster.siamese.dyndns.org>
+X-Google-Sender-Auth: 8ec8f169c5ae18de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69745>
 
-On Sun, Jan 06, 2008 at 04:32:15AM -0800, Junio C Hamano wrote:
+On Jan 6, 2008 3:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> James Bowes <jbowes@dangerouslyinc.com> writes:
+>
+> > Without explicit version deps in the rpm spec file, 'yum update git'
+> > effectively does nothing. Require explicit versions of the subpackages, so that
+> > they get pulled in on an update.
+> >
+> > Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
+>
+> I am asking as an RPM illiterate, not questioning the validity
+> of what your patch does.
+>
+> The approach your patch takes feels like the right way we should
+> have taken from the beginning.  Does this supersede the "fix" in
+> 5587cac28be66acf5edc2a4b83b67c8cfffbc5e9 (GIT 1.5.3.1: obsolete
+> git-p4 in RPM spec file)?  IOW, if we had Requires for the same
+> version from the beginning, we wouldn't have had the problem
+> when we dropped git-p4 package?
 
-> Yeah, I like that much better, especially the renaming of
-> $use_color to more descriptive (but is it really about "menu", I
-> wonder?).
+I believe the obsolete is still needed, as you'd need a way to tell
+rpm to just get rid of git-p4 entirely.
 
-I thought that, too, but I didn't know what better word to use
-(something like "display" doesn't make it clear that it doesn't involve
-the diff).
-
-> I might consider rewriting this part
-> 
-> > +my $menu_use_color = $repo->get_colorbool('color.interactive');
-> > +my ($prompt_color, $header_color, $help_color) =
-> > +	$menu_use_color ? (
-> > +		$repo->get_color('color.interactive.prompt', 'bold blue'),
-> > +		$repo->get_color('color.interactive.header', 'bold'),
-> > +		$repo->get_color('color.interactive.help', 'red bold'),
-> > +	) : ();
-> 
-> like this:
-> 
-> 	my ($prompt_color, $header_color, $help_color, $fraginfo_color);
->         if ($colored_prompt) {
->         	$prompt_color = ...;
->                 $header_color = ...;
->         }
-> 	if ($colored_diff) {
->         	$fraginfo_color = ...;
-> 	}
-
-Actually, that's more or less how it's written before my patch (in fact,
-you could eliminate that part of my patch and just move $normal_color
-outside of the conditional). However I didn't like having the
-declaration and the assignment so far apart (and duplicated). But I will
-admit my version is a little nested. Please feel free to switch it when
-you apply.
-
-> or even like this:
-> 
-> 	my (%palette);
->         if ($colored_prompt) {
-> 		my %default = (
->                 	prompt => 'bold blue',
->                         header => 'bold',
->                         ...
-> 		);
->                 while (my ($k,$v) = each %default) {
->                     $palette{$k} = $repo->get_color("color.interactive.$k",$v);
-> 		}
-> 	}
-> 
-> But I realize that's going overboard.  Certainly the last one is
-> doing unnecessary generalization for generalization's sake.
-
-Yes, I considered making a %palette, as well, but it just seemed a
-little gratuitous (and the nice thing about using variables is that they
-catch typos better).
-
--Peff
+-James
