@@ -1,66 +1,106 @@
-From: Thomas Neumann <tneumann@users.sourceforge.net>
-Subject: Re: CRLF problems with Git on Win32
-Date: Mon, 7 Jan 2008 22:42:04 +0100
-Message-ID: <20080107224204.55539c31@jaiman>
-References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se>
-	<200801071947.28586.robin.rosenberg.lists@dewire.com>
-	<alpine.LSU.1.00.0801071915470.10101@racer.site>
-	<200801072203.23938.robin.rosenberg.lists@dewire.com>
+From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+Subject: [PATCH] Fix some typos.
+Date: Mon, 7 Jan 2008 22:43:27 +0100
+Organization: Department of Numerical Simulation, University of Bonn
+Message-ID: <20080107214326.GA15651@ins.uni-bonn.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 07 22:43:04 2008
+X-From: git-owner@vger.kernel.org Mon Jan 07 22:44:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBzkG-0004Bf-LM
-	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 22:42:57 +0100
+	id 1JBzlG-0004YQ-Ns
+	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 22:43:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752464AbYAGVm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2008 16:42:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752383AbYAGVm1
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 16:42:27 -0500
-Received: from main.gmane.org ([80.91.229.2]:51715 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751812AbYAGVm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2008 16:42:26 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JBzji-0003kg-Lb
-	for git@vger.kernel.org; Mon, 07 Jan 2008 21:42:22 +0000
-Received: from dslb-084-058-195-057.pools.arcor-ip.net ([84.58.195.57])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 07 Jan 2008 21:42:22 +0000
-Received: from tneumann by dslb-084-058-195-057.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 07 Jan 2008 21:42:22 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dslb-084-058-195-057.pools.arcor-ip.net
-In-Reply-To: <200801072203.23938.robin.rosenberg.lists@dewire.com>
-X-Newsreader: Claws Mail 3.2.0 (GTK+ 2.12.0; x86_64-unknown-linux-gnu)
+	id S1755445AbYAGVnb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2008 16:43:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754210AbYAGVnb
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 16:43:31 -0500
+Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:37181 "EHLO
+	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753927AbYAGVna (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2008 16:43:30 -0500
+Received: from localhost.localdomain (xdsl-87-78-66-129.netcologne.de [87.78.66.129])
+	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id 853C340000E3A
+	for <git@vger.kernel.org>; Mon,  7 Jan 2008 22:43:28 +0100 (CET)
+Received: from ralf by localhost.localdomain with local (Exim 4.63)
+	(envelope-from <Ralf.Wildenhues@gmx.de>)
+	id 1JBzkl-00034j-62
+	for git@vger.kernel.org; Mon, 07 Jan 2008 22:43:27 +0100
+Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69816>
 
-> Indeed, but the most common SCM's detect binary files automatically, 
-> either by suffix  or content analysis, so I think that is what user's
-> expect. It will be right for more projects that the current behaviour.
-as a user, I expect a SCM to only modify a file when I have explicitly
-asked it to do so. Automatically conversion by guessing file types are
-evil, as they _will_ go wrong, and then mess some files.
-This "intelligent" file handling is a pain to use. You end up in
-situations were builds work on some platforms but not on others, which
-gets even more confusion with NFS home directories.
+Signed-off-by: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+---
 
-So, please do not enable core.autocrlf by default on Windows. It might
-be reasonable for some projects, but not for all of them, and it will
-break some projects. Perhaps a project should be able to enable (or
-"suggest" it) in a repo-wide setting somehow, which would avoid the git
-clone problem.
+ Documentation/gitcli.txt                |    2 +-
+ Documentation/technical/api-diff.txt    |    6 +++---
+ Documentation/technical/pack-format.txt |    2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-Thomas
+diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
+index b7dcf9c..07899ec 100644
+--- a/Documentation/gitcli.txt
++++ b/Documentation/gitcli.txt
+@@ -95,7 +95,7 @@ $ git foo -oArg
+ $ git foo -o Arg
+ ----------------------------
+ 
+-However, this is *NOT* allowed for switches with an optionnal value, where the
++However, this is *NOT* allowed for switches with an optional value, where the
+ 'sticked' form must be used:
+ ----------------------------
+ $ git describe --abbrev HEAD     # correct
+diff --git a/Documentation/technical/api-diff.txt b/Documentation/technical/api-diff.txt
+index 822609b..83b007e 100644
+--- a/Documentation/technical/api-diff.txt
++++ b/Documentation/technical/api-diff.txt
+@@ -102,13 +102,13 @@ Notable members are:
+ 	and copies.
+ 
+ `abbrev`::
+-	Number of hexdigits to abbrevate raw format output to.
++	Number of hexdigits to abbreviate raw format output to.
+ 
+ `pickaxe`::
+ 	A constant string (can and typically does contain newlines to
+ 	look for a block of text, not just a single line) to filter out
+ 	the filepairs that do not change the number of strings contained
+-	in its preimage and postmage of the diff_queue.
++	in its preimage and postimage of the diff_queue.
+ 
+ `flags`::
+ 	This is mostly a collection of boolean options that affects the
+@@ -149,7 +149,7 @@ REVERSE_DIFF;;
+ 
+ EXIT_WITH_STATUS;;
+ 	For communication between the calling program and the options
+-	parser; tell the calling program to signal the presense of
++	parser; tell the calling program to signal the presence of
+ 	difference using program exit code.
+ 
+ HAS_CHANGES;;
+diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
+index a80baa4..aa87756 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/technical/pack-format.txt
+@@ -125,7 +125,7 @@ Pack file entry: <+
+ 
+   - A table of 4-byte CRC32 values of the packed object data.
+     This is new in v2 so compressed data can be copied directly
+-    from pack to pack during repacking withough undetected
++    from pack to pack during repacking without undetected
+     data corruption.
+ 
+   - A table of 4-byte offset values (in network byte order).
+-- 
+1.5.4.rc2.17.g257f
