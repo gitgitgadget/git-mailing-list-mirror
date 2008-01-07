@@ -1,57 +1,55 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: CRLF problems with Git on Win32
-Date: Mon, 7 Jan 2008 22:03:23 +0100
-Message-ID: <200801072203.23938.robin.rosenberg.lists@dewire.com>
-References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se> <200801071947.28586.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801071915470.10101@racer.site>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] slightly better auto gc message
+Date: Mon, 07 Jan 2008 16:05:22 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0801071603010.3054@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Steffen Prohaska <prohaska@zib.de>,
-	Peter Karlsson <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 07 22:04:06 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 07 22:05:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBz8a-0007qd-1k
-	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 22:04:00 +0100
+	id 1JBzAN-0008Bq-1W
+	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 22:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753331AbYAGVDd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jan 2008 16:03:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752940AbYAGVDd
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 16:03:33 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:8439 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752574AbYAGVDc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2008 16:03:32 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id B2B79802893;
-	Mon,  7 Jan 2008 22:03:30 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id wgaNjhCrgnVq; Mon,  7 Jan 2008 22:03:30 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 191A0802641;
-	Mon,  7 Jan 2008 22:03:30 +0100 (CET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-In-Reply-To: <alpine.LSU.1.00.0801071915470.10101@racer.site>
-Content-Disposition: inline
+	id S1756037AbYAGVFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2008 16:05:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755573AbYAGVFY
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 16:05:24 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:62771 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755402AbYAGVFX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2008 16:05:23 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JUA00IBDL8YRW61@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 07 Jan 2008 16:05:22 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69807>
 
-m=C3=A5ndagen den 7 januari 2008 skrev du:
-> Problem.  There is not a single "right".  It really depends on the=20
-> project.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
+diff --git a/builtin-gc.c b/builtin-gc.c
+index 799c263..ac34788 100644
+--- a/builtin-gc.c
++++ b/builtin-gc.c
+@@ -205,7 +205,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 		prune = 0;
+ 		if (!need_to_gc())
+ 			return 0;
+-		fprintf(stderr, "Packing your repository for optimum "
++		fprintf(stderr, "Auto packing your repository for optimum "
+ 			"performance. You may also\n"
+ 			"run \"git gc\" manually. See "
+ 			"\"git help gc\" for more information.\n");
 
-Indeed, but the most common SCM's detect binary files automatically,=20
-either by suffix  or content analysis, so I think that is what user's e=
-xpect.
-It will be right for more projects that the current behaviour.
 
--- robin
+Nicolas
