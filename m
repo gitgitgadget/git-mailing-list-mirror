@@ -1,75 +1,76 @@
-From: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-Subject: Re: CRLF problems with Git on Win32
-Date: Mon, 07 Jan 2008 14:06:09 -0800
-Message-ID: <7vzlvhxpda.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se> <200801071947.28586.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801071915470.10101@racer.site> <200801072203.23938.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801072115120.10101@racer.site> <3B08AC4C-A807-4155-8AD7-DC6A6D0FE134@zib.de>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: What's in git.git (stable frozen)
+Date: Mon, 7 Jan 2008 23:05:58 +0100
+Organization: Alumni Technische =?iso-8859-1?q?Universit=E4t?= Hamburg-Harburg
+Message-ID: <200801072305.59425.stimming@tuhh.de>
+References: <20071022061115.GR14735@spearce.org> <7vhchq11n2.fsf@gitster.siamese.dyndns.org> <18306.41093.376963.228802@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>,  Robin Rosenberg <robin.rosenberg.lists-RgPrefM1rjDQT0dZR+AlfA@public.gmane.org>,  Jeff King <peff-AdEPDUrAXsQ@public.gmane.org>,  Peter Karlsson <peter-wzhfs8O2nkI+/KzbbBz5qQ@public.gmane.org>,  Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>,  msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-To: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Jan 07 23:07:01 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wr-out-0708.google.com ([64.233.184.249])
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Jan 07 23:08:06 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JC07X-00049h-F3
-	for gcvm-msysgit@m.gmane.org; Mon, 07 Jan 2008 23:07:00 +0100
-Received: by wr-out-0708.google.com with SMTP id 56so12199745wra.3
-        for <gcvm-msysgit@m.gmane.org>; Mon, 07 Jan 2008 14:06:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:from:to:cc:subject:references:date:in-reply-to:message-id:user-agent:mime-version:content-type:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=4tIvo4jmKOUNDot0ug6rz6H37xSajVWLl3vGllC05NM=;
-        b=YFKSRf+ePzrPgAly3sSQeP72+NEUmbCFd4tqgSGfrMMFmjAwM5+U+QKO1Na121DrujzUktrIWCmfWb2uQqfJrxxEPcNMTnt6K34vz6rFn0hNz2yUcqOXp81iujzqfqV9qn85x3v+rREgMcmSA3yZtwl6XZKQjuv+wPS0szz8Yk8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:from:to:cc:subject:references:date:in-reply-to:message-id:user-agent:mime-version:content-type:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=QPH3BMHYruE8UrkHj2z0PyKaPIUgCIUrA5yZqLrgQDGd1MDclaBG2675+6xKn+fzpMxN/Xtz9rETRE26PwUTfEbliMans8yoRnrI69LTWONDYh2WD7eKQv3jv4o/anwMZJSvY18by8aeJauB5wlVRdPDPCjQimE90Cf8gMnvfNA=
-Received: by 10.100.189.10 with SMTP id m10mr603375anf.22.1199743586374;
-        Mon, 07 Jan 2008 14:06:26 -0800 (PST)
-Received: by 10.44.219.52 with SMTP id r52gr1311hsg;
-	Mon, 07 Jan 2008 14:06:26 -0800 (PST)
-X-Sender: gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.140.186.20 with SMTP id j20mr1766765rvf.9.1199743585988; Mon, 07 Jan 2008 14:06:25 -0800 (PST)
-Received: from sasl.smtp.pobox.com (a-sasl-quonix.sasl.smtp.pobox.com [208.72.237.25]) by mx.google.com with ESMTP id x35si28311547nzg.2.2008.01.07.14.06.25; Mon, 07 Jan 2008 14:06:25 -0800 (PST)
-Received-SPF: pass (google.com: domain of gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org designates 208.72.237.25 as permitted sender) client-ip=208.72.237.25;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org designates 208.72.237.25 as permitted sender) smtp.mail=gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org
-Received: from a-sasl-quonix (localhost [127.0.0.1]) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A8E2F9AE9; Mon,  7 Jan 2008 17:06:24 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77]) (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DF4939AE4; Mon,  7 Jan 2008 17:06:15 -0500 (EST)
-In-Reply-To: <3B08AC4C-A807-4155-8AD7-DC6A6D0FE134-wjoc1KHpMeg@public.gmane.org> (Steffen Prohaska's message of "Mon, 7 Jan 2008 22:40:56 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1JC08a-0004X4-P5
+	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 23:08:05 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754271AbYAGWHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2008 17:07:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753614AbYAGWHg
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 17:07:36 -0500
+Received: from smtp1.rz.tu-harburg.de ([134.28.202.166]:59444 "EHLO
+	smtp1.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750766AbYAGWHf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2008 17:07:35 -0500
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp1.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id m07M7LQG013062
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Mon, 7 Jan 2008 23:07:21 +0100
+Received: from [192.168.2.102] (p54900BDF.dip0.t-ipconnect.de [84.144.11.223])
+	(user=alucst mech=LOGIN bits=0)
+	by mail2.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id m07M7Jle017012
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 7 Jan 2008 23:07:20 +0100
+User-Agent: KMail/1.9.5
+In-Reply-To: <18306.41093.376963.228802@cargo.ozlabs.ibm.com>
+Content-Disposition: inline
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.166
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69819>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69820>
 
+Am Montag, 7. Januar 2008 22:58 schrieb Paul Mackerras:
+> I'd like you to do a pull from the gitk.git master branch, but it
+> looks to me like there will be a conflict on the Makefile.
+> Unfortunately the Makefile that Christian Stimming gave me along with
+> the i18n changes is quite different from the one you currently have in
+> the gitk-git subdirectory.  I'm not quite sure what to suggest since
+> it isn't clear to me exactly what Christian's Makefile (which doesn't
+> actually work) is trying to do.  
 
-Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org> writes:
+The Makefile from me was merely a placeholder where the i18n programs should 
+work, but it was clear that the installation rules need to be defined 
+differently anyway.
 
-> I believe the main question is which type of projects we would like
-> to support by our default.  For real cross-platform projects that will
-> be checked out on Windows and Unix we should choose
-> "core.autocrlf true" as our default.  But if our default are native
-> Windows projects that will never be checked out on Unix, then we
-> should not set core.autocrlf by default.
+> I guess the best thing would be to 
+> copy your Makefile over and then add the i18n stuff.
 
-If the primary target is native Windows projects that wants CRLF
-in the work tree, you could still set core.autocrlf.  Your
-checkouts will be with CRLF.  And someday perhaps somebody may
-offer porting that to UNIX and his checkout will be without CR.
+Yes. I've just sent you a patch that does exactly this - that was what I 
+thought, too.
 
-So wouldn't the categorization be more like this?
+> Apart from the i18n changes, there is one more commit (b039f0a6) that
+> improves the appearance slightly when running under Tk8.5.
 
- - "real cross-platform" would want core.autocrlf = true;
+Are you going to release a i18n-enabled gitk sometime soon? If yes, you should 
+consider notifying the translator(s) a few days in advance so that they can 
+finalize their translations, in case they want to avoid a half-translated 
+program to be shipped. Thanks a lot.
 
- - "native Windows" can work either way;
-
- - "originated from UNIX" would be helped with core.autocrlf = true;
+Christian
