@@ -1,83 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's in git.git (stable frozen)
-Date: Mon, 07 Jan 2008 14:14:18 -0800
-Message-ID: <7vve65xozp.fsf@gitster.siamese.dyndns.org>
-References: <20071022061115.GR14735@spearce.org>
-	<7vhchq11n2.fsf@gitster.siamese.dyndns.org>
-	<18306.41093.376963.228802@cargo.ozlabs.ibm.com>
-	<200801072305.59425.stimming@tuhh.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: StGIT loses Git commit using "stg repair"; I miss "stg assimilate"
+Date: Mon, 7 Jan 2008 23:45:18 +0100
+Message-ID: <200801072345.21585.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: Christian Stimming <stimming@tuhh.de>
-X-From: git-owner@vger.kernel.org Mon Jan 07 23:15:00 2008
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Catalin Marinas <catalin.marinas@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 07 23:45:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JC0FI-0006ia-F3
-	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 23:15:00 +0100
+	id 1JC0jE-0007lb-6U
+	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 23:45:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752993AbYAGWOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2008 17:14:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753058AbYAGWOd
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 17:14:33 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59859 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752925AbYAGWOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2008 17:14:32 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E04AA86B;
-	Mon,  7 Jan 2008 17:14:31 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F49FA86A;
-	Mon,  7 Jan 2008 17:14:24 -0500 (EST)
-In-Reply-To: <200801072305.59425.stimming@tuhh.de> (Christian Stimming's
-	message of "Mon, 7 Jan 2008 23:05:58 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754787AbYAGWp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2008 17:45:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753829AbYAGWp1
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 17:45:27 -0500
+Received: from fk-out-0910.google.com ([209.85.128.188]:26013 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752481AbYAGWp0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2008 17:45:26 -0500
+Received: by fk-out-0910.google.com with SMTP id z23so8763752fkz.5
+        for <git@vger.kernel.org>; Mon, 07 Jan 2008 14:45:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=lT+/+jD/3MlH/UclP6EYGXVHOWveJtB4mG4QebgRbSE=;
+        b=jYEGMkpYJtbpSex6V879CGAad+zHB0JRhEqxgNdET8CbQtBv+bTJ63BHXgQyzKQPihLEkNV0Do6hsKFfbtk7C8Sc5bx+ImeAxqakQHa9nrHbRKrsUr0Ch0Qi2Yoh7XOGH/Ld3mKvJiwVFwlMNlDUmfRJwLf8iQYlL8ju9oNpuYA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=tahQyz+D8MnI694DMgUrsMWdbv0L3SDVbM20F+GC3gz4KpAfaZwJ1Z7N8dPZeOWJTySahg+tN5qGe5n5vG/zZgLRJC8lJt/58CjcyxqwakiXhF6+7kLcFBrqvd+pHMpetfxVt7WUTQD/y2PYKh3YNw0k2AYCJptMkhFdF6u2T8Q=
+Received: by 10.82.107.15 with SMTP id f15mr5326575buc.0.1199745923996;
+        Mon, 07 Jan 2008 14:45:23 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.234.59])
+        by mx.google.com with ESMTPS id c24sm13947448ika.10.2008.01.07.14.45.21
+        (version=SSLv3 cipher=OTHER);
+        Mon, 07 Jan 2008 14:45:23 -0800 (PST)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69822>
 
-Christian Stimming <stimming@tuhh.de> writes:
+I have StGIT branch with no patches applied: all patches are on stack.
+I have accidentally added git commit on top of StGIT branch head.
+I tried to use "stg assimilate" to turn this commit into StGIT commit, 
+applied, but new version of StGIT has only "stg repair". And the 
+sequence
 
-> Am Montag, 7. Januar 2008 22:58 schrieb Paul Mackerras:
->> I'd like you to do a pull from the gitk.git master branch, but it
->> looks to me like there will be a conflict on the Makefile.
->> Unfortunately the Makefile that Christian Stimming gave me along with
->> the i18n changes is quite different from the one you currently have in
->> the gitk-git subdirectory.  I'm not quite sure what to suggest since
->> it isn't clear to me exactly what Christian's Makefile (which doesn't
->> actually work) is trying to do.  
->
-> The Makefile from me was merely a placeholder where the i18n programs should 
-> work, but it was clear that the installation rules need to be defined 
-> differently anyway.
->
->> I guess the best thing would be to 
->> copy your Makefile over and then add the i18n stuff.
->
-> Yes. I've just sent you a patch that does exactly this - that was what I 
-> thought, too.
+ # stg repair
+ # stg rebase origin
 
-Thanks both of you.
+made me lose this git commit (well, up to reflog of course). This should 
+not happen! Why assimilate got removed?
 
->> Apart from the i18n changes, there is one more commit (b039f0a6) that
->> improves the appearance slightly when running under Tk8.5.
->
-> Are you going to release a i18n-enabled gitk sometime soon? If yes, you should 
-> consider notifying the translator(s) a few days in advance so that they can 
-> finalize their translations, in case they want to avoid a half-translated 
-> program to be shipped. Thanks a lot.
+4206:[gitweb/web@git]# stg --version
+Stacked GIT 0.14.1
+git version 1.5.3.7
+Python version 2.4.3 (#1, Jun 13 2006, 16:41:18) 
+[GCC 4.0.2 20051125 (Red Hat 4.0.2-8)]
 
-If I understand correctly, what Paul told me to pull contains
-the i18n stuff, so assuming your adjustment to gitk Makefile
-makes things cleanly merge and build inside git.git repository,
-upcoming 1.5.4-rc3 will ship with the infrastructure and
-existing translations, and updates to po/ files can be made
-between -rc3 and the final (I do not mean there won't be -rc4.
-That is also "between -rc3 and final").
+-- 
+Jakub Narebski
+Poland
