@@ -1,61 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: rm and mv commands: should I use them?
-Date: Sun, 6 Jan 2008 22:06:42 -0500
-Message-ID: <20080107030642.GA18194@coredump.intra.peff.net>
-References: <379EDA94-A67B-483A-BC5F-E961DD52AD0C@gmail.com> <alpine.LFD.1.00.0801061108320.2811@woody.linux-foundation.org> <20080107015518.GD17748@coredump.intra.peff.net> <7v63y62xwj.fsf@gitster.siamese.dyndns.org>
+From: "Imran M Yousuf" <imyousuf@gmail.com>
+Subject: Problem with git ls-files
+Date: Mon, 7 Jan 2008 10:38:11 +0600
+Message-ID: <7bfdc29a0801062038j269466fcgaffd2b90d59ebfb4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jon Hancock <redstarling@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 07 04:07:16 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 07 05:38:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBiKW-0002uu-45
-	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 04:07:12 +0100
+	id 1JBjlF-0002cs-UU
+	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 05:38:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752964AbYAGDGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jan 2008 22:06:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752777AbYAGDGp
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jan 2008 22:06:45 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1043 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752557AbYAGDGp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jan 2008 22:06:45 -0500
-Received: (qmail 2652 invoked by uid 111); 7 Jan 2008 03:06:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 06 Jan 2008 22:06:44 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 06 Jan 2008 22:06:42 -0500
+	id S1753579AbYAGEiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jan 2008 23:38:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753371AbYAGEiQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Jan 2008 23:38:16 -0500
+Received: from fk-out-0910.google.com ([209.85.128.186]:64901 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752827AbYAGEiP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jan 2008 23:38:15 -0500
+Received: by fk-out-0910.google.com with SMTP id z23so8323434fkz.5
+        for <git@vger.kernel.org>; Sun, 06 Jan 2008 20:38:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=CSReoOp30GWvdO+TAM89DnTr+N9JRryTrWi9fEQyQXA=;
+        b=i0431OhF3jBy7PgPaTLPPZ5PgUOCsjXh6tL3mXkEQuHzk2XMq9KKyjwTrWsLCjOZj0LrXDvNj6tP/XUdLBrT2EU7mDrE8LTITXiKxkPKlqa6R9rNjsllfMFSIqPa3npLq/hj/1sMOin4VRBhtMc/riTnAf640+PYMaILuFjTdQI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=kLTlNod9RIymgRxLm/yWjESFrvT1CPMKRi3joQpUxhFfxxo/XHf4FaE0ak/dmeBSka7bS7EmaEs0Fz0A3ObKyg6v4Ice8qkDD44aCWYiRBWswjlQVyoW/LgmsKa9KOR514jswuS+ysWST4YQegRb4+vIXY1ZLA/EHa52iKg8vr0=
+Received: by 10.78.155.4 with SMTP id c4mr1303585hue.79.1199680691520;
+        Sun, 06 Jan 2008 20:38:11 -0800 (PST)
+Received: by 10.78.50.5 with HTTP; Sun, 6 Jan 2008 20:38:11 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <7v63y62xwj.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69758>
 
-On Sun, Jan 06, 2008 at 06:05:16PM -0800, Junio C Hamano wrote:
+Hi all,
 
-> Actually, I think I found a bug.
-> 
-> 	$ git reset --hard
-> 	$ echo >>Makefile
->         $ git diff --numstat
->         1	0	Makefile
->         $ git mv Makefile makefile
->         $ git diff
->         $ git diff --cached -M --numstat
->         1	0	Makefile => makefile
-> 
-> "git mv" should not have staged the change.  It should have
-> moved the index entry from Makefile to makefile and moved the
-> work tree files.
+I am facing a strange problem with git ls-files in git-submodule. When I do -
+echo in modules init with "$@" - `git-ls-files --stage` - `git
+ls-files --stage -- "$@" | grep -e '^160000 '` - `pwd`
+The output is =
 
-I thought there was some discussion about this a few months ago,
-concerning what exactly it should do, and that was how we arrived at the
-current behavior. However, I can't seem to find it now. Maybe I dreamed
-it.
+in modules init with d - 100644
+c462997b94c371248bf17895ee18e7fbea5bce9b 0 .gitmodules 160000
+091158296a8f57322f70f3c17e5fcb66687a0970 0 a 160000
+6397239aeb662ba96f61b59ccc0a0d0812f48435 0 b 160000
+c9f0a7dedcb4a9daf5a68c37109577d7d177e10b 0 c 100644
+e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0 main.txt - -
+/home/imyousuf/projects/git-projs/test/super-project/a
 
--Peff
+If we format the above output of git list-files --stage we can see the following
+
+100644 c462997b94c371248bf17895ee18e7fbea5bce9b 0 .gitmodules
+160000 091158296a8f57322f70f3c17e5fcb66687a0970 0 a
+160000 6397239aeb662ba96f61b59ccc0a0d0812f48435 0 b
+160000 c9f0a7dedcb4a9daf5a68c37109577d7d177e10b 0 c
+100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0 main.txt
+
+In the output please note the path
+/home/imyousuf/projects/git-projs/test/super-project/a
+
+Now I am providing the output of -
+ls -al /home/imyousuf/projects/git-projs/test/super-project/a
+
+ drwxr-xr-x 4 imyousuf imyousuf 4096 2008-01-07 10:22 .
+ drwxr-xr-x 6 imyousuf imyousuf 4096 2008-01-07 10:22 ..
+ -rw-r--r-- 1 imyousuf imyousuf  130 2008-01-07 10:22 a.txt
+ drwxr-xr-x 2 imyousuf imyousuf 4096 2008-01-07 10:22 d
+ drwxr-xr-x 8 imyousuf imyousuf 4096 2008-01-07 10:22 .git
+ -rw-r--r-- 1 imyousuf imyousuf   95 2008-01-07 10:22 .gitmodules
+
+
+Now this is getting really confusing for me, because I get the strange
+output when I call the git submodule from shell script but after the
+shell script is executed if I do the same command copy and paste in
+gnome-terminal it works fine.
+
+Can someone please tell me what I am doing wrong?
+
+Thank you,
+
+Imran
