@@ -1,92 +1,88 @@
-From: "Peter Klavins" <klavins@netspace.net.au>
-Subject: Re: CRLF problems with Git on Win32
-Date: Mon, 7 Jan 2008 11:13:31 +0100
-Message-ID: <flsu0r$m9p$1@ger.gmane.org>
-References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se> <5C0F88FD-AB2F-4BAD-ADEC-75428F14260F@zib.de>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: RFC/RFH submodule handling in big setups
+Date: Mon, 7 Jan 2008 11:23:27 +0100
+Message-ID: <20080107102327.GA12427@pvv.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=response
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 07 11:14:28 2008
+X-From: git-owner@vger.kernel.org Mon Jan 07 11:24:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBozy-0006QH-Ar
-	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 11:14:26 +0100
+	id 1JBp9G-0000Rt-Ve
+	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 11:24:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754226AbYAGKN7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2008 05:13:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753927AbYAGKN7
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 05:13:59 -0500
-Received: from main.gmane.org ([80.91.229.2]:57440 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753116AbYAGKN6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2008 05:13:58 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JBozU-0005rB-4U
-	for git@vger.kernel.org; Mon, 07 Jan 2008 10:13:56 +0000
-Received: from host74-244-static.104-82-b.business.telecomitalia.it ([82.104.244.74])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 07 Jan 2008 10:13:56 +0000
-Received: from klavins by host74-244-static.104-82-b.business.telecomitalia.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 07 Jan 2008 10:13:56 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: host74-244-static.104-82-b.business.telecomitalia.it
-In-Reply-To: <5C0F88FD-AB2F-4BAD-ADEC-75428F14260F@zib.de>
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Windows Mail 6.0.6000.16480
-X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16545
+	id S1753874AbYAGKX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2008 05:23:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754267AbYAGKX3
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 05:23:29 -0500
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:48111 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753008AbYAGKX2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2008 05:23:28 -0500
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.60)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1JBp8h-0002JT-JC
+	for git@vger.kernel.org; Mon, 07 Jan 2008 11:23:27 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69780>
 
-I use an alternate workaround that clones the repository, removes the 
-checked out files, sets autocrlf, then checks out the files again:
+We're trying to get git to work well with our vision of submodules,
+and have to figure out how to make submodule fetching and pushing work
+in a smooth way.
 
-$ git clone git://git.debian.org/git/turqstat/turqstat.git
-$ cd turqstat
-$ git config --add core.autocrlf true
-$ rm -rf * .gitignore
-$ git reset --hard
+This is our situation (simplified):
 
-The result should now be the same as using Steffen's system.
+          [product1]          [product2]  ...         (supermodules)
+           /      \             /     \
+    ... [foo]  [os-abstraction-lib] [log-merger] ...  (submodules)
 
-However, there is still an unresolved problem with git's way of treating 
-cr/lf as an attribute only of the checkout and not the repository itself:
 
-$ git status
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#
-#       modified:   visualc/.gitignore
-#       modified:   visualc/turqstat.sln
-#       modified:   visualc/turqstat.vcproj
-#
-no changes added to commit (use "git add" and/or "git commit -a")
+A developer does a modification to the os-abstraction-lib, and a
+modification to the log-merger that depends on the change in the
+os-abstraction-lib. He wants this into product2, and doesn't know or
+care about product1.  He doesn't know whether his modification is
+acceptable or not, or whether his modification will go in before some
+other modification.
 
-So, checking out the repository with cr/lf true has now caused misalignment 
-of files that were originally checked in with existing cr/lf's in place. 
-Visual Studio in fact happily works with files that only have lf endings, 
-_except_ *.sln and *.vcproj files, which it much prefers to have with cr/lf 
-endings.
+He needs some way of pushing his modifications to a branch in the
+supermodule (e.g. "change-131345"), without interfering with anyone
+else.  The problem is where to push the sub-modules, they need to be
+available for anyone who wants to get the "change-131345" branch of
+the product2, but the modifications shouldn't show up anywhere else
+(yet).  Here are solutions we have thought of so far:
 
-The _real_ solution to this problem for the moment is _not_ to mix files 
-with both lf and cr/lf endings in the repository.
+1. push and fetch sha1s directly - this was sort of vetoed on this list.
 
-So, the original author of the repository should _also_ have used 
-core.autocrlf true, thus causing the *sln and *vcproj to have their cr's 
-stripped on checkin, but replaced on checkout when checking out with 
-autocrlf true.
+2. each time you push a submodule, push it to a auto-generated
+   tag (something like submodule-autogen-<sha1>), and use fetch -t
+   when fetching the submodules
 
-------------------------------------------------------------------------
- Peter Klavins 
+   Issue: Need to clean up these tags at some point, or there will be too
+   many of them. There will be many ugly tags no matter what.
+
+3. each time you push a submodule, do a merge ours to a
+   "internal-submodule-tracking" branch, and push to that. Something
+   like this in other words:
+
+     git fetch origin internal-submodule-tracking
+     git merge -s ours origin/internal-submodule-tracking
+     git push origin internal-submodule-tracking
+     git reset --hard HEAD^1
+
+   Issue: feels wrong somehow?
+
+4. Manually push all sub-modules to some new branch before pushing the
+   super-module. This is what we'd rather avoid, but the developer
+   should obviously have the option of doing this to some sub-modules
+   if he wants to.
+
+5. Secret option 5 - something we didn't think about
+
+- Finn Arne
