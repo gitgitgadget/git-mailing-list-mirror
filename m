@@ -1,88 +1,76 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: RFC/RFH submodule handling in big setups
-Date: Mon, 7 Jan 2008 11:23:27 +0100
-Message-ID: <20080107102327.GA12427@pvv.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn doesn't like !! in the url
+Date: Mon, 7 Jan 2008 02:30:40 -0800
+Message-ID: <20080107103040.GA28557@soma>
+References: <EA596F68-D87B-49AD-9DEF-2C2E07127BDE@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 07 11:24:04 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: "Michael J. Cohen" <michael.joseph.cohen@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 07 11:31:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBp9G-0000Rt-Ve
-	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 11:24:03 +0100
+	id 1JBpGA-0003FA-6Q
+	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 11:31:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753874AbYAGKX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2008 05:23:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754267AbYAGKX3
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 05:23:29 -0500
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:48111 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753008AbYAGKX2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2008 05:23:28 -0500
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.60)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1JBp8h-0002JT-JC
-	for git@vger.kernel.org; Mon, 07 Jan 2008 11:23:27 +0100
+	id S1754191AbYAGKan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2008 05:30:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753902AbYAGKan
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 05:30:43 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:32940 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752091AbYAGKan (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2008 05:30:43 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 61D242DC08B;
+	Mon,  7 Jan 2008 02:30:41 -0800 (PST)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
+In-Reply-To: <EA596F68-D87B-49AD-9DEF-2C2E07127BDE@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69781>
 
-We're trying to get git to work well with our vision of submodules,
-and have to figure out how to make submodule fetching and pushing work
-in a smooth way.
+"Michael J. Cohen" <michael.joseph.cohen@gmail.com> wrote:
+> I think it needs to urlencode the items before it passes it back to  
+> the server.
+> 
+> W: Ignoring error from SVN, path probably does not exist: (175007):  
+> HTTP Path Not Found: REPORT request failed on '/wowace/!svn/bc/100/ 
+> trunk/!!!LeaveMeAloneLibraries': '/wowace/!svn/bc/100/trunk/!!! 
+> LeaveMeAloneLibraries' path not found
+> 
+> works fine with svn co.
 
-This is our situation (simplified):
+Hi,
 
-          [product1]          [product2]  ...         (supermodules)
-           /      \             /     \
-    ... [foo]  [os-abstraction-lib] [log-merger] ...  (submodules)
+That was just a warning message (hence "W:").  If the path you're
+tracking did not have a revision between r0 - r100 in the repository;
+then it'll spew that warning once (it used to spew it a lot more).
+
+git-svn looks at old history in chunks starting at the beginning of the
+repository to avoid pulling (potentially) hundreds of thousands of
+revisions + filenames into memory all at once.
+
+As long as git-svn started importing revisions when the project started,
+everything should be alright.
 
 
-A developer does a modification to the os-abstraction-lib, and a
-modification to the log-merger that depends on the change in the
-os-abstraction-lib. He wants this into product2, and doesn't know or
-care about product1.  He doesn't know whether his modification is
-acceptable or not, or whether his modification will go in before some
-other modification.
 
-He needs some way of pushing his modifications to a branch in the
-supermodule (e.g. "change-131345"), without interfering with anyone
-else.  The problem is where to push the sub-modules, they need to be
-available for anyone who wants to get the "change-131345" branch of
-the product2, but the modifications shouldn't show up anywhere else
-(yet).  Here are solutions we have thought of so far:
+I just dug up cfbe7ab333d68790eb37341e30f040f99cef6af7 and that
+should've escaped everything that needs to be urlencoded for HTTP(S).
+(you were also the one that noticed the need for that one, too :).
 
-1. push and fetch sha1s directly - this was sort of vetoed on this list.
+I also just noticed that changeset didn't make it into 1.5.3.7 nor
+maint, however...
 
-2. each time you push a submodule, push it to a auto-generated
-   tag (something like submodule-autogen-<sha1>), and use fetch -t
-   when fetching the submodules
+Junio: if there are plans for 1.5.3.8, could you please add
+cfbe7ab333d68790eb37341e30f040f99cef6af7 to it?  Thanks.
 
-   Issue: Need to clean up these tags at some point, or there will be too
-   many of them. There will be many ugly tags no matter what.
-
-3. each time you push a submodule, do a merge ours to a
-   "internal-submodule-tracking" branch, and push to that. Something
-   like this in other words:
-
-     git fetch origin internal-submodule-tracking
-     git merge -s ours origin/internal-submodule-tracking
-     git push origin internal-submodule-tracking
-     git reset --hard HEAD^1
-
-   Issue: feels wrong somehow?
-
-4. Manually push all sub-modules to some new branch before pushing the
-   super-module. This is what we'd rather avoid, but the developer
-   should obviously have the option of doing this to some sub-modules
-   if he wants to.
-
-5. Secret option 5 - something we didn't think about
-
-- Finn Arne
+-- 
+Eric Wong
