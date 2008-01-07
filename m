@@ -1,66 +1,96 @@
-From: "Peter Klavins" <klavins@netspace.net.au>
+From: Steffen Prohaska <prohaska@zib.de>
 Subject: Re: CRLF problems with Git on Win32
-Date: Mon, 7 Jan 2008 15:14:21 +0100
-Message-ID: <fltc4g$6m8$1@ger.gmane.org>
+Date: Mon, 7 Jan 2008 17:05:26 +0100
+Message-ID: <9D6F756F-2709-4F8E-8DBB-298DD4B49C66@zib.de>
 References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se> <5C0F88FD-AB2F-4BAD-ADEC-75428F14260F@zib.de> <flsu0r$m9p$1@ger.gmane.org> <Pine.LNX.4.64.0801071447320.1864@ds9.cixit.se>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 07 15:15:21 2008
+Cc: git@vger.kernel.org, Peter Klavins <klavins@netspace.net.au>
+To: Peter Karlsson <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Mon Jan 07 17:05:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBsl6-0001Db-DA
-	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 15:15:20 +0100
+	id 1JBuTt-0007Iy-Uv
+	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 17:05:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753507AbYAGOOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2008 09:14:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753605AbYAGOOw
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 09:14:52 -0500
-Received: from main.gmane.org ([80.91.229.2]:36703 "EHLO ciao.gmane.org"
+	id S1754297AbYAGQFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2008 11:05:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753953AbYAGQFK
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 11:05:10 -0500
+Received: from mailer.zib.de ([130.73.108.11]:40848 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753020AbYAGOOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2008 09:14:51 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JBskb-0002DP-On
-	for git@vger.kernel.org; Mon, 07 Jan 2008 14:14:49 +0000
-Received: from host74-244-static.104-82-b.business.telecomitalia.it ([82.104.244.74])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 07 Jan 2008 14:14:49 +0000
-Received: from klavins by host74-244-static.104-82-b.business.telecomitalia.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 07 Jan 2008 14:14:49 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: host74-244-static.104-82-b.business.telecomitalia.it
+	id S1753120AbYAGQFJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2008 11:05:09 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m07G4LUO013256;
+	Mon, 7 Jan 2008 17:04:45 +0100 (CET)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m07G4KZl018403
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Mon, 7 Jan 2008 17:04:20 +0100 (MET)
 In-Reply-To: <Pine.LNX.4.64.0801071447320.1864@ds9.cixit.se>
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Windows Mail 6.0.6000.16480
-X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16545
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69793>
 
+
+On Jan 7, 2008, at 2:50 PM, Peter Karlsson wrote:
+
+> Steffen Prohaska:
+>
+>> Per default, CRLF conversion is disabled in msysgit.  Git should
+>> not convert a single file.  Does it really convert some?
+>
+> I didn't verify, but it was only some files that had LFs, perhaps the
+> files that I added while on the Windows machine had CRLFs. That's bad.
+
+This is a typical problem.  Once CRLFs are in your repository
+autocrlf can't "just work" anymore.  You need to commit a fixed
+version of the files.
+
+
+> Peter Klavins:
+>
+>> Visual Studio in fact happily works with files that only have lf
+>> endings, _except_ *.sln and *.vcproj files, which it much prefers to
+>> have with cr/lf endings.
+>
+> The project files were added to the repository on the Windows box
+> (obviously), so those are correct.
+>
+>
 > So apparently my repository is a bit broken at the moment with LF on
 > some files and CRLF on some. That's bad. I just assumed everything
 > worked, it used to "just work" for CVS (except for when you actually
 > tried to add binary files, of course).
 
-LOL. Exactly. That's my only gripe with git, there's still some way to go 
-before it's as usable as CVS in this regard, but of course in every other 
-feature it's way superior.
+"Just works" has a different meaning for git than it has for CVS.
+For git, it means that once you _told_ git how to convert line
+endings (that is you have correctly configured autocrlf), git
+will automatically detect text files and convert them, but leave
+binary files untouched.  It "just works" in the sense that you do
+not need to explicitly tell git about every single binary files
+(no cvs -kb needed).  Git will auto-detect the file type.
 
-If you follow the steps I listed, you will have new .sln and .vcproj files 
-that you can commit over the top of the ones already there, and everything 
-will be fixed! I checked out your project and it built fine.
+But if you does tell git to convert line endings it "just works"
+as if every file was binary.  Per default, git does not modify
+your content.  And for some people, "just works" means exactly
+this: leave my content as is.
 
-------------------------------------------------------------------------
- Peter Klavins 
+So it really depends on the context and therefore some
+configuration is inevitable.  git requires you to configure
+autocrlf.  cvs requires you to set -kb.
+
+You may, though, set "core.autocrlf true" globally for your
+account.  After you did this, git should "just work" for you; if
+"just works" means convert CRLF in _all_ text files in _every_
+repository.
+
+	Steffen
