@@ -1,108 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jan Hudec <bulb@ucw.cz>
 Subject: Re: RFC/RFH submodule handling in big setups
-Date: Mon, 07 Jan 2008 11:46:21 -0800
-Message-ID: <7vr6gtzaeq.fsf@gitster.siamese.dyndns.org>
+Date: Mon, 7 Jan 2008 21:07:56 +0100
+Message-ID: <20080107200756.GA20892@efreet.light.src>
 References: <20080107102327.GA12427@pvv.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Mon Jan 07 20:47:03 2008
+X-From: git-owner@vger.kernel.org Mon Jan 07 21:08:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBxw7-0005Op-Bz
-	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 20:47:03 +0100
+	id 1JByGy-0005fH-5J
+	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 21:08:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753507AbYAGTqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2008 14:46:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753331AbYAGTqg
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 14:46:36 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35891 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753191AbYAGTqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2008 14:46:35 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 44A07B6A7;
-	Mon,  7 Jan 2008 14:46:33 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 936BBB6A2;
-	Mon,  7 Jan 2008 14:46:30 -0500 (EST)
-In-Reply-To: <20080107102327.GA12427@pvv.org> (Finn Arne Gangstad's message of
-	"Mon, 7 Jan 2008 11:23:27 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752383AbYAGUIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2008 15:08:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753004AbYAGUII
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 15:08:08 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:60208 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752339AbYAGUIH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2008 15:08:07 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id F40ED57245;
+	Mon,  7 Jan 2008 21:08:04 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id Vyo+9qN6teBT; Mon,  7 Jan 2008 21:08:02 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 8C2FA57354;
+	Mon,  7 Jan 2008 21:08:00 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1JByGK-0005de-EF; Mon, 07 Jan 2008 21:07:56 +0100
+Content-Disposition: inline
+In-Reply-To: <20080107102327.GA12427@pvv.org>
+User-Agent: Mutt/1.5.17 (2007-12-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69802>
 
-Finn Arne Gangstad <finnag@pvv.org> writes:
+On Mon, Jan 07, 2008 at 11:23:27 +0100, Finn Arne Gangstad wrote:
+> 3. each time you push a submodule, do a merge ours to a
+>    "internal-submodule-tracking" branch, and push to that. Something
+>    like this in other words:
+> 
+>      git fetch origin internal-submodule-tracking
+>      git merge -s ours origin/internal-submodule-tracking
+>      git push origin internal-submodule-tracking
+>      git reset --hard HEAD^1
+> 
+>    Issue: feels wrong somehow?
 
-> We're trying to get git to work well with our vision of submodules,
-> and have to figure out how to make submodule fetching and pushing work
-> in a smooth way.
->
-> This is our situation (simplified):
->
->           [product1]          [product2]  ...         (supermodules)
->            /      \             /     \
->     ... [foo]  [os-abstraction-lib] [log-merger] ...  (submodules)
->
->
-> A developer does a modification to the os-abstraction-lib, and a
-> modification to the log-merger that depends on the change in the
-> os-abstraction-lib. He wants this into product2, and doesn't know or
-> care about product1.  He doesn't know whether his modification is
-> acceptable or not, or whether his modification will go in before some
-> other modification.
->
-> He needs some way of pushing his modifications to a branch in the
-> supermodule (e.g. "change-131345"), without interfering with anyone
-> else.  The problem is where to push the sub-modules, they need to be
-> available for anyone who wants to get the "change-131345" branch of
-> the product2, but the modifications shouldn't show up anywhere else
-> (yet).  Here are solutions we have thought of so far:
+Only one thing feels wrong here -- the merge -s ours. For one thing, the
+commit is probably descendant of what was in the internal-submodule-tracking
+branch (the branch name should actually have product2 in it's name).
+If it is not, you should not artificially make it so, but rewind the branch.
 
-The phrase "without interfering with anyone else" feels somewhat
-wrong and I sense there is something missing in the description
-of the workflow.  When a developer pushes a change to somewhere
-else, it must be because the change needs to be shared with
-_somebody else_ (but not necessarily with _everybody_).
+But as Junio already told you, you should really manage the subproject like
+a project (because it is a project), so the change should get to a topic
+branch where the other superprojects can look at the change and decide
+whether they want it or not.
 
-Without knowing exactly what the desired workflow is, I'd hazard
-a guess and would recommend something else, which is  hopefully
-a more useful way.
-
-When the developer makes that 131345 change in os-lib submodule,
-he is acting as a developer of that library and advancing its
-state.  He wants to add an enhancement so that a particular way
-to use it elsewhere (his use in log-merger program perhaps being
-the first one of them) can be supported, but the change is not
-accepted as the project wide one from os-lib project's point of
-view.  The change needs to be shared with people in product2
-group that want to further work on top of the change he makes in
-log-merger project, but not necessarily with everybody in
-product2 group, let alone people in product1 group.
-
-That's exactly what a topic branch is about, isn't it?
-
-He has a topic to enhance something in os-lib project, so
-whatever the mysterious 131345 can be made into one branch in
-os-lib project and given a more meaningful topic name.  He can
-push that out to os-lib project, and bind its tip in his tree of
-product2 superproject at os-lib directory, and push it to
-produc2 repository (maybe to its 'master', or maybe also to its
-one of the topic branches that houses his work-in-progress).
-
-That way, when somebody from product2 group needs to work on top
-of the change he made and pushed out thusly updates, his copy of
-os-lib will get the updates to (or perhaps creation of) the
-topic branch that contains 131345 change, and he can start
-working from where the original developer left off.  He can even
-fix bugs in the change in that 131345 topic in os-lib project
-the original developer made, push that back, and the original
-developer can build on top of that change.
+-- 
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
