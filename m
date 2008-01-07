@@ -1,91 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: how to use git merge -s subtree?
-Date: Mon, 07 Jan 2008 13:04:34 -0800
-Message-ID: <7vlk71z6sd.fsf@gitster.siamese.dyndns.org>
-References: <20080105230004.GY29972@genesis.frugalware.org>
-	<BAYC1-PASMTP12374B54BA370A1E1C6E78AE4E0@CEZ.ICE>
-	<flpah7$beg$2@ger.gmane.org>
-	<BAYC1-PASMTP01FC193EA959D148F19374AE4E0@CEZ.ICE>
-	<47803CB6.4050102@gmx.net> <7vir277jz6.fsf@gitster.siamese.dyndns.org>
-	<BAYC1-PASMTP1079A31936B4563801537DAE4E0@CEZ.ICE>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: Re: RFC/RFH submodule handling in big setups
+Date: Mon, 7 Jan 2008 22:07:35 +0100
+Message-ID: <20080107210735.GC19728@pvv.org>
+References: <20080107102327.GA12427@pvv.org> <7vr6gtzaeq.fsf@gitster.siamese.dyndns.org> <320075ff0801071208u1900bf76q2f0dc9cb0dc4318b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Soria Parra <sn_@gmx.net>, git@vger.kernel.org
-To: Sean <seanlkml@sympatico.ca>
-X-From: git-owner@vger.kernel.org Mon Jan 07 22:06:06 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nigel Magnay <nigel.magnay@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 07 22:08:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBz9n-0008Bq-P7
-	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 22:05:35 +0100
+	id 1JBzCZ-0000uO-8V
+	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 22:08:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753991AbYAGVEt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2008 16:04:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753882AbYAGVEs
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 16:04:48 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48669 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753244AbYAGVEs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2008 16:04:48 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D6FF6AE34;
-	Mon,  7 Jan 2008 16:04:46 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 27DFEAE33;
-	Mon,  7 Jan 2008 16:04:40 -0500 (EST)
-In-Reply-To: <BAYC1-PASMTP1079A31936B4563801537DAE4E0@CEZ.ICE>
-	(seanlkml@sympatico.ca's message of "Sun, 6 Jan 2008 03:06:25 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756948AbYAGVHk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2008 16:07:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755580AbYAGVHj
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 16:07:39 -0500
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:60731 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753215AbYAGVHj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2008 16:07:39 -0500
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.60)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1JBzC3-0000dB-Rt; Mon, 07 Jan 2008 22:07:35 +0100
+Content-Disposition: inline
+In-Reply-To: <320075ff0801071208u1900bf76q2f0dc9cb0dc4318b@mail.gmail.com>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69809>
 
-Sean <seanlkml@sympatico.ca> writes:
+On Mon, Jan 07, 2008 at 08:08:38PM +0000, Nigel Magnay wrote:
+> Do you currently use svn?
 
-> ...  Asking for the history of a file does make
-> sense.  Through path limiting you can ask to see just the subset of history that
-> touched a certain file or directory etc..
+Currently we use CVS. It hurts a bit.
 
-That's asking for the history of a _path_ (or subset defined by
-paths, as in "what changes were made to paths under 'arch/'"),
-which is very different from asking "I have B/foo.c -- show me
-the history of that _file_".
+> This feels like the common technique of using svn:externals, where
+> product1 has
+> foo repo/foo/trunk
+> os-abstraction-lib repo/os-abstraction-lib/trunk
+> 
+> product2 has
+> os-abstraction-lib repo/os-abstraction-lib/trunk
+> log-merger repos/log-merger/trunk
+> 
+> Where git (if I understand submodules correctly) can't do the above,
+> because the links are to SHA1s rather than tags or names, so in svn
+> terms it'd be something like
+> os-abstraction-lib repo/os-abstraction-lib/trunk@xxx
+> log-merger repos/log-merger/trunk@yyy
+> 
+> At first I thought the option (4) you suggest (Manually push all
+> sub-modules to some new branch before pushing the  super-module) was
+> going to be a pain - but actually I came to the conclusion it was
+> actually better. In our svn world, commits to shared libraries (can)
+> cause all hell to break loose - it'd actually be an advantage to have
+> to promote changes into the supermodules (the products in our case).
 
-Remember, David stated:
+With the way we envision using git, I don't think this is a
+problem. Each supermodule decides what version of the shared library
+it wants to use, and since git does not point to tags/branches in
+submodules but to sha1s, there is nothing you can do to a submodule
+that will cause any problems in a supermodule unless the supermodule
+decides to use a new version.
 
->> ... So you cannot do git-log B/foo.c as git doesnot know where
->> to search it as it thinks it is in /foo.c not in B/foo.c ...
+I think we'd be perfectly happy to use detached HEADs in all
+submodules, but there is no way to get that to work currently with
+push and fetch, so I'm looking for some alternative.
 
-Notice "as git does not know where to search it" part?
-
-Think --- what does that "it" refer to in that sentence?
-
-The statement is not about paths.  If it were about paths, then
-the output of "git log B/foo.c" does show what he wants.  The
-question "git log B/foo.c" asks is "what change were made to the
-path at B/foo.c".  The changes made to B/foo.c (i.e. what's
-shown with the diff headers that begin with "--- a/B/foo.c") are
-shown.  The changes made to foo.c are not shown.
-
-But that is different from what David is asking.  He wants to
-know what changes were made to B/foo.c or to foo.c, and wants to
-make the choice between the two depend on commit.  The reason
-you think you can pick between foo.c and B/foo.c is because
-there is an illusion that somehow there is an i-node like file
-identity that is kept track of, and it is preserved across
-renames and merges.
-
-That's keeping track of the history of a _file_.
-
-And as you know, git doesn't do that.
-
-What git does is to keep track of the history of the whole tree,
-but prune the parts that are not interesting away when you view
-the history.  And the pruning can be specified by _PATH_.
-
-See the difference?
+- Finn Arne
