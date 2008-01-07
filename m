@@ -1,93 +1,57 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: Re: RFC/RFH submodule handling in big setups
-Date: Mon, 7 Jan 2008 21:59:05 +0100
-Message-ID: <20080107205905.GB19728@pvv.org>
-References: <20080107102327.GA12427@pvv.org> <20080107200756.GA20892@efreet.light.src>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: CRLF problems with Git on Win32
+Date: Mon, 7 Jan 2008 22:03:23 +0100
+Message-ID: <200801072203.23938.robin.rosenberg.lists@dewire.com>
+References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se> <200801071947.28586.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801071915470.10101@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Mon Jan 07 21:59:39 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Steffen Prohaska <prohaska@zib.de>,
+	Peter Karlsson <peter@softwolves.pp.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 07 22:04:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBz4K-0006Ed-GI
-	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 21:59:36 +0100
+	id 1JBz8a-0007qd-1k
+	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 22:04:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753363AbYAGU7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2008 15:59:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753437AbYAGU7I
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 15:59:08 -0500
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:32948 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751572AbYAGU7H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2008 15:59:07 -0500
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.60)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1JBz3p-0000F5-Qe; Mon, 07 Jan 2008 21:59:05 +0100
+	id S1753331AbYAGVDd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jan 2008 16:03:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752940AbYAGVDd
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 16:03:33 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:8439 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752574AbYAGVDc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2008 16:03:32 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id B2B79802893;
+	Mon,  7 Jan 2008 22:03:30 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id wgaNjhCrgnVq; Mon,  7 Jan 2008 22:03:30 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 191A0802641;
+	Mon,  7 Jan 2008 22:03:30 +0100 (CET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
+In-Reply-To: <alpine.LSU.1.00.0801071915470.10101@racer.site>
 Content-Disposition: inline
-In-Reply-To: <20080107200756.GA20892@efreet.light.src>
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69806>
 
-On Mon, Jan 07, 2008 at 09:07:56PM +0100, Jan Hudec wrote:
-> On Mon, Jan 07, 2008 at 11:23:27 +0100, Finn Arne Gangstad wrote:
-> > 3. each time you push a submodule, do a merge ours to a
-> >    "internal-submodule-tracking" branch, and push to that. Something
-> >    like this in other words:
-> > 
-> >      git fetch origin internal-submodule-tracking
-> >      git merge -s ours origin/internal-submodule-tracking
-> >      git push origin internal-submodule-tracking
-> >      git reset --hard HEAD^1
-> > 
-> >    Issue: feels wrong somehow?
-> 
-> Only one thing feels wrong here -- the merge -s ours. For one thing, the
-> commit is probably descendant of what was in the internal-submodule-tracking
-> branch (the branch name should actually have product2 in it's name).
-> If it is not, you should not artificially make it so, but rewind the branch.
+m=C3=A5ndagen den 7 januari 2008 skrev du:
+> Problem.  There is not a single "right".  It really depends on the=20
+> project.
 
-The idea of the branch is to not have to make thousands of tags as
-time passes, just to have a branch that refers to all the commits that
-the supermodule refers to in the submodule.
+Indeed, but the most common SCM's detect binary files automatically,=20
+either by suffix  or content analysis, so I think that is what user's e=
+xpect.
+It will be right for more projects that the current behaviour.
 
-The internal-submodule-tracking branch should look like this:
-
-        / ... etc
-       m
-      / \
-     m   o-commit 3  
-    / \
-   m   o-commit 2
-  / \
- .   o-commit 1
-
-Where all the "m" commits are just dummy merge commits, the contents
-are of no consequence (hence the "merge -s ours" that should always
-silently go through). commit 1, 2 and 3, ... are the interesting ones,
-they are the sha1s the supermodule refers to in the submodule. They
-may or may not have any relationship to eachother.  If they _do_ have
-a realtionship to eachother, this will be tracked in some other branch
-in the submodule.
-
-So the purpose of the internal-submodule-tracking branch is: Have a
-branch to push to (you cannot just push a sha1 to nowhere), have
-something that refers to the sha1 so that it will not be pruned away,
-and have something that refers to the sha1 so it will actually be
-_fetched_ by git fetch.
-
-> But as Junio already told you, you should really manage the subproject like
-> a project (because it is a project), so the change should get to a topic
-> branch where the other superprojects can look at the change and decide
-> whether they want it or not.
-
-See another mail I wote, I don't want to manage the subproject like a
-separate project (it isn't).
-
-- Finn Arne
+-- robin
