@@ -1,90 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/5] First step, making setup (somewhat) reentrant
-Date: Mon, 7 Jan 2008 08:50:40 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801070845270.10101@racer.site>
-References: <1199684855-14246-1-git-send-email-ct@pipapo.org> <1199684855-14246-2-git-send-email-ct@pipapo.org>
+From: Gabriel <g2p.code@gmail.com>
+Subject: Re: [PATCH] Make commit, cherry-pick and revert more silent.
+Date: Mon, 7 Jan 2008 08:55:09 +0000 (UTC)
+Message-ID: <flspdc$4aa$1@ger.gmane.org>
+References: <1199634201-26013-1-git-send-email-g2p.code@gmail.com>
+	<7vir2636tq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Christian Thaeter <ct@pipapo.org>
-X-From: git-owner@vger.kernel.org Mon Jan 07 09:51:20 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 07 10:00:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JBnhU-0001Ia-OP
-	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 09:51:17 +0100
+	id 1JBnqV-0003iM-0Q
+	for gcvg-git-2@gmane.org; Mon, 07 Jan 2008 10:00:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754620AbYAGIut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2008 03:50:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754208AbYAGIut
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 03:50:49 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51259 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754163AbYAGIus (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2008 03:50:48 -0500
-Received: (qmail invoked by alias); 07 Jan 2008 08:50:46 -0000
-Received: from host86-137-198-115.range86-137.btcentralplus.com (EHLO racer) [86.137.198.115]
-  by mail.gmx.net (mp047) with SMTP; 07 Jan 2008 09:50:46 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX194w8QNfQV41+pKivFflXrPLMvGks2rqaUhEjPufW
-	dCZqfogST25xZ5
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1199684855-14246-2-git-send-email-ct@pipapo.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753899AbYAGJAH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jan 2008 04:00:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754036AbYAGJAH
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 04:00:07 -0500
+Received: from main.gmane.org ([80.91.229.2]:46940 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753519AbYAGJAF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2008 04:00:05 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1JBnpy-0002CI-JH
+	for git@vger.kernel.org; Mon, 07 Jan 2008 09:00:02 +0000
+Received: from dhcp26-112.enst.fr ([137.194.26.112])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 07 Jan 2008 09:00:02 +0000
+Received: from g2p.code by dhcp26-112.enst.fr with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 07 Jan 2008 09:00:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dhcp26-112.enst.fr
+User-Agent: Pan/0.129 (Benson & Hedges Moscow Gold)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69772>
 
-Hi,
+Le Sun, 06 Jan 2008 14:52:33 -0800, Junio C Hamano a =C3=A9crit=C2=A0:
 
-[I assume that you mean this series post-1.5.4]
+> So a more convincing presentation would be:
+> ...
+Will split.
 
-On Mon, 7 Jan 2008, Christian Thaeter wrote:
+> After I wrote all that, I realized that the patch is not acceptable a=
+s
+> is.
+>=20
+> Why?
+>=20
+> This makes a successful cherry-pick way too silent.  With your patch,=
+ we
+> will see:
+>=20
+>  * "Auto-merged ..." messages that shows what paths are affected
+>    by the cherry-pick/revert (which I do not think we would want to
+>    squelch),
+>=20
+>  * "Finished one cherry-pick."
+>=20
+> But we will lose the "Created commit ...: <msg>" and "<num> files
+> changed..."  summary, neither of which we would want to lose.
 
-> diff --git a/environment.c b/environment.c
-> index 18a1c4e..492d87c 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -38,31 +38,48 @@ int auto_crlf = 0;	/* 1: both ways, -1: only when adding git objects */
->  unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
->  
->  /* This is set by setup_git_dir_gently() and/or git_default_config() */
-> -char *git_work_tree_cfg;
-> -static const char *work_tree;
-> +char *git_work_tree_cfg = NULL;
-> +static char *work_tree = NULL;
-> +static int work_tree_initialized = 0;
+I'll have a look.
+This seems to require refactoring the interface between cherry-pick/
+revert and commit.
 
-Global variables do not need initialisation, if all what you do is set 
-them to NULL.  Therefore, most of this hunk is not necessary, and only 
-distracts from what is really relevant, "work_tree_initialized = 0".
+> Also sign your patch (see Documentation/SubmittingPatches), please, w=
+hen
+> you try the second round.
+>=20
+> Thanks.
 
->  static void setup_git_env(void)
->  {
->  	git_dir = getenv(GIT_DIR_ENVIRONMENT);
->  	if (!git_dir)
->  		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
-> +	if (git_object_dir)
-> +		free(git_object_dir);
-
-Logically, this belongs into a "cleanup_git_env()" function, no?
-
->  	git_object_dir = getenv(DB_ENVIRONMENT);
-> -	if (!git_object_dir) {
-> +	if (git_object_dir) {
-> +		git_object_dir = xstrdup(git_object_dir);
-> +	}
-
-Are you sure that you want to keep the object directory, even if you want 
-to initialise to a new repository?
-
-Which brings me to a more fundamental question: what do you need reentrant 
-setup_directory() for?  If it is just to allow multiple calls to that 
-function for the _same_ repository, I say clean up your code.
-
-Ciao,
-Dscho
+Thanks, I appreciate the review.
