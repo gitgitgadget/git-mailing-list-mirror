@@ -1,124 +1,112 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: An interaction with ce_match_stat_basic() and autocrlf
-Date: Tue, 8 Jan 2008 08:10:11 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801080748080.3148@woody.linux-foundation.org>
-References: <7vfxx8tt1z.fsf@gitster.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH 1/2] sideband.c: Use xmalloc() instead of variable-sized arrays.
+Date: Tue, 08 Jan 2008 17:24:18 +0100
+Message-ID: <4783A3B2.3060801@viscovery.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 08 17:11:57 2008
+X-From: git-owner@vger.kernel.org Tue Jan 08 17:24:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCH3S-0007bv-CA
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 17:11:54 +0100
+	id 1JCHFy-0003X6-0X
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 17:24:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750993AbYAHQL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2008 11:11:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752093AbYAHQL0
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 11:11:26 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:41041 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750927AbYAHQL0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Jan 2008 11:11:26 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m08GACnj017685
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 8 Jan 2008 08:10:13 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m08GAB6Y019657;
-	Tue, 8 Jan 2008 08:10:12 -0800
-In-Reply-To: <7vfxx8tt1z.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.722 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1753362AbYAHQYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 11:24:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754153AbYAHQYW
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 11:24:22 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:48126 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752942AbYAHQYV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 11:24:21 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JCHFT-00076Z-Bt; Tue, 08 Jan 2008 17:24:19 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 600CD6EF; Tue,  8 Jan 2008 17:24:18 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69888>
 
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
+How come we got along with this not very portable construct for so long?
+Probably because the array sizes were computed from the results of
+strlen() of string constants. Anyway, a follow-up patch will make the
+lengths really non-constant.
 
-On Tue, 8 Jan 2008, Junio C Hamano wrote:
-> 
-> This is caused partly by the breakage in size_only codepath of
-> diff.c::diff_populate_filespec().
-
-Only partially.
-
-The more fundamental behaviour (that of git update-index) is caused by 
-ie_modified() thinking that when DATA_CHANGED is true, it cannot possibly 
-need to call "ce_modified_check_fs()":
-
->From ie_modified():
-
-        /* Immediately after read-tree or update-index --cacheinfo,
-         * the length field is zero.  For other cases the ce_size
-         * should match the SHA1 recorded in the index entry.
-         */
-        if ((changed & DATA_CHANGED) && ce->ce_size != htonl(0))
-                return changed;
-
-and that DATA_CHANGED comes from ce_match_stat_basic() which notices that 
-the size has changed.
-
-Similarly, I think that the problem with "diff" not realizing they might 
-be the same comes from ie_match_stat(), which has a similar problem in not 
-realizing that DATA_CHANGED could possibly still mean that it's the same.
-
-This patch should fix it, but I suspect we should think hard about that 
-change to ie_modified(), and see what the performance issues are (ie that 
-code has tried to avoid doing the more expensive ce_modified_check_fs() 
-for a reason).
-
-The change to diff.c is similarly interesting. It is logically wrong to 
-use the worktree_file there (since we have to read the object anyway), but 
-since "reuse_worktree_file" is also tied into the whole refresh logic, I 
-think the diff.c change is correct.
-
-I dunno. This is not meant to be applied, it is meant to be thought about.
-
-		Linus
-
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- diff.c       |    2 +-
- read-cache.c |    2 ++
- 2 files changed, 3 insertions(+), 1 deletions(-)
+ sideband.c |   14 ++++++++++++--
+ 1 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index b18c140..9f699b7 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1512,7 +1512,7 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
- 	ce = active_cache[pos];
- 	if ((lstat(name, &st) < 0) ||
- 	    !S_ISREG(st.st_mode) || /* careful! */
--	    ce_match_stat(ce, &st, 0) ||
-+	    ce_modified(ce, &st, 0) ||
- 	    hashcmp(sha1, ce->sha1))
- 		return 0;
- 	/* we return 1 only when we can stat, it is a regular file,
-diff --git a/read-cache.c b/read-cache.c
-index 7db5588..e1fc880 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -253,12 +253,14 @@ int ie_modified(struct index_state *istate,
- 	if (changed & (MODE_CHANGED | TYPE_CHANGED))
- 		return changed;
- 
-+#if 0
- 	/* Immediately after read-tree or update-index --cacheinfo,
- 	 * the length field is zero.  For other cases the ce_size
- 	 * should match the SHA1 recorded in the index entry.
- 	 */
- 	if ((changed & DATA_CHANGED) && ce->ce_size != htonl(0))
- 		return changed;
-+#endif
- 
- 	changed_fs = ce_modified_check_fs(ce, st);
- 	if (changed_fs)
+diff --git a/sideband.c b/sideband.c
+index 756bbc2..513d7b3 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -19,7 +19,10 @@ int recv_sideband(const char *me, int in_stream, int out, int err)
+ {
+ 	unsigned pf = strlen(PREFIX);
+ 	unsigned sf = strlen(SUFFIX);
+-	char buf[pf + LARGE_PACKET_MAX + sf + 1];
++	char *buf, *save;
++
++	save = xmalloc(sf);
++	buf = xmalloc(pf + LARGE_PACKET_MAX + sf + 1);
+ 	memcpy(buf, PREFIX, pf);
+ 	while (1) {
+ 		int band, len;
+@@ -29,6 +32,8 @@ int recv_sideband(const char *me, int in_stream, int out, int err)
+ 		if (len < 1) {
+ 			len = sprintf(buf, "%s: protocol error: no band designator\n", me);
+ 			safe_write(err, buf, len);
++			free(buf);
++			free(save);
+ 			return SIDEBAND_PROTOCOL_ERROR;
+ 		}
+ 		band = buf[pf] & 0xff;
+@@ -38,6 +43,8 @@ int recv_sideband(const char *me, int in_stream, int out, int err)
+ 			buf[pf] = ' ';
+ 			buf[pf+1+len] = '\n';
+ 			safe_write(err, buf, pf+1+len+1);
++			free(buf);
++			free(save);
+ 			return SIDEBAND_REMOTE_ERROR;
+ 		case 2:
+ 			buf[pf] = ' ';
+@@ -59,7 +66,6 @@ int recv_sideband(const char *me, int in_stream, int out, int err)
+ 				 * line data actually contains something.
+ 				 */
+ 				if (brk > pf+1 + 1) {
+-					char save[sf];
+ 					memcpy(save, buf + brk, sf);
+ 					buf[brk + sf - 1] = buf[brk - 1];
+ 					memcpy(buf + brk - 1, SUFFIX, sf);
+@@ -83,9 +89,13 @@ int recv_sideband(const char *me, int in_stream, int out, int err)
+ 				      "%s: protocol error: bad band #%d\n",
+ 				      me, band);
+ 			safe_write(err, buf, len);
++			free(buf);
++			free(save);
+ 			return SIDEBAND_PROTOCOL_ERROR;
+ 		}
+ 	}
++	free(buf);
++	free(save);
+ 	return 0;
+ }
+
+-- 
+1.5.4.rc2.815.g2f849-dirty
