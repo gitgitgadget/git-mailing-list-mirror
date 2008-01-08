@@ -1,61 +1,53 @@
-From: =?ISO-8859-1?Q?Gonzalo_Garramu=F1o?= <ggarra@advancedsl.com.ar>
-Subject: git and unicode
-Date: Tue, 08 Jan 2008 08:09:54 -0300
-Message-ID: <47835A02.80404@advancedsl.com.ar>
-References: <C3A86A49.10AEF%jefferis@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: CRLF problems with Git on Win32
+Date: Tue, 8 Jan 2008 06:07:57 -0500
+Message-ID: <20080108110757.GB18087@coredump.intra.peff.net>
+References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se> <200801071947.28586.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801071915470.10101@racer.site> <200801072203.23938.robin.rosenberg.lists@dewire.com> <20080107224204.55539c31@jaiman> <Pine.LNX.4.64.0801081150010.25629@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 08 12:07:38 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Peter Karlsson <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Tue Jan 08 12:08:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCCIz-00057H-5A
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 12:07:37 +0100
+	id 1JCCJn-0005KG-W8
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 12:08:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752991AbYAHLHJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jan 2008 06:07:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752985AbYAHLHJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 06:07:09 -0500
-Received: from gorolba.terra.com ([66.119.66.228]:55986 "EHLO
-	gorolba.terra.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752991AbYAHLHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2008 06:07:08 -0500
-Received: from elimba.terra.com (elimba.terra.com [66.119.66.67])
-	by gorolba.terra.com (Postfix) with ESMTP id ACF83B1C0C0
-	for <git@vger.kernel.org>; Tue,  8 Jan 2008 06:07:04 -0500 (EST)
-X-Terra-Karma: 0%
-X-Terra-Hash: b1ee8bfc3a6c2033d4759e2bafbceeed
-Received-SPF: none (elimba.terra.com: 66.119.66.67 is neither permitted nor denied by domain of advancedsl.com.ar) client-ip=66.119.66.67; envelope-from=ggarra@advancedsl.com.ar; helo=[192.168.1.3];
-Received: from [192.168.1.3] (unknown [201.255.32.186])
-	(authenticated user ggarra@advancedsl.com.ar)
-	by elimba.terra.com (Postfix) with ESMTP id 38D321BC056
-	for <git@vger.kernel.org>; Tue,  8 Jan 2008 06:07:03 -0500 (EST)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <C3A86A49.10AEF%jefferis@gmail.com>
+	id S1752536AbYAHLIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 06:08:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752985AbYAHLIA
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 06:08:00 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2258 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752406AbYAHLIA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 06:08:00 -0500
+Received: (qmail 16717 invoked by uid 111); 8 Jan 2008 11:07:58 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 08 Jan 2008 06:07:58 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Jan 2008 06:07:57 -0500
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0801081150010.25629@ds9.cixit.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69863>
 
+On Tue, Jan 08, 2008 at 11:56:00AM +0100, Peter Karlsson wrote:
 
-=46orking a little from the recent CR/LF thread, I was wondering how do=
-es=20
-git deal with unicode files?
+> If I occasionally need to do a
+> 
+>  git add -kb binary.txt
+> 
+> to flag a file explicitely, that's a small price to pay for everything
+> else to work out of the box.
 
-Most scripting languages (ruby, python, etc) are now allowing their=20
-source code to be written in unicode (UTF-8, usually).  Will git=20
-incorrectly categorize those source files as "binary"?
+For you, perhaps, since you apparently infrequently commit binary files
+and derive some benefit from CRLF conversion. But please bear in mind
+that there are people on the other end of the spectrum who want the
+opposite (i.e., who could care less about CRLF, but _do_ have binary
+files).
 
-
---=20
-Gonzalo Garramu=F1o
-ggarra@advancedsl.com.ar
-
-AMD4400 - ASUS48N-E
-GeForce7300GT
-Xubuntu Gutsy
+-Peff
