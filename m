@@ -1,109 +1,107 @@
-From: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
-Subject: Re: CRLF problems with Git on Win32
-Date: Tue, 8 Jan 2008 18:56:28 +0100
-Message-ID: <CE10C08D-AAF1-44B5-89B5-9A16A4AB70EA@zib.de>
-References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se> <200801071947.28586.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801071915470.10101@racer.site> <200801072203.23938.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801072115120.10101@racer.site> <3B08AC4C-A807-4155-8AD7-DC6A6D0FE134@zib.de> <20080108172957.GG22155@fieldses.org>
-Reply-To: prohaska-wjoc1KHpMeg@public.gmane.org
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>, Robin Rosenberg <robin.rosenberg.lists-RgPrefM1rjDQT0dZR+AlfA@public.gmane.org>, Jeff King <peff-AdEPDUrAXsQ@public.gmane.org>, Peter Karlsson <peter-wzhfs8O2nkI+/KzbbBz5qQ@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-To: "J. Bruce Fields" <bfields-uC3wQj2KruNg9hUCZPvPmw@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Tue Jan 08 18:55:59 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.251])
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: An interaction with ce_match_stat_basic() and autocrlf
+Date: Tue, 08 Jan 2008 10:04:34 -0800
+Message-ID: <7vr6gsry6l.fsf@gitster.siamese.dyndns.org>
+References: <7vfxx8tt1z.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.1.00.0801080748080.3148@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jan 08 19:06:10 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCIg8-0004sL-3X
-	for gcvm-msysgit@m.gmane.org; Tue, 08 Jan 2008 18:55:56 +0100
-Received: by wa-out-0708.google.com with SMTP id n36so1391713wag.21
-        for <gcvm-msysgit@m.gmane.org>; Tue, 08 Jan 2008 09:55:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=1qRYrhZxNLga8PyKTsycoQH5iXafIG3A8ThDZMo5QMk=;
-        b=cxEo9fyLelJ9HoyTOMByUvs7EdPA3c5gUylPPLBV6AkmdIt/IxcAbbiLjxmE00K7A0yPfs+WvI6ryw9cOoN0PzVfkM9jV/mq6ziShUSLDJQe16OZE2GQdxHDp0BksgJ0HsACTb0kd42SUk3G+MpkJH0kC2JBfZoY/XbHjLDvnVQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=HycEJM7g7yhh+eQTwpqqPCu2+F9+t2Eb7IUpNAPt9Q0YFqVhkX13wkjYfMkcxz7fE2nzF0qZOgvH6/L2GRUsedoDk+pkAuFvpUp9EdHH4VIx2p6VUkDfmLDNGvoHGIvwwBxK0mGwRGIP668NVfQ9oxlCFXiM34A/kGwlir7Ds3o=
-Received: by 10.114.81.1 with SMTP id e1mr814751wab.9.1199814928930;
-        Tue, 08 Jan 2008 09:55:28 -0800 (PST)
-Received: by 10.44.187.4 with SMTP id k4gr1321hsf;
-	Tue, 08 Jan 2008 09:55:28 -0800 (PST)
-X-Sender: prohaska-wjoc1KHpMeg@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.65.237.15 with SMTP id o15mr48105668qbr.3.1199814928627; Tue, 08 Jan 2008 09:55:28 -0800 (PST)
-Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id h71si29066824nzf.3.2008.01.08.09.55.27; Tue, 08 Jan 2008 09:55:28 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
-Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) smtp.mail=prohaska-wjoc1KHpMeg@public.gmane.org
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m08HtNTl019970; Tue, 8 Jan 2008 18:55:23 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m08HtM5F008253 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO); Tue, 8 Jan 2008 18:55:22 +0100 (MET)
-In-Reply-To: <20080108172957.GG22155-uC3wQj2KruNg9hUCZPvPmw@public.gmane.org>
-X-Mailer: Apple Mail (2.753)
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1JCIpB-0007vb-Q5
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 19:05:47 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754124AbYAHSEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 13:04:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754108AbYAHSEu
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 13:04:50 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43727 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753980AbYAHSEu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 13:04:50 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 49E39C56A;
+	Tue,  8 Jan 2008 13:04:48 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A107AC567;
+	Tue,  8 Jan 2008 13:04:41 -0500 (EST)
+In-Reply-To: <alpine.LFD.1.00.0801080748080.3148@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 8 Jan 2008 08:10:11 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69899>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69900>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-
-On Jan 8, 2008, at 6:29 PM, J. Bruce Fields wrote:
-
-> On Mon, Jan 07, 2008 at 10:40:56PM +0100, Steffen Prohaska wrote:
->> Eventually I gave in and even voted for "Git does not modify
->> content unless explicitly requested otherwise".
->>
->> Here's the full discussion:
->>
->> http://code.google.com/p/msysgit/issues/detail?id=21
->>
->> I believe the main question is which type of projects we would like
->> to support by our default.  For real cross-platform projects that  
->> will
->> be checked out on Windows and Unix we should choose
->> "core.autocrlf true" as our default.  But if our default are native
->> Windows projects that will never be checked out on Unix, then we
->> should not set core.autocrlf by default.
+> On Tue, 8 Jan 2008, Junio C Hamano wrote:
+>> 
+>> This is caused partly by the breakage in size_only codepath of
+>> diff.c::diff_populate_filespec().
 >
-> If the policy really depends on the project, then surely the default
-> behavior should be determined by information carried in the project
-> itself (e.g., the .gitattributes)?
+> Only partially.
 
-Unfortunately it depends on the project _and_ the platform.  A
-cross-platform project should have core.autocrlf=input on Unix and
-core.autocrlf=true on Windows.  I don't think I can represent this
-with the current .gitattributes.
+Agreed.  That's why it is "just a half of the story".
 
-Do you suggest to add this kind of magic to .gitattributes? Such as
-to have .gitattributes containing
+> The more fundamental behaviour (that of git update-index) is caused by 
+> ie_modified() thinking that when DATA_CHANGED is true, it cannot possibly 
+> need to call "ce_modified_check_fs()":
+> ...
+> Similarly, I think that the problem with "diff" not realizing they might 
+> be the same comes from ie_match_stat(), which has a similar problem in not 
+> realizing that DATA_CHANGED could possibly still mean that it's the same.
 
---- SNIP ---
-* crlf=autonative
---- SNIP ---
+Yes, I think your patch to ie_modified() should take care of the
+issue from the diff-files front-end side, which is the right
+approach.  The optimization diffcore_populate_filespec() makes
+when asked to do size_only, which predates the addition of
+convert_to_git(), needs to be updated regardless, though.  The
+size field in diffcore_filespec is never about on-filesystem
+size.
 
-which would tell git to act as if core.autocrlf=input was set on Unix
-and core.autocrlf=true was set on Windows.
+> This patch should fix it, but I suspect we should think hard about that 
+> change to ie_modified(), and see what the performance issues are (ie that 
+> code has tried to avoid doing the more expensive ce_modified_check_fs() 
+> for a reason).
 
+I think the reason was I simply avoided doing any unnecessary
+operation that goes to the filesystem.  We did not even have
+that modified_check_fs() code before the racy-git safety, and
+when I added it I do not think I benched it with a real-life
+workload; the logic there was simply a valid optimization back
+then.
 
-> For that reason it strikes me as a mistake to ignore the crlf  
-> attribute
-> by default (assuming that is indeed the current behavior; apologies  
-> for
-> not checking).  If crlf is set then I think it should be assumed that
-> crlf conversion should be done unless that has been explicitly turned
-> off somehow.
+It is not anymore.  Addition of convert_to_git() made cached
+stat info essentially ineffective in the sense that:
 
-I don't understand this comment.
+ (1) if a user changes the work tree files in such a way that
+     does not change convert_to_git() output, the index will say
+     "file contents in external representation has definitely
+     changed, the sizes no longer match".  We need to actually
+     go to the data to find out that there is no change at the
+     canonical level.
 
-msysgit installs plain git.  core.autocrlf is unset.  Whatever plain
-git's default is, this is msysgit's default, too.
+ (2) if a user changes the crlf setting (or .gitattributes)
+     without touching the work tree files, the index will say
+     "unchanged and do not have to compare".  We need to
+     actually go to the data to find out that they do not match
+     anymore.
 
-	Steffen
+The latter is an opposite issue of what I brought up in this
+thread.  I personally do not want to "fix" it --- it means
+destroying one of the most important optimizations.  The use
+case is essentially a one-shot operation for a user to "fix" a
+broken crlf setting, and having to re-checkout everything is a
+small cost to pay to maintain it.
+
+But the former is something we should be able to deal with
+sanely.
