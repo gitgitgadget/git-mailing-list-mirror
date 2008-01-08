@@ -1,89 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: An interaction with ce_match_stat_basic() and autocrlf
-Date: Tue, 08 Jan 2008 04:12:24 -0800
-Message-ID: <7vfxx8tt1z.fsf@gitster.siamese.dyndns.org>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH] git-submodule: New subcommand 'summary'
+Date: Tue, 8 Jan 2008 20:20:35 +0800
+Message-ID: <46dff0320801080420v6295939aw86a6cba3ceb8c076@mail.gmail.com>
+References: <1199122505-27478-1-git-send-email-pkufranky@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: torvalds@linux-foundation.org
-X-From: git-owner@vger.kernel.org Tue Jan 08 13:13:05 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 08 13:21:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCDKJ-0005po-4a
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 13:13:03 +0100
+	id 1JCDS6-0007yq-Fq
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 13:21:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751411AbYAHMMd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2008 07:12:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752015AbYAHMMc
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 07:12:32 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41416 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751339AbYAHMMb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2008 07:12:31 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4999FCB21;
-	Tue,  8 Jan 2008 07:12:29 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A42ABCB20;
-	Tue,  8 Jan 2008 07:12:26 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751376AbYAHMUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 07:20:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751275AbYAHMUh
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 07:20:37 -0500
+Received: from py-out-1112.google.com ([64.233.166.176]:6307 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751254AbYAHMUg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 07:20:36 -0500
+Received: by py-out-1112.google.com with SMTP id u52so13181803pyb.10
+        for <git@vger.kernel.org>; Tue, 08 Jan 2008 04:20:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=J8KmRDY1zbZRvT3YZZMd10vRCgJFUVljJx+yP/8cnoE=;
+        b=SfG/bqf8Xa/60f+6+keUHnUTuW5lXgK40++n22zo33Ge4nW6d5hYdNB8At3NE32/vpQoGZNuqP/SEMfMrv+9+JChqwfXKzXLMnXsj406vZqwcNc4A15u1VjJSY1BZmKyki2C/M62nWJfUWpBoewPizzma7t+P5Ks+NYIFKIJ7m4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=h1/pO44kRL1pi3EjCKTYJkSL+Nl3nyS37sU0A1NedQiA1UpLKgUPFvtSD5wA6jyZUPslKHbQQtK7k/uKRIvMUUEHYnlVr4+C0p3UqNl9ESorUuWVLWHvto8TGWLNCmHgvgE8WJVBdHd9l6VtOBI1C+Vd9gdX4hhNbWLFH7VaRY4=
+Received: by 10.35.79.3 with SMTP id g3mr1739038pyl.3.1199794835291;
+        Tue, 08 Jan 2008 04:20:35 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Tue, 8 Jan 2008 04:20:35 -0800 (PST)
+In-Reply-To: <1199122505-27478-1-git-send-email-pkufranky@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69870>
 
-There is an interesting interaction with the stat matching and
-autocrlf.
+Any comment to my patch?
 
-    $ git init
-    $ git config core.autocrlf true
-    $ echo a >a.txt
-    $ git add a.txt
-    $ unix2dos a.txt
-    $ git diff
-    diff --git a/a.txt b/a.txt
+Following this i will give patches to introduce submodule summary
+function into git-commit
 
-At this point, the index records a blob with LF line ending,
-while the work tree file has the same content with CRLF line
-ending.  And the funny thing is that once you get into this
-situation it is unfixable short of "git add a.txt".  Most
-notably, "git update-index --refresh" (and the equilvalent
-auto-refresh that is implicitly run by "git diff" Porcelain)
-will not update the cached stat information.
+On Jan 1, 2008 1:35 AM, Ping Yin <pkufranky@gmail.com> wrote:
+> The patch series ( 3 in total) teach git-submodule a new subcommand 'summary'.
+>
+> PATCH 1 introduces the code framework.
+>
+> PATCH 2 does the real work for summary.
+>
+> PATCH 3 teaches a new option '--summary-limit|-n'.
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-This is caused partly by the breakage in size_only codepath of
-diff.c::diff_populate_filespec().  When taking the file contents
-from the work tree, it just gets stat data and thinks it got the
-final size, but it should actually convert the blob data into
-canonical format.  diff.c::diffcore_skip_stat_unmatch() is
-fooled by this and declares that the path is modified.
 
-This can be fixed by not returning early even when size_only is
-asked in the codepath.  It will make everything quite a lot more
-expensive, as there currently is not a cheap way to ask "is this
-path going to be munged by autocrlf or clean filter", but
-getting the correct result is more important than getting a
-quick but wrong result.
 
-But that is just a half of the story.
-
- (1) It won't make the entry stat clean, as refresh_index()
-     later called from builtin-diff.c to clean up the stat
-     dirtiness works without paying attention to the autocrlf
-     conversion.
-
- (2) It won't help lower-level diff-files and internal callers
-     to ce_match_stat() that checks if the path were touched.
-     The "read-tree -m -u" codepath uses it to avoid touching
-     the path with local modifications.  The standard way to
-     clear the stat-dirtiness with "git update-index --refresh"
-     still needs to be fixed anyway.
-
-I was going to conclude this message by saying "I need to sleep
-on this to see if I can come up with a clean solution", but it
-appears I do not have much time left for actually sleeping X-<.
+-- 
+Ping Yin
