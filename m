@@ -1,73 +1,59 @@
-From: Josh Triplett <josh@freedesktop.org>
-Subject: Re: [PATCH] include/asm-arm/: Spelling fixes
-Date: Tue, 08 Jan 2008 03:15:43 -0800
-Message-ID: <47835B5F.3030204@freedesktop.org>
-References: <5703e57f925f31fc0eb38873bd7f10fc44f99cb4.1197918889.git.joe@perches.com>	<20071217195658.GB13515@fieldses.org>	<1197921847.27386.16.camel@localhost>	<20071217201219.GC13515@fieldses.org>	<1197922971.27386.32.camel@localhost>	<20071217205134.GB2105@coredump.intra.peff.net> <7vy7bt57wn.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/4] git branch: Use color configuration infrastructure
+Date: Tue, 8 Jan 2008 06:23:28 -0500
+Message-ID: <20080108112328.GA19941@coredump.intra.peff.net>
+References: <1199542226.6209.34.camel@futex> <1199542299-12082-1-git-send-email-mk@spinlock.ch> <1199542299-12082-2-git-send-email-mk@spinlock.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Joe Perches <joe@perches.com>,
-	"J. Bruce Fields" <bfields@fieldses.org>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 08 12:23:02 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org,
+	Matthias Kestenholz <matthias@spinlock.ch>
+To: Matthias Kestenholz <mk@spinlock.ch>
+X-From: git-owner@vger.kernel.org Tue Jan 08 12:24:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCCXq-0000oe-LP
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 12:22:59 +0100
+	id 1JCCYo-00013X-TA
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 12:23:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751411AbYAHLWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2008 06:22:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751271AbYAHLWb
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 06:22:31 -0500
-Received: from mail6.sea5.speakeasy.net ([69.17.117.8]:47203 "EHLO
-	mail6.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751213AbYAHLWb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2008 06:22:31 -0500
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Jan 2008 06:22:30 EST
-Received: (qmail 15123 invoked from network); 8 Jan 2008 11:15:49 -0000
-Received: from dsl093-040-092.pdx1.dsl.speakeasy.net (HELO [192.168.0.121]) (josh@[66.93.40.92])
-          (envelope-sender <josh@freedesktop.org>)
-          by mail6.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
-          for <gitster@pobox.com>; 8 Jan 2008 11:15:49 -0000
-User-Agent: Mozilla-Thunderbird 2.0.0.9 (X11/20080103)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <7vy7bt57wn.fsf@gitster.siamese.dyndns.org>
+	id S1752126AbYAHLXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 06:23:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751271AbYAHLXc
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 06:23:32 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1610 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751213AbYAHLXb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 06:23:31 -0500
+Received: (qmail 16819 invoked by uid 111); 8 Jan 2008 11:23:30 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 08 Jan 2008 06:23:30 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Jan 2008 06:23:28 -0500
+Content-Disposition: inline
+In-Reply-To: <1199542299-12082-2-git-send-email-mk@spinlock.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69865>
 
-Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
->> Ah. The problem is that git-send-email unconditionally adds a
->> message-id. Usually git-format-patch doesn't add one, but for obvious
->> reasons, it must when doing --thread. Here is a fix.
-> 
->> diff --git a/git-send-email.perl b/git-send-email.perl
->> index 1d6f466..083466a 100755
->> --- a/git-send-email.perl
->> +++ b/git-send-email.perl
->> @@ -580,7 +580,7 @@ sub send_message
->>  		$ccline = "\nCc: $cc";
->>  	}
->>  	my $sanitized_sender = sanitize_address($sender);
->> -	make_message_id();
->> +	make_message_id() unless defined($message_id);
-> 
-> Isn't this called inside a loop?  If the outgoing message does not
-> originally have "Message-Id:", does the loop correctly reinitialize
-> $message_id to undef, or does this change make everybody reuse the same
-> $message_id over and over again?
-> 
-> I have a feeling that --thread to format-patch is a misfeature.  Why is
-> it needed if you are feeding the output to send-email?
+On Sat, Jan 05, 2008 at 03:11:37PM +0100, Matthias Kestenholz wrote:
 
-I added that option; see (d1566f7883f727f38bf442af3fdb69d36e6fcea2,
-cc35de8470541e389b7d2bdda4c901574720fa81, and
-da56645dd7c1175fc2ed1628ac35fdd35e705641).  I use git-imap-send, not
-git-send-email, and I wanted to thread my patches.
+> --- a/builtin-branch.c
+> +++ b/builtin-branch.c
+> [...]
+> -static int branch_use_color;
+> [...]
+>  	if (!strcmp(var, "color.branch")) {
+> -		branch_use_color = git_config_colorbool(var, value, -1);
+> +		git_use_color = git_config_colorbool(var, value, -1);
+>  		return 0;
+>  	}
 
-- Josh Triplett
+If I read this right, you are getting rid of the individual "use color"
+variables with a single static git_use_color. This will break if two
+different color "zones" get used in the same program (e.g.,
+color.branch and color.diff, but only one is supposed to be set). I
+don't think this is a problem currently, but it seems like a step
+backwards in terms of libification.
+
+-Peff
