@@ -1,275 +1,102 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: A note from the maintainer
-Date: Tue, 08 Jan 2008 00:57:41 -0800
-Message-ID: <7vir24vgmy.fsf@gitster.siamese.dyndns.org>
+Subject: Re: CRLF problems with Git on Win32
+Date: Mon, 07 Jan 2008 23:29:30 -0800
+Message-ID: <7vejcswzad.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se>
+	<200801071947.28586.robin.rosenberg.lists@dewire.com>
+	<alpine.LSU.1.00.0801071915470.10101@racer.site>
+	<200801072203.23938.robin.rosenberg.lists@dewire.com>
+	<alpine.LSU.1.00.0801072115120.10101@racer.site>
+	<3B08AC4C-A807-4155-8AD7-DC6A6D0FE134@zib.de>
+	<7vzlvhxpda.fsf@gitster.siamese.dyndns.org>
+	<5310CD2F-C3B4-404A-9C2E-1D3084B5CC96@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 08 09:58:19 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds 
+	<public-torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@hugh.gmane.org>,
+	Johannes Schindelin 
+	<public-Johannes.Schindelin-Mmb7MZpHnFY@hugh.gmane.org>,
+	Robin Rosenberg 
+	<public-robin.rosenberg.lists-RgPrefM1rjDQT0dZR+AlfA@hugh.gmane.org>,
+	Jeff King <public-peff-AdEPDUrAXsQ@hugh.gmane.org>,
+	Peter Karlsson 
+	<public-peter-wzhfs8O2nkI+/KzbbBz5qQ@hugh.gmane.org>,
+	Git Mailing List 
+	<public-git-u79uwXL29TY76Z2rM5mHXA@hugh.gmane.org>,
+	msysGit <public-msysgit-/JYPxA39Uh5TLH3MbocFFw@hugh.gmane.org>
+To: public-prohaska-wjoc1KHpMeg@hugh.gmane.org
+X-From: git-owner@vger.kernel.org Tue Jan 08 10:48:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCAHq-00053r-CJ
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 09:58:19 +0100
+	id 1JCB4q-0000kb-VH
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 10:48:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757700AbYAHI5u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jan 2008 03:57:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756875AbYAHI5u
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 03:57:50 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47873 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756841AbYAHI5t convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Jan 2008 03:57:49 -0500
+	id S1752935AbYAHJs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 04:48:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756411AbYAHJs3
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 04:48:29 -0500
+Received: from blaine.gmane.org ([80.91.229.8]:59387 "EHLO hugh.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751575AbYAHJs1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 04:48:27 -0500
+X-Greylist: delayed 2161 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Jan 2008 04:48:27 EST
+Received: from public by hugh.gmane.org with local (Exim 4.63)
+	(envelope-from <public@hugh.gmane.org>)
+	id 1JCAVR-0005va-LC
+	for git@vger.kernel.org; Tue, 08 Jan 2008 10:12:21 +0100
+Received: from public by hugh.gmane.org with local (Exim 4.63)
+	(envelope-from <gitster@pobox.com>)
+	id 1JCAUo-0005Qq-VF
+	for public-git-u79uwXL29TY76Z2rM5mHXA@hugh.gmane.org; Tue, 08 Jan 2008 10:11:42 +0100
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25] helo=sasl.smtp.pobox.com)
+	by hugh.gmane.org with esmtp (Exim 4.63)
+	(envelope-from <gitster@pobox.com>)
+	id 1JC8uF-0000Bo-V0; Tue, 08 Jan 2008 08:29:52 +0100
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DA2352D9A;
-	Tue,  8 Jan 2008 03:57:47 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B9A31CF7;
+	Tue,  8 Jan 2008 02:29:44 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CFD2F2D99;
-	Tue,  8 Jan 2008 03:57:43 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CE501CF6;
+	Tue,  8 Jan 2008 02:29:34 -0500 (EST)
+In-Reply-To: <5310CD2F-C3B4-404A-9C2E-1D3084B5CC96@zib.de> (Steffen Prohaska's
+	message of "Tue, 8 Jan 2008 08:02:47 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-TMDA-Confirmed: Tue, 08 Jan 2008 10:11:42 +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69852>
-
-Now a new maitenance release is out and we are reasonably in a
-good shape to expect smooth progress toward the next feature
-release, it's a good time to welcome new people to the list.
-This message talks about how git.git is managed, and how you can
-work with it.
-
-* IRC and Mailing list
-
-Many active members of development community hang around on #git
-IRC channel on Freenode.  Its log is available at:
-
-        http://colabti.de/irclogger/irclogger_log/git
-
-The development however is primarily done on this mailing list
-you are reading right now.  If you have patches, please send
-them to the list, following Documentation/SubmittingPatches.
-
-I usually try to read all patches posted to the list, and follow
-almost all the discussions on the list, unless the topic is about an
-obscure corner that I do not personally use.  But I am obviously not
-perfect.  If you sent a patch that you did not hear from anybody for
-three days, that is a very good indication that it was dropped on the
-floor --- please do not hesitate to remind me.
-
-The list archive is available at a few public sites as well:
-
-        http://news.gmane.org/gmane.comp.version-control.git/
-        http://marc.theaimsgroup.com/?l=3Dgit
-        http://www.spinics.net/lists/git/
-
-and some people seem to prefer to read it over NNTP:
-
-        nntp://news.gmane.org/gmane.comp.version-control.git
-
-When you point at a message in a mailing list archive, using
-gmane is often the easiest to follow by readers, like this:
-
-        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=
-=3D217
-
-as it also allows people who subscribe to the mailing list as
-gmane newsgroup to "jump to" the article.
-
-* Repositories, branches and documentation.
-
-My public git.git repository is at:
-
-        git://git.kernel.org/pub/scm/git/git.git/
-
-Immediately after I publish to the primary repository at kernel.org, I
-also push into an alternate here:
-
-        git://repo.or.cz/alt-git.git/
-
-Impatient people might have better luck with the latter one.
-
-Their gitweb interfaces are found at:
-
-        http://git.kernel.org/?p=3Dgit/git.git
-        http://repo.or.cz/w/alt-git.git
-
-There are three branches in git.git repository that are not
-about the source tree of git: "todo", "html" and "man".  The
-first one was meant to contain TODO list for me, but I am not
-good at maintaining such a list so it is not as often updated as
-it could/should be.  It also contains some helper scripts I use
-to maintain git.
-
-The "html" and "man" are autogenerated documentation from the
-tip of the "master" branch; the tip of "html" is extracted to be
-visible at kernel.org at:
-
-        http://www.kernel.org/pub/software/scm/git/docs/
-
-The above URL is the top-level documentation page, and it has
-links to documentation of older releases.
-
-The script to maintain these two documentation branches are
-found in "todo" branch as dodoc.sh, if you are interested.  It
-is a good demonstration of how to use an update hook to automate
-a task.
-
-There are four branches in git.git repository that track the
-source tree of git: "master", "maint", "next", and "pu".  I may
-add more maintenance branches (e.g. "maint-1.5.3") if we have
-hugely backward incompatible feature updates in the future to keep
-an older release alive; I may not, but the distributed nature of
-git means any volunteer can run a stable-tree like that himself.
-
-The "master" branch is meant to contain what are very well
-tested and ready to be used in a production setting.  There
-could occasionally be minor breakages or brown paper bag bugs
-but they are not expected to be anything major, and more
-importantly quickly and trivially fixable.  Every now and
-then, a "feature release" is cut from the tip of this branch and
-they typically are named with three dotted decimal digits.  The
-last such release was v1.5.3 done on Sep 2nd last year.  You
-can expect that the tip of the "master" branch is always more
-stable than any of the released versions.
-
-Whenever a feature release is made, "maint" branch is forked off
-from "master" at that point.  Obvious, safe and urgent fixes
-after a feature release are applied to this branch and
-maintenance releases are cut from it.  The maintenance releases
-are named with four dotted decimal, named after the feature
-release they are updates to; the last such release was v1.5.3.8,
-made tonight.  New features never go to this branch.  This
-branch is also merged into "master" to propagate the fixes forward.
-
-A trivial and safe enhancement goes directly on top of "master".
-A new development, either initiated by myself or more often by
-somebody who found his or her own itch to scratch, does not
-usually happen on "master", however.  Instead, a separate topic
-branch is forked from the tip of "master", and it first is
-tested in isolation; I may make minimum fixups at this point.
-Usually there are a handful such topic branches that are running
-ahead of "master" in git.git repository.  I do not publish the
-tip of these branches in my public repository, however, partly
-to keep the number of branches that downstream developers need
-to worry about low, and primarily because I am lazy.
-
-I judge the quality of topic branches, taking advices from the
-mailing list discussions.  Some of them start out as "good idea
-but obviously is broken in some areas (e.g. breaks the existing
-testsuite)" and then with some more work (either by the original
-contributor or help from other people on the list) becomes "more
-or less done and can now be tested by wider audience".  Luckily,
-most of them start out in the latter, better shape.
-
-The "next" branch is to merge and test topic branches in the
-latter category.  In general, the branch always contains the tip
-of "master".  It might not be quite rock-solid production ready,
-but is expected to work more or less without major breakage.  I
-usually use "next" version of git for my own work, so it cannot
-be _that_ broken to prevent me from pushing the changes out.
-The "next" branch is where new and exciting things take place.
-
-The above three branches, "master", "maint" and "next" are never
-rewound, so you should be able to safely track them (this
-automatically means the topics that have been merged into "next"
-are never rebased, and you can find the tip of topic branches you
-are interested in from the output of "git log next").
-
-The "pu" (proposed updates) branch bundles all the remainder of
-topic branches.  The "pu" branch, and topic branches that are
-only in "pu", are subject to rebasing in general.  By the above
-definition of how "next" works, you can tell that this branch
-will contain quite experimental and obviously broken stuff.
-
-When a topic that was in "pu" proves to be in testable shape, it
-graduates to "next".  I do this with:
-
-        git checkout next
-        git merge that-topic-branch
-
-Sometimes, an idea that looked promising turns out to be not so
-good and the topic can be dropped from "pu" in such a case.
-
-A topic that is in "next" is expected to be tweaked and fixed to
-perfection before it is merged to "master" (that's why "master"
-can be expected to stay very stable).  Similarly to the above, I
-do it with this:
-
-        git checkout master
-        git merge that-topic-branch
-        git branch -d that-topic-branch
-
-Note that being in "next" is not a guarantee to appear in the
-next release (being in "master" is such a guarantee, unless it
-is later found seriously broken and reverted), or even in any
-future release.  There even were cases that topics needed
-reverting a few commits in them before graduating to "master",
-or a topic that already was in "next" were entirely reverted
-from "next" because fatal flaws were found in them later.
-
-Starting from v1.5.0, "master" and "maint" have release notes
-for the next release in Documentation/RelNotes-* files, so that
-I do not have to run around summarizing what happened just
-before the release.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69853>
 
 
-* Other people's trees, trusted lieutenants and credits.
 
-Documentation/SubmittingPatches outlines who your changes should
-be sent to.  As described in contrib/README, I would delegate
-fixes and enhancements in contrib/ area to primary contributors
-of them.
 
-Although the following are included in git.git repository, they
-have their own authoritative repository and maintainers:
+Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org> writes:
 
- git-gui/ -- this subdirectory comes from Shawn Pearce's git-gui
-             project, which is found at:
+> But core.autocrlf  = true has a slight danger of data corruption.
+> AFAIK, git's binary detection checks the first "few" bytes (with
+> few = 8000).  This may be sufficient in most case, but I already
+> met a file that was wrongly classified.  (A File format that
+> starts with a large ASCII header and has chunks of binary data
+> attached later.)
 
-             git://repo.or.cz/git-gui.git
+I presume that's where .gitattributes kicks in.
 
- gitk     -- this file is maintained by Paul Mackerras, at:
+> I like Linus' idea of "warn" or Gregory's "fail".
 
-             git://git.kernel.org/pub/scm/gitk/gitk.git
+Yeah, that feels like a sensible thing to do.
 
-I would like to thank everybody who helped to raise git into the
-current shape.  Especially I would like to thank the git list
-regulars whose help I have relied on and expect to continue
-relying on heavily:
+> I'm asking the last question because every Unix developer should
+> think about the option, too.  Neither Unix or Windows are causing
+> the problem alone.
 
- - Linus on general design issues.
+That's the logical conclusion.
 
- - Linus, Shawn Pearce, Johannes Schindelin, Nicolas Pitre,
-   R=C3=A9ne Scharfe and Jeff King on general implementation issues.
-
- - Shawn and Nicolas Pitre on pack issues.
-
- - Martin Langhoff and Frank Lichtenheld on cvsserver and cvsimport.
-
- - Paul Mackerras on gitk.
-
- - Eric Wong on git-svn.
-
- - Jakub Narebski, Petr Baudis, and Luben Tuikov on gitweb.
-
- - J. Bruce Fields on documentaton issues.
-
- - Johannes Schindelin and Johannes Sixt for their effort to
-   move things forward on the Windows front.  Although my
-   repository does not have much from the effort of MinGW team,
-   I expect a merge into mainline will happen so that everybody
-   can work from the same codebase.
-
- - People on non-Linux platforms for keeping their eyes on
-   portability; especially, Randal Schwartz, Theodore Ts'o,
-   Jason Riedy, Thomas Glanzmann, but countless others as well.
-
-* This document
-
-The latest copy of this document is found in git.git repository,
-on 'todo' branch, as MaintNotes.
+If you are introducing crlf = warn, that means you are declaring
+that CRLF should be treated as a disease, and that should apply
+everywhere, not just on Windows (which some people may consider
+a disease itself, but that is a separate topic).
