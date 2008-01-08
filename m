@@ -1,94 +1,146 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: CRLF problems with Git on Win32
-Date: Tue, 8 Jan 2008 23:50:54 +0300
-Message-ID: <20080108205054.GN6951@dpotapov.dyndns.org>
-References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se> <200801071947.28586.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801071915470.10101@racer.site> <200801072203.23938.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801072115120.10101@racer.site> <3B08AC4C-A807-4155-8AD7-DC6A6D0FE134@zib.de> <20080108172957.GG22155@fieldses.org> <CE10C08D-AAF1-44B5-89B5-9A16A4AB70EA@zib.de> <7vmyrgry20.fsf@gitster.siamese.dyndns.org> <02DC77F5-7465-418D-972E-0F76E56C3F75@zib.de>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: [PATCH] gitk: Update and fix Makefile
+Date: Tue, 8 Jan 2008 21:54:20 +0100
+Organization: Alumni Technische =?iso-8859-1?q?Universit=E4t?= Hamburg-Harburg
+Message-ID: <200801082154.21282.stimming@tuhh.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Jeff King <peff@peff.net>,
-	Peter Karlsson <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Tue Jan 08 21:55:40 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Jan 08 21:56:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCLU3-0000aa-MF
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 21:55:40 +0100
+	id 1JCLUm-0000uq-Fr
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 21:56:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753018AbYAHUzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2008 15:55:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752209AbYAHUzM
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 15:55:12 -0500
-Received: from smtp01.mtu.ru ([62.5.255.48]:58071 "EHLO smtp01.mtu.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751601AbYAHUzK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2008 15:55:10 -0500
-Received: from smtp01.mtu.ru (localhost [127.0.0.1])
-	by smtp01.mtu.ru (Postfix) with ESMTP id D4B9CAEB89C;
-	Tue,  8 Jan 2008 23:54:39 +0300 (MSK)
-Received: from dpotapov.dyndns.org (ppp85-141-189-183.pppoe.mtu-net.ru [85.141.189.183])
-	by smtp01.mtu.ru (Postfix) with ESMTP id 3CB73ADD4CB;
-	Tue,  8 Jan 2008 23:50:47 +0300 (MSK)
-Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
-	(envelope-from <dpotapov@gmail.com>)
-	id 1JCLPS-0005uN-A7; Tue, 08 Jan 2008 23:50:54 +0300
+	id S1756233AbYAHUz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 15:55:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754990AbYAHUz5
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 15:55:57 -0500
+Received: from smtp1.rz.tu-harburg.de ([134.28.202.166]:56180 "EHLO
+	smtp1.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754015AbYAHUz4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 15:55:56 -0500
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp1.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id m08Ktqsw011606
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Tue, 8 Jan 2008 21:55:52 +0100
+Received: from [192.168.2.102] (p54900B03.dip0.t-ipconnect.de [84.144.11.3])
+	(user=alucst mech=LOGIN bits=0)
+	by mail2.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id m08KtpZj005373
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 8 Jan 2008 21:55:52 +0100
+User-Agent: KMail/1.9.5
 Content-Disposition: inline
-In-Reply-To: <02DC77F5-7465-418D-972E-0F76E56C3F75@zib.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-DCC-STREAM-Metrics: smtp01.mtu.ru 10001; Body=0 Fuz1=0 Fuz2=0
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.166
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69921>
 
-On Tue, Jan 08, 2008 at 07:58:57PM +0100, Steffen Prohaska wrote:
-> 
-> I don't think a solution will be found by declaring one platform
-> native (UNIX) and all other platform non-native.  The question to
-> answer is how to support cross-platform projects.  A valid
-> solution should never corrupt data unless the user explicitly
-> told git to do so.  I don't believe it is a valid solution to set
-> core.autocrlf=true on Windows and tell the users: "Well, in its
-> default settings, git sometimes corrupts your data on Windows.
-> Maybe you want to switch to Linux because this is the native
-> platform where data corruption will never happen."
+This Makefile uses the template provided at git.git/gitk-git/Makefile
+by Junio and adds the rules for the i18n files.
 
-Maybe I am wrong but it seems to me that to guarantee that
-CRLF conversion is reversible (which means that you can
-always get exactly what you put into the repository), it is
-enough to check that the conversation is performed only if
-every LF is preceded by CR. If it is not so, error out and
-tell the user that the file should be either marked as binary
-or EOL in the text must be corrected.
+Signed-off-by: Christian Stimming <stimming@tuhh.de>
+---
+This patch is against master of git.kernel.org.
+@Paul: Ignore my previous patch - "make install" didn't 
+work there, but it does here.
 
-So, even in those rare cases where the heuristic went wrong,
-you will not lose your data. Most likely you will get the
-above error, but even if a binary file is checked in as text,
-it will affect only cross-platform projects, and it will be
-easily to correct the situation later by marking this file
-as binary and checking in again. So, it is a extermely rare
-event, and no data is lost.
+ Makefile |   63 +++++++++++++++++++++++++++++++++++++------------------------
+ 1 files changed, 38 insertions(+), 25 deletions(-)
 
-Perhaps, this option can be called core.autocrlf=safe
-
-IMHO, a _text_ file is not just some octets, it consists of
-lines. Even without CRLF conversation, Git is aware about
-to do some basic operations like diff and merge. So, it is
-natural to store lines in the repository in the same EOL
-marker regardless on what platform the file is created. So,
-having core.autocrlf=false on Windows is wrong. You may not
-notice it until you do not move to another platform, but the
-whole thing is already broken. It is not about one platform
-being more native than other. It is like in the C standard,
-LF is used to denote the end of line, because it is the only
-sane choice to mark it.
-
-Dmitry
+diff --git a/Makefile b/Makefile
+index 38154b6..6158504 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,25 +1,52 @@
+-# Set the installation directories; this section is needed only in
+-# gitk.git but probably not in git.git.
+-ifndef gitexecdir
+-	gitexecdir := $(shell git --exec-path)
+-endif
+-ifndef sharedir
+-	sharedir := $(dir $(gitexecdir))share
+-endif
++# The default target of this Makefile is...
++all::
+ 
+-# From here on, these are needed in git.git/gitk/Makefile.
++prefix ?= $(HOME)
++bindir ?= $(prefix)/bin
++sharedir ?= $(prefix)/share
+ gitk_libdir   ?= $(sharedir)/gitk/lib
+ msgsdir    ?= $(gitk_libdir)/msgs
+ msgsdir_SQ  = $(subst ','\'',$(msgsdir))
+ 
+-## Beginning of po-file creation rules
++TCLTK_PATH ?= wish
++INSTALL ?= install
++RM ?= rm -f
++
++DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
++bindir_SQ = $(subst ','\'',$(bindir))
++TCLTK_PATH_SQ = $(subst ','\'',$(TCLTK_PATH))
++
++## po-file creation rules
+ XGETTEXT   ?= xgettext
+ MSGFMT     ?= msgfmt
+ PO_TEMPLATE = po/gitk.pot
+ ALL_POFILES = $(wildcard po/*.po)
+ ALL_MSGFILES = $(subst .po,.msg,$(ALL_POFILES))
+ 
+-all:: $(ALL_MSGFILES)
++ifndef V
++	QUIET          = @
++	QUIET_GEN      = $(QUIET)echo '   ' GEN $@ &&
++endif
++
++all:: gitk-wish $(ALL_MSGFILES)
++
++install:: all
++	$(INSTALL) gitk-wish '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
++	$(INSTALL) -d '$(DESTDIR_SQ)$(msgsdir_SQ)'
++	$(foreach p,$(ALL_MSGFILES), $(INSTALL) $p '$(DESTDIR_SQ)$(msgsdir_SQ)' &&) true
++
++uninstall::
++	$(foreach p,$(ALL_MSGFILES), $(RM) '$(DESTDIR_SQ)$(msgsdir_SQ)'/$(notdir $p) &&) true
++	$(RM) '$(DESTDIR_SQ)$(bindir_SQ)'/gitk
++
++clean::
++	$(RM) gitk-wish po/*.msg
++
++gitk-wish: gitk
++	$(QUIET_GEN)$(RM) $@ $@+ && \
++	sed -e '1,3s|^exec .* "$$0"|exec $(subst |,'\|',$(TCLTK_PATH_SQ)) "$$0"|' <gitk >$@+ && \
++	chmod +x $@+ && \
++	mv -f $@+ $@
+ 
+ $(PO_TEMPLATE): gitk
+ 	$(XGETTEXT) -kmc -LTcl -o $@ gitk
+@@ -29,17 +56,3 @@ $(ALL_MSGFILES): %.msg : %.po
+ 	@echo Generating catalog $@
+ 	$(MSGFMT) --statistics --tcl $< -l $(basename $(notdir $<)) -d $(dir $@)
+ 
+-clean::
+-	rm -f $(ALL_PROGRAMS) po/*.msg
+-## End of po-file creation rules
+-
+-# Install rules for po-files
+-install: all
+-	$(QUIET)$(INSTALL_D0)'$(DESTDIR_SQ)$(msgsdir_SQ)' $(INSTALL_D1)
+-	$(QUIET)$(foreach p,$(ALL_MSGFILES), $(INSTALL_R0)$p $(INSTALL_R1) '$(DESTDIR_SQ)$(msgsdir_SQ)' &&) true
+-
+-uninstall:
+-	$(QUIET)$(foreach p,$(ALL_MSGFILES), $(REMOVE_F0)'$(DESTDIR_SQ)$(msgsdir_SQ)'/$(notdir $p) $(REMOVE_F1) &&) true
+-	$(QUIET)$(REMOVE_D0)'$(DESTDIR_SQ)$(msgsdir_SQ)' $(REMOVE_D1)
+-	$(QUIET)$(REMOVE_D0)'$(DESTDIR_SQ)$(libdir_SQ)' $(REMOVE_D1)
+-	$(QUIET)$(REMOVE_D0)`dirname '$(DESTDIR_SQ)$(libdir_SQ)'` $(REMOVE_D1)
+-- 
+1.5.3.4.206.g58ba4
