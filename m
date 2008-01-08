@@ -1,248 +1,120 @@
-From: Peter Oberndorfer <kumbayo84@arcor.de>
-Subject: [STG PATCH] add a --index option to refresh which takes the contents of the index as the new commit
-Date: Tue, 8 Jan 2008 21:42:46 +0100
-Message-ID: <200801082142.47060.kumbayo84@arcor.de>
-References: <200712302003.33478.kumbayo84@arcor.de> <200801022039.27611.kumbayo84@arcor.de> <20080107105612.GA20981@diana.vm.bytemark.co.uk>
+From: Linus Torvalds <torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@public.gmane.org>
+Subject: Re: CRLF problems with Git on Win32
+Date: Tue, 8 Jan 2008 12:41:33 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801081232120.3148@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se> <200801071947.28586.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801071915470.10101@racer.site> <200801072203.23938.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801072115120.10101@racer.site> <3B08AC4C-A807-4155-8AD7-DC6A6D0FE134@zib.de> <20080108172957.GG22155@fieldses.org> <CE10C08D-AAF1-44B5-89B5-9A16A4AB70EA@zib.de> <7vmyrgry20.fsf@gitster.siamese.dyndns.org> <02DC77F5-7465-418D-972E-0F76E56C3F75@zib.de> <20080108190952.GK22155@fieldses.org> <7vir24rtfp.fsf@gitster.siamese.dyndns.org>
+Reply-To: torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Catalin Marinas <catalin.marinas@gmail.com>
-To: Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Tue Jan 08 21:42:32 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "J. Bruce Fields" <bfields-uC3wQj2KruNg9hUCZPvPmw@public.gmane.org>, Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>, Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>, Robin Rosenberg <robin.rosenberg.lists-RgPrefM1rjDQT0dZR+AlfA@public.gmane.org>, Jeff King <peff-AdEPDUrAXsQ@public.gmane.org>, Peter Karlsson <peter-wzhfs8O2nkI+/KzbbBz5qQ@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+To: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Tue Jan 08 21:44:10 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from wa-out-0708.google.com ([209.85.146.248])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCLHK-0003pg-Iz
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 21:42:31 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752772AbYAHUl5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jan 2008 15:41:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752373AbYAHUl4
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 15:41:56 -0500
-Received: from mail-in-07.arcor-online.net ([151.189.21.47]:33113 "EHLO
-	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752325AbYAHUly convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 8 Jan 2008 15:41:54 -0500
-Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 2FB9A24ADB5;
-	Tue,  8 Jan 2008 21:41:52 +0100 (CET)
-Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
-	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id 19088346CE6;
-	Tue,  8 Jan 2008 21:41:52 +0100 (CET)
-Received: from fnoheim52.netpark.at (fnoheim52.netpark.at [83.68.151.52])
-	(Authenticated sender: kumbayo84@arcor.de)
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id A714F29D4ED;
-	Tue,  8 Jan 2008 21:41:51 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <20080107105612.GA20981@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.91.2/5443/Tue Jan  8 18:35:47 2008 on mail-in-13.arcor-online.net
-X-Virus-Status: Clean
-Sender: git-owner@vger.kernel.org
+	id 1JCLIo-0004Kt-8k
+	for gcvm-msysgit@m.gmane.org; Tue, 08 Jan 2008 21:44:02 +0100
+Received: by wa-out-0708.google.com with SMTP id n36so1553252wag.21
+        for <gcvm-msysgit@m.gmane.org>; Tue, 08 Jan 2008 12:43:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:date:from:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-spam-status:x-spam-checker-version:x-mimedefang-filter:x-scanned-by:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=Y709d3LBeSf4t61617n7KZifVfKrzjVsdo3bZgPUblE=;
+        b=2/SYYOAjSNh5neSLlrKXHsyFigEo0H8KF9bFXk7bmDhbpwmoyYLR7kV0IVKm4qN2wdvrEZI7JK5c+I+wJuNaTiB+S/1cIGgztXqX4iWdPf3JUUfWb8kwOX1WMwazTcgoHY6viFvdtMYYIeWPZA5rhpmNDjD9yN6BFddZtguM4CQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:date:from:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-spam-status:x-spam-checker-version:x-mimedefang-filter:x-scanned-by:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=Ddv4p6rGiCL1363MnHKmzSkAZKHnejuNOGdMGmYw06t5HgYCmwTARRWrdf6wpHgH7H354gARsvIM0+joFlD/Y6Gztr0+fTzcfIfWP+1f3DA5HBz1IC5NwZ2LWSGMMJ2yVg+1fxSqlZ9oui/tb/S6Ty+XCbVqgvcjUyRujvZTBiE=
+Received: by 10.141.67.21 with SMTP id u21mr786206rvk.2.1199825015102;
+        Tue, 08 Jan 2008 12:43:35 -0800 (PST)
+Received: by 10.44.218.34 with SMTP id q34gr1332hsg;
+	Tue, 08 Jan 2008 12:43:35 -0800 (PST)
+X-Sender: torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@public.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.115.91.2 with SMTP id t2mr12537455wal.24.1199825014619; Tue, 08 Jan 2008 12:43:34 -0800 (PST)
+Received: from smtp2.linux-foundation.org (smtp2.linux-foundation.org [207.189.120.14]) by mx.google.com with ESMTP id k36si5047109waf.0.2008.01.08.12.43.33; Tue, 08 Jan 2008 12:43:34 -0800 (PST)
+Received-SPF: pass (google.com: domain of torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@public.gmane.org designates 207.189.120.14 as permitted sender) client-ip=207.189.120.14;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@public.gmane.org designates 207.189.120.14 as permitted sender) smtp.mail=torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@public.gmane.org
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55]) by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m08Kfjs7029030 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO); Tue, 8 Jan 2008 12:41:47 -0800
+Received: from localhost (localhost [127.0.0.1]) by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m08KfX2X030313; Tue, 8 Jan 2008 12:41:38 -0800
+In-Reply-To: <7vir24rtfp.fsf-jO8aZxhGsIagbBziECNbOZn29agUkmeCHZ5vskTnxNA@public.gmane.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.423 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_48
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69917>
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69918>
 
 
-This allows to stage only certain changes to a file by only adding
-the desired parts to the index with git-gui, ugit, git add -i or anothe=
-r tool
-that manipulates the index and then run stg refresh --index
-it also allows removing a file from a patch by running git reset HEAD^ =
--- file_to_remove
-followed by a stg refresh --index
 
-Signed-off-by: Peter Oberndorfer <kumbayo84@arcor.de>
+
+On Tue, 8 Jan 2008, Junio C Hamano wrote:
+>
+> I think the project can mark text files as text with attributes
+> and if the port to the platform initialized core.autocrlf
+> appropriately for the platform everything should work as you
+> described. 
+
+Yes, I think core.autocrlf should default to "true" on Windows, since 
+that is what it's about. The alternative is to have "fail"/"warn", to just 
+make sure that nobody can do the wrong thing by mistake.
+
+We could just do something like this, although that probably does mean 
+that the whole test-suite needs to be double-checked (ie now we really do 
+behave differently on windows outside of any config options!))
+
+People who really dislike it can always do the
+
+	git config --global core.autocrlf false
+
+thing.
+
+(And no, I don't know if "#ifdef __WINDOWS__" is the right thing to do, 
+it's almost certainly not. This is just a draft.)
+
+		Linus
+
 ---
+ environment.c |   16 +++++++++++++++-
+ 1 files changed, 15 insertions(+), 1 deletions(-)
 
-On Montag 07 Januar 2008, Karl Hasselstr=F6m wrote:
-> On 2008-01-02 20:39:27 +0100, Peter Oberndorfer wrote:
->=20
-> > On Sonntag 30 Dezember 2007, Peter Oberndorfer wrote:
-> >
-> > > Do you think this would be a useful/good idea? Or do we want a
-> > > separate command for removing files from a patch anyway?
-> >
-> > The question is still open if this is useful for somebody else.
->=20
-> I think it's a useful addition. Thanks!
-Good since it was useful for me too even while writing this patch :-)
-
-> So the use_index parameter to refresh_patch is actually not necessary=
-?
-> In that case I'd rather you didn't add it, since the functions in
-> stgit/stack.py have quite enough parameters already.
->=20
-In the beginning i was afraid it would be to obscure to call it this wa=
-y
-with all parameters set to some specific values.
-But having more parameters does not make it better :-)
-Done
-> > diff --git a/t/t2700-refresh.sh b/t/t2700-refresh.sh
-> > index 2e7901c..9eae85d 100755
-> > --- a/t/t2700-refresh.sh
-> > +++ b/t/t2700-refresh.sh
->=20
-> Bonus points for adding a test case!
->=20
-> I still haven't rebased my patch stack since Catalin accepted most of
-> it just before Christmas. Once I've gotten around to that, I'll take
-> your patch -- hopefully by then updated to not add the exra argument
-> to refresh_patch(). :-)
->=20
-
-Patch now comes with a Signed-off-by and a log message that explains
-how this feature could be used.
-It was tested with the testcase, used during development of this patch
-and on another repo, but still take care when using it :-)
-
- stgit/commands/refresh.py |   25 ++++++++++++++++---
- t/t2700-refresh.sh        |   57 +++++++++++++++++++++++++++++++++++++=
-+++++++-
- 2 files changed, 77 insertions(+), 5 deletions(-)
-
-diff --git a/stgit/commands/refresh.py b/stgit/commands/refresh.py
-index 6e8ed0c..952b1b6 100644
---- a/stgit/commands/refresh.py
-+++ b/stgit/commands/refresh.py
-@@ -45,6 +45,9 @@ options =3D [make_option('-f', '--force',
-            make_option('--update',
-                        help =3D 'only update the current patch files',
-                        action =3D 'store_true'),
-+           make_option('--index',
-+                       help =3D 'use the current contents of the index=
- instead of looking at the working directory',
-+                       action =3D 'store_true'),
-            make_option('--undo',
-                        help =3D 'revert the commit generated by the la=
-st refresh',
-                        action =3D 'store_true'),
-@@ -76,6 +79,14 @@ def func(parser, options, args):
-         if not patch:
-             raise CmdException, 'No patches applied'
-=20
-+    if options.index:
-+        if args or options.update:
-+            raise CmdException, \
-+                  'Only full refresh is available with the --index opt=
-ion'
-+        if options.patch:
-+            raise CmdException, \
-+                  '--patch is not compatible with the --index option'
+diff --git a/environment.c b/environment.c
+index 18a1c4e..5766bee 100644
+--- a/environment.c
++++ b/environment.c
+@@ -34,9 +34,23 @@ char *pager_program;
+ int pager_use_color = 1;
+ char *editor_program;
+ char *excludes_file;
+-int auto_crlf = 0;	/* 1: both ways, -1: only when adding git objects */
+ unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
+ 
++/*
++ * Automatic CRLF conversion on files that look like
++ * text:
++ *   0: none (unix)
++ *   1: convert to LF on check-in and to CRLF on check-out
++ *  -1: only on check-in (check-out with just LF)
++ */
++#ifdef __WINDOWS__
++  #define DEF_AUTOCRLF 1
++#else
++  #define DEF_AUTOCRLF 0
++#endif
 +
-     if not options.force:
-         check_head_top_equal(crt_series)
-=20
-@@ -85,9 +96,10 @@ def func(parser, options, args):
-         out.done()
-         return
-=20
--    files =3D [path for (stat, path) in git.tree_status(files =3D args=
-, verbose =3D True)]
-+    if not options.index:
-+        files =3D [path for (stat, path) in git.tree_status(files =3D =
-args, verbose =3D True)]
-=20
--    if files or not crt_series.head_top_equal():
-+    if options.index or files or not crt_series.head_top_equal():
-         if options.patch:
-             applied =3D crt_series.get_applied()
-             between =3D applied[:applied.index(patch):-1]
-@@ -105,8 +117,13 @@ def func(parser, options, args):
-=20
-         if autoresolved =3D=3D 'yes':
-             resolved_all()
--        crt_series.refresh_patch(files =3D files,
--                                 backup =3D True, notes =3D options.an=
-notate)
++int auto_crlf = DEF_AUTOCRLF;
 +
-+        if options.index:
-+            crt_series.refresh_patch(cache_update =3D False,
-+                                     backup =3D True, notes =3D option=
-s.annotate)
-+        else:
-+            crt_series.refresh_patch(files =3D files,
-+                                     backup =3D True, notes =3D option=
-s.annotate)
-=20
-         if crt_series.empty_patch(patch):
-             out.done('empty patch')
-diff --git a/t/t2700-refresh.sh b/t/t2700-refresh.sh
-index 2e7901c..9eae85d 100755
---- a/t/t2700-refresh.sh
-+++ b/t/t2700-refresh.sh
-@@ -6,8 +6,10 @@ test_description=3D'Run "stg refresh"'
-=20
- test_expect_success 'Initialize StGit stack' '
-     stg init &&
--    echo expected.txt >> .git/info/exclude &&
-+    echo expected*.txt >> .git/info/exclude &&
-     echo patches.txt >> .git/info/exclude &&
-+    echo show.txt >> .git/info/exclude &&
-+    echo diff.txt >> .git/info/exclude &&
-     stg new p0 -m "base" &&
-     for i in 1 2 3; do
-         echo base >> foo$i.txt &&
-@@ -62,4 +64,57 @@ test_expect_success 'Refresh bottom patch' '
-     diff -u expected.txt patches.txt
- '
-=20
-+cat > expected.txt <<EOF
-+p0
-+p1
-+p4
-+EOF
-+cat > expected2.txt <<EOF
-+diff --git a/foo1.txt b/foo1.txt
-+index 728535d..6f34984 100644
-+--- a/foo1.txt
-++++ b/foo1.txt
-+@@ -1,3 +1,4 @@
-+ base
-+ foo 1
-+ bar 1
-++baz 1
-+EOF
-+cat > expected3.txt <<EOF
-+diff --git a/foo1.txt b/foo1.txt
-+index 6f34984..a80eb63 100644
-+--- a/foo1.txt
-++++ b/foo1.txt
-+@@ -2,3 +2,4 @@ base
-+ foo 1
-+ bar 1
-+ baz 1
-++blah 1
-+diff --git a/foo2.txt b/foo2.txt
-+index 415c9f5..43168f2 100644
-+--- a/foo2.txt
-++++ b/foo2.txt
-+@@ -1,3 +1,4 @@
-+ base
-+ foo 2
-+ bar 2
-++baz 2
-+EOF
-+test_expect_success 'Refresh --index' '
-+    stg status &&
-+    stg new p4 -m "refresh_index" &&
-+    echo baz 1 >> foo1.txt &&
-+    git add foo1.txt &&
-+    echo blah 1 >> foo1.txt &&
-+    echo baz 2 >> foo2.txt &&
-+    stg refresh --index &&
-+    stg patches foo1.txt > patches.txt &&
-+    git diff HEAD^..HEAD > show.txt &&
-+    stg diff > diff.txt &&
-+    diff -u expected.txt patches.txt &&
-+    diff -u expected2.txt show.txt &&
-+    diff -u expected3.txt diff.txt &&
-+    stg new p5 -m "cleanup again" &&
-+    stg refresh
-+'
- test_done
---=20
-1.5.4.rc2
+ /* This is set by setup_git_dir_gently() and/or git_default_config() */
+ char *git_work_tree_cfg;
+ static const char *work_tree;
