@@ -1,63 +1,70 @@
-From: Dennis Schridde <devurandom@gmx.net>
-Subject: Odd number of elements in anonymous hash
-Date: Tue, 8 Jan 2008 17:38:56 +0100
-Message-ID: <200801081738.56624.devurandom@gmx.net>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: gmail smtp server and git-send-mail. Is this combination working?
+Date: Tue, 8 Jan 2008 17:58:59 +0100
+Message-ID: <4d8e3fd30801080858h5f109b47v87abc6b315fcfa08@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 08 17:40:08 2008
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 08 17:59:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCHUl-0001G5-Jh
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 17:40:08 +0100
+	id 1JCHnZ-0000eZ-QW
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 17:59:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761804AbYAHQjj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2008 11:39:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761354AbYAHQji
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 11:39:38 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59472 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755167AbYAHQjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2008 11:39:37 -0500
-Received: (qmail invoked by alias); 08 Jan 2008 16:39:36 -0000
-Received: from hnvr-4dbb9fd3.pool.einsundeins.de (EHLO ernie.local) [77.187.159.211]
-  by mail.gmx.net (mp041) with SMTP; 08 Jan 2008 17:39:36 +0100
-X-Authenticated: #19202771
-X-Provags-ID: V01U2FsdGVkX18aNGwbx00alLtJAbDBU2i+AIDFvVfl428LAXAtsO
-	HbViENfu9qo9Iz
-User-Agent: KMail/1.9.7
+	id S1756611AbYAHQ7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 11:59:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756160AbYAHQ7E
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 11:59:04 -0500
+Received: from ro-out-1112.google.com ([72.14.202.183]:7862 "EHLO
+	ro-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754872AbYAHQ7B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 11:59:01 -0500
+Received: by ro-out-1112.google.com with SMTP id p4so2469249roc.5
+        for <git@vger.kernel.org>; Tue, 08 Jan 2008 08:59:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=BHDSp7aoL9veKJCZGZjd6HM2mitFJFujv3a2dTRVkfk=;
+        b=cUIR2WceB7+TdfyIcD/6GOeBD6xh9B+g4LQ7U60L2OvkNkPR7okMUra6WMLaZb41nAmFqDOi8KjhDmXrDh73jIeKccoX4BpkZt7/kZ30G0HlAa9PA0OCvcqI5NaAQsVoDBrIUFxfU9Mk8KmA9Ss8RH2TMBCz30XG/Tv0s+REmzU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ZDQvy0AaRZaBAcPTl8yVd1W2LcmQ7cjKL9eC1o41XoauFECdB0Y8KkFMeO0b+7reXojLWD527j5oi8ZMHRhUYMWITm7aSJVyT8eC2MnrwcBEikq5X/JiRXdoOHe7P0fb+juLxlNSSzl5D8h5Ku54F3Y48KnYU94eUKYbMQw+iJ8=
+Received: by 10.142.187.2 with SMTP id k2mr358785wff.51.1199811539134;
+        Tue, 08 Jan 2008 08:58:59 -0800 (PST)
+Received: by 10.143.162.9 with HTTP; Tue, 8 Jan 2008 08:58:59 -0800 (PST)
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69891>
 
-Hello!
+Hi all,
+as I previously wrote I would like to use git-send-email to send out a series
+of patches.
+While I was looking for documentation I saw the following statement in the
+git wiki:
 
-I am getting "Odd number of elements in anonymous hash at /usr/bin/git-svn 
-line 1760." (normal output, no warning/error) during git-svn-clone.
-I am using git version 1.5.4.rc2.
+" Mailing off a set of patches to a mailing list can be quite neatly
+done by git-send-email.
+One of the problems you may encounter there is figuring out which machine
+is going to send your mail.
+I tried smtp.gmail.com, but that one requires tls and a password,
+and git-send-email could not handle that "
 
-Line 1760 is this (with context, marked with '!!'):
-    # see if we have it in our config, first:
-    eval {
-        my $section = "svn-remote.$self->{repo_id}";
-!!        $svnsync = {
-          url => tmp_config('--get', "$section.svnsync-url"),
-          uuid => tmp_config('--get', "$section.svnsync-uuid"),
-        }
-    };
+>From http://git.or.cz/gitwiki/GitTips.
 
-The commandline was "git svn 
-clone --authors-file=/var/git/org.gna.warzone.git/authors --use-svnsync-props --stdlayout 
-file:///var/svn/warzone2100/ org.gna.warzone.git/"
+Is this statemant still correct ?
+Is msmtp the only solution for using git-send-mail with gmail? (tls +
+autentication).
 
-I assume this is some kind of bug?
+Thanks.
 
---Dennis
+regards,
+-- 
+Paolo
+http://paolo.ciarrocchi.googlepages.com/
