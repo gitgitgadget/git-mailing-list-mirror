@@ -1,616 +1,440 @@
-From: "Roger C. Soares" <rogersoares@intelinet.com.br>
-Subject: [EGIT PATCH] Showing commit info like the CVS plugin instead of tooltips.
-Date: Mon, 7 Jan 2008 23:20:26 -0200
-Organization: Intelinet
-Message-ID: <200801072320.26987.rogersoares@intelinet.com.br>
+From: "Imran M Yousuf" <imyousuf@gmail.com>
+Subject: [PATCH] Added recurse command to git submodule
+Date: Tue, 8 Jan 2008 09:14:19 +0600
+Message-ID: <7bfdc29a0801071914s207be500veae8e507d7d9d29@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_31513_21338067.1199762059763"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 08 02:20:11 2008
+X-From: git-owner@vger.kernel.org Tue Jan 08 04:15:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JC38U-0000ES-Ob
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 02:20:11 +0100
+	id 1JC4va-0008Lr-63
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 04:14:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757951AbYAHBTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jan 2008 20:19:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757642AbYAHBTc
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 20:19:32 -0500
-Received: from cvxbsd.convex.com.br ([200.152.177.10]:1107 "HELO
-	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754093AbYAHBTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jan 2008 20:19:30 -0500
-Received: (qmail 68531 invoked by uid 0); 7 Jan 2008 23:21:56 -0200
-Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
- (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
- Processed in 0.042502 secs); 08 Jan 2008 01:21:56 -0000
-Received: from unknown (HELO ?192.168.1.100?) (189.5.206.233)
-  by cvxbsd.convex.com.br with SMTP; 8 Jan 2008 01:21:56 -0000
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-Content-Disposition: inline
+	id S1755079AbYAHDOY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jan 2008 22:14:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753963AbYAHDOY
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Jan 2008 22:14:24 -0500
+Received: from fk-out-0910.google.com ([209.85.128.187]:30046 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753928AbYAHDOW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jan 2008 22:14:22 -0500
+Received: by fk-out-0910.google.com with SMTP id z23so8877251fkz.5
+        for <git@vger.kernel.org>; Mon, 07 Jan 2008 19:14:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type;
+        bh=I0bYDZNvDKN51duwKgdildrYp60nXvBvvp10amvwqv0=;
+        b=pNXhung8sNgR/LaKXBlFj+ruiPatCli6jnm7nT6i89zcNMtQS6zqr6/fVjsEsLw9qEJjtMhg/V7RGnPBjt4D8NDGAm0KGVZESZfc3jL/0hTo39MpKlzGs+iNnrVwsXzTGPY7TZ7QOB3c79Cf1UlsMSIqejfsq+Dom7ak+egjsNs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type;
+        b=el1jXkQ/xEaazu8xiLsAUYRsjv0T21xx8UzV/NKszoewCk4CKrChYCwIVdGUs7qg9dokgNKp3mg95yKHpwCQZWhk2QKlBmfp4aLiu9GA4dkAUtNhuXvvgqigg/a9Fvjq01/gT9MNWQZZ0tK7GnM8YG2j5D5x3ia3QzqlSvkHUGw=
+Received: by 10.78.201.2 with SMTP id y2mr24120509huf.56.1199762059942;
+        Mon, 07 Jan 2008 19:14:19 -0800 (PST)
+Received: by 10.78.50.5 with HTTP; Mon, 7 Jan 2008 19:14:19 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69834>
 
-Tooltips for the info were annoying, especially on MacOS where the tooltip center is your pointer location.
-It is now possible to copy&paste data.
-Like the CVS plugin, there's a menu to show/hide views. Thought it doesn't save in the preferences store for now.
+------=_Part_31513_21338067.1199762059763
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-Signed-off-by: Roger C. Soares <rogersoares@intelinet.com.br>
----
- .../src/org/spearce/egit/ui/GitHistoryPage.java    |  361 +++++++++++++++-----
- .../src/org/spearce/egit/ui/UIText.java            |    4 +
- .../src/org/spearce/egit/ui/uitext.properties      |    4 +
- 3 files changed, 277 insertions(+), 92 deletions(-)
+Added a recurse command to git-submodule. Using this recurse command
+any git command (for example, git-status, git-diff, git-checkout) can
+be performed from the top level to all its submodules at any depth; if
+the module has not been initialized and updated (that is git sumodule
+init and git submodule update) the script will take care of that too.
 
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
-index 3738dfd..ae404cf 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
-@@ -17,6 +17,7 @@
- package org.spearce.egit.ui;
- 
- import java.io.IOException;
-+import java.text.SimpleDateFormat;
- import java.util.Date;
- import java.util.HashMap;
- import java.util.List;
-@@ -37,10 +38,14 @@ import org.eclipse.core.runtime.IStatus;
- import org.eclipse.core.runtime.Status;
- import org.eclipse.core.runtime.jobs.Job;
- import org.eclipse.jface.action.Action;
-+import org.eclipse.jface.action.IAction;
- import org.eclipse.jface.action.IMenuListener;
- import org.eclipse.jface.action.IMenuManager;
- import org.eclipse.jface.action.MenuManager;
-+import org.eclipse.jface.action.Separator;
- import org.eclipse.jface.resource.JFaceResources;
-+import org.eclipse.jface.text.Document;
-+import org.eclipse.jface.text.TextViewer;
- import org.eclipse.jface.viewers.ColumnWeightData;
- import org.eclipse.jface.viewers.ILazyContentProvider;
- import org.eclipse.jface.viewers.StructuredSelection;
-@@ -48,12 +53,11 @@ import org.eclipse.jface.viewers.TableLayout;
- import org.eclipse.jface.viewers.TableViewer;
- import org.eclipse.jface.viewers.Viewer;
- import org.eclipse.swt.SWT;
-+import org.eclipse.swt.custom.SashForm;
- import org.eclipse.swt.events.MouseEvent;
- import org.eclipse.swt.events.MouseListener;
--import org.eclipse.swt.events.MouseMoveListener;
- import org.eclipse.swt.events.SelectionAdapter;
- import org.eclipse.swt.events.SelectionEvent;
--import org.eclipse.swt.graphics.Point;
- import org.eclipse.swt.layout.GridData;
- import org.eclipse.swt.layout.GridLayout;
- import org.eclipse.swt.widgets.Composite;
-@@ -72,6 +76,8 @@ import org.eclipse.team.internal.ui.history.DialogHistoryPageSite;
- import org.eclipse.team.ui.history.HistoryPage;
- import org.eclipse.team.ui.history.IHistoryCompareAdapter;
- import org.eclipse.team.ui.history.IHistoryPageSite;
-+import org.eclipse.ui.IActionBars;
-+import org.eclipse.ui.part.IPageSite;
- import org.spearce.egit.core.GitProvider;
- import org.spearce.egit.core.internal.mapping.GitCommitFileRevision;
- import org.spearce.egit.core.internal.mapping.GitFileHistory;
-@@ -92,16 +98,24 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 	private static final String PREF_SHOWALLREPOVERSIONS = "org.spearce.egit.ui.githistorypage.showallrepoversions";
- 	private static final String PREF_SHOWALLPROJECTVERSIONS = "org.spearce.egit.ui.githistorypage.showallprojectversions";
- 	private static final String PREF_SHOWALLFOLDERVERSIONS = "org.spearce.egit.ui.githistorypage.showallfolderversions";
-+	/* private */static final SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-+	/* private */static final SimpleDateFormat DATETIMETZ_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
- 
--	private Composite localComposite;
-+	private SashForm localComposite;
-+	private SashForm revisionInfoComposite;
- 
--	private TableViewer viewer;
-+	/* private */TableViewer viewer;
-+	/* private */TextViewer revDetailTextViewer;
-+	/* private */TextViewer revCommentTextViewer;
-+	/* private */IAction toggleCommentWrapAction;
-+	/* private */IAction toggleRevDetailAction;
-+	/* private */IAction toggleRevCommentAction;
- 
--	private Table table;
-+	/* private */Table table;
- 
--	private List<IFileRevision> fileRevisions;
-+	/* private */List<IFileRevision> fileRevisions;
- 
--	protected boolean hintShowDiffNow;
-+	/* private */boolean hintShowDiffNow;
- 
- 	private boolean showAllProjectVersions;
- 
-@@ -127,7 +141,8 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 	}
- 
- 	public void createControl(Composite parent) {
--		localComposite = new Composite(parent, SWT.NONE);
-+		localComposite = new SashForm(parent, SWT.VERTICAL);
-+
- 		GridLayout layout = new GridLayout();
- 		layout.marginHeight = 0;
- 		layout.marginWidth = 0;
-@@ -138,6 +153,10 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 
- 		createTable(localComposite);
- 
-+		revisionInfoComposite = new SashForm(localComposite, SWT.HORIZONTAL);
-+		createRevDetailTextViewer(revisionInfoComposite);
-+		createRevCommentTextViewer(revisionInfoComposite);
-+
- 		IHistoryPageSite parentSite = getHistoryPageSite();
- 		if (parentSite != null && parentSite instanceof DialogHistoryPageSite)
- 			parentSite.setSelectionProvider(viewer);
-@@ -149,6 +168,7 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 		table.addMouseListener(new MouseListener() {
- 		
- 			public void mouseUp(MouseEvent e) {
-+				return;
- 			}
- 		
- 			public void mouseDown(MouseEvent e) {
-@@ -156,25 +176,11 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 			}
- 		
- 			public void mouseDoubleClick(MouseEvent e) {
-+				return;
- 			}
- 		
- 		});
- 
--		table.addMouseMoveListener(new MouseMoveListener() {
--			TableItem lastItem;
--			public void mouseMove(MouseEvent e) {
--				TableItem item = table.getItem(new Point(e.x,e.y));
--				if (item != null && item!=lastItem) {
--					IFileRevision rev = (IFileRevision) item.getData();
--					if (rev == null)
--						return;
--					String toolTipText = formatRevisionToolTipText(rev);
--					table.setToolTipText(toolTipText);
--				}
--				lastItem = item;
--			}
--		});
--
- 		table.addSelectionListener(new SelectionAdapter() {
- 			public void widgetSelected(SelectionEvent e) {
- 				// update the current
-@@ -184,6 +190,12 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 					selection2[i] = (IFileRevision) selection[i].getData();
- 				}
- 
-+				// Updates the revision info text viewers
-+				cleanRevisionInfoTextViewers();
-+				if(selection2.length == 1) {
-+					setRevisionInfoTextViewers(selection2[0]);
-+				}
-+
- 				compareAction.setCurrentFileRevision(fileRevisions.get(0));
- 				compareAction.selectionChanged(new StructuredSelection(
- 						selection2));
-@@ -280,33 +292,92 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 		showAllFolderVersionsAction.setChecked(isShowAllFolderVersions());
- 		getSite().getActionBars().getToolBarManager().add(
- 				showAllFolderVersionsAction);
-+
-+		toggleCommentWrapAction = new Action(UIText.ResourceHistory_toggleCommentWrap) {
-+			public void run() {
-+				updateResourceHistoryComposites();
-+			}
-+		};
-+		toggleCommentWrapAction.setChecked(true);
-+
-+		toggleRevDetailAction = new Action(UIText.ResourceHistory_toggleRevDetail) {
-+			public void run() {
-+				updateResourceHistoryComposites();
-+			}
-+		};
-+		toggleRevDetailAction.setChecked(true);
-+
-+		toggleRevCommentAction = new Action(UIText.ResourceHistory_toggleRevComment) {
-+			public void run() {
-+				updateResourceHistoryComposites();
-+			}
-+		};
-+		toggleRevCommentAction.setChecked(true);
-+
-+		IActionBars actionBars = getSite().getActionBars();
-+		IMenuManager menuManager = actionBars.getMenuManager();
-+		if (menuManager != null) {
-+			menuManager.add(toggleCommentWrapAction);
-+			menuManager.add(new Separator());
-+			menuManager.add(toggleRevDetailAction);
-+			menuManager.add(toggleRevCommentAction);
-+			menuManager.add(new Separator());
-+		}
-+		actionBars.updateActionBars();
-+		updateResourceHistoryComposites();
-+
-+		localComposite.setWeights(new int[] {65, 35});
-+		revisionInfoComposite.setWeights(new int[] {40, 60});
-+	}
-+
-+	/* private */void updateResourceHistoryComposites() {
-+		boolean commentWrap = toggleCommentWrapAction.isChecked();
-+		boolean showRevDetail = toggleRevDetailAction.isChecked();
-+		boolean showRevComment = toggleRevCommentAction.isChecked();
-+
-+		revCommentTextViewer.getTextWidget().setWordWrap(commentWrap);
-+
-+		if(showRevDetail && showRevComment) {
-+			localComposite.setMaximizedControl(null);
-+			revisionInfoComposite.setMaximizedControl(null);
-+		} else {
-+			if(!(showRevDetail || showRevComment)) {
-+				localComposite.setMaximizedControl(table);
-+			} else if(showRevDetail) {
-+				localComposite.setMaximizedControl(null);
-+				revisionInfoComposite.setMaximizedControl(revDetailTextViewer.getControl());
-+			} else {
-+				localComposite.setMaximizedControl(null);
-+				revisionInfoComposite.setMaximizedControl(revCommentTextViewer.getControl());
-+			}
-+		}
- 	}
- 
--	private boolean isShowAllRepoVersions() {
-+	/* private */boolean isShowAllRepoVersions() {
- 		return showAllRepoVersions;
- 	}
- 
--	protected void setShowAllRepoVersions(boolean showAllRepoVersions) {
-+	/* private */void setShowAllRepoVersions(boolean showAllRepoVersions) {
- 		this.showAllRepoVersions = showAllRepoVersions;
- 		Activator.getDefault().getPreferenceStore().setValue(
- 				PREF_SHOWALLREPOVERSIONS, showAllRepoVersions);
- 	}
- 
--	private boolean isShowAllProjectVersions() {
-+	/* private */boolean isShowAllProjectVersions() {
- 		return showAllProjectVersions;
- 	}
- 
--	protected void setShowAllProjectVersions(boolean showAllProjectVersions) {
-+	/* private */void setShowAllProjectVersions(boolean showAllProjectVersions) {
- 		this.showAllProjectVersions = showAllProjectVersions;
- 		Activator.getDefault().getPreferenceStore().setValue(
- 				PREF_SHOWALLPROJECTVERSIONS, showAllProjectVersions);
- 	}
- 
--	private boolean isShowAllFolderVersions() {
-+	/* private */boolean isShowAllFolderVersions() {
- 		return showAllFolderVersions;
- 	}
- 
--	protected void setShowAllFolderVersion(boolean showAllFolderVersions) {
-+	/* private */void setShowAllFolderVersion(boolean showAllFolderVersions) {
- 		this.showAllFolderVersions = showAllFolderVersions;
- 		Activator.getDefault().getPreferenceStore().setValue(
- 				PREF_SHOWALLFOLDERVERSIONS, showAllFolderVersions);
-@@ -392,7 +463,7 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 				Date d = new Date(element.getTimestamp());
- 				if (d.getTime() == -1)
- 					return "";
--				return d.toString();
-+				return DATETIME_FORMAT.format(d);
- 			}
- 			if (columnIndex == 4)
- 				return element.getAuthor();
-@@ -411,6 +482,166 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 		}
- 	}
- 
-+	private void createRevDetailTextViewer(SashForm composite) {
-+		revDetailTextViewer = new TextViewer(composite, SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
-+	}
-+
-+	private void createRevCommentTextViewer(SashForm composite) {
-+		revCommentTextViewer = new TextViewer(composite, SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
-+	}
-+
-+	/* private */void setRevisionInfoTextViewers(IFileRevision rev) {
-+		StringBuilder revisionInfo = new StringBuilder();
-+		if (appliedPatches != null) {
-+			String id = rev.getContentIdentifier();
-+			if (!id.equals("Workspace") && !id.equals("Index")) {
-+				StGitPatch patch = (StGitPatch) appliedPatches
-+						.get(new ObjectId(id));
-+				if (patch != null) {
-+					revisionInfo.append("Patch: ");
-+					revisionInfo.append(patch.getName());
-+				}
-+			} else {
-+				revisionInfo.append(id.toString());
-+			}
-+		}
-+		if (revisionInfo.length() == 0) {
-+			revisionInfo.append("Commit: ");
-+			revisionInfo.append(rev.getContentIdentifier());
-+		}
-+
-+		// Gets the tags for this revision.
-+		// TODO: Understand this better and see if there's a simpler/shared way to do it.
-+		IProject project = ((IResource) getInput()).getProject();
-+		RepositoryMapping repositoryMapping = RepositoryMapping.getMapping(project);
-+		Map<ObjectId,Tag[]> newtags = new HashMap<ObjectId,Tag[]>();
-+		try {
-+			for (String name : repositoryMapping.getRepository().getTags()) {
-+				Tag t = repositoryMapping.getRepository().mapTag(name);
-+				Tag[] samecommit = newtags.get(t.getObjId());
-+				if (samecommit==null) { 
-+					samecommit = new Tag[] { t };
-+				} else {
-+					Tag[] n=new Tag[samecommit.length+1];
-+					for (int j=0; j<samecommit.length; ++j)
-+						n[j] = samecommit[j];
-+					n[n.length-1] = t;
-+					samecommit = n;
-+				}
-+				newtags.put(t.getObjId(), samecommit);
-+			}
-+
-+			String id = rev.getContentIdentifier();
-+			if (!id.equals("Workspace") && !id.equals("Index")) {
-+				ObjectId oid = new ObjectId(id);
-+				StringBuilder b=new StringBuilder();
-+				if (tags != null) {
-+					Tag[] matching = tags.get(oid);
-+					if (matching != null) {
-+						for (Tag t : matching) {
-+							if (b.length() > 0)
-+								b.append(", ");
-+							String tag = t.getTag();
-+							b.append(tag);
-+						}
-+					}
-+				}
-+				if(b.length() > 0) {
-+					revisionInfo.append("\nTags: ");
-+					revisionInfo.append(b);
-+				}
-+			}
-+		} catch (IOException e) {
-+			e.printStackTrace();
-+		}
-+
-+		// Gets the branches for this revision.
-+		// TODO: Branches should always show all the branches from a commit.
-+		Map<ObjectId, String[]> newBranches = new HashMap<ObjectId, String[]>();
-+		try {
-+			for (String branch : repositoryMapping.getRepository().getBranches()) {
-+				ObjectId id = repositoryMapping.getRepository().resolve(branch);
-+				String[] samecommit = newBranches.get(id);
-+				if (samecommit == null) {
-+					samecommit = new String[] { branch };
-+				} else {
-+					String[] n=new String[samecommit.length + 1];
-+					for (int j=0; j<samecommit.length; ++j)
-+						n[j] = samecommit[j];
-+					n[n.length-1] = branch;
-+					samecommit = n;
-+				}
-+				newBranches.put(id, samecommit);
-+			}
-+			String[] samecommit = newBranches.get(currentHead);
-+			if (samecommit == null) {
-+				samecommit = new String[] { "HEAD" };
-+			} else {
-+				String[] n=new String[samecommit.length + 1];
-+				for (int j=0; j<samecommit.length; ++j)
-+					n[j] = samecommit[j];
-+				n[n.length-1] = "HEAD";
-+				samecommit = n;
-+			}
-+			newBranches.put(currentHead, samecommit);
-+			branches = newBranches;
-+
-+			String id = rev.getContentIdentifier();
-+			if (branches != null) {
-+				StringBuilder b=new StringBuilder();
-+				ObjectId oid = new ObjectId(id);
-+				String[] matching = branches.get(oid);
-+				if (matching != null) {
-+					for (String t : matching) {
-+						if (b.length() > 0)
-+							b.append(", ");
-+						if (t.startsWith("refs/heads/"))
-+							t = t.substring(11);
-+						b.append(t);
-+					}
-+				}
-+				if(b.length() > 0) {
-+					revisionInfo.append("\nBranches: ");
-+					revisionInfo.append(b);
-+				}
-+			}
-+		} catch (IOException e) {
-+			e.printStackTrace();
-+		}
-+
-+		revisionInfo.append("\nAuthor: ");
-+		revisionInfo.append(rev.getAuthor());
-+		revisionInfo.append("\nDate: ");
-+		revisionInfo.append(DATETIMETZ_FORMAT.format(new Date(rev.getTimestamp())));
-+
-+		String comment = rev.getComment();
-+		revDetailTextViewer.setDocument(new Document(revisionInfo.toString()));
-+		revCommentTextViewer.setDocument(new Document(comment));
-+
-+		// Adds the first comment line in the status line.
-+		int enterIndex = comment.indexOf("\n");
-+		if(enterIndex > 0) {
-+			comment = comment.substring(0, enterIndex);
-+		}
-+		IPageSite workbenchPageSite = getHistoryPageSite().getWorkbenchPageSite();
-+		if (workbenchPageSite != null) {
-+			workbenchPageSite.getActionBars().getStatusLineManager().setMessage(comment);
-+		}
-+	}
-+
-+	/* private */void cleanRevisionInfoTextViewers() {
-+		if(revDetailTextViewer != null && revCommentTextViewer != null) {
-+			revDetailTextViewer.setDocument(new Document(""));
-+			revCommentTextViewer.setDocument(new Document(""));
-+
-+			// Cleans the status line
-+			IPageSite workbenchPageSite = getHistoryPageSite().getWorkbenchPageSite();
-+			if (workbenchPageSite != null) {
-+				workbenchPageSite.getActionBars().getStatusLineManager().setMessage(null);
-+			}
-+		}
-+	}
-+
- 	private void createTable(Composite composite) {
- 		table = new Table(composite, SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI
- 				| SWT.FULL_SELECTION | SWT.VIRTUAL);
-@@ -556,10 +787,10 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 		viewer.setInput(getInput());
- 	}
- 
--	private Map appliedPatches;
-+	/* private */Map appliedPatches;
- 	ObjectId currentHead;
--	private Map<ObjectId,Tag[]> tags;
--	private Map<ObjectId, String[]> branches;
-+	/* private */Map<ObjectId,Tag[]> tags;
-+	/* private */Map<ObjectId, String[]> branches;
- 	GitHistoryLabelProvider lp = new GitHistoryLabelProvider();
- 
- 	class HistoryRefreshJob extends Job {
-@@ -662,6 +893,8 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 				table.getDisplay().asyncExec(new Runnable() {
- 				
- 					public void run() {
-+						cleanRevisionInfoTextViewers();
-+
- 						table.removeAll();
- 						table.setItemCount(fileRevisions.size());
- 						table.setData("X");
-@@ -720,6 +953,7 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 		}
- 
- 		public void dispose() {
-+			return;
- 		}
- 
- 		public void updateElement(int index) {
-@@ -757,7 +991,7 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 		col.setResizable(true);
- 		col.setText(TeamUIMessages.GenericHistoryTableProvider_RevisionTime);
- 		// X col.addSelectionListener(headerListener);
--		((TableLayout) table.getLayout()).addColumnData(new ColumnWeightData(30,
-+		((TableLayout) table.getLayout()).addColumnData(new ColumnWeightData(20,
- 				true));
- 
- 		// author
-@@ -773,7 +1007,7 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 		col.setResizable(true);
- 		col.setText(TeamUIMessages.GenericHistoryTableProvider_Comment);
- 		// X col.addSelectionListener(headerListener);
--		((TableLayout) table.getLayout()).addColumnData(new ColumnWeightData(35,
-+		((TableLayout) table.getLayout()).addColumnData(new ColumnWeightData(45,
- 				true));
- 	}
- 
-@@ -821,61 +1055,4 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
- 		// TODO Auto-generated method stub
- 	}
- 
--	/**
--	 * Formats the revision description to be displayed in the tooltip.
--	 *
--	 * @param rev
--	 *            the revision to be displayed
--	 * @return formatted description
--	 */
--	protected String formatRevisionToolTipText(IFileRevision rev) {
--		String commitStr = null;
--		if (appliedPatches != null) {
--			String id = rev.getContentIdentifier();
--			if (!id.equals("Workspace") && !id.equals("Index")) {
--				StGitPatch patch = (StGitPatch) appliedPatches
--						.get(new ObjectId(id));
--				if (patch != null)
--					commitStr = "Patch: " + patch.getName();
--			} else {
--				commitStr = id.toString();
--			}
--		}
--		if (commitStr == null)
--			commitStr = "Commit: " + rev.getContentIdentifier();
--
--		// The tooltip window is usually
--		// narrower
--		// than the comment. Remove soft returns
--		// to
--		// avoid short lines like in
--		// this
--		// example
--		String niceComment = unwrapComment(rev.getComment());
--		String toolTipText = commitStr + "\nAuthor: " + rev.getAuthor()
--				+ "\nDate: " + new Date(rev.getTimestamp()) + "\n\n"
--				+ niceComment;
--		return toolTipText;
--	}
--
--	/**
--	 * Remove soft returns (single \n) from the string. Keep hard returns
--	 * between paragraphs (two \n).
--	 *
--	 * @param origComment
--	 * @return reformated comment
--	 */
--	private static String unwrapComment(String origComment) {
--		if (origComment == null)
--			return null;
--		String paragraphs[] = origComment.split("\n\\s*\n");
--		StringBuffer result = new StringBuffer();
--		for (int i = 0; i < paragraphs.length; i++) {
--			result.append(paragraphs[i].replaceAll("\n", " "));
--			if (i < paragraphs.length - 1)
--				result.append("\n\n");
--		}
--		return result.toString();
--	}
--
+I needed this feature especially for diff, status and pull; as I am
+working on a multi module maven project with each module having
+separate repository due to architecture and future extensibility.
+
+Following is the diff with git-submdoule version 1.5.3.7. I also
+attached the diff and the modified file in the attachment.
+
+diff --git a/git-submodule b/git-submodule
+index b91d626..e819152 100755
+--- a/git-submodule
++++ b/git-submodule
+@@ -1,10 +1,11 @@
+ #!/bin/sh
+ #
+ # git-submodules.sh: add, init, update or list git submodules
++# or recurse any git command over the submodules recursively.
+ #
+ # Copyright (c) 2007 Lars Hjemli
+
+-USAGE='[--quiet] [--cached] [add <repo> [-b
+branch]|status|init|update] [--] [<path>...]'
++USAGE='[[--quiet] [--cached] [add <repo> [-b
+branch]|status|init|update] [--] [<path>...]|[recurse [-v] command
+arguments ...]]'
+ . git-sh-setup
+ require_work_tree
+
+@@ -251,6 +252,78 @@ modules_list()
+ 	done
  }
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/UIText.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/UIText.java
-index cdbe8bb..b714c1d 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/UIText.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/UIText.java
-@@ -39,6 +39,10 @@ public class UIText extends NLS {
- 
- 	public static String QuickDiff_failedLoading;
- 
-+	public static String ResourceHistory_toggleCommentWrap;
-+	public static String ResourceHistory_toggleRevDetail;
-+	public static String ResourceHistory_toggleRevComment;
+
++# Simply checks whether the submodule is initialized
++# or not. If not initialized it does so.
++initializeSubModule() {
++	if [ ! -d "$1"/.git ]; then
++		if [ $recurse_verbose -eq 1 ]; then
++			echo Initializing and updating "$1"
++		fi
++		git-submodule init "$1"; git-submodule update "$1"
++	fi
++}
 +
- 	static {
- 		initializeMessages(UIText.class.getPackage().getName() + ".uitext",
- 				UIText.class);
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/uitext.properties b/org.spearce.egit.ui/src/org/spearce/egit/ui/uitext.properties
-index 75e975b..f45f4d2 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/uitext.properties
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/uitext.properties
-@@ -28,3 +28,7 @@ ExistingOrNewPage_createNew=Create a new Git repository for this project
- 
- Decorator_failedLazyLoading=Resource decorator failed to load tree contents on demand.
- QuickDiff_failedLoading=Quick diff failed to obtain file data.
++# This actually traverses the module; checks
++# whether the module is initialized or not.
++# if not initialized, then done so and then the
++# intended command is evaluated. Then it
++# recursively goes into it modules.
++traverseModule() {
++	current_dir=`pwd`
++	dir_path="$current_dir:$dir_path"
++	initializeSubModule "$1"
++        cd "$1"
++	if [ $recurse_verbose -eq 1 ]; then
++		echo Working in mod $1 @ `pwd` with $2
++	fi
++        eval "$2"
++	if [ -f .gitmodules ]; then
++                for mod_path in `grep "path =" .gitmodules | awk
+'{print $3}'`; do
++                        traverseModule "$mod_path" "$2"
++                done
++        fi
++	old_dir=$(echo $dir_path | cut -d':' -f1-1)
++	length_old_dir=`expr "$old_dir" : '.*'`
++	cd $old_dir
++	index=$(echo "$length_old_dir+2" | bc)
++	dir_path=`echo $dir_path $index | awk '{print substr($1, $2)}'`
++}
 +
-+ResourceHistory_toggleCommentWrap=Wrap Comments
-+ResourceHistory_toggleRevDetail=Show Revision Details
-+ResourceHistory_toggleRevComment=Show Revision Comment
-\ No newline at end of file
++# Propagates or recurses over all the submodules at any
++# depth with any git command, e.g. git-clone, git-status,
++# git-commit etc., with the arguments supplied exactly as
++# it would have been supplied to the command otherwise.
++# This actually starts the recursive propagation
++propagate() {
++	project_home=`pwd`
++	echo Project Home: $project_home
++	if [ -d $project_home/.git/ ]; then
++		git_command=$1
++		shift
++		command_arguments=""
++		for arg in "$@"; do
++			if [ `expr index "$arg" ' '` -gt 0 ]; then
++				arg="\"$arg\""
++			fi
++			command_arguments="$command_arguments $arg"
++		done
++		if [ $recurse_verbose -eq 1 ]; then
++			echo GIT Command git-$git_command with arguments\($#\) "$command_arguments"
++		fi
++		main_command="git-$git_command $command_arguments"
++		eval $main_command
++		if [ -f .gitmodules ]; then
++			for mod_path in `grep "path =" .gitmodules | awk '{print $3}'`; do
++				traverseModule $mod_path "$main_command"
++			done
++		fi
++	else
++		echo $project_home not a git repo thus exiting
++		exit
++	fi
++}
++
++recurse_verbose=0
+ while test $# != 0
+ do
+ 	case "$1" in
+@@ -286,6 +359,17 @@ do
+ 	-*)
+ 		usage
+ 		;;
++	recurse)
++		recurse=1
++		case "$2" in
++			-v)
++				recurse_verbose=1
++				shift
++				;;
++		esac
++		shift
++		break
++		;;
+ 	*)
+ 		break
+ 		;;
+@@ -303,17 +387,21 @@ case "$add,$branch" in
+ 	;;
+ esac
+
+-case "$add,$init,$update,$status,$cached" in
+-1,,,,)
++
++case "$add,$init,$update,$recurse,$status,$cached" in
++1,,,,,)
+ 	module_add "$@"
+ 	;;
+-,1,,,)
++,1,,,,)
+ 	modules_init "$@"
+ 	;;
+-,,1,,)
++,,1,,,)
+ 	modules_update "$@"
+ 	;;
+-,,,*,*)
++,,,1,,)
++	propagate "$@"
++	;;
++,,,,*,*)
+ 	modules_list "$@"
+ 	;;
+ *)
+
 -- 
-1.5.3.7
+Imran M Yousuf
+
+------=_Part_31513_21338067.1199762059763
+Content-Type: text/plain; name=git-submodule-diff-1.5.3.7.txt
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fb5ur82m2
+Content-Disposition: attachment; filename=git-submodule-diff-1.5.3.7.txt
+
+ZGlmZiAtLWdpdCBhL2dpdC1zdWJtb2R1bGUgYi9naXQtc3VibW9kdWxlCmluZGV4IGI5MWQ2MjYu
+LmU4MTkxNTIgMTAwNzU1Ci0tLSBhL2dpdC1zdWJtb2R1bGUKKysrIGIvZ2l0LXN1Ym1vZHVsZQpA
+QCAtMSwxMCArMSwxMSBAQAogIyEvYmluL3NoCiAjCiAjIGdpdC1zdWJtb2R1bGVzLnNoOiBhZGQs
+IGluaXQsIHVwZGF0ZSBvciBsaXN0IGdpdCBzdWJtb2R1bGVzCisjIG9yIHJlY3Vyc2UgYW55IGdp
+dCBjb21tYW5kIG92ZXIgdGhlIHN1Ym1vZHVsZXMgcmVjdXJzaXZlbHkuCiAjCiAjIENvcHlyaWdo
+dCAoYykgMjAwNyBMYXJzIEhqZW1saQogCi1VU0FHRT0nWy0tcXVpZXRdIFstLWNhY2hlZF0gW2Fk
+ZCA8cmVwbz4gWy1iIGJyYW5jaF18c3RhdHVzfGluaXR8dXBkYXRlXSBbLS1dIFs8cGF0aD4uLi5d
+JworVVNBR0U9J1tbLS1xdWlldF0gWy0tY2FjaGVkXSBbYWRkIDxyZXBvPiBbLWIgYnJhbmNoXXxz
+dGF0dXN8aW5pdHx1cGRhdGVdIFstLV0gWzxwYXRoPi4uLl18W3JlY3Vyc2UgWy12XSBjb21tYW5k
+IGFyZ3VtZW50cyAuLi5dXScKIC4gZ2l0LXNoLXNldHVwCiByZXF1aXJlX3dvcmtfdHJlZQogCkBA
+IC0yNTEsNiArMjUyLDc4IEBAIG1vZHVsZXNfbGlzdCgpCiAJZG9uZQogfQogCisjIFNpbXBseSBj
+aGVja3Mgd2hldGhlciB0aGUgc3VibW9kdWxlIGlzIGluaXRpYWxpemVkCisjIG9yIG5vdC4gSWYg
+bm90IGluaXRpYWxpemVkIGl0IGRvZXMgc28uCitpbml0aWFsaXplU3ViTW9kdWxlKCkgeworCWlm
+IFsgISAtZCAiJDEiLy5naXQgXTsgdGhlbgorCQlpZiBbICRyZWN1cnNlX3ZlcmJvc2UgLWVxIDEg
+XTsgdGhlbgorCQkJZWNobyBJbml0aWFsaXppbmcgYW5kIHVwZGF0aW5nICIkMSIKKwkJZmkKKwkJ
+Z2l0LXN1Ym1vZHVsZSBpbml0ICIkMSI7IGdpdC1zdWJtb2R1bGUgdXBkYXRlICIkMSIKKwlmaQor
+fQorCisjIFRoaXMgYWN0dWFsbHkgdHJhdmVyc2VzIHRoZSBtb2R1bGU7IGNoZWNrcworIyB3aGV0
+aGVyIHRoZSBtb2R1bGUgaXMgaW5pdGlhbGl6ZWQgb3Igbm90LgorIyBpZiBub3QgaW5pdGlhbGl6
+ZWQsIHRoZW4gZG9uZSBzbyBhbmQgdGhlbiB0aGUKKyMgaW50ZW5kZWQgY29tbWFuZCBpcyBldmFs
+dWF0ZWQuIFRoZW4gaXQKKyMgcmVjdXJzaXZlbHkgZ29lcyBpbnRvIGl0IG1vZHVsZXMuCit0cmF2
+ZXJzZU1vZHVsZSgpIHsKKwljdXJyZW50X2Rpcj1gcHdkYAorCWRpcl9wYXRoPSIkY3VycmVudF9k
+aXI6JGRpcl9wYXRoIgorCWluaXRpYWxpemVTdWJNb2R1bGUgIiQxIgorICAgICAgICBjZCAiJDEi
+CisJaWYgWyAkcmVjdXJzZV92ZXJib3NlIC1lcSAxIF07IHRoZW4KKwkJZWNobyBXb3JraW5nIGlu
+IG1vZCAkMSBAIGBwd2RgIHdpdGggJDIKKwlmaQorICAgICAgICBldmFsICIkMiIKKwlpZiBbIC1m
+IC5naXRtb2R1bGVzIF07IHRoZW4KKyAgICAgICAgICAgICAgICBmb3IgbW9kX3BhdGggaW4gYGdy
+ZXAgInBhdGggPSIgLmdpdG1vZHVsZXMgfCBhd2sgJ3twcmludCAkM30nYDsgZG8KKyAgICAgICAg
+ICAgICAgICAgICAgICAgIHRyYXZlcnNlTW9kdWxlICIkbW9kX3BhdGgiICIkMiIKKyAgICAgICAg
+ICAgICAgICBkb25lCisgICAgICAgIGZpCisJb2xkX2Rpcj0kKGVjaG8gJGRpcl9wYXRoIHwgY3V0
+IC1kJzonIC1mMS0xKQorCWxlbmd0aF9vbGRfZGlyPWBleHByICIkb2xkX2RpciIgOiAnLionYAor
+CWNkICRvbGRfZGlyCisJaW5kZXg9JChlY2hvICIkbGVuZ3RoX29sZF9kaXIrMiIgfCBiYykKKwlk
+aXJfcGF0aD1gZWNobyAkZGlyX3BhdGggJGluZGV4IHwgYXdrICd7cHJpbnQgc3Vic3RyKCQxLCAk
+Mil9J2AKK30KKworIyBQcm9wYWdhdGVzIG9yIHJlY3Vyc2VzIG92ZXIgYWxsIHRoZSBzdWJtb2R1
+bGVzIGF0IGFueSAKKyMgZGVwdGggd2l0aCBhbnkgZ2l0IGNvbW1hbmQsIGUuZy4gZ2l0LWNsb25l
+LCBnaXQtc3RhdHVzLAorIyBnaXQtY29tbWl0IGV0Yy4sIHdpdGggdGhlIGFyZ3VtZW50cyBzdXBw
+bGllZCBleGFjdGx5IGFzCisjIGl0IHdvdWxkIGhhdmUgYmVlbiBzdXBwbGllZCB0byB0aGUgY29t
+bWFuZCBvdGhlcndpc2UuCisjIFRoaXMgYWN0dWFsbHkgc3RhcnRzIHRoZSByZWN1cnNpdmUgcHJv
+cGFnYXRpb24KK3Byb3BhZ2F0ZSgpIHsKKwlwcm9qZWN0X2hvbWU9YHB3ZGAKKwllY2hvIFByb2pl
+Y3QgSG9tZTogJHByb2plY3RfaG9tZQorCWlmIFsgLWQgJHByb2plY3RfaG9tZS8uZ2l0LyBdOyB0
+aGVuCisJCWdpdF9jb21tYW5kPSQxCisJCXNoaWZ0CisJCWNvbW1hbmRfYXJndW1lbnRzPSIiCisJ
+CWZvciBhcmcgaW4gIiRAIjsgZG8KKwkJCWlmIFsgYGV4cHIgaW5kZXggIiRhcmciICcgJ2AgLWd0
+IDAgXTsgdGhlbgorCQkJCWFyZz0iXCIkYXJnXCIiCisJCQlmaSAKKwkJCWNvbW1hbmRfYXJndW1l
+bnRzPSIkY29tbWFuZF9hcmd1bWVudHMgJGFyZyIKKwkJZG9uZQorCQlpZiBbICRyZWN1cnNlX3Zl
+cmJvc2UgLWVxIDEgXTsgdGhlbgorCQkJZWNobyBHSVQgQ29tbWFuZCBnaXQtJGdpdF9jb21tYW5k
+IHdpdGggYXJndW1lbnRzXCgkI1wpICIkY29tbWFuZF9hcmd1bWVudHMiCisJCWZpCisJCW1haW5f
+Y29tbWFuZD0iZ2l0LSRnaXRfY29tbWFuZCAkY29tbWFuZF9hcmd1bWVudHMiCisJCWV2YWwgJG1h
+aW5fY29tbWFuZAorCQlpZiBbIC1mIC5naXRtb2R1bGVzIF07IHRoZW4KKwkJCWZvciBtb2RfcGF0
+aCBpbiBgZ3JlcCAicGF0aCA9IiAuZ2l0bW9kdWxlcyB8IGF3ayAne3ByaW50ICQzfSdgOyBkbwor
+CQkJCXRyYXZlcnNlTW9kdWxlICRtb2RfcGF0aCAiJG1haW5fY29tbWFuZCIKKwkJCWRvbmUKKwkJ
+ZmkKKwllbHNlCisJCWVjaG8gJHByb2plY3RfaG9tZSBub3QgYSBnaXQgcmVwbyB0aHVzIGV4aXRp
+bmcKKwkJZXhpdAorCWZpCit9CisKK3JlY3Vyc2VfdmVyYm9zZT0wCiB3aGlsZSB0ZXN0ICQjICE9
+IDAKIGRvCiAJY2FzZSAiJDEiIGluCkBAIC0yODYsNiArMzU5LDE3IEBAIGRvCiAJLSopCiAJCXVz
+YWdlCiAJCTs7CisJcmVjdXJzZSkKKwkJcmVjdXJzZT0xCisJCWNhc2UgIiQyIiBpbgorCQkJLXYp
+CisJCQkJcmVjdXJzZV92ZXJib3NlPTEKKwkJCQlzaGlmdAorCQkJCTs7CisJCWVzYWMKKwkJc2hp
+ZnQKKwkJYnJlYWsKKwkJOzsKIAkqKQogCQlicmVhawogCQk7OwpAQCAtMzAzLDE3ICszODcsMjEg
+QEAgY2FzZSAiJGFkZCwkYnJhbmNoIiBpbgogCTs7CiBlc2FjCiAKLWNhc2UgIiRhZGQsJGluaXQs
+JHVwZGF0ZSwkc3RhdHVzLCRjYWNoZWQiIGluCi0xLCwsLCkKKworY2FzZSAiJGFkZCwkaW5pdCwk
+dXBkYXRlLCRyZWN1cnNlLCRzdGF0dXMsJGNhY2hlZCIgaW4KKzEsLCwsLCkKIAltb2R1bGVfYWRk
+ICIkQCIKIAk7OwotLDEsLCwpCissMSwsLCwpCiAJbW9kdWxlc19pbml0ICIkQCIKIAk7OwotLCwx
+LCwpCissLDEsLCwpCiAJbW9kdWxlc191cGRhdGUgIiRAIgogCTs7Ci0sLCwqLCopCissLCwxLCwp
+CisJcHJvcGFnYXRlICIkQCIKKwk7OworLCwsLCosKikKIAltb2R1bGVzX2xpc3QgIiRAIgogCTs7
+CiAqKQo=
+------=_Part_31513_21338067.1199762059763
+Content-Type: application/octet-stream; name=git-submodule
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fb5urpdk1
+Content-Disposition: attachment; filename=git-submodule
+
+IyEvYmluL3NoCiMKIyBnaXQtc3VibW9kdWxlcy5zaDogYWRkLCBpbml0LCB1cGRhdGUgb3IgbGlz
+dCBnaXQgc3VibW9kdWxlcwojIG9yIHJlY3Vyc2UgYW55IGdpdCBjb21tYW5kIG92ZXIgdGhlIHN1
+Ym1vZHVsZXMgcmVjdXJzaXZlbHkuCiMKIyBDb3B5cmlnaHQgKGMpIDIwMDcgTGFycyBIamVtbGkK
+ClVTQUdFPSdbWy0tcXVpZXRdIFstLWNhY2hlZF0gW2FkZCA8cmVwbz4gWy1iIGJyYW5jaF18c3Rh
+dHVzfGluaXR8dXBkYXRlXSBbLS1dIFs8cGF0aD4uLi5dfFtyZWN1cnNlIFstdl0gY29tbWFuZCBh
+cmd1bWVudHMgLi4uXV0nCi4gZ2l0LXNoLXNldHVwCnJlcXVpcmVfd29ya190cmVlCgphZGQ9CmJy
+YW5jaD0KaW5pdD0KdXBkYXRlPQpzdGF0dXM9CnF1aWV0PQpjYWNoZWQ9CgojCiMgcHJpbnQgc3R1
+ZmYgb24gc3Rkb3V0IHVubGVzcyAtcSB3YXMgc3BlY2lmaWVkCiMKc2F5KCkKewoJaWYgdGVzdCAt
+eiAiJHF1aWV0IgoJdGhlbgoJCWVjaG8gIiRAIgoJZmkKfQoKIyBORUVEU1dPUks6IGlkZW50aWNh
+bCBmdW5jdGlvbiBleGlzdHMgaW4gZ2V0X3JlcG9fYmFzZSBpbiBjbG9uZS5zaApnZXRfcmVwb19i
+YXNlKCkgewoJKAoJCWNkICJgL2Jpbi9wd2RgIiAmJgoJCWNkICIkMSIgfHwgY2QgIiQxLmdpdCIg
+JiYKCQl7CgkJCWNkIC5naXQKCQkJcHdkCgkJfQoJKSAyPi9kZXYvbnVsbAp9CgojCiMgTWFwIHN1
+Ym1vZHVsZSBwYXRoIHRvIHN1Ym1vZHVsZSBuYW1lCiMKIyAkMSA9IHBhdGgKIwptb2R1bGVfbmFt
+ZSgpCnsKCSMgRG8gd2UgaGF2ZSAic3VibW9kdWxlLjxzb21ldGhpbmc+LnBhdGggPSAkMSIgZGVm
+aW5lZCBpbiAuZ2l0bW9kdWxlcyBmaWxlPwoJcmU9JChwcmludGYgJyVzJyAiJDEiIHwgc2VkIC1l
+ICdzL1tdLlteJFxcKl0vXFwmL2cnKQoJbmFtZT0kKCBHSVRfQ09ORklHPS5naXRtb2R1bGVzIFwK
+CQlnaXQgY29uZmlnIC0tZ2V0LXJlZ2V4cCAnXnN1Ym1vZHVsZVwuLipcLnBhdGgkJyB8CgkJc2Vk
+IC1uIC1lICdzfF5zdWJtb2R1bGVcLlwoLipcKVwucGF0aCAnIiRyZSInJHxcMXxwJyApCiAgICAg
+ICB0ZXN0IC16ICIkbmFtZSIgJiYKICAgICAgIGRpZSAiTm8gc3VibW9kdWxlIG1hcHBpbmcgZm91
+bmQgaW4gLmdpdG1vZHVsZXMgZm9yIHBhdGggJyRwYXRoJyIKICAgICAgIGVjaG8gIiRuYW1lIgp9
+CgojCiMgQ2xvbmUgYSBzdWJtb2R1bGUKIwojIFByaW9yIHRvIGNhbGxpbmcsIG1vZHVsZXNfdXBk
+YXRlIGNoZWNrcyB0aGF0IGEgcG9zc2libHkgZXhpc3RpbmcKIyBwYXRoIGlzIG5vdCBhIGdpdCBy
+ZXBvc2l0b3J5LgojIExpa2V3aXNlLCBtb2R1bGVfYWRkIGNoZWNrcyB0aGF0IHBhdGggZG9lcyBu
+b3QgZXhpc3QgYXQgYWxsLAojIHNpbmNlIGl0IGlzIHRoZSBsb2NhdGlvbiBvZiBhIG5ldyBzdWJt
+b2R1bGUuCiMKbW9kdWxlX2Nsb25lKCkKewoJcGF0aD0kMQoJdXJsPSQyCgoJIyBJZiB0aGVyZSBh
+bHJlYWR5IGlzIGEgZGlyZWN0b3J5IGF0IHRoZSBzdWJtb2R1bGUgcGF0aCwKCSMgZXhwZWN0IGl0
+IHRvIGJlIGVtcHR5IChzaW5jZSB0aGF0IGlzIHRoZSBkZWZhdWx0IGNoZWNrb3V0CgkjIGFjdGlv
+bikgYW5kIHRyeSB0byByZW1vdmUgaXQuCgkjIE5vdGU6IGlmICRwYXRoIGlzIGEgc3ltbGluayB0
+byBhIGRpcmVjdG9yeSB0aGUgdGVzdCB3aWxsCgkjIHN1Y2NlZWQgYnV0IHRoZSBybWRpciB3aWxs
+IGZhaWwuIFdlIG1pZ2h0IHdhbnQgdG8gZml4IHRoaXMuCglpZiB0ZXN0IC1kICIkcGF0aCIKCXRo
+ZW4KCQlybWRpciAiJHBhdGgiIDI+L2Rldi9udWxsIHx8CgkJZGllICJEaXJlY3RvcnkgJyRwYXRo
+JyBleGlzdCwgYnV0IGlzIG5laXRoZXIgZW1wdHkgbm9yIGEgZ2l0IHJlcG9zaXRvcnkiCglmaQoK
+CXRlc3QgLWUgIiRwYXRoIiAmJgoJZGllICJBIGZpbGUgYWxyZWFkeSBleGlzdCBhdCBwYXRoICck
+cGF0aCciCgoJZ2l0LWNsb25lIC1uICIkdXJsIiAiJHBhdGgiIHx8CglkaWUgIkNsb25lIG9mICck
+dXJsJyBpbnRvIHN1Ym1vZHVsZSBwYXRoICckcGF0aCcgZmFpbGVkIgp9CgojCiMgQWRkIGEgbmV3
+IHN1Ym1vZHVsZSB0byB0aGUgd29ya2luZyB0cmVlLCAuZ2l0bW9kdWxlcyBhbmQgdGhlIGluZGV4
+CiMKIyAkQCA9IHJlcG8gW3BhdGhdCiMKIyBvcHRpb25hbCBicmFuY2ggaXMgc3RvcmVkIGluIGds
+b2JhbCBicmFuY2ggdmFyaWFibGUKIwptb2R1bGVfYWRkKCkKewoJcmVwbz0kMQoJcGF0aD0kMgoK
+CWlmIHRlc3QgLXogIiRyZXBvIjsgdGhlbgoJCXVzYWdlCglmaQoKCSMgVHVybiB0aGUgc291cmNl
+IGludG8gYW4gYWJzb2x1dGUgcGF0aCBpZgoJIyBpdCBpcyBsb2NhbAoJaWYgYmFzZT0kKGdldF9y
+ZXBvX2Jhc2UgIiRyZXBvIik7IHRoZW4KCQlyZXBvPSIkYmFzZSIKCWZpCgoJIyBHdWVzcyBwYXRo
+IGZyb20gcmVwbyBpZiBub3Qgc3BlY2lmaWVkIG9yIHN0cmlwIHRyYWlsaW5nIHNsYXNoZXMKCWlm
+IHRlc3QgLXogIiRwYXRoIjsgdGhlbgoJCXBhdGg9JChlY2hvICIkcmVwbyIgfCBzZWQgLWUgJ3N8
+LyokfHwnIC1lICdzfDoqLypcLmdpdCR8fCcgLWUgJ3N8LipbLzpdfHxnJykKCWVsc2UKCQlwYXRo
+PSQoZWNobyAiJHBhdGgiIHwgc2VkIC1lICdzfC8qJHx8JykKCWZpCgoJdGVzdCAtZSAiJHBhdGgi
+ICYmCglkaWUgIickcGF0aCcgYWxyZWFkeSBleGlzdHMiCgoJZ2l0IGxzLWZpbGVzIC0tZXJyb3It
+dW5tYXRjaCAiJHBhdGgiID4gL2Rldi9udWxsIDI+JjEgJiYKCWRpZSAiJyRwYXRoJyBhbHJlYWR5
+IGV4aXN0cyBpbiB0aGUgaW5kZXgiCgoJbW9kdWxlX2Nsb25lICIkcGF0aCIgIiRyZXBvIiB8fCBl
+eGl0CgkodW5zZXQgR0lUX0RJUiAmJiBjZCAiJHBhdGgiICYmIGdpdCBjaGVja291dCAtcSAke2Jy
+YW5jaDorLWIgIiRicmFuY2giICJvcmlnaW4vJGJyYW5jaCJ9KSB8fAoJZGllICJVbmFibGUgdG8g
+Y2hlY2tvdXQgc3VibW9kdWxlICckcGF0aCciCglnaXQgYWRkICIkcGF0aCIgfHwKCWRpZSAiRmFp
+bGVkIHRvIGFkZCBzdWJtb2R1bGUgJyRwYXRoJyIKCglHSVRfQ09ORklHPS5naXRtb2R1bGVzIGdp
+dCBjb25maWcgc3VibW9kdWxlLiIkcGF0aCIucGF0aCAiJHBhdGgiICYmCglHSVRfQ09ORklHPS5n
+aXRtb2R1bGVzIGdpdCBjb25maWcgc3VibW9kdWxlLiIkcGF0aCIudXJsICIkcmVwbyIgJiYKCWdp
+dCBhZGQgLmdpdG1vZHVsZXMgfHwKCWRpZSAiRmFpbGVkIHRvIHJlZ2lzdGVyIHN1Ym1vZHVsZSAn
+JHBhdGgnIgp9CgojCiMgUmVnaXN0ZXIgc3VibW9kdWxlcyBpbiAuZ2l0L2NvbmZpZwojCiMgJEAg
+PSByZXF1ZXN0ZWQgcGF0aHMgKGRlZmF1bHQgdG8gYWxsKQojCm1vZHVsZXNfaW5pdCgpCnsKCWdp
+dCBscy1maWxlcyAtLXN0YWdlIC0tICIkQCIgfCBncmVwIC1lICdeMTYwMDAwICcgfAoJd2hpbGUg
+cmVhZCBtb2RlIHNoYTEgc3RhZ2UgcGF0aAoJZG8KCQkjIFNraXAgYWxyZWFkeSByZWdpc3RlcmVk
+IHBhdGhzCgkJbmFtZT0kKG1vZHVsZV9uYW1lICIkcGF0aCIpIHx8IGV4aXQKCQl1cmw9JChnaXQg
+Y29uZmlnIHN1Ym1vZHVsZS4iJG5hbWUiLnVybCkKCQl0ZXN0IC16ICIkdXJsIiB8fCBjb250aW51
+ZQoKCQl1cmw9JChHSVRfQ09ORklHPS5naXRtb2R1bGVzIGdpdCBjb25maWcgc3VibW9kdWxlLiIk
+bmFtZSIudXJsKQoJCXRlc3QgLXogIiR1cmwiICYmCgkJZGllICJObyB1cmwgZm91bmQgZm9yIHN1
+Ym1vZHVsZSBwYXRoICckcGF0aCcgaW4gLmdpdG1vZHVsZXMiCgoJCWdpdCBjb25maWcgc3VibW9k
+dWxlLiIkbmFtZSIudXJsICIkdXJsIiB8fAoJCWRpZSAiRmFpbGVkIHRvIHJlZ2lzdGVyIHVybCBm
+b3Igc3VibW9kdWxlIHBhdGggJyRwYXRoJyIKCgkJc2F5ICJTdWJtb2R1bGUgJyRuYW1lJyAoJHVy
+bCkgcmVnaXN0ZXJlZCBmb3IgcGF0aCAnJHBhdGgnIgoJZG9uZQp9CgojCiMgVXBkYXRlIGVhY2gg
+c3VibW9kdWxlIHBhdGggdG8gY29ycmVjdCByZXZpc2lvbiwgdXNpbmcgY2xvbmUgYW5kIGNoZWNr
+b3V0IGFzIG5lZWRlZAojCiMgJEAgPSByZXF1ZXN0ZWQgcGF0aHMgKGRlZmF1bHQgdG8gYWxsKQoj
+Cm1vZHVsZXNfdXBkYXRlKCkKewoJZ2l0IGxzLWZpbGVzIC0tc3RhZ2UgLS0gIiRAIiB8IGdyZXAg
+LWUgJ14xNjAwMDAgJyB8Cgl3aGlsZSByZWFkIG1vZGUgc2hhMSBzdGFnZSBwYXRoCglkbwoJCW5h
+bWU9JChtb2R1bGVfbmFtZSAiJHBhdGgiKSB8fCBleGl0CgkJdXJsPSQoZ2l0IGNvbmZpZyBzdWJt
+b2R1bGUuIiRuYW1lIi51cmwpCgkJaWYgdGVzdCAteiAiJHVybCIKCQl0aGVuCgkJCSMgT25seSBt
+ZW50aW9uIHVuaW5pdGlhbGl6ZWQgc3VibW9kdWxlcyB3aGVuIGl0cwoJCQkjIHBhdGggaGF2ZSBi
+ZWVuIHNwZWNpZmllZAoJCQl0ZXN0ICIkIyIgIT0gIjAiICYmCgkJCXNheSAiU3VibW9kdWxlIHBh
+dGggJyRwYXRoJyBub3QgaW5pdGlhbGl6ZWQiCgkJCWNvbnRpbnVlCgkJZmkKCgkJaWYgISB0ZXN0
+IC1kICIkcGF0aCIvLmdpdAoJCXRoZW4KCQkJbW9kdWxlX2Nsb25lICIkcGF0aCIgIiR1cmwiIHx8
+IGV4aXQKCQkJc3Vic2hhMT0KCQllbHNlCgkJCXN1YnNoYTE9JCh1bnNldCBHSVRfRElSICYmIGNk
+ICIkcGF0aCIgJiYKCQkJCWdpdCByZXYtcGFyc2UgLS12ZXJpZnkgSEVBRCkgfHwKCQkJZGllICJV
+bmFibGUgdG8gZmluZCBjdXJyZW50IHJldmlzaW9uIGluIHN1Ym1vZHVsZSBwYXRoICckcGF0aCci
+CgkJZmkKCgkJaWYgdGVzdCAiJHN1YnNoYTEiICE9ICIkc2hhMSIKCQl0aGVuCgkJCSh1bnNldCBH
+SVRfRElSICYmIGNkICIkcGF0aCIgJiYgZ2l0LWZldGNoICYmCgkJCQlnaXQtY2hlY2tvdXQgLXEg
+IiRzaGExIikgfHwKCQkJZGllICJVbmFibGUgdG8gY2hlY2tvdXQgJyRzaGExJyBpbiBzdWJtb2R1
+bGUgcGF0aCAnJHBhdGgnIgoKCQkJc2F5ICJTdWJtb2R1bGUgcGF0aCAnJHBhdGgnOiBjaGVja2Vk
+IG91dCAnJHNoYTEnIgoJCWZpCglkb25lCn0KCnNldF9uYW1lX3JldiAoKSB7CglyZXZuYW1lPSQo
+ICgKCQl1bnNldCBHSVRfRElSICYmCgkJY2QgIiQxIiAmJiB7CgkJCWdpdCBkZXNjcmliZSAiJDIi
+IDI+L2Rldi9udWxsIHx8CgkJCWdpdCBkZXNjcmliZSAtLXRhZ3MgIiQyIiAyPi9kZXYvbnVsbCB8
+fAoJCQlnaXQgZGVzY3JpYmUgLS1jb250YWlucyAtLXRhZ3MgIiQyIgoJCX0KCSkgKQoJdGVzdCAt
+eiAiJHJldm5hbWUiIHx8IHJldm5hbWU9IiAoJHJldm5hbWUpIgp9CgojCiMgTGlzdCBhbGwgc3Vi
+bW9kdWxlcywgcHJlZml4ZWQgd2l0aDoKIyAgLSBzdWJtb2R1bGUgbm90IGluaXRpYWxpemVkCiMg
+ICsgZGlmZmVyZW50IHJldmlzaW9uIGNoZWNrZWQgb3V0CiMKIyBJZiAtLWNhY2hlZCB3YXMgc3Bl
+Y2lmaWVkIHRoZSByZXZpc2lvbiBpbiB0aGUgaW5kZXggd2lsbCBiZSBwcmludGVkCiMgaW5zdGVh
+ZCBvZiB0aGUgY3VycmVudGx5IGNoZWNrZWQgb3V0IHJldmlzaW9uLgojCiMgJEAgPSByZXF1ZXN0
+ZWQgcGF0aHMgKGRlZmF1bHQgdG8gYWxsKQojCm1vZHVsZXNfbGlzdCgpCnsKCWdpdCBscy1maWxl
+cyAtLXN0YWdlIC0tICIkQCIgfCBncmVwIC1lICdeMTYwMDAwICcgfAoJd2hpbGUgcmVhZCBtb2Rl
+IHNoYTEgc3RhZ2UgcGF0aAoJZG8KCQluYW1lPSQobW9kdWxlX25hbWUgIiRwYXRoIikgfHwgZXhp
+dAoJCXVybD0kKGdpdCBjb25maWcgc3VibW9kdWxlLiIkbmFtZSIudXJsKQoJCWlmIHRlc3QgLXog
+InVybCIgfHwgISB0ZXN0IC1kICIkcGF0aCIvLmdpdAoJCXRoZW4KCQkJc2F5ICItJHNoYTEgJHBh
+dGgiCgkJCWNvbnRpbnVlOwoJCWZpCgkJc2V0X25hbWVfcmV2ICIkcGF0aCIgIiRzaGExIgoJCWlm
+IGdpdCBkaWZmLWZpbGVzIC0tcXVpZXQgLS0gIiRwYXRoIgoJCXRoZW4KCQkJc2F5ICIgJHNoYTEg
+JHBhdGgkcmV2bmFtZSIKCQllbHNlCgkJCWlmIHRlc3QgLXogIiRjYWNoZWQiCgkJCXRoZW4KCQkJ
+CXNoYTE9JCh1bnNldCBHSVRfRElSICYmIGNkICIkcGF0aCIgJiYgZ2l0IHJldi1wYXJzZSAtLXZl
+cmlmeSBIRUFEKQoJCQkJc2V0X25hbWVfcmV2ICIkcGF0aCIgIiRzaGExIgoJCQlmaQoJCQlzYXkg
+Iiskc2hhMSAkcGF0aCRyZXZuYW1lIgoJCWZpCglkb25lCn0KCiMgU2ltcGx5IGNoZWNrcyB3aGV0
+aGVyIHRoZSBzdWJtb2R1bGUgaXMgaW5pdGlhbGl6ZWQKIyBvciBub3QuIElmIG5vdCBpbml0aWFs
+aXplZCBpdCBkb2VzIHNvLgppbml0aWFsaXplU3ViTW9kdWxlKCkgewoJaWYgWyAhIC1kICIkMSIv
+LmdpdCBdOyB0aGVuCgkJaWYgWyAkcmVjdXJzZV92ZXJib3NlIC1lcSAxIF07IHRoZW4KCQkJZWNo
+byBJbml0aWFsaXppbmcgYW5kIHVwZGF0aW5nICIkMSIKCQlmaQoJCWdpdC1zdWJtb2R1bGUgaW5p
+dCAiJDEiOyBnaXQtc3VibW9kdWxlIHVwZGF0ZSAiJDEiCglmaQp9CgojIFRoaXMgYWN0dWFsbHkg
+dHJhdmVyc2VzIHRoZSBtb2R1bGU7IGNoZWNrcwojIHdoZXRoZXIgdGhlIG1vZHVsZSBpcyBpbml0
+aWFsaXplZCBvciBub3QuCiMgaWYgbm90IGluaXRpYWxpemVkLCB0aGVuIGRvbmUgc28gYW5kIHRo
+ZW4gdGhlCiMgaW50ZW5kZWQgY29tbWFuZCBpcyBldmFsdWF0ZWQuIFRoZW4gaXQKIyByZWN1cnNp
+dmVseSBnb2VzIGludG8gaXQgbW9kdWxlcy4KdHJhdmVyc2VNb2R1bGUoKSB7CgljdXJyZW50X2Rp
+cj1gcHdkYAoJZGlyX3BhdGg9IiRjdXJyZW50X2RpcjokZGlyX3BhdGgiCglpbml0aWFsaXplU3Vi
+TW9kdWxlICIkMSIKICAgICAgICBjZCAiJDEiCglpZiBbICRyZWN1cnNlX3ZlcmJvc2UgLWVxIDEg
+XTsgdGhlbgoJCWVjaG8gV29ya2luZyBpbiBtb2QgJDEgQCBgcHdkYCB3aXRoICQyCglmaQogICAg
+ICAgIGV2YWwgIiQyIgoJaWYgWyAtZiAuZ2l0bW9kdWxlcyBdOyB0aGVuCiAgICAgICAgICAgICAg
+ICBmb3IgbW9kX3BhdGggaW4gYGdyZXAgInBhdGggPSIgLmdpdG1vZHVsZXMgfCBhd2sgJ3twcmlu
+dCAkM30nYDsgZG8KICAgICAgICAgICAgICAgICAgICAgICAgdHJhdmVyc2VNb2R1bGUgIiRtb2Rf
+cGF0aCIgIiQyIgogICAgICAgICAgICAgICAgZG9uZQogICAgICAgIGZpCglvbGRfZGlyPSQoZWNo
+byAkZGlyX3BhdGggfCBjdXQgLWQnOicgLWYxLTEpCglsZW5ndGhfb2xkX2Rpcj1gZXhwciAiJG9s
+ZF9kaXIiIDogJy4qJ2AKCWNkICRvbGRfZGlyCglpbmRleD0kKGVjaG8gIiRsZW5ndGhfb2xkX2Rp
+cisyIiB8IGJjKQoJZGlyX3BhdGg9YGVjaG8gJGRpcl9wYXRoICRpbmRleCB8IGF3ayAne3ByaW50
+IHN1YnN0cigkMSwgJDIpfSdgCn0KCiMgUHJvcGFnYXRlcyBvciByZWN1cnNlcyBvdmVyIGFsbCB0
+aGUgc3VibW9kdWxlcyBhdCBhbnkgCiMgZGVwdGggd2l0aCBhbnkgZ2l0IGNvbW1hbmQsIGUuZy4g
+Z2l0LWNsb25lLCBnaXQtc3RhdHVzLAojIGdpdC1jb21taXQgZXRjLiwgd2l0aCB0aGUgYXJndW1l
+bnRzIHN1cHBsaWVkIGV4YWN0bHkgYXMKIyBpdCB3b3VsZCBoYXZlIGJlZW4gc3VwcGxpZWQgdG8g
+dGhlIGNvbW1hbmQgb3RoZXJ3aXNlLgojIFRoaXMgYWN0dWFsbHkgc3RhcnRzIHRoZSByZWN1cnNp
+dmUgcHJvcGFnYXRpb24KcHJvcGFnYXRlKCkgewoJcHJvamVjdF9ob21lPWBwd2RgCgllY2hvIFBy
+b2plY3QgSG9tZTogJHByb2plY3RfaG9tZQoJaWYgWyAtZCAkcHJvamVjdF9ob21lLy5naXQvIF07
+IHRoZW4KCQlnaXRfY29tbWFuZD0kMQoJCXNoaWZ0CgkJY29tbWFuZF9hcmd1bWVudHM9IiIKCQlm
+b3IgYXJnIGluICIkQCI7IGRvCgkJCWlmIFsgYGV4cHIgaW5kZXggIiRhcmciICcgJ2AgLWd0IDAg
+XTsgdGhlbgoJCQkJYXJnPSJcIiRhcmdcIiIKCQkJZmkgCgkJCWNvbW1hbmRfYXJndW1lbnRzPSIk
+Y29tbWFuZF9hcmd1bWVudHMgJGFyZyIKCQlkb25lCgkJaWYgWyAkcmVjdXJzZV92ZXJib3NlIC1l
+cSAxIF07IHRoZW4KCQkJZWNobyBHSVQgQ29tbWFuZCBnaXQtJGdpdF9jb21tYW5kIHdpdGggYXJn
+dW1lbnRzXCgkI1wpICIkY29tbWFuZF9hcmd1bWVudHMiCgkJZmkKCQltYWluX2NvbW1hbmQ9Imdp
+dC0kZ2l0X2NvbW1hbmQgJGNvbW1hbmRfYXJndW1lbnRzIgoJCWV2YWwgJG1haW5fY29tbWFuZAoJ
+CWlmIFsgLWYgLmdpdG1vZHVsZXMgXTsgdGhlbgoJCQlmb3IgbW9kX3BhdGggaW4gYGdyZXAgInBh
+dGggPSIgLmdpdG1vZHVsZXMgfCBhd2sgJ3twcmludCAkM30nYDsgZG8KCQkJCXRyYXZlcnNlTW9k
+dWxlICRtb2RfcGF0aCAiJG1haW5fY29tbWFuZCIKCQkJZG9uZQoJCWZpCgllbHNlCgkJZWNobyAk
+cHJvamVjdF9ob21lIG5vdCBhIGdpdCByZXBvIHRodXMgZXhpdGluZwoJCWV4aXQKCWZpCn0KCnJl
+Y3Vyc2VfdmVyYm9zZT0wCndoaWxlIHRlc3QgJCMgIT0gMApkbwoJY2FzZSAiJDEiIGluCglhZGQp
+CgkJYWRkPTEKCQk7OwoJaW5pdCkKCQlpbml0PTEKCQk7OwoJdXBkYXRlKQoJCXVwZGF0ZT0xCgkJ
+OzsKCXN0YXR1cykKCQlzdGF0dXM9MQoJCTs7CgktcXwtLXF1aWV0KQoJCXF1aWV0PTEKCQk7OwoJ
+LWJ8LS1icmFuY2gpCgkJY2FzZSAiJDIiIGluCgkJJycpCgkJCXVzYWdlCgkJCTs7CgkJZXNhYwoJ
+CWJyYW5jaD0iJDIiOyBzaGlmdAoJCTs7CgktLWNhY2hlZCkKCQljYWNoZWQ9MQoJCTs7CgktLSkK
+CQlicmVhawoJCTs7CgktKikKCQl1c2FnZQoJCTs7CglyZWN1cnNlKQoJCXJlY3Vyc2U9MQoJCWNh
+c2UgIiQyIiBpbgoJCQktdikKCQkJCXJlY3Vyc2VfdmVyYm9zZT0xCgkJCQlzaGlmdAoJCQkJOzsK
+CQllc2FjCgkJc2hpZnQKCQlicmVhawoJCTs7CgkqKQoJCWJyZWFrCgkJOzsKCWVzYWMKCXNoaWZ0
+CmRvbmUKCmNhc2UgIiRhZGQsJGJyYW5jaCIgaW4KMSwqKQoJOzsKLCkKCTs7CiwqKQoJdXNhZ2UK
+CTs7CmVzYWMKCgpjYXNlICIkYWRkLCRpbml0LCR1cGRhdGUsJHJlY3Vyc2UsJHN0YXR1cywkY2Fj
+aGVkIiBpbgoxLCwsLCwpCgltb2R1bGVfYWRkICIkQCIKCTs7CiwxLCwsLCkKCW1vZHVsZXNfaW5p
+dCAiJEAiCgk7OwosLDEsLCwpCgltb2R1bGVzX3VwZGF0ZSAiJEAiCgk7OwosLCwxLCwpCglwcm9w
+YWdhdGUgIiRAIgoJOzsKLCwsLCosKikKCW1vZHVsZXNfbGlzdCAiJEAiCgk7OwoqKQoJdXNhZ2UK
+CTs7CmVzYWMK
+------=_Part_31513_21338067.1199762059763--
