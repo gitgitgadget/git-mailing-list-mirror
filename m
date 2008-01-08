@@ -1,70 +1,84 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: Cover letter
-Date: Tue, 8 Jan 2008 14:13:46 +0100
-Message-ID: <4d8e3fd30801080513q4402b776kfd587c7c558b1f8a@mail.gmail.com>
-References: <4d8e3fd30801080452g71c3d3dx39f2ec805239ef01@mail.gmail.com>
-	 <478375FB.405@isy.liu.se>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH 1/3] git.el: Make sure we never insert the same file twice.
+Date: Tue, 08 Jan 2008 14:45:46 +0100
+Message-ID: <873at8jur9.fsf@wine.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Gustaf Hendeby" <hendeby@isy.liu.se>
-X-From: git-owner@vger.kernel.org Tue Jan 08 14:14:19 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 08 14:46:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCEHZ-00068Z-Df
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 14:14:17 +0100
+	id 1JCEma-0007Jw-MI
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 14:46:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754349AbYAHNNu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2008 08:13:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754281AbYAHNNt
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 08:13:49 -0500
-Received: from nz-out-0506.google.com ([64.233.162.226]:53975 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752092AbYAHNNt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2008 08:13:49 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so1801508nze.1
-        for <git@vger.kernel.org>; Tue, 08 Jan 2008 05:13:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=fMERGn6LFnUS6X+DIStG/zYzCITeULtc/jHhYa9Nx+E=;
-        b=o01Hx99yBKUSOBqV+XFNu2zH9D/5apfk4gZcAbUQV2cg82VlkCjAVv2v9A2YMIuh1vcLnW9YBGG7Zpu2AAOf6aVrWQFcKs3P0Tq/+0h2sl+dqdaBRQM6ESUaknL6x63IPTJ5vzVxB7gv8LdDLb0HvaKTikPquQMKZ+NKF+UQH5A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VtQNpW9BD7hWNCrRZJ6AuH80Q4S2VJsDtegBExbc/KYKSpzW4xI+vdHz3MKpO5qQgFF9KedVvrBD2p+WWvmxQj0rR7/O3C1Ts9pwGNQO7PaeeGplggPOYFvI0EP/nOPp0pdXKqBf1wGMOxAbv/DisvFrq4ElTNqemlacSCu9tgg=
-Received: by 10.142.105.14 with SMTP id d14mr998206wfc.67.1199798026112;
-        Tue, 08 Jan 2008 05:13:46 -0800 (PST)
-Received: by 10.143.162.9 with HTTP; Tue, 8 Jan 2008 05:13:46 -0800 (PST)
-In-Reply-To: <478375FB.405@isy.liu.se>
-Content-Disposition: inline
+	id S1753735AbYAHNpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 08:45:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756362AbYAHNpw
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 08:45:52 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:38247 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753735AbYAHNpw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 08:45:52 -0500
+Received: from adsl-62-167-25-224.adslplus.ch ([62.167.25.224] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1JCEm5-000230-Bf
+	for git@vger.kernel.org; Tue, 08 Jan 2008 07:45:50 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id B14621E7166; Tue,  8 Jan 2008 14:45:46 +0100 (CET)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+X-Spam-Score: -2.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69877>
 
-On Jan 8, 2008 2:09 PM, Gustaf Hendeby <hendeby@isy.liu.se> wrote:
-> > This is working fine but since I'm going to push out a queue of patches
-> > it would be nicer to script everything with git-send-email.
-> >
-> > I know I have to configure git in order to use the gmail's smtp server,
-> > I know how to tell git-send-email where to pick up the patches but I fail
-> > to understand how I can write a cover letter and let it be part of the patch
-> > queue.
->
-> Use the switch --compose to git send-email, that should open up an
-> editor and let you write a cover letter to go with the patches.
+Skip non-zero stage files during git-ls-files -c, they are handled
+later. Also fix git-insert-info-list to merge duplicate file names.
 
-Not enough coffe :-)
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ contrib/emacs/git.el |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-The option is there and well documented.
-Thanks Gustaf.
-
-Ciao,
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 9a0f03f..885ad20 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -608,7 +608,7 @@ and returns the process output as a string."
+     (while info
+       (setf (git-fileinfo->needs-refresh info) t)
+       (cond ((not node)
+-             (ewoc-enter-last status info)
++             (setq node (ewoc-enter-last status info))
+              (setq info (pop infolist)))
+             ((string-lessp (git-fileinfo->name (ewoc-data node))
+                            (git-fileinfo->name info))
+@@ -620,7 +620,7 @@ and returns the process output as a string."
+               (setf (ewoc-data node) info)
+               (setq info (pop infolist)))
+             (t
+-             (ewoc-enter-before status node info)
++             (setq node (ewoc-enter-before status node info))
+              (setq info (pop infolist)))))))
+ 
+ (defun git-run-diff-index (status files)
+@@ -677,7 +677,7 @@ Return the list of files that haven't been handled."
+     (with-temp-buffer
+       (apply #'git-call-process-env t nil "ls-files" "-z" "-s" "-c" "--" files)
+       (goto-char (point-min))
+-      (while (re-search-forward "\\([0-7]\\{6\\}\\) [0-9a-f]\\{40\\} [0-3]\t\\([^\0]+\\)\0" nil t)
++      (while (re-search-forward "\\([0-7]\\{6\\}\\) [0-9a-f]\\{40\\} 0\t\\([^\0]+\\)\0" nil t)
+ 	(let* ((new-perm (string-to-number (match-string 1) 8))
+ 	       (old-perm (if (eq default-state 'added) 0 new-perm))
+ 	       (name (match-string 2)))
 -- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
+1.5.4.rc2.71.ge10a9
+
+-- 
+Alexandre Julliard
+julliard@winehq.org
