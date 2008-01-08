@@ -1,62 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Documentation: config: add 'help.*' and 'instaweb.*'
- variables.
-Date: Tue, 8 Jan 2008 10:32:39 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801081030580.10101@racer.site>
-References: <20080108045514.1a506761.chriscool@tuxfamily.org> <7vmyrgx26h.fsf@gitster.siamese.dyndns.org> <200801080843.35693.chriscool@tuxfamily.org> <7vabngwyra.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: CRLF problems with Git on Win32
+Date: Tue, 08 Jan 2008 02:35:13 -0800
+Message-ID: <7v4pdovc4e.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se>
+	<200801071947.28586.robin.rosenberg.lists@dewire.com>
+	<alpine.LSU.1.00.0801071915470.10101@racer.site>
+	<200801072203.23938.robin.rosenberg.lists@dewire.com>
+	<alpine.LSU.1.00.0801072115120.10101@racer.site>
+	<3B08AC4C-A807-4155-8AD7-DC6A6D0FE134@zib.de>
+	<7vzlvhxpda.fsf@gitster.siamese.dyndns.org>
+	<5310CD2F-C3B4-404A-9C2E-1D3084B5CC96@zib.de>
+	<7vejcswzad.fsf@gitster.siamese.dyndns.org>
+	<20080108100818.GA17205@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 08 11:33:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 08 11:35:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCBlq-00041n-UR
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 11:33:23 +0100
+	id 1JCBoH-0004gS-F1
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 11:35:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752091AbYAHKcz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2008 05:32:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751902AbYAHKcz
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 05:32:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51904 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750768AbYAHKcy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2008 05:32:54 -0500
-Received: (qmail invoked by alias); 08 Jan 2008 10:32:52 -0000
-Received: from host86-149-202-249.range86-149.btcentralplus.com (EHLO [192.168.1.3]) [86.149.202.249]
-  by mail.gmx.net (mp006) with SMTP; 08 Jan 2008 11:32:52 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+aMJsKQ1iaXDJgEL8qmfJDUEH4/SOG9nJFXA4/rz
-	TdKEE5gcazXnr0
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vabngwyra.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753429AbYAHKfX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 05:35:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753331AbYAHKfX
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 05:35:23 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61191 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751902AbYAHKfW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 05:35:22 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 904E6996D;
+	Tue,  8 Jan 2008 05:35:19 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 02D699965;
+	Tue,  8 Jan 2008 05:35:14 -0500 (EST)
+In-Reply-To: <20080108100818.GA17205@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 8 Jan 2008 05:08:18 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69860>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-On Mon, 7 Jan 2008, Junio C Hamano wrote:
+> On Mon, Jan 07, 2008 at 11:29:30PM -0800, Junio C Hamano wrote:
+>
+>> Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org> writes:
+>
+> I'm not sure what's causing it, but all of the addresses in your message
+> (including cc headers) got munged.
 
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> 
-> > By the way I had no comment on my RFC/Patch to run the test scripts 
-> > under valgrind. Maybe it's useless because it doesn't find any bug 
-> > right now.
-> 
-> I found it interesting myself.  I did not know how well it fits into the 
-> rest of the testing infrastructure, though.  Perhaps you would want to 
-> reopen the issue after 1.5.4?
+I think Steffen's original got munged (I just replied to it) by
+gmane's mail relaying interface.
 
-I meant to rewrite it as a patch to test-lib.sh, because I found the use 
-of perl not necessary.  Besides, I would like to integrate it better, i.e. 
-"make USE_VALGRIND=yes" or "make USE_VALGRIND=t1501:2".
+>> > I'm asking the last question because every Unix developer should
+>> > think about the option, too.  Neither Unix or Windows are causing
+>> > the problem alone.
+>> 
+>> That's the logical conclusion.
+>> 
+>> If you are introducing crlf = warn, that means you are declaring
+>> that CRLF should be treated as a disease, and that should apply
+>> everywhere, not just on Windows (which some people may consider
+>> a disease itself, but that is a separate topic).
+>
+> It's unclear to me: is such a warning only supposed to happen when we
+> see CRLF _after_ we have determined that a file is not actually binary?
 
-Ciao,
-Dscho
+Oh, I agree.  I thought that was what Steffen was proposing.
