@@ -1,52 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: config: add 'help.*' and 'instaweb.*' variables.
-Date: Mon, 07 Jan 2008 23:40:57 -0800
-Message-ID: <7vabngwyra.fsf@gitster.siamese.dyndns.org>
-References: <20080108045514.1a506761.chriscool@tuxfamily.org>
-	<7vmyrgx26h.fsf@gitster.siamese.dyndns.org>
-	<200801080843.35693.chriscool@tuxfamily.org>
+From: =?ISO-8859-1?Q?Gonzalo_Garramu=F1o?= <ggarra@advancedsl.com.ar>
+Subject: git-diff across branches?
+Date: Tue, 08 Jan 2008 05:44:14 -0300
+Message-ID: <478337DE.7@advancedsl.com.ar>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Jan 08 08:41:41 2008
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 08 09:42:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JC95f-000399-Ev
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 08:41:39 +0100
+	id 1JCA2q-0001Hr-TN
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 09:42:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751989AbYAHHlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2008 02:41:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750716AbYAHHlN
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 02:41:13 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37940 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750707AbYAHHlM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2008 02:41:12 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A422F3834;
-	Tue,  8 Jan 2008 02:41:10 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 612273831;
-	Tue,  8 Jan 2008 02:41:06 -0500 (EST)
-In-Reply-To: <200801080843.35693.chriscool@tuxfamily.org> (Christian Couder's
-	message of "Tue, 8 Jan 2008 08:43:35 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750962AbYAHImN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jan 2008 03:42:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750776AbYAHImN
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 03:42:13 -0500
+Received: from gulana.terra.com ([66.119.66.229]:51937 "EHLO gulana.terra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750696AbYAHImN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 03:42:13 -0500
+Received: from feluga.terra.com (feluga.terra.com [66.119.66.183])
+	by gulana.terra.com (Postfix) with ESMTP id 5E2E010CC10A
+	for <git@vger.kernel.org>; Tue,  8 Jan 2008 03:42:09 -0500 (EST)
+X-Terra-Karma: 0%
+X-Terra-Hash: 7179eae481ebb6a2af1f0630c7954a67
+Received-SPF: none (feluga.terra.com: 66.119.66.183 is neither permitted nor denied by domain of advancedsl.com.ar) client-ip=66.119.66.183; envelope-from=ggarra@advancedsl.com.ar; helo=[192.168.1.3];
+Received: from [192.168.1.3] (unknown [201.255.32.186])
+	(authenticated user ggarra@advancedsl.com.ar)
+	by feluga.terra.com (Postfix) with ESMTP id 5B5DC2E2931
+	for <git@vger.kernel.org>; Tue,  8 Jan 2008 03:41:52 -0500 (EST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69848>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
 
-> By the way I had no comment on my RFC/Patch to run the test scripts under 
-> valgrind. Maybe it's useless because it doesn't find any bug right now.
+I was wondering if there was a way to make a git-diff across (local)=20
+branches.
 
-I found it interesting myself.  I did not know how well it fits
-into the rest of the testing infrastructure, though.  Perhaps
-you would want to reopen the issue after 1.5.4?
+Something like:
+
+$ git-diff --branch test1 HEAD --branch test2 HEAD  file.cpp
+(would show a diff for file.cpp between test1 HEAD and test2 HEAD)
+
+
+
+--=20
+Gonzalo Garramu=F1o
+ggarra@advancedsl.com.ar
+
+AMD4400 - ASUS48N-E
+GeForce7300GT
+Xubuntu Gutsy
