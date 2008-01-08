@@ -1,103 +1,124 @@
-From: "Kelvie Wong" <kelvie@ieee.org>
-Subject: Re: CRLF problems with Git on Win32
-Date: Tue, 8 Jan 2008 07:58:35 -0800
-Message-ID: <94ccbe710801080758s5913a3b8x4e17dfba1a5bc387@mail.gmail.com>
-References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se>
-	 <200801071947.28586.robin.rosenberg.lists@dewire.com>
-	 <alpine.LSU.1.00.0801071915470.10101@racer.site>
-	 <200801072203.23938.robin.rosenberg.lists@dewire.com>
-	 <20080107224204.55539c31@jaiman>
-	 <Pine.LNX.4.64.0801081150010.25629@ds9.cixit.se>
-	 <eaa105840801080507j1b748fy6fdff8b240cf8c33@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: An interaction with ce_match_stat_basic() and autocrlf
+Date: Tue, 8 Jan 2008 08:10:11 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801080748080.3148@woody.linux-foundation.org>
+References: <7vfxx8tt1z.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Peter Karlsson" <peter@softwolves.pp.se>, git@vger.kernel.org
-To: "Peter Harris" <peter@peter.is-a-geek.org>
-X-From: git-owner@vger.kernel.org Tue Jan 08 16:59:14 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 08 17:11:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCGr6-0001Jv-WD
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 16:59:09 +0100
+	id 1JCH3S-0007bv-CA
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 17:11:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752813AbYAHP6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2008 10:58:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758108AbYAHP6h
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 10:58:37 -0500
-Received: from wa-out-1112.google.com ([209.85.146.182]:37768 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757901AbYAHP6g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2008 10:58:36 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so13268405wah.23
-        for <git@vger.kernel.org>; Tue, 08 Jan 2008 07:58:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=s94shc/UNL3V2E/CQ16at68g01aRT6dBb8LhpzjpLv8=;
-        b=LpWiYVc0OZhYDuGnqG0p4RD6ivRL8BPZz0DEQ+IswMGWwYjSbis2jOaRZnVpIycIKzD+1yq3o28+gSlS7BW6JMtlTxIeiISNRnHD4DhKvYEcVqPtM2rCLc6BHURCsZqcDqs2O1CFfpmiQG7hAuMOG9R0ezUGSNGIqfr5WVYHA94=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=QPoIHiP24yh/6lhAlnq1GTpSX2gItamIxic6Wg5OvIn4tIONC8j6dJtKHNCDl9n8+xqI9Pmfp/NV9sc0OBZ4kwwfli5R5uN2CeZDHmRk7R+DgI+K3G8cuosm773TQfZECktPCdZFNDlzL2GnhMfSMyvwAFqxJoUqTyK11eDGeqE=
-Received: by 10.114.179.1 with SMTP id b1mr990385waf.143.1199807915765;
-        Tue, 08 Jan 2008 07:58:35 -0800 (PST)
-Received: by 10.114.149.15 with HTTP; Tue, 8 Jan 2008 07:58:35 -0800 (PST)
-In-Reply-To: <eaa105840801080507j1b748fy6fdff8b240cf8c33@mail.gmail.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: c7f3ff2f46c73fb6
+	id S1750993AbYAHQL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 11:11:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752093AbYAHQL0
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 11:11:26 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:41041 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750927AbYAHQL0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jan 2008 11:11:26 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m08GACnj017685
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 8 Jan 2008 08:10:13 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m08GAB6Y019657;
+	Tue, 8 Jan 2008 08:10:12 -0800
+In-Reply-To: <7vfxx8tt1z.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.722 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69887>
 
-On Jan 8, 2008 5:07 AM, Peter Harris <peter@peter.is-a-geek.org> wrote:
-> On Jan 8, 2008 5:56 AM, Peter Karlsson <peter@softwolves.pp.se> wrote:
-> > Thomas Neumann:
-> >
-> > > as a user, I expect a SCM to only modify a file when I have
-> > > explicitly asked it to do so.
-> >
-> > As a user, I exepect things to just work. With RCS/CVS/Subversion, it
-> > does, because it differentiates between text files (internally encoding
-> > NLs with "LF", but I couldn't care less what it uses there) and binary
-> > files (which it doesn't change). With git it currently doesn't since it
-> > treats everything as binary files.
->
-> Actually, Subversion does the Right Thing, and treats everything as a
-> binary file until and unless you explicitly set the svn:eol-style
-> property on each file that you want it to mangle.
->
-> Maybe you set up Subversion auto-props and forgot about it? That would
-> be almost (but not really) like setting autocrlf=true in your global
-> git config.
->
-> Peter Harris
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
 
-I'd actually like a feature like this.  On the internal subversion
-tree I'm working on (using git-svn), there are quite a bit of files
-that have CRLF endings -- we are a cross platform development group.
-The solution to this in subversion was that everyone had the same
-.subversion/config with a bunch of autoprops set; i.e.:
 
-[auto-props]
-*.H = svn:eol-style=native
-*.h = svn:eol-style=native
-*.CPP = svn:eol-style=native
-*.cpp = svn:eol-style=native
+On Tue, 8 Jan 2008, Junio C Hamano wrote:
+> 
+> This is caused partly by the breakage in size_only codepath of
+> diff.c::diff_populate_filespec().
 
-and I can't do the same using git-svn.  Thankfully emacs detects CRLFs
-and adjusts accordingly, and that's my workaround for it, but it would
-be nice to have some kind of gitattribute that allows you to set the
-autocrlf according to a filter.
+Only partially.
 
--- 
-Kelvie Wong
+The more fundamental behaviour (that of git update-index) is caused by 
+ie_modified() thinking that when DATA_CHANGED is true, it cannot possibly 
+need to call "ce_modified_check_fs()":
+
+>From ie_modified():
+
+        /* Immediately after read-tree or update-index --cacheinfo,
+         * the length field is zero.  For other cases the ce_size
+         * should match the SHA1 recorded in the index entry.
+         */
+        if ((changed & DATA_CHANGED) && ce->ce_size != htonl(0))
+                return changed;
+
+and that DATA_CHANGED comes from ce_match_stat_basic() which notices that 
+the size has changed.
+
+Similarly, I think that the problem with "diff" not realizing they might 
+be the same comes from ie_match_stat(), which has a similar problem in not 
+realizing that DATA_CHANGED could possibly still mean that it's the same.
+
+This patch should fix it, but I suspect we should think hard about that 
+change to ie_modified(), and see what the performance issues are (ie that 
+code has tried to avoid doing the more expensive ce_modified_check_fs() 
+for a reason).
+
+The change to diff.c is similarly interesting. It is logically wrong to 
+use the worktree_file there (since we have to read the object anyway), but 
+since "reuse_worktree_file" is also tied into the whole refresh logic, I 
+think the diff.c change is correct.
+
+I dunno. This is not meant to be applied, it is meant to be thought about.
+
+		Linus
+
+---
+ diff.c       |    2 +-
+ read-cache.c |    2 ++
+ 2 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index b18c140..9f699b7 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1512,7 +1512,7 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
+ 	ce = active_cache[pos];
+ 	if ((lstat(name, &st) < 0) ||
+ 	    !S_ISREG(st.st_mode) || /* careful! */
+-	    ce_match_stat(ce, &st, 0) ||
++	    ce_modified(ce, &st, 0) ||
+ 	    hashcmp(sha1, ce->sha1))
+ 		return 0;
+ 	/* we return 1 only when we can stat, it is a regular file,
+diff --git a/read-cache.c b/read-cache.c
+index 7db5588..e1fc880 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -253,12 +253,14 @@ int ie_modified(struct index_state *istate,
+ 	if (changed & (MODE_CHANGED | TYPE_CHANGED))
+ 		return changed;
+ 
++#if 0
+ 	/* Immediately after read-tree or update-index --cacheinfo,
+ 	 * the length field is zero.  For other cases the ce_size
+ 	 * should match the SHA1 recorded in the index entry.
+ 	 */
+ 	if ((changed & DATA_CHANGED) && ce->ce_size != htonl(0))
+ 		return changed;
++#endif
+ 
+ 	changed_fs = ce_modified_check_fs(ce, st);
+ 	if (changed_fs)
