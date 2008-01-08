@@ -1,102 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: CRLF problems with Git on Win32
-Date: Mon, 07 Jan 2008 23:29:30 -0800
-Message-ID: <7vejcswzad.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se>
-	<200801071947.28586.robin.rosenberg.lists@dewire.com>
-	<alpine.LSU.1.00.0801071915470.10101@racer.site>
-	<200801072203.23938.robin.rosenberg.lists@dewire.com>
-	<alpine.LSU.1.00.0801072115120.10101@racer.site>
-	<3B08AC4C-A807-4155-8AD7-DC6A6D0FE134@zib.de>
-	<7vzlvhxpda.fsf@gitster.siamese.dyndns.org>
-	<5310CD2F-C3B4-404A-9C2E-1D3084B5CC96@zib.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: A note from the maintainer
+Date: Tue, 08 Jan 2008 01:57:16 -0800 (PST)
+Message-ID: <m31w8socts.fsf@roke.D-201>
+References: <7vir24vgmy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds 
-	<public-torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@hugh.gmane.org>,
-	Johannes Schindelin 
-	<public-Johannes.Schindelin-Mmb7MZpHnFY@hugh.gmane.org>,
-	Robin Rosenberg 
-	<public-robin.rosenberg.lists-RgPrefM1rjDQT0dZR+AlfA@hugh.gmane.org>,
-	Jeff King <public-peff-AdEPDUrAXsQ@hugh.gmane.org>,
-	Peter Karlsson 
-	<public-peter-wzhfs8O2nkI+/KzbbBz5qQ@hugh.gmane.org>,
-	Git Mailing List 
-	<public-git-u79uwXL29TY76Z2rM5mHXA@hugh.gmane.org>,
-	msysGit <public-msysgit-/JYPxA39Uh5TLH3MbocFFw@hugh.gmane.org>
-To: public-prohaska-wjoc1KHpMeg@hugh.gmane.org
-X-From: git-owner@vger.kernel.org Tue Jan 08 10:48:57 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 08 10:58:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCB4q-0000kb-VH
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 10:48:57 +0100
+	id 1JCBDf-00033Z-Rg
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 10:58:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752935AbYAHJs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2008 04:48:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756411AbYAHJs3
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 04:48:29 -0500
-Received: from blaine.gmane.org ([80.91.229.8]:59387 "EHLO hugh.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751575AbYAHJs1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2008 04:48:27 -0500
-X-Greylist: delayed 2161 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Jan 2008 04:48:27 EST
-Received: from public by hugh.gmane.org with local (Exim 4.63)
-	(envelope-from <public@hugh.gmane.org>)
-	id 1JCAVR-0005va-LC
-	for git@vger.kernel.org; Tue, 08 Jan 2008 10:12:21 +0100
-Received: from public by hugh.gmane.org with local (Exim 4.63)
-	(envelope-from <gitster@pobox.com>)
-	id 1JCAUo-0005Qq-VF
-	for public-git-u79uwXL29TY76Z2rM5mHXA@hugh.gmane.org; Tue, 08 Jan 2008 10:11:42 +0100
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25] helo=sasl.smtp.pobox.com)
-	by hugh.gmane.org with esmtp (Exim 4.63)
-	(envelope-from <gitster@pobox.com>)
-	id 1JC8uF-0000Bo-V0; Tue, 08 Jan 2008 08:29:52 +0100
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B9A31CF7;
-	Tue,  8 Jan 2008 02:29:44 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6CE501CF6;
-	Tue,  8 Jan 2008 02:29:34 -0500 (EST)
-In-Reply-To: <5310CD2F-C3B4-404A-9C2E-1D3084B5CC96@zib.de> (Steffen Prohaska's
-	message of "Tue, 8 Jan 2008 08:02:47 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-X-TMDA-Confirmed: Tue, 08 Jan 2008 10:11:42 +0100
+	id S1751006AbYAHJ5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 04:57:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750951AbYAHJ5g
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 04:57:36 -0500
+Received: from mu-out-0910.google.com ([209.85.134.191]:26407 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750857AbYAHJ5T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 04:57:19 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so6627128mue.5
+        for <git@vger.kernel.org>; Tue, 08 Jan 2008 01:57:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=+e1Jm+1GZ1U35eyJkZ/jThKYLjNGIjCWA0FLsL5Z28g=;
+        b=USfY537Ve3Gnvr3YVaKPdR3v4JdIbpBdEsGYVSpcmaSQN4+qblm6FjBM7tYPmqunxZpKkA4t3XFYiklpaFb6SIxJUjF34v2+19V+CuttBN8nHgoVabyyaADcSABnXt7kUiUQPKQgzOo8HwCfFpyhCPIFJcEKIiVwRtPyCHl+guA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=Aou/OPVOg70qLAxxdXZc3xCn8fZR8s0qXAmVVG4CBgkKn6bSuurf4YCfJsxnukI8tRp/yEBIaVItjtHCWXbQM0L5vGIGWepKTaSlByukY5ihcbCij85DCqVFoR+GXCVdam1fgfaJ+csP4zJNBUXBawqdhuvT44W70+Jy1K/qimw=
+Received: by 10.78.131.8 with SMTP id e8mr24379779hud.52.1199786237105;
+        Tue, 08 Jan 2008 01:57:17 -0800 (PST)
+Received: from roke.D-201 ( [83.8.234.59])
+        by mx.google.com with ESMTPS id h1sm29543700nfh.20.2008.01.08.01.57.15
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 08 Jan 2008 01:57:16 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id m08A1rdm001841;
+	Tue, 8 Jan 2008 11:01:54 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m08A1qaY001838;
+	Tue, 8 Jan 2008 11:01:52 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <7vir24vgmy.fsf@gitster.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69854>
 
+Junio C Hamano <gitster@pobox.com> writes:
 
+> * IRC and Mailing list
+ 
+> When you point at a message in a mailing list archive, using
+> gmane is often the easiest to follow by readers, like this:
+> 
+>         http://thread.gmane.org/gmane.comp.version-control.git/27/focus=217
+> 
+> as it also allows people who subscribe to the mailing list as
+> gmane newsgroup to "jump to" the article.
 
+Isn't it better to give Message-ID (perhaps with addition to
+some archive URLs)? This way one can search his/her own mail
+archive; also (I think) all git mail archives support finding
+article with given Message-ID (e.g. http://mid.gmane.org/<msg-id>
+for GMane).
+ 
+> * Repositories, branches and documentation.
 
-Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org> writes:
+> There are four branches in git.git repository that track the
+> source tree of git: "master", "maint", "next", and "pu".  I may
+> add more maintenance branches (e.g. "maint-1.5.3") if we have
+> hugely backward incompatible feature updates in the future to keep
+> an older release alive; I may not, but the distributed nature of
+> git means any volunteer can run a stable-tree like that himself.
 
-> But core.autocrlf  = true has a slight danger of data corruption.
-> AFAIK, git's binary detection checks the first "few" bytes (with
-> few = 8000).  This may be sufficient in most case, but I already
-> met a file that was wrongly classified.  (A File format that
-> starts with a large ASCII header and has chunks of binary data
-> attached later.)
+What about "offcuts" branch?
 
-I presume that's where .gitattributes kicks in.
-
-> I like Linus' idea of "warn" or Gregory's "fail".
-
-Yeah, that feels like a sensible thing to do.
-
-> I'm asking the last question because every Unix developer should
-> think about the option, too.  Neither Unix or Windows are causing
-> the problem alone.
-
-That's the logical conclusion.
-
-If you are introducing crlf = warn, that means you are declaring
-that CRLF should be treated as a disease, and that should apply
-everywhere, not just on Windows (which some people may consider
-a disease itself, but that is a separate topic).
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
