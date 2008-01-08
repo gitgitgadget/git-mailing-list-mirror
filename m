@@ -1,75 +1,60 @@
-From: "Peter Harris" <peter@peter.is-a-geek.org>
-Subject: Re: CRLF problems with Git on Win32
-Date: Tue, 8 Jan 2008 08:07:15 -0500
-Message-ID: <eaa105840801080507j1b748fy6fdff8b240cf8c33@mail.gmail.com>
-References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se>
-	 <200801071947.28586.robin.rosenberg.lists@dewire.com>
-	 <alpine.LSU.1.00.0801071915470.10101@racer.site>
-	 <200801072203.23938.robin.rosenberg.lists@dewire.com>
-	 <20080107224204.55539c31@jaiman>
-	 <Pine.LNX.4.64.0801081150010.25629@ds9.cixit.se>
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: Re: Cover letter
+Date: Tue, 08 Jan 2008 14:09:15 +0100
+Message-ID: <478375FB.405@isy.liu.se>
+References: <4d8e3fd30801080452g71c3d3dx39f2ec805239ef01@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Peter Karlsson" <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Tue Jan 08 14:07:52 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 08 14:10:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCEBL-0004Ec-V0
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 14:07:52 +0100
+	id 1JCEDO-0004rF-Sh
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 14:09:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754246AbYAHNHT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2008 08:07:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753789AbYAHNHT
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 08:07:19 -0500
-Received: from fk-out-0910.google.com ([209.85.128.191]:20420 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751506AbYAHNHR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2008 08:07:17 -0500
-Received: by fk-out-0910.google.com with SMTP id z23so9116579fkz.5
-        for <git@vger.kernel.org>; Tue, 08 Jan 2008 05:07:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=HR5doLDF7h9IkQ+beFCXoBcK0AES1yFpjLZveIvMebg=;
-        b=qAhP9bIrkxYhqDXYGOwFG2GmDD3YQDkMCEDmnAKj/3TVJCSVO/HF81iCmrmo/Ci5gMEQz3kRwDIIB1Pdpo9UGd3L1NYAy0s1OLsDrzxwOcGYU9d3YITgOtpLpLDiN9VEp/W1H8bDOLdgKaYMLvzunpMaTuxsAW2JhqgZtaMSYGY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=U+ecxc2hUphf5ajRJGweXpkxsbuz6evkTHbhJgPynAw1MGQr2Hzm8k+wHjIrLxOHLErzGCKFqfXP37VUftJHtlagQCCmwS4jpx+SxFKKOe53OrZUo++Y2x3Ig135b3S/5JzFuT0vJTi9bCYQ7ilvFEMuw7kWodQGTfI5ZZ/OM2w=
-Received: by 10.78.159.7 with SMTP id h7mr577057hue.17.1199797635582;
-        Tue, 08 Jan 2008 05:07:15 -0800 (PST)
-Received: by 10.78.203.14 with HTTP; Tue, 8 Jan 2008 05:07:15 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0801081150010.25629@ds9.cixit.se>
-Content-Disposition: inline
-X-Google-Sender-Auth: 736425382e841313
+	id S1753661AbYAHNJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 08:09:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122AbYAHNJT
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 08:09:19 -0500
+Received: from bogotron.isy.liu.se ([130.236.48.26]:41962 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752184AbYAHNJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 08:09:18 -0500
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id E06C925A9B;
+	Tue,  8 Jan 2008 14:09:16 +0100 (MET)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 15479-04; Thu,  3 Jan 2008 00:53:57 +0100 (MET)
+Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 647D925A92;
+	Tue,  8 Jan 2008 14:09:16 +0100 (MET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <4d8e3fd30801080452g71c3d3dx39f2ec805239ef01@mail.gmail.com>
+X-Enigmail-Version: 0.95.6
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69875>
 
-On Jan 8, 2008 5:56 AM, Peter Karlsson <peter@softwolves.pp.se> wrote:
-> Thomas Neumann:
->
-> > as a user, I expect a SCM to only modify a file when I have
-> > explicitly asked it to do so.
->
-> As a user, I exepect things to just work. With RCS/CVS/Subversion, it
-> does, because it differentiates between text files (internally encoding
-> NLs with "LF", but I couldn't care less what it uses there) and binary
-> files (which it doesn't change). With git it currently doesn't since it
-> treats everything as binary files.
+> This is working fine but since I'm going to push out a queue of patches
+> it would be nicer to script everything with git-send-email.
+> 
+> I know I have to configure git in order to use the gmail's smtp server,
+> I know how to tell git-send-email where to pick up the patches but I fail
+> to understand how I can write a cover letter and let it be part of the patch
+> queue.
 
-Actually, Subversion does the Right Thing, and treats everything as a
-binary file until and unless you explicitly set the svn:eol-style
-property on each file that you want it to mangle.
+Use the switch --compose to git send-email, that should open up an 
+editor and let you write a cover letter to go with the patches.
 
-Maybe you set up Subversion auto-props and forgot about it? That would
-be almost (but not really) like setting autocrlf=true in your global
-git config.
-
-Peter Harris
+/Gustaf
