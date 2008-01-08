@@ -1,70 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Odd number of elements in anonymous hash
-Date: Tue, 08 Jan 2008 09:21:55 -0800
-Message-ID: <7vbq7wteq4.fsf@gitster.siamese.dyndns.org>
-References: <200801081738.56624.devurandom@gmx.net>
+From: "J. Bruce Fields" <bfields-uC3wQj2KruNg9hUCZPvPmw@public.gmane.org>
+Subject: Re: CRLF problems with Git on Win32
+Date: Tue, 8 Jan 2008 12:29:57 -0500
+Message-ID: <20080108172957.GG22155@fieldses.org>
+References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se> <200801071947.28586.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801071915470.10101@racer.site> <200801072203.23938.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801072115120.10101@racer.site> <3B08AC4C-A807-4155-8AD7-DC6A6D0FE134@zib.de>
+Reply-To: bfields-uC3wQj2KruNg9hUCZPvPmw@public.gmane.org
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dennis Schridde <devurandom@gmx.net>,
-	Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Jan 08 18:22:43 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>, Robin Rosenberg <robin.rosenberg.lists-RgPrefM1rjDQT0dZR+AlfA@public.gmane.org>, Jeff King <peff-AdEPDUrAXsQ@public.gmane.org>, Peter Karlsson <peter-wzhfs8O2nkI+/KzbbBz5qQ@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+To: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Tue Jan 08 18:30:41 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from ug-out-1516.google.com ([66.249.92.164])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCI9q-000158-KJ
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 18:22:35 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751744AbYAHRWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2008 12:22:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751765AbYAHRWF
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 12:22:05 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34360 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751744AbYAHRWE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2008 12:22:04 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6F55A1519;
-	Tue,  8 Jan 2008 12:22:01 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DD65B1515;
-	Tue,  8 Jan 2008 12:21:57 -0500 (EST)
-In-Reply-To: <200801081738.56624.devurandom@gmx.net> (Dennis Schridde's
-	message of "Tue, 8 Jan 2008 17:38:56 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+	id 1JCIHf-0003sQ-CA
+	for gcvm-msysgit@m.gmane.org; Tue, 08 Jan 2008 18:30:40 +0100
+Received: by ug-out-1516.google.com with SMTP id 1so1082857uga.9
+        for <gcvm-msysgit@m.gmane.org>; Tue, 08 Jan 2008 09:30:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=RkOuarIVp0QJrJR8Vab+Fr9qKVD263Xs/PuTXkEk5Aw=;
+        b=ug0VKvxd7oovuBhs2cITA41hUdF6uPZUL39a1vOl8hKelmtipU8kzTx9owYyhrYoqEO73o4bmNYL/E08m3SliUMLN9MXQ/lOKKbmUEZnF/e/eeMufOJT7xRRUN+FQRKRPp2yUfZu89q5teoc5XZ2YaHO/DDC27Ie01HRp0uaITg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=tGZBbiPyut4TNuSKHoeUOOQHdHN4UIeR9zKO3kSinx/qAFF1/wuKBfSWqifflOm2CxVTV1LHg6kEDThtHv70YO/e27bMaQpPiOktNkO+GRWoPe2NF3Mpdb1f3i5prCg2cXhJFINxbV8NTJFUdQJTWmDl8a8Ay5EJSY+u8X1XZqg=
+Received: by 10.82.169.4 with SMTP id r4mr41973bue.7.1199813412834;
+        Tue, 08 Jan 2008 09:30:12 -0800 (PST)
+Received: by 10.44.69.72 with SMTP id r72gr1320hsa;
+	Tue, 08 Jan 2008 09:30:12 -0800 (PST)
+X-Sender: bfields-uC3wQj2KruNg9hUCZPvPmw@public.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.64.21.6 with SMTP id 6mr47838478qbu.6.1199813412048; Tue, 08 Jan 2008 09:30:12 -0800 (PST)
+Received: from fieldses.org (mail.fieldses.org [66.93.2.214]) by mx.google.com with ESMTP id h49si29001890nzf.5.2008.01.08.09.30.11; Tue, 08 Jan 2008 09:30:12 -0800 (PST)
+Received-SPF: pass (google.com: best guess record for domain of bfields-uC3wQj2KruNg9hUCZPvPmw@public.gmane.org designates 66.93.2.214 as permitted sender) client-ip=66.93.2.214;
+Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of bfields-uC3wQj2KruNg9hUCZPvPmw@public.gmane.org designates 66.93.2.214 as permitted sender) smtp.mail=bfields-uC3wQj2KruNg9hUCZPvPmw@public.gmane.org
+Received: from bfields by fieldses.org with local (Exim 4.68) (envelope-from <bfields-uC3wQj2KruNg9hUCZPvPmw@public.gmane.org>) id 1JCIGz-0000Rr-NL; Tue, 08 Jan 2008 12:29:57 -0500
+Content-Disposition: inline
+In-Reply-To: <3B08AC4C-A807-4155-8AD7-DC6A6D0FE134-wjoc1KHpMeg@public.gmane.org>
+User-Agent: Mutt/1.5.17 (2007-12-11)
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69894>
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69895>
 
-Dennis Schridde <devurandom@gmx.net> writes:
 
-> Hello!
->
-> I am getting "Odd number of elements in anonymous hash at /usr/bin/git-svn 
-> line 1760." (normal output, no warning/error) during git-svn-clone.
-> I am using git version 1.5.4.rc2.
->
-> Line 1760 is this (with context, marked with '!!'):
->     # see if we have it in our config, first:
->     eval {
->         my $section = "svn-remote.$self->{repo_id}";
-> !!        $svnsync = {
->           url => tmp_config('--get', "$section.svnsync-url"),
->           uuid => tmp_config('--get', "$section.svnsync-uuid"),
->         }
->     };
->
-> The commandline was "git svn 
-> clone --authors-file=/var/git/org.gna.warzone.git/authors --use-svnsync-props --stdlayout 
-> file:///var/svn/warzone2100/ org.gna.warzone.git/"
->
-> I assume this is some kind of bug?
+On Mon, Jan 07, 2008 at 10:40:56PM +0100, Steffen Prohaska wrote:
+> Eventually I gave in and even voted for "Git does not modify
+> content unless explicitly requested otherwise".
+> 
+> Here's the full discussion:
+> 
+> http://code.google.com/p/msysgit/issues/detail?id=21
+> 
+> I believe the main question is which type of projects we would like
+> to support by our default.  For real cross-platform projects that will
+> be checked out on Windows and Unix we should choose
+> "core.autocrlf true" as our default.  But if our default are native
+> Windows projects that will never be checked out on Unix, then we
+> should not set core.autocrlf by default.
 
-More than one svn-remote.$your_repo.svnsync-{url,uuid}?
+If the policy really depends on the project, then surely the default
+behavior should be determined by information carried in the project
+itself (e.g., the .gitattributes)?
 
-(Eric CC'ed).
+For that reason it strikes me as a mistake to ignore the crlf attribute
+by default (assuming that is indeed the current behavior; apologies for
+not checking).  If crlf is set then I think it should be assumed that
+crlf conversion should be done unless that has been explicitly turned
+off somehow.
+
+--b.
