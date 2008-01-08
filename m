@@ -1,89 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: CRLF problems with Git on Win32
-Date: Tue, 08 Jan 2008 11:47:06 -0800
-Message-ID: <7vir24rtfp.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se>
-	<200801071947.28586.robin.rosenberg.lists@dewire.com>
-	<alpine.LSU.1.00.0801071915470.10101@racer.site>
-	<200801072203.23938.robin.rosenberg.lists@dewire.com>
-	<alpine.LSU.1.00.0801072115120.10101@racer.site>
-	<3B08AC4C-A807-4155-8AD7-DC6A6D0FE134@zib.de>
-	<20080108172957.GG22155@fieldses.org>
-	<CE10C08D-AAF1-44B5-89B5-9A16A4AB70EA@zib.de>
-	<7vmyrgry20.fsf@gitster.siamese.dyndns.org>
-	<02DC77F5-7465-418D-972E-0F76E56C3F75@zib.de>
-	<20080108190952.GK22155@fieldses.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 1/2] sideband.c: Use xmalloc() instead of variable-sized
+ arrays.
+Date: Tue, 08 Jan 2008 14:59:20 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0801081444360.3054@xanadu.home>
+References: <4783A3B2.3060801@viscovery.net>
+ <7v4pdotdtl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Jeff King <peff@peff.net>,
-	Peter Karlsson <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Tue Jan 08 20:47:55 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 08 20:59:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCKQT-000266-Jo
-	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 20:47:54 +0100
+	id 1JCKc1-0005rs-J6
+	for gcvg-git-2@gmane.org; Tue, 08 Jan 2008 20:59:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751289AbYAHTrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2008 14:47:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752820AbYAHTrZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 14:47:25 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34169 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750962AbYAHTrY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2008 14:47:24 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D4E8C60F;
-	Tue,  8 Jan 2008 14:47:22 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 755A0C57F;
-	Tue,  8 Jan 2008 14:47:08 -0500 (EST)
-In-Reply-To: <20080108190952.GK22155@fieldses.org> (J. Bruce Fields's message
-	of "Tue, 8 Jan 2008 14:09:52 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752157AbYAHT7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 14:59:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751860AbYAHT7W
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 14:59:22 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:32237 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751695AbYAHT7V (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 14:59:21 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JUC007TLCUWFM40@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 08 Jan 2008 14:59:20 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7v4pdotdtl.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69907>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
+On Tue, 8 Jan 2008, Junio C Hamano wrote:
 
-> On Tue, Jan 08, 2008 at 07:58:57PM +0100, Steffen Prohaska wrote:
->> ...
->> I don't think a solution will be found by declaring one platform
->> native (UNIX) and all other platform non-native.  The question to
->> answer is how to support cross-platform projects.  A valid
->> solution should never corrupt data unless the user explicitly
->> told git to do so.
->
-> My only suggestion is that we consider allowing the user that
-> "explicitly told git to do so" be the project maintainer.  So if you
->
-> 	echo * autodetectcrlf >.gitattributes
-> 	git add .gitattributes
-> 	git commit
->
-> then users that clone your repo will get that default without having to
-> be told to do something magic on clone.
->
-> (And ideally I'd've hoped you could do that using the existing crlf
-> attribute rather than having to invent something new, but maybe that
-> doesn't work.)
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+> 
+> > From: Johannes Sixt <johannes.sixt@telecom.at>
+> >
+> > How come we got along with this not very portable construct for so long?
+> > Probably because the array sizes were computed from the results of
+> > strlen() of string constants. Anyway, a follow-up patch will make the
+> > lengths really non-constant.
+> >
+> > Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+> > ---
+> >  sideband.c |   14 ++++++++++++--
+> >  1 files changed, 12 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/sideband.c b/sideband.c
+> > index 756bbc2..513d7b3 100644
+> > --- a/sideband.c
+> > +++ b/sideband.c
+> > @@ -19,7 +19,10 @@ int recv_sideband(const char *me, int in_stream, int out, int err)
+> >  {
+> >  	unsigned pf = strlen(PREFIX);
+> >  	unsigned sf = strlen(SUFFIX);
+> > -	char buf[pf + LARGE_PACKET_MAX + sf + 1];
+> > +	char *buf, *save;
+> > +
+> > +	save = xmalloc(sf);
+> > +	buf = xmalloc(pf + LARGE_PACKET_MAX + sf + 1);
+> 
+> I have to wonder if the malloc() overhead is small enough
+> compared to the network bandwidth to make a two malloc-free
+> pairs per packet a non-issue...
 
-I think the project can mark text files as text with attributes
-and if the port to the platform initialized core.autocrlf
-appropriately for the platform everything should work as you
-described. 
+Eeek.  Overhead might be insignificant, but it still doesn't feel right.
 
-At least that is how I read the description of `crlf` in
-gitattributes(5).
+What about using alloca() instead?  This is not like if we are doing 
+funky things with the allocated memory anyway.
+
+
+Nicolas
