@@ -1,51 +1,75 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [RFC] refer to post-patch lines in whitespace warnings
-Date: Wed, 9 Jan 2008 10:57:40 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0801091046100.13593@iabervon.org>
+From: Florian La Roche <laroche@redhat.com>
+Subject: [PATCH] Change git-gc documentation to reflect gc.packrefs implementation.
+Date: Wed, 9 Jan 2008 17:05:16 +0100
+Message-ID: <20080109160516.GA31535@dudweiler.stuttgart.redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 09 16:58:19 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Jan 09 17:06:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCdJo-0004ey-RD
-	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 16:58:17 +0100
+	id 1JCdRg-0007qz-HM
+	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 17:06:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752138AbYAIP5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2008 10:57:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752092AbYAIP5m
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 10:57:42 -0500
-Received: from iabervon.org ([66.92.72.58]:40928 "EHLO iabervon.org"
+	id S1752166AbYAIQFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2008 11:05:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751257AbYAIQFj
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 11:05:39 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:39925 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751910AbYAIP5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2008 10:57:42 -0500
-Received: (qmail 8298 invoked by uid 1000); 9 Jan 2008 15:57:40 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 9 Jan 2008 15:57:40 -0000
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751837AbYAIQFi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 11:05:38 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m09G5Jt7030220;
+	Wed, 9 Jan 2008 11:05:19 -0500
+Received: from pobox.stuttgart.redhat.com (pobox.stuttgart.redhat.com [172.16.2.10])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m09G5I68005005;
+	Wed, 9 Jan 2008 11:05:18 -0500
+Received: from dudweiler.stuttgart.redhat.com (dudweiler.stuttgart.redhat.com [10.32.5.60])
+	by pobox.stuttgart.redhat.com (8.13.1/8.13.1) with ESMTP id m09G5HSN004556;
+	Wed, 9 Jan 2008 11:05:17 -0500
+Received: from dudweiler.stuttgart.redhat.com (localhost.localdomain [127.0.0.1])
+	by dudweiler.stuttgart.redhat.com (8.13.8/8.13.8) with ESMTP id m09G5IKO031631;
+	Wed, 9 Jan 2008 17:05:18 +0100
+Received: (from laroche@localhost)
+	by dudweiler.stuttgart.redhat.com (8.13.8/8.13.8/Submit) id m09G5GTu031628;
+	Wed, 9 Jan 2008 17:05:16 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.2i
+X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69999>
 
-When I rebase series with bad whitespace, I end up with unhelpful messages 
-like:
+Adjust git-gc documentation to reflect gc.packrefs implementation.
 
-.dotest/patch:412: trailing whitespace.
+Adjust git-gc documentation to reflect gc.packrefs implementation.
+
+Signed-off-by: Florian La Roche <laroche@redhat.com>
+---
+ Documentation/git-gc.txt |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index c4354bb..4b2dfef 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -90,9 +90,9 @@ how long records of conflicted merge you have not resolved are
+ kept.  This defaults to 15 days.
+ 
+ The optional configuration variable 'gc.packrefs' determines if
+-`git gc` runs `git-pack-refs`.  Without the configuration, `git-pack-refs`
+-is not run in bare repositories by default, to allow older dumb-transport
+-clients fetch from the repository,  but this will change in the future.
++`git gc` runs `git-pack-refs`. This can be set to "nobare" to enable
++it within all non-bare repos or it can be set to a boolean value.
++This defaults to true.
+ 
+ The optional configuration variable 'gc.aggressiveWindow' controls how
+ much time is spent optimizing the delta compression of the objects in
 -- 
-.dotest/patch:446: trailing whitespace.
--- 
-
-These line numbers obviously refer to lines in a file that's been removed 
-by the time I can do anything about it. It seems to me like the message 
-would be more useful if, in the case where it leaves the working tree 
-modified with the non-compliant whitespace, it gave this location rather 
-than the patch's location (because, even if you have the patch still, 
-you'd need to revert it first in order to be able to apply a fixed version 
-anyway). Anybody see any problems with this theory?
-
-	-Daniel
-*This .sig left intentionally blank*
+1.5.3.7
