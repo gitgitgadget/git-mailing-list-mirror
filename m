@@ -1,91 +1,85 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: CRLF problems with Git on Win32
-Date: Wed, 9 Jan 2008 22:05:04 +0300
-Message-ID: <20080109190504.GF23659@dpotapov.dyndns.org>
-References: <20080109150310.GC23659@dpotapov.dyndns.org> <C3AAB6C3.10C6B%jefferis@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git svn fetch segfaults
+Date: Wed, 09 Jan 2008 12:14:19 -0800
+Message-ID: <7v4pdmiwo4.fsf@gitster.siamese.dyndns.org>
+References: <200801082325.45756.devurandom@gmx.net>
+	<20080109003307.GS29972@genesis.frugalware.org>
+	<200801091353.44630.devurandom@gmx.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Peter Karlsson <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Jeff King <peff@peff.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Gregory Jefferis <jefferis@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 09 20:27:01 2008
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Dennis Schridde <devurandom@gmx.net>
+X-From: git-owner@vger.kernel.org Wed Jan 09 21:15:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCgZm-0004gE-BG
-	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 20:26:58 +0100
+	id 1JChKG-000700-Mq
+	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 21:15:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752349AbYAIT0Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2008 14:26:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752234AbYAIT0Y
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 14:26:24 -0500
-Received: from smtp03.mtu.ru ([62.5.255.50]:56501 "EHLO smtp03.mtu.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751026AbYAIT0X (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2008 14:26:23 -0500
-Received: from smtp03.mtu.ru (localhost.mtu.ru [127.0.0.1])
-	by smtp03.mtu.ru (Postfix) with ESMTP id 2701E1870A23;
-	Wed,  9 Jan 2008 22:26:22 +0300 (MSK)
-Received: from dpotapov.dyndns.org (ppp85-141-188-167.pppoe.mtu-net.ru [85.141.188.167])
-	by smtp03.mtu.ru (Postfix) with ESMTP id 2D2871870A98;
-	Wed,  9 Jan 2008 22:26:19 +0300 (MSK)
-Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
-	(envelope-from <dpotapov@gmail.com>)
-	id 1JCgEa-0000c5-BG; Wed, 09 Jan 2008 22:05:04 +0300
-Content-Disposition: inline
-In-Reply-To: <C3AAB6C3.10C6B%jefferis@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-DCC-STREAM-Metrics: smtp03.mtu.ru 10001; Body=0 Fuz1=0 Fuz2=0
+	id S1754181AbYAIUO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2008 15:14:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754167AbYAIUO3
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 15:14:29 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64969 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754156AbYAIUO2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 15:14:28 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 24E2E2B2C;
+	Wed,  9 Jan 2008 15:14:26 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 878072B29;
+	Wed,  9 Jan 2008 15:14:22 -0500 (EST)
+In-Reply-To: <200801091353.44630.devurandom@gmx.net> (Dennis Schridde's
+	message of "Wed, 9 Jan 2008 13:53:41 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70006>
 
-Hi Gregory,
+Dennis Schridde <devurandom@gmx.net> writes:
 
-On Wed, Jan 09, 2008 at 05:37:07PM +0000, Gregory Jefferis wrote:
-> 
-> If LF text files checked in on Windows get turned into CRLF files on
-> checkout by default then I think plenty of people would be surprised and
-> probably unhappy.
+> Am Mittwoch, 9. Januar 2008 01:33:07 schrieb Miklos Vajna:
+>> On Tue, Jan 08, 2008 at 11:25:45PM +0100, Dennis Schridde 
+> <devurandom@gmx.net> wrote:
+>> > mkdir org.gna.warzone2100.git
+>> > cd org.gna.warzone2100.git
+>> > git --bare init
+>> > git --bare svn init --use-svnsync-props --stdlayout
+>> > file:///var/svn/warzone2100/
+>> > git --bare svn fetch
+>>
+>> wget http://svn.kynes.de/warzone2100.bz2
+>>
+>> svnadmin create warzone2100 && bzcat warzone2100.bz2 | svnadmin load
+>> warzone2100
+>>
+>> the rest is the same i get a segfault at the very same place.
+>>
+>> > If I do not specify --use-svnsync-prop to "git svn init", it gets past
+>> > r13 in tags/1.10a.
+>>
+>> same.
+>>
+>> > I am using these versions:
+>> > svn, version 1.4.6 (r28521)
+>> > git version 1.5.4.rc2
+>>
+>> $ svn --version
+>> svn, version 1.4.5 (r25188)
+>>
+>> $ git --version
+>> git version 1.5.4.rc2.38.gd6da3
+> Same with git version 1.5.3.7
 
-LF text cannot be checked in with autocrlf=safe without marking that there
-is no CRLF conversation for this file. So, what you describe is impossible.
-IOW, you *always* get back what you put in the repository.
+Has anybody determined which executable is the segfaulting one?
 
-> Similarly I think it would be a bad thing if a binary
-> file that looked like LF only text got mangled on checkout by LF->CRLF
-> conversion - although I agree that it would be possible to recover from this
-> situation with a bit of juggling.
-
-Again, you can't do that with autocrlf=safe. Yes, it is possible that
-someone else on Unix to put a file like this, but it is a rare event and
-easy to recover. So, it is a very small price to pay for cross-platform
-projects, and those who use the same platform are not affected at all!
-
-> The only way to prevent collateral damage is to
-> consult .gitattributes on checkout (as Dmitry seemed to be assuming above)
-
-Yes, I assumed this. Isn't it how it is implemented now?
-
-static int crlf_to_worktree(const char *path, const char *src, size_t len,
-                            struct strbuf *buf, int action)
-{
-	char *to_free = NULL;
-	struct text_stat stats;
-
-	if ((action == CRLF_BINARY) || (action == CRLF_INPUT) ||
-	    auto_crlf <= 0)
-		return 0;
-
-If crlf=false for some file then action will be CRLF_BINARY, and
-crlf_to_worktree will not convert LF to CRLF. Did I miss somthing?
-
-Dmitry
+If it is svn executable spawned by Perl that runs git-svn, or
+libsvn shared object linked to Perl while running git-svn, I
+suspect testing with different git versions will not be very
+productive.
