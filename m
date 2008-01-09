@@ -1,98 +1,75 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: git svn fetch segfaults
-Date: Wed, 9 Jan 2008 21:53:54 +0100
-Message-ID: <20080109205354.GA1433@atjola.homenet>
-References: <200801082325.45756.devurandom@gmx.net> <20080109003307.GS29972@genesis.frugalware.org> <200801091353.44630.devurandom@gmx.net> <7v4pdmiwo4.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Trim leading / off of paths in git-svn prop_walk
+Date: Wed, 09 Jan 2008 12:54:22 -0800
+Message-ID: <7v63y2hg8x.fsf@gitster.siamese.dyndns.org>
+References: <1199860640-74118-1-git-send-email-kevin@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Dennis Schridde <devurandom@gmx.net>,
-	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 09 21:54:27 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Kevin Ballard <kevin@sb.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Jan 09 21:55:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JChwP-0005ZW-R0
-	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 21:54:26 +0100
+	id 1JChx1-0005n4-5K
+	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 21:55:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753229AbYAIUx6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jan 2008 15:53:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752408AbYAIUx6
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 15:53:58 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58089 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752839AbYAIUx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2008 15:53:58 -0500
-Received: (qmail invoked by alias); 09 Jan 2008 20:53:56 -0000
-Received: from i577ADAF5.versanet.de (EHLO localhost) [87.122.218.245]
-  by mail.gmx.net (mp050) with SMTP; 09 Jan 2008 21:53:56 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19/K1kwk6J/n4ym/y0ObOztQKZkXfbLCUw8kS5HBe
-	GTJQXO9lXbNAr1
-Content-Disposition: inline
-In-Reply-To: <7v4pdmiwo4.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-12-11)
-X-Y-GMX-Trusted: 0
+	id S1753333AbYAIUyg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2008 15:54:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753325AbYAIUyg
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 15:54:36 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34645 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753313AbYAIUyf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 15:54:35 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 701BE356E;
+	Wed,  9 Jan 2008 15:54:34 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DA3E356B;
+	Wed,  9 Jan 2008 15:54:29 -0500 (EST)
+In-Reply-To: <1199860640-74118-1-git-send-email-kevin@sb.org> (Kevin Ballard's
+	message of "Wed, 9 Jan 2008 01:37:20 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70014>
 
-On 2008.01.09 12:14:19 -0800, Junio C Hamano wrote:
-> Dennis Schridde <devurandom@gmx.net> writes:
->=20
-> > Am Mittwoch, 9. Januar 2008 01:33:07 schrieb Miklos Vajna:
-> >> On Tue, Jan 08, 2008 at 11:25:45PM +0100, Dennis Schridde=20
-> > <devurandom@gmx.net> wrote:
-> >> > mkdir org.gna.warzone2100.git
-> >> > cd org.gna.warzone2100.git
-> >> > git --bare init
-> >> > git --bare svn init --use-svnsync-props --stdlayout
-> >> > file:///var/svn/warzone2100/
-> >> > git --bare svn fetch
-> >>
-> >> wget http://svn.kynes.de/warzone2100.bz2
-> >>
-> >> svnadmin create warzone2100 && bzcat warzone2100.bz2 | svnadmin lo=
-ad
-> >> warzone2100
-> >>
-> >> the rest is the same i get a segfault at the very same place.
-> >>
-> >> > If I do not specify --use-svnsync-prop to "git svn init", it get=
-s past
-> >> > r13 in tags/1.10a.
-> >>
-> >> same.
-> >>
-> >> > I am using these versions:
-> >> > svn, version 1.4.6 (r28521)
-> >> > git version 1.5.4.rc2
-> >>
-> >> $ svn --version
-> >> svn, version 1.4.5 (r25188)
-> >>
-> >> $ git --version
-> >> git version 1.5.4.rc2.38.gd6da3
-> > Same with git version 1.5.3.7
->=20
-> Has anybody determined which executable is the segfaulting one?
+Kevin Ballard <kevin@sb.org> writes:
 
-I just tried to, but it's still running, at r600 now.
+> prop_walk adds a leading / to all subdirectory paths. Unfortunately
+> this causes a problem when the remote repo lives in a subdirectory itself,
+> as the leading / causes subsequent PROPFIND calls to be executed on
+> the wrong path. Trimming the / before calling the PROPFIND fixes this problem.
+>
+> Signed-off-by: Kevin Ballard <kevin@sb.org>
 
-> If it is svn executable spawned by Perl that runs git-svn, or
-> libsvn shared object linked to Perl while running git-svn, I
-> suspect testing with different git versions will not be very
-> productive.
+Eric, the change is very limited in scope (only the parameter to
+ra->get_dir() changes) so I can apply myself, if you agree this
+is a trivially correct fix.  I just do not know svn-perl
+interface well enough to judge.
 
-Oh well, anyway, just for the record:
-doener@atjola:~ $ svn --version
-svn, version 1.4.4 (r25188)
-
-doener@atjola:~ $ git --version
-git version 1.5.4.rc1.11.gd2f82
-
-Bj=F6rn
+> All tests passed after this change, but since it seems to only apply
+> to WebDAV SVN repos I saw no way to add a new test.
+>  git-svn.perl |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 3308fe1..d5316eb 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -1858,6 +1858,7 @@ sub rel_path {
+>  sub prop_walk {
+>  	my ($self, $path, $rev, $sub) = @_;
+>  
+> +	$path =~ s#^/##;
+>  	my ($dirent, undef, $props) = $self->ra->get_dir($path, $rev);
+>  	$path =~ s#^/*#/#g;
+>  	my $p = $path;
+> -- 
+> 1.5.4.rc2.68.ge708a-dirty
