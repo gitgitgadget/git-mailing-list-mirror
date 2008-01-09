@@ -1,57 +1,63 @@
 From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [STG PATCH] change usage string of refresh to not refer to removed options
-Date: Wed, 9 Jan 2008 08:20:36 +0100
-Message-ID: <20080109072036.GA28839@diana.vm.bytemark.co.uk>
-References: <200801082143.53125.kumbayo84@arcor.de>
+Subject: Re: [STG PATCH] add a --index option to refresh which takes the contents of the index as the new commit
+Date: Wed, 9 Jan 2008 08:23:58 +0100
+Message-ID: <20080109072358.GB28839@diana.vm.bytemark.co.uk>
+References: <200712302003.33478.kumbayo84@arcor.de> <200801022039.27611.kumbayo84@arcor.de> <20080107105612.GA20981@diana.vm.bytemark.co.uk> <200801082142.47060.kumbayo84@arcor.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Catalin Marinas <catalin.marinas@gmail.com>
 To: Peter Oberndorfer <kumbayo84@arcor.de>
-X-From: git-owner@vger.kernel.org Wed Jan 09 09:40:06 2008
+X-From: git-owner@vger.kernel.org Wed Jan 09 09:43:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCWTj-0000dY-Di
-	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 09:40:03 +0100
+	id 1JCWX2-0001aV-Cs
+	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 09:43:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751916AbYAIIjg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jan 2008 03:39:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751886AbYAIIjg
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 03:39:36 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3022 "EHLO
+	id S1751944AbYAIInA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jan 2008 03:43:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750922AbYAIInA
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 03:43:00 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3027 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751883AbYAIIjf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2008 03:39:35 -0500
+	with ESMTP id S1750822AbYAIIm7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 03:42:59 -0500
 Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JCVEq-0007WI-00; Wed, 09 Jan 2008 07:20:36 +0000
+	id 1JCVI6-0007Xp-00; Wed, 09 Jan 2008 07:23:58 +0000
 Content-Disposition: inline
-In-Reply-To: <200801082143.53125.kumbayo84@arcor.de>
+In-Reply-To: <200801082142.47060.kumbayo84@arcor.de>
 X-Manual-Spam-Check: kha@treskal.com, clean
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69968>
 
-Thanks! But ...
+On 2008-01-08 21:42:46 +0100, Peter Oberndorfer wrote:
 
-On 2008-01-08 21:43:53 +0100, Peter Oberndorfer wrote:
+> On Montag 07 Januar 2008, Karl Hasselstr=F6m wrote:
+>
+> > So the use_index parameter to refresh_patch is actually not
+> > necessary? In that case I'd rather you didn't add it, since the
+> > functions in stgit/stack.py have quite enough parameters already.
+>
+> In the beginning i was afraid it would be to obscure to call it this
+> way with all parameters set to some specific values. But having more
+> parameters does not make it better :-) Done
 
-> for changing the patch author, commiter and description
+Thanks.
 
-the first line in the commit message (which ends up being the Subject:
-line in the mail) should be a short and self-contained summary. No
-need to resend just because of that, though -- I can fix it up.
+> Patch now comes with a Signed-off-by and a log message that explains
+> how this feature could be used. It was tested with the testcase,
+> used during development of this patch and on another repo, but still
+> take care when using it :-)
 
-> I saw this while doing the refresh --index patch. There was a
-> discussion about bringing back refresh -e If that also brings back
-> this options, please do not apply the patch:-)
-
-Resurrecting "refresh -e" is on my todo list. But until then, this is
-a good fix.
+I may be promising too much now, but hopefully I'll get to this
+tonight.
 
 --=20
 Karl Hasselstr=F6m, kha@treskal.com
