@@ -1,76 +1,89 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Decompression speed: zip vs lzo
-Date: Wed, 9 Jan 2008 23:01:36 +0100
-Message-ID: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: git svn fetch segfaults
+Date: Wed, 9 Jan 2008 23:15:08 +0100
+Message-ID: <20080109221508.GB2218@atjola.homenet>
+References: <200801082325.45756.devurandom@gmx.net> <20080109003307.GS29972@genesis.frugalware.org> <200801091353.44630.devurandom@gmx.net> <7v4pdmiwo4.fsf@gitster.siamese.dyndns.org> <20080109205354.GA1433@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 09 23:02:36 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Dennis Schridde <devurandom@gmx.net>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 09 23:15:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCj0H-0007xO-0I
-	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 23:02:29 +0100
+	id 1JCjD3-0005No-NA
+	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 23:15:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754003AbYAIWBi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2008 17:01:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753116AbYAIWBi
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 17:01:38 -0500
-Received: from rv-out-0910.google.com ([209.85.198.189]:6522 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753986AbYAIWBh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2008 17:01:37 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so355761rvb.1
-        for <git@vger.kernel.org>; Wed, 09 Jan 2008 14:01:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=PJLYfto8QRFYqNksfApkoVsw0ICXigjgAL1GMat0RUA=;
-        b=fMMICb+L4krhjGFNAX+dBMOak0ZwLjaxSoufD8ebj2F8SD0E4FuSmMTyAbAEqQJ3MCbEIBZElAebdwVyocVmyK2U+PtYIHjkP7xFVpAg+4UdAMdOG2FXUkjXnh5B6vLACMFsLjXywsPey6lhJ/BIIxvISyHJmNvzKNvmq6CfjpQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=thCHrEXLX8nr8HVfEZu2MDfYiYIR+Z5ojblr3+wMG3BPgZrz/Q+h5b1tBjUaWvuiS9zi5TepXFwBuyisNrl6xv40JD2jJG/jVoRIKSZe6KP2o1viXyIxmZ+9APhMnHWZ2nYpb9mZAER462HzKyuytIzUZOPcHJEcW553UwCdJNY=
-Received: by 10.141.167.5 with SMTP id u5mr758955rvo.71.1199916096912;
-        Wed, 09 Jan 2008 14:01:36 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Wed, 9 Jan 2008 14:01:36 -0800 (PST)
+	id S1754536AbYAIWPN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jan 2008 17:15:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754349AbYAIWPN
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 17:15:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43793 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752635AbYAIWPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 17:15:11 -0500
+Received: (qmail invoked by alias); 09 Jan 2008 22:15:09 -0000
+Received: from i577ADAF5.versanet.de (EHLO localhost) [87.122.218.245]
+  by mail.gmx.net (mp041) with SMTP; 09 Jan 2008 23:15:09 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/s3A0t8LPseEK5mlSzkSLqiRSiVS7VkLa5UaeHcg
+	UJmdK7BKHeSg+V
 Content-Disposition: inline
+In-Reply-To: <20080109205354.GA1433@atjola.homenet>
+User-Agent: Mutt/1.5.17 (2007-12-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70020>
 
-I have created a big tar from linux tree:
+On 2008.01.09 21:53:54 +0100, Bj=F6rn Steinbrink wrote:
+> On 2008.01.09 12:14:19 -0800, Junio C Hamano wrote:
+> > Dennis Schridde <devurandom@gmx.net> writes:
+> >=20
+> > > Am Mittwoch, 9. Januar 2008 01:33:07 schrieb Miklos Vajna:
+> > >> On Tue, Jan 08, 2008 at 11:25:45PM +0100, Dennis Schridde=20
+> > > <devurandom@gmx.net> wrote:
+> > >> > mkdir org.gna.warzone2100.git
+> > >> > cd org.gna.warzone2100.git
+> > >> > git --bare init
+> > >> > git --bare svn init --use-svnsync-props --stdlayout
+> > >> > file:///var/svn/warzone2100/
+> > >> > git --bare svn fetch
+> > >>
+> > >> wget http://svn.kynes.de/warzone2100.bz2
+> > >>
+> > >> svnadmin create warzone2100 && bzcat warzone2100.bz2 | svnadmin =
+load
+> > >> warzone2100
+> > >>
+> > >> the rest is the same i get a segfault at the very same place.
+> > >>
+> > >> > If I do not specify --use-svnsync-prop to "git svn init", it g=
+ets past
+> > >> > r13 in tags/1.10a.
+> > >>
+> > >> same.
+> > >>
+> > >> > I am using these versions:
+> > >> > svn, version 1.4.6 (r28521)
+> > >> > git version 1.5.4.rc2
+> > >>
+> > >> $ svn --version
+> > >> svn, version 1.4.5 (r25188)
+> > >>
+> > >> $ git --version
+> > >> git version 1.5.4.rc2.38.gd6da3
+> > > Same with git version 1.5.3.7
+> >=20
+> > Has anybody determined which executable is the segfaulting one?
+>=20
+> I just tried to, but it's still running, at r600 now.
 
-linux-2.6.tar   300,0 MB
+It finished by now, no segfault with --use-svnsync-props.
 
-Then I have created to compressed files with zip and lzop utility (the
-latter uses the lzo compression algorithm):
-
-linux-2.6.zip  70,1 MB
-
-linux-2.6.tar.lzo  108,0 MB
-
-Then I have tested the decompression speed:
-
-$ time unzip -p linux-2.6.zip > /dev/null
-3.95user 0.09system 0:04.05elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+189minor)pagefaults 0swaps
-
-$ time lzop -d -c linux-2.6.tar.lzo > /dev/null
-2.10user 0.07system 0:02.18elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+234minor)pagefaults 0swaps
-
-
-So bottom line is that lzo decompression speed is almost the double of zip.
-
-
-Marco
-
-P.S: Compression size is better for zip but a more realistic test
-would be to try with a delta packaged repo instead of a simple tar of
-source files. Because delta packaged is already compressed in his way
-perhaps difference in final file sizes is smaller.
+Bj=F6rn
