@@ -1,85 +1,72 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git svn fetch segfaults
-Date: Wed, 09 Jan 2008 12:14:19 -0800
-Message-ID: <7v4pdmiwo4.fsf@gitster.siamese.dyndns.org>
-References: <200801082325.45756.devurandom@gmx.net>
-	<20080109003307.GS29972@genesis.frugalware.org>
-	<200801091353.44630.devurandom@gmx.net>
+Subject: Re: [RFC] refer to post-patch lines in whitespace warnings
+Date: Wed, 09 Jan 2008 12:22:48 -0800
+Message-ID: <7vy7ayhhpj.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LNX.1.00.0801091046100.13593@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Dennis Schridde <devurandom@gmx.net>
-X-From: git-owner@vger.kernel.org Wed Jan 09 21:15:03 2008
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Jan 09 21:23:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JChKG-000700-Mq
-	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 21:15:01 +0100
+	id 1JChSO-0001yb-7B
+	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 21:23:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754181AbYAIUO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2008 15:14:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754167AbYAIUO3
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 15:14:29 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64969 "EHLO
+	id S1752367AbYAIUW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2008 15:22:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752301AbYAIUW5
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 15:22:57 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65389 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754156AbYAIUO2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2008 15:14:28 -0500
+	with ESMTP id S1751642AbYAIUW4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 15:22:56 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 24E2E2B2C;
-	Wed,  9 Jan 2008 15:14:26 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id F3E3B356F;
+	Wed,  9 Jan 2008 15:22:53 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 878072B29;
-	Wed,  9 Jan 2008 15:14:22 -0500 (EST)
-In-Reply-To: <200801091353.44630.devurandom@gmx.net> (Dennis Schridde's
-	message of "Wed, 9 Jan 2008 13:53:41 +0100")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C504A356D;
+	Wed,  9 Jan 2008 15:22:50 -0500 (EST)
+In-Reply-To: <alpine.LNX.1.00.0801091046100.13593@iabervon.org> (Daniel
+	Barkalow's message of "Wed, 9 Jan 2008 10:57:40 -0500 (EST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70007>
 
-Dennis Schridde <devurandom@gmx.net> writes:
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> Am Mittwoch, 9. Januar 2008 01:33:07 schrieb Miklos Vajna:
->> On Tue, Jan 08, 2008 at 11:25:45PM +0100, Dennis Schridde 
-> <devurandom@gmx.net> wrote:
->> > mkdir org.gna.warzone2100.git
->> > cd org.gna.warzone2100.git
->> > git --bare init
->> > git --bare svn init --use-svnsync-props --stdlayout
->> > file:///var/svn/warzone2100/
->> > git --bare svn fetch
->>
->> wget http://svn.kynes.de/warzone2100.bz2
->>
->> svnadmin create warzone2100 && bzcat warzone2100.bz2 | svnadmin load
->> warzone2100
->>
->> the rest is the same i get a segfault at the very same place.
->>
->> > If I do not specify --use-svnsync-prop to "git svn init", it gets past
->> > r13 in tags/1.10a.
->>
->> same.
->>
->> > I am using these versions:
->> > svn, version 1.4.6 (r28521)
->> > git version 1.5.4.rc2
->>
->> $ svn --version
->> svn, version 1.4.5 (r25188)
->>
->> $ git --version
->> git version 1.5.4.rc2.38.gd6da3
-> Same with git version 1.5.3.7
+> When I rebase series with bad whitespace, I end up with unhelpful messages 
+> like:
+>
+> .dotest/patch:412: trailing whitespace.
+> -- 
+> .dotest/patch:446: trailing whitespace.
+> -- 
+>
+> These line numbers obviously refer to lines in a file that's been removed 
+> by the time I can do anything about it.
 
-Has anybody determined which executable is the segfaulting one?
+The message is more appropriate for a workflow to "git apply --check"
+first, fix the patchfile and then applying for real.
 
-If it is svn executable spawned by Perl that runs git-svn, or
-libsvn shared object linked to Perl while running git-svn, I
-suspect testing with different git versions will not be very
-productive.
+> ... if, in the case where it leaves the working tree 
+> modified with the non-compliant whitespace, it gave this location rather 
+> than the patch's location (because, even if you have the patch still, 
+> you'd need to revert it first in order to be able to apply a fixed version 
+> anyway).
+
+In such a case, "git diff" will highlight the non-compliant whitespace.
+
+More problematic is if you used whitespace=warn to let it commit anyway.
+You can use "git diff $beginning_of_series..HEAD" the same way
+to locate the breakages, but you then need to do "rebase -i" to
+fix it up (I personally would run "format-patch", fix the problems in
+the patch text, and run "am", instead of "rebase -i", mostly
+because I am used to working that way).
