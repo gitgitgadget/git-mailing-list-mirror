@@ -1,96 +1,96 @@
-From: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
-Subject: Re: CRLF problems with Git on Win32
-Date: Wed, 9 Jan 2008 13:45:38 +0100
-Message-ID: <019B1C82-27BF-4B6B-981D-5498D31B5DD3@zib.de>
-References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se> <200801071947.28586.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801071915470.10101@racer.site> <200801072203.23938.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801072115120.10101@racer.site> <3B08AC4C-A807-4155-8AD7-DC6A6D0FE134@zib.de> <20080108172957.GG22155@fieldses.org> <CE10C08D-AAF1-44B5-89B5-9A16A4AB70EA@zib.de> <7vmyrgry20.fsf@gitster.siamese.dyndns.org> <02DC77F5-7465-418D-972E-0F76E56C3F75@zib.de> <20080108190952.GK22155@fieldses.org> <7vir24rtfp.fsf@gitster.siamese.dyndns.org> <B655B6FF-9377-434A-A979-2E758771B0FA@zib.de> <alpine.LSU.1.00.0801091100401.31053@racer.site>
-Reply-To: prohaska-wjoc1KHpMeg@public.gmane.org
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Dennis Schridde <devurandom@gmx.net>
+Subject: Re: git svn fetch segfaults
+Date: Wed, 9 Jan 2008 13:53:41 +0100
+Message-ID: <200801091353.44630.devurandom@gmx.net>
+References: <200801082325.45756.devurandom@gmx.net> <20080109003307.GS29972@genesis.frugalware.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart2291533.krHo7QfzHA";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>, "J. Bruce Fields" <bfields-uC3wQj2KruNg9hUCZPvPmw@public.gmane.org>, Robin Rosenberg <robin.rosenberg.lists-RgPrefM1rjDQT0dZR+AlfA@public.gmane.org>, Jeff King <peff-AdEPDUrAXsQ@public.gmane.org>, Peter Karlsson <peter-wzhfs8O2nkI+/KzbbBz5qQ@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-To: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Wed Jan 09 13:46:15 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.241])
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Jan 09 13:55:03 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCaJu-00039S-32
-	for gcvm-msysgit@m.gmane.org; Wed, 09 Jan 2008 13:46:10 +0100
-Received: by wa-out-0708.google.com with SMTP id n36so1961064wag.21
-        for <gcvm-msysgit@m.gmane.org>; Wed, 09 Jan 2008 04:45:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=9cSMqbBiHyNVN/dxWFu6gN3BEaYBcHiQWhk2jUai510=;
-        b=mQpx3xnHaZ+2opRz2eYnOQbuVQVguErcPNMDBp2ySu01iVxlaJIFufzSn50vbXFvF+avkrOEOowsLpQjgnPakK4JB8o8KFNEb0XRl+INTjYVrjtHZMEcC25EzPx5HDabT2J82eNUJEBhkD5I2Ls9TfD9+5sQUB0WoYEAQNjjk6o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=i5ctUwNnX0ud46qR5zI6TBnNVYS8ClZSCxJ8cspdhHpGa3kWpt+s/+Gs8DNLallXaqYjiv0hQ3NB4FebK20/wSyoICq/Ej7MtfTT9AtbiJF14iGSBoAJltE0ssl72dyRFBjXZk0PjcIxfWuMsDRquCMzYAgwOxKLbzGAgf/0kVU=
-Received: by 10.140.141.15 with SMTP id o15mr792920rvd.17.1199882739198;
-        Wed, 09 Jan 2008 04:45:39 -0800 (PST)
-Received: by 10.44.24.32 with SMTP id 32gr1346hsx;
-	Wed, 09 Jan 2008 04:45:39 -0800 (PST)
-X-Sender: prohaska-wjoc1KHpMeg@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.65.197.13 with SMTP id z13mr48846882qbp.0.1199882738736; Wed, 09 Jan 2008 04:45:38 -0800 (PST)
-Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id h71si29617247nzf.3.2008.01.09.04.45.37; Wed, 09 Jan 2008 04:45:38 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
-Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) smtp.mail=prohaska-wjoc1KHpMeg@public.gmane.org
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m09CiXI6007048; Wed, 9 Jan 2008 13:44:33 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m09CiWWT000321 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO); Wed, 9 Jan 2008 13:44:33 +0100 (MET)
-In-Reply-To: <alpine.LSU.1.00.0801091100401.31053-OGWIkrnhIhzN0uC3ymp8PA@public.gmane.org>
-X-Mailer: Apple Mail (2.753)
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1JCaSN-0005eN-AI
+	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 13:54:55 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752918AbYAIMy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2008 07:54:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752098AbYAIMy2
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 07:54:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34603 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751883AbYAIMy1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 07:54:27 -0500
+Received: (qmail invoked by alias); 09 Jan 2008 12:54:25 -0000
+Received: from hnvr-4dbbb8b7.pool.einsundeins.de (EHLO ernie.local) [77.187.184.183]
+  by mail.gmx.net (mp001) with SMTP; 09 Jan 2008 13:54:25 +0100
+X-Authenticated: #19202771
+X-Provags-ID: V01U2FsdGVkX19QbFcQlHhQ7HkOQksnORoDuZGJzmSqxdO01rHKGG
+	OxQ5kCAVNJpb7+
+User-Agent: KMail/1.9.7
+In-Reply-To: <20080109003307.GS29972@genesis.frugalware.org>
+X-Y-GMX-Trusted: 0
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69986>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69987>
 
+--nextPart2291533.krHo7QfzHA
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-
-On Jan 9, 2008, at 12:03 PM, Johannes Schindelin wrote:
-
-> On Tue, 8 Jan 2008, Steffen Prohaska wrote:
+Am Mittwoch, 9. Januar 2008 01:33:07 schrieb Miklos Vajna:
+> On Tue, Jan 08, 2008 at 11:25:45PM +0100, Dennis Schridde=20
+<devurandom@gmx.net> wrote:
+> > mkdir org.gna.warzone2100.git
+> > cd org.gna.warzone2100.git
+> > git --bare init
+> > git --bare svn init --use-svnsync-props --stdlayout
+> > file:///var/svn/warzone2100/
+> > git --bare svn fetch
 >
->> On Jan 8, 2008, at 8:47 PM, Junio C Hamano wrote:
->>
->>> I think the project can mark text files as text with attributes  
->>> and if
->>> the port to the platform initialized core.autocrlf appropriately for
->>> the platform everything should work as you described.
->>>
->>> At least that is how I read the description of `crlf` in
->>> gitattributes(5).
->>
->> But we do not want to mark a file as text but tell git to run its
->> auto-detection and use the local default line endings.  But for
->> different projects we do not even want to run the auto-detection, but
->> leave the files as is.
+> wget http://svn.kynes.de/warzone2100.bz2
 >
-> Probably the best thing would be to default to crlf=true, and then  
-> have a
-> .gitattributes file like this in your project:
+> svnadmin create warzone2100 && bzcat warzone2100.bz2 | svnadmin load
+> warzone2100
 >
-> -- snip --
-> *.am -crlf
-> -- snap --
+> the rest is the same i get a segfault at the very same place.
 >
-> (Did I guess right about the file extension? But why do you want to  
-> check
-> in huge 3D stacks? Ah, of course, for test cases.)
+> > If I do not specify --use-svnsync-prop to "git svn init", it gets past
+> > r13 in tags/1.10a.
+>
+> same.
+>
+> > I am using these versions:
+> > svn, version 1.4.6 (r28521)
+> > git version 1.5.4.rc2
+>
+> $ svn --version
+> svn, version 1.4.5 (r25188)
+>
+> $ git --version
+> git version 1.5.4.rc2.38.gd6da3
+Same with git version 1.5.3.7
 
-Yes, thanks ;)
+--nextPart2291533.krHo7QfzHA
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-For now, this is the right thing to do.  However, our file format
-and the application does not depend on the extension.  A a long
-term solution, I'll fix our file format header to include '\0' if
-the file is binary.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.8 (GNU/Linux)
 
-	Steffen
+iEYEABECAAYFAkeEw9gACgkQjqfyF1DtJW6HdgCfb+oHDK5ElqLJyUnnU1NR4PL9
+xi0Anj0ktwhK3+muy0/3Bd/GJnuWpuSN
+=4btd
+-----END PGP SIGNATURE-----
+
+--nextPart2291533.krHo7QfzHA--
