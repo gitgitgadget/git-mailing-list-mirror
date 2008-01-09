@@ -1,60 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Decompression speed: zip vs lzo
-Date: Wed, 09 Jan 2008 14:55:44 -0800
-Message-ID: <7v4pdmfw27.fsf@gitster.siamese.dyndns.org>
-References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Odd number of elements in anonymous hash
+Date: Wed, 9 Jan 2008 14:58:24 -0800
+Message-ID: <20080109225824.GA10193@hand.yhbt.net>
+References: <200801081738.56624.devurandom@gmx.net> <7vbq7wteq4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 09 23:56:32 2008
+Cc: Dennis Schridde <devurandom@gmx.net>, git@vger.kernel.org,
+	Sam Vilain <sam@vilain.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 09 23:58:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCjqP-0003qx-L9
-	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 23:56:22 +0100
+	id 1JCjss-0004pA-6L
+	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 23:58:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555AbYAIWzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2008 17:55:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752942AbYAIWzx
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 17:55:53 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43140 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751026AbYAIWzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2008 17:55:52 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 663854E21;
-	Wed,  9 Jan 2008 17:55:49 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DF4734E20;
-	Wed,  9 Jan 2008 17:55:46 -0500 (EST)
-In-Reply-To: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com>
-	(Marco Costalba's message of "Wed, 9 Jan 2008 23:01:36 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755159AbYAIW60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2008 17:58:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754990AbYAIW60
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 17:58:26 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:36071 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754785AbYAIW6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 17:58:25 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id A57252DC08C;
+	Wed,  9 Jan 2008 14:58:24 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vbq7wteq4.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70024>
 
-"Marco Costalba" <mcostalba@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Dennis Schridde <devurandom@gmx.net> writes:
+> 
+> > Hello!
+> >
+> > I am getting "Odd number of elements in anonymous hash at /usr/bin/git-svn 
+> > line 1760." (normal output, no warning/error) during git-svn-clone.
+> > I am using git version 1.5.4.rc2.
+> >
+> > Line 1760 is this (with context, marked with '!!'):
+> >     # see if we have it in our config, first:
+> >     eval {
+> >         my $section = "svn-remote.$self->{repo_id}";
+> > !!        $svnsync = {
+> >           url => tmp_config('--get', "$section.svnsync-url"),
+> >           uuid => tmp_config('--get', "$section.svnsync-uuid"),
+> >         }
+> >     };
+> >
+> > The commandline was "git svn 
+> > clone --authors-file=/var/git/org.gna.warzone.git/authors --use-svnsync-props --stdlayout 
+> > file:///var/svn/warzone2100/ org.gna.warzone.git/"
+> >
+> > I assume this is some kind of bug?
+> 
+> More than one svn-remote.$your_repo.svnsync-{url,uuid}?
+> 
+> (Eric CC'ed).
 
-> P.S: Compression size is better for zip but a more realistic test
-> would be to try with a delta packaged repo instead of a simple tar of
-> source files. Because delta packaged is already compressed in his way
-> perhaps difference in final file sizes is smaller.
+I don't use svnsync myself.  I think Sam does, or would have more
+insight into this than myself.  I'll hopefully have time to take a
+harder look at it later tonight.
 
-Note that the space nor time performance of compressing and
-uncompressing a single huge blob is not as interesting in the
-context of git as compressing/uncompressing millions of small
-pieces whose total size is comparable to the specimen of "huge
-single blob" experiment.  Obviously loose object files are
-compressed individually, and packfile contents are also
-individually and independently compressed.  Set-up cost for
-individual invocation of compression and uncompression on
-smaller data matters a lot more than an experiment on
-compressing and uncompressiong a single huge blob (this applies
-to both time and space).
+-- 
+Eric Wong
