@@ -1,109 +1,73 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: gmail smtp server and git-send-mail. Is this combination working?
-Date: Thu, 10 Jan 2008 00:09:08 +0100
-Message-ID: <4d8e3fd30801091509q49c02e1dua4ca42805ba891d6@mail.gmail.com>
-References: <4d8e3fd30801080858h5f109b47v87abc6b315fcfa08@mail.gmail.com>
-	 <fm1h7t$nnr$1@ger.gmane.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Decompression speed: zip vs lzo
+Date: Thu, 10 Jan 2008 12:23:17 +1300
+Message-ID: <47855765.9090001@vilain.net>
+References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com> <7v4pdmfw27.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Douglas Stockwell" <doug@11011.net>
-X-From: git-owner@vger.kernel.org Thu Jan 10 00:09:46 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 10 00:24:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCk3H-0000bG-RZ
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 00:09:40 +0100
+	id 1JCkH6-0005Pk-WB
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 00:23:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753661AbYAIXJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2008 18:09:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753474AbYAIXJM
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 18:09:12 -0500
-Received: from hs-out-0708.google.com ([64.233.178.242]:17772 "EHLO
-	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753325AbYAIXJK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2008 18:09:10 -0500
-Received: by hs-out-2122.google.com with SMTP id 54so388432hsz.5
-        for <git@vger.kernel.org>; Wed, 09 Jan 2008 15:09:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=0jWTp5b8qWXDlOLO9qRAdn29i0ptAgx/QK6xl0vuMk8=;
-        b=LB5fSwG1lTHOZX7g+16+O3sKRt/vg4c0WrPlszPjAO5aUs08UnzjizOZyzKRrv4uvgfdFSKIktuv7f1SAF/s6uv7zCB05tniKiee0SEDANT/OqdfzSXNsK4EIbCERhvZJwQ61BEKT6NZeEDF/d3oYiJcCMlZ/AspYubFeawjD9s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qf6QdUShj1doqhrDXIFnvUxML4EMFvD138mw+9eEoX7bOYUhtrqlzveHcYyyuvPn8moLxIrWwku2RhjVVDSceJiMUxBe+tgo8fARIIiD1FYOh+buR6cdvqGtksvupsufcQ04tB10M8yRhrTCqloDkhtngOQf1l4crXpj5dNlJcE=
-Received: by 10.142.242.8 with SMTP id p8mr686793wfh.142.1199920148113;
-        Wed, 09 Jan 2008 15:09:08 -0800 (PST)
-Received: by 10.143.195.1 with HTTP; Wed, 9 Jan 2008 15:09:08 -0800 (PST)
-In-Reply-To: <fm1h7t$nnr$1@ger.gmane.org>
-Content-Disposition: inline
+	id S1754440AbYAIXXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2008 18:23:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754308AbYAIXXa
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 18:23:30 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:58446 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753895AbYAIXX3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 18:23:29 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
+	id A3F8A21D185; Thu, 10 Jan 2008 12:23:23 +1300 (NZDT)
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id C494C21D183;
+	Thu, 10 Jan 2008 12:23:17 +1300 (NZDT)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <7v4pdmfw27.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.94.2.0
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on 
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70026>
 
-On Jan 9, 2008 5:06 AM, Douglas Stockwell <doug@11011.net> wrote:
-> Paolo Ciarrocchi wrote:
-> > " Mailing off a set of patches to a mailing list can be quite neatly
-> > done by git-send-email.
-> > One of the problems you may encounter there is figuring out which machine
-> > is going to send your mail.
-> > I tried smtp.gmail.com, but that one requires tls and a password,
-> > and git-send-email could not handle that "
-> >
-> > From http://git.or.cz/gitwiki/GitTips.
-> >
-> > Is this statemant still correct ?
-> > Is msmtp the only solution for using git-send-mail with gmail? (tls +
-> > autentication).
->
-> No, as of 34cc60ce2b48f6037997543ddbab1ed9903df4a8 you can use SSL and
-> SMTP-Auth.
->
-> [sendemail]
->          smtpserver = smtp.gmail.com
->          smtpuser = <user>@gmail.com
->          smtppass = <password>
->          smtpssl = true
->
-> Can you suggest changes to the documentation if these options are unclear?
+Junio C Hamano wrote:
+> Note that the space nor time performance of compressing and
+> uncompressing a single huge blob is not as interesting in the
+> context of git as compressing/uncompressing millions of small
+> pieces whose total size is comparable to the specimen of "huge
+> single blob" experiment.  Obviously loose object files are
+> compressed individually, and packfile contents are also
+> individually and independently compressed.  Set-up cost for
+> individual invocation of compression and uncompression on
+> smaller data matters a lot more than an experiment on
+> compressing and uncompressiong a single huge blob (this applies
+> to both time and space).
 
-Well, it would be nice to add this information to the wiki, it's still
-mentioning
-that you require an external program for supporting the TLS connection.
-I'll do that when I'll get my box working with the configuration you suggested,
+Yes - and lzo will almost certainly win on all those counts!
 
-What I'm getting at the moment is:
-paolo@paolo-desktop:~/git$ git-send-email -compose -to
-paolo.ciarrocchi@gmail.com /home/paolo/Desktop/patch/
-snip
-snip
-Can't locate Net/SMTP/SSL.pm in @INC (@INC contains:
-/home/paolo/share/perl/5.8.8 /etc/perl /usr/local/lib/perl/5.8.8
-/usr/local/share/perl/5.8.8 /usr/lib/perl5 /usr/share/perl5
-/usr/lib/perl/5.8 /usr/share/perl/5.8 /usr/local/lib/site_perl .) at
-/home/paolo/bin/git-send-email line 627.
+I think to go forward this would need a prototype and benchmark figures
+for things like "annotate" and "fsck --full" - but bear in mind it would
+be a long road to follow-up to completion, as repository compatibility
+would need to be a primary concern and this essentially would create a
+new pack type AND a new *object* type.  Not only that, but currently
+there is no header in the objects on disk which can be used to detect a
+gzip vs. an lzop stream.  Not really worth it IMHO - gzip is already
+fast enough on even the most modern processor these days.
 
-Tv on #git helped me in finding an Ubuntu package which includes SSL.pm :
-http://packages.ubuntu.com/cgi-bin/search_contents.pl?word=SSL.pm&searchmode=searchfiles&case=insensitive&version=gutsy&arch=i386
-which repors:
-usr/lib/perl5/Net/SSL.pm				    perl/libcrypt-ssleay-perl [universe]
-usr/share/perl5/HTTP/Daemon/SSL.pm			    perl/libhttp-daemon-ssl-perl [universe]
-usr/share/perl5/IO/Socket/SSL.pm			    perl/libio-socket-ssl-perl
-usr/share/perl5/Net/IMAP/Simple/SSL.pm			
-perl/libnet-imap-simple-ssl-perl [universe]
-usr/share/perl5/Net/Server/Proto/SSL.pm			    perl/libnet-server-perl [universe]
-usr/share/perl5/POE/Component/Client/HTTP/SSL.pm	
-perl/libpoe-component-client-http-perl [universe]
-
-I installed libcrypt-ssleay-perl but still no luck.
-
-Regards,
--- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
+Sam.
