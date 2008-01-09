@@ -1,115 +1,343 @@
-From: Abdelrazak Younes <younes.a-GANU6spQydw@public.gmane.org>
-Subject: Re: CRLF problems with Git on Win32
-Date: Wed, 09 Jan 2008 09:43:12 +0100
-Message-ID: <fm21f2$18e$1@ger.gmane.org>
-References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se> <200801071947.28586.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801071915470.10101@racer.site> <200801072203.23938.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801072115120.10101@racer.site> <3B08AC4C-A807-4155-8AD7-DC6A6D0FE134@zib.de> <20080108172957.GG22155@fieldses.org> <CE10C08D-AAF1-44B5-89B5-9A16A4AB70EA@zib.de> <7vmyrgry20.fsf@gitster.siamese.dyndns.org> <02DC77F5-7465-418D-972E-0F76E56C3F75@zib.de> <20080108205054.GN6951@dpotapov.dyndns.org> <alpine.LFD.1.00.0801081325010.3148@woody.linux-foundation.org>
+From: "Imran M Yousuf" <imyousuf@gmail.com>
+Subject: Re: [PATCH] - Added recurse command to git submodule
+Date: Wed, 9 Jan 2008 14:55:10 +0600
+Message-ID: <7bfdc29a0801090055we2d37d1n3b735b1561919ac9@mail.gmail.com>
+References: <1199857906-26321-1-git-send-email-imyousuf@gmail.com>
+	 <7vmyrfjsw1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Wed Jan 09 09:55:17 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wr-out-0708.google.com ([64.233.184.251])
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 09 09:55:47 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCWiN-0004Tn-6J
-	for gcvm-msysgit@m.gmane.org; Wed, 09 Jan 2008 09:55:12 +0100
-Received: by wr-out-0708.google.com with SMTP id 56so1694790wra.3
-        for <gcvm-msysgit@m.gmane.org>; Wed, 09 Jan 2008 00:54:36 -0800 (PST)
+	id 1JCWiw-0004gX-18
+	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 09:55:46 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1750936AbYAIIzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2008 03:55:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751059AbYAIIzR
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 03:55:17 -0500
+Received: from fk-out-0910.google.com ([209.85.128.190]:32394 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750884AbYAIIzO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 03:55:14 -0500
+Received: by fk-out-0910.google.com with SMTP id z23so32920fkz.5
+        for <git@vger.kernel.org>; Wed, 09 Jan 2008 00:55:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:received:x-injected-via-gmane:to:from:subject:date:lines:message-id:references:mime-version:content-type:content-transfer-encoding:x-complaints-to:x-gmane-nntp-posting-host:user-agent:in-reply-to:cc:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=tfUS503YVcNheKmlgQXWOQhLwCYl2FJ51kjQovpEPmg=;
-        b=6niNqXQqXQzvt0k7qWbPZsU3Oc343Ml2fTBo1GnnYha/7lh1U9GhlBaesdYdMuPjOqKYFZkpRiBNsvSOlOekKCJbdmrRpjFYcbE/1gU722/B6PSXO0OXyRvj8PV+sCUAmQ4BhIAz0jHmviLTR3kz84AG8xQSErFDFV+VjmAENgU=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=jRQGh1q9p9otOYk2pvFVqU78u/7Ohnj5QleZqwW6iYA=;
+        b=Hycv4irmgX4QrGJT04PgehLCAsW8yxdLZwjP1R8i7+M9Te/zv6YgDG+BtxsNbbpNfF6Dk+JB1hXRQya6yoQL3xXc0Y+tzJfjQiCAFPcXKf1PC8wV93DbWRn9fBjdJSuiIdTEdj/Yd7P+fetm7CuEWJocgRftmpEyf0DefrWi7Eo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:x-injected-via-gmane:to:from:subject:date:lines:message-id:references:mime-version:content-type:content-transfer-encoding:x-complaints-to:x-gmane-nntp-posting-host:user-agent:in-reply-to:cc:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=5oBdiaa5VaY8ahaECF/6hQawYvprqUisNlnWpmDNjR/q2V79SvLx7GDU3gPSHkzicn1oa8KJhDZDTQPEpnUpxT1tB0ZqIp9dNV0xE/ja45/cInMYlOEaulVoKzlDmNZyOSaFdLDxefqh4kRU4qedK45toBT/Gd/4XkuqdhWJE4Q=
-Received: by 10.100.142.4 with SMTP id p4mr719363and.18.1199868204516;
-        Wed, 09 Jan 2008 00:43:24 -0800 (PST)
-Received: by 10.44.13.45 with SMTP id 45gr1342hsm;
-	Wed, 09 Jan 2008 00:43:24 -0800 (PST)
-X-Sender: gcvm-msysgit@m.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.35.126.2 with SMTP id d2mr52679435pyn.1.1199868204255; Wed, 09 Jan 2008 00:43:24 -0800 (PST)
-Received: from ciao.gmane.org (main.gmane.org [80.91.229.2]) by mx.google.com with ESMTP id h49si29483261nzf.5.2008.01.09.00.43.23; Wed, 09 Jan 2008 00:43:24 -0800 (PST)
-Received-SPF: pass (google.com: domain of gcvm-msysgit@m.gmane.org designates 80.91.229.2 as permitted sender) client-ip=80.91.229.2;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of gcvm-msysgit@m.gmane.org designates 80.91.229.2 as permitted sender) smtp.mail=gcvm-msysgit@m.gmane.org
-Received: from list by ciao.gmane.org with local (Exim 4.43) id 1JCWWu-0006Qn-Lv for msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; Wed, 09 Jan 2008 08:43:20 +0000
-Received: from matrix-eth-s4p3c0.eurocontrol.fr ([192.93.23.254]) by main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Wed, 09 Jan 2008 08:43:20 +0000
-Received: from younes.a by matrix-eth-s4p3c0.eurocontrol.fr with local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Wed, 09 Jan 2008 08:43:20 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet-dbVV3NMTNubNLxjTenLetw@public.gmane.org
-X-Gmane-NNTP-Posting-Host: matrix-eth-s4p3c0.eurocontrol.fr
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <alpine.LFD.1.00.0801081325010.3148-5CScLwifNT1QetFLy7KEm3xJsTq8ys+cHZ5vskTnxNA@public.gmane.org>
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=LChap5sW9epaWjnxXkdbm/7HcrXcAPJ+o3DKr2yfisQfXKw1mtIqnElrq5CqT/ixGWhzSyq3uTdFJnwT2HT8labsS5jaP1L9ZWKvESCVDiwXTajMOrZRAKt7zNCQbJHGXjbsVc3xtJ2fnlGTtKeKd6d9anHP2j4kOa+tECnvyYg=
+Received: by 10.78.138.14 with SMTP id l14mr161092hud.57.1199868910374;
+        Wed, 09 Jan 2008 00:55:10 -0800 (PST)
+Received: by 10.78.50.5 with HTTP; Wed, 9 Jan 2008 00:55:10 -0800 (PST)
+In-Reply-To: <7vmyrfjsw1.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69969>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69970>
+
+Hi Junio,
+
+Thanks for the feedback and specially thank you for the coding
+standard documentation, I was looking for it. I will make fixes to
+both the patches and email them again. Will send this patch again,
+probably tomorrow.
+
+Thank you,
+
+Imran
+
+On Jan 9, 2008 2:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> imyousuf@gmail.com writes:
+>
+> > From: Imran M Yousuf <imyousuf@smartitengineering.com>
+> >
+> >
+> >  - The purpose of the recurse command in the git submodule is to recurse
+> >  a command in its submodule at depths specified. For example if one wants
+> >  to do a diff on its project with submodules at once, one can simply do
+> >  git-submodule recurse diff HEAD and would see the diff for all the modules
+> >  it contains. If during recursion it is found that a module has not been
+> >  initialized or updated than the command also initializes and updates them.
+> >  It is to be noted that argument specification to the command intended (in
+> >  above example diff) to recurse will be same as its original command (i.e.
+> >  git diff). If the original command spec changes it will have no effect on
+> >  the recurse command. Depth of recursion can be specified simply by
+> >  mentioning the -d <recursion depth> argument to recurse command. If not
+> >  specified or specified to 0, it will be comprehended to recurse at all
+> >  depth; if a positive number is specified than maximum recursion depth will
+> >  never cross that depth. In order to see some information -v option may be
+> >  used
+>
+> The indentation style seems, eh, unique.  An overlong single
+> paragraph with solid run of sentences is somewhat hard to read.
+>
+> I am not still convinced that a subcommand other than init,
+> which is started recursively, should initialize and update
+> submodules that are uninitialized.  Currently there is no way,
+> other than not having an initialized submodule repository, to
+> mark that the user is _not_ interested in a particular
+> submodule, and you will lose that if you make recursing into
+> uninitialized ones too easy and aggressive.
+>
+> I suspect that it might be a saner approach to:
+>
+>  - allow "git submodule recurse init [-d depth]" (although I am
+>    not sure if limit by depth is so useful in practice -- only
+>    experience will tell us) to auto-initialize the uninitialized
+>    submodules;
+>
+>  - allow any other "git submodule recurse $cmd" to run
+>    recursively to _any_ depth, but never auto-initialize the
+>    uninitialized submodules.
+>
+> In other words, I think it is a very bad idea to rob the
+> existing mechanism from the user to mark uninteresting
+> submodules by not initializing them.  An alternative would be to
+> give them other means to mark "I am not interested in these
+> submodules", if you insist on this auto-initialization, but I do
+> not offhand think of a mechanism that is easier to use than what
+> we already have (i.e. not checking them out).
+>
+> > @@ -17,6 +17,9 @@ status=
+> >  quiet=
+> >  cached=
+> >  command=
+> > +recurse_verbose=0
+> > +recursion_depth=0
+> > +current_recursion_depth=0
+>
+> I wonder if we want this "verbose" option to be specific to the
+> recurse subcommand, or perhaps other subcommands may want to
+> support more verbose output mode, even if they currently don't.
+> Perhaps the variable should be just called $verbose?
+>
+> > +# Initializes the submodule if already not initialized
+> > +initialize_sub_module() {
+> > +     if [ ! -d "$1"/.git ]; then
+> > +             if [ $recurse_verbose -eq 1 ]; then
+> > +                     echo Initializing and updating "$1"
+>
+> That's a sensible message for the $verbose mode.
+>
+> > +             fi
+> > +             git-submodule init "$1"; git-submodule update "$1"
+>
+> Can init fail for repository "$1"?  Do you want to proceed
+> updating it if it does?
+>
+> > +# This actually traverses the module; checks
+> > +# whether the module is initialized or not.
+> > +# if not initialized, then done so and then the
+> > +# intended command is evaluated. Then it
+> > +# recursively goes into it modules.
+> > +traverse_module() {
+> > +     if [ $recurse_verbose -eq 1 ]; then
+> > +             echo Current recursion depth: "$current_recursion_depth"
+> > +     fi
+> > +     initialize_sub_module "$1"
+> > +     (
+> > +             submod_path="$1"
+> > +             shift
+> > +             cd "$submod_path"
+> > +             if [ $recurse_verbose -eq 1 ]; then
+> > +                     echo Working in mod "$submod_path" @ `pwd` with "$@" \("$#"\)
+>
+> Is this a sensible message, I have to wonder...  Saying `pwd`
+> after already saying "$submod_path" feels more like a debugging
+> message than just being $verbose.
+>
+> > +             fi
+> > +             git "$@"
+>
+> Is the user interested in exit status from this command?  Does
+> the user want to continue on to other submodules if this one
+> fails?
+>
+> > +             # Check whether submodules exists only if recursion to that depth
+> > +             # was requested by user
+> > +             if test "$recursion_depth" -eq 0 || test "$current_recursion_depth" -lt "$recursion_depth"
+>
+> Overly long line.  Perhaps...
+>
+>         if test "$depth" -eq 0 ||
+>            test "$current_depth" -lt "$depth"
+>         then
+>                 ...
+>
+> > +             then
+> > +                     if [ -f .gitmodules ]; then
+> > +                             for mod_path in `sed -n -e 's/path = //p' .gitmodules`; do
+> > +                                     export current_recursion_depth=$(echo "$current_recursion_depth+1" | bc)
+>
+>  (1) I do not think you need to export this variable;
+>
+>  (2) It was reported some shells that we intend to support
+>      mishandle "export VAR=VAL" construct and we tend to write
+>      this "VAR=VAL" followed by "export VAR" as two separate
+>      commands on two separate lines;
+>
+>  (3) We do not use "bc" (and traditionally, shell scripts
+>      outside git don't, either) in scripts.
+>
+> So, I think:
+>
+>     current_recursion_depth=$(( $current_recursion_depth + 1 ))
+>
+> is enough, although the variable name feels overly long.
+>
+> Probably I would even do:
+>
+>         if test "$depth -ne 0 && test "$current_depth" -ge "$depth"
+>         then
+>                 exit 0
+>         fi
+>         if test -f .gitmodules
+>         then
+>                 current_recursion_depth=$(( $current_recursion_depth + 1 ))
+>                 for p in $(sed -n -e 's/path = ....)
+>                 do
+>                         traverse_module "$p" "$@"
+>                 done
+>         fi
+>
+> which would avoid one level of nesting (and indentation), and
+> removes unnecessary increment and decrement inside the loop.
+> You are in your own subprocess, so your increment will not
+> affect the process that called you, and after leaving the loop
+> the only thing you do is just to exit the subprocess.
+>
+> > +# Propagates or recurses over all the submodules at any
+> > +# depth with any git command, e.g. git-clone, git-status,
+> > +# git-commit etc., with the arguments supplied exactly as
+> > +# it would have been supplied to the command otherwise.
+> > +# This actually starts the recursive propagation
+> > +modules_recurse() {
+> > +     project_home=`pwd`
+> > +     echo Project Home: "$project_home"
+>
+> Doesn't this message belong to $verbose mode?
+>
+> > +     if [ $recurse_verbose -eq 1 ]; then
+> > +             if [ $recursion_depth = 0 ]; then
+> > +                     echo Recursion will go to all depths
+> > +             else
+> > +                     echo Recursion depth specified to "$recursion_depth"
+> > +             fi
+>
+> These sounds more like debugging message than $verbose.
+>
+> > +     fi
+> > +     if [ -d "$project_home"/.git/ ]; then
+> > +             if [ $recurse_verbose -eq 1 ]; then
+> > +                     echo Command to recurse: git "$@"
+>
+> Likewise -- you will repeat that inside traverse_module anyway.
+>
+> > +             fi
+> > +             git "$@"
+> > +             if [ -f .gitmodules ]; then
+> > +                     for mod_path in `sed -n -e 's/path = //p' .gitmodules`; do
+> > +                             export current_recursion_depth=1
+> > +                             traverse_module $mod_path "$@"
+> > +                     done
+> > +             fi
+>
+> Do I see a code duplication here?  Why isn't this done as the
+> first level recursion inside traverse_module?  _Even_ _if_ you
+> insist auto-initializing submodules, by moving the
+> initialize_sub_module call in traverse_module a bit down
+> (namely, before it recursively invoke traverse_module itself and
+> make it auto initialize $submod_path, not "$1"), I think you can
+> remove this duplication.
+>
+> > +     else
+> > +             echo "$project_home" not a git repo thus exiting
+> > +             exit
+>
+> And its exit code is 0 which tells the caller that there is no
+> error?
+>
+> > +     fi
+> > +     unset current_recursion_depth
+>
+> The reason for this unset is...?
+>
+> > @@ -326,6 +405,37 @@ do
+> >       --cached)
+> >               command="modules_list"
+> >               ;;
+> > +     recurse)
+> > +             command="modules_$1"
+> > +             repeat=1
+> > +             while test $repeat = 1
+> > +             do
+>
+> You do not need that $repeat thing.  Just use "break", like this.
+>
+>         while :
+>         do
+>                 case ... in
+>                 ...
+>                 *)
+>                         break ;;
+>                 esac
+>         done
+>
+> > +                             -d)
+> > +                                     if [ -z $3 ]; then
+>
+> (minor style)
+>
+>         if test -z "$3"
+>         then
+>                 ...
+>
+> > +                                             echo No \<recursion depth\> specified
+> > +                                             usage
+> > +                                     elif [ `expr "$3" : '[1-9][0-9]*.*'` -eq `expr "$3" : '.*'` ]; then
+> > +                                             recursion_depth="$3"
+> > +                                             shift
+> > +                                             shift
+> > +                                     else
+> > +                                             echo \<recursion depth\> not an integer
+> > +                                             usage
+> > +                                     fi
+> > +                                     ;;
+>
+> Instead of checking integerness by hand, it would probably be
+> much simpler if you did something like this:
+>
+>         depth="$3"
+>         depth=$(( $depth + 0 ))
+>         if test "$depth" != "$3"
+>         then
+>                 die "what's that '$3' for?"
+>         else
+>                 : happy
+>         fi
+>
+> For a rough guideline of shell constructs we use (and do not
+> use), please see Documentation/CodingGuidelines.
+>
 
 
-Linus Torvalds wrote:
-> 
-> 
-> On Tue, 8 Jan 2008, Dmitry Potapov wrote:
->> Perhaps, this option can be called core.autocrlf=safe
-> 
-> We already do half of that:
-> 
->         if (action == CRLF_GUESS) {
->                 /*
->                  * We're currently not going to even try to convert stuff
->                  * that has bare CR characters. Does anybody do that crazy
->                  * stuff?
->                  */
->                 if (stats.cr != stats.crlf)
->                         return 0;
-> 
-> but we don't check that there are no "naked" LF characters.
-> 
-> So the only thing you'd need to add is to add a
-> 
-> 		/* No naked LF's! */
-> 		if (safecrlf && stats.lf)
-> 			return 0;
-> 
-> to that sequence too, but the thing is, having mixed line-endings isn't 
-> actually all that unusual, so I think that kind of "autocrlf=safe" thing 
-> is actually almost useless - because when that thing triggers, you almost 
-> always *do* want to convert it to be just one way.
 
-Sorry for the irruption in this discussion but as a potential git user 
-for cross-platform development I'd like to share my experience/opinion, 
-hope you don't mind.
-
-I am investigating the use of git for our cross-platform project which 
-uses svn currently. In our project, we mark manually *all* source file 
-(*.h and *.cpp) with 'eol-style=native'. This way, if some editor on 
-Windows added some CRLF in such marked file, svn will refuse to commit 
-this file until you clean it up. This means that all C/C++/python files 
-uses LF eol exclusively on all platforms. I believe this is the only 
-sane way to do cross-platform development.
-
-Now, marking any new file manually is cumbersome and some developers 
-often forget to do it. I would like to be able mark all files with a 
-given extension (.c, .cpp, .h) with "LF only". This way, Windows only 
-files (like visual studio projects) can stay with CRLF. It would be 
-fantastic if git could do that.
-
-> 
-> I've seen it multiple times when people cooperate with windows files with 
-> unix tools, where unix editors often preserve old CRLF's, but write new 
-> lines with just LF.
-
-Multiple versions of Visual studio do just this indeed.
-
-Abdel.
+-- 
+Imran M Yousuf
+Entrepreneur & Software Engineer
+Smart IT Engineering
+Dhaka, Bangladesh
+Email: imran@smartitengineering.com
+Mobile: +880-1711402557
