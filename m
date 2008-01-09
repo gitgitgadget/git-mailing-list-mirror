@@ -1,84 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] additional help when editing during interactive rebase
-Date: Tue, 08 Jan 2008 18:55:27 -0800
-Message-ID: <7vsl17pv1c.fsf@gitster.siamese.dyndns.org>
-References: <1199845915-sup-797@south>
+From: Mark Williamson <mark.williamson@cl.cam.ac.uk>
+Subject: [ANNOUNCE] Push Me Pull You 0.1 - Preview Release
+Date: Wed, 9 Jan 2008 02:28:40 +0000
+Message-ID: <200801090228.40382.mark.williamson@cl.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, William Morgan <wmorgan-git@masanjin.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 09 03:56:15 2008
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 09 03:59:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCR6z-00086S-8U
-	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 03:56:13 +0100
+	id 1JCRAO-0000Qg-4M
+	for gcvg-git-2@gmane.org; Wed, 09 Jan 2008 03:59:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752010AbYAICzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jan 2008 21:55:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751622AbYAICzp
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 21:55:45 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36536 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751181AbYAICzp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jan 2008 21:55:45 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DAA131A7;
-	Tue,  8 Jan 2008 21:55:42 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CFE9931A6;
-	Tue,  8 Jan 2008 21:55:38 -0500 (EST)
-In-Reply-To: <1199845915-sup-797@south> (William Morgan's message of "Tue, 08
-	Jan 2008 18:32:17 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752781AbYAIC67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jan 2008 21:58:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752702AbYAIC67
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Jan 2008 21:58:59 -0500
+Received: from ppsw-9.csi.cam.ac.uk ([131.111.8.139]:45326 "EHLO
+	ppsw-9.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751779AbYAIC66 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jan 2008 21:58:58 -0500
+X-Greylist: delayed 1814 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Jan 2008 21:58:58 EST
+X-Cam-SpamDetails: Not scanned
+X-Cam-AntiVirus: No virus found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from maw48.kings.cam.ac.uk ([128.232.236.103]:38875)
+	by ppsw-9.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.159]:25)
+	with esmtpsa (PLAIN:maw48) (TLSv1:DHE-RSA-AES256-SHA:256)
+	id 1JCQgK-0000Gf-W7 (Exim 4.67) for git@vger.kernel.org
+	(return-path <maw48@hermes.cam.ac.uk>); Wed, 09 Jan 2008 02:28:40 +0000
+User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/69946>
 
-William Morgan <wmorgan-git@masanjin.net> writes:
+Hi all,
 
-> I personally would have found this message useful the first time I used
-> git rebase --interactive. YMMV.
+For some time I have been working on a GUI for DVCS systems, which I have 
+named Push Me Pull You (PMPU).  At its core is a GUI for viewing Incoming / 
+Outgoing changesets.  It also includes support for initiating pulls / pushes, 
+doing clones, etc.  Eventually I hope to provide access to much more 
+functionality.
 
-Aside from this message being inappropriate as a proposed commit
-log message, I think what the patch tries to achieve is a worthy
-UI improvement.
+My "native" DVCS is Mercurial and I'm rather new to git's way of doing things, 
+although it is similar in many respects.  PMPU is intended to support 
+multiple DVCS systems; currently it supports hg, bzr and git.  The level of 
+support and testing for these backends varies, however my eventual goal is to 
+have complete and robust support for all of them (and probably others).
 
-I would have removed those empty lines around the instruction if
-I were patching this, though.  Losing 5 lines out of 25-line
-terminal was marginally Ok.  Losing 9 lines 4 lines too many and
-is unacceptable.
+This is just a quick heads-up that I've tagged a 0.1 release and that the code 
+may be worth looking at / playing with for some of you.
 
-Thoughts?
+Please note that error handling is non-existant and that many usecases (e.g. 
+nested repositories) haven't been tested.  The git backend is currently 
+fairly lightly tested.  It seems to work OK for me, just please be CAUTIOUS 
+when playing with it.
 
-> Signed-off-by: William Morgan <wmorgan-git@masanjin.net>
-> ---
->  git-rebase--interactive.sh |    4 ++++
->  1 files changed, 4 insertions(+), 0 deletions(-)
->
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index acdcc54..d53d283 100755
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -263,6 +263,10 @@ do_next () {
->  		warn
->  		warn "	git commit --amend"
->  		warn
-> +		warn "Once amended, continue with"
-> +		warn
-> +		warn "	git rebase --continue"
-> +		warn
->  		exit 0
->  		;;
->  	squash|s)
-> -- 
-> 1.5.4.rc2.68.ge708a-dirty
->
->
-> -- 
-> William <wmorgan-git@masanjin.net>
+The hg repository is here:
+http://xenbits.xensource.com/maw/pmpu.hg
+
+And the homepage (including a tarball of the release) is here:
+http://www.cl.cam.ac.uk/~maw48/pmpu/
+
+I would love to hear any feedback, suggestions, bug reports, etc.  Please cc 
+any mailing list e-mails to me, as I am not subscribed.  You're all welcome 
+to contact me directly if preferred.
+
+Cheers,
+Mark
+-- 
+Dave: Just a question. What use is a unicyle with no seat?  And no pedals!
+Mark: To answer a question with a question: What use is a skateboard?
+Dave: Skateboards have wheels.
+Mark: My wheel has a wheel!
