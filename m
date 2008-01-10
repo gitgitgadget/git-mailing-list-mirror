@@ -1,64 +1,74 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Decompression speed: zip vs lzo
-Date: Thu, 10 Jan 2008 14:56:50 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801101454440.3148@woody.linux-foundation.org>
-References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com> <7v4pdmfw27.fsf@gitster.siamese.dyndns.org> <47855765.9090001@vilain.net> <alpine.LSU.1.00.0801092328580.31053@racer.site> <47856E8D.4010006@vilain.net> <4785A6DB.3080007@vilain.net>
- <20080110091607.GA17944@artemis.madism.org> <alpine.LFD.1.00.0801101332150.3054@xanadu.home> <alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org> <478691EB.1080704@vilain.net> <alpine.LFD.1.00.0801101400550.3148@woody.linux-foundation.org>
- <47869C24.3000400@vilain.net>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: CRLF problems with Git on Win32
+Date: Fri, 11 Jan 2008 02:23:44 +0300
+Message-ID: <20080110232344.GD3197@dpotapov.dyndns.org>
+References: <alpine.LFD.1.00.0801101208500.3148@woody.linux-foundation.org> <C3AC3E6F.10D42%jefferis@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marco Costalba <mcostalba@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Thu Jan 10 23:58:33 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Gregory Jefferis <jefferis@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 11 00:24:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JD6M4-0006n2-N9
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 23:58:33 +0100
+	id 1JD6lJ-0007Bu-Qm
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 00:24:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755149AbYAJW6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 17:58:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752942AbYAJW6E
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 17:58:04 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:35394 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752521AbYAJW6D (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Jan 2008 17:58:03 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0AMusMx032098
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 10 Jan 2008 14:56:55 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0AMuo1A013615;
-	Thu, 10 Jan 2008 14:56:51 -0800
-In-Reply-To: <47869C24.3000400@vilain.net>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.723 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1755633AbYAJXXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2008 18:23:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756157AbYAJXXu
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 18:23:50 -0500
+Received: from smtp06.mtu.ru ([62.5.255.53]:63128 "EHLO smtp06.mtu.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756426AbYAJXXt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2008 18:23:49 -0500
+Received: from smtp06.mtu.ru (localhost [127.0.0.1])
+	by smtp06.mtu.ru (Postfix) with ESMTP id D56498EC2EC;
+	Fri, 11 Jan 2008 02:23:44 +0300 (MSK)
+Received: from dpotapov.dyndns.org (ppp85-140-171-194.pppoe.mtu-net.ru [85.140.171.194])
+	by smtp06.mtu.ru (Postfix) with ESMTP id 6DF3C8EC1E7;
+	Fri, 11 Jan 2008 02:23:44 +0300 (MSK)
+Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
+	(envelope-from <dpotapov@gmail.com>)
+	id 1JD6kS-0002XR-ER; Fri, 11 Jan 2008 02:23:44 +0300
+Content-Disposition: inline
+In-Reply-To: <C3AC3E6F.10D42%jefferis@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-DCC-STREAM-Metrics: smtp06.mtu.ru 10002; Body=0 Fuz1=0 Fuz2=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70109>
 
-
-
-On Fri, 11 Jan 2008, Sam Vilain wrote:
+On Thu, Jan 10, 2008 at 09:28:15PM +0000, Gregory Jefferis wrote:
 > 
-> Drat, guess that means I'll have to recompute the deltas - I was trying
-> to avoid that.
+> Insisting that repos created on windows should have textfiles munged to LF
+> by default doesn't seem right.  Even using Dmitry's clever autocrlf=safe
+> option on Windows would lead to inconvenience since all LF files have to be
+> explicitly attributed as text.  We should be helping Windows people to use
+> LF files rather than hindering them!
 
-Well, you could try to reuse the delta base information itself, but then 
-recompute the actual delta data contents. It would require some 
-source-code changes, but that may be faster (and result in a more accurate 
-before/after picture) than actually recomputing the deltas.
+I think people may have different preferences about that. Some people
+may want to have text files with CRLF but others with LF. Some trust Git
+heuristic for detecting text files (which seems works rahter good for
+most commonly used formats) but others are paranoid about loss some
+data. Finally, there are some people, who just wants to store their
+messy files as is. Based on that, the following options are possible:
 
-			Linus
+1. autocrlf=input for those who want LF and trust Git text heuristic
+2. autocrlf=true is for those who want CRLF and trust Git text heuristic
+3. autocrlf=fail for those who want LF but do not trust Git heuristic
+4. autocrlf=safe for those who want CRLF but do not trust Git heuristic
+5. autocrlf=false for those who like messy files with different EOLs
+
+All these options have been mentioned in this thread, and I don't think
+we are likely to come up with a better solution, because "better"
+depends in which category of people you fall. IMHO, #5 is the least
+reasonable of all.
+
+Dmitry
