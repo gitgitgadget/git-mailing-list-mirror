@@ -1,76 +1,62 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Decompression speed: zip vs lzo
-Date: Thu, 10 Jan 2008 14:02:05 +1300
-Message-ID: <47856E8D.4010006@vilain.net>
-References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com> <7v4pdmfw27.fsf@gitster.siamese.dyndns.org> <47855765.9090001@vilain.net> <alpine.LSU.1.00.0801092328580.31053@racer.site>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [STG PATCH] add a --index option to refresh which takes the contents of the index as the new commit
+Date: Thu, 10 Jan 2008 01:08:54 +0100
+Message-ID: <20080110000854.GA13111@diana.vm.bytemark.co.uk>
+References: <200712302003.33478.kumbayo84@arcor.de> <200801022039.27611.kumbayo84@arcor.de> <20080107105612.GA20981@diana.vm.bytemark.co.uk> <200801082142.47060.kumbayo84@arcor.de> <20080109072358.GB28839@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 10 02:02:42 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Catalin Marinas <catalin.marinas@gmail.com>
+To: Peter Oberndorfer <kumbayo84@arcor.de>
+X-From: git-owner@vger.kernel.org Thu Jan 10 02:28:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JClog-0008UP-8c
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 02:02:42 +0100
+	id 1JCmDx-0006M6-3Y
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 02:28:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754951AbYAJBCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2008 20:02:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754815AbYAJBCO
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 20:02:14 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:37644 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754730AbYAJBCN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2008 20:02:13 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id 8435021D185; Thu, 10 Jan 2008 14:02:11 +1300 (NZDT)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 2911A21D183;
-	Thu, 10 Jan 2008 14:02:07 +1300 (NZDT)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <alpine.LSU.1.00.0801092328580.31053@racer.site>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.3
+	id S1755128AbYAJB2U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jan 2008 20:28:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755119AbYAJB2U
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 20:28:20 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2018 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754310AbYAJB2T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 20:28:19 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JCkyc-0003Ql-00; Thu, 10 Jan 2008 00:08:54 +0000
+Content-Disposition: inline
+In-Reply-To: <20080109072358.GB28839@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70031>
 
-Johannes Schindelin wrote:
-> No new object type.  Why should it?  But it has to have a config variable 
-> which says what type of packs/loose objects it has (and you will not be 
-> able to mix them).
+On 2008-01-09 08:23:58 +0100, Karl Hasselstr=F6m wrote:
 
-I meant loose object.  However this is configured, it affects things
-like HTTP push/pull.  Configuring like that would be a bit too fragile
-for my tastes.
+> On 2008-01-08 21:42:46 +0100, Peter Oberndorfer wrote:
+>
+> > Patch now comes with a Signed-off-by and a log message that
+> > explains how this feature could be used. It was tested with the
+> > testcase, used during development of this patch and on another
+> > repo, but still take care when using it :-)
+>
+> I may be promising too much now, but hopefully I'll get to this
+> tonight.
 
->> Not really worth it IMHO - gzip is already fast enough on even the most 
->> modern processor these days.
-> 
-> I agree that gzip is already fast enough.
-> 
-> However, pack v4 had more goodies than just being faster; it also promised 
-> to have smaller packs.  And pack v4 would need to have the same 
-> infrastructure of repacking if the client does not understand v4 packs.
+I've rebased my patch stack on top of Catalin's master now, and put
+your two patches on top. The --index patch is only in experimental and
+not stable, since you recommend further testing.
 
-Ineed - I think it would be a lot easier to implement if it didn't
-bother with loose objects.  It can just be a new pack version with more
-compression formats.  For when you know you're going to be doing a lot
-of analysis you'd already run "git-repack -a -f" to shorten the deltas,
-so this might be a useful option for some - but again I'd want to see
-figures first.
+I massaged the commit messages slightly, mainly to get a reasonably
+short first line and end all sentences with a period (except on the
+first line, of course!).
 
-I do really like LZOP as far as compression algorithms go.  It seems a
-lot faster for not a huge loss in ratio.
-
-Sam.
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
