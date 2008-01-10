@@ -1,78 +1,82 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Decompression speed: zip vs lzo
-Date: Fri, 11 Jan 2008 11:28:52 +1300
-Message-ID: <47869C24.3000400@vilain.net>
-References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com> <7v4pdmfw27.fsf@gitster.siamese.dyndns.org> <47855765.9090001@vilain.net> <alpine.LSU.1.00.0801092328580.31053@racer.site> <47856E8D.4010006@vilain.net> <4785A6DB.3080007@vilain.net> <20080110091607.GA17944@artemis.madism.org> <alpine.LFD.1.00.0801101332150.3054@xanadu.home> <alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org> <478691EB.1080704@vilain.net> <alpine.LFD.1.00.0801101400550.3148@woody.linux-foundation.org>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: gmail smtp server and git-send-mail. Is this combination working?
+Date: Thu, 10 Jan 2008 23:49:11 +0100
+Message-ID: <4d8e3fd30801101449u11aabd73mba233301df157160@mail.gmail.com>
+References: <4d8e3fd30801080858h5f109b47v87abc6b315fcfa08@mail.gmail.com>
+	 <fm1h7t$nnr$1@ger.gmane.org>
+	 <4d8e3fd30801091509q49c02e1dua4ca42805ba891d6@mail.gmail.com>
+	 <fm44ck$299$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marco Costalba <mcostalba@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jan 10 23:29:57 2008
+Cc: git@vger.kernel.org
+To: "Douglas Stockwell" <doug@11011.net>
+X-From: git-owner@vger.kernel.org Thu Jan 10 23:49:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JD5uJ-00055f-Js
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 23:29:52 +0100
+	id 1JD6DX-0003i3-6r
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 23:49:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755012AbYAJW27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 17:28:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756192AbYAJW27
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 17:28:59 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:49658 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756039AbYAJW26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2008 17:28:58 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id 8FF5421D193; Fri, 11 Jan 2008 11:28:56 +1300 (NZDT)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 22F3521D192;
-	Fri, 11 Jan 2008 11:28:53 +1300 (NZDT)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <alpine.LFD.1.00.0801101400550.3148@woody.linux-foundation.org>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.3
+	id S1753902AbYAJWtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2008 17:49:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754592AbYAJWtP
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 17:49:15 -0500
+Received: from hs-out-0708.google.com ([64.233.178.247]:59201 "EHLO
+	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753674AbYAJWtO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2008 17:49:14 -0500
+Received: by hs-out-2122.google.com with SMTP id 54so788638hsz.5
+        for <git@vger.kernel.org>; Thu, 10 Jan 2008 14:49:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=8hK+cJYaPitcc7n+2BIfhzLn/Ehar9OWdM1Zrid7TIc=;
+        b=jhlxMkkfz6QcmA8AdOB7X6Yj2UUCWuS3DJVZQVWJvtsC0txlxRJSoO1eSRDJVZDGkR9P+Rpzj4ljJes4kfY2opmhSQ3aiHu2PBCzHgrQ/ALanzwycae2fNo7AmjRrGhorsszaZ8LXrPD6UyODurQKJM3pRat0ewZDJC4Djt4TmI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=wMhPZMlMP9x+5w7zRM6tkoiRwPi3O811/F7Cvc4PeRYh7LJxeM4cChpAZljG2ItuE5khPbpMhb4JdTcpMfLsJVQcqCjRjZflklcsu6QipxCdmMiodrbINv7avB8mSGI8kSnWxYwZV4qzvxDlsb8uL0/uHxL9kG/QqwDMmC7Usk4=
+Received: by 10.142.229.4 with SMTP id b4mr1412916wfh.158.1200005351406;
+        Thu, 10 Jan 2008 14:49:11 -0800 (PST)
+Received: by 10.143.195.1 with HTTP; Thu, 10 Jan 2008 14:49:11 -0800 (PST)
+In-Reply-To: <fm44ck$299$1@ger.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70107>
 
-Linus Torvalds wrote:
->> wilber:~/src/perl-preview$ du -sk .git
->> 73274   .git
->> wilber:~/src/perl-preview$ git-repack -a
->> Counting objects: 244360, done.
->> Compressing objects: 100% (55493/55493), done.
->> Writing objects: 100% (244360/244360), done.
->> Total 244360 (delta 181061), reused 244360 (delta 181061)
->> wilber:~/src/perl-preview$ du -sk .git/objects/pack/
->> 75389   .git/objects/pack/
-> 
-> Hmm. I'm not sure I understand what this was supposed to show?
-> 
-> You reused all the old deltas, and you did "du -sk" on two different 
-> things before/after (and didn't do a "-a -d" to repack the old pack 
-> either). So does the result actually have anything to do with any 
-> compression algorithm?
-> 
-> Use "-a -d -f" to repack a whole archive.
+On Jan 10, 2008 4:45 AM, Douglas Stockwell <doug@11011.net> wrote:
+> Paolo Ciarrocchi wrote:
+>
+> > Well, it would be nice to add this information to the wiki, it's still
+> > mentioning
+> > that you require an external program for supporting the TLS connection.
+> > I'll do that when I'll get my box working with the configuration you suggested,
+> >
+> > What I'm getting at the moment is:
+> > paolo@paolo-desktop:~/git$ git-send-email -compose -to
+> > paolo.ciarrocchi@gmail.com /home/paolo/Desktop/patch/
+> > snip
+> > snip
+> > Can't locate Net/SMTP/SSL.pm in @INC (@INC contains:
+>
+> As indicated, the module you need is Net::SMTP::SSL, if there is no
+> package for ubuntu, you can install it using CPAN:
+>
+> perl -MCPAN -e 'install Net::SMTP::SSL'
 
-Drat, guess that means I'll have to recompute the deltas - I was trying
-to avoid that.
+I'm now getting:
+Unable to initialize SMTP properly.  Is there something wrong with
+your config? at /home/paolo/bin/git-send-email line 638.
 
-Ok, see you in an hour or two, hopefully sans bonehead mistakes this time :)
+I tried to get help on #git but I failed, it looks like other people
+are getting the same error.
 
-Sam.
+Ciao,
+-- 
+Paolo
+http://paolo.ciarrocchi.googlepages.com/
