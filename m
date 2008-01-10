@@ -1,62 +1,64 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] bundle, fast-import: detect write failure
-Date: Thu, 10 Jan 2008 12:05:50 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801101204120.31053@racer.site>
-References: <874pdmhxha.fsf@rho.meyering.net>
+Subject: Re: Decompression speed: zip vs lzo
+Date: Thu, 10 Jan 2008 12:12:25 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801101210031.31053@racer.site>
+References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com>  <7v4pdmfw27.fsf@gitster.siamese.dyndns.org>  <47855765.9090001@vilain.net>  <alpine.LSU.1.00.0801092328580.31053@racer.site>  <alpine.LFD.1.00.0801092234130.3054@xanadu.home> 
+ <e5bfff550801092255wc852252m9086567a88b1ae99@mail.gmail.com> <e5bfff550801100345i20cb3030mf04a11d610fda6f7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git list <git@vger.kernel.org>
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Thu Jan 10 13:06:33 2008
+Cc: Nicolas Pitre <nico@cam.org>, Sam Vilain <sam@vilain.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 10 13:13:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCwAy-0008Tc-K9
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 13:06:25 +0100
+	id 1JCwHO-0002Hq-Vz
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 13:13:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754504AbYAJMF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 07:05:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754078AbYAJMF4
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 07:05:56 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38215 "HELO mail.gmx.net"
+	id S1753154AbYAJMMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2008 07:12:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753359AbYAJMMa
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 07:12:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53922 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753907AbYAJMFz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2008 07:05:55 -0500
-Received: (qmail invoked by alias); 10 Jan 2008 12:05:53 -0000
+	id S1752918AbYAJMM3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2008 07:12:29 -0500
+Received: (qmail invoked by alias); 10 Jan 2008 12:12:27 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp011) with SMTP; 10 Jan 2008 13:05:53 +0100
+  by mail.gmx.net (mp030) with SMTP; 10 Jan 2008 13:12:27 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19WQusaNI1WGpMdu/bpWRElvQFmMnGdJqnChfq9zl
-	sk7jotm4HMM3OO
+X-Provags-ID: V01U2FsdGVkX1/aRzROxvva2zWGNHb/X/AgY35VTsy3YOXF4TDOO6
+	tVgZevJR5WDk1l
 X-X-Sender: gene099@racer.site
-In-Reply-To: <874pdmhxha.fsf@rho.meyering.net>
+In-Reply-To: <e5bfff550801100345i20cb3030mf04a11d610fda6f7@mail.gmail.com>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70063>
 
 Hi,
 
-On Thu, 10 Jan 2008, Jim Meyering wrote:
+On Thu, 10 Jan 2008, Marco Costalba wrote:
 
-> I noticed some unchecked writes.  This fixes them.
+> - Remove #include <zlib.h> from cache.h and substitute with #include
+> "compress.h"
 
-Thank you.
+No.  We will always need zlib for compatibility.  You cannot just replace 
+zlib usage in git.
 
-However, you also have this:
+> - Add #include <zlib.h> where it is "really" intended as example 
+> archive-zip.c
 
-> -	close(keep_fd);
-> +	if (close(keep_fd))
-> +		die("failed to write keep file");
+We have a long tradition to have the system includes in cache.h.
 
-I recently read an article which got me thinking about close().  The 
-author maintained that many mistakes are done by being overzealously 
-defensive; die()ing in case of a close() failure (when open() succeeded!) 
-might be just wrong.
+Besides, if you have "compress.h" included in cache.h, which in turn has 
+to include "zlib.h", what is the use of putting it also in archive-zip.c?
 
 Ciao,
 Dscho
