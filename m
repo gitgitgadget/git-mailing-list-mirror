@@ -1,74 +1,85 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Odd number of elements in anonymous hash
-Date: Thu, 10 Jan 2008 00:38:46 -0800
-Message-ID: <20080110083846.GA15047@soma>
-References: <200801081738.56624.devurandom@gmx.net> <7vbq7wteq4.fsf@gitster.siamese.dyndns.org> <200801081830.25722.devurandom@gmx.net>
+From: Jim Meyering <jim@meyering.net>
+Subject: [PATCH] bundle, fast-import: detect write failure
+Date: Thu, 10 Jan 2008 09:54:25 +0100
+Message-ID: <874pdmhxha.fsf@rho.meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Dennis Schridde <devurandom@gmx.net>
-X-From: git-owner@vger.kernel.org Thu Jan 10 09:39:43 2008
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 10 09:55:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCswv-0004Ad-Ty
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 09:39:42 +0100
+	id 1JCtCP-0001DI-SF
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 09:55:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754303AbYAJIis (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 03:38:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754266AbYAJIis
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 03:38:48 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:36539 "EHLO hand.yhbt.net"
+	id S1754730AbYAJIy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2008 03:54:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753740AbYAJIy2
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 03:54:28 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:35403 "EHLO smtp3-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753447AbYAJIir (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2008 03:38:47 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id D3D132DC08B;
-	Thu, 10 Jan 2008 00:38:46 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <200801081830.25722.devurandom@gmx.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751833AbYAJIy1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2008 03:54:27 -0500
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id B77ED17B58F
+	for <git@vger.kernel.org>; Thu, 10 Jan 2008 09:54:25 +0100 (CET)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id A8A4117B55C
+	for <git@vger.kernel.org>; Thu, 10 Jan 2008 09:54:25 +0100 (CET)
+Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
+	by rho.meyering.net (Acme Bit-Twister) with ESMTP id 7AB413351E
+	for <git@vger.kernel.org>; Thu, 10 Jan 2008 09:54:25 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70050>
 
-Dennis Schridde <devurandom@gmx.net> wrote:
-> Am Dienstag, 8. Januar 2008 18:21:55 schrieb Junio C Hamano:
-> > Dennis Schridde <devurandom@gmx.net> writes:
-> > > Hello!
-> > >
-> > > I am getting "Odd number of elements in anonymous hash at
-> > > /usr/bin/git-svn line 1760." (normal output, no warning/error) during
-> > > git-svn-clone. I am using git version 1.5.4.rc2.
-> > >
-> > > Line 1760 is this (with context, marked with '!!'):
-> > >     # see if we have it in our config, first:
-> > >     eval {
-> > >         my $section = "svn-remote.$self->{repo_id}";
-> > > !!        $svnsync = {
-> > >           url => tmp_config('--get', "$section.svnsync-url"),
-> > >           uuid => tmp_config('--get', "$section.svnsync-uuid"),
-> > >         }
-> > >     };
-> > >
-> > > The commandline was "git svn
-> > > clone --authors-file=/var/git/org.gna.warzone.git/authors
-> > > --use-svnsync-props --stdlayout file:///var/svn/warzone2100/
-> > > org.gna.warzone.git/"
-> > >
-> > > I assume this is some kind of bug?
-> >
-> > More than one svn-remote.$your_repo.svnsync-{url,uuid}?
-> PS: It doesn't happen for every revision and the folders (and thus config) 
-> were empty before. The config doesn't list any "svnsync-*" during the import 
-> process.
 
-Can you look in .git/svn/.metadata for the svnsync-* values?  Thanks.
+I noticed some unchecked writes.  This fixes them.
 
-I downloaded your repository and couldn't reproduce it locally.
+* bundle.c (create_bundle): Die upon write failure.
+* fast-import.c (keep_pack): Die upon write or close failure.
 
--- 
-Eric Wong
+Signed-off-by: Jim Meyering <meyering@redhat.com>
+---
+ bundle.c      |    6 +++---
+ fast-import.c |    5 +++--
+ 2 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/bundle.c b/bundle.c
+index be204d8..316aa74 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -320,9 +320,9 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 	for (i = 0; i < revs.pending.nr; i++) {
+ 		struct object *object = revs.pending.objects[i].item;
+ 		if (object->flags & UNINTERESTING)
+-			write(rls.in, "^", 1);
+-		write(rls.in, sha1_to_hex(object->sha1), 40);
+-		write(rls.in, "\n", 1);
++			write_or_die(rls.in, "^", 1);
++		write_or_die(rls.in, sha1_to_hex(object->sha1), 40);
++		write_or_die(rls.in, "\n", 1);
+ 	}
+ 	if (finish_command(&rls))
+ 		return error ("pack-objects died");
+diff --git a/fast-import.c b/fast-import.c
+index 74597c9..82e9161 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -878,8 +878,9 @@ static char *keep_pack(char *curr_index_name)
+ 	keep_fd = open(name, O_RDWR|O_CREAT|O_EXCL, 0600);
+ 	if (keep_fd < 0)
+ 		die("cannot create keep file");
+-	write(keep_fd, keep_msg, strlen(keep_msg));
+-	close(keep_fd);
++	write_or_die(keep_fd, keep_msg, strlen(keep_msg));
++	if (close(keep_fd))
++		die("failed to write keep file");
+
+ 	snprintf(name, sizeof(name), "%s/pack/pack-%s.pack",
+ 		 get_object_directory(), sha1_to_hex(pack_data->sha1));
+--
+1.5.4.rc2.85.g71fd
