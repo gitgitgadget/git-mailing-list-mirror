@@ -1,342 +1,83 @@
-From: Matthias Kestenholz <mk@spinlock.ch>
-Subject: [PATCH/resend] Add color.ui variable which globally enables
-	colorization if set
-Date: Thu, 10 Jan 2008 10:03:16 +0100
-Message-ID: <1199955796.6831.5.camel@futex>
+From: Peter Karlsson <peter-wzhfs8O2nkI+/KzbbBz5qQ@public.gmane.org>
+Subject: Re: CRLF problems with Git on Win32
+Date: Thu, 10 Jan 2008 10:25:00 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0801101023380.11922@ds9.cixit.se>
+References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se> <200801071947.28586.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801071915470.10101@racer.site> <200801072203.23938.robin.rosenberg.lists@dewire.com> <alpine.LSU.1.00.0801072115120.10101@racer.site> <3B08AC4C-A807-4155-8AD7-DC6A6D0FE134@zib.de> <20080108172957.GG22155@fieldses.org> <CE10C08D-AAF1-44B5-89B5-9A16A4AB70EA@zib.de> <7vmyrgry20.fsf@gitster.siamese.dyndns.org> <02DC77F5-7465-418D-972E-0F76E56C3F75@zib.de> <20080108190952.GK22155@fieldses.org> <7vir24rtfp.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801081232120.3148@woody.linux-foundation.org> <7vd4sbmnmz.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801091041570.31053@racer.site>
+Reply-To: peter-wzhfs8O2nkI+/KzbbBz5qQ@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 10 10:24:43 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>, Linus Torvalds <torvalds-de/tnXTf+JLsfHDXvbKv3WD2FQJk+8+b@public.gmane.org>, "J. Bruce Fields" <bfields-uC3wQj2KruNg9hUCZPvPmw@public.gmane.org>, Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>, Robin Rosenberg <robin.rosenberg.lists-RgPrefM1rjDQT0dZR+AlfA@public.gmane.org>, Jeff King <peff-AdEPDUrAXsQ@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+To: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu Jan 10 10:26:24 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from py-out-1314.google.com ([64.233.166.171])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCteV-0001JM-7H
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 10:24:43 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757268AbYAJJXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 04:23:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757175AbYAJJXQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 04:23:16 -0500
-Received: from mail21.bluewin.ch ([195.186.18.66]:36792 "EHLO
-	mail21.bluewin.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756821AbYAJJXL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2008 04:23:11 -0500
-X-Greylist: delayed 1137 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Jan 2008 04:23:10 EST
-Received: from futex.feinheit.ch (213.3.44.95) by mail21.bluewin.ch (Bluewin 7.3.121)
-        id 476BDFDB0047D332; Thu, 10 Jan 2008 09:03:17 +0000
-Received: (nullmailer pid 17499 invoked by uid 1000);
-	Thu, 10 Jan 2008 09:03:17 -0000
-X-Mailer: Evolution 2.21.4 
-Sender: git-owner@vger.kernel.org
+	id 1JCtg4-0001mn-W6
+	for gcvm-msysgit@m.gmane.org; Thu, 10 Jan 2008 10:26:23 +0100
+Received: by py-out-1314.google.com with SMTP id b29so7459738pyh.0
+        for <gcvm-msysgit@m.gmane.org>; Thu, 10 Jan 2008 01:25:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:x-authentication-warning:date:from:to:cc:subject:in-reply-to:message-id:references:accept:x-warning:x-rating:organization:mime-version:content-type:x-greylist:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=JLr1jPLDtAlyerNkO24AB1seOnANAwJjF8ZWHzPg+p4=;
+        b=2RVl7f9m2gOaWbDVXNla/vi2LYRaE8TXxl/vvoWSi5weeaswuGsOL88oH6zBIhzGjr9HK/4SKecN9ipdZhEhcj77mIH/8HOTKId1ijWLkZL8IjCpOqGj2qwFP6zdv+txUFPQBbohZmnUXR58Sxr1oB39YIwxeeKr4KiTKEjNq2I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:x-authentication-warning:date:from:to:cc:subject:in-reply-to:message-id:references:accept:x-warning:x-rating:organization:mime-version:content-type:x-greylist:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=KDAWqoXJHLPxtDNAu+Uol5EgvhKnV0aDJ6C2o0kXqTZx+Uryy89+6E85e3QIovg4+ect9MUKieqpQkXYRRncN5hoKuPUpIBQNVxHgcLioC1B92hyiDbJLb4J/E0xNF1GMxFVCZ/sp3npacj7YWoQgAHsnxarl4Fhtl8MFrDG7og=
+Received: by 10.140.82.35 with SMTP id f35mr5645rvb.10.1199957136906;
+        Thu, 10 Jan 2008 01:25:36 -0800 (PST)
+Received: by 10.44.69.72 with SMTP id r72gr1352hsa;
+	Thu, 10 Jan 2008 01:25:36 -0800 (PST)
+X-Sender: peter-wzhfs8O2nkI+/KzbbBz5qQ@public.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.35.13.4 with SMTP id q4mr779735pyi.7.1199957136216; Thu, 10 Jan 2008 01:25:36 -0800 (PST)
+Received: from ds9.cixit.se (ds9.cixit.se [193.15.169.228]) by mx.google.com with ESMTP id x35si200291nzg.2.2008.01.10.01.25.35; Thu, 10 Jan 2008 01:25:36 -0800 (PST)
+Received-SPF: pass (google.com: domain of peter-wzhfs8O2nkI+/KzbbBz5qQ@public.gmane.org designates 193.15.169.228 as permitted sender) client-ip=193.15.169.228;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of peter-wzhfs8O2nkI+/KzbbBz5qQ@public.gmane.org designates 193.15.169.228 as permitted sender) smtp.mail=peter-wzhfs8O2nkI+/KzbbBz5qQ@public.gmane.org
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1]) by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m0A9P2ZZ026710 (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Thu, 10 Jan 2008 10:25:03 +0100
+Received: from localhost (peter@localhost) by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m0A9P0cX026697; Thu, 10 Jan 2008 10:25:01 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <alpine.LSU.1.00.0801091041570.31053-OGWIkrnhIhzN0uC3ymp8PA@public.gmane.org>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Thu, 10 Jan 2008 10:25:03 +0100 (CET)
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70055>
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70056>
 
-This patch introduces the color.ui variable which globally enables colorization.
-More specific colorization variables like color.branch, color.diff etc. take
-precedence.
 
-color.ui is not respected by git add --interactive and git svn yet.
+Johannes Schindelin:
 
-Signed-off-by: Matthias Kestenholz <mk@spinlock.ch>
----
- Documentation/config.txt |    7 +++++++
- builtin-branch.c         |   10 +++++++---
- builtin-commit.c         |    4 ++++
- builtin-diff.c           |    5 +++++
- builtin-log.c            |   17 +++++++++++++++++
- color.c                  |   12 ++++++++++++
- color.h                  |   11 +++++++++++
- diff.c                   |    6 +++---
- diff.h                   |    1 +
- wt-status.c              |    6 +++---
- 10 files changed, 70 insertions(+), 9 deletions(-)
+> The problem is that MinGW behaves sanely, i.e. it does not output
+> CRLF but only LF.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1b6d6d6..b55f3b4 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -439,6 +439,13 @@ color.status.<slot>::
- commit.template::
- 	Specify a file to use as the template for new commit messages.
- 
-+color.ui::
-+	When set to `always`, always use colors in all git commands which
-+	are capable of colored output. When false (or `never`), never. When
-+	set to `true` or `auto`, use colors only when the output is to the
-+	terminal. When more specific variables of color.* are set, they always
-+	take precedence over this setting. Defaults to false.
-+
- diff.autorefreshindex::
- 	When using `git diff` to compare with work tree
- 	files, do not consider stat-only change as changed.
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 089cae5..9a1eb21 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -31,7 +31,7 @@ static unsigned char head_sha1[20];
- 
- static int branch_track = 1;
- 
--static int branch_use_color;
-+static int branch_use_color = -1;
- static char branch_colors[][COLOR_MAXLEN] = {
- 	"\033[m",	/* reset */
- 	"",		/* PLAIN (normal) */
-@@ -76,12 +76,12 @@ static int git_branch_config(const char *var, const char *value)
- 	if (!strcmp(var, "branch.autosetupmerge"))
- 			branch_track = git_config_bool(var, value);
- 
--	return git_default_config(var, value);
-+	return git_color_default_config(var, value);
- }
- 
- static const char *branch_get_color(enum color_branch ix)
- {
--	if (branch_use_color)
-+	if (branch_use_color > 0)
- 		return branch_colors[ix];
- 	return "";
- }
-@@ -585,6 +585,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	git_config(git_branch_config);
-+
-+	if (branch_use_color == -1)
-+		branch_use_color = git_use_color_default;
-+
- 	track = branch_track;
- 	argc = parse_options(argc, argv, options, builtin_branch_usage, 0);
- 	if (!!delete + !!rename + !!force_create > 1)
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 73f1e35..ba60cfa 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -7,6 +7,7 @@
- 
- #include "cache.h"
- #include "cache-tree.h"
-+#include "color.h"
- #include "dir.h"
- #include "builtin.h"
- #include "diff.h"
-@@ -640,6 +641,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_status_config);
- 
-+	if (wt_status_use_color == -1)
-+		wt_status_use_color = git_use_color_default;
-+
- 	argc = parse_and_validate_options(argc, argv, builtin_status_usage);
- 
- 	index_file = prepare_index(argc, argv, prefix);
-diff --git a/builtin-diff.c b/builtin-diff.c
-index 29365a0..77a9c9a 100644
---- a/builtin-diff.c
-+++ b/builtin-diff.c
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2006 Junio C Hamano
-  */
- #include "cache.h"
-+#include "color.h"
- #include "commit.h"
- #include "blob.h"
- #include "tag.h"
-@@ -229,6 +230,10 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 
- 	prefix = setup_git_directory_gently(&nongit);
- 	git_config(git_diff_ui_config);
-+
-+	if (diff_use_color_default == -1)
-+		diff_use_color_default = git_use_color_default;
-+
- 	init_revisions(&rev, prefix);
- 	rev.diffopt.skip_stat_unmatch = !!diff_auto_refresh_index;
- 
-diff --git a/builtin-log.c b/builtin-log.c
-index dcc9f81..880da94 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -5,6 +5,7 @@
-  *		 2006 Junio Hamano
-  */
- #include "cache.h"
-+#include "color.h"
- #include "commit.h"
- #include "diff.h"
- #include "revision.h"
-@@ -235,6 +236,10 @@ int cmd_whatchanged(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 
- 	git_config(git_log_config);
-+
-+	if (diff_use_color_default == -1)
-+		diff_use_color_default = git_use_color_default;
-+
- 	init_revisions(&rev, prefix);
- 	rev.diff = 1;
- 	rev.simplify_history = 0;
-@@ -307,6 +312,10 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 	int i, count, ret = 0;
- 
- 	git_config(git_log_config);
-+
-+	if (diff_use_color_default == -1)
-+		diff_use_color_default = git_use_color_default;
-+
- 	init_revisions(&rev, prefix);
- 	rev.diff = 1;
- 	rev.combine_merges = 1;
-@@ -367,6 +376,10 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 
- 	git_config(git_log_config);
-+
-+	if (diff_use_color_default == -1)
-+		diff_use_color_default = git_use_color_default;
-+
- 	init_revisions(&rev, prefix);
- 	init_reflog_walk(&rev.reflog_info);
- 	rev.abbrev_commit = 1;
-@@ -395,6 +408,10 @@ int cmd_log(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 
- 	git_config(git_log_config);
-+
-+	if (diff_use_color_default == -1)
-+		diff_use_color_default = git_use_color_default;
-+
- 	init_revisions(&rev, prefix);
- 	rev.always_show_header = 1;
- 	cmd_log_init(argc, argv, prefix, &rev);
-diff --git a/color.c b/color.c
-index 7f66c29..09b81fe 100644
---- a/color.c
-+++ b/color.c
-@@ -3,6 +3,8 @@
- 
- #define COLOR_RESET "\033[m"
- 
-+int git_use_color_default = 0;
-+
- static int parse_color(const char *name, int len)
- {
- 	static const char * const color_names[] = {
-@@ -143,6 +145,16 @@ int git_config_colorbool(const char *var, const char *value, int stdout_is_tty)
- 	return 0;
- }
- 
-+int git_color_default_config(const char *var, const char *value)
-+{
-+	if (!strcmp(var, "color.ui")) {
-+		git_use_color_default = git_config_colorbool(var, value, -1);
-+		return 0;
-+	}
-+
-+	return git_default_config(var, value);
-+}
-+
- static int color_vfprintf(FILE *fp, const char *color, const char *fmt,
- 		va_list args, const char *trail)
- {
-diff --git a/color.h b/color.h
-index ff63513..ecda556 100644
---- a/color.h
-+++ b/color.h
-@@ -4,6 +4,17 @@
- /* "\033[1;38;5;2xx;48;5;2xxm\0" is 23 bytes */
- #define COLOR_MAXLEN 24
- 
-+/*
-+ * This variable stores the value of color.ui
-+ */
-+extern int git_use_color_default;
-+
-+
-+/*
-+ * Use this instead of git_default_config if you need the value of color.ui.
-+ */
-+int git_color_default_config(const char *var, const char *value);
-+
- int git_config_colorbool(const char *var, const char *value, int stdout_is_tty);
- void color_parse(const char *var, const char *value, char *dst);
- int color_fprintf(FILE *fp, const char *color, const char *fmt, ...);
-diff --git a/diff.c b/diff.c
-index b18c140..d6f23c7 100644
---- a/diff.c
-+++ b/diff.c
-@@ -20,7 +20,7 @@
- 
- static int diff_detect_rename_default;
- static int diff_rename_limit_default = 100;
--static int diff_use_color_default;
-+int diff_use_color_default = -1;
- static const char *external_diff_cmd_cfg;
- int diff_auto_refresh_index = 1;
- 
-@@ -189,7 +189,7 @@ int git_diff_basic_config(const char *var, const char *value)
- 		}
- 	}
- 
--	return git_default_config(var, value);
-+	return git_color_default_config(var, value);
- }
- 
- static char *quote_two(const char *one, const char *two)
-@@ -2048,7 +2048,7 @@ void diff_setup(struct diff_options *options)
- 
- 	options->change = diff_change;
- 	options->add_remove = diff_addremove;
--	if (diff_use_color_default)
-+	if (diff_use_color_default > 0)
- 		DIFF_OPT_SET(options, COLOR_DIFF);
- 	else
- 		DIFF_OPT_CLR(options, COLOR_DIFF);
-diff --git a/diff.h b/diff.h
-index 073d5cb..8e73f07 100644
---- a/diff.h
-+++ b/diff.h
-@@ -174,6 +174,7 @@ extern void diff_unmerge(struct diff_options *,
- 
- extern int git_diff_basic_config(const char *var, const char *value);
- extern int git_diff_ui_config(const char *var, const char *value);
-+extern int diff_use_color_default;
- extern void diff_setup(struct diff_options *);
- extern int diff_opt_parse(struct diff_options *, const char **, int);
- extern int diff_setup_done(struct diff_options *);
-diff --git a/wt-status.c b/wt-status.c
-index c0c2472..0dfc909 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -9,7 +9,7 @@
- #include "diffcore.h"
- 
- int wt_status_relative_paths = 1;
--int wt_status_use_color = 0;
-+int wt_status_use_color = -1;
- static char wt_status_colors[][COLOR_MAXLEN] = {
- 	"",         /* WT_STATUS_HEADER: normal */
- 	"\033[32m", /* WT_STATUS_UPDATED: green */
-@@ -40,7 +40,7 @@ static int parse_status_slot(const char *var, int offset)
- 
- static const char* color(int slot)
- {
--	return wt_status_use_color ? wt_status_colors[slot] : "";
-+	return wt_status_use_color > 0 ? wt_status_colors[slot] : "";
- }
- 
- void wt_status_prepare(struct wt_status *s)
-@@ -409,5 +409,5 @@ int git_status_config(const char *k, const char *v)
- 		wt_status_relative_paths = git_config_bool(k, v);
- 		return 0;
- 	}
--	return git_default_config(k, v);
-+	return git_color_default_config(k, v);
- }
+Well, that is broken, since the convention on Windows is to use CRLF.
+
+> - Windows is already slow.  So slow that it is not even funny.  Granted, 
+>   if you use Windows daily, git on MinGW seems snappy, but if you come 
+>   from Linux, it is slow as hell.
+
+True. And I run git a lot on a Novell disk share, which doesn't exactly
+help improve the speed either :-)
+
+> - Some tools ported to Windows from Unix do not like CRs.
+
+Those tools are broken, for the same reason as above.
+
+
+Windows has CRLF line endings. Just deal with it.
+
 -- 
-1.5.4.rc2.68.ge708a-dirty
+\\// Peter - http://www.softwolves.pp.se/
