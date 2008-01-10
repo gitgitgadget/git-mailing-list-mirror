@@ -1,100 +1,229 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [Fwd: [FORCEDETH]: Fix reversing the MAC address on suspend.]
-Date: Wed, 9 Jan 2008 19:47:01 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801091934160.3148@woody.linux-foundation.org>
-References: <1199902258.2978.93.camel@pmac.infradead.org> <20080109.154431.128118336.davem@davemloft.net> <alpine.LFD.1.00.0801091620450.3148@woody.linux-foundation.org> <20080109.164149.264906319.davem@davemloft.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: dwmw2@infradead.org, B.Steinbrink@gmx.de,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Miller <davem@davemloft.net>
-X-From: git-owner@vger.kernel.org Thu Jan 10 04:47:57 2008
+From: imyousuf@gmail.com
+Subject: [PATCH] - Updated usage and simplified sub-command action invocation
+Date: Thu, 10 Jan 2008 10:07:25 +0600
+Message-ID: <1199938045-16289-1-git-send-email-imyousuf@gmail.com>
+Cc: gitster@pobox.com, Imran M Yousuf <imyousuf@smartitengineering.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 10 05:08:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCoOa-0003IK-Bh
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 04:47:56 +0100
+	id 1JCoiE-0006z7-0j
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 05:08:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754566AbYAJDr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2008 22:47:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754288AbYAJDr2
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 22:47:28 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:48026 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753154AbYAJDr1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Jan 2008 22:47:27 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0A3l2FT020420
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 9 Jan 2008 19:47:03 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0A3l111003426;
-	Wed, 9 Jan 2008 19:47:01 -0800
-In-Reply-To: <20080109.164149.264906319.davem@davemloft.net>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.223 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1755045AbYAJEHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2008 23:07:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754249AbYAJEHj
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 23:07:39 -0500
+Received: from fg-out-1718.google.com ([72.14.220.158]:25864 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754189AbYAJEHi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 23:07:38 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so522614fga.17
+        for <git@vger.kernel.org>; Wed, 09 Jan 2008 20:07:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=m8cG1zpHBrHMLTh5Ob618wsaf/HQygZzoYhFTKo7lRQ=;
+        b=YlZugblZ27xzxDLXuqBINARWOknXlpkxF1SchPwrk+YTWSJUHJKQER6kb+9nurUgicns8o44VAIkYLC4vEW/onyL/5uDzxHdMZEuSGqYVAJhdM4eCL8A5rWNESit5ra81Qi5Ntx33ZxRXtUrOxh3TeNJe5zckBYI4gmc9V+5qKE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Aqk/kysWZPF71XNrFU/AzQuz6lUS+iz1N5NHKoYxnXYwAyCjs7XCGSrMUjoqj7IG3OWEQIYSwN7TQ+GZ0bzCEUID4+VIHGWQdg5WkM/BS/qmPFRfxIGX7VtTff3PKVZmmzQ0IC1Ez4iie9V3zhso80BqGFH4OfQuZGBcyfpSybs=
+Received: by 10.86.50.8 with SMTP id x8mr1364391fgx.61.1199938056145;
+        Wed, 09 Jan 2008 20:07:36 -0800 (PST)
+Received: from localhost ( [62.101.198.35])
+        by mx.google.com with ESMTPS id 4sm1078880fge.8.2008.01.09.20.07.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 09 Jan 2008 20:07:35 -0800 (PST)
+X-Mailer: git-send-email 1.5.3.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70040>
 
+From: Imran M Yousuf <imyousuf@smartitengineering.com>
 
+- manual page of git-submodule and usage mentioned in git-subcommand.sh
+were not same, thus synchronized them. In doing so also had to change the
+way the subcommands were parsed.
 
-On Wed, 9 Jan 2008, David Miller wrote:
-> 
-> > How do you generate those MSG_FILE/PATCH_FILE things? Using 
-> > "git-mailinfo"? Do you by any chance give it the "-n" flag to make it 
-> > *not* do the conversion to UTF8?
-> 
-> I create them by hand in my editor.
+- Previous version did not allow commands such as "git-submodule add init
+update". Thus not satisfying the following case -
 
-Ok. Apparently you get them in latin1, and save them as such.
+mkdir g; mkdir f; cd g/
+touch g.txt; echo "sample text for g.txt" >> ./g.txt; git-init;
+git-add g.txt; git-commit -a -m "First commit on g"
+cd ../f/; ln -s ../g/ init
+git-init; git-submodule add init update;
+git-commit -a -m "With module update"
+mkdir ../test; cd ../test
+git-clone ../f/; cd f
+git-submodule init update; git-submodule update update
+cd ../..; rm -rf ./f/ ./test/ ./g/
 
-If you can make your editor/mail setup (I assume it's Gnu "bovine 
-excrement" Emacs, since you say that you use your editor for email) use 
-utf8 natively for saving any results, then all your problems should go 
-away.
+This patch fixes this issue and allows it as well.
 
-That said, I suspect we could make git-commit just do the same thing that 
-git-am already does, namely if it's not given an explicit character set 
-for the input/output _and_ it's supposed to be in utf8, it could do the 
-"guess_charset()" thing on a per-line basis.
+- Added 2 specific messages for usage error related to branch and cached
 
-It's not perfect, but the reason git-am does that (through "git mailinfo") 
-is exactly the fact that it's very easy indeed to have mixed messages with 
-some parts in UTF-8 (the body, for example) and others *not* in utf-8 (eg 
-have headers in Latin1).
+- Simplified subcommand action invocation by simply invoking the action if
+all conditions are fulfilled. Excepting for parsing command line arguments
+case statements are avoided and instead more direct if statement is
+introduced.
 
-Doing the "check each line one at a time, see if it is already in UTF-8, 
-otherwise assume it's the traditional Latin1" is kind of hacky, but it's 
-probably better than just acceping a non-utf8 commit message and writing 
-random data.
+Signed-off-by: Imran M Yousuf <imyousuf@smartitengineering.com>
+---
+ git-submodule.sh |   97 ++++++++++++++++++++++++++++++++++++------------------
+ 1 files changed, 65 insertions(+), 32 deletions(-)
 
-For people who really want to use Latin1 (or any other non-utf8 model), we 
-already have a way to get the current behaviour, by forcing something like
-
-	[i18n]
-		commitencoding = binary
-
-but we seem to have ended up with UTF-8 being the default encoding, so we 
-should probably just make sure that we do end up writing valid utf-8 
-unless some other explicit commit encoding has been set up.
-
-So I think it's really your own fault for basically giving a latin1 
-message (and not using the tools that know how to convert emails correctly 
-from *many* different encodings).
-
-But I *also* think that git probably should at least have warned you (I 
-think it does, if you use "git commit" rather than "git commit-tree), and 
-preferably have refused to write an invalid encoding or just converted 
-from what is the most common one (and even if I feel a bit bad about just 
-saying "latin1 is the default non-utf8 encoding", I think it makes sense 
-for historical reasons).
-
-			Linus
+diff --git a/git-submodule.sh b/git-submodule.sh
+index ad9fe62..5d5e41d 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -4,18 +4,23 @@
+ #
+ # Copyright (c) 2007 Lars Hjemli
+ 
+-USAGE='[--quiet] [--cached] [add <repo> [-b branch]|status|init|update] [--] [<path>...]'
++# Synopsis of this commands are as follows
++# git-submodule [--quiet] [-b branch] add <repository> [<path>]
++# git-submodule [--quiet] [--cached] [status] [--] [<path>...]
++# git-submodule [--quiet] init [--] [<path>...]
++# git-submodule [--quiet] update [--] [<path>...]
++USAGE='[--quiet] [[[[-b branch] add <repo>]|[[[[--cached] status]|init|update] [--]]]  [<path>...]]'
+ OPTIONS_SPEC=
+ . git-sh-setup
+ require_work_tree
+ 
++MODULES_LIST='modules_list'
++
+ add=
+ branch=
+-init=
+-update=
+-status=
+ quiet=
+ cached=
++command=
+ 
+ #
+ # print stuff on stdout unless -q was specified
+@@ -293,20 +298,47 @@ modules_list()
+ 	done
+ }
+ 
++# If there is '--' as the first argument simply ignores it and thus shifts
++check_for_terminator()
++{
++	if test -n "$1" && test "$1" = "--"
++	then
++		shift
++	fi
++}
++
++# Command synopsis clearly shows that all arguments after
++# subcommand are arguments to the command itself. Thus
++# there lies no command that has configuration argument
++# after the mention of the subcommand. Thus once the
++# subcommand is found and the separator ('--') is ignored
++# rest can be safely sent the subcommand action
+ while test $# != 0
+ do
+ 	case "$1" in
+ 	add)
+ 		add=1
++		command="module_$1"
++		shift
++		break
+ 		;;
+ 	init)
+-		init=1
++		command="modules_$1"
++		shift
++		check_for_terminator "$1"
++		break
+ 		;;
+ 	update)
+-		update=1
++		command="modules_$1"
++		shift
++		check_for_terminator "$1"
++		break
+ 		;;
+ 	status)
+-		status=1
++		command="$MODULES_LIST"
++		shift
++		check_for_terminator "$1";
++		break
+ 		;;
+ 	-q|--quiet)
+ 		quiet=1
+@@ -323,6 +355,9 @@ do
+ 		cached=1
+ 		;;
+ 	--)
++		# It is shifted so that it is not passed
++		# as an argument to the default subcommand
++		shift
+ 		break
+ 		;;
+ 	-*)
+@@ -335,30 +370,28 @@ do
+ 	shift
+ done
+ 
+-case "$add,$branch" in
+-1,*)
+-	;;
+-,)
+-	;;
+-,*)
++# Throws usage error if branch is not used with add command
++if test -n "$branch" &&
++   test -z "$add"
++then
++	echo Branch can not be specified without add subcommand
+ 	usage
+-	;;
+-esac
+-
+-case "$add,$init,$update,$status,$cached" in
+-1,,,,)
+-	module_add "$@"
+-	;;
+-,1,,,)
+-	modules_init "$@"
+-	;;
+-,,1,,)
+-	modules_update "$@"
+-	;;
+-,,,*,*)
+-	modules_list "$@"
+-	;;
+-*)
++fi
++
++# If no command is specified than default command
++# is - git submodule status
++if test -z "$command"
++then
++	command="$MODULES_LIST"
++fi
++
++# Throws usage if --cached is used by other than status, init or update
++# that is used with add command
++if test -n "$cached" &&
++   test "$command" != "$MODULES_LIST"
++then
++	echo Cached can only be used with the status subcommand
+ 	usage
+-	;;
+-esac
++fi
++
++"$command" "$@"
+-- 
+1.5.3.7
