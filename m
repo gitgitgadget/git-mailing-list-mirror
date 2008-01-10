@@ -1,77 +1,78 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Decompression speed: zip vs lzo
-Date: Thu, 10 Jan 2008 13:18:44 +0100
-Message-ID: <e5bfff550801100418p542ae424l5fc049e0b56ef293@mail.gmail.com>
-References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com>
-	 <7v4pdmfw27.fsf@gitster.siamese.dyndns.org>
-	 <47855765.9090001@vilain.net>
-	 <alpine.LSU.1.00.0801092328580.31053@racer.site>
-	 <alpine.LFD.1.00.0801092234130.3054@xanadu.home>
-	 <e5bfff550801092255wc852252m9086567a88b1ae99@mail.gmail.com>
-	 <e5bfff550801100345i20cb3030mf04a11d610fda6f7@mail.gmail.com>
-	 <alpine.LSU.1.00.0801101210031.31053@racer.site>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: [PATCH] bundle, fast-import: detect write failure
+Date: Thu, 10 Jan 2008 13:26:54 +0100
+Message-ID: <87myrdhnn5.fsf@rho.meyering.net>
+References: <874pdmhxha.fsf@rho.meyering.net>
+	<alpine.LSU.1.00.0801101204120.31053@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Nicolas Pitre" <nico@cam.org>, "Sam Vilain" <sam@vilain.net>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 10 13:19:17 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 10 13:27:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCwNP-0004Fd-5Z
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 13:19:15 +0100
+	id 1JCwVJ-0006e1-0Y
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 13:27:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753489AbYAJMSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 07:18:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753408AbYAJMSr
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 07:18:47 -0500
-Received: from py-out-1112.google.com ([64.233.166.179]:64092 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753362AbYAJMSq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2008 07:18:46 -0500
-Received: by py-out-1112.google.com with SMTP id u52so990034pyb.10
-        for <git@vger.kernel.org>; Thu, 10 Jan 2008 04:18:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=mE14jeCa7QADFkz8LW9bOWhumaqhCWm47P3x+DKceqw=;
-        b=JjT89Mi4TxRi7/QV9kl8Ox32kOR4Kl9Nk9Z4ofZXAgw0ND4f+yWlSGgsfokEgXHkUGkEj9gf+2TxfYSIyTH7XEXJnV7fqCBg8j4FVJr13feAWe2ZaqqV8PRxXa2EXzwxtq6KpRHvj23ftwYHxFedeRvtYlA70Ts1D6Qsn4fF208=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WeYVPmAev8iP/6IulrcW1kByzhV97c7bOTJap5R/FW51w7JMrYdBlAMhw73qaZfQjtk3JKHRxFjk9dxgdmlKVye28UIKjnZGiYpginH62zDPLiBwznLlFAU1zeIsBOOql4lrb/kMTdek9gfJdEYEdymsWUhDUkXN5e5O34ojB58=
-Received: by 10.140.251.1 with SMTP id y1mr1139496rvh.102.1199967524979;
-        Thu, 10 Jan 2008 04:18:44 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Thu, 10 Jan 2008 04:18:44 -0800 (PST)
-In-Reply-To: <alpine.LSU.1.00.0801101210031.31053@racer.site>
-Content-Disposition: inline
+	id S1753648AbYAJM04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2008 07:26:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753549AbYAJM04
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 07:26:56 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:53050 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753519AbYAJM0z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2008 07:26:55 -0500
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id E996E17B544
+	for <git@vger.kernel.org>; Thu, 10 Jan 2008 13:26:54 +0100 (CET)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id C39E817B592
+	for <git@vger.kernel.org>; Thu, 10 Jan 2008 13:26:54 +0100 (CET)
+Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
+	by rho.meyering.net (Acme Bit-Twister) with ESMTP id 5098A554BC;
+	Thu, 10 Jan 2008 13:26:54 +0100 (CET)
+In-Reply-To: <alpine.LSU.1.00.0801101204120.31053@racer.site> (Johannes
+	Schindelin's message of "Thu, 10 Jan 2008 12:05:50 +0000 (GMT)")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70065>
 
-On Jan 10, 2008 1:12 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> However, you also have this:
 >
-> On Thu, 10 Jan 2008, Marco Costalba wrote:
->
-> > - Remove #include <zlib.h> from cache.h and substitute with #include
-> > "compress.h"
->
-> No.  We will always need zlib for compatibility.  You cannot just replace
-> zlib usage in git.
->
+>> -	close(keep_fd);
+>> +	if (close(keep_fd))
+>> +		die("failed to write keep file");
 
-Ok. This was just to check what is broken by removing zlib.h so that
-I'm sure to renaming all the zlib related stuff.
+Yes.  I mentioned that in the commit log:
 
-But I agree this is most a development detail and I can do this just
-in my private tree to help me hacking the patches.
+    * bundle.c (create_bundle): Die upon write failure.
+    * fast-import.c (keep_pack): Die upon write or close failure.
 
-Thanks
-Marco
+But even the summary is accurate if you interpret
+"write" not as the syscall, but as the semantic
+push-data-through-OS-to-disk operation.
+
+> I recently read an article which got me thinking about close().  The
+> author maintained that many mistakes are done by being overzealously
+> defensive; die()ing in case of a close() failure (when open() succeeded!)
+> might be just wrong.
+
+No.  Whether open succeeded is a separate matter.
+Avoiding an unreported write (or close-writable-fd) failure is not
+being "overzealously defensive."
+
+>From "man 2 close",
+
+    -------------
+    NOTES
+       Not  checking  the return value of close() is a common but nevertheless
+       serious programming error.  It is quite possible that errors on a  pre-
+       vious  write(2) operation are first reported at the final close().  Not
+       checking the return value when closing the file may lead to silent loss
+       of data.  This can especially be observed with NFS and with disk quota.
+    -------------
