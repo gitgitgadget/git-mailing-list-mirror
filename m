@@ -1,76 +1,76 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH 1/5] Add zlib decompress helper functions
-Date: Thu, 10 Jan 2008 23:04:00 +0100
-Message-ID: <e5bfff550801101404g488354f5rb05cccf0923fbb9c@mail.gmail.com>
-References: <e5bfff550801101304m4f0b97baua6553c45772793b6@mail.gmail.com>
-	 <alpine.LFD.1.00.0801101351250.3148@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Decompression speed: zip vs lzo
+Date: Thu, 10 Jan 2008 14:03:19 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801101400550.3148@woody.linux-foundation.org>
+References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com> <7v4pdmfw27.fsf@gitster.siamese.dyndns.org> <47855765.9090001@vilain.net> <alpine.LSU.1.00.0801092328580.31053@racer.site> <47856E8D.4010006@vilain.net> <4785A6DB.3080007@vilain.net>
+ <20080110091607.GA17944@artemis.madism.org> <alpine.LFD.1.00.0801101332150.3054@xanadu.home> <alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org> <478691EB.1080704@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jan 10 23:04:38 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Thu Jan 10 23:06:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JD5Vr-0004Bm-1f
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 23:04:35 +0100
+	id 1JD5WX-0004Jh-Qw
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 23:05:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753447AbYAJWEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 17:04:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753245AbYAJWEE
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 17:04:04 -0500
-Received: from py-out-1112.google.com ([64.233.166.180]:40973 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753244AbYAJWEB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2008 17:04:01 -0500
-Received: by py-out-1112.google.com with SMTP id u52so1255579pyb.10
-        for <git@vger.kernel.org>; Thu, 10 Jan 2008 14:04:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=YM6RMbs5qsGrcuAqnVCr/Oll18anHcbtCp0zF0wJ2NQ=;
-        b=VzrftMVxMFXtQqEIQbRTJbdvoUAm0yUP7uhtAYlLtFB0GExiTHPPFGWvbHxZrEMdFu1j3/gYvW/D7OjVh7fS7fc6wyB4/urf/3s2g9cPFY3YB/4WoVjeoBNBr8c9IlEylYK1DUPDIaEwj95wVmlfs/w0rytNn9imt7/tW9Dmd3M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qtIWntuMRrPBlNAtGCZkwMZus/F4zqZQQHdFlxhANzFgag0hMN03CKbOObSuB8oeNPxboI5n5JD8HQqH7liNoOxK969WJAtx2QVvZOQTVLOKEB1O/NiwNfkQwRzyc7Pte3Yag6s6FH3X4Ao3O4QsZG43euiGoQhxvFd2DgZGWS4=
-Received: by 10.141.113.6 with SMTP id q6mr1531226rvm.249.1200002640299;
-        Thu, 10 Jan 2008 14:04:00 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Thu, 10 Jan 2008 14:04:00 -0800 (PST)
-In-Reply-To: <alpine.LFD.1.00.0801101351250.3148@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1753848AbYAJWEu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2008 17:04:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753755AbYAJWEt
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 17:04:49 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:50534 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753245AbYAJWEt (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Jan 2008 17:04:49 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0AM3KWu030087
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 10 Jan 2008 14:03:21 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0AM3JHE011469;
+	Thu, 10 Jan 2008 14:03:19 -0800
+In-Reply-To: <478691EB.1080704@vilain.net>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.723 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70103>
 
-On Jan 10, 2008 10:57 PM, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->
->
-> On Thu, 10 Jan 2008, Marco Costalba wrote:
-> >
-> > When decompressing a zlib stream use this
-> > helpers instead of calling low level zlib
-> > function.
->
-> I really *really* hate your naming.
->
 
-I agree 100% it was chosen only to keep zlib conventions.
 
->
-> [ How many people really know that "inflate" means "uncompress", without
->   having to think about it a bit?
->
+On Fri, 11 Jan 2008, Sam Vilain wrote:
+> 
+> For reference, 20 years of Perl with very deep deltas:
+> 
+> wilber:~/src/perl-preview$ du -sk .git
+> 73274   .git
+> wilber:~/src/perl-preview$ git-repack -a
+> Counting objects: 244360, done.
+> Compressing objects: 100% (55493/55493), done.
+> Writing objects: 100% (244360/244360), done.
+> Total 244360 (delta 181061), reused 244360 (delta 181061)
+> wilber:~/src/perl-preview$ du -sk .git/objects/pack/
+> 75389   .git/objects/pack/
 
-I misnamed the whole patch series but the last one due to deflate
-being tot intuitive !!!
+Hmm. I'm not sure I understand what this was supposed to show?
 
-Ok I wrote the e-mails very quickly and cut and paste was heavily
-involved, but when I realized that I called all the series 'decompress
-helpers' I went blush!
+You reused all the old deltas, and you did "du -sk" on two different 
+things before/after (and didn't do a "-a -d" to repack the old pack 
+either). So does the result actually have anything to do with any 
+compression algorithm?
 
-Marco
+Use "-a -d -f" to repack a whole archive.
+
+			Linus
