@@ -1,59 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Decompression speed: zip vs lzo
-Date: Wed, 09 Jan 2008 15:49:46 -0800
-Message-ID: <7vprwaeezp.fsf@gitster.siamese.dyndns.org>
-References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com>
-	<7v4pdmfw27.fsf@gitster.siamese.dyndns.org>
-	<47855765.9090001@vilain.net>
+From: "Roger C. Soares" <rogersoares@intelinet.com.br>
+Subject: Re: [EGIT PATCH] Showing commit info like the CVS plugin instead
+ of tooltips.
+Date: Wed, 09 Jan 2008 22:17:37 -0200
+Message-ID: <47856421.3070907@intelinet.com.br>
+References: <200801072320.26987.rogersoares@intelinet.com.br> <200801082320.52548.robin.rosenberg.lists@dewire.com> <4784209D.6080100@intelinet.com.br> <200801091912.37723.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Thu Jan 10 00:50:30 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Jan 10 01:17:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCkgn-0005VL-Ka
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 00:50:30 +0100
+	id 1JCl79-0005GA-3K
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 01:17:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755845AbYAIXuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2008 18:50:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754296AbYAIXuA
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 18:50:00 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47588 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752818AbYAIXt7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2008 18:49:59 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7092B28B6;
-	Wed,  9 Jan 2008 18:49:57 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DA6E028B5;
-	Wed,  9 Jan 2008 18:49:52 -0500 (EST)
-In-Reply-To: <47855765.9090001@vilain.net> (Sam Vilain's message of "Thu, 10
-	Jan 2008 12:23:17 +1300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753382AbYAJARG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2008 19:17:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753265AbYAJARF
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 19:17:05 -0500
+Received: from cvxbsd.convex.com.br ([200.152.177.10]:1914 "HELO
+	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752635AbYAJARE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 19:17:04 -0500
+Received: (qmail 53611 invoked by uid 0); 9 Jan 2008 22:19:20 -0200
+Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
+ (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
+ Processed in 0.220182 secs); 10 Jan 2008 00:19:20 -0000
+Received: from unknown (HELO ?200.152.180.33?) (200.152.180.33)
+  by cvxbsd.convex.com.br with SMTP; 10 Jan 2008 00:19:20 -0000
+User-Agent: Thunderbird 1.5.0.12 (X11/20071129)
+In-Reply-To: <200801091912.37723.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70029>
 
-Sam Vilain <sam@vilain.net> writes:
 
-> I think to go forward this would need a prototype and benchmark figures
-> for things like "annotate" and "fsck --full" - but bear in mind it would
-> be a long road to follow-up to completion, as repository compatibility
-> would need to be a primary concern and this essentially would create a
-> new pack type AND a new *object* type.  Not only that, but currently
-> there is no header in the objects on disk which can be used to detect a
-> gzip vs. an lzop stream.  Not really worth it IMHO - gzip is already
-> fast enough on even the most modern processor these days.
 
-For the compression type detection, I was hoping that we could
-do something like sha1_file.c::legacy_loose_object(), but I tend
-to agree it is not probably worth it.
+Robin Rosenberg escreveu:
+>> Showing the tooltips when you press F2 makes more sense to me. What I'm 
+>>     
+> Actually not what I meant. Javadoc tooltips popup as a tooltip. When it is 
+> active you can press F2 to see more information,
+> copy text etc.
+>   
+Humnmn, I see...
+
+>> For the search bar, I would like to make it visible by pressing ctrl-f 
+>> when the history panel has the focus. 
+>>     
+> You're free to experiment. I'm quite fond of the search field in kmail. It is 
+> a textfield that filters mail on
+> header fields as I type.
+>   
+Yep, I'm willing to do something in this direction. The behavior I'm 
+thinking right now won't be to hide the lines that don't match but to do 
+more like gitk. Highlight rows and have next/previous buttons, and if 
+possible show where I am (like 3/10 or 3 of 10).
+
+> I found a bug. When you travel down the histtory using arrow keys all of the 
+> sudden the commit info disappears.
+>   
+Cool, thanks, I'll investigate it.
+
+[]s,
+Roger.
