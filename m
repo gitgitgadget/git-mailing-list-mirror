@@ -1,229 +1,184 @@
-From: imyousuf@gmail.com
-Subject: [PATCH] - Updated usage and simplified sub-command action invocation
-Date: Thu, 10 Jan 2008 10:07:25 +0600
-Message-ID: <1199938045-16289-1-git-send-email-imyousuf@gmail.com>
-Cc: gitster@pobox.com, Imran M Yousuf <imyousuf@smartitengineering.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 10 05:08:15 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] - Added recurse command to git submodule
+Date: Wed, 09 Jan 2008 20:09:05 -0800
+Message-ID: <7vy7ay8gpq.fsf@gitster.siamese.dyndns.org>
+References: <1199857906-26321-1-git-send-email-imyousuf@gmail.com>
+	<7vmyrfjsw1.fsf@gitster.siamese.dyndns.org>
+	<8c5c35580801090242g3f755814pa56e896d0a8723bb@mail.gmail.com>
+	<7vhchmhhjv.fsf@gitster.siamese.dyndns.org>
+	<7bfdc29a0801091927v4eb65a60qf5b185924b9d1e44@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Lars Hjemli" <hjemli@gmail.com>, git@vger.kernel.org,
+	"Imran M Yousuf" <imyousuf@smartitengineering.com>
+To: "Imran M Yousuf" <imyousuf@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 10 05:09:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCoiE-0006z7-0j
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 05:08:14 +0100
+	id 1JCojk-0007L4-39
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 05:09:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755045AbYAJEHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2008 23:07:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754249AbYAJEHj
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 23:07:39 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:25864 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754189AbYAJEHi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2008 23:07:38 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so522614fga.17
-        for <git@vger.kernel.org>; Wed, 09 Jan 2008 20:07:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=m8cG1zpHBrHMLTh5Ob618wsaf/HQygZzoYhFTKo7lRQ=;
-        b=YlZugblZ27xzxDLXuqBINARWOknXlpkxF1SchPwrk+YTWSJUHJKQER6kb+9nurUgicns8o44VAIkYLC4vEW/onyL/5uDzxHdMZEuSGqYVAJhdM4eCL8A5rWNESit5ra81Qi5Ntx33ZxRXtUrOxh3TeNJe5zckBYI4gmc9V+5qKE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=Aqk/kysWZPF71XNrFU/AzQuz6lUS+iz1N5NHKoYxnXYwAyCjs7XCGSrMUjoqj7IG3OWEQIYSwN7TQ+GZ0bzCEUID4+VIHGWQdg5WkM/BS/qmPFRfxIGX7VtTff3PKVZmmzQ0IC1Ez4iie9V3zhso80BqGFH4OfQuZGBcyfpSybs=
-Received: by 10.86.50.8 with SMTP id x8mr1364391fgx.61.1199938056145;
-        Wed, 09 Jan 2008 20:07:36 -0800 (PST)
-Received: from localhost ( [62.101.198.35])
-        by mx.google.com with ESMTPS id 4sm1078880fge.8.2008.01.09.20.07.32
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 09 Jan 2008 20:07:35 -0800 (PST)
-X-Mailer: git-send-email 1.5.3.7
+	id S1755334AbYAJEJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2008 23:09:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755920AbYAJEJU
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 23:09:20 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64918 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755481AbYAJEJU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 23:09:20 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 453392ED7;
+	Wed,  9 Jan 2008 23:09:18 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C1182ED6;
+	Wed,  9 Jan 2008 23:09:12 -0500 (EST)
+In-Reply-To: <7bfdc29a0801091927v4eb65a60qf5b185924b9d1e44@mail.gmail.com>
+	(Imran M. Yousuf's message of "Thu, 10 Jan 2008 09:27:20 +0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70041>
 
-From: Imran M Yousuf <imyousuf@smartitengineering.com>
+"Imran M Yousuf" <imyousuf@gmail.com> writes:
 
-- manual page of git-submodule and usage mentioned in git-subcommand.sh
-were not same, thus synchronized them. In doing so also had to change the
-way the subcommands were parsed.
+>> Also, some commands cannot be made recursive by driving them
+>> from a higher level recursive wrapper.  "git submodule recursive
+>> log" would not make much sense, not only because the order of
+>> the log entries are output from different invocations would not
+>> be useful, but because the revision range specifier would need
+>> to be different in different submodules (e.g. library submodules
+>> and application submodule will not share version name namespace,
+>> i.e. "log v1.0..v2.0" is undefined, and worse yet, running "log
+>> v1.0:path/to/sub..v2.0:path/to/sub" in a submodule when running
+>> "log v1.0..v2.0" in the toplevel is not a correct solution
+>> either in general).
+>
+> What is you suggestion in such cases Junio?
 
-- Previous version did not allow commands such as "git-submodule add init
-update". Thus not satisfying the following case -
+Not doing it using the wrapper approach, but actually have the
+underlying command be aware of the recursiveness.
 
-mkdir g; mkdir f; cd g/
-touch g.txt; echo "sample text for g.txt" >> ./g.txt; git-init;
-git-add g.txt; git-commit -a -m "First commit on g"
-cd ../f/; ln -s ../g/ init
-git-init; git-submodule add init update;
-git-commit -a -m "With module update"
-mkdir ../test; cd ../test
-git-clone ../f/; cd f
-git-submodule init update; git-submodule update update
-cd ../..; rm -rf ./f/ ./test/ ./g/
+Let's take a small example of library project contained within
+an application project as a submodule (think of ffmpeg in
+mplayer or something like that).
 
-This patch fixes this issue and allows it as well.
+Library project has this history:
 
-- Added 2 specific messages for usage error related to branch and cached
+             3---A
+            /
+    ---1---2---4---B
 
-- Simplified subcommand action invocation by simply invoking the action if
-all conditions are fulfilled. Excepting for parsing command line arguments
-case statements are avoided and instead more direct if statement is
-introduced.
+while the application project has this history:
 
-Signed-off-by: Imran M Yousuf <imyousuf@smartitengineering.com>
----
- git-submodule.sh |   97 ++++++++++++++++++++++++++++++++++++------------------
- 1 files changed, 65 insertions(+), 32 deletions(-)
+    ---5---X---6---Y
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index ad9fe62..5d5e41d 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -4,18 +4,23 @@
- #
- # Copyright (c) 2007 Lars Hjemli
- 
--USAGE='[--quiet] [--cached] [add <repo> [-b branch]|status|init|update] [--] [<path>...]'
-+# Synopsis of this commands are as follows
-+# git-submodule [--quiet] [-b branch] add <repository> [<path>]
-+# git-submodule [--quiet] [--cached] [status] [--] [<path>...]
-+# git-submodule [--quiet] init [--] [<path>...]
-+# git-submodule [--quiet] update [--] [<path>...]
-+USAGE='[--quiet] [[[[-b branch] add <repo>]|[[[[--cached] status]|init|update] [--]]]  [<path>...]]'
- OPTIONS_SPEC=
- . git-sh-setup
- require_work_tree
- 
-+MODULES_LIST='modules_list'
-+
- add=
- branch=
--init=
--update=
--status=
- quiet=
- cached=
-+command=
- 
- #
- # print stuff on stdout unless -q was specified
-@@ -293,20 +298,47 @@ modules_list()
- 	done
- }
- 
-+# If there is '--' as the first argument simply ignores it and thus shifts
-+check_for_terminator()
-+{
-+	if test -n "$1" && test "$1" = "--"
-+	then
-+		shift
-+	fi
-+}
-+
-+# Command synopsis clearly shows that all arguments after
-+# subcommand are arguments to the command itself. Thus
-+# there lies no command that has configuration argument
-+# after the mention of the subcommand. Thus once the
-+# subcommand is found and the separator ('--') is ignored
-+# rest can be safely sent the subcommand action
- while test $# != 0
- do
- 	case "$1" in
- 	add)
- 		add=1
-+		command="module_$1"
-+		shift
-+		break
- 		;;
- 	init)
--		init=1
-+		command="modules_$1"
-+		shift
-+		check_for_terminator "$1"
-+		break
- 		;;
- 	update)
--		update=1
-+		command="modules_$1"
-+		shift
-+		check_for_terminator "$1"
-+		break
- 		;;
- 	status)
--		status=1
-+		command="$MODULES_LIST"
-+		shift
-+		check_for_terminator "$1";
-+		break
- 		;;
- 	-q|--quiet)
- 		quiet=1
-@@ -323,6 +355,9 @@ do
- 		cached=1
- 		;;
- 	--)
-+		# It is shifted so that it is not passed
-+		# as an argument to the default subcommand
-+		shift
- 		break
- 		;;
- 	-*)
-@@ -335,30 +370,28 @@ do
- 	shift
- done
- 
--case "$add,$branch" in
--1,*)
--	;;
--,)
--	;;
--,*)
-+# Throws usage error if branch is not used with add command
-+if test -n "$branch" &&
-+   test -z "$add"
-+then
-+	echo Branch can not be specified without add subcommand
- 	usage
--	;;
--esac
--
--case "$add,$init,$update,$status,$cached" in
--1,,,,)
--	module_add "$@"
--	;;
--,1,,,)
--	modules_init "$@"
--	;;
--,,1,,)
--	modules_update "$@"
--	;;
--,,,*,*)
--	modules_list "$@"
--	;;
--*)
-+fi
-+
-+# If no command is specified than default command
-+# is - git submodule status
-+if test -z "$command"
-+then
-+	command="$MODULES_LIST"
-+fi
-+
-+# Throws usage if --cached is used by other than status, init or update
-+# that is used with add command
-+if test -n "$cached" &&
-+   test "$command" != "$MODULES_LIST"
-+then
-+	echo Cached can only be used with the status subcommand
- 	usage
--	;;
--esac
-+fi
-+
-+"$command" "$@"
--- 
-1.5.3.7
+and at time X (and before that point), it binds commit A at a
+directory "lib/" as a submodule.  The commit 6 (between X and Y)
+changes it to bind commit B there instead.  You have both
+toplevel and submodule checked out.  The HEAD in the application
+project is at Y while the HEAD in the library project is at B.
+Your work tree may or may not be clean.
+
+How would a recursive "git diff" between two versions should
+behave, with various arguments?
+
+	$ git diff X Y
+
+Currently this will say something like:
+
+	--- a/lib
+        +++ b/lib
+	@@ -1 +1 @@
+	-Subproject commit A
+        +Subproject commit B
+
+You can make it recurse naturally by recursing into lib/
+subproject instead (at least conceptually this is a simple
+change but it may not be so straightforward, implementation
+wise).
+
+How would you handle this, then?
+
+	$ git diff X Y -- Documentation/
+
+A wrapper approach that blindly descends into lib/ and runs "git
+diff X Y -- Documentation/" there is wrong at two levels.
+Commits X and Y do not even exist there, and Documentation/
+pathspec is wrong.  The documentation may be called docs/ in the
+library project, or it may not even exist, and that is not what
+the user asked to see anyway.  If the user were interested in
+the documentation of the library, the pathspec would have said
+lib/Documentaiton/ (or lib/docs/).
+
+For "git diff", the right solution happens to be invoking the
+command recursively without any pathspec.  The higher level
+chose to recurse into the directory already because it saw
+changes --- by definition everything underneath is interesting.
+
+	Side note.  If we support asking for lib/docs/ from the
+	toplevel, the recursive one would use docs/ as its
+	pathspec in this case.  
+
+The point is that pathspec needs to be munged from the higher
+level iteration, and more importantly that is pretty much
+specific to "git diff".  "git diff" itself needs to have the
+knowledge of what to do when working recursively --- wrapper
+approach would not work well.
+
+How would a recursive version of "git log" work, then?
+
+	$ git log X..Y
+
+Again, a naive wrapper approach of descending into lib/ and
+running "git log X..Y" recursively would not give us anything
+useful.
+
+But if "git log" itself knew recursive behaviour, it should be
+able to do much better.  It can show Y and 6, and at that point
+it could notice that between 6 and its parent X the commit bound
+at lib/ as submodule has changed from A to B, so it could insert
+the log from submodule there.  If we were running with
+--left-right, we might see something like this:
+
+	>Y
+	>6
+            >B
+            >4
+            >2
+            <A
+            <3
+	    -2
+	-X
+
+If the toplevel "git log" was invoked with a pathspec, again, it
+needs to be adjusted to submodule.
+
+I think a wrapper approach could be adequate for simple things
+like "checking out the whole tree including all of its
+submodules".  But even that has to be done carefully.
+
+What should this command (recursive version) do?
+
+	$ git checkout X
+
+The toplevel detaches head at commit X, and notices that it
+contains a submodule at lib/ whose HEAD now needs to point at
+A.  The recursive command should go there, and say
+
+	$ git checkout A
+
+What should it do when this checkout cannot be made because your
+work tree is not clean?  Ideally, it should abort and roll-back
+the checkout of commit X at the toplevel (otherwise you will end
+up in a mixed state).
+
+There are more interesting issues when you bring up a situation
+where X and Y binds that library project at different place
+(i.e. submodule was moved inside the toplevel), which I avoided
+to talk about here to keep this message short.
