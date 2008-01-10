@@ -1,84 +1,115 @@
-From: "Peter Harris" <git@peter.is-a-geek.org>
-Subject: Re: CRLF problems with Git on Win32
-Date: Thu, 10 Jan 2008 09:31:12 -0500
-Message-ID: <eaa105840801100631p6b95ed86j153d70244d474b03@mail.gmail.com>
-References: <Pine.LNX.4.64.0801071010340.1864@ds9.cixit.se>
-	 <02DC77F5-7465-418D-972E-0F76E56C3F75@zib.de>
-	 <20080108190952.GK22155@fieldses.org>
-	 <7vir24rtfp.fsf@gitster.siamese.dyndns.org>
-	 <alpine.LFD.1.00.0801081232120.3148@woody.linux-foundation.org>
-	 <7vd4sbmnmz.fsf@gitster.siamese.dyndns.org>
-	 <alpine.LSU.1.00.0801091041570.31053@racer.site>
-	 <Pine.LNX.4.64.0801101023380.11922@ds9.cixit.se>
-	 <alpine.LSU.1.00.0801101155140.31053@racer.site>
-	 <Pine.LNX.4.64.0801101424580.11922@ds9.cixit.se>
+From: Pierre Habouzit <madcoder@artemis.madism.org>
+Subject: Re: [PATCH] bundle, fast-import: detect write failure
+Date: Thu, 10 Jan 2008 17:25:26 +0100
+Message-ID: <20080110162526.GB27808@artemis.madism.org>
+References: <874pdmhxha.fsf@rho.meyering.net> <alpine.LSU.1.00.0801101204120.31053@racer.site> <87myrdhnn5.fsf@rho.meyering.net> <alpine.LSU.1.00.0801101234580.31053@racer.site> <87hchlhm3k.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	"Steffen Prohaska" <prohaska@zib.de>,
-	"Robin Rosenberg" <robin.rosenberg.lists@dewire.com>,
-	"Jeff King" <peff@peff.net>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-To: "Peter Karlsson" <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Thu Jan 10 15:31:48 2008
+Content-Type: multipart/signed; boundary="oLBj+sq0vYjzfsbl";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git list <git@vger.kernel.org>
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Thu Jan 10 17:26:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCyRe-0001wN-LE
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 15:31:47 +0100
+	id 1JD0EC-0006hv-Dv
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 17:26:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753519AbYAJObR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 09:31:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753359AbYAJObR
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 09:31:17 -0500
-Received: from mu-out-0910.google.com ([209.85.134.190]:38019 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753116AbYAJObQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2008 09:31:16 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so432086mue.5
-        for <git@vger.kernel.org>; Thu, 10 Jan 2008 06:31:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=yMXkLmWHoPRcK4K8bTQ8Jts+P88zcynlIGHeiC2xVKo=;
-        b=SVTnrtK6J0TOAcgno0RO3IypMqlWhsmPQHvXOUO7Zkf+jDma+ei0kLYzbqnrR57IY3Gv2Rvoq3VdNZerjWF4tukaOz43fCvd8OrwIo4382FtmfqyRnvzYryZtDgb2/7anaRHloY2FVhxuOXsn2Lj0fx6lqjfpl1Tbloj7HdgSEY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=aoobtOLc8s4jU1O311nuNT48sKq+BzMEPwk9PlWtjSFsosLDd3uVEr5SURnXcU0tsYZ+CQiHIy1c7nhG8W1wENl9kdGKK156gSQVGT/HCznBgBr9D5wpuawlekITdc1nfpKWeIFQI2OM0K9g48FaWfar5z3AJBB9TFYMAkFdGqo=
-Received: by 10.78.138.14 with SMTP id l14mr2254357hud.57.1199975472181;
-        Thu, 10 Jan 2008 06:31:12 -0800 (PST)
-Received: by 10.78.203.14 with HTTP; Thu, 10 Jan 2008 06:31:12 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0801101424580.11922@ds9.cixit.se>
+	id S1756238AbYAJQZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2008 11:25:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756182AbYAJQZa
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 11:25:30 -0500
+Received: from pan.madism.org ([88.191.52.104]:51291 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754504AbYAJQZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2008 11:25:29 -0500
+Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 1A00F2E4DD;
+	Thu, 10 Jan 2008 17:25:28 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id ECD2E145FE6; Thu, 10 Jan 2008 17:25:26 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@artemis.madism.org>,
+	Jim Meyering <jim@meyering.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git list <git@vger.kernel.org>
 Content-Disposition: inline
-X-Google-Sender-Auth: a0852169d2f5b541
+In-Reply-To: <87hchlhm3k.fsf@rho.meyering.net>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70075>
 
-On Jan 10, 2008 8:28 AM, Peter Karlsson <peter@softwolves.pp.se> wrote:
-> I meant to say that any software that claims to be Windows software
-> should handle, and produce, CRLF line breaks in text files.
 
-Including zip/unzip? How about tar? rsync? NFS and SMB copies from
-network shares? I bet the Samba folks would just *love* to have this
-discussion for the hundredth time.
+--oLBj+sq0vYjzfsbl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Just because CVS and FTP got the defaults wrong (and modern FTP
-clients mostly default to automatically switching to binary, so
-basically just CVS) doesn't mean that Git has to get the default
-wrong, too. Git *does* handle and produce CRLF line breaks, as long as
-you tell it to. Please don't lose sight of that fact.
+On Thu, Jan 10, 2008 at 01:00:15PM +0000, Jim Meyering wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > Are you aware what this code does?  It writes a ".keep" file.  Whose
+> > purpose is to _exist_, and whose purpose is fulfilled, even if the write
+> > or the push-back did not succeed.
+>=20
+> Hi,
+>=20
+> I do see what you mean.
+>=20
+> If the write is not necessary, then perhaps you would prefer a comment
+> documenting that failures of the write and following close are ignorable.
+> And add a '(void)' stmt prefix, to tell compilers that ignoring the
+> return value is deliberate.
 
-I'm just glad that VMS is effectively dead. Line endings on VMS are
-stored outside the text body, IIRC...
+  Note that (void) isn't enough with the most recent gcc flavours, which
+is a pain. I do use:
 
-Peter Harris
+#define IGNORE(expr)  do { if (expr) (void)0; } while (0)
+
+for that purpose in my code. I know IGNORE isn't a brilliant name, but
+it's modeled after the ocaml function doing the same thing.
+
+> However, even if it's not technically required to fail at that point,
+> if it were my choice, I'd prefer to know when a .keep file whose
+> contents are unimportant just happens to reside on a bad spot on my
+> disk.  I/O errors should never be ignored.
+
+  Actually I think .keep files are empty, so the write() should not be
+there in the first place, and we should only check for close() right ?
+not that it matters that much.
+
+> > I could not care less what the manual says.  What is important is if the
+> > defensive programming is done mindlessly, and therefore can fail so not
+> > gracefully.
+>=20
+> On the other hand, if that write failure is truly ignorable,
+> a mindless minimalist :-) might argue that it's best just to
+> omit the syscall.
+
+  And leak a file descriptor :)
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--oLBj+sq0vYjzfsbl
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHhkb2vGr7W6HudhwRAv6UAKCcYLGOiJkWEBQ0uMNAc9uTLP8y/QCeP9ne
+cInWNOI+6mswA6runBF/aqc=
+=X4HF
+-----END PGP SIGNATURE-----
+
+--oLBj+sq0vYjzfsbl--
