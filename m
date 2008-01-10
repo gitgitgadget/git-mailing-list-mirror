@@ -1,106 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: An interaction with ce_match_stat_basic() and autocrlf
-Date: Wed, 09 Jan 2008 18:11:31 -0800
-Message-ID: <7vzlvea0q4.fsf@gitster.siamese.dyndns.org>
-References: <7vfxx8tt1z.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801080748080.3148@woody.linux-foundation.org>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Signing by StGIT broken
+Date: Wed, 09 Jan 2008 21:53:16 -0500
+Message-ID: <1199933596.21499.15.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jan 10 03:12:38 2008
+To: Karl =?ISO-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+	Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 10 03:53:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCmuK-0007aj-UH
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 03:12:37 +0100
+	id 1JCnYB-0000Qd-1O
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 03:53:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754418AbYAJCMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2008 21:12:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753849AbYAJCMF
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 21:12:05 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57859 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753333AbYAJCMD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2008 21:12:03 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E4D35117B;
-	Wed,  9 Jan 2008 21:11:59 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CA7D117A;
-	Wed,  9 Jan 2008 21:11:53 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755800AbYAJCxT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jan 2008 21:53:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755573AbYAJCxT
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 21:53:19 -0500
+Received: from c60.cesmail.net ([216.154.195.49]:26060 "EHLO c60.cesmail.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755454AbYAJCxS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 21:53:18 -0500
+Received: from unknown (HELO relay.cesmail.net) ([192.168.1.81])
+  by c60.cesmail.net with ESMTP; 09 Jan 2008 21:53:17 -0500
+Received: from [192.168.1.21] (static-72-92-88-10.phlapa.fios.verizon.net [72.92.88.10])
+	by relay.cesmail.net (Postfix) with ESMTP id 4AFD4618FE1;
+	Wed,  9 Jan 2008 21:53:17 -0500 (EST)
+X-Mailer: Evolution 2.12.2 (2.12.2-2.fc8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70034>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Hello!
 
-> This patch should fix it, but I suspect we should think hard about that 
-> change to ie_modified(), and see what the performance issues are (ie that 
-> code has tried to avoid doing the more expensive ce_modified_check_fs() 
-> for a reason).
->
-> The change to diff.c is similarly interesting. It is logically wrong to 
-> use the worktree_file there (since we have to read the object anyway), but 
-> since "reuse_worktree_file" is also tied into the whole refresh logic, I 
-> think the diff.c change is correct.
->
-> I dunno. This is not meant to be applied, it is meant to be thought about.
+"stg edit --sign" is not working anymore.  It was working in version
+0.14.
 
-There are a few cases around the changing value of autocrlf (and
-filter attributes --- anything that affects convert_to_git() and
-convert_to_working_tree()).
+$ stg edit --sign
+Checking for changes in the working directory ... done
+Updating patch "id123" ... Traceback (most recent call last):
+  File "/home/proski/bin/stg", line 43, in <module>
+    main()
+  File "home/proski/lib/python2.5/site-packages/stgit/main.py", line 27=
+8, in main
+  File "home/proski/lib/python2.5/site-packages/stgit/commands/edit.py"=
+, line 235, in func
+  File "home/proski/lib/python2.5/site-packages/stgit/commands/edit.py"=
+, line 93, in __update_patch
+  File "home/proski/lib/python2.5/site-packages/stgit/commands/common.p=
+y", line 469, in parse_patch
+  File "home/proski/lib/python2.5/site-packages/stgit/commands/common.p=
+y", line 359, in __split_descr_diff
+AttributeError: 'NoneType' object has no attribute 'split'
 
- * The cached stat information matches the work tree, but user
-   changed convert_to_working_tree().  "git diff" reports
-   nothing.  The user needs to remove the work tree file and
-   check it out again.
+git-bisect reports this:
 
- * The cached stat information matches the work tree, but user
-   changed convert_to_git().  Again, diff reports nothing.  The
-   user needs to "git add" to cause rehashing.
+a08e424021d32bf93ee7bb13ed0a9d7313367660 is first bad commit
+commit a08e424021d32bf93ee7bb13ed0a9d7313367660
+Author: Karl Hasselstr=C3=B6m <kha@treskal.com>
+Date:   Thu Dec 13 00:13:55 2007 +0100
 
- * The cached stat information does not match.  What the working
-   tree file stores hasn't changed, but convert_to_git() was
-   changed.
+    Make generic --message/--file/--save-template flags
+   =20
+    And let "stg edit" use them.
+   =20
+    Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-   The fact that the working tree "file" contents did not change
-   does not have much significance in this case.  What defines
-   the "contents" as far as git is concerned is the combination
-   of the working tree file contents _and_ what convert_to_git()
-   does to it.
+:040000 040000 0c9317423123d328e8bf03866c08fa458808dce4 9195692410c3ed8=
+171f2f799a8e3efd101a89a14 M      stgit
 
-   Depending on the nature of the change to convert_to_git(),
-   "git diff-files" may or may not report real changes in this
-   case.
 
- * The working tree file has changed, and convert_to_git() also
-   has changed.
+I suspect this part:
 
-   Depending on the nature of the change to convert_to_git(),
-   "git diff" may or may not report change in this case.  The
-   most extreme case is when unix2dos is run on the working tree
-   file and convert_to_git() is made to strip CR.  The object
-   registered in the index won't change in this case.
+- elif options.file:
+- __update_patch(pname, options.file, options)
++ elif any([options.message, options.authname, options.authemail,
++ options.authdate, options.commname, options.commemail,
++ options.sign_str]):
++ out.start('Updating patch "%s"' % pname)
++ __update_patch(pname, options.message, options)
++ out.done()
 
-   But in practice, the most problematic case also falls into
-   this category.  The user has _real_ changes to the work tree
-   file, but at the same time flipped convert_to_git() to
-   operate differently from before.  Users should not be making
-   such a change, not because of git, but because a commit like
-   that will be impossible to review (and understand three
-   months later while archaeologying).
+options.message is passed even if it's None and something else (like
+options.sign_str) is defined.
 
-The ie_modified() change you suggested will not be hurt by the
-first two cases (which I see are one-shot events and re-checkout
-and re-add are good enough solution to them, and I do not want
-them to hurt the performance for normal use cases).
-
-I originally thought it was a _bug_, but I suspect the false
-positive changes reported by "git diff" is even a good thing.
+--=20
+Regards,
+Pavel Roskin
