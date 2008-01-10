@@ -1,76 +1,126 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Decompression speed: zip vs lzo
-Date: Fri, 11 Jan 2008 10:45:15 +1300
-Message-ID: <478691EB.1080704@vilain.net>
-References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com> <7v4pdmfw27.fsf@gitster.siamese.dyndns.org> <47855765.9090001@vilain.net> <alpine.LSU.1.00.0801092328580.31053@racer.site> <47856E8D.4010006@vilain.net> <4785A6DB.3080007@vilain.net> <20080110091607.GA17944@artemis.madism.org> <alpine.LFD.1.00.0801101332150.3054@xanadu.home> <alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Odd number of elements in anonymous hash
+Date: Thu, 10 Jan 2008 13:45:50 -0800
+Message-ID: <7vmyrd5p81.fsf@gitster.siamese.dyndns.org>
+References: <200801081738.56624.devurandom@gmx.net>
+	<200801101813.45938.devurandom@gmx.net>
+	<7v63y178a3.fsf@gitster.siamese.dyndns.org>
+	<200801102213.04082.devurandom@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marco Costalba <mcostalba@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jan 10 22:45:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Dennis Schridde <devurandom@gmx.net>
+X-From: git-owner@vger.kernel.org Thu Jan 10 22:46:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JD5Dk-00057M-ML
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 22:45:53 +0100
+	id 1JD5ER-0005S8-33
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 22:46:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752218AbYAJVpY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 16:45:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbYAJVpY
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 16:45:24 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:41872 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752367AbYAJVpX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2008 16:45:23 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id 74BD521D188; Fri, 11 Jan 2008 10:45:21 +1300 (NZDT)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	id S1752367AbYAJVqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2008 16:46:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752848AbYAJVqF
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 16:46:05 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36486 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751191AbYAJVqE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2008 16:46:04 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 94B9A23E6;
+	Thu, 10 Jan 2008 16:46:01 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id D599121D183;
-	Fri, 11 Jan 2008 10:45:16 +1300 (NZDT)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.3
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B18A023E5;
+	Thu, 10 Jan 2008 16:45:57 -0500 (EST)
+In-Reply-To: <200801102213.04082.devurandom@gmx.net> (Dennis Schridde's
+	message of "Thu, 10 Jan 2008 22:13:00 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70098>
 
-Linus Torvalds wrote:
-> Maybe the difference to other repositories isn't huge, and maybe the 
-> kernel *is* a good test-case, but I just wouldn't take that for granted. 
->
-> Try with the gcc repo, especially the one that has deep delta chains (so 
-> it has even *more* deltas in relation to full objects than the kernel has)
+Dennis Schridde <devurandom@gmx.net> writes:
 
-For reference, 20 years of Perl with very deep deltas:
+> Am Donnerstag, 10. Januar 2008 21:08:52 schrieb Junio C Hamano:
+>> Dennis Schridde <devurandom@gmx.net> writes:
+>> >> [svn-remote "svn"]
+>> >>     reposRoot = file:///var/svn/warzone2100
+>> >>     uuid = 4a71c877-e1ca-e34f-864e-861f7616d084
+>> >>     branches-maxRev = 14
+>> >>     tags-maxRev = 14
+>> >>     svnsync-uuid = 4a71c877-e1ca-e34f-864e-861f7616d084\n
+>> >>     svnsync-url = http://svn.gna.org/svn/warzone
+>> >> [svn-remote "tags/1.10a.12"]
+>> >>     reposRoot = file:///var/svn/warzone2100
+>> >>     uuid = 4a71c877-e1ca-e34f-864e-861f7616d084
+>> >> ---
+>> >
+>> > The rest of the file is rather boring. The "svn" remote is not changed
+>> > (besides having higher revisions) and the other remotes look exactly like
+>> > the "tags/1.10a.12" one.
+>> >
+>> > Somehow I think that the \n at the end of the svnsync-uuid shouldn't be
+>> > there... It could be that this is the same linebreak which prevents
+>> > people from relocating (svn switch --relocate) from
+>> > svn://svn.gna.org/svn/warzone to http://svn.gna.org/svn/warzone, so that
+>> > would be a Gna bug.
+>> > However git-svn shouldn't throw any warnings (or even (make perl) crash?)
+>> > on such occasions, either...
+>> >
+>> > I now got it to run through without a segfault, by compiling an unstriped
+>> > perl binary with debug symbols (Gentoo: FEATURES=nostrip CFLAGS="...
+>> > -g"). Maybe this is a bug in GCC or something...
+>> >
+>> > The "Odd number of elements in anonymous hash" still stays, though.
+>>
+>> The code in question is:
+>>
+>> 	my $svnsync;
+>> 	# see if we have it in our config, first:
+>> 	eval {
+>> 		my $section = "svn-remote.$self->{repo_id}";
+>> 		$svnsync = {
+>> 		  url => tmp_config('--get', "$section.svnsync-url"),
+>> 		  uuid => tmp_config('--get', "$section.svnsync-uuid"),
+>> 		}
+>> 	};
+>>
+>> I think the "Odd number" is an indication that one of the
+>> tmp_config() calls is returning an even number of elements (so
+>> the hash whose ref will be stored in $svnsync ends up having an
+>> odd number of elements), and that is why I initially asked you
+>> about "more than one" svnsync-url.  0 is also an even number,
+>> and it could be that it is not finding any.
+>>
+>> How about doing something ugly like this _just for diagnosis_?
+>>
+>> 	my $svnsync;
+>> 	# see if we have it in our config, first:
+>> 	eval {
+>> 		my $section = "svn-remote.$self->{repo_id}";
+>> 		my @u = tmp_config('--get', "$section.svnsync-url");
+>> 		my @v = tmp_config('--get', "$section.svnsync-uuid");
+>> 		if (@u != 1 || @v != 1) {
+>>                 	print STDERR "Oops: <$section> $#u <@u> $#v <@v>\n";
+>> 		}
+>> 		$svnsync = {
+>> 		  url => @u,
+>> 		  uuid => @v,
+>> 		}
+>> 	};
+> I've created /usr/bin/git-svndbg and changed that part, like you proposed.
+> I now get this output. (As it continues to run, there are probably more 
+> occassions of the Oops.)
+> ---
+> Oops: <svn-remote.svn> 0 <http://svn.gna.org/svn/warzone> 1 
+> <4a71c877-e1ca-e34f-864e-861f7616d084 >
+> Odd number of elements in anonymous hash at /usr/bin/git-svndbg line 1768.
+> r13 = ee6d5a48dd5cf1a96ed5217d638f372d2c173d89 (tags/1.10a)
+> ---
 
-wilber:~/src/perl-preview$ du -sk .git
-73274   .git
-wilber:~/src/perl-preview$ git-repack -a
-Counting objects: 244360, done.
-Compressing objects: 100% (55493/55493), done.
-Writing objects: 100% (244360/244360), done.
-Total 244360 (delta 181061), reused 244360 (delta 181061)
-wilber:~/src/perl-preview$ du -sk .git/objects/pack/
-75389   .git/objects/pack/
-wilber:~/src/perl-preview$
-
-There are a few generated files in this history, but really only yacc
-files etc.  It is in general also a lot of small changes.
-
-Sam.
+Exactly.  The trailing newline is taken as a record separator by
+tmp_config subroutine.
