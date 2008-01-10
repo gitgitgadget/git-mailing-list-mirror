@@ -1,82 +1,64 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: gmail smtp server and git-send-mail. Is this combination working?
-Date: Thu, 10 Jan 2008 23:49:11 +0100
-Message-ID: <4d8e3fd30801101449u11aabd73mba233301df157160@mail.gmail.com>
-References: <4d8e3fd30801080858h5f109b47v87abc6b315fcfa08@mail.gmail.com>
-	 <fm1h7t$nnr$1@ger.gmane.org>
-	 <4d8e3fd30801091509q49c02e1dua4ca42805ba891d6@mail.gmail.com>
-	 <fm44ck$299$1@ger.gmane.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Decompression speed: zip vs lzo
+Date: Thu, 10 Jan 2008 14:56:50 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801101454440.3148@woody.linux-foundation.org>
+References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com> <7v4pdmfw27.fsf@gitster.siamese.dyndns.org> <47855765.9090001@vilain.net> <alpine.LSU.1.00.0801092328580.31053@racer.site> <47856E8D.4010006@vilain.net> <4785A6DB.3080007@vilain.net>
+ <20080110091607.GA17944@artemis.madism.org> <alpine.LFD.1.00.0801101332150.3054@xanadu.home> <alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org> <478691EB.1080704@vilain.net> <alpine.LFD.1.00.0801101400550.3148@woody.linux-foundation.org>
+ <47869C24.3000400@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Douglas Stockwell" <doug@11011.net>
-X-From: git-owner@vger.kernel.org Thu Jan 10 23:49:50 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Thu Jan 10 23:58:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JD6DX-0003i3-6r
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 23:49:43 +0100
+	id 1JD6M4-0006n2-N9
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 23:58:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753902AbYAJWtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 17:49:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754592AbYAJWtP
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 17:49:15 -0500
-Received: from hs-out-0708.google.com ([64.233.178.247]:59201 "EHLO
-	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753674AbYAJWtO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2008 17:49:14 -0500
-Received: by hs-out-2122.google.com with SMTP id 54so788638hsz.5
-        for <git@vger.kernel.org>; Thu, 10 Jan 2008 14:49:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=8hK+cJYaPitcc7n+2BIfhzLn/Ehar9OWdM1Zrid7TIc=;
-        b=jhlxMkkfz6QcmA8AdOB7X6Yj2UUCWuS3DJVZQVWJvtsC0txlxRJSoO1eSRDJVZDGkR9P+Rpzj4ljJes4kfY2opmhSQ3aiHu2PBCzHgrQ/ALanzwycae2fNo7AmjRrGhorsszaZ8LXrPD6UyODurQKJM3pRat0ewZDJC4Djt4TmI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=wMhPZMlMP9x+5w7zRM6tkoiRwPi3O811/F7Cvc4PeRYh7LJxeM4cChpAZljG2ItuE5khPbpMhb4JdTcpMfLsJVQcqCjRjZflklcsu6QipxCdmMiodrbINv7avB8mSGI8kSnWxYwZV4qzvxDlsb8uL0/uHxL9kG/QqwDMmC7Usk4=
-Received: by 10.142.229.4 with SMTP id b4mr1412916wfh.158.1200005351406;
-        Thu, 10 Jan 2008 14:49:11 -0800 (PST)
-Received: by 10.143.195.1 with HTTP; Thu, 10 Jan 2008 14:49:11 -0800 (PST)
-In-Reply-To: <fm44ck$299$1@ger.gmane.org>
-Content-Disposition: inline
+	id S1755149AbYAJW6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2008 17:58:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752942AbYAJW6E
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 17:58:04 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:35394 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752521AbYAJW6D (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Jan 2008 17:58:03 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0AMusMx032098
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 10 Jan 2008 14:56:55 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0AMuo1A013615;
+	Thu, 10 Jan 2008 14:56:51 -0800
+In-Reply-To: <47869C24.3000400@vilain.net>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.723 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70108>
 
-On Jan 10, 2008 4:45 AM, Douglas Stockwell <doug@11011.net> wrote:
-> Paolo Ciarrocchi wrote:
->
-> > Well, it would be nice to add this information to the wiki, it's still
-> > mentioning
-> > that you require an external program for supporting the TLS connection.
-> > I'll do that when I'll get my box working with the configuration you suggested,
-> >
-> > What I'm getting at the moment is:
-> > paolo@paolo-desktop:~/git$ git-send-email -compose -to
-> > paolo.ciarrocchi@gmail.com /home/paolo/Desktop/patch/
-> > snip
-> > snip
-> > Can't locate Net/SMTP/SSL.pm in @INC (@INC contains:
->
-> As indicated, the module you need is Net::SMTP::SSL, if there is no
-> package for ubuntu, you can install it using CPAN:
->
-> perl -MCPAN -e 'install Net::SMTP::SSL'
 
-I'm now getting:
-Unable to initialize SMTP properly.  Is there something wrong with
-your config? at /home/paolo/bin/git-send-email line 638.
 
-I tried to get help on #git but I failed, it looks like other people
-are getting the same error.
+On Fri, 11 Jan 2008, Sam Vilain wrote:
+> 
+> Drat, guess that means I'll have to recompute the deltas - I was trying
+> to avoid that.
 
-Ciao,
--- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
+Well, you could try to reuse the delta base information itself, but then 
+recompute the actual delta data contents. It would require some 
+source-code changes, but that may be faster (and result in a more accurate 
+before/after picture) than actually recomputing the deltas.
+
+			Linus
