@@ -1,62 +1,76 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Decompression speed: zip vs lzo
-Date: Fri, 11 Jan 2008 11:01:52 +1300
-Message-ID: <478695D0.5040404@vilain.net>
-References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com>	 <7v4pdmfw27.fsf@gitster.siamese.dyndns.org>	 <47855765.9090001@vilain.net>	 <alpine.LSU.1.00.0801092328580.31053@racer.site>	 <47856E8D.4010006@vilain.net> <4785A6DB.3080007@vilain.net>	 <20080110091607.GA17944@artemis.madism.org>	 <alpine.LFD.1.00.0801101332150.3054@xanadu.home> <e5bfff550801101351w257975b1q9391d556c7af22a0@mail.gmail.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH 1/5] Add zlib decompress helper functions
+Date: Thu, 10 Jan 2008 23:04:00 +0100
+Message-ID: <e5bfff550801101404g488354f5rb05cccf0923fbb9c@mail.gmail.com>
+References: <e5bfff550801101304m4f0b97baua6553c45772793b6@mail.gmail.com>
+	 <alpine.LFD.1.00.0801101351250.3148@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 10 23:02:37 2008
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jan 10 23:04:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JD5Tp-0003SW-H7
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 23:02:29 +0100
+	id 1JD5Vr-0004Bm-1f
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 23:04:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753276AbYAJWCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 17:02:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753212AbYAJWCA
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 17:02:00 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:37780 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752154AbYAJWCA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2008 17:02:00 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id D59BE21D188; Fri, 11 Jan 2008 11:01:56 +1300 (NZDT)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 4549D21D183;
-	Fri, 11 Jan 2008 11:01:52 +1300 (NZDT)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <e5bfff550801101351w257975b1q9391d556c7af22a0@mail.gmail.com>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.3
+	id S1753447AbYAJWEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2008 17:04:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753245AbYAJWEE
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 17:04:04 -0500
+Received: from py-out-1112.google.com ([64.233.166.180]:40973 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753244AbYAJWEB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2008 17:04:01 -0500
+Received: by py-out-1112.google.com with SMTP id u52so1255579pyb.10
+        for <git@vger.kernel.org>; Thu, 10 Jan 2008 14:04:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=YM6RMbs5qsGrcuAqnVCr/Oll18anHcbtCp0zF0wJ2NQ=;
+        b=VzrftMVxMFXtQqEIQbRTJbdvoUAm0yUP7uhtAYlLtFB0GExiTHPPFGWvbHxZrEMdFu1j3/gYvW/D7OjVh7fS7fc6wyB4/urf/3s2g9cPFY3YB/4WoVjeoBNBr8c9IlEylYK1DUPDIaEwj95wVmlfs/w0rytNn9imt7/tW9Dmd3M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qtIWntuMRrPBlNAtGCZkwMZus/F4zqZQQHdFlxhANzFgag0hMN03CKbOObSuB8oeNPxboI5n5JD8HQqH7liNoOxK969WJAtx2QVvZOQTVLOKEB1O/NiwNfkQwRzyc7Pte3Yag6s6FH3X4Ao3O4QsZG43euiGoQhxvFd2DgZGWS4=
+Received: by 10.141.113.6 with SMTP id q6mr1531226rvm.249.1200002640299;
+        Thu, 10 Jan 2008 14:04:00 -0800 (PST)
+Received: by 10.141.76.1 with HTTP; Thu, 10 Jan 2008 14:04:00 -0800 (PST)
+In-Reply-To: <alpine.LFD.1.00.0801101351250.3148@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70102>
 
-Marco Costalba wrote:
-> BTW would be possible to test git with zlib disabled also now? I mean
-> there is a quick hack to disable zlib not only in writing but also in
-> reading, so that we can see what happens when running a repository
-> packed without compression?
+On Jan 10, 2008 10:57 PM, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>
+>
+> On Thu, 10 Jan 2008, Marco Costalba wrote:
+> >
+> > When decompressing a zlib stream use this
+> > helpers instead of calling low level zlib
+> > function.
+>
+> I really *really* hate your naming.
+>
 
-See Nicholas Pitre's hack on another branch of this thread - it won't
-cut out zlib entirely, but at least it's just configuring it to do plain
-pass-through.  You can probably just replace pack_compression_level with 0.
+I agree 100% it was chosen only to keep zlib conventions.
 
-Sam
+>
+> [ How many people really know that "inflate" means "uncompress", without
+>   having to think about it a bit?
+>
+
+I misnamed the whole patch series but the last one due to deflate
+being tot intuitive !!!
+
+Ok I wrote the e-mails very quickly and cut and paste was heavily
+involved, but when I realized that I called all the series 'decompress
+helpers' I went blush!
+
+Marco
