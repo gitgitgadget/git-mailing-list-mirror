@@ -1,94 +1,102 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Signing by StGIT broken
-Date: Wed, 09 Jan 2008 21:53:16 -0500
-Message-ID: <1199933596.21499.15.camel@dv>
+From: "Imran M Yousuf" <imyousuf@gmail.com>
+Subject: Re: [PATCH] Simplified the invocation of command action in submodule
+Date: Thu, 10 Jan 2008 09:05:20 +0600
+Message-ID: <7bfdc29a0801091905k1ef9285em170b26a332a30535@mail.gmail.com>
+References: <1199851140-31853-1-git-send-email-imyousuf@gmail.com>
+	 <47848CDD.7050806@viscovery.net>
+	 <7bfdc29a0801090151k22d3cd5aqedb0d4860868d4d9@mail.gmail.com>
+	 <8c5c35580801090224l1e30df6cw5d3fefe99c0cdd7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Karl =?ISO-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 10 03:53:54 2008
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Sixt" <j.sixt@viscovery.net>, git@vger.kernel.org,
+	gitster@pobox.com
+To: "Lars Hjemli" <lh@elementstorage.no>
+X-From: git-owner@vger.kernel.org Thu Jan 10 04:05:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCnYB-0000Qd-1O
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 03:53:47 +0100
+	id 1JCnjr-0003BB-VE
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 04:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755800AbYAJCxT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jan 2008 21:53:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755573AbYAJCxT
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 21:53:19 -0500
-Received: from c60.cesmail.net ([216.154.195.49]:26060 "EHLO c60.cesmail.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755454AbYAJCxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2008 21:53:18 -0500
-Received: from unknown (HELO relay.cesmail.net) ([192.168.1.81])
-  by c60.cesmail.net with ESMTP; 09 Jan 2008 21:53:17 -0500
-Received: from [192.168.1.21] (static-72-92-88-10.phlapa.fios.verizon.net [72.92.88.10])
-	by relay.cesmail.net (Postfix) with ESMTP id 4AFD4618FE1;
-	Wed,  9 Jan 2008 21:53:17 -0500 (EST)
-X-Mailer: Evolution 2.12.2 (2.12.2-2.fc8) 
+	id S1755395AbYAJDFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2008 22:05:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755019AbYAJDFX
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 22:05:23 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:25863 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753792AbYAJDFW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 22:05:22 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so504243fga.17
+        for <git@vger.kernel.org>; Wed, 09 Jan 2008 19:05:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=ZOk/20DB8vQhjkW9hw3c1Cf8V1tRjK005DDhg6B8/xM=;
+        b=R+MjfX6B/fxe0srCyEaWKkr96kDoq46BxhgXlahrbYwCRp+G6Ll60QiTdr0T8Dkj94CMRP5lEJ/JGiQfeH2/wRPce/wfBmzCDtGvQ8ZTXnGl+b0sFKTTb4MiH5emCfpjdZp3kHf8BKm58nhONeh0GWi7PVnz+FX5Am/8HbauQ28=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=H7We9KIBQ4WvyYN8jv8jOCIqa/U/vskMwD/g15Ny+fltQyf3aXzKlhRKEOQJmnrilj5KLrtigHoV7redB37TH93FVSP3NM9LUJ7A5uB5moqSmtEJGe73Ot3CYSyHwHdHPDs+AZkKTYOxQslddPzw0eMf+Unoz/NhL0aNKybFAGk=
+Received: by 10.78.149.15 with SMTP id w15mr1650336hud.72.1199934320493;
+        Wed, 09 Jan 2008 19:05:20 -0800 (PST)
+Received: by 10.78.50.5 with HTTP; Wed, 9 Jan 2008 19:05:20 -0800 (PST)
+In-Reply-To: <8c5c35580801090224l1e30df6cw5d3fefe99c0cdd7@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70035>
 
-Hello!
+On Jan 9, 2008 4:24 PM, Lars Hjemli <lh@elementstorage.no> wrote:
+> On Jan 9, 2008 10:51 AM, Imran M Yousuf <imyousuf@gmail.com> wrote:
+> > On Jan 9, 2008 2:59 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> > >
+> > > - Previously, passing --cached to add, init, or update was an error, now
+> > > it is not.
+> >
+> > The usage statement and this behaviour is rather contradicting. The
+> > usage says that --cached can be used with all commands; so I am not
+> > sure whether using --cached with add should be an error or not. IMHO,
+> > if the previous implementation was right than the USAGE has to be
+> > changed, and if the previous implementation was incorrect, than if the
+> > default command is set to status than current implementation is right.
+> >
+> > I would like to get comment on this until I fix the patch and resend it.
+>
+> --cached only makes sense for the status subcommand, so the
+> usage/manpage probably should have looked like this (except for the
+> whitespace mangling...):
+>
+> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+> index cffc6d4..331e806 100644
+> --- a/Documentation/git-submodule.txt
+> +++ b/Documentation/git-submodule.txt
+> @@ -10,7 +10,10 @@ SYNOPSIS
+>  --------
+>  [verse]
+>  'git-submodule' [--quiet] [-b branch] add <repository> [<path>]
+> -'git-submodule' [--quiet] [--cached] [status|init|update] [--] [<path>...]
+> +'git-submodule' [--quiet] [--cached] [status] [--] [<path>...]
+> +'git-submodule' [--quiet] init [--] [<path>...]
+> +'git-submodule' [--quiet] update [--] [<path>...]
+> +
+>
 
-"stg edit --sign" is not working anymore.  It was working in version
-0.14.
+This change makes a lot sense. Thus I will make sure that it is used
+in this manner :). Thanks a lot for clarifying it Lars. I wanted to
+know what is the purpose of '--'? If it is simply meant to be a
+separator than fine; else I would be grateful if you would please
+explain its purpose, so that I do not again implement wrongly :).
 
-$ stg edit --sign
-Checking for changes in the working directory ... done
-Updating patch "id123" ... Traceback (most recent call last):
-  File "/home/proski/bin/stg", line 43, in <module>
-    main()
-  File "home/proski/lib/python2.5/site-packages/stgit/main.py", line 27=
-8, in main
-  File "home/proski/lib/python2.5/site-packages/stgit/commands/edit.py"=
-, line 235, in func
-  File "home/proski/lib/python2.5/site-packages/stgit/commands/edit.py"=
-, line 93, in __update_patch
-  File "home/proski/lib/python2.5/site-packages/stgit/commands/common.p=
-y", line 469, in parse_patch
-  File "home/proski/lib/python2.5/site-packages/stgit/commands/common.p=
-y", line 359, in __split_descr_diff
-AttributeError: 'NoneType' object has no attribute 'split'
-
-git-bisect reports this:
-
-a08e424021d32bf93ee7bb13ed0a9d7313367660 is first bad commit
-commit a08e424021d32bf93ee7bb13ed0a9d7313367660
-Author: Karl Hasselstr=C3=B6m <kha@treskal.com>
-Date:   Thu Dec 13 00:13:55 2007 +0100
-
-    Make generic --message/--file/--save-template flags
-   =20
-    And let "stg edit" use them.
-   =20
-    Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
-
-:040000 040000 0c9317423123d328e8bf03866c08fa458808dce4 9195692410c3ed8=
-171f2f799a8e3efd101a89a14 M      stgit
+>
+>  COMMANDS
+> --
+> 1.5.3.7.1141.g4eb39
+>
 
 
-I suspect this part:
-
-- elif options.file:
-- __update_patch(pname, options.file, options)
-+ elif any([options.message, options.authname, options.authemail,
-+ options.authdate, options.commname, options.commemail,
-+ options.sign_str]):
-+ out.start('Updating patch "%s"' % pname)
-+ __update_patch(pname, options.message, options)
-+ out.done()
-
-options.message is passed even if it's None and something else (like
-options.sign_str) is defined.
-
---=20
-Regards,
-Pavel Roskin
+-- 
+Imran M Yousuf
