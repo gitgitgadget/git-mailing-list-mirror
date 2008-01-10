@@ -1,86 +1,120 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Decompression speed: zip vs lzo
-Date: Thu, 10 Jan 2008 16:30:59 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0801101613050.3054@xanadu.home>
-References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com>
- <7v4pdmfw27.fsf@gitster.siamese.dyndns.org> <47855765.9090001@vilain.net>
- <alpine.LSU.1.00.0801092328580.31053@racer.site> <47856E8D.4010006@vilain.net>
- <4785A6DB.3080007@vilain.net> <20080110091607.GA17944@artemis.madism.org>
- <alpine.LFD.1.00.0801101332150.3054@xanadu.home>
- <alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: [PATCH 6/6] Use new compress helpers in builtin-pack-objects.c
+Date: Thu, 10 Jan 2008 22:34:49 +0100
+Message-ID: <e5bfff550801101334p5df5adaerf0eeae02ddf28334@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Pierre Habouzit <madcoder@debian.org>, Sam Vilain <sam@vilain.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marco Costalba <mcostalba@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jan 10 22:31:58 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 10 22:35:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JD50H-00087I-PJ
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 22:31:58 +0100
+	id 1JD53W-0000rJ-S4
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 22:35:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753037AbYAJVb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 16:31:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752482AbYAJVb1
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 16:31:27 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:35818 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752438AbYAJVb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2008 16:31:26 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JUG00E3R6FNGK60@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 10 Jan 2008 16:31:02 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1753242AbYAJVev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2008 16:34:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753438AbYAJVev
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 16:34:51 -0500
+Received: from rv-out-0910.google.com ([209.85.198.190]:36811 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752482AbYAJVeu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2008 16:34:50 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so708809rvb.1
+        for <git@vger.kernel.org>; Thu, 10 Jan 2008 13:34:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=bFD0w49Kl5DB2KxP9IqcmEpLkFGlZt2dM1W7AUmMrP0=;
+        b=sEJwAk/s+mk1vm0bDFDYR5/6BjF0rbHwYDyRQSQcSecbIHdZGZ+B9k7bt71e2CCz2L6b7CTGiIQ1Hvt2tnqU2fki9H/GRLtWPi4OLotpHuarULGQCOgj7n0zUBX+/l3RApOggi30v7arqmNQ8u+fyRMrmwe2y5BvzEksj02v83A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=pKqssfTCXAnQ0+HV89bg7uwEpe8WYJgqbSSz3wDCcTrgAp5LH+SlNviXLu155+QS9Squ5D17z82oDX5IPKvwEymJ/fttffWQUyKhjE+DM7Ycwb7N7v4/S97OGqD+9iXBFEEOf1bZnqE16bLKD9Nq5vpRWh42LfMP6wzrDAGzOe4=
+Received: by 10.141.122.20 with SMTP id z20mr1511854rvm.239.1200000889845;
+        Thu, 10 Jan 2008 13:34:49 -0800 (PST)
+Received: by 10.141.76.1 with HTTP; Thu, 10 Jan 2008 13:34:49 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70096>
 
-On Thu, 10 Jan 2008, Linus Torvalds wrote:
-
-> 
-> 
-> On Thu, 10 Jan 2008, Nicolas Pitre wrote:
-> > 
-> > Here's my rather surprising results:
-> > 
-> > My kernel repo pack size without the patch:	184275401 bytes
-> > Same repo with the above patch applied:		205204930 bytes
-> > 
-> > So it is only 11% larger.  I was expecting much more.
-> 
-> It's probably worth doing those statistics on some other projects.
-> 
-> Maybe the difference to other repositories isn't huge, and maybe the 
-> kernel *is* a good test-case, but I just wouldn't take that for granted. 
-
-Obviously.
-
-This was a really crud test, and my initial goal was to quickly dismiss 
-Pierre's assertion.  Turns out that he wasn't that wrong after all, and 
-if a significant increase in access speed by avoiding zlib for 82% of 
-object accesses can also be demonstrated for the kernel, then we have an 
-opportunity for some optimization tradeoff with no backward 
-compatibility concerns.
-
-> Yes, delta's are bound to compress much less well than non-deltas, and 
-> especially for tree objects (which is a large chunk of them) they probably 
-> compress even less (because a big part of the delta is actually just the 
-> SHA1 changes), but if it's 11% on the kernel, it could easily be 25% on 
-> something else.
-
-Right.  But again this is not worth pursuing if a significant speed 
-increase in repo access is not demonstrated at least with the kernel.
+Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+---
 
 
-Nicolas
+It's 'compress helper' not 'decomrpess helper' of course.
+
+All my patch series is misnamed by my idiocy!
+
+This is the last one for this evening, this is interesting
+because pack_compression_level instead of the usual
+zlib_compression_level is used.
+
+The goal of this patch series is to have some
+comment before to procede with remaining conversions.
+
+When compression is fully abstarceted out I will go with
+decompression (inflate).
+
+At the end of this job perhaps we have something that
+allows us to have fun with different compression libraries.
+
+In any case IMHO this patch series is valid 'per se' as a
+cleanup and (a lot of) code lines removing.
+
+
+ builtin-pack-objects.c |   21 ++++-----------------
+ 1 files changed, 4 insertions(+), 17 deletions(-)
+
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index a39cb82..682d7fb 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -1,5 +1,6 @@
+ #include "builtin.h"
+ #include "cache.h"
++#include "compress.h"
+ #include "attr.h"
+ #include "object.h"
+ #include "blob.h"
+@@ -409,9 +410,7 @@ static unsigned long write_object(struct sha1file *f,
+ 				 */
+
+ 	if (!to_reuse) {
+-		z_stream stream;
+-		unsigned long maxsize;
+-		void *out;
++		unsigned char *out = NULL;
+ 		if (!usable_delta) {
+ 			buf = read_sha1_file(entry->idx.sha1, &obj_type, &size);
+ 			if (!buf)
+@@ -432,20 +431,8 @@ static unsigned long write_object(struct sha1file *f,
+ 				OBJ_OFS_DELTA : OBJ_REF_DELTA;
+ 		}
+ 		/* compress the data to store and put compressed length in datalen */
+-		memset(&stream, 0, sizeof(stream));
+-		deflateInit(&stream, pack_compression_level);
+-		maxsize = deflateBound(&stream, size);
+-		out = xmalloc(maxsize);
+-		/* Compress it */
+-		stream.next_in = buf;
+-		stream.avail_in = size;
+-		stream.next_out = out;
+-		stream.avail_out = maxsize;
+-		while (deflate(&stream, Z_FINISH) == Z_OK)
+-			/* nothing */;
+-		deflateEnd(&stream);
+-		datalen = stream.total_out;
+-		deflateEnd(&stream);
++		datalen = z_deflate_all(pack_compression_level, buf, size, &out);
++
+ 		/*
+ 		 * The object header is a byte of 'type' followed by zero or
+ 		 * more bytes of length.
+-- 
+1.5.4.rc2.89.g1b3f-dirty
