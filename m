@@ -1,84 +1,62 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 1/5] Add zlib decompress helper functions
-Date: Thu, 10 Jan 2008 13:57:40 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801101351250.3148@woody.linux-foundation.org>
-References: <e5bfff550801101304m4f0b97baua6553c45772793b6@mail.gmail.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Decompression speed: zip vs lzo
+Date: Fri, 11 Jan 2008 11:01:52 +1300
+Message-ID: <478695D0.5040404@vilain.net>
+References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com>	 <7v4pdmfw27.fsf@gitster.siamese.dyndns.org>	 <47855765.9090001@vilain.net>	 <alpine.LSU.1.00.0801092328580.31053@racer.site>	 <47856E8D.4010006@vilain.net> <4785A6DB.3080007@vilain.net>	 <20080110091607.GA17944@artemis.madism.org>	 <alpine.LFD.1.00.0801101332150.3054@xanadu.home> <e5bfff550801101351w257975b1q9391d556c7af22a0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
 To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 10 22:58:12 2008
+X-From: git-owner@vger.kernel.org Thu Jan 10 23:02:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JD5Pf-0001fP-BN
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 22:58:11 +0100
+	id 1JD5Tp-0003SW-H7
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 23:02:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752848AbYAJV5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 16:57:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbYAJV5n
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 16:57:43 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:52821 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751587AbYAJV5m (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Jan 2008 16:57:42 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0ALvev8029896
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 10 Jan 2008 13:57:41 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0ALvegl011177;
-	Thu, 10 Jan 2008 13:57:40 -0800
-In-Reply-To: <e5bfff550801101304m4f0b97baua6553c45772793b6@mail.gmail.com>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.184 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,TW_XX
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1753276AbYAJWCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2008 17:02:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753212AbYAJWCA
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 17:02:00 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:37780 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752154AbYAJWCA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jan 2008 17:02:00 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
+	id D59BE21D188; Fri, 11 Jan 2008 11:01:56 +1300 (NZDT)
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id 4549D21D183;
+	Fri, 11 Jan 2008 11:01:52 +1300 (NZDT)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <e5bfff550801101351w257975b1q9391d556c7af22a0@mail.gmail.com>
+X-Enigmail-Version: 0.94.2.0
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on 
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70101>
 
+Marco Costalba wrote:
+> BTW would be possible to test git with zlib disabled also now? I mean
+> there is a quick hack to disable zlib not only in writing but also in
+> reading, so that we can see what happens when running a repository
+> packed without compression?
 
+See Nicholas Pitre's hack on another branch of this thread - it won't
+cut out zlib entirely, but at least it's just configuring it to do plain
+pass-through.  You can probably just replace pack_compression_level with 0.
 
-On Thu, 10 Jan 2008, Marco Costalba wrote:
->
-> When decompressing a zlib stream use this
-> helpers instead of calling low level zlib
-> function.
-
-I really *really* hate your naming.
-
-> This is the first step in generalizing compress and
-> decompress functions avoiding zlib directly calls.
-
-If that's the goal, why keep the horrible "z_" prefix, and why the opaque 
-and non-obvious "inflate"/"deflate" names?
-
-I'd suggest that you just replace all "z_deflate_" with "compress_" and 
-"z_inflate_" with "decompress_".
-
-Yes, it would still leave zlib-specific stuff in there (the return codes, 
-the "z_stream" type thing etc), but at least it would be a _step_ towards 
-more readable code and code that is less obviously zlib-specific.
-
-With those changes, I'd heartily recommend merging this even if we never 
-actually switch away from zlib, if only because zlib has all these 
-horrible names.
-
-		Linus
-
-[ How many people really know that "inflate" means "uncompress", without 
-  having to think about it a bit?
-
-  I guarantee that any computer person immediately knows the difference 
-  between "compress" and "decompress" without even thinking, but ask 
-  somebody what "inflate" vs "deflate" does, and they'll be able to answer 
-  you, but they'll first have to think about an air mattress or something.
-
-  Yeah, yeah, old-time zip users probably think the whole xxflate thing 
-  makes sense, and I'm just grouchy because _I_ always have to think 
-  about it. ]
+Sam
