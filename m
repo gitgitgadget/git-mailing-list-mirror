@@ -1,71 +1,76 @@
-From: "Roger C. Soares" <rogersoares@intelinet.com.br>
-Subject: Re: [EGIT PATCH] Showing commit info like the CVS plugin instead
- of tooltips.
-Date: Wed, 09 Jan 2008 22:17:37 -0200
-Message-ID: <47856421.3070907@intelinet.com.br>
-References: <200801072320.26987.rogersoares@intelinet.com.br> <200801082320.52548.robin.rosenberg.lists@dewire.com> <4784209D.6080100@intelinet.com.br> <200801091912.37723.robin.rosenberg.lists@dewire.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Decompression speed: zip vs lzo
+Date: Thu, 10 Jan 2008 14:02:05 +1300
+Message-ID: <47856E8D.4010006@vilain.net>
+References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com> <7v4pdmfw27.fsf@gitster.siamese.dyndns.org> <47855765.9090001@vilain.net> <alpine.LSU.1.00.0801092328580.31053@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Jan 10 01:17:43 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 10 02:02:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JCl79-0005GA-3K
-	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 01:17:43 +0100
+	id 1JClog-0008UP-8c
+	for gcvg-git-2@gmane.org; Thu, 10 Jan 2008 02:02:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753382AbYAJARG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jan 2008 19:17:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753265AbYAJARF
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 19:17:05 -0500
-Received: from cvxbsd.convex.com.br ([200.152.177.10]:1914 "HELO
-	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752635AbYAJARE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jan 2008 19:17:04 -0500
-Received: (qmail 53611 invoked by uid 0); 9 Jan 2008 22:19:20 -0200
-Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
- (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
- Processed in 0.220182 secs); 10 Jan 2008 00:19:20 -0000
-Received: from unknown (HELO ?200.152.180.33?) (200.152.180.33)
-  by cvxbsd.convex.com.br with SMTP; 10 Jan 2008 00:19:20 -0000
-User-Agent: Thunderbird 1.5.0.12 (X11/20071129)
-In-Reply-To: <200801091912.37723.robin.rosenberg.lists@dewire.com>
+	id S1754951AbYAJBCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jan 2008 20:02:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754815AbYAJBCO
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Jan 2008 20:02:14 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:37644 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754730AbYAJBCN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jan 2008 20:02:13 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
+	id 8435021D185; Thu, 10 Jan 2008 14:02:11 +1300 (NZDT)
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id 2911A21D183;
+	Thu, 10 Jan 2008 14:02:07 +1300 (NZDT)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <alpine.LSU.1.00.0801092328580.31053@racer.site>
+X-Enigmail-Version: 0.94.2.0
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on 
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70030>
 
+Johannes Schindelin wrote:
+> No new object type.  Why should it?  But it has to have a config variable 
+> which says what type of packs/loose objects it has (and you will not be 
+> able to mix them).
 
+I meant loose object.  However this is configured, it affects things
+like HTTP push/pull.  Configuring like that would be a bit too fragile
+for my tastes.
 
-Robin Rosenberg escreveu:
->> Showing the tooltips when you press F2 makes more sense to me. What I'm 
->>     
-> Actually not what I meant. Javadoc tooltips popup as a tooltip. When it is 
-> active you can press F2 to see more information,
-> copy text etc.
->   
-Humnmn, I see...
+>> Not really worth it IMHO - gzip is already fast enough on even the most 
+>> modern processor these days.
+> 
+> I agree that gzip is already fast enough.
+> 
+> However, pack v4 had more goodies than just being faster; it also promised 
+> to have smaller packs.  And pack v4 would need to have the same 
+> infrastructure of repacking if the client does not understand v4 packs.
 
->> For the search bar, I would like to make it visible by pressing ctrl-f 
->> when the history panel has the focus. 
->>     
-> You're free to experiment. I'm quite fond of the search field in kmail. It is 
-> a textfield that filters mail on
-> header fields as I type.
->   
-Yep, I'm willing to do something in this direction. The behavior I'm 
-thinking right now won't be to hide the lines that don't match but to do 
-more like gitk. Highlight rows and have next/previous buttons, and if 
-possible show where I am (like 3/10 or 3 of 10).
+Ineed - I think it would be a lot easier to implement if it didn't
+bother with loose objects.  It can just be a new pack version with more
+compression formats.  For when you know you're going to be doing a lot
+of analysis you'd already run "git-repack -a -f" to shorten the deltas,
+so this might be a useful option for some - but again I'd want to see
+figures first.
 
-> I found a bug. When you travel down the histtory using arrow keys all of the 
-> sudden the commit info disappears.
->   
-Cool, thanks, I'll investigate it.
+I do really like LZOP as far as compression algorithms go.  It seems a
+lot faster for not a huge loss in ratio.
 
-[]s,
-Roger.
+Sam.
