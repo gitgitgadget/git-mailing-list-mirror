@@ -1,105 +1,57 @@
-From: Florian La Roche <laroche@redhat.com>
-Subject: Re: [PATCH] gitweb: Change feeds from commit to commitdiff output.
-Date: Fri, 11 Jan 2008 07:53:48 +0100
-Message-ID: <20080111065348.GA3967@dudweiler.stuttgart.redhat.com>
-References: <20080110130900.GA9395@dudweiler.stuttgart.redhat.com> <7vtzll5t4u.fsf@gitster.siamese.dyndns.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Decompression speed: zip vs lzo
+Date: Fri, 11 Jan 2008 20:05:08 +1300
+Message-ID: <47871524.9010904@vilain.net>
+References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com> <7v4pdmfw27.fsf@gitster.siamese.dyndns.org> <47855765.9090001@vilain.net> <alpine.LSU.1.00.0801092328580.31053@racer.site> <47856E8D.4010006@vilain.net> <4785A6DB.3080007@vilain.net> <20080110091607.GA17944@artemis.madism.org> <alpine.LFD.1.00.0801101332150.3054@xanadu.home> <alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org> <478691EB.1080704@vilain.net> <alpine.LFD.1.00.0801101400550.3148@woody.linux-foundation.org> <47869C24.3000400@vilain.net> <alpine.LFD.1.00.0801101454440.3148@woody.linux-foundation.org> <4786BFCD.1000303@vilain.net> <alpine.LFD.1.00.0801101805540.3148@woody.linux-foundation.org> <47870CDF.4010606@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 11 07:54:29 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Fri Jan 11 08:05:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDDme-0007T8-7G
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 07:54:28 +0100
+	id 1JDDxg-00010F-2c
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 08:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752631AbYAKGx7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 01:53:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752096AbYAKGx7
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 01:53:59 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:50491 "EHLO mx1.redhat.com"
+	id S1752275AbYAKHFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 02:05:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752096AbYAKHFX
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 02:05:23 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:36679 "EHLO mail.utsl.gen.nz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752043AbYAKGx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 01:53:58 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m0B6rn25011614;
-	Fri, 11 Jan 2008 01:53:49 -0500
-Received: from pobox.stuttgart.redhat.com (pobox.stuttgart.redhat.com [172.16.2.10])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m0B6rmID017068;
-	Fri, 11 Jan 2008 01:53:48 -0500
-Received: from dudweiler.stuttgart.redhat.com (vpn-4-21.str.redhat.com [10.32.4.21])
-	by pobox.stuttgart.redhat.com (8.13.1/8.13.1) with ESMTP id m0B6rlf7018279;
-	Fri, 11 Jan 2008 01:53:48 -0500
-Received: from dudweiler.stuttgart.redhat.com (localhost.localdomain [127.0.0.1])
-	by dudweiler.stuttgart.redhat.com (8.13.8/8.13.8) with ESMTP id m0B6rm54004845;
-	Fri, 11 Jan 2008 07:53:48 +0100
-Received: (from laroche@localhost)
-	by dudweiler.stuttgart.redhat.com (8.13.8/8.13.8/Submit) id m0B6rmQ1004842;
-	Fri, 11 Jan 2008 07:53:48 +0100
-Content-Disposition: inline
-In-Reply-To: <7vtzll5t4u.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.4.2.2i
-X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
+	id S1752023AbYAKHFW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 02:05:22 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
+	id 162ED21D194; Fri, 11 Jan 2008 20:05:17 +1300 (NZDT)
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id DBC0921D191;
+	Fri, 11 Jan 2008 20:05:08 +1300 (NZDT)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <47870CDF.4010606@vilain.net>
+X-Enigmail-Version: 0.94.2.0
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on 
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70126>
 
-On Thu, Jan 10, 2008 at 12:21:21PM -0800, Junio C Hamano wrote:
-> Florian La Roche <laroche@redhat.com> writes:
-> 
-> > [PATCH] gitweb: Change feeds from commit to commitdiff output.
-> >
-> > Change feeds from displaying the commit to displaying the commitdiff
-> > output. This way the patches are shown directly and code review is
-> > done more easily via watching feeds.
-> >
-> > Signed-off-by: Florian La Roche <laroche@redhat.com>
-> 
-> I can see that easier access to commitdiff output is sometimes
-> desirable.
-> 
-> If you are making this change unconditional, however, I think
-> there needs a list discussion between you and the silent
-> majority of people that have been perfectly happy with the
-> current "log only" behaviour.
+Sam Vilain wrote:
+> sv.c has about 1500 revisions, though the oldest line is 
 
-
-Hello Junio,
-
-Right, this is a change in behaviour. Maybe a config option
-for this would be good, so that users can configure their
-wanted output style.
-
-
-> And to have that discussion, you first have to wake them up,
-> which this patch would serve well as a wake-up call.  But if
-> that was the purpose of the posting, please (1) mark the patch
-> as such (commonly done by saying [RFC/PATCH] instead), and (2)
-> keep me out of the "To:" list, if the patch is not for inclusion
-> but for discussion ("cc:" is fine but it's redundant as long as
-> you are sending to the list).
-
-
-Ok.
-
-
-> After such a discussion, we may end up finding out that
-> everybody have been silently unhappy and wanted to have
-> commitdiff there, and agree on doing this unconditionally.
-> 
-> But we do not know that yet.
-
-
->From asking people, most don't use feeds to follow development
-checkins, but prefer to keep with mailinglists and looking only
-at the repos for their own interesting parts.
-
-Hope more people will speak up here on the git@ list.
-
-Thanks a lot,
-
-Florian La Roche
+only about 900 revisions old.
