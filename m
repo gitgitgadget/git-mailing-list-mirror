@@ -1,81 +1,71 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: git-commit fatal: Out of memory? mmap failed: Bad file descriptor
-Date: Fri, 11 Jan 2008 23:19:45 +0100
-Message-ID: <e5bfff550801111419o33a8904ajcf295417d3499bde@mail.gmail.com>
-References: <4787E981.7010200@nrlssc.navy.mil>
+From: Sam Ravnborg <sam@ravnborg.org>
+Subject: Re: CRLF problems with Git on Win32
+Date: Fri, 11 Jan 2008 23:21:26 +0100
+Message-ID: <20080111222126.GA30184@uranus.ravnborg.org>
+References: <7EAB1DA8-627D-455E-AA23-C404FDC615D9@zib.de> <alpine.LFD.1.00.0801110756260.3148@woody.linux-foundation.org> <D36EB89D-11A3-4EAF-BC1C-6100383FCBFC@zib.de> <alpine.LFD.1.00.0801110924380.3148@woody.linux-foundation.org> <930EC77A-73D1-4DDD-81D4-BF22B248FCB6@zib.de> <alpine.LFD.1.00.0801111005360.3148@woody.linux-foundation.org> <14E7B5D5-B1B8-4532-A471-106B14B912B8@zib.de> <alpine.LFD.1.00.0801111103420.3148@woody.linux-foundation.org> <20080111195022.GC29189@uranus.ravnborg.org> <alpine.LSU.1.00.0801112116180.31053@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>, drafnel@gmail.com
-To: "Brandon Casey" <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Fri Jan 11 23:20:22 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 11 23:21:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDSEZ-0000bm-79
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 23:20:15 +0100
+	id 1JDSG5-0001CS-Ut
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 23:21:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761117AbYAKWTs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 17:19:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761597AbYAKWTr
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 17:19:47 -0500
-Received: from rv-out-0910.google.com ([209.85.198.188]:54182 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761102AbYAKWTr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 17:19:47 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1067294rvb.1
-        for <git@vger.kernel.org>; Fri, 11 Jan 2008 14:19:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=o+5CCL9e9j2Dg3Ym4tYBhcPWrtBQO7cwZxhEhfCWrfY=;
-        b=kFcJZW6fniuakfhuFPUwq+cfdHPUT7rF1j2qpOi4tiFdz1sRi7zGvUzaqVpIuDWFYx8pZi9kH65is2Ngyv7+qP9z5bOgmEiUPEqfgxd0PU6xNreGbYN8l08fYUp2xtX0bfF66FwddkUJG6VUO1A9q/FL09uOTBH7O1exhwStors=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=r3dnnp5x4e8iiam1uz9QDFyRnWZ3RjAcFSDEXX8jP0dSH5jyhteBBpIdME4dwkx6uZXN3vlyhMBJHs+lN7PC6ZVz8BbZ5OHpDmOZwJzsSPfbsM3VKAj3laZoInsGe9eNtkIK6d2qVAs2Imcnu3BPCsnV/OpjvspUwy13D/4Ow+c=
-Received: by 10.141.88.3 with SMTP id q3mr2349058rvl.94.1200089985784;
-        Fri, 11 Jan 2008 14:19:45 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Fri, 11 Jan 2008 14:19:45 -0800 (PST)
-In-Reply-To: <4787E981.7010200@nrlssc.navy.mil>
+	id S1761265AbYAKWVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 17:21:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761082AbYAKWVW
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 17:21:22 -0500
+Received: from pasmtpb.tele.dk ([80.160.77.98]:60438 "EHLO pasmtpB.tele.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761110AbYAKWVV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 17:21:21 -0500
+Received: from ravnborg.org (0x535d98d8.vgnxx8.adsl-dhcp.tele.dk [83.93.152.216])
+	by pasmtpB.tele.dk (Postfix) with ESMTP id 932A5E30D9C;
+	Fri, 11 Jan 2008 23:21:20 +0100 (CET)
+Received: by ravnborg.org (Postfix, from userid 500)
+	id 188AE580D2; Fri, 11 Jan 2008 23:21:26 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <alpine.LSU.1.00.0801112116180.31053@racer.site>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70217>
 
-On Jan 11, 2008 11:11 PM, Brandon Casey <casey@nrlssc.navy.mil> wrote:
->
-> I got this message from git-commit:
->
-> $ git commit -a
-> <edit message, :wq>
-> fatal: Out of memory? mmap failed: Bad file descriptor
-> Create commit <my_prompt_string>
->
-> The exit status was 128.
-> Looks like the commit was successful though.
-> The partial message 'Create commit ' comes from print_summary()
-> in builtin-commit.c which is _after_ the actual commit.
->
-> $ git --version
-> git version 1.5.4.rc2.84.gf85fd-dirty
->
+On Fri, Jan 11, 2008 at 09:18:49PM +0000, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Fri, 11 Jan 2008, Sam Ravnborg wrote:
+> 
+> > On Fri, Jan 11, 2008 at 11:16:02AM -0800, Linus Torvalds wrote:
+> > 
+> > > (Every place I've ever been at, people who had a choice would never 
+> > > ever develop under Windows, so I've never seen any real mixing - even 
+> > > when some parts of the project were DOS/Windows stuff, there was a 
+> > > clear boundary between the stuff that was actually done under Windows)
+> > 
+> > The reality I see is the other way around as common practice.
+> 
+> Not in my world.
+> 
+> I see a few people who are stuck to Windows, but they are so because they 
+> are lazy.  They do not ever do something interesting with computers in 
+> their free time, and while working, they only do what they are told to do.
 
-I had the same message about one week ago for few times, same
-symptoms, I didn't had the time to dig it out and today it seems no
-more happening.
+Some of the people I have in my mind I will certainly not call lazy, but the
+other part of the description is a fine match.
 
+> That might sound cynical, but you will have to _show_ me different 
+> examples to make me reconsider.
 
-> It was compiled with NO_CURL=1. The dirtiness comes from the
-> patches I submitted for relink earlier today.
->
-> The other possible clue is that this repo is on NFS.
->
+I just wanted to say that things looks different in some places of the
+world nad for some types of development.
+I do not even know what I should try to make you reconsider - as I did not
+follow the full thread. Just stumbled over this statement.
 
-I don't use any NFS mount.
-
-
-Marco
+	Sam
