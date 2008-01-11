@@ -1,113 +1,105 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: CRLF problems with Git on Win32
-Date: Fri, 11 Jan 2008 19:29:07 +0100
-Message-ID: <14E7B5D5-B1B8-4532-A471-106B14B912B8@zib.de>
-References: <C3AC3E6F.10D42%jefferis@gmail.com> <alpine.LFD.1.00.0801101556380.3148@woody.linux-foundation.org> <7EAB1DA8-627D-455E-AA23-C404FDC615D9@zib.de> <alpine.LFD.1.00.0801110756260.3148@woody.linux-foundation.org> <D36EB89D-11A3-4EAF-BC1C-6100383FCBFC@zib.de> <alpine.LFD.1.00.0801110924380.3148@woody.linux-foundation.org> <930EC77A-73D1-4DDD-81D4-BF22B248FCB6@zib.de> <alpine.LFD.1.00.0801111005360.3148@woody.linux-foundation.org>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: [PATCH 1/6] Better error handling in compress_all()
+Date: Fri, 11 Jan 2008 19:53:02 +0100
+Message-ID: <e5bfff550801111053v55fd2fc3ice97e6ae10c8f942@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Gregory Jefferis <jefferis@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jan 11 19:29:16 2008
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 11 19:54:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDOd2-0000xT-Dj
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 19:29:16 +0100
+	id 1JDP15-0001RL-CZ
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 19:54:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757144AbYAKS2s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 13:28:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757168AbYAKS2s
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 13:28:48 -0500
-Received: from mailer.zib.de ([130.73.108.11]:48387 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752934AbYAKS2r (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 13:28:47 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0BISCbS021894;
-	Fri, 11 Jan 2008 19:28:17 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0BISB00016891
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 11 Jan 2008 19:28:12 +0100 (MET)
-In-Reply-To: <alpine.LFD.1.00.0801111005360.3148@woody.linux-foundation.org>
-X-Mailer: Apple Mail (2.753)
+	id S1761867AbYAKSxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 13:53:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761861AbYAKSxH
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 13:53:07 -0500
+Received: from py-out-1112.google.com ([64.233.166.182]:62732 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758179AbYAKSxE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 13:53:04 -0500
+Received: by py-out-1112.google.com with SMTP id u52so1782632pyb.10
+        for <git@vger.kernel.org>; Fri, 11 Jan 2008 10:53:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=h5BexNq+PCC0Ap/qmvwjGpG0UDBhEfDG++jP2i68dHw=;
+        b=peAUpHcHsATz5bFp1hFutKDGukirBW0UBbdgVCsYA/pzneWlKnEtCasIhqnbiVn8K8ZYOKI1+ySmHeso1S8Frzn8CYHdqlQPPcgDbj2SZhOcbQO4c6MJQeB1OdeOclNQxWT1WRs1kQEPL03I4xsgI6976TYYRCZRPuK15ujiYCs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Z5dBndA184wrdggUjqmOUA2udXVwJ/soeUezohPGx/0eQdUC2pT9jKVqkbiXbDagzFCSmAwjtJqC3DyC5TT5GeHeqfM1z+DMy2Gfs1os6bVxWJH09H8o8fILefWyNUHlgjgxS2XcOXrFbCSjpJioypwbyX6auNSfdroSjdEnzuQ=
+Received: by 10.141.15.19 with SMTP id s19mr2198059rvi.269.1200077582619;
+        Fri, 11 Jan 2008 10:53:02 -0800 (PST)
+Received: by 10.141.76.1 with HTTP; Fri, 11 Jan 2008 10:53:02 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70185>
+
+Also let the caller to xmalloc() the buffer
+int compress_start()
+
+Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+---
+
+This patch belong to the previous compression series,
+not the decompression one that I'm publishing right now.
+
+Anyhow next patches depends on this, so that's the reason
+why is the first.
 
 
-On Jan 11, 2008, at 7:10 PM, Linus Torvalds wrote:
+ compress.c |   19 +++++++++----------
+ 1 files changed, 9 insertions(+), 10 deletions(-)
 
->
->
-> On Fri, 11 Jan 2008, Steffen Prohaska wrote:
->>
->> Ah sorry, I misunderstood you in [1].  I thought your last point
->> "Mixed Windows usage" meant what I have in mind:  A user working
->> in a mixed Windows/Unix environment who creates a file using
->> Windows tools and commits it in the Unix environment.  In this
->> case the CRLF file will be transferred from Windows to Unix
->> without git being involved.  The right thing for git on Unix is
->> to remove CRLF during a commit but still write only LF during
->> check out.  So autocrlf=input is the right choice.
->
-> Oh, ok, I didn't realize.
->
-> But yes, if you use a network share across windows and Unixand  
-> actually
-> *share* the working tree over it, then yes, you'd want  
-> "autocrlf=input" on
-> the unix side.
->
-> However, I think that falls under the "0.1%" case, not the "99.9%"  
-> case.
->
-> I realize that people probably do that more often with centralized
-> systems, but with a distributed thing, it probably makes a *ton* more
-> sense to have separate trees. But I could kind of see having a shared
-> development directory and accessing it from different types of  
-> machines
-> too.
+diff --git a/compress.c b/compress.c
+index be771a9..a8f46d5 100644
+--- a/compress.c
++++ b/compress.c
+@@ -12,7 +12,7 @@ int compress_start(z_stream *stream,
+                    unsigned char *in, unsigned long in_size,
+                    unsigned char *out, unsigned long out_size)
+ {
+-	stream->next_out = (out ? out : xmalloc(out_size));
++	stream->next_out = out;
+ 	stream->avail_out = out_size;
+ 	stream->next_in = in;
+ 	stream->avail_in = in_size;
+@@ -36,19 +36,18 @@ unsigned long compress_free(z_stream
+ 	return stream->total_out;
+ }
 
-It just happens yesterday that I copied a file from Unix to Windows
-(lucky I am ;) for a quite simple reason.  I fetched and merged and
-realized that another developer forgot to check in a new file. He
-had already left.  So I just looked into his workspace and copied
-the file.  This has nothing to do with centralized system or not.
-We're just working in a mixed OS environment with shared filesystems.
+-unsigned long compress_all(int level, unsigned char *data,
+-                           unsigned long size, unsigned char **out)
++unsigned long compress_all(int level, unsigned char *in,
++                           unsigned long in_size, unsigned char **out)
+ {
+-	int bound, result;
++	unsigned long out_size;
+ 	z_stream stream;
 
-I didn't even think about the line endings in this situation because
-everything just worked.  Actually I like the idea that I do not
-need to think about the endings because git will care about them.
-Actually many other tools work well with CRLF.  For example, vi
-just displays [dos] in its status bar; but besides this everything
-is just fine.
+-	bound = compress_alloc(&stream, level, size);
+-	compress_start(&stream, data, size, NULL, bound);
++	out_size = compress_alloc(&stream, level, in_size);
++	*out = xmalloc(out_size);
 
-
-> I'd also bet that crlf behavior of git itself will be the *least*  
-> of your
-> problems in that situation. You'd have all the *other* tools to worry
-> about, and would probably be very aware indeed of any CRLF issues.  
-> So  at
-> that point, the "automatic" or default behaviour is probably not a big
-> deal, because everything _else_ you do likely needs special effort  
-> too!
-
-I don't think so.  In the setting I described above, the questions I  
-receive
-are not about the other tools but about git.  I already started to teach
-everyone the new "autocrlf=input" policy to avoid these questions.  I  
-don't
-care that much about potential file corruption (though I'd feel more
-comfortable if I knew git would have stronger guarantees).  During  
-the next
-checkout on Windows file corruption would happen anyway.
-
-	Steffen
+-	*out = stream.next_out;
+-	result = compress_next(&stream, Z_FINISH);
+-
+-	if (result != Z_STREAM_END) {
++	if (   compress_start(&stream, in, in_size, *out, out_size) != Z_OK
++	    || compress_next(&stream, Z_FINISH) != Z_STREAM_END)
++	{
+ 		compress_free(&stream);
+ 		free(*out);
+ 		*out = NULL;
+-- 
+1.5.4.rc2.90.gf158-dirty
