@@ -1,57 +1,66 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Re-casing directories on case-insensitive systems
-Date: Fri, 11 Jan 2008 22:59:40 +0100
-Message-ID: <200801112259.40968.robin.rosenberg.lists@dewire.com>
-References: <579DF776-4F4E-464C-88DB-B22C2EC291BD@sb.org> <CCDF6298-4F17-4F70-AF00-E63F2C2A2816@sb.org>
+Date: Fri, 11 Jan 2008 22:05:18 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801112202180.31053@racer.site>
+References: <579DF776-4F4E-464C-88DB-B22C2EC291BD@sb.org> <alpine.LSU.1.00.0801112127040.31053@racer.site> <34F43A68-6041-42BE-85BD-3EF971875C0F@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Fri Jan 11 23:00:21 2008
+X-From: git-owner@vger.kernel.org Fri Jan 11 23:05:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDRvF-0001u4-Js
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 23:00:18 +0100
+	id 1JDS0c-0003X1-UI
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 23:05:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762024AbYAKV7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 16:59:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761979AbYAKV7t
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 16:59:49 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:7393 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1761755AbYAKV7s (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 16:59:48 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id B8A97802899;
-	Fri, 11 Jan 2008 22:59:46 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id EgQam3gAAkdl; Fri, 11 Jan 2008 22:59:46 +0100 (CET)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 3DC91802641;
-	Fri, 11 Jan 2008 22:59:46 +0100 (CET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-In-Reply-To: <CCDF6298-4F17-4F70-AF00-E63F2C2A2816@sb.org>
-Content-Disposition: inline
+	id S1761793AbYAKWFZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 17:05:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761756AbYAKWFZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 17:05:25 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53937 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1761075AbYAKWFY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 17:05:24 -0500
+Received: (qmail invoked by alias); 11 Jan 2008 22:05:23 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp032) with SMTP; 11 Jan 2008 23:05:23 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+rlaE6nvyr4W6sn6Lnk87ac65q2jxKISztT7j5+l
+	dzHjvobTxO3NmW
+X-X-Sender: gene099@racer.site
+In-Reply-To: <34F43A68-6041-42BE-85BD-3EF971875C0F@sb.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70212>
 
-fredagen den 11 januari 2008 skrev Kevin Ballard:
-> Wow, it's even worse. I made a tmp branch and used git-filter-branch  
-> to remove the commit that introduced CS4536, leaving only the cs4536  
-> directory. But now if I try and run `git co master` it refuses, as it  
-> thinks it's going to overwrite the untracked file CS4536/ 
-> introduction.txt. I believe it's actually seeing the tracked file  
-> cs4536/introduction.txt.
+Hi,
 
-I think you should try an index filter. That should help you avoid file system problems.
+On Fri, 11 Jan 2008, Kevin Ballard wrote:
 
--- robin
+> On Jan 11, 2008, at 4:29 PM, Johannes Schindelin wrote:
+> 
+> > If you are serious about this problem, I can give you tons of pointers 
+> > how to go solve it.  (Although I might be disconnected this weekend, 
+> > because of the lack of competence of the IT department here.)
+> 
+> I think I've got a handle on it. I've already expunged the mis-cased 
+> file using git-rebase to remove the offending commit, now I just need to 
+> rewrite the second commit's message so it looks like the original commit 
+> (luckily I didn't do any work in the directory before I re-cased it). 
+> Thanks anyway.
+
+I was not talking about fixing it up in your repository.  If you really 
+think that git should help you, you gotta teach it to.  Because people who 
+do not experience the same as you will be less likely to feel the urge to 
+teach git to help in that situation (because they did not experience that 
+situation yet).  For example, I am one of these people.  And I guess a lot 
+of these people hang out on this list.
+
+Ciao,
+Dscho
