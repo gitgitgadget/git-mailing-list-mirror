@@ -1,93 +1,307 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Decompression speed: zip vs lzo
-Date: Fri, 11 Jan 2008 19:29:51 +1300
-Message-ID: <47870CDF.4010606@vilain.net>
-References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com> <7v4pdmfw27.fsf@gitster.siamese.dyndns.org> <47855765.9090001@vilain.net> <alpine.LSU.1.00.0801092328580.31053@racer.site> <47856E8D.4010006@vilain.net> <4785A6DB.3080007@vilain.net> <20080110091607.GA17944@artemis.madism.org> <alpine.LFD.1.00.0801101332150.3054@xanadu.home> <alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org> <478691EB.1080704@vilain.net> <alpine.LFD.1.00.0801101400550.3148@woody.linux-foundation.org> <47869C24.3000400@vilain.net> <alpine.LFD.1.00.0801101454440.3148@woody.linux-foundation.org> <4786BFCD.1000303@vilain.net> <alpine.LFD.1.00.0801101805540.3148@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-write-error with cherry-pick -n usages
+Date: Thu, 10 Jan 2008 22:49:35 -0800
+Message-ID: <7vr6go501s.fsf@gitster.siamese.dyndns.org>
+References: <20080111054811.GA7476@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marco Costalba <mcostalba@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jan 11 07:30:40 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 11 07:50:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDDPa-0003Nh-5Z
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 07:30:38 +0100
+	id 1JDDih-0006l2-Iw
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 07:50:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751759AbYAKGaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 01:30:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751729AbYAKGaK
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 01:30:10 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:56116 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751617AbYAKGaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 01:30:08 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id 72CDD21D192; Fri, 11 Jan 2008 19:29:58 +1300 (NZDT)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	id S1754945AbYAKGtt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2008 01:49:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754101AbYAKGtt
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 01:49:49 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44976 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753836AbYAKGtr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Jan 2008 01:49:47 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 231462A8F;
+	Fri, 11 Jan 2008 01:49:46 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id CC00F21D18C;
-	Fri, 11 Jan 2008 19:29:52 +1300 (NZDT)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <alpine.LFD.1.00.0801101805540.3148@woody.linux-foundation.org>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.3
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id AE6C22A8E;
+	Fri, 11 Jan 2008 01:49:38 -0500 (EST)
+In-Reply-To: <20080111054811.GA7476@atjola.homenet> (=?utf-8?Q?Bj=C3=B6rn?=
+ Steinbrink's
+	message of "Fri, 11 Jan 2008 06:48:11 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70124>
 
-Linus Torvalds wrote:
-> 
-> On Fri, 11 Jan 2008, Sam Vilain wrote:
->> Without compression of deltas:
->>
->> wilber:~/src/perl-preview$ du -sk .git/objects/pack/
->> 86781 .git/objects/pack/
->>
->> With compression of deltas:
->>
->> wilber:~/src/perl-preview$ du -sk .git/objects/pack/
->> 72907 .git/objects/pack/
-> 
-> Ok, so non-compressed deltas are 20% bigger.
-> 
-> That may well be a perfectly acceptable trade-off if the end result is 
-> then a lot faster. Has somebody done performance numbers? I may have 
-> missed them.. The best test is probably something like "git blame" on a 
-> file that takes an appreciable amount of time.
+Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
 
-The difference seems only barely measurable;
+> when you cherry-pick -n a commit that has changes to a file missing i=
+n
+> the current tree, that file will be added as "Unmerged". A subsequent
+> cherry-pick that tries to pick a commit that has changes to that file
+> will then fail with:
+>
+> fatal: git-write-tree: error building trees
 
-wilber:~/src/perl-preview$ time git annotate sv.c >/dev/null
+Yeah, this was because the original "rewrite in C" did somewhat
+a sloppy job while stealing code from git-write-tree.
 
-real    0m8.130s
-user    0m6.712s
-sys     0m1.412s
+The caller pretends as if the write_tree() function would return
+an error code and being able to issue a sensible error message
+itself, but write_tree() function just calls die() and never
+returns an error.  Worse yet, the function claims that it was
+running git-write-tree (which is no longer true after
+cherry-pick stole it).
 
-wilber:~/src/perl-preview-loose$ time git annotate sv.c >/dev/null
+I think you would need to do something like this patch.  I will
+not apply it during the -rc period, but testing and resending
+with "Tested-by:" would be helpful after post 1.5.4 cycle opens.
 
-real    0m7.930s
-user    0m6.480s
-sys     0m1.408s
+---
+ builtin-revert.c     |    5 ++-
+ builtin-write-tree.c |   74 +++++++++++-------------------------------=
+--------
+ builtin.h            |    1 -
+ cache-tree.c         |   59 +++++++++++++++++++++++++++++++++++++++
+ cache-tree.h         |    5 +++
+ 5 files changed, 83 insertions(+), 61 deletions(-)
 
-(each one is last of three runs - dual-core x86_64 @ 2.1GHz w/512KB cache)
-
-sv.c has about 1500 revisions, though the oldest line is    I also tried
-annotate and log on the YACC generated parser which only has about 165
-revisions, with similar results - a very minor difference or no difference.
-
-Sam
+diff --git a/builtin-revert.c b/builtin-revert.c
+index 4bf8eb2..d71f414 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -8,6 +8,7 @@
+ #include "exec_cmd.h"
+ #include "utf8.h"
+ #include "parse-options.h"
++#include "cache-tree.h"
+=20
+ /*
+  * This implements the builtins revert and cherry-pick.
+@@ -270,7 +271,7 @@ static int revert_or_cherry_pick(int argc, const ch=
+ar **argv)
+ 		 * that represents the "current" state for merge-recursive
+ 		 * to work on.
+ 		 */
+-		if (write_tree(head, 0, NULL))
++		if (write_cache_as_tree(head, 0, NULL))
+ 			die ("Your index file is unmerged.");
+ 	} else {
+ 		struct wt_status s;
+@@ -357,7 +358,7 @@ static int revert_or_cherry_pick(int argc, const ch=
+ar **argv)
+ 	if (merge_recursive(sha1_to_hex(base->object.sha1),
+ 				sha1_to_hex(head), "HEAD",
+ 				sha1_to_hex(next->object.sha1), oneline) ||
+-			write_tree(head, 0, NULL)) {
++			write_cache_as_tree(head, 0, NULL)) {
+ 		add_to_msg("\nConflicts:\n\n");
+ 		read_cache();
+ 		for (i =3D 0; i < active_nr;) {
+diff --git a/builtin-write-tree.c b/builtin-write-tree.c
+index b89d02e..e838d01 100644
+--- a/builtin-write-tree.c
++++ b/builtin-write-tree.c
+@@ -11,66 +11,12 @@
+ static const char write_tree_usage[] =3D
+ "git-write-tree [--missing-ok] [--prefix=3D<prefix>/]";
+=20
+-int write_tree(unsigned char *sha1, int missing_ok, const char *prefix=
+)
+-{
+-	int entries, was_valid, newfd;
+-
+-	/* We can't free this memory, it becomes part of a linked list parsed=
+ atexit() */
+-	struct lock_file *lock_file =3D xcalloc(1, sizeof(struct lock_file));
+-
+-	newfd =3D hold_locked_index(lock_file, 1);
+-
+-	entries =3D read_cache();
+-	if (entries < 0)
+-		die("git-write-tree: error reading cache");
+-
+-	if (!active_cache_tree)
+-		active_cache_tree =3D cache_tree();
+-
+-	was_valid =3D cache_tree_fully_valid(active_cache_tree);
+-
+-	if (!was_valid) {
+-		if (cache_tree_update(active_cache_tree,
+-				      active_cache, active_nr,
+-				      missing_ok, 0) < 0)
+-			die("git-write-tree: error building trees");
+-		if (0 <=3D newfd) {
+-			if (!write_cache(newfd, active_cache, active_nr)
+-					&& !close(newfd)) {
+-				commit_lock_file(lock_file);
+-				newfd =3D -1;
+-			}
+-		}
+-		/* Not being able to write is fine -- we are only interested
+-		 * in updating the cache-tree part, and if the next caller
+-		 * ends up using the old index with unupdated cache-tree part
+-		 * it misses the work we did here, but that is just a
+-		 * performance penalty and not a big deal.
+-		 */
+-	}
+-
+-	if (prefix) {
+-		struct cache_tree *subtree =3D
+-			cache_tree_find(active_cache_tree, prefix);
+-		if (!subtree)
+-			die("git-write-tree: prefix %s not found", prefix);
+-		hashcpy(sha1, subtree->sha1);
+-	}
+-	else
+-		hashcpy(sha1, active_cache_tree->sha1);
+-
+-	if (0 <=3D newfd)
+-		close(newfd);
+-	rollback_lock_file(lock_file);
+-
+-	return 0;
+-}
+-
+ int cmd_write_tree(int argc, const char **argv, const char *unused_pre=
+fix)
+ {
+ 	int missing_ok =3D 0, ret;
+ 	const char *prefix =3D NULL;
+ 	unsigned char sha1[20];
++	const char *me =3D "git-write-tree";
+=20
+ 	git_config(git_default_config);
+ 	while (1 < argc) {
+@@ -87,8 +33,20 @@ int cmd_write_tree(int argc, const char **argv, cons=
+t char *unused_prefix)
+ 	if (argc > 2)
+ 		die("too many options");
+=20
+-	ret =3D write_tree(sha1, missing_ok, prefix);
+-	printf("%s\n", sha1_to_hex(sha1));
+-
++	ret =3D write_cache_as_tree(sha1, missing_ok, prefix);
++	switch (ret) {
++	case 0:
++		printf("%s\n", sha1_to_hex(sha1));
++		break;
++	case WRITE_TREE_UNREADABLE_INDEX:
++		die("%s: error reading the index", me);
++		break;
++	case WRITE_TREE_UNMERGED_INDEX:
++		die("%s: error building trees; the index is unmerged?", me);
++		break;
++	case WRITE_TREE_PREFIX_ERROR:
++		die("%s: prefix %s not found", me, prefix);
++		break;
++	}
+ 	return ret;
+ }
+diff --git a/builtin.h b/builtin.h
+index cb675c4..3d1628c 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -8,7 +8,6 @@ extern const char git_usage_string[];
+=20
+ extern void list_common_cmds_help(void);
+ extern void help_unknown_cmd(const char *cmd);
+-extern int write_tree(unsigned char *sha1, int missing_ok, const char =
+*prefix);
+ extern void prune_packed_objects(int);
+=20
+ extern int cmd_add(int argc, const char **argv, const char *prefix);
+diff --git a/cache-tree.c b/cache-tree.c
+index 50b3526..69d0b46 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -529,3 +529,62 @@ struct cache_tree *cache_tree_find(struct cache_tr=
+ee *it, const char *path)
+ 	}
+ 	return it;
+ }
++
++int write_cache_as_tree(unsigned char *sha1, int missing_ok, const cha=
+r *prefix)
++{
++	int entries, was_valid, newfd;
++
++	/*
++	 * We can't free this memory, it becomes part of a linked list
++	 * parsed atexit()
++	 */
++	struct lock_file *lock_file =3D xcalloc(1, sizeof(struct lock_file));
++
++	newfd =3D hold_locked_index(lock_file, 1);
++
++	entries =3D read_cache();
++	if (entries < 0)
++		return WRITE_TREE_UNREADABLE_INDEX;
++
++	if (!active_cache_tree)
++		active_cache_tree =3D cache_tree();
++
++	was_valid =3D cache_tree_fully_valid(active_cache_tree);
++
++	if (!was_valid) {
++		if (cache_tree_update(active_cache_tree,
++				      active_cache, active_nr,
++				      missing_ok, 0) < 0)
++			return WRITE_TREE_UNMERGED_INDEX;
++		if (0 <=3D newfd) {
++			if (!write_cache(newfd, active_cache, active_nr)
++					&& !close(newfd)) {
++				commit_lock_file(lock_file);
++				newfd =3D -1;
++			}
++		}
++		/* Not being able to write is fine -- we are only interested
++		 * in updating the cache-tree part, and if the next caller
++		 * ends up using the old index with unupdated cache-tree part
++		 * it misses the work we did here, but that is just a
++		 * performance penalty and not a big deal.
++		 */
++	}
++
++	if (prefix) {
++		struct cache_tree *subtree =3D
++			cache_tree_find(active_cache_tree, prefix);
++		if (!subtree)
++			return WRITE_TREE_PREFIX_ERROR;
++		hashcpy(sha1, subtree->sha1);
++	}
++	else
++		hashcpy(sha1, active_cache_tree->sha1);
++
++	if (0 <=3D newfd)
++		close(newfd);
++	rollback_lock_file(lock_file);
++
++	return 0;
++}
++
+diff --git a/cache-tree.h b/cache-tree.h
+index 8243228..44aad42 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -30,4 +30,9 @@ int cache_tree_update(struct cache_tree *, struct cac=
+he_entry **, int, int, int)
+=20
+ struct cache_tree *cache_tree_find(struct cache_tree *, const char *);
+=20
++#define WRITE_TREE_UNREADABLE_INDEX (-1)
++#define WRITE_TREE_UNMERGED_INDEX (-2)
++#define WRITE_TREE_PREFIX_ERROR (-3)
++
++int write_cache_as_tree(unsigned char *sha1, int missing_ok, const cha=
+r *prefix);
+ #endif
