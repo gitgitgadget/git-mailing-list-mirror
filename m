@@ -1,87 +1,74 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH] git-clone - Set remotes.default config variable
-Date: Thu, 10 Jan 2008 22:29:48 -0500
-Message-ID: <1200022189-2400-4-git-send-email-mlevedahl@gmail.com>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
- <1200022189-2400-2-git-send-email-mlevedahl@gmail.com>
- <1200022189-2400-3-git-send-email-mlevedahl@gmail.com>
-Cc: git@vger.kernel.org, Mark Levedahl <mlevedahl@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jan 11 04:31:02 2008
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: git-write-error with cherry-pick -n usages
+Date: Fri, 11 Jan 2008 06:48:11 +0100
+Message-ID: <20080111054811.GA7476@atjola.homenet>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="ZPt4rx8FFjLCG7dd"
+Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 11 06:48:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDAbj-0004i8-Jg
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 04:31:00 +0100
+	id 1JDClA-0004no-07
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 06:48:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753762AbYAKDaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 22:30:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755890AbYAKDaB
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 22:30:01 -0500
-Received: from hs-out-0708.google.com ([64.233.178.241]:3059 "EHLO
-	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753762AbYAKD36 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2008 22:29:58 -0500
-Received: by hs-out-2122.google.com with SMTP id 54so862397hsz.5
-        for <git@vger.kernel.org>; Thu, 10 Jan 2008 19:29:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=5IdsK0eQ7CtrYolqpF/DCI09pr2X2Jjp1sWujeMQ/pE=;
-        b=hRMp4lkfhIG3OfbpKzSAnSIg2lQV9X/7JyENceTefCk1HgnUuKnloYnawyfq2vsQarZNt5rFLQQSF4HUfTgbMqteReiY7P6HaXMZFQUAJfvBwmUFp69Fw/6fciJpiraSJiWHWFNVC2sybxkGep3ijvD8GBN0k/0h1r2N3cLRbuI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=hLEIe2wFTpQl/9pd4N/0wjs5tibvl4SeSNSWxbCzAkVWrjNeKI4j79cGdJ1Ygawb1vPhMiUo6TCzok5qrHgpy7QeSqfG09Lqz/b2xq33Z/Al0SD9Q/dQH0IYKM98XJyCzy2dW0dagL/aZoAIGmEn2HowDlMmPH5XwgeTxe+/GPg=
-Received: by 10.150.211.19 with SMTP id j19mr1127214ybg.10.1200022198432;
-        Thu, 10 Jan 2008 19:29:58 -0800 (PST)
-Received: from localhost.localdomain ( [71.163.17.196])
-        by mx.google.com with ESMTPS id h8sm4363197wxd.39.2008.01.10.19.29.56
-        (version=SSLv3 cipher=OTHER);
-        Thu, 10 Jan 2008 19:29:57 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.rc2.99.g3ef7-dirty
-In-Reply-To: <1200022189-2400-3-git-send-email-mlevedahl@gmail.com>
+	id S1757134AbYAKFsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 00:48:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752446AbYAKFsS
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 00:48:18 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58080 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751398AbYAKFsO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 00:48:14 -0500
+Received: (qmail invoked by alias); 11 Jan 2008 05:48:12 -0000
+Received: from i577ACCB6.versanet.de (EHLO atjola.local) [87.122.204.182]
+  by mail.gmx.net (mp011) with SMTP; 11 Jan 2008 06:48:12 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19tTHcxq+pt5AvlVjvASvHHsxnsoAJmwkxhF8itk4
+	ZJ6eZLhKCVqQtS
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17 (2007-12-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70121>
 
-This records the users choice of default remote name (by default "origin")
-as given by the -o option.
 
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
----
- Documentation/git-clone.txt |    3 ++-
- git-clone.sh                |    1 +
- 2 files changed, 3 insertions(+), 1 deletions(-)
+--ZPt4rx8FFjLCG7dd
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index fdccbd4..7fd3ea1 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -95,7 +95,8 @@ OPTIONS
- --origin <name>::
- -o <name>::
- 	Instead of using the remote name 'origin' to keep track
--	of the upstream repository, use <name> instead.
-+	of the upstream repository, use <name> instead. The name
-+        is recorded in the  remotes.default config variable.
- 
- --upload-pack <upload-pack>::
- -u <upload-pack>::
-diff --git a/git-clone.sh b/git-clone.sh
-index b4e858c..efbcee2 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -242,6 +242,7 @@ fi &&
- export GIT_DIR &&
- GIT_CONFIG="$GIT_DIR/config" git-init $quiet ${template+"$template"} || usage
- 
-+git config remotes.default $origin
- if test -n "$bare"
- then
- 	GIT_CONFIG="$GIT_DIR/config" git config core.bare true
--- 
-1.5.4.rc2.99.g3ef7-dirty
+Hi,
+
+when you cherry-pick -n a commit that has changes to a file missing in
+the current tree, that file will be added as "Unmerged". A subsequent
+cherry-pick that tries to pick a commit that has changes to that file
+will then fail with:
+
+fatal: git-write-tree: error building trees
+
+I've attached a small shell script to easily reproduce that.
+
+git version 1.5.4.rc2.84.gf85fd
+
+That specific use of cherry-pick might be an user error, but, if
+possible, git should give a less cryptic error message.
+
+Björn
+
+--ZPt4rx8FFjLCG7dd
+Content-Type: application/x-sh
+Content-Disposition: attachment; filename="test.sh"
+Content-Transfer-Encoding: quoted-printable
+
+#!/bin/sh=0Amkdir gwt-crash=0Acd gwt-crash=0Agit init=0Atouch a=0Agit add a=
+=0Agit commit -m init=0A=0Agit branch foo=0A=0Aecho 123 > new=0Agit add new=
+=0Agit commit -m 123=0A=0Aecho 456 > new=0Agit commit -a -m 456=0A=0Aecho 7=
+89 > new=0Agit commit -a -m 789=0A=0A=0Agit checkout foo=0Agit cherry-pick =
+-n master^=0Agit cherry-pick -n master=0A
+--ZPt4rx8FFjLCG7dd--
