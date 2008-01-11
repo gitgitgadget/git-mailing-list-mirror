@@ -1,74 +1,65 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: git-write-error with cherry-pick -n usages
-Date: Fri, 11 Jan 2008 06:48:11 +0100
-Message-ID: <20080111054811.GA7476@atjola.homenet>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH 6/6] Use new compress helpers in builtin-pack-objects.c
+Date: Fri, 11 Jan 2008 07:10:49 +0100
+Message-ID: <e5bfff550801102210g181a091s28725e24922b9b12@mail.gmail.com>
+References: <e5bfff550801101334p5df5adaerf0eeae02ddf28334@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="ZPt4rx8FFjLCG7dd"
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 11 06:48:52 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Nicolas Pitre" <nico@cam.org>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 11 07:11:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDClA-0004no-07
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 06:48:52 +0100
+	id 1JDD6t-0000B0-LG
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 07:11:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757134AbYAKFsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 00:48:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752446AbYAKFsS
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 00:48:18 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58080 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751398AbYAKFsO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 00:48:14 -0500
-Received: (qmail invoked by alias); 11 Jan 2008 05:48:12 -0000
-Received: from i577ACCB6.versanet.de (EHLO atjola.local) [87.122.204.182]
-  by mail.gmx.net (mp011) with SMTP; 11 Jan 2008 06:48:12 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19tTHcxq+pt5AvlVjvASvHHsxnsoAJmwkxhF8itk4
-	ZJ6eZLhKCVqQtS
+	id S1750896AbYAKGKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 01:10:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750908AbYAKGKv
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 01:10:51 -0500
+Received: from rv-out-0910.google.com ([209.85.198.188]:7953 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750870AbYAKGKu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 01:10:50 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so829023rvb.1
+        for <git@vger.kernel.org>; Thu, 10 Jan 2008 22:10:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=gilFzDLTxhHTRiSNTxwFOZ+RpDSkBfz8QnpmTTfVElc=;
+        b=U25SLqsSmh0NSJlirpb+PoRUr9Tz4UOWl8vSeXEo8c7SotOWPfdMAH17Xb/B/Uw/gA3kgqcoM4fvrkc0Nl2XbKsjIxcv3GtupsUdvY5lLUSJ/CGoHavi3G8G87UyCFByi7hpVgJvC1BbR9C28Ar7XDbRaHtPhC1oj3hXsMCoxpA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eSKule0M406MAyiONF1gAkqDAo4rj6bwmpMy6DqXTB+8qS8GDRmA8i3nYWNSOR9tAMKNWWBiFJLF+7w8CiW9jRZboFAw8IFRoMYvi6vYLoWyp7Vui/94lF4zi45vjnwFfE8jutmQF8YWsElGJ+z6w+ZetDWPO2XVHOTV5SyjP3s=
+Received: by 10.141.71.8 with SMTP id y8mr1775087rvk.10.1200031849110;
+        Thu, 10 Jan 2008 22:10:49 -0800 (PST)
+Received: by 10.141.76.1 with HTTP; Thu, 10 Jan 2008 22:10:49 -0800 (PST)
+In-Reply-To: <e5bfff550801101334p5df5adaerf0eeae02ddf28334@mail.gmail.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.17 (2007-12-11)
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70122>
+
+On Jan 10, 2008 10:34 PM, Marco Costalba <mcostalba@gmail.com> wrote:
+>
+> -               while (deflate(&stream, Z_FINISH) == Z_OK)
+> -                       /* nothing */;
+> -               deflateEnd(&stream);
+> -               datalen = stream.total_out;
+> -               deflateEnd(&stream);
 
 
---ZPt4rx8FFjLCG7dd
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+One thing I would like someone to clarify is why deflateEnd(&stream)
+is called two times ?
 
-Hi,
+With my patch is called only once as I have seen in all the others places.
 
-when you cherry-pick -n a commit that has changes to a file missing in
-the current tree, that file will be added as "Unmerged". A subsequent
-cherry-pick that tries to pick a commit that has changes to that file
-will then fail with:
-
-fatal: git-write-tree: error building trees
-
-I've attached a small shell script to easily reproduce that.
-
-git version 1.5.4.rc2.84.gf85fd
-
-That specific use of cherry-pick might be an user error, but, if
-possible, git should give a less cryptic error message.
-
-Björn
-
---ZPt4rx8FFjLCG7dd
-Content-Type: application/x-sh
-Content-Disposition: attachment; filename="test.sh"
-Content-Transfer-Encoding: quoted-printable
-
-#!/bin/sh=0Amkdir gwt-crash=0Acd gwt-crash=0Agit init=0Atouch a=0Agit add a=
-=0Agit commit -m init=0A=0Agit branch foo=0A=0Aecho 123 > new=0Agit add new=
-=0Agit commit -m 123=0A=0Aecho 456 > new=0Agit commit -a -m 456=0A=0Aecho 7=
-89 > new=0Agit commit -a -m 789=0A=0A=0Agit checkout foo=0Agit cherry-pick =
--n master^=0Agit cherry-pick -n master=0A
---ZPt4rx8FFjLCG7dd--
+Thanks
+Marco
