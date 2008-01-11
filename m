@@ -1,106 +1,81 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [PATCH decompress BUG] Fix decompress_next_from() wrong argument value
-Date: Fri, 11 Jan 2008 21:47:04 +0100
-Message-ID: <e5bfff550801111247l1ccf171ene5b53b8d6841a864@mail.gmail.com>
+From: "Mark Levedahl" <mlevedahl@gmail.com>
+Subject: Re: [PATCH] Teach remote machinery about remotes.default config variable
+Date: Fri, 11 Jan 2008 15:52:12 -0500
+Message-ID: <30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
+	 <1200022189-2400-2-git-send-email-mlevedahl@gmail.com>
+	 <7v1w8o4ws0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 11 21:47:38 2008
+X-From: git-owner@vger.kernel.org Fri Jan 11 21:52:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDQms-00021g-5p
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 21:47:34 +0100
+	id 1JDQry-0003kx-Ch
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 21:52:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759555AbYAKUrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 15:47:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759335AbYAKUrF
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 15:47:05 -0500
-Received: from rv-out-0910.google.com ([209.85.198.184]:27371 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759264AbYAKUrE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 15:47:04 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1046832rvb.1
-        for <git@vger.kernel.org>; Fri, 11 Jan 2008 12:47:04 -0800 (PST)
+	id S1751644AbYAKUwQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 15:52:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750908AbYAKUwQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 15:52:16 -0500
+Received: from nz-out-0506.google.com ([64.233.162.227]:14213 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750794AbYAKUwP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 15:52:15 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so749320nze.1
+        for <git@vger.kernel.org>; Fri, 11 Jan 2008 12:52:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=qoSBrXaF5hP6SGsr6Jvqro6MlPP1YcCaK3r1ABtc1K0=;
-        b=G1RUnsiS7yApftUBfoD8WFPDvuhnHH2JuOm+VU8bIxM8s94a/2f4BfsiY7GlFsme5dJf8ORU0c0s4uc8mrYkpgcM/1u5lo0SXGBU1ldAeic0tiFoyhqoVikQNegWS0ixu49W5WXVkDrDYQu5pnDDX/2/NTbv42dZPa9PeJ1uMEI=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=b2EeBJe0Ty3TJqi1OtGFewb1hfHZV1vGv5VaDhEh+vI=;
+        b=K5g5ad4gtOsHJK6s0oyxPbqvY0G2UmGgudy2p/2idEipIRDbIiT0VJi5BExSab4ewshkmaE2ZxZ6bkwxpWlyN7w3n7grDyL8AQ2vR/RqeahUuRYMb/K7Of74rKraejSoxpLVSzLA3oQ5iSn+nHRdSX6SzedTdR6nLfl3+mqWKkc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=c88wPqQIgDHfa/+lS5Y3lk8BmSqs0NoLMeTZPyoBdBeY9P7KnTMLQKKRzCPsJi/MY9NjSav82xXzOg7ZEN3ANuNmYG6mSF5cRFzQrBx0n0VC1mILpQuve5UkG0K2SudKw2HlSqnMY+9tY/fWLPz9ORlH4VAWEkkmQONghOgZE34=
-Received: by 10.140.169.4 with SMTP id r4mr2285318rve.131.1200084424321;
-        Fri, 11 Jan 2008 12:47:04 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Fri, 11 Jan 2008 12:47:04 -0800 (PST)
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ClAhEnzyYFW/bTagfVLo2uwrJ19wPHGaAKNVkFgfuRVJWiq+HKWqukt43NP8chhkBmuRu7++0YxVnQdWZTrJUJqicLCqvt6nzbXWQuVYNQyGsFHKKNHAjoiBmCoyYvtNQ9eYBFK1BjPkJSibvx33XUAABYDpnkilREbhb3rA/+U=
+Received: by 10.142.246.8 with SMTP id t8mr1958035wfh.199.1200084732068;
+        Fri, 11 Jan 2008 12:52:12 -0800 (PST)
+Received: by 10.143.159.5 with HTTP; Fri, 11 Jan 2008 12:52:12 -0800 (PST)
+In-Reply-To: <7v1w8o4ws0.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70199>
 
-Function decompress_next_from() needs a pointer to a buffer
-and the buffer size as arguments.
+On Jan 11, 2008 3:00 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Does this mean "default" is now a new reserved word that cannot
+> be used as "git remote update default"?
 
-Interesting enough the function fill() that returns the
-buffer pointer happens to modify also the buffer size,
-stored in a variable at file scope.
+oops...git-remote already has a (partially undocumented) use for
+remotes.* as well as remote.*, so I need another variable name,
+probably core.origin to avoid either defining new namespace or
+polluting one reserved for arbitrary end-user use. Will resend patches
+later tonight.
 
-So we need to guarantee fill() is called before to use buffer
-size as argument in decompress_next_from()
+>
+> However, it is a bit hard to judge how much of inconvenience it
+> really is in your real life that the current behaviour does not
+> allow you to.
 
-Signed-off-by: Marco Costalba <mcostalba@gmail.com>
----
-Patch to be applied above decompress helper series.
+I believe I addressed this in the thread with Dscho.
 
-Not to be pedantic, but have a function that gives two really
-coupled values, as a buffer pointer and the size, the first as return
-value and the second through a variable at file scope is not something
-you are going to see advertised in the programming books!
+> >       git_config(handle_config);
+> > +     if (!default_remote_name) {
+> > +                     default_remote_name = remotes_default_name ?
+> > +                             remotes_default_name : xstrdup("origin");
+> > +     }
+>
+> Is this a bit too deep indentation?
+>
 
-Sorry for this little rant but this bug really made me crazy.
-
-With this patch 'make test' runs with success!
+will fix.
 
 
- builtin-unpack-objects.c |    3 ++-
- index-pack.c             |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
-index f1a4883..72293ec 100644
---- a/builtin-unpack-objects.c
-+++ b/builtin-unpack-objects.c
-@@ -68,7 +68,8 @@ static void *get_data(unsigned long size)
- 	decompress_into(&stream, buf, size);
-
- 	for (;;) {
--		int ret = decompress_next_from(&stream, fill(1), len, Z_NO_FLUSH);
-+		void* tmp = fill(1); // fill() modifies len, so be sure is evaluated as first
-+		int ret = decompress_next_from(&stream, tmp, len, Z_NO_FLUSH);
- 		use(len - stream.avail_in);
- 		if (stream.total_out == size && ret == Z_STREAM_END)
- 			break;
-diff --git a/index-pack.c b/index-pack.c
-index 30d7837..13b308d 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -173,7 +173,8 @@ static void *unpack_entry_data(unsigned long
-offset, unsigned long size)
- 	decompress_into(&stream, buf, size);
-
- 	for (;;) {
--		int ret = decompress_next_from(&stream, fill(1), input_len, Z_NO_FLUSH);
-+		void* tmp = fill(1); // fill() modifies input_len, so be sure is
-evaluated as first
-+		int ret = decompress_next_from(&stream, tmp, input_len, Z_NO_FLUSH);
- 		use(input_len - stream.avail_in);
- 		if (stream.total_out == size && ret == Z_STREAM_END)
- 			break;
--- 
-1.5.4.rc2.95.g0eaa-dirty
+Mark
