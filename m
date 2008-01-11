@@ -1,61 +1,74 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] gitk: make Ctrl "+" really increase the font size
-Date: Fri, 11 Jan 2008 13:59:15 +0100
-Message-ID: <47876823.1070800@viscovery.net>
-References: <fm5oln$ahq$1@ger.gmane.org> <alpine.LSU.1.00.0801111238150.31053@racer.site>
+From: "Mark Levedahl" <mlevedahl@gmail.com>
+Subject: Re: Allowing override of the default "origin" nickname
+Date: Fri, 11 Jan 2008 08:06:08 -0500
+Message-ID: <30e4a070801110506h19b77488sbfa6ae48701f30f9@mail.gmail.com>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
+	 <Pine.LNX.4.64.0801111301360.14355@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Stephan Hennig <public-mailing_list-KvP5wT2u2U0@lo.gmane.org>,
-	public-paulus-eUNUBHrolfbYtjvyW6yDsg@lo.gmane.org,
-	msysGit <msysgit@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 11 13:59:55 2008
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 11 14:06:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDJUB-0004I0-06
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 13:59:47 +0100
+	id 1JDJb0-0006uj-1k
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 14:06:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755573AbYAKM7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 07:59:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755929AbYAKM7S
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 07:59:18 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:34218 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752478AbYAKM7S (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 07:59:18 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JDJTe-00008f-8N; Fri, 11 Jan 2008 13:59:14 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 1F5C654D; Fri, 11 Jan 2008 13:59:15 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <alpine.LSU.1.00.0801111238150.31053@racer.site>
-X-Spam-Score: 0.2 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2
+	id S1758100AbYAKNGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 08:06:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758055AbYAKNGK
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 08:06:10 -0500
+Received: from nz-out-0506.google.com ([64.233.162.224]:59313 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757921AbYAKNGJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 08:06:09 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so617041nze.1
+        for <git@vger.kernel.org>; Fri, 11 Jan 2008 05:06:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=wi0sDv2U0etvEmazzHqXSU3MrbwCV4rxL5cINaNbHT8=;
+        b=XAzl9LY1bNODNoogDJS6+2MWpRzw0HoKc36vLdi37SVrHBhr2geOJInAHBv1pGDZXcw043Dgu0u/HEA5WsNR+dCIh0jGxGK2T5U+AAR3Qljgw9DS/rruYueysgqisPPqZX3KF87Jokny9dGyqOvVYyEEhmkJmr4nHZOQ+rRKD+g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KfYxLkKUSQ+aTuK5ftC2DcejIedl7eMwZ2It3H/p9whtA7tDyEvDPabsvzNm+1I7a+muKxuSLht3+br/4BIbd9ZIKScQAYP0RQ4nG0j02zCEsVcXK/FuPcXYnbUjQhq0dGCNT1RFC3euHs+vW/7ZF9uEPB6X/3KDCgzk4Iyju14=
+Received: by 10.142.162.5 with SMTP id k5mr1579373wfe.171.1200056768195;
+        Fri, 11 Jan 2008 05:06:08 -0800 (PST)
+Received: by 10.143.159.5 with HTTP; Fri, 11 Jan 2008 05:06:08 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0801111301360.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70156>
 
-Johannes Schindelin schrieb:
-> Only Ctrl "=" was bound to increase the font size, probably because
-> English keyboards have the plus on the same key as the equal sign.
-> However, not the whole world is English, and at least with some
-> other keyboard layouts, Ctrl "+" did not work as documented.
-> 
-> Noticed by Stephan Hennig.
-> 
-> Signed-off-by: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
-                                                         ^^^^^^^^^^^^^^...
-WTF is going on these days?
+On Jan 11, 2008 7:03 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> IIUC your patch only replaces the term "origin" by something
+> user-specifiable.  I fail to see the use of it; care to explain what
+> workflow is easier with your patches than without?
+>
+> Ciao,
+> Dscho
 
-[note: yours, git ML and msysgit ML adresses corrected manually]
+Consider a project with several servers, each of which is *supposed*
+is host the same project but due to lags in mirroring across airgaps,
+etc., are never quite in sync. Now, we get on a teleconference and
+discuss issues, find differences, and everyone reports that "origin"
+has x, but in fact "origin" means different servers to almost
+everyone. Also consider that only a small subset of the group really
+understands git, most just follow cook-book recipes to get their work
+done and don't understand what is going on.
 
--- Hannes
+This is my problem: "origin" is an abstraction that hides the
+different server names in use and makes communication difficult,
+having everyone use nicknames related to their particular upstream
+server reduces the confusion.
+
+Mark
