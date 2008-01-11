@@ -1,79 +1,76 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: Re-casing directories on case-insensitive systems
-Date: Sat, 12 Jan 2008 00:26:01 +0100
-Message-ID: <200801120026.01930.robin.rosenberg@dewire.com>
-References: <579DF776-4F4E-464C-88DB-B22C2EC291BD@sb.org> <34F43A68-6041-42BE-85BD-3EF971875C0F@sb.org> <alpine.LFD.1.00.0801111356000.3148@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitk: Update and fix Makefile
+Date: Fri, 11 Jan 2008 15:57:34 -0800
+Message-ID: <7vr6gn29w1.fsf@gitster.siamese.dyndns.org>
+References: <200801082154.21282.stimming@tuhh.de>
+	<7vk5mkq669.fsf@gitster.siamese.dyndns.org>
+	<18308.17099.334609.80415@cargo.ozlabs.ibm.com>
+	<7vk5mg3fjf.fsf@gitster.siamese.dyndns.org>
+	<7vfxx43f5r.fsf@gitster.siamese.dyndns.org>
+	<18311.64910.643392.816623@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Kevin Ballard <kevin@sb.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jan 12 00:54:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Stimming <stimming@tuhh.de>, git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sat Jan 12 00:58:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDTi1-0003j6-Pu
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 00:54:46 +0100
+	id 1JDTlL-0004bi-AQ
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 00:58:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756871AbYAKXyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 18:54:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756868AbYAKXyP
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 18:54:15 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:7909 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1756751AbYAKXyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 18:54:14 -0500
-X-Greylist: delayed 1683 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Jan 2008 18:54:14 EST
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 98A9780267F;
-	Sat, 12 Jan 2008 00:26:09 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1sidBBvTqjjo; Sat, 12 Jan 2008 00:26:08 +0100 (CET)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 12552802643;
-	Sat, 12 Jan 2008 00:26:07 +0100 (CET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-In-Reply-To: <alpine.LFD.1.00.0801111356000.3148@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1756958AbYAKX5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 18:57:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756868AbYAKX5o
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 18:57:44 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60281 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755906AbYAKX5n (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 18:57:43 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CDE924E6;
+	Fri, 11 Jan 2008 18:57:41 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id AA1BC24E5;
+	Fri, 11 Jan 2008 18:57:36 -0500 (EST)
+In-Reply-To: <18311.64910.643392.816623@cargo.ozlabs.ibm.com> (Paul
+	Mackerras's message of "Sat, 12 Jan 2008 10:36:46 +1100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70226>
 
-fredagen den 11 januari 2008 skrev Linus Torvalds:
-> I do agree that we could/should do something to help with case-insensitive 
-> filesystems.
-> 
-> I absolutely *detest* those things, and I think that people who design 
-> them are total morons - with MS-DOS, you could understand it (people 
-> didn't know better), but with OS X?
+Paul Mackerras <paulus@samba.org> writes:
 
-Could it be some comfort that the other SCM's I know of make a mess of
-these cases, regardless of the number of digits in the price tag.
+> I get:
+>
+> ~/gitk$ git pull master.kernel.org:/pub/scm/git/git.git/ gitk
+> error: no such remote ref refs/heads/gitk
+> fatal: Fetch failure: master.kernel.org:/pub/scm/git/git.git/
 
-[...]
+My bash history tells me that I only did push --dry-run.  Stupid
+me.  Sorry about the noise.
 
-> Almost all of the code that actually touches the index is in read-cache.c, 
-> and it's not like that is a very complex data structure (or a very big 
-> file), so adding another key to the sorting probably wouldn't be too 
-> horrid. But it's definitely a lot more than just a few lines of code!
+>> Christian Stimming (2):
+>>       gitk: Fix typo in user message.
+>
+> I was going to ignore this one since "descendent" is actually a valid
+> alternate spelling, and is the one I am used to.  However, I don't
+> have a strong feeling about it.
 
-Could we just have a lookup table index extension for identifying the 
-duplicates (when checking is enabled using core configuration option #3324)? 
-That table would keep a mapping from a normalized form (maybe include 
-canonical encoding while we're at it) to the actual octet sequence(s) used.
+I agree with you that both are valid spellings, but when I
+received 9e5d87d49070fe0463040e826824d6ce41beb089, I consulted a
+couple of dictionaries and descendant seemed to be more widely
+used.  Besides, I think the german translation update depends on
+it ;-).
 
-Many operations would translate any supplied form throug the table before
-doing the lookup so if we have Foo.h and give FOO.h to git add, it would 
-notice and perform add (update index) on Foo.h instead as that is the form we 
-alreay know (or refuse yielding an error message; pick your poison). And, 
-well you get the picture.
+Anyway, I pushed it (this time without --dry-run) to
 
--- robin
+    master.kernel.org:/pub/scm/git/git.git/ gitk-for-paulus
+
+Sorry, and thanks.
