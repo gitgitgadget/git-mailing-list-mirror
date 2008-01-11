@@ -1,72 +1,77 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [EGIT PATCH] Showing abbreviated commit hash of the versions in Compare editor.
-Date: Fri, 11 Jan 2008 00:46:40 +0100
-Message-ID: <200801110046.41786.robin.rosenberg.lists@dewire.com>
-References: <200801072315.30122.rogersoares@intelinet.com.br> <200801082312.00329.robin.rosenberg.lists@dewire.com> <4784247B.10604@intelinet.com.br>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: CRLF problems with Git on Win32
+Date: Thu, 10 Jan 2008 16:02:43 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801101556380.3148@woody.linux-foundation.org>
+References: <C3AC3E6F.10D42%jefferis@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: "Roger C. Soares" <rogersoares@intelinet.com.br>
-X-From: git-owner@vger.kernel.org Fri Jan 11 00:47:20 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Gregory Jefferis <jefferis@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 11 01:03:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JD77D-0005l5-Lx
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 00:47:16 +0100
+	id 1JD7Mn-0001lc-VA
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 01:03:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754181AbYAJXqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jan 2008 18:46:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753941AbYAJXqs
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 18:46:48 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:24489 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752820AbYAJXqr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jan 2008 18:46:47 -0500
+	id S1754626AbYAKACy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jan 2008 19:02:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754607AbYAKACy
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Jan 2008 19:02:54 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:41858 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754219AbYAKACy (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Jan 2008 19:02:54 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0B02iP1001939
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 10 Jan 2008 16:02:45 -0800
 Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id B54298030C9;
-	Fri, 11 Jan 2008 00:46:45 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id o-ntm7VH2+6R; Fri, 11 Jan 2008 00:46:42 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id BBA2F8028A7;
-	Fri, 11 Jan 2008 00:46:41 +0100 (CET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-In-Reply-To: <4784247B.10604@intelinet.com.br>
-Content-Disposition: inline
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0B02ht5016170;
+	Thu, 10 Jan 2008 16:02:44 -0800
+In-Reply-To: <C3AC3E6F.10D42%jefferis@gmail.com>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.423 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_84
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70111>
 
-onsdagen den 9 januari 2008 skrev Roger C. Soares:
-> Robin Rosenberg escreveu:
-> > I'm implementing fetch (with some help from Shawn). Progress in
-> > place. I still need to update refs and get in consistent with native
-> > git behaviour.
-> >
-> > I'm also updating the javadocs.
-> Cool.
+
+
+On Thu, 10 Jan 2008, Gregory Jefferis wrote:
 > 
-> I use a lot the eclipse feature that highlights all occurences of a 
-> variable or method but with all the warnings in the project it is 
-> difficult to visually find these occurences. So I'm anxious to remove a 
-> lot of warnings. Public methods without documentation are one of them. 
-> Is it ok if I send you a patch removing all the warnings I know how but 
-> the ones about public methods needing documentation as you're already 
-> documenting them? I also want to remove the auto generated TODOs, as 
-> they don't actually say what to do, like this one:
-> // TODO Auto-generated catch block
+> So this is what has to be accommodated.  But instead of having autocrlf
+> always set on Windows and always converting to LF in the repository, why not
+> do nothing by default [ .. ]
 
-I pushed my doc-branch as pu, you can look at it. My intention is take a look again
-and then push it as master if there are no objections. Is it ok and good to flags 
-public stuff without javadoc as an error (tip pu commit)?
+Why? You can screw yourself more, and much more easily (and much more 
+subtly), by leaving CRLF alone on Windows.
 
-The abbr commit patch is already pushed to master.
+The thing is, 99.9% of all people will be *much* better off with 
+autocrlf=true on Windows than with it defaulting to off (or even fail).
 
--- robin
+Isn't *that* the whole point of having a default? Pick the thing that is 
+the right thing for almost everybody?
+
+And no, "but think of the children.." is not a valid argument. Sure, you 
+*can* corrupt binary imags with CRLF conversion. But it's really quite 
+hard, since the git heuristics for guessing are rather good. You really 
+have to work at it, and if you do, you're pretty damn likely to know about 
+the issue, so that 0.1% that really needs to not convert (and it's usually 
+one specific file type!) would probably not even turn off CRLF, but rather 
+add a .gitattributes entry for that one filetype!
+
+(Side note: if there are known filetype extensions that have problems with 
+the git guessing, we sure as heck could take the filename into account 
+when guessing! There's absolutely nothing that says that we only have to 
+look at the contents when guessing about the text/binary thing!)
+
+			Linus
