@@ -1,162 +1,106 @@
-From: Deepak Saxena <dsaxena@plexity.net>
-Subject: [PATCH] Use commit template when cherry picking
-Date: Thu, 10 Jan 2008 23:45:05 -0800
-Message-ID: <20080111074505.GC14022@plexity.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Teach remote machinery about remotes.default config variable
+Date: Fri, 11 Jan 2008 00:00:15 -0800
+Message-ID: <7v1w8o4ws0.fsf@gitster.siamese.dyndns.org>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
+	<1200022189-2400-2-git-send-email-mlevedahl@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Perry Wagle <pwagle@mvista.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 11 08:45:39 2008
+Cc: git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 11 09:01:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDEaA-0000gW-Dw
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 08:45:38 +0100
+	id 1JDEp1-0004ws-Ij
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 09:01:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751748AbYAKHpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 02:45:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750873AbYAKHpJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 02:45:09 -0500
-Received: from qmta10.westchester.pa.mail.comcast.net ([76.96.62.17]:51356
-	"EHLO QMTA10.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751140AbYAKHpH (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Jan 2008 02:45:07 -0500
-Received: from OMTA10.westchester.pa.mail.comcast.net ([76.96.62.28])
-	by QMTA10.westchester.pa.mail.comcast.net with comcast
-	id bjaW1Y00E0cZkys5A00W00; Fri, 11 Jan 2008 07:45:06 +0000
-Received: from plexity.net ([71.59.208.117])
-	by OMTA10.westchester.pa.mail.comcast.net with comcast
-	id bjko1Y0012YWqFb3W00000; Fri, 11 Jan 2008 07:44:49 +0000
-X-Authority-Analysis: v=1.0 c=1 a=5A2GFgTln-UA:10 a=5nLO5BDCAAAA:8 a=gQGbs8_HAAAA:8 a=eQxQWBvfHLyWa0qMaD0A:9 a=9fb7uCHkvtBUCznJZDkA:7 a=DAxkoPWO1dzTM70oufR_jOc3IbAA:4 a=gH_wm7_JyAQA:10 a=hpF-ijbX5cwA:10
-Received: by plexity.net (Postfix, from userid 1025)
-	id 3AF0B544518; Thu, 10 Jan 2008 23:45:05 -0800 (PST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
+	id S1754403AbYAKIAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 03:00:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753648AbYAKIAb
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 03:00:31 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50850 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754069AbYAKIAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 03:00:30 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B924E5202;
+	Fri, 11 Jan 2008 03:00:28 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A2CEC51FD;
+	Fri, 11 Jan 2008 03:00:22 -0500 (EST)
+In-Reply-To: <1200022189-2400-2-git-send-email-mlevedahl@gmail.com> (Mark
+	Levedahl's message of "Thu, 10 Jan 2008 22:29:46 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70136>
 
-When using a workflow with a default commit message template/header,
-git-cherry-pick should also pick that up. Users can manually read
-the header into the commit message, but this is simpler.
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-Signed-off-by: Deepak Saxena <dsaxena@mvista.com>
+> This introduces a new configuration variable, remotes.default, that
+> defines the name of the default remote to be used.
 
----
+Does this mean "default" is now a new reserved word that cannot
+be used as "git remote update default"?
 
-We are using git to manage our kernel tree and we often cherry-pick
-patches from upstream and while we want to save the original commit
-message, we also want to apply our default commit header to the log.
-If this patch is not the ideal solution, please let me know how
-I should go about this.
+> ... Traditionally, this
+> is "origin", and could be overridden for a given branch. This change
+> introduces a way to redefine the default as desired and have that honored
+> regardless of the currently checked out head (e.g., remotes.default is
+> used when on a detached head or any other non-tracking branch).
 
-(I'm not on the mailing list, so please cc: me on replies)
+I'd 100% agree that being able to use anything not just
+hardcoded 'origin' is much better than not being able to.  I do
+not have much against that goal.
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 73f1e35..6bd937a 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -43,7 +43,8 @@ static enum {
- 	COMMIT_PARTIAL,
- } commit_style;
- 
--static char *logfile, *force_author, *template_file;
-+char *template_file;
-+static char *logfile, *force_author;
- static char *edit_message, *use_message;
- static int all, edit_flag, also, interactive, only, amend, signoff;
- static int quiet, verbose, untracked_files, no_verify, allow_empty;
-@@ -89,7 +90,7 @@ static struct option builtin_commit_options[] = {
- 	OPT_STRING('c', "reedit-message", &edit_message, "COMMIT", "reuse and edit message from specified commit "),
- 	OPT_STRING('C', "reuse-message", &use_message, "COMMIT", "reuse message from specified commit"),
- 	OPT_BOOLEAN('s', "signoff", &signoff, "add Signed-off-by: header"),
--	OPT_STRING('t', "template", &template_file, "FILE", "use specified template file"),
-+	OPT_STRING('t', "template", &template_file, "FILE", "use specified commit message template file"),
- 	OPT_BOOLEAN('e', "edit", &edit_flag, "force edit of commit"),
- 
- 	OPT_GROUP("Commit contents options"),
-diff --git a/builtin-revert.c b/builtin-revert.c
-index 4bf8eb2..cbb57c6 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -8,6 +8,7 @@
- #include "exec_cmd.h"
- #include "utf8.h"
- #include "parse-options.h"
-+#include "strbuf.h"
- 
- /*
-  * This implements the builtins revert and cherry-pick.
-@@ -49,6 +50,7 @@ static void parse_args(int argc, const char **argv)
- 		OPT_BOOLEAN('n', "no-commit", &no_commit, "don't automatically commit"),
- 		OPT_BOOLEAN('e', "edit", &edit, "edit the commit message"),
- 		OPT_BOOLEAN('x', NULL, &no_replay, "append commit name when cherry-picking"),
-+		OPT_STRING('t', "template", &template_file, "FILE", "use specified commit message template file"),
- 		OPT_BOOLEAN('r', NULL, &noop, "no-op (backward compatibility)"),
- 		OPT_INTEGER('m', "mainline", &mainline, "parent number"),
- 		OPT_END(),
-@@ -249,16 +251,24 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- {
- 	unsigned char head[20];
- 	struct commit *base, *next, *parent;
-+	struct strbuf sb;
- 	int i;
- 	char *oneline, *reencoded_message = NULL;
- 	const char *message, *encoding;
- 	const char *defmsg = xstrdup(git_path("MERGE_MSG"));
- 
--	git_config(git_default_config);
-+	git_config(git_commit_config);	
- 	me = action == REVERT ? "revert" : "cherry-pick";
- 	setenv(GIT_REFLOG_ACTION, me, 0);
- 	parse_args(argc, argv);
- 
-+	strbuf_init(&sb, 0);
-+	if (template_file) {
-+		if (strbuf_read_file(&sb, template_file, 0) < 0)
-+			 die("could not read %s: %s", 
-+				template_file, strerror(errno));
-+	}
-+
- 	/* this is copied from the shell script, but it's never triggered... */
- 	if (action == REVERT && !no_replay)
- 		die("revert is incompatible with replay");
-@@ -332,6 +342,8 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 
- 	oneline = get_oneline(message);
- 
-+	add_to_msg(sb.buf);
-+
- 	if (action == REVERT) {
- 		char *oneline_body = strchr(oneline, ' ');
- 
-diff --git a/commit.h b/commit.h
-index 10e2b5d..7746ec6 100644
---- a/commit.h
-+++ b/commit.h
-@@ -23,6 +23,7 @@ struct commit {
- 
- extern int save_commit_buffer;
- extern const char *commit_type;
-+extern char *template_file;
- 
- /* While we can decorate any object with a name, it's only used for commits.. */
- extern struct decoration name_decoration;
-@@ -116,6 +117,8 @@ int in_merge_bases(struct commit *, struct commit **, int);
- extern int interactive_add(int argc, const char **argv, const char *prefix);
- extern int rerere(void);
- 
-+extern int git_commit_config(const char *k, const char *v);
-+
- static inline int single_parent(struct commit *commit)
- {
- 	return commit->parents && !commit->parents->next;
+However, it is a bit hard to judge how much of inconvenience it
+really is in your real life that the current behaviour does not
+allow you to.
 
--- 
-   _____   __o  Living Deepak Saxena - CarFree and CareFree            (o>
-------    -\<,  Towards Carfree Cities 2008 - www.carfreeportland.org  //\
- ----- ( )/ ( ) Linux Plumber's Conference - www.linuxplumbersconf.org V_/_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In your cover letter, you said:
+
+>> As my project is distributed across multiple domains with
+>> many firewalls and airgaps such that no single server is
+>> available to all, we really need to use nicknames to refer
+>> to different servers,...
+
+If you need to access different repositories on different
+machines from your submodules, you would of course need to
+access different domains from your submodule repositories.  But
+that does not mean each of them cannot be named 'origin'.  That
+name is local to each of the submodule (and the toplevel) and
+can point at different domains over different transfer channels.
+
+> diff --git a/git-parse-remote.sh b/git-parse-remote.sh
+> index 695a409..1b235e0 100755
+> --- a/git-parse-remote.sh
+> +++ b/git-parse-remote.sh
+> @@ -56,8 +56,9 @@ get_remote_url () {
+>  
+>  get_default_remote () {
+>  	curr_branch=$(git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||')
+> -	origin=$(git config --get "branch.$curr_branch.remote")
+> -	echo ${origin:-origin}
+> +	git config --get "branch.$curr_branch.remote" ||
+> +	git config --get "remotes.default" ||
+> +	echo origin
+
+This sequence cascaded with || is much nicer than the original,
+even if it did not change the behaviour.
+
+> @@ -300,6 +305,10 @@ static void read_config(void)
+>  			make_branch(head_ref + strlen("refs/heads/"), 0);
+>  	}
+>  	git_config(handle_config);
+> +	if (!default_remote_name) {
+> +			default_remote_name = remotes_default_name ?
+> +				remotes_default_name : xstrdup("origin");
+> +	}
+
+Is this a bit too deep indentation?
