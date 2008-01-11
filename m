@@ -1,65 +1,93 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH 6/6] Use new compress helpers in builtin-pack-objects.c
-Date: Fri, 11 Jan 2008 07:10:49 +0100
-Message-ID: <e5bfff550801102210g181a091s28725e24922b9b12@mail.gmail.com>
-References: <e5bfff550801101334p5df5adaerf0eeae02ddf28334@mail.gmail.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Decompression speed: zip vs lzo
+Date: Fri, 11 Jan 2008 19:29:51 +1300
+Message-ID: <47870CDF.4010606@vilain.net>
+References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com> <7v4pdmfw27.fsf@gitster.siamese.dyndns.org> <47855765.9090001@vilain.net> <alpine.LSU.1.00.0801092328580.31053@racer.site> <47856E8D.4010006@vilain.net> <4785A6DB.3080007@vilain.net> <20080110091607.GA17944@artemis.madism.org> <alpine.LFD.1.00.0801101332150.3054@xanadu.home> <alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org> <478691EB.1080704@vilain.net> <alpine.LFD.1.00.0801101400550.3148@woody.linux-foundation.org> <47869C24.3000400@vilain.net> <alpine.LFD.1.00.0801101454440.3148@woody.linux-foundation.org> <4786BFCD.1000303@vilain.net> <alpine.LFD.1.00.0801101805540.3148@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Nicolas Pitre" <nico@cam.org>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 11 07:11:26 2008
+Cc: Nicolas Pitre <nico@cam.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jan 11 07:30:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDD6t-0000B0-LG
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 07:11:20 +0100
+	id 1JDDPa-0003Nh-5Z
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 07:30:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750896AbYAKGKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 01:10:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750908AbYAKGKv
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 01:10:51 -0500
-Received: from rv-out-0910.google.com ([209.85.198.188]:7953 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750870AbYAKGKu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 01:10:50 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so829023rvb.1
-        for <git@vger.kernel.org>; Thu, 10 Jan 2008 22:10:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=gilFzDLTxhHTRiSNTxwFOZ+RpDSkBfz8QnpmTTfVElc=;
-        b=U25SLqsSmh0NSJlirpb+PoRUr9Tz4UOWl8vSeXEo8c7SotOWPfdMAH17Xb/B/Uw/gA3kgqcoM4fvrkc0Nl2XbKsjIxcv3GtupsUdvY5lLUSJ/CGoHavi3G8G87UyCFByi7hpVgJvC1BbR9C28Ar7XDbRaHtPhC1oj3hXsMCoxpA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=eSKule0M406MAyiONF1gAkqDAo4rj6bwmpMy6DqXTB+8qS8GDRmA8i3nYWNSOR9tAMKNWWBiFJLF+7w8CiW9jRZboFAw8IFRoMYvi6vYLoWyp7Vui/94lF4zi45vjnwFfE8jutmQF8YWsElGJ+z6w+ZetDWPO2XVHOTV5SyjP3s=
-Received: by 10.141.71.8 with SMTP id y8mr1775087rvk.10.1200031849110;
-        Thu, 10 Jan 2008 22:10:49 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Thu, 10 Jan 2008 22:10:49 -0800 (PST)
-In-Reply-To: <e5bfff550801101334p5df5adaerf0eeae02ddf28334@mail.gmail.com>
-Content-Disposition: inline
+	id S1751759AbYAKGaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 01:30:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751729AbYAKGaK
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 01:30:10 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:56116 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751617AbYAKGaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 01:30:08 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
+	id 72CDD21D192; Fri, 11 Jan 2008 19:29:58 +1300 (NZDT)
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id CC00F21D18C;
+	Fri, 11 Jan 2008 19:29:52 +1300 (NZDT)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <alpine.LFD.1.00.0801101805540.3148@woody.linux-foundation.org>
+X-Enigmail-Version: 0.94.2.0
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on 
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70123>
 
-On Jan 10, 2008 10:34 PM, Marco Costalba <mcostalba@gmail.com> wrote:
->
-> -               while (deflate(&stream, Z_FINISH) == Z_OK)
-> -                       /* nothing */;
-> -               deflateEnd(&stream);
-> -               datalen = stream.total_out;
-> -               deflateEnd(&stream);
+Linus Torvalds wrote:
+> 
+> On Fri, 11 Jan 2008, Sam Vilain wrote:
+>> Without compression of deltas:
+>>
+>> wilber:~/src/perl-preview$ du -sk .git/objects/pack/
+>> 86781 .git/objects/pack/
+>>
+>> With compression of deltas:
+>>
+>> wilber:~/src/perl-preview$ du -sk .git/objects/pack/
+>> 72907 .git/objects/pack/
+> 
+> Ok, so non-compressed deltas are 20% bigger.
+> 
+> That may well be a perfectly acceptable trade-off if the end result is 
+> then a lot faster. Has somebody done performance numbers? I may have 
+> missed them.. The best test is probably something like "git blame" on a 
+> file that takes an appreciable amount of time.
 
+The difference seems only barely measurable;
 
-One thing I would like someone to clarify is why deflateEnd(&stream)
-is called two times ?
+wilber:~/src/perl-preview$ time git annotate sv.c >/dev/null
 
-With my patch is called only once as I have seen in all the others places.
+real    0m8.130s
+user    0m6.712s
+sys     0m1.412s
 
-Thanks
-Marco
+wilber:~/src/perl-preview-loose$ time git annotate sv.c >/dev/null
+
+real    0m7.930s
+user    0m6.480s
+sys     0m1.408s
+
+(each one is last of three runs - dual-core x86_64 @ 2.1GHz w/512KB cache)
+
+sv.c has about 1500 revisions, though the oldest line is    I also tried
+annotate and log on the YACC generated parser which only has about 165
+revisions, with similar results - a very minor difference or no difference.
+
+Sam
