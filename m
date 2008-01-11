@@ -1,57 +1,68 @@
-From: Douglas Stockwell <doug@11011.net>
-Subject: Re: gmail smtp server and git-send-mail. Is this combination working?
-Date: Sat, 12 Jan 2008 01:36:03 +0900
-Message-ID: <fm85u3$mbd$1@ger.gmane.org>
-References: <4d8e3fd30801080858h5f109b47v87abc6b315fcfa08@mail.gmail.com>	 <fm1h7t$nnr$1@ger.gmane.org>	 <4d8e3fd30801091509q49c02e1dua4ca42805ba891d6@mail.gmail.com>	 <fm44ck$299$1@ger.gmane.org>	 <4d8e3fd30801101449u11aabd73mba233301df157160@mail.gmail.com> <2faad3050801110419h20acbda8me1cbdb4c6e06a086@mail.gmail.com>
+From: "Mark Levedahl" <mlevedahl@gmail.com>
+Subject: Re: Allowing override of the default "origin" nickname
+Date: Fri, 11 Jan 2008 11:39:48 -0500
+Message-ID: <30e4a070801110839j6b27e224j9a83fc9975f2e4c6@mail.gmail.com>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
+	 <Pine.LNX.4.64.0801111301360.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+	 <30e4a070801110506h19b77488sbfa6ae48701f30f9@mail.gmail.com>
+	 <alpine.LSU.1.00.0801111348230.31053@racer.site>
+	 <30e4a070801110653n61a826c0y33ed13f95cddf25d@mail.gmail.com>
+	 <alpine.LSU.1.00.0801111501510.31053@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 11 17:37:01 2008
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 11 17:40:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDMsO-0007nH-Bv
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 17:37:00 +0100
+	id 1JDMva-0000tS-VR
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 17:40:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752184AbYAKQgd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 11:36:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751575AbYAKQgd
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 11:36:33 -0500
-Received: from main.gmane.org ([80.91.229.2]:47463 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750794AbYAKQgc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 11:36:32 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JDMrs-0000pW-3i
-	for git@vger.kernel.org; Fri, 11 Jan 2008 16:36:28 +0000
-Received: from ie186.opt2.point.ne.jp ([222.225.39.186])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 11 Jan 2008 16:36:28 +0000
-Received: from doug by ie186.opt2.point.ne.jp with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 11 Jan 2008 16:36:28 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: ie186.opt2.point.ne.jp
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <2faad3050801110419h20acbda8me1cbdb4c6e06a086@mail.gmail.com>
+	id S1756389AbYAKQjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 11:39:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755761AbYAKQjv
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 11:39:51 -0500
+Received: from hs-out-0708.google.com ([64.233.178.242]:3717 "EHLO
+	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752577AbYAKQju (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 11:39:50 -0500
+Received: by hs-out-2122.google.com with SMTP id 54so1073602hsz.5
+        for <git@vger.kernel.org>; Fri, 11 Jan 2008 08:39:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=12qK+YJB9S/534UU5czcuHGmMsQaPINkNnYPKK7iTGU=;
+        b=mUjyggpRgJLj34Rnxfgo8e5MVyicyVYDn0smDnNPnF0b7rli/kOHXBp0g4WNGxZM3SVcAtvoGzYcgS8I+4Py4yldpZshi6QTvMg0h2lwx7Prkiuh9XgoPXKrQao0YurEInHpxjI22u9X18s6a3Kbko2fr80E5UUQVEpc9wne5W0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jO3Ou2ef7n7eQSKPTzq84ZuUbz0ZsuIQXSUWD8JVa71HZtHPlNVo0+7TA6t1oVLtSUmS+9YXp7Zl1p6QjbdLGnehytMMNfjqICMWbjxOrhB4rLXarw3yNiGycKUDUBQh7VQHtg3TaBbp5l1ptUWvQU8bpDRvSd45UZ6TtBy/9HE=
+Received: by 10.142.232.20 with SMTP id e20mr1768863wfh.59.1200069588163;
+        Fri, 11 Jan 2008 08:39:48 -0800 (PST)
+Received: by 10.143.159.5 with HTTP; Fri, 11 Jan 2008 08:39:48 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0801111501510.31053@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70175>
 
-Baz wrote:
-> On Jan 10, 2008 10:49 PM, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
-> With Authen::SASL and Net::SMTP::SSL, you can get 1 patch at a time in
-> via gmail. The alternative connection mode which git-send-email
-> doesn't support yet is to connect over smtp then negotiate TLS using
-> 'STARTTLS'. If you do this then you can send multiple patches via
-> gmail with a single call to git-send-email.
+On Jan 11, 2008 10:03 AM, Johannes Schindelin >
+> Okay, so with your change the user has to either remember or lookup which
+> is the default remote.  Without your change, the user has to either
+> remember or lookup where origin points to.
+>
+> I still think your change does not help.
 
-I just tested this. I *was* able to send multiple patches in a single call?
+That's a theoretical argument: my *experience* with trying to make the
+current workflow operate was sufficiently bad and troublesome that it
+caused me to write code and fix it to enable the new workflow. Also,
+absent submodules the new workflow is fully supported by
+branch.<name>.remote: are you advocating the elimination of that
+existing feature?
 
-Doug
+Mark
