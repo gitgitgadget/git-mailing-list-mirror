@@ -1,149 +1,106 @@
 From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [PATCH 3/5] Use new compress helpers in fast-import
-Date: Fri, 11 Jan 2008 08:38:21 +0100
-Message-ID: <e5bfff550801102338s6542be72r78029ecfc382559e@mail.gmail.com>
+Subject: [PATCH 4/5] Use new compress helpers in http-push.c
+Date: Fri, 11 Jan 2008 08:39:45 +0100
+Message-ID: <e5bfff550801102339o757eea62h40b5e00cd904f7e1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: "Git Mailing List" <git@vger.kernel.org>
 To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 11 08:38:55 2008
+X-From: git-owner@vger.kernel.org Fri Jan 11 08:40:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDETb-0007UV-BQ
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 08:38:51 +0100
+	id 1JDEV6-0007uI-4f
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 08:40:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750851AbYAKHiX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 02:38:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbYAKHiX
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 02:38:23 -0500
-Received: from rv-out-0910.google.com ([209.85.198.186]:39173 "EHLO
+	id S1752484AbYAKHjr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 02:39:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752082AbYAKHjr
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 02:39:47 -0500
+Received: from rv-out-0910.google.com ([209.85.198.186]:41789 "EHLO
 	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750761AbYAKHiX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 02:38:23 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so851253rvb.1
-        for <git@vger.kernel.org>; Thu, 10 Jan 2008 23:38:21 -0800 (PST)
+	with ESMTP id S1751762AbYAKHjq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 02:39:46 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so851607rvb.1
+        for <git@vger.kernel.org>; Thu, 10 Jan 2008 23:39:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=JGVka8e8I/3r04vZmU5sYBcm/8JcHJZ3EVpk/8ryoxU=;
-        b=MmYl/oAbZHNwgG//ntF2H+Qb28SdWJt2ptQjtitimBykdA2xLhYsVlwNu9Vu9kasqtcSEQQQ/13PARdTMuNEDaMOHlsMRfRFeePFAhFrAjph7qp7jxNC/TuS/MimTN3omOyYqEuMM9LToBZSjckOZLbZ9qY5OmR3Of91BR950J4=
+        bh=E13WP1/egm1gIUKFgRa64B6IjLNHVI35w6bcE4vMxRU=;
+        b=nwjD9VRwWiByKmy0GgIVwJWB4NqIPZqYT9zwTJ2dBHc4oQgJdJXbuK4dFg6MtCYN6vUXKRkkTi2ShpaLePrRgezmLFxy3hXQSbBl2nNKkG12q3fWE5PvHLC+0hFMu4cMdGbVpqZ0q7glndmGJpCzrf//h1tkXK/4y8AZERo+Fa8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=g9v8PrMgYYv4js1AMQDGfMlHco3tK3rh3mzIdCW9jsjL1T8tvfMNfHA+RZIEG6Dbs1RtLRT3lbuQDowJOX3dt0g9Ye1zcIT2XX0wbVRoFdvQp3gfL5LfGF8fkphwoss+LelTIgCpbFgfC/CDD6kOH0BDjysF4zMRnFo4cTOQo7o=
-Received: by 10.141.185.3 with SMTP id m3mr1785716rvp.236.1200037101368;
-        Thu, 10 Jan 2008 23:38:21 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Thu, 10 Jan 2008 23:38:21 -0800 (PST)
+        b=lIIMlNql090pKroXB07crlH+3auEugnxFQvru7fqKAlGPq0gGnSXIVWQmwADhx/8eUvZtAC2iQbpOVPriAKW4ZQ0A/kFYn6NiIFTzKYoHn5fI+2X+6HB7wHt8FbTf5NsQenNKbKhm+E1fRo58ZCj9HEWL/ZuHXwcQ6LWql2igSM=
+Received: by 10.141.71.8 with SMTP id y8mr1807910rvk.32.1200037185198;
+        Thu, 10 Jan 2008 23:39:45 -0800 (PST)
+Received: by 10.141.76.1 with HTTP; Thu, 10 Jan 2008 23:39:45 -0800 (PST)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70133>
 
-Here is slightly more difficult, in particular
-a xrealloc() has been substituted with a
-free() + xmalloc() to keep the code simple.
+A multistep compress is required here, so
+we need the full arsenal of compress helpers.
 
 Signed-off-by: Marco Costalba <mcostalba@gmail.com>
 ---
- fast-import.c |   44 +++++++++++++++------------------------
- 1 files changed, 15 insertions(+), 29 deletions(-)
+ http-push.c |   22 ++++++++--------------
+ 1 files changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index 74597c9..6166d4a 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -141,6 +141,7 @@ Format of STDIN stream:
-
- #include "builtin.h"
+diff --git a/http-push.c b/http-push.c
+index 55d0c94..b7fe57f 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1,5 +1,6 @@
  #include "cache.h"
+ #include "commit.h"
 +#include "compress.h"
- #include "object.h"
+ #include "pack.h"
+ #include "tag.h"
  #include "blob.h"
- #include "tree.h"
-@@ -994,13 +995,13 @@ static int store_object(
- 	unsigned char *sha1out,
- 	uintmax_t mark)
- {
--	void *out, *delta;
-+	unsigned char *out, *delta;
- 	struct object_entry *e;
- 	unsigned char hdr[96];
- 	unsigned char sha1[20];
- 	unsigned long hdrlen, deltalen;
- 	SHA_CTX c;
--	z_stream s;
-+	int out_size;
+@@ -491,31 +492,24 @@ static void start_put(struct transfer_request
+ 	hdrlen = sprintf(hdr, "%s %lu", typename(type), len) + 1;
 
- 	hdrlen = sprintf((char*)hdr,"%s %lu", typename(type),
- 		(unsigned long)dat->len) + 1;
-@@ -1036,24 +1037,15 @@ static int store_object(
- 	} else
- 		delta = NULL;
+ 	/* Set it up */
+-	memset(&stream, 0, sizeof(stream));
+-	deflateInit(&stream, zlib_compression_level);
+-	size = deflateBound(&stream, len + hdrlen);
++	size = compress_alloc(&stream, zlib_compression_level, len + hdrlen);
+ 	strbuf_init(&request->buffer.buf, size);
+ 	request->buffer.posn = 0;
 
--	memset(&s, 0, sizeof(s));
--	deflateInit(&s, zlib_compression_level);
--	if (delta) {
--		s.next_in = delta;
--		s.avail_in = deltalen;
--	} else {
--		s.next_in = (void *)dat->buf;
--		s.avail_in = dat->len;
--	}
--	s.avail_out = deflateBound(&s, s.avail_in);
--	s.next_out = out = xmalloc(s.avail_out);
--	while (deflate(&s, Z_FINISH) == Z_OK)
+ 	/* Compress it */
+-	stream.next_out = (unsigned char *)request->buffer.buf.buf;
+-	stream.avail_out = size;
++	compress_start(&stream, (void *)hdr, hdrlen,
++                      (unsigned char *)request->buffer.buf.buf, size);
+
+ 	/* First header.. */
+-	stream.next_in = (void *)hdr;
+-	stream.avail_in = hdrlen;
+-	while (deflate(&stream, 0) == Z_OK)
 -		/* nothing */;
--	deflateEnd(&s);
-+	if (delta)
-+		out_size = compress_all(zlib_compression_level, delta, deltalen, &out);
-+	else
-+		out_size = compress_all(zlib_compression_level,
-+                                       (unsigned char *)dat->buf,
-dat->len, &out);
++	compress_next(&stream, Z_NO_FLUSH);
 
- 	/* Determine if we should auto-checkpoint. */
--	if ((pack_size + 60 + s.total_out) > max_packsize
--		|| (pack_size + 60 + s.total_out) < pack_size) {
-+	if ((pack_size + 60 + out_size) > max_packsize
-+		|| (pack_size + 60 + out_size) < pack_size) {
+ 	/* Then the data itself.. */
+ 	stream.next_in = unpacked;
+ 	stream.avail_in = len;
+-	while (deflate(&stream, Z_FINISH) == Z_OK)
+-		/* nothing */;
+-	deflateEnd(&stream);
+-	free(unpacked);
++	compress_next(&stream, Z_FINISH);
 
- 		/* This new object needs to *not* have the current pack_id. */
- 		e->pack_id = pack_id + 1;
-@@ -1064,15 +1056,9 @@ static int store_object(
- 			free(delta);
- 			delta = NULL;
+-	request->buffer.buf.len = stream.total_out;
++	request->buffer.buf.len = compress_free(&stream);
++	free(unpacked);
 
--			memset(&s, 0, sizeof(s));
--			deflateInit(&s, zlib_compression_level);
--			s.next_in = (void *)dat->buf;
--			s.avail_in = dat->len;
--			s.avail_out = deflateBound(&s, s.avail_in);
--			s.next_out = out = xrealloc(out, s.avail_out);
--			while (deflate(&s, Z_FINISH) == Z_OK)
--				/* nothing */;
--			deflateEnd(&s);
-+			free(out);
-+			out_size = compress_all(zlib_compression_level,
-+                                               (unsigned char
-*)dat->buf, dat->len, &out);
- 		}
- 	}
-
-@@ -1105,8 +1091,8 @@ static int store_object(
- 		pack_size += hdrlen;
- 	}
-
--	write_or_die(pack_data->pack_fd, out, s.total_out);
--	pack_size += s.total_out;
-+	write_or_die(pack_data->pack_fd, out, out_size);
-+	pack_size += out_size;
-
- 	free(out);
- 	free(delta);
+ 	request->url = xmalloc(strlen(remote->url) +
+ 			       strlen(request->lock->token) + 51);
 -- 
 1.5.4.rc2.89.g1b3f-dirty
