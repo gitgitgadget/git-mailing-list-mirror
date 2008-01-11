@@ -1,68 +1,86 @@
-From: "Mark Levedahl" <mlevedahl@gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
 Subject: Re: Allowing override of the default "origin" nickname
-Date: Fri, 11 Jan 2008 11:39:48 -0500
-Message-ID: <30e4a070801110839j6b27e224j9a83fc9975f2e4c6@mail.gmail.com>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
-	 <Pine.LNX.4.64.0801111301360.14355@wbgn129.biozentrum.uni-wuerzburg.de>
-	 <30e4a070801110506h19b77488sbfa6ae48701f30f9@mail.gmail.com>
-	 <alpine.LSU.1.00.0801111348230.31053@racer.site>
-	 <30e4a070801110653n61a826c0y33ed13f95cddf25d@mail.gmail.com>
-	 <alpine.LSU.1.00.0801111501510.31053@racer.site>
+Date: Fri, 11 Jan 2008 18:01:27 +0100
+Message-ID: <20080111170127.GA23893@atjola.homenet>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com> <Pine.LNX.4.64.0801111301360.14355@wbgn129.biozentrum.uni-wuerzburg.de> <30e4a070801110506h19b77488sbfa6ae48701f30f9@mail.gmail.com> <alpine.LSU.1.00.0801111348230.31053@racer.site> <30e4a070801110653n61a826c0y33ed13f95cddf25d@mail.gmail.com> <alpine.LSU.1.00.0801111501510.31053@racer.site> <30e4a070801110839j6b27e224j9a83fc9975f2e4c6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 11 17:40:22 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	gitster@pobox.com, git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 11 18:02:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDMva-0000tS-VR
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 17:40:19 +0100
+	id 1JDNGa-0001DH-3P
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 18:02:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756389AbYAKQjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 11:39:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755761AbYAKQjv
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 11:39:51 -0500
-Received: from hs-out-0708.google.com ([64.233.178.242]:3717 "EHLO
-	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752577AbYAKQju (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 11:39:50 -0500
-Received: by hs-out-2122.google.com with SMTP id 54so1073602hsz.5
-        for <git@vger.kernel.org>; Fri, 11 Jan 2008 08:39:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=12qK+YJB9S/534UU5czcuHGmMsQaPINkNnYPKK7iTGU=;
-        b=mUjyggpRgJLj34Rnxfgo8e5MVyicyVYDn0smDnNPnF0b7rli/kOHXBp0g4WNGxZM3SVcAtvoGzYcgS8I+4Py4yldpZshi6QTvMg0h2lwx7Prkiuh9XgoPXKrQao0YurEInHpxjI22u9X18s6a3Kbko2fr80E5UUQVEpc9wne5W0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jO3Ou2ef7n7eQSKPTzq84ZuUbz0ZsuIQXSUWD8JVa71HZtHPlNVo0+7TA6t1oVLtSUmS+9YXp7Zl1p6QjbdLGnehytMMNfjqICMWbjxOrhB4rLXarw3yNiGycKUDUBQh7VQHtg3TaBbp5l1ptUWvQU8bpDRvSd45UZ6TtBy/9HE=
-Received: by 10.142.232.20 with SMTP id e20mr1768863wfh.59.1200069588163;
-        Fri, 11 Jan 2008 08:39:48 -0800 (PST)
-Received: by 10.143.159.5 with HTTP; Fri, 11 Jan 2008 08:39:48 -0800 (PST)
-In-Reply-To: <alpine.LSU.1.00.0801111501510.31053@racer.site>
+	id S1759949AbYAKRBc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2008 12:01:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760180AbYAKRBc
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 12:01:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38613 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759646AbYAKRBb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 12:01:31 -0500
+Received: (qmail invoked by alias); 11 Jan 2008 17:01:29 -0000
+Received: from i577AC1E6.versanet.de (EHLO atjola.local) [87.122.193.230]
+  by mail.gmx.net (mp053) with SMTP; 11 Jan 2008 18:01:29 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/Z7cpPnAjZ5TZAaNIZNGDEXqY2/8DthADRhKBq+y
+	OPUY4QPardSHSt
 Content-Disposition: inline
+In-Reply-To: <30e4a070801110839j6b27e224j9a83fc9975f2e4c6@mail.gmail.com>
+User-Agent: Mutt/1.5.17 (2007-12-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70176>
 
-On Jan 11, 2008 10:03 AM, Johannes Schindelin >
-> Okay, so with your change the user has to either remember or lookup which
-> is the default remote.  Without your change, the user has to either
-> remember or lookup where origin points to.
->
-> I still think your change does not help.
+On 2008.01.11 11:39:48 -0500, Mark Levedahl wrote:
+> On Jan 11, 2008 10:03 AM, Johannes Schindelin >
+> > Okay, so with your change the user has to either remember or lookup=
+ which
+> > is the default remote.  Without your change, the user has to either
+> > remember or lookup where origin points to.
+> >
+> > I still think your change does not help.
+>=20
+> That's a theoretical argument: my *experience* with trying to make th=
+e
+> current workflow operate was sufficiently bad and troublesome that it
+> caused me to write code and fix it to enable the new workflow. Also,
+> absent submodules the new workflow is fully supported by
+> branch.<name>.remote: are you advocating the elimination of that
+> existing feature?
 
-That's a theoretical argument: my *experience* with trying to make the
-current workflow operate was sufficiently bad and troublesome that it
-caused me to write code and fix it to enable the new workflow. Also,
-absent submodules the new workflow is fully supported by
-branch.<name>.remote: are you advocating the elimination of that
-existing feature?
+AFAICT your main point is that you can do:
+git config --get remotes.default
 
-Mark
+and get an unique _symbolic_ name, right? So while you still need to
+lookup the value of remotes.default, you get e.g. "myremote" instead of
+"git://myremote/foo.git" which you get from "git remote show origin". A=
+t
+least that's how I interpreted it. Your argumentation wasn't that clear
+on what you actually want to achieve/improve and why just looking up
+"origin" isn't enough, IMHO.
+
+A different approach, which feels more in-line with the current state o=
+f
+things, might be to allow remote aliases. "origin" would be an alias of
+"myremote", and "git remote show origin" might say "origin is an alias
+for myremote" followed by the details of "myremote". So that would give
+you the same benefit, but "origin" would keep its meaning, and you woul=
+d
+not get different behaviour depending on some configuration setting (so
+the poor folks on #git can just assume that "origin" is the default for
+everyone).
+
+Admittedly, I don't see any use-case for aliases except for that origin
+thing, but maybe someone else does?
+
+Bj=F6rn
