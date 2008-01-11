@@ -1,109 +1,78 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Decompression speed: zip vs lzo
-Date: Fri, 11 Jan 2008 09:27:30 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0801110913410.3054@xanadu.home>
-References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com>
- <7v4pdmfw27.fsf@gitster.siamese.dyndns.org> <47855765.9090001@vilain.net>
- <alpine.LSU.1.00.0801092328580.31053@racer.site> <47856E8D.4010006@vilain.net>
- <4785A6DB.3080007@vilain.net> <20080110091607.GA17944@artemis.madism.org>
- <alpine.LFD.1.00.0801101332150.3054@xanadu.home>
- <20080111094516.GD20141@artemis.madism.org>
+From: "Mark Levedahl" <mlevedahl@gmail.com>
+Subject: Re: Allowing override of the default "origin" nickname
+Date: Fri, 11 Jan 2008 09:53:56 -0500
+Message-ID: <30e4a070801110653n61a826c0y33ed13f95cddf25d@mail.gmail.com>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
+	 <Pine.LNX.4.64.0801111301360.14355@wbgn129.biozentrum.uni-wuerzburg.de>
+	 <30e4a070801110506h19b77488sbfa6ae48701f30f9@mail.gmail.com>
+	 <alpine.LSU.1.00.0801111348230.31053@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Sam Vilain <sam@vilain.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marco Costalba <mcostalba@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Fri Jan 11 15:28:06 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 11 15:54:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDKrc-0004G4-Je
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 15:28:05 +0100
+	id 1JDLHC-0006ff-3R
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 15:54:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759383AbYAKO1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 09:27:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759369AbYAKO1h
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 09:27:37 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:53763 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759065AbYAKO1g (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 09:27:36 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JUH00KNCHHUIND0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 11 Jan 2008 09:27:30 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080111094516.GD20141@artemis.madism.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1759589AbYAKOyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 09:54:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758096AbYAKOyA
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 09:54:00 -0500
+Received: from wr-out-0506.google.com ([64.233.184.236]:37447 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759462AbYAKOx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 09:53:59 -0500
+Received: by wr-out-0506.google.com with SMTP id c49so457724wra.1
+        for <git@vger.kernel.org>; Fri, 11 Jan 2008 06:53:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=lEOZffpYUgTiuW+l+LO8z/PZOxX6qZNDPTJn7rmk7ds=;
+        b=xDZ1SBe7TnUGFSkviK4jB3ga1mBLi6Nsjw2+vEC1z7RhZUvGYof+xj3QZgBKarJb8Tz7Z5a3IbO8pkzFQyPWzwjviIyiQs238Qklytv9EKarsWk68F8IVo90AIoZG0KX39Q78GrutwuiaG+rYse/wMDak12qEjEtG9MniTZpnsY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Zt/SeHxg6EvzD+5PC6ObydDxYjqoQ+O6HaDOG9sXMxn7NO/xl+GkrOCvtDmVyEO11hA+HuAkFzbD+N2IwP9uk/8Lk6BfZv4DUvsCMrqMliGXBGZj0rCvlMVEhd49CwKSB76hNOIo55OLMZYULfS6JVI4RulHKnP/zlFfXbuHTX0=
+Received: by 10.142.201.3 with SMTP id y3mr1684825wff.1.1200063236801;
+        Fri, 11 Jan 2008 06:53:56 -0800 (PST)
+Received: by 10.143.159.5 with HTTP; Fri, 11 Jan 2008 06:53:56 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0801111348230.31053@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70164>
 
-On Fri, 11 Jan 2008, Pierre Habouzit wrote:
+On Jan 11, 2008 8:52 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> IMHO you should optimise the communication by agreeing on one origin,
+> or alternatively not talk about a server at all (which is made easy by the
+> global uniqueness of commit names; just say "my tip is ac9b7192").
+>
 
-> Okay the numbers are still not that impressive, but my patch doesn't
-> touches _only_ deltas, but also log comments I said, so I've redone my
-> tests with git log and *TADAAAA*:
-> 
-> vanilla git:
->     repeat 5 time git log >|/dev/null
->     git log >| /dev/null  2,54s user 0,12s system 99% cpu 2,660 total
->     git log >| /dev/null  2,52s user 0,12s system 99% cpu 2,653 total
->     git log >| /dev/null  2,57s user 0,07s system 99% cpu 2,637 total
->     git log >| /dev/null  2,56s user 0,09s system 99% cpu 2,659 total
->     git log >| /dev/null  2,54s user 0,10s system 99% cpu 2,660 total
-> 
-> with the 512 octets limit:
-> 
->     $ repeat 5 time git log >|/dev/null
->     git log >| /dev/null  2,10s user 0,10s system 99% cpu 2,193 total
->     git log >| /dev/null  2,08s user 0,10s system 99% cpu 2,189 total
->     git log >| /dev/null  2,06s user 0,11s system 100% cpu 2,162 total
->     git log >| /dev/null  2,04s user 0,13s system 100% cpu 2,172 total
->     git log >| /dev/null  2,06s user 0,13s system 99% cpu 2,198 total
-> 
->     That's already a 20% time reduction.
+We *cannot* agree on one definition of "origin": there is no single
+server accessible by all, but use of submodules currently *requires*
+that each repo's upstream be given the nickname "origin". With this
+change, I can enforce that each server has a unique nickname and that
+one unique nickname per server is used across the program. Absent
+this, I cannot and end up having to have everyone translate "origin"
+into what it means for them.
 
-Well, sorry but that doesn't count to me.  The whole 'git log' taking 
-around 2 seconds is already hell fast for what it does, and IMHO this is 
-not worth increasing the repository storage size for this particular 
-work load.
+SHA-1's are absolutely unique, but what do you do when "origin" does
+not have  acdc101? I want to know that server-x@joe.com doesn't have
+it, while server-y@mary.org does. This is the frequent problem in
+conversation, and is the reason we have to be able to talk about the
+particular upstream server.
 
-> with the 1024 octets limits:
->     $ repeat 5 time git log >|/dev/null
->     git log >| /dev/null  1,39s user 0,12s system 99% cpu 1,512 total
->     git log >| /dev/null  1,38s user 0,12s system 100% cpu 1,498 total
->     git log >| /dev/null  1,41s user 0,10s system 99% cpu 1,514 total
->     git log >| /dev/null  1,41s user 0,10s system 100% cpu 1,506 total
->     git log >| /dev/null  1,40s user 0,10s system 100% cpu 1,504 total
-> 
->     Yes that's 43% time reduction !
+This change does not eliminate the ability to obscure multiple
+different server names using "origin" for those who think that is the
+best way to do things, it just eliminates the requirement for doing
+so.
 
-If that was 43% reduction of a 10 second operation then sure I would 
-agree, like the blame operation typically is.  But otherwise the 
-significant storage size increase is not worth the reduction of less 
-than a second in absolute time.
-
->   As a side note, repacking with the 1024 octets limits takes 4:06 here,
-> and 4:26 without the limit at all, which is 8% less time. I know it
-> doesn't matters a lot as repack is a once time operation, but still, it
-> would speed up git gc --auto which is not something to neglect
-> completely.
-
-No, I doubt it would.  The bulk of 'git gc --auto' will reuse existing 
-pack data which is way different from 'git repack -f'. 
-
-> I say it's worth investigating a _lot_,
-
-Well, I was initially entousiastic about this avenue, but the speed 
-performance difference is far from impressive IMHO, given the tradeoff.
-
-
-Nicolas
+Mark
