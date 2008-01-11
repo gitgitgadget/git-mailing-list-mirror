@@ -1,101 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: gitk dev branch: F5 problem again
-Date: Fri, 11 Jan 2008 14:17:29 +0100
-Message-ID: <47876C69.8070604@viscovery.net>
+From: "Julio Espinoza-Sokal" <julioes@gmail.com>
+Subject: Re: [PATCH] gitk: make Ctrl "+" really increase the font size
+Date: Fri, 11 Jan 2008 08:22:31 -0500
+Message-ID: <1a61e4060801110522o67ab6c08y9e979abb2b7da102@mail.gmail.com>
+References: <fm5oln$ahq$1@ger.gmane.org>
+	 <alpine.LSU.1.00.0801111238150.31053@racer.site>
+	 <47876823.1070800@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri Jan 11 14:18:04 2008
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Stephan Hennig" <public-mailing_list-KvP5wT2u2U0@lo.gmane.org>,
+	public-paulus-eUNUBHrolfbYtjvyW6yDsg@lo.gmane.org,
+	msysGit <msysgit@googlegroups.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Sixt" <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Jan 11 14:23:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDJlp-0002J6-0t
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 14:18:01 +0100
+	id 1JDJqg-00042n-BJ
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 14:23:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758260AbYAKNRd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 08:17:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758159AbYAKNRd
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 08:17:33 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:60074 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757488AbYAKNRc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 08:17:32 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JDJlJ-00032N-3R; Fri, 11 Jan 2008 14:17:29 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 0EC5F54D; Fri, 11 Jan 2008 14:17:30 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1758587AbYAKNWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 08:22:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758617AbYAKNWd
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 08:22:33 -0500
+Received: from nz-out-0506.google.com ([64.233.162.234]:6121 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758479AbYAKNWc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 08:22:32 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so621571nze.1
+        for <git@vger.kernel.org>; Fri, 11 Jan 2008 05:22:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=33wZ+2ZBZxh1LImzaH8L/t++8NGMnrc/3ByHowsBPiE=;
+        b=G+oBInDGbcZpH2Le/x626WdgmFgryEgscRKbGWRyYtJlO2QxVUx/bHFwwSiQnjTsPzLhjBCDe4UQG9jQSxyK882Np9jx4tR6j2LDirRmgmQT4MWN2jl49ikb0SkWzK9fRNF2o1LhMO2xVCeTgW0miadj8X/QNesZTsJzkR1Q2pY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NdYAE0ZwNTXEqtQaZfC3/2gdLQmKzT/TJg2TFz98kGvoIGGS1viLFXqxxmpC9WTw7nlpjZhgczdV3bw2TFgIhZMT7NPhKa10UhvLmPqaGzoat/FRd0lMnvRxm3MZ6zTZc6fRcjxBnFXF/Xh0P91i9eCrVCyQDpl3nV8IDHDs+G4=
+Received: by 10.142.108.14 with SMTP id g14mr1604333wfc.52.1200057751087;
+        Fri, 11 Jan 2008 05:22:31 -0800 (PST)
+Received: by 10.142.203.5 with HTTP; Fri, 11 Jan 2008 05:22:31 -0800 (PST)
+In-Reply-To: <47876823.1070800@viscovery.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70159>
 
-I'm using gitk's dev branch (476ca63d Index [fnvr]highlights by id...) on
-Windows.
+On Jan 11, 2008 7:59 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Johannes Schindelin schrieb:
+> > Only Ctrl "=" was bound to increase the font size, probably because
+> > English keyboards have the plus on the same key as the equal sign.
+> > However, not the whole world is English, and at least with some
+> > other keyboard layouts, Ctrl "+" did not work as documented.
+> >
+> > Noticed by Stephan Hennig.
+> >
+> > Signed-off-by: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
+>                                                          ^^^^^^^^^^^^^^...
+> WTF is going on these days?
+>
+> [note: yours, git ML and msysgit ML adresses corrected manually]
+>
+> -- Hannes
+>
 
-Start gitk like this:
-
-   gitk somefile.c
-
-while on a branch whose tip touches somefile.c.
-
-Now:
-
-   git commit --amend
-
-Then press F5 in gitk. I get these error reports after which gitk is
-unresponsive:
-
-can't read "children(1,)": no such element in array
-can't read "children(1,)": no such element in array
-    while executing
-"lindex $children($curview,$id) 0"
-    (procedure "ordertoken" line 15)
-    invoked from within
-"ordertoken $id"
-    (procedure "idcol" line 2)
-    invoked from within
-"idcol $idlist $id"
-    (procedure "layoutrows" line 51)
-    invoked from within
-"layoutrows $rl1 $r"
-    (procedure "drawcommits" line 36)
-    invoked from within
-"drawcommits $row $endrow"
-    (procedure "drawvisible" line 51)
-    invoked from within
-"drawvisible"
-    (procedure "scrollcanv" line 3)
-    invoked from within
-"scrollcanv .tf.histframe.csb 0.00852273 0.146591"
-
-
-... same as above ...
-"drawvisible"
-    (procedure "scrollcanv" line 3)
-    invoked from within
-"scrollcanv .tf.histframe.csb 0.0170455 0.155114"
-
-
-... same as above ...
-"drawvisible"
-    ("eval" body line 1)
-    invoked from within
-"eval $script"
-    (procedure "dorunq" line 9)
-    invoked from within
-"dorunq"
-    ("after" script)
-
-
--- Hannes
+I don't know if this is new, but it seems that's a feature of Gmane to
+prevent spam.
+http://gmane.org/tmda.php
