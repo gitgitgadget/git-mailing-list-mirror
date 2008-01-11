@@ -1,130 +1,106 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re-casing directories on case-insensitive systems
-Date: Fri, 11 Jan 2008 15:19:25 -0500
-Message-ID: <579DF776-4F4E-464C-88DB-B22C2EC291BD@sb.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: multipart/signed; boundary=Apple-Mail-2-584750016; micalg=sha1; protocol="application/pkcs7-signature"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 11 21:21:57 2008
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: [PATCH decompress BUG] Fix decompress_next_from() wrong argument value
+Date: Fri, 11 Jan 2008 21:47:04 +0100
+Message-ID: <e5bfff550801111247l1ccf171ene5b53b8d6841a864@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 11 21:47:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDQO5-00015Z-BB
-	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 21:21:57 +0100
+	id 1JDQms-00021g-5p
+	for gcvg-git-2@gmane.org; Fri, 11 Jan 2008 21:47:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761020AbYAKUVa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 15:21:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760691AbYAKUVa
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 15:21:30 -0500
-Received: from hapkido.dreamhost.com ([66.33.216.122]:50472 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759697AbYAKUV2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 15:21:28 -0500
-Received: from randymail-a10.g.dreamhost.com (sd-green-bigip-202.dreamhost.com [208.97.132.202])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id 01ABB17AEB8
-	for <git@vger.kernel.org>; Fri, 11 Jan 2008 12:21:27 -0800 (PST)
-Received: from KBALLARD.RES.WPI.NET (KBALLARD.RES.WPI.NET [130.215.239.91])
-	by randymail-a10.g.dreamhost.com (Postfix) with ESMTP id EC95810FD50
-	for <git@vger.kernel.org>; Fri, 11 Jan 2008 12:19:26 -0800 (PST)
-X-Mailer: Apple Mail (2.915)
+	id S1759555AbYAKUrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 15:47:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759335AbYAKUrF
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 15:47:05 -0500
+Received: from rv-out-0910.google.com ([209.85.198.184]:27371 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759264AbYAKUrE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 15:47:04 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so1046832rvb.1
+        for <git@vger.kernel.org>; Fri, 11 Jan 2008 12:47:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=qoSBrXaF5hP6SGsr6Jvqro6MlPP1YcCaK3r1ABtc1K0=;
+        b=G1RUnsiS7yApftUBfoD8WFPDvuhnHH2JuOm+VU8bIxM8s94a/2f4BfsiY7GlFsme5dJf8ORU0c0s4uc8mrYkpgcM/1u5lo0SXGBU1ldAeic0tiFoyhqoVikQNegWS0ixu49W5WXVkDrDYQu5pnDDX/2/NTbv42dZPa9PeJ1uMEI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=c88wPqQIgDHfa/+lS5Y3lk8BmSqs0NoLMeTZPyoBdBeY9P7KnTMLQKKRzCPsJi/MY9NjSav82xXzOg7ZEN3ANuNmYG6mSF5cRFzQrBx0n0VC1mILpQuve5UkG0K2SudKw2HlSqnMY+9tY/fWLPz9ORlH4VAWEkkmQONghOgZE34=
+Received: by 10.140.169.4 with SMTP id r4mr2285318rve.131.1200084424321;
+        Fri, 11 Jan 2008 12:47:04 -0800 (PST)
+Received: by 10.141.76.1 with HTTP; Fri, 11 Jan 2008 12:47:04 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70198>
+
+Function decompress_next_from() needs a pointer to a buffer
+and the buffer size as arguments.
+
+Interesting enough the function fill() that returns the
+buffer pointer happens to modify also the buffer size,
+stored in a variable at file scope.
+
+So we need to guarantee fill() is called before to use buffer
+size as argument in decompress_next_from()
+
+Signed-off-by: Marco Costalba <mcostalba@gmail.com>
+---
+Patch to be applied above decompress helper series.
+
+Not to be pedantic, but have a function that gives two really
+coupled values, as a buffer pointer and the size, the first as return
+value and the second through a variable at file scope is not something
+you are going to see advertised in the programming books!
+
+Sorry for this little rant but this bug really made me crazy.
+
+With this patch 'make test' runs with success!
 
 
---Apple-Mail-2-584750016
-Content-Type: text/plain;
-	charset=US-ASCII;
-	format=flowed;
-	delsp=yes
-Content-Transfer-Encoding: 7bit
+ builtin-unpack-objects.c |    3 ++-
+ index-pack.c             |    3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-Somehow I managed to change the case of a directory without git  
-realizing it. I thought I issued `git mv CS4536 cs4536` but since that  
-won't work in my efforts to reproduce the problem, I must have simply  
-issued the `mv` outside of git and then re-added it.
+diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
+index f1a4883..72293ec 100644
+--- a/builtin-unpack-objects.c
++++ b/builtin-unpack-objects.c
+@@ -68,7 +68,8 @@ static void *get_data(unsigned long size)
+ 	decompress_into(&stream, buf, size);
 
-Anyway, here's the state of my directory:
+ 	for (;;) {
+-		int ret = decompress_next_from(&stream, fill(1), len, Z_NO_FLUSH);
++		void* tmp = fill(1); // fill() modifies len, so be sure is evaluated as first
++		int ret = decompress_next_from(&stream, tmp, len, Z_NO_FLUSH);
+ 		use(len - stream.avail_in);
+ 		if (stream.total_out == size && ret == Z_STREAM_END)
+ 			break;
+diff --git a/index-pack.c b/index-pack.c
+index 30d7837..13b308d 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -173,7 +173,8 @@ static void *unpack_entry_data(unsigned long
+offset, unsigned long size)
+ 	decompress_into(&stream, buf, size);
 
-kevin@KBALLARD:~/Documents/School/C07> git ls-tree HEAD
-040000 tree b47c8103e2e01fcf145bdc237c0e56ffc61f1c47	CS4536
-040000 tree dbf7fc51ef3effebdf9b4e9172e4c86cae52b163	cs4536
-040000 tree 15834a7b6534a285bf6930be4e5404b37e1dc718	ece3601
-040000 tree 62d229b8c4a389b550df20a3752d666c48c767a4	ma2071
-
-Note that I have both versions of the directory present.  
-Unfortunately, only one of them can be present on the filesystem. If I  
-run `mv cs4536 CS4536; git reset --hard` I end up with a different  
-working tree.
-
-Git should be able to detect this sort of conflict on a case- 
-insensitive system. I didn't even realize what I'd done until I pushed  
-back to the master repo and ran `git reset --hard` there, then  
-wondered why the new file I added to cs4536/ was missing and why my  
-directory was still named CS4536.
-
--Kevin Ballard
-
+ 	for (;;) {
+-		int ret = decompress_next_from(&stream, fill(1), input_len, Z_NO_FLUSH);
++		void* tmp = fill(1); // fill() modifies input_len, so be sure is
+evaluated as first
++		int ret = decompress_next_from(&stream, tmp, input_len, Z_NO_FLUSH);
+ 		use(input_len - stream.avail_in);
+ 		if (stream.total_out == size && ret == Z_STREAM_END)
+ 			break;
 -- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
-
-
-
---Apple-Mail-2-584750016
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGMjCCAusw
-ggJUoAMCAQICEDsG8BKvlrEW0HUBIxWIgjUwDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
-JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
-ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA3MDQyMzIxMjM0OVoXDTA4MDQyMjIxMjM0
-OVowVzEQMA4GA1UEBBMHQmFsbGFyZDEOMAwGA1UEKhMFS2V2aW4xFjAUBgNVBAMTDUtldmluIEJh
-bGxhcmQxGzAZBgkqhkiG9w0BCQEWDGtldmluQHNiLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEP
-ADCCAQoCggEBAN/koURrN2ndrAiuAuHHrdFz+hLGQ7ZsXloGnObjALGOFY3Kmk2FCwAJPIha5GfM
-YFmZIoqxs+DbOWOn6KZ9hcQ5wf4EOgokayrEs3G72T+G8ZE4aXrw0CWJzKLjaIQeDZNZoHA44jlZ
-dG70wtZske898IoPz6YHpkcXiulllATfd8Pa7EgjPri5hKFiRXKI52OsOQTX6cNMMZJUIm8DvfQ5
-jmDyAtywNZGSGeUAMbWnpuLq7H18zpye2Q1hr+p4kucazMb+i7OHXPvX7yx2jMjhN5jw/gYkuzQQ
-JExp1fJyAZQ/av/ZgaxWchhhi4ziFXIlX3B09DTlOQlF53P3fi0CAwEAAaMpMCcwFwYDVR0RBBAw
-DoEMa2V2aW5Ac2Iub3JnMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEFBQADgYEAw/qc6zq+0Qy2
-XaodDlt2L6Vq1DzaVWjV152BFjidmsyhyCkCuyYdAcDp17opIfrNCBbOX5DdY6cpFpnSCxCZeIEB
-PDc3TaaFPtzr8qrpcNDohRSdt+qFLUeMHzlidAiAjvjI3tPKv3JLTakWdQR/XPHsg4mWoaVQU2hM
-HOQBw8EwggM/MIICqKADAgECAgENMA0GCSqGSIb3DQEBBQUAMIHRMQswCQYDVQQGEwJaQTEVMBMG
-A1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0ZSBD
-b25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQwIgYD
-VQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNvbmFs
-LWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNMDMwNzE3MDAwMDAwWhcNMTMwNzE2MjM1OTU5WjBiMQsw
-CQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoGA1UE
-AxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0EwgZ8wDQYJKoZIhvcNAQEBBQAD
-gY0AMIGJAoGBAMSmPFVzVftOucqZWh5owHUEcJ3f6f+jHuy9zfVb8hp2vX8MOmHyv1HOAdTlUAow
-1wJjWiyJFXCO3cnwK4Vaqj9xVsuvPAsH5/EfkTYkKhPPK9Xzgnc9A74r/rsYPge/QIACZNenpruf
-ZdHFKlSFD0gEf6e20TxhBEAeZBlyYLf7AgMBAAGjgZQwgZEwEgYDVR0TAQH/BAgwBgEB/wIBADBD
-BgNVHR8EPDA6MDigNqA0hjJodHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUGVyc29uYWxGcmVl
-bWFpbENBLmNybDALBgNVHQ8EBAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZhdGVM
-YWJlbDItMTM4MA0GCSqGSIb3DQEBBQUAA4GBAEiM0VCD6gsuzA2jZqxnD3+vrL7CF6FDlpSdf0wh
-uPg2H6otnzYvwPQcUCCTcDz9reFhYsPZOhl+hLGZGwDFGguCdJ4lUJRix9sncVcljd2pnDmOjCBP
-ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
-MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
-A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEDsG8BKvlrEW0HUBIxWI
-gjUwCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
-DxcNMDgwMTExMjAxOTI2WjAjBgkqhkiG9w0BCQQxFgQU8yWn3FqMdr9NzoQLHhYIc/BNm3AwgYUG
-CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
-IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
-AhA7BvASr5axFtB1ASMViII1MIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
-BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
-b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhA7BvASr5axFtB1ASMViII1MA0GCSqGSIb3DQEBAQUA
-BIIBAHz7fy+HxgxlOWNfPYRa83xlglRBhdLSy8//J+URNFTbERK5qwUB/GzoJhjRtBN6QAxHmHYI
-jDbvfNUckKcsTey6CbsToFabiv7rYq44nGRCUKtH0ziW4W2UvAT91Dep9qqfZlcx/7Vs5PuySsxC
-rJLGnc4FQt19tl8gx+qS8jKaDQWDMgOxaxoQbpWO1ebkHgZTBdu0UByJeJlJCqrSZEMhlSx7/Ryv
-/ZdO1equHDETDCd7g2Dif3e7Qx+JkNFGIEoMIrWNxJTOiFek5JcXyUV6vzIp46/mxj3vBZe3YPdL
-Ov+nRQK4l6rMkFUcFz8qpqhHou/3v4rgd5htC0mwzGEAAAAAAAA=
-
---Apple-Mail-2-584750016--
+1.5.4.rc2.95.g0eaa-dirty
