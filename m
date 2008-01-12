@@ -1,58 +1,44 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re-casing directories on case-insensitive systems
-Date: Fri, 11 Jan 2008 16:27:33 -0800
-Message-ID: <7v7iif28i2.fsf@gitster.siamese.dyndns.org>
-References: <579DF776-4F4E-464C-88DB-B22C2EC291BD@sb.org>
-	<200801120026.01930.robin.rosenberg@dewire.com>
-	<1973E1D5-C8CC-4979-A085-85A2C5A13E57@sb.org>
-	<200801120115.41274.robin.rosenberg@dewire.com>
-	<191B60D7-FD89-48D8-8D48-C91645D4814D@sb.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: gitk font configuration
+Date: Sat, 12 Jan 2008 11:29:29 +1100
+Message-ID: <18312.2537.861776.185427@cargo.ozlabs.ibm.com>
+References: <Pine.LNX.4.64.0712201318270.27181@ds9.cixit.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Sat Jan 12 01:28:15 2008
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Peter Karlsson <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Sat Jan 12 01:30:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDUEO-0003Pi-BW
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 01:28:12 +0100
+	id 1JDUGD-0003ny-AV
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 01:30:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762384AbYALA1o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 19:27:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760327AbYALA1o
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 19:27:44 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61603 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754068AbYALA1n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 19:27:43 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F2E238FF;
-	Fri, 11 Jan 2008 19:27:42 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A890B38FE;
-	Fri, 11 Jan 2008 19:27:36 -0500 (EST)
-In-Reply-To: <191B60D7-FD89-48D8-8D48-C91645D4814D@sb.org> (Kevin Ballard's
-	message of "Fri, 11 Jan 2008 19:25:26 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1762475AbYALA3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 19:29:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762463AbYALA3h
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 19:29:37 -0500
+Received: from ozlabs.org ([203.10.76.45]:59166 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762385AbYALA3g (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 19:29:36 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 10D12DDF78; Sat, 12 Jan 2008 11:29:35 +1100 (EST)
+In-Reply-To: <Pine.LNX.4.64.0712201318270.27181@ds9.cixit.se>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70235>
 
-Kevin Ballard <kevin@sb.org> writes:
+Peter Karlsson writes:
 
-> Is there a reason for this? It seems like it would be trivial to end
-> up with misdiagnosed "untracked" files when using any language other
-> than English given this behaviuor.
+> I can configure git gui's fonts through its preferences, but gitk does
+> not have font settings.
 
-No.  The assumption of the code has always been that sane
-filesystems would return from readdir() the names you gave from
-creat().
+It does, now, in the preferences window (do Edit->Preferences).
+
+Paul.
