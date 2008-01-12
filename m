@@ -1,122 +1,90 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: performance problem: "git commit filename"
-Date: Sat, 12 Jan 2008 14:46:08 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801121426510.2806@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Teach remote machinery about remotes.default config variable
+Date: Sat, 12 Jan 2008 14:48:52 -0800
+Message-ID: <7v4pdislrf.fsf@gitster.siamese.dyndns.org>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
+	<1200022189-2400-2-git-send-email-mlevedahl@gmail.com>
+	<7v1w8o4ws0.fsf@gitster.siamese.dyndns.org>
+	<30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com>
+	<7v63xzzszp.fsf@gitster.siamese.dyndns.org>
+	<478855B5.9070600@gmail.com>
+	<7vbq7ry405.fsf@gitster.siamese.dyndns.org>
+	<47885B2C.8020809@gmail.com>
+	<7v7iify2wm.fsf@gitster.siamese.dyndns.org>
+	<4788BFA8.2030508@gmail.com>
+	<7vwsqeubj8.fsf@gitster.siamese.dyndns.org>
+	<47891658.3090604@gmail.com>
+	<7vbq7qssd7.fsf@gitster.siamese.dyndns.org>
+	<47893E1A.5020702@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 12 23:47:36 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 23:49:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDp8Y-0000Do-20
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 23:47:34 +0100
+	id 1JDpAM-0000vm-M4
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 23:49:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759360AbYALWrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 17:47:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759350AbYALWrF
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 17:47:05 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:37837 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759302AbYALWrE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2008 17:47:04 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0CMk9B8009997
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 12 Jan 2008 14:46:10 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0CMk8Yr018048;
-	Sat, 12 Jan 2008 14:46:08 -0800
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.721 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1759437AbYALWs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 17:48:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759383AbYALWs7
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 17:48:59 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45125 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759350AbYALWs6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 17:48:58 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id ACB58169C;
+	Sat, 12 Jan 2008 17:48:56 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 10824169A;
+	Sat, 12 Jan 2008 17:48:53 -0500 (EST)
+In-Reply-To: <47893E1A.5020702@gmail.com> (Mark Levedahl's message of "Sat, 12
+	Jan 2008 17:24:26 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70363>
 
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-I thought we had fixed this long long ago, but if we did, it has 
-re-surfaced.
+> Basically, I think an important (but not complete) test of the design
+> is that
+>
+>    git clone -o frotz git://frotz.foo.bar/myproject.git
+>    cd myproject
+>    git submodule init
+>    git submodule update
+>
+> work, with origin = frotz throughout the submodules, and with the
+> whole project correctly checked out even if the entire project was
+> rehosted onto a different server.
 
-Using an explicit filename with "git commit" is _extremely_ slow. Lookie 
-here:
+I like that.  This is a very good argument, especially because
+it clarifies very well that the issue is not about "'submodule
+init' misbehaves" but "fetch/pull/merge does not play well with
+clone -o".
 
-	[torvalds@woody linux]$ time git commit fs/exec.c
-	no changes added to commit (use "git add" and/or "git commit -a")
+The only remaining (minor) doubt I have (not in the sense that
+"I object to it!", but in the sense that "I wish there could be
+a better alternative, but I do not think of one offhand") is
+polluting the core.* namespace with this configuration variable.
 
-	real    0m1.671s
-	user    0m1.200s
-	sys     0m0.328s
+Looking at Documentation/config.txt, I realize that we already
+have made a mistake of allowing core.gitproxy, but other than
+that single mistake, everything in core.* is still about things
+that apply to the use of git even when the repository does not
+talk with any other repository.  If we deprecate and rename away
+that one mistake, we can again make core.* to mean things that
+are _really_ core, but using core.origin for "the default remote
+is not called 'origin' but 'frotz' here" is a step backwards
+from that ideal.
 
-that's closer to two seconds on a fast machine, with the whole tree 
-cached!
-
-And for the uncached case, it's just unbearably slow: two and a half 
-*minutes*.
-
-In contrast, without the filename, it's much faster:
-
-	[torvalds@woody linux]$ time git commit
-	no changes added to commit (use "git add" and/or "git commit -a")
-	
-	real    0m0.387s
-	user    0m0.220s
-	sys     0m0.168s
-
-with the cold-cache case now being "just" 18s (which is still long, but 
-we're talking eight times faster, and certainly not unbearable!)
-
-Doing an "strace -c" on the thing shows why. In the filename case, we 
-have:
-
-	% time     seconds  usecs/call     calls    errors syscall
-	------ ----------- ----------- --------- --------- ----------------
-	 32.69    0.000868           0     92299        37 lstat
-	 17.40    0.000462           0     29958      3993 open
-	 15.78    0.000419           0      5522           getdents
-	 15.56    0.000413           0     23165           mmap
-	 11.37    0.000302           0     23118           munmap
-	  5.76    0.000153           0     25966         2 close
-	  1.43    0.000038           0      2845           fstat
-	...
-
-and in the non-filename case we have
-
-	% time     seconds  usecs/call     calls    errors syscall
-	------ ----------- ----------- --------- --------- ----------------
-	 53.67    0.000600           0     69227        31 lstat
-	 23.35    0.000261           0      5522           getdents
-	 11.09    0.000124           2        55           munmap
-	  4.20    0.000047           0       285           write
-	  3.31    0.000037           0      5537      2638 open
-	  2.33    0.000026           0      2899         1 close
-	  2.06    0.000023           0      2844           fstat
-	...
-
-notice how the expensive case has a lot of successful open/mmap/munmap 
-calls: it is *literally* ignoring the valid entries in the old index 
-entirely, and re-hashing every single file in the tree! No wonder it is 
-slow!
-
-Just counting "lstat()" calls, it's worth noticing that the non-filename 
-case seems to do three lstat's for each index entry (and yes, that's two
-too many), but the named file case has upped that to *four* lstats per 
-entry, and then added the one open/mmap/munmap/close on top of that!
-
-I'm pretty sure we didn't use to do things this badly. And if this is a 
-regression like I think it is, it should be fixed before a real 1.5.4 
-release.
-
-I'll try to see if I can see what's up, but I thought I'd better let 
-others know too, in case I don't have time. I *suspect* (but have nothing 
-what-so-ever to back that up) that this happened as part of making commit 
-a builtin.
-
-			Linus
+But that's a minor naming issue.
