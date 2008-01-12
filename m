@@ -1,91 +1,122 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH 5/5] git-status: configurable submodule summary size
-Date: Sat, 12 Jan 2008 15:37:15 +0800
-Message-ID: <576f7d00c7ecb2cf92fe22592f04b8b1ea6512f7.1200122041.git.pkufranky@gmail.com>
-References: <1200123435-16722-1-git-send-email-pkufranky@gmail.com>
- <f67f45eeb9648bb7e5adaf53544443b79643914e.1200122041.git.pkufranky@gmail.com>
- <62a73e734832ad67e89be706f1f8b3dbc30cfcf4.1200122041.git.pkufranky@gmail.com>
- <bce0ee9fde688c27fc788fab91a571184918da67.1200122041.git.pkufranky@gmail.com>
- <b220c31f973576dfc1a90ee588bbfd01cd8f6409.1200122041.git.pkufranky@gmail.com>
-Cc: gitster@pobox.com, Ping Yin <pkufranky@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 12 08:53:53 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-svn: handle leading/trailing whitespace from svnsync revprops
+Date: Fri, 11 Jan 2008 23:57:02 -0800
+Message-ID: <7vzlvbv5m9.fsf@gitster.siamese.dyndns.org>
+References: <200801081738.56624.devurandom@gmx.net>
+	<200801101813.45938.devurandom@gmx.net>
+	<7v63y178a3.fsf@gitster.siamese.dyndns.org>
+	<200801102213.04082.devurandom@gmx.net>
+	<7vmyrd5p81.fsf@gitster.siamese.dyndns.org>
+	<20080112071355.GA17021@soma>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Dennis Schridde <devurandom@gmx.net>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Jan 12 08:57:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDbBh-000493-3I
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 08:53:53 +0100
+	id 1JDbFM-0004kS-CW
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 08:57:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759028AbYALHxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 02:53:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758598AbYALHxI
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 02:53:08 -0500
-Received: from mail.qikoo.org ([60.28.205.235]:51692 "EHLO mail.qikoo.org"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1758933AbYALHwt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 02:52:49 -0500
-Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id 9393D47099; Sat, 12 Jan 2008 15:37:15 +0800 (CST)
-X-Mailer: git-send-email 1.5.4.rc2.9.gf5146-dirty
-In-Reply-To: <b220c31f973576dfc1a90ee588bbfd01cd8f6409.1200122041.git.pkufranky@gmail.com>
-In-Reply-To: <f67f45eeb9648bb7e5adaf53544443b79643914e.1200122041.git.pkufranky@gmail.com>
-References: <f67f45eeb9648bb7e5adaf53544443b79643914e.1200122041.git.pkufranky@gmail.com>
+	id S1755266AbYALH5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 02:57:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759719AbYALH5M
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 02:57:12 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45126 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751658AbYALH5L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 02:57:11 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E475E4C17;
+	Sat, 12 Jan 2008 02:57:07 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 196C34C16;
+	Sat, 12 Jan 2008 02:57:03 -0500 (EST)
+In-Reply-To: <20080112071355.GA17021@soma> (Eric Wong's message of "Fri, 11
+	Jan 2008 23:13:55 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70293>
 
-Add config variable status.submodulesummary which is passed as
-the arg for '--summary-limit' of 'git submodule' to limit the
-submodule summary size.
+Eric Wong <normalperson@yhbt.net> writes:
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 3308fe1..f40ad2c 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -1758,10 +1758,16 @@ sub svnsync {
+>  	# see if we have it in our config, first:
+>  	eval {
+>  		my $section = "svn-remote.$self->{repo_id}";
+> -		$svnsync = {
+> -		  url => tmp_config('--get', "$section.svnsync-url"),
+> -		  uuid => tmp_config('--get', "$section.svnsync-uuid"),
+> -		}
+> +
+> +	        my $url = tmp_config('--get', "$section.svnsync-url");
+> +		($url) = ($url =~ m{^([a-z\+]+://\S+)$}) or
+> +	           die "doesn't look right - svn:sync-from-url is '$url'\n";
 
-The summary function is disabled by default by this config
-(say status.submodulesummary is 0 by default).
+When I checked tmp_config(), I thought that it was returning the
+first element (taking the output of "config --get" as a
+LF-terminated list) when called in list context, so this would
+give the correct sync-url after stripping the trailing LF for
+Dennis's case.  The first assignment looks fine, but the second
+one looks very funny.
 
-Signed-off-by: Ping Yin <pkufranky@gmail.com>
----
- wt-status.c |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
+Is it only me who finds that
 
-diff --git a/wt-status.c b/wt-status.c
-index df5be80..25ce58b 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -11,6 +11,7 @@
- 
- int wt_status_relative_paths = 1;
- int wt_status_use_color = 0;
-+int wt_status_submodule_summary = 0;
- static char wt_status_colors[][COLOR_MAXLEN] = {
- 	"",         /* WT_STATUS_HEADER: normal */
- 	"\033[32m", /* WT_STATUS_UPDATED: green */
-@@ -275,10 +276,14 @@ static void wt_status_print_changed(struct wt_status *s)
- static void wt_status_print_submodule_summary(struct wt_status *s)
- {
- 	struct child_process sm_summary;
-+	char summary_limit[64];
-+	sprintf(summary_limit, "%d", wt_status_submodule_summary);
- 	const char *argv[] = {
- 		"submodule",
- 		"summary",
- 		"--cached",
-+		"--summary-limit",
-+		summary_limit,
- 		s->amend ? "HEAD^" : "HEAD",
- 		NULL
- 	};
-@@ -424,6 +429,10 @@ void wt_status_print(struct wt_status *s)
- 
- int git_status_config(const char *k, const char *v)
- {
-+	if (!strcmp(k, "status.submodulesummary")) {
-+		wt_status_submodule_summary = atoi(v);
-+		return 0;
-+	}
- 	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
- 		wt_status_use_color = git_config_colorbool(k, v, -1);
- 		return 0;
--- 
-1.5.4.rc2.9.gf5146-dirty
+	($var) = ($var =~ m{^(any regexp)$}) or die "message"
+
+is extremely a roundabout and hard-to-read way to say:
+
+	if ($var !~ m{^(the same regexp)$} {
+        	die "message";
+	}
+
+which is much easier to read?
+
+I said the first one looks fine, but actually I really _hate_
+Perl subs that use wantarray and return one element in scalar
+context, and return a list in list context.
+
+This forces the programmer who calls the sub to read the code of
+the sub and know that it uses this unusual calling convention.
+It forbids them to rely on their common-sense acquired from
+experience while coding in Perl, that most functions do not do
+that, and a usual sub that is capable of returning a list in a
+list context you can find out the number of elemenets, the first
+element, and the first few elements by using:
+
+	sub returns_list {
+        	my @a = qw(a b c);
+                return @a;
+	}
+
+	my $number_of_elems = returns_list();
+	my ($first_element) = returns_list();
+	my ($first, $second) = returns_list();
+
+IOW, writing
+
+	sub returns_funny {
+        	my @a = qw(a b c);
+                return wantarray ? @a : $a[0];
+	}
+
+may make you feel as if you have become a power-coder, and might
+even give you a false sense that some parts of your code can
+become simpler thanks to that, because you can now write:
+
+	my $first_element = returns_list();
+
+i.e. you did not have to type WHOLE TWO LETTERS ( and )!
+
+But in the longer run, when you want/need other people to help
+maintaining such a code, you create unnecessary burden on them.
