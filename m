@@ -1,79 +1,159 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] git-submodule: New subcommand 'summary' (1) - code framework
-Date: Sat, 12 Jan 2008 00:18:19 -0800
-Message-ID: <7vmyrbv4ms.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH 2/5] git-submodule: New subcommand 'summary' (2) - hard work
+Date: Sat, 12 Jan 2008 00:32:15 -0800
+Message-ID: <7vejcnv3zk.fsf@gitster.siamese.dyndns.org>
 References: <1200123435-16722-1-git-send-email-pkufranky@gmail.com>
 	<f67f45eeb9648bb7e5adaf53544443b79643914e.1200122041.git.pkufranky@gmail.com>
+	<62a73e734832ad67e89be706f1f8b3dbc30cfcf4.1200122041.git.pkufranky@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, gitster@pobox.com
 To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 09:18:57 2008
+X-From: git-owner@vger.kernel.org Sat Jan 12 09:32:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDbZw-0008D5-QO
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 09:18:57 +0100
+	id 1JDbnU-00021z-V7
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 09:32:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758501AbYALIS2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 03:18:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758499AbYALIS2
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 03:18:28 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45750 "EHLO
+	id S1759757AbYALIc2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 03:32:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759669AbYALIc2
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 03:32:28 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46366 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757812AbYALIS1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 03:18:27 -0500
+	with ESMTP id S1758611AbYALIc1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 03:32:27 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5544F4FE7;
-	Sat, 12 Jan 2008 03:18:24 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E7B614045;
+	Sat, 12 Jan 2008 03:32:25 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CF5CE4FE6;
-	Sat, 12 Jan 2008 03:18:20 -0500 (EST)
-In-Reply-To: <f67f45eeb9648bb7e5adaf53544443b79643914e.1200122041.git.pkufranky@gmail.com>
-	(Ping Yin's message of "Sat, 12 Jan 2008 15:37:11 +0800")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CFF974044;
+	Sat, 12 Jan 2008 03:32:21 -0500 (EST)
+In-Reply-To: <62a73e734832ad67e89be706f1f8b3dbc30cfcf4.1200122041.git.pkufranky@gmail.com>
+	(Ping Yin's message of "Sat, 12 Jan 2008 15:37:12 +0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70297>
 
 Ping Yin <pkufranky@gmail.com> writes:
 
-> +	# get modified modules which have been checked out (i.e. cared by user)
-> +	modules=$(git diff $cache_option --raw $head -- "$@" |
-> +		grep '^:160000\|:000000 160000' |
-> +		while read mod_src mod_dst sha1_src sha1_dst status name
-> +		do
+> +	git diff $cache_option --raw $head -- $modules |
+> +	grep '^:160000\|:000000 160000' |
+> +	cut -c2- |
+> +	while read mod_src mod_dst sha1_src sha1_dst status name
+> +	do
+> +		sha1_dst=$(echo $sha1_dst | cut -c1-7)
+> +		sha1_src=$(echo $sha1_src | cut -c1-7)
 
-You are listing paths that were already submodule in HEAD, or
-newly added submodule.  What about a path that used to be a blob
-but is being made into submodule with the next commit (i.e. RHS
-is 160000 but LHS is not 000000)?
+If you are willing to lose precision forever like this, I think
+you can run "git diff" with --abbrev and lose this cut.
 
-> +	# TODO: quote module names containing space or tab
+> +		check_dst=t
+> +		check_src=t
+> +		case $status in
+> +		D)
+> +			check_dst=
+> +			;;
+> +		A)
+> +			check_src=
+> +			;;
 
-Yes, you would need to worry about *un*quoting them.
+I'd loosen the above grep (see my comments to your 1/5) and also
+add this:
 
-> +	test -n "$modules" &&
-> +	echo "# Submodules modified: "$modules &&
-> +	echo "#"
-> +	cd "$cwd"
+		*)
+			continue ;# punt
+			;;
 
-Hmmmmmm.... 
+so that the rest of the code won't break when seeing a path that
+was submodule in the HEAD but is a blob in the index.
 
-> -case "$add,$init,$update,$status,$cached" in
-> -1,,,,)
-> +case "$add,$init,$update,$summary,$status,$cached" in
-> +1,,,,,)
->  	module_add "$@"
->  	;;
+> +		esac
+> +
+> +		(
+> +			errmsg=
+> +			unfound_src=
+> +			unfound_dst=
+> +
+> +			test -z "$check_src" ||
+> +			GIT_DIR="$name/.git" git-rev-parse $sha1_src >&/dev/null ||
 
-This is simply unsustainable.
+And the precision of $sha1_src matter here.  Be it done with
+"diff --abbrev" at the toplevel or your "cut", that may not be
+unique enough in the submodule.
 
-Please see the other thread with Imran M Yousuf regarding the
-command dispatcher.  I think that should be the first thing to
-fix before doing any change.
+I think you would want to read full 40-char sha1_src and
+sha1_dst with "while read", and keep that full 40-char in these
+variables, and use them when calling rev-parse here.
+
+If you are checking if that the object exists in the submodule,
+use "rev-parse --verify", which was designed for exactly that
+purpose.  If you also want to verify if the object is a commit,
+which may be a good idea anyway, "rev-parse --verify $sha1_src^0".
+
+To be portable, use traditional ">/dev/null 2>&1", not ">&/dev/null".
+
+> +			case "$unfound_src,$unfound_dst" in
+> +			t,)
+> +				errmsg="  Warn: $name doesn't contain commit $sha1_src"
+> +				;;
+> +			,t)
+> +				errmsg="  Warn: $name doesn't contain commit $sha1_dst"
+> +				;;
+> +			t,t)
+> +				errmsg="  Warn: $name doesn't contain commits $sha1_src and $sha1_dst"
+> +				;;
+
+When reporting errors, you would want to give full 40-chars...
+
+> +			*)
+> +				left=
+> +				right=
+> +				test -n "$check_src" &&
+> +				left=$(GIT_DIR="$name/.git" git log --pretty=format:"  <%s" \
+> +				${check_dst:+$sha1_dst..}$sha1_src 2>/dev/null)
+> +
+> +				test -n "$check_dst" &&
+> +				right=$(GIT_DIR="$name/.git" git log --reverse --pretty=format:"  >%s" \
+> +				${check_src:+$sha1_src..}$sha1_dst 2>/dev/null)
+> +				;;
+> +			esac
+> +
+> +			echo "* $name $sha1_src...$sha1_dst:"
+
+While reporting like this, you would want the shortened form,
+perhaps produced your "cut -c1-7".
+
+> +			if test -n "$errmsg"
+> +			then
+> +				echo "$errmsg"
+> +			else
+> +				test -n "$left" && echo "$left"
+> +				test -n "$right" && echo "$right"
+> +			fi
+> +			echo
+> +		) | sed 's/^/# /'
+> +	done
+
+I'd prefer to always have "-e" before the sed expression.
+
+Any reason why you want separate invocation of sed inside the
+while loop?  IOW, why isn't it like this?
+
+	git diff --raw |
+        while read ...
+        do
+        	...
+	done | sed -e 's/^/# /'
+
+> +
+>  	cd "$cwd"
+
+Hmmm.
