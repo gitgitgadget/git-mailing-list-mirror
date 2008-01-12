@@ -1,107 +1,83 @@
-From: "Stephen Sinclair" <radarsat1@gmail.com>
-Subject: Re: [PATCH] Add committer and author names to top of COMMIT_EDITMSG.
-Date: Fri, 11 Jan 2008 21:25:16 -0500
-Message-ID: <9b3e2dc20801111825i644da598i7556ef700b870445@mail.gmail.com>
-References: <9b3e2dc20801111210n7bd7a71cw437819aa6253ae85@mail.gmail.com>
-	 <7v3at42avd.fsf@gitster.siamese.dyndns.org>
-	 <9b3e2dc20801111609t3103af1frc23519cab43ae8be@mail.gmail.com>
-	 <7vbq7r28qo.fsf@gitster.siamese.dyndns.org>
-	 <9b3e2dc20801111733o477b3aadv6ee76d3aafade54a@mail.gmail.com>
-	 <7vejcnzu5z.fsf@gitster.siamese.dyndns.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] git-relink.perl: warn() instead of die() on directory
+ open failure
+Date: Fri, 11 Jan 2008 20:26:51 -0600
+Message-ID: <4788256B.2080007@nrlssc.navy.mil>
+References: <4787B15D.3070105@nrlssc.navy.mil> <7vabnbzt6t.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 03:25:51 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 03:27:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDW4D-0003Ze-N2
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 03:25:50 +0100
+	id 1JDW5j-0003v8-7U
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 03:27:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759860AbYALCZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 21:25:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760198AbYALCZX
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 21:25:23 -0500
-Received: from rv-out-0910.google.com ([209.85.198.189]:55252 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759860AbYALCZS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 21:25:18 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1117767rvb.1
-        for <git@vger.kernel.org>; Fri, 11 Jan 2008 18:25:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=aUEXMIGgXzP/HhTrJdxc2z+12NPM71i7AChnG30u7eg=;
-        b=NylBRoWkZy8A5IoNyxk4BPk569oPGjXKZGjGnLDuBQUT7Bb7Dz5Pq8OyGtZFp4gMn8JK6srmRRPzQx8tTmv6k2EnOiiC+7CZ9G5/snndwT4LsUNBF3YLVNZDfe/0gCgQpdN8UGQ/3VCbGShzVfAFmiSv5icEdgd9K6A7kSymIbU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pALKOmC7bT6NLB3a+yf/5UmC7cx5tu9FfHIOnn8kt0Hg9da5rbZBpExWmy7E7uCVCW9ezY/YbHx4lGtp8DDFUzk2aTFdKISBx9PEFQB0yGYcxNNPNgv9m5XPVw5/tX89iSvTBk/U8Rj/1iU+WaVccsY3rL29K9lnxouE4qob6hU=
-Received: by 10.140.188.10 with SMTP id l10mr2434242rvf.247.1200104716724;
-        Fri, 11 Jan 2008 18:25:16 -0800 (PST)
-Received: by 10.140.188.1 with HTTP; Fri, 11 Jan 2008 18:25:16 -0800 (PST)
-In-Reply-To: <7vejcnzu5z.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753978AbYALC04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 21:26:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754014AbYALC0z
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 21:26:55 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:41026 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753762AbYALC0z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 21:26:55 -0500
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0C2QqSE024235;
+	Fri, 11 Jan 2008 20:26:52 -0600
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 11 Jan 2008 20:26:51 -0600
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <7vabnbzt6t.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 12 Jan 2008 02:26:51.0947 (UTC) FILETIME=[975667B0:01C854C2]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15652001
+X-TM-AS-Result: : Yes--6.402500-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY3NS03MDAw?=
+	=?us-ascii?B?NzUtMTM5MDEwLTcwMDE2MC03MDM3MzEtNzExOTUzLTcwMjAyMC0x?=
+	=?us-ascii?B?ODcwNjctNzAxNDU1LTcwNDk4MC03MDAwMDktNzA1NDYxLTcwNDYw?=
+	=?us-ascii?B?NS03MDc0NTEtNzA0Mjg3LTcwOTgyMy03MDUxNzgtMTIxNTQ4LTcw?=
+	=?us-ascii?B?Mzg1MS0xMDYyMzAtNzAzNzEyLTcwNDQzMC03MDQ5MjctNzA0MzMy?=
+	=?us-ascii?B?LTcwMDUxNi03MDM3ODgtNzAzODAyLTcwMjExMy03MDkwMjEtNzAw?=
+	=?us-ascii?B?NzU2LTcwNjA2MC0xMDY0MjAtNzAxOTE0LTcwNzIyNS03MDEyMDIt?=
+	=?us-ascii?B?MTQ4MDM5LTE0ODA1MS0yMDA0Mg==?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70254>
 
-> In a properly configured repository, telling you who git thinks
-> you are is _ALWAYS_ useless (that's the definition of "properly
-> configured").  Just admit it.
+Junio C Hamano wrote:
+> Brandon Casey <casey@nrlssc.navy.mil> writes:
+> 
+>> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+>> ---
+>>
+>>
+>> Sometimes the repository to link to is not under your control.
+>> If it contains files or unreadable directories, git-relink will
+>> die without this patch.
+> 
+> I am not so sure if dying is a bad behaviour, if it is because
+> you are trying to link against an object store that you may not
+> be able to read.  I actually think we should actively refuse to,
+> in order to prevent future problems.  After seeing the command
+> die, you will talk to the owner of that "master" object store
+> and ask him to fix permissions (or he may choose to say "please
+> do not share with me").
 
-Well, I'll admit that I don't really understand you here.
-Maybe I'm still too much of a git newbie on this.  (Fair enough.)
-Right now the only way to make sure I'm committing as myself with my
-proper email address is to:
+The case for me was that the objects directory contained temporary
+pack files. This is a perfectly valid state for a git repository,
+but relink() currently aborts the whole effort when it encounters
+a non-directory.
 
---  remember to "git-config --list", and check that my email is listed.
---  "git-commit; git-log", and remember to check the last entry before
-doing a "git-push".
+Stale tmp packs can remain if the user aborted a git command before
+it was finished. (hmm, maybe git-gc --prune could remove these too?)
 
-Am I missing something?
+I only mentioned the unreadable directory case as another possibility.
+You're probably right about that one.
 
-If proper use of git seems to require remembering one of these two
-things, that's okay with me, I'll just do my best, but it was an area
-where I thought I might suggest an improvement.  (As a rule, I prefer
-letting the computer remember things for me.)
-
-
-> ".local", "@localhost", "@<distroname>" and ".(none)" are all
-> plausible red-flag raisers.  There may be more, but I think we
-> should be able to catch most misconfigurations with simple
-> rules.
-
-I'd have to disagree with you here.  Most people name their boxes one
-thing or another, and trying to catch it with some rule is pointless.
-Especially considering the default name is taken from the hostname
-anyway -- you're taking the local hostname and then checking with a
-rule to see if it might be localhost.  Personally I think the solution
-is not to take the hostname in the first place, since in my experience
-it's rarely equivalent to a valid email address.
-
-Obviously though my personal experience is apparently not the same as
-that of others'.  I do most of my development on personal boxes, or
-laptops configured by some non-professional guy in my lab at
-university.  Or on virtual machines, which was my recent case.
-
-
-> Perhaps we could disable the code that reads from hostname and
-> gecos, and instead always force the users to configure.
-
-That would be my preference, and I do think there's a case for it. But
-whether it's a strong one or not I'm not sure.
-
-> But that kind of change is not something I'd want to be
-> discussing right now.
-
-That's okay.  In the spirit of git, I'll just solve my problem in my
-own branch.. ;-)
-
-thanks for the comments,
-Steve
+-brandon
