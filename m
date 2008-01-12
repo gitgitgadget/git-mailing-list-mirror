@@ -1,81 +1,66 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Re-casing directories on case-insensitive systems
-Date: Sat, 12 Jan 2008 13:07:47 +0100
-Message-ID: <85ejcn5jsc.fsf@lola.goethe.zz>
-References: <579DF776-4F4E-464C-88DB-B22C2EC291BD@sb.org>
-	<200801120026.01930.robin.rosenberg@dewire.com>
-	<1973E1D5-C8CC-4979-A085-85A2C5A13E57@sb.org>
-	<200801120115.41274.robin.rosenberg@dewire.com>
-	<191B60D7-FD89-48D8-8D48-C91645D4814D@sb.org>
-	<7v7iif28i2.fsf@gitster.siamese.dyndns.org>
-	<alpine.LSU.1.00.0801120139170.8333@wbgn129.biozentrum.uni-wuerzburg.de>
-	<B2968E86-D43E-4F5E-921F-DF8A15886C98@sb.org>
-	<7vprw7zv7s.fsf@gitster.siamese.dyndns.org>
-	<08E42D03-7AAA-4ADD-9F5B-215AB30E34E1@sb.org>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH 2/5] git-submodule: New subcommand 'summary' (2) - hard work
+Date: Sat, 12 Jan 2008 20:24:09 +0800
+Message-ID: <46dff0320801120424v1b780a97x8a4ecfcfe8e52f7@mail.gmail.com>
+References: <1200123435-16722-1-git-send-email-pkufranky@gmail.com>
+	 <f67f45eeb9648bb7e5adaf53544443b79643914e.1200122041.git.pkufranky@gmail.com>
+	 <62a73e734832ad67e89be706f1f8b3dbc30cfcf4.1200122041.git.pkufranky@gmail.com>
+	 <7vejcnv3zk.fsf@gitster.siamese.dyndns.org>
+	 <46dff0320801120148r1a760bcdq4b9dcdf31354d9e0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Sat Jan 12 13:07:16 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 13:24:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDf8n-0002fm-OL
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 13:07:10 +0100
+	id 1JDfPq-0007ih-Uo
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 13:24:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761791AbYALMGl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 07:06:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761530AbYALMGl
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 07:06:41 -0500
-Received: from mail-in-01.arcor-online.net ([151.189.21.41]:58360 "EHLO
-	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759431AbYALMGk (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2008 07:06:40 -0500
-Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id CBF3D103986;
-	Sat, 12 Jan 2008 13:06:38 +0100 (CET)
-Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
-	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id B76CA2130A2;
-	Sat, 12 Jan 2008 13:06:38 +0100 (CET)
-Received: from lola.goethe.zz (dslb-084-061-008-152.pools.arcor-ip.net [84.61.8.152])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 95E6A1C36A7;
-	Sat, 12 Jan 2008 13:06:38 +0100 (CET)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 4FD651C3E010; Sat, 12 Jan 2008 13:07:46 +0100 (CET)
-In-Reply-To: <08E42D03-7AAA-4ADD-9F5B-215AB30E34E1@sb.org> (Kevin Ballard's
-	message of "Fri, 11 Jan 2008 20:43:35 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/5478/Fri Jan 11 16:39:22 2008 on mail-in-05.arcor-online.net
-X-Virus-Status: Clean
+	id S1757117AbYALMYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 07:24:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756799AbYALMYM
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 07:24:12 -0500
+Received: from py-out-1112.google.com ([64.233.166.182]:12528 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750746AbYALMYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 07:24:11 -0500
+Received: by py-out-1112.google.com with SMTP id u52so2105293pyb.10
+        for <git@vger.kernel.org>; Sat, 12 Jan 2008 04:24:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=P+NGnYAJGTuEgWPyHafjPm/0g09ok4QKFoW146wKamE=;
+        b=hEtfZ89SPUPvq4Jc7aDBF6uHcbjxAfbtBHRoZtygjX0BAPiLmL+o/oWGdeUWil2QPZUFjxP8R1GuVA78FlZKgjLfPB/vT1EWKuIsL4uRP4UEyI7IxcgPtsMtvVn6uzcZJSxLb98/hVPBtH9ZIX9hyd2mUbKbZnDZ+7VIaiiKnIA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JLLTpMcuywgf+6vWoN36c81CvfZ2CDJHzm90+YFxP1XMF8zyOiuxkoKlvN8lUNowm/vQe7CxA0uxke3mgSk6MTyG8XvZenUkkrID9KbGifSAuqwmF8TbYvDtdF/8+qq1Xi5ETmmfom0tcrogA/TOBIHA+3MOe1tX5USWYtBeWUY=
+Received: by 10.65.119.14 with SMTP id w14mr9554236qbm.23.1200140649965;
+        Sat, 12 Jan 2008 04:24:09 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Sat, 12 Jan 2008 04:24:09 -0800 (PST)
+In-Reply-To: <46dff0320801120148r1a760bcdq4b9dcdf31354d9e0@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70311>
 
-Kevin Ballard <kevin@sb.org> writes:
-
-> On Jan 11, 2008, at 8:30 PM, Junio C Hamano wrote:
+> >
+> > I think you would want to read full 40-char sha1_src and
+> > sha1_dst with "while read", and keep that full 40-char in these
+> > variables, and use them when calling rev-parse here.
 >
->>> Apparently so. By Junio's definition, HFS+ is not a sane filesystem,
->>> and as git grows more popular with OS X users, this issue is going to
->>> crop up more frequently.
->>
->> It's not "my" definition, but you asked the reason and I gave
->> the answer.  We can close this issue of "is HFS+ sane" now.
->> HFS+ is insane, period.  And as Linus said, you cannot forgive
->> its insanity using the historical baggage argument, like MS-DOS.
+> Hmm, precision is really a problem. However, "git diff --raw" will not
+> always give full 40-char sha1, instead it will give sha1 with enough
+> length. So maybe i can use the sha1 from "git diff --raw" ?
 >
-> Fair enough, though I believe OS X has a good reason, namely it's an
-> OS designed for regular users rather than servers or
-> programmers. Case-sensitivity would confuse my mother.
-
-If case-sensitivity would be the primary cause of confusion in
-mother-computer interoperation, you have a remarkable mother.
-
-"Type things the same way and they work the same" is a simple enough
-rule.
+Oh, I'm wrong. It seems 'git diff --raw' will always give full 40-char
+sha1 for submodule entry and abbreviated sha1 for blob entry.
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Ping Yin
