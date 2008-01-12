@@ -1,83 +1,106 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] git-relink.perl: warn() instead of die() on directory
- open failure
-Date: Fri, 11 Jan 2008 20:26:51 -0600
-Message-ID: <4788256B.2080007@nrlssc.navy.mil>
-References: <4787B15D.3070105@nrlssc.navy.mil> <7vabnbzt6t.fsf@gitster.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Decompression speed: zip vs lzo
+Date: Fri, 11 Jan 2008 21:32:24 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0801112125470.3054@xanadu.home>
+References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com>
+ <7v4pdmfw27.fsf@gitster.siamese.dyndns.org> <47855765.9090001@vilain.net>
+ <alpine.LSU.1.00.0801092328580.31053@racer.site> <47856E8D.4010006@vilain.net>
+ <4785A6DB.3080007@vilain.net> <20080110091607.GA17944@artemis.madism.org>
+ <alpine.LFD.1.00.0801101332150.3054@xanadu.home>
+ <alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org>
+ <478691EB.1080704@vilain.net>
+ <alpine.LFD.1.00.0801101400550.3148@woody.linux-foundation.org>
+ <47869C24.3000400@vilain.net>
+ <alpine.LFD.1.00.0801101454440.3148@woody.linux-foundation.org>
+ <4786BFCD.1000303@vilain.net>
+ <alpine.LFD.1.00.0801101805540.3148@woody.linux-foundation.org>
+ <47870CDF.4010606@vilain.net>
+ <alpine.LFD.1.00.0801110759160.3148@woody.linux-foundation.org>
+ <47881D44.9060105@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 03:27:25 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Sat Jan 12 03:33:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDW5j-0003v8-7U
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 03:27:23 +0100
+	id 1JDWBF-000518-MK
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 03:33:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753978AbYALC04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 21:26:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754014AbYALC0z
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 21:26:55 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:41026 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753762AbYALC0z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 21:26:55 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0C2QqSE024235;
-	Fri, 11 Jan 2008 20:26:52 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 11 Jan 2008 20:26:51 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <7vabnbzt6t.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 12 Jan 2008 02:26:51.0947 (UTC) FILETIME=[975667B0:01C854C2]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15652001
-X-TM-AS-Result: : Yes--6.402500-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY3NS03MDAw?=
-	=?us-ascii?B?NzUtMTM5MDEwLTcwMDE2MC03MDM3MzEtNzExOTUzLTcwMjAyMC0x?=
-	=?us-ascii?B?ODcwNjctNzAxNDU1LTcwNDk4MC03MDAwMDktNzA1NDYxLTcwNDYw?=
-	=?us-ascii?B?NS03MDc0NTEtNzA0Mjg3LTcwOTgyMy03MDUxNzgtMTIxNTQ4LTcw?=
-	=?us-ascii?B?Mzg1MS0xMDYyMzAtNzAzNzEyLTcwNDQzMC03MDQ5MjctNzA0MzMy?=
-	=?us-ascii?B?LTcwMDUxNi03MDM3ODgtNzAzODAyLTcwMjExMy03MDkwMjEtNzAw?=
-	=?us-ascii?B?NzU2LTcwNjA2MC0xMDY0MjAtNzAxOTE0LTcwNzIyNS03MDEyMDIt?=
-	=?us-ascii?B?MTQ4MDM5LTE0ODA1MS0yMDA0Mg==?=
+	id S1754181AbYALCce (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 21:32:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753822AbYALCcd
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 21:32:33 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:18241 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752184AbYALCcd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 21:32:33 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JUI001ITF20X141@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 11 Jan 2008 21:32:25 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <47881D44.9060105@vilain.net>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70255>
 
-Junio C Hamano wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> writes:
+On Sat, 12 Jan 2008, Sam Vilain wrote:
+
+> Linus Torvalds wrote:
+> > 
+> > On Fri, 11 Jan 2008, Sam Vilain wrote:
+> >> The difference seems only barely measurable;
+> > 
+> > Ok. 
+> > 
+> > It may be that it might help other cases, but that seems unlikely.
+> > 
+> > The more likely answer is that it's either of:
+> > 
+> >  - yes, zlib uncompression is noticeable in profiles, but that the 
+> >    cold-cache access is simply the bigger problem, and getting rid of zlib 
+> >    just moves the expense to whatever other thing that needs to access it 
+> >    (memcpy, xdelta apply, whatever)
+> > 
+> > or
+> > 
+> >  - I don't know exactly which patch you used (did you just do the 
+> >    "core.deltacompression=0" thing?), and maybe zlib is fairly expensive 
+> >    even for just the setup crud, even when it doesn't really need to be.
+> > 
+> > but who knows..
 > 
->> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
->> ---
->>
->>
->> Sometimes the repository to link to is not under your control.
->> If it contains files or unreadable directories, git-relink will
->> die without this patch.
+> Well, my figures agree with Pierre I think - 6-10% time savings for
+> 'git annotate'.
 > 
-> I am not so sure if dying is a bad behaviour, if it is because
-> you are trying to link against an object store that you may not
-> be able to read.  I actually think we should actively refuse to,
-> in order to prevent future problems.  After seeing the command
-> die, you will talk to the owner of that "master" object store
-> and ask him to fix permissions (or he may choose to say "please
-> do not share with me").
+> I think Pierre has hit the nail on the head - that skipping
+> compression for small objects is a clear win.  He saw the obvious
+> criterion, really.  I've knocked it up as a config option that doesn't
+> change the default behaviour below.
 
-The case for me was that the objects directory contained temporary
-pack files. This is a perfectly valid state for a git repository,
-but relink() currently aborts the whole effort when it encounters
-a non-directory.
+Sorry to rain on your parade, but to me 6-10% time saving is not a clear 
+win at all, given the equal increase in repository size.  This is simply 
+not worth it.
 
-Stale tmp packs can remain if the user aborted a git command before
-it was finished. (hmm, maybe git-gc --prune could remove these too?)
+And a 50% time saving on an operation, such a git log, which takes less 
+than 2 seconds in absolute time, is not worth the repo size increase 
+either.  Going from 2 seconds down to one second doesn't make enough of 
+a user experience difference.
 
-I only mentioned the unreadable directory case as another possibility.
-You're probably right about that one.
+If git blame was to go from 10 seconds down to 4 then I'd say this is a 
+clear win.  But this is not the case.
 
--brandon
+
+Nicolas
