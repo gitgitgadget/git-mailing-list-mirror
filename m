@@ -1,102 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] manpages: linking all mail-related commands
-Date: Fri, 11 Jan 2008 16:53:43 -0800
-Message-ID: <7vy7avzwx4.fsf@gitster.siamese.dyndns.org>
-References: <1200095286-2621-1-git-send-email-humberto@digi.com.br>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: Re-casing directories on case-insensitive systems
+Date: Sat, 12 Jan 2008 01:57:46 +0100
+Message-ID: <200801120157.47854.robin.rosenberg@dewire.com>
+References: <579DF776-4F4E-464C-88DB-B22C2EC291BD@sb.org> <200801120026.01930.robin.rosenberg@dewire.com> <7v3at3280v.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Humberto Diogenes <humberto@digi.com.br>
-X-From: git-owner@vger.kernel.org Sat Jan 12 01:54:21 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Kevin Ballard <kevin@sb.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 01:58:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDUdf-000186-7Q
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 01:54:19 +0100
+	id 1JDUhd-00029n-SW
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 01:58:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762744AbYALAxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 19:53:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758073AbYALAxv
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 19:53:51 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62653 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762726AbYALAxv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 19:53:51 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 833632256;
-	Fri, 11 Jan 2008 19:53:48 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E980E2255;
-	Fri, 11 Jan 2008 19:53:44 -0500 (EST)
-In-Reply-To: <1200095286-2621-1-git-send-email-humberto@digi.com.br> (Humberto
-	Diogenes's message of "Fri, 11 Jan 2008 20:48:06 -0300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932069AbYALA56 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2008 19:57:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932066AbYALA56
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 19:57:58 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:8235 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S932067AbYALA55 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 19:57:57 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 491CA80289F;
+	Sat, 12 Jan 2008 01:57:55 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id kYbJIAe4rRwb; Sat, 12 Jan 2008 01:57:54 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id B0B8A802643;
+	Sat, 12 Jan 2008 01:57:54 +0100 (CET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
+In-Reply-To: <7v3at3280v.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70241>
 
-Humberto Diogenes <humberto@digi.com.br> writes:
+l=F6rdagen den 12 januari 2008 skrev Junio C Hamano:
+> Robin Rosenberg <robin.rosenberg@dewire.com> writes:
+>=20
+> > Could we just have a lookup table index extension for identifying t=
+he=20
+> > duplicates (when checking is enabled using core configuration optio=
+n #3324)?=20
+> > That table would keep a mapping from a normalized form (maybe inclu=
+de=20
+> > canonical encoding while we're at it) to the actual octet sequence(=
+s) used.
+>=20
+> I would agree that the index extension, if we ever are going to
+> do this, would be the right place to store this information, at
+> the single repository level.
+>=20
+> However, this opens up a can of worms.  What's the canonical key
+> should be?  If you want to protect yourself from a unicode
+> normalizing filesystem, you would use one canonicalization,
+> while if you want to protect from a case losing filesystem you
+> would use another?  Or do we at the same time downcase and NFD
+> normalize at the same time and be done with it?
 
-> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-> index e4a6b3a..fd00fc1 100644
-> --- a/Documentation/git-am.txt
-> +++ b/Documentation/git-am.txt
-> @@ -144,8 +144,10 @@ names.
->  
->  SEE ALSO
->  --------
-> -gitlink:git-apply[1].
-> -
-> +gitlink:git-apply[1],
-> +gitlink:git-format-patch[1],
-> +gitlink:git-imap-send[1],
-> +gitlink:git-send-email[1]
+The worms are out already. So the question is whether there
+is a way of keeping them in the can instead of having them crawl
+all around. I think we could to both unicode (UTF-8 or NFD) and
+downcase at the same time.
 
-I do not see a point in this.  "am" is a tool for people who
-accept and they do not care how the sender prepared
-(format-patch) nor sent (imap-send nor send-email).
+> And where should the configuration be stored?  If a project
+> wants to be interoperable across Linux and vfat, for example,
 
-On the other hand, as am uses mailinfo and mailsplit, it may be
-worth mentioning them (although I suspect not all the readers of
-manual page of am are interested in such a low level details).
+In the brand new ".gitconfig". It could in principle contain any config=
+ option,
+but that would not be safe so I guess one should only allow "safe" opti=
+ons
+there.
 
-> diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-> index c1c54bf..53fa937 100644
-> --- a/Documentation/git-apply.txt
-> +++ b/Documentation/git-apply.txt
-> @@ -189,6 +189,10 @@ If --index is not specified, then the submodule commits in the patch
->  are ignored and only the absence of presence of the corresponding
->  subdirectory is checked and (if possible) updated.
->  
-> +See Also
-> +--------
-> +gitlink:git-am[1]
-
-Why?  apply is not about email at all.  am uses apply but not
-the other way around.
-
-This feels you are going a bit overboard, as if you are adding
-"See Also: git[7]" everywhere (even though it is not that bad).
-
-> -See Also
-> +SEE ALSO
->  --------
-
-If you are standardizing between "SEE ALSO" and "See Also", I
-think that is a worthy thing to do independent from the
-additional links, but (1) please be consistent --- you tried to
-add "See Also" yoruself above, (2) please have a separate patch
-that does _ONLY_ the standardization to "SEE ALSO", and not
-limited to commands that has (maybe remotely) something to do
-with emailed patch workflow.
-
-Right now, I count 14 "SEE ALSO" and 17 "See Also".  127 spell
-"Author" and 5 spell "AUTHOR".  Everybody says "NAME", "SYNOPSIS",
-"DESCRIPTION", and "OPTIONS".
-
-I think we should spell these in all uppercase.
+-- robin
