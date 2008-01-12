@@ -1,104 +1,158 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add committer and author names to top of COMMIT_EDITMSG.
-Date: Fri, 11 Jan 2008 17:53:12 -0800
-Message-ID: <7vejcnzu5z.fsf@gitster.siamese.dyndns.org>
-References: <9b3e2dc20801111210n7bd7a71cw437819aa6253ae85@mail.gmail.com>
-	<7v3at42avd.fsf@gitster.siamese.dyndns.org>
-	<9b3e2dc20801111609t3103af1frc23519cab43ae8be@mail.gmail.com>
-	<7vbq7r28qo.fsf@gitster.siamese.dyndns.org>
-	<9b3e2dc20801111733o477b3aadv6ee76d3aafade54a@mail.gmail.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Decompression speed: zip vs lzo
+Date: Sat, 12 Jan 2008 14:52:04 +1300
+Message-ID: <47881D44.9060105@vilain.net>
+References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com> <7v4pdmfw27.fsf@gitster.siamese.dyndns.org> <47855765.9090001@vilain.net> <alpine.LSU.1.00.0801092328580.31053@racer.site> <47856E8D.4010006@vilain.net> <4785A6DB.3080007@vilain.net> <20080110091607.GA17944@artemis.madism.org> <alpine.LFD.1.00.0801101332150.3054@xanadu.home> <alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org> <478691EB.1080704@vilain.net> <alpine.LFD.1.00.0801101400550.3148@woody.linux-foundation.org> <47869C24.3000400@vilain.net> <alpine.LFD.1.00.0801101454440.3148@woody.linux-foundation.org> <4786BFCD.1000303@vilain.net> <alpine.LFD.1.00.0801101805540.3148@woody.linux-foundation.org> <47870CDF.4010606@vilain.net> <alpine.LFD.1.00.0801110759160.3148@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Stephen Sinclair" <radarsat1@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 02:53:55 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Jan 12 03:11:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDVZK-0005Xq-G7
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 02:53:54 +0100
+	id 1JDVpv-0000mB-Jw
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 03:11:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932235AbYALBx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 20:53:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932233AbYALBx1
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 20:53:27 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64735 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932234AbYALBx0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 20:53:26 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C23732DA;
-	Fri, 11 Jan 2008 20:53:24 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 79BF632D9;
-	Fri, 11 Jan 2008 20:53:20 -0500 (EST)
-In-Reply-To: <9b3e2dc20801111733o477b3aadv6ee76d3aafade54a@mail.gmail.com>
-	(Stephen Sinclair's message of "Fri, 11 Jan 2008 20:33:23 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758935AbYALCKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 21:10:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762828AbYALCKf
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 21:10:35 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:50453 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758294AbYALCKe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 21:10:34 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 1003)
+	id C1581FCCF6; Sat, 12 Jan 2008 15:10:31 +1300 (NZDT)
+FCC: imap://sam@mail.utsl.gen.nz/INBOX/Sent
+X-Identity-Key: id1
+X-Mozilla-Draft-Info: internal/draft; vcard=0; receipt=0; uuencode=0
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <alpine.LFD.1.00.0801110759160.3148@woody.linux-foundation.org>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70250>
 
-"Stephen Sinclair" <radarsat1@gmail.com> writes:
+Linus Torvalds wrote:
+> 
+> On Fri, 11 Jan 2008, Sam Vilain wrote:
+>> The difference seems only barely measurable;
+> 
+> Ok. 
+> 
+> It may be that it might help other cases, but that seems unlikely.
+> 
+> The more likely answer is that it's either of:
+> 
+>  - yes, zlib uncompression is noticeable in profiles, but that the 
+>    cold-cache access is simply the bigger problem, and getting rid of zlib 
+>    just moves the expense to whatever other thing that needs to access it 
+>    (memcpy, xdelta apply, whatever)
+> 
+> or
+> 
+>  - I don't know exactly which patch you used (did you just do the 
+>    "core.deltacompression=0" thing?), and maybe zlib is fairly expensive 
+>    even for just the setup crud, even when it doesn't really need to be.
+> 
+> but who knows..
 
->>  * If AUTHOR_NAME+EMAIL is different from AUTHOR_NAME+EMAIL that
->>    I would normally get for myself, or
->
-> I thought of this, however if the purpose of this is to handle a case
-> where you do a commit from a new and unconfigured user account, "that
-> I would normally get for myself" is undefined, since this information
-> is (rightfully) not propagated by git-clone.  This is why I made it
-> unconditional, (or perhaps something you could could turn off, but
-> would by default be on), but I figured there would be objections since
-> I admit it's not always useful information.
+Well, my figures agree with Pierre I think - 6-10% time savings for
+'git annotate'.
 
-What are you talking about?
+I think Pierre has hit the nail on the head - that skipping
+compression for small objects is a clear win.  He saw the obvious
+criterion, really.  I've knocked it up as a config option that doesn't
+change the default behaviour below.
 
-In a properly configured repository, telling you who git thinks
-you are is _ALWAYS_ useless (that's the definition of "properly
-configured").  Just admit it.
+I can't help but speculate what benefits having a range of one or two
+of the most elite compression algorithms (eg, lzop or even lzma for
+the larger blobs) available would be, in general.  eg, if gzip takes a
+stream longer than X kb to offer substantial benefits over lzop, lzop
+the ones shorter than that.
 
-The only case it is of any use is to remind people who amend
-other people's change.  Showing the AUTHOR for the commit being
-created would add value (and the knowledge that git shows AUTHOR
-in that situation would help remind you that it will be
-recording your own name if you do not see that line).
+If the uncompressed objects are clustered in the pack, then they might
+stream compress a lot better, should they be tranmitted over a http
+transport with gzip encoding.  In packs which should be as small as
+possible, with a format change they could be distributed as one
+compressed resource.  The ordering of the objects would ideally be
+selected such that it results in optimum compression - which could add
+a savings akin to bzip2 vs gzip, at the expense of having to scan the
+small objects for mini-deltas and arrange them clustering objects
+which share these mini-deltas.
 
->>  * If AUTHOR_NAME+EMAIL contains garbage identifier commonly
->>    found when misconfigured (e.g. ".(none)" at the end of
->>    e-mail),
->
-> That's more interesting to me.  I just checked my logs and I do see
-> that in at least one case, this .(none) was not appended.  The
-> computer in question was configured (not by me) with a domain of
-> ".local", so the commit has <machinename>.local as part of the email
-> address.  However I would imagine this might solve most cases.
+Well, interesting ideas anyway :)
 
-Yes, and please notice that "e.g." in my description means "I am
-just giving you an example, not the exhaustive list for the
-final solution but a hint to one possibly acceptable solution".
-".local", "@localhost", "@<distroname>" and ".(none)" are all
-plausible red-flag raisers.  There may be more, but I think we
-should be able to catch most misconfigurations with simple
-rules.
+Subject: [PATCH] pack-objects: add compressionMinSize option
 
-> I still don't understand why git generates a default email address
-> instead of just giving an error message; do people actually use this
-> scenario?
+Objects smaller than a page don't save much space when compressed, and
+cause some overhead.  Allow the user to specify a minimum size for
+objects before they are compressed.
 
-The official party line to defend the existing behaviour is that
-there is no need to configure anything, when the host and gecos
-is done properly.  But I tend to agree with you that quite a lot
-of systems are not "done properly", and users cannot do much
-about it in some cases.  I think most of misconfigured systems
-are personal boxes they have control over but not all.
+Credit: Pierre Habouzit <madcoder@debian.org>
+Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
+---
+ Documentation/config.txt |    5 +++++
+ builtin-pack-objects.c   |    7 ++++++-
+ 2 files changed, 11 insertions(+), 1 deletions(-)
 
-Perhaps we could disable the code that reads from hostname and
-gecos, and instead always force the users to configure.  But
-that kind of change is not something I'd want to be discussing
-right now.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1b6d6d6..245121e 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -734,6 +734,11 @@ pack.compression::
+ 	compromise between speed and compression (currently equivalent
+ 	to level 6)."
+ 
++pack.compressionMinSize::
++	Objects smaller than this are not compressed.  This can make
++	operations that deal with many small objects (such as log)
++	faster.
++
+ pack.deltaCacheSize::
+ 	The maximum memory in bytes used for caching deltas in
+ 	linkgit:git-pack-objects[1].
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index a39cb82..316b809 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -76,6 +76,7 @@ static int num_preferred_base;
+ static struct progress *progress_state;
+ static int pack_compression_level = Z_DEFAULT_COMPRESSION;
+ static int pack_compression_seen;
++static int compression_min_size = 0;
+ 
+ static unsigned long delta_cache_size = 0;
+ static unsigned long max_delta_cache_size = 0;
+@@ -433,7 +434,7 @@ static unsigned long write_object(struct sha1file *f,
+ 		}
+ 		/* compress the data to store and put compressed length in datalen */
+ 		memset(&stream, 0, sizeof(stream));
+-		deflateInit(&stream, pack_compression_level);
++		deflateInit(&stream, size >= compression_min_size ? pack_compression_level : 0);
+ 		maxsize = deflateBound(&stream, size);
+ 		out = xmalloc(maxsize);
+ 		/* Compress it */
+@@ -1841,6 +1842,10 @@ static int git_pack_config(const char *k, const char *v)
+ 		pack_compression_seen = 1;
+ 		return 0;
+ 	}
++	if (!strcmp(k, "pack.compressionminsize")) {
++		compression_min_size = git_config_int(k, v);
++		return 0;	
++	}
+ 	if (!strcmp(k, "pack.deltacachesize")) {
+ 		max_delta_cache_size = git_config_int(k, v);
+ 		return 0;
+-- 
+1.5.3.7.2095.gb2448-dirty
