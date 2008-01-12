@@ -1,129 +1,63 @@
-From: Humberto Diogenes <humberto@digi.com.br>
-Subject: [PATCH] manpages: linking all mail-related commands
-Date: Fri, 11 Jan 2008 20:48:06 -0300
-Message-ID: <1200095286-2621-1-git-send-email-humberto@digi.com.br>
-Cc: gitster@pobox.com, humberto <humberto@digi.com.br>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 12 01:40:13 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Re-casing directories on case-insensitive systems
+Date: Sat, 12 Jan 2008 01:40:08 +0100 (CET)
+Message-ID: <alpine.LSU.1.00.0801120139170.8333@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <579DF776-4F4E-464C-88DB-B22C2EC291BD@sb.org> <200801120026.01930.robin.rosenberg@dewire.com> <1973E1D5-C8CC-4979-A085-85A2C5A13E57@sb.org> <200801120115.41274.robin.rosenberg@dewire.com> <191B60D7-FD89-48D8-8D48-C91645D4814D@sb.org>
+ <7v7iif28i2.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Kevin Ballard <kevin@sb.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 01:40:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDUQ0-0006IY-Uq
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 01:40:13 +0100
+	id 1JDUQY-0006RS-Fl
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 01:40:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762637AbYALAjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 19:39:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762621AbYALAjp
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 19:39:45 -0500
-Received: from huguinho.digi.com.br ([201.76.144.70]:3958 "EHLO
-	huguinho.digi.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762599AbYALAjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 19:39:45 -0500
-X-Greylist: delayed 3094 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Jan 2008 19:39:44 EST
-Received: from localhost.localdomain (eddie.digi.com.br [201.76.154.21])
-	by huguinho.digi.com.br (Postfix) with ESMTP id BF7C2333184;
-	Fri, 11 Jan 2008 20:48:06 -0300 (GMT+3)
-X-Mailer: git-send-email 1.5.3.6
+	id S1762650AbYALAkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 19:40:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762647AbYALAkS
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 19:40:18 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38858 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1762640AbYALAkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 19:40:17 -0500
+Received: (qmail invoked by alias); 12 Jan 2008 00:40:14 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+  by mail.gmx.net (mp001) with SMTP; 12 Jan 2008 01:40:14 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18L/a48pbkLNcs11RH/FFEtUGDfseFeWJSh/8N/NY
+	vC1pNtVimZRJjh
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7v7iif28i2.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70238>
 
-From: humberto <humberto@digi.com.br>
+Hi,
 
----
- Documentation/git-am.txt           |    6 ++++--
- Documentation/git-apply.txt        |    4 ++++
- Documentation/git-format-patch.txt |    7 ++++---
- Documentation/git-imap-send.txt    |    5 +++++
- Documentation/git-send-email.txt   |    6 ++++++
- 5 files changed, 23 insertions(+), 5 deletions(-)
+On Fri, 11 Jan 2008, Junio C Hamano wrote:
 
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index e4a6b3a..fd00fc1 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -144,8 +144,10 @@ names.
- 
- SEE ALSO
- --------
--gitlink:git-apply[1].
--
-+gitlink:git-apply[1],
-+gitlink:git-format-patch[1],
-+gitlink:git-imap-send[1],
-+gitlink:git-send-email[1]
- 
- Author
- ------
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index c1c54bf..53fa937 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -189,6 +189,10 @@ If --index is not specified, then the submodule commits in the patch
- are ignored and only the absence of presence of the corresponding
- subdirectory is checked and (if possible) updated.
- 
-+See Also
-+--------
-+gitlink:git-am[1]
-+
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org>
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index f0617ef..0221b6d 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -184,10 +184,11 @@ git-format-patch -3::
- 	Extract three topmost commits from the current branch
- 	and format them as e-mailable patches.
- 
--See Also
-+SEE ALSO
- --------
--gitlink:git-am[1], gitlink:git-send-email[1]
--
-+gitlink:git-am[1],
-+gitlink:git-imap-send[1],
-+gitlink:git-send-email[1]
- 
- Author
- ------
-diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
-index eca9e9c..8397dcb 100644
---- a/Documentation/git-imap-send.txt
-+++ b/Documentation/git-imap-send.txt
-@@ -48,6 +48,11 @@ BUGS
- ----
- Doesn't handle lines starting with "From " in the message body.
- 
-+SEE ALSO
-+--------
-+gitlink:git-am[1],
-+gitlink:git-format-patch[1],
-+gitlink:git-send-email[1]
- 
- Author
- ------
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 16bfd7b..9214596 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -143,6 +143,12 @@ sendemail.chainreplyto::
- sendemail.smtpserver::
- 	Default smtp server to use.
- 
-+SEE ALSO
-+--------
-+gitlink:git-am[1],
-+gitlink:git-format-patch[1],
-+gitlink:git-imap-send[1]
-+
- Author
- ------
- Written by Ryan Anderson <ryan@michonline.com>
--- 
-1.5.3.6
+> Kevin Ballard <kevin@sb.org> writes:
+> 
+> > Is there a reason for this? It seems like it would be trivial to end 
+> > up with misdiagnosed "untracked" files when using any language other 
+> > than English given this behaviuor.
+> 
+> No.  The assumption of the code has always been that sane filesystems 
+> would return from readdir() the names you gave from creat().
+
+We do not really have to rehash that whole discussion for the Nth time, do 
+we?
+
+Ciao,
+Dscho
