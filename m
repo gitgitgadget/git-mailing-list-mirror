@@ -1,151 +1,85 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
 Subject: Re: [ANNOUNCE] GIT 1.5.4-rc3
-Date: Sat, 12 Jan 2008 14:01:09 +0100
-Message-ID: <4788BA15.3050804@lsrfire.ath.cx>
-References: <7vsl13wmas.fsf@gitster.siamese.dyndns.org> <200801120926.14307.ismail@pardus.org.tr> <7vejcnwl85.fsf@gitster.siamese.dyndns.org> <200801120947.48602.ismail@pardus.org.tr> <20080112090432.GA6134@coredump.intra.peff.net>
+Date: Sat, 12 Jan 2008 15:10:41 +0200
+Organization: Pardus / KDE
+Message-ID: <200801121510.41501.ismail@pardus.org.tr>
+References: <7vsl13wmas.fsf@gitster.siamese.dyndns.org> <200801120947.48602.ismail@pardus.org.tr> <20080112090432.GA6134@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Ismail_D=F6nmez?= <ismail@pardus.org.tr>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jan 12 14:02:48 2008
+X-From: git-owner@vger.kernel.org Sat Jan 12 14:09:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDg0d-0000ZH-4Q
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 14:02:47 +0100
+	id 1JDg7S-0002XJ-FP
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 14:09:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763642AbYALNBr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 08:01:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763641AbYALNBr
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 08:01:47 -0500
-Received: from india601.server4you.de ([85.25.151.105]:54318 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762306AbYALNBq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 08:01:46 -0500
-Received: from [10.0.1.201] (p57B7FF5E.dip.t-dialin.net [87.183.255.94])
-	by india601.server4you.de (Postfix) with ESMTP id ABBFB2F8064;
-	Sat, 12 Jan 2008 14:01:37 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+	id S1762577AbYALNJW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jan 2008 08:09:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759662AbYALNJW
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 08:09:22 -0500
+Received: from ns2.uludag.org.tr ([193.140.100.220]:44483 "EHLO uludag.org.tr"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1758612AbYALNJV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2008 08:09:21 -0500
+Received: from [192.168.1.3] (unknown [85.97.18.122])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by uludag.org.tr (Postfix) with ESMTP id 7F02761ED936;
+	Sat, 12 Jan 2008 15:09:14 +0200 (EET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071204.744707)
 In-Reply-To: <20080112090432.GA6134@coredump.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70314>
 
-Jeff King schrieb:
+Saturday 12 January 2008 11:04:32 tarihinde Jeff King =C5=9Funlar=C4=B1=
+ yazm=C4=B1=C5=9Ft=C4=B1:
+> On Sat, Jan 12, 2008 at 09:47:48AM +0200, Ismail D=C3=B6nmez wrote:
+> > So looks like tests no longer work as root, so I run make test as n=
+ormal
+> > user and I now see t7300-clean.sh fail, this time a real failure:
+> >
+> > Removing part3.c
+> > ./test-lib.sh: line 193: 19413 Aborted                 git-clean
+> > * FAIL 5: git-clean with prefix
+>
+> I couldn't reproduce this just running the test, but running it under
+> valgrind showed a memory access error. Fix is below.
+>
+> Junio, can you please sanity check this fix (it stops the valgrind
+> error, but I want to make sure my assumptions about match_pathspec ar=
+e
+> right).
+>
+> -- >8 --
+> git-clean: fix off-by-one memory access when given no arguments
+>
+> The "seen" variable is used by match_pathspec, and must have
+> as many elements as there are in the given pathspec. We
+> create the pathspec either from the command line arguments
+> _or_ from just the current prefix.
+>
 > Thus allocating "seen" based upon just argc is wrong, since
-> if argc == 0, then we still have one pathspec, the prefix,
+> if argc =3D=3D 0, then we still have one pathspec, the prefix,
 > but we don't allocate any space in "seen".
+>
+> Signed-off-by: Jeff King <peff@peff.net>
 
-Yes, all the other callers count the number of elements in pathspec
-and allocate seen accordingly.  We could do that.  Or we could
-extend match_pathspec() to allow seen to be a NULL pointer, for
-those cases where this result isn't needed.
+Thanks Jefff, this fixes t7300-clean.sh for me.
 
-This patch is for discussion, only, because it touches central,
-non-buggy code and where in bugfix only mode.  And I'm not really
-sure git-clean ignoring non-matching pathspecs (as it does now,
-even without this patch) is really what we want.
+Tested-by: =C4=B0smail D=C3=B6nmez <ismail@pardus.org.tr>
 
- builtin-clean.c |    8 +-------
- dir.c           |   26 ++++++++++++++++----------
- 2 files changed, 17 insertions(+), 17 deletions(-)
+Regards,
+ismail
 
-diff --git a/builtin-clean.c b/builtin-clean.c
-index 6cad8ea..40d976c 100644
---- a/builtin-clean.c
-+++ b/builtin-clean.c
-@@ -35,7 +35,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	const char *path, *base;
- 	static const char **pathspec;
- 	int prefix_offset = 0;
--	char *seen = NULL;
- 	struct option options[] = {
- 		OPT__QUIET(&quiet),
- 		OPT__DRY_RUN(&show_only),
-@@ -89,9 +88,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	read_directory(&dir, path, base, baselen, pathspec);
- 	strbuf_init(&directory, 0);
- 
--	if (pathspec)
--		seen = xmalloc(argc);
--
- 	for (i = 0; i < dir.nr; i++) {
- 		struct dir_entry *ent = dir.entries[i];
- 		int len, pos, matches;
-@@ -125,9 +121,8 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 			continue;
- 
- 		if (pathspec) {
--			memset(seen, 0, argc);
- 			matches = match_pathspec(pathspec, ent->name, ent->len,
--						 baselen, seen);
-+						 baselen, NULL);
- 		} else {
- 			matches = 0;
- 		}
-@@ -165,7 +160,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 			unlink(ent->name);
- 		}
- 	}
--	free(seen);
- 
- 	strbuf_release(&directory);
- 	return 0;
-diff --git a/dir.c b/dir.c
-index 3e345c2..6af70ac 100644
---- a/dir.c
-+++ b/dir.c
-@@ -88,32 +88,38 @@ static int match_one(const char *match, const char *name, int namelen)
- 
- /*
-  * Given a name and a list of pathspecs, see if the name matches
-- * any of the pathspecs.  The caller is also interested in seeing
-- * all pathspec matches some names it calls this function with
-- * (otherwise the user could have mistyped the unmatched pathspec),
-- * and a mark is left in seen[] array for pathspec element that
-- * actually matched anything.
-+ * any of the pathspecs.
-+ * If the caller is interested in which of the pathspecs matched,
-+ * seen needs to point to a char array with as many members as there
-+ * are pathspecs.  A mark is left at the nth element of the nth
-+ * pathspec matched the name.  The marks are not reset, so the
-+ * caller can check, after matching a list of files, if there are
-+ * any unmatched pathspecs (which might have been mistyped).
-  */
- int match_pathspec(const char **pathspec, const char *name, int namelen, int prefix, char *seen)
- {
--	int retval;
--	const char *match;
-+	int retval = 0;
- 
- 	name += prefix;
- 	namelen -= prefix;
- 
--	for (retval = 0; (match = *pathspec++) != NULL; seen++) {
-+	while (*pathspec) {
-+		const char *match = *pathspec++;
- 		int how;
--		if (retval && *seen == MATCHED_EXACTLY)
-+
-+		if (retval && seen && *seen == MATCHED_EXACTLY)
- 			continue;
-+
- 		match += prefix;
- 		how = match_one(match, name, namelen);
- 		if (how) {
- 			if (retval < how)
- 				retval = how;
--			if (*seen < how)
-+			if (seen && *seen < how)
- 				*seen = how;
- 		}
-+		if (seen)
-+			seen++;
- 	}
- 	return retval;
- }
+
+--=20
+Never learn by your mistakes, if you do you may never dare to try again=
+=2E
