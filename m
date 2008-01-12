@@ -1,90 +1,65 @@
-From: "Neshama Parhoti" <pneshama@gmail.com>
-Subject: Re: Project Hosting with git ?
-Date: Sat, 12 Jan 2008 17:28:15 +0200
-Message-ID: <912ec82a0801120728w19763291x220f5201b8e5619c@mail.gmail.com>
-References: <912ec82a0801120553u3621c991u7c4cb4793960159c@mail.gmail.com>
-	 <4788CBAC.9050804@obry.net>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [EGIT PATCH] Showing abbreviated commit hash of the versions in Compare editor.
+Date: Sat, 12 Jan 2008 16:44:19 +0100
+Message-ID: <200801121644.21173.robin.rosenberg.lists@dewire.com>
+References: <200801072315.30122.rogersoares@intelinet.com.br> <200801110046.41786.robin.rosenberg.lists@dewire.com> <47883600.20307@intelinet.com.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Pascal Obry" <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Sat Jan 12 16:28:49 2008
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: "Roger C. Soares" <rogersoares@intelinet.com.br>
+X-From: git-owner@vger.kernel.org Sat Jan 12 16:45:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDiHw-0001jz-8O
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 16:28:48 +0100
+	id 1JDiXl-00078B-Ez
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 16:45:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752491AbYALP2T convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jan 2008 10:28:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752446AbYALP2T
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 10:28:19 -0500
-Received: from an-out-0708.google.com ([209.85.132.240]:40831 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752381AbYALP2S convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2008 10:28:18 -0500
-Received: by an-out-0708.google.com with SMTP id d31so321485and.103
-        for <git@vger.kernel.org>; Sat, 12 Jan 2008 07:28:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=wyXKERGkGntgPCBHx6zVEqTXyHPTrDso5P7qWLv+BN8=;
-        b=S6SjersrW1WDcoyMo/8PTeGzA+PXZh+ukHvR36lACZXISNI8y6vzIDaL3dIudIeGNHWn5HNYkQbw0VCqJh/wPVfUYdDFrMBfTzjLP9cx4vPQNuIXnP3zrRiuZUg7040d5pf9E0kmDwp8/Z/5zNwro5JH663LKuzL105Eo7gdB1o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=RfGznUxy7Ph9gu0BYHfJ2gSEOErjYZaM+fASN5stNDd+KAFMl5arO1FMJ2HeUrizkhEaNW6BlVa8cgjFBRVgdhlC0a0LD6N2AcXrUK/atJyPmFzKcp8AxgFq5Lq+hXOMo1Fgylxfcvi+YEsGHhbs92D6XG0oy/Usp9Olmn4FvYQ=
-Received: by 10.100.253.12 with SMTP id a12mr9547094ani.43.1200151695474;
-        Sat, 12 Jan 2008 07:28:15 -0800 (PST)
-Received: by 10.100.131.14 with HTTP; Sat, 12 Jan 2008 07:28:15 -0800 (PST)
-In-Reply-To: <4788CBAC.9050804@obry.net>
+	id S1752706AbYALPoh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jan 2008 10:44:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750846AbYALPoh
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 10:44:37 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:11418 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1750808AbYALPog (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 10:44:36 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 3DA768033A3;
+	Sat, 12 Jan 2008 16:44:35 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cSU55BCaRvym; Sat, 12 Jan 2008 16:44:34 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 9DB958030CD;
+	Sat, 12 Jan 2008 16:44:32 +0100 (CET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
+In-Reply-To: <47883600.20307@intelinet.com.br>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70326>
 
-On Jan 12, 2008 4:16 PM, Pascal Obry <pascal@obry.net> wrote:
-> Neshama Parhoti a =E9crit :
-> > Hello,
-> >
-> > I mean, if I open a SourceForge project, I have to use cvs/subversi=
-on right ?
->
-> That's right.
->
-> > Is there any way to use git ?
->
-> Using Savannah:http://savannah.gnu.org/
->
-> Or http://repo.or.cz
->
-> The former require approval to create the project but has more featur=
-es
-> (bug tracker...) and is somewhat faster (larger bandwidth), the later=
- is
-> simpler but do not require approval. I'm using both, and both are
-> working fine.
+l=F6rdagen den 12 januari 2008 skrev Roger C. Soares:
+>=20
+> Robin Rosenberg escreveu:
+> > I pushed my doc-branch as pu, you can look at it. My intention is t=
+ake a look again
+> > and then push it as master if there are no objections. Is it ok and=
+ good to flags=20
+> > public stuff without javadoc as an error (tip pu commit)?
+> >  =20
+> Got some errors, when trying to export to a deployable plugin:
+> "/home/roger/eclipse/workspace/egit/org.spearce.jgit/tst" does not ex=
+ist!
+>=20
+> And on "team -> share project... -> Git", it goes to the CVS wizard.
 
-thanks a lot
+Due to my lack of testing @_@. I pushed a new pu branch with these two =
+errors fixed.
 
->
-> There is probably others.
->
-> Pascal.
->
-> --
->
-> --|------------------------------------------------------
-> --| Pascal Obry                           Team-Ada Member
-> --| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
-> --|------------------------------------------------------
-> --|              http://www.obry.net
-> --| "The best way to travel is by means of imagination"
-> --|
-> --| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
->
->
+Thanks
+-- robin
