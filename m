@@ -1,92 +1,85 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Re-casing directories on case-insensitive systems
-Date: Sat, 12 Jan 2008 10:47:10 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801121040010.2806@woody.linux-foundation.org>
-References: <579DF776-4F4E-464C-88DB-B22C2EC291BD@sb.org> <alpine.LSU.1.00.0801112127040.31053@racer.site> <34F43A68-6041-42BE-85BD-3EF971875C0F@sb.org> <alpine.LFD.1.00.0801111356000.3148@woody.linux-foundation.org>
- <20080112144629.GE2963@dpotapov.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-svn: handle leading/trailing whitespace from svnsync revprops
+Date: Sat, 12 Jan 2008 10:57:32 -0800
+Message-ID: <7vprw6ub1f.fsf@gitster.siamese.dyndns.org>
+References: <200801081738.56624.devurandom@gmx.net>
+	<200801101813.45938.devurandom@gmx.net>
+	<7v63y178a3.fsf@gitster.siamese.dyndns.org>
+	<200801102213.04082.devurandom@gmx.net>
+	<7vmyrd5p81.fsf@gitster.siamese.dyndns.org>
+	<20080112071355.GA17021@soma>
+	<7vzlvbv5m9.fsf@gitster.siamese.dyndns.org>
+	<20080112091242.GA27109@soma>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kevin Ballard <kevin@sb.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 19:47:54 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Dennis Schridde <devurandom@gmx.net>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Jan 12 19:58:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDlOX-0001Se-IO
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 19:47:49 +0100
+	id 1JDlYf-0004GO-Gb
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 19:58:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754472AbYALSrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 13:47:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755336AbYALSrU
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 13:47:20 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:34969 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754429AbYALSrU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2008 13:47:20 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0CIlBUX001498
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 12 Jan 2008 10:47:12 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0CIlAQr009851;
-	Sat, 12 Jan 2008 10:47:11 -0800
-In-Reply-To: <20080112144629.GE2963@dpotapov.dyndns.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.721 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1756232AbYALS5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 13:57:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756240AbYALS5r
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 13:57:47 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36730 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755807AbYALS5r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 13:57:47 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FA7D5168;
+	Sat, 12 Jan 2008 13:57:45 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id EAD575165;
+	Sat, 12 Jan 2008 13:57:39 -0500 (EST)
+In-Reply-To: <20080112091242.GA27109@soma> (Eric Wong's message of "Sat, 12
+	Jan 2008 01:12:42 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70346>
 
+Eric Wong <normalperson@yhbt.net> writes:
 
+> The statements are not equivalent, however.  I'd have to add
+>
+> 	$var = $1;
+>
+> too, because I needed to extract what was inside the ( ) since the '$'
+> doesn't catch the trailing newline, either.
 
-On Sat, 12 Jan 2008, Dmitry Potapov wrote:
-> 
-> After cursory look at the source code, I wonder if converting name1
-> and name2 to upper case before memcmp in cache_name_compare() can
-> help case-insensitive systems. This change will change the order of
-> file names in the index, but I suppose that it should not be a problem,
-> because the index is host specific. Though, this fix is too simple, so
-> I guess, I missed something.
+Ahh, _stupid me_.
 
-No, the index isn't host-specific, and we also have a deep knowledge of 
-the fact that the index order is the same as the unpacked tree order.
+Yes, you said '$', not '\Z', but somehow I mistook m|^(.*)$| as
+a no-op "whole thing".  Sorry.
 
-So no, we absolutely cannot just sort the index differently. We literally 
-need to have a separate key for a "upper case lookup".
+> Good points, I've been mindlessly taking "interesting" things from other
+> Perl code I've seen over the years and using it in my own without
+> thinking about it too hard :x
+>
+> I'll avoid them in the future.  Unfortunately, Git.pm also suffers from
+> this as well.
 
-(That separate key can be just a hash table - it doesn't need to be 
-something you can iterate over, so it can be pretty simple).
+Git.pm is even worse.  It uses the line-noise prototype which is
+a very good and cute hack to allow people to (1) emulate Perl's
+built-in and (2) come up with syntax sugars, but has a similar
+issue that defeats old-school intuition as wantarray-return
+subroutines does.
 
-> > (And that's totally ignoring the fact that case-insensitivity then also 
-> > has tons of i18n issues and can get *really* messy 
-> 
-> The proper support of i18n is not simple even without case-insensitivity.
-> For instance, there are four different encodings widely used for Russian
-> letters.
+The caller needs to be careful about receiving return values
+with wantarray-return subroutines.  The caller needs to be
+careful about how to send in the parameters with line-noise
+prototyped subs.
 
-.. and git is very clear about this: filenames are *not* "characters" in 
-the i18n sense, they are series of bytes. There is absolutely no room for 
-ambiguity, and there is no locale for those things.
+In any case, this kind of clean-up is not within the scope of
+changes during rc cycle.  I'll take your bugfix as is.
 
-And that isn't going to change. It's the only sane way to do 
-locale-independent names: people can *choose* to see the filenames as some 
-UTF-8 sequence, or a series of Latin1, or anything, but that's not 
-something git itself will care about.
-
-Trying to involve locale in name comparison simply isn't possible. Two 
-different repositories on two different filesystems would get two 
-different answers. And that is simply unacceptable in a distributed 
-system.
-
-What we can do is to make the simple cases (ie the locale-*independent* 
-ones) warn about problems with case insensitivity.
-
-			Linus
+Thanks.
