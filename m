@@ -1,134 +1,104 @@
-From: Humberto Diogenes <humberto@digi.com.br>
-Subject: Re: [PATCH] manpages: linking all mail-related commands
-Date: Fri, 11 Jan 2008 22:44:04 -0300
-Message-ID: <B4D45D5C-618B-46E4-B66A-27914EF810A7@digi.com.br>
-References: <1200095286-2621-1-git-send-email-humberto@digi.com.br> <7vy7avzwx4.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add committer and author names to top of COMMIT_EDITMSG.
+Date: Fri, 11 Jan 2008 17:53:12 -0800
+Message-ID: <7vejcnzu5z.fsf@gitster.siamese.dyndns.org>
+References: <9b3e2dc20801111210n7bd7a71cw437819aa6253ae85@mail.gmail.com>
+	<7v3at42avd.fsf@gitster.siamese.dyndns.org>
+	<9b3e2dc20801111609t3103af1frc23519cab43ae8be@mail.gmail.com>
+	<7vbq7r28qo.fsf@gitster.siamese.dyndns.org>
+	<9b3e2dc20801111733o477b3aadv6ee76d3aafade54a@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 02:44:40 2008
+To: "Stephen Sinclair" <radarsat1@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 02:53:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDVQL-0003cD-O1
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 02:44:38 +0100
+	id 1JDVZK-0005Xq-G7
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 02:53:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758035AbYALBoJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jan 2008 20:44:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762805AbYALBoJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 20:44:09 -0500
-Received: from huguinho.digi.com.br ([201.76.144.70]:1025 "EHLO
-	huguinho.digi.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756962AbYALBoI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Jan 2008 20:44:08 -0500
-Received: from eddie.digi.com.br (eddie.digi.com.br [201.76.154.21])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	id S932235AbYALBx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 20:53:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932233AbYALBx1
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 20:53:27 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64735 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932234AbYALBx0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 20:53:26 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2C23732DA;
+	Fri, 11 Jan 2008 20:53:24 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by huguinho.digi.com.br (Postfix) with ESMTP id 9421D3331D7;
-	Fri, 11 Jan 2008 22:44:04 -0300 (GMT+3)
-In-Reply-To: <7vy7avzwx4.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.915)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 79BF632D9;
+	Fri, 11 Jan 2008 20:53:20 -0500 (EST)
+In-Reply-To: <9b3e2dc20801111733o477b3aadv6ee76d3aafade54a@mail.gmail.com>
+	(Stephen Sinclair's message of "Fri, 11 Jan 2008 20:33:23 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70249>
 
+"Stephen Sinclair" <radarsat1@gmail.com> writes:
 
-   Wow! I wasn't expecting that amount of reply for such a simple =20
-patch. :-) I just found it unnecessarily hard to discover all the =20
-email-related commands in git (even though I already used some of =20
-them). My point-of-view is that some additional links wouldn't hurt. =20
-More answers below.
-
-On 11/01/2008, at 21:53, Junio C Hamano wrote:
-
-> Humberto Diogenes <humberto@digi.com.br> writes:
+>>  * If AUTHOR_NAME+EMAIL is different from AUTHOR_NAME+EMAIL that
+>>    I would normally get for myself, or
 >
->> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
->> index e4a6b3a..fd00fc1 100644
->> --- a/Documentation/git-am.txt
->> +++ b/Documentation/git-am.txt
->> @@ -144,8 +144,10 @@ names.
->>
->> SEE ALSO
->> --------
->> -gitlink:git-apply[1].
->> -
->> +gitlink:git-apply[1],
->> +gitlink:git-format-patch[1],
->> +gitlink:git-imap-send[1],
->> +gitlink:git-send-email[1]
+> I thought of this, however if the purpose of this is to handle a case
+> where you do a commit from a new and unconfigured user account, "that
+> I would normally get for myself" is undefined, since this information
+> is (rightfully) not propagated by git-clone.  This is why I made it
+> unconditional, (or perhaps something you could could turn off, but
+> would by default be on), but I figured there would be objections since
+> I admit it's not always useful information.
+
+What are you talking about?
+
+In a properly configured repository, telling you who git thinks
+you are is _ALWAYS_ useless (that's the definition of "properly
+configured").  Just admit it.
+
+The only case it is of any use is to remind people who amend
+other people's change.  Showing the AUTHOR for the commit being
+created would add value (and the knowledge that git shows AUTHOR
+in that situation would help remind you that it will be
+recording your own name if you do not see that line).
+
+>>  * If AUTHOR_NAME+EMAIL contains garbage identifier commonly
+>>    found when misconfigured (e.g. ".(none)" at the end of
+>>    e-mail),
 >
-> I do not see a point in this.  "am" is a tool for people who
-> accept and they do not care how the sender prepared
-> (format-patch) nor sent (imap-send nor send-email).
+> That's more interesting to me.  I just checked my logs and I do see
+> that in at least one case, this .(none) was not appended.  The
+> computer in question was configured (not by me) with a domain of
+> ".local", so the commit has <machinename>.local as part of the email
+> address.  However I would imagine this might solve most cases.
 
-   Well, if I'm reading the docs about how a program works with some =20
-input, I'll sure want to know which commands in the package generate =20
-that kind of output. I think at least git-format-patch deserves a link =
-=20
-(am: read, format-patch: write).
-   And yes, I managed to find git-am and git-send-email but couldn't =20
-remember the name of git-format-patch.
+Yes, and please notice that "e.g." in my description means "I am
+just giving you an example, not the exhaustive list for the
+final solution but a hint to one possibly acceptable solution".
+".local", "@localhost", "@<distroname>" and ".(none)" are all
+plausible red-flag raisers.  There may be more, but I think we
+should be able to catch most misconfigurations with simple
+rules.
 
-> On the other hand, as am uses mailinfo and mailsplit, it may be
-> worth mentioning them (although I suspect not all the readers of
-> manual page of am are interested in such a low level details).
+> I still don't understand why git generates a default email address
+> instead of just giving an error message; do people actually use this
+> scenario?
 
-   I think it wouldn't hurt.
+The official party line to defend the existing behaviour is that
+there is no need to configure anything, when the host and gecos
+is done properly.  But I tend to agree with you that quite a lot
+of systems are not "done properly", and users cannot do much
+about it in some cases.  I think most of misconfigured systems
+are personal boxes they have control over but not all.
 
->> diff --git a/Documentation/git-apply.txt b/Documentation/git-=20
->> apply.txt
->> index c1c54bf..53fa937 100644
->> --- a/Documentation/git-apply.txt
->> +++ b/Documentation/git-apply.txt
->> @@ -189,6 +189,10 @@ If --index is not specified, then the =20
->> submodule commits in the patch
->> are ignored and only the absence of presence of the corresponding
->> subdirectory is checked and (if possible) updated.
->>
->> +See Also
->> +--------
->> +gitlink:git-am[1]
->
-> Why?  apply is not about email at all.  am uses apply but not
-> the other way around.
-
-   Imagine you don't know git, but know there's some command to apply =20
-patches from mailboxes. Which one would you try first: git-am or git-=20
-apply? "git-am" just doesn't say anything (for beginners, at least).
-
-> This feels you are going a bit overboard, as if you are adding
-> "See Also: git[7]" everywhere (even though it is not that bad).
-
-   Again: wouldn't hurt. :)
-
->> -See Also
->> +SEE ALSO
->> --------
->
-> If you are standardizing between "SEE ALSO" and "See Also", I
-> think that is a worthy thing to do independent from the
-> additional links, but (1) please be consistent --- you tried to
-> add "See Also" yoruself above, (2) please have a separate patch
-> that does _ONLY_ the standardization to "SEE ALSO", and not
-> limited to commands that has (maybe remotely) something to do
-> with emailed patch workflow.
->
-> Right now, I count 14 "SEE ALSO" and 17 "See Also".  127 spell
-> "Author" and 5 spell "AUTHOR".  Everybody says "NAME", "SYNOPSIS",
-> "DESCRIPTION", and "OPTIONS".
->
-> I think we should spell these in all uppercase.
-
-   Yes, I could see this one coming. Sorry.
-
-
---
-Humberto Di=F3genes
-http://humberto.digi.com.br
+Perhaps we could disable the code that reads from hostname and
+gecos, and instead always force the users to configure.  But
+that kind of change is not something I'd want to be discussing
+right now.
