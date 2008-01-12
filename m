@@ -1,55 +1,97 @@
-From: "Roger C. Soares" <rogersoares@intelinet.com.br>
-Subject: Re: [EGIT PATCH] Showing abbreviated commit hash of the versions
- in Compare editor.
-Date: Sat, 12 Jan 2008 01:37:36 -0200
-Message-ID: <47883600.20307@intelinet.com.br>
-References: <200801072315.30122.rogersoares@intelinet.com.br> <200801082312.00329.robin.rosenberg.lists@dewire.com> <4784247B.10604@intelinet.com.br> <200801110046.41786.robin.rosenberg.lists@dewire.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Decompression speed: zip vs lzo
+Date: Fri, 11 Jan 2008 20:46:01 -0800
+Message-ID: <7vzlvby7li.fsf@gitster.siamese.dyndns.org>
+References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com>
+	<7v4pdmfw27.fsf@gitster.siamese.dyndns.org>
+	<47855765.9090001@vilain.net>
+	<alpine.LSU.1.00.0801092328580.31053@racer.site>
+	<47856E8D.4010006@vilain.net> <4785A6DB.3080007@vilain.net>
+	<20080110091607.GA17944@artemis.madism.org>
+	<alpine.LFD.1.00.0801101332150.3054@xanadu.home>
+	<alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org>
+	<478691EB.1080704@vilain.net>
+	<alpine.LFD.1.00.0801101400550.3148@woody.linux-foundation.org>
+	<47869C24.3000400@vilain.net>
+	<alpine.LFD.1.00.0801101454440.3148@woody.linux-foundation.org>
+	<4786BFCD.1000303@vilain.net>
+	<alpine.LFD.1.00.0801101805540.3148@woody.linux-foundation.org>
+	<47870CDF.4010606@vilain.net>
+	<alpine.LFD.1.00.0801110759160.3148@woody.linux-foundation.org>
+	<47881D44.9060105@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 04:37:59 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marco Costalba <mcostalba@gmail.com>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Sat Jan 12 05:47:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDXC1-0008IR-Ln
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 04:37:58 +0100
+	id 1JDYGp-0001p5-TA
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 05:47:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757743AbYALDhT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 22:37:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757556AbYALDhT
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 22:37:19 -0500
-Received: from cvxbsd.convex.com.br ([200.152.177.10]:1067 "HELO
-	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1754101AbYALDhR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 22:37:17 -0500
-Received: (qmail 78734 invoked by uid 0); 12 Jan 2008 01:39:23 -0200
-Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
- (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
- Processed in 0.240594 secs); 12 Jan 2008 03:39:23 -0000
-Received: from unknown (HELO ?200.152.180.33?) (200.152.180.33)
-  by cvxbsd.convex.com.br with SMTP; 12 Jan 2008 03:39:23 -0000
-User-Agent: Thunderbird 1.5.0.12 (X11/20071129)
-In-Reply-To: <200801110046.41786.robin.rosenberg.lists@dewire.com>
+	id S1755906AbYALEqb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 23:46:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754904AbYALEqb
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 23:46:31 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38521 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755491AbYALEqa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 23:46:30 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8860040DD;
+	Fri, 11 Jan 2008 23:46:27 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C4F6940DC;
+	Fri, 11 Jan 2008 23:46:18 -0500 (EST)
+In-Reply-To: <47881D44.9060105@vilain.net> (Sam Vilain's message of "Sat, 12
+	Jan 2008 14:52:04 +1300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70259>
 
+Sam Vilain <sam@vilain.net> writes:
 
+> If the uncompressed objects are clustered in the pack, then they might
+> stream compress a lot better, should they be tranmitted over a http
+> transport with gzip encoding.
 
-Robin Rosenberg escreveu:
-> I pushed my doc-branch as pu, you can look at it. My intention is take a look again
-> and then push it as master if there are no objections. Is it ok and good to flags 
-> public stuff without javadoc as an error (tip pu commit)?
->   
-Got some errors, when trying to export to a deployable plugin:
-"/home/roger/eclipse/workspace/egit/org.spearce.jgit/tst" does not exist!
+That would only have been a sensible optimization in older
+native pack protocol, where we always exploded the transferred
+packfile.  However, these days, we tend to keep the packfile and
+re-index at the receiving end (http transport never exploded the
+packfile and it still doesn't).  When used that way, choosing
+object layout in packfile in such a way to ignore recency order
+and cluster objects by their delta chain, which you are
+advocating to reduce the transfer overhead, is a bad tradeoff.
+Your packs will be kept in the form you chose for transport,
+which is a layout that hurts the runtime performance.  And you
+keep using that suboptimal packs number of times, getting hurt
+every time.
 
-And on "team -> share project... -> Git", it goes to the CVS wizard.
+> @@ -433,7 +434,7 @@ static unsigned long write_object(struct sha1file *f,
+>  		}
+>  		/* compress the data to store and put compressed length in datalen */
+>  		memset(&stream, 0, sizeof(stream));
+> -		deflateInit(&stream, pack_compression_level);
+> +		deflateInit(&stream, size >= compression_min_size ? pack_compression_level : 0);
+>  		maxsize = deflateBound(&stream, size);
+>  		out = xmalloc(maxsize);
+>  		/* Compress it */
 
-[]s,
-Roger.
+I very much like the simplicity of the patch.  If such a simple
+approach can give us a clear performance gain, I am all for it.
+
+Benchmarks on different repositories need to back that up,
+though.
