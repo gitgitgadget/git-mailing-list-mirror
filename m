@@ -1,66 +1,85 @@
-From: "Neshama Parhoti" <pneshama@gmail.com>
-Subject: Project Hosting with git ?
-Date: Sat, 12 Jan 2008 15:53:44 +0200
-Message-ID: <912ec82a0801120553u3621c991u7c4cb4793960159c@mail.gmail.com>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: Project Hosting with git ?
+Date: Sat, 12 Jan 2008 15:16:12 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <4788CBAC.9050804@obry.net>
+References: <912ec82a0801120553u3621c991u7c4cb4793960159c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 12 14:54:15 2008
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Neshama Parhoti <pneshama@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 15:16:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDgoQ-0006TJ-99
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 14:54:14 +0100
+	id 1JDhAE-0004ac-Q9
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 15:16:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759404AbYALNxq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 08:53:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751727AbYALNxq
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 08:53:46 -0500
-Received: from an-out-0708.google.com ([209.85.132.249]:42233 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751402AbYALNxp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 08:53:45 -0500
-Received: by an-out-0708.google.com with SMTP id d31so317306and.103
-        for <git@vger.kernel.org>; Sat, 12 Jan 2008 05:53:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=U7Ql5P7GnAToBhwDR3ujZAZdBP8uoR9qk9YpnemIeCY=;
-        b=S5lrZYf1C50KH4e1h4IlX1bMi3r41Be4L37OfdVtk5UJEMWqcvDZUuu8c6elC3RzW6m8U4wjaZewQ1/I/5BxG+YlWc4/pQpe25B39yy/uwGtbJPU253tgjt6GCi2fAxT0dk9AGnmUrQywHRPCLGJN+TGKwMXPQ2dD0qXvJF2OK0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=iy+7MpAhtglMl0WajZYu3v8/qyI9TBV6acIQ9Rl5upj428DrSM8GcEIN7yR88eZ5tcohhdW2b1PIrIITNMAkFWJhCTL1BRoU5A/6u3JN82sHBYYAjkplBZYwA116azHoIkFe9gVPDeYe4wNt0Qng44oRuQQ5trAI1cgA+xp48/s=
-Received: by 10.100.216.3 with SMTP id o3mr9344679ang.95.1200146024651;
-        Sat, 12 Jan 2008 05:53:44 -0800 (PST)
-Received: by 10.100.131.14 with HTTP; Sat, 12 Jan 2008 05:53:44 -0800 (PST)
-Content-Disposition: inline
+	id S1760283AbYALOQS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jan 2008 09:16:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756342AbYALOQS
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 09:16:18 -0500
+Received: from smtp2e.orange.fr ([80.12.242.111]:56922 "EHLO smtp2e.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751917AbYALOQR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 09:16:17 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2e01.orange.fr (SMTP Server) with ESMTP id 69B2770000A2
+	for <git@vger.kernel.org>; Sat, 12 Jan 2008 15:16:15 +0100 (CET)
+Received: from [192.168.0.100] (AVelizy-151-1-90-111.w86-205.abo.wanadoo.fr [86.205.32.111])
+	by mwinf2e01.orange.fr (SMTP Server) with ESMTP id 2264A700009C;
+	Sat, 12 Jan 2008 15:16:15 +0100 (CET)
+X-ME-UUID: 20080112141615140.2264A700009C@mwinf2e01.orange.fr
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <912ec82a0801120553u3621c991u7c4cb4793960159c@mail.gmail.com>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70317>
 
-Hello,
+Neshama Parhoti a =E9crit :
+> Hello,
+>=20
+> I am beginning a new Open Source project which I would
+> like to manage with git.
+>=20
+> I was wondering how is it possible with current hosting
+> solutions ?
+>=20
+> I mean, if I open a SourceForge project, I have to use cvs/subversion=
+ right ?
 
-I am beginning a new Open Source project which I would
-like to manage with git.
+That's right.
 
-I was wondering how is it possible with current hosting
-solutions ?
+> Is there any way to use git ?
 
-I mean, if I open a SourceForge project, I have to use cvs/subversion right ?
+Using Savannah:http://savannah.gnu.org/
 
-Is there any way to use git ?
+Or http://repo.or.cz
 
-Of course I can pay for a VPS and install my own git server
-but that would be a bit expensive.
+The former require approval to create the project but has more features=
+=20
+(bug tracker...) and is somewhat faster (larger bandwidth), the later i=
+s=20
+simpler but do not require approval. I'm using both, and both are=20
+working fine.
 
-Any ideas ?
+There is probably others.
 
-How are the current git-using projects hosted (besides kernel.org...) ?
+Pascal.
 
-thank you very much
-neshama
+--=20
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
