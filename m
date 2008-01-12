@@ -1,85 +1,108 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: gitk dev branch: F5 problem again
-Date: Sat, 12 Jan 2008 21:55:08 +1100
-Message-ID: <18312.40076.179788.88596@cargo.ozlabs.ibm.com>
-References: <47876C69.8070604@viscovery.net>
+From: Jeff King <peff@peff.net>
+Subject: valgrind test script integration
+Date: Sat, 12 Jan 2008 06:10:44 -0500
+Message-ID: <20080112111044.GA24257@coredump.intra.peff.net>
+References: <7vsl13wmas.fsf@gitster.siamese.dyndns.org> <200801120926.14307.ismail@pardus.org.tr> <7vejcnwl85.fsf@gitster.siamese.dyndns.org> <200801120947.48602.ismail@pardus.org.tr> <20080112090432.GA6134@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Sat Jan 12 11:55:47 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 12 12:12:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDe1h-000175-QE
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 11:55:46 +0100
+	id 1JDeHP-0004bb-MX
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 12:12:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760486AbYALKzR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 05:55:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760587AbYALKzR
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 05:55:17 -0500
-Received: from ozlabs.org ([203.10.76.45]:46544 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760473AbYALKzQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 05:55:16 -0500
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id D2999DDE35; Sat, 12 Jan 2008 21:55:14 +1100 (EST)
-In-Reply-To: <47876C69.8070604@viscovery.net>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1762998AbYALLK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 06:10:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762849AbYALLKu
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 06:10:50 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1355 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762657AbYALLKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 06:10:47 -0500
+Received: (qmail 6326 invoked by uid 111); 12 Jan 2008 11:10:45 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 12 Jan 2008 06:10:45 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Jan 2008 06:10:44 -0500
+Content-Disposition: inline
+In-Reply-To: <20080112090432.GA6134@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70307>
 
-Johannes Sixt writes:
+On Sat, Jan 12, 2008 at 04:04:32AM -0500, Jeff King wrote:
 
-> I'm using gitk's dev branch (476ca63d Index [fnvr]highlights by id...) on
-> Windows.
-> 
-> Start gitk like this:
-> 
->    gitk somefile.c
-> 
-> while on a branch whose tip touches somefile.c.
-> 
-> Now:
-> 
->    git commit --amend
-> 
-> Then press F5 in gitk. I get these error reports after which gitk is
-> unresponsive:
-> 
-> can't read "children(1,)": no such element in array
+> I couldn't reproduce this just running the test, but running it under
+> valgrind showed a memory access error. Fix is below.
 
-Thanks.
+BTW, this could have been caught automagically if we had valgrind
+integration in the test scripts. Below is a rudimentary patch to do so.
+I'm not that familiar with valgrind, so input from those more
+knowledgeable is appreciated, and maybe we can get something official
+post-1.5.4.
 
-I found the reason for the Tcl errors - an incorrect optimization in
-make_disporder - and I have pushed out a fix.
+You can use it like "./t7300-clean.sh -m"; each call to 'git' is run
+through valgrind, and returns an error if the original program had an
+error, or if valgrind turned up any errors.
 
-However, that shows up another problem, due to the way parent
-rewriting does (or doesn't) work when we are limiting both by
-revisions and by path.  When you press F5 in the above scenario, you
-will get the new version of the commit, with its real parent shown as
-an open-circle commit, disconnected from the rest of the graph.
+It of course runs horribly slowly. I've just kicked off a
 
-What's happening here is that to do the update, gitk first re-reads
-all the references, notices that the head has changed, and does a git
-log command like:
+  make GIT_TEST_OPTS='-i -m'
 
-	git log newhead ^oldhead -- somefile.c
+now. A few caveats:
 
-The git log traversal stops as soon as it finds a commit which is an
-ancestor of oldhead, which in this case will be oldhead's (and
-newhead's) real parent.  Because the traversal doesn't go far enough
-to find another commit that touches somefile.c (which would be the
-fake parent that gitk would want to use for the graph), the parent
-rewriting doesn't happen and git log outputs the newhead commit with
-its real parent rather than a fake parent.  Assuming the real parent
-doesn't touch somefile.c, it is a commit that gitk doesn't have in its
-graph, so it can't join newhead into the existing graph properly.  I'm
-not sure how best to fix that.  I'll have to think about it.
+ - It barfs on _any_ valgrind error. On my Debian unstable system,
+   anything that touches nss ends up with an error deep in the dlopen
+   code.  Therefore to make this useful, I had to put
 
-Paul.
+     {
+       dl hack
+       Memcheck:Addr4
+       obj:/lib/ld-2.7.so
+     }
+
+   into /usr/lib/valgrind/default.supp
+
+   We should maybe have a 'git.supp' error suppression file, but in this
+   case, the error really seems to be platform-specific.
+
+ - We only catch calls to 'git', not 'git-foo' (and in fact for that
+   reason this doesn't catch the t7300 bug by itself, since that uses
+   git-clean). A follow-on patch will deal with this.
+
+---
+ t/test-lib.sh |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 90b6844..415e918 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -84,6 +84,8 @@ do
+ 	--no-python)
+ 		# noop now...
+ 		shift ;;
++	-m|--m|--me|--mem|--memc|--memch|--memche|--memchec|--memcheck)
++		alias git='memcheck git'; shift ;;
+ 	*)
+ 		break ;;
+ 	esac
+@@ -120,6 +122,12 @@ say () {
+ 	say_color info "$*"
+ }
+ 
++memcheck() {
++	valgrind -q --error-exitcode=1 --leak-check=no "$@" && return 0
++	echo >&2 valgrind failure: "$@"
++	return 1
++}
++
+ test "${test_description}" != "" ||
+ error "Test script did not set test_description."
+ 
+-- 
+1.5.4.rc3.1.g027628-dirty
