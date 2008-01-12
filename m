@@ -1,97 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Decompression speed: zip vs lzo
-Date: Fri, 11 Jan 2008 20:46:01 -0800
-Message-ID: <7vzlvby7li.fsf@gitster.siamese.dyndns.org>
-References: <e5bfff550801091401y753ea883p8d08b01f2b391147@mail.gmail.com>
-	<7v4pdmfw27.fsf@gitster.siamese.dyndns.org>
-	<47855765.9090001@vilain.net>
-	<alpine.LSU.1.00.0801092328580.31053@racer.site>
-	<47856E8D.4010006@vilain.net> <4785A6DB.3080007@vilain.net>
-	<20080110091607.GA17944@artemis.madism.org>
-	<alpine.LFD.1.00.0801101332150.3054@xanadu.home>
-	<alpine.LFD.1.00.0801101252030.3148@woody.linux-foundation.org>
-	<478691EB.1080704@vilain.net>
-	<alpine.LFD.1.00.0801101400550.3148@woody.linux-foundation.org>
-	<47869C24.3000400@vilain.net>
-	<alpine.LFD.1.00.0801101454440.3148@woody.linux-foundation.org>
-	<4786BFCD.1000303@vilain.net>
-	<alpine.LFD.1.00.0801101805540.3148@woody.linux-foundation.org>
-	<47870CDF.4010606@vilain.net>
-	<alpine.LFD.1.00.0801110759160.3148@woody.linux-foundation.org>
-	<47881D44.9060105@vilain.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add committer and author names to top of
+	COMMIT_EDITMSG.
+Date: Fri, 11 Jan 2008 23:52:31 -0500
+Message-ID: <20080112045231.GB5211@coredump.intra.peff.net>
+References: <9b3e2dc20801111210n7bd7a71cw437819aa6253ae85@mail.gmail.com> <7v3at42avd.fsf@gitster.siamese.dyndns.org> <9b3e2dc20801111609t3103af1frc23519cab43ae8be@mail.gmail.com> <7vbq7r28qo.fsf@gitster.siamese.dyndns.org> <9b3e2dc20801111733o477b3aadv6ee76d3aafade54a@mail.gmail.com> <7vejcnzu5z.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Nicolas Pitre <nico@cam.org>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marco Costalba <mcostalba@gmail.com>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Sat Jan 12 05:47:02 2008
+Cc: Stephen Sinclair <radarsat1@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 05:53:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDYGp-0001p5-TA
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 05:47:00 +0100
+	id 1JDYMx-0002dX-CX
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 05:53:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755906AbYALEqb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jan 2008 23:46:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754904AbYALEqb
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 23:46:31 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38521 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755491AbYALEqa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jan 2008 23:46:30 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8860040DD;
-	Fri, 11 Jan 2008 23:46:27 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C4F6940DC;
-	Fri, 11 Jan 2008 23:46:18 -0500 (EST)
-In-Reply-To: <47881D44.9060105@vilain.net> (Sam Vilain's message of "Sat, 12
-	Jan 2008 14:52:04 +1300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756180AbYALEwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jan 2008 23:52:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756157AbYALEwo
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Jan 2008 23:52:44 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2035 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754880AbYALEwn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jan 2008 23:52:43 -0500
+Received: (qmail 3971 invoked by uid 111); 12 Jan 2008 04:52:33 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 11 Jan 2008 23:52:33 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Jan 2008 23:52:31 -0500
+Content-Disposition: inline
+In-Reply-To: <7vejcnzu5z.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70260>
 
-Sam Vilain <sam@vilain.net> writes:
+On Fri, Jan 11, 2008 at 05:53:12PM -0800, Junio C Hamano wrote:
 
-> If the uncompressed objects are clustered in the pack, then they might
-> stream compress a lot better, should they be tranmitted over a http
-> transport with gzip encoding.
+> The official party line to defend the existing behaviour is that
+> there is no need to configure anything, when the host and gecos
+> is done properly.  But I tend to agree with you that quite a lot
+> of systems are not "done properly", and users cannot do much
+> about it in some cases.  I think most of misconfigured systems
+> are personal boxes they have control over but not all.
 
-That would only have been a sensible optimization in older
-native pack protocol, where we always exploded the transferred
-packfile.  However, these days, we tend to keep the packfile and
-re-index at the receiving end (http transport never exploded the
-packfile and it still doesn't).  When used that way, choosing
-object layout in packfile in such a way to ignore recency order
-and cluster objects by their delta chain, which you are
-advocating to reduce the transfer overhead, is a bad tradeoff.
-Your packs will be kept in the form you chose for transport,
-which is a layout that hurts the runtime performance.  And you
-keep using that suboptimal packs number of times, getting hurt
-every time.
+I think there are plenty of reasons for the host/gecos information not
+being useful. Is a workstation whose hostname is not a valid mailing
+address really not "done properly"?
 
-> @@ -433,7 +434,7 @@ static unsigned long write_object(struct sha1file *f,
->  		}
->  		/* compress the data to store and put compressed length in datalen */
->  		memset(&stream, 0, sizeof(stream));
-> -		deflateInit(&stream, pack_compression_level);
-> +		deflateInit(&stream, size >= compression_min_size ? pack_compression_level : 0);
->  		maxsize = deflateBound(&stream, size);
->  		out = xmalloc(maxsize);
->  		/* Compress it */
+> Perhaps we could disable the code that reads from hostname and
+> gecos, and instead always force the users to configure.  But
+> that kind of change is not something I'd want to be discussing
+> right now.
 
-I very much like the simplicity of the patch.  If such a simple
-approach can give us a clear performance gain, I am all for it.
+This is obviously not 1.5.4 material, so I haven't given it that much
+thought either. But perhaps Stephen's "author message" should simply
+trigger any time the author is pulled from gecos? I suppose that would
+annoy people who use this feature all the time, but they can silence the
+"warning" with a simple git-config.
 
-Benchmarks on different repositories need to back that up,
-though.
+-Peff
