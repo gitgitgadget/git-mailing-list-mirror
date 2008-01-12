@@ -1,48 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add committer and author names to top of
-	COMMIT_EDITMSG.
-Date: Sat, 12 Jan 2008 00:58:02 -0500
-Message-ID: <20080112055802.GA6117@coredump.intra.peff.net>
-References: <7v3at42avd.fsf@gitster.siamese.dyndns.org> <9b3e2dc20801111609t3103af1frc23519cab43ae8be@mail.gmail.com> <7vbq7r28qo.fsf@gitster.siamese.dyndns.org> <9b3e2dc20801111733o477b3aadv6ee76d3aafade54a@mail.gmail.com> <7vejcnzu5z.fsf@gitster.siamese.dyndns.org> <20080112045231.GB5211@coredump.intra.peff.net> <7vprw7y6mz.fsf@gitster.siamese.dyndns.org> <7vlk6vy5jj.fsf@gitster.siamese.dyndns.org> <20080112053225.GA6059@coredump.intra.peff.net> <7vhchjy4cg.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Teach remote machinery about remotes.default config variable
+Date: Fri, 11 Jan 2008 22:03:38 -0800
+Message-ID: <7vbq7ry405.fsf@gitster.siamese.dyndns.org>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
+	<1200022189-2400-2-git-send-email-mlevedahl@gmail.com>
+	<7v1w8o4ws0.fsf@gitster.siamese.dyndns.org>
+	<30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com>
+	<7v63xzzszp.fsf@gitster.siamese.dyndns.org>
+	<478855B5.9070600@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Stephen Sinclair <radarsat1@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 06:58:43 2008
+Cc: git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 07:04:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDZO8-0003oj-5r
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 06:58:36 +0100
+	id 1JDZTa-0004eC-Fj
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 07:04:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757927AbYALF6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 00:58:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759057AbYALF6H
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 00:58:07 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1981 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751010AbYALF6G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 00:58:06 -0500
-Received: (qmail 4406 invoked by uid 111); 12 Jan 2008 05:58:03 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 12 Jan 2008 00:58:03 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Jan 2008 00:58:02 -0500
-Content-Disposition: inline
-In-Reply-To: <7vhchjy4cg.fsf@gitster.siamese.dyndns.org>
+	id S1751197AbYALGDr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 01:03:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757472AbYALGDr
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 01:03:47 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41253 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751064AbYALGDq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 01:03:46 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CA9754BD2;
+	Sat, 12 Jan 2008 01:03:44 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 94BF24BD0;
+	Sat, 12 Jan 2008 01:03:40 -0500 (EST)
+In-Reply-To: <478855B5.9070600@gmail.com> (Mark Levedahl's message of "Sat, 12
+	Jan 2008 00:52:53 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70275>
 
-On Fri, Jan 11, 2008 at 09:56:15PM -0800, Junio C Hamano wrote:
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-> > list (ISTR that Linus _likes_ pulling the hostname from gecos).
-> 
-> You do not pull hostname from gecos, but I agree with your main
-> point.
+> My use really is a different use-case than is typical....
+>
+> This breaks down in a project like mine where there are multiple
+> servers and the differences are important. Content and usage vary
+> server to server, not just connectivity. At this point, hiding the
+> server names is counterproductive. Basically, use of origin is data
+> hiding, and data hiding is not good when you actually need the data.
 
-Heh. Sorry, the sentence made more sense before I edited it.
+If you need explicit name, you do not have to use "origin".
 
--Peff
+You can spell URL explicitly to name which exact repository you
+mean to reach over which datapath (one physical host may have
+different name depending on the network interface you reach it
+via).  You can always say
+
+	$ git pull git://that.exact.machine/repo that-branch
+
+if you want to avoid ambiguity.
+
+And that is not atypical at all.  Scan the kernel mailing list,
+looking for "please pull" requests.  You will never see 'origin'
+or any short nickname.  The names used in communication should
+be unambiguous in the context of the communication.  If you know
+'origin' mean different things to different people, do not use
+that in public communication.
+
+It's that simple.  Isn't it?
