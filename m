@@ -1,140 +1,72 @@
 From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH] Teach remote machinery about core.origin config variable
-Date: Sat, 12 Jan 2008 00:54:30 -0500
-Message-ID: <1200117273-3524-1-git-send-email-mlevedahl@gmail.com>
+Subject: [PATCH] git-remote - Unset core.origin when deleting the default remote
+Date: Sat, 12 Jan 2008 00:54:31 -0500
+Message-ID: <1200117273-3524-2-git-send-email-mlevedahl@gmail.com>
 References: <7v63xzzszp.fsf@gitster.siamese.dyndns.org>
+ <1200117273-3524-1-git-send-email-mlevedahl@gmail.com>
 Cc: git@vger.kernel.org, Mark Levedahl <mlevedahl@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Jan 12 06:55:09 2008
+X-From: git-owner@vger.kernel.org Sat Jan 12 06:55:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDZKk-0003KA-Jw
+	id 1JDZKl-0003KA-8M
 	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 06:55:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757292AbYALFyj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 00:54:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751463AbYALFyi
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 00:54:38 -0500
+	id S1757657AbYALFyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 00:54:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751463AbYALFyk
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 00:54:40 -0500
 Received: from an-out-0708.google.com ([209.85.132.240]:2935 "EHLO
 	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751105AbYALFyh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 00:54:37 -0500
+	with ESMTP id S1751237AbYALFyi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 00:54:38 -0500
 Received: by an-out-0708.google.com with SMTP id d31so299153and.103
-        for <git@vger.kernel.org>; Fri, 11 Jan 2008 21:54:36 -0800 (PST)
+        for <git@vger.kernel.org>; Fri, 11 Jan 2008 21:54:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=wepePbKaj5CpNkZkFb8G3CtnquWbMiIAV1cvnfQ2Dkg=;
-        b=jQ55tkHZrmskdaQBlo9x/xYjgbilZ/LtXtmbexPvvy37gXCcYOJCTfQ5iuAIzkVuqV8kU+LRDEAZODOcaT3UOfpINCaX5KD5VHHkznLerwAYRThNEm4AUnVrxxd0dkv95ES1gdMzfJaDgyyU/rJtAT76IPnrSFWyECIEcH3JXp4=
+        bh=uxKyKRXEdsgWKA6jKYxGPn7fJbImKqV+y/3m9+L4M5w=;
+        b=jyKRDwoa957Tj9xwfj5WXuXAdmwXIWIbuJXZyjlz2bWkE7gEPBjTRuOxzW8GhhR4yOFhwjonwKosaO4v5FDBeSFzxWV6zOVWF2eBWrbo4C6snr2A8Qok1GOPTXMYo+XZO6nv/5fPQCPsKQyni2AeHt3GYgDKnCrmPOr5UdrnTto=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=VnJHfLsPlDNXCW4vHswSFs/BzMS4nr2YmXp/IYMaVJtW4O4EyP1hxUY+EVjaDqAZAv0I9GwG73qSCVczZfMOgsA2Hs6Rpl9L2dKv1aH5CUAUWUguVuee8QAXZNXFqEWKkAE1o0KRsLUHx9LI/5+bhggnFrumJbql3gxMZdMRG/s=
-Received: by 10.100.110.15 with SMTP id i15mr8582018anc.76.1200117276829;
-        Fri, 11 Jan 2008 21:54:36 -0800 (PST)
+        b=s/CBs5LWeau7ZVJetz0YMxXroVe8ntLmInouLWGA0k8ue+BxWG5UXAWpTLiwPzULLhiB9QKaCrJajTALllGzNaF9cJtRaCVRL5/8ADVMWCKes6tX/hi30DoIt9Okjxpv3xt4X2H1MH10ZT2FY7E69fFKXC4cCIZ23mKFkLNiHk4=
+Received: by 10.100.247.14 with SMTP id u14mr8573529anh.85.1200117278306;
+        Fri, 11 Jan 2008 21:54:38 -0800 (PST)
 Received: from localhost.localdomain ( [71.163.17.196])
-        by mx.google.com with ESMTPS id c37sm6069027ana.9.2008.01.11.21.54.34
+        by mx.google.com with ESMTPS id c37sm6069027ana.9.2008.01.11.21.54.36
         (version=SSLv3 cipher=OTHER);
-        Fri, 11 Jan 2008 21:54:36 -0800 (PST)
+        Fri, 11 Jan 2008 21:54:37 -0800 (PST)
 X-Mailer: git-send-email 1.5.4.rc2.98.g1f3d5
-In-Reply-To: <7v63xzzszp.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <1200117273-3524-1-git-send-email-mlevedahl@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70270>
-
-This introduces a new configuration variable, core.origin, that
-defines the name of the default remote to be used. Traditionally, this
-is "origin", and could be overridden for a given branch. This change
-introduces a way to redefine the default as desired and have that honored
-regardless of the currently checked out head (e.g., core.origin is
-used when on a detached head or any other non-tracking branch).
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70271>
 
 Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
 ---
- Documentation/config.txt |    6 ++++++
- git-parse-remote.sh      |    5 +++--
- remote.c                 |   11 ++++++++++-
- 3 files changed, 19 insertions(+), 3 deletions(-)
+ git-remote.perl |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1b6d6d6..a0bdf14 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -291,6 +291,12 @@ core.editor::
- 	`GIT_EDITOR` environment, `core.editor`, `VISUAL` and
- 	`EDITOR` environment variables and then finally `vi`.
+diff --git a/git-remote.perl b/git-remote.perl
+index d13e4c1..75d2371 100755
+--- a/git-remote.perl
++++ b/git-remote.perl
+@@ -328,6 +328,11 @@ sub rm_remote {
  
-+core.origin::
-+	The name of the remote used by default for fetch / pull. If unset,
-+	origin is assumed. This value is used whenever the current branch
-+	has no corresponding branch.<name>.remote, such as when working on
-+	a detached head.
+ 	$git->command('config', '--remove-section', "remote.$name");
+ 
++	my $defremote = $git->config("core.origin");
++	if (defined $defremote && $defremote eq $name) {
++	       $git->command("config", "--unset", "core.origin");
++	}
 +
- core.pager::
- 	The command that git will use to paginate output.  Can be overridden
- 	with the `GIT_PAGER` environment variable.
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index 695a409..c7ac7c7 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -56,8 +56,9 @@ get_remote_url () {
- 
- get_default_remote () {
- 	curr_branch=$(git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||')
--	origin=$(git config --get "branch.$curr_branch.remote")
--	echo ${origin:-origin}
-+	git config --get "branch.$curr_branch.remote" ||
-+	git config --get "core.origin" ||
-+	echo origin
- }
- 
- get_remote_default_refs_for_push () {
-diff --git a/remote.c b/remote.c
-index 0e00680..302d499 100644
---- a/remote.c
-+++ b/remote.c
-@@ -10,6 +10,7 @@ static int allocated_branches;
- 
- static struct branch *current_branch;
- static const char *default_remote_name;
-+static const char *core_origin;
- 
- #define BUF_SIZE (2048)
- static char buffer[BUF_SIZE];
-@@ -233,6 +234,11 @@ static int handle_config(const char *key, const char *value)
- 			add_merge(branch, xstrdup(value));
- 		return 0;
- 	}
-+	if (!strcmp(key, "core.origin")) {
-+		if (value)
-+			core_origin = xstrdup(value);
-+		return 0;
-+	}
- 	if (prefixcmp(key,  "remote."))
- 		return 0;
- 	name = key + 7;
-@@ -291,7 +297,6 @@ static void read_config(void)
- 	int flag;
- 	if (default_remote_name) // did this already
- 		return;
--	default_remote_name = xstrdup("origin");
- 	current_branch = NULL;
- 	head_ref = resolve_ref("HEAD", sha1, 0, &flag);
- 	if (head_ref && (flag & REF_ISSYMREF) &&
-@@ -300,6 +305,10 @@ static void read_config(void)
- 			make_branch(head_ref + strlen("refs/heads/"), 0);
- 	}
- 	git_config(handle_config);
-+	if (!default_remote_name) {
-+		default_remote_name = core_origin ?
-+		core_origin : xstrdup("origin");
-+	}
- }
- 
- struct refspec *parse_ref_spec(int nr_refspec, const char **refspec)
+ 	eval {
+ 	    my @trackers = $git->command('config', '--get-regexp',
+ 			'branch.*.remote', $name);
 -- 
 1.5.4.rc2.98.g1f3d5
