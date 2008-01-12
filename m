@@ -1,51 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] gitk: Update and fix Makefile
-Date: Sat, 12 Jan 2008 00:04:33 -0500
-Message-ID: <20080112050433.GD5211@coredump.intra.peff.net>
-References: <200801082154.21282.stimming@tuhh.de> <7vk5mkq669.fsf@gitster.siamese.dyndns.org> <18308.17099.334609.80415@cargo.ozlabs.ibm.com> <7vk5mg3fjf.fsf@gitster.siamese.dyndns.org> <7vfxx43f5r.fsf@gitster.siamese.dyndns.org> <18311.64910.643392.816623@cargo.ozlabs.ibm.com> <7vr6gn29w1.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add committer and author names to top of COMMIT_EDITMSG.
+Date: Fri, 11 Jan 2008 21:06:44 -0800
+Message-ID: <7vprw7y6mz.fsf@gitster.siamese.dyndns.org>
+References: <9b3e2dc20801111210n7bd7a71cw437819aa6253ae85@mail.gmail.com>
+	<7v3at42avd.fsf@gitster.siamese.dyndns.org>
+	<9b3e2dc20801111609t3103af1frc23519cab43ae8be@mail.gmail.com>
+	<7vbq7r28qo.fsf@gitster.siamese.dyndns.org>
+	<9b3e2dc20801111733o477b3aadv6ee76d3aafade54a@mail.gmail.com>
+	<7vejcnzu5z.fsf@gitster.siamese.dyndns.org>
+	<20080112045231.GB5211@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>,
-	Christian Stimming <stimming@tuhh.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 06:05:59 2008
+Cc: Stephen Sinclair <radarsat1@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jan 12 06:07:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDYYW-0004D6-AX
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 06:05:46 +0100
+	id 1JDYaj-0004aF-0d
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 06:07:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750752AbYALFEn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 00:04:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750744AbYALFEn
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 00:04:43 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3798 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750740AbYALFEm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 00:04:42 -0500
-Received: (qmail 4116 invoked by uid 111); 12 Jan 2008 05:04:34 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 12 Jan 2008 00:04:34 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Jan 2008 00:04:33 -0500
-Content-Disposition: inline
-In-Reply-To: <7vr6gn29w1.fsf@gitster.siamese.dyndns.org>
+	id S1750759AbYALFHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 00:07:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750744AbYALFHF
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 00:07:05 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39303 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750757AbYALFHC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 00:07:02 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 31D7D43B9;
+	Sat, 12 Jan 2008 00:06:59 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 79AD643B8;
+	Sat, 12 Jan 2008 00:06:53 -0500 (EST)
+In-Reply-To: <20080112045231.GB5211@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 11 Jan 2008 23:52:31 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70265>
 
-On Fri, Jan 11, 2008 at 03:57:34PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> I agree with you that both are valid spellings, but when I
-> received 9e5d87d49070fe0463040e826824d6ce41beb089, I consulted a
-> couple of dictionaries and descendant seemed to be more widely
-> used.  Besides, I think the german translation update depends on
-> it ;-).
+> This is obviously not 1.5.4 material, so I haven't given it that much
+> thought either. But perhaps Stephen's "author message" should simply
+> trigger any time the author is pulled from gecos? I suppose that would
+> annoy people who use this feature all the time, but they can silence the
+> "warning" with a simple git-config.
 
-Descendant is a noun, whereas descendent is an adjective. Though like
-many such distinctions, the two forms increasingly are used
-interchangeably.
+Well, we could certainly do that.
 
--Peff
+But I am not entirely happy with the idea of having to make the
+default silly and inconvenient, only because otherwise new
+people who did not even bother to read and follow the VERY FIRST
+subsection of the tutorial that tells them that the first thing
+to do is to use user.name and user.email would not notice their
+problems, and experts know enough to squelch that broken
+default.  Middle level people (and newbies will quickly become
+one of them) will be inconvenienced even though they followed
+the tutorial's instruction, until they find the configuration
+variable to turn that silly AUTHOR output off.
