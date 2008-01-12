@@ -1,85 +1,67 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: Project Hosting with git ?
-Date: Sat, 12 Jan 2008 15:16:12 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <4788CBAC.9050804@obry.net>
-References: <912ec82a0801120553u3621c991u7c4cb4793960159c@mail.gmail.com>
+From: "Roger C. Soares" <rogersoares@intelinet.com.br>
+Subject: Re: [ANNOUNCE] GIT 1.5.4-rc3
+Date: Sat, 12 Jan 2008 12:24:44 -0200
+Message-ID: <4788CDAC.5030409@intelinet.com.br>
+References: <7vsl13wmas.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Neshama Parhoti <pneshama@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 15:16:50 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 15:25:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDhAE-0004ac-Q9
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 15:16:47 +0100
+	id 1JDhIF-0006m5-IK
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 15:25:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760283AbYALOQS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jan 2008 09:16:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756342AbYALOQS
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 09:16:18 -0500
-Received: from smtp2e.orange.fr ([80.12.242.111]:56922 "EHLO smtp2e.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751917AbYALOQR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 09:16:17 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2e01.orange.fr (SMTP Server) with ESMTP id 69B2770000A2
-	for <git@vger.kernel.org>; Sat, 12 Jan 2008 15:16:15 +0100 (CET)
-Received: from [192.168.0.100] (AVelizy-151-1-90-111.w86-205.abo.wanadoo.fr [86.205.32.111])
-	by mwinf2e01.orange.fr (SMTP Server) with ESMTP id 2264A700009C;
-	Sat, 12 Jan 2008 15:16:15 +0100 (CET)
-X-ME-UUID: 20080112141615140.2264A700009C@mwinf2e01.orange.fr
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <912ec82a0801120553u3621c991u7c4cb4793960159c@mail.gmail.com>
-X-Enigmail-Version: 0.95.6
+	id S1759043AbYALOY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 09:24:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756920AbYALOY2
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 09:24:28 -0500
+Received: from cvxbsd.convex.com.br ([200.152.177.10]:1295 "HELO
+	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751942AbYALOY1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 09:24:27 -0500
+Received: (qmail 89152 invoked by uid 0); 12 Jan 2008 12:26:32 -0200
+Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
+ (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
+ Processed in 0.407586 secs); 12 Jan 2008 14:26:32 -0000
+Received: from unknown (HELO ?200.152.180.33?) (200.152.180.33)
+  by cvxbsd.convex.com.br with SMTP; 12 Jan 2008 14:26:31 -0000
+User-Agent: Thunderbird 1.5.0.12 (X11/20071129)
+In-Reply-To: <7vsl13wmas.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70318>
 
-Neshama Parhoti a =E9crit :
-> Hello,
->=20
-> I am beginning a new Open Source project which I would
-> like to manage with git.
->=20
-> I was wondering how is it possible with current hosting
-> solutions ?
->=20
-> I mean, if I open a SourceForge project, I have to use cvs/subversion=
- right ?
 
-That's right.
+Junio C Hamano escreveu:
+> The third rc for the next feature release GIT 1.5.4 is available
+> at the usual places:
+>
+>   http://www.kernel.org/pub/software/scm/git/
+>
+>   git-1.5.4.rc3.tar.{gz,bz2}			(tarball)
+>   git-htmldocs-1.5.4.rc3.tar.{gz,bz2}		(preformatted docs)
+>   git-manpages-1.5.4.rc3.tar.{gz,bz2}		(preformatted docs)
+>   testing/git-*-1.5.4.rc3-1.$arch.rpm	(RPM)
+>   
+Don't know if you already have some recomendation for RHEL5 users, so 
+just reporting what I had to do to install the rpms.
 
-> Is there any way to use git ?
+To start, I already had git installed from EPEL.
+Downloaded perl-Error from 
+http://dag.wieers.com/rpm/packages/perl-Error/ to satisfy dependencies. 
+There was another dependacy for git-arch I think, but as I don't need it 
+I just deleted this one.
+When trying to install perl-Error it conflicted with perl-Git from EPEL. 
+I think they included perl-Error files inside their perl-Git rpm.
+So, after uninstalling all git rpms from EPEL, installing perl-Error 
+from dag.wieers, the rc3 git rpms installed successfully.
 
-Using Savannah:http://savannah.gnu.org/
-
-Or http://repo.or.cz
-
-The former require approval to create the project but has more features=
-=20
-(bug tracker...) and is somewhat faster (larger bandwidth), the later i=
-s=20
-simpler but do not require approval. I'm using both, and both are=20
-working fine.
-
-There is probably others.
-
-Pascal.
-
---=20
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+[]s,
+Roger.
