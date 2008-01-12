@@ -1,67 +1,60 @@
-From: "Roger C. Soares" <rogersoares@intelinet.com.br>
-Subject: Re: [ANNOUNCE] GIT 1.5.4-rc3
-Date: Sat, 12 Jan 2008 12:24:44 -0200
-Message-ID: <4788CDAC.5030409@intelinet.com.br>
-References: <7vsl13wmas.fsf@gitster.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Gr=E9goire_Barbier?= <devel@gbarbier.org>
+Subject: Re: Project Hosting with git ?
+Date: Sat, 12 Jan 2008 15:09:14 +0100
+Message-ID: <4788CA0A.9020503@gbarbier.org>
+References: <912ec82a0801120553u3621c991u7c4cb4793960159c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 15:25:09 2008
+To: Neshama Parhoti <pneshama@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 15:28:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDhIF-0006m5-IK
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 15:25:03 +0100
+	id 1JDhLn-0007sf-6e
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 15:28:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759043AbYALOY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 09:24:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756920AbYALOY2
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 09:24:28 -0500
-Received: from cvxbsd.convex.com.br ([200.152.177.10]:1295 "HELO
-	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751942AbYALOY1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 09:24:27 -0500
-Received: (qmail 89152 invoked by uid 0); 12 Jan 2008 12:26:32 -0200
-Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
- (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
- Processed in 0.407586 secs); 12 Jan 2008 14:26:32 -0000
-Received: from unknown (HELO ?200.152.180.33?) (200.152.180.33)
-  by cvxbsd.convex.com.br with SMTP; 12 Jan 2008 14:26:31 -0000
-User-Agent: Thunderbird 1.5.0.12 (X11/20071129)
-In-Reply-To: <7vsl13wmas.fsf@gitster.siamese.dyndns.org>
+	id S1763334AbYALO1r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jan 2008 09:27:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763070AbYALO1q
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 09:27:46 -0500
+Received: from slow1-v.mail.gandi.net ([217.70.178.88]:49848 "EHLO
+	slow1-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763812AbYALO1p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 09:27:45 -0500
+X-Greylist: delayed 1116 seconds by postgrey-1.27 at vger.kernel.org; Sat, 12 Jan 2008 09:27:45 EST
+Received: from relay1-v.mail.gandi.net (relay1-v.mail.gandi.net [217.70.178.75])
+	by slow1-v.mail.gandi.net (Postfix) with ESMTP id 3C07E6897EB
+	for <git@vger.kernel.org>; Sat, 12 Jan 2008 15:09:50 +0100 (CET)
+Received: from localhost (mfilter5-v.gandi.net [217.70.178.39])
+	by relay1-v.mail.gandi.net (Postfix) with ESMTP id A1432362AF;
+	Sat, 12 Jan 2008 15:09:08 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mfilter5-v.mgt.gandi.net
+Received: from relay1-v.mail.gandi.net ([217.70.178.75])
+	by localhost (mfilter5-v.gandi.net [217.70.178.39]) (amavisd-new, port 10024)
+	with ESMTP id WNB3GQuxgniV; Sat, 12 Jan 2008 15:01:54 +0100 (CET)
+Received: from [192.168.79.1] (soy95-1-82-229-96-169.fbx.proxad.net [82.229.96.169])
+	by relay1-v.mail.gandi.net (Postfix) with ESMTP id B8927362AA;
+	Sat, 12 Jan 2008 15:09:07 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <912ec82a0801120553u3621c991u7c4cb4793960159c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70319>
 
+Neshama Parhoti a =E9crit :
+> I was wondering how is it possible with current hosting
+> solutions ?
 
-Junio C Hamano escreveu:
-> The third rc for the next feature release GIT 1.5.4 is available
-> at the usual places:
->
->   http://www.kernel.org/pub/software/scm/git/
->
->   git-1.5.4.rc3.tar.{gz,bz2}			(tarball)
->   git-htmldocs-1.5.4.rc3.tar.{gz,bz2}		(preformatted docs)
->   git-manpages-1.5.4.rc3.tar.{gz,bz2}		(preformatted docs)
->   testing/git-*-1.5.4.rc3-1.$arch.rpm	(RPM)
->   
-Don't know if you already have some recomendation for RHEL5 users, so 
-just reporting what I had to do to install the rpms.
+Hi.
 
-To start, I already had git installed from EPEL.
-Downloaded perl-Error from 
-http://dag.wieers.com/rpm/packages/perl-Error/ to satisfy dependencies. 
-There was another dependacy for git-arch I think, but as I don't need it 
-I just deleted this one.
-When trying to install perl-Error it conflicted with perl-Git from EPEL. 
-I think they included perl-Error files inside their perl-Git rpm.
-So, after uninstalling all git rpms from EPEL, installing perl-Error 
-from dag.wieers, the rc3 git rpms installed successfully.
+There is a list of git projects and hosting here:
+http://git.or.cz/gitwiki/GitProjects
 
-[]s,
-Roger.
+--=20
+Gr=E9goire Barbier - gb =E0 gbarbier.org - +33 6 21 35 73 49
