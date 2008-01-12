@@ -1,107 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] GIT 1.5.4-rc3
-Date: Fri, 11 Jan 2008 23:34:34 -0800
-Message-ID: <7vejcnwl85.fsf@gitster.siamese.dyndns.org>
-References: <7vsl13wmas.fsf@gitster.siamese.dyndns.org>
-	<200801120926.14307.ismail@pardus.org.tr>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH decompress BUG] Fix decompress_next_from() wrong argument value
+Date: Sat, 12 Jan 2008 08:42:14 +0100
+Message-ID: <e5bfff550801112342w4faee040nad294f3962160180@mail.gmail.com>
+References: <e5bfff550801111247l1ccf171ene5b53b8d6841a864@mail.gmail.com>
+	 <7vfxx3290v.fsf@gitster.siamese.dyndns.org>
+	 <e5bfff550801112306g6b8127dft80484c9fd8554992@mail.gmail.com>
+	 <7vir1zwlcw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-To: Ismail =?utf-8?Q?D=C3=B6nmez?= <ismail@pardus.org.tr>
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1763302AbYALHe4@vger.kernel.org Sat Jan 12 08:35:40 2008
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1763302AbYALHe4@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 08:42:52 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDau2-0001GB-K6
-	for glk-linux-kernel-3@gmane.org; Sat, 12 Jan 2008 08:35:39 +0100
+	id 1JDb12-0002Tc-2D
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 08:42:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763302AbYALHe4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sat, 12 Jan 2008 02:34:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759732AbYALHeo
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Sat, 12 Jan 2008 02:34:44 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44347 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758011AbYALHen convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sat, 12 Jan 2008 02:34:43 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C24C348DB;
-	Sat, 12 Jan 2008 02:34:40 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 25F8B48D9;
-	Sat, 12 Jan 2008 02:34:37 -0500 (EST)
-In-Reply-To: <200801120926.14307.ismail@pardus.org.tr> (Ismail =?utf-8?Q?D?=
- =?utf-8?Q?=C3=B6nmez's?=
-	message of "Sat, 12 Jan 2008 09:26:14 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1754536AbYALHmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 02:42:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758011AbYALHmQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 02:42:16 -0500
+Received: from rv-out-0910.google.com ([209.85.198.185]:28946 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754318AbYALHmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 02:42:15 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so1168576rvb.1
+        for <git@vger.kernel.org>; Fri, 11 Jan 2008 23:42:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=4sqwWlRj/ZlNvdRhEpIyFNOCfF91oCESqWjsITnpalw=;
+        b=g663ejRllrDEHWJdoN3ZESRJkO90+Z9ysYF9kG/NYOirPNJ1WXBVK6S8+18pqgsmoOe6mQ8ntOnZ7RRDcIqX7I9Y7PboNv9PZdDd2/P8wx6qGDuMDTR7irLRP3w3Rpu2KYGUWZLZw6VVghKqJGRexSSMJRsqRnn7aMQ39biKW74=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=xqm90yRZG/I7qsFREOQuaumbB4t1W/wAm15NSMGyHArayVK9t4sgs4Jvzjlb/J+6VEoWs99+tebLFNzXmYh9b6WTd7MgBDVrqNuoAHahafWCBrKAWTfWRcJclPdG+Dbxmd+e4DDpa6bdkicViqFW0AnL/r80IY0nwDhCAg8o0GI=
+Received: by 10.141.185.3 with SMTP id m3mr2536894rvp.167.1200123734085;
+        Fri, 11 Jan 2008 23:42:14 -0800 (PST)
+Received: by 10.141.76.1 with HTTP; Fri, 11 Jan 2008 23:42:14 -0800 (PST)
+In-Reply-To: <7vir1zwlcw.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70284>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70285>
 
-Ismail D=C3=B6nmez <ismail@pardus.org.tr> writes:
-
-> Saturday 12 January 2008 09:11:23 tarihinde Junio C Hamano =C5=9Funla=
-r=C4=B1 yazm=C4=B1=C5=9Ft=C4=B1:
->> The third rc for the next feature release GIT 1.5.4 is available
->> at the usual places:
->>
->>   http://www.kernel.org/pub/software/scm/git/
->>
->>   git-1.5.4.rc3.tar.{gz,bz2}			(tarball)
->>   git-htmldocs-1.5.4.rc3.tar.{gz,bz2}		(preformatted docs)
->>   git-manpages-1.5.4.rc3.tar.{gz,bz2}		(preformatted docs)
->>   testing/git-*-1.5.4.rc3-1.$arch.rpm	(RPM)
+On Jan 12, 2008 8:31 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> I am seeing new failures compared to rc2 :
+> By the way, I was looking at the earlier two series from you
+> (compress and decompress), and noticed some of them were corrupt
+> with linewrap.  As I think they are good clean-up patches, I'd
+> like to apply them as one of the first series post 1.5.4.  As
+> such, this request is not urgent at all, but please resend with
+> a clean-up when 'master'/'next' reopens.
 >
-> *** t9200-git-cvsexportcommit.sh ***
-> * FAIL 1: New file
->         mkdir A B C D E F &&
->              echo hello1 >A/newfile1.txt &&
->              echo hello2 >B/newfile2.txt &&
->              cp ../test9200a.png C/newfile3.png &&
->              cp ../test9200a.png D/newfile4.png &&
->              git add A/newfile1.txt &&
->              git add B/newfile2.txt &&
->              git add C/newfile3.png &&
->              git add D/newfile4.png &&
->              git commit -a -m "Test: New file" &&
->              id=3D$(git rev-list --max-count=3D1 HEAD) &&
->              (cd "$CVSWORK" &&
->              git cvsexportcommit -c $id &&
->              check_entries A "newfile1.txt/1.1/" &&
->              check_entries B "newfile2.txt/1.1/" &&
->              check_entries C "newfile3.png/1.1/-kb" &&
->              check_entries D "newfile4.png/1.1/-kb" &&
->              diff A/newfile1.txt ../A/newfile1.txt &&
->              diff B/newfile2.txt ../B/newfile2.txt &&
->              diff C/newfile3.png ../C/newfile3.png &&
->              diff D/newfile4.png ../D/newfile4.png
->              )
-> Ideas appreciated.
 
-Often the first failure is the most interesting one.  Running
-the test under sh -x like this:
+Sure.
 
-	$ cd t
-	$ sh t9200-git-cvsexportcommit.sh -i -v
+Do you prefer patches differently organized or I can keep the same
+patch contents (of course with squashing the bug fixes in) ?
 
-and then looking at "trash" directory would tell you which one
-of the long sequence of commands failed, and further
-investigation can be made from there.
-
-Thanks.
---
-To unsubscribe from this list: send the line "unsubscribe linux-kernel"=
- in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
-Please read the FAQ at  http://www.tux.org/lkml/
+Marco
