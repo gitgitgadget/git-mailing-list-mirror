@@ -1,86 +1,66 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: CRLF problems with Git on Win32
-Date: Sat, 12 Jan 2008 18:26:15 +0300
-Message-ID: <20080112152615.GH2963@dpotapov.dyndns.org>
-References: <D36EB89D-11A3-4EAF-BC1C-6100383FCBFC@zib.de> <C3AD6D58.10E02%jefferis@gmail.com>
+From: "Neshama Parhoti" <pneshama@gmail.com>
+Subject: Re: Project Hosting with git ?
+Date: Sat, 12 Jan 2008 17:27:42 +0200
+Message-ID: <912ec82a0801120727k1160853clb5fc72627fb2037d@mail.gmail.com>
+References: <912ec82a0801120553u3621c991u7c4cb4793960159c@mail.gmail.com>
+	 <4788CA0A.9020503@gbarbier.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Gregory Jefferis <jefferis@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 16:26:47 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Gr=E9goire_Barbier?=" <devel@gbarbier.org>
+X-From: git-owner@vger.kernel.org Sat Jan 12 16:28:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDiFy-0001Ea-FD
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 16:26:46 +0100
+	id 1JDiHM-0001cO-GA
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 16:28:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758255AbYALP0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 10:26:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755588AbYALP0S
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 10:26:18 -0500
-Received: from smtp03.mtu.ru ([62.5.255.50]:58503 "EHLO smtp03.mtu.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758416AbYALP0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 10:26:17 -0500
-Received: from smtp03.mtu.ru (localhost.mtu.ru [127.0.0.1])
-	by smtp03.mtu.ru (Postfix) with ESMTP id A6B2118704D7;
-	Sat, 12 Jan 2008 18:26:15 +0300 (MSK)
-Received: from dpotapov.dyndns.org (ppp85-140-170-195.pppoe.mtu-net.ru [85.140.170.195])
-	by smtp03.mtu.ru (Postfix) with ESMTP id 3B1CD18704F2;
-	Sat, 12 Jan 2008 18:26:15 +0300 (MSK)
-Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
-	(envelope-from <dpotapov@gmail.com>)
-	id 1JDiFT-000465-6E; Sat, 12 Jan 2008 18:26:15 +0300
+	id S1752023AbYALP1o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jan 2008 10:27:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752149AbYALP1o
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 10:27:44 -0500
+Received: from an-out-0708.google.com ([209.85.132.243]:40233 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751566AbYALP1n convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2008 10:27:43 -0500
+Received: by an-out-0708.google.com with SMTP id d31so321465and.103
+        for <git@vger.kernel.org>; Sat, 12 Jan 2008 07:27:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=ILdrO7ZHwB1KaI+dUdVUxcoUzYcFID6TI7byYIrhuRQ=;
+        b=Nu5s/TzsHkCVa1qolZxkKKfBr/VNA9MC/+/eWmpW9cOkEx0LnlLNkw6DLIabihdfzVP6WvjUm5LpxfYXsQRhYx1GBHb2jRjo62SSb7QdWm/dDRZkphmySJfJcskv2vx8qMFWH2ynZQQaSY7g7qqpZRr+3i/xs/aqwfWSmNOhozs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NEMkfIi53y+qjPAZ//C7T5JCREPeawDOFHE+yq/BH8F39W3t8jSCRcAR1tyoc23oUpKPertyWDERr8fAdl6Cfr9szOMmxItZcr5EgB6tVSJaR/rb2/PIVM8fp+Ia71b3giBd3X0wjRkGWKaiU9S0vE5coyaGJXAkMTh7wifIovA=
+Received: by 10.100.253.12 with SMTP id a12mr9546085ani.43.1200151662443;
+        Sat, 12 Jan 2008 07:27:42 -0800 (PST)
+Received: by 10.100.131.14 with HTTP; Sat, 12 Jan 2008 07:27:42 -0800 (PST)
+In-Reply-To: <4788CA0A.9020503@gbarbier.org>
 Content-Disposition: inline
-In-Reply-To: <C3AD6D58.10E02%jefferis@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-DCC-STREAM-Metrics: smtp03.mtu.ru 10002; Body=0 Fuz1=0 Fuz2=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70324>
 
-On Fri, Jan 11, 2008 at 07:00:40PM +0000, Gregory Jefferis wrote:
-> 
-> LF only repositories are model that everyone is tending towards but I feel
-> that there are (sane) people out there who would sometimes like to have CRLF
-> files in the repository and do cross-platform development (I would
-> developing on a Mac for a Windows originated Win/Mac project or if I were
-> keeping vendor source code in a tree).  In spite of the plethora of autocrlf
-> variants so far there is still none that on unix would give you LF->CRLF on
-> check in and CRLF->LF on checkout!  This should be perfectly compatible with
-> git's internals
+On Jan 12, 2008 4:09 PM, Gr=E9goire Barbier <devel@gbarbier.org> wrote:
+> Neshama Parhoti a =E9crit :
+> > I was wondering how is it possible with current hosting
+> > solutions ?
+>
+> Hi.
+>
+> There is a list of git projects and hosting here:
+> http://git.or.cz/gitwiki/GitProjects
 
-Git internally considers only LF as the EOL marker. I think there are
-more three hundreds places in Git where the decision about end-of-line
-is made based on that. Though CRLF may appear to work, but it is more
-an artifact caused by its LF ending, so what it actually works is LF and
-nothing else. IOW, CRLF from the Git's point of view is no better EOL
-than let's say SPACE+LF.
-
-> and I think it should be possible to allow this without
-> breaking anything for other situations.  One solution, which would have
-> other uses, would be to allow checkin conversion to a specified line ending
-> and checkout conversion to platform line ending as separately configurable
-> options.
-> 
-> If this seems outrageous then it should be made perfectly clear that the git
-> project strongly discourages CRLF text files in cross-platform repositories,
-
-Because LF is the only true EOL marker, and CRLF is not and never will be.
-In fact, Git is written in C, and the decision of what is EOL in C is made
-many years ago. So, it is the only sane choice to use LF for _internal_
-representation. It can be said that *nix users are lucky in that their
-OS uses the same symbol, but it is similar to big-endian platforms being
-lucky with byte order when it comes to TCP/IP. That is not because TCP/IP
-wants to discourage little-endian platforms, but having the single encoding
-is the only sane choice if you care about interoperability, and any other
-decision will end up being much worse.
+thank you
 
 
-Dmitry
+>
+> --
+> Gr=E9goire Barbier - gb =E0 gbarbier.org - +33 6 21 35 73 49
+>
