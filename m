@@ -1,120 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: valgrind test script integration
-Date: Sat, 12 Jan 2008 06:36:09 -0500
-Message-ID: <20080112113608.GB24589@coredump.intra.peff.net>
-References: <7vsl13wmas.fsf@gitster.siamese.dyndns.org> <200801120926.14307.ismail@pardus.org.tr> <7vejcnwl85.fsf@gitster.siamese.dyndns.org> <200801120947.48602.ismail@pardus.org.tr> <20080112090432.GA6134@coredump.intra.peff.net> <20080112111044.GA24257@coredump.intra.peff.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Re-casing directories on case-insensitive systems
+Date: Sat, 12 Jan 2008 13:07:47 +0100
+Message-ID: <85ejcn5jsc.fsf@lola.goethe.zz>
+References: <579DF776-4F4E-464C-88DB-B22C2EC291BD@sb.org>
+	<200801120026.01930.robin.rosenberg@dewire.com>
+	<1973E1D5-C8CC-4979-A085-85A2C5A13E57@sb.org>
+	<200801120115.41274.robin.rosenberg@dewire.com>
+	<191B60D7-FD89-48D8-8D48-C91645D4814D@sb.org>
+	<7v7iif28i2.fsf@gitster.siamese.dyndns.org>
+	<alpine.LSU.1.00.0801120139170.8333@wbgn129.biozentrum.uni-wuerzburg.de>
+	<B2968E86-D43E-4F5E-921F-DF8A15886C98@sb.org>
+	<7vprw7zv7s.fsf@gitster.siamese.dyndns.org>
+	<08E42D03-7AAA-4ADD-9F5B-215AB30E34E1@sb.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 12 12:36:43 2008
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Sat Jan 12 13:07:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDefI-00024g-WB
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 12:36:41 +0100
+	id 1JDf8n-0002fm-OL
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 13:07:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762827AbYALLgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 06:36:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762742AbYALLgM
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 06:36:12 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3204 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762727AbYALLgM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 06:36:12 -0500
-Received: (qmail 6736 invoked by uid 111); 12 Jan 2008 11:36:10 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 12 Jan 2008 06:36:10 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Jan 2008 06:36:09 -0500
-Content-Disposition: inline
-In-Reply-To: <20080112111044.GA24257@coredump.intra.peff.net>
+	id S1761791AbYALMGl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 07:06:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761530AbYALMGl
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 07:06:41 -0500
+Received: from mail-in-01.arcor-online.net ([151.189.21.41]:58360 "EHLO
+	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759431AbYALMGk (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2008 07:06:40 -0500
+Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id CBF3D103986;
+	Sat, 12 Jan 2008 13:06:38 +0100 (CET)
+Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
+	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id B76CA2130A2;
+	Sat, 12 Jan 2008 13:06:38 +0100 (CET)
+Received: from lola.goethe.zz (dslb-084-061-008-152.pools.arcor-ip.net [84.61.8.152])
+	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 95E6A1C36A7;
+	Sat, 12 Jan 2008 13:06:38 +0100 (CET)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 4FD651C3E010; Sat, 12 Jan 2008 13:07:46 +0100 (CET)
+In-Reply-To: <08E42D03-7AAA-4ADD-9F5B-215AB30E34E1@sb.org> (Kevin Ballard's
+	message of "Fri, 11 Jan 2008 20:43:35 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/5478/Fri Jan 11 16:39:22 2008 on mail-in-05.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70310>
 
-On Sat, Jan 12, 2008 at 06:10:44AM -0500, Jeff King wrote:
+Kevin Ballard <kevin@sb.org> writes:
 
->  - We only catch calls to 'git', not 'git-foo' (and in fact for that
->    reason this doesn't catch the t7300 bug by itself, since that uses
->    git-clean). A follow-on patch will deal with this.
+> On Jan 11, 2008, at 8:30 PM, Junio C Hamano wrote:
+>
+>>> Apparently so. By Junio's definition, HFS+ is not a sane filesystem,
+>>> and as git grows more popular with OS X users, this issue is going to
+>>> crop up more frequently.
+>>
+>> It's not "my" definition, but you asked the reason and I gave
+>> the answer.  We can close this issue of "is HFS+ sane" now.
+>> HFS+ is insane, period.  And as Linus said, you cannot forgive
+>> its insanity using the historical baggage argument, like MS-DOS.
+>
+> Fair enough, though I believe OS X has a good reason, namely it's an
+> OS designed for regular users rather than servers or
+> programmers. Case-sensitivity would confuse my mother.
 
-And here it is.
+If case-sensitivity would be the primary cause of confusion in
+mother-computer interoperation, you have a remarkable mother.
 
-This replaces all usage of "git-foo" with "git foo" in the
-test scripts. The replacement was done semi-manually; a
-fully automatic replacement won't work because the pattern
-"git-" appears in several other contexts (e.g.,
-"--git-dir=", ref names, filenames, etc).
+"Type things the same way and they work the same" is a simple enough
+rule.
 
-Obviously another route would be intercepting git-* calls,
-as well, but my impression is that we are ultimately heading
-towards a "git foo is the right way" situation, in which
-case this cleanup is eventually necessary anyway.
-
-[the original got eaten by the list since the patch is almost 150K;
- the diffstat is below, and I am making the patch available at
-
-   git://repo.or.cz/git/peff.git master
-]
-
- t/t1400-update-ref.sh                  |   10 +-
- t/t2005-checkout-index-symlinks.sh     |    4 +-
- t/t2050-git-dir-relative.sh            |    4 +-
- t/t2102-update-index-symlinks.sh       |    2 +-
- t/t2200-add-update.sh                  |   12 +-
- t/t3020-ls-files-error-unmatch.sh      |    2 +-
- t/t3030-merge-recursive.sh             |   14 +-
- t/t3200-branch.sh                      |   16 +-
- t/t3210-pack-refs.sh                   |    4 +-
- t/t3400-rebase.sh                      |    6 +-
- t/t3401-rebase-partial.sh              |   20 +-
- t/t3500-cherry.sh                      |   12 +-
- t/t3600-rm.sh                          |    4 +-
- t/t3800-mktag.sh                       |    8 +-
- t/t3900-i18n-commit.sh                 |    6 +-
- t/t3901-i18n-patch.sh                  |   16 +-
- t/t4012-diff-binary.sh                 |    2 +-
- t/t4103-apply-binary.sh                |   26 ++--
- t/t5300-pack-object.sh                 |   14 +-
- t/t5301-sliding-window.sh              |    4 +-
- t/t5302-pack-index.sh                  |   10 +-
- t/t5400-send-pack.sh                   |   30 ++--
- t/t5401-update-hooks.sh                |    4 +-
- t/t5402-post-merge-hook.sh             |    4 +-
- t/t5403-post-checkout-hook.sh          |    4 +-
- t/t5500-fetch-pack.sh                  |    4 +-
- t/t5510-fetch.sh                       |    2 +-
- t/t5530-upload-pack-error.sh           |    4 +-
- t/t5600-clone-fail-cleanup.sh          |    6 +-
- t/t6006-rev-list-format.sh             |    6 +-
- t/t6025-merge-symlinks.sh              |   32 ++--
- t/t6026-merge-attr.sh                  |   12 +-
- t/t6030-bisect-porcelain.sh            |    2 +-
- t/t6120-describe.sh                    |   30 ++--
- t/t6300-for-each-ref.sh                |   28 ++--
- t/t7001-mv.sh                          |   12 +-
- t/t7003-filter-branch.sh               |   18 +-
- t/t7004-tag.sh                         |  316 ++++++++++++++++----------------
- t/t7101-reset.sh                       |    6 +-
- t/t7300-clean.sh                       |   38 ++--
- t/t7400-submodule-basic.sh             |   46 +++---
- t/t7501-commit.sh                      |   44 +++---
- t/t9100-git-svn-basic.sh               |   44 +++---
- t/t9101-git-svn-props.sh               |   62 +++---
- t/t9102-git-svn-deep-rmdir.sh          |    6 +-
- t/t9104-git-svn-follow-parent.sh       |   36 ++--
- t/t9105-git-svn-commit-diff.sh         |    8 +-
- t/t9106-git-svn-commit-diff-clobber.sh |   12 +-
- t/t9107-git-svn-migrate.sh             |   16 +-
- t/t9108-git-svn-glob.sh                |    4 +-
- t/t9110-git-svn-use-svm-props.sh       |    8 +-
- t/t9111-git-svn-use-svnsync-props.sh   |    8 +-
- t/t9112-git-svn-md5less-file.sh        |    4 +-
- t/t9116-git-svn-log.sh                 |    4 +-
- t/t9119-git-svn-info.sh                |  120 ++++++------
- t/t9200-git-cvsexportcommit.sh         |   10 +-
- t/t9300-fast-import.sh                 |   64 ++++----
- t/t9400-git-cvsserver-server.sh        |   30 ++--
- 58 files changed, 640 insertions(+), 640 deletions(-)
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
