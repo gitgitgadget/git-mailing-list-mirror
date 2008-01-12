@@ -1,135 +1,159 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: handle leading/trailing whitespace from svnsync revprops
-Date: Sat, 12 Jan 2008 01:12:42 -0800
-Message-ID: <20080112091242.GA27109@soma>
-References: <200801081738.56624.devurandom@gmx.net> <200801101813.45938.devurandom@gmx.net> <7v63y178a3.fsf@gitster.siamese.dyndns.org> <200801102213.04082.devurandom@gmx.net> <7vmyrd5p81.fsf@gitster.siamese.dyndns.org> <20080112071355.GA17021@soma> <7vzlvbv5m9.fsf@gitster.siamese.dyndns.org>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH 2/5] git-submodule: New subcommand 'summary' (2) - hard work
+Date: Sat, 12 Jan 2008 17:48:59 +0800
+Message-ID: <46dff0320801120148r1a760bcdq4b9dcdf31354d9e0@mail.gmail.com>
+References: <1200123435-16722-1-git-send-email-pkufranky@gmail.com>
+	 <f67f45eeb9648bb7e5adaf53544443b79643914e.1200122041.git.pkufranky@gmail.com>
+	 <62a73e734832ad67e89be706f1f8b3dbc30cfcf4.1200122041.git.pkufranky@gmail.com>
+	 <7vejcnv3zk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dennis Schridde <devurandom@gmx.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 10:13:19 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 10:49:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDcQU-0001G9-IG
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 10:13:14 +0100
+	id 1JDczu-0000dh-1A
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 10:49:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755643AbYALJMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 04:12:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759171AbYALJMq
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 04:12:46 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:39030 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751746AbYALJMo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 04:12:44 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id E91332DC08B;
-	Sat, 12 Jan 2008 01:12:43 -0800 (PST)
+	id S1762152AbYALJtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 04:49:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751620AbYALJtF
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 04:49:05 -0500
+Received: from py-out-1112.google.com ([64.233.166.181]:40673 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762257AbYALJtB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 04:49:01 -0500
+Received: by py-out-1112.google.com with SMTP id u52so2076823pyb.10
+        for <git@vger.kernel.org>; Sat, 12 Jan 2008 01:49:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=UL6EYnpd7qu+ODmcmfF63AKYCUzJUc0Tg96fqDWBXjc=;
+        b=fN7/4cgIUqI6UErt0aClxLkLYyZwOglELBiJRxGgXt1XRehw9kolq4Xs94Fi9zl0FQRi7qn3YAGDyD0lCeqeMj8R9rTja72UPpW/X20ZDJREQGH963O3ThmumzqQ//iZqHWGKDW20WxS3xN4ZCMWeKpYdiqgiLrhXGnzlitZibU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=yCjLhwi0hQgSxorurUZoFdBegz2qLbLnS3miRlFOjjJJKUdJgEVTWykD/4GvwiOrdSgdV9Hr9zQnwT+Y64CGXCgpWyp9hwTYlDahDb3qnNIROrmD4PD7D90C0UralYjcXyosoaZzIHt9xlWXPeRKd4VGFgjLXO0whITojHiAR2A=
+Received: by 10.35.90.1 with SMTP id s1mr4805512pyl.53.1200131340224;
+        Sat, 12 Jan 2008 01:49:00 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Sat, 12 Jan 2008 01:48:59 -0800 (PST)
+In-Reply-To: <7vejcnv3zk.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7vzlvbv5m9.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70303>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
-> > diff --git a/git-svn.perl b/git-svn.perl
-> > index 3308fe1..f40ad2c 100755
-> > --- a/git-svn.perl
-> > +++ b/git-svn.perl
-> > @@ -1758,10 +1758,16 @@ sub svnsync {
-> >  	# see if we have it in our config, first:
-> >  	eval {
-> >  		my $section = "svn-remote.$self->{repo_id}";
-> > -		$svnsync = {
-> > -		  url => tmp_config('--get', "$section.svnsync-url"),
-> > -		  uuid => tmp_config('--get', "$section.svnsync-uuid"),
-> > -		}
+On Jan 12, 2008 4:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ping Yin <pkufranky@gmail.com> writes:
+>
+>
+> > +             check_dst=t
+> > +             check_src=t
+> > +             case $status in
+> > +             D)
+> > +                     check_dst=
+> > +                     ;;
+> > +             A)
+> > +                     check_src=
+> > +                     ;;
+>
+> I'd loosen the above grep (see my comments to your 1/5) and also
+> add this:
+>
+>                 *)
+>                         continue ;# punt
+>                         ;;
+>
+> so that the rest of the code won't break when seeing a path that
+> was submodule in the HEAD but is a blob in the index.
+
+Right. I thought 'M' should be the default case because I missed the
+case 'T' (head blob but index submodule, or the reverse) .
+
+>
+> > +             esac
 > > +
-> > +	        my $url = tmp_config('--get', "$section.svnsync-url");
-> > +		($url) = ($url =~ m{^([a-z\+]+://\S+)$}) or
-> > +	           die "doesn't look right - svn:sync-from-url is '$url'\n";
-> 
-> When I checked tmp_config(), I thought that it was returning the
-> first element (taking the output of "config --get" as a
-> LF-terminated list) when called in list context, so this would
-> give the correct sync-url after stripping the trailing LF for
-> Dennis's case.  The first assignment looks fine, but the second
-> one looks very funny.
-> 
-> Is it only me who finds that
-> 
-> 	($var) = ($var =~ m{^(any regexp)$}) or die "message"
-> 
-> is extremely a roundabout and hard-to-read way to say:
-> 
-> 	if ($var !~ m{^(the same regexp)$} {
->         	die "message";
-> 	}
-> 
-> which is much easier to read?
+> > +             (
+> > +                     errmsg=
+> > +                     unfound_src=
+> > +                     unfound_dst=
+> > +
+> > +                     test -z "$check_src" ||
+> > +                     GIT_DIR="$name/.git" git-rev-parse $sha1_src >&/dev/null ||
+>
+>
+> I think you would want to read full 40-char sha1_src and
+> sha1_dst with "while read", and keep that full 40-char in these
+> variables, and use them when calling rev-parse here.
 
-The statements are not equivalent, however.  I'd have to add
+Hmm, precision is really a problem. However, "git diff --raw" will not
+always give full 40-char sha1, instead it will give sha1 with enough
+length. So maybe i can use the sha1 from "git diff --raw" ?
 
-	$var = $1;
+>
+> If you are checking if that the object exists in the submodule,
+> use "rev-parse --verify", which was designed for exactly that
+> purpose.  If you also want to verify if the object is a commit,
+> which may be a good idea anyway, "rev-parse --verify $sha1_src^0".
 
-too, because I needed to extract what was inside the ( ) since the '$'
-doesn't catch the trailing newline, either.  I also couldn't find any of
-the /sm, /m, /s switches useful for making '$' not accept the trailing
-newline, either.
+Yes, --verify is better.
+                   ;;
+>
+> When reporting errors, you would want to give full 40-chars...
+>
+As said before, enough is ok?
 
-I also consider the "or die " part of the line to be uninteresting,
-and would rather not waste extra space on it.
+> > +                     *)
+> > +                             left=
+> > +                             right=
+> > +                             test -n "$check_src" &&
+> > +                             left=$(GIT_DIR="$name/.git" git log --pretty=format:"  <%s" \
+> > +                             ${check_dst:+$sha1_dst..}$sha1_src 2>/dev/null)
+> > +
+> > +                             test -n "$check_dst" &&
+> > +                             right=$(GIT_DIR="$name/.git" git log --reverse --pretty=format:"  >%s" \
+> > +                             ${check_src:+$sha1_src..}$sha1_dst 2>/dev/null)
+> > +                             ;;
+> > +                     esac
+> > +
+> > +                     echo "* $name $sha1_src...$sha1_dst:"
+>
+> While reporting like this, you would want the shortened form,
+> perhaps produced your "cut -c1-7".
+>
+> > +                     if test -n "$errmsg"
+> > +                     then
+> > +                             echo "$errmsg"
+> > +                     else
+> > +                             test -n "$left" && echo "$left"
+> > +                             test -n "$right" && echo "$right"
+> > +                     fi
+> > +                     echo
+> > +             ) | sed 's/^/# /'
+> > +     done
+>
+> I'd prefer to always have "-e" before the sed expression.
+Is it not portable without "-e"?
 
-> I said the first one looks fine, but actually I really _hate_
-> Perl subs that use wantarray and return one element in scalar
-> context, and return a list in list context.
-> 
-> This forces the programmer who calls the sub to read the code of
-> the sub and know that it uses this unusual calling convention.
-> It forbids them to rely on their common-sense acquired from
-> experience while coding in Perl, that most functions do not do
-> that, and a usual sub that is capable of returning a list in a
-> list context you can find out the number of elemenets, the first
-> element, and the first few elements by using:
-> 
-> 	sub returns_list {
->         	my @a = qw(a b c);
->                 return @a;
-> 	}
-> 
-> 	my $number_of_elems = returns_list();
-> 	my ($first_element) = returns_list();
-> 	my ($first, $second) = returns_list();
-> 
-> IOW, writing
-> 
-> 	sub returns_funny {
->         	my @a = qw(a b c);
->                 return wantarray ? @a : $a[0];
-> 	}
-> 
-> may make you feel as if you have become a power-coder, and might
-> even give you a false sense that some parts of your code can
-> become simpler thanks to that, because you can now write:
-> 
-> 	my $first_element = returns_list();
-> 
-> i.e. you did not have to type WHOLE TWO LETTERS ( and )!
-> 
-> But in the longer run, when you want/need other people to help
-> maintaining such a code, you create unnecessary burden on them.
+>
+> Any reason why you want separate invocation of sed inside the
+> while loop?  IOW, why isn't it like this?
+>
+>         git diff --raw |
+>         while read ...
+>         do
+>                 ...
+>         done | sed -e 's/^/# /'
+>
+Just because i'm stupid. :)
 
-Good points, I've been mindlessly taking "interesting" things from other
-Perl code I've seen over the years and using it in my own without
-thinking about it too hard :x
 
-I'll avoid them in the future.  Unfortunately, Git.pm also suffers from
-this as well.
 
 -- 
-Eric Wong
+Ping Yin
