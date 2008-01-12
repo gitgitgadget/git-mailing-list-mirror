@@ -1,202 +1,112 @@
-From: Ismail =?utf-8?q?D=C3=B6nmez?= <ismail@pardus.org.tr>
-Subject: Re: [ANNOUNCE] GIT 1.5.4-rc3
-Date: Sat, 12 Jan 2008 09:26:14 +0200
-Organization: Pardus / KDE
-Message-ID: <200801120926.14307.ismail@pardus.org.tr>
-References: <7vsl13wmas.fsf@gitster.siamese.dyndns.org>
+From: "Stephen Sinclair" <radarsat1@gmail.com>
+Subject: Re: [PATCH] Add committer and author names to top of COMMIT_EDITMSG.
+Date: Sat, 12 Jan 2008 02:26:24 -0500
+Message-ID: <9b3e2dc20801112326p2b4eaf96tbd036ed746eff4a3@mail.gmail.com>
+References: <9b3e2dc20801111210n7bd7a71cw437819aa6253ae85@mail.gmail.com>
+	 <7v3at42avd.fsf@gitster.siamese.dyndns.org>
+	 <9b3e2dc20801111609t3103af1frc23519cab43ae8be@mail.gmail.com>
+	 <7vbq7r28qo.fsf@gitster.siamese.dyndns.org>
+	 <9b3e2dc20801111733o477b3aadv6ee76d3aafade54a@mail.gmail.com>
+	 <7vejcnzu5z.fsf@gitster.siamese.dyndns.org>
+	 <9b3e2dc20801111825i644da598i7556ef700b870445@mail.gmail.com>
+	 <7vve5zy72p.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 08:25:59 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 08:27:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDakf-0008ET-5f
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 08:25:57 +0100
+	id 1JDalw-0008Qn-FI
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 08:27:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760327AbYALHZO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jan 2008 02:25:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759805AbYALHZN
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 02:25:13 -0500
-Received: from ns2.uludag.org.tr ([193.140.100.220]:56074 "EHLO uludag.org.tr"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1760243AbYALHY7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2008 02:24:59 -0500
-Received: from [192.168.1.3] (unknown [85.97.18.122])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by uludag.org.tr (Postfix) with ESMTP id 62EA761F48C8;
-	Sat, 12 Jan 2008 09:24:51 +0200 (EET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071204.744707)
-In-Reply-To: <7vsl13wmas.fsf@gitster.siamese.dyndns.org>
+	id S1760634AbYALH02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 02:26:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760804AbYALH02
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 02:26:28 -0500
+Received: from rv-out-0910.google.com ([209.85.198.188]:9440 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760323AbYALH01 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 02:26:27 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so1166431rvb.1
+        for <git@vger.kernel.org>; Fri, 11 Jan 2008 23:26:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=XGUb4eXBbPnokIeeKDdFfy9ik+AkFgOFVChnBn8FPBk=;
+        b=FnX+yPZwINtQmZqkjjgYRbET3GTpa2SDpsbQraGUy72tF4F4vXp1D5BDeNI4xiKcotF+fKYMpJb70KVdd/CRfdAIAXNTvi1TqAos6kp72JQZG08M1vJ3eEOH34SfCtF9mFs+FHGj8nU/fFXj0pgU/Qzi1TLFEtMMo866ml9hERs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UgW7fFQ1Ty9kEJ4EW+f5Fw7szKk7cnNNItNwRdCsY4Hfe5qkFN3hXmdL0OG5zn7/khsWWXa9bn1PjPuxoe1PGziNeZJirpWi4pJpym3j7wNmrm8FVgFid0w6Cn+lroSadftffwZzTXsUXYkpVrsTExGken+GJMwAmJeeQ41TvQM=
+Received: by 10.141.145.11 with SMTP id x11mr2520695rvn.264.1200122784174;
+        Fri, 11 Jan 2008 23:26:24 -0800 (PST)
+Received: by 10.140.188.1 with HTTP; Fri, 11 Jan 2008 23:26:24 -0800 (PST)
+In-Reply-To: <7vve5zy72p.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70282>
 
-Saturday 12 January 2008 09:11:23 tarihinde Junio C Hamano =C5=9Funlar=C4=
-=B1 yazm=C4=B1=C5=9Ft=C4=B1:
-> The third rc for the next feature release GIT 1.5.4 is available
-> at the usual places:
+> You omitted the part that matters from the part you quoted
+> above, but this discussion was about "showing AUTHOR if it is
+> different from me", which was _one of_ the two conditions I
+> suggested in my counterproposal, and I was saying that it is
+> useless to expect that you would be able to find a
+> misconfiguration when AUTHOR is shown for this first reason.
+> This part is _not_ about catching your misconfiguration.
 >
->   http://www.kernel.org/pub/software/scm/git/
+> The other part is about the misconfiguration catching.
+
+Okay, sorry I guess I was misreading it because that wasn't really my
+original intention with the patch.  However in that context I can see
+that showing author information when it differs from yourself could
+definitely be useful.
+
+
+> Yes, and earlier you said one of the undesirable ones was
+> "yourname@foo.local" (and others were "yourname@foo.(none)").
+> IOW, "localhost" is one of the things you want to catch as
+> unconfigured bogosity that you want to catch, isn't it?
+
+Well, it was only an example to show that it's easily possible (in
+fact, common) to have hostnames that are not configured as actual
+email domains.  The fact that the hostname contained the word "local"
+was an indication, but I'm not really sure that filtering for that
+word in the hostname would be such a good idea.  I'm also not sure how
+many admins will even end up sticking ".local" as their domain, it's
+probably just a quirk of the administrator for my lab.
+
+I guess "localhost" really clearly is a "bogus" host name, but other
+than that I can't think of any real rules that would make sense.
+Rather, IMHO, the error is earlier in the chain: doing anything with
+the hostname in the first place.
+
+
+> To rephrase, you would show AUTHOR when one of the conditions
+> holds true, either:
 >
->   git-1.5.4.rc3.tar.{gz,bz2}			(tarball)
->   git-htmldocs-1.5.4.rc3.tar.{gz,bz2}		(preformatted docs)
->   git-manpages-1.5.4.rc3.tar.{gz,bz2}		(preformatted docs)
->   testing/git-*-1.5.4.rc3-1.$arch.rpm	(RPM)
+>  (1) "not me" (so that we can remind that other's commit is
+>      being amended); _OR_
+>
+>  (2) "funny me" (so that we can catch misconfiguration.
 
-I am seeing new failures compared to rc2 :
+I definitely agree with (1), though having not really done much
+amending of other people's commits I can't vouch for it.  I think (2)
+might not be very reliable.
 
-*** t9200-git-cvsexportcommit.sh ***
-* FAIL 1: New file
-        mkdir A B C D E F &&
-             echo hello1 >A/newfile1.txt &&
-             echo hello2 >B/newfile2.txt &&
-             cp ../test9200a.png C/newfile3.png &&
-             cp ../test9200a.png D/newfile4.png &&
-             git add A/newfile1.txt &&
-             git add B/newfile2.txt &&
-             git add C/newfile3.png &&
-             git add D/newfile4.png &&
-             git commit -a -m "Test: New file" &&
-             id=3D$(git rev-list --max-count=3D1 HEAD) &&
-             (cd "$CVSWORK" &&
-             git cvsexportcommit -c $id &&
-             check_entries A "newfile1.txt/1.1/" &&
-             check_entries B "newfile2.txt/1.1/" &&
-             check_entries C "newfile3.png/1.1/-kb" &&
-             check_entries D "newfile4.png/1.1/-kb" &&
-             diff A/newfile1.txt ../A/newfile1.txt &&
-             diff B/newfile2.txt ../B/newfile2.txt &&
-             diff C/newfile3.png ../C/newfile3.png &&
-             diff D/newfile4.png ../D/newfile4.png
-             )
-* FAIL 2: Remove two files, add two and update two
-        echo Hello1 >>A/newfile1.txt &&
-             rm -f B/newfile2.txt &&
-             rm -f C/newfile3.png &&
-             echo Hello5  >E/newfile5.txt &&
-             cp ../test9200b.png D/newfile4.png &&
-             cp ../test9200a.png F/newfile6.png &&
-             git add E/newfile5.txt &&
-             git add F/newfile6.png &&
-             git commit -a -m "Test: Remove, add and update" &&
-             id=3D$(git rev-list --max-count=3D1 HEAD) &&
-             (cd "$CVSWORK" &&
-             git cvsexportcommit -c $id &&
-             check_entries A "newfile1.txt/1.2/" &&
-             check_entries B "" &&
-             check_entries C "" &&
-             check_entries D "newfile4.png/1.2/-kb" &&
-             check_entries E "newfile5.txt/1.1/" &&
-             check_entries F "newfile6.png/1.1/-kb" &&
-             diff A/newfile1.txt ../A/newfile1.txt &&
-             diff D/newfile4.png ../D/newfile4.png &&
-             diff E/newfile5.txt ../E/newfile5.txt &&
-             diff F/newfile6.png ../F/newfile6.png
-             )
 
-* FAIL 4: Remove only binary files
-        git reset --hard HEAD^^ &&
-             rm -f D/newfile4.png &&
-             git commit -a -m "test: remove only a binary file" &&
-             id=3D$(git rev-list --max-count=3D1 HEAD) &&
-             (cd "$CVSWORK" &&
-             git cvsexportcommit -c $id &&
-             check_entries A "newfile1.txt/1.2/" &&
-             check_entries B "" &&
-             check_entries C "" &&
-             check_entries D "" &&
-             check_entries E "newfile5.txt/1.1/" &&
-             check_entries F "newfile6.png/1.1/-kb" &&
-             diff A/newfile1.txt ../A/newfile1.txt &&
-             diff E/newfile5.txt ../E/newfile5.txt &&
-             diff F/newfile6.png ../F/newfile6.png
-             )
-* FAIL 5: Remove only a text file
-        rm -f A/newfile1.txt &&
-             git commit -a -m "test: remove only a binary file" &&
-             id=3D$(git rev-list --max-count=3D1 HEAD) &&
-             (cd "$CVSWORK" &&
-             git cvsexportcommit -c $id &&
-             check_entries A "" &&
-             check_entries B "" &&
-             check_entries C "" &&
-             check_entries D "" &&
-             check_entries E "newfile5.txt/1.1/" &&
-             check_entries F "newfile6.png/1.1/-kb" &&
-             diff E/newfile5.txt ../E/newfile5.txt &&
-             diff F/newfile6.png ../F/newfile6.png
-             )
-* FAIL 6: New file with spaces in file name
-        mkdir "G g" &&
-              echo ok then >"G g/with spaces.txt" &&
-              git add "G g/with spaces.txt" && \
-              cp ../test9200a.png "G g/with spaces.png" && \
-              git add "G g/with spaces.png" &&
-              git commit -a -m "With spaces" &&
-              id=3D$(git rev-list --max-count=3D1 HEAD) &&
-              (cd "$CVSWORK" &&
-              git-cvsexportcommit -c $id &&
-              check_entries "G g" "with spaces.png/1.1/-kb|with=20
-spaces.txt/1.1/"
-              )
-* FAIL 7: Update file with spaces in file name
-        echo Ok then >>"G g/with spaces.txt" &&
-              cat ../test9200a.png >>"G g/with spaces.png" && \
-              git add "G g/with spaces.png" &&
-              git commit -a -m "Update with spaces" &&
-              id=3D$(git rev-list --max-count=3D1 HEAD) &&
-              (cd "$CVSWORK" &&
-              git-cvsexportcommit -c $id
-              check_entries "G g" "with spaces.png/1.2/-kb|with=20
-spaces.txt/1.2/"
-              )
-* FAIL 8: File with non-ascii file name
-        mkdir -p=20
-=C3=85/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/=C3=A5/=C3=
-=A4/=C3=B6 &&
-              echo Foo=20
->=C3=85/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/=C3=A5/=
-=C3=A4/=C3=B6/g=C3=A5rdets=C3=A5g=C3=A5rdet.txt=20
-&&
-              git add=20
-=C3=85/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/=C3=A5/=C3=
-=A4/=C3=B6/g=C3=A5rdets=C3=A5g=C3=A5rdet.txt=20
-&&
-              cp ../test9200a.png=20
-=C3=85/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/=C3=A5/=C3=
-=A4/=C3=B6/g=C3=A5rdets=C3=A5g=C3=A5rdet.png=20
-&&
-              git add=20
-=C3=85/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/=C3=A5/=C3=
-=A4/=C3=B6/g=C3=A5rdets=C3=A5g=C3=A5rdet.png=20
-&&
-              git commit -a -m "G=C3=A5r det s=C3=A5 g=C3=A5r det" && \
-              id=3D$(git rev-list --max-count=3D1 HEAD) &&
-              (cd "$CVSWORK" &&
-              git-cvsexportcommit -v -c $id &&
-              check_entries \
-              "=C3=85/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w=
-/x/y/z/=C3=A5/=C3=A4/=C3=B6"=20
-\
-              "g=C3=A5rdets=C3=A5g=C3=A5rdet.png/1.1/-kb|g=C3=A5rdets=C3=
-=A5g=C3=A5rdet.txt/1.1/"
-              )
+Since submitting the patch, I have added a post-receive hook to my
+repo which checks all incoming commits and verifies whether any names
+or email addresses are not in a whitelist.  If any are flagged, a
+warning is displayed.  This is actually quite satisfactory for me,
+since it'll warn me when I accidentally push commits with the wrong
+name to my private repo, but before I push to public.  Let me know if
+something like this would be useful for the contrib folder..
 
-[...]
-* failed 7 among 10 test(s)
-
-Ideas appreciated.
-
-/ismail
-
---=20
-Never learn by your mistakes, if you do you may never dare to try again=
-=2E
+Steve
