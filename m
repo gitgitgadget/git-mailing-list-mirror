@@ -1,69 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Teach remote machinery about remotes.default config variable
-Date: Sat, 12 Jan 2008 10:46:51 -0800
-Message-ID: <7vwsqeubj8.fsf@gitster.siamese.dyndns.org>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
-	<1200022189-2400-2-git-send-email-mlevedahl@gmail.com>
-	<7v1w8o4ws0.fsf@gitster.siamese.dyndns.org>
-	<30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com>
-	<7v63xzzszp.fsf@gitster.siamese.dyndns.org>
-	<478855B5.9070600@gmail.com>
-	<7vbq7ry405.fsf@gitster.siamese.dyndns.org>
-	<47885B2C.8020809@gmail.com>
-	<7v7iify2wm.fsf@gitster.siamese.dyndns.org>
-	<4788BFA8.2030508@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Re-casing directories on case-insensitive systems
+Date: Sat, 12 Jan 2008 10:47:10 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801121040010.2806@woody.linux-foundation.org>
+References: <579DF776-4F4E-464C-88DB-B22C2EC291BD@sb.org> <alpine.LSU.1.00.0801112127040.31053@racer.site> <34F43A68-6041-42BE-85BD-3EF971875C0F@sb.org> <alpine.LFD.1.00.0801111356000.3148@woody.linux-foundation.org>
+ <20080112144629.GE2963@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 19:47:33 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Kevin Ballard <kevin@sb.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 12 19:47:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDlOC-0001Mf-FO
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 19:47:28 +0100
+	id 1JDlOX-0001Se-IO
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 19:47:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754079AbYALSrA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 13:47:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754429AbYALSrA
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 13:47:00 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36394 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753848AbYALSq7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 13:46:59 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 51190504E;
-	Sat, 12 Jan 2008 13:46:58 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D3910504C;
-	Sat, 12 Jan 2008 13:46:53 -0500 (EST)
-In-Reply-To: <4788BFA8.2030508@gmail.com> (Mark Levedahl's message of "Sat, 12
-	Jan 2008 08:24:56 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754472AbYALSrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 13:47:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755336AbYALSrU
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 13:47:20 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:34969 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754429AbYALSrU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2008 13:47:20 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0CIlBUX001498
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 12 Jan 2008 10:47:12 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0CIlAQr009851;
+	Sat, 12 Jan 2008 10:47:11 -0800
+In-Reply-To: <20080112144629.GE2963@dpotapov.dyndns.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.721 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70345>
 
-Mark Levedahl <mlevedahl@gmail.com> writes:
 
-> Junio C Hamano wrote:
->> Sorry, I may be missing something.
->>
->> Even if you have a submodule, you can go there and that will be
->> a valid freestanding repository.  You can always be explicit,
->> bypassing any behaviour that defaults to 'origin' to avoid
->> ambiguity.
->>
-> "git-submodule update" *requires* that origin is defined in all
-> sub-modules. There is no way to avoid this behavior.
 
-Ahh.
+On Sat, 12 Jan 2008, Dmitry Potapov wrote:
+> 
+> After cursory look at the source code, I wonder if converting name1
+> and name2 to upper case before memcmp in cache_name_compare() can
+> help case-insensitive systems. This change will change the order of
+> file names in the index, but I suppose that it should not be a problem,
+> because the index is host specific. Though, this fix is too simple, so
+> I guess, I missed something.
 
-Does that suggest the new configuration thing is only about the
-"submodule update" command, not "remotes.default" that affects
-how the non-submodule merge and fetch works?
+No, the index isn't host-specific, and we also have a deep knowledge of 
+the fact that the index order is the same as the unpacked tree order.
+
+So no, we absolutely cannot just sort the index differently. We literally 
+need to have a separate key for a "upper case lookup".
+
+(That separate key can be just a hash table - it doesn't need to be 
+something you can iterate over, so it can be pretty simple).
+
+> > (And that's totally ignoring the fact that case-insensitivity then also 
+> > has tons of i18n issues and can get *really* messy 
+> 
+> The proper support of i18n is not simple even without case-insensitivity.
+> For instance, there are four different encodings widely used for Russian
+> letters.
+
+.. and git is very clear about this: filenames are *not* "characters" in 
+the i18n sense, they are series of bytes. There is absolutely no room for 
+ambiguity, and there is no locale for those things.
+
+And that isn't going to change. It's the only sane way to do 
+locale-independent names: people can *choose* to see the filenames as some 
+UTF-8 sequence, or a series of Latin1, or anything, but that's not 
+something git itself will care about.
+
+Trying to involve locale in name comparison simply isn't possible. Two 
+different repositories on two different filesystems would get two 
+different answers. And that is simply unacceptable in a distributed 
+system.
+
+What we can do is to make the simple cases (ie the locale-*independent* 
+ones) warn about problems with case insensitivity.
+
+			Linus
