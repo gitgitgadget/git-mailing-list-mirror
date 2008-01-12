@@ -1,66 +1,94 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [PATCH 2/5] git-submodule: New subcommand 'summary' (2) - hard work
-Date: Sat, 12 Jan 2008 20:24:09 +0800
-Message-ID: <46dff0320801120424v1b780a97x8a4ecfcfe8e52f7@mail.gmail.com>
-References: <1200123435-16722-1-git-send-email-pkufranky@gmail.com>
-	 <f67f45eeb9648bb7e5adaf53544443b79643914e.1200122041.git.pkufranky@gmail.com>
-	 <62a73e734832ad67e89be706f1f8b3dbc30cfcf4.1200122041.git.pkufranky@gmail.com>
-	 <7vejcnv3zk.fsf@gitster.siamese.dyndns.org>
-	 <46dff0320801120148r1a760bcdq4b9dcdf31354d9e0@mail.gmail.com>
+From: Dennis Schridde <devurandom@gmx.net>
+Subject: Re: [PATCH] git-svn: handle leading/trailing whitespace from svnsync revprops
+Date: Sat, 12 Jan 2008 13:34:18 +0100
+Message-ID: <200801121334.18632.devurandom@gmx.net>
+References: <200801081738.56624.devurandom@gmx.net> <7vmyrd5p81.fsf@gitster.siamese.dyndns.org> <20080112071355.GA17021@soma>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed;
+  boundary="nextPart2556348.yo8pmWMLZL";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 13:24:50 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 12 13:35:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDfPq-0007ih-Uo
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 13:24:47 +0100
+	id 1JDfaV-0001xf-Nr
+	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 13:35:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757117AbYALMYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 07:24:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756799AbYALMYM
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 07:24:12 -0500
-Received: from py-out-1112.google.com ([64.233.166.182]:12528 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750746AbYALMYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 07:24:11 -0500
-Received: by py-out-1112.google.com with SMTP id u52so2105293pyb.10
-        for <git@vger.kernel.org>; Sat, 12 Jan 2008 04:24:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=P+NGnYAJGTuEgWPyHafjPm/0g09ok4QKFoW146wKamE=;
-        b=hEtfZ89SPUPvq4Jc7aDBF6uHcbjxAfbtBHRoZtygjX0BAPiLmL+o/oWGdeUWil2QPZUFjxP8R1GuVA78FlZKgjLfPB/vT1EWKuIsL4uRP4UEyI7IxcgPtsMtvVn6uzcZJSxLb98/hVPBtH9ZIX9hyd2mUbKbZnDZ+7VIaiiKnIA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JLLTpMcuywgf+6vWoN36c81CvfZ2CDJHzm90+YFxP1XMF8zyOiuxkoKlvN8lUNowm/vQe7CxA0uxke3mgSk6MTyG8XvZenUkkrID9KbGifSAuqwmF8TbYvDtdF/8+qq1Xi5ETmmfom0tcrogA/TOBIHA+3MOe1tX5USWYtBeWUY=
-Received: by 10.65.119.14 with SMTP id w14mr9554236qbm.23.1200140649965;
-        Sat, 12 Jan 2008 04:24:09 -0800 (PST)
-Received: by 10.35.108.1 with HTTP; Sat, 12 Jan 2008 04:24:09 -0800 (PST)
-In-Reply-To: <46dff0320801120148r1a760bcdq4b9dcdf31354d9e0@mail.gmail.com>
-Content-Disposition: inline
+	id S1758969AbYALMfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 07:35:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759036AbYALMfN
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 07:35:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34569 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758969AbYALMfM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 07:35:12 -0500
+Received: (qmail invoked by alias); 12 Jan 2008 12:35:10 -0000
+Received: from hnvr-4dbb963c.pool.einsundeins.de (EHLO ernie.local) [77.187.150.60]
+  by mail.gmx.net (mp020) with SMTP; 12 Jan 2008 13:35:10 +0100
+X-Authenticated: #19202771
+X-Provags-ID: V01U2FsdGVkX1/fwQcIdfLfgRvvFFXtTOT5BTMayouBD4psntQrO0
+	YV8gKCcbMeatM1
+User-Agent: KMail/1.9.7
+In-Reply-To: <20080112071355.GA17021@soma>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70312>
 
-> >
-> > I think you would want to read full 40-char sha1_src and
-> > sha1_dst with "while read", and keep that full 40-char in these
-> > variables, and use them when calling rev-parse here.
->
-> Hmm, precision is really a problem. However, "git diff --raw" will not
-> always give full 40-char sha1, instead it will give sha1 with enough
-> length. So maybe i can use the sha1 from "git diff --raw" ?
->
-Oh, I'm wrong. It seems 'git diff --raw' will always give full 40-char
-sha1 for submodule entry and abbreviated sha1 for blob entry.
+--nextPart2556348.yo8pmWMLZL
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
--- 
-Ping Yin
+Am Samstag, 12. Januar 2008 08:13:55 schrieben Sie:
+> Repositories generated by svnsync cannot be relied on to have
+> properly set revprops without newlines in UUIDs and URLs.  There
+> may be broken versions of svnsync out there that append extra
+> newlines to UUIDs, or the revprops could've been changed by
+> repository administrators at any time, too.
+>
+> At least one repository we've come across has an embedded
+> newline erroneously set in the svnsync-uuid prop.  This is bad
+> because the trailing newline is taken as another record by the
+> Git.pm library, and the wantarray detection causes tmp_config()
+> to return an array with an empty-but-existing second element.
+>
+> We will now strip leading and trailing whitespace both before
+> setting and after reading the uuid and url for svnsync values.
+> We will also force tmp_config to return a single scalar when
+> reading existing values.
+>
+> SVN UUIDs should never have whitespace in them, and SVN
+> repository URLs should be URI-escaped, so neither of those
+> values we ever see in git-svn should actually have whitespace
+> in them.
+>
+> Thanks to Dennis Schridde for the bug report and Junio for
+> helping diagnose this.
+Thanks! This patch seems to work, at least the "Odd number..." message is=20
+gone. The segfault with a non-debug perl stays, though. But I guess that is=
+ a=20
+different problem.
+
+=2D-Dennis
+
+--nextPart2556348.yo8pmWMLZL
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.7 (GNU/Linux)
+
+iD8DBQBHiLPKjqfyF1DtJW4RAtCjAKCiSEKm77VdHes8rbe+Z/tIqseS+QCgn5T4
+xRnZIvDSZVl6aPo0kTj4Wtw=
+=6dif
+-----END PGP SIGNATURE-----
+
+--nextPart2556348.yo8pmWMLZL--
