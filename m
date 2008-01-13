@@ -1,284 +1,220 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [WIP v2] safecrlf: Add mechanism to warn about irreversible crlf conversions
-Date: Sun, 13 Jan 2008 10:05:02 +0100
-Message-ID: <12002151022583-git-send-email-prohaska@zib.de>
-References: <20080112191429.GI2963@dpotapov.dyndns.org>
-Cc: torvalds@linux-foundation.org, Steffen Prohaska <prohaska@zib.de>
-To: dpotapov@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 13 10:06:16 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: performance problem: "git commit filename"
+Date: Sun, 13 Jan 2008 02:33:15 -0800
+Message-ID: <7vd4s6qal0.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.00.0801121426510.2806@woody.linux-foundation.org>
+	<alpine.LFD.1.00.0801121735020.2806@woody.linux-foundation.org>
+	<alpine.LFD.1.00.0801121949180.2806@woody.linux-foundation.org>
+	<7vtzliqh3u.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Kristian H?gsberg <krh@redhat.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Jan 13 11:33:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDynH-0002en-5v
-	for gcvg-git-2@gmane.org; Sun, 13 Jan 2008 10:06:15 +0100
+	id 1JE0A7-000309-FC
+	for gcvg-git-2@gmane.org; Sun, 13 Jan 2008 11:33:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751173AbYAMJFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jan 2008 04:05:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751145AbYAMJFR
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jan 2008 04:05:17 -0500
-Received: from mailer.zib.de ([130.73.108.11]:46639 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751098AbYAMJFL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2008 04:05:11 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0D953Hg016774;
-	Sun, 13 Jan 2008 10:05:03 +0100 (CET)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0D952nZ000048;
-	Sun, 13 Jan 2008 10:05:03 +0100 (MET)
-X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <20080112191429.GI2963@dpotapov.dyndns.org>
+	id S1751286AbYAMKd1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jan 2008 05:33:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751275AbYAMKd1
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jan 2008 05:33:27 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63362 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751234AbYAMKdZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2008 05:33:25 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FD063BCE;
+	Sun, 13 Jan 2008 05:33:23 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 720B13BCD;
+	Sun, 13 Jan 2008 05:33:19 -0500 (EST)
+In-Reply-To: <7vtzliqh3u.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 13 Jan 2008 00:12:21 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70376>
 
-This version gets the naked LF/autocrlf=true case right.
-However, different from what Dimitry suggested, the safety check
-is run for all cases that are irreversible.  Dimitry suggested to
-run it only for the CRLF_GUESS case.  I believe this is not
-sufficient: the explicit CFLF_TEXT case should also be checked.
-The user explicitly marked the file as text but the conversion is
-nonetheless irreversible in the current setting.  This might be
-unexpected and we should warn about it.  Paranoid users can even
-ask git to fail in this case.  Such users would need to manually
-fix the file, e.g. running dos2unix.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I also added basic tests.
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>
+>> HOWEVER. This was just a quick hack, and while it all looks sane, this is 
+>> some damn core code. Somebody else should double- and triple-check this.
+>
+> Double-checked.  The patch looks sane.
+>
+>> [ That 4x lstat thing bothers me. I think we should add a flag to the 
+>>   index saying "we checked this once already, it's clean", so that if we 
+>>   do multiple passes over the index, we can still do just a single lstat() 
+>>   on just the first pass. But that's a separate issue.
+>
+> I've thought about this in a different context before, but it
+> seemed quite tricky, as some codepaths in more complex commands
+> (commit being one of them) tend to use the cache and discard to
+> use it for different purpose (like creating temporary index and
+> then reading the real index).  Besides, I had an impression that
+> we ran out of the bits of ce_flags in the cache entry, although
+> we could shorten the maximum path we support from 4k down to 2k
+> bytes.  I'll have to think about this a bit more.
 
-A documentation is yet missing.
+Aside from the lstat(2) done for work tree files, there are
+quite many lstat(2) calls in refname dwimming codepath.  I am
+not currently looking into reducing them.
 
-    Steffen
+Some observations.
 
----- snip snap ---
+ * In the partial commit codepath, we run one file_exists() and
+   then one add_file_to_index(), each of which has lstat(2) on
+   the same pathname, for the paths to be committed.  This can
+   be reduced to one trivially by changing the calling
+   convention of add_file_to_index().  This is done in order to
+   build the temporary index file to be written out as a tree
+   for committing (and the index file needs to be written to be
+   shown to the pre-commit hook).
 
-CRLF conversion bears a slight chance of corrupting data.
-autocrlf=true will convert CRLF to LF during commit and LF to
-CRLF during checkout.  A file that containes a mixture of LF and
-CRLF before the commit cannot be recreated by git.  For text
-files this does not really matter because we do not care about
-the line endings anyway; but for binary files that are
-accidentally classified as text the conversion can result in
-corrupted data.
+ * Then refresh_cache_ent(), which has one lstat(2), is called
+   for everybody in the temporary index, in order to refresh the
+   temporary index.  Again this cannot be avoided because we
+   promise to show the pre-commit hook a refreshed index.
 
-If you recognize such corruption during commit you can easily fix
-it by setting the conversion type explicitly in .gitattributes.
-Right after committing you still have the original file in your
-work tree and this file is not yet corrupted.
+ * Then we run file_exists() and add_file_to_index() to update
+   the real index.
 
-However, in mixed Windows/Unix environments text files quite
-easily can end up containing a mixture of CRLF and LF line
-endings and git should handle such situations gracefully.  For
-example a user could copy a CRLF file from Windows to Unix and
-mix it with an existing LF file there.  The result would contain
-both types of line endings.
+ * And refresh_cache_ent() is run for everybody in the real
+   index.
 
-Unfortunately, the desired effect of cleaning up text files
-with mixed lineendings and undesired effect of corrupting binary
-files can not be distinguished.  In both cases CRLF are removed
-in an irreversible way.  For text files this is the right thing
-to do, while for binary file its corrupting data.
+ * The final diffstat phase runs lstat(2) from
+   reuse_worktree_file() codepath to see if the work tree is up
+   to date, and read from the work tree files instead of having
+   to explode them from the object store.
 
-In a sane environment committing and checking out the same file
-should not modify the origin file in the work tree.  For
-autocrlf=input the original file must not contain CRLF.  For
-autocrlf=true the original file must not contain LF without
-preceding CR.  Otherwise the conversion is irreversible.  Note,
-git might be able to recreate the original file with different
-autocrlf settings, but in the current environment checking out
-will yield a file that differs from the file before the commit.
+The attached is a quick and dirty hack which may or may not
+help.  It all looks sane, this also is some core code, and meant
+only for discussion and not application.
 
-This patch adds a mechanism that can either warn the user about
-an irreversible conversion or can even refuse to convert.  The
-mechanism is controlled by the variable core.safecrlf, with the
-following values
- - false: disable safecrlf mechanism
- - warn: warn about irreversible conversions
- - true: refuse irreversible conversions
+ * It adds a new ce_flag, CE_UPTODATE, that is meant to mark the
+   cache entries that record a regular file blob that is up to
+   date in the work tree.
 
-The default is to warn.
+ * I had to reduce the maximum length of allowed pathname from
+   4k down to 2k for the above.  Incidentally I noticed that we
+   do not check the length of pathname does not exceed what we
+   can express with CE_NAMEMASK, which we may want to fix (and
+   make it barf if somebody tries to add too long a path)
+   independently from this issue.  A low hanging fruit for
+   janitors -- hint, hint.
 
-The concept of a safety check was originally proposed in a similar
-way by Linus Torvalds.  Thanks to Dimitry Potapov for insisting
-on getting the naked LF/autocrlf=true case right.
+ * fill_stat_cache_info() marks the cache entry it just added
+   with CE_UPTODATE.  This has the effect of marking the paths
+   we write out of the index and lstat(2) immediately as "no
+   need to lstat -- we know it is up-to-date", from quite a lot
+   fo callers:
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+    - git-apply --index
+    - git-update-index
+    - git-checkout-index
+    - git-add (uses add_file_to_index())
+    - git-commit (ditto)
+    - git-mv (ditto)
+
+ * write_index is changed not to write CE_UPTODATE out to the
+   index file, because CE_UPTODATE is meant to be transient only
+   in core.  For the same reason, CE_UPDATE is not written to
+   prevent an accident from happening.
+
+The fact that we write out a temporary index and then rebuild
+the real index means CE_UPTODATE flag we populate in the
+temporary index is lost and we still need to lstat(2) while
+building the real index, which is a bit unfortunate.  I suspect
+that we can use the one-way merge to reset the index when
+building the real index after we are done building the temporary
+index, instead of discarding the in-core temporary index and
+re-reading the real index.
+
 ---
- cache.h         |    8 ++++++++
- config.c        |    9 +++++++++
- convert.c       |   28 +++++++++++++++++++++++++---
- environment.c   |    1 +
- t/t0020-crlf.sh |   45 +++++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 88 insertions(+), 3 deletions(-)
+ cache.h      |    3 ++-
+ diff.c       |    4 ++++
+ read-cache.c |   10 ++++++++++
+ 3 files changed, 16 insertions(+), 1 deletions(-)
 
 diff --git a/cache.h b/cache.h
-index 39331c2..4e03e3d 100644
+index 39331c2..9b950fc 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -330,6 +330,14 @@ extern size_t packed_git_limit;
- extern size_t delta_base_cache_limit;
- extern int auto_crlf;
+@@ -108,7 +108,8 @@ struct cache_entry {
+ 	char name[FLEX_ARRAY]; /* more */
+ };
  
-+enum safe_crlf {
-+	SAFE_CRLF_FALSE = 0,
-+	SAFE_CRLF_FAIL = 1,
-+	SAFE_CRLF_WARN = 2,
-+};
-+
-+extern enum safe_crlf safe_crlf;
-+
- #define GIT_REPO_VERSION 0
- extern int repository_format_version;
- extern int check_repository_format(void);
-diff --git a/config.c b/config.c
-index 857deb6..0a46046 100644
---- a/config.c
-+++ b/config.c
-@@ -407,6 +407,15 @@ int git_default_config(const char *var, const char *value)
+-#define CE_NAMEMASK  (0x0fff)
++#define CE_NAMEMASK  (0x07ff)
++#define CE_UPTODATE  (0x0800)
+ #define CE_STAGEMASK (0x3000)
+ #define CE_UPDATE    (0x4000)
+ #define CE_VALID     (0x8000)
+diff --git a/diff.c b/diff.c
+index b18c140..41847ae 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1510,6 +1510,10 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
+ 	if (pos < 0)
  		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.safecrlf")) {
-+		if (value && !strcasecmp(value, "warn")) {
-+			safe_crlf = SAFE_CRLF_WARN;
-+			return 0;
-+		}
-+		safe_crlf = git_config_bool(var, value);
-+		return 0;
-+	}
+ 	ce = active_cache[pos];
 +
- 	if (!strcmp(var, "user.name")) {
- 		strlcpy(git_default_name, value, sizeof(git_default_name));
- 		return 0;
-diff --git a/convert.c b/convert.c
-index 4df7559..c9678ee 100644
---- a/convert.c
-+++ b/convert.c
-@@ -90,9 +90,6 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
- 		return 0;
- 
- 	gather_stats(src, len, &stats);
--	/* No CR? Nothing to convert, regardless. */
--	if (!stats.cr)
--		return 0;
- 
- 	if (action == CRLF_GUESS) {
- 		/*
-@@ -110,6 +107,20 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
- 			return 0;
- 	}
- 
-+	if (safe_crlf && auto_crlf > 0 && action != CRLF_INPUT) {
-+		/* CRLFs would be added by checkout: check if we have "naked" LFs */
-+		if (stats.lf != stats.crlf) {
-+			if (safe_crlf == SAFE_CRLF_WARN)
-+				warning("Checkout will replace LFs with CRLF in %s", path);
-+			else
-+				die("Checkout would replace LFs with CRLF in %s", path);
-+		}
-+	}
++	if (ce->ce_flags & htons(CE_UPTODATE))
++		return 1;
 +
-+	/* Optimization: No CR? Nothing to convert, regardless. */
-+	if (!stats.cr)
-+		return 0;
-+
- 	/* only grow if not in place */
- 	if (strbuf_avail(buf) + buf->len < len)
- 		strbuf_grow(buf, len - buf->len);
-@@ -132,6 +143,17 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
- 				*dst++ = c;
- 		} while (--len);
- 	}
-+
-+	if (safe_crlf && (action == CRLF_INPUT || auto_crlf <= 0)) {
-+		/* CRLFs would not be restored by checkout: check if we removed CRLFs */
-+		if (buf->len != dst - buf->buf) {
-+			if (safe_crlf == SAFE_CRLF_WARN)
-+				warning("Stripped CRLF from %s.", path);
-+			else
-+				die("Refusing to strip CRLF from %s.", path);
-+		}
-+	}
-+
- 	strbuf_setlen(buf, dst - buf->buf);
- 	return 1;
- }
-diff --git a/environment.c b/environment.c
-index 18a1c4e..e351e99 100644
---- a/environment.c
-+++ b/environment.c
-@@ -35,6 +35,7 @@ int pager_use_color = 1;
- char *editor_program;
- char *excludes_file;
- int auto_crlf = 0;	/* 1: both ways, -1: only when adding git objects */
-+enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
- unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
+ 	if ((lstat(name, &st) < 0) ||
+ 	    !S_ISREG(st.st_mode) || /* careful! */
+ 	    ce_match_stat(ce, &st, 0) ||
+diff --git a/read-cache.c b/read-cache.c
+index 7db5588..3a90db1 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -44,6 +44,9 @@ void fill_stat_cache_info(struct cache_entry *ce, struct stat *st)
  
- /* This is set by setup_git_dir_gently() and/or git_default_config() */
-diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-index 89baebd..e2e0f7b 100755
---- a/t/t0020-crlf.sh
-+++ b/t/t0020-crlf.sh
-@@ -8,6 +8,10 @@ q_to_nul () {
- 	tr Q '\000'
+ 	if (assume_unchanged)
+ 		ce->ce_flags |= htons(CE_VALID);
++
++	if (S_ISREG(st->st_mode))
++		ce->ce_flags |= htons(CE_UPTODATE);
  }
  
-+q_to_cr () {
-+	tr Q '\015'
-+}
-+
- append_cr () {
- 	sed -e 's/$/Q/' | tr Q '\015'
- }
-@@ -42,6 +46,47 @@ test_expect_success setup '
- 	echo happy.
- '
+ static int ce_compare_data(struct cache_entry *ce, struct stat *st)
+@@ -794,6 +797,9 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
+ 	int changed, size;
+ 	int ignore_valid = options & CE_MATCH_IGNORE_VALID;
  
-+test_expect_failure 'safecrlf: autocrlf=input, all CRLF' '
++	if (ce->ce_flags & htons(CE_UPTODATE))
++		return ce;
 +
-+	git repo-config core.autocrlf input &&
-+	git repo-config core.safecrlf true &&
-+
-+	for w in I am all CRLF; do echo $w; done | append_cr >allcrlf &&
-+	git add allcrlf
-+'
-+
-+test_expect_failure 'safecrlf: autocrlf=input, mixed LF/CRLF' '
-+
-+	git repo-config core.autocrlf input &&
-+	git repo-config core.safecrlf true &&
-+
-+	for w in Oh here is CRLFQ in text; do echo $w; done | q_to_cr >mixed &&
-+	git add mixed
-+'
-+
-+test_expect_failure 'safecrlf: autocrlf=true, all LF' '
-+
-+	git repo-config core.autocrlf true &&
-+	git repo-config core.safecrlf true &&
-+
-+	for w in I am all LF; do echo $w; done >alllf &&
-+	git add alllf
-+'
-+
-+test_expect_failure 'safecrlf: autocrlf=true mixed LF/CRLF' '
-+
-+	git repo-config core.autocrlf true &&
-+	git repo-config core.safecrlf true &&
-+
-+	for w in Oh here is CRLFQ in text; do echo $w; done | q_to_cr >mixed &&
-+	git add mixed
-+'
-+
-+test_expect_success 'switch off autocrlf, safecrlf' '
-+	git repo-config core.autocrlf false &&
-+	git repo-config core.safecrlf false
-+'
-+
- test_expect_success 'update with autocrlf=input' '
+ 	if (lstat(ce->name, &st) < 0) {
+ 		if (err)
+ 			*err = errno;
+@@ -1170,13 +1176,17 @@ int write_index(struct index_state *istate, int newfd)
  
- 	rm -f tmp one dir/two three &&
--- 
-1.5.4.rc2.60.g46ee
+ 	for (i = 0; i < entries; i++) {
+ 		struct cache_entry *ce = cache[i];
++		unsigned short ce_flags;
+ 		if (!ce->ce_mode)
+ 			continue;
+ 		if (istate->timestamp &&
+ 		    istate->timestamp <= ntohl(ce->ce_mtime.sec))
+ 			ce_smudge_racily_clean_entry(ce);
++		ce_flags = ce->ce_flags;
++		ce->ce_flags &= htons(~(CE_UPDATE | CE_UPTODATE));
+ 		if (ce_write(&c, newfd, ce, ce_size(ce)) < 0)
+ 			return -1;
++		ce->ce_flags = ce_flags;
+ 	}
+ 
+ 	/* Write extension data here */
