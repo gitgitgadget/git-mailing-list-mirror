@@ -1,90 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Teach remote machinery about remotes.default config variable
-Date: Sat, 12 Jan 2008 14:48:52 -0800
-Message-ID: <7v4pdislrf.fsf@gitster.siamese.dyndns.org>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
-	<1200022189-2400-2-git-send-email-mlevedahl@gmail.com>
-	<7v1w8o4ws0.fsf@gitster.siamese.dyndns.org>
-	<30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com>
-	<7v63xzzszp.fsf@gitster.siamese.dyndns.org>
-	<478855B5.9070600@gmail.com>
-	<7vbq7ry405.fsf@gitster.siamese.dyndns.org>
-	<47885B2C.8020809@gmail.com>
-	<7v7iify2wm.fsf@gitster.siamese.dyndns.org>
-	<4788BFA8.2030508@gmail.com>
-	<7vwsqeubj8.fsf@gitster.siamese.dyndns.org>
-	<47891658.3090604@gmail.com>
-	<7vbq7qssd7.fsf@gitster.siamese.dyndns.org>
-	<47893E1A.5020702@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Adding Git to Better SCM Initiative : Comparison
+Date: Sun, 13 Jan 2008 01:44:10 +0100
+Message-ID: <200801130144.14574.jnareb@gmail.com>
+References: <200712101357.49325.jnareb@gmail.com> <200801071057.27710.shlomif@iglu.org.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 12 23:49:27 2008
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>,
+	David Kastrup <dak@gnu.org>, Florian Weimer <fw@deneb.enyo.de>,
+	Chris Shoemaker <c.shoemaker@cox.net>
+To: Shlomi Fish <shlomif@iglu.org.il>
+X-From: git-owner@vger.kernel.org Sun Jan 13 01:44:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDpAM-0000vm-M4
-	for gcvg-git-2@gmane.org; Sat, 12 Jan 2008 23:49:27 +0100
+	id 1JDqy2-0003CV-1k
+	for gcvg-git-2@gmane.org; Sun, 13 Jan 2008 01:44:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759437AbYALWs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 17:48:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759383AbYALWs7
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 17:48:59 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45125 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759350AbYALWs6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 17:48:58 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id ACB58169C;
-	Sat, 12 Jan 2008 17:48:56 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 10824169A;
-	Sat, 12 Jan 2008 17:48:53 -0500 (EST)
-In-Reply-To: <47893E1A.5020702@gmail.com> (Mark Levedahl's message of "Sat, 12
-	Jan 2008 17:24:26 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752790AbYAMAoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 19:44:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752738AbYAMAoW
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 19:44:22 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:38505 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752479AbYAMAoV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jan 2008 19:44:21 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so663047ugc.16
+        for <git@vger.kernel.org>; Sat, 12 Jan 2008 16:44:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=n5i7Y5jQMgPLfTd0ht81f4hXvaEOmT2sPlF2VLVjKEQ=;
+        b=LpGzuRK1ntz5DEcoAKu0jdYWW9ZcYZfBRH2NlVwdPj8xMx4Y3y0XoYpuMpcF5Ve2BFXc+56SZFGxCqz0TtTl7J8fTYb6YeAL1qU1+ARCsaCTdUcqsRdl30Dtlys9yf09+ri3zG6gaLKlv0IA5xDCTTHMV6zBkqtYjBEW+3J9EII=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ZKaeF+LW4g3oE838wJ2+kG2HF1RzX/sdNxCqujefhH4aPZy1WThWhm3yygMI52QKkb74ceHUxdU7S/Kzrk40uuNL4o5/3/X6t5BBbjP7XTToDSJcBWetrrxSksqMKfP5S61jkq0EnnBMaC7/71DLKnHJ+5KKF0HjOwdJY1QJwBs=
+Received: by 10.67.98.15 with SMTP id a15mr1833982ugm.69.1200185059515;
+        Sat, 12 Jan 2008 16:44:19 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.190.231])
+        by mx.google.com with ESMTPS id 18sm16101704ugk.18.2008.01.12.16.44.16
+        (version=SSLv3 cipher=OTHER);
+        Sat, 12 Jan 2008 16:44:17 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200801071057.27710.shlomif@iglu.org.il>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70364>
 
-Mark Levedahl <mlevedahl@gmail.com> writes:
+On Mon, 7 Jan 2008, Shlomi Fish wrote:
+> 
+> I'm CCing all the correspondents, because I'm banned from the vger.kernel.org 
+> mail. This has been an obstacle for me in several legitimate occassions and 
+> this one is the latest. I'm still CCing it, so the people in the mailing list 
+> will receive the replies.
+> 
+> On Monday 10 December 2007, Jakub Narebski wrote:
+> > I have noticed that your SCM comparison at "Better SCM Initiative"
+> > website
+> >   http://better-scm.berlios.de/comparison/comparison.html
+> > misses one of the Git, version control system which is used to manage
+> > Linux kernel, and one of the main open source (distributed) version
+> > control systems (among Mercurial, Bazaar-NG, Monotone and Darcs).
+> >
+> 
+> Indeed git is absent. That's because no one until you has volunteered to send 
+> a patch that adds it to the comparison. Another requirement is for someone to 
+> volunteer to become a "champion" for the version control system and maintain 
+> it into the future. So who is going to be the champion?
 
-> Basically, I think an important (but not complete) test of the design
-> is that
->
->    git clone -o frotz git://frotz.foo.bar/myproject.git
->    cd myproject
->    git submodule init
->    git submodule update
->
-> work, with origin = frotz throughout the submodules, and with the
-> whole project correctly checked out even if the entire project was
-> rehosted onto a different server.
+I can be git champion for "Better SCM Initiative" comparison... although
+I'd rather somebody else was it.
+ 
+[...] 
+> > Below there is (slightly doctored) patch to the sources for the site.
+> >
+> 
+> Despite the fact that I the comparison was recently patched to add Bazaar and 
+> fix some grammatical problems, the patch still applies cleanly. However, I 
+> saw that some people commented on it here. Can you send me a new patch 
+> integrating all this commentary?
 
-I like that.  This is a very good argument, especially because
-it clarifies very well that the issue is not about "'submodule
-init' misbehaves" but "fetch/pull/merge does not play well with
-clone -o".
+I'll try to send revised patch soon. Integrating commentary is a bit
+harder that it could be because some responses were sent _only_ to
+git mailing list, so I'd have to browse through git mailing list
+archives.
 
-The only remaining (minor) doubt I have (not in the sense that
-"I object to it!", but in the sense that "I wish there could be
-a better alternative, but I do not think of one offhand") is
-polluting the core.* namespace with this configuration variable.
 
-Looking at Documentation/config.txt, I realize that we already
-have made a mistake of allowing core.gitproxy, but other than
-that single mistake, everything in core.* is still about things
-that apply to the use of git even when the repository does not
-talk with any other repository.  If we deprecate and rename away
-that one mistake, we can again make core.* to mean things that
-are _really_ core, but using core.origin for "the default remote
-is not called 'origin' but 'frotz' here" is a step backwards
-from that ideal.
+BTW. some of the questions / comments were caused by the fact that the
+features listed in Better SCM Initiative: Comparison are a bit ambiguous.
 
-But that's a minor naming issue.
+What does for example "Atomic Commit" mean? Does it mean that if we
+interrupt commit in the middle we would always get full commit or none,
+and not some f**d-up intermediate state? Hos CVS can have atomic commits
+then?
+
+What does "Renames Support" mean? Does it mean that when browsing history
+we [can] show file / directory renames? Does it mean that log of file or
+directory history [can] follow renames? Does it mean that line-wise file
+history [can] follow renames? Renames support in merges is as TODO, so
+I don't think that this one matters in this question. Because the answer,
+especially in the case of git which is a bit different in that it does
+rename detection and not rename tracking (using inodes / file-ids),
+depends on that...
+
+-- 
+Jakub Narebski
+Poland
