@@ -1,78 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach remote machinery about remotes.default config
- variable
-Date: Sun, 13 Jan 2008 22:27:22 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com> <1200022189-2400-2-git-send-email-mlevedahl@gmail.com> <7v1w8o4ws0.fsf@gitster.siamese.dyndns.org> <30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com> <7v63xzzszp.fsf@gitster.siamese.dyndns.org>
- <478855B5.9070600@gmail.com> <7vbq7ry405.fsf@gitster.siamese.dyndns.org> <47885B2C.8020809@gmail.com> <7v7iify2wm.fsf@gitster.siamese.dyndns.org> <4788BFA8.2030508@gmail.com> <7vwsqeubj8.fsf@gitster.siamese.dyndns.org> <47891658.3090604@gmail.com>
- <7vbq7qssd7.fsf@gitster.siamese.dyndns.org> <47893E1A.5020702@gmail.com> <7v4pdislrf.fsf@gitster.siamese.dyndns.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH v3] safecrlf: Add mechanism to warn about irreversible crlf conversions
+Date: Mon, 14 Jan 2008 01:13:04 +0300
+Message-ID: <20080113221304.GS2963@dpotapov.dyndns.org>
+References: <1200241847776-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 13 22:27:54 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, torvalds@linux-foundation.org,
+	git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Jan 13 23:24:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEAMz-0005xv-Lt
-	for gcvg-git-2@gmane.org; Sun, 13 Jan 2008 22:27:54 +0100
+	id 1JEBFO-0006xI-VF
+	for gcvg-git-2@gmane.org; Sun, 13 Jan 2008 23:24:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754114AbYAMV10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jan 2008 16:27:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754110AbYAMV10
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jan 2008 16:27:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34064 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754083AbYAMV1Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2008 16:27:25 -0500
-Received: (qmail invoked by alias); 13 Jan 2008 21:27:23 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp039) with SMTP; 13 Jan 2008 22:27:23 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19kYpVklo9kCoZ0O1ui8YIMou+7XmMjLimuGDrKpU
-	jYoteD3ag+6qwO
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7v4pdislrf.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754883AbYAMWXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jan 2008 17:23:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754821AbYAMWXc
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jan 2008 17:23:32 -0500
+Received: from smtp03.mtu.ru ([62.5.255.50]:51453 "EHLO smtp03.mtu.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754882AbYAMWXY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2008 17:23:24 -0500
+Received: from smtp03.mtu.ru (localhost.mtu.ru [127.0.0.1])
+	by smtp03.mtu.ru (Postfix) with ESMTP id AE0FC1870D00;
+	Mon, 14 Jan 2008 01:23:22 +0300 (MSK)
+Received: from dpotapov.dyndns.org (ppp85-140-170-195.pppoe.mtu-net.ru [85.140.170.195])
+	by smtp03.mtu.ru (Postfix) with ESMTP id 00AAC1870D4F;
+	Mon, 14 Jan 2008 01:23:21 +0300 (MSK)
+Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
+	(envelope-from <dpotapov@gmail.com>)
+	id 1JEB4i-0003dh-FN; Mon, 14 Jan 2008 01:13:04 +0300
+Content-Disposition: inline
+In-Reply-To: <1200241847776-git-send-email-prohaska@zib.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-DCC-STREAM-Metrics: smtp03.mtu.ru 10001; Body=0 Fuz1=0 Fuz2=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70416>
 
-Hi,
+Hi Steffan,
 
-On Sat, 12 Jan 2008, Junio C Hamano wrote:
+It looks like I was to quick to ack your patch
 
-> Mark Levedahl <mlevedahl@gmail.com> writes:
+On Sun, Jan 13, 2008 at 05:30:47PM +0100, Steffen Prohaska wrote:
 > 
-> > Basically, I think an important (but not complete) test of the design
-> > is that
-> >
-> >    git clone -o frotz git://frotz.foo.bar/myproject.git
-> >    cd myproject
-> >    git submodule init
-> >    git submodule update
-> >
-> > work, with origin = frotz throughout the submodules, and with the
-> > whole project correctly checked out even if the entire project was
-> > rehosted onto a different server.
-> 
-> I like that.  This is a very good argument, especially because it 
-> clarifies very well that the issue is not about "'submodule init' 
-> misbehaves" but "fetch/pull/merge does not play well with clone -o".
+> I mentioned earlier that crlf_to_git() would be called twice.  Unfortunately,
+> I can't reproduce this behaviour and are not even sure if it ever happend.
 
-FWIW I disagree.
+that happened to me right now. My setting is autocrlf = input.
+and file that I am adding has mixing line-ending:
+===
+foo
+bar\r
+===
 
-I never understood why people want to complicate things by being able to 
-name default _keys_ differently.  Why not letting "origin" being the 
-default being pulled from, and be done with it?
-
-Besides, I _really_ do not understand why we have such a discussion in rc 
-phase.  There are _many_ more interesting discussions now that _also_ do 
-not belong into a freeze phase.
-
-Ciao,
-Dscho
+Dmitry
