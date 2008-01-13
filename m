@@ -1,78 +1,64 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Digging through old vendor code
-Date: Sat, 12 Jan 2008 20:41:31 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801122034090.2806@woody.linux-foundation.org>
-References: <9e4733910801122009k5658488bx69c04a5cbf7d832a@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: performance problem: "git commit filename"
+Date: Sun, 13 Jan 2008 00:38:51 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0801130028460.13593@iabervon.org>
+References: <alpine.LFD.1.00.0801121426510.2806@woody.linux-foundation.org> <alpine.LFD.1.00.0801121735020.2806@woody.linux-foundation.org> <alpine.LFD.1.00.0801121949180.2806@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 13 05:42:17 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Kristian H?gsberg <krh@redhat.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Jan 13 06:39:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDufm-0005K9-EH
-	for gcvg-git-2@gmane.org; Sun, 13 Jan 2008 05:42:14 +0100
+	id 1JDvZ5-0004uZ-3a
+	for gcvg-git-2@gmane.org; Sun, 13 Jan 2008 06:39:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753282AbYAMElh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 23:41:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753329AbYAMElh
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 23:41:37 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:46095 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753259AbYAMElg (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2008 23:41:36 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0D4fVp9020054
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 12 Jan 2008 20:41:33 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0D4fVaU029147;
-	Sat, 12 Jan 2008 20:41:31 -0800
-In-Reply-To: <9e4733910801122009k5658488bx69c04a5cbf7d832a@mail.gmail.com>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.721 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751238AbYAMFix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jan 2008 00:38:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751235AbYAMFix
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jan 2008 00:38:53 -0500
+Received: from iabervon.org ([66.92.72.58]:52797 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751234AbYAMFix (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2008 00:38:53 -0500
+Received: (qmail 2868 invoked by uid 1000); 13 Jan 2008 05:38:51 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 13 Jan 2008 05:38:51 -0000
+In-Reply-To: <alpine.LFD.1.00.0801121949180.2806@woody.linux-foundation.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70369>
 
+On Sat, 12 Jan 2008, Linus Torvalds wrote:
 
+> It makes builtin-commit.c use the same logic that "git read-tree -i -m" 
+> does (which is what the old shell script did), and it seems to pass the 
+> test-suite, and it looks pretty obvious.
 
-On Sat, 12 Jan 2008, Jon Smirl wrote:
->
-> I have a file that a vendor has modified. It's a serial driver so I
-> know which directory the original file came from. Is there a way to
-> ask git to search through all of the past versions of all of the files
-> in this directory and give me the top two or three choices as to what
-> file the vendor originally copied before staring to edit? This is the
-> same problem as picking the best diff base.
+The only issue I know about with using unpack_trees in C as a replacement 
+for read-tree in shell is that unpack_trees leaves "deletion" index 
+entries in memory which are not written to disk, but may surprise some 
+code (these are used to allow -u to remove the files from the working 
+tree). So you may want to make sure that you don't get any weird results 
+out of a commit of particular files that involves not committing some 
+newly-added files:
 
-Heh. Maybe you could just use the rename logic?
+$ git add new-file
+$ (edit old-file)
+$ git commit old-file
 
-Example of what *might* work:
+This may cause the unpack_trees to leave a misleading entry for new-file 
+that the code doesn't expect. I've got a patch to make it saner as part of 
+my builtin-checkout series, but I can't say for sure that that change 
+won't either confuse something else or have performance problems without a 
+bunch of analysis I haven't done recently.
 
- - go to the directory in the git tree you think the file came from
-
- - delete all the files that are *potential* sources (eg "rm *.c")
-
- - add the new file to that directory
-
- - commit the end result
-
- - ask git to find the best rename possibility, using a low rename 
-   detection score, something like:
-
-	git show -M1%
-
-(and no, I don't guarantee that that "-M1%" is the right syntax, and in 
-general you might well want to play with this concept a bit..)
-
-No guarantees, but it just might work..
-
-		Linus
+	-Daniel
+*This .sig left intentionally blank*
