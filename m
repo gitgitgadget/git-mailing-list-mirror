@@ -1,320 +1,91 @@
-From: Marco Costalba <mcostalba@gmail.com>
-Subject: [PATCH 1/3] Convert compress helpers to use an extended z_stream
-Date: Sun, 13 Jan 2008 14:24:36 +0100
-Message-ID: <1200230678-18188-1-git-send-email-mcostalba@gmail.com>
-Cc: git@vger.kernel.org, Marco Costalba <mcostalba@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Jan 13 14:25:51 2008
+From: "David J. Neu" <davidjneu@gmail.com>
+Subject: git-checkout question
+Date: Sun, 13 Jan 2008 09:21:40 -0500
+Message-ID: <20080113142140.GB10426@bach.davidneu.local>
+Reply-To: djneu@acm.org
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 13 15:22:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JE2qT-0001OI-Qs
-	for gcvg-git-2@gmane.org; Sun, 13 Jan 2008 14:25:50 +0100
+	id 1JE3j5-0006sk-Fv
+	for gcvg-git-2@gmane.org; Sun, 13 Jan 2008 15:22:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751394AbYAMNZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jan 2008 08:25:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbYAMNZS
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jan 2008 08:25:18 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:1748 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751222AbYAMNZQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2008 08:25:16 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so1860514fga.17
-        for <git@vger.kernel.org>; Sun, 13 Jan 2008 05:25:14 -0800 (PST)
+	id S1751381AbYAMOVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jan 2008 09:21:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751360AbYAMOVp
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jan 2008 09:21:45 -0500
+Received: from hs-out-0708.google.com ([64.233.178.242]:8316 "EHLO
+	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751343AbYAMOVo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2008 09:21:44 -0500
+Received: by hs-out-2122.google.com with SMTP id 54so1576987hsz.5
+        for <git@vger.kernel.org>; Sun, 13 Jan 2008 06:21:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=dmGkM8rgeSctmVPUZMHc4jUG/fb+uSdJ/Jj82/ObcHk=;
-        b=JHxDTG+S4RfBMWtc782Q5+s1l2tC6N/1JLNnjgMvTT8fMp8+X0l+lktEGObYKS3Ej4AzzFs/8OpuoPN2ucktJU4j9ws5ry6lnUuy2K9GyTMUtg+Durix4UdZfzkfdZrDydxDeX6hQq4Qqj8T+IG4FdzCKm3/B8JAMkmQSG4DyEE=
+        h=domainkey-signature:received:received:date:from:to:subject:message-id:reply-to:mime-version:content-type:content-disposition:user-agent;
+        bh=byruARlJUfFi0vCGQHn+NfFszkhQVe+lETalvrxL5Vg=;
+        b=PQbUViN8NTJ/SHXGG+X4X+XKbInNnBUddz+zRW9RY02Qf548WrjuDYWngxyoCy4Zgbra53/RsRXhMkeoJmIkFLrwzVzaN/BqkfhxV5T68OADbsA+QkmOdM5geQdH7q83n44BFZU2Q37AzLE8crfgUq3YaRk320Y5ymev/N3fhO0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=sIYmwakrImLT97GmDP39TlZlnsnjoyK7p21ZUxEdyFY/vKvTq/NP10YDsLCT5nAFi5GKsVlnlBRrWa9Dl8/FqLx1efvv8Mk6rJzJq4iBxJbNO6m4vh59qWjE+gcuyZLabQ8LSzlxX6iuWfz01yKIC3gxFxD7uuRPwGfDTBOQLQo=
-Received: by 10.86.77.5 with SMTP id z5mr5116867fga.41.1200230714300;
-        Sun, 13 Jan 2008 05:25:14 -0800 (PST)
-Received: from localhost.localdomain ( [151.70.79.87])
-        by mx.google.com with ESMTPS id g11sm3987662gve.15.2008.01.13.05.25.11
+        h=date:from:to:subject:message-id:reply-to:mime-version:content-type:content-disposition:user-agent;
+        b=BrY8SseyqJ+QC+aIX+AclLuENkbTArZYhCPsYCb5LqWxiqKGlrACgwvffaGnw79gJVASHsSydMBVOXjGfbZsrvIQosxx9jlIv6gO9sab/L21s7Aci4FYat8FuauT90lAJ3qzS+i8S/I1geDi6FFGls+DvN+VEn4SPayMKyBCJj4=
+Received: by 10.150.140.6 with SMTP id n6mr1968762ybd.33.1200234102301;
+        Sun, 13 Jan 2008 06:21:42 -0800 (PST)
+Received: from localhost ( [75.69.180.181])
+        by mx.google.com with ESMTPS id q30sm9257148wrq.4.2008.01.13.06.21.40
         (version=SSLv3 cipher=OTHER);
-        Sun, 13 Jan 2008 05:25:13 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.rc2.98.g58cd2
+        Sun, 13 Jan 2008 06:21:41 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70383>
 
-Instead of passing as argument to compress/decompress
-helpers the zlib native z_stream create a new extended
-one called ext_stream and use this instead.
+Hi, 
 
-This will allow us to associate the specified compress
-algorithm on a 'per stream' base.
+I was wondering if someone could explain the following behavior.
 
-The patch aims to be as less intrusive as possible
-so that ext_stream is really a (slightly) extended
-z_stream and includes a z_stream member.
+1. create and switch to branch off master
+2. edit a file in the branch
+3. checkout master without committing changes in the branch
+4. the changes in the branch are automatically applied in working tree 
+   in master
 
-Choice to use a z_stream variable instead of a z_stream*
-pointer as member is to avoid a xmalloc when a local
-ext_stream variable is used.
+I wasn't expecting the changes in the branch to be automatically
+moved to master.  Had I committed while in the branch this doesn't
+happen.  I'm using git version 1.5.3, the details are below.
 
-This patch just introduces ext_stream and modifies the
-helpers to cope with that. Next patch will rename z_stream
-to ext_stream across the sources. Tough this patch will
-not compile without the next I splitted the two for easing
-the review: the interesting part is here, the next is
-just renaming.
+Many thanks!
 
-Signed-off-by: Marco Costalba <mcostalba@gmail.com>
----
+Cheers,
+David
 
-The patch series apply above my last one sent yesterday.
-
-This patch series is intended more as a RFC then to
-be applied.
-
-While the previous series introduced a cleanup, this one
-extends the compress/decompress helpers framwork to support
-different compress backends.
-
-The compress backends are associated to each z_stream, it means
-I can have multiple z_stream working with different backends at
-the same time.
-
-The rationale for this low level link instead of setting the chosen
-comrpess library, say, at repository level, is that pulling/pushing
-packs on the net must continue to work with zlib so to not break
-things and also that, as Junio pointed out, today we don't
-unpackage and repackage the objects that arrive with a git-pull,
-but store the incoming pack as is.
-
-So we can have different packs compressed with different backends
-in the same repo. To allow this the compression algorithm info should
-be linked at the z_stream level. Note that this is _almost_ trasparent
-to the user.
-
-
-Finally this is the first patch series sent with send-mail, so to try
-to overcome the lines wrapping damage of my mailer.
-
-BTW it took more time to setup send-mail and send the patches then to
-write them! ;-)
-
-
- compress.c |   64 ++++++++++++++++++++++++++++++------------------------------
- compress.h |   52 ++++++++++++++++++++++++++++++++++++++----------
- 2 files changed, 73 insertions(+), 43 deletions(-)
-
-diff --git a/compress.c b/compress.c
-index f73cf2c..b28c389 100644
---- a/compress.c
-+++ b/compress.c
-@@ -5,46 +5,46 @@
-  *     Compression helpers
-  */
- 
--unsigned long compress_alloc(z_stream *stream, int level, unsigned long size)
-+unsigned long compress_alloc(ext_stream *stream, int level, unsigned long size)
- {
- 	memset(stream, 0, sizeof(*stream));
--	deflateInit(stream, level);
--	return deflateBound(stream, size);
-+	deflateInit(&stream->z, level);
-+	return deflateBound(&stream->z, size);
- }
- 
--int compress_start(z_stream *stream,
-+int compress_start(ext_stream *stream,
-                    unsigned char *in, unsigned long in_size,
-                    unsigned char *out, unsigned long out_size)
- {
--	stream->next_out = out;
--	stream->avail_out = out_size;
--	stream->next_in = in;
--	stream->avail_in = in_size;
-+	stream->z.next_out = out;
-+	stream->z.avail_out = out_size;
-+	stream->z.next_in = in;
-+	stream->z.avail_in = in_size;
- 	return Z_OK;
- }
- 
--int compress_next(z_stream *stream, int flush)
-+int compress_next(ext_stream *stream, int flush)
- {
- 	int result;
- 
- 	do {
--		result = deflate(stream, flush);
-+		result = deflate(&stream->z, flush);
- 	} while (result == Z_OK);
- 
- 	return result;
- }
- 
--unsigned long compress_free(z_stream *stream)
-+unsigned long compress_free(ext_stream *stream)
- {
--	deflateEnd(stream);
--	return stream->total_out;
-+	deflateEnd(&stream->z);
-+	return stream->z.total_out;
- }
- 
- unsigned long compress_all(int level, unsigned char *in,
-                            unsigned long in_size, unsigned char **out)
- {
- 	unsigned long out_size;
--	z_stream stream;
-+	ext_stream stream;
- 
- 	out_size = compress_alloc(&stream, level, in_size);
- 	*out = xmalloc(out_size);
-@@ -65,47 +65,47 @@ unsigned long compress_all(int level, unsigned char *in,
-  *     Decompression helpers
-  */
- 
--int decompress_alloc(z_stream *stream)
-+int decompress_alloc(ext_stream *stream)
- {
- 	memset(stream, 0, sizeof(*stream));
--	return inflateInit(stream);
-+	return inflateInit(&stream->z);
- }
- 
--int decompress_from(z_stream *stream, unsigned char *in, unsigned long in_size)
-+int decompress_from(ext_stream *stream, unsigned char *in, unsigned long in_size)
- {
--	stream->next_in = in;
--	stream->avail_in = in_size;
-+	stream->z.next_in = in;
-+	stream->z.avail_in = in_size;
- 	return Z_OK;
- }
- 
--int decompress_into(z_stream *stream, unsigned char *out, unsigned long out_size)
-+int decompress_into(ext_stream *stream, unsigned char *out, unsigned long out_size)
- {
--	stream->next_out = out;
--	stream->avail_out = out_size;
-+	stream->z.next_out = out;
-+	stream->z.avail_out = out_size;
- 	return Z_OK;
- }
- 
--int decompress_next(z_stream *stream, int flush)
-+int decompress_next(ext_stream *stream, int flush)
- {
--	return inflate(stream, flush);
-+	return inflate(&stream->z, flush);
- }
- 
--int decompress_next_from(z_stream *stream, unsigned char *in, unsigned long in_size, int flush)
-+int decompress_next_from(ext_stream *stream, unsigned char *in, unsigned long in_size, int flush)
- {
- 	decompress_from(stream, in, in_size);
--	return inflate(stream, flush);
-+	return inflate(&stream->z, flush);
- }
- 
--int decompress_next_into(z_stream *stream, unsigned char *out, unsigned long out_size, int flush)
-+int decompress_next_into(ext_stream *stream, unsigned char *out, unsigned long out_size, int flush)
- {
- 	decompress_into(stream, out, out_size);
--	return inflate(stream, flush);
-+	return inflate(&stream->z, flush);
- }
- 
--unsigned long decompress_free(z_stream *stream)
-+unsigned long decompress_free(ext_stream *stream)
- {
--	inflateEnd(stream);
--	return stream->total_out;
-+	inflateEnd(&stream->z);
-+	return stream->z.total_out;
- }
- 
- unsigned long decompress_all(unsigned char *in, unsigned long in_size,
-@@ -113,7 +113,7 @@ unsigned long decompress_all(unsigned char *in, unsigned long in_size,
- {
- /* caller should check for return value != 0 */
- 
--	z_stream stream;
-+	ext_stream stream;
- 	int st;
- 
- 	if (decompress_alloc(&stream) != Z_OK)
-diff --git a/compress.h b/compress.h
-index a81d006..d1de31f 100644
---- a/compress.h
-+++ b/compress.h
-@@ -1,25 +1,55 @@
- #ifndef COMPRESS_H
- #define COMPRESS_H
- 
--extern unsigned long compress_alloc(z_stream *stream, int level, unsigned long size);
--extern int compress_start(z_stream *stream, unsigned char *in, unsigned long in_size,
-+/* Any compress/decompress engine must implement all the
-+ * below functions that are modeled after the zlib ones.
-+ */
-+typedef int (*deflateInit_fn_t)(z_stream *stream, int level);
-+typedef int (*deflate_fn_t)(z_stream *stream, int flush);
-+typedef int (*deflateEnd_fn_t)(z_stream *stream);
-+typedef unsigned long (*deflateBound_fn_t)(z_stream *stream, unsigned long size);
-+
-+typedef int (*inflateInit_fn_t)(z_stream *stream);
-+typedef int (*inflate_fn_t)(z_stream *stream, int flush);
-+typedef int (*inflateEnd_fn_t)(z_stream *stream);
-+
-+
-+/* Extended struct used instead of the zlib native to
-+ * call the compress/decompress helpers. It's just a
-+ * thin extension of the zlib native one.
-+ */
-+typedef struct ext_stream_s {
-+	z_stream z; /* defined in zlib.h to store stream state */
-+
-+	/* pointers to low level compress library functions */
-+	deflateInit_fn_t  deflateInit_fn;
-+	deflate_fn_t      deflate_fn;
-+	deflateEnd_fn_t   deflateEnd_fn;
-+	deflateBound_fn_t deflateBound_fn;
-+	inflateInit_fn_t  inflateInit_fn;
-+	inflate_fn_t      inflate_fn;
-+	inflateEnd_fn_t   inflateEnd_fn;
-+} ext_stream;
-+
-+extern unsigned long compress_alloc(ext_stream *stream, int level, unsigned long size);
-+extern int compress_start(ext_stream *stream, unsigned char *in, unsigned long in_size,
-                            unsigned char *out, unsigned long out_size);
--extern int compress_next(z_stream *stream, int flush);
--extern unsigned long compress_free(z_stream *stream);
-+extern int compress_next(ext_stream *stream, int flush);
-+extern unsigned long compress_free(ext_stream *stream);
- extern unsigned long compress_all(int level, unsigned char *in, unsigned long in_size,
-                                   unsigned char **out);
- 
- 
--extern int decompress_alloc(z_stream *stream);
-+extern int decompress_alloc(ext_stream *stream);
- 
--extern int decompress_from(z_stream *stream, unsigned char *in, unsigned long in_size);
--extern int decompress_into(z_stream *stream, unsigned char *out, unsigned long out_size);
-+extern int decompress_from(ext_stream *stream, unsigned char *in, unsigned long in_size);
-+extern int decompress_into(ext_stream *stream, unsigned char *out, unsigned long out_size);
- 
--extern int decompress_next(z_stream *stream, int flush);
--extern int decompress_next_from(z_stream *stream, unsigned char *in, unsigned long in_size, int flush);
--extern int decompress_next_into(z_stream *stream, unsigned char *out, unsigned long out_size, int flush);
-+extern int decompress_next(ext_stream *stream, int flush);
-+extern int decompress_next_from(ext_stream *stream, unsigned char *in, unsigned long in_size, int flush);
-+extern int decompress_next_into(ext_stream *stream, unsigned char *out, unsigned long out_size, int flush);
- 
--extern unsigned long decompress_free(z_stream *stream);
-+extern unsigned long decompress_free(ext_stream *stream);
- 
- extern unsigned long decompress_all(unsigned char *in, unsigned long in_size,
-                                     unsigned char *out, unsigned long out_size);
--- 
-1.5.4.rc2.98.g58cd2
+[/tmp] mkdir git-test
+[/tmp] cd git-test
+[/tmp/git-test] git-init 
+Initialized empty Git repository in .git/
+[/tmp/git-test] # create hello.py
+[/tmp/git-test] git-add hello.py 
+[/tmp/git-test] git-commit   
+Created initial commit 58282ee: Initial commit of git-test.
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 hello.py
+[/tmp/git-test] cat hello.py 
+print "hello from master."
+[/tmp/git-test] git-checkout -b test-branch
+Switched to a new branch "test-branch"
+[/tmp/git-test] # modify hello.py
+[/tmp/git-test] cat hello.py 
+print "hello from test-branch."
+[/tmp/git-test] git-checkout master
+M       hello.py
+Switched to branch "master"
+[/tmp/git-test] cat hello.py 
+print "hello from test-branch."
+[/tmp/git-test] # hmmm?
