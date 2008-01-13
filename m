@@ -1,115 +1,100 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Adding Git to Better SCM Initiative : Comparison
-Date: Sun, 13 Jan 2008 01:44:10 +0100
-Message-ID: <200801130144.14574.jnareb@gmail.com>
-References: <200712101357.49325.jnareb@gmail.com> <200801071057.27710.shlomif@iglu.org.il>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: performance problem: "git commit filename"
+Date: Sat, 12 Jan 2008 17:46:20 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801121735020.2806@woody.linux-foundation.org>
+References: <alpine.LFD.1.00.0801121426510.2806@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>,
-	David Kastrup <dak@gnu.org>, Florian Weimer <fw@deneb.enyo.de>,
-	Chris Shoemaker <c.shoemaker@cox.net>
-To: Shlomi Fish <shlomif@iglu.org.il>
-X-From: git-owner@vger.kernel.org Sun Jan 13 01:44:51 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Kristian H?gsberg <krh@redhat.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 13 02:47:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDqy2-0003CV-1k
-	for gcvg-git-2@gmane.org; Sun, 13 Jan 2008 01:44:50 +0100
+	id 1JDrx5-0001ku-1J
+	for gcvg-git-2@gmane.org; Sun, 13 Jan 2008 02:47:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752790AbYAMAoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jan 2008 19:44:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752738AbYAMAoW
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 19:44:22 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:38505 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752479AbYAMAoV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jan 2008 19:44:21 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so663047ugc.16
-        for <git@vger.kernel.org>; Sat, 12 Jan 2008 16:44:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=n5i7Y5jQMgPLfTd0ht81f4hXvaEOmT2sPlF2VLVjKEQ=;
-        b=LpGzuRK1ntz5DEcoAKu0jdYWW9ZcYZfBRH2NlVwdPj8xMx4Y3y0XoYpuMpcF5Ve2BFXc+56SZFGxCqz0TtTl7J8fTYb6YeAL1qU1+ARCsaCTdUcqsRdl30Dtlys9yf09+ri3zG6gaLKlv0IA5xDCTTHMV6zBkqtYjBEW+3J9EII=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ZKaeF+LW4g3oE838wJ2+kG2HF1RzX/sdNxCqujefhH4aPZy1WThWhm3yygMI52QKkb74ceHUxdU7S/Kzrk40uuNL4o5/3/X6t5BBbjP7XTToDSJcBWetrrxSksqMKfP5S61jkq0EnnBMaC7/71DLKnHJ+5KKF0HjOwdJY1QJwBs=
-Received: by 10.67.98.15 with SMTP id a15mr1833982ugm.69.1200185059515;
-        Sat, 12 Jan 2008 16:44:19 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.190.231])
-        by mx.google.com with ESMTPS id 18sm16101704ugk.18.2008.01.12.16.44.16
-        (version=SSLv3 cipher=OTHER);
-        Sat, 12 Jan 2008 16:44:17 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200801071057.27710.shlomif@iglu.org.il>
-Content-Disposition: inline
+	id S1752482AbYAMBrS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jan 2008 20:47:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752399AbYAMBrS
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Jan 2008 20:47:18 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:57619 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752229AbYAMBrR (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Jan 2008 20:47:17 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0D1kLx2015883
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 12 Jan 2008 17:46:22 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0D1kK84023730;
+	Sat, 12 Jan 2008 17:46:21 -0800
+In-Reply-To: <alpine.LFD.1.00.0801121426510.2806@woody.linux-foundation.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.42 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_42
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70365>
 
-On Mon, 7 Jan 2008, Shlomi Fish wrote:
+
+
+On Sat, 12 Jan 2008, Linus Torvalds wrote:
 > 
-> I'm CCing all the correspondents, because I'm banned from the vger.kernel.org 
-> mail. This has been an obstacle for me in several legitimate occassions and 
-> this one is the latest. I'm still CCing it, so the people in the mailing list 
-> will receive the replies.
-> 
-> On Monday 10 December 2007, Jakub Narebski wrote:
-> > I have noticed that your SCM comparison at "Better SCM Initiative"
-> > website
-> >   http://better-scm.berlios.de/comparison/comparison.html
-> > misses one of the Git, version control system which is used to manage
-> > Linux kernel, and one of the main open source (distributed) version
-> > control systems (among Mercurial, Bazaar-NG, Monotone and Darcs).
-> >
-> 
-> Indeed git is absent. That's because no one until you has volunteered to send 
-> a patch that adds it to the comparison. Another requirement is for someone to 
-> volunteer to become a "champion" for the version control system and maintain 
-> it into the future. So who is going to be the champion?
+> I thought we had fixed this long long ago, but if we did, it has 
+> re-surfaced.
 
-I can be git champion for "Better SCM Initiative" comparison... although
-I'd rather somebody else was it.
- 
-[...] 
-> > Below there is (slightly doctored) patch to the sources for the site.
-> >
-> 
-> Despite the fact that I the comparison was recently patched to add Bazaar and 
-> fix some grammatical problems, the patch still applies cleanly. However, I 
-> saw that some people commented on it here. Can you send me a new patch 
-> integrating all this commentary?
+It's new, and yes, it seems to be due to the new builtin-commit.c.
 
-I'll try to send revised patch soon. Integrating commentary is a bit
-harder that it could be because some responses were sent _only_ to
-git mailing list, so I'd have to browse through git mailing list
-archives.
+I think I know what is going on.
 
+In the old git-commit.sh, this case used to be handled with
 
-BTW. some of the questions / comments were caused by the fact that the
-features listed in Better SCM Initiative: Comparison are a bit ambiguous.
+	TMP_INDEX="$GIT_DIR/tmp-index$$"
 
-What does for example "Atomic Commit" mean? Does it mean that if we
-interrupt commit in the middle we would always get full commit or none,
-and not some f**d-up intermediate state? Hos CVS can have atomic commits
-then?
+	GIT_INDEX_FILE="$THIS_INDEX" \
+	git read-tree --index-output="$TMP_INDEX" -i -m HEAD
 
-What does "Renames Support" mean? Does it mean that when browsing history
-we [can] show file / directory renames? Does it mean that log of file or
-directory history [can] follow renames? Does it mean that line-wise file
-history [can] follow renames? Renames support in merges is as TODO, so
-I don't think that this one matters in this question. Because the answer,
-especially in the case of git which is a bit different in that it does
-rename detection and not rename tracking (using inodes / file-ids),
-depends on that...
+which is a one-way merge of the *old* index and HEAD, taking the index 
+information from the old index, but the actual file information from HEAD 
+(to then later be updated by the named files).
 
--- 
-Jakub Narebski
-Poland
+This logic is implemented by builtin-read-tree.c with
+
+	struct unpack_trees_options opts;
+	..
+	opts.fn = oneway_merge;
+	..
+	unpack_trees(nr_trees, t, &opts);
+
+where all the magic is done by that "oneway_merge()" function being called 
+for each entry by unpack_trees(). This does everything right, and the 
+result is that any index entry that was up-to-date in the old index and 
+unchanged in the base tree will be up-to-date in the new index too
+
+HOWEVER. When that logic was converted from that shell-script into a 
+builtin-commit.c, that conversion was not done correctly. The old "git 
+read-tree -i -m" was not translated as a "unpack_trees()" call, but as 
+this in prepare_index():
+
+	discard_cache()
+	..
+	tree = parse_tree_indirect(head_sha1);
+	..
+	read_tree(tree, 0, NULL)
+
+which is very wrong, because it replaces the old index entirely, and 
+doesn't do that stat information merging.
+
+As a result, the index that is created by read-tree is totally bogus in 
+the stat cache, and yes, everything will have to be re-computed.
+
+Kristian?
+
+			Linus
