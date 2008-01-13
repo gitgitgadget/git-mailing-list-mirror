@@ -1,64 +1,77 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: performance problem: "git commit filename"
-Date: Sun, 13 Jan 2008 00:38:51 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0801130028460.13593@iabervon.org>
-References: <alpine.LFD.1.00.0801121426510.2806@woody.linux-foundation.org> <alpine.LFD.1.00.0801121735020.2806@woody.linux-foundation.org> <alpine.LFD.1.00.0801121949180.2806@woody.linux-foundation.org>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH 2/5] git-submodule: New subcommand 'summary' (2) - hard work
+Date: Sun, 13 Jan 2008 14:28:21 +0800
+Message-ID: <46dff0320801122228r4261786eo2f23258e79f2e346@mail.gmail.com>
+References: <f67f45eeb9648bb7e5adaf53544443b79643914e.1200122041.git.pkufranky@gmail.com>
+	 <62a73e734832ad67e89be706f1f8b3dbc30cfcf4.1200122041.git.pkufranky@gmail.com>
+	 <46dff0320801120312i7b22f13vb9fe2394b1f687a9@mail.gmail.com>
+	 <7vve5ysv72.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Kristian H?gsberg <krh@redhat.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Jan 13 06:39:23 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 13 07:29:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JDvZ5-0004uZ-3a
-	for gcvg-git-2@gmane.org; Sun, 13 Jan 2008 06:39:23 +0100
+	id 1JDwL4-0003zB-0I
+	for gcvg-git-2@gmane.org; Sun, 13 Jan 2008 07:28:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751238AbYAMFix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jan 2008 00:38:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751235AbYAMFix
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jan 2008 00:38:53 -0500
-Received: from iabervon.org ([66.92.72.58]:52797 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751234AbYAMFix (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2008 00:38:53 -0500
-Received: (qmail 2868 invoked by uid 1000); 13 Jan 2008 05:38:51 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 13 Jan 2008 05:38:51 -0000
-In-Reply-To: <alpine.LFD.1.00.0801121949180.2806@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1750844AbYAMG2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jan 2008 01:28:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbYAMG2X
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jan 2008 01:28:23 -0500
+Received: from py-out-1112.google.com ([64.233.166.177]:58031 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750844AbYAMG2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2008 01:28:22 -0500
+Received: by py-out-1112.google.com with SMTP id u52so2406585pyb.10
+        for <git@vger.kernel.org>; Sat, 12 Jan 2008 22:28:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=RFccawdToioNdV0KcVNXry1ydmF/sWO4uBA/ZJ7Et4U=;
+        b=h+inLwbk913t26HHpGIDuZ0xesgNrx1rW5LsJWVfIjmGdVNT1t0tBXWKxNNeah+IqMO+WT/nonuJdO91UqfLXRGQH30C+zRjoJpUitUvgGmf3QerWMtcbsRE27tNNIvNrYV5GocsJ8nMlCoSYY74tYtmo2j8KJSAGitWfq7V3JY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HPA3tsGv2X4UNu57Q1os0j40bCe4SL5mjv5NW2bM403N348/FwwWav6hLzKIOqKAmed40fg+NB6SWqRtFNZellU3M7vGEkutkiGxvnRRV6k4+MAjpXaJawScUDXTphzah/hejU15H4MSpvLTKZzlc5e0GkFenJ1fiN4wi1Y1EyU=
+Received: by 10.35.87.10 with SMTP id p10mr5990266pyl.34.1200205701697;
+        Sat, 12 Jan 2008 22:28:21 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Sat, 12 Jan 2008 22:28:21 -0800 (PST)
+In-Reply-To: <7vve5ysv72.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70370>
 
-On Sat, 12 Jan 2008, Linus Torvalds wrote:
+On Jan 13, 2008 3:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Ping Yin" <pkufranky@gmail.com> writes:
+>
+> >> +                       echo "* $name $sha1_src...$sha1_dst:"
+> >
+> > If it's a type change (head submodule but index blob, or the the
+> > reverse), $sha1_dst or $sha1_src will be the sha1 of the blob. It's
+> > inapprociate to be shown as if it's a commit in the submodule. May
+> > 00000000 should be shown instead of the blob sha1?
+>
+> I do not think that adds much value.  When A or B is a
+> non-commit, you know that A...B notation does not apply, and
+> because it is probably a rare situation you would want to make
+> it even more clearer to the reader by using a different
+> notation.  Like
+>
+>     echo "* $name have changed from submodule $sha1_src to blob $sha1_dst!!".
+>
+> perhaps in red bold letter in larger font ;-)
+>
+OK, i will think over.
 
-> It makes builtin-commit.c use the same logic that "git read-tree -i -m" 
-> does (which is what the old shell script did), and it seems to pass the 
-> test-suite, and it looks pretty obvious.
 
-The only issue I know about with using unpack_trees in C as a replacement 
-for read-tree in shell is that unpack_trees leaves "deletion" index 
-entries in memory which are not written to disk, but may surprise some 
-code (these are used to allow -u to remove the files from the working 
-tree). So you may want to make sure that you don't get any weird results 
-out of a commit of particular files that involves not committing some 
-newly-added files:
 
-$ git add new-file
-$ (edit old-file)
-$ git commit old-file
-
-This may cause the unpack_trees to leave a misleading entry for new-file 
-that the code doesn't expect. I've got a patch to make it saner as part of 
-my builtin-checkout series, but I can't say for sure that that change 
-won't either confuse something else or have performance problems without a 
-bunch of analysis I haven't done recently.
-
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+Ping Yin
