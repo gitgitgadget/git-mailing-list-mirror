@@ -1,55 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] http-push: making HTTP push more robust and more
- user-friendly
-Date: Mon, 14 Jan 2008 12:21:08 +0100 (CET)
-Message-ID: <alpine.LSU.1.00.0801141220001.8333@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <1200250979-19604-1-git-send-email-gb@gbarbier.org> <7vbq7ppbyh.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Digging through old vendor code
+Date: Mon, 14 Jan 2008 07:08:07 -0500
+Message-ID: <20080114120807.GB12723@coredump.intra.peff.net>
+References: <20080113162806.13991.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?ISO-8859-15?Q?Gr=E9goire_Barbier?= <gb@gbarbier.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 14 12:21:42 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jonsmirl@gmail.com,
+	torvalds@linux-foundation.org
+To: linux@horizon.com
+X-From: git-owner@vger.kernel.org Mon Jan 14 13:08:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JENNt-0002Cg-Cv
-	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 12:21:41 +0100
+	id 1JEO7N-0007RM-1Y
+	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 13:08:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754680AbYANLVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2008 06:21:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754194AbYANLVM
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 06:21:12 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57305 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754253AbYANLVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2008 06:21:11 -0500
-Received: (qmail invoked by alias); 14 Jan 2008 11:21:09 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp039) with SMTP; 14 Jan 2008 12:21:09 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18yKTECiJEyBS5UANX7xqS0TjWH3iur/EOHQlv3bZ
-	YDhdavCu/JCE2q
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vbq7ppbyh.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755183AbYANMIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2008 07:08:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754953AbYANMIL
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 07:08:11 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2050 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754598AbYANMIK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2008 07:08:10 -0500
+Received: (qmail 6370 invoked by uid 111); 14 Jan 2008 12:08:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 14 Jan 2008 07:08:08 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Jan 2008 07:08:07 -0500
+Content-Disposition: inline
+In-Reply-To: <20080113162806.13991.qmail@science.horizon.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70455>
 
-Hi,
+On Sun, Jan 13, 2008 at 11:28:06AM -0500, linux@horizon.com wrote:
 
-On Sun, 13 Jan 2008, Junio C Hamano wrote:
+> Maybe a real git wizard will show me how to insert the index entries
+> directly without ever doing anything as pedestrian as extracting, hashing,
+> and then deleting the files, but it's still not that bad.
 
-> The second one to add a couple of "goto cleanup" looked correct.  Acks, 
-> people?
+git-read-tree?  Unfortunately it has no option to insert only a subset
+of the tree. But you can make do with git-ls-tree piped to
+git-update-index.
 
-I haven't used http-push in ages, but there was a bug report with msysgit.  
-Hopefully that issue gets fixed by this patch.
+Using the script below, Jon's sample file seems to be
 
-Ciao,
-Dscho
+  v2.6.15-rc6-81-g0b57ee9:drivers/serial/amba-pl010.c
+
+and it runs in about 8 seconds on v2.6.13..v2.6.15. I think it might be
+more intuitive to just diff a temporary index against each tree, but I
+don't think there's a way to say "find copies harder, but use only this
+subset of files as the source" which makes it less efficient.
+
+Jon, you might try playing around with different ranges. I get a
+different answer for v2.6.13..v2.6.16.
+
+-- >8 --
+SRC=drivers/serial
+
+echo >&2 Cleaning up after old runs...
+rm -f tmpindex
+git branch -D tmpbranch
+
+echo >&2 Creating giant source commit...
+for i in `git rev-list v2.6.13..v2.6.15 -- $SRC`; do
+  git ls-tree -r $i -- $SRC |
+    # note the whitespace is a literal tab
+    sed "s,	,	$i/," |
+    GIT_INDEX_FILE=tmpindex git update-index --index-info
+done
+tree=`GIT_INDEX_FILE=tmpindex git write-tree`
+commit=`echo source | git commit-tree $tree`
+git update-ref refs/heads/tmpbranch $commit
+
+echo >&2 Creating updated index...
+GIT_INDEX_FILE=tmpindex git add candidate.c
+echo >&2 Diffing...
+GIT_INDEX_FILE=tmpindex git diff-index --cached -l0 -M1% -C1% --find-copies-harder tmpbranch
+
+# now you should manually git-describe the winner
