@@ -1,64 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] http-push: making HTTP push more robust and more
- user-friendly
-Date: Mon, 14 Jan 2008 20:22:15 +0000 (GMT)
-Message-ID: <alpine.DEB.1.00.0801142019360.23987@eeepc-johanness>
-References: <1200250979-19604-1-git-send-email-gb@gbarbier.org> <7vbq7ppbyh.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801141220001.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7v1w8kkxo7.fsf@gitster.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Git Cygwin - unable to create any repository - help!
+Date: Mon, 14 Jan 2008 21:29:32 +0100
+Message-ID: <20080114202932.GA25130@steel.home>
+References: <a5eb9c330801140921m63b1b8a9pe67bf6f0d2e58dba@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?ISO-8859-15?Q?Gr=E9goire_Barbier?= <gb@gbarbier.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 14 21:22:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Umbers <paul.umbers@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 14 21:30:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEVpX-0005aD-2m
-	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 21:22:47 +0100
+	id 1JEVwa-00083s-AC
+	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 21:30:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750943AbYANUWS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2008 15:22:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750993AbYANUWS
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 15:22:18 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45188 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750868AbYANUWR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2008 15:22:17 -0500
-Received: (qmail invoked by alias); 14 Jan 2008 20:22:15 -0000
-Received: from unknown (EHLO eeepc-johanness.st-andrews.ac.uk) [138.251.11.75]
-  by mail.gmx.net (mp048) with SMTP; 14 Jan 2008 21:22:15 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX184t5Z2AnQ4T+OtcGj9ELIRHbsET9rOxXHZzDIyK8
-	vxYGTuDrU006js
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <7v1w8kkxo7.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1750985AbYANU3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2008 15:29:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750937AbYANU3g
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 15:29:36 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:31563 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750708AbYANU3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2008 15:29:35 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3Cculz0wOV/Ag==
+Received: from tigra.home (Faf3b.f.strato-dslnet.de [195.4.175.59])
+	by post.webmailer.de (fruni mo24) (RZmta 15.4)
+	with ESMTP id v03fd0k0EIkclp ; Mon, 14 Jan 2008 21:29:33 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 9C7E1277AE;
+	Mon, 14 Jan 2008 21:29:33 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 145D056D22; Mon, 14 Jan 2008 21:29:33 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <a5eb9c330801140921m63b1b8a9pe67bf6f0d2e58dba@mail.gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70474>
 
-Hi,
-
-On Mon, 14 Jan 2008, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Paul Umbers, Mon, Jan 14, 2008 18:21:44 +0100:
+> Trying to create a repository under the cygwin install of git, windows
+> XP Pro. I can create the initial repository OK using "git init" and
+> add files using "git add .", but when I come to commit I get the
+> messages:
 > 
-> > On Sun, 13 Jan 2008, Junio C Hamano wrote:
-> >
-> >> The second one to add a couple of "goto cleanup" looked correct.  
-> >> Acks, people?
-> >
-> > I haven't used http-push in ages, but there was a bug report with 
-> > msysgit.  Hopefully that issue gets fixed by this patch.
-> 
-> Could you work with the reporter to see if this fixes the issue for him?
+> error: invalid object d9b06fceac52f6c24357e6a7f85c601
+> 088381152
+> fatal: git-write-tree: error building trees
 
-I wanted to try to reproduce first, but I had definitely not enough time 
-for git today.
-
-Will try to find some time tomorrow,
-Dscho
+Is it a "text-mode" mount where your repository is to reside?
