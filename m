@@ -1,341 +1,335 @@
 From: imyousuf@gmail.com
-Subject: [PATCH] - git submodule subcommand parsing modified.
-Date: Mon, 14 Jan 2008 09:22:36 +0600
-Message-ID: <1200280956-19920-1-git-send-email-imyousuf@gmail.com>
+Subject: [PATCH] - Introduced 'recurse' command for git-submodule
+Date: Mon, 14 Jan 2008 09:23:00 +0600
+Message-ID: <1200280980-20081-1-git-send-email-imyousuf@gmail.com>
 Cc: gitster@pobox.com, Imran M Yousuf <imyousuf@smartitengineering.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 14 04:23:37 2008
+X-From: git-owner@vger.kernel.org Mon Jan 14 04:24:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEFvE-0004ZZ-JA
-	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 04:23:37 +0100
+	id 1JEFvd-0004bp-JH
+	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 04:24:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753950AbYANDW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jan 2008 22:22:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754148AbYANDW7
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jan 2008 22:22:59 -0500
+	id S1754173AbYANDXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jan 2008 22:23:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753640AbYANDXW
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jan 2008 22:23:22 -0500
 Received: from fg-out-1718.google.com ([72.14.220.152]:47182 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753950AbYANDW5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2008 22:22:57 -0500
+	with ESMTP id S1752495AbYANDXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jan 2008 22:23:20 -0500
 Received: by fg-out-1718.google.com with SMTP id e21so2100299fga.17
-        for <git@vger.kernel.org>; Sun, 13 Jan 2008 19:22:55 -0800 (PST)
+        for <git@vger.kernel.org>; Sun, 13 Jan 2008 19:23:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=pBsJghJ3oji6Ozim9soomyI835rUOxRip+WyKWJq/PI=;
-        b=KWe0OEwmWKPyc6h9vyNvzj4qxX3WnvcR4TAv2aMBYIYv2lx1FyyCOSc+3Ur0qjL+grSDI57cUv73c4VpPQX97OUpMUky7IpmcMrp43fp2ScJ1NeIJT6273LRmPVQeMStdfs4lktvdOwW2noJRMbPeBt8oGYrTWux3M/Lmg+Rhnw=
+        bh=UIZzI1viVKq12EK6q1J9HTn/t6tTt4+vtevU/EUnOkg=;
+        b=Rz6Ldq6VxtlsoV6H/GD2nfnCKpO3zYsKWTQh+4rDje4iy8ps6clqcmF5N1BobpUeYTbvA/YHfvWvGJ0AXkvmX4l+D/06r0Io+8zPOYE+a3HDeoXfp3fWYuuaNUD2590C+N1jjt4Sv786taokQ83hpdT3lLE4v++J/PzNE7/IdDE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        b=B9o+nBPSJ2ddkmkQPiHrXiERpzrh9HUY/7xNXX+OGidzRnGI//kKWYacPsoTAYyiqMkRXrUfzQIMll+euIm5i1WoEOVrwH7uzQFnBAeX5Prz4oKGdJ5gtvmwzau5xkkSnWThf8Bgzbeu6NrM081TMJsKl++mKlRmWKEPO6asCnk=
-Received: by 10.86.78.4 with SMTP id a4mr5781651fgb.3.1200280975828;
-        Sun, 13 Jan 2008 19:22:55 -0800 (PST)
+        b=Rz4zOiPYLyXvP4jYMMA42T8THhk/1Zy58Ip61J5ZYu99EQpt5FYHbSHBNFJHuAXgOK6MpbtHdkj5Hzh5EvwdrynxuIgP4f/GdZIjSy8z518xiaRnVA85+GJAPLy4jcMh5SYKHacgmHFm+4az+kxwuDp0XFk3bvJSzy8SyliVV+c=
+Received: by 10.86.54.3 with SMTP id c3mr1871850fga.18.1200280999965;
+        Sun, 13 Jan 2008 19:23:19 -0800 (PST)
 Received: from localhost ( [62.101.198.35])
-        by mx.google.com with ESMTPS id e11sm4652057fga.5.2008.01.13.19.22.47
+        by mx.google.com with ESMTPS id 3sm5902611fge.7.2008.01.13.19.23.11
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 13 Jan 2008 19:22:55 -0800 (PST)
+        Sun, 13 Jan 2008 19:23:19 -0800 (PST)
 X-Mailer: git-send-email 1.5.3.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70435>
 
 From: Imran M Yousuf <imyousuf@smartitengineering.com>
 
-- manual page of git-submodule and usage mentioned in git-subcommand.sh
-were not same, thus synchronized them. In doing so also had to change the
-way the subcommands were parsed.
+- The purpose of the recurse command in the git submodule is to recurse
+a command in its submodule. For example if one wants to do a diff on its
+project with submodules at once, one can simply do
+	git-submodule recurse diff HEAD
+and would see the diff for all the modules it contains.
 
-- Previous version did not allow commands such as
-	git-submodule add init update
-as the command parser incorrectly made subcommand names reserve.
-Thus refusing them to be used as parameters to subcommands. As a result it
-was impossible to add a submodule whose (symbolic) name is "init" and that
-resides at path "update" was refused. For more details the following case
-can be considered -
+- The recurse commands behavior can be customized with several arguments
+that it accepts. The synopsis for the recurse command is:
 
-mkdir g; mkdir f; cd g/
-touch g.txt; echo "sample text for g.txt" >> ./g.txt; git-init;
-git-add g.txt; git-commit -a -m "First commit on g"
-cd ../f/; ln -s ../g/ init
-git-init; git-submodule add init update;
-git-commit -a -m "With module update"
-mkdir ../test; cd ../test
-git-clone ../f/; cd f
-git-submodule init update; git-submodule update update
-cd ../..; rm -rf ./f/ ./test/ ./g/
+	git-submodule [-q|--quiet] recurse [-i|--initialize]
+	[-e|--exit-after-error] [-d|--depth <recursion depth>]
+	[-df|--depth-first] [-ca|--customized-argument] [-p|--pre-command]
+	<command> [<arguments> ...]
 
-This patch fixes this issue and allows it as well.
+- When traversing modules, a module could be uninitialized that is git
+submodule init and update has not been called for it; if [-i|--initialize]
+option is specified, it will initialize any module that is not initialized;
+else if the module is not initialized it will simply skip it.
 
-- Status currently is implemented to show list only but later
-implementation might change and list and status could coexists. Thus
-status module is introduced. The module is also used to parse its
-arguments
+- There are commands that can fail for a certain submodule but succeed for
+others; if one wants to stop execution once the top level module's execution
+fails, one can specify [-e|--exit-after-error]. It will ensure that once
+execution of git <command> fails in the top level module it will not recurse
+into its submodules.
 
-- Subcommands will also parse their own commands; thus enabling command
-specific arguments to be passed after the command. For example,
-	git-submodule -q add -b master module_a
-	git-submodule -q status -c
-It is to be noted that -q or --quiet is specified before the subcommand
-since it is for the submodule command in general rather than the
-subcommand. It is mention worthy that backward compatibility exists and
-thus commands like git submodule --cached status will also work as expected
+- If the project has submodule hierarchy upto n depth and we want to restrict
+recursion to (n-p) depth; we can use the [-d|--depth <recursion depth>] option.
+Value has to be greater than 0 and command will at least recurse into the first
+depth. If depth is specified to p than all depths <= p will be recursed over.
 
-- Subcommands that currently do not take any arguments (init and update)
-has a case which is introduced just to ensure that no argument is
-deliberately sent as the first argument and also to serve the purpose of
-providing a future extension point for its arguments.
+- While discussion on the recurse command one thing which was put forward
+in several occassions is that there might be scenario where a command should be
+executed over the child module before the parent module. For such scenario
+[-df|--depth-first] option can be used; one use case in particualar presented
+as an example is git commit; where almost everybody mentioned that they prefer
+to commit the child module before the parent and -df will enable just that.
+E.g. p -> a, b, c, e; a ->d is a module structure. If the following command is
+used,
+	git submodule recurse -df commit -a
+it will execute git commit -a in the following sequence - d, a, b, c, e, p.
 
-- Though ther was short and long version for quiet (-q or --quiet and
-branch (-b or --branch) but there was no short version for cached. Thus
-it is now introduced (-c or --cached).
+- There is also another scenario which has been put forward several times in
+discussion over the recurse command and it is that commands chould have
+different arguments for different modules. For example for the same example
+mentioned above, one wants to check a_1 for submdoule a, while it wants to
+checkout d_2 for d. It can be achieved by using [-ca|--customized-argument].
+This results the script to prompt for user input, which will be passed as
+argument to the command for that module.
+	git submodule recurse -ca checkout
+	Working in mod a .......
+	Please provide arguments for this module: a_1
+	Working in mod d .......
+	Please provide arguments for this module: a_1
 
-- Added 3 specific messages for usage error related to branch and cached
+- I usually found that when typing a command being able to see some options
+come in handy. For example if I can see the available branches before checking
+out a branch that would be useful, IOW, if I could git branch before git
+checkout; it is now possible using the [-p|--pre-command] option. Using this
+command you can actually execute other git commands before specifying the
+arguments to the original command. E.g. if the above command is changed to,
+	git submodule recurse -ca -p checkout
+it will prompt the user for the pre command until one is satisfied and later
+the user can actually use them in the argument.
 
-- Simplified subcommand action invocation by simply invoking the action if
-all conditions are fulfilled. Excepting for parsing command line arguments
-case statements are avoided and instead more direct if statement is
-introduced.
+Signed-off-by: Imran M Yousuf <imyousuf@smartitengineering.com>
 ---
- git-submodule.sh |  158 +++++++++++++++++++++++++++++++++++++++---------------
- 1 files changed, 114 insertions(+), 44 deletions(-)
+ git-submodule.sh |  183 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 182 insertions(+), 1 deletions(-)
 
 diff --git a/git-submodule.sh b/git-submodule.sh
-index ad9fe62..22e7e5f 100755
+index 22e7e5f..ceca985 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -4,18 +4,23 @@
- #
- # Copyright (c) 2007 Lars Hjemli
- 
--USAGE='[--quiet] [--cached] [add <repo> [-b branch]|status|init|update] [--] [<path>...]'
-+# Synopsis of this commands are as follows
-+# git-submodule [-q|--quiet] add [-b|--branch branch] <repository> [<path>]
-+# git-submodule [-q|--quiet] [status] [-c|--cached] [--] [<path>...]
-+# git-submodule [-q|--quiet] init [--] [<path>...]
-+# git-submodule [-q|--quiet] update [--] [<path>...]
-+USAGE='[-q|--quiet] [[[add [-b|--branch branch] <repo>]|[[[status [-c|--cached]]|init|update] [--]]]  [<path>...]]'
+@@ -9,7 +9,8 @@
+ # git-submodule [-q|--quiet] [status] [-c|--cached] [--] [<path>...]
+ # git-submodule [-q|--quiet] init [--] [<path>...]
+ # git-submodule [-q|--quiet] update [--] [<path>...]
+-USAGE='[-q|--quiet] [[[add [-b|--branch branch] <repo>]|[[[status [-c|--cached]]|init|update] [--]]]  [<path>...]]'
++# git-submodule [-q|--quiet] recurse [-i|--initialize] [-e|--exit-after-error] [-d|--depth <recursion depth>] [-df|--depth-first] [-ca|--customized-argument] [-p|--pre-command] <command> [<arguments> ...]
++USAGE='[-q|--quiet] [[[add [-b|--branch branch] <repo>]|[[[status [-c|--cached]]|init|update] [--]]]  [<path>...]]|[recurse [-i|--initialize] [-e|--exit-after-error] [-d|--depth <recursion depth>] [-df|--depth-first] [-ca|--customized-argument] [-p|--pre-command] <command> [<arguments> ...]]'
  OPTIONS_SPEC=
  . git-sh-setup
  require_work_tree
- 
-+MODULES_LIST='modules_list'
-+
- add=
- branch=
--init=
--update=
--status=
+@@ -21,6 +22,14 @@ branch=
  quiet=
  cached=
-+command=
+ command=
++depth=0
++current_depth=0
++auto_initialize=
++depth_first=
++use_custom_args=
++custom_args=
++pre_cmd=
++on_error=
  
  #
  # print stuff on stdout unless -q was specified
-@@ -114,6 +119,17 @@ module_clone()
- 	die "Clone of '$url' into submodule path '$path' failed"
+@@ -359,7 +368,174 @@ check_for_terminator()
+ 	fi
  }
  
-+# Parses the branch name and exits if not present
-+parse_branch_name()
++# Initializes the submodule if already not initialized
++# and auto initialize is enabled
++initialize_sub_module()
 +{
-+	branch="$1"; 
-+	if test -z "$branch"
++	if test ! -d "$1"/.git &&
++	   test -n "$auto_initialize"
 +	then
-+		echo Branch name must me specified	
-+		usage
++		say "Initializing and updating $1"
++		git-submodule init "$1" &&
++		git-submodule update "$1" &&
++		return 0
++	# Returns true if module is already initialized
++	elif test -d "$1"/.git
++	then
++		return 0
++	fi
++	say "Module $1 is not initialized and skipped"
++	return 1
++}
++
++# Take command from user and execute it until user wants to discontinue
++do_pre_command()
++{
++	say "Starting pre-comamnd execution!"
++	while :
++	do
++		(
++			read -p "Please provide a git command: " pre_command
++			test -z "$pre_command" || git "$pre_command"
++		)
++		read -p "Press y to continue with another git command... " keypress
++		if test "$keypress" != "y" &&
++			test "$keypress" != "Y"
++		then
++			break
++		fi
++	done
++}
+ 
++# Take arguments from user to pass as custom arguments
++get_custom_args()
++{
++	read -p "Please provide arguments for this module: " custom_args
++}
++
++traverse_submodule()
++{
++	# If current depth is the range specified than it will continue
++	# else return with success
++	if test "$depth" -gt 0 &&
++		test "$current_depth" -ge "$depth"
++	then
++		return 0;
++	fi
++	# If submodules exists than it will traverse over them
++	if test -f .gitmodules
++	then
++		# Incrementing the depth for the next level of submodules
++		current_depth=$(($current_depth + 1))
++                for mod_path in `sed -n -e 's/path = //p' .gitmodules`; do
++                        traverse_module "$mod_path" "$@"
++                done
++		# Decremented the depth to bring it back to the depth of
++		# the current module
++		current_depth=$(($current_depth - 1))
 +	fi
 +}
 +
- #
- # Add a new submodule to the working tree, .gitmodules and the index
- #
-@@ -123,6 +139,16 @@ module_clone()
- #
- module_add()
- {
-+	case "$1" in
-+		-b|--branch)
-+			shift
-+			parse_branch_name "$@" &&
-+			shift
-+			;;
-+		-*)
-+			usage
-+			;;
-+	esac
- 	repo=$1
- 	path=$2
- 
-@@ -176,6 +202,14 @@ module_add()
- #
- modules_init()
- {
-+	# Added here to ensure that no argument is passed to be treated as
-+	# parameter to the sub command. This will be used to parse any 
-+	# to the subcommand
-+	case "$1" in
-+		-*)
-+			usage
-+			;;
-+	esac
- 	git ls-files --stage -- "$@" | grep -e '^160000 ' |
- 	while read mode sha1 stage path
- 	do
-@@ -209,6 +243,14 @@ modules_init()
- #
- modules_update()
- {
-+	# Added here to ensure that no argument is passed to be treated as
-+	# parameter to the sub command. This will be used to parse any 
-+	# to the subcommand
-+	case "$1" in
-+		-*)
-+			usage
-+			;;
-+	esac
- 	git ls-files --stage -- "$@" | grep -e '^160000 ' |
- 	while read mode sha1 stage path
- 	do
-@@ -293,36 +335,69 @@ modules_list()
- 	done
- }
- 
-+# Delgates to modules_list after parsing its arguments
-+modules_status()
++# This actually traverses the module; checks
++# whether the module is initialized or not.
++# if not initialized, then done so and then the
++# intended command is evaluated. Then it
++# recursively goes into it modules.
++traverse_module()
 +{
-+	case "$1" in
-+		-c|--cached)
-+			shift
-+			cached=1
-+			;;
-+		-*)
-+			usage
-+			;;
-+	esac
-+	"$MODULES_LIST" "$@"
++	# Will work in the module if and only if the module is initialized
++	initialize_sub_module "$1" &&
++	(
++		submod_path="$1"
++		shift
++		cd "$submod_path"
++		# If depth-first is specified in that case submodules are
++		# are traversed before executing the command on this module
++		test -n "$depth_first" && traverse_submodule "$@"
++		# pwd is mentioned in order to enable the ser to distinguish
++		# between same name modules, e.g. a/lib and b/lib.
++		say "Working in mod $submod_path" @ `pwd` "with $@ ($#)"
++		test -n "$pre_cmd" && do_pre_command
++		test -n "$use_custom_args" && get_custom_args
++		cmd_status=
++		git "$@" "$custom_args" || cmd_status=1
++		# if exit on error is specifed than script will exit if any
++		# command fails. As there is no transaction there will be
++		# no rollback either
++		if  test -n "$cmd_status" && test -n "$on_error"
++		then
++			die "git $@ failed in module $submod_path @ $(pwd)"
++		fi
++		# If depth-first is not specified in that case submodules are
++		# are traversed after executing the command on this module
++		test -z "$depth_first" && traverse_submodule "$@"
++	)
 +}
 +
-+# If there is '--' as the first argument simply ignores it and thus shifts
-+check_for_terminator()
-+{
-+	if test -n "$1" && test "$1" = "--"
-+	then
++# Propagates or recurses over all the submodules at any
++# depth with any git command, e.g. git-clone, git-status,
++# git-commit etc., with the arguments supplied exactly as
++# it would have been supplied to the command otherwise.
++# This actually starts the recursive propagation
++modules_recurse() {
++	while :
++	do
++		case "$1" in
++			-d|--depth)
++				shift
++				if test -z "$1"
++				then
++					echo "No <recursion depth> specified"
++					usage
++				# Arithmatic operation will give an error if depth is not number
++				# thus chose to check intergerness with regular expression
++				elif test "$(expr $1 : '[1-9][0-9]*')" -eq "$(expr $1 : '.*')"
++				then
++					depth="$1"
++				else
++					echo "<recursion depth> not an integer"
++					usage
++				fi
++				;;
++			-df|--depth-first)
++				depth_first=1
++				;;
++			-e|--exit-after-error)
++				on_error=1
++				;;
++			-i|--initialize)
++				auto_initialize=1
++				;;
++			-p|--pre-command)
++				pre_cmd=1
++				;;
++			-ca|--customized-argument)
++				use_custom_args=1
++				;;
++			-*)
++				usage
++				;;
++			*)
++				break
++				;;
++		esac
 +		shift
++	done
++	test "$#" -le 0 && die "No git command specified"
++	project_home="$(pwd)"
++	say "Project Home: $project_home"
++	if test "$depth" -gt 0
++	then
++		say Command will recurse upto "$depth" depth
++	fi
++	if test -d "$project_home"/.git/
++	then
++		say "Command to recurse: git $@"
++		traverse_module . "$@"
++	else
++		die "$project_home not a git repo thus exiting"
 +	fi
 +}
-+
-+
-+
-+# Command synopsis clearly shows that all arguments after
-+# subcommand are arguments to the command itself. Thus
-+# there lies no command that has configuration argument
-+# after the mention of the subcommand. Thus once the
-+# subcommand is found and the separator ('--') is ignored
-+# rest can be safely sent the subcommand action
-+# It is to be noted that pre-subcommand arguments are parsed
-+# just to have backward compatibility.
- while test $# != 0
- do
- 	case "$1" in
- 	add)
- 		add=1
-+		command="module_$1"
-+		shift
-+		break
- 		;;
--	init)
--		init=1
--		;;
--	update)
--		update=1
--		;;
--	status)
--		status=1
-+	init|update|status)
-+		command="modules_$1"
-+		shift
-+		check_for_terminator "$1"
-+		break
- 		;;
- 	-q|--quiet)
- 		quiet=1
- 		;;
- 	-b|--branch)
--		case "$2" in
--		'')
--			usage
--			;;
--		esac
--		branch="$2"; shift
-+		shift
-+		parse_branch_name "$@"
- 		;;
--	--cached)
-+	-c|--cached)
+ 
+ # Command synopsis clearly shows that all arguments after
+ # subcommand are arguments to the command itself. Thus
+@@ -394,6 +570,11 @@ do
+ 	-c|--cached)
  		cached=1
  		;;
- 	--)
-+		# It is shifted so that it is not passed
-+		# as an argument to the default subcommand
++	recurse)
++		command="modules_$1"
 +		shift
- 		break
- 		;;
- 	-*)
-@@ -335,30 +410,25 @@ do
- 	shift
- done
- 
--case "$add,$branch" in
--1,*)
--	;;
--,)
--	;;
--,*)
-+# Throws usage error if branch is not used with add command
-+if test -n "$branch" &&
-+   test -z "$add"
-+then
-+	echo Branch can not be specified without add subcommand
- 	usage
--	;;
--esac
--
--case "$add,$init,$update,$status,$cached" in
--1,,,,)
--	module_add "$@"
--	;;
--,1,,,)
--	modules_init "$@"
--	;;
--,,1,,)
--	modules_update "$@"
--	;;
--,,,*,*)
--	modules_list "$@"
--	;;
--*)
-+fi
-+
-+# If no command is specified then default command
-+# is - git submodule status
-+test -z "$command" && command="modules_status"
-+
-+# Throws usage if --cached is used by other than status, init or update
-+# that is used with add command
-+if test -n "$cached" &&
-+   test "$command" != "modules_status"
-+then
-+	echo Cached can only be used with the status subcommand
- 	usage
--	;;
--esac
-+fi
-+
-+"$command" "$@"
++		break
++		;;
+ 	--)
+ 		# It is shifted so that it is not passed
+ 		# as an argument to the default subcommand
 -- 
 1.5.3.7
