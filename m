@@ -1,88 +1,83 @@
-From: "Paul Umbers" <paul.umbers@gmail.com>
-Subject: Re: Git Cygwin - unable to create any repository - help!
-Date: Mon, 14 Jan 2008 15:21:28 -0700
-Message-ID: <a5eb9c330801141421g13c627e5x77afb357e2a78463@mail.gmail.com>
-References: <a5eb9c330801140921m63b1b8a9pe67bf6f0d2e58dba@mail.gmail.com>
-	 <20080114202932.GA25130@steel.home>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: performance problem: "git commit filename"
+Date: Mon, 14 Jan 2008 18:15:58 -0500
+Message-ID: <1200352558.488.10.camel@gaara.boston.redhat.com>
+References: <alpine.LFD.1.00.0801121426510.2806@woody.linux-foundation.org>
+	 <alpine.LFD.1.00.0801121735020.2806@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 14 23:23:10 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jan 15 00:17:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEXi1-0005Aa-P3
-	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 23:23:10 +0100
+	id 1JEYYI-0006SV-Vd
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 00:17:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757222AbYANWVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2008 17:21:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757219AbYANWVc
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 17:21:32 -0500
-Received: from nz-out-0506.google.com ([64.233.162.236]:32344 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757217AbYANWVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2008 17:21:30 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so1043999nze.1
-        for <git@vger.kernel.org>; Mon, 14 Jan 2008 14:21:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=+3Y1FBSzwZXn31gaGyarfo+KxMrD/VVk8wK7/CPXpYc=;
-        b=QlTWv+CfVqR9HzRuVsnJrpOD2a2p0HzQtlgITSjzZUlKJ3AIHucStTdQVDq/bJTvVwyypfK6CbWWG6x3C1jHLBXXwfr43aQR/rwA2kTXNL8zVTChTwzdwn0KjRImXuREte/VN6KIdEhVfueUScecNEGACp4PdCZbVr4d+J6R1Vk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rJGMkYKpNFD/WqmQbJ3Sg3vwqGd88SvuGrfVfPqvGkjAUOc6mQGvsaW25CI9ortDqH6VYq2jmMh9O7rirlEUMGffvGGGQiAJD39GPYuE5Uw+oc3gk5WaNR8RkaJmLTtyZnaTVkB6H0WpAYl+bdnMEqUEgY53T+rRcuRqAWOlSlU=
-Received: by 10.142.158.17 with SMTP id g17mr2854016wfe.157.1200349288857;
-        Mon, 14 Jan 2008 14:21:28 -0800 (PST)
-Received: by 10.114.137.1 with HTTP; Mon, 14 Jan 2008 14:21:28 -0800 (PST)
-In-Reply-To: <20080114202932.GA25130@steel.home>
-Content-Disposition: inline
+	id S1751064AbYANXQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2008 18:16:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752309AbYANXQU
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 18:16:20 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:55105 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750851AbYANXQT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2008 18:16:19 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m0ENG320015611;
+	Mon, 14 Jan 2008 18:16:03 -0500
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m0ENG3rH016835;
+	Mon, 14 Jan 2008 18:16:03 -0500
+Received: from [192.168.1.105] (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m0ENG3aN013803;
+	Mon, 14 Jan 2008 18:16:03 -0500
+In-Reply-To: <alpine.LFD.1.00.0801121735020.2806@woody.linux-foundation.org>
+X-Mailer: Evolution 2.21.4 (2.21.4-1.fc9) 
+X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70485>
 
-The "mount" command tells me everything I have is mounted in binmode.
-I have used Git on a default cygwin install (win XP pro) before and
-not had this problem - that's why this is so frustrating. Not sure
-what changed this time round as I tend to use defaults for most
-installations.
+On Sat, 2008-01-12 at 17:46 -0800, Linus Torvalds wrote:
 
-Are you saying I need to make sure the repository directory is mounted
-in text-mode (for Windows compatibility)? I just reinstalled cygwin,
-selecting text-mode as the default. I can create a git repository, but
-"git add ." returns:
+> HOWEVER. When that logic was converted from that shell-script into a 
+> builtin-commit.c, that conversion was not done correctly. The old "git 
+> read-tree -i -m" was not translated as a "unpack_trees()" call, but as 
+> this in prepare_index():
+> 
+> 	discard_cache()
+> 	..
+> 	tree = parse_tree_indirect(head_sha1);
+> 	..
+> 	read_tree(tree, 0, NULL)
+> 
+> which is very wrong, because it replaces the old index entirely, and 
+> doesn't do that stat information merging.
+> 
+> As a result, the index that is created by read-tree is totally bogus in 
+> the stat cache, and yes, everything will have to be re-computed.
+> 
+> Kristian?
 
-fatal: cannot use /cygdrive/c/test/.git/info/exclude as an exclude file
+Sorry for being late to the game, and yes, it's a bug I introduced with
+the rewrite.  When doing the rewrite I was a bit puzzled by the
 
-Paul
+  git-read-tree --index-output="$TMP_INDEX" -i -m HEAD
 
- On Jan 14, 2008 1:29 PM, Alex Riesen <raa.lkml@gmail.com> wrote:
-> Paul Umbers, Mon, Jan 14, 2008 18:21:44 +0100:
->
-> > Trying to create a repository under the cygwin install of git, windows
-> > XP Pro. I can create the initial repository OK using "git init" and
-> > add files using "git add .", but when I come to commit I get the
-> > messages:
-> >
-> > error: invalid object d9b06fceac52f6c24357e6a7f85c601
-> > 088381152
-> > fatal: git-write-tree: error building trees
->
-> Is it a "text-mode" mount where your repository is to reside?
->
->
+part of the shell script.  I carried a FIXME around in the patch for a
+while, as can be seen here:
 
+  http://marc.info/?l=git&m=118478660425992&w=2
 
+since I couldn't figure out what the difference in behavior was between
+just using read_tree(), which did exactly what I wanted and the more
+complicated unpack_tree().  I guess it fell through the cracks,
+especially since it never caused the test suite to fail :/
 
--- 
-Computer Science is no more about computers than astronomy is about telescopes.
---- Edsger W. Dijkstra
-
-Paul Umbers MSc MBCS MIAP
-paul.umbers@gmail.com
+Kristian
