@@ -1,89 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: valgrind test scripts (was Re: [PATCH] Teach remote...)
-Date: Mon, 14 Jan 2008 07:16:15 -0500
-Message-ID: <20080114121615.GC12723@coredump.intra.peff.net>
-References: <7v7iify2wm.fsf@gitster.siamese.dyndns.org> <4788BFA8.2030508@gmail.com> <7vwsqeubj8.fsf@gitster.siamese.dyndns.org> <47891658.3090604@gmail.com> <7vbq7qssd7.fsf@gitster.siamese.dyndns.org> <47893E1A.5020702@gmail.com> <7v4pdislrf.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7vir1xmazm.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801141202240.8333@wbgn129.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 14 13:16:49 2008
+From: Pedro Melo <melo@simplicidade.org>
+Subject: git-svn: network error while git-svn dcommit
+Date: Mon, 14 Jan 2008 13:20:51 +0000
+Message-ID: <75A83473-664E-4CC8-97ED-119D18F17F76@simplicidade.org>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 14 14:21:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEOFD-0002gB-Df
-	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 13:16:47 +0100
+	id 1JEPFV-0005Im-Ew
+	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 14:21:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755183AbYANMQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2008 07:16:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755169AbYANMQS
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 07:16:18 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3485 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754865AbYANMQR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2008 07:16:17 -0500
-Received: (qmail 6427 invoked by uid 111); 14 Jan 2008 12:16:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 14 Jan 2008 07:16:16 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Jan 2008 07:16:15 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0801141202240.8333@wbgn129.biozentrum.uni-wuerzburg.de>
+	id S1750870AbYANNUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2008 08:20:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750851AbYANNUh
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 08:20:37 -0500
+Received: from mail.sl.pt ([212.55.140.13]:33248 "EHLO sl.pt"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750842AbYANNUg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2008 08:20:36 -0500
+Received: (qmail 9760 invoked from network); 14 Jan 2008 13:20:32 -0000
+X-Virus-Status: Clean (0.01005 seconds) ; Version: 0.3-0.88.6
+X-Spam-Flag: NO
+X-Spam-Status: NO (0.0/5.0) (0.00007 seconds / 0.05883 sA)
+	Checked: by PTMail-AS v0.1 on mail.sl.pt
+Received: from unknown (HELO [10.0.0.5]) (melo@[213.205.66.71])
+          (envelope-sender <melo@simplicidade.org>)
+          by mail-sl (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 14 Jan 2008 13:20:32 -0000
+Received-SPF: neutral (mail-sl: domain of (null) is neutral about designating 213.205.66.71 as permitted sender)
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70458>
 
-On Mon, Jan 14, 2008 at 12:18:13PM +0100, Johannes Schindelin wrote:
+Hi,
 
-> >  * test scripts to use valgrind (Jeff King, but there was another
-> >    one in the past -- can their efforts compared and coordinated
-> >    better?).
-> 
-> Yes, that was written in Perl by Christian Couder:
-> 
-> http://article.gmane.org/gmane.comp.version-control.git/69236
-> 
-> Peff's version does not need Perl, and is better integrated with the 
-> testsuite (via the new option -m).  Christian's version parses the output, 
-> and might therefore be nicer to look at.
+I was doing a git-svn dcommit (git-1.5.4-rc2)  and the network to the  
+svn server died on me.
 
-I don't think parsing is necessary. Christian's version counts the
-errors, whereas I just barf if valgrind has mentioned any errors. And
-using the '-q' output of valgrind means the output is fairly cleaned up.
+Network connection closed unexpectedly: Connection closed  
+unexpectedly at /usr/local/git/bin/git-svn line 450
 
-But of course the main difference is that I tried to integrate into the
-test scripts, and stop running as soon as any errors are found.
+If I try again, I get a warning about a dirty index.
 
-> However, I think that both versions do not account for scripts, and I 
-> imagine that going through Git.pm and git-sh-setup is necessary for that.
+Cannot dcommit with a dirty index.  Commit your changes first, or  
+stash them with `git stash'.
+  at /usr/local/git/bin/git-svn line 406
 
-Both versions use the 'alias' approach. A more comprehensive approach
-would be something like:
+What's the best way to recover from this?
 
-  mkdir wrapper-bin
-  cat >wrapper-bin/git <<EOF
-  ...
-  EOF
-  chmod 755 wrapper-bin/git
-  for i in $GIT_PROGRAMS; do
-    ln -s git wrapper-bin/git-$i
-  done
-  PATH=$PWD/wrapper-bin:$PATH
-
-which should get all git calls (though we should probably not wrap
-"git-foo" if git-foo is a script (or we should convert it to "git
-foo") since I have no desire to valgrind bash or perl).
-
-> Also, it might be a good idea to be able to provide extra arguments, such 
-> as "--attach-db=yes".
-
-Yes. I suspect some people will need to add custom suppression files
-depending on their platform, as well.
-
-> Post 1.5.4, definitely.
-
-Agreed.
-
--Peff
+Thanks,
+-- 
+Pedro Melo
+Blog: http://www.simplicidade.org/notes/
+XMPP ID: melo@simplicidade.org
+Use XMPP!
