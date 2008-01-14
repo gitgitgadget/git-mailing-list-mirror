@@ -1,87 +1,147 @@
-From: Dan McGee <dpmcgee@gmail.com>
-Subject: [PATCH] cvsimport: remove last use of repo-config from git standard tools
-Date: Sun, 13 Jan 2008 22:51:10 -0600
-Message-ID: <1200286270-12236-1-git-send-email-dpmcgee@gmail.com>
-Cc: Dan McGee <dpmcgee@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 14 05:51:52 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH] Don't display crlf warning twice
+Date: Mon, 14 Jan 2008 07:17:26 +0100
+Message-ID: <B4297A2E-9F8F-4167-AB48-10AC1FB4E1D5@zib.de>
+References: <1200241847776-git-send-email-prohaska@zib.de> <1200267979-17683-1-git-send-email-dpotapov@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, torvalds@linux-foundation.org,
+	git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 14 07:20:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEHIc-0001ja-Fc
-	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 05:51:50 +0100
+	id 1JEIgi-0007VI-4e
+	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 07:20:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751399AbYANEvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jan 2008 23:51:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751396AbYANEvP
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Jan 2008 23:51:15 -0500
-Received: from an-out-0708.google.com ([209.85.132.243]:65454 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751348AbYANEvO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jan 2008 23:51:14 -0500
-Received: by an-out-0708.google.com with SMTP id d31so414315and.103
-        for <git@vger.kernel.org>; Sun, 13 Jan 2008 20:51:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=/4BNwDBF2CzEyfclegnmoVEQRljIAaIIobyGLfv65gw=;
-        b=aPjiq0WE0RMfRj8CyVHRdSVAQGhppI0Jfv2wYJbwIpHxrmWusu+qB6GCGb5VcIJEMHTEKYXLNTZ0PXsqRqyodYYQNNh5ZWbJEOpP9VwGouKdu+cbDLSYuDXOZx8XnqS6aX0rT4tIUruREOIPdZgeTeWcZTSKlBFN48uOCMhLDK4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=ImMkPGbrKxZRdhbTyTGDrWCOe5f9XT/YfeY/0f4UOHR5R3DQpgC8SWiFrlapSC+/QjxCgpvATiVE49JDQKyOfbT8aLliONrSeJWcY9Uh50GIpH0Y673m+Izv2J2QvNsFcgSpnEgkMtEC8ycv+jUEcr1EOWo0TFRnB2He85TvaU8=
-Received: by 10.100.34.16 with SMTP id h16mr13111866anh.114.1200286273372;
-        Sun, 13 Jan 2008 20:51:13 -0800 (PST)
-Received: from localhost ( [76.197.238.51])
-        by mx.google.com with ESMTPS id 36sm5149941nzk.29.2008.01.13.20.51.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 13 Jan 2008 20:51:12 -0800 (PST)
-X-Mailer: git-send-email 1.5.4.rc3
+	id S1751565AbYANGUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2008 01:20:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbYANGUQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 01:20:16 -0500
+Received: from mailer.zib.de ([130.73.108.11]:64787 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751432AbYANGUO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2008 01:20:14 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0E6GNb7001253;
+	Mon, 14 Jan 2008 07:19:47 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db9373f.pool.einsundeins.de [77.185.55.63])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0E6GLuI000630
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Mon, 14 Jan 2008 07:16:22 +0100 (MET)
+In-Reply-To: <1200267979-17683-1-git-send-email-dpotapov@gmail.com>
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70440>
 
-git cvsimport was the last tool to use repo-config instead of config. Update
-it to use plain git config.
+Dimitry,
+Thanks for finding the code path that leads to double printing
+the warning.
 
-Signed-off-by: Dan McGee <dpmcgee@gmail.com>
----
- git-cvsimport.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+Your traces reveal that it is a racy condition that can trigger
+the double warnings.  In my test cases this apparently does not
+happen, at least not on my machine.
 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 6d8ff93..5694978 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -88,7 +88,7 @@ sub write_author_info($) {
- 	close ($f);
- }
- 
--# convert getopts specs for use by git-repo-config
-+# convert getopts specs for use by git config
- sub read_repo_config {
-     # Split the string between characters, unless there is a ':'
-     # So "abc:de" becomes ["a", "b", "c:", "d", "e"]
-@@ -96,7 +96,7 @@ sub read_repo_config {
- 	foreach my $o (@opts) {
- 		my $key = $o;
- 		$key =~ s/://g;
--		my $arg = 'git-repo-config';
-+		my $arg = 'git config';
- 		$arg .= ' --bool' if ($o !~ /:$/);
- 
-         chomp(my $tmp = `$arg --get cvsimport.$key`);
-@@ -116,7 +116,7 @@ getopts($opts) or usage();
- usage if $opt_h;
- 
- if (@ARGV == 0) {
--		chomp(my $module = `git-repo-config --get cvsimport.module`);
-+		chomp(my $module = `git config --get cvsimport.module`);
- 		push(@ARGV, $module) if $? == 0;
- }
- @ARGV <= 1 or usage("You can't specify more than one CVS module");
--- 
-1.5.4.rc3
+Do you have a test case that reliably triggers the second call to
+convert_to_git()?
+
+
+
+On Jan 14, 2008, at 12:46 AM, Dmitry Potapov wrote:
+
+> 'git add' could call crlf_to_git() twice, and this caused that the  
+> same
+> crlf warning being display twice. The first time crlf_to_git() is  
+> called
+> when a file is added to index, and it could be called the second time
+> during writing the index.
+>
+> This patches sets safe_crlf to false before the second call.
+
+This would certainly work.
+
+However I do not think it is the right place to fix ...
+
+
+> Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+> ---
+>
+> On Sun, Jan 13, 2008 at 05:30:47PM +0100, Steffen Prohaska wrote:
+>> _
+>> I mentioned earlier that crlf_to_git() would be called twice.   
+>> Unfortunately,
+>> I can't reproduce this behaviour and are not even sure if it ever  
+>> happend.
+>
+> I think I have found the cause. It can be seen from the following  
+> trace:
+>
+> ==============
+> #0  crlf_to_git (path=0x814b37e "a", src=0xb7fb4000 "Hello\r\nHello 
+> \r\nHello\n", len=20, buf=0xbfad504c, action=-1) at convert.c:89
+> #1  0x080e0454 in convert_to_git (path=0x814b37e "a",  
+> src=0xb7fb4000 "Hello\r\nHello\r\nHello\n", len=20, dst=0xbfad504c)  
+> at convert.c:578
+> #2  0x080b7194 in index_fd (sha1=0xbfad508c "", fd=7,  
+> st=0xbfad50d8, write_object=0, type=OBJ_BLOB, path=0x814b37e "a")  
+> at sha1_file.c:2345
+
+Here, index_fd() is called with write_object=0 ...
+
+
+> #3  0x080a7dd4 in ce_compare_data (ce=0x814b340, st=0xbfad50d8) at  
+> read-cache.c:56
+> #4  0x080a8045 in ce_modified_check_fs (ce=0x814b340,  
+> st=0xbfad50d8) at read-cache.c:111
+> #5  0x080aa66d in ce_smudge_racily_clean_entry (ce=0x814b340) at  
+> read-cache.c:1121
+> #6  0x080aa79d in write_index (istate=0x814a3e0, newfd=6) at read- 
+> cache.c:1177
+> #7  0x0804c66a in cmd_add (argc=1, argv=0xbfad6408, prefix=0x0) at  
+> builtin-add.c:261
+> ==============
+> #0  crlf_to_git (path=0x814b094 "a", src=0xb7fb4000 "Hello\r\nHello 
+> \r\nHello\n", len=20, buf=0xbfad50ec, action=-1) at convert.c:89
+> #1  0x080e0454 in convert_to_git (path=0x814b094 "a",  
+> src=0xb7fb4000 "Hello\r\nHello\r\nHello\n", len=20, dst=0xbfad50ec)  
+> at convert.c:578
+> #2  0x080b7194 in index_fd (sha1=0x814b368 "", fd=7, st=0xbfad5174,  
+> write_object=1, type=OBJ_BLOB, path=0x814b094 "a") at sha1_file.c:2345
+
+while here index_fd() is called with write_object=1.
+
+
+> #3  0x080b731f in index_path (sha1=0x814b368 "", path=0x814b094  
+> "a", st=0xbfad5174, write_object=1) at sha1_file.c:2377
+> #4  0x080a8c00 in add_file_to_index (istate=0x814a3e0,  
+> path=0x814b094 "a", verbose=0) at read-cache.c:433
+> #5  0x0804c640 in cmd_add (argc=1, argv=0xbfad6408, prefix=0x0) at  
+> builtin-add.c:257
+> ==============
+
+
+Without digging deeply through the code, this looks to me as if
+we could base our decision wether to print a warning or not on
+this difference.
+
+My first take is: we should print a warning if write_object=1
+and should be quiet if write_object=0.  The flag can easily be
+passed to convert_to_git().
+
+My assumption is that users would only be interested in the
+warning if data is really written to the repository (and that
+this is the meaning of write_object=1).  But maybe there are
+cases where a warning is also appropriate even if the data
+is not written?  I don't now.
+
+Another question is if we should die() even if write_object=0;
+or only if write_object=1?
+
+	Steffen
