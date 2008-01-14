@@ -1,108 +1,245 @@
-From: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
-Subject: Re: [PATCH] gitk: make Ctrl "+" really increase the font
- size
-Date: Mon, 14 Jan 2008 15:57:52 +0000 (GMT)
-Message-ID: <alpine.DEB.1.00.0801141555100.23987@eeepc-johanness>
-References: <fm5oln$ahq$1@ger.gmane.org> <alpine.LSU.1.00.0801111238150.31053@racer.site> <fmft8d$kuv$2@ger.gmane.org>
-Reply-To: Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-To: Stephan Hennig <mailing_list-KvP5wT2u2U0@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Jan 14 16:58:28 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from py-out-1314.google.com ([64.233.166.169])
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH] Move sha1_file_to_archive into libgit
+Date: Mon, 14 Jan 2008 17:36:34 +0100
+Message-ID: <1200328594-17810-1-git-send-email-hjemli@gmail.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 14 17:26:08 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JERhf-0003D2-Sg
-	for gcvm-msysgit@m.gmane.org; Mon, 14 Jan 2008 16:58:24 +0100
-Received: by py-out-1314.google.com with SMTP id b29so8544656pyh.0
-        for <gcvm-msysgit@m.gmane.org>; Mon, 14 Jan 2008 07:57:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=7AJUhuecDMFRM0mIFOPIt0/yCvYzge1mZ2o2Z419zUg=;
-        b=v/JYFdPpWUIk9XuPVt/xlKVFOWwZTWIeQMF/5zjLIVrJQ3UqnFB6piaTKCYmLUKlLblTQNRvfNlfxdkqqyEGoSa5ddVgiKP8P5En8zWPTgIjRu+bD4P5/xbQuIRtQ+YQusLWzFZebsJK7cOVkgq7UQIr6TcCKT8ER7Smwl1Gsz4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=ilYshNPf26qL2HufeYsdvxweaMJVq/FlH1ao8ACp52tFwt191VInIkoyf1X7H8JhwMiEMs51URNOHUK8Pji7xEQkdngh03G4UHNcoCxZWckISbwEQwppTRDlFq+hpfSrahCS9eZehWu0cKBDtwVJu2iFEPOF3zxxCzriJH33Na0=
-Received: by 10.150.97.20 with SMTP id u20mr309088ybb.19.1200326274205;
-        Mon, 14 Jan 2008 07:57:54 -0800 (PST)
-Received: by 10.44.112.30 with SMTP id k30gr1401hsc;
-	Mon, 14 Jan 2008 07:57:54 -0800 (PST)
-X-Sender: Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.114.131.9 with SMTP id e9mr1188961wad.5.1200326273841; Mon, 14 Jan 2008 07:57:53 -0800 (PST)
-Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id v28si2716103nzb.4.2008.01.14.07.57.53; Mon, 14 Jan 2008 07:57:53 -0800 (PST)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
-Received: (qmail invoked by alias); 14 Jan 2008 15:57:52 -0000
-Received: from unknown (EHLO eeepc-johanness.st-andrews.ac.uk) [138.251.11.75] by mail.gmx.net (mp046) with SMTP; 14 Jan 2008 16:57:52 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/w/z8GX0DwX+4FuI6NGJwfx1BY8AB0me2hFx8PxQ vDkQ4ChI5WqdC8
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <fmft8d$kuv$2@ger.gmane.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1JES8Q-0006fz-Rd
+	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 17:26:03 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751082AbYANQZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2008 11:25:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751162AbYANQZd
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 11:25:33 -0500
+Received: from mail42.e.nsc.no ([193.213.115.42]:44987 "EHLO mail42.e.nsc.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750982AbYANQZc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2008 11:25:32 -0500
+X-Greylist: delayed 2852 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Jan 2008 11:25:31 EST
+Received: from localhost.localdomain (ti231210a341-0985.bb.online.no [88.88.171.217])
+	by mail42.nsc.no (8.13.8/8.13.5) with ESMTP id m0EFbc7b024614;
+	Mon, 14 Jan 2008 16:37:38 +0100 (MET)
+X-Mailer: git-send-email 1.5.4.rc2.69.g047fe-dirty
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70462>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70463>
 
+When the specfile (export-subst) attribute was introduced, it added a
+dependency from archive-{tar|zip}.c to builtin-archive.c. This broke the
+support for archive-operations in libgit.a since builtin-archive.o doesn't
+belong in libgit.a.
 
-Hi,
+This patch moves the functions required by libgit.a from builtin-archive.c
+to the new file archive.c (which becomes part of libgit.a).
 
-[please do not cull me from the Cc' list.  It's like answering to what I 
- said while looking at someone else.]
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+---
+ Makefile          |    2 +-
+ archive.c         |   84 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ builtin-archive.c |   80 --------------------------------------------------
+ 3 files changed, 85 insertions(+), 81 deletions(-)
+ create mode 100644 archive.c
 
-On Mon, 14 Jan 2008, Stephan Hennig wrote:
-
-> Johannes Schindelin schrieb:
-> > 
-> > Only Ctrl "=" was bound to increase the font size, probably because
-> > English keyboards have the plus on the same key as the equal sign.
-> > However, not the whole world is English, and at least with some
-> > other keyboard layouts, Ctrl "+" did not work as documented.
-> > 
-> > Noticed by Stephan Hennig.
-> > 
-> > Signed-off-by: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
-> > 
-> > ---
-> > 
-> > 	On Thu, 10 Jan 2008, Stephan Hennig wrote:
-> > 
-> > 	> 
-> > 	> Hi,
-> > 	> 
-> > 	> reducing font size in gitk with CTRL-- works, but enlarging font 
-> > 	> size fails.  Typing CTRL-+ just doesn't have any effect here.
-> > 
-> > 	This is no bug in msysgit, but in gitk.
-> > 
-> > 	Paul, please apply.
-> 
-> The bug is still present in gitk that comes with Msysgit
-
-If you are complaining about msysgit, please do not flood the git list 
-with your response.
-
-Besides, it is asking a little much after just 4 days for a patch to come 
-through no less than 4 different repositories: gitk -> git.git -> 
-mingw.git -> 4msysgit.git.
-
-A patch that you could apply yourself easily, with the further benefit of 
-being able to added your "Tested-by:" line.
-
-After all, I just worked for you, for free, and I expect something back.
-
-Hth,
-Dscho
+diff --git a/Makefile b/Makefile
+index 21c80e6..c9b482a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -316,7 +316,7 @@ LIB_OBJS = \
+ 	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
+ 	color.o wt-status.o archive-zip.o archive-tar.o shallow.o utf8.o \
+ 	convert.o attr.o decorate.o progress.o mailmap.o symlinks.o remote.o \
+-	transport.o bundle.o walker.o parse-options.o ws.o
++	transport.o bundle.o walker.o parse-options.o ws.o archive.o
+ 
+ BUILTIN_OBJS = \
+ 	builtin-add.o \
+diff --git a/archive.c b/archive.c
+new file mode 100644
+index 0000000..fb159fe
+--- /dev/null
++++ b/archive.c
+@@ -0,0 +1,84 @@
++#include "cache.h"
++#include "commit.h"
++#include "attr.h"
++
++static void format_subst(const struct commit *commit,
++                         const char *src, size_t len,
++                         struct strbuf *buf)
++{
++	char *to_free = NULL;
++	struct strbuf fmt;
++
++	if (src == buf->buf)
++		to_free = strbuf_detach(buf, NULL);
++	strbuf_init(&fmt, 0);
++	for (;;) {
++		const char *b, *c;
++
++		b = memmem(src, len, "$Format:", 8);
++		if (!b || src + len < b + 9)
++			break;
++		c = memchr(b + 8, '$', len - 8);
++		if (!c)
++			break;
++
++		strbuf_reset(&fmt);
++		strbuf_add(&fmt, b + 8, c - b - 8);
++
++		strbuf_add(buf, src, b - src);
++		format_commit_message(commit, fmt.buf, buf);
++		len -= c + 1 - src;
++		src  = c + 1;
++	}
++	strbuf_add(buf, src, len);
++	strbuf_release(&fmt);
++	free(to_free);
++}
++
++static int convert_to_archive(const char *path,
++                              const void *src, size_t len,
++                              struct strbuf *buf,
++                              const struct commit *commit)
++{
++	static struct git_attr *attr_export_subst;
++	struct git_attr_check check[1];
++
++	if (!commit)
++		return 0;
++
++	if (!attr_export_subst)
++		attr_export_subst = git_attr("export-subst", 12);
++
++	check[0].attr = attr_export_subst;
++	if (git_checkattr(path, ARRAY_SIZE(check), check))
++		return 0;
++	if (!ATTR_TRUE(check[0].value))
++		return 0;
++
++	format_subst(commit, src, len, buf);
++	return 1;
++}
++
++void *sha1_file_to_archive(const char *path, const unsigned char *sha1,
++                           unsigned int mode, enum object_type *type,
++                           unsigned long *sizep,
++                           const struct commit *commit)
++{
++	void *buffer;
++
++	buffer = read_sha1_file(sha1, type, sizep);
++	if (buffer && S_ISREG(mode)) {
++		struct strbuf buf;
++		size_t size = 0;
++
++		strbuf_init(&buf, 0);
++		strbuf_attach(&buf, buffer, *sizep, *sizep + 1);
++		convert_to_working_tree(path, buf.buf, buf.len, &buf);
++		convert_to_archive(path, buf.buf, buf.len, &buf, commit);
++		buffer = strbuf_detach(&buf, &size);
++		*sizep = size;
++	}
++
++	return buffer;
++}
++
+diff --git a/builtin-archive.c b/builtin-archive.c
+index 14a1b30..c2e0c1e 100644
+--- a/builtin-archive.c
++++ b/builtin-archive.c
+@@ -79,86 +79,6 @@ static int run_remote_archiver(const char *remote, int argc,
+ 	return !!rv;
+ }
+ 
+-static void format_subst(const struct commit *commit,
+-                         const char *src, size_t len,
+-                         struct strbuf *buf)
+-{
+-	char *to_free = NULL;
+-	struct strbuf fmt;
+-
+-	if (src == buf->buf)
+-		to_free = strbuf_detach(buf, NULL);
+-	strbuf_init(&fmt, 0);
+-	for (;;) {
+-		const char *b, *c;
+-
+-		b = memmem(src, len, "$Format:", 8);
+-		if (!b || src + len < b + 9)
+-			break;
+-		c = memchr(b + 8, '$', len - 8);
+-		if (!c)
+-			break;
+-
+-		strbuf_reset(&fmt);
+-		strbuf_add(&fmt, b + 8, c - b - 8);
+-
+-		strbuf_add(buf, src, b - src);
+-		format_commit_message(commit, fmt.buf, buf);
+-		len -= c + 1 - src;
+-		src  = c + 1;
+-	}
+-	strbuf_add(buf, src, len);
+-	strbuf_release(&fmt);
+-	free(to_free);
+-}
+-
+-static int convert_to_archive(const char *path,
+-                              const void *src, size_t len,
+-                              struct strbuf *buf,
+-                              const struct commit *commit)
+-{
+-	static struct git_attr *attr_export_subst;
+-	struct git_attr_check check[1];
+-
+-	if (!commit)
+-		return 0;
+-
+-	if (!attr_export_subst)
+-		attr_export_subst = git_attr("export-subst", 12);
+-
+-	check[0].attr = attr_export_subst;
+-	if (git_checkattr(path, ARRAY_SIZE(check), check))
+-		return 0;
+-	if (!ATTR_TRUE(check[0].value))
+-		return 0;
+-
+-	format_subst(commit, src, len, buf);
+-	return 1;
+-}
+-
+-void *sha1_file_to_archive(const char *path, const unsigned char *sha1,
+-                           unsigned int mode, enum object_type *type,
+-                           unsigned long *sizep,
+-                           const struct commit *commit)
+-{
+-	void *buffer;
+-
+-	buffer = read_sha1_file(sha1, type, sizep);
+-	if (buffer && S_ISREG(mode)) {
+-		struct strbuf buf;
+-		size_t size = 0;
+-
+-		strbuf_init(&buf, 0);
+-		strbuf_attach(&buf, buffer, *sizep, *sizep + 1);
+-		convert_to_working_tree(path, buf.buf, buf.len, &buf);
+-		convert_to_archive(path, buf.buf, buf.len, &buf, commit);
+-		buffer = strbuf_detach(&buf, &size);
+-		*sizep = size;
+-	}
+-
+-	return buffer;
+-}
+-
+ static int init_archiver(const char *name, struct archiver *ar)
+ {
+ 	int rv = -1, i;
+-- 
+1.5.4.rc2.69.g047fe-dirty
