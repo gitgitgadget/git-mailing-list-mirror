@@ -1,126 +1,93 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Digging through old vendor code
-Date: Mon, 14 Jan 2008 09:49:30 -0500
-Message-ID: <9e4733910801140649u5c2b74cbkcf0d790d0e7bc0a2@mail.gmail.com>
-References: <20080113162806.13991.qmail@science.horizon.com>
-	 <20080114120807.GB12723@coredump.intra.peff.net>
+From: Stephan Hennig <mailing_list-KvP5wT2u2U0@public.gmane.org>
+Subject: Re: [PATCH] gitk: make Ctrl "+" really increase the font
+ size
+Date: Mon, 14 Jan 2008 15:52:07 +0100
+Message-ID: <fmft8d$kuv$2@ger.gmane.org>
+References: <fm5oln$ahq$1@ger.gmane.org> <alpine.LSU.1.00.0801111238150.31053@racer.site>
+Reply-To: mailing_list-KvP5wT2u2U0@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: linux@horizon.com, git@vger.kernel.org,
-	torvalds@linux-foundation.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jan 14 15:50:13 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Jan 14 16:06:37 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from wa-out-0708.google.com ([209.85.146.249])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEQdZ-0001xa-Sg
-	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 15:50:06 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751074AbYANOtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2008 09:49:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751060AbYANOtg
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 09:49:36 -0500
-Received: from qb-out-0506.google.com ([72.14.204.224]:26554 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750768AbYANOte (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2008 09:49:34 -0500
-Received: by qb-out-0506.google.com with SMTP id e11so270178qbe.15
-        for <git@vger.kernel.org>; Mon, 14 Jan 2008 06:49:31 -0800 (PST)
+	id 1JEQtE-0007tp-5V
+	for gcvm-msysgit@m.gmane.org; Mon, 14 Jan 2008 16:06:16 +0100
+Received: by wa-out-0708.google.com with SMTP id n36so2366786wag.21
+        for <gcvm-msysgit@m.gmane.org>; Mon, 14 Jan 2008 07:05:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=wuAIOJhRz0BjnH96J8O/Ql7cRVcKebWG7qeKIpAHuRs=;
-        b=p8EmXxAZc8ouh685Xcv8I48alRdV0PWaAOiIhjsl/RN885qr3jB/Vljgtm38/P7R+TmzACmFklnHdkGxsFBTuAXJ3rUtCvXph0rrkoSJSSA1DzS+MlTD+8XJT53+ooF8Rw2ed2UVp9F+oIMXTPB6UoyJqax2yfMJ4ZpYJlfuM+s=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:received:x-injected-via-gmane:to:from:subject:date:lines:message-id:references:mime-version:content-type:content-transfer-encoding:x-complaints-to:x-gmane-nntp-posting-host:user-agent:in-reply-to:cc:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=ZmE1BSO+jtsHPCzYOqECZJSYOxLdZ3NHaRbFZBqY9w4=;
+        b=QulPZp8av0Dq+4V0RBoIERxXWGRLhASNa2RlG1EyqjF5URZ8GFue57hE7Kn2hluSUn1hs1Eg/nuvTW3DOEmQZOcPORYgy47anAYLYBi4zzC9lI9Y4G7CiW/MKVXG75K18rQ+OKhYJE9t84fqemtKRt1YKyOrspzFkD0YdAge0aI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=M39RDSj6J25OcckSgojV+ES4DIwSGk2bBXnxMyonDMGQQEH8PRJNKrawoOFEWJAyrIp/gW4F1H9sTbTUjdjrBDvVr+VgpHwLJ9glfot+4Km2wVlKM4LkVHolYvlnSHkrr9V4l69ljkKi46rMK+2Kx23mXAGsJM9xNwboiKrS4kQ=
-Received: by 10.114.151.13 with SMTP id y13mr2101970wad.60.1200322170951;
-        Mon, 14 Jan 2008 06:49:30 -0800 (PST)
-Received: by 10.114.200.7 with HTTP; Mon, 14 Jan 2008 06:49:30 -0800 (PST)
-In-Reply-To: <20080114120807.GB12723@coredump.intra.peff.net>
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:x-injected-via-gmane:to:from:subject:date:lines:message-id:references:mime-version:content-type:content-transfer-encoding:x-complaints-to:x-gmane-nntp-posting-host:user-agent:in-reply-to:cc:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=uzZ32t/CT8SPI4SUddNkhQn29bDym/aXtZRgcwvAMg4djMCDYHyYPTMv9urlZ7KZFk5STdPMtElO+Qemf8XxUGOiQE4YzcYP9aJcVbGQj8meiijzyy/4db8ad5cdDj6JN+UbM+nZS7EXsXw5bqEIGlGIaa7MkVPYk4lgQxe2qSE=
+Received: by 10.142.147.15 with SMTP id u15mr41172wfd.15.1200323146421;
+        Mon, 14 Jan 2008 07:05:46 -0800 (PST)
+Received: by 10.44.53.58 with SMTP id b58gr1397hsa;
+	Mon, 14 Jan 2008 07:05:46 -0800 (PST)
+X-Sender: gcvm-msysgit@m.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.114.36.1 with SMTP id j1mr1150969waj.25.1200323145728; Mon, 14 Jan 2008 07:05:45 -0800 (PST)
+Received: from ciao.gmane.org (main.gmane.org [80.91.229.2]) by mx.google.com with ESMTP id h49si2687092nzf.5.2008.01.14.07.05.45; Mon, 14 Jan 2008 07:05:45 -0800 (PST)
+Received-SPF: pass (google.com: domain of gcvm-msysgit@m.gmane.org designates 80.91.229.2 as permitted sender) client-ip=80.91.229.2;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of gcvm-msysgit@m.gmane.org designates 80.91.229.2 as permitted sender) smtp.mail=gcvm-msysgit@m.gmane.org
+Received: from root by ciao.gmane.org with local (Exim 4.43) id 1JEQs2-0001S2-Gz for msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; Mon, 14 Jan 2008 15:05:02 +0000
+Received: from dialin-145-254-070-092.pools.arcor-ip.net ([145.254.70.92]) by main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Mon, 14 Jan 2008 15:05:02 +0000
+Received: from mailing_list by dialin-145-254-070-092.pools.arcor-ip.net with local (Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00 for <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Mon, 14 Jan 2008 15:05:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet-dbVV3NMTNubNLxjTenLetw@public.gmane.org
+X-Gmane-NNTP-Posting-Host: dialin-145-254-070-092.pools.arcor-ip.net
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.9) Gecko/20071031 Thunderbird/2.0.0.9 Mnenhy/0.7.5.0
+In-Reply-To: <alpine.LSU.1.00.0801111238150.31053-OGWIkrnhIhzN0uC3ymp8PA@public.gmane.org>
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70459>
-
-On 1/14/08, Jeff King <peff@peff.net> wrote:
-> On Sun, Jan 13, 2008 at 11:28:06AM -0500, linux@horizon.com wrote:
->
-> > Maybe a real git wizard will show me how to insert the index entries
-> > directly without ever doing anything as pedestrian as extracting, hashing,
-> > and then deleting the files, but it's still not that bad.
->
-> git-read-tree?  Unfortunately it has no option to insert only a subset
-> of the tree. But you can make do with git-ls-tree piped to
-> git-update-index.
->
-> Using the script below, Jon's sample file seems to be
->
->   v2.6.15-rc6-81-g0b57ee9:drivers/serial/amba-pl010.c
->
-> and it runs in about 8 seconds on v2.6.13..v2.6.15. I think it might be
-> more intuitive to just diff a temporary index against each tree, but I
-> don't think there's a way to say "find copies harder, but use only this
-> subset of files as the source" which makes it less efficient.
->
-> Jon, you might try playing around with different ranges. I get a
-> different answer for v2.6.13..v2.6.16.
-
-That's probably because some of the other drivers in there were also
-created via copy and edit. The similarity between drivers is what made
-the original base hard to find. amba-pl010.c is probably a copy/edit
-from one of the other drivers.
-
-I'm pretty sure 2.6.15/amba-pl010.c is right. I started undoing some
-of the obvious changes like renaming the functions and the diffs are
-getting pretty small.
-
-Thanks for the help on this. I have enough info now to separate the diffs.
-
-This would probably make a nice command to add to git since I'm sure
-other vendors have done copy/edit to make their out of tree drivers. I
-doubt if any other SCM has a command like this.
-
-I'm really starting to hate the "port and forget" that goes on in the
-embedded world. But I'm beginning to understand why it happens. I've
-been working since November to get a patch  into i2c without success -
-19 versions. The process is chewing up way too much time relative to
-the importance of the patch to my code. So I'm just about ready to
-"port and forget" the patch.
-
->
-> -- >8 --
-> SRC=drivers/serial
->
-> echo >&2 Cleaning up after old runs...
-> rm -f tmpindex
-> git branch -D tmpbranch
->
-> echo >&2 Creating giant source commit...
-> for i in `git rev-list v2.6.13..v2.6.15 -- $SRC`; do
->   git ls-tree -r $i -- $SRC |
->     # note the whitespace is a literal tab
->     sed "s,     ,       $i/," |
->     GIT_INDEX_FILE=tmpindex git update-index --index-info
-> done
-> tree=`GIT_INDEX_FILE=tmpindex git write-tree`
-> commit=`echo source | git commit-tree $tree`
-> git update-ref refs/heads/tmpbranch $commit
->
-> echo >&2 Creating updated index...
-> GIT_INDEX_FILE=tmpindex git add candidate.c
-> echo >&2 Diffing...
-> GIT_INDEX_FILE=tmpindex git diff-index --cached -l0 -M1% -C1% --find-copies-harder tmpbranch
->
-> # now you should manually git-describe the winner
->
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70460>
 
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+Johannes Schindelin schrieb:
+> 
+> Only Ctrl "=" was bound to increase the font size, probably because
+> English keyboards have the plus on the same key as the equal sign.
+> However, not the whole world is English, and at least with some
+> other keyboard layouts, Ctrl "+" did not work as documented.
+> 
+> Noticed by Stephan Hennig.
+> 
+> Signed-off-by: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
+> 
+> ---
+> 
+> 	On Thu, 10 Jan 2008, Stephan Hennig wrote:
+> 
+> 	> 
+> 	> Hi,
+> 	> 
+> 	> reducing font size in gitk with CTRL-- works, but enlarging font 
+> 	> size fails.  Typing CTRL-+ just doesn't have any effect here.
+> 
+> 	This is no bug in msysgit, but in gitk.
+> 
+> 	Paul, please apply.
+
+The bug is still present in gitk that comes with Msysgit
+
+> $ git version
+> git version 1.5.4.rc3.941.gebb79
+
+Best regards,
+Stephan Hennig
