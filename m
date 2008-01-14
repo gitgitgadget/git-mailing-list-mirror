@@ -1,62 +1,73 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: performance problem: "git commit filename"
-Date: Mon, 14 Jan 2008 15:53:35 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801141552090.2806@woody.linux-foundation.org>
-References: <alpine.LFD.1.00.0801121426510.2806@woody.linux-foundation.org> <alpine.LFD.1.00.0801121735020.2806@woody.linux-foundation.org> <1200352558.488.10.camel@gaara.boston.redhat.com> <7vodbohstl.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] safecrlf: Add flag to convert_to_git() to disable safecrlf check
+Date: Mon, 14 Jan 2008 15:58:42 -0800
+Message-ID: <7vk5mchsct.fsf@gitster.siamese.dyndns.org>
+References: <004D2FB5-2CEA-4DB1-AF8D-D5ADEB0F0508@zib.de>
+	<12003528401309-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 00:54:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: dpotapov@gmail.com, gitster@pobox.com,
+	torvalds@linux-foundation.org, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Tue Jan 15 00:59:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEZ8f-00013w-RL
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 00:54:46 +0100
+	id 1JEZDM-0002GE-OA
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 00:59:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751888AbYANXyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2008 18:54:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751854AbYANXyS
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 18:54:18 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:51083 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751440AbYANXyR (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Jan 2008 18:54:17 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0ENrZbt031716
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 14 Jan 2008 15:53:37 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0ENrZFC021710;
-	Mon, 14 Jan 2008 15:53:35 -0800
-In-Reply-To: <7vodbohstl.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.721 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1752238AbYANX7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2008 18:59:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752092AbYANX7H
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 18:59:07 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57674 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751314AbYANX7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2008 18:59:06 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 564466D70;
+	Mon, 14 Jan 2008 18:59:03 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7EB336D6B;
+	Mon, 14 Jan 2008 18:58:55 -0500 (EST)
+In-Reply-To: <12003528401309-git-send-email-prohaska@zib.de> (Steffen
+	Prohaska's message of "Tue, 15 Jan 2008 00:20:40 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70492>
 
+Steffen Prohaska <prohaska@zib.de> writes:
 
+> We want to verify if an autocrlf conversion is reversible only if
+> the converted data is actually written to the repository.  Only
+> in this case the file would be modified during the next checkout.
+> But convert_to_git() is used for some other purposes.
+> This commit adds a flag to convert_to_git() that controls if the
+> safecrlf check is enabled...
 
-On Mon, 14 Jan 2008, Junio C Hamano wrote:
-> 
-> Yeah, the breakage was not about the correctness, and because I
-> almost never do partial commit I did not notice it until Linus
-> brought it up.
+At first this felt dirty to me as convert_to_git() is not
+limited to crlf, but about external vs canonical representation.
+The variable name being "checksafe" however makes it much more
+palatable.  It is clear that it is talking about irreversible
+conversion.
 
-I wouldn't have noticed it either, if it wasn't for the fact that my 
-kernel tree was out-of-cache for other testing reasons. When cached, the 
-difference was still quite noticeable, but I would probably not have 
-noticed the difference between half a second and a second and a half.
+When running diff with a work tree file and the index (or a
+named tree), we read the work tree file and run convert_to_git()
+on it before comparing it with what we have in the object store
+(either index or a named tree).  When running apply without
+touching the index, we also use convert_to_git() on the work
+tree file.  The patch file is supposed to record the data in
+canonical format, I think.
 
-But a commit that took over a minute due to IO was very noticeable 
-indeed..
-
-		Linus
+Of course, "git add" on the path will warn or fail with your
+patch, but we may somehow want to be warned about the breakage
+before "git add" on that path triggers it.  Perhaps we can have
+a separate "check-work-tree" command that iterates over locally
+modified work tree files and runs convert_to_git() with checking
+enabled.
