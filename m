@@ -1,47 +1,48 @@
-From: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
+From: Dmitry Potapov <dpotapov-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
 Subject: Re: safecrlf not in 1.5.4
-Date: Mon, 14 Jan 2008 09:29:04 +0100
-Message-ID: <E4FD5B11-F61A-4838-B9AD-1E6F6C2B0AD6@zib.de>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com> <1200022189-2400-2-git-send-email-mlevedahl@gmail.com> <7v1w8o4ws0.fsf@gitster.siamese.dyndns.org> <30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com> <7v63xzzszp.fsf@gitster.siamese.dyndns.org> <478855B5.9070600@gmail.com> <7vbq7ry405.fsf@gitster.siamese.dyndns.org> <47885B2C.8020809@gmail.com> <7v7iify2wm.fsf@gitster.siamese.dyndns.org> <4788BFA8.2030508@gmail.com> <7vwsqeubj8.fsf@gitster.siamese.dyndns.org> <47891658.3090604@gmail.com> <7vbq7qssd7.fsf@gitster.siamese.dyndns.org> <47893E1A.5020702@gmail.com> <7v4pdislrf.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7vir1xmazm.fsf@gitster.siamese.dyndns.org> <31687420-EB17-4651-AD6C-07213311ABDA@zib.de> <
- 7vejcklv84.fsf@gitster.siamese.dyndns.org>
-Reply-To: prohaska-wjoc1KHpMeg@public.gmane.org
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>, Mark Levedahl <mlevedahl-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Date: Mon, 14 Jan 2008 12:04:56 +0300
+Message-ID: <20080114090456.GZ2963@dpotapov.dyndns.org>
+References: <4788BFA8.2030508@gmail.com> <7vwsqeubj8.fsf@gitster.siamese.dyndns.org> <47891658.3090604@gmail.com> <7vbq7qssd7.fsf@gitster.siamese.dyndns.org> <47893E1A.5020702@gmail.com> <7v4pdislrf.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7vir1xmazm.fsf@gitster.siamese.dyndns.org> <31687420-EB17-4651-AD6C-07213311ABDA@zib.de> <7vejcklv84.fsf@gitster.siamese.dyndns.org>
+Reply-To: dpotapov-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>, Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>, Mark Levedahl <mlevedahl-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
 To: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Jan 14 09:28:45 2008
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Jan 14 10:06:09 2008
 Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from py-out-1314.google.com ([64.233.166.170])
+Received: from wr-out-0708.google.com ([64.233.184.247])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEKgW-00063q-0Z
-	for gcvm-msysgit@m.gmane.org; Mon, 14 Jan 2008 09:28:44 +0100
-Received: by py-out-1314.google.com with SMTP id b29so7488204pyh.0
-        for <gcvm-msysgit@m.gmane.org>; Mon, 14 Jan 2008 00:28:14 -0800 (PST)
+	id 1JELGG-0007tC-ED
+	for gcvm-msysgit@m.gmane.org; Mon, 14 Jan 2008 10:05:53 +0100
+Received: by wr-out-0708.google.com with SMTP id 56so11247871wra.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 14 Jan 2008 01:05:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=6SUqRRrHI+d6XF6zqhBunPtnb/HwJ3J/K+Jvikuj7KQ=;
-        b=WuHoMMvAloaDG+usrhsUrOEs8R0tkXL6VbrBi0e1h+MmKq+CNYdUTavzwEdt1Dk3AtPR2B0NtxFXn8g9t9ZyV2xC9tBZlS3W004VD3c+ojeiM3nU+4NzK1PciEOrAbZKpo/vRDC78igaYOOLQg6OWT1CcaVPVHKuwy7bCcxftBc=
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:x-dcc-stream-metrics:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=oH0VsDx8Jc2FhbU/MsURfFBTjNOKafxtQw17TdpIZ+0=;
+        b=D1HEC0gFZ3ki3cNtt/msMaXDjC3FJDILUReIHzi31cUmudC0sTFocojuEPu7WUlSG4/jfpAjvb0Pg6VKl60RX5LHAUaR8L+3/B7K/SmuK1XtP9rHr6zW51IWlvmAT+fq9VIQFNamGuyGQCHUE3ZSpL7OnAbjzkUMnOtxguie7Z8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=YlmloOz1EZbd0sL8r6fhLlwKLZQ0BVgX4qBxldMZOUWdjgKGf4OsY2QlPyf2AX6L7nK+luQaf4gUbDcAxYngCejSFuj9rED/T2DiKTp7XpSZLbGwN5dpJgaIlRxBkKOyGa5EiRbqlIebJFUY0pTEqEHQ8SMcBIcgB+cNaIrR6TQ=
-Received: by 10.151.6.2 with SMTP id j2mr286091ybi.23.1200299285938;
-        Mon, 14 Jan 2008 00:28:05 -0800 (PST)
-Received: by 10.44.187.4 with SMTP id k4gr1379hsf;
-	Mon, 14 Jan 2008 00:28:05 -0800 (PST)
-X-Sender: prohaska-wjoc1KHpMeg@public.gmane.org
+        h=x-sender:x-apparently-to:received-spf:authentication-results:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:x-dcc-stream-metrics:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=mjqTcawSQJCT58rIuu2TX7UD9+50Kn7Nj312RmAQlPNz8lu9V9y7k/8PnRuUmg2OMR1I71ETYsCXKgAIFs6IhjAY/h8fXY/g+iMTsddZkMkOnh50Mw3Mh5OGeXdzZwr1BaAbBwRhuHAOwPlEnMXY9cmjvAbf98BOxcMYVRv21UI=
+Received: by 10.100.125.12 with SMTP id x12mr391744anc.23.1200301501070;
+        Mon, 14 Jan 2008 01:05:01 -0800 (PST)
+Received: by 10.44.13.45 with SMTP id 45gr1380hsm;
+	Mon, 14 Jan 2008 01:05:01 -0800 (PST)
+X-Sender: dpotapov-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
 X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.35.99.14 with SMTP id b14mr10103806pym.4.1200299285607; Mon, 14 Jan 2008 00:28:05 -0800 (PST)
-Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id v28si2488787nzb.4.2008.01.14.00.28.04; Mon, 14 Jan 2008 00:28:05 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
-Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) smtp.mail=prohaska-wjoc1KHpMeg@public.gmane.org
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0E8S1rn009901; Mon, 14 Jan 2008 09:28:01 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0E8S0ZW026160 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO); Mon, 14 Jan 2008 09:28:00 +0100 (MET)
+Received: by 10.35.126.2 with SMTP id d2mr10162042pyn.1.1200301500656; Mon, 14 Jan 2008 01:05:00 -0800 (PST)
+Received: from smtp03.mtu.ru (smtp03.mtu.ru [62.5.255.50]) by mx.google.com with ESMTP id h71si2493939nzf.3.2008.01.14.01.04.58; Mon, 14 Jan 2008 01:05:00 -0800 (PST)
+Received-SPF: neutral (google.com: 62.5.255.50 is neither permitted nor denied by domain of dpotapov-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org) client-ip=62.5.255.50;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 62.5.255.50 is neither permitted nor denied by domain of dpotapov-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org) smtp.mail=dpotapov-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+Received: from smtp03.mtu.ru (localhost.mtu.ru [127.0.0.1]) by smtp03.mtu.ru (Postfix) with ESMTP id 123381870D18; Mon, 14 Jan 2008 12:04:57 +0300 (MSK)
+Received: from dpotapov.dyndns.org (ppp85-141-237-183.pppoe.mtu-net.ru [85.141.237.183]) by smtp03.mtu.ru (Postfix) with ESMTP id 780AD1870CE0; Mon, 14 Jan 2008 12:04:56 +0300 (MSK)
+Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63) (envelope-from <dpotapov-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>) id 1JELFY-0006kA-9Q; Mon, 14 Jan 2008 12:04:56 +0300
+Content-Disposition: inline
 In-Reply-To: <7vejcklv84.fsf-jO8aZxhGsIagbBziECNbOZn29agUkmeCHZ5vskTnxNA@public.gmane.org>
-X-Mailer: Apple Mail (2.753)
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-DCC-STREAM-Metrics: smtp03.mtu.ru 10001; Body=0 Fuz1=0 Fuz2=0
 Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
 X-Google-Loop: groups
@@ -52,39 +53,18 @@ List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
 List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
 List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
 	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70449>
 
 
-
-On Jan 14, 2008, at 8:30 AM, Junio C Hamano wrote:
-
->
-> Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org> writes:
->
->> Do you see a chance to have safecrlf in 1.5.4.1?
->
-> By definition of 'maint', 1.5.4.X are to fix bugs in the
-> features that are in 1.5.4, so the answer is no.
-
-I expected this answer.
-
-
+On Sun, Jan 13, 2008 at 11:30:51PM -0800, Junio C Hamano wrote:
+> 
 > But we could end up having a short cycle for 1.5.5 if we agree
 > that the lack of crlf=safe is a severe bug that is worth fixing
 > post 1.5.4.
->
-> Currently I am not convinced that the lack of crlf=safe is a
-> severe and urgent bug worth "fixing" for 1.5.4.  I see it as a
-> new feature, a different variant of crlf behaviour we will be
-> introducing for audience who are not satisfied with existing the
-> crlf variants.
 
+Hopefully, the cycle for 1.5.5 will be a bit shorter than 1.5.4, because
+1.5.4 seems to have the longest development cycle of all versions, and
+it already contains almost as much changes as three previous versions
+("git diff v1.5.3 master" is almost as big as "git diff v1.5.0 v1.5.3").
 
-So I should try harder to find better arguments.  But this has
-time until the 1.5.4 release is out.  For now, I am being quiet.
-
-(Well, I'll continue to improve the safecrlf patch and most
-likely will send it to the list, too.  But I don't expect to find
-it anywhere in your repo before 1.5.4.)
-
-	Steffen
+Dmitry
