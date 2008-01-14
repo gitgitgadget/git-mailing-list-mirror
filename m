@@ -1,90 +1,59 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: CRLF problems with Git on Win32
-Date: Mon, 14 Jan 2008 10:41:40 +0100
-Message-ID: <871w8kvj57.fsf@lysator.liu.se>
-References: <C3AC3E6F.10D42%jefferis@gmail.com> <alpine.LFD.1.00.0801101556380.3148@woody.linux-foundation.org> <7EAB1DA8-627D-455E-AA23-C404FDC615D9@zib.de> <alpine.LFD.1.00.0801110756260.3148@woody.linux-foundation.org> <D36EB89D-11A3-4EAF-BC1C-6100383FCBFC@zib.de> <alpine.LFD.1.00.0801110924380.3148@woody.linux-foundation.org> <930EC77A-73D1-4DDD-81D4-BF22B248FCB6@zib.de> <alpine.LFD.1.00.0801111005360.3148@woody.linux-foundation.org>
+From: Markus Korber <korbse@gmx.at>
+Subject: Re: Revert git push
+Date: Mon, 14 Jan 2008 11:39:55 +0100
+Message-ID: <6z7iicpu6c.fsf@odpc25.int.ondemand.co.at>
+References: <6zve61q0t3.fsf@odpc25.int.ondemand.co.at>
+	<478627E2.4060808@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 14 10:41:52 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Jan 14 11:40:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JELpC-0000KE-CT
-	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 10:41:46 +0100
+	id 1JEMjz-00072E-Vi
+	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 11:40:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754925AbYANJlU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jan 2008 04:41:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754838AbYANJlT
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 04:41:19 -0500
-Received: from main.gmane.org ([80.91.229.2]:34547 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754721AbYANJlQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2008 04:41:16 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JELod-0000Zd-Iv
-	for git@vger.kernel.org; Mon, 14 Jan 2008 09:41:11 +0000
-Received: from 87.96.142.114 ([87.96.142.114])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 14 Jan 2008 09:41:11 +0000
-Received: from davidk by 87.96.142.114 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 14 Jan 2008 09:41:11 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 87.96.142.114
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:GgTBZu1Ya8KIGm+4LM3P+CbuLHA=
+	id S1752236AbYANKj7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2008 05:39:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752083AbYANKj6
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 05:39:58 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33138 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751958AbYANKj6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2008 05:39:58 -0500
+Received: (qmail invoked by alias); 14 Jan 2008 10:39:55 -0000
+Received: from vie004.vienna.atvirtual.net (EHLO odpc25.gmx.at) [212.186.216.185]
+  by mail.gmx.net (mp046) with SMTP; 14 Jan 2008 11:39:55 +0100
+X-Authenticated: #23003311
+X-Provags-ID: V01U2FsdGVkX18QihMbVuQQRi23Nd+tePl9i1CFW4P9+sDgr7tHIr
+	JDm3W56BEHxyP8
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/23.0.50 (gnu/linux)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70451>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Thus spake Johannes Sixt:
 
-> On Fri, 11 Jan 2008, Steffen Prohaska wrote:
->>=20
->> Ah sorry, I misunderstood you in [1].  I thought your last point
->> "Mixed Windows usage" meant what I have in mind:  A user working
->> in a mixed Windows/Unix environment who creates a file using
->> Windows tools and commits it in the Unix environment.  In this
->> case the CRLF file will be transferred from Windows to Unix
->> without git being involved.  The right thing for git on Unix is
->> to remove CRLF during a commit but still write only LF during
->> check out.  So autocrlf=3Dinput is the right choice.
+> Markus Korber schrieb:
 >
-> Oh, ok, I didn't realize.
+>> revert this push if nobody has pushed something since my last pull from
+>> the linux repository?
 >
-> But yes, if you use a network share across windows and Unixand actual=
-ly=20
-> *share* the working tree over it, then yes, you'd want "autocrlf=3Din=
-put" on=20
-> the unix side.
+> $ cd /the/linux/repo
+> $ git checkout 94545baded
+> $ git branch -f master 94545baded
+> $ git checkout master
 >
-> However, I think that falls under the "0.1%" case, not the "99.9%" ca=
-se.
->
-> I realize that people probably do that more often with centralized=20
-> systems, but with a distributed thing, it probably makes a *ton* more=
-=20
-> sense to have separate trees. But I could kind of see having a shared=
-=20
-> development directory and accessing it from different types of machin=
-es=20
-> too.
+> Omit the two checkouts if the repo is bare or if it did not have 'master'
+> checked out.
 
-One case is when you only want to commit compiling code, and to
-test-compile on all platforms that you are supposed to be portable to
-you need to access the source tree on different systems before
-committing anything.
+Thanks a lot, that worked like a charm.
 
-You could of course commit optimistically and checkout on the other
-system, and then go back and rewrite the commits if you need to fix
-something. But that is a lot more work.
-
---=20
-David K=C3=A5gedal
+Regards,
+Markus Korber
