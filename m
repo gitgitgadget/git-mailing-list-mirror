@@ -1,91 +1,108 @@
-From: Pedro Melo <melo@simplicidade.org>
-Subject: Re: git-svn: network error while git-svn dcommit
-Date: Mon, 14 Jan 2008 15:34:54 +0000
-Message-ID: <0876BB1D-8830-47B1-8910-E95BA07EA405@simplicidade.org>
-References: <75A83473-664E-4CC8-97ED-119D18F17F76@simplicidade.org>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Pedro Melo <melo@simplicidade.org>
-X-From: git-owner@vger.kernel.org Mon Jan 14 16:35:13 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+From: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
+Subject: Re: [PATCH] gitk: make Ctrl "+" really increase the font
+ size
+Date: Mon, 14 Jan 2008 15:57:52 +0000 (GMT)
+Message-ID: <alpine.DEB.1.00.0801141555100.23987@eeepc-johanness>
+References: <fm5oln$ahq$1@ger.gmane.org> <alpine.LSU.1.00.0801111238150.31053@racer.site> <fmft8d$kuv$2@ger.gmane.org>
+Reply-To: Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+To: Stephan Hennig <mailing_list-KvP5wT2u2U0@public.gmane.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Jan 14 16:58:28 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from py-out-1314.google.com ([64.233.166.169])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JERLA-0002bl-QZ
-	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 16:35:09 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751035AbYANPel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2008 10:34:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750982AbYANPek
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 10:34:40 -0500
-Received: from mail.sl.pt ([212.55.140.13]:54364 "EHLO sl.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751019AbYANPek (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2008 10:34:40 -0500
-Received: (qmail 16667 invoked from network); 14 Jan 2008 15:34:37 -0000
-X-Virus-Status: Clean (0.01598 seconds) ; Version: 0.3-0.88.6
-X-Spam-Flag: NO
-X-Spam-Status: NO (0.0/5.0) (0.00020 seconds / 0.06211 sA)
-	Checked: by PTMail-AS v0.1 on mail.sl.pt
-Received: from unknown (HELO [10.0.0.5]) (melo@[213.205.66.71])
-          (envelope-sender <melo@simplicidade.org>)
-          by mail-sl (qmail-ldap-1.03) with SMTP
-          for <git@vger.kernel.org>; 14 Jan 2008 15:34:37 -0000
-Received-SPF: neutral (mail-sl: domain of (null) is neutral about designating 213.205.66.71 as permitted sender)
-In-Reply-To: <75A83473-664E-4CC8-97ED-119D18F17F76@simplicidade.org>
-X-Mailer: Apple Mail (2.753)
-Sender: git-owner@vger.kernel.org
+	id 1JERhf-0003D2-Sg
+	for gcvm-msysgit@m.gmane.org; Mon, 14 Jan 2008 16:58:24 +0100
+Received: by py-out-1314.google.com with SMTP id b29so8544656pyh.0
+        for <gcvm-msysgit@m.gmane.org>; Mon, 14 Jan 2008 07:57:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=7AJUhuecDMFRM0mIFOPIt0/yCvYzge1mZ2o2Z419zUg=;
+        b=v/JYFdPpWUIk9XuPVt/xlKVFOWwZTWIeQMF/5zjLIVrJQ3UqnFB6piaTKCYmLUKlLblTQNRvfNlfxdkqqyEGoSa5ddVgiKP8P5En8zWPTgIjRu+bD4P5/xbQuIRtQ+YQusLWzFZebsJK7cOVkgq7UQIr6TcCKT8ER7Smwl1Gsz4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=ilYshNPf26qL2HufeYsdvxweaMJVq/FlH1ao8ACp52tFwt191VInIkoyf1X7H8JhwMiEMs51URNOHUK8Pji7xEQkdngh03G4UHNcoCxZWckISbwEQwppTRDlFq+hpfSrahCS9eZehWu0cKBDtwVJu2iFEPOF3zxxCzriJH33Na0=
+Received: by 10.150.97.20 with SMTP id u20mr309088ybb.19.1200326274205;
+        Mon, 14 Jan 2008 07:57:54 -0800 (PST)
+Received: by 10.44.112.30 with SMTP id k30gr1401hsc;
+	Mon, 14 Jan 2008 07:57:54 -0800 (PST)
+X-Sender: Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.114.131.9 with SMTP id e9mr1188961wad.5.1200326273841; Mon, 14 Jan 2008 07:57:53 -0800 (PST)
+Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id v28si2716103nzb.4.2008.01.14.07.57.53; Mon, 14 Jan 2008 07:57:53 -0800 (PST)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
+Received: (qmail invoked by alias); 14 Jan 2008 15:57:52 -0000
+Received: from unknown (EHLO eeepc-johanness.st-andrews.ac.uk) [138.251.11.75] by mail.gmx.net (mp046) with SMTP; 14 Jan 2008 16:57:52 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/w/z8GX0DwX+4FuI6NGJwfx1BY8AB0me2hFx8PxQ vDkQ4ChI5WqdC8
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <fmft8d$kuv$2@ger.gmane.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70461>
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70462>
+
 
 Hi,
 
-sorry to reply to myself. Figure it out.
+[please do not cull me from the Cc' list.  It's like answering to what I 
+ said while looking at someone else.]
 
-Created a new branch from the remote svn, brought it up-to-date, then  
-got the last applied sha1, and rebased that onto my new branch.
+On Mon, 14 Jan 2008, Stephan Hennig wrote:
 
-there might be an easier way, but this worked.
+> Johannes Schindelin schrieb:
+> > 
+> > Only Ctrl "=" was bound to increase the font size, probably because
+> > English keyboards have the plus on the same key as the equal sign.
+> > However, not the whole world is English, and at least with some
+> > other keyboard layouts, Ctrl "+" did not work as documented.
+> > 
+> > Noticed by Stephan Hennig.
+> > 
+> > Signed-off-by: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
+> > 
+> > ---
+> > 
+> > 	On Thu, 10 Jan 2008, Stephan Hennig wrote:
+> > 
+> > 	> 
+> > 	> Hi,
+> > 	> 
+> > 	> reducing font size in gitk with CTRL-- works, but enlarging font 
+> > 	> size fails.  Typing CTRL-+ just doesn't have any effect here.
+> > 
+> > 	This is no bug in msysgit, but in gitk.
+> > 
+> > 	Paul, please apply.
+> 
+> The bug is still present in gitk that comes with Msysgit
 
-Best regards,
+If you are complaining about msysgit, please do not flood the git list 
+with your response.
 
-On Jan 14, 2008, at 1:20 PM, Pedro Melo wrote:
+Besides, it is asking a little much after just 4 days for a patch to come 
+through no less than 4 different repositories: gitk -> git.git -> 
+mingw.git -> 4msysgit.git.
 
-> Hi,
->
-> I was doing a git-svn dcommit (git-1.5.4-rc2)  and the network to  
-> the svn server died on me.
->
-> Network connection closed unexpectedly: Connection closed  
-> unexpectedly at /usr/local/git/bin/git-svn line 450
->
-> If I try again, I get a warning about a dirty index.
->
-> Cannot dcommit with a dirty index.  Commit your changes first, or  
-> stash them with `git stash'.
->  at /usr/local/git/bin/git-svn line 406
->
-> What's the best way to recover from this?
->
-> Thanks,
-> -- 
-> Pedro Melo
-> Blog: http://www.simplicidade.org/notes/
-> XMPP ID: melo@simplicidade.org
-> Use XMPP!
->
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+A patch that you could apply yourself easily, with the further benefit of 
+being able to added your "Tested-by:" line.
 
--- 
-Pedro Melo
-Blog: http://www.simplicidade.org/notes/
-XMPP ID: melo@simplicidade.org
-Use XMPP!
+After all, I just worked for you, for free, and I expect something back.
+
+Hth,
+Dscho
