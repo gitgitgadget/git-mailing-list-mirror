@@ -1,74 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] parse_commit_buffer: don't parse invalid commits
-Date: Sun, 13 Jan 2008 23:23:40 -0800
-Message-ID: <7vk5mclvk3.fsf@gitster.siamese.dyndns.org>
-References: <12002478702664-git-send-email-mkoegler@auto.tuwien.ac.at>
+From: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+Subject: Re: safecrlf not in 1.5.4
+Date: Sun, 13 Jan 2008 23:30:51 -0800
+Message-ID: <7vejcklv84.fsf@gitster.siamese.dyndns.org>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com> <1200022189-2400-2-git-send-email-mlevedahl@gmail.com> <7v1w8o4ws0.fsf@gitster.siamese.dyndns.org> <30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com> <7v63xzzszp.fsf@gitster.siamese.dyndns.org> <478855B5.9070600@gmail.com> <7vbq7ry405.fsf@gitster.siamese.dyndns.org> <47885B2C.8020809@gmail.com> <7v7iify2wm.fsf@gitster.siamese.dyndns.org> <4788BFA8.2030508@gmail.com> <7vwsqeubj8.fsf@gitster.siamese.dyndns.org> <47891658.3090604@gmail.com> <7vbq7qssd7.fsf@gitster.siamese.dyndns.org> <47893E1A.5020702@gmail.com> <7v4pdislrf.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7vir1xmazm.fsf@gitster.siamese.dyndns.org> <31687420-EB17-4651-AD6C-07213311ABDA@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Mon Jan 14 08:24:17 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>,  Mark Levedahl <mlevedahl-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>,  Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>,  msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+To: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Jan 14 08:31:36 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from nz-out-0708.google.com ([64.233.162.249])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEJg6-0001XI-Uy
-	for gcvg-git-2@gmane.org; Mon, 14 Jan 2008 08:24:15 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751923AbYANHXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2008 02:23:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751885AbYANHXq
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 02:23:46 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38575 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751245AbYANHXq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jan 2008 02:23:46 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DEDC1C5B;
-	Mon, 14 Jan 2008 02:23:44 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E98C11C5A;
-	Mon, 14 Jan 2008 02:23:41 -0500 (EST)
-In-Reply-To: <12002478702664-git-send-email-mkoegler@auto.tuwien.ac.at>
-	(Martin Koegler's message of "Sun, 13 Jan 2008 19:11:09 +0100")
+	id 1JEJnD-0002nv-Rn
+	for gcvm-msysgit@m.gmane.org; Mon, 14 Jan 2008 08:31:36 +0100
+Received: by nz-out-0708.google.com with SMTP id v22so3017634nzg.9
+        for <gcvm-msysgit@m.gmane.org>; Sun, 13 Jan 2008 23:31:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:from:to:cc:subject:references:date:in-reply-to:message-id:user-agent:mime-version:content-type:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=XLFbHjhGmwKsL1qF6pStcUSLalp4h9rLFgAPEBRPL6k=;
+        b=Y+bSTlXJZZ/SwZ3tXomq0W8I0dhyj7XtwvhU0D8ttSbxp/n7N5J5uAgE+3F+GjBB55dq2YZGFlg7wI6ZamzDHsGJiRe0O8+YzQdSCR6OqpaTgZ1FD1rZsUu5YsEpkFoPNWYj+tO+JkxqPyHxIEe6l12tX2WN0lDTEYNpgsYUNZo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:from:to:cc:subject:references:date:in-reply-to:message-id:user-agent:mime-version:content-type:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=u6IVxcW0ed+AVSaKHSU/45kzHXUClzcpS+ERM/A1WWcSvD0Z0w3DbrK8W80Laoa5yxQhaFC8bDC+clWrC5LSXeYsMgHpSa6NjD5sWFhelNSjZa88aKtNLk89YQfaPj5XLjhwkhXxrTCWuzL5mWzLFal7NIHyfXljsKBavYEs7KY=
+Received: by 10.151.6.2 with SMTP id j2mr284396ybi.13.1200295867116;
+        Sun, 13 Jan 2008 23:31:07 -0800 (PST)
+Received: by 10.44.218.34 with SMTP id q34gr1377hsg;
+	Sun, 13 Jan 2008 23:31:07 -0800 (PST)
+X-Sender: gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.35.99.14 with SMTP id b14mr10055013pym.4.1200295866799; Sun, 13 Jan 2008 23:31:06 -0800 (PST)
+Received: from sasl.smtp.pobox.com (a-sasl-quonix.sasl.smtp.pobox.com [208.72.237.25]) by mx.google.com with ESMTP id x46si3571362pyg.3.2008.01.13.23.31.06; Sun, 13 Jan 2008 23:31:06 -0800 (PST)
+Received-SPF: pass (google.com: domain of gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org designates 208.72.237.25 as permitted sender) client-ip=208.72.237.25;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org designates 208.72.237.25 as permitted sender) smtp.mail=gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org
+Received: from a-sasl-quonix (localhost [127.0.0.1]) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A1C5D2A02; Mon, 14 Jan 2008 02:31:04 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77]) (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested) by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C9ED9239C; Mon, 14 Jan 2008 02:30:57 -0500 (EST)
+In-Reply-To: <31687420-EB17-4651-AD6C-07213311ABDA-wjoc1KHpMeg@public.gmane.org> (Steffen Prohaska's message of "Mon, 14 Jan 2008 07:49:14 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70446>
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70447>
 
-Martin Koegler <mkoegler@auto.tuwien.ac.at> writes:
 
-> +	if (!parse_commit_date(bufptr, tail, &item->date))
-> +		return error("bogus commit date in object %s", sha1_to_hex(item->object.sha1));
->  
->  	if (track_object_refs) {
->  		unsigned i = 0;
+Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org> writes:
 
-I suspect this might be an undesirable regression.
+> Do you see a chance to have safecrlf in 1.5.4.1?
 
-If somebody managed to create a commit with a bogus "author"
-line and wanted to clean up the history, your previous one at
-least gave something usable back, even though it had to come up
-with a bogus date.  It gave the rest of the data back without
-barfing.  And it was easy to see which "resurrected" commit had
-a missing author date (bogus ones always gave 0 timestamp).
+By definition of 'maint', 1.5.4.X are to fix bugs in the
+features that are in 1.5.4, so the answer is no.
 
-This round you made it to error out, and callers that check the
-return value of parse_commit() would stop traversing the
-history, even if the commit in question has perfectly valid
-"parent " lines, thinking "ah, this commit object is faulty".
-It actively interferes with attempts to resurrect data from
-history that contains a faulty commit.
+But we could end up having a short cycle for 1.5.5 if we agree
+that the lack of crlf=safe is a severe bug that is worth fixing
+post 1.5.4.
 
-Your previous version was much better with respect to this
-issue.  It was about being more careful not to read outside the
-commit object buffer, while still allowing the data from a
-history that has an unfortunate commit with broken author line
-to be resurrected more easily.
-
-I do not think the checks done by fsck and parse_commit should
-share the same strictness.  They serve different purposes.
+Currently I am not convinced that the lack of crlf=safe is a
+severe and urgent bug worth "fixing" for 1.5.4.  I see it as a
+new feature, a different variant of crlf behaviour we will be
+introducing for audience who are not satisfied with existing the
+crlf variants.
