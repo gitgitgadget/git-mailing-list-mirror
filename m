@@ -1,68 +1,103 @@
-From: "Chris Ortman" <chrisortman@gmail.com>
-Subject: Re: First time compiling source
-Date: Tue, 15 Jan 2008 15:01:36 -0600
-Message-ID: <c0f2d4110801151301m18f65fa5x29eb8f5b6d3e2ece@mail.gmail.com>
-References: <c0f2d4110801151234i2292ad2aw48e38f4f4fcb5ee7@mail.gmail.com>
-	 <20080115205603.GA12055@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 15 22:02:43 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH] treat any file with NUL as binary
+Date: Tue, 15 Jan 2008 22:03:33 +0100
+Message-ID: <A220A113-8D82-4D54-8759-BD7199FC22A8@zib.de>
+References: <1200407309-10992-1-git-send-email-dpotapov@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 8BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 22:03:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEsvc-0004Wb-8U
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 22:02:36 +0100
+	id 1JEswi-00054a-Py
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 22:03:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757281AbYAOVBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 16:01:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756702AbYAOVBk
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 16:01:40 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:18959 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752443AbYAOVBi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 16:01:38 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so4545363wah.23
-        for <git@vger.kernel.org>; Tue, 15 Jan 2008 13:01:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=o8cLs6q5QQt+ap0Xd91U8X5SoEzyTnq4cyOEk0VKsoY=;
-        b=cFEr3xA9SqijezzgtiXOr2MsetlT4st3Gx2dBtb1jPfRL3fyJwuApFQjmj2GUK9YqII466Bdagl3xezoA8Cbx3G3zKR32eu78mq3avkucZrHPas3q+rV8XnXJCOz0maoSbAEFASMPDPqQL0fQHFa2sVztz74rNT2zV6e7owdc/o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=RtZBygGj3nB88Fk3e1PyWGGDsDM28cKip6XapKgDfIhWKBy1tepyObglpR8aFWVHY8OT4oGvLoUzOx/fkhG9fD5md7IwGHy42QWmxl1NcB3wKYCFcX9o8PwgHRk+8g7MI1O3T4fGMben8fEQs9fveNvkbdQDlXq38w6SHf3JX0Q=
-Received: by 10.115.90.1 with SMTP id s1mr6192926wal.50.1200430896350;
-        Tue, 15 Jan 2008 13:01:36 -0800 (PST)
-Received: by 10.115.17.6 with HTTP; Tue, 15 Jan 2008 13:01:36 -0800 (PST)
-In-Reply-To: <20080115205603.GA12055@coredump.intra.peff.net>
-Content-Disposition: inline
+	id S1752263AbYAOVDE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 16:03:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751839AbYAOVDB
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 16:03:01 -0500
+Received: from mailer.zib.de ([130.73.108.11]:46718 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751315AbYAOVDA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2008 16:03:00 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0FL2ULc016871;
+	Tue, 15 Jan 2008 22:02:30 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db83608.pool.einsundeins.de [77.184.54.8])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0FL2Tfo026871
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Tue, 15 Jan 2008 22:02:29 +0100 (MET)
+In-Reply-To: <1200407309-10992-1-git-send-email-dpotapov@gmail.com>
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70561>
 
-That was it, thanks.
 
-On Jan 15, 2008 2:56 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Jan 15, 2008 at 02:34:12PM -0600, Chris Ortman wrote:
+On Jan 15, 2008, at 3:28 PM, Dmitry Potapov wrote:
+
+> There are two heuristics in Git to detect whether a file is binary
+> or text. One in xdiff-interface.c relied on existing NUL byte at
+> the beginning. However, convert.c used a different heuristic, which
+> relied that the number of non-printable symbols is less than 1%.
 >
-> > then to check
-> > which git
-> > /home/chrisortman/bin/git
-> > as expected
-> >
-> > however git --version still reports 1.5.2.5
-> >
-> > What did I miss?
+> Due to difference in approaches whether a file is binary or not,
+> it was possible that a file that diff treats as binary will not be
+> treated as text by CRLF conversation. This is very confusing for
+> a user who seeing that 'git diff' shows file as binary expects it
+> to be added as binary.
 >
-> Is bash caching the location of git? Try 'type git' in that shell, or
-> try running 'git --version' from a new shell.
+> This patch makes is_binary to consider any file that contains at
+> least one NUL character as binary.
+
+Shouldn't the commit message explicitly mention that the solution
+is to make the check in convert.c stricter than the check in
+xdiff-interface.c?  I think a comment in xdiff-interface.c
+would also be a good thing to remember future developers about
+this.
+
+
+> ---
 >
-> -Peff
+> Junio,
 >
+> I believe that the current behavior where 'git diff' shows me a file
+> as binary and then adds it as text with crlf conversation is a bug.
+>
+> Though, it is not very likely to happen, it still possible cases where
+> a binary file contains large amount of text. For instance, a tar file
+> of text files can be such a file. Probably, word processor that store
+> text in binary format may also generate a file with more 99% printable
+> characters. So, such files will be considered as text by current  
+> convert
+> heuristic. Still such files are considered by diff due present of a  
+> NUL
+> character. This is very confusing for a user to see 'git diff' saying
+> that a file is binary and then having it converted as text. Because I
+> don't think that any real text file (especially one that requires CRLF
+> conversation) may contain NUL character, I believe this change should
+> improve binary heuristic and avoid user confusion.
+
+I think this is a good idea.  When reading the code for the first
+time it took me some time to accept that we really have different
+ways for detecting a binary file and to understand how these
+detections are related.
+
+I also agree with Dimitry that convert.c should be stricter than
+xdiff-interface.c, because everything else could be confusing. ...
+
+
+> So, please, consider it for inclusion as a bug fix.
+
+... Hence, this should be considered a bug fix.
+
+The patch looks good to me.
+
+	Steffen
