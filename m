@@ -1,79 +1,90 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH] Teach remote machinery about remotes.default config variable
-Date: Tue, 15 Jan 2008 18:08:08 -0500
-Message-ID: <478D3CD8.3040805@gmail.com>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>	<1200022189-2400-2-git-send-email-mlevedahl@gmail.com>	<7v1w8o4ws0.fsf@gitster.siamese.dyndns.org>	<30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com>	<7v63xzzszp.fsf@gitster.siamese.dyndns.org>	<478855B5.9070600@gmail.com>	<7vbq7ry405.fsf@gitster.siamese.dyndns.org>	<47885B2C.8020809@gmail.com>	<7v7iify2wm.fsf@gitster.siamese.dyndns.org>	<4788BFA8.2030508@gmail.com>	<7vwsqeubj8.fsf@gitster.siamese.dyndns.org>	<47891658.3090604@gmail.com>	<alpine.LSU.1.00.0801122123430.8333@wbgn129.biozentrum.uni-wuerzburg.de>	<47893F53.2070908@gmail.com>	<alpine.LSU.1.00.0801132220200.8333@wbgn129.biozentrum.uni-wuerzburg.de>	<478AD5A0.50900@gmail.com> <7vabn9m30a.fsf@gitster.siamese.dyndns.org>	<478C3CD3.6010504@gmail.com> <7vy7a
- rhas9.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-commit fatal: Out of memory? mmap failed: Bad file descriptor
+Date: Tue, 15 Jan 2008 15:10:29 -0800
+Message-ID: <7vzlv6d6sa.fsf@gitster.siamese.dyndns.org>
+References: <4787E981.7010200@nrlssc.navy.mil>
+	<478C1D7A.6090103@nrlssc.navy.mil>
+	<alpine.LFD.1.00.0801142140560.2806@woody.linux-foundation.org>
+	<478CECAB.2030906@nrlssc.navy.mil>
+	<alpine.LFD.1.00.0801150931260.2806@woody.linux-foundation.org>
+	<478CFAFF.6010006@nrlssc.navy.mil>
+	<alpine.LFD.1.00.0801151036110.2806@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 00:08:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	Git Mailing List <git@vger.kernel.org>, drafnel@gmail.com,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jan 16 00:11:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEutf-0004Yd-OD
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 00:08:44 +0100
+	id 1JEuw8-0005cH-3l
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 00:11:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756191AbYAOXIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 18:08:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753439AbYAOXIP
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 18:08:15 -0500
-Received: from an-out-0708.google.com ([209.85.132.245]:19279 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753334AbYAOXIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 18:08:14 -0500
-Received: by an-out-0708.google.com with SMTP id d31so5539and.103
-        for <git@vger.kernel.org>; Tue, 15 Jan 2008 15:08:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        bh=QuymUmo7bBdWsMF/Z8otPbhHmvCKppELqfng6vFIph0=;
-        b=KIMSQPgqiBH0z2z+5/jEAa3VfLHTaqzCIwCisWbwP11ZVk9ZQ/BnMgtcQCmpUhLrJBdPpBFx+9CijJcEidE8pehJy+PrVMHaddsmXhHzMUZlHwA7SSR3XPFPWCCBCWUMvM0cnGpHGrbQGdARhhiu4MWJ5/u/1hdJa4ImQjMjVo0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=kjE+r8U/AMitMwp2QXrfvFgiMBaJd1mLyl4xiQyCAqJQPzbTMahkkc4v2zkrakZMk/wdiiOlMTTg4RB7klxYMBLhUMORIvcY71vR2t0HgT34fjugP+aLt8zIunxIy0FLbmW+gWEYJSefCZ21vGNcOSLws1CmkerYDqmJYk1+F/k=
-Received: by 10.100.216.3 with SMTP id o3mr73691ang.95.1200438489417;
-        Tue, 15 Jan 2008 15:08:09 -0800 (PST)
-Received: from ?192.168.1.117? ( [71.163.17.196])
-        by mx.google.com with ESMTPS id d38sm119938and.17.2008.01.15.15.08.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 15 Jan 2008 15:08:08 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <7vy7arhas9.fsf@gitster.siamese.dyndns.org>
+	id S1755608AbYAOXKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 18:10:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753986AbYAOXKs
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 18:10:48 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36963 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753439AbYAOXKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 18:10:47 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B2CF17631;
+	Tue, 15 Jan 2008 18:10:45 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C6754762D;
+	Tue, 15 Jan 2008 18:10:38 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70574>
 
-Junio C Hamano wrote:
->> Nope, git submodule *still* requires origin (e.g., execute git
->> submodule init or update on a detached head).
->>     
+Linus Torvalds <torvalds@linux-foundation.org> writes:
+
+> On Tue, 15 Jan 2008, Brandon Casey wrote:
+>>
+>> Linus Torvalds wrote:
+>> > It would obviously be interesting to see the base repository and the 
+>> > commit you are trying to do - is that possibly publicly available?
+>> 
+>> I wish it was.
 >
-> Now I am even more confused.
+> It's ok, I found the bug in your full strace.
 >
-> The approach I suggested in a few paragraphs above, to which you
-> just said "I like this change", is about making "git submodule
-> update" to use the url configured in the upper level repository
-> when it runs "git fetch".  I am looking at around l.238 of
-> git-submodule.sh.  In the current code, it runs "git-fetch"
-> without any parameter, which would allow it default to origin or
-> whatever, which may or may not be desirable depending on where
-> the 'origin' points at.  If you make that particular git-fetch
-> explicitly say where the fetch should be done from, wouldn't it
-> fix the issue for that codepath?  Why does it still require
-> origin?
-1) If top-level is on a detached head, then the remotes machinery will 
-find current remote is "origin". This is what would be passed down the 
-chain.
+> The bug really is pretty stupid:
+>
+>  - prepare_index() does a 
+>
+> 	fd = hold_lock_file_for_update(&false_lock, ...
+> 	...
+> 	if (write_cache(fd, active_cache, active_nr) || close(fd))
+> 		die("unable to write temporary index file");
+>
+> and the magic here is that *it*closes*the*fd*.
 
-2) Absent the other changes in the thread, git-submodule-init still 
-invokes   git clone *without* -o in the submodules, and thus still 
-defines and points to remote "origin".
+While I think the ones that are immediately followed by
+commit_locked_index() can drop the close(fd) safely, I am not
+sure about Kristian's changes to the other ones that we
+currently close(fd) but do not commit nor rollback immediately.
+These indices are now shown to the hook with open fd to it if
+you choose not to close them.  Is that okay for Windows guys?  I
+somehow had an impression that the other process may have
+trouble accessing a file that is still open elsewhere for
+writing.
 
-Mark
+So I think the approach along the lines of your "hack" to close
+and tell lockfile API not to double-close is more appropriate.
+We would perhaps want "close_lock_file(struct lock_file *)" that
+calls close(lk->fd) and does lk->fd = -1 without rename/unlink,
+and replace these close() with that.
+
+I am sick today, feeling feverish, and not thinking straight,
+so I may be talking total nonsense...
