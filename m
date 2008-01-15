@@ -1,65 +1,100 @@
-From: "Chris Ortman" <chrisortman@gmail.com>
-Subject: Re: [FEATURE REQUEST] git-svn format-patch
-Date: Tue, 15 Jan 2008 13:04:23 -0600
-Message-ID: <c0f2d4110801151104j4c34dekc7d06dcfc89bfbe6@mail.gmail.com>
-References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>
-	 <alpine.DEB.1.00.0801151444180.5289@eeepc-johanness>
-	 <c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
-	 <alpine.DEB.1.00.0801151612470.5289@eeepc-johanness>
-	 <c0f2d4110801150823u7899e6dds1192b5f3bb3f7133@mail.gmail.com>
-	 <alpine.DEB.1.00.0801151650240.5289@eeepc-johanness>
-	 <c0f2d4110801150907y59593407u820c7b3db556ed31@mail.gmail.com>
-	 <alpine.DEB.1.00.0801151709330.5289@eeepc-johanness>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: git-commit fatal: Out of memory? mmap failed: Bad file descriptor
+Date: Tue, 15 Jan 2008 13:43:22 -0600
+Message-ID: <478D0CDA.5050709@nrlssc.navy.mil>
+References: <4787E981.7010200@nrlssc.navy.mil> <478C1D7A.6090103@nrlssc.navy.mil> <alpine.LFD.1.00.0801142140560.2806@woody.linux-foundation.org> <478CECAB.2030906@nrlssc.navy.mil> <alpine.LFD.1.00.0801150931260.2806@woody.linux-foundation.org> <478CFAFF.6010006@nrlssc.navy.mil> <alpine.LFD.1.00.0801151036110.2806@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 15 20:04:58 2008
+Cc: Git Mailing List <git@vger.kernel.org>, drafnel@gmail.com,
+	Junio C Hamano <gitster@pobox.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	=?ISO-8859-1?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jan 15 20:45:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEr5k-0001bn-7s
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 20:04:56 +0100
+	id 1JEria-0000Fi-O0
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 20:45:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753954AbYAOTE1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 14:04:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751561AbYAOTE1
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 14:04:27 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:56797 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751348AbYAOTE0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 14:04:26 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so4489940wah.23
-        for <git@vger.kernel.org>; Tue, 15 Jan 2008 11:04:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=9LeyixcwQix431As72FG5tlv6IO6Fm3M8aagazvx65c=;
-        b=mvkSup7CpZIxvnZqRDPFHlEll2ioGptZrWRAIgQ9140xJLKGr9TB6F7QuZB8R2bJ9jOwwIHUN/mRIcY7hbf98VtgtWA6uPg96CL8jU+vspI3XMwJM85jP7GEJQfcOwKttAne8twZ+igqZ2fkVkTPcZWTHUDIy8MPWx7t+jK1MIc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=omxOreyz+U3bhaT2Lw6qMZYqSqOotgpHFIgbWtEgKit4J560EY3jOEE9vTLbeskYABfGbUVniKgGOgJ1cpvS8TJjoYlBXAipyTM+bmZQprfMXqnDoZZupxaTPevtFjpspDBnI/G7RIyABVuu3LjcotNv4MgDO3k1ph8pc2wd6jw=
-Received: by 10.114.149.2 with SMTP id w2mr5118937wad.5.1200423863398;
-        Tue, 15 Jan 2008 11:04:23 -0800 (PST)
-Received: by 10.115.17.6 with HTTP; Tue, 15 Jan 2008 11:04:23 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0801151709330.5289@eeepc-johanness>
-Content-Disposition: inline
+	id S1751729AbYAOTod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 14:44:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751278AbYAOTod
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 14:44:33 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:49716 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751097AbYAOToc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 14:44:32 -0500
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0FJhM4J014875;
+	Tue, 15 Jan 2008 13:43:24 -0600
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 15 Jan 2008 13:43:22 -0600
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <alpine.LFD.1.00.0801151036110.2806@woody.linux-foundation.org>
+X-OriginalArrivalTime: 15 Jan 2008 19:43:22.0373 (UTC) FILETIME=[E2F59350:01C857AE]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15666001
+X-TM-AS-Result: : Yes--10.957400-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1NzA0Mi03MDAw?=
+	=?us-ascii?B?NzUtMTM5MDEwLTcwNzc2MC03MTE5NTMtNzAxNDU1LTE4NjAzNS03?=
+	=?us-ascii?B?MDIwMjAtNzAyMTU3LTEzNzcxNy03MDEwMDUtNzA5MDUwLTcwMDM5?=
+	=?us-ascii?B?OC03MDEwNTMtNzA0NDI1LTcwMDk3MS03MDU3MTgtNzAxMjAyLTcw?=
+	=?us-ascii?B?NjY0OS03MDQyNTctMTg4MDE5LTcwNjI5MC03MDQ3NDctMTQ4MDM5?=
+	=?us-ascii?B?LTE0ODA1MS0yMDA0MA==?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70543>
 
-Myself and many others have excellent luck with the cygwin version.
-But the reasoning behind wanting this isn't so much for the developer
-that is creating the patch as it is for the person receiving it. Most
-of the projects I work on use tortoise to apply the patches and don't
-typically have patch.exe
+Linus Torvalds wrote:
+> 
+> On Tue, 15 Jan 2008, Brandon Casey wrote:
+>> Linus Torvalds wrote:
+>>> It would obviously be interesting to see the base repository and the 
+>>> commit you are trying to do - is that possibly publicly available?
+>> I wish it was.
+> 
+> It's ok, I found the bug in your full strace.
 
-If something like this was to be accepted and become part of standard
-git is there a requirement that it be written in perl or is some other
-scripting language fine?
-Thanks
+Good catch, but that wasn't it. Still getting the same error.
+
+> and now it's trying to close that fd *again*
+
+In that same vein, just above your changes in prepare_index() is:
+
+	if (!pathspec || !*pathspec) {
+		fd = hold_locked_index(&index_lock, 1);
+		refresh_cache(REFRESH_QUIET);
+		if (write_cache(fd, active_cache, active_nr) ||
+		    close(fd) || commit_locked_index(&index_lock))
+			die("unable to write new_index file");
+		commit_style = COMMIT_AS_IS;
+		return get_index_file();
+	}
+
+If I followed hold_locked_index() correctly, then fd and index_lock.fd
+are equal, and commit_locked_index() does a close(lk->fd) making the
+close(fd) above, redundant (or vice-versa).
+
+Probably not causing the error at hand, but not good.
+
+-brandon
+
+
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 1e55c2e..3b4f4e2 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -256,7 +256,7 @@ static char *prepare_index(int argc, const char **argv, cons
+		fd = hold_locked_index(&index_lock, 1);
+		refresh_cache(REFRESH_QUIET);
+		if (write_cache(fd, active_cache, active_nr) ||
+-		    close(fd) || commit_locked_index(&index_lock))
++		    commit_locked_index(&index_lock))
+			die("unable to write new_index file");
+		commit_style = COMMIT_AS_IS;
+		return get_index_file();
