@@ -1,90 +1,154 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: performance problem: "git commit filename"
-Date: Mon, 14 Jan 2008 16:18:06 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801141611560.2806@woody.linux-foundation.org>
-References: <alpine.LFD.1.00.0801121426510.2806@woody.linux-foundation.org> <alpine.LFD.1.00.0801121735020.2806@woody.linux-foundation.org> <alpine.LFD.1.00.0801121949180.2806@woody.linux-foundation.org> <7vtzliqh3u.fsf@gitster.siamese.dyndns.org>
- <7vd4s6qal0.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801130922030.2806@woody.linux-foundation.org> <7vr6glnrvp.fsf@gitster.siamese.dyndns.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Add [HOWTO] using merge subtree.
+Date: Tue, 15 Jan 2008 01:35:02 +0100
+Message-ID: <20080115003502.GN29972@genesis.frugalware.org>
+References: <7vabnefx3d.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Kristian H?gsberg <krh@redhat.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 01:20:41 2008
+X-From: git-owner@vger.kernel.org Tue Jan 15 01:35:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEZXl-0007m1-0i
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 01:20:41 +0100
+	id 1JEZmQ-0003F3-6H
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 01:35:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752864AbYAOAUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jan 2008 19:20:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751457AbYAOAUM
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 19:20:12 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:34609 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750733AbYAOAUK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Jan 2008 19:20:10 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0F0I7vq032648
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 14 Jan 2008 16:18:08 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0F0I6wq022576;
-	Mon, 14 Jan 2008 16:18:06 -0800
-In-Reply-To: <7vr6glnrvp.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.72 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751672AbYAOAfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jan 2008 19:35:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751411AbYAOAfV
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Jan 2008 19:35:21 -0500
+Received: from mx3.mail.elte.hu ([157.181.1.138]:39077 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751262AbYAOAfU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jan 2008 19:35:20 -0500
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1JEZlm-00085m-Rk
+	from <vmiklos@frugalware.org>; Tue, 15 Jan 2008 01:35:16 +0100
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 12DFC176C06D; Tue, 15 Jan 2008 01:35:02 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vabnefx3d.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70494>
 
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
+Here comes the 3rd try. I wonder if I should remove the mail header :) The
+commands are from the mail, but the patch itself now are more based on the
+suggestions by Junio (and reworded / reorganized).
 
-On Sun, 13 Jan 2008, Junio C Hamano wrote:
-> 
-> I've reworked the patch, and in the kernel repository, a
-> single-path commit after touching that path now calls 23k
-> lstat(2).  It used to call 46k lstat(2) after your fix.
+Sorry for the late reply, I had some problem with my mail setup.
 
-Hmm. This part of it looks incorrect:
+ Documentation/Makefile                    |    2 +-
+ Documentation/howto/use-merge-subtree.txt |   71 +++++++++++++++++++++++++++++
+ 2 files changed, 72 insertions(+), 1 deletions(-)
+ create mode 100644 Documentation/howto/use-merge-subtree.txt
 
-> diff --git a/diff.c b/diff.c
-> index b18c140..62d0c06 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -1510,6 +1510,10 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
->  	if (pos < 0)
->  		return 0;
->  	ce = active_cache[pos];
-> +
-> +	if (ce_uptodate(ce))
-> +		return 1;
-> +
->  	if ((lstat(name, &st) < 0) ||
->  	    !S_ISREG(st.st_mode) || /* careful! */
->  	    ce_match_stat(ce, &st, 0) ||
-
-Isn't this wrong? I think it also needs to check that ce->sha1 matches the 
-right SHA1, because even if the lstat() information may be fine, if the 
-SHA1 doesn't match what we want, we still shouldn't use the checked-out 
-copy, of course.
-
-The old code continues with a
-
-	   hashcmp(sha1, ce->sha1))
-		return 0;
-
-in that if-statement that is partially visible in the context, and it's 
-that hashcmp() that got incorrectly cut off from the logic.
-
-(Of course, maybe we never call this function unless we've already checked 
-that the cache-entry SHA1 matches, but if so, that subsequent hashcmp 
-should just be removed instead).
-
-		Linus
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 7b0685b..4addb8a 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -23,7 +23,7 @@ ARTICLES += everyday
+ ARTICLES += git-tools
+ ARTICLES += glossary
+ # with their own formatting rules.
+-SP_ARTICLES = howto/revert-branch-rebase user-manual
++SP_ARTICLES = howto/revert-branch-rebase howto/use-merge-subtree user-manual
+ API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technical/api-index.txt, $(wildcard technical/api-*.txt)))
+ SP_ARTICLES += $(API_DOCS)
+ SP_ARTICLES += technical/api-index
+diff --git a/Documentation/howto/use-merge-subtree.txt b/Documentation/howto/use-merge-subtree.txt
+new file mode 100644
+index 0000000..2f4f38a
+--- /dev/null
++++ b/Documentation/howto/use-merge-subtree.txt
+@@ -0,0 +1,71 @@
++Date: Sat, 5 Jan 2008 20:17:40 -0500
++From: Sean <seanlkml@sympatico.ca>
++To: Miklos Vajna <vmiklos@frugalware.org>
++Cc: git@vger.kernel.org
++Subject: Re: how to use git merge -s subtree?
++Abstract: In this article, Sean demonstrates how one can use the subtree merge
++ strategy.
++Message-ID: <BAYC1-PASMTP12374B54BA370A1E1C6E78AE4E0@CEZ.ICE>
++
++How to use the subtree merge strategy
++=====================================
++
++There are situations where you want to include contents in your project from an
++independently developed project. You can just pull from the other project as
++long as there are no conflicting paths.
++
++The problematic case is when there are conflicting files. Potential candidates
++are Makefiles and other standard filenames. You could merge these files but
++probably you do not want.  A better solution for this problem can be to merge
++the project to its own subdirectory. This is not supported by the 'recursive'
++merge strategy, so just pulling won't work.
++
++What you want is the 'subtree' merge strategy, which helps you in such a
++situation.
++
++In this example, let's say you have the repository at `/path/to/B` (but it can
++be an URL as well, if you want). You want to merge the 'master' branch of that
++repository to the `dir-B` subdirectory in your current branch.
++
++Here are all the commands you need:
++
++----------------
++$ git remote add -f Bproject /path/to/B <1>
++$ git merge -s ours --no-commit Bproject/master <2>
++$ git read-tree --prefix=dir-B/ -u Bproject/master <3>
++$ git commit -m "Merge B project as our subdirectory" <4>
++
++$ git pull -s subtree Bproject master <5>
++----------------
++<1> name the other project "Bproject", and fetch.
++<2> prepare for the later step to record the result as a merge.
++<3> read "master" branch of Bproject to the subdirectory "dir-B".
++<4> record the merge result.
++<5> maintain the result with subsequent merges using "subtree"
++
++The first four commands are necessary for the initial merge, while the last one
++should be used to merge updates from 'B project'.
++
++Comparing 'subtree' merge with submodules
++-----------------------------------------
++
++- The benefit of using subtree merge is that it requires less attention from
++  the users of your repository. It works with older (before Git v1.5.2) clients
++  and you have the code right after clone.
++
++- However if you use submodules then you can choose not to transfer the
++  submodule objects. This may be a problem with the subtree merge.
++
++- Also, in case you make changes to the other project, it is easier to submit
++  changes if you just use submodules.
++
++Additional tips
++---------------
++
++- If you made changes to the other project in your repository, they may want to
++  merge from your project. This is possible using subtree -- it can shift up
++  the paths in your tree and then they can merge only the relevant parts of
++  your tree.
++
++- Please note that if the other project merges from you, then it will connects
++  its history to yours, which can be something they don't want to.
+-- 
+1.5.4.rc2-dirty
