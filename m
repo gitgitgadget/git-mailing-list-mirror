@@ -1,123 +1,111 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git-commit fatal: Out of memory? mmap failed: Bad file
- descriptor
-Date: Tue, 15 Jan 2008 10:50:19 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801151036110.2806@woody.linux-foundation.org>
-References: <4787E981.7010200@nrlssc.navy.mil> <478C1D7A.6090103@nrlssc.navy.mil> <alpine.LFD.1.00.0801142140560.2806@woody.linux-foundation.org> <478CECAB.2030906@nrlssc.navy.mil> <alpine.LFD.1.00.0801150931260.2806@woody.linux-foundation.org>
- <478CFAFF.6010006@nrlssc.navy.mil>
+From: Matt McCutchen <matt@mattmccutchen.net>
+Subject: Re: How to structure a project distributed with varyingly
+	interdependent feature branches?
+Date: Tue, 15 Jan 2008 14:02:08 -0500
+Message-ID: <1200423728.3865.69.camel@localhost>
+References: <1199139613.2360.83.camel@localhost>
+	 <7vwsqrvpur.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>, drafnel@gmail.com,
-	Junio C Hamano <gitster@pobox.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Tue Jan 15 19:52:05 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 20:04:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEqtB-0004wk-Ck
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 19:51:57 +0100
+	id 1JEr5B-0001PT-Fu
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 20:04:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751676AbYAOSv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 13:51:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751470AbYAOSv2
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 13:51:28 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:34337 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751320AbYAOSv1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2008 13:51:27 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0FIoLYR014051
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 15 Jan 2008 10:50:22 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0FIoJnq030252;
-	Tue, 15 Jan 2008 10:50:20 -0800
-In-Reply-To: <478CFAFF.6010006@nrlssc.navy.mil>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.721 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751523AbYAOTDn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jan 2008 14:03:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750926AbYAOTDn
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 14:03:43 -0500
+Received: from hapkido.dreamhost.com ([66.33.216.122]:43026 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751296AbYAOTDm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 14:03:42 -0500
+Received: from jankymail-a2.g.dreamhost.com (sd-green-bigip-66.dreamhost.com [208.97.132.66])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id E44A417A3EF
+	for <git@vger.kernel.org>; Tue, 15 Jan 2008 11:03:41 -0800 (PST)
+Received: from [192.168.1.46] (pool-71-163-191-46.washdc.east.verizon.net [71.163.191.46])
+	by jankymail-a2.g.dreamhost.com (Postfix) with ESMTP id 0CA43B6A72;
+	Tue, 15 Jan 2008 11:02:09 -0800 (PST)
+In-Reply-To: <7vwsqrvpur.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.21.3 (2.21.3-4.fc8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70541>
 
+Junio, thanks for the response.  I am finally getting around to
+following up.
 
+On Wed, 2008-01-02 at 14:12 -0800, Junio C Hamano wrote:=20
+> > 1. How to properly represent the history of an individual branch an=
+d
+> > update it when the trunk (or the branch on which it depends) change=
+s.
+> > Right now, Wayne updates the branch by rebasing; unfortunately, if =
+the
+> > trunk changes in such a way that one of the intermediate commits no
+> > longer makes sense, it is impossible to update the branch while
+> > preserving a record that the intermediate commit once existed.
+>=20
+> I take this to mean a situation like this:
+>=20
+>  * There is a series of patch X Y Z that implements some nicety
+>    not present in the mainline yet.  This set applies to older
+>    codebase at point A.
+>=20
+>  * Newer codebase B does things differently from codebase A and
+>    patch X is no longer needed --- IOW, what X achieves on top
+>    of A has already been incorporated somewhere between A and B.
+>    Applying Y and Z suffices to obtain that nice feature on top
+>    of B.
 
-On Tue, 15 Jan 2008, Brandon Casey wrote:
->
-> Linus Torvalds wrote:
-> > It would obviously be interesting to see the base repository and the 
-> > commit you are trying to do - is that possibly publicly available?
-> 
-> I wish it was.
+Actually, I was thinking of a change to the mainline that causes a
+conflict with the patch series.  For example, my repository of git was
+at point A when I made the first draft X of my "gitweb: snapshot
+cleanups & support for offering multiple formats" change.  Then I
+updated my repository and got commit B, "gitweb.perl - Optionally send
+archives as .zip files", among others.  When I rebased X on top of the
+new master C, there was a conflict, which I resolved to produce X':
 
-It's ok, I found the bug in your full strace.
+     X                   X'
+    /                   /
+---A---...---B---...---C
 
-The bug really is pretty stupid:
+But now, with refs only to C and X', I have lost the information that
+the previous incarnation of X' was X.
 
- - prepare_index() does a 
+Essentially, my objection to rebasing is that I want to keep a history
+for the patch series containing all of the patched versions that I have
+released (here X and X'), especially when they differ in interesting
+ways (i.e., conflict resolutions), and this history should be a
+first-class object that others can pull from me via the git remote
+system.
 
-	fd = hold_lock_file_for_update(&false_lock, ...
-	...
-	if (write_cache(fd, active_cache, active_nr) || close(fd))
-		die("unable to write temporary index file");
+I only want to use a separate patch management tool if it is integrated
+with git.  I have some familiarity with StGIT, and I assume guilt is
+similar.  StGIT uses rebasing and keeps an additional "patch changelog"
+viewable by "stg log" which might seem to be what I want.  The trouble
+is that this changelog behaves more like a reflog than an orderly
+history, and "stg refresh" does not support storing a user-entered
+message describing *the change to the patch* in the patch changelog.
+One option I am considering is to use StGIT and track some subset of th=
+e
+StGIT area itself=EF=BB=BF (.git/patches) in git.
 
-and the magic here is that *it*closes*the*fd*.
+The other approach is to maintain the feature patches/branches by
+merging instead of rebasing.  This has two significant advantages: patc=
+h
+history is naturally kept and the full power of git's distributed merge
+is available.  However, it also has two significant disadvantages: the
+complaint by Linus about "useless merges" mentioned in the git-rerere
+manpage applies, and it's impossible to fully revert a merge (the
+ancestry remains and will cause trouble if the merge is redone later).
 
-But that's not how "hold_lock_file_for_update()" works. It still has that 
-fd squirrelled away in it's "false_lock.fd", and later on, when we do 
-
-	rollback_lock_file(&false_lock);
-
-(in the COMMIT_PARTIAL case of either "commit_index_files()" or 
-"rollback_index_files()"), that rollback_lock_file() will do:
-
-	void rollback_lock_file(struct lock_file *lk)
-	{
-	        if (lk->filename[0]) {
-	                close(lk->fd);
-	                unlink(lk->filename);
-	        }
-	        lk->filename[0] = 0;
-	}
-
-and now it's trying to close that fd *again* and would normally get a 
-EBADF there. But in the meantime, somebody already re-used it for 
-something else, and what rollback_lock_file() ends up doing is to just 
-close some random file descriptor.
-
-In other words, I'm pretty sure that the bug goes away with this really 
-ugly hack. The real problem is that that "false_lockfile" thing simply 
-mis-uses the whole lockfile interface. So this is not a pretty fix, but it 
-at least should hide the effects of the mis-use of the interface.
-
-In other words: the file descriptor that is returned by the lock_file 
-interface functions *MUST*NOT* be closed. But if you violate that rule, 
-you'd better make sure that you also fix the effects.
-
-		Linus
-
----
- builtin-commit.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 265ba6b..7a52224 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -308,6 +308,9 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
- 
- 	if (write_cache(fd, active_cache, active_nr) || close(fd))
- 		die("unable to write temporary index file");
-+
-+	/* We closed the false lock-file fd, make sure we don't do anything else to it */
-+	false_lock.fd = -1;
- 	return false_lock.filename;
- }
- 
+Matt
