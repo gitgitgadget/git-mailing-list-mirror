@@ -1,95 +1,65 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [FEATURE REQUEST] git-svn format-patch
-Date: Tue, 15 Jan 2008 18:11:37 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0801151728120.13593@iabervon.org>
-References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>  <alpine.DEB.1.00.0801151444180.5289@eeepc-johanness> <c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] safecrlf: Add flag to convert_to_git() to disable safecrlf check
+Date: Tue, 15 Jan 2008 15:23:21 -0800
+Message-ID: <7vodbmd66u.fsf@gitster.siamese.dyndns.org>
+References: <004D2FB5-2CEA-4DB1-AF8D-D5ADEB0F0508@zib.de>
+	<12003528401309-git-send-email-prohaska@zib.de>
+	<7vk5mchsct.fsf@gitster.siamese.dyndns.org>
+	<F825ADAF-036C-46FE-8E3D-540B9AA092A8@zib.de>
+	<FF86F119-5BF4-4ED3-B6AD-BADFDC91301D@zib.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Chris Ortman <chrisortman@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 00:12:16 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed Jan 16 00:24:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEux1-0005wb-P7
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 00:12:12 +0100
+	id 1JEv8S-0001Pa-7n
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 00:24:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755701AbYAOXLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 18:11:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755238AbYAOXLn
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 18:11:43 -0500
-Received: from iabervon.org ([66.92.72.58]:39298 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754648AbYAOXLm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 18:11:42 -0500
-Received: (qmail 817 invoked by uid 1000); 15 Jan 2008 23:11:37 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 15 Jan 2008 23:11:37 -0000
-In-Reply-To: <c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1751074AbYAOXXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 18:23:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752869AbYAOXXc
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 18:23:32 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37746 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751074AbYAOXXb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 18:23:31 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 03B0278B0;
+	Tue, 15 Jan 2008 18:23:29 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 66BF978AD;
+	Tue, 15 Jan 2008 18:23:23 -0500 (EST)
+In-Reply-To: <FF86F119-5BF4-4ED3-B6AD-BADFDC91301D@zib.de> (Steffen Prohaska's
+	message of "Tue, 15 Jan 2008 22:41:53 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70577>
 
-On Tue, 15 Jan 2008, Chris Ortman wrote:
+Steffen Prohaska <prohaska@zib.de> writes:
 
-> The format that TortoiseSVN expects is the same as the format of svn diff.
-> The most apparent differences are
-> 
-> diff --git a/Facilities/EventWiring/Castle.Facilities.EventWiring.Tests/Castle.Facilities.EventWiring.Tests-vs2005.csproj
-> b/Facilities/EventWiring/Castle.Facilities.EventWiring.Tests/Castle.Facilities.EventWiring.Tests-vs2005.csproj
-> 
-> becomes
-> 
-> Index: Facilities/EventWiring/Castle.Facilities.EventWiring.Tests/Castle.Facilities.EventWiring.Tests-vs2005.csproj
+> What is the right way to iterate over the changed files?
 
-When --no-prefix is used, we should probably do:
+I think something like
 
-Index: <filename>
+	read_cache();
+        for (i = 0; i < active_nr; i++) {
+		struct cache_entry *ce = active_cache[i];
+		struct stat st;
+		if (!lstat(ce->name, &st) &&
+			ce_match_stat(ce, &st, 0)) {
+			/* do your thing */
+		}
+	}
 
-instead of
-
-diff --git <filename> <filename>
-
-If nothing else, --no-prefix generates patches that git-apply can't apply 
-but thinks that it should be able to because of the "diff --git" line.
-
-> and
-> 
-> index a0a0d38..9676e16 100644
-> 
-> becomes
-> 
-> ===================================================================
-
-Can't tell if this matters, or if this is meant to underline the Index 
-line, and if we can leave some extra info after it. The source link you 
-sent requires a login; is this line actually important to recognition, or 
-is it just different in the generated patches?
-
-> and
-> 
-> --- a/Facilities/EventWiring/Castle.Facilities.EventWiring.Tests/Castle.Facilities.EventWiring.Tests-vs2005.csproj
-> +++ b/Facilities/EventWiring/Castle.Facilities.EventWiring.Tests/Castle.Facilities.EventWiring.Tests-vs2005.csproj
-> 
-> becomes
-> 
-> --- Facilities/EventWiring/Castle.Facilities.EventWiring.Tests/Castle.Facilities.EventWiring.Tests-vs2005.csproj	(revision 4715)
-> +++ Facilities/EventWiring/Castle.Facilities.EventWiring.Tests/Castle.Facilities.EventWiring.Tests-vs2005.csproj	(working copy)
-
-This (putting a description of the revision at the end) would be nice in 
-general for those of us who can't remember what arguments we gave to git 
-diff and can't get back to them without quitting less and no longer having 
-the diff.
-
-Of course, it would take a lot of magic to get git to describe things with 
-the svn revision info in a non-svn-specific command, but that may not be 
-necessary if tortoise is willing to apply patches where the base revision 
-is unknown. Or git-svn could just make a lot of tags like "revision 4715".
-
-	-Daniel
-*This .sig left intentionally blank*
+would do.
