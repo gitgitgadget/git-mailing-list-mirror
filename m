@@ -1,67 +1,77 @@
-From: "Mark Drago" <markdrago@gmail.com>
-Subject: Re: [PATCH] hg-to-git: improve popen calls
-Date: Tue, 15 Jan 2008 08:03:37 -0500
-Message-ID: <af675f7f0801150503p26fba583tfb5827717b67705f@mail.gmail.com>
-References: <478C0837.7090804@gmail.com>
-	 <7vr6gjfl4z.fsf@gitster.siamese.dyndns.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: Git Gui: initial french translation: fr.po
+Date: Tue, 15 Jan 2008 14:09:00 +0100
+Message-ID: <20080115130900.GO29972@genesis.frugalware.org>
+References: <20080115062426.8fd03852.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, brian.ewins@gmail.com, stelian@popies.net
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 14:04:12 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="NeBFRwWgvjTuyTVb"
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue Jan 15 14:09:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JElSZ-0003UI-6c
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 14:04:07 +0100
+	id 1JElY2-0005Vb-Vp
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 14:09:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750858AbYAONDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 08:03:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750888AbYAONDj
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 08:03:39 -0500
-Received: from hs-out-0708.google.com ([64.233.178.250]:54752 "EHLO
-	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750851AbYAONDi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 08:03:38 -0500
-Received: by hs-out-2122.google.com with SMTP id 54so2290943hsz.5
-        for <git@vger.kernel.org>; Tue, 15 Jan 2008 05:03:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ekiWXeb1g/WCa9twvDKeXJIaX8S+7Ee+kxYbQsnbh14=;
-        b=fAOTXI8Juh1uyKN5T52i75xhZ3p/hc2T3ZmxBpSEfnGxTBZZjvSXH+0zBSL9VK4J5wNmxtdoVpqal8V9OhcRGhD+X35RF+PWm2Rwt61RjrSt5ec++eEtH6sZX8/U0hWaiDWym9gwP6W6Zo/JvJ9H/It8cWDRD4VzFyZwWvrJPVU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bdVFILZfj1ePR5g3/8ZhTHTiGtmYy7K7b75aF6oHL5CKX+AK/fq5UzmXzJFNY825KS08iBC39NxVCfjp+2Ho9xIn0gL2M0sRS1AjUczHJkeUdt81UQEPUxm3Gf0+aJh7LIF/zIVhDOMv4Is9fTyjvbqB1T28XmVjDUfN8kRonTc=
-Received: by 10.142.158.17 with SMTP id g17mr3029257wfe.234.1200402217060;
-        Tue, 15 Jan 2008 05:03:37 -0800 (PST)
-Received: by 10.142.139.18 with HTTP; Tue, 15 Jan 2008 05:03:37 -0800 (PST)
-In-Reply-To: <7vr6gjfl4z.fsf@gitster.siamese.dyndns.org>
+	id S1751008AbYAONJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 08:09:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751340AbYAONJR
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 08:09:17 -0500
+Received: from mx3.mail.elte.hu ([157.181.1.138]:60137 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750816AbYAONJQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 08:09:16 -0500
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1JElXO-00015P-Fa
+	from <vmiklos@frugalware.org>; Tue, 15 Jan 2008 14:09:13 +0100
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id CC299176C06D; Tue, 15 Jan 2008 14:09:00 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <20080115062426.8fd03852.chriscool@tuxfamily.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70521>
 
-On Jan 15, 2008 5:17 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Mark Drago <markdrago@gmail.com> writes:
->
-> > +    log_data = os.popen('hg log -r %d --template "{tags}\n{date|date}\n{author}\n"' % cset).readlines()
->
-> I've already seen Stelian's Ack, but just for my sanity, let me
-> make sure one thing.  The above {date|date} is correct, not a
-> typo?
 
-Yeah.  Everything after the pipe character is a filter and there is a
-template keyword and a filter that are both called 'date'.
+--NeBFRwWgvjTuyTVb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-mdrago@laptop:~/Code/trunk$ hg log -r 4 --template '{date}\n'
-1197080765.018000
-mdrago@laptop:~/Code/trunk$ hg log -r 4 --template '{date|date}\n'
-Fri Dec 07 21:26:05 2007 -0500
+On Tue, Jan 15, 2008 at 06:24:26AM +0100, Christian Couder <chriscool@tuxfamily.org> wrote:
+> I just attached the file instead of sending the patch because I fear
+> some encoding breakages.
 
-Mark.
+if you have such a problem, you can push to the mob branch of
+git-gui-i18n.git.
+
+- VMiklos
+
+--NeBFRwWgvjTuyTVb
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFHjLBse81tAgORUJYRAsNkAJ9pZ1M68adWP5Yklsb8qxUZ1bh0kACfUAUE
+/USg0kBklEOmmgQniPZF0/A=
+=tD6l
+-----END PGP SIGNATURE-----
+
+--NeBFRwWgvjTuyTVb--
