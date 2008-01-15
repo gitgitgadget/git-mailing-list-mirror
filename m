@@ -1,145 +1,51 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH - v3] gitk: fix "Key bindings" message
-Date: Tue, 15 Jan 2008 23:31:49 +0100
-Message-ID: <200801152331.49990.barra_cuda@katamail.com>
-References: <200801081437.46398.barra_cuda@katamail.com> <200801091916.52680.barra_cuda@katamail.com> <18316.40891.875291.618507@cargo.ozlabs.ibm.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Git Cygwin - unable to create any repository - help!
+Date: Tue, 15 Jan 2008 23:51:05 +0100
+Message-ID: <20080115225105.GA32287@steel.home>
+References: <20080114202932.GA25130@steel.home> <a5eb9c330801141421g13c627e5x77afb357e2a78463@mail.gmail.com> <20080115054807.GA3694@steel.home> <a5eb9c330801150721t5da85295heacae2c5a5aad47e@mail.gmail.com> <a5eb9c330801140921m63b1b8a9pe67bf6f0d2e58dba@mail.gmail.com> <20080115200437.GB3213@steel.home> <a5eb9c330801151212y30cf4f63r9c294ba33da2b8f@mail.gmail.com> <20080115212022.GC3213@steel.home> <a5eb9c330801151357w62674db6td23dd2c501e62728@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Jan 15 23:24:52 2008
+To: Paul Umbers <paul.umbers@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 23:52:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEuD8-0001wj-JQ
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 23:24:47 +0100
+	id 1JEudP-0005OP-4W
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 23:51:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757419AbYAOWYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 17:24:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757208AbYAOWYQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 17:24:16 -0500
-Received: from slim-3c.inet.it ([213.92.5.125]:35570 "EHLO slim-3c.inet.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755906AbYAOWYO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 17:24:14 -0500
-Received: from host27-56-static.104-80-b.business.telecomitalia.it ([::ffff:80.104.56.27]) by slim-3c.inet.it via I-SMTP-5.4.4-547
-	id ::ffff:80.104.56.27+T0ldpl0uTUuw; Tue, 15 Jan 2008 23:24:07 +0100
-User-Agent: KMail/1.9.7
-In-Reply-To: <18316.40891.875291.618507@cargo.ozlabs.ibm.com>
+	id S1754546AbYAOWvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 17:51:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754293AbYAOWvJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 17:51:09 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:10531 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752256AbYAOWvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 17:51:08 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtolErE4=
+Received: from tigra.home (Faa76.f.strato-dslnet.de [195.4.170.118])
+	by post.webmailer.de (mrclete mo34) (RZmta 15.4)
+	with ESMTP id j01cc0k0FIMelT ; Tue, 15 Jan 2008 23:51:06 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 5903D277AE;
+	Tue, 15 Jan 2008 23:51:06 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id F1FA156D22; Tue, 15 Jan 2008 23:51:05 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <a5eb9c330801151357w62674db6td23dd2c501e62728@mail.gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70569>
 
-The "Key bindings" message under the "Help" menu was too long
-and could not be parsed by the translation engine.
+Paul Umbers, Tue, Jan 15, 2008 22:57:35 +0100:
+> Try this ... test.tar (from within cygwin).
+> 
 
-Fix both issues by translating one line at a time.
-
-Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
----
-On Tuesday 15 January 2008, Paul Mackerras wrote:
-> I am wondering whether the help text
-> needs to be busted up into individual lines for processing by [mc].
-
-Here it is. With this patch the strings do show up in po/gitk.pot.
-
- gitk |   78 +++++++++++++++++++++++++++++++++---------------------------------
- 1 files changed, 39 insertions(+), 39 deletions(-)
-
-diff --git a/gitk b/gitk
-index 5560e4d..7555968 100755
---- a/gitk
-+++ b/gitk
-@@ -1307,45 +1307,45 @@ proc keys {} {
-     }
-     toplevel $w
-     wm title $w [mc "Gitk key bindings"]
--    message $w.m -text [mc "
--Gitk key bindings:
--
--<$M1T-Q>		Quit
--<Home>		Move to first commit
--<End>		Move to last commit
--<Up>, p, i	Move up one commit
--<Down>, n, k	Move down one commit
--<Left>, z, j	Go back in history list
--<Right>, x, l	Go forward in history list
--<PageUp>	Move up one page in commit list
--<PageDown>	Move down one page in commit list
--<$M1T-Home>	Scroll to top of commit list
--<$M1T-End>	Scroll to bottom of commit list
--<$M1T-Up>	Scroll commit list up one line
--<$M1T-Down>	Scroll commit list down one line
--<$M1T-PageUp>	Scroll commit list up one page
--<$M1T-PageDown>	Scroll commit list down one page
--<Shift-Up>	Find backwards (upwards, later commits)
--<Shift-Down>	Find forwards (downwards, earlier commits)
--<Delete>, b	Scroll diff view up one page
--<Backspace>	Scroll diff view up one page
--<Space>		Scroll diff view down one page
--u		Scroll diff view up 18 lines
--d		Scroll diff view down 18 lines
--<$M1T-F>		Find
--<$M1T-G>		Move to next find hit
--<Return>	Move to next find hit
--/		Move to next find hit, or redo find
--?		Move to previous find hit
--f		Scroll diff view to next file
--<$M1T-S>		Search for next hit in diff view
--<$M1T-R>		Search for previous hit in diff view
--<$M1T-KP+>	Increase font size
--<$M1T-plus>	Increase font size
--<$M1T-KP->	Decrease font size
--<$M1T-minus>	Decrease font size
--<F5>		Update
--"] \
-+    message $w.m -text "
-+[mc "Gitk key bindings:"]
-+
-+[mc "<%s-Q>		Quit" $M1T]
-+[mc "<Home>		Move to first commit"]
-+[mc "<End>		Move to last commit"]
-+[mc "<Up>, p, i	Move up one commit"]
-+[mc "<Down>, n, k	Move down one commit"]
-+[mc "<Left>, z, j	Go back in history list"]
-+[mc "<Right>, x, l	Go forward in history list"]
-+[mc "<PageUp>	Move up one page in commit list"]
-+[mc "<PageDown>	Move down one page in commit list"]
-+[mc "<%s-Home>	Scroll to top of commit list" $M1T]
-+[mc "<%s-End>	Scroll to bottom of commit list" $M1T]
-+[mc "<%s-Up>	Scroll commit list up one line" $M1T]
-+[mc "<%s-Down>	Scroll commit list down one line" $M1T]
-+[mc "<%s-PageUp>	Scroll commit list up one page" $M1T]
-+[mc "<%s-PageDown>	Scroll commit list down one page" $M1T]
-+[mc "<Shift-Up>	Find backwards (upwards, later commits)"]
-+[mc "<Shift-Down>	Find forwards (downwards, earlier commits)"]
-+[mc "<Delete>, b	Scroll diff view up one page"]
-+[mc "<Backspace>	Scroll diff view up one page"]
-+[mc "<Space>		Scroll diff view down one page"]
-+[mc "u		Scroll diff view up 18 lines"]
-+[mc "d		Scroll diff view down 18 lines"]
-+[mc "<%s-F>		Find" $M1T]
-+[mc "<%s-G>		Move to next find hit" $M1T]
-+[mc "<Return>	Move to next find hit"]
-+[mc "/		Move to next find hit, or redo find"]
-+[mc "?		Move to previous find hit"]
-+[mc "f		Scroll diff view to next file"]
-+[mc "<%s-S>		Search for next hit in diff view" $M1T]
-+[mc "<%s-R>		Search for previous hit in diff view" $M1T]
-+[mc "<%s-KP+>	Increase font size" $M1T]
-+[mc "<%s-plus>	Increase font size" $M1T]
-+[mc "<%s-KP->	Decrease font size" $M1T]
-+[mc "<%s-minus>	Decrease font size" $M1T]
-+[mc "<F5>		Update"]
-+" \
- 	    -justify left -bg white -border 2 -relief groove
-     pack $w.m -side top -fill both -padx 2 -pady 2
-     button $w.ok -text [mc "Close"] -command "destroy $w" -default active
--- 
-1.5.3.5
+Ok, nothing suspicios here.
