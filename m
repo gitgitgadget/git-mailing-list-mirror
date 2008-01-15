@@ -1,60 +1,58 @@
-From: Pascal Obry <pascal@obry.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [FEATURE REQUEST] git-svn format-patch
-Date: Tue, 15 Jan 2008 18:10:38 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <478CE90E.1010807@obry.net>
-References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>	 <alpine.DEB.1.00.0801151444180.5289@eeepc-johanness> <c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
+Date: Tue, 15 Jan 2008 17:11:11 +0000 (GMT)
+Message-ID: <alpine.DEB.1.00.0801151709330.5289@eeepc-johanness>
+References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>  <alpine.DEB.1.00.0801151444180.5289@eeepc-johanness>  <c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>  <alpine.DEB.1.00.0801151612470.5289@eeepc-johanness> 
+ <c0f2d4110801150823u7899e6dds1192b5f3bb3f7133@mail.gmail.com>  <alpine.DEB.1.00.0801151650240.5289@eeepc-johanness> <c0f2d4110801150907y59593407u820c7b3db556ed31@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Chris Ortman <chrisortman@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 18:11:18 2008
+X-From: git-owner@vger.kernel.org Tue Jan 15 18:12:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEpJl-0005Z5-2D
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 18:11:17 +0100
+	id 1JEpKo-00061L-9y
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 18:12:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756467AbYAORKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 12:10:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756469AbYAORKp
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 12:10:45 -0500
-Received: from smtp2e.orange.fr ([80.12.242.112]:47431 "EHLO smtp2e.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756464AbYAORKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 12:10:45 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2e06.orange.fr (SMTP Server) with ESMTP id 161877000042
-	for <git@vger.kernel.org>; Tue, 15 Jan 2008 18:10:44 +0100 (CET)
-Received: from [192.168.0.100] (AVelizy-151-1-66-40.w81-249.abo.wanadoo.fr [81.249.60.40])
-	by mwinf2e06.orange.fr (SMTP Server) with ESMTP id 77DEC70000BD;
-	Tue, 15 Jan 2008 18:10:42 +0100 (CET)
-X-ME-UUID: 20080115171042491.77DEC70000BD@mwinf2e06.orange.fr
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
-X-Enigmail-Version: 0.95.6
+	id S1751846AbYAORLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 12:11:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbYAORLP
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 12:11:15 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51834 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751846AbYAORLO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 12:11:14 -0500
+Received: (qmail invoked by alias); 15 Jan 2008 17:11:12 -0000
+Received: from unknown (EHLO eeepc-johanness.st-andrews.ac.uk) [138.251.11.75]
+  by mail.gmx.net (mp053) with SMTP; 15 Jan 2008 18:11:12 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19UOcUSz0ZUla1N8ypzWOtoQ3rzoTvoMngdu2Ae0Y
+	MdgI8r6cV8KseY
+X-X-Sender: user@eeepc-johanness
+In-Reply-To: <c0f2d4110801150907y59593407u820c7b3db556ed31@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70536>
 
-Chris,
+Him
 
-You want to use format-patch's --no-prefix option.
+On Tue, 15 Jan 2008, Chris Ortman wrote:
 
-Pascal.
+> Should this be a new command in git-svn.perl? or something in contrib?
 
--- 
+I'd just start with an alias at first, and if it develops into something 
+you're happy with, send it here and let others comment on it -- also where 
+it should go.
 
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+Possibly the best place really would be git-svn, but it might also be less 
+interesting for other people, given that git-svn does not work in msysGit 
+yet (and your use case was for TortoiseSVN, which is Windows-only).
+
+Ciao,
+Dscho
