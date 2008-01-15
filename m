@@ -1,59 +1,57 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git-commit fatal: Out of memory? mmap failed: Bad file
- descriptor
-Date: Mon, 14 Jan 2008 21:42:11 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801142140560.2806@woody.linux-foundation.org>
-References: <4787E981.7010200@nrlssc.navy.mil> <478C1D7A.6090103@nrlssc.navy.mil>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Git Cygwin - unable to create any repository - help!
+Date: Tue, 15 Jan 2008 06:48:07 +0100
+Message-ID: <20080115054807.GA3694@steel.home>
+References: <a5eb9c330801140921m63b1b8a9pe67bf6f0d2e58dba@mail.gmail.com> <20080114202932.GA25130@steel.home> <a5eb9c330801141421g13c627e5x77afb357e2a78463@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>, drafnel@gmail.com
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Tue Jan 15 06:42:46 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Umbers <paul.umbers@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 06:48:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEeZR-0006Al-Hy
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 06:42:45 +0100
+	id 1JEefA-00071n-IF
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 06:48:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751413AbYAOFmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 00:42:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbYAOFmR
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 00:42:17 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:50509 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751320AbYAOFmR (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2008 00:42:17 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0F5gCnd010293
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 14 Jan 2008 21:42:13 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0F5gB9Z001412;
-	Mon, 14 Jan 2008 21:42:12 -0800
-In-Reply-To: <478C1D7A.6090103@nrlssc.navy.mil>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.72 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751471AbYAOFsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 00:48:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbYAOFsN
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 00:48:13 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:9815 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751307AbYAOFsM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 00:48:12 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3Cculz0wOV/Ag==
+Received: from tigra.home (Faf3b.f.strato-dslnet.de [195.4.175.59])
+	by post.webmailer.de (mrclete mo38) (RZmta 15.4)
+	with ESMTP id j01cd6k0F0chkQ ; Tue, 15 Jan 2008 06:48:09 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 6A9B5277AE;
+	Tue, 15 Jan 2008 06:48:08 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id C6AAE56D22; Tue, 15 Jan 2008 06:48:07 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <a5eb9c330801141421g13c627e5x77afb357e2a78463@mail.gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70503>
 
+Paul Umbers, Mon, Jan 14, 2008 23:21:28 +0100:
+> The "mount" command tells me everything I have is mounted in binmode.
 
+Now that's unusual, unless you had "Text Mode" selected in the installer
 
-On Mon, 14 Jan 2008, Brandon Casey wrote:
-> 
-> To reiterate, I only have problems with the builtin-commit,
-> i.e. 1.5.4.*, the 1.5.3.* series works correctly. Of course
-> if this is a memory corruption issue, then it could just be
-> that the pattern of memory accesses in 1.5.3 does not tweak
-> the problem.
+> Are you saying I need to make sure the repository directory is mounted
+> in text-mode (for Windows compatibility)? I just reinstalled cygwin,
+> selecting text-mode as the default.
 
-Can you do an strace of the failure case and put it up on some public 
-place (it's likely going to be too big to send as email)?
-
-			Linus
+No, text-mode is definitely wrong for almost anything. It just
+corrupts data. Try activating binary mode.
