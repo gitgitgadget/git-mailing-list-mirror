@@ -1,88 +1,139 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH] safecrlf: Add flag to convert_to_git() to disable safecrlf check
-Date: Tue, 15 Jan 2008 13:26:26 +0300
-Message-ID: <20080115102626.GE2963@dpotapov.dyndns.org>
-References: <004D2FB5-2CEA-4DB1-AF8D-D5ADEB0F0508@zib.de> <12003528401309-git-send-email-prohaska@zib.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/3] git-submodule: rename shell functions for consistency
+Date: Tue, 15 Jan 2008 03:18:39 -0800
+Message-ID: <7vy7are3qo.fsf_-_@gitster.siamese.dyndns.org>
+References: <1200280956-19920-1-git-send-email-imyousuf@gmail.com>
+	<7vzlv7flb5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, torvalds@linux-foundation.org,
-	git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Tue Jan 15 11:28:05 2008
+Cc: git@vger.kernel.org,
+	Imran M Yousuf <imyousuf@smartitengineering.com>
+To: imyousuf@gmail.com
+X-From: git-owner@vger.kernel.org Tue Jan 15 12:19:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEj1V-0005yT-LY
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 11:28:02 +0100
+	id 1JEjpD-0005Tc-7L
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 12:19:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751198AbYAOK1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 05:27:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750768AbYAOK1d
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 05:27:33 -0500
-Received: from smtp04.mtu.ru ([62.5.255.51]:54055 "EHLO smtp04.mtu.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750762AbYAOK1c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 05:27:32 -0500
-Received: from smtp04.mtu.ru (localhost [127.0.0.1])
-	by smtp04.mtu.ru (Postfix) with ESMTP id 97A26823D0E;
-	Tue, 15 Jan 2008 13:27:30 +0300 (MSK)
-Received: from dpotapov.dyndns.org (ppp85-141-191-67.pppoe.mtu-net.ru [85.141.191.67])
-	by smtp04.mtu.ru (Postfix) with ESMTP id 31B38825EE3;
-	Tue, 15 Jan 2008 13:26:27 +0300 (MSK)
-Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
-	(envelope-from <dpotapov@gmail.com>)
-	id 1JEizy-00024M-NX; Tue, 15 Jan 2008 13:26:26 +0300
-Content-Disposition: inline
-In-Reply-To: <12003528401309-git-send-email-prohaska@zib.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-DCC-STREAM-Metrics: smtp04.mtu.ru 10001; Body=0 Fuz1=0 Fuz2=0
+	id S1751254AbYAOLSx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 06:18:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751199AbYAOLSx
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 06:18:53 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58586 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751080AbYAOLSw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 06:18:52 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CB4121801;
+	Tue, 15 Jan 2008 06:18:50 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id EDC2F1800;
+	Tue, 15 Jan 2008 06:18:45 -0500 (EST)
+In-Reply-To: <7vzlv7flb5.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 15 Jan 2008 02:13:50 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70512>
 
-On Tue, Jan 15, 2008 at 12:20:40AM +0100, Steffen Prohaska wrote:
-> 
-> I looked briefly at the various places where convert_to_git() is
-> called.  I think that only the one code path through index_fd()
-> actually writes data to the repsitory.  Maybe someone else with
-> a better understanding of git's internals should confirm this.
+This renames the shell functions used in git-submodule that
+implement top-level subcommands.  The rule is that the
+subcommand $foo is implemented by cmd_$foo function.
 
-Your patch is certainly better than my quick hack for git-add,
-and perhaps you are right that the check should be done only
-when data are written, but it also means that there is no longer
-any warning when you are running git diff with the work tree,
-which would be useful, because it is what most users do before
-adding anything.
+A noteworthy change is that modules_list() is now known as
+cmd_status().  There is no "submodule list" command.
 
-However, my real concern is that it seems we have two different
-heuristics for binary -- one that is used inside of convert.c
-and the other one is buffer_is_binary() in xdiff-interface.c.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-So, I am running 'git diff' for some test file, and it says:
+ * We could probably do something like this.  This first part is
+   about making the command dispatcher maintainable.
 
-diff --git a/foo b/foo
-index e965047..c102bdc 100644
-Binary files a/foo and b/foo differ
+   Note that I haven't seriously tested this series.  This and
+   the next one are primarily to illustrate what I think the fix
+   you are trying should look like.
 
-okay, now I want to add this *binary* file, so I run 'git add':
+ git-submodule.sh |   20 ++++++++++----------
+ 1 files changed, 10 insertions(+), 10 deletions(-)
 
-warning: Stripped CRLF from foo.
-
-I imagine a user saying: "What the hell! Why did this stupid Git
-strip CRLF from my _binary_ file?"
-
-And the current version of Git, which does not print CRLF warning,
-seems to be dangerous, because when 'git diff' told me that it is
-a _binary_ file, I expect that Git will put it as *binary*. So,
-from the user's point of view, it looks like a bug.
-
-So, I suppose that at least we should make is_binary heuristic in
-convert.c more strict than those that is used by diff. Namely, if
-there is at least one NUL byte in the buffer, it should be treated
-as binary.
-
-
-Dmitry
+diff --git a/git-submodule.sh b/git-submodule.sh
+index ad9fe62..3c104e3 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -86,9 +86,9 @@ module_name()
+ #
+ # Clone a submodule
+ #
+-# Prior to calling, modules_update checks that a possibly existing
++# Prior to calling, cmd_update checks that a possibly existing
+ # path is not a git repository.
+-# Likewise, module_add checks that path does not exist at all,
++# Likewise, cmd_add checks that path does not exist at all,
+ # since it is the location of a new submodule.
+ #
+ module_clone()
+@@ -121,7 +121,7 @@ module_clone()
+ #
+ # optional branch is stored in global branch variable
+ #
+-module_add()
++cmd_add()
+ {
+ 	repo=$1
+ 	path=$2
+@@ -174,7 +174,7 @@ module_add()
+ #
+ # $@ = requested paths (default to all)
+ #
+-modules_init()
++cmd_init()
+ {
+ 	git ls-files --stage -- "$@" | grep -e '^160000 ' |
+ 	while read mode sha1 stage path
+@@ -207,7 +207,7 @@ modules_init()
+ #
+ # $@ = requested paths (default to all)
+ #
+-modules_update()
++cmd_update()
+ {
+ 	git ls-files --stage -- "$@" | grep -e '^160000 ' |
+ 	while read mode sha1 stage path
+@@ -266,7 +266,7 @@ set_name_rev () {
+ #
+ # $@ = requested paths (default to all)
+ #
+-modules_list()
++cmd_status()
+ {
+ 	git ls-files --stage -- "$@" | grep -e '^160000 ' |
+ 	while read mode sha1 stage path
+@@ -347,16 +347,16 @@ esac
+ 
+ case "$add,$init,$update,$status,$cached" in
+ 1,,,,)
+-	module_add "$@"
++	cmd_add "$@"
+ 	;;
+ ,1,,,)
+-	modules_init "$@"
++	cmd_init "$@"
+ 	;;
+ ,,1,,)
+-	modules_update "$@"
++	cmd_update "$@"
+ 	;;
+ ,,,*,*)
+-	modules_list "$@"
++	cmd_status "$@"
+ 	;;
+ *)
+ 	usage
+-- 
+1.5.4.rc3.11.g4e67
