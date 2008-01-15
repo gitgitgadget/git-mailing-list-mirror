@@ -1,81 +1,85 @@
-From: Mark Williamson <mark.williamson@cl.cam.ac.uk>
-Subject: [ANNOUNCE] Push Me Pull You 0.2 - Tech Preview Release
-Date: Tue, 15 Jan 2008 21:31:33 +0000
-Message-ID: <200801152131.33628.mark.williamson@cl.cam.ac.uk>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH] safecrlf: Add flag to convert_to_git() to disable safecrlf check
+Date: Tue, 15 Jan 2008 22:41:53 +0100
+Message-ID: <FF86F119-5BF4-4ED3-B6AD-BADFDC91301D@zib.de>
+References: <004D2FB5-2CEA-4DB1-AF8D-D5ADEB0F0508@zib.de> <12003528401309-git-send-email-prohaska@zib.de> <7vk5mchsct.fsf@gitster.siamese.dyndns.org> <F825ADAF-036C-46FE-8E3D-540B9AA092A8@zib.de>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 15 22:32:10 2008
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 22:42:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEtOD-0007Qh-Jm
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 22:32:10 +0100
+	id 1JEtXe-0002mS-C2
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 22:41:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755721AbYAOVbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 16:31:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752285AbYAOVbh
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 16:31:37 -0500
-Received: from ppsw-8.csi.cam.ac.uk ([131.111.8.138]:49006 "EHLO
-	ppsw-8.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750895AbYAOVbg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 16:31:36 -0500
-X-Cam-SpamDetails: Not scanned
-X-Cam-AntiVirus: No virus found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from maw48.kings.cam.ac.uk ([128.232.236.103]:38493)
-	by ppsw-8.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.158]:25)
-	with esmtpsa (PLAIN:maw48) (TLSv1:DHE-RSA-AES256-SHA:256)
-	id 1JEtNe-0007Fr-R1 (Exim 4.67) for git@vger.kernel.org
-	(return-path <maw48@hermes.cam.ac.uk>); Tue, 15 Jan 2008 21:31:34 +0000
-User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
-Content-Disposition: inline
+	id S1754215AbYAOVlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 16:41:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754209AbYAOVlT
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 16:41:19 -0500
+Received: from mailer.zib.de ([130.73.108.11]:50085 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752668AbYAOVlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 16:41:19 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0FLesIK019959;
+	Tue, 15 Jan 2008 22:40:54 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db83608.pool.einsundeins.de [77.184.54.8])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0FLen52005754
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Tue, 15 Jan 2008 22:40:49 +0100 (MET)
+In-Reply-To: <F825ADAF-036C-46FE-8E3D-540B9AA092A8@zib.de>
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70565>
 
-Hi all,
 
-I'd like to announce a new release of the Push Me Pull You (pmpu) tool; a GUI 
-for distributed revision control systems.
+On Jan 15, 2008, at 9:52 PM, Steffen Prohaska wrote:
 
-PMPU supports plain hg, hg forest repositories, bzr, git and darcs as 
-underlying repositories.  It aims to provide a powerful graphical interface 
-to the underlying functionality, based around the workflow of incoming and 
-outgoing changesets.
+>> Of course, "git add" on the path will warn or fail with your
+>> patch, but we may somehow want to be warned about the breakage
+>> before "git add" on that path triggers it.  Perhaps we can have
+>> a separate "check-work-tree" command that iterates over locally
+>> modified work tree files and runs convert_to_git() with checking
+>> enabled.
+>
+> We could certainly have such a command, yet the question remains
+> when to call it.  Do you have in mind calling it when we enter
+> the work tree, such that all files in the work tree will always
+> be verified?  Running the check once during start up should be
+> sufficient and we could switch it off for the remainder of the
+> execution.
+>
+> We would certainly print all paths with an irreversible conversion
+> and only die() afterwards if requested by core.safecrlf=true.
+> All information would be printed at once in an ordered way.  This
+> could be more user friendly than the current approach.
+>
+> I'll work on this.
 
-PMPU is implemented in Python and PyQt4 and is tested on Linux, though it 
-should work on other Unix platforms.  I eventually hope to support Windows 
-hosts also.  For hg, bzr and git, plugins are supplied to improve integration 
-with the command line interface of the underlying system.
 
-My DVCS of choice is Mercurial but I aim to properly support the other 
-backends and have this be an SCM-agnostic system.  I would appreciate expert 
-feedback about my implementation of all the backends including Mercurial, 
-including advice if I'm doing things wrong and suggestions of further 
-enhancements.
+What is the right way to iterate over the changed files?
+Should I copy and adapt the following from wt-status.c?
 
-Please treat this as experimental software, released as a technical preview.  
-The error handling is not very good and my understanding of the underlying 
-SCMs is still somewhat incomplete.  I regard it as fairly safe and solid and 
-it hasn't eaten my data during all my use and testing but please be cautious 
-nonetheless.  I don't want to make it sound like it's going to destroy the 
-world ;-) but I'm very aware that most users of revision control have 
-critical data to manage.
+static void wt_status_print_changed(struct wt_status *s)
+{
+     struct rev_info rev;
+     init_revisions(&rev, "");
+     setup_revisions(0, NULL, &rev, NULL);
+     rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+     rev.diffopt.format_callback = wt_status_print_changed_cb;
+     rev.diffopt.format_callback_data = s;
+     wt_read_cache(s);
+     run_diff_files(&rev, 0);
+}
 
-The website is here: http://www.cl.cam.ac.uk/~maw48/pmpu/ and contains links 
-to a downloadable tarball and the Mercurial repository.
-
-Please feel free to send me e-mail with feedback or questions, no matter how 
-insignificant.  There's no user documentation, so don't hesitate to ask me 
-questions about how things work.  Private e-mail is fine if you prefer.
-
-Cheers,
-Mark
--- 
-Push Me Pull You - Distributed SCM tool (http://www.cl.cam.ac.uk/pmpu/)
+	Steffen
