@@ -1,242 +1,55 @@
-From: "Paul Umbers" <paul.umbers@gmail.com>
-Subject: Re: Git Cygwin - unable to create any repository - help!
-Date: Tue, 15 Jan 2008 13:12:45 -0700
-Message-ID: <a5eb9c330801151212y30cf4f63r9c294ba33da2b8f@mail.gmail.com>
-References: <20080114202932.GA25130@steel.home>
-	 <a5eb9c330801141421g13c627e5x77afb357e2a78463@mail.gmail.com>
-	 <20080115054807.GA3694@steel.home>
-	 <a5eb9c330801150721t5da85295heacae2c5a5aad47e@mail.gmail.com>
-	 <a5eb9c330801140921m63b1b8a9pe67bf6f0d2e58dba@mail.gmail.com>
-	 <20080115200437.GB3213@steel.home>
+From: Jean-Luc Herren <jlh@gmx.ch>
+Subject: Re: [FEATURE REQUEST] git-svn format-patch
+Date: Tue, 15 Jan 2008 21:14:58 +0100
+Message-ID: <478D1442.2090301@gmx.ch>
+References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_22891_32666088.1200427966055"
-Cc: git@vger.kernel.org
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 21:13:39 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 15 21:16:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEsAD-0003HA-Pl
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 21:13:38 +0100
+	id 1JEsCZ-0004Jy-Sn
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 21:16:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751061AbYAOUMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 15:12:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751326AbYAOUMr
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 15:12:47 -0500
-Received: from wa-out-1112.google.com ([209.85.146.180]:32037 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750841AbYAOUMq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 15:12:46 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so4522764wah.23
-        for <git@vger.kernel.org>; Tue, 15 Jan 2008 12:12:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        bh=BSOC7bFfe8AhX0B2lRB0slZAXBa6WT6+xyLRfk9lbMs=;
-        b=VNh5owXhK/lyVqHMGIi9+jVno06woCvsxp8ZHpaE0nFWj+UzL0ngbcv4uWXA6/GijQQQ0+RISN39Nn9ycQtrP0p6Ddz3zJP9KFu0KlpkOIvrMrI3Fhu0Ip0QtAfg22kgLzOu6qVnKWak9OhfhQD9QQPGGbE7rWDKeLj5xsa/A/w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=VPKPaMc7rn2m22/Z3+/n0lhry12uAvQppRa8roUmSeOhSkl9dL9HBX3O5moj+sr8sFc30j4bf5YeN7qIg1Z1XsE02zPBfGtjujTuUK/CqfS3m0FSiSiffwPS9EILez1VQamxJ3A+BiQMhjruHEXa8JplgdCkFPUVfdFrLxCGrQA=
-Received: by 10.114.195.19 with SMTP id s19mr5417339waf.58.1200427966063;
-        Tue, 15 Jan 2008 12:12:46 -0800 (PST)
-Received: by 10.114.137.1 with HTTP; Tue, 15 Jan 2008 12:12:45 -0800 (PST)
-In-Reply-To: <20080115200437.GB3213@steel.home>
+	id S1752259AbYAOUPE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 15:15:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752805AbYAOUPE
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 15:15:04 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56680 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752259AbYAOUPB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 15:15:01 -0500
+Received: (qmail invoked by alias); 15 Jan 2008 20:14:59 -0000
+Received: from 70-185.1-85.cust.bluewin.ch (EHLO [192.168.123.202]) [85.1.185.70]
+  by mail.gmx.net (mp048) with SMTP; 15 Jan 2008 21:14:59 +0100
+X-Authenticated: #14737133
+X-Provags-ID: V01U2FsdGVkX19bPQ0hPq9bPUWfwgCh4tNPEZXIF845N6Dzll3mo5
+	hrirHsipLpvWDo
+User-Agent: Thunderbird 2.0.0.9 (X11/20071118)
+In-Reply-To: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>
+X-Enigmail-Version: 0.95.5
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70549>
 
-------=_Part_22891_32666088.1200427966055
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Chris Ortman wrote:
+> Something that would really benefit the folks who use git to manage a
+> subversion repository (such as myself) would be a special format-patch
+> command for git-svn that creates a tortoise svn compatible diff file.
 
-git ls (see below) returns nothing - it looks like the object doesn't
-exist at all. I've attached a .zip of the entire test directory (one
-text file plus .git). This is after "git init" followed by "git add ."
+Isn't it that TortoiseSVN is simply being too strict about the
+diff format it accepts?  Since even GNU patch reads and applies
+them fine (I didn't test it thoroughly though), I would assume git
+diffs follow some sort of standard (couldn't find it though) for
+the unified diff format, or at least was designed to not break
+patch.  So in the long term, I think this is rather or at least
+also something to be addressed in TortoiseSVN.
 
-What do you think?
-
->
-> Does the object exists at all? Try
->
->     ls -l .git/d9/b06fceac52f6c24357e6a7f85c601088381152
->
-> Is it possible to get a hold of this repo (just the .git directly
-> after "git add .")? It would be interesting to see the nature of the
-> corruption.
->
->
-
-
-
--- 
-Computer Science is no more about computers than astronomy is about telescopes.
---- Edsger W. Dijkstra
-
-Paul Umbers MSc MBCS MIAP
-paul.umbers@gmail.com
-
-------=_Part_22891_32666088.1200427966055
-Content-Type: application/zip; name=test.zip
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fbgvqesq0
-Content-Disposition: attachment; filename=test.zip
-
-UEsDBAoAAAAAACVpLzgAAAAAAAAAAAAAAAAFAAAAdGVzdC9QSwMECgAAAAAAJ2kvOAAAAAAAAAAA
-AAAAAAoAAAB0ZXN0Ly5naXQvUEsDBAoAAAAAACVpLzgAAAAAAAAAAAAAAAATAAAAdGVzdC8uZ2l0
-L2JyYW5jaGVzL1BLAwQUAAAACAAlaS84NzUAwU8AAABcAAAAEAAAAHRlc3QvLmdpdC9jb25maWc1
-ysENgCAMBdAzTOEILuAkxkOVYkiKJb/FxO3Fg8eXvPVQ8BYDuKkVVzxZUclvhhW9pmWaY8hFuGri
-IUfnGHbCh0xiQ6IniYBzb4mc7W8vUEsDBAoAAAAAACVpLzhaH3A3OgAAADoAAAAVAAAAdGVzdC8u
-Z2l0L2Rlc2NyaXB0aW9uVW5uYW1lZCByZXBvc2l0b3J5OyBlZGl0IHRoaXMgZmlsZSB0byBuYW1l
-IGl0IGZvciBnaXR3ZWIuClBLAwQKAAAAAAAlaS84K2lzpxcAAAAXAAAADgAAAHRlc3QvLmdpdC9I
-RUFEcmVmOiByZWZzL2hlYWRzL21hc3RlcgpQSwMECgAAAAAAJWkvOAAAAAAAAAAAAAAAABAAAAB0
-ZXN0Ly5naXQvaG9va3MvUEsDBBQAAAAIACVpLzh6gEXNBgEAALkBAAAeAAAAdGVzdC8uZ2l0L2hv
-b2tzL2FwcGx5cGF0Y2gtbXNnfY+7TsNAEEVr9isuTkQDjkVLBRISSovSo4kz9q68L3nGSgLi31kn
-SqCiXOnMOXcXt83WxUasWZgFXiL4QCF7hk1pgLSjywpNaC23A9Qy2hSCU/jUI7AI9QylgSO2x2Kg
-nP0xk7YW3ZgCqBjrQM5f4NUptLGXgk2T35VqUe6dWsQU608eE0RJJwF1yiOcyORiX3Tnxpjy6Ej5
-OsF1mA0UVaDzccp/1q5wLRbVrPA+7Xk3o7wrh7/o1dg5fxlboEhbzwVzcrI8INBwfp/A8gFuJy1Q
-uTEr9E5rsbWwTtkoi6I+oFq+rTcfr+v3ZlZIcw7WQfoKd3fmZnb8Cy2/Hu+r5XP1bZ7MD1BLAwQU
-AAAACAAlaS845j8hccIBAAAMAwAAGgAAAHRlc3QvLmdpdC9ob29rcy9jb21taXQtbXNnfZLNbtsw
-EITP1lNMZaOyjciCeywQA2lTtLk0QKOc6jpYSyuJsEQqItX0x333rug4cH+Qi0BSs9/MEBy/SLZK
-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
-GwAbAP8GAACYGgAAAAA=
-------=_Part_22891_32666088.1200427966055--
+jlh
