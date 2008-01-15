@@ -1,108 +1,145 @@
-From: "Paul Umbers" <paul.umbers@gmail.com>
-Subject: Re: Git Cygwin - unable to create any repository - help!
-Date: Tue, 15 Jan 2008 14:59:52 -0700
-Message-ID: <a5eb9c330801151359q5a474a83le36ae9076ad4e5c1@mail.gmail.com>
-References: <20080114202932.GA25130@steel.home>
-	 <a5eb9c330801141421g13c627e5x77afb357e2a78463@mail.gmail.com>
-	 <20080115054807.GA3694@steel.home>
-	 <a5eb9c330801150721t5da85295heacae2c5a5aad47e@mail.gmail.com>
-	 <a5eb9c330801140921m63b1b8a9pe67bf6f0d2e58dba@mail.gmail.com>
-	 <20080115200437.GB3213@steel.home>
-	 <a5eb9c330801151212y30cf4f63r9c294ba33da2b8f@mail.gmail.com>
-	 <20080115212022.GC3213@steel.home>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: [PATCH - v3] gitk: fix "Key bindings" message
+Date: Tue, 15 Jan 2008 23:31:49 +0100
+Message-ID: <200801152331.49990.barra_cuda@katamail.com>
+References: <200801081437.46398.barra_cuda@katamail.com> <200801091916.52680.barra_cuda@katamail.com> <18316.40891.875291.618507@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 23:00:26 2008
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Jan 15 23:24:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEtpX-00047K-DP
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 23:00:23 +0100
+	id 1JEuD8-0001wj-JQ
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 23:24:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755646AbYAOV7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 16:59:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755374AbYAOV7x
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 16:59:53 -0500
-Received: from wa-out-1112.google.com ([209.85.146.177]:29052 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751804AbYAOV7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 16:59:52 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so17375wah.23
-        for <git@vger.kernel.org>; Tue, 15 Jan 2008 13:59:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ApAH9nU/WA/VhGxQ6bG+pM6P/5IDQbkS2Cm+jQ0vJok=;
-        b=gAhVtbGijrCaxsuAi5L1cVBsNZAe+RyOES9QSVInHHa4XSgCUdECZMEz4bOvhzPbeRYf9aVpLOraEoJvO+O4LBBeRFFZTTiv38kTRGidoTXbdPWSurzuwj+KPe07OBVxBOs1Td9JzFZXfAu9OmjKmMH/9L4wrB5SbI6ndePLn04=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=e+TfRVeo/DI8S9QiIKLEKnUIAIwkl8Eg5z5/9zQPmyncVnLdpuEIqIwC8DWhBD6wKU4MBtnreV9898OgqLEjokCJiNl+ZADRVpLd4XjgUsCeIF6I9vOgMINLfsWPLYSO9EJEHUm2j7UT9CVf7s24DLCY6f6sx0Yhv5aC0Dy+/Ls=
-Received: by 10.114.202.15 with SMTP id z15mr4991949waf.72.1200434392436;
-        Tue, 15 Jan 2008 13:59:52 -0800 (PST)
-Received: by 10.114.137.1 with HTTP; Tue, 15 Jan 2008 13:59:52 -0800 (PST)
-In-Reply-To: <20080115212022.GC3213@steel.home>
+	id S1757419AbYAOWYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 17:24:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757208AbYAOWYQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 17:24:16 -0500
+Received: from slim-3c.inet.it ([213.92.5.125]:35570 "EHLO slim-3c.inet.it"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755906AbYAOWYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 17:24:14 -0500
+Received: from host27-56-static.104-80-b.business.telecomitalia.it ([::ffff:80.104.56.27]) by slim-3c.inet.it via I-SMTP-5.4.4-547
+	id ::ffff:80.104.56.27+T0ldpl0uTUuw; Tue, 15 Jan 2008 23:24:07 +0100
+User-Agent: KMail/1.9.7
+In-Reply-To: <18316.40891.875291.618507@cargo.ozlabs.ibm.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70568>
 
-Git version is 1.5.3.8.
+The "Key bindings" message under the "Help" menu was too long
+and could not be parsed by the translation engine.
 
-On Jan 15, 2008 2:20 PM, Alex Riesen <raa.lkml@gmail.com> wrote:
-> Paul Umbers, Tue, Jan 15, 2008 21:12:45 +0100:
-> > >
-> > > Does the object exists at all? Try
-> > >
-> > >     ls -l .git/d9/b06fceac52f6c24357e6a7f85c601088381152
-> > >
-> > > Is it possible to get a hold of this repo (just the .git directly
-> > > after "git add .")? It would be interesting to see the nature of the
-> > > corruption.
-> > >
-> > git ls (see below) returns nothing - it looks like the object doesn't
-> > exist at all. I've attached a .zip of the entire test directory (one
->
-> zip is a bit lying: it does not keep the attributes of the files the
-> way cygwin programs see them. For instance, it not known whether the
-> hooks (.git/hooks) where executable at the time.
->
-> > text file plus .git). This is after "git init" followed by "git add ."
-> >
-> > What do you think?
->
-> I think it has failed already at "git add". From looking at the code
-> it is hard for the current git-add (builtin-add.c) to fail silently.
->
-> Hmm... What "git version" returns for you? (the .git/config contains
-> filemode=true, which cygwin breaks every time).
->
-> Of course, it would be interesting to know if the current git works
-> for you. Or the MinGW port:
->
->     http://code.google.com/p/msysgit/downloads/list
->
-> It used to conflict with cygwin, though.
->
-> If the current git fails, I'd suggest to instrument write_sha1_file in
-> sha1_file.c and see if it really manages to create temporary file and
-> rename it to sha1 file (that d9/b06fceac52f6c24357e6a7f85c601088381152).
-> I suspect either rename or link failing silently (IOW, it fails to
-> create the new name under objects/d9/ but returns 0(no error) anyway).
->
->
+Fix both issues by translating one line at a time.
 
+Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+---
+On Tuesday 15 January 2008, Paul Mackerras wrote:
+> I am wondering whether the help text
+> needs to be busted up into individual lines for processing by [mc].
 
+Here it is. With this patch the strings do show up in po/gitk.pot.
 
+ gitk |   78 +++++++++++++++++++++++++++++++++---------------------------------
+ 1 files changed, 39 insertions(+), 39 deletions(-)
+
+diff --git a/gitk b/gitk
+index 5560e4d..7555968 100755
+--- a/gitk
++++ b/gitk
+@@ -1307,45 +1307,45 @@ proc keys {} {
+     }
+     toplevel $w
+     wm title $w [mc "Gitk key bindings"]
+-    message $w.m -text [mc "
+-Gitk key bindings:
+-
+-<$M1T-Q>		Quit
+-<Home>		Move to first commit
+-<End>		Move to last commit
+-<Up>, p, i	Move up one commit
+-<Down>, n, k	Move down one commit
+-<Left>, z, j	Go back in history list
+-<Right>, x, l	Go forward in history list
+-<PageUp>	Move up one page in commit list
+-<PageDown>	Move down one page in commit list
+-<$M1T-Home>	Scroll to top of commit list
+-<$M1T-End>	Scroll to bottom of commit list
+-<$M1T-Up>	Scroll commit list up one line
+-<$M1T-Down>	Scroll commit list down one line
+-<$M1T-PageUp>	Scroll commit list up one page
+-<$M1T-PageDown>	Scroll commit list down one page
+-<Shift-Up>	Find backwards (upwards, later commits)
+-<Shift-Down>	Find forwards (downwards, earlier commits)
+-<Delete>, b	Scroll diff view up one page
+-<Backspace>	Scroll diff view up one page
+-<Space>		Scroll diff view down one page
+-u		Scroll diff view up 18 lines
+-d		Scroll diff view down 18 lines
+-<$M1T-F>		Find
+-<$M1T-G>		Move to next find hit
+-<Return>	Move to next find hit
+-/		Move to next find hit, or redo find
+-?		Move to previous find hit
+-f		Scroll diff view to next file
+-<$M1T-S>		Search for next hit in diff view
+-<$M1T-R>		Search for previous hit in diff view
+-<$M1T-KP+>	Increase font size
+-<$M1T-plus>	Increase font size
+-<$M1T-KP->	Decrease font size
+-<$M1T-minus>	Decrease font size
+-<F5>		Update
+-"] \
++    message $w.m -text "
++[mc "Gitk key bindings:"]
++
++[mc "<%s-Q>		Quit" $M1T]
++[mc "<Home>		Move to first commit"]
++[mc "<End>		Move to last commit"]
++[mc "<Up>, p, i	Move up one commit"]
++[mc "<Down>, n, k	Move down one commit"]
++[mc "<Left>, z, j	Go back in history list"]
++[mc "<Right>, x, l	Go forward in history list"]
++[mc "<PageUp>	Move up one page in commit list"]
++[mc "<PageDown>	Move down one page in commit list"]
++[mc "<%s-Home>	Scroll to top of commit list" $M1T]
++[mc "<%s-End>	Scroll to bottom of commit list" $M1T]
++[mc "<%s-Up>	Scroll commit list up one line" $M1T]
++[mc "<%s-Down>	Scroll commit list down one line" $M1T]
++[mc "<%s-PageUp>	Scroll commit list up one page" $M1T]
++[mc "<%s-PageDown>	Scroll commit list down one page" $M1T]
++[mc "<Shift-Up>	Find backwards (upwards, later commits)"]
++[mc "<Shift-Down>	Find forwards (downwards, earlier commits)"]
++[mc "<Delete>, b	Scroll diff view up one page"]
++[mc "<Backspace>	Scroll diff view up one page"]
++[mc "<Space>		Scroll diff view down one page"]
++[mc "u		Scroll diff view up 18 lines"]
++[mc "d		Scroll diff view down 18 lines"]
++[mc "<%s-F>		Find" $M1T]
++[mc "<%s-G>		Move to next find hit" $M1T]
++[mc "<Return>	Move to next find hit"]
++[mc "/		Move to next find hit, or redo find"]
++[mc "?		Move to previous find hit"]
++[mc "f		Scroll diff view to next file"]
++[mc "<%s-S>		Search for next hit in diff view" $M1T]
++[mc "<%s-R>		Search for previous hit in diff view" $M1T]
++[mc "<%s-KP+>	Increase font size" $M1T]
++[mc "<%s-plus>	Increase font size" $M1T]
++[mc "<%s-KP->	Decrease font size" $M1T]
++[mc "<%s-minus>	Decrease font size" $M1T]
++[mc "<F5>		Update"]
++" \
+ 	    -justify left -bg white -border 2 -relief groove
+     pack $w.m -side top -fill both -padx 2 -pady 2
+     button $w.ok -text [mc "Close"] -command "destroy $w" -default active
 -- 
-Computer Science is no more about computers than astronomy is about telescopes.
---- Edsger W. Dijkstra
-
-Paul Umbers MSc MBCS MIAP
-paul.umbers@gmail.com
+1.5.3.5
