@@ -1,62 +1,91 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: git-commit fatal: Out of memory? mmap failed: Bad file	descriptor
-Date: Tue, 15 Jan 2008 14:39:19 -0600
-Message-ID: <478D19F7.9020308@nrlssc.navy.mil>
-References: <4787E981.7010200@nrlssc.navy.mil>	 <478C1D7A.6090103@nrlssc.navy.mil>	 <alpine.LFD.1.00.0801142140560.2806@woody.linux-foundation.org>	 <478CECAB.2030906@nrlssc.navy.mil>	 <alpine.LFD.1.00.0801150931260.2806@woody.linux-foundation.org>	 <478CFAFF.6010006@nrlssc.navy.mil>	 <alpine.LFD.1.00.0801151036110.2806@woody.linux-foundation.org>	 <478D0CDA.5050709@nrlssc.navy.mil> <1200427202.5821.7.camel@gaara.boston.redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>, drafnel@gmail.com,
-	Junio C Hamano <gitster@pobox.com>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: =?ISO-8859-1?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 21:41:22 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH] safecrlf: Add flag to convert_to_git() to disable safecrlf check
+Date: Tue, 15 Jan 2008 21:52:53 +0100
+Message-ID: <F825ADAF-036C-46FE-8E3D-540B9AA092A8@zib.de>
+References: <004D2FB5-2CEA-4DB1-AF8D-D5ADEB0F0508@zib.de> <12003528401309-git-send-email-prohaska@zib.de> <7vk5mchsct.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: dpotapov@gmail.com, torvalds@linux-foundation.org,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 21:54:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEsb1-0004wP-GS
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 21:41:19 +0100
+	id 1JEsnS-0001XK-Tw
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 21:54:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753225AbYAOUkf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jan 2008 15:40:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751979AbYAOUke
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 15:40:34 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:37869 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753225AbYAOUke (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 15:40:34 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0FKdJbx015677;
-	Tue, 15 Jan 2008 14:39:19 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 15 Jan 2008 14:39:19 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <1200427202.5821.7.camel@gaara.boston.redhat.com>
-X-OriginalArrivalTime: 15 Jan 2008 20:39:19.0414 (UTC) FILETIME=[B3E96160:01C857B6]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15666001
-X-TM-AS-Result: : Yes--13.402100-0-2-1
-X-TM-AS-Category-Info: : 2:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1NzA0Mi03MDAw?=
-	=?us-ascii?B?NzUtMTM5MDEwLTcxMDIwNy0xMzc3MTctNzAwNjkzLTcwMDk3MS03?=
-	=?us-ascii?B?MDE0NjEtMTA1MjUwLTE0ODAzOS0xNDgwNTEtMjAwNDA=?=
+	id S1757784AbYAOUxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 15:53:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757726AbYAOUxG
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 15:53:06 -0500
+Received: from mailer.zib.de ([130.73.108.11]:45819 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757727AbYAOUxE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 15:53:04 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0FKpsvQ015915;
+	Tue, 15 Jan 2008 21:51:54 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db83608.pool.einsundeins.de [77.184.54.8])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0FKpm86024024
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Tue, 15 Jan 2008 21:51:48 +0100 (MET)
+In-Reply-To: <7vk5mchsct.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70558>
 
-Kristian H=F8gsberg wrote:
 
-> To my defense, the lockfile API is used a little inconsitently in git=
-=2E
-> Many places in git does a close(fd) and the call commit_locked_index(=
-),
-> which will close the fd again.
+On Jan 15, 2008, at 12:58 AM, Junio C Hamano wrote:
 
-I bet they did that so that the return status of close() could be check=
-ed
-since commit_lock_file() doesn't currently check it.
+> Steffen Prohaska <prohaska@zib.de> writes:
+>
+>> We want to verify if an autocrlf conversion is reversible only if
+>> the converted data is actually written to the repository.  Only
+>> in this case the file would be modified during the next checkout.
+>> But convert_to_git() is used for some other purposes.
+>> This commit adds a flag to convert_to_git() that controls if the
+>> safecrlf check is enabled...
+>
+> At first this felt dirty to me as convert_to_git() is not
+> limited to crlf, but about external vs canonical representation.
+> The variable name being "checksafe" however makes it much more
+> palatable.  It is clear that it is talking about irreversible
+> conversion.
+>
+> When running diff with a work tree file and the index (or a
+> named tree), we read the work tree file and run convert_to_git()
+> on it before comparing it with what we have in the object store
+> (either index or a named tree).  When running apply without
+> touching the index, we also use convert_to_git() on the work
+> tree file.  The patch file is supposed to record the data in
+> canonical format, I think.
+>
+> Of course, "git add" on the path will warn or fail with your
+> patch, but we may somehow want to be warned about the breakage
+> before "git add" on that path triggers it.  Perhaps we can have
+> a separate "check-work-tree" command that iterates over locally
+> modified work tree files and runs convert_to_git() with checking
+> enabled.
 
--brandon
+We could certainly have such a command, yet the question remains
+when to call it.  Do you have in mind calling it when we enter
+the work tree, such that all files in the work tree will always
+be verified?  Running the check once during start up should be
+sufficient and we could switch it off for the remainder of the
+execution.
+
+We would certainly print all paths with an irreversible conversion
+and only die() afterwards if requested by core.safecrlf=true.
+All information would be printed at once in an ordered way.  This
+could be more user friendly than the current approach.
+
+I'll work on this.
+
+	Steffen
