@@ -1,143 +1,70 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: git-commit fatal: Out of memory? mmap failed: Bad file
-	descriptor
-Date: Tue, 15 Jan 2008 15:00:02 -0500
-Message-ID: <1200427202.5821.7.camel@gaara.boston.redhat.com>
-References: <4787E981.7010200@nrlssc.navy.mil>
-	 <478C1D7A.6090103@nrlssc.navy.mil>
-	 <alpine.LFD.1.00.0801142140560.2806@woody.linux-foundation.org>
-	 <478CECAB.2030906@nrlssc.navy.mil>
-	 <alpine.LFD.1.00.0801150931260.2806@woody.linux-foundation.org>
-	 <478CFAFF.6010006@nrlssc.navy.mil>
-	 <alpine.LFD.1.00.0801151036110.2806@woody.linux-foundation.org>
-	 <478D0CDA.5050709@nrlssc.navy.mil>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Git Cygwin - unable to create any repository - help!
+Date: Tue, 15 Jan 2008 21:04:37 +0100
+Message-ID: <20080115200437.GB3213@steel.home>
+References: <a5eb9c330801140921m63b1b8a9pe67bf6f0d2e58dba@mail.gmail.com> <20080114202932.GA25130@steel.home> <a5eb9c330801141421g13c627e5x77afb357e2a78463@mail.gmail.com> <20080115054807.GA3694@steel.home> <a5eb9c330801150721t5da85295heacae2c5a5aad47e@mail.gmail.com> <a5eb9c330801140921m63b1b8a9pe67bf6f0d2e58dba@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>, drafnel@gmail.com,
-	Junio C Hamano <gitster@pobox.com>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Tue Jan 15 21:03:14 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Umbers <paul.umbers@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 21:06:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEs0A-0007E0-0W
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 21:03:14 +0100
+	id 1JEs2W-000824-HY
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 21:05:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751887AbYAOUCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 15:02:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751883AbYAOUCo
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 15:02:44 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:52899 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751871AbYAOUCn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 15:02:43 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id m0FK093L029251;
-	Tue, 15 Jan 2008 15:00:09 -0500
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m0FK08hG010234;
-	Tue, 15 Jan 2008 15:00:08 -0500
-Received: from [192.168.1.105] (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id m0FK081p013336;
-	Tue, 15 Jan 2008 15:00:08 -0500
-In-Reply-To: <478D0CDA.5050709@nrlssc.navy.mil>
-X-Mailer: Evolution 2.21.4 (2.21.4-1.fc9) 
-X-Scanned-By: MIMEDefang 2.58 on 172.16.52.254
+	id S1751318AbYAOUEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 15:04:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752074AbYAOUEl
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 15:04:41 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:61037 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750852AbYAOUEk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 15:04:40 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtolErE4=
+Received: from tigra.home (Faa76.f.strato-dslnet.de [195.4.170.118])
+	by post.webmailer.de (fruni mo34) (RZmta 15.4)
+	with ESMTP id j03ffbk0FGlHrT ; Tue, 15 Jan 2008 21:04:38 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 0BBD3277AE;
+	Tue, 15 Jan 2008 21:04:38 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id AEEB056D22; Tue, 15 Jan 2008 21:04:37 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <a5eb9c330801150721t5da85295heacae2c5a5aad47e@mail.gmail.com> <a5eb9c330801140921m63b1b8a9pe67bf6f0d2e58dba@mail.gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70546>
 
-On Tue, 2008-01-15 at 13:43 -0600, Brandon Casey wrote:
-> Linus Torvalds wrote:
-> > 
-> > On Tue, 15 Jan 2008, Brandon Casey wrote:
-> >> Linus Torvalds wrote:
-> >>> It would obviously be interesting to see the base repository and the 
-> >>> commit you are trying to do - is that possibly publicly available?
-> >> I wish it was.
-> > 
-> > It's ok, I found the bug in your full strace.
-> 
-> Good catch, but that wasn't it. Still getting the same error.
-> 
-> > and now it's trying to close that fd *again*
-> 
-> In that same vein, just above your changes in prepare_index() is:
-> 
-> 	if (!pathspec || !*pathspec) {
-> 		fd = hold_locked_index(&index_lock, 1);
-> 		refresh_cache(REFRESH_QUIET);
-> 		if (write_cache(fd, active_cache, active_nr) ||
-> 		    close(fd) || commit_locked_index(&index_lock))
-> 			die("unable to write new_index file");
-> 		commit_style = COMMIT_AS_IS;
-> 		return get_index_file();
-> 	}
-> 
-> If I followed hold_locked_index() correctly, then fd and index_lock.fd
-> are equal, and commit_locked_index() does a close(lk->fd) making the
-> close(fd) above, redundant (or vice-versa).
+Paul Umbers, Tue, Jan 15, 2008 16:21:15 +0100:
+> I've just completely uninstalled (ie: deleted) and re-installed
+> cygwin, ensuring that bin mode was selected for the install (I'm sure
+> it was before, that's the default). "mount" confirms that everything
+> is mounted in binmode.
 
-To my defense, the lockfile API is used a little inconsitently in git.
-Many places in git does a close(fd) and the call commit_locked_index(),
-which will close the fd again.  Normally that will just cause an EBADFD
-which we ignore, but the problem here is that there's a longer time
-between close(fd) and the commit/rollback of the lock file.  I guess the
-correct way to use the API is to never close the fd manually, but I
-copied and pasted the lockfile use in builtin-commit.c from somewhere
-else and along with it the double close.
+Ok, so it is a bit more complicated...
 
-There's four close(fd) calls in prepare_index() and they're all
-incorrect.  The open fd's are cleaned up in rollback_index_files() and
-shouldn't be closed manually.  The patch below gets rid of the extra
-close() calls and should fix the problem.
+Paul Umbers, Mon, Jan 14, 2008 18:21:44 +0100:
+> Trying to create a repository under the cygwin install of git, windows
+> XP Pro. I can create the initial repository OK using "git init" and
+> add files using "git add .", but when I come to commit I get the
+> messages:
+> 
+> error: invalid object d9b06fceac52f6c24357e6a7f85c601088381152
+> fatal: git-write-tree: error building trees
 
-cheers,
-Kristian
+Does the object exists at all? Try
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 73f1e35..4494c9c 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -212,7 +212,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
- 		int fd = hold_locked_index(&index_lock, 1);
- 		add_files_to_cache(0, also ? prefix : NULL, pathspec);
- 		refresh_cache(REFRESH_QUIET);
--		if (write_cache(fd, active_cache, active_nr) || close(fd))
-+		if (write_cache(fd, active_cache, active_nr))
- 			die("unable to write new_index file");
- 		commit_style = COMMIT_NORMAL;
- 		return index_lock.filename;
-@@ -231,7 +231,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
- 		fd = hold_locked_index(&index_lock, 1);
- 		refresh_cache(REFRESH_QUIET);
- 		if (write_cache(fd, active_cache, active_nr) ||
--		    close(fd) || commit_locked_index(&index_lock))
-+		    commit_locked_index(&index_lock))
- 			die("unable to write new_index file");
- 		commit_style = COMMIT_AS_IS;
- 		return get_index_file();
-@@ -273,7 +273,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
- 	fd = hold_locked_index(&index_lock, 1);
- 	add_remove_files(&partial);
- 	refresh_cache(REFRESH_QUIET);
--	if (write_cache(fd, active_cache, active_nr) || close(fd))
-+	if (write_cache(fd, active_cache, active_nr))
- 		die("unable to write new_index file");
- 
- 	fd = hold_lock_file_for_update(&false_lock,
-@@ -289,7 +289,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
- 	add_remove_files(&partial);
- 	refresh_cache(REFRESH_QUIET);
- 
--	if (write_cache(fd, active_cache, active_nr) || close(fd))
-+	if (write_cache(fd, active_cache, active_nr))
- 		die("unable to write temporary index file");
- 	return false_lock.filename;
- }
+    ls -l .git/d9/b06fceac52f6c24357e6a7f85c601088381152
+
+Is it possible to get a hold of this repo (just the .git directly
+after "git add .")? It would be interesting to see the nature of the
+corruption.
