@@ -1,54 +1,75 @@
-From: "Chris Ortman" <chrisortman@gmail.com>
-Subject: Re: [FEATURE REQUEST] git-svn format-patch
-Date: Tue, 15 Jan 2008 11:07:24 -0600
-Message-ID: <c0f2d4110801150907y59593407u820c7b3db556ed31@mail.gmail.com>
-References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>
-	 <alpine.DEB.1.00.0801151444180.5289@eeepc-johanness>
-	 <c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
-	 <alpine.DEB.1.00.0801151612470.5289@eeepc-johanness>
-	 <c0f2d4110801150823u7899e6dds1192b5f3bb3f7133@mail.gmail.com>
-	 <alpine.DEB.1.00.0801151650240.5289@eeepc-johanness>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: Git Cygwin - unable to create any repository - help!
+Date: Tue, 15 Jan 2008 18:08:34 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <478CE892.9070808@obry.net>
+References: <a5eb9c330801140921m63b1b8a9pe67bf6f0d2e58dba@mail.gmail.com>	 <20080114202932.GA25130@steel.home> <a5eb9c330801141421g13c627e5x77afb357e2a78463@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 15 18:08:03 2008
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Paul Umbers <paul.umbers@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 18:09:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEpGW-00043u-G3
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 18:07:56 +0100
+	id 1JEpHm-0004cs-UW
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 18:09:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751551AbYAORH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 12:07:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751403AbYAORH0
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 12:07:26 -0500
-Received: from wa-out-1112.google.com ([209.85.146.181]:24981 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751423AbYAORHZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 12:07:25 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so4434094wah.23
-        for <git@vger.kernel.org>; Tue, 15 Jan 2008 09:07:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=K4Y6JGc0Uu8XqXbstnr8EfhhsR7H/bL5T1WuAFIBgoo=;
-        b=FArUgzeMylsZfWfSS4Bdx53wAKmjck7lyrxGGmfO44BeG4+VWsayrntFIzAwq/m+KXJb09QOUbR1qzXxeauuyol9uE3AWnGVgx/FINSdA8/y1PUysrJnLSj5ycsJthyWZYoQg8COFNUnmbqSL9iMOIuV+qL2cwL9x55MLx28KA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=cQ3UJN0+mDAMN9c5IcfVVCtBgS04GANC1g3nbaxgzDs+W493m/fy81GECd/2LzRXP/MXFdi3sZZo2IyN8jhyC6rnFuByxq1bjI05lOyvgVUdjztGN3Y89D3LMvCOzR2IEaG5NP08RTokem2B7xiWrY/DypA+P9heQQRr4sDksvk=
-Received: by 10.115.111.1 with SMTP id o1mr4298847wam.87.1200416844251;
-        Tue, 15 Jan 2008 09:07:24 -0800 (PST)
-Received: by 10.115.17.6 with HTTP; Tue, 15 Jan 2008 09:07:24 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0801151650240.5289@eeepc-johanness>
-Content-Disposition: inline
+	id S1752235AbYAORIq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jan 2008 12:08:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752012AbYAORIq
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 12:08:46 -0500
+Received: from smtp2e.orange.fr ([80.12.242.112]:43394 "EHLO smtp2e.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751348AbYAORIp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 12:08:45 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2e06.orange.fr (SMTP Server) with ESMTP id 292A5700009C
+	for <git@vger.kernel.org>; Tue, 15 Jan 2008 18:08:41 +0100 (CET)
+Received: from [192.168.0.100] (AVelizy-151-1-66-40.w81-249.abo.wanadoo.fr [81.249.60.40])
+	by mwinf2e06.orange.fr (SMTP Server) with ESMTP id C80DC7000093;
+	Tue, 15 Jan 2008 18:08:40 +0100 (CET)
+X-ME-UUID: 20080115170840819.C80DC7000093@mwinf2e06.orange.fr
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <a5eb9c330801141421g13c627e5x77afb357e2a78463@mail.gmail.com>
+X-Enigmail-Version: 0.95.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70534>
 
-Should this be a new command in git-svn.perl? or something in contrib?
+Paul Umbers a =E9crit :
+> The "mount" command tells me everything I have is mounted in binmode.
+> I have used Git on a default cygwin install (win XP pro) before and
+> not had this problem - that's why this is so frustrating. Not sure
+> what changed this time round as I tend to use defaults for most
+> installations.
+>=20
+> Are you saying I need to make sure the repository directory is mounte=
+d
+> in text-mode (for Windows compatibility)? I just reinstalled cygwin,
+> selecting text-mode as the default. I can create a git repository, bu=
+t
+> "git add ." returns:
+
+Avoid text-mode on Windows with Cygwin. I can't help with your problem=20
+but I can tell you that Git is working fine here!
+
+What about permissions for /cygdrive/c/test ?
+
+Pascal.
+
+--=20
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
