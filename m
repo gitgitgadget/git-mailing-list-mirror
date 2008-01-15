@@ -1,56 +1,48 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Squelch bogus progress output from
- git-rebase--interactive
-Date: Tue, 15 Jan 2008 11:22:59 +0000 (GMT)
-Message-ID: <alpine.DEB.1.00.0801151122450.5289@eeepc-johanness>
-References: <7v3aszivjk.fsf@gitster.siamese.dyndns.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH - v2] gitk: fix "Key bindings" message
+Date: Tue, 15 Jan 2008 22:57:47 +1100
+Message-ID: <18316.40891.875291.618507@cargo.ozlabs.ibm.com>
+References: <200801081437.46398.barra_cuda@katamail.com>
+	<18308.2284.160506.432481@cargo.ozlabs.ibm.com>
+	<200801091916.52680.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 15 12:23:36 2008
+To: Michele Ballabio <barra_cuda@katamail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 15 12:59:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEjtF-0006n4-Lw
-	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 12:23:34 +0100
+	id 1JEkSC-0008Rv-Nr
+	for gcvg-git-2@gmane.org; Tue, 15 Jan 2008 12:59:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751463AbYAOLXG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 06:23:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751269AbYAOLXE
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 06:23:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37604 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750757AbYAOLXD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 06:23:03 -0500
-Received: (qmail invoked by alias); 15 Jan 2008 11:22:59 -0000
-Received: from unknown (EHLO eeepc-johanness.st-andrews.ac.uk) [138.251.11.75]
-  by mail.gmx.net (mp007) with SMTP; 15 Jan 2008 12:22:59 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+C69I7zkaC/82sCL9Mn4KBzfwipgPtcrHQNpvMrp
-	TRjKKxJs0/ilZL
-X-X-Sender: user@eeepc-johanness
-In-Reply-To: <7v3aszivjk.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751003AbYAOL7K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 06:59:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751041AbYAOL7K
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 06:59:10 -0500
+Received: from ozlabs.org ([203.10.76.45]:58305 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750833AbYAOL7I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 06:59:08 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 88E58DDE32; Tue, 15 Jan 2008 22:59:05 +1100 (EST)
+In-Reply-To: <200801091916.52680.barra_cuda@katamail.com>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70516>
 
-Hi,
+Michele Ballabio writes:
 
-On Mon, 14 Jan 2008, Junio C Hamano wrote:
+> This patch tries to do so. Is this correct?
 
-> The command repeats "Rebasing (1/1)" many times even when
-> there is only one task remaining, because mark_action_done() is
-> called to skip comment and empty lines in the TODO file.
-> 
-> This should fix it.
+Pretty good...  I think that $M1T needs to be passed through [mc] as
+well, and I would tend to use [list M1T $M1T] rather than "M1T $M1T",
+but apart from that it's OK.  I am wondering whether the help text
+needs to be busted up into individual lines for processing by [mc].
 
-Yes, it should.
-
-Thanks,
-Dscho
+Paul.
