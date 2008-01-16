@@ -1,63 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Be more careful about updating refs
-Date: Tue, 15 Jan 2008 16:29:54 -0800
-Message-ID: <7vd4s2d33x.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.1.00.0801151546560.2806@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Make 'git fsck' complain about non-commit branches
+Date: Tue, 15 Jan 2008 16:34:17 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801151618300.2806@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jan 16 01:31:04 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 01:35:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEwBJ-00041Q-OF
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 01:31:02 +0100
+	id 1JEwFc-0005CD-Ey
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 01:35:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751677AbYAPAaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 19:30:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751423AbYAPAaK
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 19:30:10 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42332 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751134AbYAPAaJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 19:30:09 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 78AC52887;
-	Tue, 15 Jan 2008 19:30:05 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CDAEF2886;
-	Tue, 15 Jan 2008 19:30:01 -0500 (EST)
-In-Reply-To: <alpine.LFD.1.00.0801151546560.2806@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Tue, 15 Jan 2008 15:50:17 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751683AbYAPAe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 19:34:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751848AbYAPAe7
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 19:34:59 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:57316 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751590AbYAPAe6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2008 19:34:58 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0G0YIrW000347
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 15 Jan 2008 16:34:19 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0G0YHRr011445;
+	Tue, 15 Jan 2008 16:34:18 -0800
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.719 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70585>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-> ---
->
-> I'm signing off on this, but I hope people will double-check this: I 
-> didn't actually test it very much.
+Since having non-commits in branches is a no-no, and just means you cannot 
+commit on them, let's make fsck tell you when a branch is bad.
 
-Does "Signed-off-by:" line mean something different for you than
-for other people these days?
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
 
-I thought that the rule that applies to you (and only you) on
-this list was that all patches from you are DCO certified and I
-am free to forge your signature on them, and the other rule that
-applies to everybody including you is that Signed-off-by: is
-about DCO certification and not about anything else
-(e.g. author's confidence level about the patch).
+ builtin-fsck.c |   13 ++++++++-----
+ 1 files changed, 8 insertions(+), 5 deletions(-)
 
-I am asking because you did not have S-o-b and did not say
-anything about the other patch about commit object creation.
-Although both patches looked sane to me.
+diff --git a/builtin-fsck.c b/builtin-fsck.c
+index 8876d34..6fc9525 100644
+--- a/builtin-fsck.c
++++ b/builtin-fsck.c
+@@ -555,20 +555,23 @@ static int fsck_handle_reflog(const char *logname, const unsigned char *sha1, in
+ 	return 0;
+ }
+ 
++static int is_branch(const char *refname)
++{
++	return !strcmp(refname, "HEAD") || !prefixcmp(refname, "refs/heads/");
++}
++
+ static int fsck_handle_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
+ {
+ 	struct object *obj;
+ 
+-	obj = lookup_object(sha1);
++	obj = parse_object(sha1);
+ 	if (!obj) {
+-		if (has_sha1_file(sha1)) {
+-			default_refs++;
+-			return 0; /* it is in a pack */
+-		}
+ 		error("%s: invalid sha1 pointer %s", refname, sha1_to_hex(sha1));
+ 		/* We'll continue with the rest despite the error.. */
+ 		return 0;
+ 	}
++	if (obj->type != OBJ_COMMIT && is_branch(refname))
++		error("%s: not a commit", refname);
+ 	default_refs++;
+ 	obj->used = 1;
+ 	mark_reachable(obj, REACHABLE);
