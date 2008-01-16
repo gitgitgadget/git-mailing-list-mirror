@@ -1,88 +1,161 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: git-commit fatal: Out of memory? mmap failed: Bad file descriptor
-Date: Tue, 15 Jan 2008 20:11:55 -0600 (CST)
-Message-ID: <Pine.LNX.4.44.0801152006260.944-100000@demand>
-References: <7vmyr6bluy.fsf@gitster.siamese.dyndns.org>
+From: "Imran M Yousuf" <imyousuf@gmail.com>
+Subject: Re: [PATCH 1/3] git-submodule: rename shell functions for consistency
+Date: Wed, 16 Jan 2008 08:26:29 +0600
+Message-ID: <7bfdc29a0801151826u2218f825ga8100b1cc9fa8b2@mail.gmail.com>
+References: <1200280956-19920-1-git-send-email-imyousuf@gmail.com>
+	 <7vzlv7flb5.fsf@gitster.siamese.dyndns.org>
+	 <7vy7are3qo.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Git Mailing List <git@vger.kernel.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	=?ISO-8859-1?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 03:26:08 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 03:27:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JExyi-0005HZ-5j
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 03:26:08 +0100
+	id 1JExzn-0005Xc-Cs
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 03:27:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752127AbYAPCZk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 21:25:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752023AbYAPCZk
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 21:25:40 -0500
-Received: from hs-out-0708.google.com ([64.233.178.245]:26013 "EHLO
-	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751302AbYAPCZj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 21:25:39 -0500
-Received: by hs-out-2122.google.com with SMTP id 54so64809hsz.5
-        for <git@vger.kernel.org>; Tue, 15 Jan 2008 18:25:38 -0800 (PST)
+	id S1755126AbYAPC0d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 21:26:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752501AbYAPC0c
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 21:26:32 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:27702 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751248AbYAPC0b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 21:26:31 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so88097fga.17
+        for <git@vger.kernel.org>; Tue, 15 Jan 2008 18:26:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:x-x-sender:to:cc:subject:in-reply-to:message-id:mime-version:content-type:from;
-        bh=3+m6gqxQBS2+5VCc9zUSgng1ovSRCcgvgt62wa5h7Pw=;
-        b=uvwi61zElFXEMYkprqxR3mr2GjUoUVlus5Dhu2HbzrDajUyYB6pGNKecQR1uHzin7XOR0eW+DSdJ+2iELOThkoa1b/Zzl7ivDLvkUSLyfXowYIJlojbXZkYS4rHNwf155/Bh4V9HzzyIPxEyiMhgiOmvmZtn4WcjMCAca41iLOs=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Rt3/sNhoU6rIdSa01S+oeomy/ayInZHibvNkJK4rTPI=;
+        b=IdcBHFKdkzjL19p1W7kKv0PINIRze64Nin3onaneilnTL35OEFtEPIC1QpuRxgSTzuecH5AzmdV6i7U9NNjuw4hz+sR5r3C2S8P/q0UsK+HzD3x/eRXi+zqMVJKPeUWDzAGlk0c2Gf9VeuL8I4q8QecLGxxYjv5NfBbiQJFZlBU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:x-x-sender:to:cc:subject:in-reply-to:message-id:mime-version:content-type:from;
-        b=LSK0ucg6i7HmnYLKVVK77TiOYiglUsJo3W20EipE5wqbPVtWVKMAfNaZl8jEJwOHduyI5UrfNsp440Z3m4EDB9CiozmSp8Akvz85CMuJeC6lamSH+1/hBmjZYMe2FQEHtgcsKlMik3wZUNUxojmUCIgwkNl1wI5THKTMHWpBA9k=
-Received: by 10.143.8.10 with SMTP id l10mr109684wfi.181.1200450337943;
-        Tue, 15 Jan 2008 18:25:37 -0800 (PST)
-Received: from demand ( [216.107.110.92])
-        by mx.google.com with ESMTPS id i35sm768349wxd.34.2008.01.15.18.25.36
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 15 Jan 2008 18:25:37 -0800 (PST)
-X-X-Sender: casey@demand
-In-Reply-To: <7vmyr6bluy.fsf@gitster.siamese.dyndns.org>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QbKEOCIzq7Z4//6k7NzmNmUgsoTNYKlSY28WukqXC3t4Vapy2HTCJ6UvXeIVUI5p2ulRJHs3PeZWZxyqueA6c0ZvnDiVpZYBzkQFV8g+3B4KAYmX2zLq/VA9sbG0wOMyJ7U9MdLH/t+xwoYFxU5rD0YMYr9K3UzV1+hWOalxAMQ=
+Received: by 10.78.166.7 with SMTP id o7mr251330hue.31.1200450389898;
+        Tue, 15 Jan 2008 18:26:29 -0800 (PST)
+Received: by 10.78.50.5 with HTTP; Tue, 15 Jan 2008 18:26:29 -0800 (PST)
+In-Reply-To: <7vy7are3qo.fsf_-_@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70607>
 
-On Tue, 15 Jan 2008, Junio C Hamano wrote:
+Thanks Junio for showing how it should be done. Due to some
+pre-scheduled appointment I was unavailable yesterday evening and thus
+was neither able to reply nor resubmit the changes.
 
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->> While I think the ones that are immediately followed by
->> commit_locked_index() can drop the close(fd) safely, I am not
->> sure about Kristian's changes to the other ones that we
->> currently close(fd) but do not commit nor rollback immediately.
->> These indices are now shown to the hook with open fd to it if
->> you choose not to close them.  Is that okay for Windows guys?  I
->> somehow had an impression that the other process may have
->> trouble accessing a file that is still open elsewhere for
->> writing.
->>
->> So I think the approach along the lines of your "hack" to close
->> and tell lockfile API not to double-close is more appropriate.
->> We would perhaps want "close_lock_file(struct lock_file *)" that
->> calls close(lk->fd) and does lk->fd = -1 without rename/unlink,
->> and replace these close() with that.
->>
->> I am sick today, feeling feverish, and not thinking straight,
->> so I may be talking total nonsense...
+On Jan 15, 2008 5:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> This renames the shell functions used in git-submodule that
+> implement top-level subcommands.  The rule is that the
+> subcommand $foo is implemented by cmd_$foo function.
+>
+> A noteworthy change is that modules_list() is now known as
+> cmd_status().  There is no "submodule list" command.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * We could probably do something like this.  This first part is
+>    about making the command dispatcher maintainable.
+>
+>    Note that I haven't seriously tested this series.  This and
+>    the next one are primarily to illustrate what I think the fix
+>    you are trying should look like.
+>
+>  git-submodule.sh |   20 ++++++++++----------
+>  1 files changed, 10 insertions(+), 10 deletions(-)
+>
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index ad9fe62..3c104e3 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -86,9 +86,9 @@ module_name()
+>  #
+>  # Clone a submodule
+>  #
+> -# Prior to calling, modules_update checks that a possibly existing
+> +# Prior to calling, cmd_update checks that a possibly existing
+>  # path is not a git repository.
+> -# Likewise, module_add checks that path does not exist at all,
+> +# Likewise, cmd_add checks that path does not exist at all,
+>  # since it is the location of a new submodule.
+>  #
+>  module_clone()
+> @@ -121,7 +121,7 @@ module_clone()
+>  #
+>  # optional branch is stored in global branch variable
+>  #
+> -module_add()
+> +cmd_add()
 
-> I'll aplly and push out Kristian's one that apparently got
-> Tested-by from Brandon for tonight.
+After reading your reply I was about to suggest renaming module to cmd
+but you have done it before I could propose or submit the patch.
 
-I've got a followup patch coming that will remove the rest of
-the redundant close()'s and I'll look into your suggestion for
-close_lock_file() above.
+>  {
+>         repo=$1
+>         path=$2
+> @@ -174,7 +174,7 @@ module_add()
+>  #
+>  # $@ = requested paths (default to all)
+>  #
+> -modules_init()
+> +cmd_init()
+>  {
+>         git ls-files --stage -- "$@" | grep -e '^160000 ' |
+>         while read mode sha1 stage path
+> @@ -207,7 +207,7 @@ modules_init()
+>  #
+>  # $@ = requested paths (default to all)
+>  #
+> -modules_update()
+> +cmd_update()
+>  {
+>         git ls-files --stage -- "$@" | grep -e '^160000 ' |
+>         while read mode sha1 stage path
+> @@ -266,7 +266,7 @@ set_name_rev () {
+>  #
+>  # $@ = requested paths (default to all)
+>  #
+> -modules_list()
+> +cmd_status()
+>  {
+>         git ls-files --stage -- "$@" | grep -e '^160000 ' |
+>         while read mode sha1 stage path
+> @@ -347,16 +347,16 @@ esac
+>
+>  case "$add,$init,$update,$status,$cached" in
+>  1,,,,)
+> -       module_add "$@"
+> +       cmd_add "$@"
+>         ;;
+>  ,1,,,)
+> -       modules_init "$@"
+> +       cmd_init "$@"
+>         ;;
+>  ,,1,,)
+> -       modules_update "$@"
+> +       cmd_update "$@"
+>         ;;
+>  ,,,*,*)
+> -       modules_list "$@"
+> +       cmd_status "$@"
+>         ;;
+>  *)
+>         usage
+> --
+> 1.5.4.rc3.11.g4e67
+>
+>
 
-Currently everything passes the test suite, I just need to do
-some manual testing.
 
--brandon
+
+-- 
+Imran M Yousuf
