@@ -1,78 +1,127 @@
-From: "Blucher, Guy" <Guy.Blucher@dsto.defence.gov.au>
-Subject: git gui and commit-msg hook
-Date: Thu, 17 Jan 2008 09:43:03 +1030
-Message-ID: <054F21930D24A0428E5B4588462C7AEDC5F8DC@ednex512.dsto.defence.gov.au>
-References: <054F21930D24A0428E5B4588462C7AEDC5F8DB@ednex512.dsto.defence.gov.au>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 17 00:13:46 2008
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Wed, 16 Jan 2008 18:16:35 -0500
+Message-ID: <F1428C56-9BAE-4903-A1A7-27019CBF4487@sb.org>
+References: <478E1FED.5010801@web.de> <m33asxn2gt.fsf@roke.D-201> <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org> <200801162251.54219.jnareb@gmail.com> <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org> <alpine.LSU.1.00.0801162222180.17650@racer.site>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: multipart/signed; boundary=Apple-Mail-7-1027380055; micalg=sha1; protocol="application/pkcs7-signature"
+Cc: Jakub Narebski <jnareb@gmail.com>, Mark Junker <mjscod@web.de>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 17 00:17:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFHS6-00035C-0e
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 00:13:46 +0100
+	id 1JFHVY-0004KY-Et
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 00:17:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751102AbYAPXNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 18:13:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752299AbYAPXNS
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 18:13:18 -0500
-Received: from digger1.defence.gov.au ([203.5.217.4]:47663 "EHLO
-	digger1.defence.gov.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750858AbYAPXNR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 18:13:17 -0500
-Received: from ednmsw511.dsto.defence.gov.au (ednmsw511.dsto.defence.gov.au [131.185.68.12])
-	by digger1.defence.gov.au (8.13.8/8.13.8) with ESMTP id m0GNBseb016653
-	for <git@vger.kernel.org>; Thu, 17 Jan 2008 09:41:54 +1030 (CST)
-Received: from fmbex510.dsto.defence.gov.au (fmbex510.dsto.defence.gov.au) by 
-    ednmsw511.dsto.defence.gov.au (Clearswift SMTPRS 5.2.9) with ESMTP id 
-    <T84938a1d8183b9440c16d0@ednmsw511.dsto.defence.gov.au> for 
-    <git@vger.kernel.org>; Thu, 17 Jan 2008 09:43:05 +1030
-Received: from fmbex511.dsto.defence.gov.au ([131.185.134.21]) by 
-    fmbex510.dsto.defence.gov.au with Microsoft SMTPSVC(6.0.3790.1830); 
-    Thu, 17 Jan 2008 10:13:04 +1100
-Received: from ednex514.dsto.defence.gov.au ([131.185.2.174]) by 
-    fmbex511.dsto.defence.gov.au with Microsoft SMTPSVC(6.0.3790.1830); 
-    Thu, 17 Jan 2008 10:13:04 +1100
-Received: from ednex512.dsto.defence.gov.au ([131.185.2.172]) by 
-    ednex514.dsto.defence.gov.au with Microsoft SMTPSVC(6.0.3790.1830); 
-    Thu, 17 Jan 2008 09:43:03 +1030
-Content-class: urn:content-classes:message
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-In-Reply-To: <054F21930D24A0428E5B4588462C7AEDC5F8DB@ednex512.dsto.defence.gov.au>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: git gui and commit-msg hook sec:u
-Thread-Index: AchYjxGgbpdz3VHaSRmMcD0rjMns7wABgLlw
-X-OriginalArrivalTime: 16 Jan 2008 23:13:03.0986 (UTC) 
-    FILETIME=[58991D20:01C85895]
-X-TM-AS-Product-Ver: SMEX-7.0.0.1526-5.0.1023-15672.000
-X-TM-AS-Result: No-3.188600-0.000000-31
+	id S1756231AbYAPXQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 18:16:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756000AbYAPXQj
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 18:16:39 -0500
+Received: from sd-green-bigip-74.dreamhost.com ([208.97.132.74]:60850 "EHLO
+	randymail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755541AbYAPXQi (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 18:16:38 -0500
+Received: from KBALLARD.RES.WPI.NET (KBALLARD.RES.WPI.NET [130.215.239.91])
+	by randymail-a11.g.dreamhost.com (Postfix) with ESMTP id E9342109EB6;
+	Wed, 16 Jan 2008 15:16:36 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0801162222180.17650@racer.site>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70769>
 
-Hi,
 
-Is the commit-msg hook supposed to work when using git gui to do a
-commit?
+--Apple-Mail-7-1027380055
+Content-Type: text/plain;
+	charset=US-ASCII;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: 7bit
 
-I've just setup a commit-msg hook in my local repository.  It works as
-advertised from the command-line when using git commit, but if I use git
-gui to do the commit, then the hook is ignored.
+On Jan 16, 2008, at 5:23 PM, Johannes Schindelin wrote:
 
-I also have a pre-commit hook in my repository which runs fine when
-using 'git gui' or 'git commit'.  
+> On Wed, 16 Jan 2008, Kevin Ballard wrote:
+>
+>> It's not using different encodings, it's all Unicode.
+>
+> But that's the _point_!  It _is_ Unicode, yet it uses _different_
+> encodings of the _same_ string.
+>
+> Now, this discussion gets really annoying.  The real question is:  
+> will you
+> do something about it, or reply with another 500-line email?
 
-All I want to do is verify that the text of a commit message follows
-some "corporate standard", perhaps I can do this using the pre-commit
-hook instead, but commit-msg seems to be the best fit?  
+I wish I could do something about it. But right now I'm a full-time  
+student trying to do contracting jobs on the side, and I don't believe  
+I have the time to learn enough about the guts of git to try and make  
+any changes to something as core as index filename handling. I just  
+want people here to recognize that this is a valid problem instead of  
+simply dismissing it as "HFS+ is insane, lets just ignore this issue".
 
-Regards,
-Guy.
+-Kevin Ballard
 
-IMPORTANT: This email remains the property of the Australian Defence Organisation and is subject to the jurisdiction of section 70 of the CRIMES ACT 1914.  If you have received this email in error, you are requested to contact the sender and delete the email.
+-- 
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
+
+
+
+--Apple-Mail-7-1027380055
+Content-Disposition: attachment;
+	filename=smime.p7s
+Content-Type: application/pkcs7-signature;
+	name=smime.p7s
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGMjCCAusw
+ggJUoAMCAQICEDsG8BKvlrEW0HUBIxWIgjUwDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
+JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
+ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA3MDQyMzIxMjM0OVoXDTA4MDQyMjIxMjM0
+OVowVzEQMA4GA1UEBBMHQmFsbGFyZDEOMAwGA1UEKhMFS2V2aW4xFjAUBgNVBAMTDUtldmluIEJh
+bGxhcmQxGzAZBgkqhkiG9w0BCQEWDGtldmluQHNiLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEP
+ADCCAQoCggEBAN/koURrN2ndrAiuAuHHrdFz+hLGQ7ZsXloGnObjALGOFY3Kmk2FCwAJPIha5GfM
+YFmZIoqxs+DbOWOn6KZ9hcQ5wf4EOgokayrEs3G72T+G8ZE4aXrw0CWJzKLjaIQeDZNZoHA44jlZ
+dG70wtZske898IoPz6YHpkcXiulllATfd8Pa7EgjPri5hKFiRXKI52OsOQTX6cNMMZJUIm8DvfQ5
+jmDyAtywNZGSGeUAMbWnpuLq7H18zpye2Q1hr+p4kucazMb+i7OHXPvX7yx2jMjhN5jw/gYkuzQQ
+JExp1fJyAZQ/av/ZgaxWchhhi4ziFXIlX3B09DTlOQlF53P3fi0CAwEAAaMpMCcwFwYDVR0RBBAw
+DoEMa2V2aW5Ac2Iub3JnMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEFBQADgYEAw/qc6zq+0Qy2
+XaodDlt2L6Vq1DzaVWjV152BFjidmsyhyCkCuyYdAcDp17opIfrNCBbOX5DdY6cpFpnSCxCZeIEB
+PDc3TaaFPtzr8qrpcNDohRSdt+qFLUeMHzlidAiAjvjI3tPKv3JLTakWdQR/XPHsg4mWoaVQU2hM
+HOQBw8EwggM/MIICqKADAgECAgENMA0GCSqGSIb3DQEBBQUAMIHRMQswCQYDVQQGEwJaQTEVMBMG
+A1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0ZSBD
+b25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQwIgYD
+VQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNvbmFs
+LWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNMDMwNzE3MDAwMDAwWhcNMTMwNzE2MjM1OTU5WjBiMQsw
+CQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoGA1UE
+AxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0EwgZ8wDQYJKoZIhvcNAQEBBQAD
+gY0AMIGJAoGBAMSmPFVzVftOucqZWh5owHUEcJ3f6f+jHuy9zfVb8hp2vX8MOmHyv1HOAdTlUAow
+1wJjWiyJFXCO3cnwK4Vaqj9xVsuvPAsH5/EfkTYkKhPPK9Xzgnc9A74r/rsYPge/QIACZNenpruf
+ZdHFKlSFD0gEf6e20TxhBEAeZBlyYLf7AgMBAAGjgZQwgZEwEgYDVR0TAQH/BAgwBgEB/wIBADBD
+BgNVHR8EPDA6MDigNqA0hjJodHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUGVyc29uYWxGcmVl
+bWFpbENBLmNybDALBgNVHQ8EBAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZhdGVM
+YWJlbDItMTM4MA0GCSqGSIb3DQEBBQUAA4GBAEiM0VCD6gsuzA2jZqxnD3+vrL7CF6FDlpSdf0wh
+uPg2H6otnzYvwPQcUCCTcDz9reFhYsPZOhl+hLGZGwDFGguCdJ4lUJRix9sncVcljd2pnDmOjCBP
+ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
+MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
+A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEDsG8BKvlrEW0HUBIxWI
+gjUwCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
+DxcNMDgwMTE2MjMxNjM2WjAjBgkqhkiG9w0BCQQxFgQU8FK8donqxslwdPclxQUeqFMBSl8wgYUG
+CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
+IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
+AhA7BvASr5axFtB1ASMViII1MIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
+BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
+b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhA7BvASr5axFtB1ASMViII1MA0GCSqGSIb3DQEBAQUA
+BIIBAMqMZubn5eEEWMlgeMcdmSRE9mGqtXn72h8FQs1bRXravmScgGAmdOar2PocVoUsyYWXdP0+
+dnoiMZgtkWpYXiCrJyQ3W/Jgs0IdjXhVobaX+5Jp9c0WeN2Ryttd4E3wFqjxPcT4JGlYtvIXuA1M
+s3DzT7ugtQz7eN9xfx2cT9jfQJbkQC5zXZWiS0jaxlaJpnjivCh0jzgo+wvCrVeBgeV8gYuAZ2I/
+sVZRgs154B82K4dSfc62TIuN6xFeKevlahvl08b4gIluKq1JJeeL5kzLoaRAvN+vD62Mt75RkN5p
+LSZfNF4tzCQPxDndUCc++sQpe7PxuLzM4E39vY+a4/QAAAAAAAA=
+
+--Apple-Mail-7-1027380055--
