@@ -1,75 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Do not show "diff --git" metainfo with --no-prefix
-Date: Tue, 15 Jan 2008 20:18:55 -0800
-Message-ID: <7vy7aqs8r4.fsf@gitster.siamese.dyndns.org>
-References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>
-	<alpine.DEB.1.00.0801151444180.5289@eeepc-johanness>
-	<c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
-	<alpine.LNX.1.00.0801151728120.13593@iabervon.org>
-	<7vhched3kw.fsf@gitster.siamese.dyndns.org>
-	<7v4pded1rk.fsf_-_@gitster.siamese.dyndns.org>
-	<7v7iiabjyh.fsf_-_@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: I don't want the .git directory next to my code.
+Date: Tue, 15 Jan 2008 19:50:20 -0800
+Message-ID: <86hcheig3n.fsf@blue.stonehenge.com>
+References: <478D79BD.7060006@talkingspider.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Chris Ortman <chrisortman@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jan 16 05:19:49 2008
+Cc: git@vger.kernel.org
+To: Mike <fromlists@talkingspider.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 05:20:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEzkh-0002xj-NT
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 05:19:48 +0100
+	id 1JEzlh-0003BM-1u
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 05:20:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753193AbYAPETT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 23:19:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753186AbYAPETT
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 23:19:19 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58190 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753179AbYAPETS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 23:19:18 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D87A7B00;
-	Tue, 15 Jan 2008 23:19:15 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B43897AB7;
-	Tue, 15 Jan 2008 23:19:06 -0500 (EST)
-In-Reply-To: <alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Tue, 15 Jan 2008 19:09:51 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757296AbYAPEUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 23:20:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757486AbYAPEUT
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 23:20:19 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:19834 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757197AbYAPEUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 23:20:18 -0500
+X-Greylist: delayed 1797 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Jan 2008 23:20:18 EST
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id B8D441DE220; Tue, 15 Jan 2008 19:50:20 -0800 (PST)
+x-mayan-date: Long count = 12.19.14.17.18; tzolkin = 9 Etznab; haab = 6 Muan
+In-Reply-To: <478D79BD.7060006@talkingspider.com> (fromlists@talkingspider.com's message of "Tue, 15 Jan 2008 22:27:57 -0500")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70622>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+>>>>> "Mike" == Mike  <fromlists@talkingspider.com> writes:
 
-> We do not want to make it particularly easy for people to create 
-> mind-bogglingly stupid diff output. 
+Mike> I'm learning git and I'm really annoyed that the .git directory lives in
+Mike> the same directory as my code.  I don't want it there for three reasons:
 
-Although the discussion was triggered by that Tortoise thing,
-the RFC patch was not about helping that.  That's a new feature
-asked long after we went into rc freeze, and I am not interested
-in discussing such a feature, especially when I am sick.
+Mike> 1. My code lives on a development web server docroot, and I don't want
+Mike> the .git repository to end up getting published to the live site by
+Mike> accident. (I would imagine this would be a common need.)
 
-The only objective was to make sure that a patch that is not
-kosher in git-apply's eyes is not marked with "diff --git";
-otherwise, its output will confuse git-apply.  As --no-prefix
-will be a new feature in 1.5.4, we would be shipping with a
-known-to-be-bad new feature that is --no-prefix, unless we do
-something about it.  Fixing that breakage was the sole
-motivation behind my patch.
+Sounds like you need an installer... something that copies your repo into the
+live location with things you don't want included left out, and all the
+permissions and ownership correct.
 
-I think a reasonable short-term solution might be to disable any
-git specific stuff (renames, rewrites, etc) when --no-prefix and
-its friends are used, along with the patch you are commenting on
-to remove " --git" from the header.  That would at least make
-sure that the --no-prefix feature is safe.
+Mike> 2. If I tar/gz my code and deliver it to a client, I don't want the .git
+Mike> dir slipping into the tarball, allowing my client to be able to peruse
+Mike> the history of what we did and when.
+
+git archive --help
+
+Mike> 3. The .git respository will get big, especially with binary files in
+Mike> it, and I want it someplace with a lot of disk space. And I don't want
+Mike> it to get tarred up when we migrate the site to a different server. (And
+Mike> tar isn't aware of hard links is it? wonderful.)
+
+An installer helps here too.
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
