@@ -1,112 +1,127 @@
-From: Pedro Melo <melo@simplicidade.org>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Wed, 16 Jan 2008 23:57:21 +0000
-Message-ID: <BA518A23-FBF8-49BB-BEFB-D9A6BA1E302C@simplicidade.org>
-References: <478E1FED.5010801@web.de> <m33asxn2gt.fsf@roke.D-201> <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org> <200801162251.54219.jnareb@gmail.com> <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org> <alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org> <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org> <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
+Date: Thu, 17 Jan 2008 00:58:47 +0100
+Message-ID: <85ir1tpbk8.fsf@lola.goethe.zz>
+References: <478E1FED.5010801@web.de> <m33asxn2gt.fsf@roke.D-201>
+	<65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org>
+	<200801162251.54219.jnareb@gmail.com>
+	<1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org>
+	<alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org>
+	<7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org>
+	<alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Kevin Ballard <kevin@sb.org>, Jakub Narebski <jnareb@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Mark Junker <mjscod@web.de>, git@vger.kernel.org
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jan 17 00:58:00 2008
+X-From: git-owner@vger.kernel.org Thu Jan 17 00:59:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFI8q-0001kb-IY
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 00:57:57 +0100
+	id 1JFIAl-0002Oj-U9
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 00:59:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750926AbYAPX52 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Jan 2008 18:57:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750908AbYAPX52
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 18:57:28 -0500
-Received: from mail.sl.pt ([212.55.140.13]:52377 "EHLO sl.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751069AbYAPX51 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 18:57:27 -0500
-Received: (qmail 17611 invoked from network); 16 Jan 2008 23:57:24 -0000
-X-Virus-Status: Clean (0.01890 seconds) ; Version: 0.3-0.88.6
-X-Spam-Flag: NO
-X-Spam-Status: NO (0.0/5.0) (0.00008 seconds / 0.07313 sA)
-	Checked: by PTMail-AS v0.1 on mail.sl.pt
-Received: from unknown (HELO [192.168.1.209]) (melo@[85.240.106.162])
-          (envelope-sender <melo@simplicidade.org>)
-          by mail-sl (qmail-ldap-1.03) with SMTP
-          for <kevin@sb.org>; 16 Jan 2008 23:57:24 -0000
-Received-SPF: neutral (mail-sl: domain of (null) is neutral about designating 85.240.106.162 as permitted sender)
+	id S1751513AbYAPX7L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Jan 2008 18:59:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751721AbYAPX7J
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 18:59:09 -0500
+Received: from mail-in-03.arcor-online.net ([151.189.21.43]:54443 "EHLO
+	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750921AbYAPX7G convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 18:59:06 -0500
+Received: from mail-in-14-z2.arcor-online.net (mail-in-14-z2.arcor-online.net [151.189.8.31])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id C79D32CB21B;
+	Thu, 17 Jan 2008 00:59:04 +0100 (CET)
+Received: from mail-in-16.arcor-online.net (mail-in-16.arcor-online.net [151.189.21.56])
+	by mail-in-14-z2.arcor-online.net (Postfix) with ESMTP id AC61B100C6;
+	Thu, 17 Jan 2008 00:59:04 +0100 (CET)
+Received: from lola.goethe.zz (dslb-084-061-027-179.pools.arcor-ip.net [84.61.27.179])
+	by mail-in-16.arcor-online.net (Postfix) with ESMTP id 730C7236E47;
+	Thu, 17 Jan 2008 00:58:50 +0100 (CET)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 1A2CB1C00279; Thu, 17 Jan 2008 00:58:47 +0100 (CET)
 In-Reply-To: <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org>
-X-Mailer: Apple Mail (2.753)
+	(Linus Torvalds's message of "Wed, 16 Jan 2008 15:38:35 -0800 (PST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.92/5488/Wed Jan 16 21:44:30 2008 on mail-in-16.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70779>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-On Jan 16, 2008, at 11:38 PM, Linus Torvalds wrote:
 > On Wed, 16 Jan 2008, Kevin Ballard wrote:
->> 	The only way to argue that normalization is wrong is by providing a
->> good reason to preserve the exact byte sequence, and so far the =20
->> only reason
->> I've seen is to help git.
+>>=20
+>> There's a difference between "looks similar" as in "Polish" vs "poli=
+sh", and
+>> actually is the same string as in "Ma<UMLAUT MODIFIER>rchen" vs "M<A=
+ WITH
+>> UMLAUT>rchen". Capitalization has a valid semantic meaning, normaliz=
+ation
+>> doesn't.=20
 >
-> Git doesn't care. Just use the *same* sequence everywhere. Make sure
-> something doesn't change it. Because if something changes it, git wil=
-l
-> track it.
+> That simply isn't true.
+>
+> Normalization actually has real semantic meaning. If it didn't, there
+> would never ever be a reason why you'd use the non-normalized form in
+> the first place.
 
-The problem is that you don't control the sequence that everybody uses.
+Actually, there is no good reason for non-normalized forms (deficient
+software not able to deal with some of the normalized forms is not a
+good reason: such software should be fixed).
 
-See this example:
+It is just that the file system is a rather quirky place for enforcing
+the normalization.  One should not be able to get unnormalized forms
+created easily in the first place, be it command line or script.
 
-melo@speed(~)$ uname -a
-Linux speed.simplicidade.org 2.6.9-55.ELsmp #1 SMP Wed May 2 14:28:44 =20
-EDT 2007 i686 i686 i386 GNU/Linux
-melo@speed(~)$ set | grep LANG
-LANG=3Den_US.UTF-8
-melo@speed(~)$ mkdir t
-melo@speed(~)$ cd t
-melo@speed(~/t)$ git init
-Initialized empty Git repository in .git/
-melo@speed(~/t)$ touch =E1
-melo@speed(~/t)$ git-add =E1
-melo@speed(~/t)$ git-commit -m "added a in utf8"
-Created initial commit 7a473a2: added a in utf8
-  0 files changed, 0 insertions(+), 0 deletions(-)
-  create mode 100644 "\303\241"
-melo@speed(~/t)$ export LANG=3Den_US
-melo@speed(~/t)$ touch =E1
-melo@speed(~/t)$ ls -la
-total 12
-drwxrwxr-x   3 melo melo 4096 Jan 16 23:44 .
-drwx--x--x  31 melo melo 4096 Jan 16 23:43 ..
--rw-rw-r--   1 melo melo    0 Jan 16 23:44 =E1
--rw-rw-r--   1 melo melo    0 Jan 16 23:43 =C3=A1
-drwxrwxr-x   8 melo melo 4096 Jan 16 23:43 .git
-melo@speed(~/t)$ git-add =E1
-melo@speed(~/t)$ git-commit -m "added a in iso-latin-1"
-Created commit 4282fca: Ol=C3=A1x!
-  0 files changed, 0 insertions(+), 0 deletions(-)
-  create mode 100644 "\341"
+> And there *are* cases where there are distinctions. Especially inside
+> computers. For one thing, you may not be talking about "characters on
+> screen", but you may be talking about "key sequences". And suddenly
+> "a<UMLAUT MODIFIER>" is a two-key sequence, and "<a WITH UMLAUT>" is =
+a
+> single-key sequence, and THEY ARE DIFFERENT.
+>
+> See?
 
-So two (simulated in this test) users who use different LANG settings =20
-will be in trouble in no time.
+No.  Input methods are not the same as their resulting string.  I can
+even produce some ASCII characters on my keyboard in more than one way
+and would not expect them to lead to different codes.
 
-What I take from this conversation is that I have to specify, for =20
-each project I work on, which encoding we should use, across all =20
-users, before they start using git with files with accented chars.
+>> How do you figure? When I type "M=E4rchen", I'm typing a string, not=
+ a
+>> byte sequence. I have no control over the normalization of the
+>> characters.  Therefore, depending on what program I'm typing the nam=
+e
+>> in, I might use the same normalization as the filename, or I might
+>> miss. It's completely out of my control. This is why the filesystem
+>> has to step in and say "You composed that character differently, but
+>> I know you were trying to specify this file".
+>
+> Pure and utter garbage.
+>
+> What you are describing is an *input method* issue, not a filesystem
+> issue.
+>
+> The fact that you think this has anything what-so-ever to do with
+> filesystems, I cannot understand.
 
-The difference I see between us is that if I tell my filesystem that =20
-I want to name my file with a particular string encoded in X, users =20
-using encoding Y will be able to read it correctly. I  like my =20
-filesystem to make that work for me.
+How nice.  We are actually in agreement here.
 
-Best regards,
+> See? Putting the conversion in the filesystem IS INSANE. You wouldn't
+> make the filesystem convert the characters in the data stream (becaus=
+e
+> it would cause strange data conversion issues) AND FOR EXACTLY THE
+> SAME REASON it shouldn't do it for filenames either!
+
+Yup.  But that does not mean that normalization is a bad idea.  It is
+just that the filesystem is not the right place for it.
+
 --=20
-Pedro Melo
-Blog: http://www.simplicidade.org/notes/
-XMPP ID: melo@simplicidade.org
-Use XMPP!
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
