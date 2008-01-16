@@ -1,157 +1,134 @@
-From: "Paul Umbers" <paul.umbers@gmail.com>
-Subject: Re: Git Cygwin - unable to create any repository - help!
-Date: Wed, 16 Jan 2008 11:57:18 -0700
-Message-ID: <a5eb9c330801161057q61a04d66u2059e08db1bdd3ee@mail.gmail.com>
-References: <20080114202932.GA25130@steel.home>
-	 <20080115200437.GB3213@steel.home>
-	 <a5eb9c330801151212y30cf4f63r9c294ba33da2b8f@mail.gmail.com>
-	 <200801160002.51048.robin.rosenberg.lists@dewire.com>
-	 <20080116071832.GA2896@steel.home>
-	 <a5eb9c330801160742j645ee50p72ee0a93adf8f94f@mail.gmail.com>
-	 <7v1w8hslhw.fsf@gitster.siamese.dyndns.org>
-	 <a5eb9c330801161010h41e55486y5e8a4335dd939b73@mail.gmail.com>
-	 <20080116183840.GB3181@steel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] Document lockfile API
+Date: Wed, 16 Jan 2008 11:00:13 -0800
+Message-ID: <7vk5m9r3ya.fsf_-_@gitster.siamese.dyndns.org>
+References: <7vmyr6bluy.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.44.0801152006260.944-100000@demand>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_4113_27156175.1200509839105"
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Robin Rosenberg" <robin.rosenberg.lists@dewire.com>,
-	git@vger.kernel.org
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 19:57:55 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Git Mailing List <git@vger.kernel.org>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 20:01:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFDSQ-0006BS-Mo
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 19:57:51 +0100
+	id 1JFDVU-0007R6-EZ
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 20:01:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751270AbYAPS5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 13:57:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751053AbYAPS5U
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 13:57:20 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:22825 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750702AbYAPS5T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 13:57:19 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so583308wah.23
-        for <git@vger.kernel.org>; Wed, 16 Jan 2008 10:57:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        bh=pN7e/7t9jYBfxf1PYN1ODPKSyIPKq6ITmIHHvuIInVI=;
-        b=EOa127vJfOHPQXDrn8f23kgkKn75iqC5xVXt+uCLbkyNvpdXy7bacPUb0/Jm6KjFd5llV8AnpPDD6Imvku8yyFsBYf1SyLSUi+ny3cs1xTCHMXWSa99qQooc7l4d1u7DVkiOM9nBTBTW3b8vHQfv3M2UdNix8kBH7b9FRwLNwmE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=rpjwSupKbPnuNP4l+grq0OAsFjoYbGAlWdHRnwodibmvvne/WHj5IjLI+2uzNinA5IqVIMgsPfEWZQRtd1ynu71JoSAh7OVSkAsWJTd7gBGOwRjZ02qRXiuz3lUsk+hHIlTgbFELFXVsA7Bsu3oAn+n78/7kgHnzhIj46L7gzL4=
-Received: by 10.114.150.1 with SMTP id x1mr1272008wad.145.1200509839097;
-        Wed, 16 Jan 2008 10:57:19 -0800 (PST)
-Received: by 10.114.137.1 with HTTP; Wed, 16 Jan 2008 10:57:18 -0800 (PST)
-In-Reply-To: <20080116183840.GB3181@steel.home>
+	id S1752184AbYAPTAa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 14:00:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751625AbYAPTAa
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 14:00:30 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60303 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750824AbYAPTA3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 14:00:29 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D738288F;
+	Wed, 16 Jan 2008 14:00:27 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A630D288A;
+	Wed, 16 Jan 2008 14:00:20 -0500 (EST)
+In-Reply-To: <Pine.LNX.4.44.0801152006260.944-100000@demand> (Brandon Casey's
+	message of "Tue, 15 Jan 2008 20:11:55 -0600 (CST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70721>
 
-------=_Part_4113_27156175.1200509839105
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+We have nice set of placeholders, but nobody stepped in to fill
+the gap in the API documentation, so I am doing it myself.
 
-Done. The cygwin install is the standard, all-defaults install (and
-I've done it 5 times now). I've attached a tar.gz with the test
-results run under sh and bash. Hope that helps.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/technical/api-lockfile.txt |   67 ++++++++++++++++++++++++++---
+ 1 files changed, 60 insertions(+), 7 deletions(-)
 
-On Jan 16, 2008 11:38 AM, Alex Riesen <raa.lkml@gmail.com> wrote:
-> Paul Umbers, Wed, Jan 16, 2008 19:10:43 +0100:
-> > > After seeing the above error, running the test with -i (stop
-> > > immediately on failure):
-> > >
-> > >         $ cd t
-> > >         $ sh -x ./t0000-basic.sh -i -v
-> > >
-> > Tried Junio's latest suggestion. The resulting output and contents of
-> > the trash are attached as a tar.gz. Thanks for all your help guys, I'm
->
-> Well, either it didn't work or you omited something critical (like
-> stderr):
->
->     * expecting success: tree=$(git write-tree)
->     * FAIL 5: writing tree out with git write-tree
->             tree=$(git write-tree)
->
-> that is too short. All the traces missing. Could you please retry
-> with
->
->     sh -x ./t0000-basic.sh -d -v -i &> test_results.txt
->
-> ? If that is what you actually did, I suspect you have a very broken
-> shell installed. Could you check if you have bash (bash --version)
-> and try it instead of "sh"?
->
->
-
-
-
+diff --git a/Documentation/technical/api-lockfile.txt b/Documentation/technical/api-lockfile.txt
+index 73ac102..5b1553e 100644
+--- a/Documentation/technical/api-lockfile.txt
++++ b/Documentation/technical/api-lockfile.txt
+@@ -1,12 +1,65 @@
+ lockfile API
+ ============
+ 
+-Talk about <lockfile.c>, things like:
++The lockfile API serves two purposes:
+ 
+-* lockfile lifetime -- atexit(3) looks at them, do not put them on the
+-  stack;
+-* hold_lock_file_for_update()
+-* commit_lock_file()
+-* rollback_rock_file()
++* Mutual exclusion.  When we write out a new index file, first
++  we create a new file `$GIT_DIR/index.lock`, write the new
++  contents into it, and rename it to the final destination
++  `$GIT_DIR/index`.  We try to create the `$GIT_DIR/index.lock`
++  file with O_EXCL so that we can notice and fail when somebody
++  else is already trying to update the index file.
+ 
+-(JC, Dscho, Shawn)
++* Automatic cruft removal.  After we create the "lock" file, we
++  may decide to `die()`, and we would want to make sure that we
++  remove the file that has not been committed to its final
++  destination.  This is done by remembering the lockfiles we
++  created in a linked list and cleaning them up from an
++  `atexit(3)` handler.  Outstanding lockfiles are also removed
++  when the program dies on a signal.
++
++
++The functions
++-------------
++
++hold_lock_file_for_update::
++
++	Take a pointer to `struct lock_file`, the filename of
++	the final destination (e.g. `$GIT_DIR/index`) and a flag
++	`die_on_error`.  Attempt to create a lockfile for the
++	destination and return the file descriptor for writing
++	to the file.  If `die_on_error` flag is true, it dies if
++	a lock is already taken for the file; otherwise it
++	returns a negative integer to the caller on failure.
++
++commit_lock_file::
++
++	Take a pointer to the `struct lock_file` initialized
++	with an earlier call to `hold_lock_file_for_update()`,
++	close the file descriptor and rename the lockfile to its
++	final destination.
++
++rollback_lock_file::
++
++	Take a pointer to the `struct lock_file` initialized
++	with an earlier call to `hold_lock_file_for_update()`,
++	close the file descriptor and remove the lockfile.
++
++Because the structure is used in an `atexit(3)` handler, its
++storage has to stay throughout the life of the program.  It
++cannot be an auto variable allocated on the stack.
++
++Call `commit_lock_file()` or `rollback_lock_file()` when you are
++done writing to the file descriptor.  If you do not call either
++and simply `exit(3)` from the program, an `atexit(3)` handler
++will close and remove the lockfile.
++
++You should not close the file descriptor you obtained from
++`hold_lock_file_for_update` function yourself.  The `struct
++lock_file` structure still remembers that the file descriptor
++needs to be closed, and a later call to `commit_lock_file()` or
++`rollback_lock_file()` will result in duplicate calls to
++`close(2)`.  Worse yet, if you `close(2)`, open another file
++descriptor for completely different purpose, and then call
++`commit_lock_file()` or `rollback_lock_file()`, they may close
++that unrelated file descriptor.
 -- 
-Computer Science is no more about computers than astronomy is about telescopes.
---- Edsger W. Dijkstra
-
-Paul Umbers MSc MBCS MIAP
-paul.umbers@gmail.com
-
-------=_Part_4113_27156175.1200509839105
-Content-Type: application/x-gzip; name=test_results_sh_and_bash.tar.gz
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fbi8ikom0
-Content-Disposition: attachment; filename=test_results_sh_and_bash.tar.gz
-
-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
-KFCgQIECBQoUKFCgQIECBf998G+0Z0ggAHgAAA==
-------=_Part_4113_27156175.1200509839105--
+1.5.4.rc3.14.g44397
