@@ -1,103 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC] Do not show "diff --git" metainfo with --no-prefix
-Date: Wed, 16 Jan 2008 01:53:51 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801160152540.17650@racer.site>
-References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com> <alpine.DEB.1.00.0801151444180.5289@eeepc-johanness> <c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com> <alpine.LNX.1.00.0801151728120.13593@iabervon.org>
- <7vhched3kw.fsf@gitster.siamese.dyndns.org> <7v4pded1rk.fsf_-_@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801160133150.17650@racer.site> <7vir1ubl0g.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Chris Ortman <chrisortman@gmail.com>, git@vger.kernel.org
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: [PATCH] treat any file with NUL as binary
+Date: Wed, 16 Jan 2008 04:59:12 +0300
+Message-ID: <1200448752-16024-1-git-send-email-dpotapov@gmail.com>
+References: <7vr6gibm56.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>,
+	Dmitry Potapov <dpotapov@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 02:54:43 2008
+X-From: git-owner@vger.kernel.org Wed Jan 16 02:59:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JExUE-0007CX-PT
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 02:54:39 +0100
+	id 1JExZ9-0008NS-Q3
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 02:59:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755452AbYAPByE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 20:54:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756732AbYAPByB
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 20:54:01 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42961 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754289AbYAPByA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 20:54:00 -0500
-Received: (qmail invoked by alias); 16 Jan 2008 01:53:59 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp018) with SMTP; 16 Jan 2008 02:53:59 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Rk/ohQgyRQ7hY0gV8HwLkOmRRs0yCksEBgRVcX4
-	rDpsMu+tcfy6jc
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vir1ubl0g.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1756782AbYAPB7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 20:59:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756732AbYAPB7P
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 20:59:15 -0500
+Received: from smtp08.mtu.ru ([62.5.255.55]:50488 "EHLO smtp08.mtu.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756779AbYAPB7O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 20:59:14 -0500
+Received: from smtp08.mtu.ru (localhost [127.0.0.1])
+	by smtp08.mtu.ru (Postfix) with ESMTP id 300CAF7693E;
+	Wed, 16 Jan 2008 04:59:07 +0300 (MSK)
+Received: from dpotapov.dyndns.org (ppp85-141-191-67.pppoe.mtu-net.ru [85.141.191.67])
+	by smtp08.mtu.ru (Postfix) with ESMTP id DEB12F76969;
+	Wed, 16 Jan 2008 04:59:06 +0300 (MSK)
+Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
+	(envelope-from <dpotapov@gmail.com>)
+	id 1JExYe-0004BB-IF; Wed, 16 Jan 2008 04:59:12 +0300
+X-Mailer: git-send-email 1.5.3.5
+In-Reply-To: <7vr6gibm56.fsf@gitster.siamese.dyndns.org>
+X-DCC-STREAM-Metrics: smtp08.mtu.ru 10002; Body=0 Fuz1=0 Fuz2=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70600>
 
-Hi,
+There are two heuristics in Git to detect whether a file is binary
+or text. One in xdiff-interface.c (which is taken from GNU diff)
+relies on existence of the NUL byte at the beginning. However,
+convert.c used a different heuristic, which relied on the percent
+of non-printable symbols (less than 1% for text files).
 
-On Tue, 15 Jan 2008, Junio C Hamano wrote:
+Due to differences in detection whether a file is binary or not,
+it was possible that a file that diff treats as binary could be
+treated as text by CRLF conversion. This is very confusing for a
+user who sees that 'git diff' shows the file as binary expects it
+to be added as binary.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> diff --git a/diff.c b/diff.c
-> >> index b18c140..8126a74 100644
-> >> --- a/diff.c
-> >> +++ b/diff.c
-> >> @@ -1246,30 +1258,46 @@ static void builtin_diff(const char *name_a,
-> >>  	char *a_one, *b_two;
-> >>  	const char *set = diff_get_color_opt(o, DIFF_METAINFO);
-> >>  	const char *reset = diff_get_color_opt(o, DIFF_RESET);
-> >> +	int is_git_diff = with_standard_prefix(o);
-> >>  
-> >>  	a_one = quote_two(o->a_prefix, name_a + (*name_a == '/'));
-> >>  	b_two = quote_two(o->b_prefix, name_b + (*name_b == '/'));
-> >>  	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
-> >>  	lbl[1] = DIFF_FILE_VALID(two) ? b_two : "/dev/null";
-> >> -	printf("%sdiff --git %s %s%s\n", set, a_one, b_two, reset);
-> >> +
-> >> +	if (!is_git_diff)
-> >> +		printf("%sIndex: %s%s\n", set, b_two, reset);
-> >> +	else
-> >> +		printf("%sdiff --git %s %s%s\n", set, a_one, b_two, reset);
-> >> +
-> >
-> > Hmm.  AFAICT plain diff outputs "diff ...", not "Index: ...".  IMHO doing 
-> > half of what SVN does, and half what GNU diff does, but not completely 
-> > what something else does, does not help anybody.
-> >
-> > So I'm mildly negative on this hunk.
-> 
-> You misread the intention of the patch.
-> 
-> This whole point of this RFC patch is about not labelling a non-git 
-> patch that results from --no-prefix with "diff --git". As I said in my 
-> reply to Daniel, I do not like "Index:" myself, and doing printf("diff 
-> %s %s\n", a_one, b_two) instead would be perfectly fine by me.
+This patch makes is_binary to consider any file that contains at
+least one NUL character as binary, to ensure that the heuristics
+used for CRLF conversion is tighter than what is used by diff.
 
-Well, I commented on this hunk specifically, and think that the intention 
-of the patch would be better served by just conditionally omitting 
-"--git", and nothing else.
+Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+---
+ convert.c |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
 
-> I do not mind keeping the metainformation such as rename/deleted labels 
-> in the output of non-git case (iow, dropping all the other hunks that 
-> pay attention to is_git_diff in the RFC patch). As long as the patch is 
-> not labelled with "diff --git", stricter checks in git-apply will not 
-> trigger, and it knows to skip these non-patch lines.  Also a plain GNU 
-> patch would ignore those metainformation lines, so there is no strong 
-> reason to remove them from the output, unless somebody wants to use non 
-> patch non git tool that is stricter for no good reason (and I'd agree 
-> with you that the solution to such a tool is a postprocessing filter 
-> outside of git).
-
-Fair enough.
-
-Ciao,
-Dscho
+diff --git a/convert.c b/convert.c
+index 5adef4f..a51da1f 100644
+--- a/convert.c
++++ b/convert.c
+@@ -17,8 +17,8 @@
+ #define CRLF_INPUT	2
+ 
+ struct text_stat {
+-	/* CR, LF and CRLF counts */
+-	unsigned cr, lf, crlf;
++	/* NUL, CR, LF and CRLF counts */
++	unsigned nul, cr, lf, crlf;
+ 
+ 	/* These are just approximations! */
+ 	unsigned printable, nonprintable;
+@@ -51,6 +51,9 @@ static void gather_stats(const char *buf, unsigned long size, struct text_stat *
+ 			case '\b': case '\t': case '\033': case '\014':
+ 				stats->printable++;
+ 				break;
++			case 0:
++				stats->nul++;
++				/* fall through */
+ 			default:
+ 				stats->nonprintable++;
+ 			}
+@@ -66,6 +69,8 @@ static void gather_stats(const char *buf, unsigned long size, struct text_stat *
+ static int is_binary(unsigned long size, struct text_stat *stats)
+ {
+ 
++	if (stats->nul)
++		return 1;
+ 	if ((stats->printable >> 7) < stats->nonprintable)
+ 		return 1;
+ 	/*
+-- 
+1.5.3.5
