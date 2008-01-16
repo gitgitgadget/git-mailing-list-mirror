@@ -1,78 +1,74 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Make 'git fsck' complain about non-commit branches
-Date: Tue, 15 Jan 2008 17:01:57 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801151654050.2806@woody.linux-foundation.org>
-References: <alpine.LFD.1.00.0801151618300.2806@woody.linux-foundation.org> <7v8x2qd2hu.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Be more careful about updating refs
+Date: Tue, 15 Jan 2008 17:11:32 -0800
+Message-ID: <7vzlv6bmm3.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.00.0801151546560.2806@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 02:03:27 2008
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jan 16 02:12:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEwgg-0003P9-JX
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 02:03:27 +0100
+	id 1JEwpD-0005Y8-LH
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 02:12:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754487AbYAPBCL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 20:02:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756036AbYAPBCJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 20:02:09 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:50659 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750968AbYAPBCI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Jan 2008 20:02:08 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0G11w6u001598
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 15 Jan 2008 17:01:59 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0G11vG0012497;
-	Tue, 15 Jan 2008 17:01:58 -0800
-In-Reply-To: <7v8x2qd2hu.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.719 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1752256AbYAPBLp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 20:11:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751590AbYAPBLp
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 20:11:45 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44981 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751379AbYAPBLo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 20:11:44 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 32CB165FD;
+	Tue, 15 Jan 2008 20:11:43 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id ADDD465FB;
+	Tue, 15 Jan 2008 20:11:39 -0500 (EST)
+In-Reply-To: <alpine.LFD.1.00.0801151546560.2806@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 15 Jan 2008 15:50:17 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70590>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> This makes write_ref_sha1() more careful: it actually checks the SHA1 of 
+> the ref it is updating, and refuses to update a ref with an object that it 
+> cannot find.
+>
+> Perhaps more importantly, it also refuses to update a branch head with a 
+> non-commit object. I don't quite know *how* the stable series maintainers 
+> were able to corrupt their repository to have a HEAD that pointed to a tag 
+> rather than a commit object, but they did. Which results in a totally 
+> broken repository that cannot be cloned or committed on.
 
-On Tue, 15 Jan 2008, Junio C Hamano wrote:
-> 
-> So far, the plumbing level did not care much about the Porcelain
-> convention, such as refs/heads and refs/remotes (you seem to
-> have forgot) are about "branches" and must point at commit
-> objects.
+Two questions and a comment:
 
-Yeah. I'm not sure this is all a great idea, but I think they are correct 
-(and no, "refs/remotes/" would *not* have been correct). 
+ - Do we want to impose the same restriction on refs/remotes/?
+   I think that is a logical thing to do.
 
-The "be more careful about parents" patch (builtin-commit.c) is 
-unquestionably a good idea - those things really *have* to be commits from 
-a plumbing standpoint.
+ - What should the receive-pack and git-fetch do if they trigger
+   the check in this codepath while updating the refs under the
+   affected hierarchies?  Fail the push and fetch?
 
-The other ones follow the same rules: "HEAD" really does need to be a 
-commit, since that will otherwise cause breakage (not just for "git 
-commit", but for "git clone" too). The same is true of "git checkout" and 
-"refs/heads/" - if a "refs/heads/" ref isn't a commit, switching branches 
-will get confused!
+ - I think !strcmp(refname, "HEAD") is not quite a right check
+   to do here.  In order to catch the detached head case, it
+   must be checked, but at the same time if the head is not
+   detached, it should look at where the symref points at
+   (i.e. a symref HEAD that points outside refs/heads is an
+   error, and we need to catch that).
 
-So now git-fsck verifies things that would confuse git itself. But that's 
-also why refs/remotes/* aren't checked for being commits, and really a 
-remote branch is very *different* from a local branch - because those 
-things would never be used for a commit chain by the native git commands, 
-so git itself shouldn't care.
-
-We've clearly moved a lot of the porcelain layer into git internals, and 
-maybe this went too far, but I suspect not. You can still do whatever the 
-heck you want from a porcelain angle, it just has to follow the (fairly 
-lax) rules that core git itself does expect.
-
-		Linus
+> +static int is_branch(const char *refname)
+> +{
+> +	return !strcmp(refname, "HEAD") || !prefixcmp(refname, "refs/heads/");
+> +}
