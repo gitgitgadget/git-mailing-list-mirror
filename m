@@ -1,242 +1,154 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] close_lock_file(): new function in the lockfile API
-Date: Wed, 16 Jan 2008 13:57:50 -0800
-Message-ID: <7v7ii9o2ld.fsf@gitster.siamese.dyndns.org>
-References: <7vmyr6bluy.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.44.0801152006260.944-100000@demand>
-	<7vejchr3pf.fsf_-_@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801161207220.2806@woody.linux-foundation.org>
-	<7vodblo6c9.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0801161443340.31161@torch.nrlssc.navy.mil>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Jan 16 22:58:35 2008
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Wed, 16 Jan 2008 17:06:05 -0500
+Message-ID: <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org>
+References: <478E1FED.5010801@web.de> <m33asxn2gt.fsf@roke.D-201> <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org> <200801162251.54219.jnareb@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: multipart/signed; boundary=Apple-Mail-5-1023149992; micalg=sha1; protocol="application/pkcs7-signature"
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mark Junker <mjscod@web.de>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 23:07:01 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFGHH-0008A1-A6
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 22:58:31 +0100
+	id 1JFGPD-0002ZT-AS
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 23:06:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751569AbYAPV6D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 16:58:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751542AbYAPV6B
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 16:58:01 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37456 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751487AbYAPV6A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 16:58:00 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 701BC23AD;
-	Wed, 16 Jan 2008 16:57:58 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 35A2423AC;
-	Wed, 16 Jan 2008 16:57:52 -0500 (EST)
-In-Reply-To: <Pine.LNX.4.64.0801161443340.31161@torch.nrlssc.navy.mil>
-	(Brandon Casey's message of "Wed, 16 Jan 2008 14:46:23 -0600 (CST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752070AbYAPWGN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 17:06:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751921AbYAPWGN
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 17:06:13 -0500
+Received: from sd-green-bigip-207.dreamhost.com ([208.97.132.207]:41679 "EHLO
+	randymail-a8.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751700AbYAPWGL (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 17:06:11 -0500
+Received: from KBALLARD.RES.WPI.NET (KBALLARD.RES.WPI.NET [130.215.239.91])
+	by randymail-a8.g.dreamhost.com (Postfix) with ESMTP id 22A37AF824;
+	Wed, 16 Jan 2008 14:06:06 -0800 (PST)
+In-Reply-To: <200801162251.54219.jnareb@gmail.com>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70753>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-> My patch does this, though I understand it may take some time to review.
+--Apple-Mail-5-1023149992
+Content-Type: text/plain;
+	charset=US-ASCII;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: 7bit
 
-This is what I have right now, squashed your change into [2/2] 
-I sent earlier, along with a couple of further fixups.
+On Jan 16, 2008, at 4:51 PM, Jakub Narebski wrote:
 
-Improvement since my v1 are:
+>> On the other hand, what you create the file with may not
+>> be what you read back later, since the name has been standardized.
+>> It's hard to say one is better than the other, they're just different
+>> ways of doing it.
+>
+> But using one encoding to create file, and another when reding  
+> filenames
+> is strange. It is IMHO better to simply refuse creating filenames  
+> which
+> are outside chosen encoding / normalization. But having different
+> encodings used for reading and writing on the level of filesystem
+> access (not on level of UI) is strange.
 
- - close_lock_file() returns int, which is the return value from
-   close(2);
+It's not using different encodings, it's all Unicode. However, it  
+accepts different normalization variants of Unicode, since it can read  
+them all and it would be folly to require everybody to conform to its  
+own special internal variant. But it does have to normalize them,  
+otherwise how would it detect the same filename using different  
+normalizations? Also, it may seem strange to have different names  
+between reading and writing, but that's only if you think of the name  
+as a sequence of bytes - when treated as a sequence of characters, you  
+get the same result. In other words, you're used to filenames as  
+bytes, HFS+ treats filenames as strings.
 
- - remove_lock_file() avoids calling close(2) if
-   close_lock_file() was called earlier on the lockfile;
+>> However, I have noticed that everybody who's voiced
+>> an opinion on this list in favor of the encoding-agnostic approach
+>> seem to be unwilling to accept that any other approach might have
+>> validity, to the extent of calling an OS/filesystem that does things
+>> different stupid or insane. This strikes me as extremely elitist and
+>> risks alienating what I expect to be a fast-growing group of users
+>> (i.e. OS X users).
+>
+> First, it is Git philosophy and very core of design to be encoding
+> agnostic (to be "content tracker"). Second, using the same sequence of
+> bytes on filesystem, in the index, and in 'tree' objects ensures good
+> performance... this is something to think about if you want to add
+> patches which would deal with HFS+ API/UI quirks.
 
- - commit_lock_file() does the same, and notices failure
-   returned from close_lock_file().  In addition, it unlinks the
-   lockfile and clears lk->filename upon failure;
+Sure, it makes sense from a performance perspective, but it causes  
+problems with HFS+ and any other filesystem that behaves the same way.  
+In the previous discussion about case-sensitivity, somebody suggested  
+using a lookup table to map between git's internal representation and  
+the name the filesystem returns, which seems like a decent idea and  
+one that could be enabled with a config parameter to avoid penalizing  
+repos on other filesystems. But I don't know enough about the  
+internals of git to even think of trying to implement it myself.
 
- - commit_locked_index() does the same, and notices failure
-   returned from close_lock_file() in alternate_index_output
-   codepath.  It unlinks the lockfile and clears lk->filename
-   upon failure;
-
- - The codepath in commit_locked_index() for writing to
-   alternate_index_output clears the alternate_index_output
-   variable when it is done.
-
-Most of the above are thanks to the changes to lockfile.c in your
-version and Linus's suggestion.
-
-I am planning to take your patch (only the parts that fix the
-callers, because the changes to lockfile.c are all included
-here) on top of this one.
-
--- >8 --
-close_lock_file(): new function in the lockfile API
-
-The lockfile API is a handy way to obtain a file that is cleaned
-up if you die().  But sometimes you would need this sequence to
-work:
-
- 1. hold_lock_file_for_update() to get a file descriptor for
-    writing;
-
- 2. write the contents out, without being able to decide if the
-    results should be committed or rolled back;
-
- 3. do something else that makes the decision --- and this
-    "something else" needs the lockfile not to have an open file
-    descriptor for writing (e.g. Windows do not want a open file
-    to be renamed);
-
- 4. call commit_lock_file() or rollback_lock_file() as
-    appropriately.
-
-This adds close_lock_file() you can call between step 2 and 3 in
-the above sequence.
-
-[jc: updated with Brandon's stricter error checking on return values
- from close() and a suggestion by Linus.]
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/technical/api-lockfile.txt |   15 +++++++++++--
- cache.h                                  |    2 +-
- lockfile.c                               |   32 ++++++++++++++++++++++++-----
- 3 files changed, 39 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/technical/api-lockfile.txt b/Documentation/technical/api-lockfile.txt
-index 5b1553e..dd89404 100644
---- a/Documentation/technical/api-lockfile.txt
-+++ b/Documentation/technical/api-lockfile.txt
-@@ -37,7 +37,8 @@ commit_lock_file::
- 	Take a pointer to the `struct lock_file` initialized
- 	with an earlier call to `hold_lock_file_for_update()`,
- 	close the file descriptor and rename the lockfile to its
--	final destination.
-+	final destination.  Returns 0 upon success, a negative
-+	value on failure to close(2) or rename(2).
- 
- rollback_lock_file::
- 
-@@ -45,6 +46,12 @@ rollback_lock_file::
- 	with an earlier call to `hold_lock_file_for_update()`,
- 	close the file descriptor and remove the lockfile.
- 
-+close_lock_file::
-+	Take a pointer to the `struct lock_file` initialized
-+	with an earlier call to `hold_lock_file_for_update()`,
-+	and close the file descriptor.  Returns 0 upon success,
-+	a negative value on failure to close(2).
-+
- Because the structure is used in an `atexit(3)` handler, its
- storage has to stay throughout the life of the program.  It
- cannot be an auto variable allocated on the stack.
-@@ -54,8 +61,10 @@ done writing to the file descriptor.  If you do not call either
- and simply `exit(3)` from the program, an `atexit(3)` handler
- will close and remove the lockfile.
- 
--You should not close the file descriptor you obtained from
--`hold_lock_file_for_update` function yourself.  The `struct
-+If you need to close the file descriptor you obtained from
-+`hold_lock_file_for_update` function yourself, do so by calling
-+`close_lock_file()`.  You should never call `close(2)` yourself!
-+Otherwise the `struct
- lock_file` structure still remembers that the file descriptor
- needs to be closed, and a later call to `commit_lock_file()` or
- `rollback_lock_file()` will result in duplicate calls to
-diff --git a/cache.h b/cache.h
-index 39331c2..24735bd 100644
---- a/cache.h
-+++ b/cache.h
-@@ -308,7 +308,7 @@ extern int commit_lock_file(struct lock_file *);
- extern int hold_locked_index(struct lock_file *, int);
- extern int commit_locked_index(struct lock_file *);
- extern void set_alternate_index_output(const char *);
--
-+extern int close_lock_file(struct lock_file *);
- extern void rollback_lock_file(struct lock_file *);
- extern int delete_ref(const char *, const unsigned char *sha1);
- 
-diff --git a/lockfile.c b/lockfile.c
-index f45d3ed..fcf9285 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -13,7 +13,8 @@ static void remove_lock_file(void)
- 	while (lock_file_list) {
- 		if (lock_file_list->owner == me &&
- 		    lock_file_list->filename[0]) {
--			close(lock_file_list->fd);
-+			if (lock_file_list->fd >= 0)
-+				close(lock_file_list->fd);
- 			unlink(lock_file_list->filename);
- 		}
- 		lock_file_list = lock_file_list->next;
-@@ -159,11 +160,23 @@ int hold_lock_file_for_update(struct lock_file *lk, const char *path, int die_on
- 	return fd;
- }
- 
-+int close_lock_file(struct lock_file *lk)
-+{
-+	int fd = lk->fd;
-+	lk->fd = -1;
-+	return close(fd);
-+}
-+
- int commit_lock_file(struct lock_file *lk)
- {
- 	char result_file[PATH_MAX];
- 	int i;
--	close(lk->fd);
-+
-+	if (lk->fd >= 0 && close_lock_file(lk)) {
-+		unlink(lk->filename);
-+		lk->filename[0] = 0;
-+		return -1;
-+	}
- 	strcpy(result_file, lk->filename);
- 	i = strlen(result_file) - 5; /* .lock */
- 	result_file[i] = 0;
-@@ -185,9 +198,15 @@ void set_alternate_index_output(const char *name)
- int commit_locked_index(struct lock_file *lk)
- {
- 	if (alternate_index_output) {
--		int result = rename(lk->filename, alternate_index_output);
--		lk->filename[0] = 0;
--		return result;
-+		const char *newname = alternate_index_output;
-+		alternate_index_output = NULL;
-+
-+		if (lk->fd >= 0 && close_lock_file(lk)) {
-+			unlink(lk->filename);
-+			lk->filename[0] = 0;
-+			return -1;
-+		}
-+		return rename(lk->filename, newname);
- 	}
- 	else
- 		return commit_lock_file(lk);
-@@ -196,7 +215,8 @@ int commit_locked_index(struct lock_file *lk)
- void rollback_lock_file(struct lock_file *lk)
- {
- 	if (lk->filename[0]) {
--		close(lk->fd);
-+		if (lk->fd >= 0)
-+			close(lk->fd);
- 		unlink(lk->filename);
- 	}
- 	lk->filename[0] = 0;
 -- 
-1.5.4.rc3.14.g44397
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
+
+
+
+--Apple-Mail-5-1023149992
+Content-Disposition: attachment;
+	filename=smime.p7s
+Content-Type: application/pkcs7-signature;
+	name=smime.p7s
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGMjCCAusw
+ggJUoAMCAQICEDsG8BKvlrEW0HUBIxWIgjUwDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
+JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
+ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA3MDQyMzIxMjM0OVoXDTA4MDQyMjIxMjM0
+OVowVzEQMA4GA1UEBBMHQmFsbGFyZDEOMAwGA1UEKhMFS2V2aW4xFjAUBgNVBAMTDUtldmluIEJh
+bGxhcmQxGzAZBgkqhkiG9w0BCQEWDGtldmluQHNiLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEP
+ADCCAQoCggEBAN/koURrN2ndrAiuAuHHrdFz+hLGQ7ZsXloGnObjALGOFY3Kmk2FCwAJPIha5GfM
+YFmZIoqxs+DbOWOn6KZ9hcQ5wf4EOgokayrEs3G72T+G8ZE4aXrw0CWJzKLjaIQeDZNZoHA44jlZ
+dG70wtZske898IoPz6YHpkcXiulllATfd8Pa7EgjPri5hKFiRXKI52OsOQTX6cNMMZJUIm8DvfQ5
+jmDyAtywNZGSGeUAMbWnpuLq7H18zpye2Q1hr+p4kucazMb+i7OHXPvX7yx2jMjhN5jw/gYkuzQQ
+JExp1fJyAZQ/av/ZgaxWchhhi4ziFXIlX3B09DTlOQlF53P3fi0CAwEAAaMpMCcwFwYDVR0RBBAw
+DoEMa2V2aW5Ac2Iub3JnMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEFBQADgYEAw/qc6zq+0Qy2
+XaodDlt2L6Vq1DzaVWjV152BFjidmsyhyCkCuyYdAcDp17opIfrNCBbOX5DdY6cpFpnSCxCZeIEB
+PDc3TaaFPtzr8qrpcNDohRSdt+qFLUeMHzlidAiAjvjI3tPKv3JLTakWdQR/XPHsg4mWoaVQU2hM
+HOQBw8EwggM/MIICqKADAgECAgENMA0GCSqGSIb3DQEBBQUAMIHRMQswCQYDVQQGEwJaQTEVMBMG
+A1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0ZSBD
+b25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQwIgYD
+VQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNvbmFs
+LWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNMDMwNzE3MDAwMDAwWhcNMTMwNzE2MjM1OTU5WjBiMQsw
+CQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoGA1UE
+AxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0EwgZ8wDQYJKoZIhvcNAQEBBQAD
+gY0AMIGJAoGBAMSmPFVzVftOucqZWh5owHUEcJ3f6f+jHuy9zfVb8hp2vX8MOmHyv1HOAdTlUAow
+1wJjWiyJFXCO3cnwK4Vaqj9xVsuvPAsH5/EfkTYkKhPPK9Xzgnc9A74r/rsYPge/QIACZNenpruf
+ZdHFKlSFD0gEf6e20TxhBEAeZBlyYLf7AgMBAAGjgZQwgZEwEgYDVR0TAQH/BAgwBgEB/wIBADBD
+BgNVHR8EPDA6MDigNqA0hjJodHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUGVyc29uYWxGcmVl
+bWFpbENBLmNybDALBgNVHQ8EBAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZhdGVM
+YWJlbDItMTM4MA0GCSqGSIb3DQEBBQUAA4GBAEiM0VCD6gsuzA2jZqxnD3+vrL7CF6FDlpSdf0wh
+uPg2H6otnzYvwPQcUCCTcDz9reFhYsPZOhl+hLGZGwDFGguCdJ4lUJRix9sncVcljd2pnDmOjCBP
+ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
+MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
+A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEDsG8BKvlrEW0HUBIxWI
+gjUwCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
+DxcNMDgwMTE2MjIwNjA2WjAjBgkqhkiG9w0BCQQxFgQUranKibawAgIxHFQNa7IA8m/WAmEwgYUG
+CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
+IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
+AhA7BvASr5axFtB1ASMViII1MIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
+BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
+b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhA7BvASr5axFtB1ASMViII1MA0GCSqGSIb3DQEBAQUA
+BIIBACEuXSq3JAFX74514hPOGXy+Dr9YcamZQEPFEjeVpcvkpnjaBYC0D9lvl6pAenQ40O7/AkXI
+i+Fc58lJdeufLmSs4N9/2oDAXvkG/Mg1vl+/g4PSHgw59Dy5VuC8rz1S8261scbyI1O2a0XYC6ch
+Zv5543PvrJPJwuCbucfmM41bZWrexKSOr3Id1TVMFcceMQoAvPjr3fX33Qw9tVmKgwwwQNiTgIAL
+1NVcvVEokLWUF8uUULTy7vIGd7hvzJvKo6sWGM96/4JXCb9V+IDFi2v33ydCT2E8TlA2Tns5gy4G
+n9QaqqmsJJ3X9hRpE/ByxeyjQmWC63AggKa7V5xPoRIAAAAAAAA=
+
+--Apple-Mail-5-1023149992--
