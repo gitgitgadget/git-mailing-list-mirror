@@ -1,65 +1,66 @@
-From: Dan McGee <dpmcgee@gmail.com>
-Subject: Re: [RFC/PATCH] Remove repo-config
-Date: Tue, 15 Jan 2008 22:40:08 -0600
-Message-ID: <478D8AA8.3070008@gmail.com>
-References: <1200453554-14163-1-git-send-email-dpmcgee@gmail.com> <7vtzles8j8.fsf@gitster.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: I don't want the .git directory next to my code.
+Date: Tue, 15 Jan 2008 23:44:19 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0801152337140.13593@iabervon.org>
+References: <478D79BD.7060006@talkingspider.com> <ee77f5c20801152006w11307ce0j17463f1c6536543f@mail.gmail.com> <478D85A9.6050807@talkingspider.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 05:40:42 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
+To: Mike <fromlists@talkingspider.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 05:44:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JF04v-0006jd-UD
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 05:40:42 +0100
+	id 1JF08w-0007PP-Tg
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 05:44:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753832AbYAPEkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 23:40:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753473AbYAPEkN
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 23:40:13 -0500
-Received: from an-out-0708.google.com ([209.85.132.241]:26156 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752739AbYAPEkL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 23:40:11 -0500
-Received: by an-out-0708.google.com with SMTP id d31so25040and.103
-        for <git@vger.kernel.org>; Tue, 15 Jan 2008 20:40:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        bh=iqD4kYcJdFn4SJcw72WCB7Ol6Vna4VixwsIlIlBVxh4=;
-        b=BIw4LXdXw5oilk0ITDxQDWAqSpe7y1PXZD4WcUYn0vnMjIwMYSG1jrZ0fGwxhrxlylY+WnIa9u7TrZpHG/jxs5DciLVcdMy8fBT5F1zOGfhSJ1PwL9Dw5RTR5FyjGm4MxRy/I8240dcZypzvVSVhuyBf6TiN7Y7Z1A0VuuYDDvs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=IHdcsj/eQm27BeaaHcH7ly9S2QJ+K2uof6FX7O+Du3v/qtmOn5xUlKYp408FtwTE5J0s7WvM2OwOuHKabCDl19ycR3tvkWrh752qOwqmGcnQAxS67Bm0Wh0eSXwfOfElZM9axwebZiD115eF71jkSOiKp/HEjz7tQClQVzgx+jg=
-Received: by 10.100.7.1 with SMTP id 1mr673616ang.81.1200458410683;
-        Tue, 15 Jan 2008 20:40:10 -0800 (PST)
-Received: from ?192.168.1.100? ( [76.197.238.51])
-        by mx.google.com with ESMTPS id a13sm466505rof.9.2008.01.15.20.40.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 15 Jan 2008 20:40:10 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071212)
-In-Reply-To: <7vtzles8j8.fsf@gitster.siamese.dyndns.org>
+	id S1757486AbYAPEoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 23:44:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757568AbYAPEoW
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 23:44:22 -0500
+Received: from iabervon.org ([66.92.72.58]:55827 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757146AbYAPEoV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 23:44:21 -0500
+Received: (qmail 18827 invoked by uid 1000); 16 Jan 2008 04:44:19 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 16 Jan 2008 04:44:19 -0000
+In-Reply-To: <478D85A9.6050807@talkingspider.com>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70631>
 
-On 01/15/2008 10:23 PM, Junio C Hamano wrote:
-> I do not think it is unreasonable to add repo-config to feature
-> removal schedule in 1.5.4 release notes.  Perhaps something like...
+On Tue, 15 Jan 2008, Mike wrote:
+
+> David Symonds wrote:
+> > On Jan 16, 2008 2:27 PM, Mike <fromlists@talkingspider.com> wrote:
+> > > 2. If I tar/gz my code and deliver it to a client, I don't want the .git
+> > > dir slipping into the tarball, allowing my client to be able to peruse
+> > > the history of what we did and when.
+> > 
+> > Use git-archive.
+> > 
 > 
-> + * "git repo-config", which was an old name for "git config" command,
-> +   has been supported without being advertised for a long time.  The
-> +   next feature release will remove it.
-> +
+> Thanks but this isn't sufficient. If we have one directory of our web root in
+> a git repository, say docroot/php, and we tar up docroot, it will include
+> php/.git.  We don't want that.  We would have to go out of our way to avoid
+> the .git directory.  The point is, we don't want anything in docroot that
+> shouldn't be made live.
 
-Seems fine to me. Does it need to be put in command-list.txt for the time being too, or what all is that file used for? Sorry I am not familiar.
+I don't know about you, but my source directories get lots of other 
+junk: editor backup files, half-written scripts, debugging output, etc. 
+Furthermore, there's the issue of whether you can accidentally distribute 
+something you haven't added to your version control yet and therefore 
+can't reproduce. It's just a lot cleaner to deploy and distribute out of 
+the version control system instead of out of a working directory.
 
-Something like:
+I don't know why you don't seem to have git-archive (or its manpage); it's 
+in the version you have. Maybe it didn't get into the deb-generation files 
+at the time? You might have git-tar-tree instead, though.
 
-git-repo-config                       ancillarymanipulators	deprecated
+	-Daniel
+*This .sig left intentionally blank*
