@@ -1,85 +1,75 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 2/2] close_lock_file(): new function in the lockfile API
-Date: Wed, 16 Jan 2008 14:46:23 -0600 (CST)
-Message-ID: <Pine.LNX.4.64.0801161443340.31161@torch.nrlssc.navy.mil>
-References: <7vmyr6bluy.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.44.0801152006260.944-100000@demand> <7vejchr3pf.fsf_-_@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0801161207220.2806@woody.linux-foundation.org>
- <7vodblo6c9.fsf@gitster.siamese.dyndns.org>
+From: Peter Oberndorfer <kumbayo84@arcor.de>
+Subject: Re: [RFC/PATCH] Remove repo-config
+Date: Wed, 16 Jan 2008 21:47:33 +0100
+Message-ID: <200801162147.33448.kumbayo84@arcor.de>
+References: <1200453554-14163-1-git-send-email-dpmcgee@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	=?X-UNKNOWN?Q?Kristian_H=C3=B8gsberg?= <krh@redhat.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 21:48:18 2008
+Content-Type: text/plain;
+  charset="iso-8859-6"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>,
+	Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>
+To: Dan McGee <dpmcgee@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 21:57:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFFBJ-00071n-56
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 21:48:17 +0100
+	id 1JFFKM-00021S-6t
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 21:57:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751263AbYAPUro (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 15:47:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751194AbYAPUrn
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 15:47:43 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:53383 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751188AbYAPUrn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 15:47:43 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0GKkOuc028406;
-	Wed, 16 Jan 2008 14:46:24 -0600
-Received: from torch.nrlssc.navy.mil ([128.160.25.59]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 16 Jan 2008 14:46:23 -0600
-In-Reply-To: <7vodblo6c9.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 16 Jan 2008 20:46:23.0861 (UTC) FILETIME=[DB509A50:01C85880]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15666001
-X-TM-AS-Result: : Yes--13.041800-0-4-1
-X-TM-AS-Category-Info: : 4:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY3NS03MDAw?=
-	=?us-ascii?B?NzUtMTM5MDEwLTcwMDY0OC03MTEyMTktNzAzNzMxLTEzNzcxNy03?=
-	=?us-ascii?B?MDA5NzEtNzA0ODUyLTcwMTUxMy03MDA3MjYtNzA5MDY1LTcwMTYw?=
-	=?us-ascii?B?NC03MDIzNzUtNzAxNDU1LTcxMTQzMi03MDA3NTgtNzAzNzg4LTcw?=
-	=?us-ascii?B?NDkzMC03MDA0NzYtMTQ4MDM5LTE0ODA1MC0yMDA0Mw==?=
+	id S1751561AbYAPU5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 15:57:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751471AbYAPU5G
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 15:57:06 -0500
+Received: from mail-in-02.arcor-online.net ([151.189.21.42]:34980 "EHLO
+	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751484AbYAPU5F (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 15:57:05 -0500
+Received: from mail-in-03-z2.arcor-online.net (mail-in-03-z2.arcor-online.net [151.189.8.15])
+	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 3EF9B32EC10;
+	Wed, 16 Jan 2008 21:57:03 +0100 (CET)
+Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
+	by mail-in-03-z2.arcor-online.net (Postfix) with ESMTP id 3081B2D37DB;
+	Wed, 16 Jan 2008 21:57:03 +0100 (CET)
+Received: from fnoheim52.netpark.at (fnoheim52.netpark.at [83.68.151.52])
+	(Authenticated sender: kumbayo84@arcor.de)
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id E1A6E212F62;
+	Wed, 16 Jan 2008 21:57:02 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <1200453554-14163-1-git-send-email-dpmcgee@gmail.com>
+Content-Disposition: inline
+X-Virus-Scanned: ClamAV 0.92/5487/Wed Jan 16 19:21:33 2008 on mail-in-01.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70746>
 
-On Wed, 16 Jan 2008, Junio C Hamano wrote:
+On Mittwoch 16 Januar 2008, Dan McGee wrote:
+> 'git config' has been used in place of 'git repo-config' for some time in
+> the documentation and most of the tools, so remove traces of repo-config
+> from the source.
+> 
+> Signed-off-by: Dan McGee <dpmcgee@gmail.com>
+> ---
+> 
+> Mainly a request for comment, but I sent this patch becuase I noticed
+> repo-config is not even listed in command-list.txt. Before the 1.5.4 release,
+> I would think it either needs to be listed there or removed entirely.
+> 
+> Looking forward to 1.5.5, is there any reason to keep an old command like
+> this around? It is rarely used and needlessly complicates things, and the
+> manpage did nothing but send you to config anyway.
+> 
+I don't know if this should impact removing schedule, but stgit 0.14.1
+(and the current development version) uses "git repo-config" instead of "git config"
+in stgit/config.py and certain tests
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
->
->> On Wed, 16 Jan 2008, Junio C Hamano wrote:
->>> +
->>> +void close_lock_file(struct lock_file *lk)
->>> +{
->>> +	close(lk->fd);
->>> +	lk->fd = -1;
->>> +}
->>
->> Since one of the main purposes of closing would be the error testing of
->> writes that haven't made it out yet on filesystems like NFS that do
->> open-close cache serialization, I'd suggest doing this as
->>
->> 	int close_lock_file(struct lock_file *lk)
->> 	{
->> 		int fd = lk->fd;
->> 		lk->df = -1;
->> 		return close(fd);
->> 	}
->>
->> to give the return code.
->
-> Yup!  You are as always right.
-
-My patch does this, though I understand it may take some time to review.
-
-I left the lk->fd unmodified when close() failed in case the caller
-would like to include it in an error message.
-
--brandon
+will post a patch for this as a reply
+> All tests pass on Linux 2.6.23.
+> 
+> -Dan
+Greetings Peter
+PS: i hope it is ok to add stgit people to CC
