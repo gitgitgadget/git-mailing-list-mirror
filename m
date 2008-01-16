@@ -1,68 +1,58 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH v2] Do not show "diff --git" metainfo with --no-prefix
-Date: Tue, 15 Jan 2008 23:04:21 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0801152256480.13593@iabervon.org>
-References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com> <alpine.DEB.1.00.0801151444180.5289@eeepc-johanness> <c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com> <alpine.LNX.1.00.0801151728120.13593@iabervon.org>
- <7vhched3kw.fsf@gitster.siamese.dyndns.org> <7v4pded1rk.fsf_-_@gitster.siamese.dyndns.org> <7v7iiabjyh.fsf_-_@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org>
- <alpine.LFD.1.00.0801151919440.2806@woody.linux-foundation.org>
+From: "David Symonds" <dsymonds@gmail.com>
+Subject: Re: I don't want the .git directory next to my code.
+Date: Wed, 16 Jan 2008 15:06:13 +1100
+Message-ID: <ee77f5c20801152006w11307ce0j17463f1c6536543f@mail.gmail.com>
+References: <478D79BD.7060006@talkingspider.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Chris Ortman <chrisortman@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jan 16 05:04:53 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Mike <fromlists@talkingspider.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 05:06:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEzWG-000089-Oj
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 05:04:53 +0100
+	id 1JEzY3-0000Wm-47
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 05:06:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756533AbYAPEEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 23:04:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754830AbYAPEEY
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 23:04:24 -0500
-Received: from iabervon.org ([66.92.72.58]:41307 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754138AbYAPEEY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 23:04:24 -0500
-Received: (qmail 17689 invoked by uid 1000); 16 Jan 2008 04:04:21 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 16 Jan 2008 04:04:21 -0000
-In-Reply-To: <alpine.LFD.1.00.0801151919440.2806@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1756912AbYAPEGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 23:06:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752586AbYAPEGO
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 23:06:14 -0500
+Received: from wa-out-1112.google.com ([209.85.146.176]:8235 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756638AbYAPEGN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 23:06:13 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so177337wah.23
+        for <git@vger.kernel.org>; Tue, 15 Jan 2008 20:06:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=hanGB228jMWplbQXBsyMts5VCeFTnvcv87jpf4bmfKg=;
+        b=RVtkzG8jvtf0Sg4wS7DbyuVleQ88jBojEJtPT5+RBKFCQeGf8KvUNmsrftD4DHBtn9PvvbeyraKqbV4jIxHB+2KlouizV+UuxfsZ6qH6OwIz77BpibytvPMn3ON58dblYye3eesvqPDdzqu9FUXXofbqRV1qghjO4zD9oPISpLI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AJnKD4PC2gYfVu4m682NSGcMtfDTn5SiHo2nPHuip8XjhedM2wJsUD7NZp4VtFexOKL3uo/od/14pFPfVSF4BkgDDkdrFiiRLJ/PxH/wlP4OHs/1ZaKpdUdUkizQufVItw4g/tOScdLV0IFNPKg085kd3W5hxQrs9YMZPm+2pPI=
+Received: by 10.140.251.1 with SMTP id y1mr237292rvh.11.1200456373513;
+        Tue, 15 Jan 2008 20:06:13 -0800 (PST)
+Received: by 10.141.115.4 with HTTP; Tue, 15 Jan 2008 20:06:13 -0800 (PST)
+In-Reply-To: <478D79BD.7060006@talkingspider.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70617>
 
-On Tue, 15 Jan 2008, Linus Torvalds wrote:
-
-> On Tue, 15 Jan 2008, Linus Torvalds wrote:
-> > 
-> > If we do any git-specific stuff, we need to have that "--git" thing there. 
-> > That is *not* just limited to the prefix, but to all the other things git 
-> > diffs can do: renames, mode changes, etc.
-> 
-> Side note: the fact that git-apply itself might have issues with a 
-> "--no-prefix" patch is really a red herring, because while it's true that 
-> you would normally not do it for git, it's even more true that we haven't 
-> actually started teaching git about it and the cases where you *would* use 
-> it (eg recursive subproject diffs etc).
+On Jan 16, 2008 2:27 PM, Mike <fromlists@talkingspider.com> wrote:
 >
-> So I do not think it's true that "--no-prefix" (or --src/dst-prefix) 
-> necessarily implies "no-git" at all. It *can* do so, but it's not a given 
-> thing, and almost certainly isn't in the long run with submodule support. 
+> 2. If I tar/gz my code and deliver it to a client, I don't want the .git
+> dir slipping into the tarball, allowing my client to be able to peruse
+> the history of what we did and when.
 
-I don't think --no-prefix is sufficient for submodules; it means that 
-git-apply will accidentally remove exactly one level, but if your 
-submodule is two directory levels down, it won't work, and having the 
-effective prefixes be "gitweb" and "gitweb" is a little hackish. You'd 
-really want to generate a -p1 patch whose root is shifted from the actual 
-project root, not a -p0 patch or -p2 patch or something.
+Use git-archive.
 
-	-Daniel
-*This .sig left intentionally blank*
+
+Dave.
