@@ -1,66 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Do not show "diff --git" metainfo with --no-prefix
-Date: Wed, 16 Jan 2008 09:22:53 -0800
-Message-ID: <7vhchdsn0y.fsf@gitster.siamese.dyndns.org>
-References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>
-	<alpine.DEB.1.00.0801151444180.5289@eeepc-johanness>
-	<c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
-	<alpine.LNX.1.00.0801151728120.13593@iabervon.org>
-	<7vhched3kw.fsf@gitster.siamese.dyndns.org>
-	<7v4pded1rk.fsf_-_@gitster.siamese.dyndns.org>
-	<7v7iiabjyh.fsf_-_@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org>
-	<alpine.LFD.1.00.0801151919440.2806@woody.linux-foundation.org>
+From: Mike <fromlists@talkingspider.com>
+Subject: Re: I don't want the .git directory next to my code.
+Date: Wed, 16 Jan 2008 12:23:09 -0500
+Message-ID: <478E3D7D.4000700@talkingspider.com>
+References: <478D79BD.7060006@talkingspider.com> <ee77f5c20801152006w11307ce0j17463f1c6536543f@mail.gmail.com> <478D85A9.6050807@talkingspider.com> <D017F6F6-D674-428B-936B-181BF20CF4B5@vicaya.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Chris Ortman <chrisortman@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jan 16 18:23:36 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de
+To: Luke Lu <git@vicaya.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 18:23:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFBzE-0008MW-Av
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 18:23:36 +0100
+	id 1JFBzW-0008UH-Bt
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 18:23:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750958AbYAPRXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 12:23:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750911AbYAPRXG
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 12:23:06 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55720 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750902AbYAPRXD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 12:23:03 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DAEC4440;
-	Wed, 16 Jan 2008 12:23:02 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CD154441D;
-	Wed, 16 Jan 2008 12:22:55 -0500 (EST)
-In-Reply-To: <alpine.LFD.1.00.0801151919440.2806@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Tue, 15 Jan 2008 19:26:06 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750985AbYAPRXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 12:23:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750990AbYAPRXN
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 12:23:13 -0500
+Received: from relay03.pair.com ([209.68.5.17]:1572 "HELO relay03.pair.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750943AbYAPRXM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 12:23:12 -0500
+Received: (qmail 72859 invoked from network); 16 Jan 2008 17:23:10 -0000
+Received: from unknown (HELO ?192.168.1.100?) (unknown)
+  by unknown with SMTP; 16 Jan 2008 17:23:10 -0000
+X-pair-Authenticated: 72.225.213.70
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <D017F6F6-D674-428B-936B-181BF20CF4B5@vicaya.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70704>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> So I do not think it's true that "--no-prefix" (or --src/dst-prefix) 
-> necessarily implies "no-git" at all. It *can* do so, but it's not a given 
-> thing, and almost certainly isn't in the long run with submodule support. 
->
-> So it would be kind of sad if we mixed it up with the prefix decision, 
-> when it really is something totally separate. Many other SCM's may want a 
-> simple "-p1" patch (BK did, for example), and that doesn't make them 
-> particularly "git-like". And conversely, git itself will want more than a 
-> simple "-p1" patch for subproject handling.
 
-Ok.  That's a sensible argument.
+Luke Lu wrote:
+> 
+> On Jan 15, 2008, at 8:18 PM, Mike wrote:
+> 
+>>
+>> David Symonds wrote:
+>>> On Jan 16, 2008 2:27 PM, Mike <fromlists@talkingspider.com> wrote:
+>>>> 2. If I tar/gz my code and deliver it to a client, I don't want the 
+>>>> .git
+>>>> dir slipping into the tarball, allowing my client to be able to peruse
+>>>> the history of what we did and when.
+>>> Use git-archive.
+>>
+>> Thanks but this isn't sufficient. If we have one directory of our web 
+>> root in a git repository, say docroot/php, and we tar up docroot, it 
+>> will include php/.git.  We don't want that.  We would have to go out 
+>> of our way to avoid the .git directory.  The point is, we don't want 
+>> anything in docroot that shouldn't be made live.
+> 
+> git-archive generates an archive file *without* the .git directory. From 
+> git-archive(1):
+> 
+>   git archive --format=tar --prefix=junk/ HEAD | (cd /var/tmp/ && tar xf -)
+>               Create a tar archive that contains the contents of the latest
+>               commit on the current branch, and extracts it in 
+> /var/tmp/junk
+>               directory.
+> 
+>   git archive --format=tar --prefix=git-1.4.0/ v1.4.0 | gzip > 
+> git-1.4.0.tar.gz
+>               Create a compressed tarball for v1.4.0 release.
+> 
+>   git archive --format=tar --prefix=git-1.4.0/ v1.4.0^{tree} | gzip 
+>  >git-1.4.0.tar.gz
+>               Create a compressed tarball for v1.4.0 release, but without a
+>               global extended pax header.
+> 
+>   git archive --format=zip --prefix=git-docs/ HEAD:Documentation/ > 
+> git-1.4.0-docs.zip
+>               Put everything in the current head's Documentation/ directory
+>               into git-1.4.0-docs.zip, with the prefix git-docs/.
+> 
+> IMHO, git export is probably a better name for the command. git-archive 
+> sounds like backup everything associated with git.
+> 
+> __Luke
+> -
+
+OK I don't think you read my response closely.  I wasn't going to 
+respond except I see Johannes missed the point too.
+
+I completely understand that git archive will not inlcude the .git dir. 
+What you missed in my response is the case where someone tars up a 
+directory above the .git directory. Not all of the content under doc 
+root is in a git archive.
