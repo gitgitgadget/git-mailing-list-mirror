@@ -1,120 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] Remove repo-config
-Date: Wed, 16 Jan 2008 12:13:27 -0800
-Message-ID: <7v7ii9plzs.fsf@gitster.siamese.dyndns.org>
-References: <1200453554-14163-1-git-send-email-dpmcgee@gmail.com>
+Subject: Re: [PATCH v2] Do not show "diff --git" metainfo with --no-prefix
+Date: Wed, 16 Jan 2008 12:19:57 -0800
+Message-ID: <7v1w8hploy.fsf@gitster.siamese.dyndns.org>
+References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>
+	<alpine.DEB.1.00.0801151444180.5289@eeepc-johanness>
+	<c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
+	<alpine.LNX.1.00.0801151728120.13593@iabervon.org>
+	<7vhched3kw.fsf@gitster.siamese.dyndns.org>
+	<7v4pded1rk.fsf_-_@gitster.siamese.dyndns.org>
+	<7v7iiabjyh.fsf_-_@gitster.siamese.dyndns.org>
+	<alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org>
+	<alpine.LFD.1.00.0801151919440.2806@woody.linux-foundation.org>
+	<alpine.LNX.1.00.0801152256480.13593@iabervon.org>
+	<alpine.LFD.1.00.0801152017490.2806@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dan McGee <dpmcgee@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 21:14:08 2008
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Chris Ortman <chrisortman@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jan 16 21:20:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFEeB-0002TP-Vg
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 21:14:04 +0100
+	id 1JFEkZ-0004wu-1g
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 21:20:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750977AbYAPUNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 15:13:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751080AbYAPUNf
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 15:13:35 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64335 "EHLO
+	id S1752268AbYAPUUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 15:20:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752190AbYAPUUJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 15:20:09 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64849 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750898AbYAPUNe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 15:13:34 -0500
+	with ESMTP id S1751973AbYAPUUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 15:20:07 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D9944697;
-	Wed, 16 Jan 2008 15:13:32 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0884E481E;
+	Wed, 16 Jan 2008 15:20:06 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E7AF4695;
-	Wed, 16 Jan 2008 15:13:29 -0500 (EST)
-In-Reply-To: <1200453554-14163-1-git-send-email-dpmcgee@gmail.com> (Dan
-	McGee's message of "Tue, 15 Jan 2008 21:19:14 -0600")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 34E48481A;
+	Wed, 16 Jan 2008 15:19:59 -0500 (EST)
+In-Reply-To: <alpine.LFD.1.00.0801152017490.2806@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 15 Jan 2008 20:22:11 -0800 (PST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70738>
 
-Dan McGee <dpmcgee@gmail.com> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> 'git config' has been used in place of 'git repo-config' for some time in
-> the documentation and most of the tools, so remove traces of repo-config
-> from the source.
->
-> Signed-off-by: Dan McGee <dpmcgee@gmail.com>
+> That's why tying "--git" together with any prefix handling is wrong: 
+> because it's a totally different issue. It's true that "git-apply" right 
+> now doesn't understand these things, but assuming we want to teach 
+> git-apply to apply to subprojects eventually (we do, don't we?) we'll 
+> eventually have to teach it.
 
-I'd agree with the deprecation.  We stopped advertising it long
-time ago (1.5.0 I think).
+That's all correct but
 
-> diff --git a/Documentation/git-repo-config.txt b/Documentation/git-repo-config.txt
+ * currently diff does not recurse, nor apply does not apply
+   recursively;
 
-Let's defer the removal til post 1.5.4.
+ * "git diff" that comes with 1.5.4, if we do not do anything,
+   can produce a diff that will be rejected by the stricter
+   check "git apply" has when used with --no-prefix and friends;
 
-> diff --git a/Makefile b/Makefile
+ * submodule aware versions of "git diff" can be told to add
+   "--mark-as-git-diff" when it passes "--src-prefix=a/git-gui"
+   and "--dst-prefix=b/git-gui" when it recurses internally, to
+   defeat what my proposed patch does.
 
-Likewise.
-
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-
-Likewise.
-
-> diff --git a/contrib/examples/git-tag.sh b/contrib/examples/git-tag.sh
-> index ae7c531..a3182df 100755
-> --- a/contrib/examples/git-tag.sh
-> +++ b/contrib/examples/git-tag.sh
-> @@ -167,6 +167,7 @@ type=$(git cat-file -t $object) || exit 1
->  tagger=$(git-var GIT_COMMITTER_IDENT) || exit 1
->  
->  test -n "$username" ||
-> +	#NOTE: 'git repo-config' has since been replaced by 'git config'
->  	username=$(git repo-config user.signingkey) ||
->  	username=$(expr "z$tagger" : 'z\(.*>\)')
-
-Good.
-
-> diff --git a/git.c b/git.c
-
-Deferred.
-
-> diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-> diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcommit.sh
-
-Doing s/repo-config/config/ in test scripts is good.
-
-> diff --git a/templates/hooks--update b/templates/hooks--update
-> index bd93dd1..09a99ff 100644
-> --- a/templates/hooks--update
-> +++ b/templates/hooks--update
-> @@ -37,9 +37,9 @@ if [ -z "$refname" -o -z "$oldrev" -o -z "$newrev" ]; then
->  fi
->  
->  # --- Config
-> -allowunannotated=$(git-repo-config --bool hooks.allowunannotated)
-> -allowdeletebranch=$(git-repo-config --bool hooks.allowdeletebranch)
-> -allowdeletetag=$(git-repo-config --bool hooks.allowdeletetag)
-> +allowunannotated=$(git config --bool hooks.allowunannotated)
-> +allowdeletebranch=$(git config --bool hooks.allowdeletebranch)
-> +allowdeletetag=$(git config --bool hooks.allowdeletetag)
->  
->  # check for no description
->  projectdesc=$(sed -e '1q' "$GIT_DIR/description")
-
-Good.
-
-
-> @@ -53,7 +53,7 @@ fi
->  if [ "$newrev" = "0000000000000000000000000000000000000000" ]; then
->  	newrev_type=delete
->  else
-> -	newrev_type=$(git-cat-file -t $newrev)
-> +	newrev_type=$(git cat-file -t $newrev)
->  fi
->  
->  case "$refname","$newrev_type" in
-
-Good but does not belong to the topic.
+So I think it makes more sense to mark output as a non-git diff
+when custom prefix is used in the version we are going to ship
+as part of 1.5.4.
