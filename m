@@ -1,53 +1,75 @@
-From: Mike <fromlists@talkingspider.com>
-Subject: Re: I don't want the .git directory next to my code.
-Date: Tue, 15 Jan 2008 23:18:49 -0500
-Message-ID: <478D85A9.6050807@talkingspider.com>
-References: <478D79BD.7060006@talkingspider.com> <ee77f5c20801152006w11307ce0j17463f1c6536543f@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Do not show "diff --git" metainfo with --no-prefix
+Date: Tue, 15 Jan 2008 20:18:55 -0800
+Message-ID: <7vy7aqs8r4.fsf@gitster.siamese.dyndns.org>
+References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>
+	<alpine.DEB.1.00.0801151444180.5289@eeepc-johanness>
+	<c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
+	<alpine.LNX.1.00.0801151728120.13593@iabervon.org>
+	<7vhched3kw.fsf@gitster.siamese.dyndns.org>
+	<7v4pded1rk.fsf_-_@gitster.siamese.dyndns.org>
+	<7v7iiabjyh.fsf_-_@gitster.siamese.dyndns.org>
+	<alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Symonds <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 05:19:20 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Chris Ortman <chrisortman@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jan 16 05:19:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEzkF-0002uD-Uj
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 05:19:20 +0100
+	id 1JEzkh-0002xj-NT
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 05:19:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756741AbYAPESv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 23:18:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753186AbYAPESv
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 23:18:51 -0500
-Received: from relay00.pair.com ([209.68.5.9]:1865 "HELO relay00.pair.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751484AbYAPESv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 23:18:51 -0500
-Received: (qmail 39223 invoked from network); 16 Jan 2008 04:18:50 -0000
-Received: from unknown (HELO ?192.168.1.100?) (unknown)
-  by unknown with SMTP; 16 Jan 2008 04:18:50 -0000
-X-pair-Authenticated: 72.225.213.70
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <ee77f5c20801152006w11307ce0j17463f1c6536543f@mail.gmail.com>
+	id S1753193AbYAPETT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 23:19:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753186AbYAPETT
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 23:19:19 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58190 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753179AbYAPETS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 23:19:18 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D87A7B00;
+	Tue, 15 Jan 2008 23:19:15 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B43897AB7;
+	Tue, 15 Jan 2008 23:19:06 -0500 (EST)
+In-Reply-To: <alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 15 Jan 2008 19:09:51 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70621>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-David Symonds wrote:
-> On Jan 16, 2008 2:27 PM, Mike <fromlists@talkingspider.com> wrote:
->> 2. If I tar/gz my code and deliver it to a client, I don't want the .git
->> dir slipping into the tarball, allowing my client to be able to peruse
->> the history of what we did and when.
-> 
-> Use git-archive.
-> 
+> We do not want to make it particularly easy for people to create 
+> mind-bogglingly stupid diff output. 
 
-Thanks but this isn't sufficient. If we have one directory of our web 
-root in a git repository, say docroot/php, and we tar up docroot, it 
-will include php/.git.  We don't want that.  We would have to go out of 
-our way to avoid the .git directory.  The point is, we don't want 
-anything in docroot that shouldn't be made live.
+Although the discussion was triggered by that Tortoise thing,
+the RFC patch was not about helping that.  That's a new feature
+asked long after we went into rc freeze, and I am not interested
+in discussing such a feature, especially when I am sick.
+
+The only objective was to make sure that a patch that is not
+kosher in git-apply's eyes is not marked with "diff --git";
+otherwise, its output will confuse git-apply.  As --no-prefix
+will be a new feature in 1.5.4, we would be shipping with a
+known-to-be-bad new feature that is --no-prefix, unless we do
+something about it.  Fixing that breakage was the sole
+motivation behind my patch.
+
+I think a reasonable short-term solution might be to disable any
+git specific stuff (renames, rewrites, etc) when --no-prefix and
+its friends are used, along with the patch you are commenting on
+to remove " --git" from the header.  That would at least make
+sure that the --no-prefix feature is safe.
