@@ -1,44 +1,57 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Improve use of lockfile API
-Date: Wed, 16 Jan 2008 11:30:25 -0800
-Message-ID: <7v4pddr2jy.fsf@gitster.siamese.dyndns.org>
-References: <478E572E.3020505@nrlssc.navy.mil>
+Subject: Re: [ANNOUNCE] Push Me Pull You 0.2 - Tech Preview Release
+Date: Wed, 16 Jan 2008 11:35:16 -0800
+Message-ID: <7vzlv5pnrf.fsf@gitster.siamese.dyndns.org>
+References: <200801152131.33628.mark.williamson@cl.cam.ac.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Jan 16 20:31:29 2008
+Cc: git@vger.kernel.org
+To: Mark Williamson <mark.williamson@cl.cam.ac.uk>
+X-From: git-owner@vger.kernel.org Wed Jan 16 20:35:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFDyW-000243-Mr
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 20:31:01 +0100
+	id 1JFE3K-00044c-DM
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 20:35:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752294AbYAPTac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 14:30:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbYAPTac
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 14:30:32 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61864 "EHLO
+	id S1751328AbYAPTfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 14:35:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750931AbYAPTf3
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 14:35:29 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62219 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752092AbYAPTab (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 14:30:31 -0500
+	with ESMTP id S1751063AbYAPTf3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 14:35:29 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 885503904;
-	Wed, 16 Jan 2008 14:30:29 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 67AD73E1F;
+	Wed, 16 Jan 2008 14:35:25 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AF383903;
-	Wed, 16 Jan 2008 14:30:27 -0500 (EST)
-In-Reply-To: <478E572E.3020505@nrlssc.navy.mil> (Brandon Casey's message of
-	"Wed, 16 Jan 2008 13:12:46 -0600")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id EEE403E19;
+	Wed, 16 Jan 2008 14:35:22 -0500 (EST)
+In-Reply-To: <200801152131.33628.mark.williamson@cl.cam.ac.uk> (Mark
+	Williamson's message of "Tue, 15 Jan 2008 21:31:33 +0000")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70731>
 
-Ok, our mails crossed.  I'll scrap part of my [2/2] and queue
-this series perhaps to 'next' after review.
+Mark Williamson <mark.williamson@cl.cam.ac.uk> writes:
+
+> I'd like to announce a new release of the Push Me Pull You (pmpu) tool; a GUI 
+> for distributed revision control systems.
+>
+> PMPU supports plain hg, hg forest repositories, bzr, git and darcs as 
+> underlying repositories.  It aims to provide a powerful graphical interface 
+> to the underlying functionality, based around the workflow of incoming and 
+> outgoing changesets.
+
+I haven't tried to look at this since your 0.1 announcement
+(which unfortunately was accepted with a thundering silence
+here), but it would be interesting if it allowed to pull from Hg
+into git (or other combinations).  Is that one of the features
+(or planned features)?
