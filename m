@@ -1,84 +1,59 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Petko Manolov <petkan@nucleusys.com>
 Subject: Re: git and binary files
-Date: Wed, 16 Jan 2008 15:20:43 +0100
-Message-ID: <200801161520.44668.jnareb@gmail.com>
-References: <alpine.DEB.1.00.0801161222150.3889@bender.nucleusys.com> <m37ii9nagt.fsf@roke.D-201> <alpine.DEB.1.00.0801161600030.5260@bender.nucleusys.com>
+Date: Wed, 16 Jan 2008 16:21:44 +0200 (EET)
+Message-ID: <alpine.DEB.1.00.0801161615300.5260@bender.nucleusys.com>
+References: <alpine.DEB.1.00.0801161222150.3889@bender.nucleusys.com> <ee77f5c20801160254u53e07773qb4125ffd90cf7619@mail.gmail.com> <alpine.DEB.1.00.0801161517260.5260@bender.nucleusys.com> <alpine.LSU.1.00.0801161341430.17650@racer.site>
+ <alpine.DEB.1.00.0801161549140.5260@bender.nucleusys.com> <alpine.LSU.1.00.0801161405330.17650@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Petko Manolov <petkan@nucleusys.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 15:21:20 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 16 15:23:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JF98q-0002vZ-9n
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 15:21:20 +0100
+	id 1JF9Az-0003jQ-UU
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 15:23:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753050AbYAPOUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 09:20:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752588AbYAPOUw
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 09:20:52 -0500
-Received: from fg-out-1718.google.com ([72.14.220.156]:10898 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752567AbYAPOUv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 09:20:51 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so296187fga.17
-        for <git@vger.kernel.org>; Wed, 16 Jan 2008 06:20:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=eAutk+twjgTBsDrd2ib/HESeKznG74IkhqV36UNdPgs=;
-        b=kOXX2IfUt2eSIEIGrlFJLUghVelml0eDFFnntHW9/0laS7p9YLMEv9ycNi5GDyU36NAHVSyVdTJ3DHtyn/EU3ErbqZviUL9A2JGjHSNKg8EgTAbl5YstG0+BVCWJLHzb8LT4U9cIvPpykoKIIFb0TA04nI80Xi/TR44PQ6LJL3g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=owgBZIqELZrWV2Hekn2I0ayFq4tUfdrrWWg0VyIAjVuZWpM53zmfBmZZKYxNHEEC2ooIqUMJeONi/KzZjqDwO4r6C7ZLtmLnpwhYdsoOoEVXM/fZl81iO6mt7w+7VxSJLHwePLMyMrUuMv1oLm+qNVKWR4MfEZSUiRu0SLKAqUk=
-Received: by 10.86.58.3 with SMTP id g3mr758842fga.38.1200493250157;
-        Wed, 16 Jan 2008 06:20:50 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.213.34])
-        by mx.google.com with ESMTPS id e20sm1155781fga.1.2008.01.16.06.20.46
-        (version=SSLv3 cipher=OTHER);
-        Wed, 16 Jan 2008 06:20:47 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.DEB.1.00.0801161600030.5260@bender.nucleusys.com>
-Content-Disposition: inline
+	id S1753659AbYAPOXF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 09:23:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753563AbYAPOXF
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 09:23:05 -0500
+Received: from n152-u15.cabletel.bg ([89.253.152.15]:41685 "EHLO
+	zztop.nucleusys.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752880AbYAPOXD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 09:23:03 -0500
+Received: from bender.nucleusys.com ([192.168.234.2])
+	by zztop.nucleusys.com with esmtp (Exim 4.63)
+	(envelope-from <petkan@nucleusys.com>)
+	id 1JF9AM-0007QT-JQ; Wed, 16 Jan 2008 16:22:54 +0200
+In-Reply-To: <alpine.LSU.1.00.0801161405330.17650@racer.site>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70679>
 
-Petko Manolov wrote:
-> On Wed, 16 Jan 2008, Jakub Narebski wrote:
-> 
-> > You can always tag a blob (like junio-gpg-pub tag in git.git repository),
-> > but it wouldn't be in a working directory. But it would get distributed
-> > on clone.
-> 
-> Hm, how does it work?
+On Wed, 16 Jan 2008, Johannes Schindelin wrote:
 
-You use git-hash-object to put file (-t blob) into the object database.
-It would return sha1 of added object. Use git-tag to create tag to blob
-(use returned sha1 for head). You can get file (to stdout) with 
-"git cat-file blob tagname^{blob}".
+> No, you _do_ miss the point here.  You might _think_ that they work 
+> perfectly, but with revision control you want to have _exactly_ the same 
+> setup.  You want to be able to go back to a certain _revision_ 
+> (including the then-current firmware).
 
-The file would be in object database, but not in working directory
-by default.
+I _know_ older code will work with new binaries.  I know because i've done 
+it many times and the application is the sort that is not going to forgive 
+any frivolity.
 
-> > BTW. if those large binary files doesn't differ much between version, 
-> > they should get well compressed even if you would store them normally, 
-> > all revisions.
-> 
-> Unfortunately this is not the case.  These binary blobs are already 
-> compressed and/or encrypted and adding even a few bytes ends up storing 
-> new version in full size.
+Unfortunately this is very specific to what i'm doing and does not apply 
+for 99.99% of what people usually need.
 
-Can't you store them uncompressed?
+> And that's what you don't want.  So git is not for you.
 
--- 
-Jakub Narebski
-Poland
+I use git for SCV from day one.  It's great.  I was just thinking aloud 
+about something i've stumbled upon.  ;-)
+
+
+ 		Petko
