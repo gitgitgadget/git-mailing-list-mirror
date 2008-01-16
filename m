@@ -1,64 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] git-submodule: rename shell functions for consistency
-Date: Wed, 16 Jan 2008 12:08:59 -0800
-Message-ID: <7vbq7lpm78.fsf@gitster.siamese.dyndns.org>
-References: <1200280956-19920-1-git-send-email-imyousuf@gmail.com>
-	<7vzlv7flb5.fsf@gitster.siamese.dyndns.org>
-	<7vy7are3qo.fsf_-_@gitster.siamese.dyndns.org>
-	<7bfdc29a0801151826u2218f825ga8100b1cc9fa8b2@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 2/2] close_lock_file(): new function in the lockfile
+ API
+Date: Wed, 16 Jan 2008 12:08:58 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801161207220.2806@woody.linux-foundation.org>
+References: <7vmyr6bluy.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.44.0801152006260.944-100000@demand> <7vejchr3pf.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Imran M Yousuf" <imyousuf@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 21:10:08 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Brandon Casey <drafnel@gmail.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>,
+	Git Mailing List <git@vger.kernel.org>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	=?ISO-8859-15?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 21:11:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFEaA-0000sQ-It
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 21:09:55 +0100
+	id 1JFEbK-0001Np-Nq
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 21:11:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751315AbYAPUJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 15:09:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751259AbYAPUJR
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 15:09:17 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64087 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751248AbYAPUJR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 15:09:17 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D31445DA;
-	Wed, 16 Jan 2008 15:09:15 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 80C2F45D7;
-	Wed, 16 Jan 2008 15:09:11 -0500 (EST)
-In-Reply-To: <7bfdc29a0801151826u2218f825ga8100b1cc9fa8b2@mail.gmail.com>
-	(Imran M. Yousuf's message of "Wed, 16 Jan 2008 08:26:29 +0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753809AbYAPUKc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 15:10:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751378AbYAPUKb
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 15:10:31 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:51580 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753829AbYAPUKa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 15:10:30 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0GK90bb021114
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 16 Jan 2008 12:09:01 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0GK8wQl021815;
+	Wed, 16 Jan 2008 12:08:59 -0800
+In-Reply-To: <7vejchr3pf.fsf_-_@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.217 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70736>
 
-"Imran M Yousuf" <imyousuf@gmail.com> writes:
 
-> Thanks Junio for showing how it should be done. Due to some
-> pre-scheduled appointment I was unavailable yesterday evening and thus
-> was neither able to reply nor resubmit the changes.
 
-Well, I did not show how it _should_ be done.  That series was
-merely an illustration of how I _think_ it should look like.  I
-did not test it, I do not know if it introduced new bugs, and
-most importantly I do not know if it fulfills what you intended
-to achieve with your patch.
+On Wed, 16 Jan 2008, Junio C Hamano wrote:
+> +
+> +void close_lock_file(struct lock_file *lk)
+> +{
+> +	close(lk->fd);
+> +	lk->fd = -1;
+> +}
 
-In other words, I just tried to turn the table around.  Instead
-of me and others commenting on your patch saying "I do not like
-this" piecemeal, now you have something you can comment on.  You
-can say the whole range of things from "I tested this and it is
-what I want", "I like the general concept but I found this and
-that bug and here is a fix", to "This is much worse than what I
-proposed and here is why."
+Since one of the main purposes of closing would be the error testing of 
+writes that haven't made it out yet on filesystems like NFS that do 
+open-close cache serialization, I'd suggest doing this as
+
+	int close_lock_file(struct lock_file *lk)
+	{
+		int fd = lk->fd;
+		lk->df = -1;
+		return close(fd);
+	} 
+
+to give the return code.
+
+		Linus
