@@ -1,79 +1,75 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: I don't want the .git directory next to my code.
-Date: Wed, 16 Jan 2008 10:25:20 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801161019250.2806@woody.linux-foundation.org>
-References: <478D79BD.7060006@talkingspider.com> <86hcheig3n.fsf@blue.stonehenge.com> <478D82FA.2030404@talkingspider.com> <478D95D8.5040806@theory.org> <478E3D8E.1090300@talkingspider.com> <alpine.LFD.1.00.0801161000310.2806@woody.linux-foundation.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Git Cygwin - unable to create any repository - help!
+Date: Wed, 16 Jan 2008 19:31:24 +0100
+Message-ID: <20080116183124.GA3181@steel.home>
+References: <20080114202932.GA25130@steel.home> <20080115200437.GB3213@steel.home> <a5eb9c330801151212y30cf4f63r9c294ba33da2b8f@mail.gmail.com> <200801160002.51048.robin.rosenberg.lists@dewire.com> <20080116071832.GA2896@steel.home> <a5eb9c330801160742j645ee50p72ee0a93adf8f94f@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Neil Macneale <mac4-git@theory.org>, git@vger.kernel.org
-To: Mike <fromlists@talkingspider.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 19:26:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org
+To: Paul Umbers <paul.umbers@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 19:32:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFCxx-0001a8-5G
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 19:26:21 +0100
+	id 1JFD3N-0003mt-FM
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 19:31:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752811AbYAPSZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 13:25:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752602AbYAPSZv
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 13:25:51 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:53178 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752524AbYAPSZu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 13:25:50 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0GIPK9H016178
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 16 Jan 2008 10:25:21 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0GIPKi1017658;
-	Wed, 16 Jan 2008 10:25:20 -0800
-In-Reply-To: <alpine.LFD.1.00.0801161000310.2806@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.717 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751677AbYAPSb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 13:31:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751607AbYAPSb2
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 13:31:28 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:38397 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751343AbYAPSb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 13:31:27 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzyClFj/1U=
+Received: from tigra.home (Fad79.f.strato-dslnet.de [195.4.173.121])
+	by post.webmailer.de (klopstock mo53) (RZmta 15.4)
+	with ESMTP id 205c05k0GFIMVA ; Wed, 16 Jan 2008 19:31:25 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 85175277AE;
+	Wed, 16 Jan 2008 19:31:25 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id EE6D656D22; Wed, 16 Jan 2008 19:31:24 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <a5eb9c330801160742j645ee50p72ee0a93adf8f94f@mail.gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70716>
 
-
-
-On Wed, 16 Jan 2008, Linus Torvalds wrote:
+Paul Umbers, Wed, Jan 16, 2008 16:42:46 +0100:
+> OK, I think this worked (I'm a Java man, not C/C++). I downloaded the
+> latest 1.5.3 source from the git repository and ran "make" with
+> GIT_TEST_OPTS="--verbose --debug". Here's the output:
 > 
->    Yes, it's certainly quite possible that you simply don't have any 
->    management scripts etc, and that you don't generate any files, and you 
->    simply want to just deploy the exact files that you also want to track. 
->    But that really is a fairly unusual thing to do.
+...
+> * expecting success: tree=$(git write-tree)
+> error: invalid object e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+> fatal: git-write-tree: error building trees
+> * FAIL 5: writing tree out with git write-tree
+>         tree=$(git write-tree)
 
-Example management scripts: let's say that you have a logo that shows up 
-in multiple different sizes. You can just have it as <n> number of 
-different files that you check in and update separately, or you can have 
-it as *one* scalable master file, and then the deployment script will 
-create all the generated files and put them in the deployment area.
+Ok, since you managed to compile it, could you please try to strace
+git-add? Cygwins strace is a bit unusual, but strace --help can
+provide enough information to configure it to trace filesystem
+operations.
 
-So the common issue with SCM's is that you want to share two totally 
-different things:
+In the top-level of Git source directory:
 
- - the actual "source" (which obviously doesn't have to be source code per 
-   se), which is the thing you want to have for yourself and people you 
-   work with, and which you want the history of.
+    $ uname -a > somefile
+    $ strace -o log -f -m syscall ./git --exec-path=$(pwd) add somefile
+    $ git ls-files -s somefile
 
- - the "output" for external entities, which may often contain a lot of 
-   the "source" verbatim, but quite often doesn't contain it all (some of 
-   the stuff you need to manage things may be rather private and purely 
-   for *your* management info), and almost invariably contains some 
-   post-processing.
+or
 
-Some people don't split this up, and they tend to make horrible horrible 
-mistakes, like checking in the *results* of the post-processing too (ie 
-binary result blobs that can be regenerated from the other files), because 
-they don't make a clear separation between the parts they do development 
-on, and the end result.
+    $ strace -o log -f -m syscall ./git --exec-path=$(pwd) hash-object somefile
 
-			Linus
+Than check if the sha1file is missing and send in the log.
