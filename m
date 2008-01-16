@@ -1,118 +1,178 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Git Cygwin - unable to create any repository - help!
-Date: Thu, 17 Jan 2008 00:45:27 +0100
-Message-ID: <20080116234527.GA3499@steel.home>
-References: <20080114202932.GA25130@steel.home> <20080115200437.GB3213@steel.home> <a5eb9c330801151212y30cf4f63r9c294ba33da2b8f@mail.gmail.com> <200801160002.51048.robin.rosenberg.lists@dewire.com> <20080116071832.GA2896@steel.home> <a5eb9c330801160742j645ee50p72ee0a93adf8f94f@mail.gmail.com> <20080116183124.GA3181@steel.home> <a5eb9c330801161048x4b5a88dcsebd7cf9754f72ba6@mail.gmail.com> <20080116191737.GD3181@steel.home> <a5eb9c330801161344i1da447c7sb447bf6274d408e8@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Thu, 17 Jan 2008 02:52:58 +0300
+Message-ID: <20080116235257.GA2901@dpotapov.dyndns.org>
+References: <478E1FED.5010801@web.de> <alpine.LSU.1.00.0801161531030.17650@racer.site> <427BE4FD-6534-4CB2-91F8-F9014DC82B54@sb.org> <alpine.LSU.1.00.0801161629580.17650@racer.site> <m33asxn2gt.fsf@roke.D-201> <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Paul Umbers <paul.umbers@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 00:46:03 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mark Junker <mjscod@web.de>, git@vger.kernel.org
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Thu Jan 17 00:53:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFHxI-0006Ch-Qv
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 00:46:01 +0100
+	id 1JFI4c-0000L3-5K
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 00:53:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750891AbYAPXpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 18:45:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750898AbYAPXpb
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 18:45:31 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:32059 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750861AbYAPXpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 18:45:30 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzyClFj/1U=
-Received: from tigra.home (Fad79.f.strato-dslnet.de [195.4.173.121])
-	by post.webmailer.de (klopstock mo35) (RZmta 15.4)
-	with ESMTP id a05b7fk0GMvUcW ; Thu, 17 Jan 2008 00:45:28 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id D9E02277AE;
-	Thu, 17 Jan 2008 00:45:27 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 51B5356D22; Thu, 17 Jan 2008 00:45:27 +0100 (CET)
+	id S1751507AbYAPXxF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Jan 2008 18:53:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751248AbYAPXxE
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 18:53:04 -0500
+Received: from smtp07.mtu.ru ([62.5.255.54]:51362 "EHLO smtp07.mtu.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751001AbYAPXxB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 18:53:01 -0500
+Received: from smtp07.mtu.ru (localhost.mtu.ru [127.0.0.1])
+	by smtp07.mtu.ru (Postfix) with ESMTP id C9E43708018;
+	Thu, 17 Jan 2008 02:52:54 +0300 (MSK)
+Received: from dpotapov.dyndns.org (ppp85-141-191-110.pppoe.mtu-net.ru [85.141.191.110])
+	by smtp07.mtu.ru (Postfix) with ESMTP id 7FFDB708012;
+	Thu, 17 Jan 2008 02:52:54 +0300 (MSK)
+Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
+	(envelope-from <dpotapov@gmail.com>)
+	id 1JFI42-0000nE-13; Thu, 17 Jan 2008 02:52:58 +0300
 Content-Disposition: inline
-In-Reply-To: <a5eb9c330801161344i1da447c7sb447bf6274d408e8@mail.gmail.com>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+In-Reply-To: <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-DCC-STREAM-Metrics: smtp07.mtu.ru 10002; Body=0 Fuz1=0 Fuz2=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70777>
 
-Paul Umbers, Wed, Jan 16, 2008 22:44:10 +0100:
-> Here's the log from the latest strace.
 
-Something is fishy here (aside from the horrible selection of
-information in the trace output):
+On Wed, Jan 16, 2008 at 03:39:36PM -0500, Kevin Ballard wrote:
+> On Jan 16, 2008, at 11:46 AM, Jakub Narebski wrote:
+>=20
+> >
+> >HFS+ is just _stupid_. And unfortunately Git doesn't support stupid
+> >filesystems (e.g. case insensitive filesystems) well.
+>=20
+> There's two different ways to do filesystem encodings. One is to have=
+ =20
+> the fs simply not care about encoding, which is what the linux world =
+=20
+> seems to prefer.=20
 
-   56 1151793 [main] git 3244 symlink_info::check: 0 = symlink.check (c:\workspace\git\git-1.5.3\.git\objects\2e, 0x22BBE0) (0x2A)
-   58 1151851 [main] git 3244 path_conv::check: this->path(c:\workspace\git\git-1.5.3\.git\objects\2e\d63d326ffdb2fd4b703780f4d61f1893cac63b), has_acls(1)
-   65 1151916 [main] git 3244 fhandler_base::open: (c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L, 0x110000)
-  206 1152122 [main] git 3244 fhandler_base::set_flags: flags 0x110000, supplied_bin 0x10000
-   76 1152198 [main] git 3244 fhandler_base::set_flags: O_TEXT/O_BINARY set in flags 0x10000
-  308 1152506 [main] git 3244 fhandler_base::set_flags: filemode set to binary
-  146 1152652 [main] git 3244 fhandler_base::open: 0 = NtCreateFile (0x6D0, 20100, c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L, io, NULL, 0, 7, 1, 4400, NULL, 0)
-   74 1152726 [main] git 3244 fhandler_base::open: 1 = fhandler_base::open (c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L, 0x110000)
-  105 1152831 [main] git 3244 fhandler_base::open_fs: 1 = fhandler_disk_file::open (c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L, 0x10000)
- 5915 1158746 [main] git 3244 fhandler_disk_file::link: CreateHardLinkA failed
-   94 1158840 [main] git 3244 seterrno_from_win_error: /ext/build/netrel/src/cygwin-1.5.25-7/winsup/cygwin/fhandler_disk_file.cc:893 windows error 183
-   72 1158912 [main] git 3244 geterrno_from_win_error: windows error 183 == errno 17
-   64 1158976 [main] git 3244 __set_errno: void seterrno_from_win_error(const char*, int, DWORD):310 val 17
-   65 1159041 [main] git 3244 fhandler_base::close: closing '/cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L' handle 0x6D0
-  124 1159165 [main] git 3244 link: -1 = link (/cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L, /cygdrive/c/workspace/git/git-1.5.3/.git/objects/2e/d63d326ffdb2fd4b703780f4d61f1893cac63b)
-   87 1159252 [main] git 3244 normalize_posix_path: src /cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L
-   94 1159346 [main] git 3244 normalize_posix_path: /cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L = normalize_posix_path (/cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L)
-   65 1159411 [main] git 3244 mount_info::conv_to_win32_path: conv_to_win32_path (/cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L)
-  104 1159515 [main] git 3244 mount_info::cygdrive_win32_path: src '/cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L', dst 'c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L'
-   73 1159588 [main] git 3244 set_flags: flags: binary (0x2)
-   62 1159650 [main] git 3244 mount_info::conv_to_win32_path: src_path /cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L, dst c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L, flags 0x2A, rc 0
-  130 1159780 [main] git 3244 symlink_info::check: not a symlink
-   66 1159846 [main] git 3244 symlink_info::check: 0 = symlink.check (c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L, 0x22C110) (0x2A)
-   67 1159913 [main] git 3244 path_conv::check: this->path(c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L), has_acls(1)
-   64 1159977 [main] git 3244 unlink: _unlink (c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L)
-  763 1160740 [main] git 3244 unlink: 1 = CloseHandle (0x6D0)
-  144 1160884 [main] git 3244 unlink: CreateFile (FILE_FLAG_DELETE_ON_CLOSE) succeeded
-   66 1160950 [main] git 3244 unlink: 0 = unlink (/cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L)
+There is no technical reason for *kernel* to care about file name
+encoding. It is something that can be and should be dealt with in
+the user space (except some special cases like smbfs).
 
-Could you locate move_temp_to_file and make it unconditionally rename
-the tempfile into target sha1 file? It should become something like that:
+> Sure, this is great in that what you create the file =20
+> with is what you get back,
 
-int move_temp_to_file(const char *tmpfile, const char *filename)
-{
-	int ret = link_temp_to_file(tmpfile, filename);
+And also because a user space program can deal with it much more
+gracefully...
 
-	/*
-	 * Coda hack - coda doesn't like cross-directory links,
-	 * so we fall back to a rename, which will mean that it
-	 * won't be able to check collisions, but that's not a
-	 * big deal.
-	 *
-	 * The same holds for FAT formatted media.
-	 *
-	 * When this succeeds, we just return 0. We have nothing
-	 * left to unlink.
-	 */
-	if (!rename(tmpfile, filename))
-		return 0;
-	ret = errno;
-	unlink(tmpfile);
-	if (ret) {
-		if (ret != EEXIST) {
-			return error("unable to write sha1 filename %s: %s\n", filename, strerror(ret));
-		}
-		/* FIXME!!! Collision check here ? */
-		return error("failed to write sha1 filename %s: %s\n", filename, strerror(ret));
-	}
+> but on the other hand, given an arbitrary =20
+> non-ASCII file on disk, you have absolutely no idea what the encoding=
+ =20
+> should be and you can't display it without making assumptions (yes yo=
+u =20
+> can use heuristics, but you're still making assumptions).
 
-	return 0;
-}
+Wrong. If you have a policy that all file names are stored in UTF-8
+encoding then there is no problem here. It should not be a kernel
+problem to care about encoding, besides you cannot fully solve it
+in the kernel space anyway...
 
-Does someone know, why this function seem to return 0 (success) on
-something which looks like an SHA1 collision? And destroy the
-tempfile, even though it is not moved anywhere.
+> Filesystems =20
+> like HFS+ that standardize the encoding,
+
+Yeah, right... Like Microsoft likes to "standardize" everything, which
+in practice means forcing on others something fundamentally broken and
+that does not follow any existing standard precisely:
+
+=3D=3D=3D
+IMPORTANT:
+The terms used in this Q&A, decomposed and precomposed, roughly
+correspond to Unicode Normal Forms D and C, respectively. However, most
+volume formats do not follow the exact specification for these normal
+forms.
+=3D=3D=3D
+http://developer.apple.com/qa/qa2001/qa1173.html
+
+Not to mention that the use of decomposed Unicode as the standard is
+outright silly -- no sane person writes in "decomposed" Unicode...
+
+> on the other hand, make it =20
+> such that you always know what the encoding of a file should be, so =20
+> you can always display and use the filename intelligently.
+
+Somehow I have no problem with displaying non-ASCII names on Linux.
+I can see both Unicode Normal Forms C and D encoded symbols without
+any problem, though the kernel is completely unaware about them.
+
+> It also =20
+> means it plays much nicer in a non-ASCII world, since you don't have =
+=20
+> to worry about different normalizations of a given string referring t=
+o =20
+> different files (it's one thing to be case-sensitive, but claiming =20
+> that "f=F6o" and "f=F6o" are different files
+
+As you typed them, they both are exactly the same, and both of them are
+in the Normal Forms C (which Mac calls as precomposed). So why do you
+use one encoding in your writings and the other in your file names?
+
+> just because one uses a =20
+> composed character and the other doesn't is extremely user-=20
+> unfriendly). On the other hand, what you create the file with may not=
+ =20
+> be what you read back later, since the name has been standardized. =20
+> It's hard to say one is better than the other, they're just different=
+ =20
+> ways of doing it. However, I have noticed that everybody who's voiced=
+ =20
+> an opinion on this list in favor of the encoding-agnostic approach =20
+> seem to be unwilling to accept that any other approach might have =20
+> validity, to the extent of calling an OS/filesystem that does things =
+=20
+> different stupid or insane. This strikes me as extremely elitist and =
+=20
+> risks alienating what I expect to be a fast-growing group of users =20
+> (i.e. OS X users).
+
+I am sure everyone here is scared to death... I mean we have used to
+hear such threats from some MS salespeople, but from a Mac guy? It is
+really scare....
+
+Wake up, and stop shooting this nonsense at us. If you have technical
+reasons why your solution is better, let us know. So far, you do not
+sound very convincing here. Why do think that the issue of encoding can
+not be dealt with in the user space? Why does Mac OS X uses so-called
+decomposed Unicode, which even does not follow any standard precisely?
+Why does Mac OS X chose to decompose characters while it does not
+solve any real issue?
+
+> And one area that it has a problem with is the de-=20
+> facto filesystem on my OS of choice.
+
+I suppose it would be much better a subject for discussion...
+At least, it would be more likely to result in that Git working
+better on your OS.
+
+> However, attempts to discuss the =20
+> problem invariable end up with multiple people calling my OS stupid =20
+> and insane simply because it differs in a particular design decision.=
+ =20
+
+=46irst, no one called Mac OS X insane, but case insensitive filesystem=
+s,
+and there are good reasons to think so, because no one has demonstrated
+so far any advantage of that approach, but disadvantages are quite=20
+obvious to anyone -- comparison of a stored file list with readdir()
+is much more problematic, and you cannot say that you have solved the
+problem with encoding if you force other people to *duplicate* some
+logic that Mac OS X does in its kernel just to get things working...
+So, no one thinks it is insane because it is different, but because it
+requires much more efforts to do the same thing -- compare two file
+lists, and this operation is important for Git to work properly...
+
+
+Dmitry
