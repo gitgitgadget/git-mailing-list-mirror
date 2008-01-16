@@ -1,58 +1,69 @@
-From: "David Symonds" <dsymonds@gmail.com>
+From: Mike <fromlists@talkingspider.com>
 Subject: Re: I don't want the .git directory next to my code.
-Date: Wed, 16 Jan 2008 15:06:13 +1100
-Message-ID: <ee77f5c20801152006w11307ce0j17463f1c6536543f@mail.gmail.com>
-References: <478D79BD.7060006@talkingspider.com>
+Date: Tue, 15 Jan 2008 23:07:22 -0500
+Message-ID: <478D82FA.2030404@talkingspider.com>
+References: <478D79BD.7060006@talkingspider.com> <86hcheig3n.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Mike <fromlists@talkingspider.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 05:06:43 2008
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 05:07:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEzY3-0000Wm-47
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 05:06:43 +0100
+	id 1JEzZA-0000jW-S7
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 05:07:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756912AbYAPEGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 23:06:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752586AbYAPEGO
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 23:06:14 -0500
-Received: from wa-out-1112.google.com ([209.85.146.176]:8235 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756638AbYAPEGN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 23:06:13 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so177337wah.23
-        for <git@vger.kernel.org>; Tue, 15 Jan 2008 20:06:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=hanGB228jMWplbQXBsyMts5VCeFTnvcv87jpf4bmfKg=;
-        b=RVtkzG8jvtf0Sg4wS7DbyuVleQ88jBojEJtPT5+RBKFCQeGf8KvUNmsrftD4DHBtn9PvvbeyraKqbV4jIxHB+2KlouizV+UuxfsZ6qH6OwIz77BpibytvPMn3ON58dblYye3eesvqPDdzqu9FUXXofbqRV1qghjO4zD9oPISpLI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AJnKD4PC2gYfVu4m682NSGcMtfDTn5SiHo2nPHuip8XjhedM2wJsUD7NZp4VtFexOKL3uo/od/14pFPfVSF4BkgDDkdrFiiRLJ/PxH/wlP4OHs/1ZaKpdUdUkizQufVItw4g/tOScdLV0IFNPKg085kd3W5hxQrs9YMZPm+2pPI=
-Received: by 10.140.251.1 with SMTP id y1mr237292rvh.11.1200456373513;
-        Tue, 15 Jan 2008 20:06:13 -0800 (PST)
-Received: by 10.141.115.4 with HTTP; Tue, 15 Jan 2008 20:06:13 -0800 (PST)
-In-Reply-To: <478D79BD.7060006@talkingspider.com>
-Content-Disposition: inline
+	id S1756359AbYAPEHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 23:07:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757217AbYAPEHY
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 23:07:24 -0500
+Received: from relay00.pair.com ([209.68.5.9]:4879 "HELO relay00.pair.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756359AbYAPEHY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 23:07:24 -0500
+Received: (qmail 36393 invoked from network); 16 Jan 2008 04:07:23 -0000
+Received: from unknown (HELO ?192.168.1.100?) (unknown)
+  by unknown with SMTP; 16 Jan 2008 04:07:23 -0000
+X-pair-Authenticated: 72.225.213.70
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <86hcheig3n.fsf@blue.stonehenge.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70618>
 
-On Jan 16, 2008 2:27 PM, Mike <fromlists@talkingspider.com> wrote:
+
+
+Randal L. Schwartz wrote:
+>>>>>> "Mike" == Mike  <fromlists@talkingspider.com> writes:
+> 
+> 
+> Sounds like you need an installer... something that copies your repo into the
+> live location with things you don't want included left out, and all the
+> permissions and ownership correct.
+
+If you mean copying files from the development webserver to the live 
+server, then the only reason we'd need an installer is because of the 
+.git directory, it's the only thing we "don't want included".  And as 
+for permissions and ownership, rsync takes care of that.
+
+> 
+> git archive --help
 >
-> 2. If I tar/gz my code and deliver it to a client, I don't want the .git
-> dir slipping into the tarball, allowing my client to be able to peruse
-> the history of what we did and when.
 
-Use git-archive.
+I got:
 
+$ git archive --help
+No manual entry for git-archive
 
-Dave.
+Did I install it wrong?  I have CentOS 5, and I did:
+
+su
+yum install git
+
+thanks,
+m
