@@ -1,91 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: fix and clarify grammar in git-merge docs.
-Date: Wed, 16 Jan 2008 11:07:29 -0800
-Message-ID: <7vd4s1r3m6.fsf@gitster.siamese.dyndns.org>
-References: <1200460565-16797-1-git-send-email-dave@krondo.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Git Cygwin - unable to create any repository - help!
+Date: Wed, 16 Jan 2008 20:12:50 +0100
+Message-ID: <20080116191250.GC3181@steel.home>
+References: <20080114202932.GA25130@steel.home> <20080115200437.GB3213@steel.home> <a5eb9c330801151212y30cf4f63r9c294ba33da2b8f@mail.gmail.com> <200801160002.51048.robin.rosenberg.lists@dewire.com> <20080116071832.GA2896@steel.home> <a5eb9c330801160742j645ee50p72ee0a93adf8f94f@mail.gmail.com> <20080116183124.GA3181@steel.home> <a5eb9c330801161048x4b5a88dcsebd7cf9754f72ba6@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: dave@krondo.com
-X-From: git-owner@vger.kernel.org Wed Jan 16 20:08:20 2008
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	git@vger.kernel.org
+To: Paul Umbers <paul.umbers@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 20:13:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFDcV-00020t-1k
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 20:08:15 +0100
+	id 1JFDhU-00040X-VO
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 20:13:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752490AbYAPTHg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 14:07:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752485AbYAPTHg
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 14:07:36 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60669 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752070AbYAPTHf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 14:07:35 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 71F4E2EA0;
-	Wed, 16 Jan 2008 14:07:34 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D25732E7F;
-	Wed, 16 Jan 2008 14:07:31 -0500 (EST)
-In-Reply-To: <1200460565-16797-1-git-send-email-dave@krondo.com>
-	(dave@krondo.com's message of "Tue, 15 Jan 2008 21:16:05 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751064AbYAPTMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 14:12:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750861AbYAPTMx
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 14:12:53 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:24698 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750702AbYAPTMw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 14:12:52 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzyClFj/1U=
+Received: from tigra.home (Fad79.f.strato-dslnet.de [195.4.173.121])
+	by post.webmailer.de (klopstock mo57) (RZmta 15.4)
+	with ESMTP id w05c1fk0GIM3lg ; Wed, 16 Jan 2008 20:12:50 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 94854277AE;
+	Wed, 16 Jan 2008 20:12:50 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 7691056D22; Wed, 16 Jan 2008 20:12:50 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <a5eb9c330801161048x4b5a88dcsebd7cf9754f72ba6@mail.gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70724>
 
-dave@krondo.com writes:
+Paul Umbers, Wed, Jan 16, 2008 19:48:28 +0100:
+> Latest output, log file attached:
+> 
+> paulumbers@Devteam29 ~/workspace/git/git-1.5.3
+> $ uname -a > somefile
+> 
+> paulumbers@Devteam29 ~/workspace/git/git-1.5.3
+> $ git init
+> Initialized empty Git repository in .git/
+> 
+> paulumbers@Devteam29 ~/workspace/git/git-1.5.3
+> $ strace -o log -f -m syscall ./git --exec-path=$(pwd) add somefile
+> 
+> paulumbers@Devteam29 ~/workspace/git/git-1.5.3
+> $ git ls-files -s somefile
+> 100644 2ed63d326ffdb2fd4b703780f4d61f1893cac63b 0       somefile
+> 
+> Checking .git/objects/2e ... there is no sha1 file
+> 
 
-> From: Dave Peticolas <dave@krondo.com>
->
->
-> Signed-off-by: Dave Peticolas <dave@krondo.com>
-> ---
->  Documentation/git-merge.txt |   25 ++++++++++++-------------
->  1 files changed, 12 insertions(+), 13 deletions(-)
->
-> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-> index ed3a924..abf63fe 100644
-> --- a/Documentation/git-merge.txt
-> +++ b/Documentation/git-merge.txt
-> @@ -74,19 +74,18 @@ it happens.  In other words, `git-diff --cached HEAD` must
->  report no changes.
->  
->  [NOTE]
-> -This is a bit of lie.  In certain special cases, your index are
-> -allowed to be different from the tree of `HEAD` commit.  The most
-> -notable case is when your `HEAD` commit is already ahead of what
-> -is being merged, in which case your index can have arbitrary
-> -difference from your `HEAD` commit.  Otherwise, your index entries
-> -are allowed have differences from your `HEAD` commit that match
-> -the result of trivial merge (e.g. you received the same patch
-> -from external source to produce the same result as what you are
-> -merging).  For example, if a path did not exist in the common
-> -ancestor and your head commit but exists in the tree you are
-> -merging into your repository, and if you already happen to have
-> -that path exactly in your index, the merge does not have to
-> -fail.
-> +This is a bit of a lie.  In certain special cases, your index is
-> +allowed to be different from the tree of the `HEAD` commit.  The
-> +most notable case is when your `HEAD` commit is already ahead of
-> +what is being merged, in which case your index can have arbitrary
-> +differences from your `HEAD` commit.  Also, your index entries may
-> +have differences from your `HEAD` commit that match the result of
-> +a trivial merge (e.g., you received the same patch from an external
-> +source to produce the same result as what you are merging).  For example,
-> +if a path did not exist in the common ancestor and your head commit
-> +but exists in the tree you are merging into your repository, and if
-> +you already happen to have that path exactly in your index, the merge
-> +does not have to fail.
-
-While checking and fixing the grammatical errors is very much
-appreciated, line re-wrapping is not.  It makes it unnecessarily
-cumbersome to see what got really changed.
-
-Thanks anyway.  The changes look good.
+Hmm... Could you try to create a repo so that the whole path contains
+no whitespace? Something like "c:/tmp/mydir". Just a suggestion, I am
+still inspecting your log...
