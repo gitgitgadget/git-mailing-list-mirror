@@ -1,99 +1,62 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: [PATCH] treat any file with NUL as binary
-Date: Wed, 16 Jan 2008 04:59:12 +0300
-Message-ID: <1200448752-16024-1-git-send-email-dpotapov@gmail.com>
-References: <7vr6gibm56.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>,
-	Dmitry Potapov <dpotapov@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 02:59:46 2008
+From: "Chris Ortman" <chrisortman@gmail.com>
+Subject: Re: [FEATURE REQUEST] git-svn format-patch
+Date: Tue, 15 Jan 2008 20:01:47 -0600
+Message-ID: <c0f2d4110801151801o941d8f7i3ec11668f7948b62@mail.gmail.com>
+References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>
+	 <alpine.DEB.1.00.0801151444180.5289@eeepc-johanness>
+	 <c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
+	 <alpine.LNX.1.00.0801151728120.13593@iabervon.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Daniel Barkalow" <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Jan 16 03:02:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JExZ9-0008NS-Q3
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 02:59:44 +0100
+	id 1JExbd-0000Uk-Gm
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 03:02:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756782AbYAPB7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 20:59:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756732AbYAPB7P
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 20:59:15 -0500
-Received: from smtp08.mtu.ru ([62.5.255.55]:50488 "EHLO smtp08.mtu.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756779AbYAPB7O (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 20:59:14 -0500
-Received: from smtp08.mtu.ru (localhost [127.0.0.1])
-	by smtp08.mtu.ru (Postfix) with ESMTP id 300CAF7693E;
-	Wed, 16 Jan 2008 04:59:07 +0300 (MSK)
-Received: from dpotapov.dyndns.org (ppp85-141-191-67.pppoe.mtu-net.ru [85.141.191.67])
-	by smtp08.mtu.ru (Postfix) with ESMTP id DEB12F76969;
-	Wed, 16 Jan 2008 04:59:06 +0300 (MSK)
-Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
-	(envelope-from <dpotapov@gmail.com>)
-	id 1JExYe-0004BB-IF; Wed, 16 Jan 2008 04:59:12 +0300
-X-Mailer: git-send-email 1.5.3.5
-In-Reply-To: <7vr6gibm56.fsf@gitster.siamese.dyndns.org>
-X-DCC-STREAM-Metrics: smtp08.mtu.ru 10002; Body=0 Fuz1=0 Fuz2=0
+	id S1756787AbYAPCBu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 21:01:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756741AbYAPCBt
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 21:01:49 -0500
+Received: from nz-out-0506.google.com ([64.233.162.227]:38103 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756732AbYAPCBt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 21:01:49 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so84101nze.1
+        for <git@vger.kernel.org>; Tue, 15 Jan 2008 18:01:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=O920JDD2aMn+ib0leViVNazpZ5KcGPlUJ1Kuqx1bhRA=;
+        b=iw78AzFVSjCAvIu17AMGEprQWudKTe7hJa4mEWHH5v3HpNRbhBhr4J1Iw3yA7nABGjQEtz3Yoy2PCTXFML3UKKte+bk/wmoC6pLuwRczD4CG3HZMJGowpRBUTeUoFuePbaQLMHIsxieS3F5dD7ZhvON5SJxQcVdjoU/W4EnF684=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sDkknIMxcWByRDiRmjY+8bg6ZKnvCU2jp9TiggDfyfa2pkwaW/B6AotqsPxIV+cLoGmZDuuSOykrDeA7YnkjfjCsJNuBiLgPdd87gjlteRqm/a6xusvpW4OaAE4fd42QU3xAbDbx9MhCbXdLBhCwakPaxgU9Ns1UDFtQQHLjb5Y=
+Received: by 10.114.181.1 with SMTP id d1mr254911waf.10.1200448907413;
+        Tue, 15 Jan 2008 18:01:47 -0800 (PST)
+Received: by 10.115.17.6 with HTTP; Tue, 15 Jan 2008 18:01:47 -0800 (PST)
+In-Reply-To: <alpine.LNX.1.00.0801151728120.13593@iabervon.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70601>
 
-There are two heuristics in Git to detect whether a file is binary
-or text. One in xdiff-interface.c (which is taken from GNU diff)
-relies on existence of the NUL byte at the beginning. However,
-convert.c used a different heuristic, which relied on the percent
-of non-printable symbols (less than 1% for text files).
+I'm sorry I completely forgot there was username / password on that link
+username: guest
+password: ''
 
-Due to differences in detection whether a file is binary or not,
-it was possible that a file that diff treats as binary could be
-treated as text by CRLF conversion. This is very confusing for a
-user who sees that 'git diff' shows the file as binary expects it
-to be added as binary.
+Tortoise does care about the line of equals signs, although it seems
+like an unecessary one from my understanding.
 
-This patch makes is_binary to consider any file that contains at
-least one NUL character as binary, to ensure that the heuristics
-used for CRLF conversion is tighter than what is used by diff.
-
-Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
----
- convert.c |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/convert.c b/convert.c
-index 5adef4f..a51da1f 100644
---- a/convert.c
-+++ b/convert.c
-@@ -17,8 +17,8 @@
- #define CRLF_INPUT	2
- 
- struct text_stat {
--	/* CR, LF and CRLF counts */
--	unsigned cr, lf, crlf;
-+	/* NUL, CR, LF and CRLF counts */
-+	unsigned nul, cr, lf, crlf;
- 
- 	/* These are just approximations! */
- 	unsigned printable, nonprintable;
-@@ -51,6 +51,9 @@ static void gather_stats(const char *buf, unsigned long size, struct text_stat *
- 			case '\b': case '\t': case '\033': case '\014':
- 				stats->printable++;
- 				break;
-+			case 0:
-+				stats->nul++;
-+				/* fall through */
- 			default:
- 				stats->nonprintable++;
- 			}
-@@ -66,6 +69,8 @@ static void gather_stats(const char *buf, unsigned long size, struct text_stat *
- static int is_binary(unsigned long size, struct text_stat *stats)
- {
- 
-+	if (stats->nul)
-+		return 1;
- 	if ((stats->printable >> 7) < stats->nonprintable)
- 		return 1;
- 	/*
--- 
-1.5.3.5
+>From the best I can tell it doesn't look like tortoise actually cares
+that the svn revision be something valid, just that something is there
+as a placeholder
