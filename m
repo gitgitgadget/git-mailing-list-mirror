@@ -1,182 +1,90 @@
-From: Peter Oberndorfer <kumbayo84@arcor.de>
-Subject: [STGIT PATCH] replace "git repo-config" usage by "git config"
-Date: Wed, 16 Jan 2008 21:58:26 +0100
-Message-ID: <200801162158.26450.kumbayo84@arcor.de>
-References: <1200453554-14163-1-git-send-email-dpmcgee@gmail.com> <200801162147.33448.kumbayo84@arcor.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [STGIT PATCH] replace "git repo-config" usage by "git config"
+Date: Wed, 16 Jan 2008 13:13:35 -0800 (PST)
+Message-ID: <m3y7aplbie.fsf@roke.D-201>
+References: <1200453554-14163-1-git-send-email-dpmcgee@gmail.com>
+	<200801162147.33448.kumbayo84@arcor.de>
+	<200801162158.26450.kumbayo84@arcor.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-6"
-Content-Transfer-Encoding: 7bit
-Cc: Dan McGee <dpmcgee@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-8859-15?q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
+	Dan McGee <dpmcgee@gmail.com>, git@vger.kernel.org,
 	Catalin Marinas <catalin.marinas@gmail.com>
-To: Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 22:08:03 2008
+To: Peter Oberndorfer <kumbayo84@arcor.de>
+X-From: git-owner@vger.kernel.org Wed Jan 16 22:14:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFFTo-0005Vd-ML
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 22:07:25 +0100
+	id 1JFFaI-0007y1-TD
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 22:14:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750915AbYAPVGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 16:06:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750898AbYAPVGz
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 16:06:55 -0500
-Received: from mail-in-02.arcor-online.net ([151.189.21.42]:38212 "EHLO
-	mail-in-02.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750891AbYAPVGy (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 16:06:54 -0500
-Received: from mail-in-04-z2.arcor-online.net (mail-in-04-z2.arcor-online.net [151.189.8.16])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 8EE6D32EC31;
-	Wed, 16 Jan 2008 22:06:53 +0100 (CET)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-04-z2.arcor-online.net (Postfix) with ESMTP id 7A35FABE95;
-	Wed, 16 Jan 2008 22:06:53 +0100 (CET)
-Received: from fnoheim52.netpark.at (fnoheim52.netpark.at [83.68.151.52])
-	(Authenticated sender: kumbayo84@arcor.de)
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 4B25B27ECB;
-	Wed, 16 Jan 2008 22:06:53 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <200801162147.33448.kumbayo84@arcor.de>
-Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.92/5487/Wed Jan 16 19:21:33 2008 on mail-in-02.arcor-online.net
-X-Virus-Status: Clean
+	id S1751069AbYAPVNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 16:13:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750998AbYAPVNj
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 16:13:39 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:48920 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750990AbYAPVNi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 16:13:38 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so263256ugc.16
+        for <git@vger.kernel.org>; Wed, 16 Jan 2008 13:13:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=WQUBxt462M2FTJc1EHKHtE4/wx2N76J9FBCze9NRA/E=;
+        b=UqsqRlJ5L/nIwgk5Vl9KQAOOZCRXPKbou1zBDn+im3jlkpbNMPJk2gA4oisu3a2ceFWNniseViURBpqnZaGlaAAmxRmfyo/adzKyLJPjJOKrQggdRuzLXmFL744I2Tr8HEyYZZ/nIaE5ajSZzM3zd7/I6XwTxEHYrQ6p8KudUmA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=nFyziO2PNyMKz6VFw5vk4E31EswhzwvlW5TjSlccVcnNeM53bdiOYeQt7cRB4htLUQLIbWrQLSy5KvE3zBAIrmkwmGBOEY6og0WnINcMdSlAOtECBGihrUpewFfIOg3kSgqP9hK9+lbwZCfZaq30EDhS+Kx2JMr97DQahm/FCqY=
+Received: by 10.67.29.20 with SMTP id g20mr2542966ugj.54.1200518016623;
+        Wed, 16 Jan 2008 13:13:36 -0800 (PST)
+Received: from roke.D-201 ( [83.8.213.34])
+        by mx.google.com with ESMTPS id x26sm2190607ugc.61.2008.01.16.13.13.34
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 16 Jan 2008 13:13:35 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id m0GLDWO9021817;
+	Wed, 16 Jan 2008 22:13:33 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m0GLDU2X021814;
+	Wed, 16 Jan 2008 22:13:30 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <200801162158.26450.kumbayo84@arcor.de>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70748>
 
-"git repo-config" will be removed soon
+Peter Oberndorfer <kumbayo84@arcor.de> writes:
 
-Signed-off-by: Peter Oberndorfer <kumbayo84@arcor.de>
----
-since i am not good at creating log messages, feel free to change it :-)
-built on top of kha experimental patch
-passes all testcases for me
- stgit/config.py               |   14 +++++++-------
- t/t1900-mail.sh               |    2 +-
- t/t2100-pull-policy-fetch.sh  |    4 ++--
- t/t2101-pull-policy-pull.sh   |    4 ++--
- t/t2102-pull-policy-rebase.sh |    4 ++--
- 5 files changed, 14 insertions(+), 14 deletions(-)
+> "git repo-config" will be removed soon
+> 
+> Signed-off-by: Peter Oberndorfer <kumbayo84@arcor.de>
+> ---
+> since i am not good at creating log messages, feel free to change it :-)
+> built on top of kha experimental patch
+> passes all testcases for me
 
-diff --git a/stgit/config.py b/stgit/config.py
-index 1d71cd2..9bfdd52 100644
---- a/stgit/config.py
-+++ b/stgit/config.py
-@@ -47,7 +47,7 @@ class GitConfig:
-         if self.__cache.has_key(name):
-             return self.__cache[name]
-         try:
--            value = Run('git', 'repo-config', '--get', name).output_one_line()
-+            value = Run('git', 'config', '--get', name).output_one_line()
-         except RunException:
-             value = self.__defaults.get(name, None)
-         self.__cache[name] = value
-@@ -56,7 +56,7 @@ class GitConfig:
-     def getall(self, name):
-         if self.__cache.has_key(name):
-             return self.__cache[name]
--        values = Run('git', 'repo-config', '--get-all', name
-+        values = Run('git', 'config', '--get-all', name
-                      ).returns([0, 1]).output_lines()
-         self.__cache[name] = values
-         return values
-@@ -71,23 +71,23 @@ class GitConfig:
-     def rename_section(self, from_name, to_name):
-         """Rename a section in the config file. Silently do nothing if
-         the section doesn't exist."""
--        Run('git', 'repo-config', '--rename-section', from_name, to_name
-+        Run('git', 'config', '--rename-section', from_name, to_name
-             ).returns([0, 1]).run()
-         self.__cache.clear()
- 
-     def remove_section(self, name):
-         """Remove a section in the config file. Silently do nothing if
-         the section doesn't exist."""
--        Run('git', 'repo-config', '--remove-section', name
-+        Run('git', 'config', '--remove-section', name
-             ).returns([0, 1]).discard_stderr().discard_output()
-         self.__cache.clear()
- 
-     def set(self, name, value):
--        Run('git', 'repo-config', name, value).run()
-+        Run('git', 'config', name, value).run()
-         self.__cache[name] = value
- 
-     def unset(self, name):
--        Run('git', 'repo-config', '--unset', name)
-+        Run('git', 'config', '--unset', name)
-         self.__cache[name] = None
- 
-     def sections_matching(self, regexp):
-@@ -96,7 +96,7 @@ class GitConfig:
-         group contents, for all variable names matching the regexp.
-         """
-         result = []
--        for line in Run('git', 'repo-config', '--get-regexp', '"^%s$"' % regexp
-+        for line in Run('git', 'config', '--get-regexp', '"^%s$"' % regexp
-                         ).returns([0, 1]).output_lines():
-             m = re.match('^%s ' % regexp, line)
-             if m:
-diff --git a/t/t1900-mail.sh b/t/t1900-mail.sh
-index e83b2d3..cfdc6f3 100755
---- a/t/t1900-mail.sh
-+++ b/t/t1900-mail.sh
-@@ -6,7 +6,7 @@ test_description='Test the mail command'
- test_expect_success \
-     'Initialize the StGIT repository' \
-     '
--    git repo-config stgit.sender "A U Thor <author@example.com>" &&
-+    git config stgit.sender "A U Thor <author@example.com>" &&
-     for i in 1 2 3 4 5; do
-       touch foo.txt &&
-       echo "line $i" >> foo.txt &&
-diff --git a/t/t2100-pull-policy-fetch.sh b/t/t2100-pull-policy-fetch.sh
-index 9e4bc31..670c7c6 100755
---- a/t/t2100-pull-policy-fetch.sh
-+++ b/t/t2100-pull-policy-fetch.sh
-@@ -19,8 +19,8 @@ test_expect_success \
-     (cd upstream && stg init) &&
-     stg clone upstream clone &&
-     (cd clone &&
--     git repo-config branch.master.stgit.pull-policy fetch-rebase &&
--     git repo-config --list &&
-+     git config branch.master.stgit.pull-policy fetch-rebase &&
-+     git config --list &&
-      stg new c1 -m c1 &&
-      echo a > file && git add file && stg refresh
-     )
-diff --git a/t/t2101-pull-policy-pull.sh b/t/t2101-pull-policy-pull.sh
-index b4521f0..ce4b5c8 100755
---- a/t/t2101-pull-policy-pull.sh
-+++ b/t/t2101-pull-policy-pull.sh
-@@ -19,8 +19,8 @@ test_expect_success \
-     (cd upstream && stg init) &&
-     stg clone upstream clone &&
-     (cd clone &&
--     git repo-config branch.master.stgit.pull-policy pull &&
--     git repo-config --list &&
-+     git config branch.master.stgit.pull-policy pull &&
-+     git config --list &&
-      stg new c1 -m c1 &&
-      echo a > file && git add file && stg refresh
-     )
-diff --git a/t/t2102-pull-policy-rebase.sh b/t/t2102-pull-policy-rebase.sh
-index 135b48c..5619bda 100755
---- a/t/t2102-pull-policy-rebase.sh
-+++ b/t/t2102-pull-policy-rebase.sh
-@@ -13,8 +13,8 @@ test_expect_success \
-     git branch -m master parent &&
-     stg init &&
-     stg branch --create stack &&
--    git repo-config branch.stack.stgit.pull-policy rebase &&
--    git repo-config --list &&
-+    git config branch.stack.stgit.pull-policy rebase &&
-+    git config --list &&
-     stg new c1 -m c1 &&
-     echo a > file && git add file && stg refresh
-     '
+> @@ -47,7 +47,7 @@ class GitConfig:
+>          if self.__cache.has_key(name):
+>              return self.__cache[name]
+>          try:
+> -            value = Run('git', 'repo-config', '--get', name).output_one_line()
+> +            value = Run('git', 'config', '--get', name).output_one_line()
+>          except RunException:
+>              value = self.__defaults.get(name, None)
+>          self.__cache[name] = value
+
+Strange that StGIT didn't abstracted out reading git config, like
+Git.pm and gitweb.perl did.
+
+BTW. will StGIT be using libgit-thin + PyGit, or is it not ready yet?
+
 -- 
-1.5.4.rc3
+Jakub Narebski
+Poland
+ShadeHawk on #git
