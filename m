@@ -1,79 +1,58 @@
-From: Mark Williamson <mark.williamson@cl.cam.ac.uk>
-Subject: Re: [ANNOUNCE] Push Me Pull You 0.2 - Tech Preview Release
-Date: Wed, 16 Jan 2008 23:15:35 +0000
-Message-ID: <200801162315.35288.mark.williamson@cl.cam.ac.uk>
-References: <200801152131.33628.mark.williamson@cl.cam.ac.uk> <7vzlv5pnrf.fsf@gitster.siamese.dyndns.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 2/2] close_lock_file(): new function in the lockfile API
+Date: Wed, 16 Jan 2008 17:16:56 -0600
+Message-ID: <478E9068.1040602@nrlssc.navy.mil>
+References: <7vmyr6bluy.fsf@gitster.siamese.dyndns.org>	<Pine.LNX.4.44.0801152006260.944-100000@demand>	<7vejchr3pf.fsf_-_@gitster.siamese.dyndns.org>	<alpine.LFD.1.00.0801161207220.2806@woody.linux-foundation.org>	<7vodblo6c9.fsf@gitster.siamese.dyndns.org>	<Pine.LNX.4.64.0801161443340.31161@torch.nrlssc.navy.mil>	<7v7ii9o2ld.fsf@gitster.siamese.dyndns.org>	<478E893F.4070100@nrlssc.navy.mil> <7vy7apmlci.fsf@gitster.siamese.dyndns.org> <478E8E6B.80702@nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	=?ISO-8859-1?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 00:17:44 2008
+X-From: git-owner@vger.kernel.org Thu Jan 17 00:19:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFHVW-0004KY-Fh
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 00:17:18 +0100
+	id 1JFHXS-000592-Dw
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 00:19:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756106AbYAPXQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 18:16:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755962AbYAPXQR
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 18:16:17 -0500
-Received: from ppsw-9.csi.cam.ac.uk ([131.111.8.139]:44164 "EHLO
-	ppsw-9.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755765AbYAPXQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 18:16:15 -0500
-X-Cam-SpamDetails: Not scanned
-X-Cam-AntiVirus: No virus found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from maw48.kings.cam.ac.uk ([128.232.236.103]:54360)
-	by ppsw-9.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.159]:25)
-	with esmtpsa (PLAIN:maw48) (TLSv1:DHE-RSA-AES256-SHA:256)
-	id 1JFHUS-0005vW-Tt (Exim 4.67)
-	(return-path <maw48@hermes.cam.ac.uk>); Wed, 16 Jan 2008 23:16:12 +0000
-User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
-In-Reply-To: <7vzlv5pnrf.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1755698AbYAPXRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 18:17:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756823AbYAPXRz
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 18:17:55 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50118 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756820AbYAPXRx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 18:17:53 -0500
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0GNGuRr030016;
+	Wed, 16 Jan 2008 17:16:56 -0600
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 16 Jan 2008 17:16:56 -0600
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <478E8E6B.80702@nrlssc.navy.mil>
+X-OriginalArrivalTime: 16 Jan 2008 23:16:56.0216 (UTC) FILETIME=[E3049980:01C85895]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15666001
+X-TM-AS-Result: : Yes--3.708400-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY3NS03MDAw?=
+	=?us-ascii?B?NzUtMTM5MDEwLTcwMTQ1NS03MDgxNzktNzAyMDg0LTcwNDI1Ny03?=
+	=?us-ascii?B?MDI0NzQtMTQ4MDM5LTE0ODA1MQ==?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70771>
 
-> > I'd like to announce a new release of the Push Me Pull You (pmpu) tool; a
-> > GUI for distributed revision control systems.
-> >
-> > PMPU supports plain hg, hg forest repositories, bzr, git and darcs as
-> > underlying repositories.  It aims to provide a powerful graphical
-> > interface to the underlying functionality, based around the workflow of
-> > incoming and outgoing changesets.
->
-> I haven't tried to look at this since your 0.1 announcement
-> (which unfortunately was accepted with a thundering silence
-> here),
+Brandon Casey wrote:
+> I think you should consider how to handle fdopen on the lock
+> descriptor
 
-Heheh, yeah, I was almost deafened by it :-)  But it's a new obscure tool, 
-written using an foreign SCM so I'm not surprised if uptake is slow!
+This happens in
+builtin-pack-refs.c:pack_refs
+fast-import.c:dump_marks
 
-> but it would be interesting if it allowed to pull from Hg 
-> into git (or other combinations).  Is that one of the features
-> (or planned features)?
-
-That's not one of the current features; I've been focusing on making basic 
-functionality of each of the backend available from the GUI.  I'm trying to 
-do this in a standardised way so that the GUI always looks / acts the same 
-regardless of underlying storage repository.
-
-But yes, in the future I'd like to wrap the process of repository conversion / 
-interaction so that's it's easier for people on different SCM backends to 
-collaborate.  I've been pondering whether a commandline-based "universal SCM 
-tool" that could transparently provide DVCS functionality on top of a variety 
-of systems would be worth playing with at some point.
-
-Cheers,
-Mark
-
--- 
-Push Me Pull You - Distributed SCM tool (http://www.cl.cam.ac.uk/~maw48/pmpu/)
+-brandon
