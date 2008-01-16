@@ -1,71 +1,68 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 2/2] close_lock_file(): new function in the lockfile API
-Date: Wed, 16 Jan 2008 17:28:44 -0600 (CST)
-Message-ID: <Pine.LNX.4.64.0801161725010.31161@torch.nrlssc.navy.mil>
-References: <7vmyr6bluy.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.44.0801152006260.944-100000@demand> <7vejchr3pf.fsf_-_@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0801161207220.2806@woody.linux-foundation.org>
- <7vodblo6c9.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0801161443340.31161@torch.nrlssc.navy.mil>
- <7vtzldmk8p.fsf@gitster.siamese.dyndns.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [ANNOUNCE] Push Me Pull You 0.2 - Tech Preview Release
+Date: Thu, 17 Jan 2008 12:37:22 +1300
+Message-ID: <46a038f90801161537r4013f30ale0ae3ecb43609cf2@mail.gmail.com>
+References: <200801152131.33628.mark.williamson@cl.cam.ac.uk>
+	 <7vzlv5pnrf.fsf@gitster.siamese.dyndns.org>
+	 <200801162315.35288.mark.williamson@cl.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 00:30:22 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Mark Williamson" <mark.williamson@cl.cam.ac.uk>
+X-From: git-owner@vger.kernel.org Thu Jan 17 00:37:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFHi2-0000hL-B4
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 00:30:14 +0100
+	id 1JFHpR-0003JN-0n
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 00:37:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752506AbYAPX3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 18:29:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751561AbYAPX3n
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 18:29:43 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:56071 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751080AbYAPX3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 18:29:42 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0GNSikp030116;
-	Wed, 16 Jan 2008 17:28:45 -0600
-Received: from torch.nrlssc.navy.mil ([128.160.25.59]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 16 Jan 2008 17:28:44 -0600
-In-Reply-To: <7vtzldmk8p.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 16 Jan 2008 23:28:44.0806 (UTC) FILETIME=[895EDA60:01C85897]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15666001
-X-TM-AS-Result: : Yes--13.265700-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY3NS03MDAw?=
-	=?us-ascii?B?NzUtMTM5MDEwLTcwMDE2MC03MDM3MzEtNzExNDMyLTcwMDc1OC03?=
-	=?us-ascii?B?MDM3ODgtMTM3NzE3LTcwNDkzMC03MDA0NzYtMTEzMjI4LTcwNTg2?=
-	=?us-ascii?B?MS03MDY3MzctNzAzNzEyLTcwNzIyNS03MDIwMjAtMTQ4MDM5LTE0?=
-	=?us-ascii?B?ODA1MC0yMDA0MA==?=
+	id S1752394AbYAPXhZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 18:37:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbYAPXhZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 18:37:25 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:40975 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751761AbYAPXhX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 18:37:23 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so278291ugc.16
+        for <git@vger.kernel.org>; Wed, 16 Jan 2008 15:37:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=WRQqt9kgtRKPXca7BHHVgdrwJG/17M3jJi9tOkYOvJg=;
+        b=t848mNVwgr6rvD7ZgHsUl0IynI8RtsUMhPlSjFoLG4zA8TDFP8/IeY1m+nMXdfwSHGhUTr1K+YvpLUYIk8eImc14r/dh/rZYw+vT5gPA5v9SqmQAhYSFvhoCOEz2H2cPX3PAmEwUI4Lr95Spf/tfBhomhaiU06vE3TmO1GQToAI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SxLvoS/em8xuhOdk2VIiIJwz38WZAA9WYH9UIjxKxDn8DBgNO645oeiHQWEBOJEwdhS18X86tUYyAntrU3MzhvfdbtuZtShoj/vwQH+//72AcIgdw69mGmmceY5Lg+chFWpAOfi9uQ1IeToF9hmULHOs9E9pnauOJsaJp3GfsoQ=
+Received: by 10.66.254.15 with SMTP id b15mr2649939ugi.76.1200526642096;
+        Wed, 16 Jan 2008 15:37:22 -0800 (PST)
+Received: by 10.66.252.6 with HTTP; Wed, 16 Jan 2008 15:37:22 -0800 (PST)
+In-Reply-To: <200801162315.35288.mark.williamson@cl.cam.ac.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70774>
 
-On Wed, 16 Jan 2008, Junio C Hamano wrote:
+On Jan 17, 2008 12:15 PM, Mark Williamson <mark.williamson@cl.cam.ac.uk> wrote:
+> Heheh, yeah, I was almost deafened by it :-)  But it's a new obscure tool,
+> written using an foreign SCM so I'm not surprised if uptake is slow!
 
-> Brandon Casey <casey@nrlssc.navy.mil> writes:
->
->> My patch does this, though I understand it may take some time to review.
->>
->> I left the lk->fd unmodified when close() failed in case the caller
->> would like to include it in an error message.
->
-> But that would bring us back to the same double-close issue,
-> wouldn't it?
+I don't mind at all that it is hosted with Hg ;-) I just looked at the
+screenshots and description, and my feedback, as potential user, is
+that it isn't clear what I would use it for.
 
-Yes it would. Although I knew it would happen, I was disregarding
-_that_ double close case for some reason.
+ - What's the usage scenario for a cli-oriented power user? I do use
+hg on other projects, but I'm happy to use its commandline tools.
 
-You're right, your's and Linus's version is better.
+ - For a GUI user, how does it compare with using git gui when using
+git, and the equivalente gui when using hg?
 
--brandon
+cheers,
+
+
+martin
