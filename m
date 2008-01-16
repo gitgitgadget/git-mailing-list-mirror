@@ -1,158 +1,118 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Wed, 16 Jan 2008 15:38:35 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org>
-References: <478E1FED.5010801@web.de> <m33asxn2gt.fsf@roke.D-201> <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org> <200801162251.54219.jnareb@gmail.com> <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org> <alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org>
- <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Git Cygwin - unable to create any repository - help!
+Date: Thu, 17 Jan 2008 00:45:27 +0100
+Message-ID: <20080116234527.GA3499@steel.home>
+References: <20080114202932.GA25130@steel.home> <20080115200437.GB3213@steel.home> <a5eb9c330801151212y30cf4f63r9c294ba33da2b8f@mail.gmail.com> <200801160002.51048.robin.rosenberg.lists@dewire.com> <20080116071832.GA2896@steel.home> <a5eb9c330801160742j645ee50p72ee0a93adf8f94f@mail.gmail.com> <20080116183124.GA3181@steel.home> <a5eb9c330801161048x4b5a88dcsebd7cf9754f72ba6@mail.gmail.com> <20080116191737.GD3181@steel.home> <a5eb9c330801161344i1da447c7sb447bf6274d408e8@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Mark Junker <mjscod@web.de>, git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Thu Jan 17 00:39:12 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Paul Umbers <paul.umbers@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 17 00:46:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFHqh-0003k2-Be
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 00:39:11 +0100
+	id 1JFHxI-0006Ch-Qv
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 00:46:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750993AbYAPXin convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Jan 2008 18:38:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750990AbYAPXin
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 18:38:43 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:47000 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750931AbYAPXim (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 18:38:42 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0GNca4R031154
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 16 Jan 2008 15:38:37 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0GNcZ0V030611;
-	Wed, 16 Jan 2008 15:38:35 -0800
-In-Reply-To: <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.716 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1750891AbYAPXpb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 18:45:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750898AbYAPXpb
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 18:45:31 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:32059 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750861AbYAPXpa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 18:45:30 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzyClFj/1U=
+Received: from tigra.home (Fad79.f.strato-dslnet.de [195.4.173.121])
+	by post.webmailer.de (klopstock mo35) (RZmta 15.4)
+	with ESMTP id a05b7fk0GMvUcW ; Thu, 17 Jan 2008 00:45:28 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id D9E02277AE;
+	Thu, 17 Jan 2008 00:45:27 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 51B5356D22; Thu, 17 Jan 2008 00:45:27 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <a5eb9c330801161344i1da447c7sb447bf6274d408e8@mail.gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70776>
 
+Paul Umbers, Wed, Jan 16, 2008 22:44:10 +0100:
+> Here's the log from the latest strace.
 
+Something is fishy here (aside from the horrible selection of
+information in the trace output):
 
-On Wed, 16 Jan 2008, Kevin Ballard wrote:
->=20
-> There's a difference between "looks similar" as in "Polish" vs "polis=
-h", and
-> actually is the same string as in "Ma<UMLAUT MODIFIER>rchen" vs "M<A =
-WITH
-> UMLAUT>rchen". Capitalization has a valid semantic meaning, normaliza=
-tion
-> doesn't.=20
+   56 1151793 [main] git 3244 symlink_info::check: 0 = symlink.check (c:\workspace\git\git-1.5.3\.git\objects\2e, 0x22BBE0) (0x2A)
+   58 1151851 [main] git 3244 path_conv::check: this->path(c:\workspace\git\git-1.5.3\.git\objects\2e\d63d326ffdb2fd4b703780f4d61f1893cac63b), has_acls(1)
+   65 1151916 [main] git 3244 fhandler_base::open: (c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L, 0x110000)
+  206 1152122 [main] git 3244 fhandler_base::set_flags: flags 0x110000, supplied_bin 0x10000
+   76 1152198 [main] git 3244 fhandler_base::set_flags: O_TEXT/O_BINARY set in flags 0x10000
+  308 1152506 [main] git 3244 fhandler_base::set_flags: filemode set to binary
+  146 1152652 [main] git 3244 fhandler_base::open: 0 = NtCreateFile (0x6D0, 20100, c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L, io, NULL, 0, 7, 1, 4400, NULL, 0)
+   74 1152726 [main] git 3244 fhandler_base::open: 1 = fhandler_base::open (c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L, 0x110000)
+  105 1152831 [main] git 3244 fhandler_base::open_fs: 1 = fhandler_disk_file::open (c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L, 0x10000)
+ 5915 1158746 [main] git 3244 fhandler_disk_file::link: CreateHardLinkA failed
+   94 1158840 [main] git 3244 seterrno_from_win_error: /ext/build/netrel/src/cygwin-1.5.25-7/winsup/cygwin/fhandler_disk_file.cc:893 windows error 183
+   72 1158912 [main] git 3244 geterrno_from_win_error: windows error 183 == errno 17
+   64 1158976 [main] git 3244 __set_errno: void seterrno_from_win_error(const char*, int, DWORD):310 val 17
+   65 1159041 [main] git 3244 fhandler_base::close: closing '/cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L' handle 0x6D0
+  124 1159165 [main] git 3244 link: -1 = link (/cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L, /cygdrive/c/workspace/git/git-1.5.3/.git/objects/2e/d63d326ffdb2fd4b703780f4d61f1893cac63b)
+   87 1159252 [main] git 3244 normalize_posix_path: src /cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L
+   94 1159346 [main] git 3244 normalize_posix_path: /cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L = normalize_posix_path (/cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L)
+   65 1159411 [main] git 3244 mount_info::conv_to_win32_path: conv_to_win32_path (/cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L)
+  104 1159515 [main] git 3244 mount_info::cygdrive_win32_path: src '/cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L', dst 'c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L'
+   73 1159588 [main] git 3244 set_flags: flags: binary (0x2)
+   62 1159650 [main] git 3244 mount_info::conv_to_win32_path: src_path /cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L, dst c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L, flags 0x2A, rc 0
+  130 1159780 [main] git 3244 symlink_info::check: not a symlink
+   66 1159846 [main] git 3244 symlink_info::check: 0 = symlink.check (c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L, 0x22C110) (0x2A)
+   67 1159913 [main] git 3244 path_conv::check: this->path(c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L), has_acls(1)
+   64 1159977 [main] git 3244 unlink: _unlink (c:\workspace\git\git-1.5.3\.git\objects\tmp_obj_rOxD3L)
+  763 1160740 [main] git 3244 unlink: 1 = CloseHandle (0x6D0)
+  144 1160884 [main] git 3244 unlink: CreateFile (FILE_FLAG_DELETE_ON_CLOSE) succeeded
+   66 1160950 [main] git 3244 unlink: 0 = unlink (/cygdrive/c/workspace/git/git-1.5.3/.git/objects/tmp_obj_rOxD3L)
 
-That simply isn't true.
+Could you locate move_temp_to_file and make it unconditionally rename
+the tempfile into target sha1 file? It should become something like that:
 
-Normalization actually has real semantic meaning. If it didn't, there=20
-would never ever be a reason why you'd use the non-normalized form in t=
-he=20
-first place.
+int move_temp_to_file(const char *tmpfile, const char *filename)
+{
+	int ret = link_temp_to_file(tmpfile, filename);
 
-Others have argued the exact same thing for capitalization. "A" is the=20
-same letter as "a". Except there is a distinction.
+	/*
+	 * Coda hack - coda doesn't like cross-directory links,
+	 * so we fall back to a rename, which will mean that it
+	 * won't be able to check collisions, but that's not a
+	 * big deal.
+	 *
+	 * The same holds for FAT formatted media.
+	 *
+	 * When this succeeds, we just return 0. We have nothing
+	 * left to unlink.
+	 */
+	if (!rename(tmpfile, filename))
+		return 0;
+	ret = errno;
+	unlink(tmpfile);
+	if (ret) {
+		if (ret != EEXIST) {
+			return error("unable to write sha1 filename %s: %s\n", filename, strerror(ret));
+		}
+		/* FIXME!!! Collision check here ? */
+		return error("failed to write sha1 filename %s: %s\n", filename, strerror(ret));
+	}
 
-The same is true of "a<UMLAUT MODIFIER>" and "<a WITH UMLAUT>". Yes, it=
-'s=20
-the same "chacter" in either case. Except when there is a distinction.
+	return 0;
+}
 
-And there *are* cases where there are distinctions. Especially inside=20
-computers. For one thing, you may not be talking about "characters on=20
-screen", but you may be talking about "key sequences". And suddenly=20
-"a<UMLAUT MODIFIER>" is a two-key sequence, and "<a WITH UMLAUT>" is a=20
-single-key sequence, and THEY ARE DIFFERENT.
-
-See?
-
-"a" and "A" are the same letter. But sometimes case matters.
-
-Multi-character UTF-8 sequences may be the same character. But sometime=
-s=20
-the sequence matters.
-
-Same exact thing.
-
->	The only way to argue that normalization is wrong is by providing a
-> good reason to preserve the exact byte sequence, and so far the only =
-reason
-> I've seen is to help git.
-
-Git doesn't care. Just use the *same* sequence everywhere. Make sure=20
-something doesn't change it. Because if something changes it, git will=20
-track it.
-
-> How do you figure? When I type "M=E4rchen", I'm typing a string, not =
-a byte
-> sequence. I have no control over the normalization of the characters.
-> Therefore, depending on what program I'm typing the name in, I might =
-use the
-> same normalization as the filename, or I might miss. It's completely =
-out of my
-> control. This is why the filesystem has to step in and say "You compo=
-sed that
-> character differently, but I know you were trying to specify this fil=
-e".
-
-Pure and utter garbage.
-
-What you are describing is an *input method* issue, not a filesystem=20
-issue.
-
-The fact that you think this has anything what-so-ever to do with=20
-filesystems, I cannot understand.
-
-Here's an example: I can type M=E4rchen two different ways on my keyboa=
-rd: I=20
-can press the '=E4' key (yes, I have one, I have a Swedish keyboard), o=
-r I=20
-could press the '=A8' key and the 'a' key.
-
-See: I get '=E4' and '=E4' respectively.
-
-And as I send this email off, those characters never *ever* got written=
- as=20
-filenames to any filesystem. But they *did* get written as part of=20
-text-files to the disk using "write()", yes.
-
-And according to your *insane* logic, that write() call should have=20
-converted them to the same representation, no?
-
-Hell no! That conversion has absolutely nothing to do with the filesyst=
-em.=20
-It's done at a totally different layer that actually knows what it is=20
-doing, and turned them both into \xc3\xa4 (and then, the email client=20
-probably will turn this into Latin1, and send it out as a single-byte=20
-'\xe4' character).
-
-See? Putting the conversion in the filesystem IS INSANE. You wouldn't m=
-ake=20
-the filesystem convert the characters in the data stream (because it wo=
-uld=20
-cause strange data conversion issues) AND FOR EXACTLY THE SAME REASON i=
-t=20
-shouldn't do it for filenames either!
-
-And your claim that "you have no control over the normalization of=20
-characters" is simply insane. Of course you have. It's just not suppose=
-d=20
-to be at the filesystem level - whether it's a write() call or a creat(=
-)=20
-call!
-
-			Linus
+Does someone know, why this function seem to return 0 (success) on
+something which looks like an SHA1 collision? And destroy the
+tempfile, even though it is not moved anywhere.
