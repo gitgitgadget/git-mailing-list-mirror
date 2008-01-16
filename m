@@ -1,66 +1,55 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git Gui: initial french translation: fr.po
-Date: Wed, 16 Jan 2008 00:59:20 -0500
-Message-ID: <20080116055920.GK24004@spearce.org>
-References: <20080115062426.8fd03852.chriscool@tuxfamily.org>
+From: Mike <fromlists@talkingspider.com>
+Subject: Re: I don't want the .git directory next to my code.
+Date: Wed, 16 Jan 2008 01:00:00 -0500
+Message-ID: <478D9D60.9070807@talkingspider.com>
+References: <478D79BD.7060006@talkingspider.com> <478D8062.3090506@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Wed Jan 16 06:59:55 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Dan McGee <dpmcgee@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 07:00:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JF1Ja-0003Xt-EH
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 06:59:54 +0100
+	id 1JF1KC-0003dP-Tz
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 07:00:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752390AbYAPF70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 00:59:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752169AbYAPF70
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 00:59:26 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:53323 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752094AbYAPF7Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 00:59:25 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JF1J4-0001Ta-21; Wed, 16 Jan 2008 00:59:22 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7AB4120FBAE; Wed, 16 Jan 2008 00:59:20 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20080115062426.8fd03852.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752492AbYAPGAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 01:00:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751757AbYAPGAE
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 01:00:04 -0500
+Received: from relay02.pair.com ([209.68.5.16]:1410 "HELO relay02.pair.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751172AbYAPGAD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 01:00:03 -0500
+Received: (qmail 67257 invoked from network); 16 Jan 2008 06:00:01 -0000
+Received: from unknown (HELO ?192.168.1.100?) (unknown)
+  by unknown with SMTP; 16 Jan 2008 06:00:01 -0000
+X-pair-Authenticated: 72.225.213.70
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <478D8062.3090506@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70636>
 
-Christian Couder <chriscool@tuxfamily.org> wrote:
-> Here are some of the choices made to translate Git Gui to french:
 
-Thanks, this will be in git-gui 0.9.2.  GNU msgfmt caught a minor
-bug in the translation.  The translation on line 466 needed to have
-an LF, as the original text ended with an LF.  I inserted it when
-I applied the patch.
 
-> I just attached the file instead of sending the patch because I fear
-> some encoding breakages.
+Dan McGee wrote:
+> On 01/15/2008 09:27 PM, Mike wrote:
+>> How do I make the repository dir live somewhere else, the hell away from
+>> my code? Thanks
+> 
+> mv .git <location to move to>
+> ln -s <location moved to> .git
+> 
+> Did you try this before you sent your email?
 
-Next time could you please use a proper Git patch (git-format-patch)
-but attach the .patch file to your email.  Its far easier for me
-to apply.
+No, good idea. But it didn't work.  When I git commit -a, I get "fatal: 
+Not a git repository"
 
-I don't mind applying translation patches sent as attachments
-(as it does help avoid mangling) but I know many folks on the list
-would still rather see them inline whenever possible.
-
--- 
-Shawn.
+(And also even if that worked, it wouldn't work on an NTFS partiton, 
+right...)
