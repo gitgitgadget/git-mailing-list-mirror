@@ -1,64 +1,59 @@
-From: Wincent Colaiuta <win@wincent.com>
+From: Petko Manolov <petkan@nucleusys.com>
 Subject: Re: git and binary files
-Date: Wed, 16 Jan 2008 15:34:16 +0100
-Message-ID: <D3716EB3-10B1-4D96-AB12-BD86CBB189CB@wincent.com>
-References: <alpine.DEB.1.00.0801161222150.3889@bender.nucleusys.com> <ee77f5c20801160254u53e07773qb4125ffd90cf7619@mail.gmail.com> <alpine.DEB.1.00.0801161517260.5260@bender.nucleusys.com> <alpine.LSU.1.00.0801161341430.17650@racer.site> <alpine.DEB.1.00.0801161549140.5260@bender.nucleusys.com>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Date: Wed, 16 Jan 2008 16:39:19 +0200 (EET)
+Message-ID: <alpine.DEB.1.00.0801161634080.5260@bender.nucleusys.com>
+References: <alpine.DEB.1.00.0801161222150.3889@bender.nucleusys.com> <alpine.LSU.1.00.0801161113170.17650@racer.site> <alpine.DEB.1.00.0801161521500.5260@bender.nucleusys.com> <20080116135420.GA21588@coredump.intra.peff.net> <alpine.DEB.1.00.0801161606160.5260@bender.nucleusys.com>
+ <20080116141836.GA22639@coredump.intra.peff.net> <alpine.DEB.1.00.0801161622030.5260@bender.nucleusys.com> <20080116143219.GA22744@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
-To: Petko Manolov <petkan@nucleusys.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 15:35:48 2008
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 16 15:41:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JF9Mp-0000Sf-1Y
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 15:35:47 +0100
+	id 1JF9S3-0002VN-Af
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 15:41:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755217AbYAPOfR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Jan 2008 09:35:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753717AbYAPOfR
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 09:35:17 -0500
-Received: from wincent.com ([72.3.236.74]:32797 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755190AbYAPOfP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 09:35:15 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m0GEYJco021021;
-	Wed, 16 Jan 2008 08:34:20 -0600
-In-Reply-To: <alpine.DEB.1.00.0801161549140.5260@bender.nucleusys.com>
-X-Mailer: Apple Mail (2.915)
+	id S1753828AbYAPOkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 09:40:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751422AbYAPOkg
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 09:40:36 -0500
+Received: from n152-u15.cabletel.bg ([89.253.152.15]:35102 "EHLO
+	zztop.nucleusys.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753778AbYAPOkf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 09:40:35 -0500
+Received: from bender.nucleusys.com ([192.168.234.2])
+	by zztop.nucleusys.com with esmtp (Exim 4.63)
+	(envelope-from <petkan@nucleusys.com>)
+	id 1JF9RN-0007SM-ST; Wed, 16 Jan 2008 16:40:29 +0200
+In-Reply-To: <20080116143219.GA22744@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70683>
 
-El 16/1/2008, a las 14:58, Petko Manolov escribi=F3:
+On Wed, 16 Jan 2008, Jeff King wrote:
 
-> On Wed, 16 Jan 2008, Johannes Schindelin wrote:
->
->> I think that you're missing the point of version control.  It's not =
-=20
->> only about having an up-to-date source tree, but also about being =20
->> able to go back to a certain revision.
->
-> No contradiction here.  In my case old source code will work =20
-> perfectly with new binaries/firmware.  That's why i don't _need_ the =
-=20
-> history, only the latest stuff in order to save space.
+> OK, that was the answer I was looking for; it looks like you are out
+> of luck.
 
-You may be interested in the history, but the entire purpose of any =20
-version control system (not just Git) is to record exactly that: =20
-history.
+Story of my life. :-)
 
-If the exact contents of these large binaries *really* don't matter, =20
-as you say they don't, than why don't you just commit one and never =20
-touch it again?
+> As an experiment, it might be worth trying to store the uncompressed
+> versions instead (git will delta _and_ compress them for you).
 
-Cheers,
-Wincent
+I don't have them uncompressed.
+
+I can try to convert those files into ascii format and then save them in 
+the repository.  Since most changes are incremental git should be able to 
+generate relatively small delta, which should compress well enough.
+
+Thanks for the hint.
+
+
+ 		Petko
