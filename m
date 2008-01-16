@@ -1,68 +1,64 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Make 'git fsck' complain about non-commit branches
-Date: Wed, 16 Jan 2008 11:59:41 -0800
-Message-ID: <7vk5m9pmmq.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.1.00.0801151618300.2806@woody.linux-foundation.org>
-	<7v8x2qd2hu.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801151654050.2806@woody.linux-foundation.org>
+Subject: Re: [PATCH 1/3] git-submodule: rename shell functions for consistency
+Date: Wed, 16 Jan 2008 12:08:59 -0800
+Message-ID: <7vbq7lpm78.fsf@gitster.siamese.dyndns.org>
+References: <1200280956-19920-1-git-send-email-imyousuf@gmail.com>
+	<7vzlv7flb5.fsf@gitster.siamese.dyndns.org>
+	<7vy7are3qo.fsf_-_@gitster.siamese.dyndns.org>
+	<7bfdc29a0801151826u2218f825ga8100b1cc9fa8b2@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jan 16 21:00:53 2008
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Imran M Yousuf" <imyousuf@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 21:10:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFERE-0005jd-Je
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 21:00:41 +0100
+	id 1JFEaA-0000sQ-It
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 21:09:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752078AbYAPT7s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 14:59:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751700AbYAPT7s
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 14:59:48 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63587 "EHLO
+	id S1751315AbYAPUJS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 15:09:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751259AbYAPUJR
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 15:09:17 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64087 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751378AbYAPT7r (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 14:59:47 -0500
+	with ESMTP id S1751248AbYAPUJR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 15:09:17 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D7273439A;
-	Wed, 16 Jan 2008 14:59:45 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D31445DA;
+	Wed, 16 Jan 2008 15:09:15 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5978D4399;
-	Wed, 16 Jan 2008 14:59:43 -0500 (EST)
-In-Reply-To: <alpine.LFD.1.00.0801151654050.2806@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Tue, 15 Jan 2008 17:01:57 -0800 (PST)")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 80C2F45D7;
+	Wed, 16 Jan 2008 15:09:11 -0500 (EST)
+In-Reply-To: <7bfdc29a0801151826u2218f825ga8100b1cc9fa8b2@mail.gmail.com>
+	(Imran M. Yousuf's message of "Wed, 16 Jan 2008 08:26:29 +0600")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70735>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+"Imran M Yousuf" <imyousuf@gmail.com> writes:
 
-> On Tue, 15 Jan 2008, Junio C Hamano wrote:
->> 
->> So far, the plumbing level did not care much about the Porcelain
->> convention, such as refs/heads and refs/remotes (you seem to
->> have forgot) are about "branches" and must point at commit
->> objects.
->
-> Yeah. I'm not sure this is all a great idea, but I think they are correct 
-> (and no, "refs/remotes/" would *not* have been correct). 
+> Thanks Junio for showing how it should be done. Due to some
+> pre-scheduled appointment I was unavailable yesterday evening and thus
+> was neither able to reply nor resubmit the changes.
 
-If we take that "plumbing knows much more about Porcelain
-convention" shift-of-paradigm all the way, refs/remotes/ would
-contain what are copied from refs/heads/ elsewhere, so checking
-would have been correct.  If you are saying that we are not
-prepared to take the change that far (which I tend to agree
-with, as I like to keep the door open for people to do things
-that at the first sight seem insane but later turns out to be
-useful in workflows we haven't imagined so far), I'd agree that
-not insisting on commitness under refs/remotes/ is correct.
+Well, I did not show how it _should_ be done.  That series was
+merely an illustration of how I _think_ it should look like.  I
+did not test it, I do not know if it introduced new bugs, and
+most importantly I do not know if it fulfills what you intended
+to achieve with your patch.
 
-Is that where your "refs/remotes would *not* have been correct"
-comes from, or did I miss something more fundamental?
+In other words, I just tried to turn the table around.  Instead
+of me and others commenting on your patch saying "I do not like
+this" piecemeal, now you have something you can comment on.  You
+can say the whole range of things from "I tested this and it is
+what I want", "I like the general concept but I found this and
+that bug and here is a fix", to "This is much worse than what I
+proposed and here is why."
