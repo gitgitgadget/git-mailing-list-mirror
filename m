@@ -1,73 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] close_lock_file(): new function in the lockfile API
-Date: Wed, 16 Jan 2008 12:36:54 -0800
-Message-ID: <7vodblo6c9.fsf@gitster.siamese.dyndns.org>
-References: <7vmyr6bluy.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.44.0801152006260.944-100000@demand>
-	<7vejchr3pf.fsf_-_@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801161207220.2806@woody.linux-foundation.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH v2] Do not show "diff --git" metainfo with --no-prefix
+Date: Wed, 16 Jan 2008 15:39:10 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0801161524390.13593@iabervon.org>
+References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com> <alpine.DEB.1.00.0801151444180.5289@eeepc-johanness> <c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com> <alpine.LNX.1.00.0801151728120.13593@iabervon.org>
+ <7vhched3kw.fsf@gitster.siamese.dyndns.org> <7v4pded1rk.fsf_-_@gitster.siamese.dyndns.org> <7v7iiabjyh.fsf_-_@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org> <alpine.LFD.1.00.0801151919440.2806@woody.linux-foundation.org>
+ <alpine.LNX.1.00.0801152256480.13593@iabervon.org> <alpine.LFD.1.00.0801152017490.2806@woody.linux-foundation.org> <7v1w8hploy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <drafnel@gmail.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>,
-	Git Mailing List <git@vger.kernel.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jan 16 21:37:39 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Chris Ortman <chrisortman@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 16 21:39:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFF0z-00030M-0c
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 21:37:37 +0100
+	id 1JFF35-0003i6-4a
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 21:39:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751102AbYAPUhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 15:37:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751188AbYAPUhI
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 15:37:08 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:32867 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751041AbYAPUhG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 15:37:06 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A76F4BC8;
-	Wed, 16 Jan 2008 15:37:05 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 34AD64BC1;
-	Wed, 16 Jan 2008 15:36:57 -0500 (EST)
-In-Reply-To: <alpine.LFD.1.00.0801161207220.2806@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Wed, 16 Jan 2008 12:08:58 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752654AbYAPUjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 15:39:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbYAPUjS
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 15:39:18 -0500
+Received: from iabervon.org ([66.92.72.58]:59002 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750993AbYAPUjR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 15:39:17 -0500
+Received: (qmail 32711 invoked by uid 1000); 16 Jan 2008 20:39:10 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 16 Jan 2008 20:39:10 -0000
+In-Reply-To: <7v1w8hploy.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70743>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Wed, 16 Jan 2008, Junio C Hamano wrote:
 
-> On Wed, 16 Jan 2008, Junio C Hamano wrote:
->> +
->> +void close_lock_file(struct lock_file *lk)
->> +{
->> +	close(lk->fd);
->> +	lk->fd = -1;
->> +}
->
-> Since one of the main purposes of closing would be the error testing of 
-> writes that haven't made it out yet on filesystems like NFS that do 
-> open-close cache serialization, I'd suggest doing this as
->
-> 	int close_lock_file(struct lock_file *lk)
-> 	{
-> 		int fd = lk->fd;
-> 		lk->df = -1;
-> 		return close(fd);
-> 	} 
->
-> to give the return code.
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> 
+> > That's why tying "--git" together with any prefix handling is wrong: 
+> > because it's a totally different issue. It's true that "git-apply" right 
+> > now doesn't understand these things, but assuming we want to teach 
+> > git-apply to apply to subprojects eventually (we do, don't we?) we'll 
+> > eventually have to teach it.
+> 
+> That's all correct but
+> 
+>  * currently diff does not recurse, nor apply does not apply
+>    recursively;
+> 
+>  * "git diff" that comes with 1.5.4, if we do not do anything,
+>    can produce a diff that will be rejected by the stricter
+>    check "git apply" has when used with --no-prefix and friends;
+> 
+>  * submodule aware versions of "git diff" can be told to add
+>    "--mark-as-git-diff" when it passes "--src-prefix=a/git-gui"
+>    and "--dst-prefix=b/git-gui" when it recurses internally, to
+>    defeat what my proposed patch does.
 
-Yup!  You are as always right.
+Or it could pass an option to include the intermediate portion as part of 
+the name rather than as part of the prefixes. And git-apply would probably 
+be a lot happier to have confirmation that certain files are supposed to 
+be from a submodule, which could be handled by including that option in 
+the header after --git.
+
+	-Daniel
+*This .sig left intentionally blank*
