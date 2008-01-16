@@ -1,96 +1,62 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH v2] Do not show "diff --git" metainfo with --no-prefix
-Date: Tue, 15 Jan 2008 22:56:14 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0801152226000.13593@iabervon.org>
-References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com> <alpine.DEB.1.00.0801151444180.5289@eeepc-johanness> <c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com> <alpine.LNX.1.00.0801151728120.13593@iabervon.org>
- <7vhched3kw.fsf@gitster.siamese.dyndns.org> <7v4pded1rk.fsf_-_@gitster.siamese.dyndns.org> <7v7iiabjyh.fsf_-_@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org>
+From: Dan McGee <dpmcgee@gmail.com>
+Subject: Re: I don't want the .git directory next to my code.
+Date: Tue, 15 Jan 2008 21:56:18 -0600
+Message-ID: <478D8062.3090506@gmail.com>
+References: <478D79BD.7060006@talkingspider.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Chris Ortman <chrisortman@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jan 16 04:56:53 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: fromlists@talkingspider.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 16 04:57:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JEzOP-0007Bp-JZ
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 04:56:46 +0100
+	id 1JEzOc-0007EE-7j
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 04:56:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757106AbYAPD4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jan 2008 22:56:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756404AbYAPD4Q
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 22:56:16 -0500
-Received: from iabervon.org ([66.92.72.58]:40183 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754199AbYAPD4P (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jan 2008 22:56:15 -0500
-Received: (qmail 16983 invoked by uid 1000); 16 Jan 2008 03:56:14 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 16 Jan 2008 03:56:14 -0000
-In-Reply-To: <alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1755707AbYAPD4X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jan 2008 22:56:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756935AbYAPD4W
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Jan 2008 22:56:22 -0500
+Received: from an-out-0708.google.com ([209.85.132.242]:32379 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754764AbYAPD4V (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jan 2008 22:56:21 -0500
+Received: by an-out-0708.google.com with SMTP id d31so22948and.103
+        for <git@vger.kernel.org>; Tue, 15 Jan 2008 19:56:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        bh=xWs9N24Rcbljd90X+eWWFe3Kw6XErR5BHkQ5f4zrBt4=;
+        b=gcv9hSFaHXeWSVTUe2+fQ1FcLa9McHc/KMl9jB8RxSKa2UlKUe7Fp3blAuz4mWyLp1xHm4bdCNlO4E0kcmcy61eO+ewYNwbQgNj7JxZP9k0+qXHadHq3Sr6cGi5XwIORTXipUZ35vIxauRRyS8qlKOJLOOecw9dsaa9RpP2z8MU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=C3EX5cLgqcro/AQu2c5lOlWIcCuHQMQ0MbrrCGSN8qyuJeLJbfJYdQo7qQrGmQJntR9MgLTZdy/HTaphnSzL6yuGFb3T98KZT2Pjjw5LATFEAcUisaorDNAPC4BL9taL6JkpYS8rUoHmMLpTHSV62FclmqhIfm5guWsMKi0zFZY=
+Received: by 10.100.249.9 with SMTP id w9mr611196anh.67.1200455780746;
+        Tue, 15 Jan 2008 19:56:20 -0800 (PST)
+Received: from ?192.168.1.100? ( [76.197.238.51])
+        by mx.google.com with ESMTPS id a15sm420329rof.19.2008.01.15.19.56.19
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 15 Jan 2008 19:56:20 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071212)
+In-Reply-To: <478D79BD.7060006@talkingspider.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70614>
 
-On Tue, 15 Jan 2008, Linus Torvalds wrote:
-
-> On Tue, 15 Jan 2008, Junio C Hamano wrote:
-> >
-> > If a non-standard prefix is used by --no-prefix, --src-prefix,
-> > or --dst-prefix options, the resulting diff becomes something
-> > git-apply would not grok.  In such a case, we should not trigger
-> > the more strict check git-apply does for patches in "diff --git"
-> > format.
+On 01/15/2008 09:27 PM, Mike wrote:
 > 
-> I think this is wrong.
-> 
-> If we do any git-specific stuff, we need to have that "--git" thing there. 
-> That is *not* just limited to the prefix, but to all the other things git 
-> diffs can do: renames, mode changes, etc.
+> How do I make the repository dir live somewhere else, the hell away from
+> my code? Thanks
 
-Well, part of the issue is that, if you drop the prefix, then *git* can't 
-understand the resulting patch (because --git causes git-apply to use 
-open-coded -p1 handling of names, which won't be right).
+mv .git <location to move to>
+ln -s <location moved to> .git
 
-I suppose the other option is to have the header in this case be:
+Did you try this before you sent your email?
 
-diff --git --src-prefix= --dst-prefix= filename filename
-
-so that apply can figure out what diff did correctly.
-
-> > Metainformation (e.g. "index", "similarity", etc.) lines will
-> > safely be ignored by patch and git-apply (even when the latter
-> > parses a non-git diff output), so this patch does not bother
-> > stripping them away.
-> 
-> It's not necessarily safe to ignore some of them, like the rename info. If 
-> you see a rename patch and don't understand it as a rename, it's 
-> pointless.
-> 
-> So I would argue that you need something stronger to say "don't do a git 
-> diff", and that should also disallow rename detection at a minimum. Quite 
-> frankly, any program that is so stupid as to not accept current git 
-> patches (ie TortoiseSVN), then we damn well shouldn't just disable the 
-> most trivial part of it. We should make sure that we do not enable *any* 
-> of the rather important extensions: even if ToirtoiseSVN would ignore 
-> them, if ignoring them means that it mis-understands the diff, it 
-> shouldn't be allowed at all.
-> 
-> So maybe a --standard-diff option that removes the "--git" part, but also 
-> removes everything else.
-
-That seems wise to me. We should be able to generate patches that are 
-accessible to programs that can't follow any clever instructions. I think 
-the point of the "Index:" header is that these programs will freak out if 
-two filenames don't match (or, more likely, break in some way), and it 
-means you can't sensibly generate patches that upset them for deletes or 
-creates.
-
-	-Daniel
-*This .sig left intentionally blank*
+-Dan
