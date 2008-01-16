@@ -1,59 +1,60 @@
 From: Petko Manolov <petkan@nucleusys.com>
 Subject: Re: git and binary files
-Date: Wed, 16 Jan 2008 16:21:44 +0200 (EET)
-Message-ID: <alpine.DEB.1.00.0801161615300.5260@bender.nucleusys.com>
-References: <alpine.DEB.1.00.0801161222150.3889@bender.nucleusys.com> <ee77f5c20801160254u53e07773qb4125ffd90cf7619@mail.gmail.com> <alpine.DEB.1.00.0801161517260.5260@bender.nucleusys.com> <alpine.LSU.1.00.0801161341430.17650@racer.site>
- <alpine.DEB.1.00.0801161549140.5260@bender.nucleusys.com> <alpine.LSU.1.00.0801161405330.17650@racer.site>
+Date: Wed, 16 Jan 2008 16:25:28 +0200 (EET)
+Message-ID: <alpine.DEB.1.00.0801161622030.5260@bender.nucleusys.com>
+References: <alpine.DEB.1.00.0801161222150.3889@bender.nucleusys.com> <alpine.LSU.1.00.0801161113170.17650@racer.site> <alpine.DEB.1.00.0801161521500.5260@bender.nucleusys.com> <20080116135420.GA21588@coredump.intra.peff.net> <alpine.DEB.1.00.0801161606160.5260@bender.nucleusys.com>
+ <20080116141836.GA22639@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 16 15:23:43 2008
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 16 15:27:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JF9Az-0003jQ-UU
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 15:23:34 +0100
+	id 1JF9EY-00056R-0d
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 15:27:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753659AbYAPOXF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 09:23:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753563AbYAPOXF
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 09:23:05 -0500
-Received: from n152-u15.cabletel.bg ([89.253.152.15]:41685 "EHLO
+	id S1752876AbYAPO0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 09:26:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752904AbYAPO0p
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 09:26:45 -0500
+Received: from n152-u15.cabletel.bg ([89.253.152.15]:36174 "EHLO
 	zztop.nucleusys.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752880AbYAPOXD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 09:23:03 -0500
+	with ESMTP id S1752310AbYAPO0p (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 09:26:45 -0500
 Received: from bender.nucleusys.com ([192.168.234.2])
 	by zztop.nucleusys.com with esmtp (Exim 4.63)
 	(envelope-from <petkan@nucleusys.com>)
-	id 1JF9AM-0007QT-JQ; Wed, 16 Jan 2008 16:22:54 +0200
-In-Reply-To: <alpine.LSU.1.00.0801161405330.17650@racer.site>
+	id 1JF9Dz-0007Qk-1e; Wed, 16 Jan 2008 16:26:39 +0200
+In-Reply-To: <20080116141836.GA22639@coredump.intra.peff.net>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70680>
 
-On Wed, 16 Jan 2008, Johannes Schindelin wrote:
+On Wed, 16 Jan 2008, Jeff King wrote:
 
-> No, you _do_ miss the point here.  You might _think_ that they work 
-> perfectly, but with revision control you want to have _exactly_ the same 
-> setup.  You want to be able to go back to a certain _revision_ 
-> (including the then-current firmware).
+> On Wed, Jan 16, 2008 at 04:14:30PM +0200, Petko Manolov wrote:
+>
+>>> How big are your firmware files? How often do they change, and how large
+>>> are the changes? IOW, have you confirmed that repacking does not produce
+>>> an acceptable delta, meaning you get versioning for very low space cost?
+>>
+>> Changes don't happen too often, but the size of everything binary in the
+>> tree easily goes to about 100MB.  Three commits later it ends up at about
+>> 300MB...
+>
+> Right, as loose objects. Did you try running "git-gc" to repack?
 
-I _know_ older code will work with new binaries.  I know because i've done 
-it many times and the application is the sort that is not going to forgive 
-any frivolity.
-
-Unfortunately this is very specific to what i'm doing and does not apply 
-for 99.99% of what people usually need.
-
-> And that's what you don't want.  So git is not for you.
-
-I use git for SCV from day one.  It's great.  I was just thinking aloud 
-about something i've stumbled upon.  ;-)
+I did "git repack -f -a -d", but it didn't reduce the repository size. 
+Those binaries are already compressed so any change adds up their size 
+once again.
 
 
- 		Petko
+cheers,
+Petko
