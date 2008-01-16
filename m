@@ -1,121 +1,83 @@
-From: Eyvind Bernhardsen <eyvind-git@orakel.ntnu.no>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Wed, 16 Jan 2008 23:37:58 +0100
-Message-ID: <24A6A8D6-EED9-4E30-AE4C-125F98A7F6A3@orakel.ntnu.no>
-References: <478E1FED.5010801@web.de> <alpine.LSU.1.00.0801161531030.17650@racer.site> <427BE4FD-6534-4CB2-91F8-F9014DC82B54@sb.org> <alpine.LSU.1.00.0801161629580.17650@racer.site>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kevin Ballard <kevin@sb.org>, Mark Junker <mjscod@web.de>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 17 00:09:59 2008
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 2/2] close_lock_file(): new function in the lockfile API
+Date: Wed, 16 Jan 2008 17:08:27 -0600
+Message-ID: <478E8E6B.80702@nrlssc.navy.mil>
+References: <7vmyr6bluy.fsf@gitster.siamese.dyndns.org>	<Pine.LNX.4.44.0801152006260.944-100000@demand>	<7vejchr3pf.fsf_-_@gitster.siamese.dyndns.org>	<alpine.LFD.1.00.0801161207220.2806@woody.linux-foundation.org>	<7vodblo6c9.fsf@gitster.siamese.dyndns.org>	<Pine.LNX.4.64.0801161443340.31161@torch.nrlssc.navy.mil>	<7v7ii9o2ld.fsf@gitster.siamese.dyndns.org>	<478E893F.4070100@nrlssc.navy.mil> <7vy7apmlci.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	=?ISO-8859-1?Q?Kristian_H=F8gsberg?= <krh@redhat.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 17 00:10:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFHOG-0001fA-Hg
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 00:09:48 +0100
+	id 1JFHOW-0001lv-9c
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 00:10:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751894AbYAPXJT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Jan 2008 18:09:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751882AbYAPXJT
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 18:09:19 -0500
-Received: from 97.84-49-228.nextgentel.com ([84.49.228.97]:53194 "EHLO
-	eyvind.bernhardsens.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751384AbYAPXJS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 18:09:18 -0500
-X-Greylist: delayed 1874 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Jan 2008 18:09:17 EST
-Received: from vredefort.d.eyvind.bernhardsens.net (vredefort.d.eyvind.bernhardsens.net [172.16.3.223])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by eyvind.bernhardsens.net (Postfix) with ESMTP id E8F796411FB;
-	Wed, 16 Jan 2008 23:37:59 +0100 (CET)
-In-Reply-To: <alpine.LSU.1.00.0801161629580.17650@racer.site>
-X-Mailer: Apple Mail (2.915)
+	id S1751882AbYAPXJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 18:09:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752086AbYAPXJd
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 18:09:33 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:42355 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751069AbYAPXJc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 18:09:32 -0500
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0GN8SB8029867;
+	Wed, 16 Jan 2008 17:08:28 -0600
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 16 Jan 2008 17:08:27 -0600
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <7vy7apmlci.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 16 Jan 2008 23:08:27.0947 (UTC) FILETIME=[B410E7B0:01C85894]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15666001
+X-TM-AS-Result: : Yes--15.172900-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY3NS03MDAw?=
+	=?us-ascii?B?NzUtMTM5MDEwLTcwMDE2MC03MDM3MzEtNzA0MDM0LTcwMzc4OC03?=
+	=?us-ascii?B?MDIwMjAtNzAwNzI2LTcwMTIwMi03MDUxNjctNzA0NDEwLTcwMzgw?=
+	=?us-ascii?B?Ny03MDE3MzgtMTM3NzE3LTcwMTQ1NS03MDgxNzktNzA3NDUxLTcw?=
+	=?us-ascii?B?MDk3MS03MDkxODUtNzA2NzkxLTcwMjA0Mi0xMzk1MDQtNzAxMTYz?=
+	=?us-ascii?B?LTcwMTkzNy03MDQ0MjEtNzAxOTE0LTcwODc5Ny03MDgzMjgtNzAz?=
+	=?us-ascii?B?NzEyLTE0ODAzOS0xNDgwNTEtMjAwNDA=?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70766>
 
-On 16. jan.. 2008, at 17.32, Johannes Schindelin wrote:
+Junio C Hamano wrote:
+> Brandon Casey <casey@nrlssc.navy.mil> writes:
+> 
+>> Mainly, I prefer to not modify the data structures when a failure occurs.
+> 
+> Ok.  Is the rest of your patch that fixes callers Ok with that
+> semantics?
 
->>> FWIW the issue is that Mac OS X decides that it knows better how to
->>> encode your filename than you could yourself.
->>
->> More like, Mac OS X has standardized on Unicode and the rest of the
->> world hasn't caught up yet. Git is the only tool I've ever heard of =
-=20
->> that
->> has a problem with OS X using Unicode.
->
-> No.  That's not at all the problem.  Mac OS X insists on storing =20
-> _another_
-> encoding of your filename.  Both are UTF-8.  Both encode the _same_
-> string.  Yet they are different, bytewise.  For no good reason.
->
-> Stop spreading FUD.  Git can handle Unicode just fine.  In fact, Git =
-=20
-> does
-> not _care_ how the filename is encoded, it _respects_ the user's =20
-> choice,
-> not only of the encoding _type_, but the _encoding_, too.
+yes.
 
-"FUD" is a bit strong, don't you think?  HFS+ is the way it is and it =20
-would be nice if Git could deal with it.
+>  If so, I'd agree that is probably cleaner.  I'll
+> scrap the one we are discussing, resurrecting only the api
+> documentation part, and replace it with the lockfile.c changes
+> from your patch, along with the fixes to callers.
 
-The problem is that HFS+ normalizes filenames to avoid multiple files =20
-that appear to have the same name (eg "M<A WITH UMLAUT>rchen" vs =20
-"Ma<UMLAUT MODIFIER>rchen", in gitweb/test).  This is sort of like =20
-case sensitivity, but filenames are normalized when a file is =20
-_created_.  Git, not unreasonably, expects a file to keep the name it =20
-was created with.
+Most of that patch is straight forward, just removing close().
 
-As far as I can tell, as long as you add all your internationally =20
-becharactered files to git from an HFS+ file system using a gui or =20
-command-line completion, you'll be okay; trouble starts when you check =
-=20
-in a file with the composed form of a character, by typing the name on =
-=20
-the command line (I'm not sure about this one) or committing on =20
-another OS.  Git will store the filename in composed form, but the =20
-Mac's filesystem will decompose the filename when you check the file =20
-out.
+I think you should consider how to handle fdopen on the lock
+descriptor and the fact that start_command closes the lock
+file descriptor in create_bundle().
 
-The result looks like this:
+After we fdopen, we should always fclose() and never close().
+This isn't enforced.
 
-vredefort:[git]% git status
-# On branch master
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#	gitweb/test/M=E4rchen
-nothing added to commit but untracked files present (use "git add" to =20
-track)
+I merely assigned the file descriptor to -1 when it was safe
+(i.e. after fclose), and added a comment. We could add another
+function which did this automatically, but maybe that is too
+much effort, especially in the bundle case.
 
-(this is directly after checking out git.git @ v1.5.4-rc3)
-
-There are two things to note here.  One is that Git thinks that there =20
-is a new file called "gitweb/test/M=E4rchen" (decomposed) when it's =20
-"really" just the same "gitweb/test/M=E4rchen" (precomposed) that's in =
-=20
-the repository.  The other is that git _thinks_ that the "gitweb/test/=20
-M=E4rchen" (precomposed) it's expecting is still there, because the =20
-filesystem, when asked for "gitweb/test/M=E4rchen" in any form will =20
-return the file "gitweb/test/M=E4rchen" (decomposed).
-
-Trying to check out the "next" branch at this point is a pain since =20
-next's "M=E4rchen" would overwrite the untracked "M=E4rchen".
-
-I can't provide links to any previous discussions about this, but =20
-here's Apple's Technical Q&A on the subject:
-
-http://developer.apple.com/qa/qa2001/qa1235.html
-
-=46inding a sane way of allowing git to handle this behaviour is left a=
-s =20
-an exercise for the reader.
-
-Eyvind Bernhardsen
+-brandon
