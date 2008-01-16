@@ -1,61 +1,101 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: git and binary files
-Date: Wed, 16 Jan 2008 21:54:58 +1100
-Message-ID: <ee77f5c20801160254u53e07773qb4125ffd90cf7619@mail.gmail.com>
-References: <alpine.DEB.1.00.0801161222150.3889@bender.nucleusys.com>
+From: Mark Junker <mjscod@web.de>
+Subject: git-svn: Internal error during fetch of mono repository
+Date: Wed, 16 Jan 2008 12:33:36 +0100
+Message-ID: <478DEB90.2090306@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Petko Manolov" <petkan@nucleusys.com>
-X-From: git-owner@vger.kernel.org Wed Jan 16 11:55:42 2008
+Content-Type: multipart/mixed;
+ boundary="------------010606010001010706060800"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 16 12:34:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JF5vl-0001JJ-Gx
-	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 11:55:37 +0100
+	id 1JF6Wz-00073t-Sk
+	for gcvg-git-2@gmane.org; Wed, 16 Jan 2008 12:34:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751785AbYAPKzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 05:55:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbYAPKzA
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 05:55:00 -0500
-Received: from rv-out-0910.google.com ([209.85.198.188]:2466 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751139AbYAPKzA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 05:55:00 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so183252rvb.1
-        for <git@vger.kernel.org>; Wed, 16 Jan 2008 02:54:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=qxGuRlNoFmOMsApcbtsbIor4BggX2O93wauSlrW7cVU=;
-        b=HLAzA/UDRKs0bxss7te0H5VDH2r7hfd1DJgZVLYLz1PKf7hxVea5JOMX9raQN1DQae9W+A6HS3H3dbnXAYLgN/XH3EC1s3a7Mfs0TawT1XelPup0t3QkwZ4n3VuMpXeWyBKXCCvFJjZrtkQoClmWHKVxOGZX3Ex3OsTiftIV0A8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=p2GUs30cvaxV3fbQfh2AZU7/O0Li00Y63ypFAMEavV9jDsLix3JKZzaNZNP4SHnV4gPc7w6Q6eEsJ2qmVNcGjX8z/0nwQlT6GurdxHzcyksQWQ1GCIICDfE2atbDAuIsleXAdGvXWjkX2NwU2VAajU0Dc7bcH7kDPmau+yb8cJo=
-Received: by 10.140.135.20 with SMTP id i20mr436732rvd.263.1200480898706;
-        Wed, 16 Jan 2008 02:54:58 -0800 (PST)
-Received: by 10.141.115.4 with HTTP; Wed, 16 Jan 2008 02:54:58 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.00.0801161222150.3889@bender.nucleusys.com>
-Content-Disposition: inline
+	id S1751275AbYAPLdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 06:33:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751550AbYAPLdh
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 06:33:37 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:35076 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750848AbYAPLdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 06:33:36 -0500
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 2E1E6C68588B
+	for <git@vger.kernel.org>; Wed, 16 Jan 2008 12:33:35 +0100 (CET)
+Received: from [80.146.179.234] (helo=mark-junkers-computer.local)
+	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
+	id 1JF6WV-0000Sq-00
+	for git@vger.kernel.org; Wed, 16 Jan 2008 12:33:35 +0100
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X; de; rv:1.8.1.9) Gecko/20071031 Thunderbird/2.0.0.9 Mnenhy/0.7.5.0
+X-Sender: mjscod@web.de
+X-Provags-ID: V01U2FsdGVkX19R4tRci3+krxePm+jd9J/KRmrMvrGiWPxVGLU2
+	VA3aDgTk6t+8tKBtqRDs+Pxlw0IkBQJNddxbILagpn3NAZUgPe
+	crNGWhKOA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70653>
 
-On Jan 16, 2008 9:34 PM, Petko Manolov <petkan@nucleusys.com> wrote:
->
-> The nature of these binary files is such that i don't care neither about
-> their history nor older versions.  Hence the question:  is there an easy
-> way to tell git not to bother about the history of these particular files
-> and keep the most recent version only?
+This is a multi-part message in MIME format.
+--------------010606010001010706060800
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 
-If you don't care about versioning those files, why would you use a
-version control system? Just store them somewhere else, and use
-symlinks.
+Hi,
+
+I got an internal error during fetch of the mono repository. I attach
+both the messages produces by the git-fetch and the .git/config.
+
+My git version is 1.5.3.7. The svn version is 1.4.6.
+
+Any idea?
+
+Regards,
+Mark
 
 
-Dave.
+--------------010606010001010706060800
+Content-Type: text/plain; x-mac-type="0"; x-mac-creator="0";
+ name="config"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="config"
+
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[svn-remote "svn"]
+	url = svn://anonsvn.mono-project.com/source
+	fetch = trunk:refs/remotes/trunk
+	branches = branches/*:refs/remotes/*
+	tags = tags/*:refs/remotes/tags/*
+
+
+--------------010606010001010706060800
+Content-Type: text/plain;
+ name="git-svn-error.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+ filename="git-svn-error.txt"
+
+SW5kZXggbWlzbWF0Y2g6IDkyOTFjZjU5YzZmNTg5NDg0NWZiYTAzZGY0Nzg0ODcyYjUyYWI3
+NWIgIT0gNWY3MzJjMzFhNGJiNzgwNjE4ZGUwMzEzNzVlYTZmMzE5NzYwY2VhNg1yZXJlYWRp
+bmcgY2UwY2M1YTAzMmZhN2IxOTI2MTI4ZGY1YmI3NTFiZjAwMzAzZTBiOA1Gb3VuZCBwb3Nz
+aWJsZSBicmFuY2ggcG9pbnQ6IHN2bjovL2Fub25zdm4ubW9uby1wcm9qZWN0LmNvbS9zb3Vy
+Y2UvdHJ1bmsvZGVidWdnZXIgPT4gc3ZuOi8vYW5vbnN2bi5tb25vLXByb2plY3QuY29tL3Nv
+dXJjZS90YWdzL01PTk9fREVCVUdHRVJfMF8xMCwgNDU5MjQNSW5pdGlhbGl6aW5nIHBhcmVu
+dDogdGFncy9NT05PX0RFQlVHR0VSXzBfMTBANDU5MjQNRm91bmQgYnJhbmNoIHBhcmVudDog
+KHRhZ3MvTU9OT19ERUJVR0dFUl8wXzEwKSBkOGM1YjVkODQxMmU0YmZlNDA2NDg1OGEwZDk0
+MjU4Yjc3MDkwM2RkDUluZGV4IG1pc21hdGNoOiA1ZjczMmMzMWE0YmI3ODA2MThkZTAzMTM3
+NWVhNmYzMTk3NjBjZWE2ICE9IDkyOTFjZjU5YzZmNTg5NDg0NWZiYTAzZGY0Nzg0ODcyYjUy
+YWI3NWINcmVyZWFkaW5nIGQ4YzViNWQ4NDEyZTRiZmU0MDY0ODU4YTBkOTQyNThiNzcwOTAz
+ZGQNRm9sbG93aW5nIHBhcmVudCB3aXRoIGRvX3N3aXRjaA1JbnRlcm5hbCBlcnJvcjogQ2Fu
+J3QgZmluZCBhIHRlbXBvcmFyeSBkaXJlY3RvcnkgYXQgL29wdC9sb2NhbC9iaW4vZ2l0LXN2
+biBsaW5lIDMyMjc=
+--------------010606010001010706060800--
