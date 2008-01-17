@@ -1,110 +1,97 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] gitk: Add checkbutton to ignore space changes
-Date: Thu, 17 Jan 2008 23:42:55 +0100
-Message-ID: <12006097753995-git-send-email-prohaska@zib.de>
-Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>
-To: paulus@samba.org
-X-From: git-owner@vger.kernel.org Thu Jan 17 23:44:39 2008
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Thu, 17 Jan 2008 15:05:23 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801171412420.2957@woody.linux-foundation.org>
+References: <478E1FED.5010801@web.de> <m33asxn2gt.fsf@roke.D-201> <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org> <200801162251.54219.jnareb@gmail.com> <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org> <alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org>
+ <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org> <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org> <B45968C6-3029-48B6-BED2-E7D5A88747F7@sb.org> <alpine.LFD.1.00.0801161707150.2806@woody.linux-foundation.org> <8AC4CC86-A711-483D-9F9C-5F8497006A1D@sb.org>
+ <alpine.LFD.1.00.0801161959210.2806@woody.linux-foundation.org> <B719D4A2-0D05-4C55-95FC-AB880D58E1AC@wincent.com> <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org> <87odbkyuvq.fsf@adler.orangeandbronze.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Wincent Colaiuta <win@wincent.com>, Kevin Ballard <kevin@sb.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mark Junker <mjscod@web.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: JM Ibanez <jm@orangeandbronze.com>
+X-From: git-owner@vger.kernel.org Fri Jan 18 00:07:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFdTS-00019Z-KS
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 23:44:39 +0100
+	id 1JFdoz-00014Q-Eh
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 00:06:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760924AbYAQWn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2008 17:43:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760922AbYAQWnZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 17:43:25 -0500
-Received: from mailer.zib.de ([130.73.108.11]:52179 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760614AbYAQWnX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2008 17:43:23 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0HMguuD010216;
-	Thu, 17 Jan 2008 23:42:56 +0100 (CET)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0HMgtlM003163;
-	Thu, 17 Jan 2008 23:42:56 +0100 (MET)
-X-Mailer: git-send-email 1.5.2.4
+	id S1757061AbYAQXGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2008 18:06:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757055AbYAQXGE
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 18:06:04 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:52767 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757169AbYAQXGB (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Jan 2008 18:06:01 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0HN5OLO002165
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 17 Jan 2008 15:05:25 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0HN5Nsm018471;
+	Thu, 17 Jan 2008 15:05:23 -0800
+In-Reply-To: <87odbkyuvq.fsf@adler.orangeandbronze.com>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.715 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70936>
 
-Ignoring space changes can be helpful.  For example, a commit
-claims to only reformat source code and you quickly want to
-verify if this claim is true.  Or a commit accidentally changes
-code formatting and you want to focus on the real changes.
 
-In such cases a button to toggle of whitespace changes would be
-quite handy.  You could quickly toggle between seeing and
-ignoring whitespace changes.
 
-This commit adds such a checkbutton right above the diff view.
+On Fri, 18 Jan 2008, JM Ibanez wrote:
+>
+> With the exception of Unicode. If you check the standard, two Unicode
+> codepoints (i.e. the numeric value that gets stored on disk) *can* map
+> to the same character, hence they are the same.
 
-However, in general it is a good thing to see whitespace changes
-and therefore the state of the checkbutton is not saved. For
-example, space changes might happen unintentionally.  But they are
-real changes yielding different sha1s for the blobs involved.
+But if you want to make it clear, you can use "encoded character" or yes, 
+"code point". 
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- gitk-git/gitk |   13 +++++++++++++
- 1 files changed, 13 insertions(+), 0 deletions(-)
+But the thing is, even the unicode standard tends to just say "character", 
+and a unicode string (for example) is defined to be a sequence of "code 
+units" which in turn is about those *encoded* characters, which is all 
+about the code points.
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index b3cb8e8..6eadbde 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -632,6 +632,7 @@ proc makewindow {} {
-     global findtype findtypemenu findloc findstring fstring geometry
-     global entries sha1entry sha1string sha1but
-     global diffcontextstring diffcontext
-+    global ignorespace
-     global maincursor textcursor curtextcursor
-     global rowctxmenu fakerowmenu mergemax wrapcomment
-     global highlight_files gdttype
-@@ -849,6 +850,9 @@ proc makewindow {} {
-     trace add variable diffcontextstring write diffcontextchange
-     lappend entries .bleft.mid.diffcontext
-     pack .bleft.mid.labeldiffcontext .bleft.mid.diffcontext -side left
-+    checkbutton .bleft.mid.ignspace -text [mc "Ignore space change"] \
-+	-command changeignorespace -variable ignorespace
-+    pack .bleft.mid.ignspace -side left -padx 5
-     set ctext .bleft.ctext
-     text $ctext -background $bgcolor -foreground $fgcolor \
- 	-state disabled -font textfont \
-@@ -5269,13 +5273,21 @@ proc diffcontextchange {n1 n2 op} {
-     }
- }
- 
-+proc changeignorespace {} {
-+    reselectline
-+}
-+
- proc getblobdiffs {ids} {
-     global blobdifffd diffids env
-     global diffinhdr treediffs
-     global diffcontext
-+    global ignorespace
-     global limitdiffs viewfiles curview
- 
-     set cmd [diffcmd $ids "-p -C --no-commit-id -U$diffcontext"]
-+    if {$ignorespace} {
-+	append cmd " -w"
-+    }
-     if {$limitdiffs && $viewfiles($curview) ne {}} {
- 	set cmd [concat $cmd -- $viewfiles($curview)]
-     }
-@@ -8458,6 +8470,7 @@ set bgcolor white
- set fgcolor black
- set diffcolors {red "#00a000" blue}
- set diffcontext 3
-+set ignorespace 0
- set selectbgcolor gray85
- 
- ## For msgcat loading, first locate the installation location.
--- 
-1.5.4.rc2.60.g46ee
+So you'll find that they are very careful in some technical definition 
+parts to talk about "code points", but then in other sequences they talk 
+about "character" even though they are referring to the actual code point 
+(ie the figure literally has the unicode number in it!)
+
+In fact, they sometimes even talk about "characters" in the totally 
+non-encoding meaning of "glyph".
+
+So yes, "character" is often ambiguous. It would be good to never use the 
+word at all, and only talk about "code point" and "glyph" and one of the 
+well-defined special terms like "combining character" or "replacement 
+character".
+
+But to take a representative example from The Unicode Standard, Chapter 2: 
+"Unicode Design Principles":
+
+  Characters are represented by code points that reside only in a memory 
+  representation, as strings in memory, on disk, or in data transmission. 
+  The Unicode Standard deals only with character codes.
+
+(any speling mistakes mine). In other words, from the very beginning of 
+the standard, very basic design principles chapter, it starts talking 
+about characters being represented by code points and explicitly says that 
+it really only deals with CHARACTER CODES.
+
+Yes, I'm sure you can argue ad infinitum that all the "equivalences" and 
+other crap means that a "character" can sometimes mean just about 
+anything, but I'd say that it's pretty damn reasonable to equate "unicode 
+character" with "code point" or "character code".
+
+			Linus
