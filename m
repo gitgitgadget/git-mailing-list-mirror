@@ -1,61 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] Do not show "diff --git" metainfo with --no-prefix
-Date: Thu, 17 Jan 2008 01:11:16 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801170108440.17650@racer.site>
-References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com> <alpine.DEB.1.00.0801151444180.5289@eeepc-johanness> <c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com> <alpine.LNX.1.00.0801151728120.13593@iabervon.org>
- <7vhched3kw.fsf@gitster.siamese.dyndns.org> <7v4pded1rk.fsf_-_@gitster.siamese.dyndns.org> <7v7iiabjyh.fsf_-_@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org> <alpine.LFD.1.00.0801151919440.2806@woody.linux-foundation.org>
- <alpine.LNX.1.00.0801152256480.13593@iabervon.org> <alpine.LFD.1.00.0801152017490.2806@woody.linux-foundation.org> <7v1w8hploy.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0801161524390.13593@iabervon.org> <7vprw1mfpr.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-commit: exit non-zero if we fail to commit the index
+Date: Wed, 16 Jan 2008 17:13:51 -0800
+Message-ID: <7vir1tmey8.fsf@gitster.siamese.dyndns.org>
+References: <478E9C59.9070008@nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Chris Ortman <chrisortman@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 02:11:50 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu Jan 17 02:14:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFJIL-0007Wq-Fd
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 02:11:49 +0100
+	id 1JFJL4-0008HV-6c
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 02:14:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752235AbYAQBLV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 20:11:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752164AbYAQBLV
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 20:11:21 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52419 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752092AbYAQBLV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 20:11:21 -0500
-Received: (qmail invoked by alias); 17 Jan 2008 01:11:19 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp006) with SMTP; 17 Jan 2008 02:11:19 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX196tjw3wpl6HnFoA0R5aN5TpJUd8G4cO2WWXhrHcs
-	CvPB5u5hS4tebr
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vprw1mfpr.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752522AbYAQBOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 20:14:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750998AbYAQBOI
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 20:14:08 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47882 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752335AbYAQBOH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 20:14:07 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 13DE84A6C;
+	Wed, 16 Jan 2008 20:14:06 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 87EBE4A6B;
+	Wed, 16 Jan 2008 20:14:03 -0500 (EST)
+In-Reply-To: <478E9C59.9070008@nrlssc.navy.mil> (Brandon Casey's message of
+	"Wed, 16 Jan 2008 18:07:53 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70800>
 
-Hi,
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-On Wed, 16 Jan 2008, Junio C Hamano wrote:
+> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+> ---
+>
+>
+> Shouldn't we be doing this? I think if quiet is set,
+> then a failed rename will go undetected since we
+> won't enter print_summary to have lookup_commit fail.
 
-> An important point for me in this discussion is to agree that the 
-> current --no-prefix that claims to be "diff --git" is not safe for 
-> release and come to consensus that we need a fix.
+But then it's a bit too late, isn't it?  We already have
+successfully made the commit and updated the HEAD to point at
+it.  We would need to tell the user that the index is not where
+it is when we detect the error, though.
 
-Having had time to think about it for a while, I think that the 
---no-prefix still can make sense with --git.  For example, if I want to 
-submit a gitk patch, but only have git.git (and consequently, made the fix 
-in that repository), I could use "git diff --no-prefix" to make it easier 
-for Paul, no?
+> run_hook also is not checked for failure.
 
-Ciao,
-Dscho
+I think you mean the final post-commit one, but that is
+deliberate.  post-commit is not meant to affect the outcome of
+the command.
