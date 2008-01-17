@@ -1,123 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Do not show "diff --git" metainfo with --no-prefix
-Date: Wed, 16 Jan 2008 18:28:09 -0800
-Message-ID: <7vzlv5kwxy.fsf@gitster.siamese.dyndns.org>
-References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>
-	<alpine.DEB.1.00.0801151444180.5289@eeepc-johanness>
-	<c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
-	<alpine.LNX.1.00.0801151728120.13593@iabervon.org>
-	<7vhched3kw.fsf@gitster.siamese.dyndns.org>
-	<7v4pded1rk.fsf_-_@gitster.siamese.dyndns.org>
-	<7v7iiabjyh.fsf_-_@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org>
-	<alpine.LFD.1.00.0801151919440.2806@woody.linux-foundation.org>
-	<alpine.LNX.1.00.0801152256480.13593@iabervon.org>
-	<alpine.LFD.1.00.0801152017490.2806@woody.linux-foundation.org>
-	<7v1w8hploy.fsf@gitster.siamese.dyndns.org>
-	<alpine.LNX.1.00.0801161524390.13593@iabervon.org>
-	<7vprw1mfpr.fsf@gitster.siamese.dyndns.org>
-	<alpine.LSU.1.00.0801170108440.17650@racer.site>
-	<7vejchmeom.fsf@gitster.siamese.dyndns.org>
-	<alpine.LSU.1.00.0801170151040.17650@racer.site>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: I don't want the .git directory next to my code.
+Date: Wed, 16 Jan 2008 18:38:28 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801161834380.2806@woody.linux-foundation.org>
+References: <478D79BD.7060006@talkingspider.com>  <86hcheig3n.fsf@blue.stonehenge.com>  <478D82FA.2030404@talkingspider.com> <478D95D8.5040806@theory.org>  <478E3D8E.1090300@talkingspider.com>  <alpine.LFD.1.00.0801161000310.2806@woody.linux-foundation.org>
+ <46dff0320801161800y9f5bf0cvb1804a57c41c3f4c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Chris Ortman <chrisortman@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 17 03:29:08 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mike <fromlists@talkingspider.com>,
+	Neil Macneale <mac4-git@theory.org>, git@vger.kernel.org
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 17 03:40:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFKVA-0000r0-5F
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 03:29:08 +0100
+	id 1JFKfM-00047c-3m
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 03:39:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754506AbYAQC2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 21:28:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754384AbYAQC23
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 21:28:29 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51939 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753472AbYAQC2Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 21:28:25 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BD46430A;
-	Wed, 16 Jan 2008 21:28:24 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4142E4309;
-	Wed, 16 Jan 2008 21:28:17 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0801170151040.17650@racer.site> (Johannes
-	Schindelin's message of "Thu, 17 Jan 2008 01:54:16 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750941AbYAQCjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 21:39:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750958AbYAQCjJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 21:39:09 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:40295 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750941AbYAQCjI (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 21:39:08 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0H2cTjn007776
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 16 Jan 2008 18:38:30 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0H2cS9d005116;
+	Wed, 16 Jan 2008 18:38:28 -0800
+In-Reply-To: <46dff0320801161800y9f5bf0cvb1804a57c41c3f4c@mail.gmail.com>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.665 required=5 tests=AWL,BAYES_00,OSDL_NIGERIAN_URGENT
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70814>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> No, what you are talking about is a need of negative prefix, which you 
->> did not implement in that no/src/dst-prefix patch.
+
+On Thu, 17 Jan 2008, Ping Yin wrote:
 >
-> I'm probably missing something, but wouldn't a "diff --git gitk-git/gitk 
-> gitk-git/gitk" instead of "diff --git a/gitk-git/gitk b/gitk-git/gitk" in 
-> mbox format be directly grokkable by git-am?
->
->> Using --no-prefix is a _hack_ that may happen to work only when
->> the subtree-merged project is one level down.
->
-> Yep.  But my point was more to show that it is still a valid git diff.  
+> Using git to manage deployment environment and even as deployment
+> tools is not always a bad idea.
 
-My point was that the validness you mentined above is a
-happenstance, and not a result of a good design.
+I don't think it's alway sa bad idea, no. But it's a good idea only if you 
+then accept things like ".git" subdirectories lying around in your 
+deployment area (or you accept the use of tricks like GIT_DIR).
 
-After I move gitk-git one level down to modules/gitk but before
-making it as a submodule, the output with --no-prefix will say
-"diff --git modules/gitk/gitk modules/gitk/gitk", and that will
-not be a suitable diff for Paul to apply to his tree.
+> 1. In case where development and deployment environment are almost the
+> same, such as html files, js files, binding the two environments as
+> one is convenient.
+> 
+> 2. Event In the case where the two environement are different very
+> much, managing deployment environment in git sometimes still seems
+> good, since we can easily back to any earlier version or fix some
+> urgent bug ASAP (surely for the non-generated files).
+> 
+> 3. Use 'git pull' as deploy command seems simple enough.
 
-I think he needs "-p2", but then he can already do that to diffs
-produced without using your --no-prefix that talks about "diff
---git a/gitk-git/gitk b/gitk-git/gitk".  IOW, --no-prefix is not
-a solution to anything.
+Hey, I do it for all my kernels ("git pull" + "make" is just simpler than 
+pushing tar-balls around), so I'm not entirely disagreeing. I *like* 
+having the entire development environment around everywhere.
 
-And that is why I keep calling your "--no-prefix happens to work
-if you are only talking about a project that is subtree-merged
-one level down" argument a _hack_.
+But it does seem like a lot of Mike's problems basically boil down to the 
+fact that he doesn't really want to use it as a deployment tool.
 
-If we were to do this properly in "git diff", we would:
-
- - introduce a separate --strip-paths=1 (or whatever number of
-   levels of leading prefix);
-
- - not use --{src,dst,no}-prefix
-
-and you would do:
-
-	$ git diff --strip-paths=1 gitk-git
-
-in the current tree, which would first strip one path component
-and then do the usual opt->a_prefix/b_prefix thing to show:
-
-	diff --git a/gitk b/gitk
-
-Similarly you would run:
-
-        $ git diff --strip-paths=2 modules/gitk
-
-after I move gitk-git down one level.
-
-An alternative would be to use the jc/diff-relative topic
-currently parked in 'offcuts' branch, and run:
-
-	$ cd gitk-git && git diff .
-
-or
-
-	$ cd modules/gitk && git diff .
-
-which would give diffs in relative paths.
+		Linus
