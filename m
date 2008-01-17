@@ -1,79 +1,77 @@
-From: dave@krondo.com
-Subject: [PATCH] Documentation: fix and clarify grammar in git-merge docs.
-Date: Wed, 16 Jan 2008 18:58:39 -0800
-Message-ID: <1200538719-24733-1-git-send-email-dave@krondo.com>
-Cc: Dave Peticolas <dave@krondo.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 17 03:59:20 2008
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: I don't want the .git directory next to my code.
+Date: Thu, 17 Jan 2008 15:59:05 +1300
+Message-ID: <46a038f90801161859n2f7d8c33kb5d359fb25d07488@mail.gmail.com>
+References: <478D79BD.7060006@talkingspider.com> <m3bq7lncak.fsf@roke.D-201>
+	 <20080117005954.GM18022@lavos.net>
+	 <86sl0xfd4e.fsf@blue.stonehenge.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Brian Downing" <bdowning@lavos.net>,
+	"Jakub Narebski" <jnareb@gmail.com>,
+	Mike <fromlists@talkingspider.com>, git@vger.kernel.org
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Thu Jan 17 03:59:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFKyN-0000Lb-Fr
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 03:59:19 +0100
+	id 1JFKyk-0000RC-Hf
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 03:59:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750993AbYAQC6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 21:58:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751110AbYAQC6n
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 21:58:43 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:11569 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750991AbYAQC6m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 21:58:42 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so797583wah.23
-        for <git@vger.kernel.org>; Wed, 16 Jan 2008 18:58:42 -0800 (PST)
+	id S1752880AbYAQC7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 21:59:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752750AbYAQC7N
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 21:59:13 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:18359 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752506AbYAQC7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 21:59:11 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so293307ugc.16
+        for <git@vger.kernel.org>; Wed, 16 Jan 2008 18:59:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:sender;
-        bh=B6BAFPF3FIVXy40GzSH+Iy+y01nMmblJqmeSTQBiugg=;
-        b=h18aHWGtgadvC9EQx6AWLy7w+vfv//mCDQPmtkKvejL7AJ9zz/uSahJeZG0HU7zj7WPgVo/xv3Fk5Homlhf/ZWcHC0Angf7RVyo4s9lgKvqOipSjoUY1YxACdjp3WGU12QEsQ2sW9jc1cjIAqAXJ4jC8gsonh+3BTZMtXfW84g8=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=vx0ej+Rtqy2Ah4P+GXgwIcyJA5DNpKQwxWj17uTZ4gg=;
+        b=vd7KRGUCcW/5vteKSWJ50vRxWEDWLn9bsLtAYoBLGG0hhcpBFJWTmoYOCKpTIOZ4cJqQjKhzri74nribv/QGDwyjHIFM33BXon2UN48NHTV1BlIQ+w9VLNsQtT7YM8XB/E6lr9hlSN874ZY+bBm67s7VdptHJsd8NxOcmHf+yWs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:sender;
-        b=wW8ni28kR4ek2CHEe/Q8sFQBiDDK8+ULMC57jdKZil32IOwQ7XRjnue8TSU0qOHsfm/yoDZF7s4sI93UlA7A6HxkDG6QIRVobz/LnYxmy9VP/wIoGTata4Yu6G1PPRiaVdn4NJKuPiV+X51sB8U9HrGqMADmmp+x+C0YQwipQfg=
-Received: by 10.114.133.1 with SMTP id g1mr1787693wad.81.1200538722344;
-        Wed, 16 Jan 2008 18:58:42 -0800 (PST)
-Received: from localhost ( [70.231.131.126])
-        by mx.google.com with ESMTPS id m28sm2302805poh.7.2008.01.16.18.58.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 16 Jan 2008 18:58:41 -0800 (PST)
-X-Mailer: git-send-email 1.5.3.8
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NyEZQrmdMJzZZ7LdBuyqlOYqx+LYIKr64XDudzANIH79Qyfnz0WMCB6RP6H5qm+omotYXNsejc4WNcWrFPmF8USfPLZrosRhV+cmTwDcAimLEUGndiiw+yXEO3liXSoTC9cSm466o/66IzVfpJ9aY+X0eBjvS56AThehqZawSLs=
+Received: by 10.66.233.14 with SMTP id f14mr2812227ugh.84.1200538746045;
+        Wed, 16 Jan 2008 18:59:06 -0800 (PST)
+Received: by 10.66.252.6 with HTTP; Wed, 16 Jan 2008 18:59:05 -0800 (PST)
+In-Reply-To: <86sl0xfd4e.fsf@blue.stonehenge.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70818>
 
-From: Dave Peticolas <dave@krondo.com>
+On Jan 17, 2008 2:35 PM, Randal L. Schwartz <merlyn@stonehenge.com> wrote:
+> >>>>> "Brian" == Brian Downing <bdowning@lavos.net> writes:
+>
+> Brian> Yes, you could use rsync or some other tool, but Git already has the
+> Brian> tools available, so why not take advantage of them?
+>
+> It's very likely that rsync will be faster/better/cheaper/more-flexible
+> than git.  "Yes, you could use git, but rsync already does the job
+> better, so why not take advantage of it?"  Back at ya.
 
----
- Documentation/git-merge.txt |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
+We do web development, and use various deployment tools, usually git,
+git+rsync or git + debian packages.
 
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index ed3a924..4494595 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -74,14 +74,14 @@ it happens.  In other words, `git-diff --cached HEAD` must
- report no changes.
- 
- [NOTE]
--This is a bit of lie.  In certain special cases, your index are
--allowed to be different from the tree of `HEAD` commit.  The most
-+This is a bit of a lie.  In certain special cases, your index is
-+allowed to be different from the tree of the `HEAD` commit.  The most
- notable case is when your `HEAD` commit is already ahead of what
- is being merged, in which case your index can have arbitrary
--difference from your `HEAD` commit.  Otherwise, your index entries
--are allowed have differences from your `HEAD` commit that match
--the result of trivial merge (e.g. you received the same patch
--from external source to produce the same result as what you are
-+differences from your `HEAD` commit.  Also, your index entries
-+may have differences from your `HEAD` commit that match
-+the result of a trivial merge (e.g., you received the same patch
-+from an external source to produce the same result as what you are
- merging).  For example, if a path did not exist in the common
- ancestor and your head commit but exists in the tree you are
- merging into your repository, and if you already happen to have
--- 
-1.5.3.8
+I find the discussion of git-archive as a deployment tool a bit
+worrying - remember that untarring a newer version of the tarball on
+top of the old version does not remove old files. In web applications
+(and I think the OP is talking about web development) often security
+bugs come from sloppy inclusion of files (such as sample AdoDB code).
+If you deploy your "security fix" by unpacking a tarball, chances are
+you'll wake up to a p0wned server.
+
+cheers,
+
+
+martin
