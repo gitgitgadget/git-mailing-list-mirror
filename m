@@ -1,61 +1,66 @@
-From: Mike <fromlists@talkingspider.com>
-Subject: Re: I don't want the .git directory next to my code.
-Date: Thu, 17 Jan 2008 14:12:48 -0500
-Message-ID: <478FA8B0.2000205@talkingspider.com>
-References: <478D79BD.7060006@talkingspider.com> <86hcheig3n.fsf@blue.stonehenge.com> <478D82FA.2030404@talkingspider.com> <478D95D8.5040806@theory.org> <478E3D8E.1090300@talkingspider.com> <alpine.LFD.1.00.0801161000310.2806@woody.linux-foundation.org> <alpine.LFD.1.00.0801161019250.2806@woody.linux-foundation.org> <478EEAC4.2010006@talkingspider.com> <20080117151725.GC2816@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git Cygwin - unable to create any repository - help!
+Date: Thu, 17 Jan 2008 19:17:27 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801171916350.5731@racer.site>
+References: <20080114202932.GA25130@steel.home>  <a5eb9c330801151212y30cf4f63r9c294ba33da2b8f@mail.gmail.com>  <200801160002.51048.robin.rosenberg.lists@dewire.com>  <20080116071832.GA2896@steel.home>  <a5eb9c330801160742j645ee50p72ee0a93adf8f94f@mail.gmail.com>
+  <20080116183124.GA3181@steel.home>  <a5eb9c330801161048x4b5a88dcsebd7cf9754f72ba6@mail.gmail.com>  <20080116191737.GD3181@steel.home>  <a5eb9c330801161344i1da447c7sb447bf6274d408e8@mail.gmail.com>  <20080116234527.GA3499@steel.home>
+ <a5eb9c330801171037v333becc2lbc5873383d07a358@mail.gmail.com> <alpine.LFD.1.00.0801171046040.14959@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 17 20:13:22 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Paul Umbers <paul.umbers@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jan 17 20:18:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFaAz-00077S-QF
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 20:13:22 +0100
+	id 1JFaFX-0000UG-8L
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 20:18:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752978AbYAQTMw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2008 14:12:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753421AbYAQTMw
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 14:12:52 -0500
-Received: from relay00.pair.com ([209.68.5.9]:4856 "HELO relay00.pair.com"
+	id S1753295AbYAQTRe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2008 14:17:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752959AbYAQTRe
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 14:17:34 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49371 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753324AbYAQTMv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2008 14:12:51 -0500
-Received: (qmail 96848 invoked from network); 17 Jan 2008 19:12:49 -0000
-Received: from unknown (HELO ?192.168.1.100?) (unknown)
-  by unknown with SMTP; 17 Jan 2008 19:12:49 -0000
-X-pair-Authenticated: 72.225.213.70
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <20080117151725.GC2816@coredump.intra.peff.net>
+	id S1751882AbYAQTRd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2008 14:17:33 -0500
+Received: (qmail invoked by alias); 17 Jan 2008 19:17:31 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp008) with SMTP; 17 Jan 2008 20:17:31 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19niJk+ZkhnKKfcdOOnudeOm1Ix7B2vAim1zq0VVm
+	TkbUK2+W9k6LeL
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.1.00.0801171046040.14959@woody.linux-foundation.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70909>
 
+Hi,
 
+On Thu, 17 Jan 2008, Linus Torvalds wrote:
 
-Jeff King wrote:
->   - moving .git away, and using --git-dir or GIT_DIR to specify it
->     manually
+> On Thu, 17 Jan 2008, Paul Umbers wrote:
+> > 
+> > Incidentally, I've tried this on two other machines at work with the 
+> > same results. The steps to reproduce are annoyingly simple: download 
+> > cygwin installer & execute (accept all defaults), select the packages 
+> > specified for the binary windows install on the git wiki, try to 
+> > create a git repository and add files. Frustrating - especially since 
+> > my desktop at my last job worked just fine.
+> 
+> Is there perhaps some odd virus scanner or something that interferes 
+> with filesystem operations?
 
-Actually, git-dir is sufficient for our needs, thanks.  I haven't been 
-able to get my hands on man pages for git until this morning.  (If you 
-look near the top of this thread you see that I don't have the git man 
-pages because apparently CentOS (and probably RHEL too), doesn't include 
-them when you "yum install git").
+Or that Logitech Abomination of an "Updater service"?  On one of my 
+machines, I had tons of problems before just uninstalling those "drivers".
 
-Linus posted a response about deployment and development being 
-separated, so I had to point out why that doesn't work for web apps in 
-interpreted languages.
-
-You guys might want to complain to the CentOS (and/or RHEL) maintainers 
-to have them put the man pages into the yum rpm. Er or whoever maintains 
-that (they maintain that rpm, right? I don't know).
-
-Thanks, Jeff,
-
-mike
+Ciao,
+Dscho
