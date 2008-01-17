@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2] Do not show "diff --git" metainfo with --no-prefix
-Date: Wed, 16 Jan 2008 17:19:37 -0800
-Message-ID: <7vejchmeom.fsf@gitster.siamese.dyndns.org>
+Date: Wed, 16 Jan 2008 17:34:52 -0800
+Message-ID: <7vabn5mdz7.fsf@gitster.siamese.dyndns.org>
 References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>
 	<alpine.DEB.1.00.0801151444180.5289@eeepc-johanness>
 	<c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
@@ -23,30 +23,30 @@ Cc: Daniel Barkalow <barkalow@iabervon.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Chris Ortman <chrisortman@gmail.com>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 17 02:20:40 2008
+X-From: git-owner@vger.kernel.org Thu Jan 17 02:35:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFJQt-0001PM-S6
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 02:20:40 +0100
+	id 1JFJfJ-000556-9a
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 02:35:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750943AbYAQBUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 20:20:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750958AbYAQBUL
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 20:20:11 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48146 "EHLO
+	id S1751542AbYAQBfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 20:35:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751326AbYAQBfD
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 20:35:03 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48964 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750861AbYAQBUJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 20:20:09 -0500
+	with ESMTP id S1751542AbYAQBfB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 20:35:01 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4F5394D29;
-	Wed, 16 Jan 2008 20:20:07 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 980262977;
+	Wed, 16 Jan 2008 20:34:59 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A3A84D28;
-	Wed, 16 Jan 2008 20:19:59 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id F22CD2973;
+	Wed, 16 Jan 2008 20:34:53 -0500 (EST)
 In-Reply-To: <alpine.LSU.1.00.0801170108440.17650@racer.site> (Johannes
 	Schindelin's message of "Thu, 17 Jan 2008 01:11:16 +0000 (GMT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
@@ -54,27 +54,28 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70803>
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Having had time to think about it for a while, I think that the 
-> --no-prefix still can make sense with --git.  For example, if I want to 
-> submit a gitk patch, but only have git.git (and consequently, made the fix 
-> in that repository), I could use "git diff --no-prefix" to make it easier 
-> for Paul, no?
+> On Wed, 16 Jan 2008, Junio C Hamano wrote:
+>
+>> An important point for me in this discussion is to agree that the 
+>> current --no-prefix that claims to be "diff --git" is not safe for 
+>> release and come to consensus that we need a fix.
+>
+> Having had time to think about it for a while, I think that...
 
-No, what you are talking about is a need of negative prefix,
-which you did not implement in that no/src/dst-prefix patch.
+While we are discussing about diff, there is one thing that has
+been bugging me occasionally, but the annoyance factor has not
+motivated me enough to look into it myself, because I do not use
+it often: --color-words.  It appears that it shows lines that do
+not have any word differences in bold (whatever diff.color.meta
+is configured) and I think it should use plain color instead.
 
-Using --no-prefix is a _hack_ that may happen to work only when
-the subtree-merged project is one level down.  You would need
-negative prefix of two level _and_ a/ and b/ prefix, when gitk
-is moved to modules/gitk subdirectory.
+Was this intentional, or just a simple plain bug?
 
-Incidentally I am planning to do such a move of gitk and git-gui
-to one level down (modules/gitk and modules/git-gui) sometime in
-the future when I convert git.git to use submodules.  Privately
-I already have such a tree based on -rc3 but for obvious reasons
-I cannot push it out even to a preview branch in git.git
-repository for the time being.
+I noticed when I was reviewing documentation patch I received
+from Dave Peticolas today (the feature is great for "apply the
+patch as received, review the --color-words output, and undo the
+uncalled-for line wrapping" workflow).
