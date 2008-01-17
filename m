@@ -1,61 +1,67 @@
-From: Geert Bosch <bosch@adacore.com>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Thu, 17 Jan 2008 01:13:26 -0500
-Message-ID: <A915BECA-A486-477B-A07D-D1033E44DCBD@adacore.com>
-References: <478E1FED.5010801@web.de> <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org> <alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org> <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org> <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org> <B45968C6-3029-48B6-BED2-E7D5A88747F7@sb.org> <alpine.LFD.1.00.0801161707150.2806@woody.linux-foundation.org> <8AC4CC86-A711-483D-9F9C-5F8497006A1D@sb.org> <alpine.LFD.1.00.0801161959210.2806@woody.linux-foundation.org> <4C21C1AF-40B0-48C7-8F0E-2DAF3C5FAB29@sb.org> <46a038f90801162051s5ce40abcm623599269943a24@mail.gmail.com> <ACDB98F4-178C-43C3-99C4-A1D03DD6A8F5@sb.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Kris Shannon <kris@shannon.id.au>
+Subject: Re: I don't want the .git directory next to my code.
+Date: Thu, 17 Jan 2008 17:38:22 +1100
+Message-ID: <478EF7DE.3090709@shannon.id.au>
+References: <478D79BD.7060006@talkingspider.com> <86hcheig3n.fsf@blue.stonehenge.com> <478D82FA.2030404@talkingspider.com> <478D95D8.5040806@theory.org> <478E3D8E.1090300@talkingspider.com> <alpine.LFD.1.00.0801161000310.2806@woody.linux-foundation.org> <alpine.LFD.1.00.0801161019250.2806@woody.linux-foundation.org> <478EEAC4.2010006@talkingspider.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Jakub Narebski" <jnareb@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Mark Junker" <mjscod@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Thu Jan 17 07:14:08 2008
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Mike <fromlists@talkingspider.com>
+X-From: git-owner@vger.kernel.org Thu Jan 17 07:39:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFO0t-0006o6-8S
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 07:14:07 +0100
+	id 1JFOOx-0003RH-2s
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 07:38:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751011AbYAQGN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2008 01:13:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750960AbYAQGN2
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 01:13:28 -0500
-Received: from rock.gnat.com ([205.232.38.15]:40116 "EHLO rock.gnat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750865AbYAQGN2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2008 01:13:28 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by filtered-rock.gnat.com (Postfix) with ESMTP id 6275C2A9644;
-	Thu, 17 Jan 2008 01:13:27 -0500 (EST)
-Received: from rock.gnat.com ([127.0.0.1])
-	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id n3xdNa386E4R; Thu, 17 Jan 2008 01:13:27 -0500 (EST)
-Received: from [172.16.1.99] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rock.gnat.com (Postfix) with ESMTP id EE4E02A9637;
-	Thu, 17 Jan 2008 01:13:26 -0500 (EST)
-In-Reply-To: <ACDB98F4-178C-43C3-99C4-A1D03DD6A8F5@sb.org>
-X-Mailer: Apple Mail (2.915)
+	id S1752843AbYAQGi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2008 01:38:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752782AbYAQGi3
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 01:38:29 -0500
+Received: from wa-out-1112.google.com ([209.85.146.177]:48178 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752222AbYAQGi2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2008 01:38:28 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so891602wah.23
+        for <git@vger.kernel.org>; Wed, 16 Jan 2008 22:38:27 -0800 (PST)
+Received: by 10.114.26.1 with SMTP id 1mr2002779waz.80.1200551907122;
+        Wed, 16 Jan 2008 22:38:27 -0800 (PST)
+Received: from hal.office.sisgroup.com.au ( [122.252.3.76])
+        by mx.google.com with ESMTPS id q20sm2617348pog.5.2008.01.16.22.38.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 16 Jan 2008 22:38:26 -0800 (PST)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-GB; rv:1.8.1.9) Gecko/20071031 Thunderbird/2.0.0.9 ThunderBrowse/3.2.0.9 Mnenhy/0.7.5.666
+In-Reply-To: <478EEAC4.2010006@talkingspider.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70833>
 
-For those on Mac OS X: it is possible to create a case-sensitive HFS+  
-partition and
-use it with git. You even can just create a disk image and mount it.  
-However,
-I wouldn't quite try to use it as startup filesystem...
+Mike wrote:
+> 
+> 
+> Linus Torvalds wrote:
+> 
+>> Some people don't split this up, and they tend to make horrible 
+>> horrible mistakes, like checking in the *results* of the 
+>> post-processing too (ie binary result blobs that can be regenerated 
+>> from the other files), because they don't make a clear separation 
+>> between the parts they do development on, and the end result.
+> 
+> Honestly, I think your mode of thinking is centered around compiled 
+> languages and linux app(/kernel) development.  The web app 
+> development/deployment model is very different.
+> 
+> With PHP, Python, and Ruby, the development is the deployment.  The 
+> source is the output.  You can't develop web apps in those languages 
+> unless the source files you're working on are under the doc root of your 
+> development server.   "the parts they do development on" and "the end 
+> result" *are* the same files.
 
-   -Geert
-
-PS. I'm working on a proposal/patch for addressing the UFS/case  
-sensitivity issues.
-     Will try to mail something later this week.
+Not for me.  I've always had my source separate from development docroot
+even before I was using proper SCM's.  I've written stuff in all three
+languages you mention where deployment to the docroot (development or not)
+was more than a simple copy.
