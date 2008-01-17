@@ -1,89 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: FYI: Reply from HP-UX
-Date: Thu, 17 Jan 2008 16:58:36 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801171655570.5731@racer.site>
-References: <20080117141143.38a88c7a@pc09.procura.nl>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [STGIT PATCH] replace "git repo-config" usage by "git config"
+Date: Thu, 17 Jan 2008 17:07:17 +0000
+Message-ID: <b0943d9e0801170907x9c4721cy4e5ac886eb61e0a5@mail.gmail.com>
+References: <1200453554-14163-1-git-send-email-dpmcgee@gmail.com>
+	 <200801162147.33448.kumbayo84@arcor.de>
+	 <200801162158.26450.kumbayo84@arcor.de> <m3y7aplbie.fsf@roke.D-201>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Thu Jan 17 17:59:28 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Peter Oberndorfer" <kumbayo84@arcor.de>,
+	"=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
+	"Dan McGee" <dpmcgee@gmail.com>, git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 17 18:07:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFY58-00031A-Ra
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 17:59:11 +0100
+	id 1JFYDY-0006aM-S7
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 18:07:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300AbYAQQ6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2008 11:58:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751189AbYAQQ6m
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 11:58:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33333 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751292AbYAQQ6l (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2008 11:58:41 -0500
-Received: (qmail invoked by alias); 17 Jan 2008 16:58:39 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp043) with SMTP; 17 Jan 2008 17:58:39 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18NpIgaanUNLLvPImpN8Y+at5+ua+z1cst7NJhnW5
-	zQ/0ityZCxjpZy
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080117141143.38a88c7a@pc09.procura.nl>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751471AbYAQRHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2008 12:07:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751263AbYAQRHU
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 12:07:20 -0500
+Received: from rv-out-0910.google.com ([209.85.198.189]:14441 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750893AbYAQRHT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2008 12:07:19 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so607470rvb.1
+        for <git@vger.kernel.org>; Thu, 17 Jan 2008 09:07:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=C++Wnbch9CjIycoYN6pxgyjiW9ajsEIXkYeT9YPFb70=;
+        b=gmX1kJ9K43z1yJ+PFuV1luaLULsGfkUy+Cv2a7Zc857j9CV5lm8htak6UXOb39Uza5jXReOPKwsQKNwOfm1AsC4rFMGwZJ2EVgqoz5dnkByoIXLsNgHvZzu3VVK/qF4eMIafDk8hgyUqtn1s5Kb18a1Yj4puiWy/cabeP749RmU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=fRJjWd8yWNGC4iOi8PNO1YutiELJuAbZkXgghRj27CUHedxkG7PpgwyCEeENIKnktm2qAtDXB93fQd6UlkAstkLEldF8grlkk7aaJzKG5XSpy7sC1sEsuhmcPhYcCRJ0h0vUPIM1T9zh3+oH5V6EvLoBWFtdEZ6qlJ8h8hk5QXQ=
+Received: by 10.140.199.19 with SMTP id w19mr1606449rvf.219.1200589637567;
+        Thu, 17 Jan 2008 09:07:17 -0800 (PST)
+Received: by 10.141.186.5 with HTTP; Thu, 17 Jan 2008 09:07:17 -0800 (PST)
+In-Reply-To: <m3y7aplbie.fsf@roke.D-201>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70874>
 
 Hi,
 
-On Thu, 17 Jan 2008, H.Merijn Brand wrote:
+Now I'm back from holiday and I'll start merging patches. Thanks for the fixes.
 
-> > I got git running on HP-UX 11.00, which still is our base for our Version
-> > Control System (VCS)s. Most of the changes I made were incorporated into
-> > the git mainline.  
-> 
-> I've had a look at the git 1.5.3.8 source code and there are several
-> HP-UX issues with it:
-> 
-> * Use of gcc-specific features. Doesn't seem to want to compile nicely
->   with HP's ANSI C compiler.
+On 16/01/2008, Jakub Narebski <jnareb@gmail.com> wrote:
+> Strange that StGIT didn't abstracted out reading git config, like
+> Git.pm and gitweb.perl did.
 
-If that would be a bit more specific, we might very well be able to fix 
-it.  After all, AFAIK we do support some non-gcc compilers.
+The initial implementation was to use Python to parse the config file
+but it was dropped in favour of the git-config tool. It might be a bit
+slower but, at least, we don't need to follow any future syntax
+changes.
 
-> * Failure of the configure/make to handle the lack of unsetenv() in
->   pre-11.31 HP-UX releases. Bizarrely, it does handle the lack of setenv()
->   and also has a compat/unsetenv.c for use by non-unsetenv()-capable OS'es,
->   but then configure and config.mak.in completely fail to use a NO_UNSETENV
->   variable like they should!
+> BTW. will StGIT be using libgit-thin + PyGit, or is it not ready yet?
 
-Didn't you provide them with a patch to Makefile making a run of 
-./configure unnecessary?
+The last commit to the libgit project seems to be in August 2007. Is
+it still maintained? If GIT will provide a stable API and library, we
+might use it but I don't think it would bring a great performance
+improvement. Most of the time, in my case, seems to be spent in calls
+list git-diff-tree. A few tens of milliseconds avoided by not calling
+an external tool would be unnoticed.
 
-> * Use of "-include config.mak.autogen" in the top-level Makefile doesn't
->   seem to actually include that file. I had to remove the leading "-" to
->   include it. Also had to stop "gmake clean" from deleting config.mak.autogen
->   otherwise a second "gmake clean" would fail :-(
-
-That is strange.  The "-" in front means that the exit status of this 
-command is ignored.  So it is no surprise that it fails when you remove 
-the "-".  OTOH it is quite a surprise that it does not work when leaving 
-it alone...  What's the output?
-
-> * Have to force use of /usr/local/bin/perl, otherwise it picks up /usr/bin/perl
->   which the build system doesn't like.
-
-This should be handled in your patch to Makefile IMHO.
-
-> * "gmake check" requires porting "sparse" at
->   http://www.kernel.org/pub/software/devel/sparse/ which could be "fun".
-
-You don't need to make "check".  You need to make "test".
-
-Ciao,
-Dscho
+-- 
+Catalin
