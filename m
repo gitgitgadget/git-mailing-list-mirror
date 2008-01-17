@@ -1,58 +1,65 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: I don't want the .git directory next to my code.
-Date: Thu, 17 Jan 2008 14:42:52 +1300
-Message-ID: <478EB29C.9080908@vilain.net>
-References: <478D79BD.7060006@talkingspider.com> <ee77f5c20801152006w11307ce0j17463f1c6536543f@mail.gmail.com> <478D85A9.6050807@talkingspider.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] Do not show "diff --git" metainfo with --no-prefix
+Date: Thu, 17 Jan 2008 01:48:54 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801170147350.17650@racer.site>
+References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com> <alpine.DEB.1.00.0801151444180.5289@eeepc-johanness> <c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com> <alpine.LNX.1.00.0801151728120.13593@iabervon.org>
+ <7vhched3kw.fsf@gitster.siamese.dyndns.org> <7v4pded1rk.fsf_-_@gitster.siamese.dyndns.org> <7v7iiabjyh.fsf_-_@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org> <alpine.LFD.1.00.0801151919440.2806@woody.linux-foundation.org>
+ <alpine.LNX.1.00.0801152256480.13593@iabervon.org> <alpine.LFD.1.00.0801152017490.2806@woody.linux-foundation.org> <7v1w8hploy.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0801161524390.13593@iabervon.org> <7vprw1mfpr.fsf@gitster.siamese.dyndns.org>
+ <alpine.LSU.1.00.0801170108440.17650@racer.site> <7vabn5mdz7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Mike <fromlists@talkingspider.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 02:43:37 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Chris Ortman <chrisortman@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 17 02:49:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFJn3-0006y8-RW
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 02:43:34 +0100
+	id 1JFJsm-0008Qt-JL
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 02:49:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752509AbYAQBnE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 20:43:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752450AbYAQBnD
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 20:43:03 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:43534 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752099AbYAQBnB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 20:43:01 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id 44D7321D1B8; Thu, 17 Jan 2008 14:42:59 +1300 (NZDT)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id BD59521D1AA;
-	Thu, 17 Jan 2008 14:42:52 +1300 (NZDT)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <478D85A9.6050807@talkingspider.com>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.3
+	id S1750991AbYAQBtA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 20:49:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751080AbYAQBtA
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 20:49:00 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51470 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750861AbYAQBs7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 20:48:59 -0500
+Received: (qmail invoked by alias); 17 Jan 2008 01:48:57 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp053) with SMTP; 17 Jan 2008 02:48:57 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+FjzUpPA6Fcw6K2MnsdpbWGKnHufgxYUYcaZ1gML
+	Z9wc/PbXKbQzgH
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vabn5mdz7.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70807>
 
-Mike wrote:
-> Thanks but this isn't sufficient. If we have one directory of our web 
-> root in a git repository, say docroot/php, and we tar up docroot, it 
-> will include php/.git.  We don't want that.  We would have to go out of 
-> our way to avoid the .git directory.  The point is, we don't want 
-> anything in docroot that shouldn't be made live.
+Hi,
 
-It sounds like you want a tool more like Capistrano, which can use git,
-rather than just pushing files around with git.
+On Wed, 16 Jan 2008, Junio C Hamano wrote:
 
-Sam.
+> While we are discussing about diff, there is one thing that has been 
+> bugging me occasionally, but the annoyance factor has not motivated me 
+> enough to look into it myself, because I do not use it often: 
+> --color-words.  It appears that it shows lines that do not have any word 
+> differences in bold (whatever diff.color.meta is configured) and I think 
+> it should use plain color instead.
+> 
+> Was this intentional, or just a simple plain bug?
+
+Plain bug.  I even meant to implement your suggestion of having a variable 
+set of non-word characters, but never came around to work on it.  
+Hopefully this weekend...
+
+Ciao,
+Dscho
