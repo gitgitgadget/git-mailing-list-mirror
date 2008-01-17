@@ -1,113 +1,68 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] git-commit: exit non-zero if we fail to commit the index
-Date: Wed, 16 Jan 2008 18:07:53 -0600
-Message-ID: <478E9C59.9070008@nrlssc.navy.mil>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Wed, 16 Jan 2008 16:16:58 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801161615330.2806@woody.linux-foundation.org>
+References: <478E1FED.5010801@web.de> <m33asxn2gt.fsf@roke.D-201> <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org> <200801162251.54219.jnareb@gmail.com> <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org> <alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org>
+ <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org> <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org> <BA518A23-FBF8-49BB-BEFB-D9A6BA1E302C@simplicidade.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 01:14:47 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Kevin Ballard <kevin@sb.org>, Jakub Narebski <jnareb@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mark Junker <mjscod@web.de>, git@vger.kernel.org
+To: Pedro Melo <melo@simplicidade.org>
+X-From: git-owner@vger.kernel.org Thu Jan 17 01:17:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFIP1-0007fF-IF
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 01:14:39 +0100
+	id 1JFIRt-0000D5-Gu
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 01:17:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752213AbYAQAOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 19:14:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752088AbYAQAOL
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 19:14:11 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:36186 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752050AbYAQAOK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 19:14:10 -0500
-Received: from earthquake.mgeo.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0H0EBAU001081;
-	Wed, 16 Jan 2008 18:14:11 -0600
-Received: from starfish.gems.nrlssc.navy.mil ([128.160.50.76]) by earthquake.mgeo.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 16 Jan 2008 18:16:36 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 16 Jan 2008 18:07:53 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-X-OriginalArrivalTime: 17 Jan 2008 00:07:53.0287 (UTC) FILETIME=[012C9D70:01C8589D]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15666001
-X-TM-AS-Result: : Yes--8.831200-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjQzLTcwMDE2MC03MDkw?=
-	=?us-ascii?B?NjUtNzA5MDUwLTEyMTU4OC03MDEyMzItNzAzMTc2LTcwMDk3MS03?=
-	=?us-ascii?B?MDYyNDktNzA3ODAwLTcwMDQ3Ni03MDQyNTctMTg4MDE5LTcwNjI5?=
-	=?us-ascii?B?MC0zMDAwMTUtNzA0NDczLTcwNTcxOC03MDM3MTItNzA5MTM3LTcx?=
-	=?us-ascii?B?MTYyNC03MDEzODQtNzA0NzQ3LTcwMjExOC03MDEwNTMtNzAwMzk4?=
-	=?us-ascii?B?LTcwNDQyNS03MDAzMjQtMTQ4MDM5LTE0ODA1MQ==?=
+	id S1751269AbYAQARJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 19:17:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750998AbYAQARH
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 19:17:07 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:58912 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751275AbYAQARG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 19:17:06 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0H0GwQf001129
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 16 Jan 2008 16:16:59 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0H0Gw7H032156;
+	Wed, 16 Jan 2008 16:16:58 -0800
+In-Reply-To: <BA518A23-FBF8-49BB-BEFB-D9A6BA1E302C@simplicidade.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.716 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70781>
-
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70782>
 
 
-Shouldn't we be doing this? I think if quiet is set,
-then a failed rename will go undetected since we
-won't enter print_summary to have lookup_commit fail.
 
-rerere() die()'s on a failure, but also returns zero
-if it can't create a lock file.
+On Wed, 16 Jan 2008, Pedro Melo wrote:
+> 
+> The difference I see between us is that if I tell my filesystem that I want to
+> name my file with a particular string encoded in X, users using encoding Y
+> will be able to read it correctly. I  like my filesystem to make that work for
+> me.
 
-run_hook also is not checked for failure. I guess it
-should at least print an error message on failure, but
-I've never used hooks.
+The difference I see between us is that when I tell you that this is 
+exactly the same thing as your file *contents*, you don't seem to get it.
 
--brandon
+An OS that silently changes the contents of your files is *crap*.
 
+Get it?
 
- builtin-commit.c |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
+An OS that silently changes the contents of your directories is *crap*.
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index a764053..d7db7b3 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -122,19 +122,23 @@ static void rollback_index_files(void)
- 	}
- }
- 
--static void commit_index_files(void)
-+static int commit_index_files(void)
- {
-+	int err = 0;
-+
- 	switch (commit_style) {
- 	case COMMIT_AS_IS:
- 		break; /* nothing to do */
- 	case COMMIT_NORMAL:
--		commit_lock_file(&index_lock);
-+		err = commit_lock_file(&index_lock);
- 		break;
- 	case COMMIT_PARTIAL:
--		commit_lock_file(&index_lock);
-+		err = commit_lock_file(&index_lock);
- 		rollback_lock_file(&false_lock);
- 		break;
- 	}
-+
-+	return err;
- }
- 
- /*
-@@ -912,7 +916,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	unlink(git_path("MERGE_HEAD"));
- 	unlink(git_path("MERGE_MSG"));
- 
--	commit_index_files();
-+	if (commit_index_files())
-+		die("unable to write new_index file");
- 
- 	rerere();
- 	run_hook(get_index_file(), "post-commit", NULL);
--- 
-1.5.4.rc3.17.gb63a4
+Get it now?
+
+		Linus
