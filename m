@@ -1,167 +1,141 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Kevin Ballard <kevin@sb.org>
 Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Thu, 17 Jan 2008 08:43:25 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org>
-References: <478E1FED.5010801@web.de> <m33asxn2gt.fsf@roke.D-201> <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org> <200801162251.54219.jnareb@gmail.com> <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org> <alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org>
- <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org> <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org> <B45968C6-3029-48B6-BED2-E7D5A88747F7@sb.org> <alpine.LFD.1.00.0801161707150.2806@woody.linux-foundation.org> <8AC4CC86-A711-483D-9F9C-5F8497006A1D@sb.org>
- <alpine.LFD.1.00.0801161959210.2806@woody.linux-foundation.org> <B719D4A2-0D05-4C55-95FC-AB880D58E1AC@wincent.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kevin Ballard <kevin@sb.org>, Jakub Narebski <jnareb@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Mark Junker <mjscod@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 17:44:12 2008
+Date: Thu, 17 Jan 2008 11:53:56 -0500
+Message-ID: <2010BC03-E5AE-4333-96CA-4A9B700AD720@sb.org>
+References: <478E1FED.5010801@web.de> <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org> <alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org> <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org> <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org> <B45968C6-3029-48B6-BED2-E7D5A88747F7@sb.org> <alpine.LFD.1.00.0801161707150.2806@woody.linux-foundation.org> <8AC4CC86-A711-483D-9F9C-5F8497006A1D@sb.org> <alpine.LFD.1.00.0801161959210.2806@woody.linux-foundation.org> <4C21C1AF-40B0-48C7-8F0E-2DAF3C5FAB29@sb.org> <46a038f90801162051s5ce40abcm623599269943a24@mail.gmail.com> <ACDB98F4-178C-43C3-99C4-A1D03DD6A8F5@sb.org> <A915BECA-A486-477B-A07D-D1033E44DCBD@adacore.com> <AD012876-3B4A-41EE-8CCB-F60D5C812903@gmail.com> <17846BF5-1215-4C28-8BBC-2C745A053156@wincent.com> <15C01F6E-052B-401
+ C-B189-833CBAB20787@sb.org> <alpine.LSU.1.00.0801171556170.5731@racer.site>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: multipart/signed; boundary=Apple-Mail-2--1056662516; micalg=sha1; protocol="application/pkcs7-signature"
+Cc: Wincent Colaiuta <win@wincent.com>,
+	Mitch Tishmack <mitcht.git@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 17 17:54:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFXqc-00047B-En
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 17:44:10 +0100
+	id 1JFY0e-0000hg-EY
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 17:54:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751080AbYAQQng convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jan 2008 11:43:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751117AbYAQQng
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 11:43:36 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:41663 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751074AbYAQQnf (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Jan 2008 11:43:35 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0HGhRed014382
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 17 Jan 2008 08:43:28 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0HGhPpS002008;
-	Thu, 17 Jan 2008 08:43:26 -0800
-In-Reply-To: <B719D4A2-0D05-4C55-95FC-AB880D58E1AC@wincent.com>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.414 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_55
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751290AbYAQQyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2008 11:54:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283AbYAQQyA
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 11:54:00 -0500
+Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:49993 "EHLO
+	randymail-a9.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751276AbYAQQyA (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Jan 2008 11:54:00 -0500
+Received: from KBLAPTOP.WIFI.WPI.EDU (KBLAPTOP.WIFI.WPI.EDU [130.215.168.244])
+	by randymail-a9.g.dreamhost.com (Postfix) with ESMTP id 18329EF2CC;
+	Thu, 17 Jan 2008 08:53:57 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0801171556170.5731@racer.site>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70872>
 
 
-On Thu, 17 Jan 2008, Wincent Colaiuta wrote:
+--Apple-Mail-2--1056662516
+Content-Type: text/plain;
+	charset=US-ASCII;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: 7bit
+
+On Jan 17, 2008, at 10:57 AM, Johannes Schindelin wrote:
+
+> On Thu, 17 Jan 2008, Kevin Ballard wrote:
 >
-> (the day I have two files in the same directory called "M=E4rchen" an=
-d=20
-> want to specify one of them on the command line I'll worry about that=
-=20
-> when I come to it).
+>> On Jan 17, 2008, at 5:22 AM, Wincent Colaiuta wrote:
+>>
+>>> While it's a nice workaround, it really is just that (a workaround)
+>>> because performance will be suboptimal in a repository running on a
+>>> disk image (and many of switched to Git because of its speed).
+>>
+>> Not only is it suboptimal, it's also not acceptable, plain and  
+>> simple.
+>
+> If it's not acceptable, do something about it (and I don't mean  
+> writing 50
+> emails). If you don't want to do something about it, I have to  
+> assume that
+> you accept it as-is.
 
-Side note: the thing is, the reason people shouldn't worry about it is=20
-that this is a *trivial* thing to handle. You really don't even need to=
-=20
-know what you're doing. And you can test it today, easily.
+I never said I don't want to do anything about it. However, I do  
+believe that it will take a significant investment of time and energy  
+to learn all the gooey details of how git handles filenames and how  
+the index works and all that jazz, which is knowledge that other  
+people already have. I believe that, for me to solve this problem  
+independently, it may require so much time that it never gets done  
+(after all, I am fairly busy). However, if other people who already  
+have this knowledge are willing to help, that would make this task far  
+easier, especially given that if nobody else even acknowledges that  
+this is a problem I don't have much hope of getting a patch accepted.
 
-Having two (differently encoded) files like that is really no different=
-=20
-from the traditional UNIX FAQ of "how do I remove a file starting with=20
-'-'" or even more closely "how do I remove a file that has a character =
-in=20
-it that I cannot get at the keyboard".
+So again, I'm certainly going to try, but working by myself it simply  
+may never get done.
 
-In other words, on a bog-standard UNIX (and yes, in this case, I bet OS=
- X=20
-works fine too for this test), just try this
+-Kevin Ballard
 
-	filename1=3D$(echo -e "hello\002there")
-	filename2=3D$(echo -e "hello\003there")
-	echo Odd file > "$filename1"
-	echo Another odd file > "$filename2"
+-- 
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
 
-and now you have a filename that is actually rather hard to type on the=
-=20
-command line. In fact, for me they even *look* the same:
 
-	[torvalds@woody ~]$ ll hello*
-	-rw-rw-r-- 1 torvalds torvalds  9 2008-01-17 08:23 hello?there
-	-rw-rw-r-- 1 torvalds torvalds 17 2008-01-17 08:23 hello?there
 
-See?
+--Apple-Mail-2--1056662516
+Content-Disposition: attachment;
+	filename=smime.p7s
+Content-Type: application/pkcs7-signature;
+	name=smime.p7s
+Content-Transfer-Encoding: base64
 
-Even in my graphical browser, those two filenames look 100% *identical*=
-=2E I=20
-could give you a screen-shot, but I'm lazy. Just take my word for it, o=
-r=20
-just fire up konqueror on Linux (but it may well depend on the particul=
-ar=20
-font you're using).
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGMjCCAusw
+ggJUoAMCAQICEDsG8BKvlrEW0HUBIxWIgjUwDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
+JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
+ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA3MDQyMzIxMjM0OVoXDTA4MDQyMjIxMjM0
+OVowVzEQMA4GA1UEBBMHQmFsbGFyZDEOMAwGA1UEKhMFS2V2aW4xFjAUBgNVBAMTDUtldmluIEJh
+bGxhcmQxGzAZBgkqhkiG9w0BCQEWDGtldmluQHNiLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEP
+ADCCAQoCggEBAN/koURrN2ndrAiuAuHHrdFz+hLGQ7ZsXloGnObjALGOFY3Kmk2FCwAJPIha5GfM
+YFmZIoqxs+DbOWOn6KZ9hcQ5wf4EOgokayrEs3G72T+G8ZE4aXrw0CWJzKLjaIQeDZNZoHA44jlZ
+dG70wtZske898IoPz6YHpkcXiulllATfd8Pa7EgjPri5hKFiRXKI52OsOQTX6cNMMZJUIm8DvfQ5
+jmDyAtywNZGSGeUAMbWnpuLq7H18zpye2Q1hr+p4kucazMb+i7OHXPvX7yx2jMjhN5jw/gYkuzQQ
+JExp1fJyAZQ/av/ZgaxWchhhi4ziFXIlX3B09DTlOQlF53P3fi0CAwEAAaMpMCcwFwYDVR0RBBAw
+DoEMa2V2aW5Ac2Iub3JnMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEFBQADgYEAw/qc6zq+0Qy2
+XaodDlt2L6Vq1DzaVWjV152BFjidmsyhyCkCuyYdAcDp17opIfrNCBbOX5DdY6cpFpnSCxCZeIEB
+PDc3TaaFPtzr8qrpcNDohRSdt+qFLUeMHzlidAiAjvjI3tPKv3JLTakWdQR/XPHsg4mWoaVQU2hM
+HOQBw8EwggM/MIICqKADAgECAgENMA0GCSqGSIb3DQEBBQUAMIHRMQswCQYDVQQGEwJaQTEVMBMG
+A1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0ZSBD
+b25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQwIgYD
+VQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNvbmFs
+LWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNMDMwNzE3MDAwMDAwWhcNMTMwNzE2MjM1OTU5WjBiMQsw
+CQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoGA1UE
+AxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0EwgZ8wDQYJKoZIhvcNAQEBBQAD
+gY0AMIGJAoGBAMSmPFVzVftOucqZWh5owHUEcJ3f6f+jHuy9zfVb8hp2vX8MOmHyv1HOAdTlUAow
+1wJjWiyJFXCO3cnwK4Vaqj9xVsuvPAsH5/EfkTYkKhPPK9Xzgnc9A74r/rsYPge/QIACZNenpruf
+ZdHFKlSFD0gEf6e20TxhBEAeZBlyYLf7AgMBAAGjgZQwgZEwEgYDVR0TAQH/BAgwBgEB/wIBADBD
+BgNVHR8EPDA6MDigNqA0hjJodHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUGVyc29uYWxGcmVl
+bWFpbENBLmNybDALBgNVHQ8EBAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZhdGVM
+YWJlbDItMTM4MA0GCSqGSIb3DQEBBQUAA4GBAEiM0VCD6gsuzA2jZqxnD3+vrL7CF6FDlpSdf0wh
+uPg2H6otnzYvwPQcUCCTcDz9reFhYsPZOhl+hLGZGwDFGguCdJ4lUJRix9sncVcljd2pnDmOjCBP
+ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
+MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
+A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEDsG8BKvlrEW0HUBIxWI
+gjUwCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
+DxcNMDgwMTE3MTY1MzU3WjAjBgkqhkiG9w0BCQQxFgQUFsOGQmW8LIK9nyzy/630KHDcKFMwgYUG
+CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
+IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
+AhA7BvASr5axFtB1ASMViII1MIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
+BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
+b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhA7BvASr5axFtB1ASMViII1MA0GCSqGSIb3DQEBAQUA
+BIIBAJWAw1WCvK4+Nsi2HnNz4VQw8b4MdEsl3KH5OxU+ieMZ03sYsB1E2yP3FPdBBgupfwrQBKe7
+A/yPYfEXE8o3o0K16fImdDBaBwN5scc0XkLGA4Q7jD2Xyk8vvvduQki9fBc4uOToh6DBTLvNxFJ9
+cgn4xFeGGu9WPaIMQuYbEL+u/pOcw8K8pinPWm0r2qwwF22my6lmnlscAmllKTDsUVvz4NrwHqCP
+OpYF5WUJc2Yhbh31V5dBhUYQw/uIXdn6drCtWFC213cFi23PjYDhdh6Xhbc5yj5UQUomPRDLkpPX
+WUkhsmm61gjGtYQEbTNCokSD3BP2D+38vAFEb/Xx0BEAAAAAAAA=
 
-[ And yes, for other browsers, you might have something that shows them=
- as=20
-  different characters - depending on the font, it might show up as a=20
-  small box with [00 02] vs [00 03] in it, for example. But that's also=
-=20
-  actually 100% true of the two different encodings of '=E4' - you coul=
-d=20
-  easily have a file broswer that shows the multi-character as a=20
-  multi-character, exactly to distinguish them and show that one of the=
-m=20
-  isn't "normalized"!
-
-  The point is, once the filesystem doesn't corrupt the data, it's alwa=
-ys=20
-  easy to get at, and there is never any ambiguity. ]
-
-How is this different from "M=E4rchen" spelled with two different encod=
-ings=20
-for that "=E4"?
-
-I'll tell you: it's not at all different. It's 100% the exact same issu=
-e.
-
-And does that make you perhaps go "Hunh? How do I remove it, or open it=
-?"
-
-And the fact is, those "idential looking" filenames (and thus they must=
- be=20
-the same, and something should have normalized them to the same thing,=20
-no?) are obviously two different files, and they are *really*easy* to e=
-dit=20
-and look at.
-
-=46ire up that graphical browser again, and it doesn't even matter whet=
-her=20
-the filename looks identical or not, it shows up as two different files=
-,=20
-and you can drag them around independently, rename them there, and at=20
-least my file browser shows clearly which is which, because I get a sma=
-ll=20
-icon with a preview in it, so I directly see which one is the "Odd file=
-"=20
-and which one is the "Another odd file".
-
-So the whole "but they _look_ the same" argument is just total BS. In j=
-ust=20
-about all character encodings there has always been unique and differen=
-t=20
-"characters" that _look_ the same on screen, and it has never really ma=
-de=20
-them actually *be* the same, and it has never been a valid argument for=
-=20
-them being considered the same.
-
-Because even when they *look* the same, that file browser that didn't s=
-how=20
-the difference in names visually, still showed them correctly as two=20
-separate files, and I could still just rename them by hand by=20
-right-clicking on them and picking "rename".=20
-
-So "look the same" is really not a new thing, nor is it even a really h=
-ard=20
-thing. Yes, people can get confused by it, but hey, people can get=20
-confused by *anything*. People get confused by filenames starting with =
-a=20
-"-", yet nobody sane really says that filenames cannot start with a das=
-h.
-
-			Linus
+--Apple-Mail-2--1056662516--
