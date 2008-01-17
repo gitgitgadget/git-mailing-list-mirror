@@ -1,66 +1,77 @@
-From: "Jay Soffian" <jaysoffian+git@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Wed, 16 Jan 2008 23:59:53 -0500
-Message-ID: <76718490801162059i2472cd82va34010caa3130b7e@mail.gmail.com>
-References: <478E1FED.5010801@web.de>
-	 <76718490801162043w3884435ex435f38b9de837540@mail.gmail.com>
+Date: Wed, 16 Jan 2008 21:11:20 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801162059460.2806@woody.linux-foundation.org>
+References: <478E1FED.5010801@web.de> <76718490801162043w3884435ex435f38b9de837540@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 17 06:00:26 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Jay Soffian <jaysoffian+git@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 17 06:12:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFMrZ-0001gC-7P
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 06:00:25 +0100
+	id 1JFN2o-0004HP-Pd
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 06:12:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753479AbYAQE75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 23:59:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753364AbYAQE75
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 23:59:57 -0500
-Received: from wa-out-1112.google.com ([209.85.146.179]:53549 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753300AbYAQE74 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 23:59:56 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so848293wah.23
-        for <git@vger.kernel.org>; Wed, 16 Jan 2008 20:59:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=ulWm1UvbMq4M8k2NwgGvoIXkiq52+dv0Pfy+APHshaU=;
-        b=CLjyar0gp/UdCXeNy/hlXI3Gy4THPt2xX+Ga98atR29f0uKdTH8d5kbK3my3qyifnzQPugL3z/DEefT2lSyRGT3BaLvSdb1TCfiVGdzhzzSXOEo/uZQQic6V/I0HGedG8VVhHYJpLSkxUy5oNDpJbYkiCeKPumvZAeMP+fLHVgI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=wVe6FWwChUXLdJXDmoUn3iti0wP6jZwiazilkrYTvnTtJumP8hsFkJgrJsA5QfUWqsRFFes+twTxiEkXNR77AttBtJDdJiizxkITyAK6K7IdltrvIOE59I7lekMp5Uoo44fVzppOCGtUyGzvesRVoAqit8XmDylghGaR/zaLGqA=
-Received: by 10.115.88.1 with SMTP id q1mr1915468wal.64.1200545993792;
-        Wed, 16 Jan 2008 20:59:53 -0800 (PST)
-Received: by 10.114.14.17 with HTTP; Wed, 16 Jan 2008 20:59:53 -0800 (PST)
+	id S1750847AbYAQFLY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2008 00:11:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750820AbYAQFLY
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 00:11:24 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:58517 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750782AbYAQFLX (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Jan 2008 00:11:23 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0H5BK2s012513
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 16 Jan 2008 21:11:21 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0H5BK1b010354;
+	Wed, 16 Jan 2008 21:11:20 -0800
 In-Reply-To: <76718490801162043w3884435ex435f38b9de837540@mail.gmail.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: dbb338badfb3e136
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.415 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_48
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70827>
 
-So here's what I can see as being useful additions to git:
 
-* Allowing a repo to be *optionally* configured to disallow two files
-in a directory that can cause aliasing problems, with options for
-unicode normalization aliasing and/or case-insensitivity aliasing. Can
-this already be done via hooks and someone just needs to write the
-appropriate hooks?
 
-* Having git warn during checkout if there are files which alias in
-the working copy filesystem. I guess it might be interesting if there
-were a mechanism in this situation for telling git which of the
-aliases you want checked out, though that doesn't seem like a very
-good feature.
+On Wed, 16 Jan 2008, Jay Soffian wrote:
+>
+> FWIW, here's Sun's take on the issue of filesystems and i18n:
 
-Thoughts (besides "patches welcomed")?
+Pretty sane, from a quick read-through, although most of it seems to not 
+be about general issue, as about "let's emulate others correctly on their 
+filesystems" (ie the rules are different for NTFS and HFS+, little enough 
+discussion about "native" preferred logic).
 
-j.
+However, while they don't consider normalization on file creates to be the 
+"preferred solution", they *do* consider filename comparison with 
+canonical equivalence to be that. Which means that you can get the same 
+odd problems:
+
+	fd = open(filename, O_CREAT);
+	+
+	readdir()
+
+can actually return a *different* filename than the one we just created, 
+if it already existed in the directory under the different normalization.
+
+So it's basically "normalization-preserving, but normalization-ignoring" 
+(the same way many filesystems are case-preserving, but case-ignoring). I 
+don't much like it either, but as with case, the "preserving" behaviour is 
+probably the nicer one.
+
+I'd guess the problems are harder to trigger in practice, but you can 
+still get some pretty hairy cases. It's just painful when readdir() and 
+your own file creation doesn't have any obvious 1:1 relationship.
+
+			Linus
