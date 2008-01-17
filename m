@@ -1,102 +1,63 @@
-From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-Subject: Re: FYI: Reply from HP-UX
-Date: Thu, 17 Jan 2008 19:29:27 +0100
-Message-ID: <20080117192927.20f1bd1f@pc09.procura.nl>
-References: <20080117141143.38a88c7a@pc09.procura.nl>
-	<alpine.LSU.1.00.0801171655570.5731@racer.site>
-	<20080117185514.621525a6@pc09.procura.nl>
-	<alpine.LSU.1.00.0801171811480.5731@racer.site>
-	<20080117192154.5634c62d@pc09.procura.nl>
-	<alpine.LSU.1.00.0801171823500.5731@racer.site>
+From: Mark Junker <mjscod@web.de>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Thu, 17 Jan 2008 19:36:32 +0100
+Message-ID: <478FA030.9010807@web.de>
+References: <478E1FED.5010801@web.de> <m33asxn2gt.fsf@roke.D-201> <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org> <200801162251.54219.jnareb@gmail.com> <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org> <alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org> <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org> <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org> <B45968C6-3029-48B6-BED2-E7D5A88747F7@sb.org> <alpine.LFD.1.00.0801161707150.2806@woody.linux-foundation.org> <8AC4CC86-A711-483D-9F9C-5F8497006A1D@sb.org> <alpine.LFD.1.00.0801161959210.2806@woody.linux-foundation.org> <B719D4A2-0D05-4C55-95FC-AB880D58E1AC@wincent.com> <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org> <478F99E7.1050503@web.de> <6E1A0E9A-34D7-4D85-BD4B-CF56CE3927CA@simplicidade.org> <alpine.LSU.
+ 1.00.0801171817340.5731@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Richard Lloyd <richard.lloyd@connectinternetsolutions.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 17 19:30:48 2008
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 17 19:37:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFZVh-00079B-QD
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 19:30:42 +0100
+	id 1JFZc0-0001Y6-Nn
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 19:37:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755922AbYAQS3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2008 13:29:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755424AbYAQS3n
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 13:29:43 -0500
-Received: from smtp-vbr7.xs4all.nl ([194.109.24.27]:2577 "EHLO
-	smtp-vbr7.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751823AbYAQS3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2008 13:29:42 -0500
-Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
-	(authenticated bits=0)
-	by smtp-vbr7.xs4all.nl (8.13.8/8.13.8) with ESMTP id m0HITRtY058093
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 17 Jan 2008 19:29:27 +0100 (CET)
-	(envelope-from h.m.brand@xs4all.nl)
-In-Reply-To: <alpine.LSU.1.00.0801171823500.5731@racer.site>
-X-Mailer: Claws Mail 3.2.0cvs27 (GTK+ 2.10.6; x86_64-unknown-linux-gnu)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1750999AbYAQSgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2008 13:36:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751510AbYAQSgn
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 13:36:43 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:53185 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750955AbYAQSgm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2008 13:36:42 -0500
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 4B89EC6FEC6F
+	for <git@vger.kernel.org>; Thu, 17 Jan 2008 19:36:32 +0100 (CET)
+Received: from [92.195.28.188] (helo=mark-junkers-computer.local)
+	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
+	id 1JFZbK-0005n9-00
+	for git@vger.kernel.org; Thu, 17 Jan 2008 19:36:30 +0100
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X; de; rv:1.8.1.9) Gecko/20071031 Thunderbird/2.0.0.9 Mnenhy/0.7.5.0
+In-Reply-To: <alpine.LSU.1.00.0801171817340.5731@racer.site>
+X-Sender: mjscod@web.de
+X-Provags-ID: V01U2FsdGVkX1//rX0iJRehxmdWs45M/kWzMKkmKR92WLevpRKd
+	c3pFssbtenxib+NpY2zE3xxJtrKzzeJUOz5BqQ5GmOPx1PqSSA
+	dd1Z6JyeU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70895>
 
-On Thu, 17 Jan 2008 18:24:29 +0000 (GMT), Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+Johannes Schindelin schrieb:
 
-> Hi,
-> 
-> On Thu, 17 Jan 2008, H.Merijn Brand wrote:
-> 
-> > On Thu, 17 Jan 2008 18:14:00 +0000 (GMT), Johannes Schindelin
-> > <Johannes.Schindelin@gmx.de> wrote:
-> > 
-> > > On Thu, 17 Jan 2008, H.Merijn Brand wrote:
-> > > 
-> > > > $ ./configure --prefix=/pro/local --disable-nls --without-iconv --with-perl=/pro/bin/perl
-> > > 
-> > > I guess that my suggestion doesn't work... Your perl is not in 
-> > > /usr/local/bin...
-> > 
-> > This was *my* CONF, not Richard's!
-> 
-> The point is: it should not be part of the Makefile if not most of the 
-> people have that setup.
+> It's just too arrogant to force your particular preferences down the 
+> throat of every git user.
 
-Ahh, right.
+It's not arrogant to make a suggestion. Where is your alternative solution?
 
-99.99% will have either one of these:
+However, what about storing an additional information like the file 
+system encoding (for every file)? This would result in the same 
+behaviour (and speed) as today as long as the file system encoding is 
+the same. Conversion will only be done when the targets file system 
+encoding is different.
 
-/opt/perl/bin/perl
-/opt/perl32/bin/perl
-/opt/perl64/bin/perl
-/usr/local/bin/perl
-/usr/bin/perl
+BTW: This reminds me of the code page switching stuff back in the times 
+of MS-DOS 4/5. This really wasn't funny.
 
-I'd strongly suggest to filter /usr/contrib/bin/ out of whatever path is
-used to find programs, as it might contain perl4
-
-/pro/bin is only for me (and our customers). It is a safe place where we
-will never interfere with whatever system perl is installed
-
--- 
-H.Merijn Brand         Amsterdam Perl Mongers (http://amsterdam.pm.org/)
-using & porting perl 5.6.2, 5.8.x, 5.10.x  on HP-UX 10.20, 11.00, 11.11,
-& 11.23, SuSE 10.1 & 10.2, AIX 5.2, and Cygwin.       http://qa.perl.org
-http://mirrors.develooper.com/hpux/            http://www.test-smoke.org
-                        http://www.goldmark.org/jeff/stupid-disclaimers/
+Regards,
+Mark
