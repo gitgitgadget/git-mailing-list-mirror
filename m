@@ -1,86 +1,89 @@
-From: Pedro Melo <melo@simplicidade.org>
+From: Johan Herland <johan@herland.net>
 Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Thu, 17 Jan 2008 18:38:47 +0000
-Message-ID: <10F7A0B4-AF3C-456A-BC2A-7687FF264E31@simplicidade.org>
-References: <478E1FED.5010801@web.de> <m33asxn2gt.fsf@roke.D-201> <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org> <200801162251.54219.jnareb@gmail.com> <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org> <alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org> <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org> <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org> <B45968C6-3029-48B6-BED2-E7D5A88747F7@sb.org> <alpine.LFD.1.00.0801161707150.2806@woody.linux-foundation.org> <8AC4CC86-A711-483D-9F9C-5F8497006A1D@sb.org> <alpine.LFD.1.00.0801161959210.2806@woody.linux-foundation.org> <B719D4A2-0D05-4C55-95FC-AB880D58E1AC@wincent.com> <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org> <478F99E7.1050503@web.de> <6E1A0E9A-34D7-4D85-BD4B-CF56CE3927CA@simplicidade.org> <alpine.LSU.
- 1.00.0801171817340.5731@racer.site>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Date: Thu, 17 Jan 2008 19:22:47 +0100
+Message-ID: <200801171922.48343.johan@herland.net>
+References: <478E1FED.5010801@web.de> <16D4755D-EAEC-4F4A-B6B4-F262A6841F66@wincent.com> <7vfxwwjpv3.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Mark Junker <mjscod@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 17 19:39:32 2008
+Cc: git@vger.kernel.org, Wincent Colaiuta <win@wincent.com>,
+	Pedro Melo <melo@simplicidade.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jay Soffian <jaysoffian+git@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 17 19:40:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFZe4-0002Qo-IR
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 19:39:20 +0100
+	id 1JFZfX-00032i-Ot
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 19:40:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752833AbYAQSiv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2008 13:38:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752739AbYAQSiv
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 13:38:51 -0500
-Received: from mail.sl.pt ([212.55.140.13]:60823 "EHLO sl.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752127AbYAQSiu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2008 13:38:50 -0500
-Received: (qmail 18691 invoked from network); 17 Jan 2008 18:38:48 -0000
-X-Virus-Status: Clean (0.01523 seconds) ; Version: 0.3-0.88.6
-X-Spam-Flag: NO
-X-Spam-Status: NO (0.0/5.0) (0.00008 seconds / 0.72879 sA)
-	Checked: by PTMail-AS v0.1 on mail.sl.pt
-Received: from unknown (HELO [192.168.1.209]) (melo@[81.193.151.201])
-          (envelope-sender <melo@simplicidade.org>)
-          by mail-sl (qmail-ldap-1.03) with SMTP
-          for <mjscod@web.de>; 17 Jan 2008 18:38:48 -0000
-Received-SPF: neutral (mail-sl: domain of (null) is neutral about designating 81.193.151.201 as permitted sender)
-In-Reply-To: <alpine.LSU.1.00.0801171817340.5731@racer.site>
-X-Mailer: Apple Mail (2.753)
+	id S1753526AbYAQSkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2008 13:40:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753410AbYAQSkW
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 13:40:22 -0500
+Received: from sam.opera.com ([213.236.208.81]:48081 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752859AbYAQSkV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2008 13:40:21 -0500
+X-Greylist: delayed 1024 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Jan 2008 13:40:20 EST
+Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id m0HIMmZD014224
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 17 Jan 2008 18:22:49 GMT
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vfxwwjpv3.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
+X-Virus-Scanned: ClamAV 0.91.1/5491/Thu Jan 17 15:13:54 2008 on smtp.opera.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70898>
 
-Hi,
+On Thursday 17 January 2008, Junio C Hamano wrote:
+> Wincent Colaiuta <win@wincent.com> writes:
+> 
+> > If this is really just a platform-specific hack, can we use platform- 
+> > specific code to do the normalization?
+> 
+> Unfortunately, I do not think this can be a platform-specific
+> hack.
+> 
+> If a project wants to be usable on both sane and insane
+> filesystems, people on platforms whose filesystems treat "foo"
+> and "Foo" as two distinct pathnames (and "Ma<UMLAUT>rchen" and
+> "M<A-with-UMLAUT>rchen" as two distinct ones) need to be
+> prevented from creating both in their tree objects at the same
+> time.  Once you create two pathnames xt_connmark.c and
+> xt_CONNMARK.c in the same tree object in your project, people on
+> case insensitive filesystems cannot work with your project (you
+> cannot check out the kernel source tree and work on it on vfat).
 
-On Jan 17, 2008, at 6:18 PM, Johannes Schindelin wrote:
-> On Thu, 17 Jan 2008, Pedro Melo wrote:
->> On Jan 17, 2008, at 6:09 PM, Mark Junker wrote:
->>
->>> IMHO it would be the best solution when git stores all string meta
->>> data in UTF-8 and converts it to the target systems file system
->>> encoding. That would fix all those problems with different  
->>> locales and
->>> file system encodings ...
->>
->> +1.
->
-> -1.
->
-> It's just too arrogant to force your particular preferences down the
-> throat of every git user.
+IMHO, support for insane filesystems should be split into two parts:
 
-Do you agree that you need to store or at least calculate a  
-normalized version of each filename to see if you are already  
-tracking the file, to take in account all the the filesystems out  
-there who are not case-preserving, case-sensitive?
+1. A git config setting (probably in .gitattributes) that is enabled
+   by the project to prevent anyone from committing files that would
+   cause problems on insane filesystems. This setting must be enabled
+   for everybody in the project (which is why it cannot easily be
+   solved by the current hooks infrastructure which is per-repo only).
 
-If so, do you think those rules should be an option? Or a preference?
+2. A platform-specific hack that detects whenever you're about to
+   check out a problematic filename on an insane filesystem.
+   The hack should either warn or (probably better) FAIL to check out
+   the problematic file(s) (with an appropriate error message
+   pointing at the setting in (1)).
 
-Should I specify in my config file that I want my filenames to be  
-normalized?
+AFAICS, _both_ are needed in order to solve this problem properly.
 
-Ignoring encoding, and case-sensitive issues in the git index creates  
-problems for those people who want/need to use non-ascii chars in  
-their filenames, and have some change of being able to collaborate  
-with other users on different operating systems.
 
-Best regards,
+Have fun!
+
+...Johan
+
 -- 
-Pedro Melo
-Blog: http://www.simplicidade.org/notes/
-XMPP ID: melo@simplicidade.org
-Use XMPP!
+Johan Herland, <johan@herland.net>
+www.herland.net
