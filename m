@@ -1,111 +1,96 @@
-From: Mark Williamson <mark.williamson@cl.cam.ac.uk>
-Subject: Re: [ANNOUNCE] Push Me Pull You 0.2 - Tech Preview Release
-Date: Thu, 17 Jan 2008 01:56:54 +0000
-Message-ID: <200801170156.55007.mark.williamson@cl.cam.ac.uk>
-References: <200801152131.33628.mark.williamson@cl.cam.ac.uk> <200801162315.35288.mark.williamson@cl.cam.ac.uk> <46a038f90801161537r4013f30ale0ae3ecb43609cf2@mail.gmail.com>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: I don't want the .git directory next to my code.
+Date: Thu, 17 Jan 2008 10:00:09 +0800
+Message-ID: <46dff0320801161800y9f5bf0cvb1804a57c41c3f4c@mail.gmail.com>
+References: <478D79BD.7060006@talkingspider.com>
+	 <86hcheig3n.fsf@blue.stonehenge.com>
+	 <478D82FA.2030404@talkingspider.com> <478D95D8.5040806@theory.org>
+	 <478E3D8E.1090300@talkingspider.com>
+	 <alpine.LFD.1.00.0801161000310.2806@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 02:59:01 2008
+Cc: Mike <fromlists@talkingspider.com>,
+	"Neil Macneale" <mac4-git@theory.org>, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Jan 17 03:00:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFK20-0002Jk-Ha
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 02:59:01 +0100
+	id 1JFK3c-0002lM-LZ
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 03:00:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752869AbYAQB6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 20:58:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752859AbYAQB6c
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 20:58:32 -0500
-Received: from ppsw-1.csi.cam.ac.uk ([131.111.8.131]:37365 "EHLO
-	ppsw-1.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752773AbYAQB6b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 20:58:31 -0500
-X-Cam-SpamDetails: Not scanned
-X-Cam-AntiVirus: No virus found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from maw48.kings.cam.ac.uk ([128.232.236.103]:35501)
-	by ppsw-1.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.151]:25)
-	with esmtpsa (PLAIN:maw48) (TLSv1:DHE-RSA-AES256-SHA:256)
-	id 1JFK1R-0000kN-4C (Exim 4.67)
-	(return-path <maw48@hermes.cam.ac.uk>); Thu, 17 Jan 2008 01:58:25 +0000
-User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
-In-Reply-To: <46a038f90801161537r4013f30ale0ae3ecb43609cf2@mail.gmail.com>
+	id S1751014AbYAQCAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 21:00:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752739AbYAQCAL
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 21:00:11 -0500
+Received: from py-out-1112.google.com ([64.233.166.178]:31132 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750998AbYAQCAK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 21:00:10 -0500
+Received: by py-out-1112.google.com with SMTP id u52so687411pyb.10
+        for <git@vger.kernel.org>; Wed, 16 Jan 2008 18:00:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=wQgwLpdcuf80pbMHg2hYak4WWoCiHw4K4V/y7SoqpM0=;
+        b=o4Eza8i/qXoF5PupFYPHjnY4tZSsEsqh5YZyd81UqLBf2ttY4d6gBm5LPd/1DfMDKXFjCLCMwlQ6NkO3YGpvSWxEgFcsOPWp1FaLaY3PQmHlUX+HfHrZSJWmR4PMNvYds4d2hiQ1wyBC9137hSaEv5VTqktAqxK+Bgfck66ba4k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=BJZzMr4y58oN3T3FMxDF7OFiC1EOmcdFBZ8LlG5brklVQa900V5rdvLI0weaPh9TOktTmprxwsIk6TxbhTfBP3YCG8SjJBuFjqYc9AJOgWeQ83yvvOTfUFsq8+AP7ugEYrKfEEdcEvDxnBXDBzKkIRseSMuJi98Xrpj/x5woE28=
+Received: by 10.35.84.9 with SMTP id m9mr1694068pyl.6.1200535209149;
+        Wed, 16 Jan 2008 18:00:09 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Wed, 16 Jan 2008 18:00:09 -0800 (PST)
+In-Reply-To: <alpine.LFD.1.00.0801161000310.2806@woody.linux-foundation.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70811>
 
-> > Heheh, yeah, I was almost deafened by it :-)  But it's a new obscure
-> > tool, written using an foreign SCM so I'm not surprised if uptake is
-> > slow!
+On Jan 17, 2008 2:15 AM, Linus Torvalds <torvalds@linux-foundation.org> wrote:
 >
-> I don't mind at all that it is hosted with Hg ;-) 
+>
+>
 
-Incidentally, I didn't mean to imply that that was the only reason nobody 
-responded.  But it's always a pain to think you have to get another SCM 
-installed to get the latest source.  I put tarballs up for releases and 
-occasional snapshots but I should probably enabled tarball download from the 
-web interface...
+>
+>  - Most sane people want to deploy and test separately. In particular, you
+>   want to test *before* you deploy. People make mistakes, they don't want
+>   to show them. Or there are consistency requirements, and/or you simply
+>   want to deploy to multiple sites simultaneously. All of which really
+>   re-inforces the "develop separately" mentality, where the actual
+>   deployment is then a separate "now I'm ready, let's push out the
+>   result".
+>
+Using git to manage deployment environment and even as deployment
+tools is not always a bad idea.
 
-> > I just looked at the  
-> screenshots and description, and my feedback, as potential user, is
-> that it isn't clear what I would use it for.
+1. In case where development and deployment environment are almost the
+same, such as html files, js files, binding the two environments as
+one is convenient.
 
-Well, that's fair enough :-)
+2. Event In the case where the two environement are different very
+much, managing deployment environment in git sometimes still seems
+good, since we can easily back to any earlier version or fix some
+urgent bug ASAP (surely for the non-generated files).
 
->  - What's the usage scenario for a cli-oriented power user? I do use
-> hg on other projects, but I'm happy to use its commandline tools.
+3. Use 'git pull' as deploy command seems simple enough.
 
-As you rightly point out, there's not anything you can do with pmpu that you 
-couldn't have managed on the CLI, the basic functionality is the same.  So 
-nothing that compelling (yet).
+>
+>                Linus
+>
+>
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-I find the GUI is sometimes quicker to use, e.g. creating and e-mailing 
-bundles.  I find that keeping a pmpu window open somewhere gives me handy 
-feedback on what incoming / outgoing changes need dealing with.  The new 
-annotate view provides live filtering, flexible viewing of metadata for each 
-line in the file, etc.  That's going to be handy too, although it needs more 
-work.
 
-But again, you *can* do all that stuff on the commandline and for some people 
-that's probably best.
-
-You will notice, however, that I have included a CLI in the GUI.  Right now 
-it's not that useful because it doesn't let you have any output ;-)  What I'd 
-like to do is to integrate this more with the rest of the GUI in the style of 
-the Hotwire shell (http://code.google.com/p/hotwire-shell/), e.g. intelligent 
-completion, higher level interface to what you're trying to do, etc.  The 
-power of the CLI interface plus the power of a flexible GUI to organise your 
-thoughts.
-
->  - For a GUI user, how does it compare with using git gui when using
-> git, and the equivalente gui when using hg?
-
-The main advantage relative to those tools is probably that it supports a 
-range of SCM backends and gives them a rather uniform user interface.  I'd 
-say it's also a fairly simple interface to get started with, although I'm 
-hardly a usability guru.  It's currently more limited than, say, git-gui 
-because I've not yet added all the features I want.
-
-My intention is to provide an alternative style of GUI to the existing tools, 
-which may suit some people better.  Right now the main UI difference is the 
-focus primarily on incoming / ougoing changeset flow.  I've got other ideas 
-I'll be trying out in due course ;-)
-
-Given the similarities of all the modern DVCS systems I think a sensible 
-approach is to have a range of polished GUI tools, which can use a range of 
-DVCS backends.  The trend towards this is already starting and I guess I'd 
-like pmpu to one day be one of these ;-)
-
-Cheers,
-Mark
 
 -- 
-Push Me Pull You - Distributed SCM tool (http://www.cl.cam.ac.uk/~maw48/pmpu/)
+Ping Yin
