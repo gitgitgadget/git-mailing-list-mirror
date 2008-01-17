@@ -1,51 +1,47 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Charles Bailey <charles@hashpling.org>
 Subject: Re: Be more careful about updating refs
-Date: Thu, 17 Jan 2008 11:52:23 +0100
-Message-ID: <478F3367.8050307@viscovery.net>
+Date: Thu, 17 Jan 2008 10:56:35 +0000
+Message-ID: <20080117105635.GA12285@hashpling.org>
 References: <alpine.LFD.1.00.0801151546560.2806@woody.linux-foundation.org> <alpine.LFD.1.00.0801151600140.2806@woody.linux-foundation.org> <7vodblpmyc.fsf@gitster.siamese.dyndns.org> <20080117091558.GA8341@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Thu Jan 17 11:53:04 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 17 11:57:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFSMp-0007tv-87
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 11:53:03 +0100
+	id 1JFSR7-0000wG-A7
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 11:57:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754605AbYAQKwe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2008 05:52:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753343AbYAQKwe
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 05:52:34 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:20268 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754309AbYAQKwe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2008 05:52:34 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JFSM6-0007ZR-6U; Thu, 17 Jan 2008 11:52:18 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 649A254D; Thu, 17 Jan 2008 11:52:23 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+	id S1751083AbYAQK5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2008 05:57:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbYAQK5A
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 05:57:00 -0500
+Received: from pih-relay06.plus.net ([212.159.14.133]:45021 "EHLO
+	pih-relay06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750955AbYAQK5A (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2008 05:57:00 -0500
+Received: from [212.159.69.125] (helo=hashpling.plus.com)
+	 by pih-relay06.plus.net with esmtp (Exim) id 1JFSQI-0000Hg-R1; Thu, 17 Jan 2008 10:56:39 +0000
+Received: from fermat.hashpling.org (fermat.hashpling.org [127.0.0.1])
+	by hashpling.plus.com (8.13.8/8.13.6) with ESMTP id m0HAuZ8S012721;
+	Thu, 17 Jan 2008 10:56:35 GMT
+Received: (from charles@localhost)
+	by fermat.hashpling.org (8.13.8/8.13.6/Submit) id m0HAuZSu012720;
+	Thu, 17 Jan 2008 10:56:35 GMT
+Content-Disposition: inline
 In-Reply-To: <20080117091558.GA8341@hashpling.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70845>
 
-Charles Bailey schrieb:
-> I'm assuming that this original patch and the test update turned into
-> the following commit in master:
+On Thu, Jan 17, 2008 at 09:15:58AM +0000, Charles Bailey wrote:
 > 
 > c3b0dec509fe136c5417422f31898b5a4e2d5e02 is first bad commit
 > 
@@ -53,11 +49,22 @@ Charles Bailey schrieb:
 > so) to have caused a failure in t9301-fast-export.sh on my Mac OS X
 > 10.4.11 machine although I haven't yet had the time to investigate
 > why.
+> 
 
-I observed the same (on Windows). The reason is that above-mentioned
-commit introduces a call to parse_objects(). But by the time that
-fast-import calls write_ref_sha1() (and, hence, this new parse_objects())
-it has not yet written a pack file, and parse_objects() fails. I don't
-have a clue how to fix this short of reverting the commit.
+Further to this, the first problem is that the 'fast-export |
+fast-import' test is failing.
 
--- Hannes
+As far as I can tell, fast-export is behaving no differently, the
+generated export file looks identical in shape.  It seems that
+fast-import is creating a bad temporary packfile for itself.
+
+The error that I'm getting is:
+
+fatal: unknown object type 0 in
+.git/objects/pack/pack-6be2b92c2d7485fd5cefbb0d9a68827e4c23d548.pack
+fast-import: dumping crash report to .git/fast_import_crash_12317
+
+which seems to come from the unpack_entry function in sha1_file.c.
+
+I haven't got much deeper into how the refs.c change has caused the
+issue, or why on earth it seems to be a Mac only issue.
