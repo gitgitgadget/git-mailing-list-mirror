@@ -1,55 +1,60 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: FYI: Reply from HP-UX
-Date: Thu, 17 Jan 2008 16:17:41 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0801171559480.13593@iabervon.org>
-References: <20080117141143.38a88c7a@pc09.procura.nl>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Fri, 18 Jan 2008 00:27:00 +0300
+Message-ID: <20080117212700.GB14088@dpotapov.dyndns.org>
+References: <alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org> <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org> <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org> <B45968C6-3029-48B6-BED2-E7D5A88747F7@sb.org> <alpine.LFD.1.00.0801161707150.2806@woody.linux-foundation.org> <8AC4CC86-A711-483D-9F9C-5F8497006A1D@sb.org> <alpine.LFD.1.00.0801161959210.2806@woody.linux-foundation.org> <B719D4A2-0D05-4C55-95FC-AB880D58E1AC@wincent.com> <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org> <478F99E7.1050503@web.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "H.Merijn Brand" <h.m.brand@xs4all.nl>
-X-From: git-owner@vger.kernel.org Thu Jan 17 22:18:39 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Mark Junker <mjscod@web.de>
+X-From: git-owner@vger.kernel.org Thu Jan 17 22:27:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFc7s-0008F0-SB
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 22:18:17 +0100
+	id 1JFcGs-0003MY-Ae
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 22:27:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348AbYAQVRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2008 16:17:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752503AbYAQVRr
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 16:17:47 -0500
-Received: from iabervon.org ([66.92.72.58]:58501 "EHLO iabervon.org"
+	id S1755235AbYAQV1G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2008 16:27:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754496AbYAQV1F
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 16:27:05 -0500
+Received: from smtp02.mtu.ru ([62.5.255.49]:53242 "EHLO smtp02.mtu.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751618AbYAQVRq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2008 16:17:46 -0500
-Received: (qmail 10489 invoked by uid 1000); 17 Jan 2008 21:17:41 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 17 Jan 2008 21:17:41 -0000
-In-Reply-To: <20080117141143.38a88c7a@pc09.procura.nl>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1752881AbYAQV1D (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2008 16:27:03 -0500
+Received: from smtp02.mtu.ru (localhost [127.0.0.1])
+	by smtp02.mtu.ru (Postfix) with ESMTP id C124730A38;
+	Fri, 18 Jan 2008 00:26:57 +0300 (MSK)
+Received: from dpotapov.dyndns.org (ppp85-141-190-40.pppoe.mtu-net.ru [85.141.190.40])
+	by smtp02.mtu.ru (Postfix) with ESMTP id 7386B305C5;
+	Fri, 18 Jan 2008 00:26:57 +0300 (MSK)
+Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
+	(envelope-from <dpotapov@gmail.com>)
+	id 1JFcGK-0003mJ-CS; Fri, 18 Jan 2008 00:27:00 +0300
+Content-Disposition: inline
+In-Reply-To: <478F99E7.1050503@web.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-DCC-STREAM-Metrics: smtp02.mtu.ru 10001; Body=0 Fuz1=0 Fuz2=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70929>
 
-On Thu, 17 Jan 2008, H.Merijn Brand wrote:
+On Thu, Jan 17, 2008 at 07:09:43PM +0100, Mark Junker wrote:
+> 
+> Sorry, but you're using different characters that look the same. But 
+> Kevins point was that it's a different thing if you use two characters 
+> that look the same or the same character with different encodings.
 
-> I think not building with a non-gcc C compiler could be a showstopper for us -
-> our policy is to compile all packages (yes, even gcc itself) using HP's
-> ANSI C and C++ compilers unless it's literally impossible to do so (the
-> only package exception so far is "pdftk" and that's only because HP don't
-> have a compiler equivalent to gcj).
+No, the encoding was the same -- UTF-8. MacOSX converts one sequence of
+Unicode characters to *another* sequence, which are canonical equivalent,
+but being canonical equivalent does not mean they are the same characters.
+In the same way, as being compatible equivalent does not mean being the
+same. As well as, being case-insensitive equivalent does not mean being
+the same... Do you remember DOS? It stored all filenames in upper-case,
+so they original and stored names are case-insensitive equivalent, but
+they are not the same!
 
-Is HP's ANSI C compiler C99 or C89? Git is sort of officially C89, but 
-most developers use C99 compilers, so there's a bunch of C99-isms; seems 
-to me like a slew of "inline" as a keyword and three C++/C99 comments.
-
-If the compiler is supposed to be C99, the issues should be reported to HP 
-and the gcc people, since "make CFLAGS=-std=c99" has no problem with git, 
-suggesting that there's some issue with interpretation of the standard for 
-one or the other.
-
-	-Daniel
-*This .sig left intentionally blank*
+Dmitry
