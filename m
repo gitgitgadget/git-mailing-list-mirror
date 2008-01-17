@@ -1,55 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Thu, 17 Jan 2008 12:53:29 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801171252540.17650@racer.site>
-References: <478E1FED.5010801@web.de> <76718490801162043w3884435ex435f38b9de837540@mail.gmail.com> <76718490801162059i2472cd82va34010caa3130b7e@mail.gmail.com> <7vejchkp6o.fsf@gitster.siamese.dyndns.org> <32DB7E53-1062-4F7C-A42D-6EC5945A70A3@wincent.com>
- <alpine.LSU.1.00.0801171106510.17650@racer.site> <C7439732-3B79-4F2B-9D0C-679C1EC8EA0E@simplicidade.org> <16D4755D-EAEC-4F4A-B6B4-F262A6841F66@wincent.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: What's in git.git (stable frozen)
+Date: Thu, 17 Jan 2008 13:56:16 +0100
+Message-ID: <478F5070.2020503@viscovery.net>
+References: <7vk5m9kvf7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pedro Melo <melo@simplicidade.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jay Soffian <jaysoffian+git@gmail.com>, git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 13:54:21 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 17 13:56:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFUG1-0004fF-3d
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 13:54:09 +0100
+	id 1JFUIe-0005jI-NT
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 13:56:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752424AbYAQMxj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2008 07:53:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752519AbYAQMxj
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 07:53:39 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49851 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752311AbYAQMxi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2008 07:53:38 -0500
-Received: (qmail invoked by alias); 17 Jan 2008 12:53:33 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp021) with SMTP; 17 Jan 2008 13:53:33 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18LfTV+0B8L9dIdhRCNw2wIYIe2BKI/6o3e3O+1HL
-	TwUtn6TMIYYsGl
-X-X-Sender: gene099@racer.site
-In-Reply-To: <16D4755D-EAEC-4F4A-B6B4-F262A6841F66@wincent.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752590AbYAQM4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2008 07:56:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752602AbYAQM4Y
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 07:56:24 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:40796 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750946AbYAQM4Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2008 07:56:24 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JFUI3-0004o7-Mc; Thu, 17 Jan 2008 13:56:16 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id E07B154D; Thu, 17 Jan 2008 13:56:16 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vk5m9kvf7.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70854>
 
-Hi,
+Junio C Hamano schrieb:
+> There are a good deal of bugfixes in 'master', the largest of
+> which is Brandon Casey's fix to builtin-commit and others'
+> misuse of lockfile API.  A tentative fix for the issue was
+> pushed out last night but the approach has known issues for our
+> Windowsy friends, and this attempts to address them.
+> 
+> We've been taking pride that the tip of 'master' is always,
+> without regression, more stable than any released version, but
+> today's one might have uncovered glitches.  Please help testing
+> it so that we do not have to leave it broken for a long time if
+> it indeed is.
 
-On Thu, 17 Jan 2008, Wincent Colaiuta wrote:
+Except for the NO_MMAP issue introduced by c3b0dec509f that kills
+git-fast-import in t9301* as discussed in a parallel thread, all tests
+pass on Windows (MinGW port). This is a good sign since most, if not all,
+issues around the lockfile API have been discovered by the test suite in
+the past.
 
-> On Mac OS X we have (unfortunately only 10.4 and up):
-
-That remark about the version raises my eyebrows.  Where I live, 10.2.8 is 
-_still_ quite common.
-
-Ciao,
-Dscho
+-- Hannes
