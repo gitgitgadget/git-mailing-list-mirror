@@ -1,76 +1,81 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: I don't want the .git directory next to my code.
-Date: Wed, 16 Jan 2008 18:38:28 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801161834380.2806@woody.linux-foundation.org>
-References: <478D79BD.7060006@talkingspider.com>  <86hcheig3n.fsf@blue.stonehenge.com>  <478D82FA.2030404@talkingspider.com> <478D95D8.5040806@theory.org>  <478E3D8E.1090300@talkingspider.com>  <alpine.LFD.1.00.0801161000310.2806@woody.linux-foundation.org>
- <46dff0320801161800y9f5bf0cvb1804a57c41c3f4c@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Do not show "diff --git" metainfo with --no-prefix
+Date: Wed, 16 Jan 2008 18:42:13 -0800
+Message-ID: <7vve5tkwai.fsf@gitster.siamese.dyndns.org>
+References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>
+	<alpine.DEB.1.00.0801151444180.5289@eeepc-johanness>
+	<c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
+	<alpine.LNX.1.00.0801151728120.13593@iabervon.org>
+	<7vhched3kw.fsf@gitster.siamese.dyndns.org>
+	<7v4pded1rk.fsf_-_@gitster.siamese.dyndns.org>
+	<7v7iiabjyh.fsf_-_@gitster.siamese.dyndns.org>
+	<alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org>
+	<alpine.LFD.1.00.0801151919440.2806@woody.linux-foundation.org>
+	<alpine.LNX.1.00.0801152256480.13593@iabervon.org>
+	<alpine.LFD.1.00.0801152017490.2806@woody.linux-foundation.org>
+	<7v1w8hploy.fsf@gitster.siamese.dyndns.org>
+	<alpine.LNX.1.00.0801161524390.13593@iabervon.org>
+	<7vprw1mfpr.fsf@gitster.siamese.dyndns.org>
+	<alpine.LSU.1.00.0801170108440.17650@racer.site>
+	<7vabn5mdz7.fsf@gitster.siamese.dyndns.org>
+	<alpine.LSU.1.00.0801170147350.17650@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mike <fromlists@talkingspider.com>,
-	Neil Macneale <mac4-git@theory.org>, git@vger.kernel.org
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 17 03:40:13 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Chris Ortman <chrisortman@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 17 03:43:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFKfM-00047c-3m
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 03:39:40 +0100
+	id 1JFKij-00055a-QB
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 03:43:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750941AbYAQCjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 21:39:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750958AbYAQCjJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 21:39:09 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:40295 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750941AbYAQCjI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 21:39:08 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0H2cTjn007776
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 16 Jan 2008 18:38:30 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0H2cS9d005116;
-	Wed, 16 Jan 2008 18:38:28 -0800
-In-Reply-To: <46dff0320801161800y9f5bf0cvb1804a57c41c3f4c@mail.gmail.com>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.665 required=5 tests=AWL,BAYES_00,OSDL_NIGERIAN_URGENT
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751262AbYAQCmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 21:42:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751248AbYAQCmk
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 21:42:40 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52676 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751232AbYAQCmj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jan 2008 21:42:39 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A68D4E62;
+	Wed, 16 Jan 2008 21:42:38 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 912384D3E;
+	Wed, 16 Jan 2008 21:42:30 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0801170147350.17650@racer.site> (Johannes
+	Schindelin's message of "Thu, 17 Jan 2008 01:48:54 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70815>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-
-On Thu, 17 Jan 2008, Ping Yin wrote:
+>> While we are discussing about diff, there is one thing that has been 
+>> bugging me occasionally, but the annoyance factor has not motivated me 
+>> enough to look into it myself, because I do not use it often: 
+>> --color-words.  It appears that it shows lines that do not have any word 
+>> differences in bold (whatever diff.color.meta is configured) and I think 
+>> it should use plain color instead.
+>> 
+>> Was this intentional, or just a simple plain bug?
 >
-> Using git to manage deployment environment and even as deployment
-> tools is not always a bad idea.
+> Plain bug.  I even meant to implement your suggestion of having a variable 
+> set of non-word characters, but never came around to work on it.  
+> Hopefully this weekend...
 
-I don't think it's alway sa bad idea, no. But it's a good idea only if you 
-then accept things like ".git" subdirectories lying around in your 
-deployment area (or you accept the use of tricks like GIT_DIR).
+I am not sure what that variable is about, but in the code you
+have fn_out_diff_words_aux() that uses OLD/NEW/PLAIN and I do
+not see where  you try to color anything to METAINFO color.
 
-> 1. In case where development and deployment environment are almost the
-> same, such as html files, js files, binding the two environments as
-> one is convenient.
-> 
-> 2. Event In the case where the two environement are different very
-> much, managing deployment environment in git sometimes still seems
-> good, since we can easily back to any earlier version or fix some
-> urgent bug ASAP (surely for the non-generated files).
-> 
-> 3. Use 'git pull' as deploy command seems simple enough.
-
-Hey, I do it for all my kernels ("git pull" + "make" is just simpler than 
-pushing tar-balls around), so I'm not entirely disagreeing. I *like* 
-having the entire development environment around everywhere.
-
-But it does seem like a lot of Mike's problems basically boil down to the 
-fact that he doesn't really want to use it as a deployment tool.
-
-		Linus
+Perhaps you are talking about a different problem?  I am a bit
+confused...
