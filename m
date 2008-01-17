@@ -1,109 +1,73 @@
-From: Pedro Melo <melo@simplicidade.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Thu, 17 Jan 2008 00:27:52 +0000
-Message-ID: <E8E76634-FFEC-426B-B04D-3C2CD3790D5E@simplicidade.org>
-References: <478E1FED.5010801@web.de> <m33asxn2gt.fsf@roke.D-201> <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org> <200801162251.54219.jnareb@gmail.com> <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org> <alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org> <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org> <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org> <BA518A23-FBF8-49BB-BEFB-D9A6BA1E302C@simplicidade.org> <alpine.LFD.1.00.0801161615330.2806@woody.linux-foundation.org>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Wed, 16 Jan 2008 16:19:30 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801161617070.2806@woody.linux-foundation.org>
+References: <478E1FED.5010801@web.de> <m33asxn2gt.fsf@roke.D-201> <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org> <200801162251.54219.jnareb@gmail.com> <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org> <alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org>
+ <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org> <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org> <85ir1tpbk8.fsf@lola.goethe.zz>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Kevin Ballard <kevin@sb.org>, Jakub Narebski <jnareb@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Mark Junker <mjscod@web.de>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jan 17 01:28:34 2008
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Jan 17 01:29:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFIcL-0003YW-GZ
-	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 01:28:25 +0100
+	id 1JFIdb-0003wf-4s
+	for gcvg-git-2@gmane.org; Thu, 17 Jan 2008 01:29:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751702AbYAQA15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jan 2008 19:27:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752248AbYAQA15
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 19:27:57 -0500
-Received: from mail.sl.pt ([212.55.140.13]:36008 "EHLO sl.pt"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751598AbYAQA15 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jan 2008 19:27:57 -0500
-Received: (qmail 31597 invoked from network); 17 Jan 2008 00:27:54 -0000
-X-Virus-Status: Clean (0.01675 seconds) ; Version: 0.3-0.88.6
-X-Spam-Flag: NO
-X-Spam-Status: NO (0.0/5.0) (0.00008 seconds / 0.08041 sA)
-	Checked: by PTMail-AS v0.1 on mail.sl.pt
-Received: from unknown (HELO [192.168.1.209]) (melo@[85.240.106.162])
-          (envelope-sender <melo@simplicidade.org>)
-          by mail-sl (qmail-ldap-1.03) with SMTP
-          for <kevin@sb.org>; 17 Jan 2008 00:27:54 -0000
-Received-SPF: neutral (mail-sl: domain of (null) is neutral about designating 85.240.106.162 as permitted sender)
-In-Reply-To: <alpine.LFD.1.00.0801161615330.2806@woody.linux-foundation.org>
-X-Mailer: Apple Mail (2.753)
+	id S1752554AbYAQA3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jan 2008 19:29:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752450AbYAQA3M
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Jan 2008 19:29:12 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:52847 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752484AbYAQA3L (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Jan 2008 19:29:11 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0H0SnWq001958
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 16 Jan 2008 16:28:50 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0H0JUA7032309;
+	Wed, 16 Jan 2008 16:19:31 -0800
+In-Reply-To: <85ir1tpbk8.fsf@lola.goethe.zz>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.715 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70785>
 
-Hi,
 
-On Jan 17, 2008, at 12:16 AM, Linus Torvalds wrote:
-> On Wed, 16 Jan 2008, Pedro Melo wrote:
->>
->> The difference I see between us is that if I tell my filesystem  
->> that I want to
->> name my file with a particular string encoded in X, users using  
->> encoding Y
->> will be able to read it correctly. I  like my filesystem to make  
->> that work for
->> me.
->
-> The difference I see between us is that when I tell you that this is
-> exactly the same thing as your file *contents*, you don't seem to  
-> get it.
 
-I get that you think its the same thing.
+On Thu, 17 Jan 2008, David Kastrup wrote:
+> 
+> Actually, there is no good reason for non-normalized forms (deficient
+> software not able to deal with some of the normalized forms is not a
+> good reason: such software should be fixed).
 
-What I don't get is why a user should be forced to know what type of  
-encoding he and the other users are using on all the layers going  
-down to the filesystem. If two users on different systems or in  
-different configurations, choose the same unicode string as the name,  
-why do we need to make it harder for things to just work out?
+I'd actually agree, and it then boils down to the second sane choice I 
+gave earlier:
 
-The content of the file is sacred, we both agree on that. We disagree  
-on the filename, because for me it's more important that equal  
-strings, even if encoded to different byte sequences, should be  
-treated as the same file.
+ - don't accept data you don't like
 
-> An OS that silently changes the contents of your files is *crap*.
->
-> Get it?
+if you don't like non-normalized names, don't create them. That's fine.
 
-I was not talking about content of files, those are sacred. I was  
-talking about filenames. Those *for me* are not, but are for you. No  
-problem, we just have different values: I want my computer to work  
-for me, not me working for the computer. I'm willing to accept a file  
-system or other layer that normalizes encoding of filenames if that  
-makes the end-user life easier, specially in a tool distributed by  
-nature.
+But don't go normalizing them behind the users back.
 
-> An OS that silently changes the contents of your directories is  
-> *crap*.
->
-> Get it now?
+> Yup.  But that does not mean that normalization is a bad idea.  It is
+> just that the filesystem is not the right place for it.
 
-As I said before, we disagree on file meta-data, not on file  
-contents. For you, byte in must be the same byte out. For me string  
-in must be the same string out.
+Oh, absolutely. You can - and often should - normalize in the application 
+(or have libraries to do it for you). 
 
-And as I said in the previous email, what I learned today is that in  
-a distributed project using git, and if you need to use accented  
-characters, I need to tell all the users to use the same LANG settings.
+Not silently and behind peoples backs.
 
-It's important information, at least for me.
-
-Best regards,
--- 
-Pedro Melo
-Blog: http://www.simplicidade.org/notes/
-XMPP ID: melo@simplicidade.org
-Use XMPP!
+		Linus
