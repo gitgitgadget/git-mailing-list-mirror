@@ -1,69 +1,67 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] git-send-email.perl: check for lines longer than 998
- characters
-Date: Fri, 18 Jan 2008 11:01:56 +0100
-Message-ID: <47907914.6000105@viscovery.net>
-References: <20080117153252.GD2816@coredump.intra.peff.net> <1200642458-3280-1-git-send-email-ediap@users.sourceforge.net> <47905F70.5090003@viscovery.net> <4790746D.1000502@users.sourceforge.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-send-email.perl: check for lines longer than 998 characters
+Date: Fri, 18 Jan 2008 02:08:24 -0800
+Message-ID: <7v1w8fh2ef.fsf@gitster.siamese.dyndns.org>
+References: <20080117153252.GD2816@coredump.intra.peff.net>
+	<1200642458-3280-1-git-send-email-ediap@users.sourceforge.net>
+	<47905F70.5090003@viscovery.net>
+	<4790746D.1000502@users.sourceforge.net>
+	<47907914.6000105@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
-To: Adam Piatyszek <ediap@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Jan 18 11:02:37 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Adam Piatyszek <ediap@users.sourceforge.net>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Jan 18 11:09:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFo3Z-0006KH-8Z
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 11:02:37 +0100
+	id 1JFo9u-0000Ap-3z
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 11:09:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754826AbYARKCE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 05:02:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754769AbYARKCE
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 05:02:04 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:17399 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754552AbYARKCB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 05:02:01 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JFo2o-0000vI-JH; Fri, 18 Jan 2008 11:01:51 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 8703569F; Fri, 18 Jan 2008 11:01:56 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <4790746D.1000502@users.sourceforge.net>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751102AbYARKIl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 05:08:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbYARKIl
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 05:08:41 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60492 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751021AbYARKIk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 05:08:40 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FFD1602F;
+	Fri, 18 Jan 2008 05:08:38 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 581E7602E;
+	Fri, 18 Jan 2008 05:08:31 -0500 (EST)
+In-Reply-To: <47907914.6000105@viscovery.net> (Johannes Sixt's message of
+	"Fri, 18 Jan 2008 11:01:56 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70988>
 
-Adam Piatyszek schrieb:
-> * Johannes Sixt [18 I 2008 09:12]:
->> Is it good to die() in this situation? If you are sending a patch series
->> and one patch in the middle triggers this condition, then only half of
->> the
->> series is sent. Maybe it would be better to warn here only, collect file
->> names of the suspects, send the patch nevertheless, and write a
->> summary at
->> the end?
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> IMHO it does not make much sense to send such patches nevertheless, if
-> we are sure that they will be broken after SMTP transfer. Such a
-> situation is similar to spamming. And sending only the ones that can be
-> sent is not an option as well.
+> You are right here. My thought was that even though the recipient gets a
+> broken patch, he would be able to fix it up. This may be acceptable for
+> peer-to-peer communication, but not for a development style that involves
+> many recipients.
+>
+> Then git-format-patch and log-family with --pretty=email -p could warn
+> about these candidates-to-be-broken patches.
 
-You are right here. My thought was that even though the recipient gets a
-broken patch, he would be able to fix it up. This may be acceptable for
-peer-to-peer communication, but not for a development style that involves
-many recipients.
+I'd rather not, unless it is explicitly asked for by a separate
+command line option.  Transferring over SMTP is not the only
+(nor even primary) use of format-patch output.
 
-Then git-format-patch and log-family with --pretty=email -p could warn
-about these candidates-to-be-broken patches.
-
--- Hannes
+On the other hand, git-send-email _is_ all about SMTP transfer.
+Perhaps a loop over input files upfront to check the line length
+limit, and warn if there are suspiciously long lines even before
+sending the first piece of e-mail out, would be a reasonable
+approach.
