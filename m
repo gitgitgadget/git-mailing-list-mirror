@@ -1,89 +1,86 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH] git-commit: add a prepare-commit-msg hook
-Date: Fri, 18 Jan 2008 17:37:35 +0100
-Message-ID: <4790D5CF.8000602@gnu.org>
-References: <4790BCED.4050207@gnu.org> <alpine.LSU.1.00.0801181545530.5731@racer.site> <4790CAF7.5010908@gnu.org> <alpine.LSU.1.00.0801181605020.5731@racer.site>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Fix random fast-import errors when compiled with
+ NO_MMAP
+Date: Fri, 18 Jan 2008 09:08:23 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801180842350.2957@woody.linux-foundation.org>
+References: <20080118035700.GA3458@spearce.org> <alpine.LFD.1.00.0801172013270.2957@woody.linux-foundation.org> <20080118084201.GA14763@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 18 17:38:45 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Fri Jan 18 18:09:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFuEj-0000VO-Sr
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 17:38:34 +0100
+	id 1JFuiz-0005fE-Vu
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 18:09:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760651AbYARQhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 11:37:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760875AbYARQhj
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 11:37:39 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:7628 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759044AbYARQhh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 11:37:37 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so1085386fga.17
-        for <git@vger.kernel.org>; Fri, 18 Jan 2008 08:37:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        bh=ld2HRTkbFQLps9S+Pp7iNSldVPzWWSHxUg1uorN0A/A=;
-        b=ZUbC9aRlB0meq4rie7uwRXn3t8mdyLOvd8cLF/2xS/EEQYLFWAbA+MA2L9lFck49c1SQo8zAYlzPioS3+hGVFwfLUMlyL3VnZuS1rHvQpWKFvBb6pxfvsG2pK4Idp2ViftjTrR5TXqIwQn9CMEzOwlC+n63PF4BJ4hzUnioUH3E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        b=DnCZgfCB4IhlYMOtWdRdR+GfRmfTa7k9iw8UHsNK4WcIoybK/LHaUipr/HsNHC3ip8utI+rFX0RIhSVsfJQQuKAtR9QFd14y/uwHeZ2fZvB9wXU4afkla7antxzWqZtjhzzb4VNCHDGkkTr1QwacczbQQ1ZzEzOzr6PMdCHE9Cs=
-Received: by 10.86.28.5 with SMTP id b5mr3215198fgb.79.1200674255223;
-        Fri, 18 Jan 2008 08:37:35 -0800 (PST)
-Received: from scientist-2.mobile.usilu.net ( [195.176.176.226])
-        by mx.google.com with ESMTPS id 3sm6041267fge.7.2008.01.18.08.37.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 18 Jan 2008 08:37:34 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
-In-Reply-To: <alpine.LSU.1.00.0801181605020.5731@racer.site>
+	id S1759044AbYARRJV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 12:09:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758104AbYARRJU
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 12:09:20 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:55867 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754534AbYARRJT (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Jan 2008 12:09:19 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0IH8Pha023242
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 18 Jan 2008 09:08:26 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0IH8NB6027312;
+	Fri, 18 Jan 2008 09:08:24 -0800
+In-Reply-To: <20080118084201.GA14763@hashpling.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-4.717 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71038>
 
 
-> In the message hook, just grep if the template was already added.  If it 
-> was, just return.  If it was not, add it.
 
-Ah, so you want me to always type ":q!" to exit and unnecessarily 
-complicate the commit-msg hook.  Cunning, but no, thanks.
+On Fri, 18 Jan 2008, Charles Bailey wrote:
+> 
+> I've just checked the Mac OS X build and it looks like there is a mmap
+> and git is indeed using it, so this is obviously an example of a
+> "really crappy" mmap implementation.
 
-I'll make an example.  This is my prepare-commit-msg hook:
+Looking closer, this is not necessarily the case here.
 
-diff_collect_changelog ()
-{
-   git diff "$@" -- \
-    `git diff "$@" --name-status -r | \
-         awk '/ChangeLog/ { print substr ($0, 3) }'` | sed -n \
-     -e '/^@@/,/^+/ {' \
-     -e '  s/^ //p' \
-     -e '  t' \
-     -e '}' \
-     -e '/^diff/,/^@@/ {' \
-     -e '  s/^diff --git a\/\(.*\)\/ChangeLog[^ ]* b\/.*/\1:/p' \
-     -e '  tdummy' \
-     -e '  :dummy' \
-     -e '  d' \
-     -e '}' \
-     -e 's/^+//p' \
-     -e 't'
-}
+Git uses MAP_PRIVATE, because that whole pack-file mapping was really 
+*meant* to map an existing read-only pack-file, and fast-import seems to 
+really be screwing with it.
 
-diff_collect_changelog --cached > /tmp/foo$$
-cat "$GIT_COMMIT_MSG" >> /tmp/foo$$ && \
-   mv /tmp/foo$$ "$GIT_COMMIT_MSG"
-rm -f /tmp/foo$$
+It so happens that Linux has a particularly clean and streamlined VM, and 
+if you do only reads to a MAP_PRIVATE mapping on a normal filesystem, 
+you'll always be as coherent as with MAP_SHARED because Linux will simply 
+map in the page cache pages directly.
 
-or something like that.  The alternative I see would be to start the vi 
-editing session with "!!make_changelog --cached".  So I thought about 
-having an hook that runs the command for me.  Do you have better ideas?
+But this is definitely not portable, and the git fast-import mmap window 
+usage before Shawn's patch it was simply wrong.
 
-Paolo
+So in this case, it really was git that was crap.
+
+It just happened to work because the Linux mmap handling is just generally 
+pretty sane. It probably also worked fine on pretty much any other modern 
+UNIX (ie Solaris).
+
+I'm not quite sure what OS X does to MAP_PRIVATE mappings, but if OS X is 
+still based on Mach (with FreeBSD just as a single-server on top), I 
+suspect that may be why it broke on OS X. The Mach VM is insanely complex 
+and does really odd things.
+
+But the fact is, without MAP_SHARED, you shouldn't expect things to be 
+coherent, even if they often will be (especially for PROT_READ).
+
+Btw, even with Shawn's patch, I wonder if the index_data usage is correct.
+
+			Linus
