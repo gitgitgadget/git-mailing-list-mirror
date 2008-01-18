@@ -1,73 +1,96 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
-Subject: git submodule when submodule is not a clone of a repository
-Date: Fri, 18 Jan 2008 17:25:20 +0000 (UTC)
-Message-ID: <loom.20080118T171433-93@post.gmane.org>
+From: "Jay Soffian" <jaysoffian+git@gmail.com>
+Subject: Re: [PATCH 2/3] send-email: validate patches before sending anything
+Date: Fri, 18 Jan 2008 12:39:45 -0500
+Message-ID: <76718490801180939v12112b5btd71dfb1fb5be5897@mail.gmail.com>
+References: <20080118141638.GA14928@coredump.intra.peff.net>
+	 <20080118141948.GB19783@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 18 18:26:12 2008
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Sixt" <j.sixt@viscovery.net>,
+	"Adam Piatyszek" <ediap@users.sourceforge.net>, git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 18 18:40:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFuym-0003rd-KE
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 18:26:09 +0100
+	id 1JFvCU-0001FP-1a
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 18:40:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756986AbYARRZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 12:25:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757011AbYARRZa
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 12:25:30 -0500
-Received: from main.gmane.org ([80.91.229.2]:51773 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756965AbYARRZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 12:25:29 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JFuy6-0003MP-KV
-	for git@vger.kernel.org; Fri, 18 Jan 2008 17:25:26 +0000
-Received: from mars-fw.arces.unibo.it ([137.204.143.2])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 Jan 2008 17:25:26 +0000
-Received: from sergio.callegari by mars-fw.arces.unibo.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 Jan 2008 17:25:26 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 137.204.143.2 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.11) Gecko/20071204 Ubuntu/7.10 (gutsy) Firefox/2.0.0.11)
+	id S1759634AbYARRjr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 12:39:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755353AbYARRjr
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 12:39:47 -0500
+Received: from wa-out-1112.google.com ([209.85.146.181]:35569 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756580AbYARRjq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 12:39:46 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1852680wah.23
+        for <git@vger.kernel.org>; Fri, 18 Jan 2008 09:39:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=5hDPLTXbcg3BraWDDMDjtTWjvOy563imGdGR7emNlZQ=;
+        b=hxbGKJXZtrWwlSu2LNKnq/EBuPHyQHfEdEFK0/MhnPKF6IZkpwCPHzZK/renzo4cijqzu1hFvVhaPFJHxm8wJG+tZ0pEXR4EzY8rSFHpNc6kvHYTVFgxwsuSEin65omcMDnSqReVxlmc29kjhRi4vH6LgKfaxKmaHTdItpvcxc8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=cc+MQv8faOYo/DrSt6k/5cTUl1mMQp+a1nx9vvIuoZdYD9gjsy93Wu6FB84zUjmbIS+F49cc4fHRgdywxv12N2brKgDWIQ3obhgScEiNgVzAj4KEa6q+m9BqCJMCndefoQ4qY6MfMYKpP4iCXZwRp2PeodPWJLtPhj882TKV9gg=
+Received: by 10.114.195.19 with SMTP id s19mr1302533waf.58.1200677985307;
+        Fri, 18 Jan 2008 09:39:45 -0800 (PST)
+Received: by 10.114.14.17 with HTTP; Fri, 18 Jan 2008 09:39:45 -0800 (PST)
+In-Reply-To: <20080118141948.GB19783@coredump.intra.peff.net>
+Content-Disposition: inline
+X-Google-Sender-Auth: 08cd2622e93f6b44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71043>
 
-Hi,
+On 1/18/08, Jeff King <peff@peff.net> wrote:
 
-I am trying to use submodules to keep a project organized.
-I am using a workflow that is probably not the common one and I am running into
-problems.
+> +foreach my $f (@files) {
+> +       my $error = validate_patch($f);
+> +       $error and die "fatal: $f: $error\nwarning: no patches were sent\n";
+> +}
+> +
+>  if (@files) {
+>         unless ($quiet) {
+>                 print $_,"\n" for (@files);
+> @@ -837,3 +842,15 @@ sub unique_email_list(@) {
+>         }
+>         return @emails;
+>  }
+> +
+> +sub validate_patch {
+> +       my $fn = shift;
+> +       open(my $fh, '<', $fn)
+> +               or die "unable to open $fn: $!\n";
+> +       while (my $line = <$fh>) {
+> +               if (length($line) > 998) {
+> +                       return "patch contains line longer than 998 characters";
+> +               }
+> +       }
+> +       return undef;
+> +}
 
-Basically, I have a superproject TOP, with subproject A and B. The thing is that
-A and B are _not_ cloned from some existing repo.  They are two brand new
-repositories created with git init.
+How about offering the line number. e.g.:
 
-Basically, I am doing this so that in the superproject I commit states with
-specific versions of A and B (that are logically distinct things) that are known
-to work fine together. Also I am doing this since A and B are actually just
-started with TOP, but I have a provision of making them independently developed
-things, so I like to have them separated from start.
+return "patch line number $. is longer than 998 characters";
 
-The thing is that git-submodule makes very strong assumptions on A and B.
-Particularly, if there is no url defined from them some commands (notably
-update) will fail.
+> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> index 659f9c7..1c41810 100755
+> --- a/t/t9001-send-email.sh
+> +++ b/t/t9001-send-email.sh
+> @@ -78,4 +78,24 @@ test_expect_success 'Show all headers' '
+>         diff -u expected-show-all-headers actual-show-all-headers
+>  '
+>
+> +test_expect_success 'no patch was sent' '
 
-So I need to make a fake url for the submodule (e.g. .) and a fake origin for it
-(again .)
+Shouldn't that be "no patches were sent" to match the perl output?
 
-Would it make sense to have a git submodule update not try to fetch if there is
-no url defined, but still checkout the right commit for the submodule (rather
-than skipping the submodule at all) ?
-
-Sergio
+j.
