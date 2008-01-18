@@ -1,85 +1,99 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
 Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Thu, 17 Jan 2008 16:35:19 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801171626470.2957@woody.linux-foundation.org>
-References: <478E1FED.5010801@web.de> <m33asxn2gt.fsf@roke.D-201> <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org> <200801162251.54219.jnareb@gmail.com> <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org> <alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org>
- <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org> <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org> <B45968C6-3029-48B6-BED2-E7D5A88747F7@sb.org> <alpine.LFD.1.00.0801161707150.2806@woody.linux-foundation.org> <8AC4CC86-A711-483D-9F9C-5F8497006A1D@sb.org>
- <alpine.LFD.1.00.0801161959210.2806@woody.linux-foundation.org> <B719D4A2-0D05-4C55-95FC-AB880D58E1AC@wincent.com> <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org> <478F99E7.1050503@web.de> <alpine.LFD.1.00.0801171017460.14959@woody.linux-foundation.org>
- <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org> <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org> <9BA6785F-A715-4F5C-B192-96471243FE20@sb.org>
+Date: Fri, 18 Jan 2008 01:44:04 +0100
+Message-ID: <200801180144.06253.robin.rosenberg.lists@dewire.com>
+References: <478E1FED.5010801@web.de> <alpine.LSU.1.00.0801171556170.5731@racer.site> <2010BC03-E5AE-4333-96CA-4A9B700AD720@sb.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pedro Melo <melo@simplicidade.org>, Mark Junker <mjscod@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Wincent Colaiuta <win@wincent.com>,
+	Mitch Tishmack <mitcht.git@gmail.com>, git@vger.kernel.org
 To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Fri Jan 18 01:35:59 2008
+X-From: git-owner@vger.kernel.org Fri Jan 18 01:44:36 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFfDC-0003Dq-3r
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 01:35:58 +0100
+	id 1JFfLX-0005l4-6k
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 01:44:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757935AbYARAf1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2008 19:35:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757803AbYARAf1
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 19:35:27 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:47788 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757630AbYARAf0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Jan 2008 19:35:26 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0I0ZK4v007171
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 17 Jan 2008 16:35:21 -0800
+	id S1756857AbYARAoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2008 19:44:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756662AbYARAoG
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 19:44:06 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:6658 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1756597AbYARAoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2008 19:44:04 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0I0ZJHT022319;
-	Thu, 17 Jan 2008 16:35:19 -0800
-In-Reply-To: <9BA6785F-A715-4F5C-B192-96471243FE20@sb.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.716 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	by dewire.com (Postfix) with ESMTP id C643E8030D9;
+	Fri, 18 Jan 2008 01:44:02 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id XK-Td5EZ3oi2; Fri, 18 Jan 2008 01:44:01 +0100 (CET)
+Received: from [10.9.0.4] (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id C342D80264C;
+	Fri, 18 Jan 2008 01:44:01 +0100 (CET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
+In-Reply-To: <2010BC03-E5AE-4333-96CA-4A9B700AD720@sb.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70942>
 
-
-
-On Thu, 17 Jan 2008, Kevin Ballard wrote:
+torsdagen den 17 januari 2008 skrev Kevin Ballard:
+> On Jan 17, 2008, at 10:57 AM, Johannes Schindelin wrote:
 > 
-> I just don't understand why you insist that the filename is data, when it is
-> clearly metadata.
+> > On Thu, 17 Jan 2008, Kevin Ballard wrote:
+> >
+> >> On Jan 17, 2008, at 5:22 AM, Wincent Colaiuta wrote:
+> >>
+> >>> While it's a nice workaround, it really is just that (a workaround)
+> >>> because performance will be suboptimal in a repository running on a
+> >>> disk image (and many of switched to Git because of its speed).
+> >>
+> >> Not only is it suboptimal, it's also not acceptable, plain and  
+> >> simple.
+> >
+> > If it's not acceptable, do something about it (and I don't mean  
+> > writing 50
+> > emails). If you don't want to do something about it, I have to  
+> > assume that
+> > you accept it as-is.
+> 
+> I never said I don't want to do anything about it. However, I do  
+> believe that it will take a significant investment of time and energy  
+> to learn all the gooey details of how git handles filenames and how  
+> the index works and all that jazz, which is knowledge that other  
+> people already have. I believe that, for me to solve this problem  
+> independently, it may require so much time that it never gets done  
+> (after all, I am fairly busy). However, if other people who already  
+> have this knowledge are willing to help, that would make this task far  
+> easier, especially given that if nobody else even acknowledges that  
+> this is a problem I don't have much hope of getting a patch accepted.
+> 
+> So again, I'm certainly going to try, but working by myself it simply  
+> may never get done.
 
-Uhh. And exactly how do you know the difference, and why should it matter?
+(This is only for those that think the problem should be solved somehow. The
+rest can move on - nothing to see here)
 
-A lot of data is metadata. Look at the git index file. It's *all* 
-metadata. Does that mean that the OS has the right to corrupt it?
+You may look at http://rosenberg.homelinux.net/cgi-bin/gitweb/gitweb.cgi?p=GIT.git;a=log;h=i18n
+for inspiration. It's pretty obsolete by now and only a "proof of concept", i.e.
+it can be done, not that it necessarily should be done exactly this way.
 
-IOW, why do you seem to argue that metadata something you can corrupt, but 
-not then "regular" data?
+Basically it intercepts the user's access to git, i.e. certain commands
+and how files are named (since those names represent a user interface). Then
+it assumes the internal encoding is UTF-8 (or garbage) converting to and
+from the user's local encoding. The heuristics is based on the assumption that
+a string (even random onesthat looks like UTF-8, with a very high probablity
+actually is UTF-8 encoded.
 
-Why is it ok to change a filename, when that same filename may *also* be 
-encoded by the user in a regular data file (think about MD5SUM files, for 
-example, that include the pathname, but now the pathname is part of the 
-file data, not on a filesystem). 
+The test cases might be usable almost as is.
 
-So filenames are data, they're metadata, they're whatever. None of that 
-means that it's acceptable to corrupt them, or gives the OS any reason to 
-say that it "knows better" than the user in how users use them. It's still 
-the *users* metadata, not the filesystems own metadata!
-
-In many cases, users use filenames *as* data, ie the filename actually has 
-a meaning in itself, not just as a handle to get the file contents.
-
-If this was truly metadata that isn't visible to the user, and not under 
-the users control (ie indirect block numbers etc), then you'd have a good 
-point. At that point, it's obviously entirely up to the filesystem how the 
-heck it encodes it.
-
-But that's not what filenames are. Filenames are an index specified by the 
-user, not by the computer. 
-
-		Linus
+-- robin
