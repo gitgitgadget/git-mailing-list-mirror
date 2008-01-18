@@ -1,158 +1,673 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's not in 'master', and likely not to be until 1.5.4
-Date: Fri, 18 Jan 2008 22:37:29 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801182228470.5731@racer.site>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com> <1200022189-2400-2-git-send-email-mlevedahl@gmail.com> <7v1w8o4ws0.fsf@gitster.siamese.dyndns.org> <30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com> <7v63xzzszp.fsf@gitster.siamese.dyndns.org>
- <478855B5.9070600@gmail.com> <7vbq7ry405.fsf@gitster.siamese.dyndns.org> <47885B2C.8020809@gmail.com> <7v7iify2wm.fsf@gitster.siamese.dyndns.org> <4788BFA8.2030508@gmail.com> <7vwsqeubj8.fsf@gitster.siamese.dyndns.org> <47891658.3090604@gmail.com>
- <7vbq7qssd7.fsf@gitster.siamese.dyndns.org> <47893E1A.5020702@gmail.com> <7v4pdislrf.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7vir1xmazm.fsf@gitster.siamese.dyndns.org>
- <7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org> <7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org> <47908CAF.90101@viscovery.net> <alpine.LSU.1.00.0801181948060.5731@racer.site> <20080118220735.B7F4B49B15@dx.sixt.local>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] Include rev-list options in git-log manpage.
+Date: Fri, 18 Jan 2008 23:50:27 +0100
+Message-ID: <20080118225026.GX29972@genesis.frugalware.org>
+References: <20080117214425.GP29972@genesis.frugalware.org> <7vejcfiop4.fsf@gitster.siamese.dyndns.org> <20080118161714.GS29972@genesis.frugalware.org> <4790D5B7.2000508@viscovery.net> <20080118171827.GV29972@genesis.frugalware.org> <7v8x2mewtt.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Fri Jan 18 23:38:08 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 18 23:51:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFzqh-0004Vu-Qn
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 23:38:08 +0100
+	id 1JG03T-0001B7-N4
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 23:51:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762130AbYARWhh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 17:37:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762380AbYARWhh
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 17:37:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39909 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759645AbYARWhg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 17:37:36 -0500
-Received: (qmail invoked by alias); 18 Jan 2008 22:37:34 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp012) with SMTP; 18 Jan 2008 23:37:34 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18WiNsTZcIWdAKlTGxtG+Xa1CfKxWT0WVSvgGQBOT
-	0FVgbMcIeMiali
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080118220735.B7F4B49B15@dx.sixt.local>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1762664AbYARWut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 17:50:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761186AbYARWut
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 17:50:49 -0500
+Received: from mx2.mail.elte.hu ([157.181.151.9]:59155 "EHLO mx2.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760838AbYARWur (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 17:50:47 -0500
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1JG02n-0007vF-Bd
+	from <vmiklos@frugalware.org>; Fri, 18 Jan 2008 23:50:45 +0100
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 13DB01190216; Fri, 18 Jan 2008 23:50:27 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7v8x2mewtt.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.5
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.5 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.2.3
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71072>
 
-Hi,
+Replace the "This manual page describes only the most frequently used options."
+text with the list of rev-list options in git-log manpage. (The git-diff-tree
+options are already included.)
 
-On Fri, 18 Jan 2008, Johannes Sixt wrote:
+Move these options to a separate file and include it from both
+git-rev-list.txt and git-log.txt.
 
-> Johannes Schindelin wrote:
-> 
-> > - Possibly some of these commits could be folded back into
-> >   f90524e(Add target architecture MinGW):
-> > 
-> >   96a27f1(MinGW: Implement gettimeofday()),
-> >   2e05f891(Implement a rudimentary poll() emulation for Windows),
-> >   142bda0(Fake implementions of getpwuid(), getuid(), and getpwnam() for
-> > Windows),
-> >   e799caf(Implement setitimer() and sigaction()),
-> >   075fee7(Implement a wrapper of execve that can invoke shell scripts),
-> >   495f0af(Work around misbehaved rename() on Windows),
-> >   34cf7fd(Implement a pipe() replacement whose ends are not inherited to
-> > children),
-> >   4504323(Implement start_command() for Windows),
-> >   b8e84a6(Implement a work-around for a misbehaved vsnprintf on Windows),
-> >   08bbcb4(Windows: always chmod(, 0666) before unlink()),
-> >   f6bbf12(Windows: Implement a wrapper of the open() function),
-> >   56cedf3(Windows: Fix PRIuMAX definition),
-> >   7458a97(Windows: Implement wrappers for gethostbyname(), socket(), and
-> > connect()),
-> >   ef25947(Windows: Fix ntohl() related warnings about printf formatting),
-> >   b9db7ad(Windows: Implement a custom spawnve()), and
-> >   47dacb3(compat/pread.c: Add foward decl to fix warning)
-> 
-> This would become a gigantic patch, which I really dislike. It's much 
-> easier to follow (and bisect) if things appear in smaller pieces.
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-Yes, probably.  (See below for the bisection.)
+On Fri, Jan 18, 2008 at 11:51:42AM -0800, Junio C Hamano <gitster@pobox.com> wrote:
+> I do not like these.  What you are really trying to express is
+> "this section makes sense only in rev-list documentation", not
+> "among the current set of documentation, the one this section
+> does not make sense in is git-log".  We might end up including
+> this in some other documents.
+>
+> IOW, they should rather be "ifdef::git-rev-list[]" instead,
+> (of course you have to define that token yourself if there isn't
+> one already).
 
-> > - d6596ed(gitk: Disable msgfmt on MinGW) and
-> >   004fb4b(Fix renaming .gitk-new to .gitk on Windows if there is already a
-> > .gitk)
-> >   are gitk patches.
-> >   Further, I think that d6596ed would be better done as an automatic
-> >   detection of msgfmt's presence; on my Eee PC, there is no msgfmt
-> >   either...
-> 
-> Let's do that later.
+Fixed.
 
-I think these are more or less independent of the rest.
+ Documentation/git-log.txt                          |   21 +-
+ Documentation/git-rev-list.txt                     |  359 +-------------------
+ .../{git-rev-list.txt => rev-list-options.txt}     |  118 +------
+ 3 files changed, 12 insertions(+), 486 deletions(-)
+ copy Documentation/{git-rev-list.txt => rev-list-options.txt} (76%)
 
-> > - 20fd16e(Windows: Use a customized struct stat that also has the
-> > st_blocks member) should be folded into
-> >   6f97065(Add a new lstat and fstat implementation based on Win32 API)
-> >   (with a comment that you customized the struct stat, too)
-> > 
-> >   But then, without 20fd16e, git does not compile, so again I would rather
-> >   fold that back into the MinGW commit.
-> 
-> The custom lstat() implementation cannot come after the custom struct 
-> stat because we can't call Windows's stat() with a custom struct stat. 
-> But I also don't want the custom lstat() in the code from the beginning 
-> because it's merely an optimization.
-
-Okay.
-
-> > - in git.git, the onelines are not terminated by "."
-> 
-> You mean commit messages?
-
-I meant the subjects of the commit messages.  I.e. "Add target 
-architecture MinGW.".  But that's such a minor issue.
-
-> > - I'd prefer f90524e(Add target architecture MinGW) to come last.
-> >   Alternatively, you could cut out the Makefile change so that the series
-> >   is still bisectable: MinGW will just not be supported until the very
-> >   end.
-> 
-> I strongly disagree. The series is completely bisectable on *nix. But if 
-> the Makefile change comes last, it becomes difficult to bisect on MinGW.
-
-Hmm.  You're right, of course, for *nix.
-
-But for MinGW I am not really sure, as you do not really get a 
-fully functional system prior to all of the 42 patches...
-
-I am really torn on this, because I can understand your point of view.
-
-But when there would be an issue with MinGW, and I wanted to find out if 
-it worked _at all_, it would be nice to have an easily determined commit 
-where MinGW was supposed to be fully functional first, without a private 
-tag or something.
-
-Reading again what I wrote it appears that my opinion on that was strong; 
-it is not.  I am not quite sure what would be best.  (In the end, I will 
-always have the option to not care and let it be Junio's problem ;-)
-
-> > $ git grep __MINGW j6t/upstream
-> > 
-> > comes up with 26 hits.
-> > 
-> > The first of them: cache.h:381, function is_absolute_path().  That just
-> > cries out loud to be "#ifdef DOS_STYLE_PATHS" instead of "#ifdef
-> > __MINGW32__".
-> > 
-> > I guess there should also be -DHAS_NO_FORK_BUT_THREADS 
-> > -DHAS_TMP_AND_TEMP -DHAS_WINSOCK2, but most of them look like 
-> > -DDOS_STYLE_PATHS to me.
-> 
-> Doesn't this go too far? How many systems are there where not all of 
-> them would be set at the same time?
-
-I am not only thinking about other systems... it is also a pretty nice way 
-of documenting _why_ this change was made.  With the possible exception of 
-HAS_TMP_AND_TEMP, I really would like to see that.  So much so that I 
-hereby offer to do the transform myself.
-
-Ciao,
-Dscho
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 5985f47..ebaee4b 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -19,14 +19,10 @@ command to control what is shown and how, and options applicable to
+ the linkgit:git-diff-tree[1] commands to control how the changes
+ each commit introduces are shown.
+ 
+-This manual page describes only the most frequently used options.
+-
+ 
+ OPTIONS
+ -------
+ 
+-include::pretty-options.txt[]
+-
+ :git-log: 1
+ include::diff-options.txt[]
+ 
+@@ -41,21 +37,6 @@ include::diff-options.txt[]
+ 	and <until>, see "SPECIFYING REVISIONS" section in
+ 	linkgit:git-rev-parse[1].
+ 
+---first-parent::
+-	Follow only the first parent commit upon seeing a merge
+-	commit.  This option can give a better overview when
+-	viewing the evolution of a particular topic branch,
+-	because merges into a topic branch tend to be only about
+-	adjusting to updated upstream from time to time, and
+-	this option allows you to ignore the individual commits
+-	brought in to your history by such a merge.
+-
+--g, \--walk-reflogs::
+-	Show commits as they were recorded in the reflog. The log contains
+-	a record about how the tip of a reference was changed.
+-	Cannot be combined with --reverse.
+-	See also linkgit:git-reflog[1].
+-
+ --decorate::
+ 	Print out the ref names of any commits that are shown.
+ 
+@@ -80,6 +61,8 @@ include::diff-options.txt[]
+ 	Show only commits that affect the specified paths.
+ 
+ 
++include::rev-list-options.txt[]
++
+ include::pretty-formats.txt[]
+ 
+ include::diff-generate-patch.txt[]
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index db42cd8..5b96eab 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -88,363 +88,8 @@ linkgit:git-repack[1].
+ OPTIONS
+ -------
+ 
+-Commit Formatting
+-~~~~~~~~~~~~~~~~~
+-
+-Using these options, linkgit:git-rev-list[1] will act similar to the
+-more specialized family of commit log tools: linkgit:git-log[1],
+-linkgit:git-show[1], and linkgit:git-whatchanged[1]
+-
+-include::pretty-options.txt[]
+-
+---relative-date::
+-
+-	Synonym for `--date=relative`.
+-
+---date={relative,local,default,iso,rfc}::
+-
+-	Only takes effect for dates shown in human-readable format, such
+-	as when using "--pretty".
+-+
+-`--date=relative` shows dates relative to the current time,
+-e.g. "2 hours ago".
+-+
+-`--date=local` shows timestamps in user's local timezone.
+-+
+-`--date=iso` (or `--date=iso8601`) shows timestamps in ISO 8601 format.
+-+
+-`--date=rfc` (or `--date=rfc2822`) shows timestamps in RFC 2822
+-format, often found in E-mail messages.
+-+
+-`--date=short` shows only date but not time, in `YYYY-MM-DD` format.
+-+
+-`--date=default` shows timestamps in the original timezone
+-(either committer's or author's).
+-
+---header::
+-
+-	Print the contents of the commit in raw-format; each record is
+-	separated with a NUL character.
+-
+---parents::
+-
+-	Print the parents of the commit.
+-
+---timestamp::
+-	Print the raw commit timestamp.
+-
+---left-right::
+-
+-	Mark which side of a symmetric diff a commit is reachable from.
+-	Commits from the left side are prefixed with `<` and those from
+-	the right with `>`.  If combined with `--boundary`, those
+-	commits are prefixed with `-`.
+-+
+-For example, if you have this topology:
+-+
+------------------------------------------------------------------------
+-             y---b---b  branch B
+-            / \ /
+-           /   .
+-          /   / \
+-         o---x---a---a  branch A
+------------------------------------------------------------------------
+-+
+-you would get an output line this:
+-+
+------------------------------------------------------------------------
+-	$ git rev-list --left-right --boundary --pretty=oneline A...B
+-
+-	>bbbbbbb... 3rd on b
+-	>bbbbbbb... 2nd on b
+-	<aaaaaaa... 3rd on a
+-	<aaaaaaa... 2nd on a
+-	-yyyyyyy... 1st on b
+-	-xxxxxxx... 1st on a
+------------------------------------------------------------------------
+-
+-Diff Formatting
+-~~~~~~~~~~~~~~~
+-
+-Below are listed options that control the formatting of diff output.
+-Some of them are specific to linkgit:git-rev-list[1], however other diff
+-options may be given. See linkgit:git-diff-files[1] for more options.
+-
+--c::
+-
+-	This flag changes the way a merge commit is displayed.  It shows
+-	the differences from each of the parents to the merge result
+-	simultaneously instead of showing pairwise diff between a parent
+-	and the result one at a time. Furthermore, it lists only files
+-	which were modified from all parents.
+-
+---cc::
+-
+-	This flag implies the '-c' options and further compresses the
+-	patch output by omitting hunks that show differences from only
+-	one parent, or show the same change from all but one parent for
+-	an Octopus merge.
+-
+--r::
+-
+-	Show recursive diffs.
+-
+--t::
+-
+-	Show the tree objects in the diff output. This implies '-r'.
+-
+-Commit Limiting
+-~~~~~~~~~~~~~~~
+-
+-Besides specifying a range of commits that should be listed using the
+-special notations explained in the description, additional commit
+-limiting may be applied.
+-
+---
+-
+--n 'number', --max-count='number'::
+-
+-	Limit the number of commits output.
+-
+---skip='number'::
+-
+-	Skip 'number' commits before starting to show the commit output.
+-
+---since='date', --after='date'::
+-
+-	Show commits more recent than a specific date.
+-
+---until='date', --before='date'::
+-
+-	Show commits older than a specific date.
+-
+---max-age='timestamp', --min-age='timestamp'::
+-
+-	Limit the commits output to specified time range.
+-
+---author='pattern', --committer='pattern'::
+-
+-	Limit the commits output to ones with author/committer
+-	header lines that match the specified pattern (regular expression).
+-
+---grep='pattern'::
+-
+-	Limit the commits output to ones with log message that
+-	matches the specified pattern (regular expression).
+-
+--i, --regexp-ignore-case::
+-
+-	Match the regexp limiting patterns without regard to letters case.
+-
+--E, --extended-regexp::
+-
+-	Consider the limiting patterns to be extended regular expressions
+-	instead of the default basic regular expressions.
+-
+---remove-empty::
+-
+-	Stop when a given path disappears from the tree.
+-
+---full-history::
+-
+-	Show also parts of history irrelevant to current state of a given
+-	path. This turns off history simplification, which removed merges
+-	which didn't change anything at all at some child. It will still actually
+-	simplify away merges that didn't change anything at all into either
+-	child.
+-
+---no-merges::
+-
+-	Do not print commits with more than one parent.
+-
+---first-parent::
+-	Follow only the first parent commit upon seeing a merge
+-	commit.  This option can give a better overview when
+-	viewing the evolution of a particular topic branch,
+-	because merges into a topic branch tend to be only about
+-	adjusting to updated upstream from time to time, and
+-	this option allows you to ignore the individual commits
+-	brought in to your history by such a merge.
+-
+---not::
+-
+-	Reverses the meaning of the '{caret}' prefix (or lack thereof)
+-	for all following revision specifiers, up to the next '--not'.
+-
+---all::
+-
+-	Pretend as if all the refs in `$GIT_DIR/refs/` are listed on the
+-	command line as '<commit>'.
+-
+---stdin::
+-
+-	In addition to the '<commit>' listed on the command
+-	line, read them from the standard input.
+-
+---quiet::
+-
+-	Don't print anything to standard output.  This form of
+-	git-rev-list is primarily meant to allow the caller to
+-	test the exit status to see if a range of objects is fully
+-	connected (or not).  It is faster than redirecting stdout
+-	to /dev/null as the output does not have to be formatted.
+-
+---cherry-pick::
+-
+-	Omit any commit that introduces the same change as
+-	another commit on the "other side" when the set of
+-	commits are limited with symmetric difference.
+-+
+-For example, if you have two branches, `A` and `B`, a usual way
+-to list all commits on only one side of them is with
+-`--left-right`, like the example above in the description of
+-that option.  It however shows the commits that were cherry-picked
+-from the other branch (for example, "3rd on b" may be cherry-picked
+-from branch A).  With this option, such pairs of commits are
+-excluded from the output.
+-
+--g, --walk-reflogs::
+-
+-	Instead of walking the commit ancestry chain, walk
+-	reflog entries from the most recent one to older ones.
+-	When this option is used you cannot specify commits to
+-	exclude (that is, '{caret}commit', 'commit1..commit2',
+-	nor 'commit1...commit2' notations cannot be used).
+-+
+-With '\--pretty' format other than oneline (for obvious reasons),
+-this causes the output to have two extra lines of information
+-taken from the reflog.  By default, 'commit@\{Nth}' notation is
+-used in the output.  When the starting commit is specified as
+-'commit@{now}', output also uses 'commit@\{timestamp}' notation
+-instead.  Under '\--pretty=oneline', the commit message is
+-prefixed with this information on the same line.
+-
+-Cannot be combined with '\--reverse'.
+-
+---merge::
+-
+-	After a failed merge, show refs that touch files having a
+-	conflict and don't exist on all heads to merge.
+-
+---boundary::
+-
+-	Output uninteresting commits at the boundary, which are usually
+-	not shown.
+-
+---dense, --sparse::
+-
+-When optional paths are given, the default behaviour ('--dense') is to
+-only output commits that changes at least one of them, and also ignore
+-merges that do not touch the given paths.
+-
+-Use the '--sparse' flag to makes the command output all eligible commits
+-(still subject to count and age limitation), but apply merge
+-simplification nevertheless.
+-
+---bisect::
+-
+-Limit output to the one commit object which is roughly halfway between
+-the included and excluded commits. Thus, if
+-
+------------------------------------------------------------------------
+-	$ git-rev-list --bisect foo ^bar ^baz
+------------------------------------------------------------------------
+-
+-outputs 'midpoint', the output of the two commands
+-
+------------------------------------------------------------------------
+-	$ git-rev-list foo ^midpoint
+-	$ git-rev-list midpoint ^bar ^baz
+------------------------------------------------------------------------
+-
+-would be of roughly the same length.  Finding the change which
+-introduces a regression is thus reduced to a binary search: repeatedly
+-generate and test new 'midpoint's until the commit chain is of length
+-one.
+-
+---bisect-vars::
+-
+-This calculates the same as `--bisect`, but outputs text ready
+-to be eval'ed by the shell. These lines will assign the name of
+-the midpoint revision to the variable `bisect_rev`, and the
+-expected number of commits to be tested after `bisect_rev` is
+-tested to `bisect_nr`, the expected number of commits to be
+-tested if `bisect_rev` turns out to be good to `bisect_good`,
+-the expected number of commits to be tested if `bisect_rev`
+-turns out to be bad to `bisect_bad`, and the number of commits
+-we are bisecting right now to `bisect_all`.
+-
+---bisect-all::
+-
+-This outputs all the commit objects between the included and excluded
+-commits, ordered by their distance to the included and excluded
+-commits. The farthest from them is displayed first. (This is the only
+-one displayed by `--bisect`.)
+-
+-This is useful because it makes it easy to choose a good commit to
+-test when you want to avoid to test some of them for some reason (they
+-may not compile for example).
+-
+-This option can be used along with `--bisect-vars`, in this case,
+-after all the sorted commit objects, there will be the same text as if
+-`--bisect-vars` had been used alone.
+-
+---
+-
+-Commit Ordering
+-~~~~~~~~~~~~~~~
+-
+-By default, the commits are shown in reverse chronological order.
+-
+---topo-order::
+-
+-	This option makes them appear in topological order (i.e.
+-	descendant commits are shown before their parents).
+-
+---date-order::
+-
+-	This option is similar to '--topo-order' in the sense that no
+-	parent comes before all of its children, but otherwise things
+-	are still ordered in the commit timestamp order.
+-
+---reverse::
+-
+-	Output the commits in reverse order.
+-	Cannot be combined with '\--walk-reflogs'.
+-
+-Object Traversal
+-~~~~~~~~~~~~~~~~
+-
+-These options are mostly targeted for packing of git repositories.
+-
+---objects::
+-
+-	Print the object IDs of any object referenced by the listed
+-	commits.  'git-rev-list --objects foo ^bar' thus means "send me
+-	all object IDs which I need to download if I have the commit
+-	object 'bar', but not 'foo'".
+-
+---objects-edge::
+-
+-	Similar to '--objects', but also print the IDs of excluded
+-	commits prefixed with a "-" character.  This is used by
+-	linkgit:git-pack-objects[1] to build "thin" pack, which records
+-	objects in deltified form based on objects contained in these
+-	excluded commits to reduce network traffic.
+-
+---unpacked::
+-
+-	Only useful with '--objects'; print the object IDs that are not
+-	in packs.
+-
+---no-walk::
+-
+-	Only show the given revs, but do not traverse their ancestors.
+-
+---do-walk::
+-
+-	Overrides a previous --no-walk.
+-
++:git-rev-list: 1
++include::rev-list-options.txt[]
+ 
+ include::pretty-formats.txt[]
+ 
+diff --git a/Documentation/git-rev-list.txt b/Documentation/rev-list-options.txt
+similarity index 76%
+copy from Documentation/git-rev-list.txt
+copy to Documentation/rev-list-options.txt
+index db42cd8..fc0591d 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/rev-list-options.txt
+@@ -1,99 +1,11 @@
+-git-rev-list(1)
+-===============
+-
+-NAME
+-----
+-git-rev-list - Lists commit objects in reverse chronological order
+-
+-
+-SYNOPSIS
+---------
+-[verse]
+-'git-rev-list' [ \--max-count=number ]
+-	     [ \--skip=number ]
+-	     [ \--max-age=timestamp ]
+-	     [ \--min-age=timestamp ]
+-	     [ \--sparse ]
+-	     [ \--no-merges ]
+-	     [ \--first-parent ]
+-	     [ \--remove-empty ]
+-	     [ \--full-history ]
+-	     [ \--not ]
+-	     [ \--all ]
+-	     [ \--stdin ]
+-	     [ \--quiet ]
+-	     [ \--topo-order ]
+-	     [ \--parents ]
+-	     [ \--timestamp ]
+-	     [ \--left-right ]
+-	     [ \--cherry-pick ]
+-	     [ \--encoding[=<encoding>] ]
+-	     [ \--(author|committer|grep)=<pattern> ]
+-	     [ \--regexp-ignore-case | \-i ]
+-	     [ \--extended-regexp | \-E ]
+-	     [ \--date={local|relative|default|iso|rfc|short} ]
+-	     [ [\--objects | \--objects-edge] [ \--unpacked ] ]
+-	     [ \--pretty | \--header ]
+-	     [ \--bisect ]
+-	     [ \--bisect-vars ]
+-	     [ \--bisect-all ]
+-	     [ \--merge ]
+-	     [ \--reverse ]
+-	     [ \--walk-reflogs ]
+-	     [ \--no-walk ] [ \--do-walk ]
+-	     <commit>... [ \-- <paths>... ]
+-
+-DESCRIPTION
+------------
+-
+-Lists commit objects in reverse chronological order starting at the
+-given commit(s), taking ancestry relationship into account.  This is
+-useful to produce human-readable log output.
+-
+-Commits which are stated with a preceding '{caret}' cause listing to
+-stop at that point. Their parents are implied. Thus the following
+-command:
+-
+------------------------------------------------------------------------
+-	$ git-rev-list foo bar ^baz
+------------------------------------------------------------------------
+-
+-means "list all the commits which are included in 'foo' and 'bar', but
+-not in 'baz'".
+-
+-A special notation "'<commit1>'..'<commit2>'" can be used as a
+-short-hand for "{caret}'<commit1>' '<commit2>'". For example, either of
+-the following may be used interchangeably:
+-
+------------------------------------------------------------------------
+-	$ git-rev-list origin..HEAD
+-	$ git-rev-list HEAD ^origin
+------------------------------------------------------------------------
+-
+-Another special notation is "'<commit1>'...'<commit2>'" which is useful
+-for merges.  The resulting set of commits is the symmetric difference
+-between the two operands.  The following two commands are equivalent:
+-
+------------------------------------------------------------------------
+-	$ git-rev-list A B --not $(git-merge-base --all A B)
+-	$ git-rev-list A...B
+------------------------------------------------------------------------
+-
+-linkgit:git-rev-list[1] is a very essential git program, since it
+-provides the ability to build and traverse commit ancestry graphs. For
+-this reason, it has a lot of different options that enables it to be
+-used by commands as different as linkgit:git-bisect[1] and
+-linkgit:git-repack[1].
+-
+-OPTIONS
+--------
+-
+ Commit Formatting
+ ~~~~~~~~~~~~~~~~~
+ 
++ifdef::git-rev-list[]
+ Using these options, linkgit:git-rev-list[1] will act similar to the
+ more specialized family of commit log tools: linkgit:git-log[1],
+ linkgit:git-show[1], and linkgit:git-whatchanged[1]
++endif::git-rev-list[]
+ 
+ include::pretty-options.txt[]
+ 
+@@ -283,8 +195,8 @@ limiting may be applied.
+ 
+ --quiet::
+ 
+-	Don't print anything to standard output.  This form of
+-	git-rev-list is primarily meant to allow the caller to
++	Don't print anything to standard output.  This form
++	is primarily meant to allow the caller to
+ 	test the exit status to see if a range of objects is fully
+ 	connected (or not).  It is faster than redirecting stdout
+ 	to /dev/null as the output does not have to be formatted.
+@@ -320,6 +232,7 @@ instead.  Under '\--pretty=oneline', the commit message is
+ prefixed with this information on the same line.
+ 
+ Cannot be combined with '\--reverse'.
++See also linkgit:git-reflog[1].
+ 
+ --merge::
+ 
+@@ -341,6 +254,7 @@ Use the '--sparse' flag to makes the command output all eligible commits
+ (still subject to count and age limitation), but apply merge
+ simplification nevertheless.
+ 
++ifdef::git-ref-list[]
+ --bisect::
+ 
+ Limit output to the one commit object which is roughly halfway between
+@@ -388,6 +302,7 @@ may not compile for example).
+ This option can be used along with `--bisect-vars`, in this case,
+ after all the sorted commit objects, there will be the same text as if
+ `--bisect-vars` had been used alone.
++endif::git-ref-list[]
+ 
+ --
+ 
+@@ -420,7 +335,7 @@ These options are mostly targeted for packing of git repositories.
+ --objects::
+ 
+ 	Print the object IDs of any object referenced by the listed
+-	commits.  'git-rev-list --objects foo ^bar' thus means "send me
++	commits.  '--objects foo ^bar' thus means "send me
+ 	all object IDs which I need to download if I have the commit
+ 	object 'bar', but not 'foo'".
+ 
+@@ -444,20 +359,3 @@ These options are mostly targeted for packing of git repositories.
+ --do-walk::
+ 
+ 	Overrides a previous --no-walk.
+-
+-
+-include::pretty-formats.txt[]
+-
+-
+-Author
+-------
+-Written by Linus Torvalds <torvalds@osdl.org>
+-
+-Documentation
+---------------
+-Documentation by David Greaves, Junio C Hamano, Jonas Fonseca
+-and the git-list <git@vger.kernel.org>.
+-
+-GIT
+----
+-Part of the linkgit:git[7] suite
+-- 
+1.5.4.rc3.4.g16335-dirty
