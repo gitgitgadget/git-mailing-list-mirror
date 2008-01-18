@@ -1,65 +1,73 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Fri, 18 Jan 2008 18:24:44 +0100
-Organization: At home
-Message-ID: <fmqncq$5sf$1@ger.gmane.org>
-References: <478E1FED.5010801@web.de> <200801180205.28742.robin.rosenberg.lists@dewire.com> <alpine.LFD.1.00.0801171716310.2957@woody.linux-foundation.org> <200801181042.37391.robin.rosenberg.lists@dewire.com> <20080118103036.GD14871@dpotapov.dyndns.org> <Pine.LNX.4.64.0801181631150.817@ds9.cixit.se>
+From: Sergio Callegari <sergio.callegari@gmail.com>
+Subject: git submodule when submodule is not a clone of a repository
+Date: Fri, 18 Jan 2008 17:25:20 +0000 (UTC)
+Message-ID: <loom.20080118T171433-93@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 18 18:26:02 2008
+X-From: git-owner@vger.kernel.org Fri Jan 18 18:26:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFuyZ-0003l2-5E
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 18:25:55 +0100
+	id 1JFuym-0003rd-KE
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 18:26:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758140AbYARRY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 12:24:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756965AbYARRY7
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 12:24:59 -0500
-Received: from main.gmane.org ([80.91.229.2]:48096 "EHLO ciao.gmane.org"
+	id S1756986AbYARRZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 12:25:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757011AbYARRZa
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 12:25:30 -0500
+Received: from main.gmane.org ([80.91.229.2]:51773 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754087AbYARRY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 12:24:58 -0500
+	id S1756965AbYARRZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 12:25:29 -0500
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JFuxa-0003Jn-AK
-	for git@vger.kernel.org; Fri, 18 Jan 2008 17:24:54 +0000
-Received: from abvf217.neoplus.adsl.tpnet.pl ([83.8.203.217])
+	id 1JFuy6-0003MP-KV
+	for git@vger.kernel.org; Fri, 18 Jan 2008 17:25:26 +0000
+Received: from mars-fw.arces.unibo.it ([137.204.143.2])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 Jan 2008 17:24:54 +0000
-Received: from jnareb by abvf217.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Fri, 18 Jan 2008 17:25:26 +0000
+Received: from sergio.callegari by mars-fw.arces.unibo.it with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 Jan 2008 17:24:54 +0000
+        for <git@vger.kernel.org>; Fri, 18 Jan 2008 17:25:26 +0000
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abvf217.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 137.204.143.2 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.11) Gecko/20071204 Ubuntu/7.10 (gutsy) Firefox/2.0.0.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71042>
 
-Peter Karlsson wrote:
+Hi,
 
-> Dmitry Potapov:
-> 
->> because Microsoft C library does not work with encoding that requires
->> more than two bytes per character.
-> 
-> Indeed. On Windows, you should avoid using UTF-8 and instead use UTF-16
-> everywhere. That usually works better, and if you run on an NT-based
-> system it will convert all the data to WinAPI to UTF-16 anyway.
+I am trying to use submodules to keep a project organized.
+I am using a workflow that is probably not the common one and I am running into
+problems.
 
-Errr... doesn't UTF-16 (as compared to USC-2) sometimes (for some exotic
-characters) require more than two bytes per character?
+Basically, I have a superproject TOP, with subproject A and B. The thing is that
+A and B are _not_ cloned from some existing repo.  They are two brand new
+repositories created with git init.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Basically, I am doing this so that in the superproject I commit states with
+specific versions of A and B (that are logically distinct things) that are known
+to work fine together. Also I am doing this since A and B are actually just
+started with TOP, but I have a provision of making them independently developed
+things, so I like to have them separated from start.
+
+The thing is that git-submodule makes very strong assumptions on A and B.
+Particularly, if there is no url defined from them some commands (notably
+update) will fail.
+
+So I need to make a fake url for the submodule (e.g. .) and a fake origin for it
+(again .)
+
+Would it make sense to have a git submodule update not try to fetch if there is
+no url defined, but still checkout the right commit for the submodule (rather
+than skipping the submodule at all) ?
+
+Sergio
