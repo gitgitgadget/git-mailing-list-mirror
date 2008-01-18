@@ -1,59 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/3] send-email: validate patches before sending
-	anything
-Date: Fri, 18 Jan 2008 14:12:01 -0500
-Message-ID: <20080118191201.GB21044@coredump.intra.peff.net>
-References: <20080118141638.GA14928@coredump.intra.peff.net> <20080118141948.GB19783@coredump.intra.peff.net> <76718490801180939v12112b5btd71dfb1fb5be5897@mail.gmail.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH] git-commit: add a prepare-commit-msg hook
+Date: Fri, 18 Jan 2008 20:46:49 +0100
+Message-ID: <47910229.90700@gnu.org>
+References: <4790BCED.4050207@gnu.org> <20080118190509.GA3411@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Adam Piatyszek <ediap@users.sourceforge.net>,
-	git@vger.kernel.org
-To: Jay Soffian <jaysoffian+git@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 20:12:45 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 18 20:47:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFwdn-00047b-KR
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 20:12:36 +0100
+	id 1JFxBV-0000Ky-84
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 20:47:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762364AbYARTMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 14:12:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761446AbYARTMF
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 14:12:05 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2661 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757317AbYARTMD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 14:12:03 -0500
-Received: (qmail 20134 invoked by uid 111); 18 Jan 2008 19:12:02 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 18 Jan 2008 14:12:02 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Jan 2008 14:12:01 -0500
-Content-Disposition: inline
-In-Reply-To: <76718490801180939v12112b5btd71dfb1fb5be5897@mail.gmail.com>
+	id S1760441AbYARTq4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 14:46:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761077AbYARTq4
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 14:46:56 -0500
+Received: from hu-out-0506.google.com ([72.14.214.224]:42736 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759741AbYARTqz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 14:46:55 -0500
+Received: by hu-out-0506.google.com with SMTP id 19so374438hue.21
+        for <git@vger.kernel.org>; Fri, 18 Jan 2008 11:46:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        bh=v0M/ONh0zghAyKFUhmbHk81x0sY3usn4YLxJ9yayv+0=;
+        b=ckkTqLS2xChjvRb1Hzx3xSfFRfq+Zu36x05D4AL+53qbMq7TRDBFJkY6U0OMVsk6exzfbV3qwTqHOZJoWEcxvb0w43Q74LFruV8TsQOj+jqCCO3q1CZva4gKyQeuDGBVxEQ4os47kpGT6zQiLZk/QvkHq0hIDe2CgGO3x0iQPwU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        b=vUKUEirRUyJPXs2LC8XPHZupDcAjin6LBtralzS2cyx8doff1WKytnobAB2Xzv0KExZCTbYuyJ1V9HrOHitGLQRWU7h4F5RQcUVsNmx/vGgEw8+gbS/HmZ39do0kbld8VmpfrqfRU9wMZBPD5hH/Ft83zSz74dGYeCCveK38Iyk=
+Received: by 10.86.36.11 with SMTP id j11mr3418170fgj.34.1200685610650;
+        Fri, 18 Jan 2008 11:46:50 -0800 (PST)
+Received: from scientist-2.lan ( [213.140.22.65])
+        by mx.google.com with ESMTPS id d4sm4646251fga.2.2008.01.18.11.46.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 18 Jan 2008 11:46:50 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
+In-Reply-To: <20080118190509.GA3411@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71054>
 
-On Fri, Jan 18, 2008 at 12:39:45PM -0500, Jay Soffian wrote:
-
-> > +                       return "patch contains line longer than 998 characters";
-> How about offering the line number. e.g.:
+Alex Riesen wrote:
+> Paolo Bonzini, Fri, Jan 18, 2008 15:51:25 +0100:
+>> +		if (!edit_message) {
+>> +			run_hook(index_file, "prepare-commit-msg", git_path(commit_editmsg));
+>> +		}
+>>  		launch_editor(git_path(commit_editmsg), NULL, env);
 > 
-> return "patch line number $. is longer than 998 characters";
-
-I think that is sensible (Junio, if you apply pre-1.5.4, can you mark it
-up?  Otherwise I will put it in the post-1.5.4 resend).
-
-> > +test_expect_success 'no patch was sent' '
+> "preedit-new-commit-msg", perhaps. A "prepare-" suggests it is called
+> every time, even if no editor is specified, which it is not.
 > 
-> Shouldn't that be "no patches were sent" to match the perl output?
+> And it really does look like a template...
 
-It's purely an informational message for the test script output, so it
-doesn't matter.
+It is, but quite a powerful one. :-)  template-commit-msg?
 
--Peff
+Paolo
