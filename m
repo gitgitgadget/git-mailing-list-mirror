@@ -1,69 +1,92 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: What's not in 'master', and likely not to be until 1.5.4
-Date: Fri, 18 Jan 2008 14:04:59 +0100
-Message-ID: <72B49AA2-B82F-448D-8401-BE1D03C9DCA9@zib.de>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com> <1200022189-2400-2-git-send-email-mlevedahl@gmail.com> <7v1w8o4ws0.fsf@gitster.siamese.dyndns.org> <30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com> <7v63xzzszp.fsf@gitster.siamese.dyndns.org> <478855B5.9070600@gmail.com> <7vbq7ry405.fsf@gitster.siamese.dyndns.org> <47885B2C.8020809@gmail.com> <7v7iify2wm.fsf@gitster.siamese.dyndns.org> <4788BFA8.2030508@gmail.com> <7vwsqeubj8.fsf@gitster.siamese.dyndns.org> <47891658.3090604@gmail.com> <7vbq7qssd7.fsf@gitster.siamese.dyndns.org> <47893E1A.5020702@gmail.com> <7v4pdislrf.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7vir1xmazm.fsf@gitster.siamese.dyndns.org> <7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org> 
- <7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org> <47908CAF.90101@viscovery.net> <7vsl0ve50f.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Jan 18 14:06:23 2008
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: errors in git pull
+Date: Fri, 18 Jan 2008 13:07:01 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801181301590.5731@racer.site>
+References: <d0383f90801180049p1599dd6fmfabcdcad7d9d3275@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Ian Brown <ianbrn@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 18 14:07:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFquo-00083f-OU
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 14:05:47 +0100
+	id 1JFqwd-0000jg-OW
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 14:07:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756286AbYARNFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 08:05:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756509AbYARNFR
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 08:05:17 -0500
-Received: from mailer.zib.de ([130.73.108.11]:57942 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754818AbYARNFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 08:05:16 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0ID40lO022540;
-	Fri, 18 Jan 2008 14:04:45 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0ID3tr7012675
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 18 Jan 2008 14:03:55 +0100 (MET)
-In-Reply-To: <7vsl0ve50f.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.753)
+	id S1757166AbYARNHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 08:07:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757023AbYARNHK
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 08:07:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37585 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751361AbYARNHI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 08:07:08 -0500
+Received: (qmail invoked by alias); 18 Jan 2008 13:07:06 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp039) with SMTP; 18 Jan 2008 14:07:06 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+kUPkwIQqkyEaPgiYzbOKyM5Cgo9JP/NoemRqNzM
+	pkvWEUXbrXqjEa
+X-X-Sender: gene099@racer.site
+In-Reply-To: <d0383f90801180049p1599dd6fmfabcdcad7d9d3275@mail.gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71014>
 
+Hi,
 
-On Jan 18, 2008, at 12:40 PM, Junio C Hamano wrote:
+On Fri, 18 Jan 2008, Ian Brown wrote:
 
-> Johannes Sixt <j.sixt@viscovery.net> writes:
->
->> BTW, how would you like to have a 40+ patch series presented that
->> implements the port to MinGW? Should I send to the ML despite its  
->> volume?
->
-> My gut feeling is that you did your usual great job separating
-> them into logical chunks and it will be a pleasure to review on
-> the usual channel, just like the trickle you did earlier.
->
->> The current state of the series is available here:
->> http://repo.or.cz/w/git/mingw/j6t.git?a=shortlog;h=upstream
->
-> Let me take a look sometime (but I cannot even say when right
-> now).  I might change my mind about the above.
+>  I am working agains a linux kernel net git repository.
+> 
+> It occurred to me more than once that when trying to
+> git-pull a repository I get the following errors; there errors appear
+> also after I am running
+> "git-reset --hard".
+> Any idea what can it be ?
+> I must add that I did not made changes in my local copy of the repository.
+> 
+> the command I am running is:
+> 
+> git-pull git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.25.git
 
-I have one or two patches that could be added, most notably
-the gpg/CRLF patch.  Maybe we should discuss them before the
-whole series is proposed for git.git?  Maybe not; then I'd
-send my patches to the list after Junio applied your series.
+To simplify, you can
 
-	Steffen
+	git remote add origin git://<...>
+
+so you can call "git pull" and it will do the same.
+
+> CONFLICT (content): Merge conflict in Documentation/feature-removal-schedule.txt
+
+These are merge conflicts.  Git thinks you have changed something.
+
+Now, this might be true, but it also might be the case that the tree you 
+are pulling was rebased, i.e. rewound to a certain point in commit 
+history, and committed to _differently_.
+
+As a consequence, your state _before_ pulling looks as if _you_ changed 
+something.  Since these changes are different than the now-current 
+changes, but touch the same code, they produce conflicts.
+
+You might be lucky with "git pull --rebase" (needs a pretty recent git), 
+but if you are just tracking a certain tree and not committing yourself, I 
+suggest something like this:
+
+git fetch origin && git reset --hard origin/master
+
+Of course, you _really_ have to make sure that you have no local changes 
+of your own with this reset call, since it will just undo them (without 
+saving them first).
+
+If you _do_ have local changes, you might want to do a "git stash" before 
+the reset, and a "git stash apply" after it (again, needs a pretty recent 
+git).
+
+Hth,
+Dscho
