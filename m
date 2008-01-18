@@ -1,68 +1,69 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: fast-import.c: zlib_compression_level vs pack_compression_level
-Date: Fri, 18 Jan 2008 14:04:30 +0100
-Message-ID: <e5bfff550801180504v17df7976x59d12f210efe583e@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: What's not in 'master', and likely not to be until 1.5.4
+Date: Fri, 18 Jan 2008 14:04:59 +0100
+Message-ID: <72B49AA2-B82F-448D-8401-BE1D03C9DCA9@zib.de>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com> <1200022189-2400-2-git-send-email-mlevedahl@gmail.com> <7v1w8o4ws0.fsf@gitster.siamese.dyndns.org> <30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com> <7v63xzzszp.fsf@gitster.siamese.dyndns.org> <478855B5.9070600@gmail.com> <7vbq7ry405.fsf@gitster.siamese.dyndns.org> <47885B2C.8020809@gmail.com> <7v7iify2wm.fsf@gitster.siamese.dyndns.org> <4788BFA8.2030508@gmail.com> <7vwsqeubj8.fsf@gitster.siamese.dyndns.org> <47891658.3090604@gmail.com> <7vbq7qssd7.fsf@gitster.siamese.dyndns.org> <47893E1A.5020702@gmail.com> <7v4pdislrf.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7vir1xmazm.fsf@gitster.siamese.dyndns.org> <7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org> 
+ <7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org> <47908CAF.90101@viscovery.net> <7vsl0ve50f.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 14:05:45 2008
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Jan 18 14:06:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFqu6-00083f-4X
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 14:05:06 +0100
+	id 1JFquo-00083f-OU
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 14:05:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759911AbYARNEe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 08:04:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760004AbYARNEe
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 08:04:34 -0500
-Received: from py-out-1112.google.com ([64.233.166.182]:26758 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759002AbYARNEd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 08:04:33 -0500
-Received: by py-out-1112.google.com with SMTP id u52so1524047pyb.10
-        for <git@vger.kernel.org>; Fri, 18 Jan 2008 05:04:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=k56vrQzHdxapZDiL/vtQgiQdoY06JZOx/+3qh2m+RaQ=;
-        b=QsCoSnObQUWaL9vmo2lLnIDkJPPwW9I6dQqcprSTRb3l84FiRAFVC6+vMBC02mcpknVF1Qih3oZafOwO+gfiZZXe7X8teAVg+QFRidDM6iIgQlgawbiquSFrUuScyOCJ09aetpWwNRAuyhF4HE6UMd5gLeRY74PVtdCvcrmaFiI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=rysIDxvj0yoZtA2nPppLcMYtaEuLuJWvuFTWWprdXH19F21UQQajPjO4QZKhVHNkpuRXEznGfsdAFG5cDc/4x0Qodi33h5bIBHfruaECm34S2NDL0pRu5hGny1b5h9rcTAEBuldWsUkpjCFXU6fChHp3nUjRZr8pWC3NCfGrIfM=
-Received: by 10.141.145.11 with SMTP id x11mr2344607rvn.230.1200661470647;
-        Fri, 18 Jan 2008 05:04:30 -0800 (PST)
-Received: by 10.141.68.21 with HTTP; Fri, 18 Jan 2008 05:04:30 -0800 (PST)
-Content-Disposition: inline
+	id S1756286AbYARNFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 08:05:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756509AbYARNFR
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 08:05:17 -0500
+Received: from mailer.zib.de ([130.73.108.11]:57942 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754818AbYARNFQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 08:05:16 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0ID40lO022540;
+	Fri, 18 Jan 2008 14:04:45 +0100 (CET)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0ID3tr7012675
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Fri, 18 Jan 2008 14:03:55 +0100 (MET)
+In-Reply-To: <7vsl0ve50f.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71013>
 
-Just a small thing I would like to bring to your attention before 1.5.4 is out
 
-During my work on compression/decompression cleanup I have found that
-in fast-import.c the zlib_compression_level is used, while in
-builtin-pack-objects is used pack_compression_level instead.
+On Jan 18, 2008, at 12:40 PM, Junio C Hamano wrote:
 
-This 2 flags corresponds, more or less directly, (some cleanup is
-needed also in that area, but this is another story) to:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+>
+>> BTW, how would you like to have a 40+ patch series presented that
+>> implements the port to MinGW? Should I send to the ML despite its  
+>> volume?
+>
+> My gut feeling is that you did your usual great job separating
+> them into logical chunks and it will be a pleasure to review on
+> the usual channel, just like the trickle you did earlier.
+>
+>> The current state of the series is available here:
+>> http://repo.or.cz/w/git/mingw/j6t.git?a=shortlog;h=upstream
+>
+> Let me take a look sometime (but I cannot even say when right
+> now).  I might change my mind about the above.
 
-core.loosecompression
+I have one or two patches that could be added, most notably
+the gpg/CRLF patch.  Maybe we should discuss them before the
+whole series is proposed for git.git?  Maybe not; then I'd
+send my patches to the list after Junio applied your series.
 
-and
-
-pack.compression
-
-config settings.
-
-My question is, does fast-import should use pack.compression instead
-of core.loosecompression?
-
-Thanks
-Marco
+	Steffen
