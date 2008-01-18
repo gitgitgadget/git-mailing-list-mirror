@@ -1,89 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Do not show "diff --git" metainfo with --no-prefix
-Date: Fri, 18 Jan 2008 00:22:10 -0800
-Message-ID: <7v63xrilvx.fsf@gitster.siamese.dyndns.org>
-References: <c0f2d4110801150559x155ffabaj6bea52715522a070@mail.gmail.com>
-	<alpine.DEB.1.00.0801151444180.5289@eeepc-johanness>
-	<c0f2d4110801150758t68714570y83e1e74acbb67325@mail.gmail.com>
-	<alpine.LNX.1.00.0801151728120.13593@iabervon.org>
-	<7vhched3kw.fsf@gitster.siamese.dyndns.org>
-	<7v4pded1rk.fsf_-_@gitster.siamese.dyndns.org>
-	<7v7iiabjyh.fsf_-_@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801151902080.2806@woody.linux-foundation.org>
-	<alpine.LFD.1.00.0801151919440.2806@woody.linux-foundation.org>
-	<alpine.LNX.1.00.0801152256480.13593@iabervon.org>
-	<alpine.LFD.1.00.0801152017490.2806@woody.linux-foundation.org>
-	<7v1w8hploy.fsf@gitster.siamese.dyndns.org>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Fri, 18 Jan 2008 09:29:36 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0801180902470.817@ds9.cixit.se>
+References: <478E1FED.5010801@web.de> <m33asxn2gt.fsf@roke.D-201>
+ <65026F2B-5CE8-4238-A9AB-D3545D336B41@sb.org> <200801162251.54219.jnareb@gmail.com>
+ <1574A90A-8C45-46AD-9402-34AE6F582B3F@sb.org>
+ <alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org>
+ <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org>
+ <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org>
+ <BA518A23-FBF8-49BB-BEFB-D9A6BA1E302C@simplicidade.org>
+ <alpine.LFD.1.00.0801161615330.2806@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Chris Ortman <chrisortman@gmail.com>,
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pedro Melo <melo@simplicidade.org>, Kevin Ballard <kevin@sb.org>,
+	Jakub Narebski <jnareb@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+	Mark Junker <mjscod@web.de>, git@vger.kernel.org
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jan 18 09:23:11 2008
+X-From: git-owner@vger.kernel.org Fri Jan 18 09:30:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFmVJ-00053v-SM
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 09:23:10 +0100
+	id 1JFmcM-0006y2-8D
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 09:30:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753292AbYARIWW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 03:22:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753999AbYARIWW
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 03:22:22 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54757 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751607AbYARIWU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 03:22:20 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 1819043E7;
-	Fri, 18 Jan 2008 03:22:19 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4570B43E6;
-	Fri, 18 Jan 2008 03:22:13 -0500 (EST)
-In-Reply-To: <7v1w8hploy.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 16 Jan 2008 12:19:57 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754119AbYARI34 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jan 2008 03:29:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753754AbYARI34
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 03:29:56 -0500
+Received: from ds9.cixit.se ([193.15.169.228]:35012 "EHLO ds9.cixit.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753406AbYARI3z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 03:29:55 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m0I8TbZZ005718
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 18 Jan 2008 09:29:37 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id m0I8Tabt005713;
+	Fri, 18 Jan 2008 09:29:36 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <alpine.LFD.1.00.0801161615330.2806@woody.linux-foundation.org>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Fri, 18 Jan 2008 09:29:38 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70976>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Linus Torvalds:
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
->
->> That's why tying "--git" together with any prefix handling is wrong: 
->> because it's a totally different issue. It's true that "git-apply" right 
->> now doesn't understand these things, but assuming we want to teach 
->> git-apply to apply to subprojects eventually (we do, don't we?) we'll 
->> eventually have to teach it.
->
-> That's all correct but
->
->  * currently diff does not recurse, nor apply does not apply
->    recursively;
->
->  * "git diff" that comes with 1.5.4, if we do not do anything,
->    can produce a diff that will be rejected by the stricter
->    check "git apply" has when used with --no-prefix and friends;
->
->  * submodule aware versions of "git diff" can be told to add
->    "--mark-as-git-diff" when it passes "--src-prefix=a/git-gui"
->    and "--dst-prefix=b/git-gui" when it recurses internally, to
->    defeat what my proposed patch does.
->
-> So I think it makes more sense to mark output as a non-git diff
-> when custom prefix is used in the version we are going to ship
-> as part of 1.5.4.
+> The difference I see between us is that when I tell you that this is
+> exactly the same thing as your file *contents*,
 
-Do you still have objections to the patch?
+This is the same issue as the CRLF issue I posted on earlier, and it
+all stems from that git also sees file names as a stream of bytes, not
+a string of characters, just as it does text.
 
-I do not think it matters _too much_, but I think starting
-stricter and then making things more relaxed later is easier
-than the other way around.
+> An OS that silently changes the contents of your files is *crap*.
+> Get it?
+
+A program that silently ignores the conventions of the platform it runs
+on is *crap*, no matter if the conventions are not the same as for
+other platforms.
+
+> An OS that silently changes the contents of your directories is *crap=
+*.
+> Get it now?
+
+A program that silently ignores the conventions of the file system it
+tries to store its files on is *crap* :-)
+
+
+In my perfect world, file names would be stored as a string of characte=
+rs,
+so if I save a file with an =E5 in it, that =E5 would be preserved no
+matter if I run Linux on ext2 with my locale is set to latin-1 (which
+stores it as byte 0xE5), on Windows with NTFS (which stores it as the
+UTF-16 code 0x00E5), on Windows/DOS with FAT (which stores it as the
+byte 0x86) or on Mac OS X which stores it as decomposed UTF-8 (whose
+byte sequence I don't know at the top of my head). If that was just
+stored as U+00E5 in whatever encoding in the filename index, the local
+implementation of git can just check it out in the form needed.
+
+--=20
+\\// Peter - http://www.softwolves.pp.se/
