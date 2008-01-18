@@ -1,36 +1,36 @@
 From: Miklos Vajna <vmiklos@frugalware.org>
 Subject: [PATCH] Include rev-list options in git-log manpage.
-Date: Fri, 18 Jan 2008 23:50:27 +0100
-Message-ID: <20080118225026.GX29972@genesis.frugalware.org>
-References: <20080117214425.GP29972@genesis.frugalware.org> <7vejcfiop4.fsf@gitster.siamese.dyndns.org> <20080118161714.GS29972@genesis.frugalware.org> <4790D5B7.2000508@viscovery.net> <20080118171827.GV29972@genesis.frugalware.org> <7v8x2mewtt.fsf@gitster.siamese.dyndns.org>
+Date: Fri, 18 Jan 2008 23:58:57 +0100
+Message-ID: <20080118225857.GY29972@genesis.frugalware.org>
+References: <20080117214425.GP29972@genesis.frugalware.org> <7vejcfiop4.fsf@gitster.siamese.dyndns.org> <20080118161714.GS29972@genesis.frugalware.org> <4790D5B7.2000508@viscovery.net> <20080118171827.GV29972@genesis.frugalware.org> <7v8x2mewtt.fsf@gitster.siamese.dyndns.org> <20080118225026.GX29972@genesis.frugalware.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 23:51:22 2008
+X-From: git-owner@vger.kernel.org Sat Jan 19 00:00:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JG03T-0001B7-N4
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 23:51:20 +0100
+	id 1JG0Bm-0003pQ-Ma
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 23:59:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762664AbYARWut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 17:50:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761186AbYARWut
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 17:50:49 -0500
-Received: from mx2.mail.elte.hu ([157.181.151.9]:59155 "EHLO mx2.mail.elte.hu"
+	id S932320AbYARW7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 17:59:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932305AbYARW7U
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 17:59:20 -0500
+Received: from mx3.mail.elte.hu ([157.181.1.138]:57167 "EHLO mx3.mail.elte.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760838AbYARWur (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 17:50:47 -0500
+	id S932298AbYARW7R (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 17:59:17 -0500
 Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1JG02n-0007vF-Bd
-	from <vmiklos@frugalware.org>; Fri, 18 Jan 2008 23:50:45 +0100
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1JG0B1-0004Vc-DQ
+	from <vmiklos@frugalware.org>; Fri, 18 Jan 2008 23:59:15 +0100
 Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 13DB01190216; Fri, 18 Jan 2008 23:50:27 +0100 (CET)
+	id 2D5561190216; Fri, 18 Jan 2008 23:58:57 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <7v8x2mewtt.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <20080118225026.GX29972@genesis.frugalware.org>
 User-Agent: Mutt/1.5.16 (2007-06-09)
 X-ELTE-VirusStatus: clean
 X-ELTE-SpamScore: -1.5
@@ -44,7 +44,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71073>
 
 Replace the "This manual page describes only the most frequently used options."
 text with the list of rev-list options in git-log manpage. (The git-diff-tree
@@ -56,18 +56,15 @@ git-rev-list.txt and git-log.txt.
 Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 ---
 
-On Fri, Jan 18, 2008 at 11:51:42AM -0800, Junio C Hamano <gitster@pobox.com> wrote:
-> I do not like these.  What you are really trying to express is
-> "this section makes sense only in rev-list documentation", not
-> "among the current set of documentation, the one this section
-> does not make sense in is git-log".  We might end up including
-> this in some other documents.
+On Fri, Jan 18, 2008 at 11:50:27PM +0100, Miklos Vajna <vmiklos@frugalware.org> wrote:
+> > IOW, they should rather be "ifdef::git-rev-list[]" instead,
+> > (of course you have to define that token yourself if there isn't
+> > one already).
 >
-> IOW, they should rather be "ifdef::git-rev-list[]" instead,
-> (of course you have to define that token yourself if there isn't
-> one already).
+> Fixed.
 
-Fixed.
+My bad, the previous version introduced two typos (ref-list instead of
+rev-list). This one should be OK.
 
  Documentation/git-log.txt                          |   21 +-
  Documentation/git-rev-list.txt                     |  359 +-------------------
@@ -499,7 +496,7 @@ diff --git a/Documentation/git-rev-list.txt b/Documentation/rev-list-options.txt
 similarity index 76%
 copy from Documentation/git-rev-list.txt
 copy to Documentation/rev-list-options.txt
-index db42cd8..fc0591d 100644
+index db42cd8..a8138e2 100644
 --- a/Documentation/git-rev-list.txt
 +++ b/Documentation/rev-list-options.txt
 @@ -1,99 +1,11 @@
@@ -627,7 +624,7 @@ index db42cd8..fc0591d 100644
  (still subject to count and age limitation), but apply merge
  simplification nevertheless.
  
-+ifdef::git-ref-list[]
++ifdef::git-rev-list[]
  --bisect::
  
  Limit output to the one commit object which is roughly halfway between
@@ -635,7 +632,7 @@ index db42cd8..fc0591d 100644
  This option can be used along with `--bisect-vars`, in this case,
  after all the sorted commit objects, there will be the same text as if
  `--bisect-vars` had been used alone.
-+endif::git-ref-list[]
++endif::git-rev-list[]
  
  --
  
