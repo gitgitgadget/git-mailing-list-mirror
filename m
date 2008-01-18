@@ -1,67 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's not in 'master' but should be
-Date: Fri, 18 Jan 2008 02:24:57 -0800
-Message-ID: <7vwsq7fn2e.fsf@gitster.siamese.dyndns.org>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
-	<4788BFA8.2030508@gmail.com>
-	<7vwsqeubj8.fsf@gitster.siamese.dyndns.org>
-	<47891658.3090604@gmail.com>
-	<7vbq7qssd7.fsf@gitster.siamese.dyndns.org>
-	<47893E1A.5020702@gmail.com>
-	<7v4pdislrf.fsf@gitster.siamese.dyndns.org>
-	<alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de>
-	<7vir1xmazm.fsf@gitster.siamese.dyndns.org>
-	<7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org>
-	<8c5c35580801180215s2c980b4kbc66fbb05778ff67@mail.gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Fri, 18 Jan 2008 13:30:36 +0300
+Message-ID: <20080118103036.GD14871@dpotapov.dyndns.org>
+References: <478E1FED.5010801@web.de> <200801180205.28742.robin.rosenberg.lists@dewire.com> <alpine.LFD.1.00.0801171716310.2957@woody.linux-foundation.org> <200801181042.37391.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 11:25:48 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Pedro Melo <melo@simplicidade.org>,
+	Mark Junker <mjscod@web.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Jan 18 11:31:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFoPw-0005xF-LC
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 11:25:45 +0100
+	id 1JFoVe-0007wm-UT
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 11:31:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756253AbYARKZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 05:25:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756272AbYARKZL
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 05:25:11 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61293 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756253AbYARKZJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 05:25:09 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D7E08639C;
-	Fri, 18 Jan 2008 05:25:07 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 42C5E639A;
-	Fri, 18 Jan 2008 05:25:04 -0500 (EST)
-In-Reply-To: <8c5c35580801180215s2c980b4kbc66fbb05778ff67@mail.gmail.com>
-	(Lars Hjemli's message of "Fri, 18 Jan 2008 11:15:00 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757343AbYARKao convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jan 2008 05:30:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756404AbYARKao
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 05:30:44 -0500
+Received: from smtp03.mtu.ru ([62.5.255.50]:59032 "EHLO smtp03.mtu.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756427AbYARKan (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 05:30:43 -0500
+Received: from smtp03.mtu.ru (localhost.mtu.ru [127.0.0.1])
+	by smtp03.mtu.ru (Postfix) with ESMTP id 822F41870BD7;
+	Fri, 18 Jan 2008 13:30:39 +0300 (MSK)
+Received: from dpotapov.dyndns.org (ppp85-141-191-154.pppoe.mtu-net.ru [85.141.191.154])
+	by smtp03.mtu.ru (Postfix) with ESMTP id EE8201870B4B;
+	Fri, 18 Jan 2008 13:30:36 +0300 (MSK)
+Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
+	(envelope-from <dpotapov@gmail.com>)
+	id 1JFoUe-0005Pz-P7; Fri, 18 Jan 2008 13:30:36 +0300
+Content-Disposition: inline
+In-Reply-To: <200801181042.37391.robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-DCC-STREAM-Metrics: smtp03.mtu.ru 10001; Body=0 Fuz1=0 Fuz2=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70992>
 
-"Lars Hjemli" <hjemli@gmail.com> writes:
+On Fri, Jan 18, 2008 at 10:42:36AM +0100, Robin Rosenberg wrote:
+>=20
+> I just had to investigate this a bit, so on a Vista machine I started=
+ a cmd
+> prompt and typed mode con: cp select=3D65001, selected the lucida fon=
+t and then
+> echo =E5 >x.txt and opened it in notepad and it was UTF-8 encoded.=20
 
-> On Jan 18, 2008 10:41 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> It seems that for the past few days, people were having too much
->> fun bashing how broken MacOS X is, and the real work has stalled
->> in the meantime.  Well, not really stalled but they certainly
->> made the patches and discussions harder to find in the list
->> archive.
->
-> Here's a patch which might have been lost in the noise:
->
-> http://thread.gmane.org/gmane.comp.version-control.git/70463
+Yes, but have you tried to run any batch file? At least, on WinXP
+all batch files silently stopped working after choosing 65001, and
+I don't know what else gets broken, because Microsoft C library
+does not work with encoding that requires more than two bytes per
+character.
 
-Not really.  It came late into rc cycle without fixing any
-breakage.  Not 1.5.4 material.
+> So there might
+> be some hope after all. I don't know how to change the encoding for n=
+on-console
+> apps. I leave that as an excercise for the list.
+
+It is not difficult to change the current encoding in any Windows
+application, the real issue is that neither Microsoft C library nor
+Cygwin library does not work correctly with UTF-8. There is a patch
+for Cygwin though...
+
+Dmitry
