@@ -1,93 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-commit: add a prepare-commit-msg hook
-Date: Fri, 18 Jan 2008 14:05:46 -0800
-Message-ID: <7vbq7ibxhh.fsf@gitster.siamese.dyndns.org>
-References: <4790BCED.4050207@gnu.org>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: What's not in 'master', and likely not to be until 1.5.4
+Date: Fri, 18 Jan 2008 23:07:35 +0100
+Message-ID: <20080118220735.B7F4B49B15@dx.sixt.local>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com> <1200022189-2400-2-git-send-email-mlevedahl@gmail.com> <7v1w8o4ws0.fsf@gitster.siamese.dyndns.org> <30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com> <7v63xzzszp.fsf@gitster.siamese.dyndns.org> <478855B5.9070600@gmail.com> <7vbq7ry405.fsf@gitster.siamese.dyndns.org> <47885B2C.8020809@gmail.com> <7v7iify2wm.fsf@gitster.siamese.dyndns.org> <4788BFA8.2030508@gmail.com> <7vwsqeubj8.fsf@gitster.siamese.dyndns.org> <47891658.3090604@gmail.com> <7vbq7qssd7.fsf@gitster.siamese.dyndns.org> <47893E1A.5020702@gmail.com> <7v4pdislrf.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7vir1xmazm.fsf@gitster.siamese.dyndns.org> <7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org> 
+ <7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org> <47908CAF.90101@viscovery.net> <alpine.LSU.1.00.0801181948060.5731@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Jan 18 23:06:42 2008
+Content-Transfer-Encoding: 7Bit
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 18 23:08:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFzMC-0001uk-9Z
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 23:06:36 +0100
+	id 1JFzNi-0002Xr-8k
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 23:08:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760875AbYARWGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 17:06:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760824AbYARWGF
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 17:06:05 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42664 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760094AbYARWGE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 17:06:04 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 26847556F;
-	Fri, 18 Jan 2008 17:06:01 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 88FC1556D;
-	Fri, 18 Jan 2008 17:05:58 -0500 (EST)
-In-Reply-To: <4790BCED.4050207@gnu.org> (Paolo Bonzini's message of "Fri, 18
-	Jan 2008 15:51:25 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1764912AbYARWHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 17:07:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764097AbYARWHl
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 17:07:41 -0500
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:37059 "EHLO
+	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763512AbYARWHi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 17:07:38 -0500
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id 0469D9839E;
+	Fri, 18 Jan 2008 23:07:36 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id B7F4B49B15;
+	Fri, 18 Jan 2008 23:07:35 +0100 (CET)
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71070>
 
-I do not particularly like hooks that act before or after an
-operation is initiated locally, act solely on local data.  This
-is maybe because I still consider git tools building blocks
-suitable for higher level scripting more than other people do.
+[Don't have Cc: in KNode. oh well...]
 
-There are five valid reasons you might want a hook to a git
-operation:
+Johannes Schindelin wrote:
+> On Fri, 18 Jan 2008, Johannes Sixt wrote:
+>> BTW, how would you like to have a 40+ patch series presented that
+>> implements the port to MinGW? Should I send to the ML despite its volume?
+>> (Of course not before 1.5.4 is released.)
+>> 
+>> The current state of the series is available here:
+>> http://repo.or.cz/w/git/mingw/j6t.git?a=shortlog;h=upstream
+> 
+> Comments from reading the patches briefly (since there are 42 patches, it
+> needs quite some time to even do it briefly):
 
- (1) A hook that countermands the normal decision made by the
-     underlying command.  Examples of this class are the update
-     hook and the pre-commit hook.
+Thanks a lot!
 
- (2) A hook that operates on data generated after the command
-     starts to run.  The ability to munge the commit log message
-     by the commit-msg hook is an example.
+I agree with everything I didn't quote from your message.
 
- (3) A hook that operates on the remote end of the connection
-     that you may not otherwise have access to other than over
-     the git protocol.  An example is the post-update hook.
+> - Possibly some of these commits could be folded back into
+>   f90524e(Add target architecture MinGW):
+> 
+>   96a27f1(MinGW: Implement gettimeofday()),
+>   2e05f891(Implement a rudimentary poll() emulation for Windows),
+>   142bda0(Fake implementions of getpwuid(), getuid(), and getpwnam() for
+> Windows),
+>   e799caf(Implement setitimer() and sigaction()),
+>   075fee7(Implement a wrapper of execve that can invoke shell scripts),
+>   495f0af(Work around misbehaved rename() on Windows),
+>   34cf7fd(Implement a pipe() replacement whose ends are not inherited to
+> children),
+>   4504323(Implement start_command() for Windows),
+>   b8e84a6(Implement a work-around for a misbehaved vsnprintf on Windows),
+>   08bbcb4(Windows: always chmod(, 0666) before unlink()),
+>   f6bbf12(Windows: Implement a wrapper of the open() function),
+>   56cedf3(Windows: Fix PRIuMAX definition),
+>   7458a97(Windows: Implement wrappers for gethostbyname(), socket(), and
+> connect()),
+>   ef25947(Windows: Fix ntohl() related warnings about printf formatting),
+>   b9db7ad(Windows: Implement a custom spawnve()), and
+>   47dacb3(compat/pread.c: Add foward decl to fix warning)
 
- (4) A hook that runs under a lock that is acquired by the
-     command for mutual exclusion.  Currently there is no
-     example, but if we allowed the update hook to modify the
-     commit that was pushed through send-pack => receive-pack
-     pair, which was discussed on the list a while ago, it would
-     be a good example of this.
+This would become a gigantic patch, which I really dislike. It's much easier
+to follow (and bisect) if things appear in smaller pieces.
 
- (5) A hook that is run differently depending on the outcome of
-     the command.  The post-merge hook conditionally run by
-     git-pull is an example of this (it is not even run if no
-     merge takes place).  Another example is the post-checkout
-     hook that gets information that is otherwise harder to get
-     (namely, if it was a branch checkout or file checkout --
-     you can figure it out by examining the command line but
-     that already is part of the processing git-checkout does
-     anyway, so no need to force duplicating that code in the
-     userland).
+> - d6596ed(gitk: Disable msgfmt on MinGW) and
+>   004fb4b(Fix renaming .gitk-new to .gitk on Windows if there is already a
+> .gitk)
+>   are gitk patches.
+>   Further, I think that d6596ed would be better done as an automatic
+>   detection of msgfmt's presence; on my Eee PC, there is no msgfmt
+>   either...
 
-You cannot do an equivalent operation from outside the git
-command for the above classes of operations.  You need hooks
-for them.
+Let's do that later.
 
-On the other hand, if you want to always cause an action before
-running a git opeation locally, you do not have to have a hook.
-You can just prepare such a message based on GNU ChangeLog and
-then run git-commit with -F, both inside your wrapper.
+> - 20fd16e(Windows: Use a customized struct stat that also has the
+> st_blocks member) should be folded into
+>   6f97065(Add a new lstat and fstat implementation based on Win32 API)
+>   (with a comment that you customized the struct stat, too)
+> 
+>   But then, without 20fd16e, git does not compile, so again I would rather
+>   fold that back into the MinGW commit.
 
-Of course there can be a very valid exception to the above
-policy.  If it is common enough so that the policy means
-effectively everybody has to reinvent the same wrapper.  But for
-this particular case I still do not see that is the case.
+The custom lstat() implementation cannot come after the custom struct stat
+because we can't call Windows's stat() with a custom struct stat. But I
+also don't want the custom lstat() in the code from the beginning because
+it's merely an optimization.
+
+> - in git.git, the onelines are not terminated by "."
+
+You mean commit messages?
+
+> - I'd prefer f90524e(Add target architecture MinGW) to come last.
+>   Alternatively, you could cut out the Makefile change so that the series
+>   is still bisectable: MinGW will just not be supported until the very
+>   end.
+
+I strongly disagree. The series is completely bisectable on *nix. But if the
+Makefile change comes last, it becomes difficult to bisect on MinGW.
+
+> $ git grep __MINGW j6t/upstream
+> 
+> comes up with 26 hits.
+> 
+> The first of them: cache.h:381, function is_absolute_path().  That just
+> cries out loud to be "#ifdef DOS_STYLE_PATHS" instead of "#ifdef
+> __MINGW32__".
+> 
+> I guess there should also be -DHAS_NO_FORK_BUT_THREADS -DHAS_TMP_AND_TEMP
+> -DHAS_WINSOCK2, but most of them look like -DDOS_STYLE_PATHS to me.
+
+Doesn't this go too far? How many systems are there where not all of them
+would be set at the same time?
+
+-- Hannes
