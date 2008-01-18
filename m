@@ -1,87 +1,73 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] git-commit: add a prepare-commit-msg hook
-Date: Fri, 18 Jan 2008 22:08:25 +0100
-Message-ID: <20080118210825.GB3411@steel.home>
-References: <4790BCED.4050207@gnu.org> <20080118190509.GA3411@steel.home> <47910229.90700@gnu.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Merging using only fast-forward
+Date: Fri, 18 Jan 2008 13:25:34 -0800
+Message-ID: <7vodbibzch.fsf@gitster.siamese.dyndns.org>
+References: <loom.20080116T151930-575@post.gmane.org>
+	<863asxivlj.fsf@blue.stonehenge.com>
+	<7vwsq9o6ls.fsf@gitster.siamese.dyndns.org>
+	<402c10cd0801162253n6ab19f51y53d0baa16319adaa@mail.gmail.com>
+	<402c10cd0801172258p9a1a97bt682fa012fcebd13c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Jan 18 22:08:59 2008
+Cc: git@vger.kernel.org
+To: "Sverre Hvammen Johansen" <hvammen@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 18 22:26:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFySR-0006sD-Ap
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 22:08:59 +0100
+	id 1JFyjB-0004aq-Nk
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 22:26:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762550AbYARVIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 16:08:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760066AbYARVIa
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 16:08:30 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:32081 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759875AbYARVI3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 16:08:29 -0500
-X-RZG-CLASS-ID: mo07
-X-RZG-AUTH: z4gQVF2k5XWuW3Ccul2hcN05LQ==
-Received: from tigra.home (Fa934.f.strato-dslnet.de [195.4.169.52])
-	by post.webmailer.de (fruni mo62) (RZmta 15.4)
-	with ESMTP id v0406ck0IJ0Iro ; Fri, 18 Jan 2008 22:08:26 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 0C844277AE;
-	Fri, 18 Jan 2008 22:08:26 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 9804356D22; Fri, 18 Jan 2008 22:08:25 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <47910229.90700@gnu.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+	id S1759642AbYARVZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 16:25:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758287AbYARVZr
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 16:25:47 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:39868 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757886AbYARVZq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 16:25:46 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A0CC63056;
+	Fri, 18 Jan 2008 16:25:44 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 213DD3051;
+	Fri, 18 Jan 2008 16:25:40 -0500 (EST)
+In-Reply-To: <402c10cd0801172258p9a1a97bt682fa012fcebd13c@mail.gmail.com>
+	(Sverre Hvammen Johansen's message of "Thu, 17 Jan 2008 22:58:50
+	-0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71066>
 
-Paolo Bonzini, Fri, Jan 18, 2008 20:46:49 +0100:
-> Alex Riesen wrote:
->> Paolo Bonzini, Fri, Jan 18, 2008 15:51:25 +0100:
->>> +		if (!edit_message) {
->>> +			run_hook(index_file, "prepare-commit-msg", git_path(commit_editmsg));
->>> +		}
->>>  		launch_editor(git_path(commit_editmsg), NULL, env);
->> "preedit-new-commit-msg", perhaps. A "prepare-" suggests it is called
->> every time, even if no editor is specified, which it is not.
->> And it really does look like a template...
->
-> It is, but quite a powerful one. :-)
+"Sverre Hvammen Johansen" <hvammen@gmail.com> writes:
 
-Except that "template" is already taken. Someone uses it and some may
-even got used to "template" having that meaning.
+> I have been testing octopus merges and figured it is not very smart with
+> respect to fast forward.
 
-> template-commit-msg?
+Octopus is designed to be simple and stupid.  Its sole purpose
+is to bind more than two _independent_ development tracks, and
+by definition if they are totally independent, like A and B and
+C all forked from the current tip of our HEAD, it should make a
+new commit that is children of A and B and C.  If B and C are
+not independent (e.g. C is a descendant of B), you should not be
+using Octopus to begin with.
 
-Not really. It will be run even if the template (the one Git have
-already) is not used.
+The thing is, Octopus makes the bisection (not the internal
+processing of "git bisect", but the whole experience with "git
+bisect" which is measured by the number of commits you may have
+to test to find the one bad commit) less efficient, especially
+when the branches that are merged are not independent topics.
 
-It really looks a bit complicated. If at all, how about running that
-"pre-editor" hook with information about where the message comes from?
+So keep it simple, and do not use Octopus if there is no
+justification other than "it looks cool" you can come up with.
 
-I.e. if the message comes from a template:
-
-    preedit-commit-msg .git/COMMIT_MSG template
-
-or, for a message coming from commit:
-
-    preedit-commit-msg .git/COMMIT_MSG commit 0123456789abdef
-
-or, for a message coming from a file
-
-    preedit-commit-msg .git/COMMIT_MSG file user/path/to/file
-
-and finally, for a new message:
-
-    preedit-commit-msg .git/COMMIT_MSG
-
-?
+I do not mind a patch to git-merge-octopus to discurage its use
+even more by detecting the casen where some of the merged
+branches are not independent and refusing to work, but that is
+a post 1.5.4 topic.
