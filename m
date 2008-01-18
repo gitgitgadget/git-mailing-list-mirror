@@ -1,69 +1,89 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Include rev-list options in git-log manpage.
-Date: Fri, 18 Jan 2008 17:37:11 +0100
-Message-ID: <4790D5B7.2000508@viscovery.net>
-References: <20080117214425.GP29972@genesis.frugalware.org> <7vejcfiop4.fsf@gitster.siamese.dyndns.org> <20080118161714.GS29972@genesis.frugalware.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH] git-commit: add a prepare-commit-msg hook
+Date: Fri, 18 Jan 2008 17:37:35 +0100
+Message-ID: <4790D5CF.8000602@gnu.org>
+References: <4790BCED.4050207@gnu.org> <alpine.LSU.1.00.0801181545530.5731@racer.site> <4790CAF7.5010908@gnu.org> <alpine.LSU.1.00.0801181605020.5731@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
 X-From: git-owner@vger.kernel.org Fri Jan 18 17:38:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFuEj-0000VO-6Z
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 17:38:33 +0100
+	id 1JFuEj-0000VO-Sr
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 17:38:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761858AbYARQhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 11:37:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761967AbYARQhS
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 11:37:18 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:20309 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762066AbYARQhQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 11:37:16 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JFuDJ-0006Fg-M7; Fri, 18 Jan 2008 17:37:06 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id E24AC69F; Fri, 18 Jan 2008 17:37:11 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20080118161714.GS29972@genesis.frugalware.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1760651AbYARQhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 11:37:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760875AbYARQhj
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 11:37:39 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:7628 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759044AbYARQhh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 11:37:37 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so1085386fga.17
+        for <git@vger.kernel.org>; Fri, 18 Jan 2008 08:37:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        bh=ld2HRTkbFQLps9S+Pp7iNSldVPzWWSHxUg1uorN0A/A=;
+        b=ZUbC9aRlB0meq4rie7uwRXn3t8mdyLOvd8cLF/2xS/EEQYLFWAbA+MA2L9lFck49c1SQo8zAYlzPioS3+hGVFwfLUMlyL3VnZuS1rHvQpWKFvBb6pxfvsG2pK4Idp2ViftjTrR5TXqIwQn9CMEzOwlC+n63PF4BJ4hzUnioUH3E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        b=DnCZgfCB4IhlYMOtWdRdR+GfRmfTa7k9iw8UHsNK4WcIoybK/LHaUipr/HsNHC3ip8utI+rFX0RIhSVsfJQQuKAtR9QFd14y/uwHeZ2fZvB9wXU4afkla7antxzWqZtjhzzb4VNCHDGkkTr1QwacczbQQ1ZzEzOzr6PMdCHE9Cs=
+Received: by 10.86.28.5 with SMTP id b5mr3215198fgb.79.1200674255223;
+        Fri, 18 Jan 2008 08:37:35 -0800 (PST)
+Received: from scientist-2.mobile.usilu.net ( [195.176.176.226])
+        by mx.google.com with ESMTPS id 3sm6041267fge.7.2008.01.18.08.37.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 18 Jan 2008 08:37:34 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
+In-Reply-To: <alpine.LSU.1.00.0801181605020.5731@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71037>
 
-Miklos Vajna schrieb:
->  Documentation/git-log.txt          |    6 +-
->  Documentation/git-rev-list.txt     |  358 +-----------------------------------
->  Documentation/rev-list-options.txt |  364 ++++++++++++++++++++++++++++++++++++
->  3 files changed, 367 insertions(+), 361 deletions(-)
->  create mode 100644 Documentation/rev-list-options.txt
 
-Had you used format-patch -C then the patch would have been shorter by
-~240 lines. And it would have been immediately obvious that you have put
-this inside ifndef::gitlog[] brackets:
+> In the message hook, just grep if the template was already added.  If it 
+> was, just return.  If it was not, add it.
 
-> +ifndef::git-log[]
-> +--first-parent::
-> +	Follow only the first parent commit upon seeing a merge
-> +	commit.  This option can give a better overview when
-> +	viewing the evolution of a particular topic branch,
-> +	because merges into a topic branch tend to be only about
-> +	adjusting to updated upstream from time to time, and
-> +	this option allows you to ignore the individual commits
-> +	brought in to your history by such a merge.
-> +endif::git-log[]
+Ah, so you want me to always type ":q!" to exit and unnecessarily 
+complicate the commit-msg hook.  Cunning, but no, thanks.
 
-I wonder why these brackets are necessary. This text applies to git-log,
-too, no? Can't you just remove that paragraph from git-log.txt?
+I'll make an example.  This is my prepare-commit-msg hook:
 
--- Hannes
+diff_collect_changelog ()
+{
+   git diff "$@" -- \
+    `git diff "$@" --name-status -r | \
+         awk '/ChangeLog/ { print substr ($0, 3) }'` | sed -n \
+     -e '/^@@/,/^+/ {' \
+     -e '  s/^ //p' \
+     -e '  t' \
+     -e '}' \
+     -e '/^diff/,/^@@/ {' \
+     -e '  s/^diff --git a\/\(.*\)\/ChangeLog[^ ]* b\/.*/\1:/p' \
+     -e '  tdummy' \
+     -e '  :dummy' \
+     -e '  d' \
+     -e '}' \
+     -e 's/^+//p' \
+     -e 't'
+}
+
+diff_collect_changelog --cached > /tmp/foo$$
+cat "$GIT_COMMIT_MSG" >> /tmp/foo$$ && \
+   mv /tmp/foo$$ "$GIT_COMMIT_MSG"
+rm -f /tmp/foo$$
+
+or something like that.  The alternative I see would be to start the vi 
+editing session with "!!make_changelog --cached".  So I thought about 
+having an hook that runs the command for me.  Do you have better ideas?
+
+Paolo
