@@ -1,99 +1,128 @@
-From: Brian Dessent <brian@dessent.net>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Thu, 17 Jan 2008 20:08:51 -0800
-Organization: My own little world...
-Message-ID: <47902653.31E38914@dessent.net>
-References: <478E1FED.5010801@web.de> <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org> <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org> <200801180205.28742.robin.rosenberg.lists@dewire.com> <alpine.LFD.1.00.0801171716310.2957@woody.linux-foundation.org>
-Reply-To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix random fast-import errors when compiled with NO_MMAP
+Date: Thu, 17 Jan 2008 22:10:43 -0800
+Message-ID: <7vtzlbirz0.fsf@gitster.siamese.dyndns.org>
+References: <20080118035700.GA3458@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Pedro Melo <melo@simplicidade.org>,
-	Mark Junker <mjscod@web.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jan 18 05:52:37 2008
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>,
+	Charles Bailey <charles@hashpling.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jan 18 07:11:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFjDY-0004UK-DZ
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 05:52:36 +0100
+	id 1JFkS6-00022G-H1
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 07:11:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753564AbYAREv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2008 23:51:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753487AbYAREv4
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 23:51:56 -0500
-Received: from dessent.net ([69.60.119.225]:43193 "EHLO dessent.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752604AbYAREvz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2008 23:51:55 -0500
-X-Greylist: delayed 2443 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Jan 2008 23:51:55 EST
-Received: from localhost ([127.0.0.1] helo=dessent.net)
-	by dessent.net with esmtp (Exim 4.50)
-	id 1JFiZ7-0003MZ-Uj; Fri, 18 Jan 2008 04:10:50 +0000
-X-Mailer: Mozilla 4.79 [en] (Windows NT 5.0; U)
-X-Accept-Language: en,en-US
+	id S1751004AbYARGK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 01:10:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751054AbYARGK7
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 01:10:59 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47860 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750984AbYARGK6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 01:10:58 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E8C7781B;
+	Fri, 18 Jan 2008 01:10:56 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A1BF97818;
+	Fri, 18 Jan 2008 01:10:50 -0500 (EST)
+In-Reply-To: <20080118035700.GA3458@spearce.org> (Shawn O. Pearce's message of
+	"Thu, 17 Jan 2008 22:57:00 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70966>
 
-Linus Torvalds wrote:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> But for a UNIX interface layer, the most logical thing would probably be
-> to map "open()" and friends not to CreateFileA(), but to
-> CreateFileW(utf8_to_utf16(filename)).
-> 
-> Once you do that, then it sounds like Windows would basically be Unicode,
-> and hopefully without any crazy normalization (but presumably all the
-> crazy case-insensitivity cannot be fixed ;^).
-> 
-> So it probably really only depends on whether you choose to use the insane
-> 8-bit code page translation or whether you just use a sane and trivial
-> UTF8<->UTF16 conversion.
-> 
-> Anybody know which one cygwin/mingw does?
+> +extern void close_pack_windows(struct packed_git *, int);
 
-Cygwin does not yet support doing the smart thing.  At the moment you
-can only open() files in the current 8 bit codepage.  There is a patch
-floating around to allow using UTF-8, but it was rejected for inclusion
-because it was considered too hackish.  Instead work has been ongoing
-for some time to replumb the internal representation of Windows
-filenames to use UTF-16 instead of plain chars, so that conversion
-overhead can be held at a minimum.  In conjuction with dropping Win9x/ME
-support this also means the Native APIs like NtCreateFile() can be used
-directly, as they are more low level than the Win32 -A and -W functions
-and expose more flexibility, such as the ability to implement the
-openat() family of functions natively (no pun intended) without
-emulation.  These two items (unicode and dropping non-NT windows) are
-the big features for 1.7.
+Nobody seems to pass anything but true in retain_fd parameter.
+Is it worth it?
 
-Of course since a lot of what Cygwin does is translate paths in
-sometimes unobvious and complicated ways, there's a lot of path handling
-code to adapt, so it's taking a while.
+> +void close_pack_windows(struct packed_git *p, int retain_fd)
+> +{
+> +	struct pack_window *tail_var = NULL, *n = p->windows;
+> +	struct pack_window **tail = &tail_var;
+> +	while (n) {
+> +		struct pack_window *w = p->windows;
+> +
+> +		if (w->inuse_cnt) {
+> +			*tail = w;
+> +			tail = &w->next;
+> +			continue;
+> +		}
+> +
+> +		munmap(w->base, w->len);
+> +		pack_mapped -= w->len;
+> +		pack_open_windows--;
+> +		n = w->next;
+> +		free(w);
+> +	}
+> +
+> +	p->windows = tail_var;
+> +	if (p->windows)
+> +		warning("pack windows still in-use during close attempt");
+> +	else if (!retain_fd && p->pack_fd != -1) {
+> +		close(p->pack_fd);
+> +		p->pack_fd = -1;
+> +	}
+> +}
 
-Incidently, the ridiculously short MAX_PATH of 260 on Windows comes from
-the Win32 -A version of the functions.  The -W API and the Native API
-can cope with paths of up to 32k wide chars, so a side benefit of this
-should be the ability to finally stop running into length limits.  Of
-course there's always a catch: when using long filenames with the Win32
--W API or the Native API you can only use absolute paths, so either you
-have to live with the 260 limitation for relative paths or you keep
-track of the current directory and always do a rel->abs conversion.  Or
-better, if you stick to the Native API you can do a directory handle
-relative openat-type thing which I suppose starts to sound relatively
-sane.  However, there's another catch here: For some time Cygwin has
-maintained a separate and private value of CWD behind Windows' back, and
-only synced the two when spawning a non-Cygwin binary.  This allows
-Windows to happly think the process' CWD is always C:\ or whatever, and
-not hold an open handle to the actual CWD.  In turn Cygwin uses this to
-allow POSIX filesystem behavior of being able to unlink the current dir,
-which some programs or build systems assume they can do but is not
-possible in straight Win32.  This is a roundabout way of saying that
-going back to actually having to keep a handle to CWD open again in
-order to do relative paths might be complicated.
+I am not sure about this inuse_cnt business.
 
-Brian
+The only caller we know that needs this function is fast-import
+that wants to drop all windows into a pack while keeping the
+file descriptor and it should not have an in-use windows.
+
+It is unclear what semantics is the right one for callers that
+do want to retain some windows but still want to call this
+function.  If somebody is in the middle of chasing a delta chain
+and still calls this function, *why* is the call being made, and
+what is the right behaviour if not all the windows can be closed
+because of these open windows?
+
+What about the case the value passed in ratain_fd is 0, which
+presumably means the caller is asking us to close the file
+descriptor?  If we close the packfile, later accesses through
+the unclosed windows will obviously barf and I understand that
+is why you are ignoring retain_fd in that case, but maybe for
+the caller it was of higher priority that the packfile to get
+closed than the remaining windows to be still usable.  Or maybe
+the caller wants to be notified of such an error, in which case
+it probably is not enough to just call warning().
+
+IOW, I think the patch is trying to be too flexible without
+having a clear definition of what that flexibility is trying to
+achieve.
+
+Maybe we would need more flexible version later, but I am not
+convinced if the semantics the above patch implements is the
+right one.
+
+So I'd prefer something much simpler like this one instead...
+
+void close_pack_windows(struct packed_git *p)
+{
+	while (p->windows) {
+		struct pack_window *w = p->windows;
+
+		if (w->inuse_cnt)
+			die("pack '%s' still has outstanding windows",
+				p->pack_name)
+		munmap(w->base, w->len);
+		pack_mapped -= w->len;
+		pack_open_windows--;
+		p->windows = w->next;
+		free(w);
+	}
+}
