@@ -1,89 +1,68 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: What's not in 'master', and likely not to be until 1.5.4
-Date: Fri, 18 Jan 2008 13:53:14 +0100
-Message-ID: <7E3714CE-0073-4E42-A455-36D595946A6C@zib.de>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com> <1200022189-2400-2-git-send-email-mlevedahl@gmail.com> <7v1w8o4ws0.fsf@gitster.siamese.dyndns.org> <30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com> <7v63xzzszp.fsf@gitster.siamese.dyndns.org> <478855B5.9070600@gmail.com> <7vbq7ry405.fsf@gitster.siamese.dyndns.org> <47885B2C.8020809@gmail.com> <7v7iify2wm.fsf@gitster.siamese.dyndns.org> <4788BFA8.2030508@gmail.com> <7vwsqeubj8.fsf@gitster.siamese.dyndns.org> <47891658.3090604@gmail.com> <7vbq7qssd7.fsf@gitster.siamese.dyndns.org> <47893E1A.5020702@gmail.com> <7v4pdislrf.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7vir1xmazm.fsf@gitster.siamese.dyndns.org> <7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org> 
- <7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: fast-import.c: zlib_compression_level vs pack_compression_level
+Date: Fri, 18 Jan 2008 14:04:30 +0100
+Message-ID: <e5bfff550801180504v17df7976x59d12f210efe583e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 13:53:27 2008
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 18 14:05:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFqih-0004Am-T1
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 13:53:16 +0100
+	id 1JFqu6-00083f-4X
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 14:05:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758682AbYARMw3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 07:52:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757287AbYARMw3
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 07:52:29 -0500
-Received: from mailer.zib.de ([130.73.108.11]:56368 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759331AbYARMw2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 07:52:28 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0ICqEPd021140;
-	Fri, 18 Jan 2008 13:52:14 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0ICqAEe008571
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 18 Jan 2008 13:52:14 +0100 (MET)
-In-Reply-To: <7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.753)
+	id S1759911AbYARNEe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 08:04:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760004AbYARNEe
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 08:04:34 -0500
+Received: from py-out-1112.google.com ([64.233.166.182]:26758 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759002AbYARNEd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 08:04:33 -0500
+Received: by py-out-1112.google.com with SMTP id u52so1524047pyb.10
+        for <git@vger.kernel.org>; Fri, 18 Jan 2008 05:04:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=k56vrQzHdxapZDiL/vtQgiQdoY06JZOx/+3qh2m+RaQ=;
+        b=QsCoSnObQUWaL9vmo2lLnIDkJPPwW9I6dQqcprSTRb3l84FiRAFVC6+vMBC02mcpknVF1Qih3oZafOwO+gfiZZXe7X8teAVg+QFRidDM6iIgQlgawbiquSFrUuScyOCJ09aetpWwNRAuyhF4HE6UMd5gLeRY74PVtdCvcrmaFiI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=rysIDxvj0yoZtA2nPppLcMYtaEuLuJWvuFTWWprdXH19F21UQQajPjO4QZKhVHNkpuRXEznGfsdAFG5cDc/4x0Qodi33h5bIBHfruaECm34S2NDL0pRu5hGny1b5h9rcTAEBuldWsUkpjCFXU6fChHp3nUjRZr8pWC3NCfGrIfM=
+Received: by 10.141.145.11 with SMTP id x11mr2344607rvn.230.1200661470647;
+        Fri, 18 Jan 2008 05:04:30 -0800 (PST)
+Received: by 10.141.68.21 with HTTP; Fri, 18 Jan 2008 05:04:30 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71012>
 
+Just a small thing I would like to bring to your attention before 1.5.4 is out
 
-On Jan 18, 2008, at 11:40 AM, Junio C Hamano wrote:
+During my work on compression/decompression cleanup I have found that
+in fast-import.c the zlib_compression_level is used, while in
+builtin-pack-objects is used pack_compression_level instead.
 
-> Here is an update to the list I sent earlier.  Topics that I
-> thought may deserve attention, discussion and eventual inclusion
-> but are not 1.5.4 material.
->
-> I think some of them actually have a slight chance of being
-> 1.5.4 material, if interested parties present good enough
-> arguments that they are actually good and safe bugfixes.
->
-[...]
->
->  * crlf (Steffen Prohaska and Dmitry Potapov)
+This 2 flags corresponds, more or less directly, (some cleanup is
+needed also in that area, but this is another story) to:
 
+core.loosecompression
 
-I am working on an alternative to the patch I sent last week.
-I hope I can present the two approaches soon.
+and
 
-The first approach is a lazy check in crlf_to_git() that warns
-about an irreversible conversion; or dies if safecrlf=true.  This
-is relatively simple code but at least for git-add a workaround
-is needed to suppress printing a warning twice.  The runtime
-overhead is negligible.
+pack.compression
 
-The second approach adds a new machinery is_worktree_crlfsafe()
-that could be run independently of the crlf_to_git() conversion.
-The code doing the conversion would stay unmodified.  The
-advantage is that the whole work tree could be verified before
-any conversion actually happens and we could die() after printing
-all the warnings instead of printing only the first one.  The
-drawback is that this approach most likely needs more code and
-will introduce runtime overhead.  A straight forward
-implementation would add another pass over the work tree running
-the stats in convert.c.  So the stats would be run twice.
-And for a simple "git add <file>" the situation is even worse:
-the full work tree would be verified even is only a single file
-is to be added.
+config settings.
 
-I haven't found time during the week, so I'll continue to work
-on this over the weekend.  Maybe even more time is needed to
-discuss the two alternatives.
+My question is, does fast-import should use pack.compression instead
+of core.loosecompression?
 
-I do not expect that this topic will be ready for 1.5.4.
-
-	Steffen
+Thanks
+Marco
