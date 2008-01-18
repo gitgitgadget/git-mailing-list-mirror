@@ -1,66 +1,127 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git gui and commit-msg hook
-Date: Thu, 17 Jan 2008 23:12:30 -0500
-Message-ID: <20080118041230.GA24004@spearce.org>
-References: <054F21930D24A0428E5B4588462C7AEDC5F8DB@ednex512.dsto.defence.gov.au> <054F21930D24A0428E5B4588462C7AEDC5F8DC@ednex512.dsto.defence.gov.au>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [STGIT PATCH] replace "git repo-config" usage by "git config"
+Date: Fri, 18 Jan 2008 05:24:47 +0100
+Message-ID: <20080118042447.GA13178@diana.vm.bytemark.co.uk>
+References: <1200453554-14163-1-git-send-email-dpmcgee@gmail.com> <200801162147.33448.kumbayo84@arcor.de> <200801162158.26450.kumbayo84@arcor.de> <20080117074559.GB25213@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "Blucher, Guy" <Guy.Blucher@dsto.defence.gov.au>
-X-From: git-owner@vger.kernel.org Fri Jan 18 05:13:15 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>,
+	Pavel Roskin <proski@gnu.org>
+To: Peter Oberndorfer <kumbayo84@arcor.de>
+X-From: git-owner@vger.kernel.org Fri Jan 18 05:25:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFibR-0005EN-R9
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 05:13:14 +0100
+	id 1JFing-0007bH-Sr
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 05:25:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753324AbYAREMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2008 23:12:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753160AbYAREMf
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 23:12:35 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:43324 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753153AbYAREMe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2008 23:12:34 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JFiaa-0000cN-3I; Thu, 17 Jan 2008 23:12:20 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6C1B020FBAE; Thu, 17 Jan 2008 23:12:30 -0500 (EST)
+	id S1752323AbYAREZV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jan 2008 23:25:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbYAREZV
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 23:25:21 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2106 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751927AbYAREZU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2008 23:25:20 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JFimd-0003Qu-00; Fri, 18 Jan 2008 04:24:47 +0000
 Content-Disposition: inline
-In-Reply-To: <054F21930D24A0428E5B4588462C7AEDC5F8DC@ednex512.dsto.defence.gov.au>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <20080117074559.GB25213@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70963>
 
-"Blucher, Guy" <Guy.Blucher@dsto.defence.gov.au> wrote:
-> Is the commit-msg hook supposed to work when using git gui to do a
-> commit?
+On 2008-01-17 08:45:59 +0100, Karl Hasselstr=F6m wrote:
 
-Uhhh.  Whoops.  ;-)
+> Thanks, I'll apply this tonight. (Along with Pavel's "stg edit --sign=
+"
+> patch, which I've been neglecting for quite a while now. Sorry!)
 
-git-gui doesn't implement the commit-msg hook.  Because I forgot
-to implement it.  So yes, its supposed to work, but no, it doesn't,
-because it was never coded.  :-)
- 
-> All I want to do is verify that the text of a commit message follows
-> some "corporate standard", perhaps I can do this using the pre-commit
-> hook instead, but commit-msg seems to be the best fit?  
+The following changes since commit 5b2666bab799830ac5e511f35103d04fc396=
+8b32:
+  Catalin Marinas (1):
+        Remove a newline from the e-mail template
 
-Yes, commit-msg is the proper hook to use here.  But git-gui doesn't
-honor it.  I'll try to work out a fix after dinner this evening.
+are available in the git repository at:
 
-Thanks for the bug report.  Definately appreciated.
+  git://repo.or.cz/stgit/kha.git safe
 
--- 
-Shawn.
+David K=E5gedal (2):
+      Emacs mode: Add mark command
+      Emacs mode: coalesce command
+
+Karl Hasselstr=F6m (12):
+      Teach the new infrastructure about the index and worktree
+      Let "stg clean" use the new transaction primitives
+      Let "stg goto" use the new infrastructure
+      Convert "stg uncommit" to the new infrastructure
+      New infrastructure: Make sure that the branch is initialized
+      Expose transaction abort function
+      stg coalesce: Support --file and --save-template
+      Set exit code to 3 on merge conflict
+      Convert "stg commit" to new infrastructure
+      Make "stg commit" fancier
+      Test that "stg goto" can be called from a subdirectory
+      Make "stg goto" subdirectory safe
+
+Pavel Roskin (1):
+      Fix "stg edit --sign"
+
+Peter Oberndorfer (2):
+      Don't mention removed "stg refresh" options
+      replace "git repo-config" usage by "git config"
+
+ contrib/stgit.el              |   97 ++++++++++++++++++-----
+ stgit/commands/clean.py       |   35 ++------
+ stgit/commands/coalesce.py    |  118 ++++++++++++++++++---------
+ stgit/commands/commit.py      |  111 ++++++++++++++++----------
+ stgit/commands/edit.py        |    5 +-
+ stgit/commands/goto.py        |   52 ++++--------
+ stgit/commands/refresh.py     |    8 +-
+ stgit/commands/uncommit.py    |   81 ++++++++-----------
+ stgit/config.py               |   14 ++--
+ stgit/lib/git.py              |  128 +++++++++++++++++++++++++++++
+ stgit/lib/stack.py            |   10 ++-
+ stgit/lib/stackupgrade.py     |    6 +-
+ stgit/lib/transaction.py      |  178 +++++++++++++++++++++++++++++++++=
+++------
+ stgit/main.py                 |    4 +-
+ stgit/run.py                  |    9 ++-
+ stgit/utils.py                |    1 +
+ t/t1300-uncommit.sh           |   12 ++--
+ t/t1900-mail.sh               |    2 +-
+ t/t2100-pull-policy-fetch.sh  |    4 +-
+ t/t2101-pull-policy-pull.sh   |    4 +-
+ t/t2102-pull-policy-rebase.sh |    4 +-
+ t/t2800-goto-subdir.sh        |   59 ++++++++++++++
+ 22 files changed, 675 insertions(+), 267 deletions(-)
+ create mode 100755 t/t2800-goto-subdir.sh
+
+                                  -+-
+
+The following changes since commit 085902b45b9bea3fa5bc14470219891ec4cc=
+ba78:
+  Peter Oberndorfer (1):
+        replace "git repo-config" usage by "git config"
+
+are available in the git repository at:
+
+  git://repo.or.cz/stgit/kha.git experimental
+
+Peter Oberndorfer (1):
+      Add an --index option to "stg refresh"
+
+ stgit/commands/refresh.py |   25 ++++++++++++++++---
+ t/t2700-refresh.sh        |   57 +++++++++++++++++++++++++++++++++++++=
++++++++-
+ 2 files changed, 77 insertions(+), 5 deletions(-)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
