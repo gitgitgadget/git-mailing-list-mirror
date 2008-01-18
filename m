@@ -1,115 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] send-email: add no-validate option
-Date: Fri, 18 Jan 2008 09:20:10 -0500
-Message-ID: <20080118142010.GC19783@coredump.intra.peff.net>
-References: <20080118141638.GA14928@coredump.intra.peff.net>
+From: dherring@ll.mit.edu
+Subject: Re: git-svn: how to connect SVN branches?
+Date: Fri, 18 Jan 2008 09:43:44 -0500 (EST)
+Message-ID: <alpine.LNX.0.999999.0801180932310.3479@mojave>
+References: <alpine.LNX.0.999999.0801171237110.3479@mojave> <478FD0E5.2080006@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Adam Piatyszek <ediap@users.sourceforge.net>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 15:20:46 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 18 15:44:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFs5M-0001ck-QW
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 15:20:45 +0100
+	id 1JFsSL-0001w3-Pl
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 15:44:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759227AbYAROUO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 09:20:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758982AbYAROUO
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 09:20:14 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1453 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758643AbYAROUM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 09:20:12 -0500
-Received: (qmail 18517 invoked by uid 111); 18 Jan 2008 14:20:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 18 Jan 2008 09:20:11 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Jan 2008 09:20:10 -0500
-Content-Disposition: inline
-In-Reply-To: <20080118141638.GA14928@coredump.intra.peff.net>
+	id S1761641AbYAROn6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 09:43:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761563AbYAROn5
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 09:43:57 -0500
+Received: from LLMAIL1.LL.MIT.EDU ([129.55.12.41]:53732 "EHLO ll.mit.edu"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1759349AbYAROn4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 09:43:56 -0500
+Received: (from smtp@localhost)
+	by ll.mit.edu (8.12.10/8.8.8) id m0IEhqAk014290
+	for <git@vger.kernel.org>; Fri, 18 Jan 2008 09:43:52 -0500 (EST)
+Received: from mojave.llan.ll.mit.edu(              ), claiming to be "mojave"
+ via SMTP by llpost, id smtpdAAATsaiVB; Fri Jan 18 09:43:43 2008
+X-X-Sender: dherring@mojave
+In-Reply-To: <478FD0E5.2080006@vilain.net>
+User-Agent: Alpine 0.999999 (LNX 847 2007-12-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71023>
 
-Since we are now sanity-checking the contents of patches and
-refusing to send ones with long lines, this knob provides a
-way for the user to override the new behavior (if, e.g., he
-knows his SMTP path will handle it).
+Sam, Gregory, thanks for solving my problem.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-send-email.perl   |   12 +++++++++---
- t/t9001-send-email.sh |   10 ++++++++++
- 2 files changed, 19 insertions(+), 3 deletions(-)
+On Thu, 17 Jan 2008, Sam Vilain wrote:
+> dherring@ll.mit.edu wrote:
+>> `git-svn fetch` pulled the new branch.  However, it created a whole new
+>> history for this branch (new git commits from the beginning of the SVN
+>> repo).
+>>
+>> Is there some way to tell git/git-svn to connect these two histories?
+>
+> git-svn doesn't yet support arbitrary mapping of paths like that.  You
+> need to add a separate git-svn remote, and you might have to graft to
+> get it started - see below.
+>
+>> Pictorially, I have
+>>
+>> SVN1@a---SVN2@a---SVN3@b---SVN4@b---SVNtrunk
+>> SVN1@b---SVN2@b---SVN3@b---SVN4@b---SVNbranch
+>
+> That's unfortunate.  There are many things that git-svn does to try to
+> avoid this happening.  You can fix it using the .git/info/grafts
+> facility - check the Documentation/ for information on that.  Once
+> you've got it looking right, git filter-branch can be used to make it
+> permanent, though you should certainly delete the git-svn metadata after
+> using that.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 144d7d4..39e0222 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -100,6 +100,8 @@ Options:
- 
-    --envelope-sender	Specify the envelope sender used to send the emails.
- 
-+   --no-validate	Don't perform any sanity checks on patches.
-+
- EOT
- 	exit(1);
- }
-@@ -177,6 +179,7 @@ my ($quiet, $dry_run) = (0, 0);
- my ($thread, $chain_reply_to, $suppress_from, $signed_off_cc, $cc_cmd);
- my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_authpass, $smtp_ssl);
- my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts);
-+my ($no_validate);
- 
- my %config_bool_settings = (
-     "thread" => [\$thread, 1],
-@@ -222,6 +225,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
- 		    "dry-run" => \$dry_run,
- 		    "envelope-sender=s" => \$envelope_sender,
- 		    "thread!" => \$thread,
-+		    "no-validate" => \$no_validate,
- 	 );
- 
- unless ($rc) {
-@@ -332,9 +336,11 @@ for my $f (@ARGV) {
- 	}
- }
- 
--foreach my $f (@files) {
--	my $error = validate_patch($f);
--	$error and die "fatal: $f: $error\nwarning: no patches were sent\n";
-+if (!$no_validate) {
-+	foreach my $f (@files) {
-+		my $error = validate_patch($f);
-+		$error and die "fatal: $f: $error\nwarning: no patches were sent\n";
-+	}
- }
- 
- if (@files) {
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 1c41810..4f6822f 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -98,4 +98,14 @@ test_expect_success 'no patch was sent' '
- 	! test -e commandline
- '
- 
-+test_expect_success 'allow long lines with --no-validate' '
-+	git send-email \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		--no-validate \
-+		$patches longline.patch \
-+		2>errors
-+'
-+
- test_done
--- 
-1.5.4.rc3.1128.g1826-dirty
+Documentation/repository-layout.txt had the best info on grafts.  A few 
+graft lines and my git repo looks just right.  For now, I'm scared of 
+breaking git-svn again; filter-branch can wait for later.
+
+Thanks again,
+Daniel
