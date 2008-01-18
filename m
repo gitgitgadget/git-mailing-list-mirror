@@ -1,107 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's not in 'master' but should be
-Date: Fri, 18 Jan 2008 18:36:47 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801181832180.5731@racer.site>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com> <1200022189-2400-2-git-send-email-mlevedahl@gmail.com> <7v1w8o4ws0.fsf@gitster.siamese.dyndns.org> <30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com> <7v63xzzszp.fsf@gitster.siamese.dyndns.org>
- <478855B5.9070600@gmail.com> <7vbq7ry405.fsf@gitster.siamese.dyndns.org> <47885B2C.8020809@gmail.com> <7v7iify2wm.fsf@gitster.siamese.dyndns.org> <4788BFA8.2030508@gmail.com> <7vwsqeubj8.fsf@gitster.siamese.dyndns.org> <47891658.3090604@gmail.com>
- <7vbq7qssd7.fsf@gitster.siamese.dyndns.org> <47893E1A.5020702@gmail.com> <7v4pdislrf.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7vir1xmazm.fsf@gitster.siamese.dyndns.org>
- <7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801181638500.5731@racer.site>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH] git-commit: add a prepare-commit-msg hook
+Date: Fri, 18 Jan 2008 19:51:57 +0100
+Message-ID: <4790F54D.7000008@gnu.org>
+References: <4790BCED.4050207@gnu.org> <alpine.LSU.1.00.0801181545530.5731@racer.site> <4790CAF7.5010908@gnu.org> <alpine.LSU.1.00.0801181605020.5731@racer.site> <4790D5CF.8000602@gnu.org> <alpine.LSU.1.00.0801181804410.5731@racer.site>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811741-451027681-1200681408=:5731"
-Cc: git@vger.kernel.org
-To: =?ISO-8859-15?Q?Gr=E9goire_Barbier?= <gb@gbarbier.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 19:37:42 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 18 19:52:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFw5j-0007RS-G8
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 19:37:23 +0100
+	id 1JFwKb-0004vI-OZ
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 19:52:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763151AbYARSg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 13:36:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761257AbYARSg4
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 13:36:56 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40614 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1763151AbYARSgy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 13:36:54 -0500
-Received: (qmail invoked by alias); 18 Jan 2008 18:36:53 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp024) with SMTP; 18 Jan 2008 19:36:53 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX188p/FbKMQ8P7B3WdueJio2atk6VlgQBVhLf6de8f
-	2KFl8nib0IATRM
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LSU.1.00.0801181638500.5731@racer.site>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1765395AbYARSwE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 13:52:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765114AbYARSwD
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 13:52:03 -0500
+Received: from hu-out-0506.google.com ([72.14.214.224]:20280 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1765392AbYARSwA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 13:52:00 -0500
+Received: by hu-out-0506.google.com with SMTP id 19so365667hue.21
+        for <git@vger.kernel.org>; Fri, 18 Jan 2008 10:51:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        bh=T2ITQw4WeLNPPpKd+UzhfbNn0nwF6w8jMffpVHKNA2U=;
+        b=UwXd1dPUvEj91hRLkXBCa1SFbR33LCBfCm4/RjH9rqyK6R3PDmZF2JMEBDlPmV6Py696eXX5qSWv+rHcJ+Kyf1EjwvNcXoUlTLoWWlZg+fviTnBCrWNNlgewO95RD9NFbRGqlVObn391UC89vXn04sDLNFFlLvwXgOi08Z0ditM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        b=GlzR1XvjscTUPQDFIk6o3xi6sWuO20pxi+6W/HaWF0ipOgNuKdfJ9Ij04zMu/iQsKN1gZfQnU+EiUVSF7epdZwnqJFjNdE5gUaUqPjKReCacaTETfiKR8HbhZ0lmmkAZ6RjqWYrAkMNUc6LPm1r2S+tAx8V5PjfBSPlMtJ5cR8w=
+Received: by 10.86.91.12 with SMTP id o12mr3353807fgb.62.1200682316646;
+        Fri, 18 Jan 2008 10:51:56 -0800 (PST)
+Received: from scientist-2.lan ( [213.140.22.65])
+        by mx.google.com with ESMTPS id l19sm6231774fgb.9.2008.01.18.10.51.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 18 Jan 2008 10:51:56 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
+In-Reply-To: <alpine.LSU.1.00.0801181804410.5731@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71049>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
----1463811741-451027681-1200681408=:5731
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+> No, my intention was to avoid complications.  Like introducing yet another 
+> commit hook.  I like clean, elegant semantics.  I don't like overbloated 
+> semantics.  That's why I speak up whenever I fear it is entering git.
 
-Hi,
+Do you think my three line patch is too complicated?  Possibly I was too
+zealous in documenting the semantics for the new hook and that looked
+like unelegant semantics.
 
-On Fri, 18 Jan 2008, Johannes Schindelin wrote:
+Do you have another possibility which allows the same workflow (git
+commit shows the output of that script) within the existing framework?
 
-> >   $gmane/70407 <1200250979-19604-2-git-send-email-gb@gbarbier.org>
-> 
-> I first could not reproduce the breakage described in the commit message 
-> (bad or no ref given on command line).
-> 
-> After playing around for a while, all of a sudden, I got a segmentation 
-> fault:
-> 
-> Waiting for 
-> http://dscho@127.0.0.1/test.git/objects/56/5e84516c1c6dca168be1715b45aeae70b24d13_36e8d912-4841-455a-bbd9-69e54d00db99
-> Segmentation fault (core dumped)
-> 
-> Unfortunately, this is with _and_ without this patch.
->
-> 
-> In gdb, it looks like this:
-> 
-> Program received signal SIGSEGV, Segmentation fault.
-> [Switching to Thread -1213430096 (LWP 31418)]
-> check_locks () at http-push.c:637
-> 637                     if (!lock->refreshing && time_remaining < 
-> LOCK_REFRESH) {
-> (gdb) p lock
-> $1 = (struct remote_lock *) 0x20
-> (gdb) bt
-> #0  check_locks () at http-push.c:637
-> #1  0x08053f8a in process_response (callback_data=0x80c4550)
->     at http-push.c:683
-> #2  0x0804dbf4 in process_curl_messages () at http.c:539
-> #3  0x0804dc46 in step_active_slots () at http.c:453
-> #4  0x0804dccb in run_active_slot (slot=0x80c2388) at http.c:474
-> #5  0x0804deaa in http_cleanup () at http.c:291
-> #6  0x0805268f in main (argc=3, argv=Cannot access memory at address 0x4
-> ) at http-push.c:2428
-> 
-> So it seems that there is more to fix.
-
-The segmentation fault occurs due to check_locks() accessing the remote 
-that was just free()d, due to the new change.
-
-But now I cannot even reproduce the segmentation fault, it seems.  
-Strange.  Very strange.
-
-Grégoire, it would help tremendously if you could come up with a test 
-case.  The description you gave did not lead to something reproducible 
-here.
-
-Ciao,
-Dscho
-
----1463811741-451027681-1200681408=:5731--
+Paolo
