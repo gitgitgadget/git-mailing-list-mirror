@@ -1,92 +1,79 @@
-From: "Sverre Hvammen Johansen" <hvammen@gmail.com>
-Subject: Re: Merging using only fast-forward
-Date: Thu, 17 Jan 2008 22:58:50 -0800
-Message-ID: <402c10cd0801172258p9a1a97bt682fa012fcebd13c@mail.gmail.com>
-References: <loom.20080116T151930-575@post.gmane.org>
-	 <863asxivlj.fsf@blue.stonehenge.com>
-	 <7vwsq9o6ls.fsf@gitster.siamese.dyndns.org>
-	 <402c10cd0801162253n6ab19f51y53d0baa16319adaa@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Include rev-list options in git-log manpage.
+Date: Thu, 17 Jan 2008 23:21:27 -0800
+Message-ID: <7vejcfiop4.fsf@gitster.siamese.dyndns.org>
+References: <20080117214425.GP29972@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 18 07:59:26 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Fri Jan 18 08:22:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFlCD-0002vS-Mb
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 07:59:22 +0100
+	id 1JFlYa-0007iI-Qz
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 08:22:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751118AbYARG6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 01:58:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750853AbYARG6x
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 01:58:53 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:7797 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750748AbYARG6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 01:58:52 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so936281fga.17
-        for <git@vger.kernel.org>; Thu, 17 Jan 2008 22:58:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=lXg4f6W9eZ7kHxtpUPP+H3IFq9tiFFZn0Y02X7BiyZQ=;
-        b=bne41N+qPdRV+bwo7Xcz4Q02lc6j5ZTkJ3chIQkSgULpUjID/2/zLHmNeztSktXckR+1X0Gb3SLNQpuX5x+3OHEjrnq8dGgiol77JO5P12zcgL6NTJ3adv5sHnndCARgnjVTfU+ncTuCLI4urUBpzQj0gmRkK63tDJka8K9ffdo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=B4uLPauXN7pNqIRxUoW6pGjgmkOOFVYXNX6/Wne73eTKDHIbZlu5oT5gWwP1/4NzYTT4QQpeAHZvoFp+o0LB5NwPFNxsL5akR6+Prm+zuIwB9A3Fak7IIbdJbnB/SR2IQkHRxILOllswx+3aW4Evot/oAtR489SgrjwupGkL1LI=
-Received: by 10.82.181.7 with SMTP id d7mr5397143buf.4.1200639530313;
-        Thu, 17 Jan 2008 22:58:50 -0800 (PST)
-Received: by 10.82.172.18 with HTTP; Thu, 17 Jan 2008 22:58:50 -0800 (PST)
-In-Reply-To: <402c10cd0801162253n6ab19f51y53d0baa16319adaa@mail.gmail.com>
-Content-Disposition: inline
+	id S1752199AbYARHVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 02:21:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbYARHVl
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 02:21:41 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51594 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750962AbYARHVk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 02:21:40 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F09F1CB0;
+	Fri, 18 Jan 2008 02:21:39 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D58D1CAB;
+	Fri, 18 Jan 2008 02:21:36 -0500 (EST)
+In-Reply-To: <20080117214425.GP29972@genesis.frugalware.org> (Miklos Vajna's
+	message of "Thu, 17 Jan 2008 22:44:25 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70969>
 
-On Jan 16, 2008 10:53 PM, Sverre Hvammen Johansen <hvammen@gmail.com> wrote:
-> We need to consider cases where the branch we are merging with is an
-> ancestor or an descendant of HEAD.  The patch only take descendants
-> into account.  There may also be more than one branch we are merging
-> with.  All these cases must be considered.  In the case of an octopus, the
-> cases are slightly more complicated.
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-I have been testing octopus merges and figured it is not very smart with
-respect to fast forward.  I would like it to do a fast forward whenever it
-makes sense to do that.  Consider the following:
+> It seems that all the git-rev-list options (--grep, --author, etc) were missing
+> from the git-log manpage. This can be quite problematic if one does not know
+> that git-log accepts the options of git-rev-list.
+>
+> So move these options to a separate file and include it from both
+> git-rev-list.txt and git-log.txt.
+>
+> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+> ---
+>
+> Noticed by tsuna on IRC. I hope this is okay for 1.5.4.
 
-     -- c1 -- A
-   /              /  \
-c0 -- c2 --      C
-   \              \  /
-     -- c3 -- B
+Have you generated documentation with and without patch and run
+diff between them?
 
-A is a merge between c1 and c2, B is a merge between c2 and c3, and C is a
-merge between A and B.
+There is an obvious duplicated inclusion of pretty-options.txt[]
+in git-log.{1,html}.
 
-c1 merged with A does a fast forward to A, A merged with C does a fast forward
-to C, but an octopus merge of c1 with A and C does not fast forward to
-C.  I would
-expect it to fast forward to C.  The commit graph above have several other cases
-where an octopus merge can be reduced to a fast forward or a recursive merge.
+In addition, this part
 
-I suggest a separate pass before we choose merge strategy.  Remove commits
-that can be fast forwarded to any of the other commits from the
-equation and fast
-forward the current branch if possible.  The remaining commits are then taken
-into consideration.  This may reduce the number of commits and thus result in
-a fast forward or another merge strategy.
+> -Commit Formatting
+> -~~~~~~~~~~~~~~~~~
+> -
+> -Using these options, linkgit:git-rev-list[1] will act similar to the
+> -more specialized family of commit log tools: linkgit:git-log[1],
+> -linkgit:git-show[1], and linkgit:git-whatchanged[1]
 
-I intend to make the patch for the option --ff-only as simple as
-possible, where it
-will fail where more than two commits are involved.  If the above suggested pass
-is implemented it should also take affect for --ff-only.
+is _clearly_ written for git-rev-list and unsuitable for any of
+the commands listed above.
 
-Does this make sense?
-
--- 
-Sverre Hvammen Johansen
+git-log manual page has been saying that "This manual page
+describes only the most frequently used options."  I would agree
+that it is a laudable goal to replace that sentence with an
+included common source text, but there needs to be a bit more
+careful copyediting than your a patch.
