@@ -1,131 +1,281 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: I don't want the .git directory next to my code.
-Date: Fri, 18 Jan 2008 09:41:39 +0100
-Message-ID: <47906643.2010201@op5.se>
-References: <478D79BD.7060006@talkingspider.com> <86hcheig3n.fsf@blue.stonehenge.com> <478D82FA.2030404@talkingspider.com> <478D95D8.5040806@theory.org> <478E3D8E.1090300@talkingspider.com> <alpine.LFD.1.00.0801161000310.2806@woody.linux-foundation.org> <alpine.LFD.1.00.0801161019250.2806@woody.linux-foundation.org> <478EEAC4.2010006@talkingspider.com>
+From: "Ian Brown" <ianbrn@gmail.com>
+Subject: errors in git pull
+Date: Fri, 18 Jan 2008 10:49:16 +0200
+Message-ID: <d0383f90801180049p1599dd6fmfabcdcad7d9d3275@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Mike <fromlists@talkingspider.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 09:44:52 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 18 09:49:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFmqJ-00027e-Cm
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 09:44:51 +0100
+	id 1JFmv7-0003Pn-MG
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 09:49:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751935AbYARIoX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 03:44:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751618AbYARIoX
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 03:44:23 -0500
-Received: from mail.op5.se ([193.201.96.20]:48412 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751021AbYARIoW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 03:44:22 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 83E9C1F08033;
-	Fri, 18 Jan 2008 09:44:20 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Fb8lFkVfpELm; Fri, 18 Jan 2008 09:44:18 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.124])
-	by mail.op5.se (Postfix) with ESMTP id F0A7F1F0802F;
-	Fri, 18 Jan 2008 09:44:16 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <478EEAC4.2010006@talkingspider.com>
+	id S1752052AbYARItT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 03:49:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750893AbYARItT
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 03:49:19 -0500
+Received: from py-out-1112.google.com ([64.233.166.182]:13205 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750853AbYARItS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 03:49:18 -0500
+Received: by py-out-1112.google.com with SMTP id u52so1424970pyb.10
+        for <git@vger.kernel.org>; Fri, 18 Jan 2008 00:49:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=E3BpLQv/dQaUMqVnwydNZE6NHjEfXd22daa3jZFwqGs=;
+        b=N7/sUprX2Ghk2e5NNdOxQofGNY1VqPGPRRbZ/lJtf/rFvKyNhvr/0GnOQekRwgqSO6C6Xdl9AUtRAGfqTf1uFDb0SyU/i99dLpHeV/TYZfy4NlX2UxJQigJ64xL+REKngJVW8JP7NXk89G4RphLjFJgvTHFTOjnurJNDL1MdyKI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=FtywSpJTz2nBs9eWPMYqFv9p9V+qXJl91uqIUhl7v+0UTRm9sc1YexN7/tiX3rad9VTOnS99LJFrorrJdniRuXPY3g0VnSXhYzr5sauCkQbSqA+yffAycSUEW3Zaqm+JXX/yfJI3LvHOZP5VSSLwisIV9IbmTnDg5gs/M+3uc1I=
+Received: by 10.35.111.14 with SMTP id o14mr3493466pym.24.1200646156492;
+        Fri, 18 Jan 2008 00:49:16 -0800 (PST)
+Received: by 10.35.101.13 with HTTP; Fri, 18 Jan 2008 00:49:16 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70979>
 
-Mike wrote:
-> 
-> 
-> Linus Torvalds wrote:
-> 
->> Some people don't split this up, and they tend to make horrible 
->> horrible mistakes, like checking in the *results* of the 
->> post-processing too (ie binary result blobs that can be regenerated 
->> from the other files), because they don't make a clear separation 
->> between the parts they do development on, and the end result.
-> 
-> Honestly, I think your mode of thinking is centered around compiled 
-> languages and linux app(/kernel) development.  The web app 
-> development/deployment model is very different.
-> 
-> With PHP, Python, and Ruby, the development is the deployment.  The 
-> source is the output.  You can't develop web apps in those languages 
-> unless the source files you're working on are under the doc root of your 
-> development server.   "the parts they do development on" and "the end 
-> result" *are* the same files.
-> 
+Hello,
 
-We develop several different PHP packages. We have a test-server where
-pandemonium reings with regards to .git directories and which branches
-are checked out where. We also have a release process, and .git dirs
-*never* end up on production servers.
+ I am working agains a linux kernel net git repository.
 
-The release-process is this: "git tag -s $tag_name; git push $tag_name".
-The update-hook then marks the repo as having a new release and a cron-
-job, running every 5 minutes, takes care of updating our production
-servers. It took me all of 30 minutes to hack up, and not only does it
-make sure we never publish the .git directory, it also makes it really,
-really easy for <insert-non-git-savvy-customer-X> to report a version in
-which he or she has spotted a bug.
+It occurred to me more than once that when trying to
+git-pull a repository I get the following errors; there errors appear
+also after I am running
+"git-reset --hard".
+Any idea what can it be ?
+I must add that I did not made changes in my local copy of the repository.
 
-> 
-> There's a fundamental "best practice" of web development being violated 
-> here- keep your docroots clean, only put stuff in them that should go 
-> live (or should eventually go live when ready).  Other files should not 
-> live under docroot.
-> 
+the command I am running is:
 
-You accomplish that by making sure only stable and signed versions hit
-the deployment server(s). Manual scp/rsync/ftp-mirroring of the testing
-server's docroot is just plain stupid.
-
-> 
-> Maybe git just isn't intended to be used for anything besides compiled
-> languages like c?  Or maybe just not for web app development?
-> 
-
-Well, it was originally intended to manage the Linux kernel, but it's
-written in such a way as to be capable of competently manage just about
-anything.
+git-pull git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.25.git
 
 
-> Finally, to this statement:
-> 
->> It's almost always a bad idea to develop in the tree that is also where
->> you "export" things, and if you find git annoying in this respect, ask
->> yourself why pretty much *every*single*scm*out*there* makes their
->> infrastructure even more noticeable (eg CVS subdirectories in every 
-> single
->> directory etc)
-> 
-> I don't think that pointing at other SCM's practices as the authority is 
-> the stance you really want to take. I can direct you to a video of a 
-> speech by a brilliant guy, in front of some googlers, where he explains 
-> that the entire reason he started the git project is because of the 
-> problems with "*every*single*scm*out*there*".
-> 
+Here are the errors I get:
 
-Those problems aren't "all the scm's in the world store their meta-data
-somewhere!" though, and the ability to tar up a working-tree and get the
-git-directory too is not always a bad thing. It's just your release
-process that needs to eliminate the manual step there so you never copy
-it by accident. That's why people write small and simple scripts though.
+mygateway:/work/src/2.6.25# gitNetPull.sh
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+mygateway:/work/src/2.6.25# git diff
+mygateway:/work/src/2.6.25# gitNetPull.sh
+remote: Generating pack...
+remote: Done counting 8510 objects.
+Result has 7230 objects.
+remote: Deltifying 7230 objects...
+remote:  100% (7230/7230) done
+Indexing 7230 objects...
+remote: Total 7230 (delta 6181), reused 6367 (delta 5448)
+ 100% (7230/7230) done
+Resolving 6181 deltas...
+ 100% (6181/6181) done
+909 objects were added to complete this thin pack.
+Auto-merged Documentation/feature-removal-schedule.txt
+CONFLICT (content): Merge conflict in Documentation/feature-removal-schedule.txt
+Auto-merged MAINTAINERS
+Auto-merged drivers/connector/cn_queue.c
+Auto-merged drivers/connector/connector.c
+Auto-merged drivers/net/macvlan.c
+Auto-merged drivers/net/niu.c
+Auto-merged drivers/net/wireless/b43/xmit.c
+Auto-merged include/linux/inetdevice.h
+Auto-merged include/linux/netfilter.h
+CONFLICT (content): Merge conflict in include/linux/netfilter.h
+Auto-merged include/linux/netfilter/Kbuild
+Auto-merged include/linux/netfilter/xt_RATEEST.h
+CONFLICT (add/add): Merge conflict in include/linux/netfilter/xt_RATEEST.h
+Auto-merged include/linux/netfilter/xt_connlimit.h
+Auto-merged include/linux/netfilter/xt_rateest.h
+CONFLICT (add/add): Merge conflict in include/linux/netfilter/xt_rateest.h
+Auto-merged include/linux/tty.h
+Auto-merged include/linux/xfrm.h
+Auto-merged include/net/fib_rules.h
+CONFLICT (content): Merge conflict in include/net/fib_rules.h
+Auto-merged include/net/ip_fib.h
+Auto-merged include/net/neighbour.h
+Auto-merged include/net/netfilter/nf_conntrack_l3proto.h
+Auto-merged include/net/raw.h
+CONFLICT (content): Merge conflict in include/net/raw.h
+Auto-merged include/net/sch_generic.h
+Auto-merged include/net/sock.h
+Auto-merged include/net/tcp.h
+CONFLICT (content): Merge conflict in include/net/tcp.h
+Auto-merged include/net/xfrm.h
+Auto-merged net/appletalk/aarp.c
+Auto-merged net/atm/br2684.c
+CONFLICT (content): Merge conflict in net/atm/br2684.c
+Auto-merged net/atm/lec.c
+Auto-merged net/atm/proc.c
+Auto-merged net/ax25/af_ax25.c
+Auto-merged net/bridge/br_netfilter.c
+Auto-merged net/core/dev.c
+Auto-merged net/core/fib_rules.c
+CONFLICT (content): Merge conflict in net/core/fib_rules.c
+Auto-merged net/core/neighbour.c
+CONFLICT (content): Merge conflict in net/core/neighbour.c
+Auto-merged net/core/pktgen.c
+Auto-merged net/core/skbuff.c
+Auto-merged net/core/utils.c
+Auto-merged net/dccp/ccids/ccid3.c
+CONFLICT (content): Merge conflict in net/dccp/ccids/ccid3.c
+Auto-merged net/decnet/dn_route.c
+Auto-merged net/ipv4/arp.c
+CONFLICT (content): Merge conflict in net/ipv4/arp.c
+Auto-merged net/ipv4/devinet.c
+CONFLICT (content): Merge conflict in net/ipv4/devinet.c
+Auto-merged net/ipv4/fib_frontend.c
+CONFLICT (content): Merge conflict in net/ipv4/fib_frontend.c
+Auto-merged net/ipv4/fib_hash.c
+CONFLICT (content): Merge conflict in net/ipv4/fib_hash.c
+Auto-merged net/ipv4/fib_semantics.c
+Auto-merged net/ipv4/fib_trie.c
+CONFLICT (content): Merge conflict in net/ipv4/fib_trie.c
+Auto-merged net/ipv4/inet_lro.c
+Auto-merged net/ipv4/ipconfig.c
+Auto-merged net/ipv4/netfilter.c
+Auto-merged net/ipv4/netfilter/Kconfig
+CONFLICT (content): Merge conflict in net/ipv4/netfilter/Kconfig
+Auto-merged net/ipv4/netfilter/Makefile
+CONFLICT (content): Merge conflict in net/ipv4/netfilter/Makefile
+Auto-merged net/ipv4/netfilter/ip_tables.c
+CONFLICT (content): Merge conflict in net/ipv4/netfilter/ip_tables.c
+Auto-merged net/ipv4/netfilter/ipt_CLUSTERIP.c
+Auto-merged net/ipv4/netfilter/ipt_ECN.c
+Auto-merged net/ipv4/netfilter/ipt_LOG.c
+Auto-merged net/ipv4/netfilter/ipt_MASQUERADE.c
+Auto-merged net/ipv4/netfilter/ipt_NETMAP.c
+Auto-merged net/ipv4/netfilter/ipt_REDIRECT.c
+Auto-merged net/ipv4/netfilter/ipt_REJECT.c
+CONFLICT (content): Merge conflict in net/ipv4/netfilter/ipt_REJECT.c
+CONFLICT (delete/modify): net/ipv4/netfilter/ipt_TOS.c deleted in
+7651a1f7ebe567f9088283f6354a5634b5dccb8e and modified in HEAD. Version
+HEAD of net/ipv4/netfilter/ipt_TOS.c left in tree.
+Auto-merged net/ipv4/netfilter/ipt_TTL.c
+Auto-merged net/ipv4/netfilter/ipt_ULOG.c
+Auto-merged net/ipv4/netfilter/ipt_addrtype.c
+Auto-merged net/ipv4/netfilter/ipt_ah.c
+Auto-merged net/ipv4/netfilter/ipt_ecn.c
+CONFLICT (delete/modify): net/ipv4/netfilter/ipt_iprange.c deleted in
+7651a1f7ebe567f9088283f6354a5634b5dccb8e and modified in HEAD. Version
+HEAD of net/ipv4/netfilter/ipt_iprange.c left in tree.
+Auto-merged net/ipv4/netfilter/ipt_recent.c
+Auto-merged net/ipv4/netfilter/ipt_ttl.c
+Auto-merged net/ipv4/netfilter/nf_conntrack_l3proto_ipv4.c
+Auto-merged net/ipv4/netfilter/nf_conntrack_proto_icmp.c
+Auto-merged net/ipv4/raw.c
+CONFLICT (content): Merge conflict in net/ipv4/raw.c
+Auto-merged net/ipv4/route.c
+Auto-merged net/ipv4/tcp.c
+Auto-merged net/ipv4/tcp_cong.c
+Auto-merged net/ipv6/datagram.c
+Auto-merged net/ipv6/netfilter/Kconfig
+CONFLICT (content): Merge conflict in net/ipv6/netfilter/Kconfig
+Auto-merged net/ipv6/netfilter/ip6_tables.c
+CONFLICT (content): Merge conflict in net/ipv6/netfilter/ip6_tables.c
+Auto-merged net/ipv6/netfilter/ip6t_HL.c
+Auto-merged net/ipv6/netfilter/ip6t_LOG.c
+Auto-merged net/ipv6/netfilter/ip6t_REJECT.c
+Auto-merged net/ipv6/netfilter/ip6t_ah.c
+Auto-merged net/ipv6/netfilter/ip6t_eui64.c
+Auto-merged net/ipv6/netfilter/ip6t_frag.c
+Auto-merged net/ipv6/netfilter/ip6t_hbh.c
+Auto-merged net/ipv6/netfilter/ip6t_hl.c
+Auto-merged net/ipv6/netfilter/ip6t_ipv6header.c
+Auto-merged net/ipv6/netfilter/ip6t_mh.c
+Auto-merged net/ipv6/netfilter/ip6t_rt.c
+Auto-merged net/ipv6/netfilter/nf_conntrack_l3proto_ipv6.c
+Auto-merged net/ipv6/netfilter/nf_conntrack_proto_icmpv6.c
+Auto-merged net/ipv6/raw.c
+CONFLICT (content): Merge conflict in net/ipv6/raw.c
+Auto-merged net/ipv6/route.c
+Auto-merged net/irda/af_irda.c
+Auto-merged net/mac80211/ieee80211_ioctl.c
+Auto-merged net/netfilter/Kconfig
+CONFLICT (content): Merge conflict in net/netfilter/Kconfig
+Auto-merged net/netfilter/Makefile
+Auto-merged net/netfilter/core.c
+Auto-merged net/netfilter/nf_conntrack_core.c
+Auto-merged net/netfilter/nf_conntrack_proto_sctp.c
+Auto-merged net/netfilter/nf_conntrack_proto_tcp.c
+Auto-merged net/netfilter/nf_conntrack_proto_udp.c
+Auto-merged net/netfilter/nf_conntrack_proto_udplite.c
+Auto-merged net/netfilter/nf_conntrack_standalone.c
+CONFLICT (delete/modify): net/netfilter/nf_sysctl.c deleted in
+7651a1f7ebe567f9088283f6354a5634b5dccb8e and modified in HEAD. Version
+HEAD of net/netfilter/nf_sysctl.c left in tree.
+Auto-merged net/netfilter/xt_CLASSIFY.c
+Auto-merged net/netfilter/xt_CONNMARK.c
+CONFLICT (content): Merge conflict in net/netfilter/xt_CONNMARK.c
+Auto-merged net/netfilter/xt_CONNSECMARK.c
+Auto-merged net/netfilter/xt_DSCP.c
+CONFLICT (content): Merge conflict in net/netfilter/xt_DSCP.c
+Auto-merged net/netfilter/xt_MARK.c
+CONFLICT (content): Merge conflict in net/netfilter/xt_MARK.c
+Auto-merged net/netfilter/xt_NFLOG.c
+Auto-merged net/netfilter/xt_NFQUEUE.c
+Auto-merged net/netfilter/xt_NOTRACK.c
+Auto-merged net/netfilter/xt_RATEEST.c
+CONFLICT (add/add): Merge conflict in net/netfilter/xt_RATEEST.c
+Auto-merged net/netfilter/xt_SECMARK.c
+Auto-merged net/netfilter/xt_TCPMSS.c
+Auto-merged net/netfilter/xt_TCPOPTSTRIP.c
+CONFLICT (add/add): Merge conflict in net/netfilter/xt_TCPOPTSTRIP.c
+Auto-merged net/netfilter/xt_TRACE.c
+Auto-merged net/netfilter/xt_comment.c
+Auto-merged net/netfilter/xt_connbytes.c
+Auto-merged net/netfilter/xt_connlimit.c
+Auto-merged net/netfilter/xt_connmark.c
+CONFLICT (content): Merge conflict in net/netfilter/xt_connmark.c
+Auto-merged net/netfilter/xt_conntrack.c
+CONFLICT (content): Merge conflict in net/netfilter/xt_conntrack.c
+Auto-merged net/netfilter/xt_dccp.c
+Auto-merged net/netfilter/xt_dscp.c
+CONFLICT (content): Merge conflict in net/netfilter/xt_dscp.c
+Auto-merged net/netfilter/xt_esp.c
+Auto-merged net/netfilter/xt_hashlimit.c
+Auto-merged net/netfilter/xt_helper.c
+Auto-merged net/netfilter/xt_length.c
+Auto-merged net/netfilter/xt_limit.c
+Auto-merged net/netfilter/xt_mac.c
+Auto-merged net/netfilter/xt_mark.c
+CONFLICT (content): Merge conflict in net/netfilter/xt_mark.c
+Auto-merged net/netfilter/xt_multiport.c
+Auto-merged net/netfilter/xt_owner.c
+CONFLICT (add/add): Merge conflict in net/netfilter/xt_owner.c
+Auto-merged net/netfilter/xt_physdev.c
+Auto-merged net/netfilter/xt_pkttype.c
+CONFLICT (content): Merge conflict in net/netfilter/xt_pkttype.c
+Auto-merged net/netfilter/xt_policy.c
+CONFLICT (content): Merge conflict in net/netfilter/xt_policy.c
+Auto-merged net/netfilter/xt_quota.c
+Auto-merged net/netfilter/xt_realm.c
+Auto-merged net/netfilter/xt_sctp.c
+Auto-merged net/netfilter/xt_statistic.c
+Auto-merged net/netfilter/xt_string.c
+Auto-merged net/netfilter/xt_tcpmss.c
+Auto-merged net/netfilter/xt_tcpudp.c
+Auto-merged net/netfilter/xt_time.c
+Auto-merged net/netfilter/xt_u32.c
+Auto-merged net/netlink/af_netlink.c
+CONFLICT (content): Merge conflict in net/netlink/af_netlink.c
+Auto-merged net/rose/af_rose.c
+Auto-merged net/sched/sch_htb.c
+Auto-merged net/sctp/sm_make_chunk.c
+Auto-merged net/sctp/sm_statefuns.c
+Auto-merged net/sctp/ulpevent.c
+Auto-merged net/x25/x25_forward.c
+Auto-merged net/xfrm/xfrm_policy.c
+Auto-merged net/xfrm/xfrm_state.c
+CONFLICT (content): Merge conflict in net/xfrm/xfrm_state.c
+Auto-merged net/xfrm/xfrm_user.c
+Automatic merge failed; fix conflicts and then commit the result.
+
+
+regards,
+Ian
