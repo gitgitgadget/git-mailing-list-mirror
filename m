@@ -1,96 +1,61 @@
-From: "Jay Soffian" <jaysoffian+git@gmail.com>
-Subject: Re: [PATCH 2/3] send-email: validate patches before sending anything
-Date: Fri, 18 Jan 2008 12:39:45 -0500
-Message-ID: <76718490801180939v12112b5btd71dfb1fb5be5897@mail.gmail.com>
-References: <20080118141638.GA14928@coredump.intra.peff.net>
-	 <20080118141948.GB19783@coredump.intra.peff.net>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: git submodule when submodule is not a clone of a repository
+Date: Fri, 18 Jan 2008 18:46:03 +0100
+Message-ID: <8c5c35580801180946q3ba824e2s4c32ac504166c684@mail.gmail.com>
+References: <loom.20080118T171433-93@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Sixt" <j.sixt@viscovery.net>,
-	"Adam Piatyszek" <ediap@users.sourceforge.net>, git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 18 18:40:21 2008
+Cc: git@vger.kernel.org
+To: "Sergio Callegari" <sergio.callegari@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 18 18:46:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFvCU-0001FP-1a
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 18:40:18 +0100
+	id 1JFvIb-0003ec-8f
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 18:46:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759634AbYARRjr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 12:39:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755353AbYARRjr
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 12:39:47 -0500
-Received: from wa-out-1112.google.com ([209.85.146.181]:35569 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756580AbYARRjq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 12:39:46 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1852680wah.23
-        for <git@vger.kernel.org>; Fri, 18 Jan 2008 09:39:46 -0800 (PST)
+	id S1763004AbYARRqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 12:46:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762957AbYARRqH
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 12:46:07 -0500
+Received: from nz-out-0506.google.com ([64.233.162.239]:2128 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762803AbYARRqG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 12:46:06 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so884269nze.1
+        for <git@vger.kernel.org>; Fri, 18 Jan 2008 09:46:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=5hDPLTXbcg3BraWDDMDjtTWjvOy563imGdGR7emNlZQ=;
-        b=hxbGKJXZtrWwlSu2LNKnq/EBuPHyQHfEdEFK0/MhnPKF6IZkpwCPHzZK/renzo4cijqzu1hFvVhaPFJHxm8wJG+tZ0pEXR4EzY8rSFHpNc6kvHYTVFgxwsuSEin65omcMDnSqReVxlmc29kjhRi4vH6LgKfaxKmaHTdItpvcxc8=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=nl3AVKfXtQsbXWQgGZ4HkIRgPn1tOcNWVEPYdf8FbAc=;
+        b=rafKn6E813Lu36N4chw8xC9t4/GOGUulXxqHf97LeYjQdouu417O+tezIBoOySfGCuU4BHZHQFFP+4Akj+oFPjoE1ascD5Jw/yn1BlxwHdGP/BcX+BQBTTANdxk7a6G8by0cUiSBZAcyg9UeBsgNcKe6wDPEwx9rYluM/tNptxM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=cc+MQv8faOYo/DrSt6k/5cTUl1mMQp+a1nx9vvIuoZdYD9gjsy93Wu6FB84zUjmbIS+F49cc4fHRgdywxv12N2brKgDWIQ3obhgScEiNgVzAj4KEa6q+m9BqCJMCndefoQ4qY6MfMYKpP4iCXZwRp2PeodPWJLtPhj882TKV9gg=
-Received: by 10.114.195.19 with SMTP id s19mr1302533waf.58.1200677985307;
-        Fri, 18 Jan 2008 09:39:45 -0800 (PST)
-Received: by 10.114.14.17 with HTTP; Fri, 18 Jan 2008 09:39:45 -0800 (PST)
-In-Reply-To: <20080118141948.GB19783@coredump.intra.peff.net>
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VLFhJfy6j1msQtWoGDJg02gWxcHLL1F2pQS8q9fSCc/7LbQt7agJnFmFqpv4NLb1bsetJn5oyerZ3iRTd8+TUJ6QniYewf2z9H+nxjoOfdb45W9euOHW0TPZKt7IH3KJ8gvol7PdPFSJ+wPD4egtCbYIRPXt37ATZubcEvPR94k=
+Received: by 10.114.59.1 with SMTP id h1mr1273670waa.39.1200678363161;
+        Fri, 18 Jan 2008 09:46:03 -0800 (PST)
+Received: by 10.114.241.8 with HTTP; Fri, 18 Jan 2008 09:46:03 -0800 (PST)
+In-Reply-To: <loom.20080118T171433-93@post.gmane.org>
 Content-Disposition: inline
-X-Google-Sender-Auth: 08cd2622e93f6b44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71044>
 
-On 1/18/08, Jeff King <peff@peff.net> wrote:
+On Jan 18, 2008 6:25 PM, Sergio Callegari <sergio.callegari@gmail.com> wrote:
+> Would it make sense to have a git submodule update not try to fetch if there is
+> no url defined, but still checkout the right commit for the submodule (rather
+> than skipping the submodule at all) ?
 
-> +foreach my $f (@files) {
-> +       my $error = validate_patch($f);
-> +       $error and die "fatal: $f: $error\nwarning: no patches were sent\n";
-> +}
-> +
->  if (@files) {
->         unless ($quiet) {
->                 print $_,"\n" for (@files);
-> @@ -837,3 +842,15 @@ sub unique_email_list(@) {
->         }
->         return @emails;
->  }
-> +
-> +sub validate_patch {
-> +       my $fn = shift;
-> +       open(my $fh, '<', $fn)
-> +               or die "unable to open $fn: $!\n";
-> +       while (my $line = <$fh>) {
-> +               if (length($line) > 998) {
-> +                       return "patch contains line longer than 998 characters";
-> +               }
-> +       }
-> +       return undef;
-> +}
+Actually, we could (and probably should) teach git-submodule not to
+fetch if the requested SHA1 is already available in the submodule, and
+I guess this would solve the problem quite nicely for your usage.
 
-How about offering the line number. e.g.:
+But that will probably not happen before 1.5.4.
 
-return "patch line number $. is longer than 998 characters";
-
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 659f9c7..1c41810 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -78,4 +78,24 @@ test_expect_success 'Show all headers' '
->         diff -u expected-show-all-headers actual-show-all-headers
->  '
->
-> +test_expect_success 'no patch was sent' '
-
-Shouldn't that be "no patches were sent" to match the perl output?
-
-j.
+--
+larsh
