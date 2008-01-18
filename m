@@ -1,99 +1,127 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Fri, 18 Jan 2008 01:44:04 +0100
-Message-ID: <200801180144.06253.robin.rosenberg.lists@dewire.com>
-References: <478E1FED.5010801@web.de> <alpine.LSU.1.00.0801171556170.5731@racer.site> <2010BC03-E5AE-4333-96CA-4A9B700AD720@sb.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Wincent Colaiuta <win@wincent.com>,
-	Mitch Tishmack <mitcht.git@gmail.com>, git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Fri Jan 18 01:44:36 2008
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] autoconf: Add checking for unsetenv function
+Date: Fri, 18 Jan 2008 02:03:51 +0100
+Message-ID: <1200618231-28675-1-git-send-email-jnareb@gmail.com>
+References: <20080117141143.38a88c7a@pc09.procura.nl>
+Cc: "H.Merijn Brand" <h.m.brand@xs4all.nl>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 18 01:59:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFfLX-0005l4-6k
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 01:44:35 +0100
+	id 1JFfa0-0001C3-Ox
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 01:59:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756857AbYARAoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2008 19:44:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756662AbYARAoG
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 19:44:06 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:6658 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1756597AbYARAoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2008 19:44:04 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id C643E8030D9;
-	Fri, 18 Jan 2008 01:44:02 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XK-Td5EZ3oi2; Fri, 18 Jan 2008 01:44:01 +0100 (CET)
-Received: from [10.9.0.4] (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id C342D80264C;
-	Fri, 18 Jan 2008 01:44:01 +0100 (CET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-In-Reply-To: <2010BC03-E5AE-4333-96CA-4A9B700AD720@sb.org>
-Content-Disposition: inline
+	id S1756723AbYARA7E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2008 19:59:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754781AbYARA7C
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 19:59:02 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:50451 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752022AbYARA7A (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2008 19:59:00 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so415752ugc.16
+        for <git@vger.kernel.org>; Thu, 17 Jan 2008 16:58:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=5MgmXQmeSIGmHvbdWT3+yMUu612UY0JSWK/9fzGq+C8=;
+        b=YRKs4s5NboxbyVgfFNYxBu45e51yuLkwF8j9ho1eunmnMkhs6ZLZ5F7o+EgI4wnlu3EfONu1hNtIH8bhYl0MjtrpgVHOd1nxSq6iOZdFfZswnGf0Sro72qXBo23GxS4o/M3O5N8NHNYob66Sn8xEVYifn1MCYCQvcXSP5ItnLMM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=LE5p/ySyFYJqpSPPlzwNTlPNBtGuj5Fps7IEmDsx5SELeZxLyvWEatjUyKQj/alhPb73gdjmyvLUvn/RG3xJgOrFV+f1WgiySin68npTj1VXlNFQcj/zzLWavfSe9ipwPj2KEB9zlBjjHL7q13PqxA1DwAfUdwU50mOpYF70smk=
+Received: by 10.66.255.7 with SMTP id c7mr416415ugi.43.1200617938731;
+        Thu, 17 Jan 2008 16:58:58 -0800 (PST)
+Received: from roke.D-201 ( [83.8.209.38])
+        by mx.google.com with ESMTPS id k2sm3308613ugf.12.2008.01.17.16.58.56
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 17 Jan 2008 16:58:57 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id m0I13qWe028690;
+	Fri, 18 Jan 2008 02:03:53 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m0I13pBB028689;
+	Fri, 18 Jan 2008 02:03:51 +0100
+X-Mailer: git-send-email 1.5.3.7
+In-Reply-To: <20080117141143.38a88c7a@pc09.procura.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70943>
 
-torsdagen den 17 januari 2008 skrev Kevin Ballard:
-> On Jan 17, 2008, at 10:57 AM, Johannes Schindelin wrote:
-> 
-> > On Thu, 17 Jan 2008, Kevin Ballard wrote:
-> >
-> >> On Jan 17, 2008, at 5:22 AM, Wincent Colaiuta wrote:
-> >>
-> >>> While it's a nice workaround, it really is just that (a workaround)
-> >>> because performance will be suboptimal in a repository running on a
-> >>> disk image (and many of switched to Git because of its speed).
-> >>
-> >> Not only is it suboptimal, it's also not acceptable, plain and  
-> >> simple.
-> >
-> > If it's not acceptable, do something about it (and I don't mean  
-> > writing 50
-> > emails). If you don't want to do something about it, I have to  
-> > assume that
-> > you accept it as-is.
-> 
-> I never said I don't want to do anything about it. However, I do  
-> believe that it will take a significant investment of time and energy  
-> to learn all the gooey details of how git handles filenames and how  
-> the index works and all that jazz, which is knowledge that other  
-> people already have. I believe that, for me to solve this problem  
-> independently, it may require so much time that it never gets done  
-> (after all, I am fairly busy). However, if other people who already  
-> have this knowledge are willing to help, that would make this task far  
-> easier, especially given that if nobody else even acknowledges that  
-> this is a problem I don't have much hope of getting a patch accepted.
-> 
-> So again, I'm certainly going to try, but working by myself it simply  
-> may never get done.
+Update configure.ac (and config.mak.in) by adding test for unsetenv
+(NO_UNSETENV).  Add comment about NO_UNSETENV to Makefile header, as
+original commit 731043fd adding compat/unsetenv.c didn't do that.
 
-(This is only for those that think the problem should be solved somehow. The
-rest can move on - nothing to see here)
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+> * Failure of the configure/make to handle the lack of unsetenv() in
+>   pre-11.31 HP-UX releases. Bizarrely, it does handle the lack of setenv()
+>   and also has a compat/unsetenv.c for use by non-unsetenv()-capable OS'es,
+>   but then configure and config.mak.in completely fail to use a NO_UNSETENV
+>   variable like they should!
 
-You may look at http://rosenberg.homelinux.net/cgi-bin/gitweb/gitweb.cgi?p=GIT.git;a=log;h=i18n
-for inspiration. It's pretty obsolete by now and only a "proof of concept", i.e.
-it can be done, not that it necessarily should be done exactly this way.
+I'm sorry for that. When I was checking which tests were missing from
+configure.ac I have examined only Makefile header... and there was no
+note about NO_UNSETENV there.
 
-Basically it intercepts the user's access to git, i.e. certain commands
-and how files are named (since those names represent a user interface). Then
-it assumes the internal encoding is UTF-8 (or garbage) converting to and
-from the user's local encoding. The heuristics is based on the assumption that
-a string (even random onesthat looks like UTF-8, with a very high probablity
-actually is UTF-8 encoded.
+But the above comment I think also means that the uname base "guessage"
+system in Makefile didn't catch that. You probably would want to modify
+Makefile in that direction too; currently "guessage system" sets
+NO_UNSETENV for and SunOS 5.8, SunOS 5.9, and you probably would want
+to use it also for (older?) HP-UX.
 
-The test cases might be usable almost as is.
+ Makefile      |    2 ++
+ config.mak.in |    1 +
+ configure.ac  |    6 ++++++
+ 3 files changed, 9 insertions(+), 0 deletions(-)
 
--- robin
+diff --git a/Makefile b/Makefile
+index 82e9cd6..f35e269 100644
+--- a/Makefile
++++ b/Makefile
+@@ -38,6 +38,8 @@ all::
+ #
+ # Define NO_SETENV if you don't have setenv in the C library.
+ #
++# Define NO_UNSETENV if you don't have unsetenv in the C library.
++#
+ # Define NO_MKDTEMP if you don't have mkdtemp in the C library.
+ #
+ # Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic link.
+diff --git a/config.mak.in b/config.mak.in
+index 15fb26c..40b14d9 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -40,6 +40,7 @@ NO_MEMMEM=@NO_MEMMEM@
+ NO_STRLCPY=@NO_STRLCPY@
+ NO_STRTOUMAX=@NO_STRTOUMAX@
+ NO_SETENV=@NO_SETENV@
++NO_UNSETENV=@NO_UNSETENV@
+ NO_MKDTEMP=@NO_MKDTEMP@
+ NO_ICONV=@NO_ICONV@
+ OLD_ICONV=@OLD_ICONV@
+diff --git a/configure.ac b/configure.ac
+index 6f641e3..af177fd 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -356,6 +356,12 @@ AC_CHECK_FUNC(setenv,
+ [NO_SETENV=YesPlease])
+ AC_SUBST(NO_SETENV)
+ #
++# Define NO_UNSETENV if you don't have unsetenv in the C library.
++AC_CHECK_FUNC(unsetenv,
++[NO_UNSETENV=],
++[NO_UNSETENV=YesPlease])
++AC_SUBST(NO_UNSETENV)
++#
+ # Define NO_MKDTEMP if you don't have mkdtemp in the C library.
+ AC_CHECK_FUNC(mkdtemp,
+ [NO_MKDTEMP=],
+-- 
+1.5.3.7
