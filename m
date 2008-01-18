@@ -1,281 +1,94 @@
-From: "Ian Brown" <ianbrn@gmail.com>
-Subject: errors in git pull
-Date: Fri, 18 Jan 2008 10:49:16 +0200
-Message-ID: <d0383f90801180049p1599dd6fmfabcdcad7d9d3275@mail.gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Fri, 18 Jan 2008 11:49:12 +0300
+Message-ID: <20080118084912.GC14871@dpotapov.dyndns.org>
+References: <478E1FED.5010801@web.de> <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org> <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org> <200801180205.28742.robin.rosenberg.lists@dewire.com> <alpine.LFD.1.00.0801171716310.2957@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 18 09:49:55 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	Pedro Melo <melo@simplicidade.org>,
+	Mark Junker <mjscod@web.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jan 18 09:50:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFmv7-0003Pn-MG
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 09:49:50 +0100
+	id 1JFmvU-0003WB-BL
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 09:50:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752052AbYARItT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 03:49:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750893AbYARItT
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 03:49:19 -0500
-Received: from py-out-1112.google.com ([64.233.166.182]:13205 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750853AbYARItS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 03:49:18 -0500
-Received: by py-out-1112.google.com with SMTP id u52so1424970pyb.10
-        for <git@vger.kernel.org>; Fri, 18 Jan 2008 00:49:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=E3BpLQv/dQaUMqVnwydNZE6NHjEfXd22daa3jZFwqGs=;
-        b=N7/sUprX2Ghk2e5NNdOxQofGNY1VqPGPRRbZ/lJtf/rFvKyNhvr/0GnOQekRwgqSO6C6Xdl9AUtRAGfqTf1uFDb0SyU/i99dLpHeV/TYZfy4NlX2UxJQigJ64xL+REKngJVW8JP7NXk89G4RphLjFJgvTHFTOjnurJNDL1MdyKI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=FtywSpJTz2nBs9eWPMYqFv9p9V+qXJl91uqIUhl7v+0UTRm9sc1YexN7/tiX3rad9VTOnS99LJFrorrJdniRuXPY3g0VnSXhYzr5sauCkQbSqA+yffAycSUEW3Zaqm+JXX/yfJI3LvHOZP5VSSLwisIV9IbmTnDg5gs/M+3uc1I=
-Received: by 10.35.111.14 with SMTP id o14mr3493466pym.24.1200646156492;
-        Fri, 18 Jan 2008 00:49:16 -0800 (PST)
-Received: by 10.35.101.13 with HTTP; Fri, 18 Jan 2008 00:49:16 -0800 (PST)
+	id S1750893AbYARItm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 03:49:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752067AbYARItm
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 03:49:42 -0500
+Received: from smtp03.mtu.ru ([62.5.255.50]:61664 "EHLO smtp03.mtu.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750853AbYARItl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 03:49:41 -0500
+Received: from smtp03.mtu.ru (localhost.mtu.ru [127.0.0.1])
+	by smtp03.mtu.ru (Postfix) with ESMTP id DBA131870347;
+	Fri, 18 Jan 2008 11:49:31 +0300 (MSK)
+Received: from dpotapov.dyndns.org (ppp85-141-191-154.pppoe.mtu-net.ru [85.141.191.154])
+	by smtp03.mtu.ru (Postfix) with ESMTP id 604571870493;
+	Fri, 18 Jan 2008 11:49:12 +0300 (MSK)
+Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
+	(envelope-from <dpotapov@gmail.com>)
+	id 1JFmuW-0005DY-JK; Fri, 18 Jan 2008 11:49:12 +0300
 Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.00.0801171716310.2957@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-DCC-STREAM-Metrics: smtp03.mtu.ru 10002; Body=0 Fuz1=0 Fuz2=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70980>
 
-Hello,
+On Thu, Jan 17, 2008 at 05:24:01PM -0800, Linus Torvalds wrote:
+> 
+> On Fri, 18 Jan 2008, Robin Rosenberg wrote:
+> 
+> > It uses the local 8-bit codepage, which is not UTF-8, often some latin-inspired
+> > thingy, but in Asia multi-byte encodings are used. In western Europe it is
+> > Windows-1252, which is almost, but not exactly iso-8859-1. Oh, and then we
+> > have the cmd prompt which has another encoding in 8-bit mode.
 
- I am working agains a linux kernel net git repository.
+Yes, the default code page for the command prompt uses so-called OEM
+encoding, and GUI programs uses another one, which MS calls as "ANSI"
+encoding. However, if you use Cygwin, then you have ANSI encoding in
+the command prompt. So, in the same command prompt window, you can have
+Cygwin programs using one encoding and other window console programs
+using a different encoding.
 
-It occurred to me more than once that when trying to
-git-pull a repository I get the following errors; there errors appear
-also after I am running
-"git-reset --hard".
-Any idea what can it be ?
-I must add that I did not made changes in my local copy of the repository.
+> 
+> Well, if it uses a 8-bit codepage, then that means that as far as the 
+> POSIX filename interface is concerned, it has nothing what-so-ever to do 
+> with Unicode (ie unicode is just a totally invisible internal encoding 
+> issue, not externally visible).
 
-the command I am running is:
+Some people tried to set the current code page to 65001, which is
+the Microsoft code page for UTF-8. However, it seems that does not
+work very well.
 
-git-pull git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.25.git
+http://support.microsoft.com/kb/175392
+http://blogs.msdn.com/michkap/archive/2006/03/13/550191.aspx
 
+It seems to me that Win32 API functions work correctly with
+UTF-8 (after all, they are just wrappers over UTF-16 functions),
+but Microsoft's C library cannot handle UTF-8 (or any other
+encoding that requires more than two bytes per character).
 
-Here are the errors I get:
+> Anybody know which one cygwin/mingw does?
 
-mygateway:/work/src/2.6.25# gitNetPull.sh
+There is a patch for Cygwin that adds UTF-8 support for it, however,
+Cygwin maintainers do not like it, so it is not integrated. I think
+Cygwin 1.7 will support UTF-8, but I have no idea how soon it will be
+released.
 
-mygateway:/work/src/2.6.25# git diff
-mygateway:/work/src/2.6.25# gitNetPull.sh
-remote: Generating pack...
-remote: Done counting 8510 objects.
-Result has 7230 objects.
-remote: Deltifying 7230 objects...
-remote:  100% (7230/7230) done
-Indexing 7230 objects...
-remote: Total 7230 (delta 6181), reused 6367 (delta 5448)
- 100% (7230/7230) done
-Resolving 6181 deltas...
- 100% (6181/6181) done
-909 objects were added to complete this thin pack.
-Auto-merged Documentation/feature-removal-schedule.txt
-CONFLICT (content): Merge conflict in Documentation/feature-removal-schedule.txt
-Auto-merged MAINTAINERS
-Auto-merged drivers/connector/cn_queue.c
-Auto-merged drivers/connector/connector.c
-Auto-merged drivers/net/macvlan.c
-Auto-merged drivers/net/niu.c
-Auto-merged drivers/net/wireless/b43/xmit.c
-Auto-merged include/linux/inetdevice.h
-Auto-merged include/linux/netfilter.h
-CONFLICT (content): Merge conflict in include/linux/netfilter.h
-Auto-merged include/linux/netfilter/Kbuild
-Auto-merged include/linux/netfilter/xt_RATEEST.h
-CONFLICT (add/add): Merge conflict in include/linux/netfilter/xt_RATEEST.h
-Auto-merged include/linux/netfilter/xt_connlimit.h
-Auto-merged include/linux/netfilter/xt_rateest.h
-CONFLICT (add/add): Merge conflict in include/linux/netfilter/xt_rateest.h
-Auto-merged include/linux/tty.h
-Auto-merged include/linux/xfrm.h
-Auto-merged include/net/fib_rules.h
-CONFLICT (content): Merge conflict in include/net/fib_rules.h
-Auto-merged include/net/ip_fib.h
-Auto-merged include/net/neighbour.h
-Auto-merged include/net/netfilter/nf_conntrack_l3proto.h
-Auto-merged include/net/raw.h
-CONFLICT (content): Merge conflict in include/net/raw.h
-Auto-merged include/net/sch_generic.h
-Auto-merged include/net/sock.h
-Auto-merged include/net/tcp.h
-CONFLICT (content): Merge conflict in include/net/tcp.h
-Auto-merged include/net/xfrm.h
-Auto-merged net/appletalk/aarp.c
-Auto-merged net/atm/br2684.c
-CONFLICT (content): Merge conflict in net/atm/br2684.c
-Auto-merged net/atm/lec.c
-Auto-merged net/atm/proc.c
-Auto-merged net/ax25/af_ax25.c
-Auto-merged net/bridge/br_netfilter.c
-Auto-merged net/core/dev.c
-Auto-merged net/core/fib_rules.c
-CONFLICT (content): Merge conflict in net/core/fib_rules.c
-Auto-merged net/core/neighbour.c
-CONFLICT (content): Merge conflict in net/core/neighbour.c
-Auto-merged net/core/pktgen.c
-Auto-merged net/core/skbuff.c
-Auto-merged net/core/utils.c
-Auto-merged net/dccp/ccids/ccid3.c
-CONFLICT (content): Merge conflict in net/dccp/ccids/ccid3.c
-Auto-merged net/decnet/dn_route.c
-Auto-merged net/ipv4/arp.c
-CONFLICT (content): Merge conflict in net/ipv4/arp.c
-Auto-merged net/ipv4/devinet.c
-CONFLICT (content): Merge conflict in net/ipv4/devinet.c
-Auto-merged net/ipv4/fib_frontend.c
-CONFLICT (content): Merge conflict in net/ipv4/fib_frontend.c
-Auto-merged net/ipv4/fib_hash.c
-CONFLICT (content): Merge conflict in net/ipv4/fib_hash.c
-Auto-merged net/ipv4/fib_semantics.c
-Auto-merged net/ipv4/fib_trie.c
-CONFLICT (content): Merge conflict in net/ipv4/fib_trie.c
-Auto-merged net/ipv4/inet_lro.c
-Auto-merged net/ipv4/ipconfig.c
-Auto-merged net/ipv4/netfilter.c
-Auto-merged net/ipv4/netfilter/Kconfig
-CONFLICT (content): Merge conflict in net/ipv4/netfilter/Kconfig
-Auto-merged net/ipv4/netfilter/Makefile
-CONFLICT (content): Merge conflict in net/ipv4/netfilter/Makefile
-Auto-merged net/ipv4/netfilter/ip_tables.c
-CONFLICT (content): Merge conflict in net/ipv4/netfilter/ip_tables.c
-Auto-merged net/ipv4/netfilter/ipt_CLUSTERIP.c
-Auto-merged net/ipv4/netfilter/ipt_ECN.c
-Auto-merged net/ipv4/netfilter/ipt_LOG.c
-Auto-merged net/ipv4/netfilter/ipt_MASQUERADE.c
-Auto-merged net/ipv4/netfilter/ipt_NETMAP.c
-Auto-merged net/ipv4/netfilter/ipt_REDIRECT.c
-Auto-merged net/ipv4/netfilter/ipt_REJECT.c
-CONFLICT (content): Merge conflict in net/ipv4/netfilter/ipt_REJECT.c
-CONFLICT (delete/modify): net/ipv4/netfilter/ipt_TOS.c deleted in
-7651a1f7ebe567f9088283f6354a5634b5dccb8e and modified in HEAD. Version
-HEAD of net/ipv4/netfilter/ipt_TOS.c left in tree.
-Auto-merged net/ipv4/netfilter/ipt_TTL.c
-Auto-merged net/ipv4/netfilter/ipt_ULOG.c
-Auto-merged net/ipv4/netfilter/ipt_addrtype.c
-Auto-merged net/ipv4/netfilter/ipt_ah.c
-Auto-merged net/ipv4/netfilter/ipt_ecn.c
-CONFLICT (delete/modify): net/ipv4/netfilter/ipt_iprange.c deleted in
-7651a1f7ebe567f9088283f6354a5634b5dccb8e and modified in HEAD. Version
-HEAD of net/ipv4/netfilter/ipt_iprange.c left in tree.
-Auto-merged net/ipv4/netfilter/ipt_recent.c
-Auto-merged net/ipv4/netfilter/ipt_ttl.c
-Auto-merged net/ipv4/netfilter/nf_conntrack_l3proto_ipv4.c
-Auto-merged net/ipv4/netfilter/nf_conntrack_proto_icmp.c
-Auto-merged net/ipv4/raw.c
-CONFLICT (content): Merge conflict in net/ipv4/raw.c
-Auto-merged net/ipv4/route.c
-Auto-merged net/ipv4/tcp.c
-Auto-merged net/ipv4/tcp_cong.c
-Auto-merged net/ipv6/datagram.c
-Auto-merged net/ipv6/netfilter/Kconfig
-CONFLICT (content): Merge conflict in net/ipv6/netfilter/Kconfig
-Auto-merged net/ipv6/netfilter/ip6_tables.c
-CONFLICT (content): Merge conflict in net/ipv6/netfilter/ip6_tables.c
-Auto-merged net/ipv6/netfilter/ip6t_HL.c
-Auto-merged net/ipv6/netfilter/ip6t_LOG.c
-Auto-merged net/ipv6/netfilter/ip6t_REJECT.c
-Auto-merged net/ipv6/netfilter/ip6t_ah.c
-Auto-merged net/ipv6/netfilter/ip6t_eui64.c
-Auto-merged net/ipv6/netfilter/ip6t_frag.c
-Auto-merged net/ipv6/netfilter/ip6t_hbh.c
-Auto-merged net/ipv6/netfilter/ip6t_hl.c
-Auto-merged net/ipv6/netfilter/ip6t_ipv6header.c
-Auto-merged net/ipv6/netfilter/ip6t_mh.c
-Auto-merged net/ipv6/netfilter/ip6t_rt.c
-Auto-merged net/ipv6/netfilter/nf_conntrack_l3proto_ipv6.c
-Auto-merged net/ipv6/netfilter/nf_conntrack_proto_icmpv6.c
-Auto-merged net/ipv6/raw.c
-CONFLICT (content): Merge conflict in net/ipv6/raw.c
-Auto-merged net/ipv6/route.c
-Auto-merged net/irda/af_irda.c
-Auto-merged net/mac80211/ieee80211_ioctl.c
-Auto-merged net/netfilter/Kconfig
-CONFLICT (content): Merge conflict in net/netfilter/Kconfig
-Auto-merged net/netfilter/Makefile
-Auto-merged net/netfilter/core.c
-Auto-merged net/netfilter/nf_conntrack_core.c
-Auto-merged net/netfilter/nf_conntrack_proto_sctp.c
-Auto-merged net/netfilter/nf_conntrack_proto_tcp.c
-Auto-merged net/netfilter/nf_conntrack_proto_udp.c
-Auto-merged net/netfilter/nf_conntrack_proto_udplite.c
-Auto-merged net/netfilter/nf_conntrack_standalone.c
-CONFLICT (delete/modify): net/netfilter/nf_sysctl.c deleted in
-7651a1f7ebe567f9088283f6354a5634b5dccb8e and modified in HEAD. Version
-HEAD of net/netfilter/nf_sysctl.c left in tree.
-Auto-merged net/netfilter/xt_CLASSIFY.c
-Auto-merged net/netfilter/xt_CONNMARK.c
-CONFLICT (content): Merge conflict in net/netfilter/xt_CONNMARK.c
-Auto-merged net/netfilter/xt_CONNSECMARK.c
-Auto-merged net/netfilter/xt_DSCP.c
-CONFLICT (content): Merge conflict in net/netfilter/xt_DSCP.c
-Auto-merged net/netfilter/xt_MARK.c
-CONFLICT (content): Merge conflict in net/netfilter/xt_MARK.c
-Auto-merged net/netfilter/xt_NFLOG.c
-Auto-merged net/netfilter/xt_NFQUEUE.c
-Auto-merged net/netfilter/xt_NOTRACK.c
-Auto-merged net/netfilter/xt_RATEEST.c
-CONFLICT (add/add): Merge conflict in net/netfilter/xt_RATEEST.c
-Auto-merged net/netfilter/xt_SECMARK.c
-Auto-merged net/netfilter/xt_TCPMSS.c
-Auto-merged net/netfilter/xt_TCPOPTSTRIP.c
-CONFLICT (add/add): Merge conflict in net/netfilter/xt_TCPOPTSTRIP.c
-Auto-merged net/netfilter/xt_TRACE.c
-Auto-merged net/netfilter/xt_comment.c
-Auto-merged net/netfilter/xt_connbytes.c
-Auto-merged net/netfilter/xt_connlimit.c
-Auto-merged net/netfilter/xt_connmark.c
-CONFLICT (content): Merge conflict in net/netfilter/xt_connmark.c
-Auto-merged net/netfilter/xt_conntrack.c
-CONFLICT (content): Merge conflict in net/netfilter/xt_conntrack.c
-Auto-merged net/netfilter/xt_dccp.c
-Auto-merged net/netfilter/xt_dscp.c
-CONFLICT (content): Merge conflict in net/netfilter/xt_dscp.c
-Auto-merged net/netfilter/xt_esp.c
-Auto-merged net/netfilter/xt_hashlimit.c
-Auto-merged net/netfilter/xt_helper.c
-Auto-merged net/netfilter/xt_length.c
-Auto-merged net/netfilter/xt_limit.c
-Auto-merged net/netfilter/xt_mac.c
-Auto-merged net/netfilter/xt_mark.c
-CONFLICT (content): Merge conflict in net/netfilter/xt_mark.c
-Auto-merged net/netfilter/xt_multiport.c
-Auto-merged net/netfilter/xt_owner.c
-CONFLICT (add/add): Merge conflict in net/netfilter/xt_owner.c
-Auto-merged net/netfilter/xt_physdev.c
-Auto-merged net/netfilter/xt_pkttype.c
-CONFLICT (content): Merge conflict in net/netfilter/xt_pkttype.c
-Auto-merged net/netfilter/xt_policy.c
-CONFLICT (content): Merge conflict in net/netfilter/xt_policy.c
-Auto-merged net/netfilter/xt_quota.c
-Auto-merged net/netfilter/xt_realm.c
-Auto-merged net/netfilter/xt_sctp.c
-Auto-merged net/netfilter/xt_statistic.c
-Auto-merged net/netfilter/xt_string.c
-Auto-merged net/netfilter/xt_tcpmss.c
-Auto-merged net/netfilter/xt_tcpudp.c
-Auto-merged net/netfilter/xt_time.c
-Auto-merged net/netfilter/xt_u32.c
-Auto-merged net/netlink/af_netlink.c
-CONFLICT (content): Merge conflict in net/netlink/af_netlink.c
-Auto-merged net/rose/af_rose.c
-Auto-merged net/sched/sch_htb.c
-Auto-merged net/sctp/sm_make_chunk.c
-Auto-merged net/sctp/sm_statefuns.c
-Auto-merged net/sctp/ulpevent.c
-Auto-merged net/x25/x25_forward.c
-Auto-merged net/xfrm/xfrm_policy.c
-Auto-merged net/xfrm/xfrm_state.c
-CONFLICT (content): Merge conflict in net/xfrm/xfrm_state.c
-Auto-merged net/xfrm/xfrm_user.c
-Automatic merge failed; fix conflicts and then commit the result.
+I don't know much about mingw, but if I am not mistaken, mingw relies
+on Microsoft's C library, so I suppose it uses an "OEM" code page for
+console programs by default.
 
 
-regards,
-Ian
+Dmitry
