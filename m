@@ -1,66 +1,71 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH] git-commit: add a prepare-commit-msg hook
-Date: Fri, 18 Jan 2008 20:46:49 +0100
-Message-ID: <47910229.90700@gnu.org>
-References: <4790BCED.4050207@gnu.org> <20080118190509.GA3411@steel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Include rev-list options in git-log manpage.
+Date: Fri, 18 Jan 2008 11:50:52 -0800
+Message-ID: <7vabn2ewv7.fsf@gitster.siamese.dyndns.org>
+References: <20080117214425.GP29972@genesis.frugalware.org>
+	<7vejcfiop4.fsf@gitster.siamese.dyndns.org>
+	<20080118161714.GS29972@genesis.frugalware.org>
+	<4790D5B7.2000508@viscovery.net>
+	<20080118171827.GV29972@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 20:47:25 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Fri Jan 18 20:51:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFxBV-0000Ky-84
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 20:47:25 +0100
+	id 1JFxFS-0001kr-3I
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 20:51:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760441AbYARTq4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 14:46:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761077AbYARTq4
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 14:46:56 -0500
-Received: from hu-out-0506.google.com ([72.14.214.224]:42736 "EHLO
-	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759741AbYARTqz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 14:46:55 -0500
-Received: by hu-out-0506.google.com with SMTP id 19so374438hue.21
-        for <git@vger.kernel.org>; Fri, 18 Jan 2008 11:46:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        bh=v0M/ONh0zghAyKFUhmbHk81x0sY3usn4YLxJ9yayv+0=;
-        b=ckkTqLS2xChjvRb1Hzx3xSfFRfq+Zu36x05D4AL+53qbMq7TRDBFJkY6U0OMVsk6exzfbV3qwTqHOZJoWEcxvb0w43Q74LFruV8TsQOj+jqCCO3q1CZva4gKyQeuDGBVxEQ4os47kpGT6zQiLZk/QvkHq0hIDe2CgGO3x0iQPwU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        b=vUKUEirRUyJPXs2LC8XPHZupDcAjin6LBtralzS2cyx8doff1WKytnobAB2Xzv0KExZCTbYuyJ1V9HrOHitGLQRWU7h4F5RQcUVsNmx/vGgEw8+gbS/HmZ39do0kbld8VmpfrqfRU9wMZBPD5hH/Ft83zSz74dGYeCCveK38Iyk=
-Received: by 10.86.36.11 with SMTP id j11mr3418170fgj.34.1200685610650;
-        Fri, 18 Jan 2008 11:46:50 -0800 (PST)
-Received: from scientist-2.lan ( [213.140.22.65])
-        by mx.google.com with ESMTPS id d4sm4646251fga.2.2008.01.18.11.46.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 18 Jan 2008 11:46:50 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
-In-Reply-To: <20080118190509.GA3411@steel.home>
+	id S1762071AbYARTvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 14:51:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761909AbYARTvA
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 14:51:00 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:32961 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761628AbYARTvA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 14:51:00 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 931696A1D;
+	Fri, 18 Jan 2008 14:50:58 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 09BD06A1C;
+	Fri, 18 Jan 2008 14:50:53 -0500 (EST)
+In-Reply-To: <20080118171827.GV29972@genesis.frugalware.org> (Miklos Vajna's
+	message of "Fri, 18 Jan 2008 18:18:27 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71055>
 
-Alex Riesen wrote:
-> Paolo Bonzini, Fri, Jan 18, 2008 15:51:25 +0100:
->> +		if (!edit_message) {
->> +			run_hook(index_file, "prepare-commit-msg", git_path(commit_editmsg));
->> +		}
->>  		launch_editor(git_path(commit_editmsg), NULL, env);
-> 
-> "preedit-new-commit-msg", perhaps. A "prepare-" suggests it is called
-> every time, even if no editor is specified, which it is not.
-> 
-> And it really does look like a template...
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-It is, but quite a powerful one. :-)  template-commit-msg?
+> +ifndef::git-log[]
+>  Using these options, linkgit:git-rev-list[1] will act similar to the
+>  more specialized family of commit log tools: linkgit:git-log[1],
+>  linkgit:git-show[1], and linkgit:git-whatchanged[1]
+> +endif::git-log[]
 
-Paolo
+> +ifndef::git-log[]
+>  --bisect::
+>  
+>  Limit output to the one commit object which is roughly halfway between
+> @@ -388,6 +302,7 @@ may not compile for example).
+>  This option can be used along with `--bisect-vars`, in this case,
+>  after all the sorted commit objects, there will be the same text as if
+>  `--bisect-vars` had been used alone.
+> +endif::git-log[]
+
+I do not like these.  What you are really trying to express is
+"this section makes sense only in rev-list documentation", not
+"the current set of documentation this section does not make
+sese is git-log".  We might end up including this in some other
+documents.
+
+IOW, they should rather be "ifdef::git-rev-list[]" instead.
