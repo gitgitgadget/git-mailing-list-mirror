@@ -1,111 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's not in 'master', and likely not to be until 1.5.4
-Date: Fri, 18 Jan 2008 02:40:03 -0800
-Message-ID: <7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
-	<1200022189-2400-2-git-send-email-mlevedahl@gmail.com>
-	<7v1w8o4ws0.fsf@gitster.siamese.dyndns.org>
-	<30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com>
-	<7v63xzzszp.fsf@gitster.siamese.dyndns.org>
-	<478855B5.9070600@gmail.com>
-	<7vbq7ry405.fsf@gitster.siamese.dyndns.org>
-	<47885B2C.8020809@gmail.com>
-	<7v7iify2wm.fsf@gitster.siamese.dyndns.org>
-	<4788BFA8.2030508@gmail.com>
-	<7vwsqeubj8.fsf@gitster.siamese.dyndns.org>
-	<47891658.3090604@gmail.com>
-	<7vbq7qssd7.fsf@gitster.siamese.dyndns.org>
-	<47893E1A.5020702@gmail.com>
-	<7v4pdislrf.fsf@gitster.siamese.dyndns.org>
-	<alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de>
-	<7vir1xmazm.fsf@gitster.siamese.dyndns.org>
-	<7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org>
+From: Adam Piatyszek <ediap@users.sourceforge.net>
+Subject: Re: [PATCH] git-send-email.perl: check for lines longer than 998
+ characters
+Date: Fri, 18 Jan 2008 11:37:04 +0100
+Message-ID: <47908150.9040201@users.sourceforge.net>
+References: <20080117153252.GD2816@coredump.intra.peff.net>	<1200642458-3280-1-git-send-email-ediap@users.sourceforge.net>	<47905F70.5090003@viscovery.net>	<4790746D.1000502@users.sourceforge.net>	<47907914.6000105@viscovery.net> <7v1w8fh2ef.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 18 11:40:49 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 18 11:51:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFoeT-0002ZY-4V
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 11:40:45 +0100
+	id 1JFooi-0006UL-LI
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 11:51:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760151AbYARKkP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jan 2008 05:40:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759963AbYARKkN
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 05:40:13 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62139 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759525AbYARKkK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Jan 2008 05:40:10 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B0D3678D;
-	Fri, 18 Jan 2008 05:40:09 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B4680678C;
-	Fri, 18 Jan 2008 05:40:05 -0500 (EST)
-In-Reply-To: <7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 18 Jan 2008 01:41:43 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752144AbYARKut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 05:50:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751021AbYARKut
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 05:50:49 -0500
+Received: from pisces.et.put.poznan.pl ([150.254.29.122]:42108 "EHLO
+	pisces.et.put.poznan.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750988AbYARKus (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 05:50:48 -0500
+Received: from hydrus.et.put.poznan.pl (hydrus.et.put.poznan.pl [150.254.11.145])
+	by pisces.et.put.poznan.pl (8.13.8/8.13.8) with ESMTP id m0IAe2WM017168;
+	Fri, 18 Jan 2008 11:40:03 +0100 (CET)
+	(envelope-from ediap@users.sourceforge.net)
+Received: from [150.254.11.77] (pc1077.et.put.poznan.pl [150.254.11.77])
+	by hydrus.et.put.poznan.pl (8.11.7p1+Sun/8.11.6) with ESMTP id m0IAb5D00934;
+	Fri, 18 Jan 2008 11:37:05 +0100 (MET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071116)
+In-Reply-To: <7v1w8fh2ef.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.6
+OpenPGP: id=1F115CCB
+X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940, Antispam-Data: 2008.1.9.11357
+X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='__CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0, __USER_AGENT 0'
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70994>
 
-Here is an update to the list I sent earlier.  Topics that I
-thought may deserve attention, discussion and eventual inclusion
-but are not 1.5.4 material.
+* Junio C Hamano [18 I 2008 11:08]:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+>> Then git-format-patch and log-family with --pretty=email -p could warn
+>> about these candidates-to-be-broken patches.
+> 
+> I'd rather not, unless it is explicitly asked for by a separate
+> command line option.  Transferring over SMTP is not the only
+> (nor even primary) use of format-patch output.
 
-I think some of them actually have a slight chance of being
-1.5.4 material, if interested parties present good enough
-arguments that they are actually good and safe bugfixes.
+Agree.
 
- * compress/decompress abstraction (Marco)
+> On the other hand, git-send-email _is_ all about SMTP transfer.
+> Perhaps a loop over input files upfront to check the line length
+> limit, and warn if there are suspiciously long lines even before
+> sending the first piece of e-mail out, would be a reasonable
+> approach.
 
- * crlf (Steffen Prohaska and Dmitry Potapov)
+But what next? Still send the problematic patches not encoded?
 
- * whitespace error: "cr at eol is ok" (me)
+In my opinion, it is more reasonable to provide an optional encoding of 
+such patches. And only throw a warning message that some of the patches 
+had to be encoded. Then, we would not need an extra loop over all patches.
 
- * moving archive related helpers to libgit.a (Lars Hjemli)
+As git-send-email _is_ all about SMTP transfer, we should be interested 
+that the stuff we transfer is sent correctly.
 
- * marking output from "diff --{no,src,dst}-prefix" as a non-git
-   diff (me)
+/Adam
 
- * submodule subcommand parser fix for "git submodule add init
-   update" (Imran M Yousuf and me)
-
- * submodule recursive wrapper (Imran M Yousuf)
-
- * 'origin' is not so special after "clone -o frotz" (Mark Levedahl)
-
- * "submodule summary" (Ping Yin)
-
- * unconfigured ident safety (Stephen Sinclair)
-
- * gitweb feed from commit to commitdiff (Florian La Rouche --
-   Jakub seems to be on top of this so I am not worried about it
-   too much).
-
- * color.ui (Matthias Kestenholz)
-
- * test scripts to use valgrind (Jeff King)
-
- * various lstat(2) reduction changes (me).
-
- * "rebase -i" UI -- should it be simplified to do commit --amend
-   itself? (Dscho)
-
- * "cherry-pick/revert" error message fix (Bj=C3=B6rn Steinbrink and me=
-)
-
- * pathname safety on filesystems whose readdir(3) thinks it
-   knows better than users (Linus, Robin Rosenberg, me and
-   others).
-
-Again, I am hoping that authors will resend the ones they really
-care about after 1.5.4, as I do not want to take patches early.
+-- 
+.:.  Adam Piatyszek (ediap)  .:.....................................:.
+.:.  ediap@users.sourceforge.net  .:................................:.
