@@ -1,61 +1,58 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: git submodule when submodule is not a clone of a repository
-Date: Fri, 18 Jan 2008 18:46:03 +0100
-Message-ID: <8c5c35580801180946q3ba824e2s4c32ac504166c684@mail.gmail.com>
-References: <loom.20080118T171433-93@post.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-commit: add a prepare-commit-msg hook
+Date: Fri, 18 Jan 2008 18:06:07 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801181804410.5731@racer.site>
+References: <4790BCED.4050207@gnu.org> <alpine.LSU.1.00.0801181545530.5731@racer.site> <4790CAF7.5010908@gnu.org> <alpine.LSU.1.00.0801181605020.5731@racer.site> <4790D5CF.8000602@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Sergio Callegari" <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 18:46:49 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Jan 18 19:06:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFvIb-0003ec-8f
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 18:46:37 +0100
+	id 1JFvc5-0002fl-Kd
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 19:06:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763004AbYARRqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 12:46:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762957AbYARRqH
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 12:46:07 -0500
-Received: from nz-out-0506.google.com ([64.233.162.239]:2128 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762803AbYARRqG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 12:46:06 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so884269nze.1
-        for <git@vger.kernel.org>; Fri, 18 Jan 2008 09:46:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=nl3AVKfXtQsbXWQgGZ4HkIRgPn1tOcNWVEPYdf8FbAc=;
-        b=rafKn6E813Lu36N4chw8xC9t4/GOGUulXxqHf97LeYjQdouu417O+tezIBoOySfGCuU4BHZHQFFP+4Akj+oFPjoE1ascD5Jw/yn1BlxwHdGP/BcX+BQBTTANdxk7a6G8by0cUiSBZAcyg9UeBsgNcKe6wDPEwx9rYluM/tNptxM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VLFhJfy6j1msQtWoGDJg02gWxcHLL1F2pQS8q9fSCc/7LbQt7agJnFmFqpv4NLb1bsetJn5oyerZ3iRTd8+TUJ6QniYewf2z9H+nxjoOfdb45W9euOHW0TPZKt7IH3KJ8gvol7PdPFSJ+wPD4egtCbYIRPXt37ATZubcEvPR94k=
-Received: by 10.114.59.1 with SMTP id h1mr1273670waa.39.1200678363161;
-        Fri, 18 Jan 2008 09:46:03 -0800 (PST)
-Received: by 10.114.241.8 with HTTP; Fri, 18 Jan 2008 09:46:03 -0800 (PST)
-In-Reply-To: <loom.20080118T171433-93@post.gmane.org>
-Content-Disposition: inline
+	id S1759238AbYARSGP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 13:06:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758119AbYARSGP
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 13:06:15 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41042 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758780AbYARSGO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 13:06:14 -0500
+Received: (qmail invoked by alias); 18 Jan 2008 18:06:12 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp017) with SMTP; 18 Jan 2008 19:06:12 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18CR1Qqg7ICNyVQCZu8ra7kQINREdHbyeQtJcR6Jd
+	XC0e5ukSPaU9vk
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4790D5CF.8000602@gnu.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71045>
 
-On Jan 18, 2008 6:25 PM, Sergio Callegari <sergio.callegari@gmail.com> wrote:
-> Would it make sense to have a git submodule update not try to fetch if there is
-> no url defined, but still checkout the right commit for the submodule (rather
-> than skipping the submodule at all) ?
+Hi,
 
-Actually, we could (and probably should) teach git-submodule not to
-fetch if the requested SHA1 is already available in the submodule, and
-I guess this would solve the problem quite nicely for your usage.
+On Fri, 18 Jan 2008, Paolo Bonzini wrote:
 
-But that will probably not happen before 1.5.4.
+> 
+> > In the message hook, just grep if the template was already added.  If it
+> > was, just return.  If it was not, add it.
+> 
+> Ah, so you want me to always type ":q!" to exit and unnecessarily 
+> complicate the commit-msg hook.  Cunning, but no, thanks.
 
---
-larsh
+No, my intention was to avoid complications.  Like introducing yet another 
+commit hook.  I like clean, elegant semantics.  I don't like overbloated 
+semantics.  That's why I speak up whenever I fear it is entering git.
+
+Hth,
+Dscho
