@@ -1,59 +1,102 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix random fast-import errors when compiled with NO_MMAP
-Date: Fri, 18 Jan 2008 01:36:55 -0800
-Message-ID: <7v8x2nh3uw.fsf@gitster.siamese.dyndns.org>
-References: <20080118032222.GX24004@spearce.org>
-	<20080118035700.GA3458@spearce.org>
-	<20080118092652.GA22052@hashpling.org>
+Subject: What's not in 'master' but should be
+Date: Fri, 18 Jan 2008 01:41:43 -0800
+Message-ID: <7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
+	<1200022189-2400-2-git-send-email-mlevedahl@gmail.com>
+	<7v1w8o4ws0.fsf@gitster.siamese.dyndns.org>
+	<30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com>
+	<7v63xzzszp.fsf@gitster.siamese.dyndns.org>
+	<478855B5.9070600@gmail.com>
+	<7vbq7ry405.fsf@gitster.siamese.dyndns.org>
+	<47885B2C.8020809@gmail.com>
+	<7v7iify2wm.fsf@gitster.siamese.dyndns.org>
+	<4788BFA8.2030508@gmail.com>
+	<7vwsqeubj8.fsf@gitster.siamese.dyndns.org>
+	<47891658.3090604@gmail.com>
+	<7vbq7qssd7.fsf@gitster.siamese.dyndns.org>
+	<47893E1A.5020702@gmail.com>
+	<7v4pdislrf.fsf@gitster.siamese.dyndns.org>
+	<alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de>
+	<7vir1xmazm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Fri Jan 18 10:37:45 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>,
+	=?utf-8?Q?Gr=C3=A9goire?= Barbier <gb@gbarbier.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 18 10:42:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFnfP-0006i5-7e
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 10:37:39 +0100
+	id 1JFnk3-0008F8-3w
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 10:42:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755514AbYARJhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 04:37:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755281AbYARJhH
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 04:37:07 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58752 "EHLO
+	id S1755762AbYARJl5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jan 2008 04:41:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755823AbYARJl4
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 04:41:56 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59040 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755274AbYARJhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 04:37:05 -0500
+	with ESMTP id S1755762AbYARJlz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Jan 2008 04:41:55 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A0A895AC4;
-	Fri, 18 Jan 2008 04:37:03 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E721E5B92;
+	Fri, 18 Jan 2008 04:41:53 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0960C597F;
-	Fri, 18 Jan 2008 04:36:56 -0500 (EST)
-In-Reply-To: <20080118092652.GA22052@hashpling.org> (Charles Bailey's message
-	of "Fri, 18 Jan 2008 09:26:52 +0000")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DB245B8F;
+	Fri, 18 Jan 2008 04:41:50 -0500 (EST)
+In-Reply-To: <7vir1xmazm.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 13 Jan 2008 17:50:21 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70983>
 
-Charles Bailey <charles@hashpling.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I can ACK this as fixing the test suite failures on Mac OS X 10.4.11
-> both with and without NO_MMAP=Yes on top of 1.5.4.rc3.24.gb53139 and
-> also on my oldish Fedora install with NO_MMAP=Yes.
->
-> Acked-by: Charles Bailey <charles@hashpling.org>
+> Currently the ones I looked at and consider possible 1.5.4
+> material are http-push fixes from Gr=C3=A9goire Barbier and
+> parse_commit_buffer() tightening from Martin Koegler.
 
-Well, I do not want to be picky with these things, but you do
-not own that area, so that would be "Tested-by:"
+It seems that for the past few days, people were having too much
+fun bashing how broken MacOS X is, and the real work has stalled
+in the meantime.  Well, not really stalled but they certainly
+made the patches and discussions harder to find in the list
+archive.
 
-I've already committed the simplified version I suggested to
-Shawn.
+But that's Ok.  You cannot win every battle.
+
+Now the lack of unsetenv can be autodetected, and coloring
+breakage of --color-words has been fixed.  We have also managed
+to catch a real breakage in fast-import, but somebody seems to
+have managed to bash OS X even in that thread ;-)
+
+But there are still unapplied patches that deserve attention.
+The one that I am most worried about is Gr=C3=A9goire Barbier's
+http-push changes:
+
+  $gmane/70406 <1200250979-19604-1-git-send-email-gb@gbarbier.org>
+  $gmane/70407 <1200250979-19604-2-git-send-email-gb@gbarbier.org>
+  $gmane/70405 <1200250979-19604-3-git-send-email-gb@gbarbier.org>
+
+They look sensible on paper. I do not, however, use http-push
+myself, and I'd really like an independent success (or failure)
+reports on them.  I can also threaten to apply them and see if
+it breaks for anybody, which I may end up doing.
+
+Martin Koegler's parse_commit_buffer() tightening is much easier:
+
+  $gname/70478 <12003456313661-git-send-email-mkoegler@auto.tuwien.ac.a=
+t>
+
+It needs a proper commit message; the patch itself is good.  I
+could write one myself but I'd rather want description from the
+real contributor.
+
+  gmane =3D http://news.gmane.org/gmane.comp.version-control.git
