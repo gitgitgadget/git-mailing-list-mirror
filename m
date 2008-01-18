@@ -1,74 +1,73 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: What's not in 'master' but should be
-Date: Fri, 18 Jan 2008 11:53:06 +0100
-Message-ID: <8c5c35580801180253x9022e62qf1ec515e101fb294@mail.gmail.com>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
-	 <47891658.3090604@gmail.com>
-	 <7vbq7qssd7.fsf@gitster.siamese.dyndns.org>
-	 <47893E1A.5020702@gmail.com>
-	 <7v4pdislrf.fsf@gitster.siamese.dyndns.org>
-	 <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de>
-	 <7vir1xmazm.fsf@gitster.siamese.dyndns.org>
-	 <7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org>
-	 <8c5c35580801180215s2c980b4kbc66fbb05778ff67@mail.gmail.com>
-	 <7vwsq7fn2e.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix random fast-import errors when compiled with NO_MMAP
+Date: Fri, 18 Jan 2008 02:57:16 -0800
+Message-ID: <7v8x2nflkj.fsf@gitster.siamese.dyndns.org>
+References: <20080118032222.GX24004@spearce.org>
+	<20080118035700.GA3458@spearce.org>
+	<20080118092652.GA22052@hashpling.org>
+	<7v8x2nh3uw.fsf@gitster.siamese.dyndns.org>
+	<20080118094553.GB22052@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 11:53:40 2008
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Fri Jan 18 11:58:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFoqv-0007DR-DH
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 11:53:38 +0100
+	id 1JFovB-0000P2-C3
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 11:58:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752323AbYARKxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 05:53:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752496AbYARKxJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 05:53:09 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:12562 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752323AbYARKxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jan 2008 05:53:07 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1662088wah.23
-        for <git@vger.kernel.org>; Fri, 18 Jan 2008 02:53:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=vIwmOXt3ajTIRWF/U5dKPhFPpYPFX1XdkYft28/W9Zc=;
-        b=B6bNuKNtGyyFKI0qm8gRccLCaA4DdK8d0JHZPFGRmnwhgiG+/q9+DQbHi7F35vmFAGYd277ZdVEoMXmBMpCsGbiIo3l54g3gIGd8XeZ2Dz2fcwViwnO+ShGZvUtgQDyEAmhOdzCNlW827aRrfWX2JhMX+d3JF2amR2+ckdJ943Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=sGEXIwLeVMs+e/QAEGr8dKOPb7LgoahCUNUdDXHAhE7QrwxpxLWlw1mfmtX6D2eAKBviTadqGMCASROB9dCbN0ThQ+wiPrZTA93fPtRNqWaYSv140kBVzuCYx3Q9UvMieegjhmIK4aj1IaW2FhlKr8IoWOLH4Cs9fsQoztx89oE=
-Received: by 10.114.103.1 with SMTP id a1mr733948wac.59.1200653586718;
-        Fri, 18 Jan 2008 02:53:06 -0800 (PST)
-Received: by 10.114.241.8 with HTTP; Fri, 18 Jan 2008 02:53:06 -0800 (PST)
-In-Reply-To: <7vwsq7fn2e.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753998AbYARK53 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jan 2008 05:57:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755157AbYARK53
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 05:57:29 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63137 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753726AbYARK52 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jan 2008 05:57:28 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B3306AC7;
+	Fri, 18 Jan 2008 05:57:25 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C3DA6AC6;
+	Fri, 18 Jan 2008 05:57:22 -0500 (EST)
+In-Reply-To: <20080118094553.GB22052@hashpling.org> (Charles Bailey's message
+	of "Fri, 18 Jan 2008 09:45:53 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70997>
 
-On Jan 18, 2008 11:24 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Lars Hjemli" <hjemli@gmail.com> writes:
->
-> > Here's a patch which might have been lost in the noise:
-> >
-> > http://thread.gmane.org/gmane.comp.version-control.git/70463
->
-> Not really.  It came late into rc cycle without fixing any
-> breakage.  Not 1.5.4 material.
+Charles Bailey <charles@hashpling.org> writes:
 
-Hmm, isn't a nonfunctional libgit considered breakage? Without
-something like this patch it is no longer possible to use
-write_tar_archive()/write_zip_archive() in libgit.a.
+> Sorry, I thought that Acked-by was an acceptable tag for people not
+> involved in the development path of a patch.  I don't want to add a
+> "Tested-by" as I am not a fast-import user and I am *only* reporting
+> the success of the test suite, not any real-world testing.
 
---
-larsh
+It still counts as "Tested-by:".  Earlier you saw breakage and
+now you see it fixed in your environment, to which neither I nor
+Shawn have access to.  That's a good verification that the patch
+fixed the issue for you and your feedback was very much
+appreciated (your timely initial breakage report even more so).
+
+Acked-by: is usually given by people who are the most familiar
+with the code being affected (or at least by the ones more
+familiar than the patch's author), in order to let me and the
+world know that he thinks the contents of the patch makes sense.
+IOW, the patch was checked by somebody who knows the existing
+code well enough to catch any subtleties in the existing code
+that might have been broken if the patch's author was not
+careful.  It just felt slightly funny that anybody is giving an
+Acked-by: to a patch Shawn made to fast-import.c, which is his
+brainchild ;-).
+
+Signed-off-by is about the kosherness from software license
+point of view, while Acked-by and Tested-by are about the
+correctness.
