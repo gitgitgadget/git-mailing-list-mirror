@@ -1,87 +1,94 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Be more careful about updating refs
-Date: Thu, 17 Jan 2008 22:22:22 -0500
-Message-ID: <20080118032222.GX24004@spearce.org>
-References: <478F3367.8050307@viscovery.net> <20080117110132.GB12285@hashpling.org> <478F4CDC.2090703@viscovery.net> <7vbq7jkixg.fsf@gitster.siamese.dyndns.org> <7v63xrki29.fsf@gitster.siamese.dyndns.org> <20080118021300.GR24004@spearce.org> <7v1w8fkgy9.fsf@gitster.siamese.dyndns.org> <20080118023327.GT24004@spearce.org> <20080118025837.GU24004@spearce.org> <20080118031831.GW24004@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Charles Bailey <charles@hashpling.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 18 04:22:59 2008
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: [PATCH] git-gui/Makefile - Handle $DESTDIR on Cygwin
+Date: Thu, 17 Jan 2008 22:50:23 -0500
+Message-ID: <1200628223-2280-1-git-send-email-mlevedahl@gmail.com>
+References: <20080116064012.GO24004@spearce.org>
+Cc: git@vger.kernel.org, Mark Levedahl <mdl123@verizon.net>
+To: spearc@spearce.org
+X-From: git-owner@vger.kernel.org Fri Jan 18 04:51:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JFhon-0003RG-P8
-	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 04:22:58 +0100
+	id 1JFiFy-0000p0-6H
+	for gcvg-git-2@gmane.org; Fri, 18 Jan 2008 04:51:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752052AbYARDW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jan 2008 22:22:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752034AbYARDW2
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 22:22:28 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:40626 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751102AbYARDW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jan 2008 22:22:28 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JFho4-0006QD-2U; Thu, 17 Jan 2008 22:22:12 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 39D6020FBAE; Thu, 17 Jan 2008 22:22:22 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20080118031831.GW24004@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751456AbYARDud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jan 2008 22:50:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752127AbYARDuc
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Jan 2008 22:50:32 -0500
+Received: from an-out-0708.google.com ([209.85.132.247]:16367 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751064AbYARDuc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jan 2008 22:50:32 -0500
+Received: by an-out-0708.google.com with SMTP id d31so195472and.103
+        for <git@vger.kernel.org>; Thu, 17 Jan 2008 19:50:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=mpu545rVi5ZWM5j+qMJAyWY1wMTtNR3I4GUr4tmGRqU=;
+        b=QK+1xVJmiK6cYTJ2j9Wyf8A12O8SI9Zn53IzajT1pTSf2HURo+Rs1Qa7S3PiQMX1D6raTe+EUY8Y7tLOPruY3/i4bbhhrJt0Irphg2ol0EjJOguy1gfHseY+TO9qm2VVRqjNrZdZ/Jum2T6pL0/7IeZk9ewiBBGWkqd563p8aEg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=BgkwBxG/g5Cp644mRKVvuH5UVG3qZ18GZtcyvMfjbiWN11IWZxgVwl+1pGA4t3QMie4vAkSo29K9YcSJp3dauV588DWZbt90Lkc2RgkO7iJsM4000eBQucCgTEX89qjEJsQ6BlWzkaZETEyj6sdtAeSMsdf6qRljcTyEMIb4uj8=
+Received: by 10.100.202.9 with SMTP id z9mr6063859anf.42.1200628229795;
+        Thu, 17 Jan 2008 19:50:29 -0800 (PST)
+Received: from localhost.localdomain ( [71.163.17.196])
+        by mx.google.com with ESMTPS id c39sm5191997anc.25.2008.01.17.19.50.26
+        (version=SSLv3 cipher=OTHER);
+        Thu, 17 Jan 2008 19:50:27 -0800 (PST)
+X-Mailer: git-send-email 1.5.4.rc3.26.gf961e
+In-Reply-To: <20080116064012.GO24004@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/70959>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> wrote:
-> > "Shawn O. Pearce" <spearce@spearce.org> wrote:
-> > > Junio C Hamano <gitster@pobox.com> wrote:
-> > > > 
-> > > > Especially, I am not sure if the issue only exists at the
-> > > > end_packfile() boundary.  Don't we have the same issue reading
-> > > > from the packfile being built, and isn't the only reason my hack
-> > > > works it around is because access patterns of the testsuite
-> > > > happens to not trigger it?
-> > > 
-> > > Yes, that's my take on it as well (see my other email).  The
-> > > testsuite must just be really lucky that its not hitting the
-> > > boundary condition.
-> > > 
-> > > I almost said gfi_unpack_entry() was immune from this bug, but
-> > > I went back and read the code again and determined that it does
-> > > in fact suffer from this under NO_MMAP, and we're just really
-> > > damn lucky nobody has caused it.
-> > 
-> > I think this solves the problem.  Its based on your first patch, but
-> > would replace it.  The trick here is we close the cached windows if
-> > we are accessing data from the packfile we are appending into and we
-> > have increased the file length.  This way we don't blow away windows
-> > during high read/low write periods, like during branch cache reloads.
-> 
-> Junio pointed out my first attempt at this didn't update the
-> memory pressure values, so we could "run out of memory" even
-> if we had plenty free.
-> 
-> Try #2...
+From: Mark Levedahl <mdl123@verizon.net>
 
-OK, that was crap.  Don't even try it.
+gg_libdir is converted to an absolute Windows path on Cygwin,
+but a later step attempts to prefix $DESTDIR to install to a
+staging directory. Explicitly separate the uses of gg_libdir for
+these two purposes so installation to $DESTDIR will work.
 
-I'm holding off sending anything more until I get the test suite
-to actually run without telling me the bus crashed into the wall.
+Signed-off-by: Mark Levedahl <mdl123@verizon.net>
+---
+git-gui built with this  passed tests on cygwin + tcl/tk 8.5,
+cygwin + normal tcl/tk, and linux. DESTDIR also works on cygwin,
+so I would suggest this rather than the previous patch.
 
--- 
-Shawn.
+
+ git-gui/Makefile |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/git-gui/Makefile b/git-gui/Makefile
+index c109eab..1baf4b0 100644
+--- a/git-gui/Makefile
++++ b/git-gui/Makefile
+@@ -110,7 +110,7 @@ TCLTK_PATH_SED = $(subst ','\'',$(subst \,\\,$(TCLTK_PATH)))
+
+ gg_libdir ?= $(sharedir)/git-gui/lib
+ libdir_SQ  = $(subst ','\'',$(gg_libdir))
+-libdir_SED = $(subst ','\'',$(subst \,\\,$(gg_libdir)))
++libdir_SED = $(subst ','\'',$(subst \,\\,$(gg_libdir_sed_in)))
+ exedir     = $(dir $(gitexecdir))share/git-gui/lib
+
+ GITGUI_SCRIPT   := $$0
+@@ -119,11 +119,12 @@ GITGUI_MACOSXAPP :=
+
+ ifeq ($(uname_O),Cygwin)
+ 	GITGUI_SCRIPT := `cygpath --windows --absolute "$(GITGUI_SCRIPT)"`
+-	gg_libdir := $(shell cygpath --windows --absolute "$(gg_libdir)")
++	gg_libdir_sed_in := $(shell cygpath --windows --absolute "$(gg_libdir)")
+ else
+ 	ifeq ($(exedir),$(gg_libdir))
+ 		GITGUI_RELATIVE := 1
+ 	endif
++	gg_libdir_sed_in := $(gg_libdir)
+ endif
+ ifeq ($(uname_S),Darwin)
+ 	ifeq ($(shell test -d $(TKFRAMEWORK) && echo y),y)
+--
+1.5.4.rc3.26.gf961e
