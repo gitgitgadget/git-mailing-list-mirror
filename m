@@ -1,83 +1,55 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Fix random fast-import errors when compiled with
- NO_MMAP
-Date: Fri, 18 Jan 2008 19:55:27 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801181953130.2957@woody.linux-foundation.org>
-References: <20080118035700.GA3458@spearce.org> <alpine.LFD.1.00.0801172013270.2957@woody.linux-foundation.org> <20080118084201.GA14763@hashpling.org> <alpine.LFD.1.00.0801180842350.2957@woody.linux-foundation.org>
- <7vwsq6a44w.fsf@gitster.siamese.dyndns.org>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Any command to simplify 'git fetch origin && git reset --hard origin/master'?
+Date: Sat, 19 Jan 2008 13:22:31 +0800
+Message-ID: <46dff0320801182122t1581b366yad123407aaad6326@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Charles Bailey <charles@hashpling.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 19 04:56:27 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jan 19 06:23:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JG4ok-0005Fm-0P
-	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 04:56:26 +0100
+	id 1JG6AX-0002tj-Mg
+	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 06:23:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763618AbYASDzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jan 2008 22:55:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763529AbYASDzv
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Jan 2008 22:55:51 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:49659 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1763378AbYASDzu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Jan 2008 22:55:50 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0J3tXEB022943
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 18 Jan 2008 19:55:34 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0J3tRFX019921;
-	Fri, 18 Jan 2008 19:55:27 -0800
-In-Reply-To: <7vwsq6a44w.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-4.716 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751789AbYASFWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jan 2008 00:22:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751684AbYASFWc
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 00:22:32 -0500
+Received: from py-out-1112.google.com ([64.233.166.179]:60402 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750786AbYASFWb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2008 00:22:31 -0500
+Received: by py-out-1112.google.com with SMTP id u52so1891071pyb.10
+        for <git@vger.kernel.org>; Fri, 18 Jan 2008 21:22:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=eMTxRrSEszFbacHGqfEs0N+ZQaox/JkWhEh8U345OI0=;
+        b=tPuJNzwo23l07uFyW1EboV8Rma1fQ21iAM+Na033o7S7WPwyD86H0Xk+QNNUTTJihxix8x88Lyh14sMB6+Hg4G7qA4srvbs5ZDWjJcuQnrbCEwXZewYZxQ9//3N8HassBgLjF40355ZI9hIYdIpLhqhJGqw55VGHxH62J61MutI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=At6xOy3SVz9gzjdbpsmUxPaTrNS7cQfyVwnNnWiUmzFW0G+Y3H0kupdOPuDxEyOasxcULtgNtEZgyDaaWen2Fzq7h6O92y0J77HBtRtD6UQBtd8T751Og6f6x2uBJI5y7j8yHAvpKhcq/wH+4CMyraSVTxeEqWjsr57m7DfBOAo=
+Received: by 10.35.42.18 with SMTP id u18mr4701484pyj.58.1200720151028;
+        Fri, 18 Jan 2008 21:22:31 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Fri, 18 Jan 2008 21:22:31 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71079>
 
+I often encounter the case that the origin reposotory is rebased and i
+make sure i want to use the origin head as my master
+Now I have to do
+$ git fetch origin && git reset --hard origin/master
 
+Should we introduce 'git pull --force-update' or something else to do
+the command combination?
 
-On Fri, 18 Jan 2008, Junio C Hamano wrote:
-> 
-> gfi uses data in a "pack" in two quite different ways.
-> 
-> A new object is written to an unfinalized pack.  Such a pack
-> already has "struct packed_git" allocated for it and a pointer
-> to it is held in pack_data.  As far as the core part of git
-> (that is, sha1_file.c) is concerned, however, this pack does not
-> even exist.  It is still not part of packed_git list in
-> sha1_file.c, and read_sha1_file() will not see objects in it, as
-> no idx into the packfile exists yet.  gfi has a table of objects
-> in this pack and uses gfi_unpack_entry() function to retrieve
-> data from it.
-> 
-> A packfile is finalized in end_packfile().  The pack header and
-> footer is recomputed, an idx file is written, and the pack is
-> finally registered.  Before that time p->index_data is not even
-> used for that pack (it is initialized with NULL).
-
-Oh, ok. I did try to grep for index_data, and didn't find anything that 
-looked bad, but the incestuous things that fast-import.c does just made me 
-worry - but I was too lazy to really follow it all. It's one of those 
-files I don't think I've ever had anything what-so-ever to do with.
-
-> So I do not think "index_data usage" can be incorrect, as there
-> won't be any index_data usage with unfinalized pack, and the
-> core part of git would not even have any mmap(2) (nor open fd)
-> into its idx file before it is finalized.
-
-In that case, I think Shawn fixed it all, and we're all good, and it's not 
-just hidden well enough that it "just happens" to work.
-
-				Linus
+-- 
+Ping Yin
