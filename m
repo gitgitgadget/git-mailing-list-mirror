@@ -1,89 +1,75 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Avoid running lstat(2) on the same cache entry.
-Date: Sat, 19 Jan 2008 11:58:47 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801191152310.2957@woody.linux-foundation.org>
-References: <alpine.LFD.1.00.0801181911560.2957@woody.linux-foundation.org> <7vfxwu9s2z.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801191133330.2957@woody.linux-foundation.org>
+From: Mark Junker <mjscod@web.de>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Sat, 19 Jan 2008 21:39:02 +0100
+Message-ID: <47925FE6.8020704@web.de>
+References: <alpine.LFD.1.00.0801161959210.2806@woody.linux-foundation.org> <B719D4A2-0D05-4C55-95FC-AB880D58E1AC@wincent.com> <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org> <478F99E7.1050503@web.de> <alpine.LFD.1.00.0801171017460.14959@woody.linux-foundation.org> <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org> <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org> <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se> <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org> <2E6F57FC-3E78-4DD2-9B5B-CF75975D6A60@sb.org> <20080119084814.GH14871@dpotapov.dyndns.org> <alpine.LFD.1.00.0801191026500.2957@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 19 20:59:46 2008
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 19 21:39:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGJqv-00006x-Hq
-	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 20:59:42 +0100
+	id 1JGKTW-0003kg-2X
+	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 21:39:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751661AbYAST7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jan 2008 14:59:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751542AbYAST7F
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 14:59:05 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:58275 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751623AbYAST7E (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Jan 2008 14:59:04 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0JJwmrI032159
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 19 Jan 2008 11:58:49 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0JJwl7a019141;
-	Sat, 19 Jan 2008 11:58:47 -0800
-In-Reply-To: <alpine.LFD.1.00.0801191133330.2957@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-4.717 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751491AbYASUjE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jan 2008 15:39:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416AbYASUjE
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 15:39:04 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:55776 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751318AbYASUjC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2008 15:39:02 -0500
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 7D3DEC99872C
+	for <git@vger.kernel.org>; Sat, 19 Jan 2008 21:39:00 +0100 (CET)
+Received: from [92.195.28.188] (helo=mark-junkers-computer.local)
+	by smtp06.web.de with asmtp (WEB.DE 4.109 #226)
+	id 1JGKSy-0003UG-00
+	for git@vger.kernel.org; Sat, 19 Jan 2008 21:39:00 +0100
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X; de; rv:1.8.1.9) Gecko/20071031 Thunderbird/2.0.0.9 Mnenhy/0.7.5.0
+In-Reply-To: <alpine.LFD.1.00.0801191026500.2957@woody.linux-foundation.org>
+X-Sender: mjscod@web.de
+X-Provags-ID: V01U2FsdGVkX19yBUy1pNsPIrapJ1jWeZ+lVeoiIwwx4KW3iBvk
+	zk3IEuF1KOVe4uUX9yQA29XP55udVDP4D6U0h3Zd0XYUe704lu
+	PIlZuDPJ0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71131>
 
+Linus Torvalds schrieb:
 
+>  - let's say that you have a file "M=E4rchen" on just about *any* oth=
+er OS=20
+>    than OS X. It could be Latin1 or it could be Unicode, but even if =
+it is=20
+>    Unicode, I can almost guarantee that the '=E4' is going to be the=20
+>    *single* Unicode character U+00e4 (utf-8: "\xc3\xa4", latin1: "\xe=
+4")
+>=20
+>    So from a cross-OS standpoint, that's the *common* representation,=
+ and=20
+>    yes, you can create the file that way (I don't know what happens i=
+f you=20
+>    actually create it with the Latin1 encoding, but I would not be=20
+>    surprised if OS X notices that it's not a valid UTF sequence and=20
+>    assumes it's Latin1 and converts it to Unicode)
 
-On Sat, 19 Jan 2008, Linus Torvalds wrote:
-> 
-> The call trace for the first one is
+=46WIW: I just made a test and it seems that MacOS X refuses the creati=
+on=20
+of a file with this invalid name.
 
-Btw, the easiest way to do this on Linux isn't totally obvious, because 
-you cannot do a simple breakpoint on "lstat()", since GNU libc internally 
-uses other names.
+> Anybody want to creat a compat layer around "readdir()" that does tha=
+t NFC=20
+> conversion on OS X but not elsewhere?
 
-So if anybody wants to work on this and runs Linux, the way to do this 
-trivially (once you know how) is to do
+Maybe I'll try it.
 
-	gdb git
-	..
-	.. run the startup to wait for the libraries to be loaded 
-	..	
-	(gdb) b main
-	(gdb) run commit
-	..
-	.. modern glibc low-level lstat() call is __lxstat64
-	.. at least on x86-64
-	..
-	(gdb) b __lxstat64
-	..
-	.. Ignore the first few ones (we have 23000+ files in the index, 
-	.. so don't worry about getting the *first* one)
-	..
-	(gdb) ignore 2 1000
-	(gdb) c
-	..
-	.. Ok, look at that backtrace, then go to the next one by
-	.. just knowing that we'll be doing 23,000+ for each iteration
-	.. over the index.
-	..
-	.. Rinse and repeat this as required:
-	..
-	(gdb) where
-	(gdb) ignore 2 24000
-	(gdb) c
-
-which gets you the backtraces I showed you, without having to think too 
-much about all the odd lstat() calls we do for resolving refs etc.
-
-			Linus
+Regards,
+Mark
