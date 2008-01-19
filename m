@@ -1,104 +1,73 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [PATCH] Let "git svn" run "git gc --auto" occasionally
-Date: Sat, 19 Jan 2008 23:36:30 +0100
-Message-ID: <20080119223249.8227.31460.stgit@yoghurt>
-References: <20080119123557.GA30778@diana.vm.bytemark.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Any command to simplify 'git fetch origin && git reset --hard
+ origin/master'?
+Date: Sat, 19 Jan 2008 22:50:01 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801192247280.5731@racer.site>
+References: <46dff0320801182122t1581b366yad123407aaad6326@mail.gmail.com>  <alpine.LSU.1.00.0801191114310.5731@racer.site> <46dff0320801190603w4f0b2595v495ed10f2a87b0cc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Kevin Ballard <kevin@sb.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Jan 19 23:37:25 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 19 23:51:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGMJY-0004ce-Cq
-	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 23:37:24 +0100
+	id 1JGMWj-00080G-Hm
+	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 23:51:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753259AbYASWgx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jan 2008 17:36:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752954AbYASWgx
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 17:36:53 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1652 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751416AbYASWgw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jan 2008 17:36:52 -0500
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1JGMIt-0001JX-00; Sat, 19 Jan 2008 22:36:43 +0000
-In-Reply-To: <20080119123557.GA30778@diana.vm.bytemark.co.uk>
-User-Agent: StGIT/0.14.1
+	id S1751773AbYASWuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jan 2008 17:50:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbYASWuU
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 17:50:20 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50572 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751057AbYASWuS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2008 17:50:18 -0500
+Received: (qmail invoked by alias); 19 Jan 2008 22:50:16 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp058) with SMTP; 19 Jan 2008 23:50:16 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+jznUepxSjrqzSJrIWU2YxUDPqR/Q/ZsajrPrvxy
+	664GubRVOW5QlE
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46dff0320801190603w4f0b2595v495ed10f2a87b0cc@mail.gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71134>
 
-Let "git svn" run "git gc --auto" every 100 imported commits, to
-reduce the number of loose objects.
+Hi,
 
-To handle the common use case of frequent imports, where each
-invocation typically fetches less than 100 commits, randomly set the
-counter to something in the range 1-100 on initialization. It's almost
-as good as saving the counter, and much less of a hassle.
+On Sat, 19 Jan 2008, Ping Yin wrote:
 
-Oh, and 100 is just my best guess at a reasonable number. It could
-conceivably need tweaking.
+> On Jan 19, 2008 7:15 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> > On Sat, 19 Jan 2008, Ping Yin wrote:
+> >
+> > > I often encounter the case that the origin reposotory is rebased and 
+> > > i make sure i want to use the origin head as my master Now I have to 
+> > > do
+> > >	$ git fetch origin && git reset --hard origin/master
+> >
+> > Just make an alias if you're too lazy to type.
+> >
+> > Personally, I do not see much sense in it, and it is too dangerous to 
+> > bless it with an option to fetch or pull.
+>
+> Can any alias do this? Since a parameter 'origin' or something should be 
+> passed in.
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+Yes.  Something like
 
----
+	$ git config alias.imtoolazytotype \
+		'!sh -c "git fetch $0 && git reset --hard $0/master"'
 
-On 2008-01-19 13:35:57 +0100, Karl Hasselstr=C3=B6m wrote:
+See http://git.or.cz/gitwiki/Aliases for more, especially the part about 
+advanced aliases with arguments.
 
-> On 2008-01-18 12:44:08 -0800, Junio C Hamano wrote:
->=20
-> > Patches?
->=20
-> Just hot air and noise for now from my end. Sorry.
-
-OK, it didn't feel good saying that. So here's my attempt at being a
-model citizen. (It's not hard with a change this small ...)
-
-I'm not quite sure how this should interact with the --repack flag.
-Right now they just coexist, except for never running right after one
-another, but conceivably we should do something cleverer. Eric?
-
- git-svn.perl |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
-
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 9f2b587..89e1d61 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1247,7 +1247,7 @@ use File::Path qw/mkpath/;
- use File::Copy qw/copy/;
- use IPC::Open3;
-=20
--my $_repack_nr;
-+my ($_repack_nr, $_gc_nr, $_gc_period);
- # properties that we do not log:
- my %SKIP_PROP;
- BEGIN {
-@@ -1413,6 +1413,8 @@ sub init_vars {
- 		$_repack_nr =3D $_repack;
- 		$_repack_flags ||=3D '-d';
- 	}
-+	$_gc_period =3D 100;
-+	$_gc_nr =3D int(rand($_gc_period)) + 1;
- }
-=20
- sub verify_remotes_sanity {
-@@ -2157,6 +2159,9 @@ sub do_git_commit {
- 		print "Running git repack $_repack_flags ...\n";
- 		command_noisy('repack', split(/\s+/, $_repack_flags));
- 		print "Done repacking\n";
-+	} elsif (--$_gc_nr =3D=3D 0) {
-+		$_gc_nr =3D $_gc_period;
-+		command_noisy('gc', '--auto');
- 	}
- 	return $commit;
- }
+Hth,
+Dscho
