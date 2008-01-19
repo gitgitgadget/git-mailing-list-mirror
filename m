@@ -1,88 +1,79 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Sat, 19 Jan 2008 11:48:14 +0300
-Message-ID: <20080119084814.GH14871@dpotapov.dyndns.org>
-References: <alpine.LFD.1.00.0801161959210.2806@woody.linux-foundation.org> <B719D4A2-0D05-4C55-95FC-AB880D58E1AC@wincent.com> <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org> <478F99E7.1050503@web.de> <alpine.LFD.1.00.0801171017460.14959@woody.linux-foundation.org> <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org> <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org> <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se> <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org> <2E6F57FC-3E78-4DD2-9B5B-CF75975D6A60@sb.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH] git-commit: add a prepare-commit-msg hook
+Date: Sat, 19 Jan 2008 10:32:24 +0100
+Message-ID: <4791C3A8.7000308@gnu.org>
+References: <4790BCED.4050207@gnu.org> <7vbq7ibxhh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Peter Karlsson <peter@softwolves.pp.se>,
-	Mark Junker <mjscod@web.de>,
-	Pedro Melo <melo@simplicidade.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Sat Jan 19 09:48:52 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 19 10:33:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JG9Nk-00048S-9b
-	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 09:48:52 +0100
+	id 1JGA4S-00045l-4w
+	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 10:33:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220AbYASIsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jan 2008 03:48:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752179AbYASIsX
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 03:48:23 -0500
-Received: from smtp08.mtu.ru ([62.5.255.55]:53969 "EHLO smtp08.mtu.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751312AbYASIsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jan 2008 03:48:22 -0500
-Received: from smtp08.mtu.ru (localhost [127.0.0.1])
-	by smtp08.mtu.ru (Postfix) with ESMTP id E25F2F7740B;
-	Sat, 19 Jan 2008 11:48:13 +0300 (MSK)
-Received: from dpotapov.dyndns.org (ppp85-141-188-224.pppoe.mtu-net.ru [85.141.188.224])
-	by smtp08.mtu.ru (Postfix) with ESMTP id 0118DF76C82;
-	Sat, 19 Jan 2008 11:48:10 +0300 (MSK)
-Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
-	(envelope-from <dpotapov@gmail.com>)
-	id 1JG9N8-0008A1-Ti; Sat, 19 Jan 2008 11:48:14 +0300
-Content-Disposition: inline
-In-Reply-To: <2E6F57FC-3E78-4DD2-9B5B-CF75975D6A60@sb.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-DCC-STREAM-Metrics: smtp08.mtu.ru 10002; Body=0 Fuz1=0 Fuz2=0
+	id S1752513AbYASJc2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jan 2008 04:32:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752499AbYASJc2
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 04:32:28 -0500
+Received: from hu-out-0506.google.com ([72.14.214.226]:17547 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752322AbYASJc0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2008 04:32:26 -0500
+Received: by hu-out-0506.google.com with SMTP id 19so452817hue.21
+        for <git@vger.kernel.org>; Sat, 19 Jan 2008 01:32:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        bh=1NZXQ4u6temq83SXsa2Dogph7mi0gzAoLhH5LRW99kU=;
+        b=oXgaKaJy92D8var4eoG4GH9CLWfZ4Y74j9LnjSDEHOQdQVUQXaM7k8Za/arQsvRXFr5+fhjdhTrtKngeBt7Y+jEOZkM4kittO981lIfAATwKk88E9VBzu5nNyPc94CR2T8VJxoZ22MXkVBgD/qGVCPUR5TQllGi/NsKFagHGGzc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
+        b=Tfwk5/FlOqMg7muu6vQL4MQWUT9SWpK1CnAdPUrf+kbcK271SOcpdpnk5FjkYzi+Kp3w1VMnnJ+61vhSsfPk8kzP+L2P7EnZKMr8EppcWk+sXd/sSibCni7Nu7dds7ZT8Qurd7fcBUxfKwi9pnNAwPaG/wqopwEAnoN0a7130iM=
+Received: by 10.86.65.11 with SMTP id n11mr4059045fga.26.1200735143867;
+        Sat, 19 Jan 2008 01:32:23 -0800 (PST)
+Received: from scientist-2.lan ( [213.140.22.65])
+        by mx.google.com with ESMTPS id l12sm5342184fgb.8.2008.01.19.01.32.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 19 Jan 2008 01:32:22 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
+In-Reply-To: <7vbq7ibxhh.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71089>
-
-Hi,
-
-[please do not top post. Just delete everything you do not reply to]
-
-On Fri, Jan 18, 2008 at 03:24:34PM -0500, Kevin Ballard wrote:
-> As far as I can tell, the only time you ever run into the problems  
-> you've described on a filesystem which treats filenames as unicode  
-> strings (and therefore is free to normalize), are when you're trying  
-> to interact with a filesystem that treats filenames as sequences of  
-> bytes.
-
-If you read the first message in this thread, you would probably know
-that the problem exists on Mac even without any other filesystem being
-involved. My understanding of it is that is caused by HFS+ converting
-one sequence of Unicode characters (generated by Mac keyboard driver)
-to another sequence using "fast decomposed" conversion.
-
-[And please stop calling by normalization what is not. Mac does NOT
-normalize Unicode strings, it uses some sub-standard conversion,
-which neither produce a normalized string nor is guaranteed to be
-stable across versions of Unicode.]
-
-> This doesn't mean treating filenames as unicode strings is wrong, it  
-> just means that the world would be much better if every filesystem had  
-> the same behaviour here. It's kinda like the endian issue, except  
-> there's no simple solution here.
-
-Actually, there is, if you care to do something. You can write a wrapper
-around readdir(3) that will recodes filenames in Unicode Normal Forms C.
-This does not require much knowledge of Git -- what it requires the
-desire to do something to solve the problem. Of course, this step alone
-is not a complete solution (it does not solve case-insensitive issue),
-but the first step in the right direction...
-
-BTW, Git is far from being only software that ran into this problem with
-Mac. But not being first, we can benefit from other people experiences:
-http://osdir.com/ml/network.gnutella.limewire.core.devel/2003-01/msg00000.html
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71090>
 
 
-Dmitry
+> On the other hand, if you want to always cause an action before
+> running a git opeation locally, you do not have to have a hook.
+> You can just prepare such a message based on GNU ChangeLog and
+> then run git-commit with -F, both inside your wrapper.
+
+I see two other possibilities:
+
+1) Would you prefer allowing to run a command by setting commit.template 
+to something starting with an exclamation mark, i.e. something like 
+"!git diff --cached --name-status -r"?
+
+2) The pre-commit could receive a file name on the command line.  If it 
+creates that file, it would be used as a template for the commit 
+message.  The default implementation of pre-commit could include, 
+commented out, a reimplementation of prepare_log_message.  I like this 
+the least.
+
+3) Consider that the patch, as I implemented it, does not act solely on 
+local data, because the index could be modified by the pre-commit hook. 
+  This possibility is contemplated explicitly in builtin-commit.c:
+
+         /*
+          * Re-read the index as pre-commit hook could have updated it,
+          * and write it out as a tree.
+          */
+
+Paolo
