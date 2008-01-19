@@ -1,65 +1,88 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: fast-import.c: zlib_compression_level vs pack_compression_level
-Date: Sat, 19 Jan 2008 09:47:36 +0100
-Message-ID: <e5bfff550801190047n5616b252w4d1c5802343af864@mail.gmail.com>
-References: <e5bfff550801180504v17df7976x59d12f210efe583e@mail.gmail.com>
-	 <alpine.LFD.1.00.0801181043100.25841@xanadu.home>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Sat, 19 Jan 2008 11:48:14 +0300
+Message-ID: <20080119084814.GH14871@dpotapov.dyndns.org>
+References: <alpine.LFD.1.00.0801161959210.2806@woody.linux-foundation.org> <B719D4A2-0D05-4C55-95FC-AB880D58E1AC@wincent.com> <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org> <478F99E7.1050503@web.de> <alpine.LFD.1.00.0801171017460.14959@woody.linux-foundation.org> <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org> <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org> <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se> <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org> <2E6F57FC-3E78-4DD2-9B5B-CF75975D6A60@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Jan 19 09:48:20 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Peter Karlsson <peter@softwolves.pp.se>,
+	Mark Junker <mjscod@web.de>,
+	Pedro Melo <melo@simplicidade.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Sat Jan 19 09:48:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JG9NC-00040p-PQ
-	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 09:48:19 +0100
+	id 1JG9Nk-00048S-9b
+	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 09:48:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751725AbYASIrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jan 2008 03:47:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751898AbYASIrj
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 03:47:39 -0500
-Received: from rv-out-0910.google.com ([209.85.198.184]:35613 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751610AbYASIri (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jan 2008 03:47:38 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1136317rvb.1
-        for <git@vger.kernel.org>; Sat, 19 Jan 2008 00:47:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=IBEBBUhXzbmUxqkCgC+Jpd3d5YC4fzHm+pbFih87p0o=;
-        b=DqqMV9NzqkUVr/HA39XA5x64/tnl3Dz6UXOKusrIlzE2byUo7zV/HKy1o2dsAzFHByIDZm1/zCUwB7r7NFwsLoZF0FzmnIZGv7Yon6BKi1xX6F3u5XziU5ujY6bPz1B+vIN/vYLzxYobUBAl9F1XIiFJO6Tf0EzRGCsbvSv8TkY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=aFDJ+/GtAMl0XtCY52DBLYE8okt/GMK3X8/GGXBako9BimgIPt+4OYdNv/U5mTy1mj873g0qG1Ff/42QgI6kEst+hr/+T/UYMFfW1LuS41N3AOnTdDUUWn9Y6Ez8q+Sy/DhCmWSFBCWbhwiWbgbCjI4wVveuNMk4KM4pJTgK6vE=
-Received: by 10.140.179.25 with SMTP id b25mr3001531rvf.152.1200732456975;
-        Sat, 19 Jan 2008 00:47:36 -0800 (PST)
-Received: by 10.141.68.21 with HTTP; Sat, 19 Jan 2008 00:47:36 -0800 (PST)
-In-Reply-To: <alpine.LFD.1.00.0801181043100.25841@xanadu.home>
+	id S1752220AbYASIsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jan 2008 03:48:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752179AbYASIsX
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 03:48:23 -0500
+Received: from smtp08.mtu.ru ([62.5.255.55]:53969 "EHLO smtp08.mtu.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751312AbYASIsW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2008 03:48:22 -0500
+Received: from smtp08.mtu.ru (localhost [127.0.0.1])
+	by smtp08.mtu.ru (Postfix) with ESMTP id E25F2F7740B;
+	Sat, 19 Jan 2008 11:48:13 +0300 (MSK)
+Received: from dpotapov.dyndns.org (ppp85-141-188-224.pppoe.mtu-net.ru [85.141.188.224])
+	by smtp08.mtu.ru (Postfix) with ESMTP id 0118DF76C82;
+	Sat, 19 Jan 2008 11:48:10 +0300 (MSK)
+Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
+	(envelope-from <dpotapov@gmail.com>)
+	id 1JG9N8-0008A1-Ti; Sat, 19 Jan 2008 11:48:14 +0300
 Content-Disposition: inline
+In-Reply-To: <2E6F57FC-3E78-4DD2-9B5B-CF75975D6A60@sb.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-DCC-STREAM-Metrics: smtp08.mtu.ru 10002; Body=0 Fuz1=0 Fuz2=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71089>
 
-On Jan 18, 2008 4:44 PM, Nicolas Pitre <nico@cam.org> wrote:
-> On Fri, 18 Jan 2008, Marco Costalba wrote:
->
-> > My question is, does fast-import should use pack.compression instead
-> > of core.loosecompression?
->
-> Yes it should.
->
+Hi,
 
-I have a patch on top of my comrpession cleanup series, if people
-agree I would leave this as is now. It's really not a biggie and 1.5.4
-_seems_ very near.
+[please do not top post. Just delete everything you do not reply to]
+
+On Fri, Jan 18, 2008 at 03:24:34PM -0500, Kevin Ballard wrote:
+> As far as I can tell, the only time you ever run into the problems  
+> you've described on a filesystem which treats filenames as unicode  
+> strings (and therefore is free to normalize), are when you're trying  
+> to interact with a filesystem that treats filenames as sequences of  
+> bytes.
+
+If you read the first message in this thread, you would probably know
+that the problem exists on Mac even without any other filesystem being
+involved. My understanding of it is that is caused by HFS+ converting
+one sequence of Unicode characters (generated by Mac keyboard driver)
+to another sequence using "fast decomposed" conversion.
+
+[And please stop calling by normalization what is not. Mac does NOT
+normalize Unicode strings, it uses some sub-standard conversion,
+which neither produce a normalized string nor is guaranteed to be
+stable across versions of Unicode.]
+
+> This doesn't mean treating filenames as unicode strings is wrong, it  
+> just means that the world would be much better if every filesystem had  
+> the same behaviour here. It's kinda like the endian issue, except  
+> there's no simple solution here.
+
+Actually, there is, if you care to do something. You can write a wrapper
+around readdir(3) that will recodes filenames in Unicode Normal Forms C.
+This does not require much knowledge of Git -- what it requires the
+desire to do something to solve the problem. Of course, this step alone
+is not a complete solution (it does not solve case-insensitive issue),
+but the first step in the right direction...
+
+BTW, Git is far from being only software that ran into this problem with
+Mac. But not being first, we can benefit from other people experiences:
+http://osdir.com/ml/network.gnutella.limewire.core.devel/2003-01/msg00000.html
 
 
-Marco
+Dmitry
