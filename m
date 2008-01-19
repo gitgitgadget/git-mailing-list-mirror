@@ -1,88 +1,59 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] http-push: making HTTP push more robust and more
- user-friendly
-Date: Sat, 19 Jan 2008 23:18:59 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801192316330.5731@racer.site>
-References: <1200250979-19604-1-git-send-email-gb@gbarbier.org> <7vbq7ppbyh.fsf@gitster.siamese.dyndns.org> <47921582.4040708@gbarbier.org>
+Subject: Re: Tiny bug report, interaction between alias and help
+Date: Sat, 19 Jan 2008 23:23:25 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801192323040.5731@racer.site>
+References: <20080119142750.GA9182@phenix.progiciels-bpi.ca> <20080119174146.GA3913@coredump.intra.peff.net> <alpine.LSU.1.00.0801192252060.5731@racer.site> <20080119225723.GA17170@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463811741-1269028956-1200784742=:5731"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Mike Hommey <mh@glandium.org>
-To: =?ISO-8859-15?Q?Gr=E9goire_Barbier?= <gb@gbarbier.org>
-X-From: git-owner@vger.kernel.org Sun Jan 20 00:19:52 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: =?ISO-8859-15?Q?Fran=E7ois_Pinard?= <pinard@iro.umontreal.ca>,
+	git mailing list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jan 20 00:24:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGMyV-00073e-0m
-	for gcvg-git-2@gmane.org; Sun, 20 Jan 2008 00:19:43 +0100
+	id 1JGN2p-0008Dy-7a
+	for gcvg-git-2@gmane.org; Sun, 20 Jan 2008 00:24:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751292AbYASXTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jan 2008 18:19:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbYASXTO
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 18:19:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60000 "HELO mail.gmx.net"
+	id S1755220AbYASXXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jan 2008 18:23:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758600AbYASXXi
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 18:23:38 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45961 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751057AbYASXTN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jan 2008 18:19:13 -0500
-Received: (qmail invoked by alias); 19 Jan 2008 23:19:11 -0000
+	id S1758369AbYASXXh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2008 18:23:37 -0500
+Received: (qmail invoked by alias); 19 Jan 2008 23:23:35 -0000
 Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp024) with SMTP; 20 Jan 2008 00:19:11 +0100
+  by mail.gmx.net (mp055) with SMTP; 20 Jan 2008 00:23:35 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/N3kUOWgPNgl5brVGub7EY/PxAUEgecziN0D61lm
-	mQcxDQCcjigkF2
+X-Provags-ID: V01U2FsdGVkX193mFRWAp53BDtkOkZFRPItmeeqUi2jvtDQl043Lm
+	LKqoOeQDLwp8hF
 X-X-Sender: gene099@racer.site
-In-Reply-To: <47921582.4040708@gbarbier.org>
+In-Reply-To: <20080119225723.GA17170@coredump.intra.peff.net>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71142>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
----1463811741-1269028956-1200784742=:5731
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71143>
 
 Hi,
 
-On Sat, 19 Jan 2008, Grégoire Barbier wrote:
+On Sat, 19 Jan 2008, Jeff King wrote:
 
-> Johannes Schindelin a écrit :
-> >  It gives a better warning if the URL cannot be accessed, alright. But
-> >  I hate the fact that it introduces yet another function which does a
-> >  bunch of curl_easy_setopt()s only to start an active slot and check
-> >  for errors.
-> > 
-> >  Currently, I am not familiar enough with http-push.c to suggest a
-> >  proper alternative, but I suspect that the return values of the
-> >  _existing_ calls to curl should know precisely why the requests
-> >  failed, and _this_ should be reported.
+> On Sat, Jan 19, 2008 at 10:55:24PM +0000, Johannes Schindelin wrote:
 > 
-> Mike Hommey a écrit :
-> > FWIW, I have a work in progress refactoring the http code, avoiding a 
-> > great amount of curl_easy_setopt()s and simplifying the whole thing. 
-> > It's been sitting on my hard drive during my (quite long) vacation. I 
-> > will probably start working again on this soonish.
+> > Urgh... We really have something like that in git?  Looks like a prime 
+> > candidate for refactoring a la
 > 
-> 4) I agree with Johannes. However I am not familiar enough with curl to 
-> write the proper alternative. I create the new function by copy/paste of 
-> an existing one. I'm not 100% sure that it has no resource leaks or 
-> other bugs, but it's called only once at http-push start, and thus is 
-> likely not to do heavy damage...
+> Yes, my patch was a one-off "how about this?". I already have a 
+> refactored version in my tree (that also converts cmd_help to use 
+> parse_options), but I am holding on to it until post-1.5.4.
 
-I agree that it is too late in the rc cycle (actually, I cannot wait for 
-the end of it...) to do heavy refactoring, and this function is small 
-enough that it should not hurt the refactoring effort, especially given 
-that you want to work on that end anyway.
+Very nice!
 
-So please strike this one of my objections.
-
-Thanks for all your work,
+Thanks,
 Dscho
-
----1463811741-1269028956-1200784742=:5731--
