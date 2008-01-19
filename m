@@ -1,72 +1,73 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: git-svn should default to --repack
-Date: Sat, 19 Jan 2008 13:35:57 +0100
-Message-ID: <20080119123557.GA30778@diana.vm.bytemark.co.uk>
-References: <96C7A3A5-D750-43AB-A8A6-8A3A6D09AF4E@sb.org> <20080118155607.GA21236@diana.vm.bytemark.co.uk> <7vfxwudftz.fsf@gitster.siamese.dyndns.org>
+From: "Sverre Hvammen Johansen" <hvammen@gmail.com>
+Subject: Re: Merging using only fast-forward
+Date: Sat, 19 Jan 2008 04:39:20 -0800
+Message-ID: <402c10cd0801190439j7e5ad661me2ba4007bbe2e882@mail.gmail.com>
+References: <loom.20080116T151930-575@post.gmane.org>
+	 <863asxivlj.fsf@blue.stonehenge.com>
+	 <7vwsq9o6ls.fsf@gitster.siamese.dyndns.org>
+	 <402c10cd0801162253n6ab19f51y53d0baa16319adaa@mail.gmail.com>
+	 <402c10cd0801172258p9a1a97bt682fa012fcebd13c@mail.gmail.com>
+	 <7vodbibzch.fsf@gitster.siamese.dyndns.org>
+	 <402c10cd0801190228o68995493u9b8b40e1557092dd@mail.gmail.com>
+	 <7vzlv2858y.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kevin Ballard <kevin@sb.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 19 13:37:01 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 19 13:39:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGCwW-00054B-Ki
-	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 13:37:01 +0100
+	id 1JGCzJ-0005e0-Jt
+	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 13:39:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752362AbYASMgX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jan 2008 07:36:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752579AbYASMgW
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 07:36:22 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3047 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751685AbYASMgW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jan 2008 07:36:22 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JGCvW-00081Z-00; Sat, 19 Jan 2008 12:35:58 +0000
+	id S1753201AbYASMjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jan 2008 07:39:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751689AbYASMjX
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 07:39:23 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:46473 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751898AbYASMjW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2008 07:39:22 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so1311879fga.17
+        for <git@vger.kernel.org>; Sat, 19 Jan 2008 04:39:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=rAU6F/GaRuq0H6lR+r8lD+wgLTkacy4KM/wajZcJl2U=;
+        b=xDSPlOuLrYKuTFKuqrwUb6YVBFKqLyR0EuEip5v5Luw7DuYEIi/zOIqQs4y7lgRa/t7Xl1IjhLFmrwR/m1LR7qmOHgbhP2nWU3Fml/+p3krLPh9mSwN123sS0HJtwlWYEbzl+15e7PJeh2B0l0+8CGiQcBtjZERyOd/YhpVQDJ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SBPHcTmTB/B2v4mApkntGGRNQTtm7ZdbHLUZ5so/rtckzyFQpJINQZkxz3au9m9q563zeewRZcSfO6MP4tnE61+8v60J8qGv6lm5w0KJLUa5DkSGcKB3iXUMIE7dOiYrYNeB3W4KWU0/wb3Q6ktwKgOQgJruse6URqbbIpNyQ08=
+Received: by 10.82.159.15 with SMTP id h15mr8133495bue.36.1200746360829;
+        Sat, 19 Jan 2008 04:39:20 -0800 (PST)
+Received: by 10.82.172.18 with HTTP; Sat, 19 Jan 2008 04:39:20 -0800 (PST)
+In-Reply-To: <7vzlv2858y.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7vfxwudftz.fsf@gitster.siamese.dyndns.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71103>
 
-On 2008-01-18 12:44:08 -0800, Junio C Hamano wrote:
+On Jan 19, 2008 2:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> At one end of the spectrum, we have these crazy people who want
+> git to record something that is not a merge at all as a merge
+> with --no-ff.  At the other end of the spectrum, we have these
+> other crazy people who want git to outsmart them by allowing
+> them to throw random set of commits as potential parents,
+> remove duplicates and figure out how many real parents the
+> resulting merge should have (including the case that it may not
+> even have any).
 
-> Karl Hasselstr=F6m <kha@treskal.com> writes:
->
-> > I believe so too. And nowadays there's "git gc --auto", which was
-> > made for occasions such as this, so it should be a breeze to
-> > implement. The overhead might be low enough that it can be called
-> > after _every_ imported revision.
->
-> Careful. I made the same mistake and it had to be corrected with
-> e0cd252eb0ba6453acd64762625b004aa4cc162b.
->
-> "gc --auto" after every 1000 or so feels like a good default and I
-> would agree that would be a real fix to a real usability bug.
+I guess the most common use case would be where you have at least
+three developers and they randomly fetch and merge between each other.
+ They usually are not aware of where each other are and everyone
+avoids octopus.  They end up with more merge commits than needed
+simply because they sometime pick the wrong order.  If they instead
+had git find the real parents they would get fewer merge commits.
 
-I think 1000 might be too high; considering that (at least in my
-experience) it takes on the order of 250-500 ms to import a commit,
-the gc --auto overhead of maybe 10 ms isn't so bad.
-
-A good compromise might be to run gc --auto after every 10-100
-commits, _and_ when the import is done.
-
-However, if gc --auto always takes a lot of time without accomplishing
-anything in the presence of too many unreachable loose objects it
-might not be a good idea to run it at all, since the use of git-svn
-involves frequent rebasing.
-
-> Patches?
-
-Just hot air and noise for now from my end. Sorry.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+Sverre Hvammen Johansen
