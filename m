@@ -1,67 +1,113 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH] git-commit: add a prepare-commit-msg hook
-Date: Sat, 19 Jan 2008 17:04:31 +0100
-Message-ID: <47921F8F.9020401@gnu.org>
-References: <4790BCED.4050207@gnu.org> <7vbq7ibxhh.fsf@gitster.siamese.dyndns.org> <4791C3A8.7000308@gnu.org> <alpine.LSU.1.00.0801191119050.5731@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 19 17:05:48 2008
+From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH] parse_commit_buffer: don't parse invalid commits
+Date: Sat, 19 Jan 2008 18:35:23 +0100
+Message-ID: <1200764123283-git-send-email-mkoegler@auto.tuwien.ac.at>
+Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 19 18:36:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGGBq-0003yG-Ae
-	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 17:05:13 +0100
+	id 1JGHc0-0006x0-LR
+	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 18:36:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759156AbYASQEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jan 2008 11:04:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757655AbYASQEd
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 11:04:33 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:30019 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755286AbYASQEc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jan 2008 11:04:32 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so1349851fga.17
-        for <git@vger.kernel.org>; Sat, 19 Jan 2008 08:04:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        bh=TIv5VGzs/bGMeBNXKjkBMzRC3v4Axm2oyQkpiDlEuyY=;
-        b=JZS8ygffrNidOzsXv0+kyZXDxPufYMP4dHrIkiiprodrMB2ZYEM46Y9iggZea0izLY3ph0EVZwOQs9fTeZSuiH643x+sMLEEVfqI9VJEHuWc39Poz6CyMl0ci3hyUTC1xn/yljKvDQ1qSlIfJxIlZNTAj49tZBxGjYaV0fLn9/0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        b=o0JFN15JshL4+bLWt9s/+/Ci3EWUhh3/j6SnIgR/WnzxNTxC09lJO9o4b8Y7ZZeR79QAbjRDTTz7H9eFgrf/Yix+StV+UrAAN1MG/uKMnN8wV/O0K5CJOIsKd8c8fu+PTJsQt9u2t1QtHshEnSdJFVAAkEtHHxo7ZJpTBMKnzFo=
-Received: by 10.86.30.9 with SMTP id d9mr4344393fgd.52.1200758670624;
-        Sat, 19 Jan 2008 08:04:30 -0800 (PST)
-Received: from scientist-2.lan ( [213.140.22.65])
-        by mx.google.com with ESMTPS id l19sm7985838fgb.9.2008.01.19.08.04.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 19 Jan 2008 08:04:30 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
-In-Reply-To: <alpine.LSU.1.00.0801191119050.5731@racer.site>
+	id S1751061AbYASRf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jan 2008 12:35:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751080AbYASRf0
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 12:35:26 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:60840 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750990AbYASRfZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2008 12:35:25 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id ADEF8680BEA3;
+	Sat, 19 Jan 2008 18:35:23 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id v9A1yvQGK3sD; Sat, 19 Jan 2008 18:35:23 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id 920F7680BEA2; Sat, 19 Jan 2008 18:35:23 +0100 (CET)
+X-Mailer: git-send-email 1.5.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71122>
 
+* check, that the tree line ends with \n
+* prevent parse_commit_date from reading beyond the buffer,
+  - if author line does not end with \n
+  - if committer line does not contain >
+* verify in parse_commit_date, that the commiter line ends with \n
 
-> Of course, there is a fourth of "two other" possibilities:
+Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+---
+ commit.c |   27 ++++++++++++++++++++-------
+ 1 files changed, 20 insertions(+), 7 deletions(-)
 
-(The third was just the previously posted patch, so two "other than the 
-posted one") :-)
-
-> Make a script calling git-commit with "-F - -e" and pipe your generated 
-> template into it.
-
-You considered that this script should parse -a, -i, -o, whatever, 
-right? ;-)
-
-The point is that a hook can use the index as prepared by git-commit.
-
-Paolo
+diff --git a/commit.c b/commit.c
+index f074811..8b8fb04 100644
+--- a/commit.c
++++ b/commit.c
+@@ -48,19 +48,32 @@ struct commit *lookup_commit(const unsigned char *sha1)
+ 	return check_commit(obj, sha1, 0);
+ }
+ 
+-static unsigned long parse_commit_date(const char *buf)
++static unsigned long parse_commit_date(const char *buf, const char *tail)
+ {
+ 	unsigned long date;
++	const char *dateptr;
+ 
++	if (buf + 6 >= tail)
++		return 0;
+ 	if (memcmp(buf, "author", 6))
+ 		return 0;
+-	while (*buf++ != '\n')
++	while (buf < tail && *buf++ != '\n')
+ 		/* nada */;
++	if (buf + 9 >= tail)
++		return 0;
+ 	if (memcmp(buf, "committer", 9))
+ 		return 0;
+-	while (*buf++ != '>')
++	while (buf < tail && *buf++ != '>')
+ 		/* nada */;
+-	date = strtoul(buf, NULL, 10);
++	if (buf >= tail)
++		return 0;
++	dateptr = buf;
++	while (buf < tail && *buf++ != '\n')
++		/* nada */;
++	if (buf >= tail)
++		return 0;
++	/* dateptr < buf && buf[-1] == '\n', so strtoul will stop at buf-1 */
++	date = strtoul(dateptr, NULL, 10);
+ 	if (date == ULONG_MAX)
+ 		date = 0;
+ 	return date;
+@@ -236,9 +249,9 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
+ 		return 0;
+ 	item->object.parsed = 1;
+ 	tail += size;
+-	if (tail <= bufptr + 5 || memcmp(bufptr, "tree ", 5))
++	if (tail <= bufptr + 46 || memcmp(bufptr, "tree ", 5) || bufptr[45] != '\n')
+ 		return error("bogus commit object %s", sha1_to_hex(item->object.sha1));
+-	if (tail <= bufptr + 45 || get_sha1_hex(bufptr + 5, parent) < 0)
++	if (get_sha1_hex(bufptr + 5, parent) < 0)
+ 		return error("bad tree pointer in commit %s",
+ 			     sha1_to_hex(item->object.sha1));
+ 	item->tree = lookup_tree(parent);
+@@ -275,7 +288,7 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
+ 			n_refs++;
+ 		}
+ 	}
+-	item->date = parse_commit_date(bufptr);
++	item->date = parse_commit_date(bufptr, tail);
+ 
+ 	if (track_object_refs) {
+ 		unsigned i = 0;
+-- 
+gitgui.0.9.1.g39b9
