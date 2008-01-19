@@ -1,53 +1,70 @@
-From: <rajivsundar@airtel.in>
-Subject: This is your thingy.....this is your thingy on meds. Any questions?
-Date: Sat, 19 Jan 2008 13:43:41 +0300
-Message-ID: <4791D45D.1030407@theedge.ca>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Merging using only fast-forward
+Date: Sat, 19 Jan 2008 02:43:57 -0800
+Message-ID: <7vzlv2858y.fsf@gitster.siamese.dyndns.org>
+References: <loom.20080116T151930-575@post.gmane.org>
+	<863asxivlj.fsf@blue.stonehenge.com>
+	<7vwsq9o6ls.fsf@gitster.siamese.dyndns.org>
+	<402c10cd0801162253n6ab19f51y53d0baa16319adaa@mail.gmail.com>
+	<402c10cd0801172258p9a1a97bt682fa012fcebd13c@mail.gmail.com>
+	<7vodbibzch.fsf@gitster.siamese.dyndns.org>
+	<402c10cd0801190228o68995493u9b8b40e1557092dd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 19 11:44:14 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Sverre Hvammen Johansen" <hvammen@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 19 11:44:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGBBM-00030I-H8
-	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 11:44:12 +0100
+	id 1JGBBh-00032V-Ok
+	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 11:44:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752266AbYASKno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jan 2008 05:43:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753021AbYASKno
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 05:43:44 -0500
-Received: from ppp85-140-229-209.pppoe.mtu-net.ru ([85.140.229.209]:4734 "HELO
-	ppp85-140-229-209.pppoe.mtu-net.ru" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1750942AbYASKnn (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Jan 2008 05:43:43 -0500
-X-Greylist: delayed 602 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Jan 2008 05:43:43 EST
-Received: (qmail 2786 invoked from network); Sat, 19 Jan 2008 13:43:41 +0300
-Received: from unknown (HELO hsavb) (113.80.141.218)
-	by ppp85-140-229-209.pppoe.mtu-net.ru with SMTP; Sat, 19 Jan 2008 13:43:41 +0300
-User-Agent: Thunderbird 1.5.0.13 (Windows/20070809)
+	id S1753132AbYASKoF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jan 2008 05:44:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753139AbYASKoE
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 05:44:04 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56809 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753061AbYASKoD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2008 05:44:03 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id AD4C35685;
+	Sat, 19 Jan 2008 05:44:01 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 340885682;
+	Sat, 19 Jan 2008 05:43:59 -0500 (EST)
+In-Reply-To: <402c10cd0801190228o68995493u9b8b40e1557092dd@mail.gmail.com>
+	(Sverre Hvammen Johansen's message of "Sat, 19 Jan 2008 02:28:55
+	-0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 19.7 points;
- *  0.2 NO_REAL_NAME From: does not include a real name
- *  3.0 RAZOR2_CF_RANGE_51_100 BODY: Razor2 gives confidence level above 50%
- *      [cf: 100]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?85.140.229.209>]
- *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: rxmarlowe65.com]
- *  2.0 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: rxmarlowe65.com]
- *  0.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: rxmarlowe65.com]
- *  2.0 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: rxmarlowe65.com]
- *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: rxmarlowe65.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71097>
 
-Ten inches long... and growing.  http://cugs.rxmarlowe65.com
+"Sverre Hvammen Johansen" <hvammen@gmail.com> writes:
+
+> The more I think about this is that --ff-only should really be
+> specified as a merge strategy (single) and not as an special case of
+> --ff.  All merge strategies can then take any number of commits, but
+> will only succeed if the commits can be reduced down to two or fewer
+> for resolve/recursive and one for single.
+
+Interesting.
+
+At one end of the spectrum, we have these crazy people who want
+git to record something that is not a merge at all as a merge
+with --no-ff.  At the other end of the spectrum, we have these
+other crazy people who want git to outsmart them by allowing
+them to throw random set of commits as potential parents,
+remove duplicates and figure out how many real parents the
+resulting merge should have (including the case that it may not
+even have any).
+
+I'll have to think about it, but it sounds like a promising
+idea.
