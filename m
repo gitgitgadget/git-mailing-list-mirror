@@ -1,103 +1,104 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Sun, 20 Jan 2008 00:17:06 +0300
-Message-ID: <20080119211706.GK14871@dpotapov.dyndns.org>
-References: <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org> <478F99E7.1050503@web.de> <alpine.LFD.1.00.0801171017460.14959@woody.linux-foundation.org> <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org> <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org> <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se> <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org> <2E6F57FC-3E78-4DD2-9B5B-CF75975D6A60@sb.org> <20080119084814.GH14871@dpotapov.dyndns.org> <FD3512A5-1CC6-4F02-8C56-4CAD6F50981B@sb.org>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [PATCH] Let "git svn" run "git gc --auto" occasionally
+Date: Sat, 19 Jan 2008 23:36:30 +0100
+Message-ID: <20080119223249.8227.31460.stgit@yoghurt>
+References: <20080119123557.GA30778@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Peter Karlsson <peter@softwolves.pp.se>,
-	Mark Junker <mjscod@web.de>,
-	Pedro Melo <melo@simplicidade.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Sat Jan 19 22:17:57 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Kevin Ballard <kevin@sb.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Jan 19 23:37:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGL4b-00072Q-54
-	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 22:17:53 +0100
+	id 1JGMJY-0004ce-Cq
+	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 23:37:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751307AbYASVRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jan 2008 16:17:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751270AbYASVRM
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 16:17:12 -0500
-Received: from smtp08.mtu.ru ([62.5.255.55]:53368 "EHLO smtp08.mtu.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751292AbYASVRL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jan 2008 16:17:11 -0500
-Received: from smtp08.mtu.ru (localhost [127.0.0.1])
-	by smtp08.mtu.ru (Postfix) with ESMTP id B5460F7742F;
-	Sun, 20 Jan 2008 00:17:08 +0300 (MSK)
-Received: from dpotapov.dyndns.org (ppp85-141-188-224.pppoe.mtu-net.ru [85.141.188.224])
-	by smtp08.mtu.ru (Postfix) with ESMTP id AB276F775D9;
-	Sun, 20 Jan 2008 00:17:05 +0300 (MSK)
-Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
-	(envelope-from <dpotapov@gmail.com>)
-	id 1JGL3q-0000pO-1q; Sun, 20 Jan 2008 00:17:06 +0300
-Content-Disposition: inline
-In-Reply-To: <FD3512A5-1CC6-4F02-8C56-4CAD6F50981B@sb.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-DCC-STREAM-Metrics: smtp08.mtu.ru 10001; Body=0 Fuz1=0 Fuz2=0
+	id S1753259AbYASWgx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jan 2008 17:36:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752954AbYASWgx
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 17:36:53 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1652 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751416AbYASWgw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2008 17:36:52 -0500
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1JGMIt-0001JX-00; Sat, 19 Jan 2008 22:36:43 +0000
+In-Reply-To: <20080119123557.GA30778@diana.vm.bytemark.co.uk>
+User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71133>
 
-On Sat, Jan 19, 2008 at 09:55:45AM -0500, Kevin Ballard wrote:
-> 
-> >[And please stop calling by normalization what is not. Mac does NOT
-> >normalize Unicode strings, it uses some sub-standard conversion,
-> >which neither produce a normalized string nor is guaranteed to be
-> >stable across versions of Unicode.]
-> 
-> From what the HFS+ technote says, it produces a variant of Normal  
-> Form D. 
+Let "git svn" run "git gc --auto" every 100 imported commits, to
+reduce the number of loose objects.
 
-There is no such thing in the standard as a variant of NFD. Moreover,
-even if this conversion were described in the standard, it would never
-called as normalization, because normalization means conversion that
-makes all equivalent strings having identical binary representations.
-HFS+ conversion does not met this criterion, so it not normalization.
+To handle the common use case of frequent imports, where each
+invocation typically fetches less than 100 commits, randomly set the
+counter to something in the range 1-100 on initialization. It's almost
+as good as saving the counter, and much less of a hassle.
 
-> This variant, while not guaranteed to be stable across  
-> versions of HFS+, but in practice it is stable.
-> 
-> What would you prefer I call it?
+Oh, and 100 is just my best guess at a reasonable number. It could
+conceivably need tweaking.
 
-Apple calls it as decomposition, which is correct even if it is not full
-decomposition as stated in the technote.
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-> 
-> >>This doesn't mean treating filenames as unicode strings is wrong, it
-> >>just means that the world would be much better if every filesystem  
-> >>had
-> >>the same behaviour here. It's kinda like the endian issue, except
-> >>there's no simple solution here.
-> >
-> >Actually, there is, if you care to do something. You can write a  
-> >wrapper
-> >around readdir(3) that will recodes filenames in Unicode Normal  
-> >Forms C.
-> >This does not require much knowledge of Git -- what it requires the
-> >desire to do something to solve the problem. Of course, this step  
-> >alone
-> >is not a complete solution (it does not solve case-insensitive issue),
-> >but the first step in the right direction...
-> 
-> I'm not sure how that would solve anything. Sure, it would provide a  
-> stable, known encoding for git to compare filenames against, but that  
-> would only work if the filename is known to be Unicode, and as it has  
-> been pointed out on other filesystems the filename can be whatever  
-> encoding the user chooses (which, IMHO, is a flaw).
+---
 
-I believe that Git internally should use only UTF-8 for encoding file
-names, commit messages, etc. The problem with some other filesystems
-should be addressed separately (by those who work on those systems or
-at least have access to them). Regardless interoperability with other
-systems, this change alone should solve the issue that was described
-in the first message of this thread.
+On 2008-01-19 13:35:57 +0100, Karl Hasselstr=C3=B6m wrote:
 
-Dmitry
+> On 2008-01-18 12:44:08 -0800, Junio C Hamano wrote:
+>=20
+> > Patches?
+>=20
+> Just hot air and noise for now from my end. Sorry.
+
+OK, it didn't feel good saying that. So here's my attempt at being a
+model citizen. (It's not hard with a change this small ...)
+
+I'm not quite sure how this should interact with the --repack flag.
+Right now they just coexist, except for never running right after one
+another, but conceivably we should do something cleverer. Eric?
+
+ git-svn.perl |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
+
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 9f2b587..89e1d61 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1247,7 +1247,7 @@ use File::Path qw/mkpath/;
+ use File::Copy qw/copy/;
+ use IPC::Open3;
+=20
+-my $_repack_nr;
++my ($_repack_nr, $_gc_nr, $_gc_period);
+ # properties that we do not log:
+ my %SKIP_PROP;
+ BEGIN {
+@@ -1413,6 +1413,8 @@ sub init_vars {
+ 		$_repack_nr =3D $_repack;
+ 		$_repack_flags ||=3D '-d';
+ 	}
++	$_gc_period =3D 100;
++	$_gc_nr =3D int(rand($_gc_period)) + 1;
+ }
+=20
+ sub verify_remotes_sanity {
+@@ -2157,6 +2159,9 @@ sub do_git_commit {
+ 		print "Running git repack $_repack_flags ...\n";
+ 		command_noisy('repack', split(/\s+/, $_repack_flags));
+ 		print "Done repacking\n";
++	} elsif (--$_gc_nr =3D=3D 0) {
++		$_gc_nr =3D $_gc_period;
++		command_noisy('gc', '--auto');
+ 	}
+ 	return $commit;
+ }
