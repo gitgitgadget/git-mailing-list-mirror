@@ -1,149 +1,199 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: git-svn should default to --repack
-Date: Sat, 19 Jan 2008 10:05:01 -0500
-Message-ID: <BB932B28-08F3-4243-8E3B-ACC4527F947E@sb.org>
-References: <96C7A3A5-D750-43AB-A8A6-8A3A6D09AF4E@sb.org> <20080118155607.GA21236@diana.vm.bytemark.co.uk> <7vfxwudftz.fsf@gitster.siamese.dyndns.org> <20080119123557.GA30778@diana.vm.bytemark.co.uk>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: multipart/signed; boundary=Apple-Mail-19--890398187; micalg=sha1; protocol="application/pkcs7-signature"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 19 16:06:05 2008
+From: =?UTF-8?B?R3LDqWdvaXJlIEJhcmJpZXI=?= <gb@gbarbier.org>
+Subject: Re: [PATCH] http-push: making HTTP push more robust and more user-friendly
+Date: Sat, 19 Jan 2008 16:21:38 +0100
+Message-ID: <47921582.4040708@gbarbier.org>
+References: <1200250979-19604-1-git-send-email-gb@gbarbier.org> <7vbq7ppbyh.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Mike Hommey <mh@glandium.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jan 19 16:22:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGFGK-000209-Fs
-	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 16:05:49 +0100
+	id 1JGFWe-0007AY-DQ
+	for gcvg-git-2@gmane.org; Sat, 19 Jan 2008 16:22:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757134AbYASPFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jan 2008 10:05:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756177AbYASPFE
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 10:05:04 -0500
-Received: from sd-green-bigip-207.dreamhost.com ([208.97.132.207]:45302 "EHLO
-	randymail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1756588AbYASPFD (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Jan 2008 10:05:03 -0500
-Received: from KBALLARD.RES.WPI.NET (KBALLARD.RES.WPI.NET [130.215.239.91])
-	by randymail-a11.g.dreamhost.com (Postfix) with ESMTP id 3DB26109EB5
-	for <git@vger.kernel.org>; Sat, 19 Jan 2008 07:05:02 -0800 (PST)
-In-Reply-To: <20080119123557.GA30778@diana.vm.bytemark.co.uk>
-X-Mailer: Apple Mail (2.915)
+	id S1757675AbYASPVl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jan 2008 10:21:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758922AbYASPVl
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 10:21:41 -0500
+Received: from relay1-v.mail.gandi.net ([217.70.178.75]:48307 "EHLO
+	relay1-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757636AbYASPVj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2008 10:21:39 -0500
+Received: from localhost (mfilter5-v.gandi.net [217.70.178.39])
+	by relay1-v.mail.gandi.net (Postfix) with ESMTP id 49CFA362AA;
+	Sat, 19 Jan 2008 16:21:38 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mfilter5-v.mgt.gandi.net
+Received: from relay1-v.mail.gandi.net ([217.70.178.75])
+	by localhost (mfilter5-v.gandi.net [217.70.178.39]) (amavisd-new, port 10024)
+	with ESMTP id LZZIff2ytp5X; Sat, 19 Jan 2008 16:13:41 +0100 (CET)
+Received: from [192.168.79.1] (soy95-1-82-229-96-169.fbx.proxad.net [82.229.96.169])
+	by relay1-v.mail.gandi.net (Postfix) with ESMTP id 43D3B362AF;
+	Sat, 19 Jan 2008 16:21:35 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <7vbq7ppbyh.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71110>
 
+Hi Junio, Hi Johannes,
 
---Apple-Mail-19--890398187
-Content-Type: text/plain;
-	charset=ISO-8859-1;
-	format=flowed;
-	delsp=yes
-Content-Transfer-Encoding: quoted-printable
+I recently sent three patches about http-push:
+>  $gmane/70406 <1200250979-19604-1-git-send-email-gb@gbarbier.org>
+>  $gmane/70407 <1200250979-19604-2-git-send-email-gb@gbarbier.org>
+>  $gmane/70405 <1200250979-19604-3-git-send-email-gb@gbarbier.org>
 
-Note: CC list pruned as, once again, my Mail client decided to send =20
-the original message as HTML and it got bounced from the list.
-Original CC list: kha@treskal.com, gitster@pobox.com
+I saw that Junio has already applied one of them (the one that disable=20
+http-push without USE_CURL_MULTI).
 
-On Jan 19, 2008, at 7:35 AM, Karl Hasselstr=F6m wrote:
+I wont talk about the second one "fix webdav lock leak" in the present=20
+mail but in another one, since Johannes has found severe bugs in it. I=20
+prefer to make them separate subjects.
 
-> On 2008-01-18 12:44:08 -0800, Junio C Hamano wrote:
+As for the third patch ("making HTTP push more robust and more=20
+user-friendly"), I recall the commit message here:
+
+>  Gr=C3=A9goire Barbier <gb@gbarbier.org> writes:
+> > Fail when info/refs exists and is already locked (avoiding strange
+> > behaviour and errors, and maybe avoiding some repository
+> > corruption).
+> >
+> > Warn if the URL does not end with '/' (since 302 is not yet
+> > handled)
+> >
+> > More explicit error message when the URL or password is not set
+> > correctly (instead of "no DAV locking support").
+> >
+> > DAV locking time of 1 minute instead of 10 minutes (avoid waiting
+> > 10 minutes for a orphan lock to expire before anyone can do a push
+> > on the repo).
+
+I agree that it should be improved seriously in several ways. I will=20
+submit the patch again with following improvements.
+
+1) I will split the patch into several ones, to enable Junio to apply i=
+t=20
+partially.
+
+Junio C Hamano a =C3=A9crit :
+>  there is no correct timeout that is good for everybody, the last ite=
+m
+>  might be contentious.
+
+2) I won't change the timeout to avoid possible side effects for other=20
+things I don't know about since I'm rather new to git.
+
+Johannes Schindelin a =C3=A9crit :
+>  This patch makes http-push Warn if URL does not end if "/", but it
+>  would be even better to just handle it... we know exactly that HTTP
+>  URLs _must_ end in a slash.
+
+3) Rather than warning if the URL does not end with a slash, I will add=
+=20
+the slash, so that this will work, even without having to handle=20
+HTTP/302 in curl calls. BTW I will do the same for http-fetch either.
+
+Johannes Schindelin a =C3=A9crit :
+>  It gives a better warning if the URL cannot be accessed, alright. Bu=
+t
+>  I hate the fact that it introduces yet another function which does a
+>  bunch of curl_easy_setopt()s only to start an active slot and check
+>  for errors.
 >
->> Karl Hasselstr=F6m <kha@treskal.com> writes:
->>
->>> I believe so too. And nowadays there's "git gc --auto", which was
->>> made for occasions such as this, so it should be a breeze to
->>> implement. The overhead might be low enough that it can be called
->>> after _every_ imported revision.
->>
->> Careful. I made the same mistake and it had to be corrected with
->> e0cd252eb0ba6453acd64762625b004aa4cc162b.
->>
->> "gc --auto" after every 1000 or so feels like a good default and I
->> would agree that would be a real fix to a real usability bug.
+>  Currently, I am not familiar enough with http-push.c to suggest a
+>  proper alternative, but I suspect that the return values of the
+>  _existing_ calls to curl should know precisely why the requests
+>  failed, and _this_ should be reported.
+
+Mike Hommey a =C3=A9crit :
+ > FWIW, I have a work in progress refactoring the http code, avoiding =
+a
+ > great amount of curl_easy_setopt()s and simplifying the whole thing.
+ > It's been sitting on my hard drive during my (quite long) vacation. =
+I
+ > will probably start working again on this soonish.
+
+4) I agree with Johannes. However I am not familiar enough with curl to=
+=20
+write the proper alternative. I create the new function by copy/paste o=
+f=20
+an existing one. I'm not 100% sure that it  has no resource leaks or=20
+other bugs, but it's called only once at http-push start, and thus is=20
+likely not to do heavy damage...
+
+As a rationale: I've tried to make several developers use git over http=
+,=20
+including push, and they made all the same beginner mistakes on the=20
+command line, all leading to that stupid error message about locking no=
+t=20
+available, and I think that making a clearer error message is an=20
+important improvement to make not-so-skilled developers using git when=20
+neither ssh nor git protocols are available.
+
+Therefore I think that applying my patch, even if it's far from being=20
+perfect, is the lesser of two evils.
+
+Then, for instance during 1.5.5 development cycle, I would be happy to=20
+help Mike if I can, to clean my new code that he is likelly not to have=
+=20
+cleaned up on his hard disk during his vacation...
+=46or instance I may look at his patches and take them in example to cl=
+ean=20
+up my code.
+
+
+Apart from the discussion on the source code, I would like to reply to=20
+Junio about the patch disabling http-push without USE_CURL_MULTI:
+Junio C Hamano a =C3=A9crit :
+>  Also http-push being unusable without CURL_MULTI was also a news to
+>  me.  Is this something that came up on #git perhaps?
 >
-> I think 1000 might be too high; considering that (at least in my
-> experience) it takes on the order of 250-500 ms to import a commit,
-> the gc --auto overhead of maybe 10 ms isn't so bad.
->
-> A good compromise might be to run gc --auto after every 10-100
-> commits, _and_ when the import is done.
->
-> However, if gc --auto always takes a lot of time without accomplishing
-> anything in the presence of too many unreachable loose objects it
-> might not be a good idea to run it at all, since the use of git-svn
-> involves frequent rebasing.
+>  This change means people need curl 7.10 or newer (post May 2003, tha=
+t
+>  is).  I do not think it is too new a version to require, but then it
+>  makes me wonder if it makes much sense for us to keep supporting non
+>  CURL_MULTI build these days.  Perhaps we should schedule such a move
+>  to drop non MULTI build in the future?
 
-I don't know much about how this works, so if git gc --auto might have =20=
+I don't know if USE_CURL_MULTI works well for other git binaries than=20
+http-push (although I've used it successfully two or three times with=20
+clone and fetch).
 
-a problem, it seems the simplest fix for now would be to default git-=20
-svn to having --repack=3D1000 on.
+If yes, I think that the release notes, or whatever information channel=
+=20
+you can have with the various distribution maintainers, should advice t=
+o=20
+compile with USE_CURL_MULTI. Or we can make it the default compilation=20
+option in a future release (> 1.5.4 I think).
 
->> Patches?
->
-> Just hot air and noise for now from my end. Sorry.
+If USE_CURL_MULTI is not safe for other binaries than http-push, I thin=
+k=20
+I should manage to make a new patch, let's say for git-1.5.5, that woul=
+d=20
+change the makefile to use CURL_MULTI by default on http-push (for=20
+example without -DNEVER_USE_CURL_MULTI) and leave alone other binaries=20
+as they are (CURL_MULTI disabled without -DUSE_CURL_MULTI).
 
-Same. I don't know Perl. Sorry.
+I want to insist that the present patch for 1.5.4 (which you've already=
+=20
+applied to git.git), does not introduce by itself a dependence or a=20
+regression, it only disables unwarned users to call a function that doe=
+s=20
+not work, but pretends to work and by the way corrupts the remote=20
+repository.
 
--Kevin Ballard
+I thank you very much for the time you spent reviewing my patches and=20
+more generally for the work you do. I'll try to improve the way I submi=
+t=20
+patches to make them take you less time to review.
 
 --=20
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
-
-
-
---Apple-Mail-19--890398187
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGMjCCAusw
-ggJUoAMCAQICEDsG8BKvlrEW0HUBIxWIgjUwDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
-JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
-ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA3MDQyMzIxMjM0OVoXDTA4MDQyMjIxMjM0
-OVowVzEQMA4GA1UEBBMHQmFsbGFyZDEOMAwGA1UEKhMFS2V2aW4xFjAUBgNVBAMTDUtldmluIEJh
-bGxhcmQxGzAZBgkqhkiG9w0BCQEWDGtldmluQHNiLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEP
-ADCCAQoCggEBAN/koURrN2ndrAiuAuHHrdFz+hLGQ7ZsXloGnObjALGOFY3Kmk2FCwAJPIha5GfM
-YFmZIoqxs+DbOWOn6KZ9hcQ5wf4EOgokayrEs3G72T+G8ZE4aXrw0CWJzKLjaIQeDZNZoHA44jlZ
-dG70wtZske898IoPz6YHpkcXiulllATfd8Pa7EgjPri5hKFiRXKI52OsOQTX6cNMMZJUIm8DvfQ5
-jmDyAtywNZGSGeUAMbWnpuLq7H18zpye2Q1hr+p4kucazMb+i7OHXPvX7yx2jMjhN5jw/gYkuzQQ
-JExp1fJyAZQ/av/ZgaxWchhhi4ziFXIlX3B09DTlOQlF53P3fi0CAwEAAaMpMCcwFwYDVR0RBBAw
-DoEMa2V2aW5Ac2Iub3JnMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEFBQADgYEAw/qc6zq+0Qy2
-XaodDlt2L6Vq1DzaVWjV152BFjidmsyhyCkCuyYdAcDp17opIfrNCBbOX5DdY6cpFpnSCxCZeIEB
-PDc3TaaFPtzr8qrpcNDohRSdt+qFLUeMHzlidAiAjvjI3tPKv3JLTakWdQR/XPHsg4mWoaVQU2hM
-HOQBw8EwggM/MIICqKADAgECAgENMA0GCSqGSIb3DQEBBQUAMIHRMQswCQYDVQQGEwJaQTEVMBMG
-A1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0ZSBD
-b25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQwIgYD
-VQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNvbmFs
-LWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNMDMwNzE3MDAwMDAwWhcNMTMwNzE2MjM1OTU5WjBiMQsw
-CQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoGA1UE
-AxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0EwgZ8wDQYJKoZIhvcNAQEBBQAD
-gY0AMIGJAoGBAMSmPFVzVftOucqZWh5owHUEcJ3f6f+jHuy9zfVb8hp2vX8MOmHyv1HOAdTlUAow
-1wJjWiyJFXCO3cnwK4Vaqj9xVsuvPAsH5/EfkTYkKhPPK9Xzgnc9A74r/rsYPge/QIACZNenpruf
-ZdHFKlSFD0gEf6e20TxhBEAeZBlyYLf7AgMBAAGjgZQwgZEwEgYDVR0TAQH/BAgwBgEB/wIBADBD
-BgNVHR8EPDA6MDigNqA0hjJodHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUGVyc29uYWxGcmVl
-bWFpbENBLmNybDALBgNVHQ8EBAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZhdGVM
-YWJlbDItMTM4MA0GCSqGSIb3DQEBBQUAA4GBAEiM0VCD6gsuzA2jZqxnD3+vrL7CF6FDlpSdf0wh
-uPg2H6otnzYvwPQcUCCTcDz9reFhYsPZOhl+hLGZGwDFGguCdJ4lUJRix9sncVcljd2pnDmOjCBP
-ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
-MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
-A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEDsG8BKvlrEW0HUBIxWI
-gjUwCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
-DxcNMDgwMTE5MTUwNTAxWjAjBgkqhkiG9w0BCQQxFgQU8rL7emttgXV0fSFhbVURssVEvxYwgYUG
-CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
-IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
-AhA7BvASr5axFtB1ASMViII1MIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
-BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
-b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhA7BvASr5axFtB1ASMViII1MA0GCSqGSIb3DQEBAQUA
-BIIBAKc5KafmjyuuyY/fNGgitNcopleHu+iHjuMhSzjrdMZLMk37i7o2DXsDATX4vNqBUjMI9bBq
-jfYOs8zOM7XB7shuaf0sjV+ISo8nIYgvpb20ogc9yMHP3rwl+pgJWf1mXPeTV8Vh9sUNynBCePb9
-w9XQxZWgel8kiJwlETO3G9fSv6vxqjREWNh0QRdnIDxA9oo7KVtLRRka6II+hYa2OfgRn1tld09J
-zgHK1M7jB1sq6M5EH1SYUXJ3xAWOrHO4HdhqYrJ26kSg9UVbIxloytlMH91lNjg0cpfjjPWivEPc
-nqnqE353t3E6r6HKscB5i0XSbR5rjJF/6dj9a5wf4cAAAAAAAAA=
-
---Apple-Mail-19--890398187--
+Gr=C3=A9goire Barbier - gb =C3=A0 gbarbier.org - +33 6 21 35 73 49
