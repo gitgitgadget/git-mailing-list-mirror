@@ -1,59 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-fsck: report missing author/commit line in a commit
- as an error
-Date: Sun, 20 Jan 2008 19:20:54 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801201918260.5731@racer.site>
-References: <12008555922208-git-send-email-mkoegler@auto.tuwien.ac.at>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: [PATCH] Avoid running lstat(2) on the same cache entry.
+Date: Sun, 20 Jan 2008 14:03:10 -0600
+Message-ID: <20080120200310.GK22503@lavos.net>
+References: <alpine.LFD.1.00.0801181911560.2957@woody.linux-foundation.org> <7vfxwu9s2z.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801191133330.2957@woody.linux-foundation.org> <alpine.LFD.1.00.0801191709380.2957@woody.linux-foundation.org> <alpine.LSU.1.00.0801200142170.5731@racer.site> <15ECE22B-FCBB-4F12-919B-694E48D48E0D@zib.de> <alpine.LFD.1.00.0801200942191.2957@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Sun Jan 20 20:21:46 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	msysgit@googlegroups.com
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Jan 20 21:03:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGfjh-0001Ju-03
-	for gcvg-git-2@gmane.org; Sun, 20 Jan 2008 20:21:41 +0100
+	id 1JGgON-00052z-OE
+	for gcvg-git-2@gmane.org; Sun, 20 Jan 2008 21:03:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754956AbYATTVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2008 14:21:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754995AbYATTVK
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 14:21:10 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57548 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754936AbYATTVJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2008 14:21:09 -0500
-Received: (qmail invoked by alias); 20 Jan 2008 19:21:07 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp043) with SMTP; 20 Jan 2008 20:21:07 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19YJ51Gnl9Y3wsnD9EqbPt1FPSr0NZPtwWgg8l0rc
-	7qGf2CjErDdl3j
-X-X-Sender: gene099@racer.site
-In-Reply-To: <12008555922208-git-send-email-mkoegler@auto.tuwien.ac.at>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755373AbYATUDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2008 15:03:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755350AbYATUDN
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 15:03:13 -0500
+Received: from mxsf00.insightbb.com ([74.128.0.70]:37706 "EHLO
+	mxsf00.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755324AbYATUDM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2008 15:03:12 -0500
+X-IronPort-AV: E=Sophos;i="4.25,224,1199682000"; 
+   d="scan'208";a="189733562"
+Received: from unknown (HELO asav02.insightbb.com) ([172.31.249.124])
+  by mxsf00.insightbb.com with ESMTP; 20 Jan 2008 15:03:11 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ao8CAP83k0dKhvkY/2dsb2JhbACBV6lo
+X-IronPort-AV: E=Sophos;i="4.25,224,1199682000"; 
+   d="scan'208";a="189378316"
+Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
+  by asav02.insightbb.com with ESMTP; 20 Jan 2008 15:03:11 -0500
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id F3CAD309F21; Sun, 20 Jan 2008 14:03:10 -0600 (CST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.1.00.0801200942191.2957@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71186>
 
-Hi,
+On Sun, Jan 20, 2008 at 10:20:46AM -0800, Linus Torvalds wrote:
+> But I guess that was a bit optimistic. On Linux, we still had about 50% 
+> user time, and I guess the same is _largely_ true on Windows. Cutting the 
+> system time in half only gives you about a quarter performance 
+> improvement, and I was just incorrect in expecting system calls to be the 
+> limiting factor.
+> 
+> [...]
+> 
+> fnmatch? It's certainly visible on Linux, I wonder if the Windows/OSX 
+> version is more expensive due to trying to be case-insensitive or 
+> something?
 
-On Sun, 20 Jan 2008, Martin Koegler wrote:
+Windows (msys) Git, with the lstat patch and on my 15433-file test case,
+is at least 90-95% system time.  I don't have any good tools for
+measuring this, but just using the silly performance monitor you get
+with ctrl-alt-del and enabling the "View -> Show Kernel Times" curve on
+the graph shows this fact pretty clearly.
 
-> +	if (!commit->date)
-> +		return objerror(&commit->object, "invalid author/commiter line in %s",
+I think this shows that:
 
-s/commiter/committer/
+1. There's not much overhead in msysGit's stat wrapper at all.  It gets
+   converted quite efficiently to native Windows calls.
 
-It makes me wonder, though, if that's correct.  AFAICT it is the committer 
-date, and the rest of the line _might_ be just fine.
+2. Windows really sucks at filesystem ops.  Film at 11.
 
-Why not be less intrusive and just change the printf() into a return 
-objerror(), like the commit message suggests?
+One thing I dimly recall is that the nightmare interface of
+FindFirstFile/FindNextFile (which I assume is what is actually getting
+called for opendir/readdir) actually returns some stat information with
+each file.  Would it be possible to use that directly in some cases
+rather than taking an extra stat call to get it?
 
-Ciao,
-Dscho
+-bcd
