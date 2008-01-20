@@ -1,83 +1,58 @@
-From: Wincent Colaiuta <win@wincent.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
 Subject: Re: Time to flush developer accumulated patches?
-Date: Sun, 20 Jan 2008 11:18:23 +0100
-Message-ID: <0B23B7DB-8AB2-4D8D-BE50-917651238353@wincent.com>
+Date: Sun, 20 Jan 2008 11:24:53 +0100
+Message-ID: <e5bfff550801200224t6a76f67bp5e550476aa1ac9c@mail.gmail.com>
 References: <e5bfff550801200210y212d0921x214773596810be52@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+	 <0B23B7DB-8AB2-4D8D-BE50-917651238353@wincent.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: "Junio C Hamano" <gitster@pobox.com>,
 	"Git Mailing List" <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 20 11:19:13 2008
+To: "Wincent Colaiuta" <win@wincent.com>
+X-From: git-owner@vger.kernel.org Sun Jan 20 11:25:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGXGi-0004fT-Dl
-	for gcvg-git-2@gmane.org; Sun, 20 Jan 2008 11:19:12 +0100
+	id 1JGXMv-0005x5-Fr
+	for gcvg-git-2@gmane.org; Sun, 20 Jan 2008 11:25:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751732AbYATKSl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Jan 2008 05:18:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751807AbYATKSl
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 05:18:41 -0500
-Received: from wincent.com ([72.3.236.74]:43602 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751666AbYATKSk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Jan 2008 05:18:40 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m0KAIPJD006623;
-	Sun, 20 Jan 2008 04:18:26 -0600
-In-Reply-To: <e5bfff550801200210y212d0921x214773596810be52@mail.gmail.com>
-X-Mailer: Apple Mail (2.915)
+	id S1751912AbYATKYz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2008 05:24:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751879AbYATKYy
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 05:24:54 -0500
+Received: from rv-out-0910.google.com ([209.85.198.185]:40688 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751615AbYATKYy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2008 05:24:54 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so1417241rvb.1
+        for <git@vger.kernel.org>; Sun, 20 Jan 2008 02:24:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=TDJb//dwMNKHydJPcvxhv2I7YUlNm8+xo2Pm3fk3QBM=;
+        b=MtnIyH+78DRIqU8S5/cAeluqrpEfqOG5Jh8MI3T9TNO38LOBF3zQZHDbnmmUEjAk6LDUetJrjtpHUqB0x/eGXOAXiyUUX805QwT2okH8a/CoumaNfzPPrqio5/R/Cq6TdM/Wdzwn3nb4akXZ9ZGbwf6rDC2HD9Tt0szJqywyewA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=filN/ThcitDA7gIKx5bTBAmZ0Zxdtc+L73jfjukedFeXFoOTAzJ31nhhFFCg7PA/2SDJLMJiP2zObzIEnoqeQxzro5edKqDvNMLtgI6tkNeo6fRApuMdejrVdIIlCqLScOs7wzfQ9C06x0Sih84ZBn+jUUg2bZBMw11ziEp9J08=
+Received: by 10.140.192.9 with SMTP id p9mr3656423rvf.168.1200824693191;
+        Sun, 20 Jan 2008 02:24:53 -0800 (PST)
+Received: by 10.141.68.21 with HTTP; Sun, 20 Jan 2008 02:24:53 -0800 (PST)
+In-Reply-To: <0B23B7DB-8AB2-4D8D-BE50-917651238353@wincent.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71170>
 
-El 20/1/2008, a las 11:10, Marco Costalba escribi=F3:
+On Jan 20, 2008 11:18 AM, Wincent Colaiuta <win@wincent.com> wrote:
+>
+> We already have two such branches: next and pu.
+>
 
-> Reading mailing list threads it is becoming common these days to hear
-> about contributors with patches ready to be sent as soon as 1.5.4 is
-> out.
->
-> Would be a good idea to open a new branch new_stuff as a target for
-> this pending stuff?
->
-> I understand that you want people focused on fixing bugs, but I also
-> understand that people don't ;-)
->
-> Opening a new_stuff branch could have the following benefits:
->
-> - Give more time to fix bugs before 1.5.4 is out without stopping
-> people from having fun and reduce the pressure to release.
->
-> - Reduce the merging impact when master reopens because patches are
-> already merged in new_stuff and developers have already taken care of
-> conflicts
->
-> - Do not slow down the wheel: I can develop some patches and keep the=
-m
-> myself, but until are not discussed in the list and eventually got in
-> master has little meaning to continue develop additional stuff.
->
-> - Perhaps it's lack of reviewing time on your side that worries you
-> (as is normal because we are on bug fixes mode in master) but upgrade
-> from new_stuff to master would be not automatic nor guaranteed but at
-> least people have an idea at what's going on and can keep contributin=
-g
-> in code and ideas.
-
-We already have two such branches: next and pu.
-
-Here's an old version of a mail from Junio describing the different =20
-branches; I know he's sent out newer ones but this it he one that I =20
-could lay my hands on:
-
-http://article.gmane.org/gmane.comp.version-control.git/39954
-
-Cheers,
-Wincent
+Yes of course, the name of the branch is not the point here, I
+purposely choose an unrealistic name 'new_stuff' to underline this,
+sorry if it was not clear.
