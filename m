@@ -1,86 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Avoid running lstat(2) on the same cache entry.
-Date: Sun, 20 Jan 2008 02:42:06 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801200231250.5731@racer.site>
-References: <alpine.LFD.1.00.0801181911560.2957@woody.linux-foundation.org> <7vfxwu9s2z.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801191133330.2957@woody.linux-foundation.org> <alpine.LFD.1.00.0801191709380.2957@woody.linux-foundation.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] Let "git svn" run "git gc --auto" occasionally
+Date: Sat, 19 Jan 2008 19:37:37 -0800
+Message-ID: <20080120033737.GA7767@soma>
+References: <20080119123557.GA30778@diana.vm.bytemark.co.uk> <20080119223249.8227.31460.stgit@yoghurt> <1200783050.5724.196.camel@brick>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Jan 20 03:43:06 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+	git@vger.kernel.org, Kevin Ballard <kevin@sb.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Harvey Harrison <harvey.harrison@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 20 04:38:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGQ9J-0006e8-7e
-	for gcvg-git-2@gmane.org; Sun, 20 Jan 2008 03:43:05 +0100
+	id 1JGR0b-0007L8-7f
+	for gcvg-git-2@gmane.org; Sun, 20 Jan 2008 04:38:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754631AbYATCmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jan 2008 21:42:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754376AbYATCmZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 21:42:25 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50509 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754213AbYATCmY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jan 2008 21:42:24 -0500
-Received: (qmail invoked by alias); 20 Jan 2008 02:42:22 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp008) with SMTP; 20 Jan 2008 03:42:22 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+KOls3xXKKZuNRiyN5MVAmoR4STSLrMUhnviEP0l
-	KLv6biGnjTWfhf
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.1.00.0801191709380.2957@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752097AbYATDhk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jan 2008 22:37:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751537AbYATDhk
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Jan 2008 22:37:40 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:48176 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750732AbYATDhj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jan 2008 22:37:39 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 42E152DC08B;
+	Sat, 19 Jan 2008 19:37:38 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1200783050.5724.196.camel@brick>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71154>
 
-Hi,
+Harvey Harrison <harvey.harrison@gmail.com> wrote:
+> On Sat, 2008-01-19 at 23:36 +0100, Karl Hasselstr=F6m wrote:
+> > Let "git svn" run "git gc --auto" every 100 imported commits, to
+> > reduce the number of loose objects.
+>=20
+> I found 100 was a bit too low when doing some large repos, I've
+> been using 1000.  I'd argue that --repack=3D1000 should be done by
+> default.
 
-On Sat, 19 Jan 2008, Linus Torvalds wrote:
+I've found 100 for repack too low in the past, too, which is why
+repack defaults to 1000 if no number is specified.  I think it
+should hold for gc --auto, too.
 
-> @@ -687,13 +732,20 @@ int run_diff_index(struct rev_info *revs, int cached)
->  	tree = parse_tree_indirect(ent->sha1);
->  	if (!tree)
->  		return error("bad tree object %s", tree_name);
-> -	if (read_tree(tree, 1, revs->prune_data))
-> -		return error("unable to read tree object %s", tree_name);
-> -	ret = diff_cache(revs, active_cache, active_nr, revs->prune_data,
-> -			 cached, match_missing);
-> +
-> +	memset(&opts, 0, sizeof(opts));
-> +	opts.head_idx = 1;
-> +	opts.index_only = cached;
-> +	opts.merge = 1;
-> +	opts.fn = oneway_diff;
-> +	opts.unpack_data = revs;
-> +
-> +	init_tree_desc(&t, tree->buffer, tree->size);
-> +	unpack_trees(1, &t, &opts);
-> +	
->  	diffcore_std(&revs->diffopt);
->  	diff_flush(&revs->diffopt);
-> -	return ret;
-> +	return 0;
->  }
->
+> > I'm not quite sure how this should interact with the --repack flag.
+> > Right now they just coexist, except for never running right after o=
+ne
+> > another, but conceivably we should do something cleverer. Eric?
 
-Two problems I see (before I go to bed): match_missing is now ignored, and 
-the return value is set to 0, whereas it was the return value of 
-diff_cache() before.
+I consider --repack is out-of-date now that we have gc --auto.  I'm in
+favor of ripping out repack support in git-svn and just using gc --auto=
+=2E
 
-The first is easily fixed, by replacing the two "0"s in the calls to 
-show_new_file() and show_modified() with "!revs->ignore_merges".  Unless I 
-am missing something, of course.
+> How about git gc always gets run at the very end of a git svn fetch?
 
-And the second is not _that_ bad, as it seems that diff_cache() has only 
-one return statement, and it returns 0, AFAICS.  But it had to be said 
-somewhere. 
+I'd much prefer that we run gc --auto at the end of every fetch instead
+of doing so randomly for small fetches.
 
-Ciao,
-Dscho
+--=20
+Eric Wong
