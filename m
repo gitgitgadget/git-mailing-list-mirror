@@ -1,68 +1,91 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Sun, 20 Jan 2008 11:12:36 +0300
-Message-ID: <20080120081236.GP14871@dpotapov.dyndns.org>
-References: <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org> <2E6F57FC-3E78-4DD2-9B5B-CF75975D6A60@sb.org> <20080119084814.GH14871@dpotapov.dyndns.org> <alpine.LFD.1.00.0801191026500.2957@woody.linux-foundation.org> <B4FDA32F-16C9-497A-AAD8-27A8D510C4CB@wincent.com> <alpine.LFD.1.00.0801191659350.2957@woody.linux-foundation.org> <20080120052735.GA18581@glandium.org> <alpine.LFD.1.00.0801192130180.2957@woody.linux-foundation.org> <20080120070018.GA11015@glandium.org> <20080120080056.GO14871@dpotapov.dyndns.org>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: Any command to simplify 'git fetch origin && git reset --hard origin/master'?
+Date: Sun, 20 Jan 2008 16:51:19 +0800
+Message-ID: <46dff0320801200051p4dd21930u5712a72baaf9af78@mail.gmail.com>
+References: <46dff0320801182122t1581b366yad123407aaad6326@mail.gmail.com>
+	 <alpine.LSU.1.00.0801191114310.5731@racer.site>
+	 <46dff0320801190603w4f0b2595v495ed10f2a87b0cc@mail.gmail.com>
+	 <alpine.LSU.1.00.0801192247280.5731@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	Kevin Ballard <kevin@sb.org>,
-	Peter Karlsson <peter@softwolves.pp.se>,
-	Mark Junker <mjscod@web.de>,
-	Pedro Melo <melo@simplicidade.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Sun Jan 20 09:13:11 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jan 20 09:51:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGVIi-0006Ut-Qj
-	for gcvg-git-2@gmane.org; Sun, 20 Jan 2008 09:13:09 +0100
+	id 1JGVuF-0004bp-2i
+	for gcvg-git-2@gmane.org; Sun, 20 Jan 2008 09:51:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751159AbYATIMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2008 03:12:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751233AbYATIMi
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 03:12:38 -0500
-Received: from smtp02.mtu.ru ([62.5.255.49]:65474 "EHLO smtp02.mtu.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751065AbYATIMi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2008 03:12:38 -0500
-Received: from smtp02.mtu.ru (localhost [127.0.0.1])
-	by smtp02.mtu.ru (Postfix) with ESMTP id 588093157F;
-	Sun, 20 Jan 2008 11:12:36 +0300 (MSK)
-Received: from dpotapov.dyndns.org (ppp85-141-190-198.pppoe.mtu-net.ru [85.141.190.198])
-	by smtp02.mtu.ru (Postfix) with ESMTP id 0F89A314A0;
-	Sun, 20 Jan 2008 11:12:36 +0300 (MSK)
-Received: from dpotapov by dpotapov.dyndns.org with local (Exim 4.63)
-	(envelope-from <dpotapov@gmail.com>)
-	id 1JGVIC-0002YT-D5; Sun, 20 Jan 2008 11:12:36 +0300
+	id S1751432AbYATIvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2008 03:51:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751363AbYATIvX
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 03:51:23 -0500
+Received: from py-out-1112.google.com ([64.233.166.177]:32398 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751338AbYATIvW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2008 03:51:22 -0500
+Received: by py-out-1112.google.com with SMTP id u52so2301964pyb.10
+        for <git@vger.kernel.org>; Sun, 20 Jan 2008 00:51:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=6Ryvzx+HDbTSh+ZAKAdZorw00Ajn7JHK/nZQ7I9dXko=;
+        b=rWq/MNuuXTBSmRKtN3d+O0HMmNR95ZS3Bz+6kwXfaHZMo0K74zXJN/27jcVpeRTKeUJgby1JWZFm+gwHZzv4CR9w1N3dpehnqYsCcHShZCEsXb4pyOSppxfjmP1BQ07SGrc2Zl5l18PMDFcyNhig7/VP1D9yIrjhCjzFOHFDBjE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=l0Mk/kEjD2dGIAW9TupKP8FS3UDPGWj14vHM0B4mTr6YeNTrcgz/4lmj7gWEzLgFtbS6dDWnrBfklUGRTmBGoaTHoUGPoanEsolNvlW1+5EYva+6gNeP0JFhGxkwjJVqe727q93ShBct9LoqDwb8Jx7omqoOZ5v7mfnWt6gkmug=
+Received: by 10.35.96.6 with SMTP id y6mr6254536pyl.46.1200819079062;
+        Sun, 20 Jan 2008 00:51:19 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Sun, 20 Jan 2008 00:51:19 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0801192247280.5731@racer.site>
 Content-Disposition: inline
-In-Reply-To: <20080120080056.GO14871@dpotapov.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-DCC-STREAM-Metrics: smtp02.mtu.ru 10001; Body=0 Fuz1=0 Fuz2=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71165>
 
-On Sun, Jan 20, 2008 at 11:00:56AM +0300, Dmitry Potapov wrote:
-> On Sun, Jan 20, 2008 at 08:00:18AM +0100, Mike Hommey wrote:
-> > 
-> > That said, the "decomposed" version of UTF-8 has nice side effects on
-> > OSX, with UTF-8 encoded RockRidge ISO-9660 volumes (with or without
-> > Joliet ; OSX will use RockRidge by default when it's there), for instance.
-> 
-> AFAIK, the RockRidge standard prescribes to use the portable character
-> set, 
+On Jan 20, 2008 6:50 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Sat, 19 Jan 2008, Ping Yin wrote:
+>
+> > On Jan 19, 2008 7:15 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > > On Sat, 19 Jan 2008, Ping Yin wrote:
+> > >
+> > > > I often encounter the case that the origin reposotory is rebased and
+> > > > i make sure i want to use the origin head as my master Now I have to
+> > > > do
+> > > >   $ git fetch origin && git reset --hard origin/master
+> > >
+> > > Just make an alias if you're too lazy to type.
+> > >
+> > > Personally, I do not see much sense in it, and it is too dangerous to
+> > > bless it with an option to fetch or pull.
+> >
+> > Can any alias do this? Since a parameter 'origin' or something should be
+> > passed in.
+>
+> Yes.  Something like
+>
+>         $ git config alias.imtoolazytotype \
+>                 '!sh -c "git fetch $0 && git reset --hard $0/master"'
+>
+> See http://git.or.cz/gitwiki/Aliases for more, especially the part about
+> advanced aliases with arguments.
+>
+wonderful!
+> Hth,
+> Dscho
+>
+>
 
-Actually, it prescribes to use the portable *filename* character set,
-which is even more restrictive than just portable character set.
 
-http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap03.html#tag_03_276
 
-Anyway, there is no place for UTF-8 in it.
-
-Dmitry
+-- 
+Ping Yin
