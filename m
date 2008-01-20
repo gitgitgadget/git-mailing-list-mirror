@@ -1,74 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Let "git svn" run "git gc --auto" occasionally
-Date: Sun, 20 Jan 2008 11:17:02 -0800
-Message-ID: <7vlk6k8fyp.fsf@gitster.siamese.dyndns.org>
-References: <20080119123557.GA30778@diana.vm.bytemark.co.uk>
-	<20080119223249.8227.31460.stgit@yoghurt>
-	<1200783050.5724.196.camel@brick> <20080120033737.GA7767@soma>
-	<20080120093436.GA10924@diana.vm.bytemark.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-fsck: report missing author/commit line in a commit
+ as an error
+Date: Sun, 20 Jan 2008 19:20:54 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801201918260.5731@racer.site>
+References: <12008555922208-git-send-email-mkoegler@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Harvey Harrison <harvey.harrison@gmail.com>,
-	git@vger.kernel.org, Kevin Ballard <kevin@sb.org>
-To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sun Jan 20 20:17:49 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Sun Jan 20 20:21:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGffv-0008UL-0z
-	for gcvg-git-2@gmane.org; Sun, 20 Jan 2008 20:17:47 +0100
+	id 1JGfjh-0001Ju-03
+	for gcvg-git-2@gmane.org; Sun, 20 Jan 2008 20:21:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753056AbYATTRS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Jan 2008 14:17:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754875AbYATTRS
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 14:17:18 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36552 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751711AbYATTRR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Jan 2008 14:17:17 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C7DBD2D43;
-	Sun, 20 Jan 2008 14:17:15 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 314962D42;
-	Sun, 20 Jan 2008 14:17:10 -0500 (EST)
-In-Reply-To: <20080120093436.GA10924@diana.vm.bytemark.co.uk> (Karl
-	=?utf-8?Q?Hasselstr=C3=B6m's?= message of "Sun, 20 Jan 2008 10:34:36
- +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754956AbYATTVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2008 14:21:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754995AbYATTVK
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 14:21:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57548 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754936AbYATTVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2008 14:21:09 -0500
+Received: (qmail invoked by alias); 20 Jan 2008 19:21:07 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp043) with SMTP; 20 Jan 2008 20:21:07 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19YJ51Gnl9Y3wsnD9EqbPt1FPSr0NZPtwWgg8l0rc
+	7qGf2CjErDdl3j
+X-X-Sender: gene099@racer.site
+In-Reply-To: <12008555922208-git-send-email-mkoegler@auto.tuwien.ac.at>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71185>
 
-Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
+Hi,
 
-> On 2008-01-19 19:37:37 -0800, Eric Wong wrote:
->
->> Harvey Harrison <harvey.harrison@gmail.com> wrote:
->>
->> > I found 100 was a bit too low when doing some large repos, I've
->> > been using 1000. I'd argue that --repack=3D1000 should be done by
->> > default.
->>
->> I've found 100 for repack too low in the past, too, which is why
->> repack defaults to 1000 if no number is specified. I think it should
->> hold for gc --auto, too.
->
-> OK, I'll change it. But remember, gc --auto doesn't do _anything_
-> unless it's deemed necessary, so it should behave much better than
-> just plain repack. In theory at least.
+On Sun, 20 Jan 2008, Martin Koegler wrote:
 
-Careful. I made the same mistake and it had to be corrected with
-e0cd252eb0ba6453acd64762625b004aa4cc162b.
+> +	if (!commit->date)
+> +		return objerror(&commit->object, "invalid author/commiter line in %s",
 
-I think defaulting to --repack=3D1000 is a sane first step and you
-guys already have most code for it so that is a very safe thing.
+s/commiter/committer/
 
-Switching to "gc --auto" can be done early post 1.5.4, right?
+It makes me wonder, though, if that's correct.  AFAICT it is the committer 
+date, and the rest of the line _might_ be just fine.
+
+Why not be less intrusive and just change the printf() into a return 
+objerror(), like the commit message suggests?
+
+Ciao,
+Dscho
