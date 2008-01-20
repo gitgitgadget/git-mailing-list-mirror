@@ -1,139 +1,283 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Time to flush developer accumulated patches?
-Date: Sun, 20 Jan 2008 12:05:50 -0800
-Message-ID: <7vlk6k6z4x.fsf@gitster.siamese.dyndns.org>
-References: <e5bfff550801200210y212d0921x214773596810be52@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 20 21:06:48 2008
+From: "Roger C. Soares" <rogersoares@intelinet.com.br>
+Subject: [EGIT PATCH] Removed Auto-generated TODOs, they don't specify something to do.
+Date: Sun, 20 Jan 2008 18:29:01 -0200
+Message-ID: <1200860941-6922-1-git-send-email-rogersoares@intelinet.com.br>
+Cc: "Roger C. Soares" <rogersoares@intelinet.com.br>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 20 21:29:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGgRC-00060V-HQ
-	for gcvg-git-2@gmane.org; Sun, 20 Jan 2008 21:06:38 +0100
+	id 1JGgms-0004S0-K7
+	for gcvg-git-2@gmane.org; Sun, 20 Jan 2008 21:29:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755414AbYATUGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2008 15:06:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755407AbYATUGF
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 15:06:05 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38131 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755391AbYATUGE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2008 15:06:04 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 90A382242;
-	Sun, 20 Jan 2008 15:06:02 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C2BE72241;
-	Sun, 20 Jan 2008 15:05:57 -0500 (EST)
-In-Reply-To: <e5bfff550801200210y212d0921x214773596810be52@mail.gmail.com>
-	(Marco Costalba's message of "Sun, 20 Jan 2008 11:10:27 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755416AbYATU2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2008 15:28:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755310AbYATU2W
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 15:28:22 -0500
+Received: from cvxbsd.convex.com.br ([200.152.177.10]:1660 "HELO
+	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1755253AbYATU2V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2008 15:28:21 -0500
+Received: (qmail 70923 invoked by uid 0); 20 Jan 2008 18:31:25 -0200
+Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
+ (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
+ Processed in 0.804451 secs); 20 Jan 2008 20:31:25 -0000
+Received: from unknown (HELO localhost.localdomain) (189.5.202.168)
+  by cvxbsd.convex.com.br with SMTP; 20 Jan 2008 20:31:24 -0000
+X-Mailer: git-send-email 1.5.3.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71188>
 
-"Marco Costalba" <mcostalba@gmail.com> writes:
+Signed-off-by: Roger C. Soares <rogersoares@intelinet.com.br>
+---
+ .../src/org/spearce/egit/core/GitBlobStorage.java  |    3 ---
+ .../src/org/spearce/egit/core/GitStorage.java      |    4 ----
+ .../internal/mapping/GitCommitFileRevision.java    |    1 -
+ .../src/org/spearce/egit/ui/GitHistoryPage.java    |    9 ---------
+ .../internal/decorators/GitResourceDecorator.java  |    7 -------
+ .../ui/internal/factories/GitAdapterFactory.java   |    1 -
+ .../org/spearce/jgit/lib/TopologicalWalker.java    |    1 -
+ .../src/org/spearce/jgit/lib/Walker.java           |    1 -
+ 8 files changed, 0 insertions(+), 27 deletions(-)
 
-> I understand that you want people focused on fixing bugs, but I also
-> understand that people don't ;-)
-
-Current policy during rc stabilization period is roughly:
-
- - No new feature is accepted, starting early in the rc cycle;
-
- - An intrusive fix is sent back and requested to be rewritten
-   as minimum "fix" without enhancements, starting mid rc cycle;
-
- - I do not want to take patches early.
-
-The third point is a double-edged sword:
-
- - Developers can easily get distracted when encouraged to do
-   new things.  That's human nature.  Everybody finds doing new
-   things more interesting than finding and fixing existing
-   bugs.
-
-   This is especially true if the fix is about somebody else's
-   code and the breakage does not affect you.  Even your own
-   earlier half-baked-hack that has not been discovered by other
-   people is often not interesting to fix (once discovered, the
-   embarrassment factor tends to make it a higher priority).
-
-   However, we won't have enough good people who know the
-   codebase and are capable of fixing existing bugs if they all
-   go and work on "other" things.
-
- - Developers tend to notice _existing_ breakage more easily
-   when given a chance to play with _existing_ code (either
-   enhancing the existing code, or adding new call sites to the
-   existing API).  And one way to encourage playing with
-   _existing_ code is to to encourage developing on top of it.
-
-In earlier releases, I used to keep 'next' open during the
-freeze.  I think it had the effect of encouraging new things too
-much without having enough side-effect (from the point of view
-of a person who wants to do new things) of uncovering and fixing
-existing issues (which is the primarily desired effect during
-the stabilization).
-
-This time I have been deliberately playing differently to strike
-the balance a bit differently:
+diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/GitBlobStorage.java b/org.spearce.egit.core/src/org/spearce/egit/core/GitBlobStorage.java
+index f7a062c..65bbb5d 100644
+--- a/org.spearce.egit.core/src/org/spearce/egit/core/GitBlobStorage.java
++++ b/org.spearce.egit.core/src/org/spearce/egit/core/GitBlobStorage.java
+@@ -52,7 +52,6 @@ public class GitBlobStorage implements IStorage {
+ 			String name = repositoryMapping.getRepoRelativePath(resource);
+ 			entry = tree.findBlobMember(name);
+ 		} catch (IOException e) {
+-			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+ 	}
+@@ -71,7 +70,6 @@ public class GitBlobStorage implements IStorage {
+ 			throw new ResourceException(IResourceStatus.FAILED_READ_LOCAL,
+ 					resource.getFullPath(), "Could not read file", e);
+ 		} catch (IOException e) {
+-			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 			throw new ResourceException(33, resource.getFullPath(), e
+ 					.getMessage(), e);
+@@ -87,7 +85,6 @@ public class GitBlobStorage implements IStorage {
+ 	}
  
- - In order to discourage new things, I do not accept patches
-   early.
-
- - In order not to discourage new things too much, I try to give
-   brief feedback, and add them to "What's not in 'master', and
-   likely not to be until 1.5.4".
-
-Another practical reason I do not take patches early is because
-it is a time drain.  Taking patches early means it will increase
-the merge impact _before_ 1.5.4.
-
-Now that high level description out of the way, let's see what
-you said:
-
-    - Give more time to fix bugs before 1.5.4 is out without stopping
-    people from having fun and reduce the pressure to release.
-
-That is precisely what I want to discourage.
-
-    - Reduce the merging impact when master reopens because patches are
-    already merged in new_stuff and developers have already taken care of
-    conflicts
-
-Bogus.
-
-When two or more new things are outstanding, and if I take
-patches early, 'next' needs merge resolution.  You are arguing
-to take my time away from what matters to 1.5.4 during the
-stabilization period, and instead encourage people to have fun
-and get distracted.
-
-Post 1.5.4 if one series contradicts/conflicts with another, I
-can just say "I have decided to take that series and your series
-conflicts with it.  Please rebase", to shift the burden to the
-contributor of the second series.  If I do that before 1.5.4,
-that means I will not just encourage but actively ask the second
-contributor not to work on uncovering and fixing existing issues
-but spend time on new things.
-
-Do you think that helps the stabilization period in _any_ way?
-
-    - Do not slow down the wheel: I can develop some patches and keep them
-    myself, but until are not discussed in the list and eventually got in
-    master has little meaning to continue develop additional stuff.
-
-That's exactly the point of stabilization freeze.  You can
-develop and keep developing.  I have a few topics myself that
-are backburnered, and I occasionally visit them when I am bored.
-However, I try not to distract others with the series.  Please
-try to do the same.
+ 	public boolean isReadOnly() {
+-		// TODO Auto-generated method stub
+ 		return false;
+ 	}
+ 
+diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/GitStorage.java b/org.spearce.egit.core/src/org/spearce/egit/core/GitStorage.java
+index f791e31..70b9f1a 100644
+--- a/org.spearce.egit.core/src/org/spearce/egit/core/GitStorage.java
++++ b/org.spearce.egit.core/src/org/spearce/egit/core/GitStorage.java
+@@ -69,7 +69,6 @@ public class GitStorage implements IStorage {
+ 					entry = treeEntry.getId();
+ 			}
+ 		} catch (IOException e) {
+-			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+ 	}
+@@ -93,7 +92,6 @@ public class GitStorage implements IStorage {
+ 			throw new ResourceException(IResourceStatus.FAILED_READ_LOCAL,
+ 					resource.getFullPath(), "Could not read file", e);
+ 		} catch (IOException e) {
+-			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 			throw new ResourceException(33, resource.getFullPath(), e
+ 					.getMessage(), e);
+@@ -109,12 +107,10 @@ public class GitStorage implements IStorage {
+ 	}
+ 
+ 	public boolean isReadOnly() {
+-		// TODO Auto-generated method stub
+ 		return false;
+ 	}
+ 
+ 	public Object getAdapter(Class adapter) {
+-		// TODO Auto-generated method stub
+ 		return null;
+ 	}
+ 
+diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitCommitFileRevision.java b/org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitCommitFileRevision.java
+index 6d6f7ea..da0444f 100644
+--- a/org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitCommitFileRevision.java
++++ b/org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitCommitFileRevision.java
+@@ -134,7 +134,6 @@ public class GitCommitFileRevision extends GitFileRevision {
+ 			else
+ 				return tree.findTreeMember(path);
+ 		} catch (IOException e) {
+-			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+ 		return null;
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
+index 649df3f..1707859 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
+@@ -155,7 +155,6 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
+ 	public boolean inputSet() {
+ 		if (viewer != null)
+ 			viewer.setInput(getInput());
+-		// TODO Auto-generated method stub
+ 		return true;
+ 	}
+ 
+@@ -875,7 +874,6 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
+ 				try {
+ 					newappliedPatches = repositoryMapping.getRepository().getAppliedPatches();
+ 				} catch (IOException e) {
+-					// TODO Auto-generated catch block
+ 					e.printStackTrace();
+ 				}
+ 				Map<ObjectId,Tag[]> newtags = new HashMap<ObjectId,Tag[]>();
+@@ -895,13 +893,11 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
+ 						newtags.put(t.getObjId(), samecommit);
+ 					}
+ 				} catch (IOException e) {
+-					// TODO Auto-generated catch block
+ 					e.printStackTrace();
+ 				}
+ 				try {
+ 					currentHead = repositoryMapping.getRepository().resolve("HEAD");
+ 				} catch (IOException e) {
+-					// TODO Auto-generated catch block
+ 					e.printStackTrace();
+ 				}
+ 				Map<ObjectId, String[]> newBranches = new HashMap<ObjectId, String[]>();
+@@ -933,7 +929,6 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
+ 					newBranches.put(currentHead, samecommit);
+ 					branches = newBranches;
+ 				} catch (IOException e) {
+-					// TODO Auto-generated catch block
+ 					e.printStackTrace();
+ 				}
+ 				GitFileHistoryProvider fileHistoryProvider = (GitFileHistoryProvider) provider
+@@ -1092,12 +1087,10 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
+ 	}
+ 
+ 	public boolean isValidInput(Object object) {
+-		// TODO Auto-generated method stub
+ 		return true;
+ 	}
+ 
+ 	public void refresh() {
+-		// TODO Auto-generated method stub
+ 
+ 	}
+ 
+@@ -1109,14 +1102,12 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
+ 	}
+ 
+ 	public ICompareInput getCompareInput(Object object) {
+-		// TODO Auto-generated method stub
+ 		return null;
+ 	}
+ 
+ 	public void prepareInput(ICompareInput input,
+ 			CompareConfiguration configuration, IProgressMonitor monitor) {
+ 		System.out.println("prepareInput()");
+-		// TODO Auto-generated method stub
+ 	}
+ 
+ 	/**
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
+index c13c38a..9ab762a 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
+@@ -89,7 +89,6 @@ public class GitResourceDecorator extends LabelProvider implements
+ 					}
+ 				});
+ 			} catch (CoreException e) {
+-				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
+ 			start();
+@@ -129,7 +128,6 @@ public class GitResourceDecorator extends LabelProvider implements
+ 								// Activator.trace("VCLEARING:"+r.getFullPath().toOSString());
+ 								clearDecorationState(r);
+ 							} catch (CoreException e) {
+-								// TODO Auto-generated catch block
+ 								e.printStackTrace();
+ 							}
+ 						}
+@@ -138,7 +136,6 @@ public class GitResourceDecorator extends LabelProvider implements
+ 
+ 				});
+ 			} catch (CoreException e2) {
+-				// TODO Auto-generated catch block
+ 				e2.printStackTrace();
+ 				return;
+ 			}
+@@ -211,10 +208,8 @@ public class GitResourceDecorator extends LabelProvider implements
+ 			}
+ 			return null; // not mapped
+ 		} catch (CoreException e) {
+-			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		} catch (IOException e) {
+-			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+ 		return null;
+@@ -342,7 +337,6 @@ public class GitResourceDecorator extends LabelProvider implements
+ 			//
+ 			throw new RuntimeException(UIText.Decorator_failedLazyLoading, e);
+ 		} catch (CoreException e) {
+-			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 			throw new RuntimeException(UIText.Decorator_failedLazyLoading, e);
+ 		}
+@@ -394,7 +388,6 @@ public class GitResourceDecorator extends LabelProvider implements
+ 				}
+ 			}
+ 		} catch (CoreException e) {
+-			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+ 	}
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/factories/GitAdapterFactory.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/factories/GitAdapterFactory.java
+index 53d222a..74b8efa 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/factories/GitAdapterFactory.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/factories/GitAdapterFactory.java
+@@ -43,7 +43,6 @@ public class GitAdapterFactory implements IAdapterFactory {
+ 	}
+ 
+ 	public Class[] getAdapterList() {
+-		// TODO Auto-generated method stub
+ 		return null;
+ 	}
+ 
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/TopologicalWalker.java b/org.spearce.jgit/src/org/spearce/jgit/lib/TopologicalWalker.java
+index 16af0c6..3da6b03 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/TopologicalWalker.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/TopologicalWalker.java
+@@ -105,7 +105,6 @@ public class TopologicalWalker extends Walker {
+ 				try {
+ 					collectSortOrder(succ, repository.mapCommit(succ));
+ 				} catch (IOException e) {
+-					// TODO Auto-generated catch block
+ 					e.printStackTrace();
+ 				}
+ 			}
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Walker.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Walker.java
+index 1f6c531..ca67969 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/Walker.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Walker.java
+@@ -104,7 +104,6 @@ public abstract class Walker {
+ 			try {
+ 				next.run();
+ 			} catch (IOException e) {
+-				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
+ 			todo.remove(next);
+-- 
+1.5.3.7
