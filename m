@@ -1,68 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Avoid running lstat(2) on the same cache entry.
-Date: Sun, 20 Jan 2008 16:18:11 -0800
-Message-ID: <7vwsq458vw.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.1.00.0801181911560.2957@woody.linux-foundation.org>
-	<7vfxwu9s2z.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801191133330.2957@woody.linux-foundation.org>
-	<alpine.LFD.1.00.0801191709380.2957@woody.linux-foundation.org>
-	<alpine.LSU.1.00.0801200142170.5731@racer.site>
-	<07FDB6ED-EBE0-4F66-9167-6A0F8AD58E2B@zib.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Also use unpack_trees() in do_diff_cache()
+Date: Mon, 21 Jan 2008 00:19:38 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801210017580.5731@racer.site>
+References: <alpine.LFD.1.00.0801181911560.2957@woody.linux-foundation.org> <7vfxwu9s2z.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801191133330.2957@woody.linux-foundation.org> <alpine.LFD.1.00.0801191709380.2957@woody.linux-foundation.org>
+ <alpine.LSU.1.00.0801200142170.5731@racer.site> <15ECE22B-FCBB-4F12-919B-694E48D48E0D@zib.de> <alpine.LSU.1.00.0801201515060.5731@racer.site> <alpine.LSU.1.00.0801201519320.5731@racer.site> <alpine.LFD.1.00.0801201144300.2957@woody.linux-foundation.org>
+ <alpine.LFD.1.00.0801201338140.2957@woody.linux-foundation.org> <alpine.LSU.1.00.0801202331380.5731@racer.site> <alpine.LFD.1.00.0801201550550.2957@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Jan 21 01:19:01 2008
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jan 21 01:20:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGkNQ-0001z5-S7
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 01:19:01 +0100
+	id 1JGkOl-0002Lw-4A
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 01:20:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755093AbYAUASb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2008 19:18:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755271AbYAUASa
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 19:18:30 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46210 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754388AbYAUAS3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2008 19:18:29 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B49B622B6;
-	Sun, 20 Jan 2008 19:18:28 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3090422B5;
-	Sun, 20 Jan 2008 19:18:23 -0500 (EST)
-In-Reply-To: <07FDB6ED-EBE0-4F66-9167-6A0F8AD58E2B@zib.de> (Steffen Prohaska's
-	message of "Sun, 20 Jan 2008 11:33:06 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755503AbYAUATy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2008 19:19:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755402AbYAUATy
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 19:19:54 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49327 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755211AbYAUATx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2008 19:19:53 -0500
+Received: (qmail invoked by alias); 21 Jan 2008 00:19:51 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp052) with SMTP; 21 Jan 2008 01:19:51 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/oMkBPctDoQr7D2exFI3lDkR4k/YTl6FV5e2zEQH
+	aLyN2PlIh2EsDd
+X-X-Sender: gene099@racer.site
+In-Reply-To: <alpine.LFD.1.00.0801201550550.2957@woody.linux-foundation.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71206>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+Hi,
 
-> On Jan 20, 2008, at 2:48 AM, Johannes Schindelin wrote:
->
->>> I bet you'll see a much bigger performance improvement from this on
->>> Windows in particular.
->>
->> I bet so, too.  Traditionally, filesystem calls are painfully slow on
->> Windows.
->>
->> But I cannot test before Monday, so I would not be mad if somebody
->> else
->> could perform some tests on Windows.
->
-> Has someone collected the whole series on a topic branch?
+On Sun, 20 Jan 2008, Linus Torvalds wrote:
 
-Yes, I have.
+> On Sun, 20 Jan 2008, Johannes Schindelin wrote:
+> > 
+> > Note: "git diff HEAD" as it is now still holds value;
+> 
+> Oh, absolutely.
+> 
+> It's not "git diff HEAD" that is broken.
+> 
+> It's "git diff --cached HEAD" that doesn't work. The "--cached" means 
+> that it's supposed to diff the index against HEAD, but since it cannot 
+> handle unmerged entries, instead of getting a diff, you get just a line 
+> saying
+> 
+> 	* Unmerged path xyzzy
+> 
+> and no diff at all.
 
-Haven't pushed it out, though.
+Silly me.  Unmerged paths can only have problems when you look at the 
+index, of course.
+
+Sorry for the noise,
+Dscho
