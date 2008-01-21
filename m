@@ -1,89 +1,76 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: pack-objects: Fix segfault when object count is less than thread
- count
-Date: Mon, 21 Jan 2008 12:53:59 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0801211248590.20753@xanadu.home>
-References: <1200926145-14625-1-git-send-email-vsu@altlinux.ru>
- <alpine.LFD.1.00.0801211103480.20753@xanadu.home>
- <20080121174052.GA4627@atlas.home>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Time to flush Mr. Hammano?
+Date: Mon, 21 Jan 2008 19:07:34 +0100
+Message-ID: <e5bfff550801211007h2f080ae2qbef0343d5877dc2a@mail.gmail.com>
+References: <e5bfff550801200210y212d0921x214773596810be52@mail.gmail.com>
+	 <20070624192215@qkholland.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sergey Vlasov <vsu@altlinux.ru>
-X-From: git-owner@vger.kernel.org Mon Jan 21 18:54:58 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "gi mailing list" <git@vger.kernel.org>
+To: "Quim K Holland" <qkholland@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 19:08:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH0rI-0008Gp-Lf
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 18:54:57 +0100
+	id 1JH143-0004QH-6K
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 19:08:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751760AbYAURyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 12:54:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751711AbYAURyD
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 12:54:03 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:17476 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751558AbYAURyA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 12:54:00 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JV000KI79PZ7320@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 21 Jan 2008 12:54:00 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20080121174052.GA4627@atlas.home>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1751745AbYAUSHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 13:07:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751780AbYAUSHh
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 13:07:37 -0500
+Received: from rv-out-0910.google.com ([209.85.198.184]:28304 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751737AbYAUSHg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 13:07:36 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so1856746rvb.1
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 10:07:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=QiR48GCJkM91HSXBta0wfIhX92fRbPFZ+SvrETooGYU=;
+        b=dZXdoO1x0xTryafhP8WIcuTzY04/c1Q5chw+mIiauwgff7YzVzonzU6kjYWbGl+araH7p2uK9zN5kb/U5rjU0Qh/xJQA2LxKoRpsvJDLR27RE0UK8z99NrOiDx78eXd/+WW2W4mOOxyjZjQcgcrRkdaNBd3ceizra7DECx+h7dw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=RA5nyLqhVLPGl7HJ+u5dTmpqI1zShhPUqfdOUxRda01MjTfDzZj3XUZ1Pz1fgqPRXyiBPxZtTyBOT5LJbc8T1bBx2SPm74+5NggwEdLKBv6ZYbJYjqHQ0Or/oKIxkv7W62o8fzu56P61NxUgrBrzGaGheaybj179gj57EnvqcSQ=
+Received: by 10.141.15.19 with SMTP id s19mr4653758rvi.75.1200938854310;
+        Mon, 21 Jan 2008 10:07:34 -0800 (PST)
+Received: by 10.141.68.21 with HTTP; Mon, 21 Jan 2008 10:07:34 -0800 (PST)
+In-Reply-To: <20070624192215@qkholland.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71300>
 
-On Mon, 21 Jan 2008, Sergey Vlasov wrote:
+On Jan 21, 2008 12:15 PM, Quim K Holland <qkholland@gmail.com> wrote:
+> "Marco Costalba" <mcostalba@gmail.com> wrote:
+>
 
-> On Mon, Jan 21, 2008 at 11:07:15AM -0500, Nicolas Pitre wrote:
-> > On Mon, 21 Jan 2008, Sergey Vlasov wrote:
-> > 
-> > > When partitioning the work amongst threads, dividing the number of
-> > > objects by the number of threads may return 0 when there are less
-> > > objects than threads; this will cause the subsequent code to segfault
-> > > when accessing list[sub_size-1].  Fix this by ensuring that sub_size
-> > > is not zero if there is at least one object to process.
-> > 
-> > No.  Forcing one object in a thread is counter productive since it won't 
-> > have anything to delta against.  Instead, the thread should be allowed 
-> > to have zero objects and let the other threads have more.
-> > 
-> > This patch would be a proper fix:
-> > 
-> > diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-> > index ec10238..d3efeff 100644
-> > --- a/builtin-pack-objects.c
-> > +++ b/builtin-pack-objects.c
-> > @@ -1672,7 +1672,8 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
-> >  		p[i].data_ready = 0;
-> >  
-> >  		/* try to split chunks on "path" boundaries */
-> > -		while (sub_size < list_size && list[sub_size]->hash &&
-> > +		while (sub_size && sub_size < list_size &&
-> > +		       list[sub_size]->hash &&
-> >  		       list[sub_size]->hash == list[sub_size-1]->hash)
-> >  			sub_size++;
-> 
-> Actually there will not be any significant differences - with my patch
-> the object distribution between threads will be 1, 1, ..., 0, 0...,
-> and with your patch it would be 0, 0, ..., 1, 1, ...
+......cut a load of sh...t
 
-Or more likely 0, 0, ..., 2.
+> Can we vote Mr. Hammano out and ask Mr. Torvalds to come back as the project leader?  I do not mean any disrespect to Mr. Hammano, but don't people think he outlived his usefulness as the project leader?
+> -
 
-And the code is simpler.
+I'm really sorry you used my argumentations and trasform them in a
+full load of bullshi..t.
 
-> We could even introduce some limit on the number of objects below
-> which multithreaded packing is not attempted, so that packing a small
-> number of objects would be more efficient.
+If I had only imagined somthing like this I would never posted in first place.
 
-Possibly.  But that's not a requirement at this moment.
+The man you can't even write his name correctly is one of the best
+maintainers we can have. And we' ve been very lucky for this.
 
+I can number a lot of reasons for this, but you really don't deserve it.
 
-Nicolas
+It's not a problem of how many patches you have posted, IMHO everyone
+could express his ideas regardless of the weight of his contribute to
+git.
+
+But, also if you had posted thousand patches this don't give you the
+right to speak like this.
+
+Marco
