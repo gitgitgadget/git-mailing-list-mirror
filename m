@@ -1,174 +1,97 @@
-From: Kevin Ballard <kevin@sb.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Mon, 21 Jan 2008 15:59:51 -0500
-Message-ID: <20863708-2F5A-4E9A-BA67-A6C29D324BD8@sb.org>
-References: <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se> <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org> <Pine.LNX.4.64.0801211509490.17095!@ds9.cixit.se> <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org> <alpine.LFD.1.00.0801210934400.2957@woody.linux-foundation.org> <C6C0E6A1-053B-48CE-90B3-8FFB44061C3B@sb.org> <20080121195703.GE29792@mit.edu> <998717B0-0165-4383-AAB8-33BD2A49954E@sb.org> <20080121201530.GF29792@mit.edu> <8F85366A-C990-47B1-BF60-936185B9E438@sb.org> <20080121204614.GG29792@mit.edu>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: multipart/signed; boundary=Apple-Mail-29--696307996; micalg=sha1; protocol="application/pkcs7-signature"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 21 22:00:24 2008
+Date: Tue, 22 Jan 2008 10:06:05 +1300
+Message-ID: <46a038f90801211306g3dd9a167wb74d06e444b18b93@mail.gmail.com>
+References: <478E1FED.5010801@web.de>
+	 <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org>
+	 <478F99E7.1050503@web.de>
+	 <alpine.LFD.1.00.0801171017460.14959@woody.linux-foundation.org>
+	 <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org>
+	 <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org>
+	 <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se>
+	 <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org>
+	 <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org>
+	 <alpine.LFD.1.00.0801210934400.2957@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Kevin Ballard" <kevin@sb.org>,
+	"Peter Karlsson" <peter@softwolves.pp.se>,
+	"Mark Junker" <mjscod@web.de>,
+	"Pedro Melo" <melo@simplicidade.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jan 21 22:06:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH3kl-0000il-Hv
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 22:00:24 +0100
+	id 1JH3qo-0002vH-Az
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 22:06:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754205AbYAUU7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 15:59:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753468AbYAUU7y
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 15:59:54 -0500
-Received: from balanced.mail.policyd.dreamhost.com ([208.97.132.119]:35040
-	"EHLO randymail-a8.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752822AbYAUU7x (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 15:59:53 -0500
-Received: from KBLAPTOP.WIFI.WPI.EDU (KBLAPTOP.WIFI.WPI.EDU [130.215.171.85])
-	by randymail-a8.g.dreamhost.com (Postfix) with ESMTP id 8D36DAF832
-	for <git@vger.kernel.org>; Mon, 21 Jan 2008 12:59:52 -0800 (PST)
-In-Reply-To: <20080121204614.GG29792@mit.edu>
-X-Mailer: Apple Mail (2.915)
+	id S1753933AbYAUVGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 16:06:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753227AbYAUVGJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 16:06:09 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:32090 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752806AbYAUVGH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 16:06:07 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so953672ugc.16
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 13:06:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=3sDX0MpfVbj0oow/yBySS1EIwh7k3xnYvCcXHy+jTTI=;
+        b=S9KD3JfvKXj5SKzEJqsYujXh5f9Sz/1X0BBq0hjYGEL8ni6mgmFfzj5B7vt9fchOXkVoEa0aIL41pLFoyvXKNBC8iF8FtaaTGF7ZSC/xAq1Mqmbc3bxObBVyxGoyIWd7272WSahl/62gjKeDP+TI2tZXvMIrVzZF++z1guMx7aI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=T5FcoExixj15IuWwixoMQkxkacpeZqndRgcj6eydiqTqfVjrkTFIeFFPIQw0jezv8UBf0O3xMSpr57lXPy0TG9DsYAsYRlonyr6T6NSPIG0+T1OnHNiOH3dw2G871iNdNOBddvZtw+iMf9bV4BNEEZB66H4idB/FJYgpbrA/J7U=
+Received: by 10.66.240.12 with SMTP id n12mr5192800ugh.9.1200949565771;
+        Mon, 21 Jan 2008 13:06:05 -0800 (PST)
+Received: by 10.66.252.2 with HTTP; Mon, 21 Jan 2008 13:06:05 -0800 (PST)
+In-Reply-To: <alpine.LFD.1.00.0801210934400.2957@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71339>
 
-
---Apple-Mail-29--696307996
-Content-Type: text/plain;
-	charset=US-ASCII;
-	format=flowed;
-	delsp=yes
-Content-Transfer-Encoding: 7bit
-
-Note: resent to list due to bounce.
-Original CC list: tytso@MIT.EDU, torvalds@linux-foundation.org, peter@softwolves.pp.se 
-, mjscod@web.de, melo@simplicidade.org
-
-On Jan 21, 2008, at 3:46 PM, Theodore Tso wrote:
-
-> On Mon, Jan 21, 2008 at 03:31:02PM -0500, Kevin Ballard wrote:
->>> No, it's still broken, because of the Unicode-is-not-static problem.
->>> What happens when you start adding more composable characters, which
->>> some future version of HFS+ will start breaking apart?
->>
->> If you need a static representation, you normalize to a specific  
->> form. And
->> in fact, adding new composable characters doesn't matter, since if  
->> they
->> didn't exist before, you couldn't have possibly used them.
+On Jan 22, 2008 7:12 AM, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> Now, git _also_ heavily depends on the actual encoding of those
+> codepoints, since we create hashes etc, so in fact, as far ass git is
+> concerned, names have to be in some particular encoding to be hashed, and
+> UTF-8 is the only sane encoding for Unicode. People can blather about
+> UCS-2 and UTF-16 and UTF-32 all they want, but the fact is, UTF-8 is
+> simply technically superior in so many ways that I don't even understand
+> why anybody ever uses anything else.
 >
-> Sure you can.  Suppose you unpack the same tar file or zip file that
-> contains one of these new-fangled characters, one on a MacOS 10.5
-> system, and one on a MacOS 10.9 system.  How HFS+ will corrupt that
-> filename will differ depending which version of MacOS you are running.
-> Hence, normalizing the filename when you store it is stupid and
-> broken.  MacOS and its applications and libraries want to do
-> normalization in the privacy of its own address space, that's it's
-> business.  It can pursue any fetish it wants, among consenting adults.
-> Safe, sane and consensual, and all that... well, consensual, anyway.
-> I'm not sure about "safe" and "sane"....
+> So I would not disagree with using UTF-8 at all.
 
-You're making the huge assumption that the HFS+ normalization  
-algorithms will change. As the technote states:
+Linus,
 
-"Platform algorithms tend to evolve with the Unicode standard. The HFS  
-Plus algorithms cannot evolve because such evolution would invalidate  
-existing HFS Plus volumes."
+(slightly offtopic) are you praising UTF-8 as storage format (for disk
+and network) or in general? UTF-8-aware string ops like counting
+characters seem to me a horrendous thing at the ASM level.
 
-> My arguement is basically is that there is absolutely no value in what
-> HFS+ is doing, by corrupting filenames --- if you want to call it
-> "normalizing" them, fine, but since Unicode is not static, so you
-> can't even call it a "canonical" form.  It's just some random
-> corruption of what was passed in at open(2) time, that can and will
-> change depending on what version of MacOS you are running.
+More on topic, I suspect Kevin's experience is more on end-user apps,
+where input sanitization and even canonicalisation are common
+practice. From a kernel and filesystems POV, a filename is data as
+sacred as file data. On the webapp world, we "corrupt" user input
+liberally to avoid XSS attacks and the like. In some cases, these
+practices are stupid and can be replaced with escaping data properly,
+but in other cases, the web platform is so broken that there's no
+option.
 
-Again with the huge assumptions.
+At least in Moodle we store *exactly*  what the user POSTed and
+cleanup^Wcorrupt it when displaying it, so that if it does happen that
+the cleanup was buggy, we never corrupted the data.
 
-> If you want to play the insane Unicode game of "equivalent"
-> characters, you have to do it at comparison time, so there's no point
-> trying to "normalize" them when you store them.  It doesn't buy you
-> anything, and it causes all sorts of pain.
-
-It must have bought somebody something, or they never would have done  
-it.
-
->> Your entire argument is based on the assumption that HFS+ "corrupts"
->> filenames in order to allow dumb clients to do byte comparisons,  
->> and I
->> don't believe that to be the case.
->
-> OK, what's your reason for why HFS+ corrupts filenames?  What do you
-> think is its excuse?  What problem does it solve?  If the answer is
-> "no reason at all, but because it *can*", according to the Great God
-> Unicode, then that's really not very impressive....
-
-I have no idea why HFS+ stores filenames in a normalized form, and  
-further I am smart enough to know that speculating is completely  
-pointless. I assume the authors had a good reason (which should be a  
-safe assumption, filesystem authors are a smart bunch). The reason may  
-not be valid anymore, but if it was valid back in 1998, then I can  
-accept it without complaining.
-
--Kevin Ballard
-
--- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
+So no point in calling eachother stupid this much. Once is enough ;-)
+And no point in arguing that something that is ok for an end-user app
+is a good design decision for an OS.
 
 
-
---Apple-Mail-29--696307996
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGMjCCAusw
-ggJUoAMCAQICEDsG8BKvlrEW0HUBIxWIgjUwDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
-JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
-ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA3MDQyMzIxMjM0OVoXDTA4MDQyMjIxMjM0
-OVowVzEQMA4GA1UEBBMHQmFsbGFyZDEOMAwGA1UEKhMFS2V2aW4xFjAUBgNVBAMTDUtldmluIEJh
-bGxhcmQxGzAZBgkqhkiG9w0BCQEWDGtldmluQHNiLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEP
-ADCCAQoCggEBAN/koURrN2ndrAiuAuHHrdFz+hLGQ7ZsXloGnObjALGOFY3Kmk2FCwAJPIha5GfM
-YFmZIoqxs+DbOWOn6KZ9hcQ5wf4EOgokayrEs3G72T+G8ZE4aXrw0CWJzKLjaIQeDZNZoHA44jlZ
-dG70wtZske898IoPz6YHpkcXiulllATfd8Pa7EgjPri5hKFiRXKI52OsOQTX6cNMMZJUIm8DvfQ5
-jmDyAtywNZGSGeUAMbWnpuLq7H18zpye2Q1hr+p4kucazMb+i7OHXPvX7yx2jMjhN5jw/gYkuzQQ
-JExp1fJyAZQ/av/ZgaxWchhhi4ziFXIlX3B09DTlOQlF53P3fi0CAwEAAaMpMCcwFwYDVR0RBBAw
-DoEMa2V2aW5Ac2Iub3JnMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEFBQADgYEAw/qc6zq+0Qy2
-XaodDlt2L6Vq1DzaVWjV152BFjidmsyhyCkCuyYdAcDp17opIfrNCBbOX5DdY6cpFpnSCxCZeIEB
-PDc3TaaFPtzr8qrpcNDohRSdt+qFLUeMHzlidAiAjvjI3tPKv3JLTakWdQR/XPHsg4mWoaVQU2hM
-HOQBw8EwggM/MIICqKADAgECAgENMA0GCSqGSIb3DQEBBQUAMIHRMQswCQYDVQQGEwJaQTEVMBMG
-A1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0ZSBD
-b25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQwIgYD
-VQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNvbmFs
-LWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNMDMwNzE3MDAwMDAwWhcNMTMwNzE2MjM1OTU5WjBiMQsw
-CQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoGA1UE
-AxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0EwgZ8wDQYJKoZIhvcNAQEBBQAD
-gY0AMIGJAoGBAMSmPFVzVftOucqZWh5owHUEcJ3f6f+jHuy9zfVb8hp2vX8MOmHyv1HOAdTlUAow
-1wJjWiyJFXCO3cnwK4Vaqj9xVsuvPAsH5/EfkTYkKhPPK9Xzgnc9A74r/rsYPge/QIACZNenpruf
-ZdHFKlSFD0gEf6e20TxhBEAeZBlyYLf7AgMBAAGjgZQwgZEwEgYDVR0TAQH/BAgwBgEB/wIBADBD
-BgNVHR8EPDA6MDigNqA0hjJodHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUGVyc29uYWxGcmVl
-bWFpbENBLmNybDALBgNVHQ8EBAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZhdGVM
-YWJlbDItMTM4MA0GCSqGSIb3DQEBBQUAA4GBAEiM0VCD6gsuzA2jZqxnD3+vrL7CF6FDlpSdf0wh
-uPg2H6otnzYvwPQcUCCTcDz9reFhYsPZOhl+hLGZGwDFGguCdJ4lUJRix9sncVcljd2pnDmOjCBP
-ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
-MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
-A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEDsG8BKvlrEW0HUBIxWI
-gjUwCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
-DxcNMDgwMTIxMjA1OTUxWjAjBgkqhkiG9w0BCQQxFgQUEM6yfBlgqJOmCX4DxJFWpXaWzQEwgYUG
-CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
-IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
-AhA7BvASr5axFtB1ASMViII1MIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
-BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
-b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhA7BvASr5axFtB1ASMViII1MA0GCSqGSIb3DQEBAQUA
-BIIBAAVlfAjQGJgOU+03rPXZyrB56CwKixeTtiQOA4v+QQbKHTaESQXJhwQ8FjPGEnDVfejPJpXY
-wZ8FgJKOcLsZdHNMho+iyu2S5Ph1CSZdcHrZK5NWfqSkToLBndAsu7AUVju4gSyQCSMltk3msz/0
-jLQtxmMkwHUw5guloSN+oXW+s/CMdxgCmyTcO8hELyzkdUUzv6FSEwDqUnCkhkoPPcUW3LWh6dIP
-ujZayYTpwQZqL/hOpmrbh2dXf5HUJy77d7B7NuUYOkzEklmJ1ldFFnRVorWdDsoap6E5y+YW4Bvt
-aw+LDXTIFAHPAHo/KRlQBHJEBdVdc1iJnpItDvMqp1EAAAAAAAA=
-
---Apple-Mail-29--696307996--
+martin
