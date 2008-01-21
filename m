@@ -1,93 +1,81 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH] git-commit: add a prepare-commit-msg hook
-Date: Mon, 21 Jan 2008 13:59:27 +0100
-Message-ID: <4794972F.9000007@gnu.org>
-References: <4790BCED.4050207@gnu.org> <7vbq7ibxhh.fsf@gitster.siamese.dyndns.org> <4791C3A8.7000308@gnu.org> <alpine.LSU.1.00.0801191119050.5731@racer.site> <7vd4rw6siv.fsf@gitster.siamese.dyndns.org> <479438D1.2050107@gnu.org> <alpine.LSU.1.00.0801211101450.5731@racer.site> <47948C9B.7030100@gnu.org> <alpine.LSU.1.00.0801211231480.5731@racer.site>
+From: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
+Subject: Re: =?ISO-8859-15?Q?=5BANNOUNCE=5D?= GIT 1.5.4-rc4
+Date: Mon, 21 Jan 2008 14:16:40 +0100
+Message-ID: <1JGwW0-0NMsgy0@fwd27.aul.t-online.de>
+References: <1JGuDL-2AugiG0@fwd26.aul.t-online.de>
+ <7vy7ajxvji.fsf@gitster.siamese.dyndns.org>
+Reply-To: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset="ISO-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 21 14:00:06 2008
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 14:19:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGwFx-0006pq-Ok
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 14:00:06 +0100
+	id 1JGwYL-0004Gy-ES
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 14:19:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751610AbYAUM7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 07:59:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751504AbYAUM7d
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 07:59:33 -0500
-Received: from fk-out-0910.google.com ([209.85.128.188]:5517 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751300AbYAUM7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 07:59:32 -0500
-Received: by fk-out-0910.google.com with SMTP id z23so1350522fkz.5
-        for <git@vger.kernel.org>; Mon, 21 Jan 2008 04:59:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        bh=vg7gCSiPMZxusc1RUCYlGH/S7I8MZxFkrDHjjOJtDws=;
-        b=T4GcTsiwgYxrZJB8msqagwBgdSjzwmWfWi/3BlMtbCDNrvlK+S/GSPHfsp/0OB4+gSsIn/NPqwuWDbluwOIaF5GdQ8ohsb1ycrrFBPbWQScbY1cFDdPtlllBnOWG4HlVVTnXpmMf3VNpw0aSI3VlUC/WeT9zDyNP0DHi5xo4xTo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        b=cpDzrz0334EF5Ukrtv6IViHDcXjR7AX9irugOdWy6dABFKPV1ah1i3M+BjexdOY/BjytgGG8Jly7Tp/kGdBmMBjvnZUsgn0aGJtnAsHsvMvlrtNKTNvp1W7F76+YQUf8Wz4er1IeRV1K+ETvrTHII4hM0CKqvRVj+XgPEBcl1lU=
-Received: by 10.82.106.14 with SMTP id e14mr12231420buc.38.1200920370832;
-        Mon, 21 Jan 2008 04:59:30 -0800 (PST)
-Received: from scientist-2.local ( [195.176.178.209])
-        by mx.google.com with ESMTPS id 31sm8183347fkt.14.2008.01.21.04.59.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 21 Jan 2008 04:59:30 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
-In-Reply-To: <alpine.LSU.1.00.0801211231480.5731@racer.site>
+	id S1752080AbYAUNSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 08:18:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751981AbYAUNSf
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 08:18:35 -0500
+Received: from mailout07.sul.t-online.de ([194.25.134.83]:40350 "EHLO
+	mailout07.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751504AbYAUNSf (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 08:18:35 -0500
+Received: from fwd27.aul.t-online.de 
+	by mailout07.sul.t-online.com with smtp 
+	id 1JGwWK-0001Xn-00; Mon, 21 Jan 2008 14:17:00 +0100
+Received: from localhost (bpsG94ZOrhbtbwz5owAi9DutXsMRvKJfG9hfnIgTs6PS55YTAHjOpIOR0E65KAhgPC@[172.20.101.250]) by fwd27.aul.t-online.de
+	with esmtp id 1JGwW0-0NMsgy0; Mon, 21 Jan 2008 14:16:40 +0100
+In-Reply-To: <7vy7ajxvji.fsf@gitster.siamese.dyndns.org>
+X-UMS: email
+X-Mailer: TOI Kommunikationscenter V9-1-3
+X-ID: bpsG94ZOrhbtbwz5owAi9DutXsMRvKJfG9hfnIgTs6PS55YTAHjOpIOR0E65KAhgPC@t-dialin.net
+X-TOI-MSGID: 2d0713e3-ff13-46a2-bc7d-1fb4b7bffce4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71280>
 
 
->> Sure it won't break anything, but it won't work either!  The existing 
->> message hook runs after the editing session -- I want the hook to 
->> introduce text that is merely a suggestion that the user can delete, or 
->> a template that the user needs to customize further.
-> 
-> OMG you're right.  But why didn't you say so in the commit message?  
-> Something like "This hook complements the commit-msg hook, in that it runs 
-> _before_ the editor is launched".
 
-I can't believe this. ;-)  At least I'm laughing for something nice now!
+From: Junio C Hamano 
+ 
+>Michael Dressel writes:
 
-You're right, I should have said instead of this:
-
-> The prepare-commit-msg hook is run whenever a "fresh" commit message 
-> (i.e. not one taken from another commit with -c) is shown in the editor. 
-
-... just before a "fresh" commit message is shown in the editor.
-          ^^^^^^
-
->>> Also, the change would be non-intrusive, easy-to-review
->> Please.  That's ludicrous.
+>> Concerning RPM specs.
 >>
->> My patch is 3 lines of inserted code and 0 modified lines, checking one 
->> variable that is set once in builtin-commit.c (edit_message).
-> 
-> Actually, after reading the commit message I was in 
-> "this-is-not-necessary" mode, and therefore the diffstat looked too large 
-> for me.
+>> I created rpm packages on a x86_64 SuSE 10.3 system.
+>>
+>> There were two complains about unmatched dependencies for expat-devel
+>> and perl(Error)
+>> I could not get rid off.
+>
+>Thanks.
+>
+>perl-error and expat-devel are both packaged outside git.
+>Aren't they listed in dependencies?  At least I think
+>expat-devel is on the build dependency.
 
-Yes, but still the diffstat was all .txt files... ;-)
+>Our Makefile tries to install our own copy of perl::Error if the
+>build platform does not have one, which we do not want to do
+>when building a binary package.  Perhaps perl-error needs to be
+>on the build dependency to deal with this issue?  I dunno, as I
+>am not an RPM person.
 
-> Actually, reading your patch again I think it also triggers for "-c", as 
-> well as for "[-C|-F|-m] ... -e".
+The packages are in the dependency list. Only that they are
+not installed (under the name given in the dependency list)
+on my system. Nevertheless the build and install
+and some simple tests work well.
 
-Not for "-c", that's the point of the "edit_message" check.  You're 
-right about "-e" though.
+For perl(Error) you have explained why it works. For openssh-client
+I guess that things may be provided by packages
+named differently. This is probably only an issue with SuSE.
 
-Points taken, and patch will be resubmitted after 1.5.4.
-
-Paolo
+Cheers,
+Michael
