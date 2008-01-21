@@ -1,61 +1,52 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: gitk layout bug
-Date: Mon, 21 Jan 2008 20:50:34 +1100
-Message-ID: <18324.27370.96611.769276@cargo.ozlabs.ibm.com>
-References: <alpine.LFD.1.00.0801191740020.2957@woody.linux-foundation.org>
+From: Mark Junker <mjscod@web.de>
+Subject: Re: [PATCH] Use FIX_UTF8_MAC to enable conversion from UTF8-MAC to
+   UTF8
+Date: Mon, 21 Jan 2008 10:50:47 +0100
+Message-ID: <fn1ptk$ljj$1@ger.gmane.org>
+References: <fn1nl6$ek5$1@ger.gmane.org> <fn1pj9$kkg$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Jan 21 10:51:14 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 21 10:51:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGtJ7-0002th-O8
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 10:51:10 +0100
+	id 1JGtJK-0002wZ-On
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 10:51:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758318AbYAUJuk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 04:50:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757130AbYAUJuk
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 04:50:40 -0500
-Received: from ozlabs.org ([203.10.76.45]:40122 "EHLO ozlabs.org"
+	id S1758320AbYAUJuw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 04:50:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758321AbYAUJuw
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 04:50:52 -0500
+Received: from main.gmane.org ([80.91.229.2]:43972 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756107AbYAUJuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 04:50:40 -0500
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 5525FDDE06; Mon, 21 Jan 2008 20:50:38 +1100 (EST)
-In-Reply-To: <alpine.LFD.1.00.0801191740020.2957@woody.linux-foundation.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1757130AbYAUJuv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 04:50:51 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JGtIn-0002h7-Na
+	for git@vger.kernel.org; Mon, 21 Jan 2008 09:50:49 +0000
+Received: from 80.146.179.234 ([80.146.179.234])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 09:50:49 +0000
+Received: from mjscod by 80.146.179.234 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 09:50:49 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 80.146.179.234
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X; de; rv:1.8.1.9) Gecko/20071031 Thunderbird/2.0.0.9 Mnenhy/0.7.5.0
+In-Reply-To: <fn1pj9$kkg$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71247>
 
-Linus Torvalds writes:
+ARGH! Sorry, I'll try it again later - when I fixed this stupid implicit 
+conversion of TAB to SPC ...
 
-> In the current git repository, try this:
-> 
-> 	gitk origin/master..origin/pu
-> 
-> and it starts out looking ok.
-> 
-> But then scroll down a bit (say, press "PageDown" ten to twenty times), 
-> and scroll up again, and now that thing is totally unusable.
-> 
-> Is it just me?
-
-No, I have seen it occasionally (though not recently), but I've never
-been able to trigger it when I had some time to debug it. :/
-
-I'd be interested to know if you can trigger it with the "dev" branch
-of gitk, too.  The dev branch doesn't use --topo-order or
---date-order, but instead does the topological sort itself, so the
-cold-cache case is a lot faster (and the hot-cache case goes just as
-fast as before).  And because I can now reorder the commits, I can put
-each open-circle commit just after the last merge that has it as a
-parent, which ends up looking much nicer too.
-
-Paul.
+Regards,
+Mark
