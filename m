@@ -1,71 +1,118 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Also use unpack_trees() in do_diff_cache()
-Date: Mon, 21 Jan 2008 00:19:38 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801210017580.5731@racer.site>
-References: <alpine.LFD.1.00.0801181911560.2957@woody.linux-foundation.org> <7vfxwu9s2z.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801191133330.2957@woody.linux-foundation.org> <alpine.LFD.1.00.0801191709380.2957@woody.linux-foundation.org>
- <alpine.LSU.1.00.0801200142170.5731@racer.site> <15ECE22B-FCBB-4F12-919B-694E48D48E0D@zib.de> <alpine.LSU.1.00.0801201515060.5731@racer.site> <alpine.LSU.1.00.0801201519320.5731@racer.site> <alpine.LFD.1.00.0801201144300.2957@woody.linux-foundation.org>
- <alpine.LFD.1.00.0801201338140.2957@woody.linux-foundation.org> <alpine.LSU.1.00.0801202331380.5731@racer.site> <alpine.LFD.1.00.0801201550550.2957@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fast importer for SCCS files
+Date: Sun, 20 Jan 2008 16:50:23 -0800
+Message-ID: <7vsl0s57e8.fsf@gitster.siamese.dyndns.org>
+References: <c5df85930801200312o7cd5d307v1a39fb35179249a9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Jan 21 01:20:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "James Youngman" <jay@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Jan 21 01:51:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGkOl-0002Lw-4A
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 01:20:23 +0100
+	id 1JGksZ-0001GQ-Jm
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 01:51:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755503AbYAUATy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2008 19:19:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755402AbYAUATy
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 19:19:54 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49327 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755211AbYAUATx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2008 19:19:53 -0500
-Received: (qmail invoked by alias); 21 Jan 2008 00:19:51 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp052) with SMTP; 21 Jan 2008 01:19:51 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/oMkBPctDoQr7D2exFI3lDkR4k/YTl6FV5e2zEQH
-	aLyN2PlIh2EsDd
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.1.00.0801201550550.2957@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1756086AbYAUAum (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2008 19:50:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755697AbYAUAum
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 19:50:42 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:47415 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754585AbYAUAul (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2008 19:50:41 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D22018C2;
+	Sun, 20 Jan 2008 19:50:40 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 620B418C1;
+	Sun, 20 Jan 2008 19:50:35 -0500 (EST)
+In-Reply-To: <c5df85930801200312o7cd5d307v1a39fb35179249a9@mail.gmail.com>
+	(James Youngman's message of "Sun, 20 Jan 2008 11:12:47 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71207>
 
-Hi,
+"James Youngman" <jay@gnu.org> writes:
 
-On Sun, 20 Jan 2008, Linus Torvalds wrote:
+> The attached patch implements an importer for SCCS files using
+> git-fastimport.  It's unidirectional SCCS->git.  This is my first git
+> patch, so apologies if I have done something the wrong way with regard
+> to how one shoudl submit a patch.    I've attached the patch because
+> my mail client would probably screw the formatting up if I just pasted
+> it :(
 
-> On Sun, 20 Jan 2008, Johannes Schindelin wrote:
-> > 
-> > Note: "git diff HEAD" as it is now still holds value;
-> 
-> Oh, absolutely.
-> 
-> It's not "git diff HEAD" that is broken.
-> 
-> It's "git diff --cached HEAD" that doesn't work. The "--cached" means 
-> that it's supposed to diff the index against HEAD, but since it cannot 
-> handle unmerged entries, instead of getting a diff, you get just a line 
-> saying
-> 
-> 	* Unmerged path xyzzy
-> 
-> and no diff at all.
+Welcome.
 
-Silly me.  Unmerged paths can only have problems when you look at the 
-index, of course.
+> From 64c49a2ee864d50280df06b0f04d17d718f187c2 Mon Sep 17 00:00:00 2001
+> From: James Youngman <jay@gnu.org>
+> Date: Sun, 20 Jan 2008 11:02:10 +0000
+> Subject: [PATCH] Add a fast importer for SCCS.
+>
+> ---
 
-Sorry for the noise,
-Dscho
+Lacks sign-off (please see Documentation/SubmittingPatches).
+
+A description?  For example, "It's unidirectional" should be in
+the commit message.  If it allows incremental or just one shot
+should also be said.  There perhaps are other things, including
+future directions.
+
+As to future directions, I think unidirectional importers should
+allow incremental updates, and try to be usable as a drop-in
+replacement of "git fetch".  Among the existing ones, cvsimport
+is almost there (instead of doing "git fetch $url && git rebase
+FETCH_HEAD", you can do "git cvsimport $args $cvs_repository &&
+git rebase $cvs_tracking_branch"), and I think it is a good
+model.
+
+> +# Author: James Youngman <jay@gnu.org>
+> +# Copyright: 2008 James Youngman <jay@gnu.org>
+> +# License: GNU GPL version 2 or later <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+> +#
+
+This is quite a long line isn't it?  Besides, we ship the copy
+of GPLv2 in git.git already.
+
+> +"""
+> +A fast git importer for SCCS files.
+> +
+> +How to use this program:
+> +
+> +Let's assume you have some SCCS files in $PROJECTDIR and want to
+> +convert them to a git repository in the directory $NEWGIT.
+> +
+> +First, make sure the SCCS (or CSSC) binaries are on your $PATH.  Then
+> +do this:
+> +
+> +  cd "$PROJECTDIR"
+> +  python git-sccsimport.py --init --git-dir="$NEWGIT" --dirs .
+
+So, from the point of view to imitate git-fetch, this is a
+suboptimal interface.  Rather:
+
+	mkdir my-project-converted-to-git
+        cd my-project-converted-to-git
+        git init
+        git-sccsimport $PROJECTDIR
+
+and later incremental option would allow the user to say:
+
+        cd my-project-converted-to-git
+        git-sccsimport $some_incremental_options $PROJECTDIR
+
+> +TIMEZONE = None
+> +MAIL_DOMAIN = None
+> +UNIX_EPOCH = time.mktime(datetime.datetime(1970, 1, 1,
+> +											0, 0, 0, 0,
+> +											None).timetuple())
+
+You seem to be using a tab-width that is not 8, and it shows
+everywhere.  Please don't.
