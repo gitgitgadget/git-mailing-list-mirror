@@ -1,97 +1,173 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
+From: Kevin Ballard <kevin@sb.org>
 Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Tue, 22 Jan 2008 10:06:05 +1300
-Message-ID: <46a038f90801211306g3dd9a167wb74d06e444b18b93@mail.gmail.com>
-References: <478E1FED.5010801@web.de>
-	 <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org>
-	 <478F99E7.1050503@web.de>
-	 <alpine.LFD.1.00.0801171017460.14959@woody.linux-foundation.org>
-	 <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org>
-	 <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se>
-	 <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org>
-	 <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org>
-	 <alpine.LFD.1.00.0801210934400.2957@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Kevin Ballard" <kevin@sb.org>,
-	"Peter Karlsson" <peter@softwolves.pp.se>,
-	"Mark Junker" <mjscod@web.de>,
-	"Pedro Melo" <melo@simplicidade.org>,
+Date: Mon, 21 Jan 2008 16:07:27 -0500
+Message-ID: <DEC058ED-EBF0-4A1E-BF7B-448B16DBBD6E@sb.org>
+References: <478F99E7.1050503@web.de> <alpine.LFD.1.00.0801171017460.14959@woody.linux-foundation.org> <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org> <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org> <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se> <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org> <Pine.LNX.4.64.0801211509490.17095!@ds9.cixit.se> <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org> <alpine.LFD.1.00.0801210934400.2957@woody.linux-foundation.org> <C6C0E6A1-053B-48CE-90B3-8FFB44061C3B@sb.org> <20080121205615.GY14871@dpotapov.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: multipart/signed; boundary=Apple-Mail-30--695852197; micalg=sha1; protocol="application/pkcs7-signature"
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Peter Karlsson <peter@softwolves.pp.se>,
+	Mark Junker <mjscod@web.de>,
+	Pedro Melo <melo@simplicidade.org>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Jan 21 22:06:54 2008
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 22:08:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH3qo-0002vH-Az
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 22:06:38 +0100
+	id 1JH3s8-0003Yt-SJ
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 22:08:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753933AbYAUVGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 16:06:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753227AbYAUVGJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 16:06:09 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:32090 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752806AbYAUVGH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 16:06:07 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so953672ugc.16
-        for <git@vger.kernel.org>; Mon, 21 Jan 2008 13:06:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=3sDX0MpfVbj0oow/yBySS1EIwh7k3xnYvCcXHy+jTTI=;
-        b=S9KD3JfvKXj5SKzEJqsYujXh5f9Sz/1X0BBq0hjYGEL8ni6mgmFfzj5B7vt9fchOXkVoEa0aIL41pLFoyvXKNBC8iF8FtaaTGF7ZSC/xAq1Mqmbc3bxObBVyxGoyIWd7272WSahl/62gjKeDP+TI2tZXvMIrVzZF++z1guMx7aI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=T5FcoExixj15IuWwixoMQkxkacpeZqndRgcj6eydiqTqfVjrkTFIeFFPIQw0jezv8UBf0O3xMSpr57lXPy0TG9DsYAsYRlonyr6T6NSPIG0+T1OnHNiOH3dw2G871iNdNOBddvZtw+iMf9bV4BNEEZB66H4idB/FJYgpbrA/J7U=
-Received: by 10.66.240.12 with SMTP id n12mr5192800ugh.9.1200949565771;
-        Mon, 21 Jan 2008 13:06:05 -0800 (PST)
-Received: by 10.66.252.2 with HTTP; Mon, 21 Jan 2008 13:06:05 -0800 (PST)
-In-Reply-To: <alpine.LFD.1.00.0801210934400.2957@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1753227AbYAUVHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 16:07:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752751AbYAUVHa
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 16:07:30 -0500
+Received: from sd-green-bigip-74.dreamhost.com ([208.97.132.74]:44685 "EHLO
+	randymail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752592AbYAUVHa (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 16:07:30 -0500
+Received: from KBLAPTOP.WIFI.WPI.EDU (KBLAPTOP.WIFI.WPI.EDU [130.215.171.85])
+	by randymail-a2.g.dreamhost.com (Postfix) with ESMTP id A2DF1EEE9C;
+	Mon, 21 Jan 2008 13:07:28 -0800 (PST)
+In-Reply-To: <20080121205615.GY14871@dpotapov.dyndns.org>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71340>
 
-On Jan 22, 2008 7:12 AM, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> Now, git _also_ heavily depends on the actual encoding of those
-> codepoints, since we create hashes etc, so in fact, as far ass git is
-> concerned, names have to be in some particular encoding to be hashed, and
-> UTF-8 is the only sane encoding for Unicode. People can blather about
-> UCS-2 and UTF-16 and UTF-32 all they want, but the fact is, UTF-8 is
-> simply technically superior in so many ways that I don't even understand
-> why anybody ever uses anything else.
+
+--Apple-Mail-30--695852197
+Content-Type: text/plain;
+	charset=US-ASCII;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: 7bit
+
+On Jan 21, 2008, at 3:56 PM, Dmitry Potapov wrote:
+
+> On Mon, Jan 21, 2008 at 02:05:51PM -0500, Kevin Ballard wrote:
+>>>
+>>> But that is *entirely* a separate issue from "normalization".
+>>>
+>>> Kevin, you seem to think that normalization is somehow forced on you
+>>> by
+>>> the "text-as-codepoints" decision, and that is SIMPLY NOT TRUE.
+>>> Normalization is a totally separate decision, and it's a STUPID one,
+>>> because it breaks so many of the _nice_ properties of using UTF-8.
+>>
+>> I'm not saying it's forced on you, I'm saying when you treat  
+>> filenames
+>> as text,
 >
-> So I would not disagree with using UTF-8 at all.
+> to treat as text could mean different for different people. Some
+> may prefer to fi and fi_ligature to be treated as same in some
+> context.
 
-Linus,
+Those people can use NFKC/NFKD (compatibility equivalence). As I've  
+said before, I'm talking about canonical equivalence, because that  
+doesn't lose information like compatibility equivalence does (ex. the  
+fi ligature gets turned into fi in compatibility equivalence, but not  
+canonical equivalence).
 
-(slightly offtopic) are you praising UTF-8 as storage format (for disk
-and network) or in general? UTF-8-aware string ops like counting
-characters seem to me a horrendous thing at the ASM level.
+>> it DOESN'T MATTER if the string gets normalized. As long as
+>> the string remains equivalent,
+>
+> As matter of fact it does, otherwise characters would be the
+> same and we would not have this conversation at all. String
+> can be equivalent and not equivalent at the time, because there
+> are different equivalent relations. Finally, what HFS+ does
+> is even not normalization. In the technote, Apple explains
+> that they decompose some characters but not others for better
+> compatibility. So, you see, there is a PROBLEM here.
 
-More on topic, I suspect Kevin's experience is more on end-user apps,
-where input sanitization and even canonicalisation are common
-practice. From a kernel and filesystems POV, a filename is data as
-sacred as file data. On the webapp world, we "corrupt" user input
-liberally to avoid XSS attacks and the like. In some cases, these
-practices are stupid and can be replaced with escaping data properly,
-but in other cases, the web platform is so broken that there's no
-option.
+Again, I've specified many times that I'm talking about canonical  
+equivalence.
 
-At least in Moodle we store *exactly*  what the user POSTed and
-cleanup^Wcorrupt it when displaying it, so that if it does happen that
-the cleanup was buggy, we never corrupted the data.
+And yes, HFS+ does normalization, it just doesn't use NFD. It uses a  
+custom variant. I fail to see how this is a problem.
 
-So no point in calling eachother stupid this much. Once is enough ;-)
-And no point in arguing that something that is ok for an end-user app
-is a good design decision for an OS.
+>> Alright, fine. I'm not saying HFS+ is right in storing the normalized
+>> version, but I do believe the authors of HFS+ must have had a reason
+>> to do that,
+>
+> I don't say they do that without *any* reason, but I suppose all
+> Apple developers in the Copland project had some reasons for they
+> did, but the outcome was not very good...
+
+Stupid engineers don't get to work on developing new filesystems. And  
+Copland didn't fail because of stupid engineers anyway. If I had to  
+blame someone, I'd blame management.
+
+>> The only information you lose when doing canonical normalization is
+>> what the original byte sequence was.
+>
+> Not true. You lose the original sequence of *characters*.
+
+Which is only a problem if you care about the byte sequence, which is  
+kinda the whole point of my argument.
+
+-Kevin Ballard
+
+-- 
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
 
 
-martin
+
+--Apple-Mail-30--695852197
+Content-Disposition: attachment;
+	filename=smime.p7s
+Content-Type: application/pkcs7-signature;
+	name=smime.p7s
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGMjCCAusw
+ggJUoAMCAQICEDsG8BKvlrEW0HUBIxWIgjUwDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
+JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
+ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA3MDQyMzIxMjM0OVoXDTA4MDQyMjIxMjM0
+OVowVzEQMA4GA1UEBBMHQmFsbGFyZDEOMAwGA1UEKhMFS2V2aW4xFjAUBgNVBAMTDUtldmluIEJh
+bGxhcmQxGzAZBgkqhkiG9w0BCQEWDGtldmluQHNiLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEP
+ADCCAQoCggEBAN/koURrN2ndrAiuAuHHrdFz+hLGQ7ZsXloGnObjALGOFY3Kmk2FCwAJPIha5GfM
+YFmZIoqxs+DbOWOn6KZ9hcQ5wf4EOgokayrEs3G72T+G8ZE4aXrw0CWJzKLjaIQeDZNZoHA44jlZ
+dG70wtZske898IoPz6YHpkcXiulllATfd8Pa7EgjPri5hKFiRXKI52OsOQTX6cNMMZJUIm8DvfQ5
+jmDyAtywNZGSGeUAMbWnpuLq7H18zpye2Q1hr+p4kucazMb+i7OHXPvX7yx2jMjhN5jw/gYkuzQQ
+JExp1fJyAZQ/av/ZgaxWchhhi4ziFXIlX3B09DTlOQlF53P3fi0CAwEAAaMpMCcwFwYDVR0RBBAw
+DoEMa2V2aW5Ac2Iub3JnMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEFBQADgYEAw/qc6zq+0Qy2
+XaodDlt2L6Vq1DzaVWjV152BFjidmsyhyCkCuyYdAcDp17opIfrNCBbOX5DdY6cpFpnSCxCZeIEB
+PDc3TaaFPtzr8qrpcNDohRSdt+qFLUeMHzlidAiAjvjI3tPKv3JLTakWdQR/XPHsg4mWoaVQU2hM
+HOQBw8EwggM/MIICqKADAgECAgENMA0GCSqGSIb3DQEBBQUAMIHRMQswCQYDVQQGEwJaQTEVMBMG
+A1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0ZSBD
+b25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQwIgYD
+VQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNvbmFs
+LWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNMDMwNzE3MDAwMDAwWhcNMTMwNzE2MjM1OTU5WjBiMQsw
+CQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoGA1UE
+AxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0EwgZ8wDQYJKoZIhvcNAQEBBQAD
+gY0AMIGJAoGBAMSmPFVzVftOucqZWh5owHUEcJ3f6f+jHuy9zfVb8hp2vX8MOmHyv1HOAdTlUAow
+1wJjWiyJFXCO3cnwK4Vaqj9xVsuvPAsH5/EfkTYkKhPPK9Xzgnc9A74r/rsYPge/QIACZNenpruf
+ZdHFKlSFD0gEf6e20TxhBEAeZBlyYLf7AgMBAAGjgZQwgZEwEgYDVR0TAQH/BAgwBgEB/wIBADBD
+BgNVHR8EPDA6MDigNqA0hjJodHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUGVyc29uYWxGcmVl
+bWFpbENBLmNybDALBgNVHQ8EBAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZhdGVM
+YWJlbDItMTM4MA0GCSqGSIb3DQEBBQUAA4GBAEiM0VCD6gsuzA2jZqxnD3+vrL7CF6FDlpSdf0wh
+uPg2H6otnzYvwPQcUCCTcDz9reFhYsPZOhl+hLGZGwDFGguCdJ4lUJRix9sncVcljd2pnDmOjCBP
+ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
+MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
+A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEDsG8BKvlrEW0HUBIxWI
+gjUwCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
+DxcNMDgwMTIxMjEwNzI3WjAjBgkqhkiG9w0BCQQxFgQUlzA2Y2ujlpES46b9kN3rwRfTFQ0wgYUG
+CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
+IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
+AhA7BvASr5axFtB1ASMViII1MIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
+BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
+b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhA7BvASr5axFtB1ASMViII1MA0GCSqGSIb3DQEBAQUA
+BIIBACoIUu+22XuwgxLcHNaHhmvyxcdwLj/8LMLk2/oLdgkk6yfnVVvnbAeBKqFGRZpYzH/8ZtMq
+2wCT0ywI4oV9R3xGBErLD+1GfIaGWi/RTSUpZi2IFE70uEMhGeB6GL7v19LK9tM8+WkRN0EqBv1l
+n3YxHtNBcPRuCMLOt2xhSQ/ibTtnaLgfHDYqWJ1T+aOHhw6dhckC9UV4gFkGywKF7U8wYKJhkqZK
+Cqb9A6aduXzn+pRIB4BiE0vQpFQW+mM3WIkr/jT9Jk5uy7RbF3ZmNEE5+qNbX9qRlM4GTuJtISjk
+17n/B5O4qlGly8ebKin7piR+GbEjjsFdzr7tSa25zMUAAAAAAAA=
+
+--Apple-Mail-30--695852197--
