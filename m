@@ -1,64 +1,77 @@
-From: =?UTF-8?B?R3LDqWdvaXJlIEJhcmJpZXI=?= <devel@gbarbier.org>
-Subject: Re: [PATCH] http-push: making HTTP push more robust and more user-friendly
-Date: Mon, 21 Jan 2008 11:09:43 +0100
-Message-ID: <47946F67.5060601@gbarbier.org>
-References: <1200250979-19604-1-git-send-email-gb@gbarbier.org> <7vbq7ppbyh.fsf@gitster.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: gitk layout bug
+Date: Mon, 21 Jan 2008 11:13:33 +0100
+Message-ID: <4794704D.2060607@viscovery.net>
+References: <alpine.LFD.1.00.0801191740020.2957@woody.linux-foundation.org> <18324.27370.96611.769276@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 21 11:11:13 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Jan 21 11:14:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGtcQ-0000FK-2h
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 11:11:06 +0100
+	id 1JGtg2-0001K1-NB
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 11:14:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762922AbYAUKJy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jan 2008 05:09:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762080AbYAUKJx
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 05:09:53 -0500
-Received: from relay2-v.mail.gandi.net ([217.70.178.76]:34697 "EHLO
-	relay2-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761063AbYAUKJw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 05:09:52 -0500
-Received: from localhost (mfilter4-v.gandi.net [217.70.178.38])
-	by relay2-v.mail.gandi.net (Postfix) with ESMTP id D3468135D7;
-	Mon, 21 Jan 2008 11:09:48 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mfilter4-v.mgt.gandi.net
-Received: from relay2-v.mail.gandi.net ([217.70.178.76])
-	by localhost (mfilter4-v.mgt.gandi.net [217.70.178.38]) (amavisd-new, port 10024)
-	with ESMTP id nSQupP3ZqiDk; Mon, 21 Jan 2008 10:38:31 +0100 (CET)
-Received: from [192.168.79.1] (soy95-1-82-229-96-169.fbx.proxad.net [82.229.96.169])
-	by relay2-v.mail.gandi.net (Postfix) with ESMTP id 1852C135BD;
-	Mon, 21 Jan 2008 11:09:43 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <7vbq7ppbyh.fsf@gitster.siamese.dyndns.org>
+	id S1764035AbYAUKNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 05:13:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764032AbYAUKNj
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 05:13:39 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:6316 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764020AbYAUKNi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 05:13:38 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JGtef-000379-TA; Mon, 21 Jan 2008 11:13:26 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 17182A33B; Mon, 21 Jan 2008 11:13:34 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <18324.27370.96611.769276@cargo.ozlabs.ibm.com>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71251>
 
-Junio C Hamano a =C3=A9crit :
-> Also http-push being unusable without CURL_MULTI was also a news
-> to me.  Is this something that came up on #git perhaps?
->=20
-> This change means people need curl 7.10 or newer (post May 2003,
-> that is).  I do not think it is too new a version to require,
-> but then it makes me wonder if it makes much sense for us to
-> keep supporting non CURL_MULTI build these days.  Perhaps we
-> should schedule such a move to drop non MULTI build in the
-> future?
+Paul Mackerras schrieb:
+> Linus Torvalds writes:
+> 
+>> In the current git repository, try this:
+>>
+>> 	gitk origin/master..origin/pu
+>>
+>> and it starts out looking ok.
+>>
+>> But then scroll down a bit (say, press "PageDown" ten to twenty times), 
+>> and scroll up again, and now that thing is totally unusable.
+>>
+>> Is it just me?
+> 
+> No, I have seen it occasionally (though not recently), but I've never
+> been able to trigger it when I had some time to debug it. :/
+> 
+> I'd be interested to know if you can trigger it with the "dev" branch
+> of gitk, too.  The dev branch doesn't use --topo-order or
+> --date-order, but instead does the topological sort itself, so the
+> cold-cache case is a lot faster (and the hot-cache case goes just as
+> fast as before).  And because I can now reorder the commits, I can put
+> each open-circle commit just after the last merge that has it as a
+> parent, which ends up looking much nicer too.
 
-In fact, it's not curl 7.10 but curl 7.16 (those guys working on curl=20
-speak hexa).
-See commit 9cf04301b182c4c57d62ea63554d109db613f9d3
+The dev branch is fine in this regard. In fact, this is the primary reason
+why I'm using it.
 
-However... http-push is anyway broken without USE_CURL_MULTI.
+BTW, there are still a few layout glitches, in particular, when F5
+(Update) is used after frequent rebase/cherry-pick/commit/--amend. I'll
+bug you once I know how to reproduce them.
 
---=20
-Gr=C3=A9goire Barbier - gb =C3=A0 gbarbier.org - +33 6 21 35 73 49
+-- Hannes
