@@ -1,83 +1,97 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 2/2] read-cache.c: fix timestamp comparison
-Date: Mon, 21 Jan 2008 11:09:44 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801211104590.2957@woody.linux-foundation.org>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com> <7vwsqeubj8.fsf@gitster.siamese.dyndns.org> <47891658.3090604@gmail.com> <7vbq7qssd7.fsf@gitster.siamese.dyndns.org> <47893E1A.5020702@gmail.com> <7v4pdislrf.fsf@gitster.siamese.dyndns.org>
- <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7vir1xmazm.fsf@gitster.siamese.dyndns.org> <7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org> <7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org> <7vr6gb3nv1.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0801202114580.2957@woody.linux-foundation.org> <7vd4rv3ds5.fsf@gitster.siamese.dyndns.org> <7vtzl71x1c.fsf@gitster.siamese.dyndns.org> <7vprvv1wnu.fsf@gitster.siamese.dyndns.org> <7vlk6j1wjj.fsf@gitster.siamese.dyndns.org>
- <7vhch71vvb.fsf@gitster.siamese.dyndns.org> <7v8x2j1sul.fsf@gitster.siamese.dyndns.org> <7vzluzzhud.fsf_-_@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801211022350.2957@woody.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Time to flush Mr. Hammano?
+Date: Mon, 21 Jan 2008 11:13:55 -0800 (PST)
+Message-ID: <m3odbfkn4s.fsf@roke.D-201>
+References: <e5bfff550801200210y212d0921x214773596810be52@mail.gmail.com>
+	<20070624192215@qkholland.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 21 20:11:27 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git mailing list <git@vger.kernel.org>
+To: Quim K Holland <qkholland@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 20:14:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH23K-0002zV-Qi
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 20:11:27 +0100
+	id 1JH26H-000443-M6
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 20:14:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751666AbYAUTK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 14:10:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbYAUTK4
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 14:10:56 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:39668 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751442AbYAUTKz (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 14:10:55 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0LJ9i9w018713
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 21 Jan 2008 11:09:45 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0LJ9iiQ015233;
-	Mon, 21 Jan 2008 11:09:44 -0800
-In-Reply-To: <alpine.LFD.1.00.0801211022350.2957@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.224 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751885AbYAUTOA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 14:14:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751724AbYAUTOA
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 14:14:00 -0500
+Received: from ik-out-1112.google.com ([66.249.90.181]:10366 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750817AbYAUTN7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 14:13:59 -0500
+Received: by ik-out-1112.google.com with SMTP id c28so95852ika.5
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 11:13:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=OadHGCNJTlsJ30tv9FWTnI4c5JYA9GsQF4epPVuPew4=;
+        b=jEPgzVQGlG0hV4AolrECHn4ID44Rxle2PMnvmpWSpcoAwjvOAFwyTlZBKt00qXg+kFx6jQ+JZZVFdqZknq2uzFsCyg/+KepahD6bHVTNTDmRmlekulAcwu5o8fS5sn4M9VzXzZU4U3PmxjnwDJ4QIn70sU/Es8e2kGycVonY4oc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=nv6r64KvxVdQcbgYk4pQp/+putVsrzExklXRTozltVJwyXUG31wHGkhexHZ4XCthT2YBuOZWrlJgTdyuZl8w9JSnINHoQUcmvOMh4quoU0bZWwotq78TggvCrTf+7iFribX6XjwRXJc+B1IrWm6UdswA9JIpiVeAO+g2Kn0DfZE=
+Received: by 10.78.173.20 with SMTP id v20mr9750659hue.12.1200942836702;
+        Mon, 21 Jan 2008 11:13:56 -0800 (PST)
+Received: from roke.D-201 ( [83.8.243.150])
+        by mx.google.com with ESMTPS id c14sm13773423nfi.6.2008.01.21.11.13.53
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Mon, 21 Jan 2008 11:13:55 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id m0LJDmvg029013;
+	Mon, 21 Jan 2008 20:13:49 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m0LJDeMb029010;
+	Mon, 21 Jan 2008 20:13:40 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <20070624192215@qkholland.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71312>
 
+Quim K Holland <qkholland@gmail.com> writes:
 
-
-On Mon, 21 Jan 2008, Linus Torvalds wrote:
+> Back when Mr. Torvalds was still leading the development there was
+> not this stupid stability freeze and many useful patches were
+> accepted every day.  For the past few months Mr. Hammano has not
+> been adding much useful code himself, did not join interesting
+> discussions such as Unicode normalization issues, nor gave much
+> useful comments on patches. He has mostly been busy rejecting useful
+> patches and sending not so useful comments.
 > 
-> Will experiment more now that I have a case that reliably fails. The 
-> commit that causes this literally shouldn't have caused any semantic 
-> changes at all, so this is rather interesting.
+> Can we vote Mr. Hammano out and ask Mr. Torvalds to come back as the
+> project leader?  I do not mean any disrespect to Mr. Hammano, but
+> don't people think he outlived his usefulness as the project leader?
 
-Intriguing. It's the "ce_mode" -> CE_REMOVE changes that trigger this bug.
+First, Linus Torvalds passed maintaining git to Junio C Hamano because
+he wanted to concentrate on Linux kernel; distributed version control
+tool is just the means to do that.  I don't think Linus would want to
+be back to maintaining git: it is a hard work.
 
-The problem goes away with this one-liner.
+Second, development and development speeds differ from the "creating"
+pre-1.0 stage (for git when it was being written and then maintained
+by Linus), and the mature development / improvement stage (for git
+being maintained by Junio).
 
-I haven't figured out *why*, yet, but the reason I checked CE_REMOVE was 
-that it was the only part that wasn't just a pure network order change.
+Third, git is now in feature freeze before main release, so it is
+better that Junio concentrates on fixing bugs than on longish
+discussions or new features.
 
-I suspect we have some code-path that didn't check for explicit removal, 
-but that happened to check for "mode doesn't match", so clearing ce_mode 
-just magically triggered it.
 
-Still looking.
+Last, you don't follow netiquette: you don't know how to cite / quote
+properly, you didn't word-wrap what you have wrote, you don't
+contribute neither to discussion nor git code.
 
-		Linus
+Have a nice life... in killfile!
 
----
-diff --git a/unpack-trees.c b/unpack-trees.c
-index ff46fd6..d6fcf60 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -613,6 +613,7 @@ static int deleted_entry(struct cache_entry *ce, struct cache_entry *old,
- 	else
- 		verify_absent(ce, "removed", o);
- 	ce->ce_flags |= CE_REMOVE;
-+	ce->ce_mode = 0;
- 	add_cache_entry(ce, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
- 	invalidate_ce_path(ce);
- 	return 1;
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
