@@ -1,57 +1,101 @@
-From: bdowning@lavos.net (Brian Downing)
-Subject: Re: [PATCH] compat: Add simplified merge sort implementation from glibc
-Date: Tue, 5 Feb 2008 08:11:39 -0600
-Message-ID: <20080205141139.GN26392@lavos.net>
-References: <20080204024644.GM26392@lavos.net> <1202209509-13760-1-git-send-email-bdowning@lavos.net>
+From: Sergei Organov <osv@javad.com>
+Subject: [PATCH] git.el: automatically revert emacs buffers
+Date: Mon, 21 Jan 2008 21:07:59 +0300
+Message-ID: <874pcnh4ej.fsf@osv.gnss.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, msysgit@googlegroups.com,
-	Edgar Toernig <froese@gmx.de>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 05 15:12:20 2008
+Cc: Alexandre Julliard <julliard@winehq.org>, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 05 15:20:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JMOX2-0006tb-Ai
-	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 15:12:16 +0100
+	id 1JMOey-00016t-Kq
+	for gcvg-git-2@gmane.org; Tue, 05 Feb 2008 15:20:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752112AbYBEOLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Feb 2008 09:11:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752083AbYBEOLm
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 09:11:42 -0500
-Received: from mxsf04.insightbb.com ([74.128.0.74]:5033 "EHLO
-	mxsf04.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752023AbYBEOLl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Feb 2008 09:11:41 -0500
-X-IronPort-AV: E=Sophos;i="4.25,308,1199682000"; 
-   d="scan'208";a="215332726"
-Received: from unknown (HELO asav02.insightbb.com) ([172.31.249.124])
-  by mxsf04.insightbb.com with ESMTP; 05 Feb 2008 09:11:40 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah4FAEj9p0dKhvkY/2dsb2JhbACBWKt9
-X-IronPort-AV: E=Sophos;i="4.25,308,1199682000"; 
-   d="scan'208";a="198943913"
-Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
-  by asav02.insightbb.com with ESMTP; 05 Feb 2008 09:11:40 -0500
-Received: by mail.lavos.net (Postfix, from userid 1000)
-	id D7B4A309F21; Tue,  5 Feb 2008 08:11:39 -0600 (CST)
-Content-Disposition: inline
-In-Reply-To: <1202209509-13760-1-git-send-email-bdowning@lavos.net>
-User-Agent: Mutt/1.5.9i
+	id S1752789AbYBEOTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Feb 2008 09:19:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752668AbYBEOTu
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Feb 2008 09:19:50 -0500
+Received: from javad.com ([216.122.176.236]:4387 "EHLO javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752435AbYBEOTs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Feb 2008 09:19:48 -0500
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id m15EJhd01944;
+	Tue, 5 Feb 2008 14:19:44 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1JMOe4-00081q-B6; Tue, 05 Feb 2008 17:19:32 +0300
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72659>
 
-I didn't notice that the previous patch made it into pu.  The only other
-changes to this patch was changing the makefile variable name from
-"NEED_QUICK_QSORT" to "INTERNAL_QSORT", and some changes to the commit
-message.
+If new custom variable git-auto-revert is 't', after git-revert-file,
+revert corresponding emacs buffers from reverted files provided the
+buffers were not changed. This is how pcl-cvs behaves.
 
-I am fine with either version going in.
+* git-auto-revert: new customizable variable.
+* git-revert-some-buffers: new function.
+* git-revert-file: call git-revert-some-buffers.
 
--bcd
+Signed-off-by: Sergei Organov <osv@javad.com>
+---
+ contrib/emacs/git.el |   23 +++++++++++++++++++++++
+ 1 files changed, 23 insertions(+), 0 deletions(-)
+
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index d8a0638..c3c0c45 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -112,6 +112,11 @@ if there is already one that displays the same directory."
+   :group 'git
+   :type 'boolean)
+ 
++(defcustom git-auto-revert t
++  "Non-nil if `git-revert-file' should automatically revert corresponding buffers."
++  :group 'git
++  :type 'boolean)
++
+ 
+ (defface git-status-face
+   '((((class color) (background light)) (:foreground "purple"))
+@@ -989,6 +994,23 @@ Return the list of files that haven't been handled."
+           (git-success-message "Removed" files))
+       (message "Aborting"))))
+ 
++;; stolen from pcl-cvs's cvs-revert-if-needed
++(defun git-revert-some-buffers (fis)
++  (dolist (fileinfo fis)
++    (let* ((file (git-fileinfo->name fileinfo))
++	   (buffer (find-buffer-visiting file)))
++      ;; For a revert to happen the user must be editing the file...
++      (unless (or (null buffer)
++		  (buffer-modified-p buffer))
++	(with-current-buffer buffer
++	  (ignore-errors
++	    (revert-buffer 'ignore-auto 'dont-ask 'preserve-modes)
++	    ;; `preserve-modes' avoids changing the (minor) modes.  But we
++	    ;; do want to reset the mode for VC, so we do it explicitly.
++	    (vc-find-file-hook)
++	    (when (eq (git-fileinfo->state fileinfo) 'unmerged)
++	      (smerge-mode 1))))))))
++
+ (defun git-revert-file ()
+   "Revert changes to the marked file(s)."
+   (interactive)
+@@ -1008,6 +1030,7 @@ Return the list of files that haven't been handled."
+       (when modified
+         (apply #'git-call-process-env nil nil "checkout" "HEAD" modified))
+       (git-update-status-files (append added modified) 'uptodate)
++      (if git-auto-revert (git-revert-some-buffers files))
+       (git-success-message "Reverted" (git-get-filenames files)))))
+ 
+ (defun git-resolve-file ()
+-- 
+1.5.4.18.gd0b8
