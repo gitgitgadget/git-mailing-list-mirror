@@ -1,68 +1,82 @@
-From: "Mark Desnoyer" <mdesnoyer@gmail.com>
-Subject: Files not deleted when merging after a rename
-Date: Mon, 21 Jan 2008 20:45:07 +0100
-Message-ID: <d997e2110801211145o5fe0a1bbpb1e32dd71b70568e@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 2/2] read-cache.c: fix timestamp comparison
+Date: Mon, 21 Jan 2008 11:47:39 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801211141160.2957@woody.linux-foundation.org>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com> <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7vir1xmazm.fsf@gitster.siamese.dyndns.org> <7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org> <7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org>
+ <7vr6gb3nv1.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801202114580.2957@woody.linux-foundation.org> <7vd4rv3ds5.fsf@gitster.siamese.dyndns.org> <7vtzl71x1c.fsf@gitster.siamese.dyndns.org> <7vprvv1wnu.fsf@gitster.siamese.dyndns.org>
+ <7vlk6j1wjj.fsf@gitster.siamese.dyndns.org> <7vhch71vvb.fsf@gitster.siamese.dyndns.org> <7v8x2j1sul.fsf@gitster.siamese.dyndns.org> <7vzluzzhud.fsf_-_@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801211022350.2957@woody.linux-foundation.org>
+ <alpine.LFD.1.00.0801211104590.2957@woody.linux-foundation.org> <alpine.LFD.1.00.0801211120350.2957@woody.linux-foundation.org> <alpine.LSU.1.00.0801211925580.5731@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 21 20:45:52 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 21 20:49:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH2aS-0006tF-SZ
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 20:45:41 +0100
+	id 1JH2dw-00089V-14
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 20:49:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751600AbYAUTpL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 14:45:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751624AbYAUTpL
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 14:45:11 -0500
-Received: from hs-out-0708.google.com ([64.233.178.244]:58100 "EHLO
-	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751569AbYAUTpJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 14:45:09 -0500
-Received: by hs-out-2122.google.com with SMTP id 54so1859973hsz.5
-        for <git@vger.kernel.org>; Mon, 21 Jan 2008 11:45:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=XUdJEaiA6lI2lInHWPgp8wabWj9urTLn0ptCP5r1FZI=;
-        b=c5WOqYsg6CV6DoaXzouQs12DJEUKjMp4TAGpZj396KBZEufHED86nYKLANFAHHlK1mnfFjnUOQbFa0ZwzOIGt+w1tm2ljDNmBWCHBsltsb0M27eWAG/Uy9L+0hSVJMOI5MLVnP9c2YN7AzAo9RrwuJpTuIBc+RIifCswidoxerc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=ecjLCIopPKvYBGpeCabuQqx1g1D3OGRpT5zVt9b5Bjnsn+ecvWqeUXPhvki4JbpVaBg+jZtF0X71/sTQfUDjBui9EOvITCnZi0eIDkpcC60XxJJODN7hiqoLMP7TYgh3kolkAErAypZZzqTL5/OiMsrvM9WbC7v6Wi5LzgtSZOE=
-Received: by 10.115.90.1 with SMTP id s1mr5322600wal.41.1200944707747;
-        Mon, 21 Jan 2008 11:45:07 -0800 (PST)
-Received: by 10.114.174.11 with HTTP; Mon, 21 Jan 2008 11:45:07 -0800 (PST)
-Content-Disposition: inline
+	id S1751740AbYAUTsr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 14:48:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751785AbYAUTsq
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 14:48:46 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:34845 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751669AbYAUTsq (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 14:48:46 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0LJldq8020906
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 21 Jan 2008 11:47:40 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0LJldUl016586;
+	Mon, 21 Jan 2008 11:47:39 -0800
+In-Reply-To: <alpine.LSU.1.00.0801211925580.5731@racer.site>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.223 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71319>
 
-Hi,
 
-I've run across a small problem and I was wondering if I could get
-some help. I have two users A and B. They are both git-cloned from a
-common repository on a different server.
 
-User A moves a directory:
-foo/bar/ ==> bar
-using:
-git mv foo/bar bar
-git commit
-git push
+On Mon, 21 Jan 2008, Johannes Schindelin wrote:
+> 
+> Not that I understand what is _really_ going on, but shouldn't the comment 
+> be actually moved, not be deleted?
 
-Meanwhile, user B is doing some other changes that are completely
-unrelated and has a few local commits. Now, when user B pulls from the
-repository (git pull), and returns no errors merging, the directory
-"bar" is created, but "foo/bar" is not deleted, although, it becomes
-untracked.
+Well, the thing is, it's not a special case any more, and you can now see 
+the code, and say "that's obviously correct".
 
-Any ideas why the merge isn't deleting foo/bar? The users are using
-git version 1.5.2.5 in Ubuntu Hoary. Thanks in advance.
+The whole point of that function is to compare a index entry with the stat 
+information, and it does that by validating it in special ways. It used to 
+be that the "ce_mode = 0" was a special case. Now it isn't.
 
--Mark
+A deleted entry can obviously never match an entry that is still on disk 
+(regardless of *any* other issues). So now the
+
+	if (ce->ce_flags & CE_REMOVE)
+		return MODE_CHANGED | DATA_CHANGED | TYPE_CHANGED;
+
+statement is in no way a special case - rather the reverse, it's a lot 
+more obvious than testing for inode ownership changes etc.
+
+So I removed the comment, because it doesn't make sense any more.
+
+Of course, I could have - instead of deleting it - changed it from 
+"Special case: .." to something like "A deleted index entry doesn't match 
+any on-disk file", but does that actually add any information to the above 
+two lines? Sure, we can comment things, but shouldn't we comment the ones 
+that are subtle or odd, rather than the obvious ones?
+
+This was why the CE_REMOVE bit was done in the first place: to remove the 
+rather special case of ce_mode being zero meaning something special.
+
+			Linus
