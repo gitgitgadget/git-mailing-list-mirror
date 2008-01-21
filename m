@@ -1,95 +1,87 @@
-From: Theodore Tso <tytso@MIT.EDU>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Mon, 21 Jan 2008 15:46:14 -0500
-Message-ID: <20080121204614.GG29792@mit.edu>
-References: <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se> <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org> <Pine.LNX.4.64.0801211509490.17095!@ds9.cixit.se> <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org> <alpine.LFD.1.00.0801210934400.2957@woody.linux-foundation.org> <C6C0E6A1-053B-48CE-90B3-8FFB44061C3B@sb.org> <20080121195703.GE29792@mit.edu> <998717B0-0165-4383-AAB8-33BD2A49954E@sb.org> <20080121201530.GF29792@mit.edu> <8F85366A-C990-47B1-BF60-936185B9E438@sb.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Make t5710 more strict when creating nested repos
+Date: Mon, 21 Jan 2008 21:53:25 +0100
+Message-ID: <20080121205325.GA16670@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Peter Karlsson <peter@softwolves.pp.se>,
-	Mark Junker <mjscod@web.de>,
-	Pedro Melo <melo@simplicidade.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Mon Jan 21 21:47:34 2008
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 21 21:54:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH3YH-0004ik-K2
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 21:47:30 +0100
+	id 1JH3ea-00073m-G3
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 21:54:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752679AbYAUUrA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 15:47:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752592AbYAUUrA
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 15:47:00 -0500
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:63421 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752101AbYAUUq7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 15:46:59 -0500
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m0LKkGh6023671;
-	Mon, 21 Jan 2008 15:46:17 -0500 (EST)
-Received: from closure.thunk.org (c-76-19-244-124.hsd1.ma.comcast.net [76.19.244.124])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m0LKkER1011996
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 21 Jan 2008 15:46:16 -0500 (EST)
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@mit.edu>)
-	id 1JH3X4-0007s9-G1; Mon, 21 Jan 2008 15:46:14 -0500
+	id S1754168AbYAUUxb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 15:53:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753484AbYAUUxb
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 15:53:31 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:40215 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753395AbYAUUx3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 15:53:29 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzwpJKatAU=
+Received: from tigra.home (Fab8e.f.strato-dslnet.de [195.4.171.142])
+	by post.webmailer.de (klopstock mo26) (RZmta 15.4)
+	with ESMTP id t05b58k0LGCqTk ; Mon, 21 Jan 2008 21:53:26 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id BCB17277AE;
+	Mon, 21 Jan 2008 21:53:25 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 8D5F956D22; Mon, 21 Jan 2008 21:53:25 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <8F85366A-C990-47B1-BF60-936185B9E438@sb.org>
 User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71334>
 
-On Mon, Jan 21, 2008 at 03:31:02PM -0500, Kevin Ballard wrote:
->> No, it's still broken, because of the Unicode-is-not-static problem.
->> What happens when you start adding more composable characters, which
->> some future version of HFS+ will start breaking apart?
->
-> If you need a static representation, you normalize to a specific form. And 
-> in fact, adding new composable characters doesn't matter, since if they 
-> didn't exist before, you couldn't have possibly used them. 
+The test 'creating too deep nesting' can fail even when cloning the repos,
+but is not its main purpose (it has to prepare nested repos and ensure
+the last one is invalid). So split the test into the creation and
+invalidity checking parts.
 
-Sure you can.  Suppose you unpack the same tar file or zip file that
-contains one of these new-fangled characters, one on a MacOS 10.5
-system, and one on a MacOS 10.9 system.  How HFS+ will corrupt that
-filename will differ depending which version of MacOS you are running.
-Hence, normalizing the filename when you store it is stupid and
-broken.  MacOS and its applications and libraries want to do
-normalization in the privacy of its own address space, that's it's
-business.  It can pursue any fetish it wants, among consenting adults.
-Safe, sane and consensual, and all that... well, consensual, anyway.
-I'm not sure about "safe" and "sane"....
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-My arguement is basically is that there is absolutely no value in what
-HFS+ is doing, by corrupting filenames --- if you want to call it
-"normalizing" them, fine, but since Unicode is not static, so you
-can't even call it a "canonical" form.  It's just some random
-corruption of what was passed in at open(2) time, that can and will
-change depending on what version of MacOS you are running.
+Noticed try to figure out why the test breaks on cygwin with the
+recent in-core-index branch. Didn't manage that, though.
 
-If you want to play the insane Unicode game of "equivalent"
-characters, you have to do it at comparison time, so there's no point
-trying to "normalize" them when you store them.  It doesn't buy you
-anything, and it causes all sorts of pain.
+ t/t5710-info-alternate.sh |   12 ++++++++----
+ 1 files changed, 8 insertions(+), 4 deletions(-)
 
-> Your entire argument is based on the assumption that HFS+ "corrupts" 
-> filenames in order to allow dumb clients to do byte comparisons, and I 
-> don't believe that to be the case. 
-
-OK, what's your reason for why HFS+ corrupts filenames?  What do you
-think is its excuse?  What problem does it solve?  If the answer is
-"no reason at all, but because it *can*", according to the Great God
-Unicode, then that's really not very impressive....
-
-						- Ted
+diff --git a/t/t5710-info-alternate.sh b/t/t5710-info-alternate.sh
+index 699df6e..1908dc8 100755
+--- a/t/t5710-info-alternate.sh
++++ b/t/t5710-info-alternate.sh
+@@ -53,14 +53,18 @@ git prune'
+ 
+ cd "$base_dir"
+ 
+-test_expect_failure 'creating too deep nesting' \
++test_expect_success 'creating too deep nesting' \
+ 'git clone -l -s C D &&
+ git clone -l -s D E &&
+ git clone -l -s E F &&
+ git clone -l -s F G &&
+-git clone -l -s G H &&
+-cd H &&
+-test_valid_repo'
++git clone -l -s G H'
++
++test_expect_success 'invalidity of deepest repository' \
++'cd H && {
++	test_valid_repo
++	test $? -ne 0
++}'
+ 
+ cd "$base_dir"
+ 
+-- 
+1.5.4.rc3.49.gd0cc3
