@@ -1,61 +1,65 @@
-From: Quim K Holland <qkholland@gmail.com>
-Subject: Time to flush Mr. Hammano?
-Date: Mon, 21 Jan 2008 17:15:45 +0600
-Message-ID: <20070624192215@qkholland.gmail.com>
-References: <e5bfff550801200210y212d0921x214773596810be52@mail.gmail.com>
+From: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
+Subject: Re: =?ISO-8859-15?Q?=5BANNOUNCE=5D?= GIT 1.5.4-rc4
+Date: Mon, 21 Jan 2008 11:49:15 +0100
+Message-ID: <1JGuDL-2AugiG0@fwd26.aul.t-online.de>
+Reply-To: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: gi mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 21 12:22:12 2008
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 21 12:24:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGujC-0004CE-U4
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 12:22:11 +0100
+	id 1JGulk-0004zm-6l
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 12:24:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758584AbYAULVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 06:21:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758633AbYAULVl
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 06:21:41 -0500
-Received: from fk-out-0910.google.com ([209.85.128.187]:57571 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758453AbYAULVk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 06:21:40 -0500
-Received: by fk-out-0910.google.com with SMTP id z23so1323183fkz.5
-        for <git@vger.kernel.org>; Mon, 21 Jan 2008 03:21:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:date:subject:message-id:in-reply-to:mime-version:content-type:content-transfer-encoding;
-        bh=hgvdOindF5+g0DXvAsO+66QJKVHJvhV1pThV71wfaM4=;
-        b=sF9K7a6dtSffxsTuHwSmw/HnF5zPwWm6EmhO7/QEU53Dj918g3dEi6+vI03istFVqZlQCy2G/+tUYfAvZICDJa/l0FYjpyWZfe1LE3C+mIGHyuSgA3+ySjIoksFtUlqhTeDmVfLKuhMNx+ysX0PtNHU40IjAH27EFpMpnSDC73w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:date:subject:message-id:in-reply-to:mime-version:content-type:content-transfer-encoding;
-        b=Q4Wwfs4kwCQZiIrQdXgws5FzMbN65B+KQdbaGnbQEn9C73P3y3hcLLqC9LH9T/uf+Thfkph7okagddm2lYdGbGf0qVB8GvX5w0f+bviVnvvQDFLO84XXZPYD9tjswMHy2jwnig+Im0OLEPs5pcEgE9rwpT6hzZmlQuD/ZE9eQXc=
-Received: by 10.82.112.3 with SMTP id k3mr12134341buc.15.1200914497975;
-        Mon, 21 Jan 2008 03:21:37 -0800 (PST)
-Received: from qkholland.smtp.gmail.com ( [212.62.97.23])
-        by mx.google.com with ESMTPS id x6sm6237987gvf.0.2008.01.21.03.21.34
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 21 Jan 2008 03:21:36 -0800 (PST)
-In-reply-to: <e5bfff550801200210y212d0921x214773596810be52@mail.gmail.com>
+	id S1758934AbYAULYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 06:24:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758895AbYAULYT
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 06:24:19 -0500
+Received: from mailout05.sul.t-online.de ([194.25.134.82]:50934 "EHLO
+	mailout05.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758838AbYAULYS (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 06:24:18 -0500
+X-Greylist: delayed 2049 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Jan 2008 06:24:18 EST
+Received: from fwd26.aul.t-online.de 
+	by mailout05.sul.t-online.com with smtp 
+	id 1JGuEB-0003dF-02; Mon, 21 Jan 2008 11:50:07 +0100
+Received: from localhost (bjkhvGZVZhFJZUCEGX5NjBO+7YqfLmust-+sR9mi0t689TdcEcOFarLbM1-Yzb6Z1T@[172.20.101.250]) by fwd26.aul.t-online.de
+	with esmtp id 1JGuDL-2AugiG0; Mon, 21 Jan 2008 11:49:15 +0100
+X-UMS: email
+X-Mailer: TOI Kommunikationscenter V9-1-3
+X-ID: bjkhvGZVZhFJZUCEGX5NjBO+7YqfLmust-+sR9mi0t689TdcEcOFarLbM1-Yzb6Z1T@t-dialin.net
+X-TOI-MSGID: fdee807e-37e1-49f1-9869-2d3a4503b145
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71263>
 
-"Marco Costalba" <mcostalba@gmail.com> wrote:
 
- Reading mailing list threads it is becoming common these days to hear
- about contributors with patches ready to be sent as soon as 1.5.4 is
- out.
+Concerning RPM specs.
 
- Would be a good idea to open a new branch new_stuff as a target for
- this pending stuff?
+I created rpm packages on a x86_64 SuSE 10.3 system.
 
-Back when Mr. Torvalds was still leading the development there was not this stupid stability freeze and many useful patches were accepted every day.  For the past few months Mr. Hammano has not been adding much useful code himself, did not join interesting discussions such as Unicode normalization issues, nor gave much useful comments on patches. He has mostly been busy rejecting useful patches and sending not so useful comments.
+There were two complains about unmatched dependencies for expat-devel
+and perl(Error)
+I could not get rid off.
 
-Can we vote Mr. Hammano out and ask Mr. Torvalds to come back as the project leader?  I do not mean any disrespect to Mr. Hammano, but don't people think he outlived his usefulness as the project leader?
+So I used rpmbuild --nodeps -ta git-1.5.4.rc4.tar.gz
+
+The installation (rpm -i) gave the following error
+
+error: Failed dependencies:
+        openssh-clients is needed by git-core-1.5.4.rc4-1.x86_64
+        perl(:MODULE_COMPAT_5.8.8) is needed by
+perl-Git-1.5.4.rc4-1.x86_64
+
+But when I used --nodeps here too the installation went through and git
+seams 
+to be working alright
+
+Cheers,
+Michael
