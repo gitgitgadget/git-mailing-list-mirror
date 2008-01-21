@@ -1,79 +1,79 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH] git-commit: add a prepare-commit-msg hook
-Date: Mon, 21 Jan 2008 07:16:49 +0100
-Message-ID: <479438D1.2050107@gnu.org>
-References: <4790BCED.4050207@gnu.org>	<7vbq7ibxhh.fsf@gitster.siamese.dyndns.org> <4791C3A8.7000308@gnu.org>	<alpine.LSU.1.00.0801191119050.5731@racer.site> <7vd4rw6siv.fsf@gitster.siamese.dyndns.org>
+From: "Sverre Hvammen Johansen" <hvammen@gmail.com>
+Subject: Re: Merging using only fast-forward
+Date: Sun, 20 Jan 2008 22:26:33 -0800
+Message-ID: <402c10cd0801202226y5bf3e00duf8ae190c6a751ee3@mail.gmail.com>
+References: <loom.20080116T151930-575@post.gmane.org>
+	 <863asxivlj.fsf@blue.stonehenge.com>
+	 <7vwsq9o6ls.fsf@gitster.siamese.dyndns.org>
+	 <402c10cd0801162253n6ab19f51y53d0baa16319adaa@mail.gmail.com>
+	 <402c10cd0801172258p9a1a97bt682fa012fcebd13c@mail.gmail.com>
+	 <7vodbibzch.fsf@gitster.siamese.dyndns.org>
+	 <402c10cd0801190228o68995493u9b8b40e1557092dd@mail.gmail.com>
+	 <7vzlv2858y.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 21 07:17:24 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 21 07:27:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGpyF-00011Z-Iu
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 07:17:24 +0100
+	id 1JGq7e-0002Ty-KA
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 07:27:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753327AbYAUGQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 01:16:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752932AbYAUGQy
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 01:16:54 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:43413 "EHLO
+	id S1753657AbYAUG0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 01:26:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753260AbYAUG0g
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 01:26:36 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:55912 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752324AbYAUGQx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 01:16:53 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so1703802fga.17
-        for <git@vger.kernel.org>; Sun, 20 Jan 2008 22:16:52 -0800 (PST)
+	with ESMTP id S1753503AbYAUG0f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 01:26:35 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so1704940fga.17
+        for <git@vger.kernel.org>; Sun, 20 Jan 2008 22:26:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        bh=GrcVRI4G2CmAnN02Bv0sMrCfVWNOtHYXdyaO/xB70Q4=;
-        b=vYx5p7LHzGT4ZKRHgiwOMK92BaAHCuk4df9QfN8AigsYcH3MealDJ0aVhSTvD9nI2R/kMOOipLdkQ4hkAs/VHjzGIqKXzbrX4nTGOdyAB41wvivnB98cg+0bGPkPs7aY9WbrYBnTBdwuO+yw+YXTI2/+cYowkyx1kdqojiBjmT0=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=tCvgTyIy8k/4q2+SbbAgQ734alf9sYGC54tnOe+mHE4=;
+        b=EpVD8H49I9Htg/0IsYzansLDbyu+dTPQDNDovTthWrKkW5qAdYUlYtZ3zsZwfLE7hhR3+KHrRtaxK704jYswrwFnXCxPegxw/1g9doR2FRthqfAI4d98eEnvhiRmq/71u8mhmUhM8mEKONblOaBk2hXj31DQnyO9wfrnAW+voLI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:sender;
-        b=ohmyVNE8ImJW05wlpVGhs4yNi0Q0USUQgKTcj/w88oUigV5DxqZ3o05/xP72X44YheirhAsQPnOwOkRw3+IQ9hj5PDR4JOuaokF/QPAwXf9qWJzciv6TUe6sNpl7uygvwQZ6g2LI2FZsAgh8ovBFPsNciylw4L5Z8/rZ3WhsHV4=
-Received: by 10.86.9.8 with SMTP id 8mr6098803fgi.70.1200896212287;
-        Sun, 20 Jan 2008 22:16:52 -0800 (PST)
-Received: from scientist-2.lan ( [213.140.22.65])
-        by mx.google.com with ESMTPS id d4sm7911280fga.2.2008.01.20.22.16.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 20 Jan 2008 22:16:50 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
-In-Reply-To: <7vd4rw6siv.fsf@gitster.siamese.dyndns.org>
+        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=EqyDUCZwZPjJeUfq2E3ZpHpcn3cFXz6js+d14pIsiYvQiwbJWoslILCAfFbq4uCwIGGoCpLXFUu38zLQea+7ghG1/KCvdEbQhzGK2ulY/P8s+2SNIal9lbBthe5tHekojuaAyrc7EY7PPJyOJKpq3Yh22qABGqvM8f3/9DmIicU=
+Received: by 10.82.181.7 with SMTP id d7mr11677826buf.8.1200896793203;
+        Sun, 20 Jan 2008 22:26:33 -0800 (PST)
+Received: by 10.82.172.18 with HTTP; Sun, 20 Jan 2008 22:26:33 -0800 (PST)
+In-Reply-To: <7vzlv2858y.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71226>
 
+On Jan 19, 2008 2:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> At one end of the spectrum, we have these crazy people who want
+> git to record something that is not a merge at all as a merge
+> with --no-ff.  At the other end of the spectrum, we have these
+> other crazy people who want git to outsmart them by allowing
+> them to throw random set of commits as potential parents,
+> remove duplicates and figure out how many real parents the
+> resulting merge should have (including the case that it may not
+> even have any).
 
-> I think that the approach has one huge advantage.  Commands
-> other than "git commit" itself ("git merge", "git rebase", "git
-> am", etc.) do call "git commit" to record the changes they made.
-> I suspect these command would not want this template behaviour,
-> and not adding this custom commit message "feature" to "git
-> commit" would avoid the risk of breaking them.
+I am currently working on a patch for this.  I have some new tests for
+this but more is needed and there is no documentation.
 
-My patch does not do that.  Of all these commands, only git-rebase uses 
-porcelain git-commit rather than plumbing git-commit-tree, and it uses 
-the -C or -F options (which disable the hook in my patch).
+The only case that currently is not working is the case where I need
+to fast forward head and then do a merge.  Do I need to update the
+files in the working directory twice (once after the fast forward and
+then once by the merge) or can I somehow get lets say
+git-merge-recursive to do this part for me?
 
-> At the same time, this exact issue could be a drawback.  Some of
-> them _might_ want it.  But in that case, the the custom template
-> "hook" needs to be told _why_ it is being called, so that it can
-> adjust its behaviour.
+The patch I have that handles the above failing case by not fast
+forwarding HEAD, but instead use it together with the other real_heads
+work (all tests succeed).
 
-I would like to understand why both of you have not considered the point 
-  that the script would need the updated index from git-commit.  Because 
-short of reusing half of the old Bourne-shell git-commit, I don't see 
-how this would be possible, but maybe there's something obvious.  Or 
-maybe we need new plumbing like git-build-index -- then I'd still need 
-to complicate my script to build a template commit message, but I 
-wouldn't need to muddle myself (not too much at least) in handling the 
-command line.
-
-Paolo
+-- 
+Sverre Hvammen Johansen
