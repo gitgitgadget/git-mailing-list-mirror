@@ -1,94 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] http-push: making HTTP push more robust and more user-friendly
-Date: Mon, 21 Jan 2008 14:05:01 -0800
-Message-ID: <7v1w8aygvm.fsf@gitster.siamese.dyndns.org>
-References: <1200250979-19604-1-git-send-email-gb@gbarbier.org>
-	<7vbq7ppbyh.fsf@gitster.siamese.dyndns.org>
-	<47946F67.5060601@gbarbier.org>
-	<7vmyqzzdhf.fsf@gitster.siamese.dyndns.org>
-	<47947399.3000507@gbarbier.org>
-	<7vabmzzbcc.fsf@gitster.siamese.dyndns.org>
-	<alpine.LSU.1.00.0801211212010.5731@racer.site>
-	<7vejcbx795.fsf@gitster.siamese.dyndns.org>
-	<alpine.LNX.1.00.0801211539320.13593@iabervon.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?utf-8?Q?Gr=C3=A9g?= =?utf-8?Q?oire?= Barbier 
-	<devel@gbarbier.org>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Jan 21 23:06:09 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+From: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.4-rc4
+Date: Mon, 21 Jan 2008 23:22:22 +0100
+Message-ID: <BB330DC7-9F38-4D41-85A2-D475701B6083@zib.de>
+References: <7vsl13wmas.fsf@gitster.siamese.dyndns.org> <7vsl0r3nvc.fsf@gitster.siamese.dyndns.org>
+Reply-To: prohaska-wjoc1KHpMeg@public.gmane.org
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+To: Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Jan 21 23:22:10 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from ag-out-0910.google.com ([72.14.246.187])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH4m9-000771-B5
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 23:05:53 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751668AbYAUWFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 17:05:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752415AbYAUWFY
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 17:05:24 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33489 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751640AbYAUWFX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 17:05:23 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C73322364;
-	Mon, 21 Jan 2008 17:05:21 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 19F642361;
-	Mon, 21 Jan 2008 17:05:13 -0500 (EST)
-In-Reply-To: <alpine.LNX.1.00.0801211539320.13593@iabervon.org> (Daniel
-	Barkalow's message of "Mon, 21 Jan 2008 16:30:40 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+	id 1JH51r-0004bN-RU
+	for gcvm-msysgit@m.gmane.org; Mon, 21 Jan 2008 23:22:09 +0100
+Received: by ag-out-0910.google.com with SMTP id 32so2643766agc.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Jan 2008 14:21:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=UKnQATcxbMjE8W3ss3H1CgRw6RSJl4ujBd+9PJ42F6Y=;
+        b=GFHMZJBFx48+Kr1O/qXLOk7A/Dcg2se/wWS4CKGR/g5dDCzZ5SOc9KPan5dCGqwUjf5NemKGneUpHHvUvjKW3mVwwdMIhsVdzZTD5yc+IV4xsiYB0q9xhXUWa/bwQPecZHXAEHvd6X6hFSQ93pfWQZOKW12WyuJTAY4ZcW7wnuo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=j7a/Ej9JOOK6jjRBuxYfRvt1VOywfTVt6swlXUbXHaPibmPtKWJGwOsLI4FSPC6Fll16tjBbNCHATbAxKJ6XrpC2GRC1TA360B2/9wlCm5J9bR1UbL2mlIbCSoFiw6rLvCL1bi/afQe8mzBfrfWzxYcgc3O4sfxJQ5LBAhm3tpI=
+Received: by 10.151.6.2 with SMTP id j2mr237563ybi.22.1200954084165;
+        Mon, 21 Jan 2008 14:21:24 -0800 (PST)
+Received: by 10.106.73.1 with SMTP id v1gr1447pra;
+	Mon, 21 Jan 2008 14:21:24 -0800 (PST)
+X-Sender: prohaska-wjoc1KHpMeg@public.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.114.12.9 with SMTP id 9mr1634661wal.19.1200954083516; Mon, 21 Jan 2008 14:21:23 -0800 (PST)
+Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id h49si3119785nzf.5.2008.01.21.14.21.22; Mon, 21 Jan 2008 14:21:23 -0800 (PST)
+Received-SPF: pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
+Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) smtp.mail=prohaska-wjoc1KHpMeg@public.gmane.org
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0LMLLHM003056; Mon, 21 Jan 2008 23:21:21 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db939bb.pool.einsundeins.de [77.185.57.187]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0LMLJfQ023319 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO); Mon, 21 Jan 2008 23:21:20 +0100 (MET)
+In-Reply-To: <7vsl0r3nvc.fsf-jO8aZxhGsIagbBziECNbOZn29agUkmeCHZ5vskTnxNA@public.gmane.org>
+X-Mailer: Apple Mail (2.753)
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71357>
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71358>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> On Mon, 21 Jan 2008, Junio C Hamano wrote:
->
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> 
->> > IMHO it is safer to disable it for curl < 7.0xa -- even if it affects a 
->> > number of distros -- than to give the illusion that it works, when it does 
->> > not.
->> >
->> > As for fixing it in the non-MULTI case, I have a hunch that Mike's 
->> > cleanups will help that, but that this is a 1.5.5 feature.
->> >
->> > So, I would like to read in the ReleaseNotes something like this:
->> >
->> > -- snip --
->> > Support for pushing via HTTP was broken with curl versions prior to 7.16, 
->> > so we disabled it for now.  However, it is likely that a major cleanup of 
->> > the http transport code -- scheduled after the release of git 1.5.4 -- 
->> > will be supported with more curl versions.
->> > -- snap --
->> 
->> That's tempting but I suspect that it might be a wrong approach.
->> 
->> I think two important questions are:
->> 
->>  * Do we know that the current code is broken for everybody, or
->>    just broken for the majority of people who do nontrivial
->>    things?
->> 
->>  * Is the code in 1.5.3.8 any better?  IOW, did we make it worse
->>    during 1.5.4 cycle?
->
-> I believe that the move to transport.c didn't change anything except 
-> cleaning up linking conflicts and moving the dispatch by URL method code. 
-> I suppose something could have gotten messed up in dealing with the 
-> linking conflicts, but I don't think it actually did.
 
-Ok, so copying 1.5.3.8 http-push to include in 1.5.4 would not
-make it work, it sounds like.  Then I guess Dscho's notice (and
-the same notice with disabling http-push without MULTI in
-1.5.3.9) would be the sane thing we should do in the short term.
+On Jan 21, 2008, at 3:37 AM, Junio C Hamano wrote:
+
+> The fourth rc for the next feature release GIT 1.5.4 is available
+> at the usual places:
+
+The matching msysgit setup is available at
+
+   http://code.google.com/p/msysgit/downloads/
+
+Commands that are not yet supported on Windows are no longer
+included in the setup.  If you find any commands that should
+not be included, please report this to the msysgit list.
+
+I haven't pushed the branches because repo.or.cz seems to have
+problems.
+
+	Steffen
