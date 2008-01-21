@@ -1,59 +1,51 @@
 From: Mark Junker <mjscod@web.de>
-Subject: [PATCH] Use FIX_UTF8_MAC to enable conversion from UTF8-MAC to UTF8
-Date: Mon, 21 Jan 2008 10:12:09 +0100
-Message-ID: <fn1nl6$ek5$1@ger.gmane.org>
+Subject: Re: [PATCH] Use FIX_UTF8_MAC to enable conversion from UTF8-MAC to
+ UTF8
+Date: Mon, 21 Jan 2008 10:45:17 +0100
+Message-ID: <fn1pj9$kkg$1@ger.gmane.org>
+References: <fn1nl6$ek5$1@ger.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 21 10:30:59 2008
+X-From: git-owner@vger.kernel.org Mon Jan 21 10:46:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGsza-0006Cb-1I
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 10:30:58 +0100
+	id 1JGtEC-0001SY-Tm
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 10:46:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758270AbYAUJaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 04:30:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758029AbYAUJaI
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 04:30:08 -0500
-Received: from main.gmane.org ([80.91.229.2]:40551 "EHLO ciao.gmane.org"
+	id S1758278AbYAUJpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 04:45:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758261AbYAUJp3
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 04:45:29 -0500
+Received: from main.gmane.org ([80.91.229.2]:47440 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757443AbYAUJaG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 04:30:06 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1JGsyg-0001n4-QQ
-	for git@vger.kernel.org; Mon, 21 Jan 2008 09:30:02 +0000
+	id S1758246AbYAUJp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 04:45:28 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JGtDa-0002OU-4t
+	for git@vger.kernel.org; Mon, 21 Jan 2008 09:45:26 +0000
 Received: from 80.146.179.234 ([80.146.179.234])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 Jan 2008 09:30:02 +0000
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 09:45:26 +0000
 Received: from mjscod by 80.146.179.234 with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 Jan 2008 09:30:02 +0000
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 09:45:26 +0000
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@ger.gmane.org
 X-Gmane-NNTP-Posting-Host: 80.146.179.234
 User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X; de; rv:1.8.1.9) Gecko/20071031 Thunderbird/2.0.0.9 Mnenhy/0.7.5.0
+In-Reply-To: <fn1nl6$ek5$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71245>
 
-Use FIX_UTF8_MAC to enable conversion from UTF8-MAC to UTF8 for readdir 
-and get_pathspec.
-
-I had to change get_pathspec too because otherwise git-add wouldn't work 
-anymore because it uses the output of get_pathspec as strings to compare 
-with the output of readdir.
-
-I'm quite unsure because this is my first patch for the git project and 
-I have several questions:
-
-1. Is FIX_UTF8_MAC the right name for this "feature"?
-2. Do I have to introduce a configuration option for this "feature"?
+Sorry, the patch was broken (TABS were converted to spaces).
 
 Signed-off-by: Mark Junker <mjscod@web.de>
 ---
