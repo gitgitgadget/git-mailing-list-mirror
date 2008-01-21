@@ -1,180 +1,64 @@
-From: Mark Junker <mjscod@web.de>
-Subject: Re: [PATCH] Use FIX_UTF8_MAC to enable conversion from UTF8-MAC to
- UTF8
-Date: Mon, 21 Jan 2008 10:55:27 +0100
-Message-ID: <fn1q6b$ljj$2@ger.gmane.org>
-References: <fn1nl6$ek5$1@ger.gmane.org> <fn1pj9$kkg$1@ger.gmane.org> <fn1ptk$ljj$1@ger.gmane.org>
+From: =?UTF-8?B?R3LDqWdvaXJlIEJhcmJpZXI=?= <devel@gbarbier.org>
+Subject: Re: [PATCH] http-push: making HTTP push more robust and more user-friendly
+Date: Mon, 21 Jan 2008 11:09:43 +0100
+Message-ID: <47946F67.5060601@gbarbier.org>
+References: <1200250979-19604-1-git-send-email-gb@gbarbier.org> <7vbq7ppbyh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------080104040405060302010604"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 21 11:00:47 2008
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 11:11:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGtSG-0005ew-HS
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 11:00:37 +0100
+	id 1JGtcQ-0000FK-2h
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 11:11:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758410AbYAUKAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 05:00:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758419AbYAUKAH
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 05:00:07 -0500
-Received: from main.gmane.org ([80.91.229.2]:35053 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758398AbYAUKAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 05:00:05 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1JGtRi-0003BS-SD
-	for git@vger.kernel.org; Mon, 21 Jan 2008 10:00:02 +0000
-Received: from 80.146.179.234 ([80.146.179.234])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 Jan 2008 10:00:02 +0000
-Received: from mjscod by 80.146.179.234 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 Jan 2008 10:00:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 80.146.179.234
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X; de; rv:1.8.1.9) Gecko/20071031 Thunderbird/2.0.0.9 Mnenhy/0.7.5.0
-In-Reply-To: <fn1ptk$ljj$1@ger.gmane.org>
+	id S1762922AbYAUKJy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jan 2008 05:09:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762080AbYAUKJx
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 05:09:53 -0500
+Received: from relay2-v.mail.gandi.net ([217.70.178.76]:34697 "EHLO
+	relay2-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761063AbYAUKJw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 05:09:52 -0500
+Received: from localhost (mfilter4-v.gandi.net [217.70.178.38])
+	by relay2-v.mail.gandi.net (Postfix) with ESMTP id D3468135D7;
+	Mon, 21 Jan 2008 11:09:48 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mfilter4-v.mgt.gandi.net
+Received: from relay2-v.mail.gandi.net ([217.70.178.76])
+	by localhost (mfilter4-v.mgt.gandi.net [217.70.178.38]) (amavisd-new, port 10024)
+	with ESMTP id nSQupP3ZqiDk; Mon, 21 Jan 2008 10:38:31 +0100 (CET)
+Received: from [192.168.79.1] (soy95-1-82-229-96-169.fbx.proxad.net [82.229.96.169])
+	by relay2-v.mail.gandi.net (Postfix) with ESMTP id 1852C135BD;
+	Mon, 21 Jan 2008 11:09:43 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <7vbq7ppbyh.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71250>
 
-This is a multi-part message in MIME format.
---------------080104040405060302010604
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Junio C Hamano a =C3=A9crit :
+> Also http-push being unusable without CURL_MULTI was also a news
+> to me.  Is this something that came up on #git perhaps?
+>=20
+> This change means people need curl 7.10 or newer (post May 2003,
+> that is).  I do not think it is too new a version to require,
+> but then it makes me wonder if it makes much sense for us to
+> keep supporting non CURL_MULTI build these days.  Perhaps we
+> should schedule such a move to drop non MULTI build in the
+> future?
 
-Hi,
+In fact, it's not curl 7.10 but curl 7.16 (those guys working on curl=20
+speak hexa).
+See commit 9cf04301b182c4c57d62ea63554d109db613f9d3
 
-here's the patch again - sent as an attachment. Sorry for any inconvenience.
+However... http-push is anyway broken without USE_CURL_MULTI.
 
-Regards,
-Mark
-
---------------080104040405060302010604
-Content-Type: text/plain; x-mac-type="0"; x-mac-creator="0";
- name="0001-Use-FIX_UTF8_MAC-to-enable-conversion-from-UTF8-MAC.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename*0="0001-Use-FIX_UTF8_MAC-to-enable-conversion-from-UTF8-MAC.pat";
- filename*1="ch"
-
-Signed-off-by: Mark Junker <mjscod@web.de>
----
- Makefile          |    5 +++++
- compat/readdir.c  |   26 ++++++++++++++++++++++++++
- git-compat-util.h |    5 +++++
- setup.c           |   12 ++++++++++++
- 4 files changed, 48 insertions(+), 0 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 5aac0c0..e55914e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -417,6 +417,7 @@ ifeq ($(uname_S),Darwin)
- 	endif
- 	NO_STRLCPY = YesPlease
- 	NO_MEMMEM = YesPlease
-+	FIX_UTF8_MAC = YesPlease
- endif
- ifeq ($(uname_S),SunOS)
- 	NEEDS_SOCKET = YesPlease
-@@ -616,6 +617,10 @@ ifdef NO_STRLCPY
- 	COMPAT_CFLAGS += -DNO_STRLCPY
- 	COMPAT_OBJS += compat/strlcpy.o
- endif
-+ifdef FIX_UTF8_MAC
-+	COMPAT_CFLAGS += -DFIX_UTF8_MAC
-+	COMPAT_OBJS += compat/readdir.o
-+endif
- ifdef NO_STRTOUMAX
- 	COMPAT_CFLAGS += -DNO_STRTOUMAX
- 	COMPAT_OBJS += compat/strtoumax.o
-diff --git a/compat/readdir.c b/compat/readdir.c
-new file mode 100644
-index 0000000..045cfef
---- /dev/null
-+++ b/compat/readdir.c
-@@ -0,0 +1,26 @@
-+#include "../git-compat-util.h"
-+#include "../utf8.h"
-+
-+#undef readdir
-+
-+static struct dirent temp;
-+
-+struct dirent *gitreaddir(DIR *dirp)
-+{
-+	size_t utf8_len;
-+	char *utf8;
-+	struct dirent *result;
-+	result = readdir(dirp);
-+	if (result != NULL) {
-+		memcpy(&temp, result, sizeof(struct dirent));
-+		utf8 = reencode_string(temp.d_name, "UTF8", "UTF8-MAC");
-+		if (utf8 != NULL) {
-+			utf8_len = strlen(utf8);
-+			temp.d_namlen = (u_int8_t) utf8_len;
-+			memcpy(temp.d_name, utf8, utf8_len + 1);
-+			free(utf8);
-+			result = &temp;
-+		}
-+	}
-+	return result;
-+}
-diff --git a/git-compat-util.h b/git-compat-util.h
-index b6ef544..cd0233d 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -202,6 +202,11 @@ void *gitmemmem(const void *haystack, size_t haystacklen,
-                 const void *needle, size_t needlelen);
- #endif
- 
-+#ifdef FIX_UTF8_MAC
-+#define readdir gitreaddir
-+struct dirent *gitreaddir(DIR *dirp);
-+#endif
-+
- #ifdef __GLIBC_PREREQ
- #if __GLIBC_PREREQ(2, 1)
- #define HAVE_STRCHRNUL
-diff --git a/setup.c b/setup.c
-index adede16..4cec28b 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1,5 +1,8 @@
- #include "cache.h"
- #include "dir.h"
-+#ifdef FIX_UTF8_MAC
-+#include "utf8.h"
-+#endif
- 
- static int inside_git_dir = -1;
- static int inside_work_tree = -1;
-@@ -131,6 +134,15 @@ const char **get_pathspec(const char *prefix, const char **pathspec)
- 	p = pathspec;
- 	prefixlen = prefix ? strlen(prefix) : 0;
- 	do {
-+#ifdef FIX_UTF8_MAC
-+		/* Reencode as UTF8 (composed) to have a counterpart for the
-+		 * readdir-replacement on MacOS X.
-+		 */
-+		char *utf8 = reencode_string(entry, "UTF8", "UTF8-MAC");
-+		if (utf8 != NULL) {
-+			entry = utf8;
-+		}
-+#endif
- 		*p = prefix_path(prefix, prefixlen, entry);
- 	} while ((entry = *++p) != NULL);
- 	return (const char **) pathspec;
--- 
-1.5.4.rc3.40.gebe4
-
-
---------------080104040405060302010604--
+--=20
+Gr=C3=A9goire Barbier - gb =C3=A0 gbarbier.org - +33 6 21 35 73 49
