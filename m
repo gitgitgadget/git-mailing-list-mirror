@@ -1,97 +1,59 @@
-From: Sergei Organov <osv@javad.com>
-Subject: [PATCH] git.el: automatically revert emacs buffers
-Date: Mon, 21 Jan 2008 21:07:59 +0300
-Message-ID: <87tzl76nfj.fsf@osv.gnss.ru>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alexandre Julliard <julliard@winehq.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 21 19:32:03 2008
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: Re: Importing merges when converting repos from SVN to Git
+Date: Mon, 21 Jan 2008 19:36:07 +0100
+Message-ID: <A35436D5-71EA-4185-BBC1-4ECCE4D63A0E@lrde.epita.fr>
+References: <744EF0AD-4773-4A35-B772-94621E9ADA10@lrde.epita.fr> <47839311.2010606@viscovery.net>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 21 19:37:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH1RC-0005nx-VK
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 19:32:03 +0100
+	id 1JH1W5-0007cv-Cc
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 19:37:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751839AbYAUSbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 13:31:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbYAUSbG
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 13:31:06 -0500
-Received: from javad.com ([216.122.176.236]:1425 "EHLO javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751839AbYAUSbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 13:31:05 -0500
-Received: from osv ([87.236.81.130])
-	by javad.com (8.11.6/8.11.0) with ESMTP id m0LIV2d13452;
-	Mon, 21 Jan 2008 18:31:03 GMT
-	(envelope-from s.organov@javad.com)
-Received: from osv by osv with local (Exim 4.63)
-	(envelope-from <s.organov@javad.com>)
-	id 1JH1Q8-0001yi-Gv; Mon, 21 Jan 2008 21:30:56 +0300
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1754258AbYAUSgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 13:36:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751539AbYAUSgY
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 13:36:24 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:38831 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754258AbYAUSgT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 13:36:19 -0500
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1JH1VK-0008Ff-35
+	for git@vger.kernel.org; Mon, 21 Jan 2008 19:36:18 +0100
+In-Reply-To: <47839311.2010606@viscovery.net>
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71306>
 
-* git-auto-revert: new customizable variable.
-* git-revert-some-buffers: new function.
-* git-revert-file: call git-revert-some-buffers.
+Hi people,
+I wrote a script (svn-merge2git [1]) that helps to convert SVN merges  
+to Git merges.  The script basically detects the merges from their  
+commit message and re-create them properly on the Git side.  It took  
+me several iterations to get it right but it eventually successfully  
+converted a SVN repo with ~2500 revisions in a dozen of branches with  
+~100 merges in between them.  The script can be used when one wants  
+to entirely convert a SVN repo to a Git one while preserving the  
+merges (that is, showing the merges in the Git history).  I guess it  
+can also be used to inject merges in the history of a git-svn repo to  
+facilitate merging of SVN branches with Git, although I haven't had  
+time to experiment this for now.
 
-Signed-off-by: Sergei Organov <osv@javad.com>
----
- contrib/emacs/git.el |   23 +++++++++++++++++++++++
- 1 files changed, 23 insertions(+), 0 deletions(-)
+I hope this will be helpful to others.
 
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index d8a0638..c3c0c45 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -112,6 +112,11 @@ if there is already one that displays the same directory."
-   :group 'git
-   :type 'boolean)
- 
-+(defcustom git-auto-revert t
-+  "Non-nil if `git-revert-file' should automatically revert corresponding buffers."
-+  :group 'git
-+  :type 'boolean)
-+
- 
- (defface git-status-face
-   '((((class color) (background light)) (:foreground "purple"))
-@@ -989,6 +994,23 @@ Return the list of files that haven't been handled."
-           (git-success-message "Removed" files))
-       (message "Aborting"))))
- 
-+;; stolen from pcl-cvs's cvs-revert-if-needed
-+(defun git-revert-some-buffers (fis)
-+  (dolist (fileinfo fis)
-+    (let* ((file (git-fileinfo->name fileinfo))
-+	   (buffer (find-buffer-visiting file)))
-+      ;; For a revert to happen the user must be editing the file...
-+      (unless (or (null buffer)
-+		  (buffer-modified-p buffer))
-+	(with-current-buffer buffer
-+	  (ignore-errors
-+	    (revert-buffer 'ignore-auto 'dont-ask 'preserve-modes)
-+	    ;; `preserve-modes' avoids changing the (minor) modes.  But we
-+	    ;; do want to reset the mode for VC, so we do it explicitly.
-+	    (vc-find-file-hook)
-+	    (when (eq (git-fileinfo->state fileinfo) 'unmerged)
-+	      (smerge-mode 1))))))))
-+
- (defun git-revert-file ()
-   "Revert changes to the marked file(s)."
-   (interactive)
-@@ -1008,6 +1030,7 @@ Return the list of files that haven't been handled."
-       (when modified
-         (apply #'git-call-process-env nil nil "checkout" "HEAD" modified))
-       (git-update-status-files (append added modified) 'uptodate)
-+      (if git-auto-revert (git-revert-some-buffers files))
-       (git-success-message "Reverted" (git-get-filenames files)))))
- 
- (defun git-resolve-file ()
+[1] Code and explanations at: http://repo.or.cz/w/svn-merge2git.git
+
 -- 
-1.5.4.rc3.30.g472ca
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
