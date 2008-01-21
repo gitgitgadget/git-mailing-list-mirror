@@ -1,101 +1,103 @@
-From: =?ISO-8859-1?Q?Gr=E9goire_Barbier?= <devel@gbarbier.org>
-Subject: Re: [PATCH] http-push: making HTTP push more robust and more user-friendly
-Date: Tue, 22 Jan 2008 00:12:27 +0100
-Message-ID: <479526DB.2050407@gbarbier.org>
-References: <1200250979-19604-1-git-send-email-gb@gbarbier.org>	<7vbq7ppbyh.fsf@gitster.siamese.dyndns.org>	<47946F67.5060601@gbarbier.org>	<7vmyqzzdhf.fsf@gitster.siamese.dyndns.org>	<47947399.3000507@gbarbier.org>	<7vabmzzbcc.fsf@gitster.siamese.dyndns.org>	<alpine.LSU.1.00.0801211212010.5731@racer.site>	<7vejcbx795.fsf@gitster.siamese.dyndns.org>	<alpine.LNX.1.00.0801211539320.13593@iabervon.org> <7v1w8aygvm.fsf@gitster.siamese.dyndns.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Tue, 22 Jan 2008 12:16:16 +1300
+Message-ID: <46a038f90801211516j1f4e10c3q364b446d1293542b@mail.gmail.com>
+References: <478E1FED.5010801@web.de>
+	 <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org>
+	 <C6C0E6A1-053B-48CE-90B3-8FFB44061C3B@sb.org>
+	 <373E260A-6786-4932-956A-68706AA7C469@sb.org>
+	 <7EB98659-4036-45DA-BD50-42CB23ED517A@sb.org>
+	 <C373E12A-2AC4-4961-833A-7D51584143C9@sb.org>
+	 <alpine.LFD.1.00.0801211407130.2957@woody.linux-foundation.org>
+	 <0CA4DF3F-1B64-4F62-8794-6F82C21BD068@sb.org>
+	 <46a038f90801211456h4b16ff2cl4378df88023bbc34@mail.gmail.com>
+	 <53C76BEA-2232-4940-8776-9DF1880089A4@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 00:13:02 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Peter Karlsson" <peter@softwolves.pp.se>,
+	"Mark Junker" <mjscod@web.de>,
+	"Pedro Melo" <melo@simplicidade.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Kevin Ballard" <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Tue Jan 22 00:16:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH5p2-0004KX-QM
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 00:12:57 +0100
+	id 1JH5sr-0005XX-EB
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 00:16:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754532AbYAUXM1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jan 2008 18:12:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754671AbYAUXM1
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 18:12:27 -0500
-Received: from relay4-v.mail.gandi.net ([217.70.178.78]:58686 "EHLO
-	relay4-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754313AbYAUXM1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 18:12:27 -0500
-Received: from localhost (mfilter5-v.gandi.net [217.70.178.39])
-	by relay4-v.mail.gandi.net (Postfix) with ESMTP id B6236B9FB;
-	Tue, 22 Jan 2008 00:12:25 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mfilter5-v.mgt.gandi.net
-Received: from relay4-v.mail.gandi.net ([217.70.178.78])
-	by localhost (mfilter5-v.gandi.net [217.70.178.39]) (amavisd-new, port 10024)
-	with ESMTP id 1jolxAD++SI2; Tue, 22 Jan 2008 00:04:15 +0100 (CET)
-Received: from [192.168.79.1] (soy95-1-82-229-96-169.fbx.proxad.net [82.229.96.169])
-	by relay4-v.mail.gandi.net (Postfix) with ESMTP id 951DDBA17;
-	Tue, 22 Jan 2008 00:12:23 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <7v1w8aygvm.fsf@gitster.siamese.dyndns.org>
+	id S1755252AbYAUXQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 18:16:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754705AbYAUXQW
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 18:16:22 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:41991 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753995AbYAUXQV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 18:16:21 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so975158ugc.16
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 15:16:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=h0fVEafaeygizGXZEnxnhmurqMhz6ykiDU3inA9AscM=;
+        b=qH4uzm/DDb8Rv0usGKO633BsJtK43N3JwJJFhOh7tLHerZuo+l+n48nvJLI+mp6v/hoY4OcG2E/oU6iWgiZyPJv/G2xwAHw331cdZVB9wpiN/5ERWG7KsXDrsgRbo38yIBl7y5kn4rD2M91seEz/vHmvLZzhUXd8x+ChDnT99Qs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gfE2uRcGPcK59BmsF0jk1sldJu/MMBthug8gwXdYr+LETzmIOQWjzP4rN6PEcFn6hGn4xbjJQPSdQ1Y8WROgZCGyoPxZfThqjhj2org5K4PEVg8g1Flcd9iLksvpwLYnXAKKtLbqmtBOqOOAtkHsRwpSnMtwTR2vC594uwADApQ=
+Received: by 10.66.237.14 with SMTP id k14mr4465646ugh.72.1200957377205;
+        Mon, 21 Jan 2008 15:16:17 -0800 (PST)
+Received: by 10.66.252.2 with HTTP; Mon, 21 Jan 2008 15:16:16 -0800 (PST)
+In-Reply-To: <53C76BEA-2232-4940-8776-9DF1880089A4@sb.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71372>
 
-Junio C Hamano a =E9crit > * Do we know that the current code is broken=
-=20
-for everybody, or just
-> broken for the majority of people who do nontrivial things?
+On Jan 22, 2008 12:02 PM, Kevin Ballard <kevin@sb.org> wrote:
+> I'd imagine writing an OS to be a horrifically complicated task. And yes, I
+> can certainly imagine HFS+ might have issues when used to back an NFS server
+> with other clients, but that still leads back to the original point, which
+> is that all these problems stem from the differences between HFS+ and other
+> filesystems, not any inherent problem with HFS+ itself.
 
-http-push without USE_CURL_MULTI is broken for everybody who uses it
+Right. If you are defining the requirements for a new FS on a new OS,
+would you not include a requirement that says "must not add any funny
+rule that prevents clean interoperation with other filesystems or
+OSs"? Forgetting that requirement is... a big one! And if someone asks
+"how do we do nice user-friendly filename matching with these
+technical differences that users mostly don't care about"... wouldn't
+you say "do it in the GUI facilities, changing the FS to handle this
+is wrong because it will break the OS as a server, as a reliable file
+storage"?
 
-> * Is the code in 1.5.3.8 any better?  IOW, did we make it worse=20
-> during 1.5.4 cycle?
+FSs have pretty hard requirements these days -- all the modern FS
+you've heard about respect the requirement above, and a ton more that
+you have to be in the FS business to be aware of. Mostly anyway,
+wherever they don't, users have all sorts of trouble.
 
-I think it is better, because it hurts less.
+> IIRC, the biggest problem he talked about was the changing unicode standard,
+> but since the technote appears to state that HFS+ will not be changing its
+> normalization algorithms to preserve backwards compatibility with existing
+> volumes, that doesn't appear to be a nasty issue after all. Is there another
+> issue I've failed to address in this thread?
 
-after:
-- http-push with curl >=3D 7.16 works
-- http-push with curl < 7.16 does not work
+Well, Ted answered that part, noting that then the "normalisation" is
+patchy, and everyone else is left to guess what chars are normalised
+and what chars aren't so being HFS+ compatible becomes a very weird
+game indeed. You didn't reply to his explanation -- you called him
+arrogant instead. Did you manage to read to the end if his email?
 
-before
-- http-push with curl >=3D 7.16 works
-- http-push with curl < 7.16 does not work and in addition corrups repo=
-s
+The HFS+ designers mucked it up -- and then papered over it with the
+OSX libraries. But a good chunk of the world does not use them, they
+forgot about the little "interop" requirement.
 
-In addition, the sooner we disable the repo corrupting code, the less w=
-e
-will have dangerous code in the wide
+cheers,
 
-Junio C Hamano a =E9crit :
-> Then I guess Dscho's notice (and the same notice with disabling=20
-> http-push without MULTI in 1.5.3.9) would be the sane thing we should
-> do in the short term.
 
-This is my opinion.
-
-Junio C Hamano a =E9crit :
- > The feature was added by one person who needed it, and it was
- > included because the need was satisfid with an implementation,
- > so at some point in the past, it must have worked for _somebody_
- > (I am hoping that this is not a regression during 1.5.4 cycle).
- >
- > Imagine that you are like that somebody who have been happily
- > using http-push.  Or imagine that you are starting to use git
- > and are tempted to use http-push.  With the above wording, I
- > strongly suspect that you would say "Crap --- 1.5.4 does not let
- > me run http-push, so I'll stay at 1.5.3.8 until 1.5.X lets me
- > use it again".
-
-My experience is that 1.5.3.6 is broken too (but I did not ever try=20
-1.5.3.8). Therefore I don't think it's an 1.5.4 regression.
-
-In fact, a few weeks ago, I was that guy discovering git and trying to=20
-use http-push, and said "Crap. That thing is broken." And this why I'm=20
-bothering you all since a while.
-
---=20
-Gr=E9goire Barbier - gb =E0 gbarbier.org - +33 6 21 35 73 49
+m
