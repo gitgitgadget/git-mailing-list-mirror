@@ -1,202 +1,151 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] GIT 1.5.4-rc4
-Date: Sun, 20 Jan 2008 18:37:27 -0800
-Message-ID: <7vsl0r3nvc.fsf@gitster.siamese.dyndns.org>
-References: <7vsl13wmas.fsf@gitster.siamese.dyndns.org>
+Subject: What's not in 'master', and likely not to be in, until 1.5.4
+Date: Sun, 20 Jan 2008 18:37:38 -0800
+Message-ID: <7vr6gb3nv1.fsf@gitster.siamese.dyndns.org>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
+	<1200022189-2400-2-git-send-email-mlevedahl@gmail.com>
+	<7v1w8o4ws0.fsf@gitster.siamese.dyndns.org>
+	<30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com>
+	<7v63xzzszp.fsf@gitster.siamese.dyndns.org>
+	<478855B5.9070600@gmail.com>
+	<7vbq7ry405.fsf@gitster.siamese.dyndns.org>
+	<47885B2C.8020809@gmail.com>
+	<7v7iify2wm.fsf@gitster.siamese.dyndns.org>
+	<4788BFA8.2030508@gmail.com>
+	<7vwsqeubj8.fsf@gitster.siamese.dyndns.org>
+	<47891658.3090604@gmail.com>
+	<7vbq7qssd7.fsf@gitster.siamese.dyndns.org>
+	<47893E1A.5020702@gmail.com>
+	<7v4pdislrf.fsf@gitster.siamese.dyndns.org>
+	<alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de>
+	<7vir1xmazm.fsf@gitster.siamese.dyndns.org>
+	<7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org>
+	<7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: linux-kernel@vger.kernel.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 21 03:38:07 2008
+X-From: git-owner@vger.kernel.org Mon Jan 21 03:39:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGmY2-0005e3-S7
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 03:38:07 +0100
+	id 1JGmYv-0005ob-5n
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 03:39:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756519AbYAUChf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Jan 2008 21:37:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756199AbYAUChf
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 21:37:35 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50907 "EHLO
+	id S1756750AbYAUCiJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Jan 2008 21:38:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756309AbYAUCiI
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 21:38:08 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50912 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756136AbYAUChe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 20 Jan 2008 21:37:34 -0500
+	with ESMTP id S1756280AbYAUCiE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Jan 2008 21:38:04 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CA04381D;
-	Sun, 20 Jan 2008 21:37:32 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A2A793821;
+	Sun, 20 Jan 2008 21:38:03 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 85130381C;
-	Sun, 20 Jan 2008 21:37:29 -0500 (EST)
-In-Reply-To: <7vsl13wmas.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 11 Jan 2008 23:11:23 -0800")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id F1AFC3820;
+	Sun, 20 Jan 2008 21:38:00 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71210>
 
-The fourth rc for the next feature release GIT 1.5.4 is available
-at the usual places:
+Here is an update to the list I sent earlier.
 
-  http://www.kernel.org/pub/software/scm/git/
+Topics that I thought may deserve attention, discussion and
+eventual inclusion but are not 1.5.4 material.
 
-  git-1.5.4.rc4.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.5.4.rc4.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.5.4.rc4.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.5.4.rc4-1.$arch.rpm	(RPM)
+I think these two could be part of 1.5.4, but I left them out of
+1.5.4-rc4 (IOW, I do not think they should be on this list):
 
-I was hoping that this would be the last rc before 1.5.4 final,
-and in fact the change between -rc3 and -rc4 is fairly small.
+ * marking output from "diff --{no,src,dst}-prefix" as a non-git
+   diff (me)
 
-Notable fixes are:
+   Linus had an objection but I think I made a reasonable
+   argument against that.  Haven't heard back since then, so
+   this is in limbo.
 
- * http-push fixes (Gr=C3=A9goire Barbier);
- * fix to performance regression during partial commit (Linus);
- * ref/heads are now enforced to point at commit (Linus);
- * fix for fast-import reading some part of its own output (Shawn);
- * "diff --color-words" showed unchanged lines in metainfo color (Jeff =
-King);
+ * submodule subcommand parser fix for "git submodule add init
+   update" (Imran M Yousuf and me)
 
-Also we have a handful gitk and git-gui updates.
+   As Jakub noticed, this is meant to be a bugfix but as I do
+   not use submodule heavily myself, backing it with real-world
+   success stories would be needed.
 
-This however still lacks two patches that I think we might want
-in the final (please see "What's not in 'master'" message). I
-asked for comments but I guess they were lost in the noise or
-something.  It's not a very good sign that we had too many
-discussions on the list that are totally unrelated to 1.5.4, and
-I had to scroll back more than 1000 articles to skip them to
-find the announcement for the -rc3 X-<.  So we will either have
-another rc to include those two fixes after getting feedbacks,
-or ship the final one with two known breakages.  The former
-would be preferred, and it would be better if they can be done
-earlier.
+Now these two out of our way, here is the list.
 
-Even though we had some RPM specfile changes that I cannot
-easily check myself, nobody reported breakages after -rc3.  I am
-taking this as "no news is a good news", but it may turn out
-that nobody has been testing/double-checking, and it may come
-back and bite us when we do the final one.  That's also
-something I cannot do much about.
+ * various lstat(2) reduction changes (me, Linus and Dscho).
 
-But other than that, I think we are in good shape.
+   This will be queued in 'pu'; it appears this introduces a
+   timing related breakages in t75?? tests.
 
-----------------------------------------------------------------
+ * compress/decompress abstraction (Marco)
 
-Changes since v1.5.4-rc3 are as follows:
+ * crlf (Steffen Prohaska and Dmitry Potapov)
 
-Bill Lear (1):
-      Correct spelling in diff.c comment
+ * whitespace error: "cr at eol is ok" (me)
 
-Brandon Casey (4):
-      close_lock_file(): new function in the lockfile API
-      Improve use of lockfile API
-      refs.c: rework ref_locks by abstracting from underlying struct lo=
-ck_file
-      fast-import.c: don't try to commit marks file if write failed
+ * submodule recursive wrapper (Imran M Yousuf)
 
-Christian Couder (2):
-      git-gui: Initial french translation
-      git-gui: add french glossary: glossary/fr.po
+ * 'origin' is not so special after "clone -o frotz" (Mark Levedahl)
 
-Christian Stimming (4):
-      git-gui: Update glossary: add term "hunk"
-      git-gui: Update German translation
-      git-gui: Fix broken revert confirmation.
-      git-gui: Improve German translation.
+ * "submodule summary" (Ping Yin)
 
-Dan McGee (3):
-      Remove usage of git- (dash) commands from email hook
-      cvsimport: remove last use of repo-config from git standard tools
-      Update git-completion for new 'remote rm' option
+ * unconfigured ident safety (Stephen Sinclair)
 
-Dave Peticolas (1):
-      Documentation: fix and clarify grammar in git-merge docs.
+ * gitweb feed from commit to commitdiff (Florian La Rouche --
+   Jakub seems to be on top of this so I am not worried about it
+   too much).
 
-Dmitry Potapov (1):
-      treat any file with NUL as binary
+ * color.ui (Matthias Kestenholz)
 
-Eric Wong (1):
-      git-svn: handle leading/trailing whitespace from svnsync revprops
+ * test scripts to use valgrind (Jeff King)
 
-Gr=C3=A9goire Barbier (4):
-      http-push: disable http-push without USE_CURL_MULTI
-      http-push: fix webdav lock leak.
-      http-push: fail when info/refs exists and is already locked
-      http-push and http-fetch: handle URLs without trailing /
+ * "rebase -i" UI -- should it be simplified to do commit --amend
+   itself? (Dscho)
 
-Jakub Narebski (1):
-      autoconf: Add checking for unsetenv function
+ * "cherry-pick/revert" error message fix (Bj=C3=B6rn Steinbrink and me=
+)
 
-Jean-Luc Herren (1):
-      Make default pre-commit hook less noisy
+ * pathname safety on filesystems whose readdir(3) thinks it
+   knows better than users (Linus, Robin Rosenberg, me and
+   others).
 
-Jeff King (5):
-      git-clean: fix off-by-one memory access when given no arguments
-      color unchanged lines as "plain" in "diff --color-words"
-      send-email: detect invocation errors earlier
-      send-email: validate patches before sending anything
-      send-email: add no-validate option
+   I tend to prefer a much simpler approach Linus suggested, to
+   wrap readdir(3) on systems that are known to mangle files,
+   but I have a slight suspicion it would not work well enough
+   for cross platform projects.
 
-Jim Meyering (2):
-      fast-import: Don't use a maybe-clobbered errno value
-      doc typo: s/prior committing/prior to committing/
+Again, I am hoping that authors will resend the ones they really
+care about after 1.5.4, as I do not want to take patches early.
 
-Johannes Schindelin (1):
-      gitk: make Ctrl "+" really increase the font size
+The previous version of this list did not include the some that
+were discussed and landed in 'pu' (or 'offcuts').  The ones that
+we may want to polish that are in 'pu' are:
 
-Junio C Hamano (8):
-      builtin-commit.c: remove useless check added by faulty cut and pa=
-ste
-      Revert "builtin-commit.c: remove useless check added by faulty cu=
-t and paste"
-      Fix git-rerere documentation
-      Squelch bogus progress output from git-rebase--interactive
-      Document lockfile API
-      Officially deprecate repo-config.
-      http-push: clarify the reason of error from the initial PROPFIND =
-request
-      GIT 1.5.4-rc4
+ * omit cc recipients from send-email (David Brown)
 
-Kristian H=C3=B8gsberg (1):
-      git-commit: fix double close(2) that can close a wrong file descr=
-iptor
+ * sha1 lookup optimization (me)
 
-Lars Hjemli (1):
-      Move sha1_file_to_archive into libgit
+ * rewrite cherry-pick/revert in order to improve its D/F
+   conflict resolution (me)
 
-Linus Torvalds (4):
-      Fix performance regression for partial commits
-      Make builtin-commit.c more careful about parenthood
-      Make 'git fsck' complain about non-commit branches
-      Be more careful about updating refs
+ * allow native protocol to tell exactly which branch HEAD
+   points at (me)
 
-Mark Drago (1):
-      hg-to-git: improve popen calls
+There is also 1.6.0 material queued already, way before the rc
+cycle:
 
-Mark Levedahl (1):
-      git-gui: Makefile - Handle $DESTDIR on Cygwin
+ * Moving "git-foo" out of users' $PATH (Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy)
 
-Martin Koegler (1):
-      parse_commit_buffer: tighten checks while parsing
-
-Miklos Vajna (3):
-      Add using merge subtree How-To
-      ls-remote: add -t and -h options.
-      Include rev-list options in git-log manpage.
-
-Peter Karlsson (1):
-      git-gui: Updated Swedish translation after mailing list review.
-
-Shawn O. Pearce (3):
-      git-gui: Allow 'Create New Repository' on existing directories
-      git-gui: Refresh file status description after hunk application
-      Fix random fast-import errors when compiled with NO_MMAP
-
-Thomas Zander (1):
-      core-tutorial typofix
+I suspect it might be a good idea to make an early declaration
+that 1.5.5 is to resolve the above listed issues plus the ones
+already in 'pu' (and nothing else), and have a fairly short
+cycle after 1.5.4.
