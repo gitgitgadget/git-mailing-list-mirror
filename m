@@ -1,77 +1,126 @@
-From: Paul Gardiner <osronline@glidos.net>
-Subject: Re: New to git: sorry for obvious question.
-Date: Mon, 04 Feb 2008 12:04:59 +0000
-Message-ID: <47A6FF6B.1000103@glidos.net>
-References: <47A6E130.7090909@glidos.net> <20080204105006.GA15855@bit.office.eurotux.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: [PATCH 1/4] git-commit: support variable number of hook arguments
+Date: Mon, 21 Jan 2008 15:02:48 +0100
+Message-ID: <2885c7896ba72adee6bc5c9e2210a8881904f601.1200933409.git.bonzini@gnu.org>
+References: <2885c7896ba72adee6bc5c9e2210a8881904f601.head.git.bonzini@gnu.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 04 13:05:58 2008
+X-From: git-owner@vger.kernel.org Mon Feb 04 13:21:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JM04z-0001A6-FY
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 13:05:49 +0100
+	id 1JM0KU-0006Pl-5W
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 13:21:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751670AbYBDMFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 07:05:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751817AbYBDMFJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 07:05:09 -0500
-Received: from mk-outboundfilter-2.mail.uk.tiscali.com ([212.74.114.38]:55174
-	"EHLO mk-outboundfilter-2.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751593AbYBDMFI (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Feb 2008 07:05:08 -0500
-X-Trace: 128902/mk-outboundfilter-2.mail.uk.tiscali.com/PIPEX/$MX-ACCEPTED/pipex-infrastructure/62.241.163.6
-X-SBRS: None
-X-RemoteIP: 62.241.163.6
-X-IP-MAIL-FROM: osronline@glidos.net
-X-IP-BHB: Once
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ao8CALOOpkc+8aMG/2dsb2JhbACqZg
-X-IP-Direction: IN
-Received: from astro.systems.pipex.net ([62.241.163.6])
-  by smtp.pipex.tiscali.co.uk with ESMTP; 04 Feb 2008 12:05:04 +0000
-Received: from [10.0.0.24] (80-42-19-184.dynamic.dsl.as9105.com [80.42.19.184])
-	by astro.systems.pipex.net (Postfix) with ESMTP id 612D8E000099
-	for <git@vger.kernel.org>; Mon,  4 Feb 2008 12:05:01 +0000 (GMT)
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <20080204105006.GA15855@bit.office.eurotux.com>
+	id S1753211AbYBDMUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 07:20:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753098AbYBDMUt
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 07:20:49 -0500
+Received: from fencepost.gnu.org ([140.186.70.10]:42347 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753580AbYBDMUp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 07:20:45 -0500
+Received: from bonzini by fencepost.gnu.org with local (Exim 4.67)
+	(envelope-from <bonzini@gnu.org>)
+	id 1JM0JW-0007o4-EE
+	for git@vger.kernel.org; Mon, 04 Feb 2008 07:20:42 -0500
+In-Reply-To: <2885c7896ba72adee6bc5c9e2210a8881904f601.head.git.bonzini@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72495>
 
-Luciano Rocha wrote:
-> On Mon, Feb 04, 2008 at 09:56:00AM +0000, Paul Gardiner wrote:
->>  Hi,
->>
->>  I've moved a project from CVS on sourceforge to git on repo.or.cz.  I
->>  want a local mirror on my own home server, so that it appears amongst
->>  the projects shown by my own gitweb set up, and so it gets caught by
->>  my backup system.  I've created the mirror with
->>
->>    git clone --bare <remote-url> <local-dir>
->>
->>  and that seems fine.  But how do I now keep it up to date.  I was
->>  guessing a cron job doing some sort of git pull, but pull doesn't
->>  look to work on --bare proj.git type repositories.
-> 
-> You want git fetch. Git pull also updates the working copy, which you
-> don't have.
-> 
-> Also, git clone --bare doesn't set up the origin configuration, and I
-> have to do it by hand:
->   git config remote.origin.url "$url"
->   git config remote.origin.fetch "+refs/heads/*:refs/heads/*"
+This is a preparatory patch to allow using run_hook for the
+prepare-commit-msg hook.
 
-Brilliant!! That works.
+Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
 
-So why wouldn't git-fetch work when, instead of setting up the origin
-config, I put the url and refspec on the commandline? - not that it
-matters, just interested.
+---
+ builtin-commit.c |   59 ++++++++++++++++++++++++++++++-------------------------
+ 1 files changed, 33 insertions(+), 26 deletions(-)
 
-Cheers,
-	Paul.
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 0227936..fc59660 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -339,6 +339,38 @@ static int run_status(FILE *fp, const char *index_file, const char *prefix, int
+ 	return s.commitable;
+ }
+ 
++static int run_hook(const char *index_file, const char *name, ...)
++{
++	struct child_process hook;
++	const char *argv[10], *env[2];
++	char index[PATH_MAX];
++	va_list args;
++	int i;
++
++	va_start(args, name);
++	argv[0] = git_path("hooks/%s", name);
++	i = 0;
++	do {
++		argv[++i] = va_arg(args, const char *);
++	} while (argv[i]);
++	va_end(args);
++
++	snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", index_file);
++	env[0] = index;
++	env[1] = NULL;
++
++	if (access(argv[0], X_OK) < 0)
++		return 0;
++
++	memset(&hook, 0, sizeof(hook));
++	hook.argv = argv;
++	hook.no_stdin = 1;
++	hook.stdout_to_stderr = 1;
++	hook.env = env;
++
++	return run_command(&hook);
++}
++
+ static const char sign_off_header[] = "Signed-off-by: ";
+ 
+ static int prepare_log_message(const char *index_file, const char *prefix)
+@@ -673,31 +705,6 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	return commitable ? 0 : 1;
+ }
+ 
+-static int run_hook(const char *index_file, const char *name, const char *arg)
+-{
+-	struct child_process hook;
+-	const char *argv[3], *env[2];
+-	char index[PATH_MAX];
+-
+-	argv[0] = git_path("hooks/%s", name);
+-	argv[1] = arg;
+-	argv[2] = NULL;
+-	snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", index_file);
+-	env[0] = index;
+-	env[1] = NULL;
+-
+-	if (access(argv[0], X_OK) < 0)
+-		return 0;
+-
+-	memset(&hook, 0, sizeof(hook));
+-	hook.argv = argv;
+-	hook.no_stdin = 1;
+-	hook.stdout_to_stderr = 1;
+-	hook.env = env;
+-
+-	return run_command(&hook);
+-}
+-
+ static void print_summary(const char *prefix, const unsigned char *sha1)
+ {
+ 	struct rev_info rev;
+@@ -872,7 +879,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		launch_editor(git_path(commit_editmsg), NULL, env);
+ 	}
+ 	if (!no_verify &&
+-	    run_hook(index_file, "commit-msg", git_path(commit_editmsg))) {
++	    run_hook(index_file, "commit-msg", git_path(commit_editmsg), NULL)) {
+ 		rollback_index_files();
+ 		exit(1);
+ 	}
