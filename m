@@ -1,65 +1,79 @@
-From: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
-Subject: Re: =?ISO-8859-15?Q?=5BANNOUNCE=5D?= GIT 1.5.4-rc4
-Date: Mon, 21 Jan 2008 11:49:15 +0100
-Message-ID: <1JGuDL-2AugiG0@fwd26.aul.t-online.de>
-Reply-To: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Use FIX_UTF8_MAC to enable conversion from UTF8-MAC to
+ UTF8
+Date: Mon, 21 Jan 2008 11:24:20 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801211121440.5731@racer.site>
+References: <fn1nl6$ek5$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 21 12:24:48 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Mark Junker <mjscod@web.de>
+X-From: git-owner@vger.kernel.org Mon Jan 21 12:25:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGulk-0004zm-6l
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 12:24:48 +0100
+	id 1JGum2-000550-Oh
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 12:25:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758934AbYAULYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 06:24:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758895AbYAULYT
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 06:24:19 -0500
-Received: from mailout05.sul.t-online.de ([194.25.134.82]:50934 "EHLO
-	mailout05.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758838AbYAULYS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 06:24:18 -0500
-X-Greylist: delayed 2049 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Jan 2008 06:24:18 EST
-Received: from fwd26.aul.t-online.de 
-	by mailout05.sul.t-online.com with smtp 
-	id 1JGuEB-0003dF-02; Mon, 21 Jan 2008 11:50:07 +0100
-Received: from localhost (bjkhvGZVZhFJZUCEGX5NjBO+7YqfLmust-+sR9mi0t689TdcEcOFarLbM1-Yzb6Z1T@[172.20.101.250]) by fwd26.aul.t-online.de
-	with esmtp id 1JGuDL-2AugiG0; Mon, 21 Jan 2008 11:49:15 +0100
-X-UMS: email
-X-Mailer: TOI Kommunikationscenter V9-1-3
-X-ID: bjkhvGZVZhFJZUCEGX5NjBO+7YqfLmust-+sR9mi0t689TdcEcOFarLbM1-Yzb6Z1T@t-dialin.net
-X-TOI-MSGID: fdee807e-37e1-49f1-9869-2d3a4503b145
+	id S1758957AbYAULYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 06:24:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758895AbYAULYh
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 06:24:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42246 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753163AbYAULYg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 06:24:36 -0500
+Received: (qmail invoked by alias); 21 Jan 2008 11:24:34 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp036) with SMTP; 21 Jan 2008 12:24:34 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/f6wlr+QrfR5+vAIrV7bjL4SpqHzkCJaJl1wIQhM
+	6z+V15Xz2JPRZi
+X-X-Sender: gene099@racer.site
+In-Reply-To: <fn1nl6$ek5$1@ger.gmane.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71264>
 
+Hi,
 
-Concerning RPM specs.
+On Mon, 21 Jan 2008, Mark Junker wrote:
 
-I created rpm packages on a x86_64 SuSE 10.3 system.
+> Use FIX_UTF8_MAC to enable conversion from UTF8-MAC to UTF8 for readdir 
+> and get_pathspec.
+> 
+> I had to change get_pathspec too because otherwise git-add wouldn't work 
+> anymore because it uses the output of get_pathspec as strings to compare 
+> with the output of readdir.
+> 
+> I'm quite unsure because this is my first patch for the git project and 
+> I have several questions:
+> 
+> 1. Is FIX_UTF8_MAC the right name for this "feature"?
+> 2. Do I have to introduce a configuration option for this "feature"?
+> 
+> Signed-off-by: Mark Junker <mjscod@web.de>
 
-There were two complains about unmatched dependencies for expat-devel
-and perl(Error)
-I could not get rid off.
+I hate three facts about this patch:
 
-So I used rpmbuild --nodeps -ta git-1.5.4.rc4.tar.gz
+- it is too specific to the MacOSX filesystem issues (and better 
+  alternatives have _already_ been proposed),
 
-The installation (rpm -i) gave the following error
+- it is a new feature and not a bug fix, very, _very_ late in the rc 
+  cycle,
 
-error: Failed dependencies:
-        openssh-clients is needed by git-core-1.5.4.rc4-1.x86_64
-        perl(:MODULE_COMPAT_5.8.8) is needed by
-perl-Git-1.5.4.rc4-1.x86_64
+- it contains questions in the commit message? WTF?  Should it not be 
+  marked as PATCH/RFC, possibly without a signoff to make sure that you 
+  want to discuss it first?
 
-But when I used --nodeps here too the installation went through and git
-seams 
-to be working alright
+It's possible I am grumpy because everybody and her dog seems to work on 
+her little projects, while I listen to Junio and try to work with/on 
+"master" already since a month.
 
-Cheers,
-Michael
+Ciao,
+Dscho
