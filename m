@@ -1,112 +1,101 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: [PATCH] git-fsck: report missing author/commit line in a commit as an error
-Date: Mon, 21 Jan 2008 08:00:49 +0100
-Message-ID: <20080121070049.GA18819@auto.tuwien.ac.at>
-References: <12008555922208-git-send-email-mkoegler@auto.tuwien.ac.at> <alpine.LSU.1.00.0801201918260.5731@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's not in 'master', and likely not to be in, until 1.5.4
+Date: Sun, 20 Jan 2008 23:02:23 -0800
+Message-ID: <7vtzl71x1c.fsf@gitster.siamese.dyndns.org>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
+	<7v1w8o4ws0.fsf@gitster.siamese.dyndns.org>
+	<30e4a070801111252s4e17b9c4m62adeb9032963e66@mail.gmail.com>
+	<7v63xzzszp.fsf@gitster.siamese.dyndns.org>
+	<478855B5.9070600@gmail.com>
+	<7vbq7ry405.fsf@gitster.siamese.dyndns.org>
+	<47885B2C.8020809@gmail.com>
+	<7v7iify2wm.fsf@gitster.siamese.dyndns.org>
+	<4788BFA8.2030508@gmail.com>
+	<7vwsqeubj8.fsf@gitster.siamese.dyndns.org>
+	<47891658.3090604@gmail.com>
+	<7vbq7qssd7.fsf@gitster.siamese.dyndns.org>
+	<47893E1A.5020702@gmail.com>
+	<7v4pdislrf.fsf@gitster.siamese.dyndns.org>
+	<alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de>
+	<7vir1xmazm.fsf@gitster.siamese.dyndns.org>
+	<7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org>
+	<7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org>
+	<7vr6gb3nv1.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.1.00.0801202114580.2957@woody.linux-foundation.org>
+	<7vd4rv3ds5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 21 08:01:31 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jan 21 08:03:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGqeu-00081V-G2
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 08:01:28 +0100
+	id 1JGqga-0008JR-1S
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 08:03:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753724AbYAUHAv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jan 2008 02:00:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752717AbYAUHAv
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 02:00:51 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:46680 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752545AbYAUHAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 02:00:50 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id AA26C680BECA;
-	Mon, 21 Jan 2008 08:00:49 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vVFlA0Szx6Fr; Mon, 21 Jan 2008 08:00:49 +0100 (CET)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 8ADF1680BEAC; Mon, 21 Jan 2008 08:00:49 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0801201918260.5731@racer.site>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756122AbYAUHCm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 02:02:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753322AbYAUHCm
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 02:02:42 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59807 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752520AbYAUHCl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 02:02:41 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B8493567;
+	Mon, 21 Jan 2008 02:02:40 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 118C03566;
+	Mon, 21 Jan 2008 02:02:35 -0500 (EST)
+In-Reply-To: <7vd4rv3ds5.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 20 Jan 2008 22:15:22 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71233>
 
-On Sun, Jan 20, 2008 at 07:20:54PM +0000, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Sun, 20 Jan 2008, Martin Koegler wrote:
->=20
-> > +	if (!commit->date)
-> > +		return objerror(&commit->object, "invalid author/commiter line i=
-n %s",
->=20
-> s/commiter/committer/
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks. Will change in next version.
-
-> It makes me wonder, though, if that's correct.  AFAICT it is the comm=
-itter=20
-> date, and the rest of the line _might_ be just fine.
+> It's a Heisenbug.  I actually merged it to 'next' but rewound it
+> before pushing the result out after seeing a breakage.
 >
-> Why not be less intrusive and just change the printf() into a return=20
-> objerror(), like the commit message suggests?
+> "make clean test" to run everything through sometimes fails and
+> immediately after that when I do "cd t && sh t75??-???.sh -i -v"
+> it happily runs through the end.
+>
+> I'll be back with more details when I have some.
 
-parse_commit_date returns zero, if
-* the author line is missing
-* the author line is not terminated with \n
-* the committer line is missing
-* the committer line does not contain >
-* the > is not followed by a number bigger than zero
-* the commiter line is not terminated with \n
+In t7501-commit.sh, "partial commit that involves removal (1)"
+test, it _sometimes_ fails.
 
-So, in my option the message "bad commit date in %s" is incorrect/misle=
-ading.
+    test_expect_success 'partial commit that involves removal (1)' '
 
-fsck_commit could be further simplified:
+        git rm --cached file &&
+        mv file elif &&
+        git add elif &&
+        git diff-index --name-status HEAD >changes &&
+        git commit -m "Partial: add elif" elif &&
+        git diff-tree --name-status HEAD^ HEAD >current &&
+        echo "A     elif" >expected &&
+        diff expected current
 
-//  If tree is missing, parse_commit should return zero =3D> fsck_commi=
-t would not be called=20
--        if (memcmp(buffer, "tree ", 5))
--                return objerror(&commit->object, "invalid format - exp=
-ected 'tree' line");
-//  If sha1 is missing/incorrect, parse_commit should return zero =3D> =
-fsck_commit would not be called=20
--        if (get_sha1_hex(buffer+5, tree_sha1) || buffer[45] !=3D '\n')
--                return objerror(&commit->object, "invalid 'tree' line =
-format - bad sha1");
-         buffer +=3D 46;
-         while (!memcmp(buffer, "parent ", 7)) {
-//  If sha1 is missing/incorrect, parse_commit should return zero =3D> =
-fsck_commit would not be called=20
--                if (get_sha1_hex(buffer+7, sha1) || buffer[47] !=3D '\=
-n')
--                        return objerror(&commit->object, "invalid 'par=
-ent' line format - bad sha1");
-                buffer +=3D 48;
-         }
-         if (memcmp(buffer, "author ", 7))
-                 return objerror(&commit->object, "invalid format - exp=
-ected 'author' line");
+    '
 
-I'm not sure, if this 6 lines should be dropped too.
+It removes "file" from the index, adds "elif" to the index, and
+tries to commit _only_ the addition of "elif" without recording
+the removal of "file" (I added "diff-index" above to see where
+it fails, its presense or absense does not change the bug, and
+it shows that both addition of elif and removal of file are in
+the index).
 
-The memcmp(buffer, "author ", 7) check is already done by
-(!commit->date), but I prefer to keep it, as further committer/author
-line checks can be based on it.
-
-mfg Martin K=F6gler
-PS:
-While writting this mail, I noticed that parse_object_buffer does not
-check the return value of parse_XX_buffer. I'll send a patch, which
-correct this.
+When the test fails, the resulting commit however does not
+record the addition of elif.  The commit records the same tree
+as its parent instead.  The index that is left has "elif" but
+not "file" (iow, it records the expected state after such a
+partial commit).
