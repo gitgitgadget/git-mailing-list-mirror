@@ -1,45 +1,188 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Time to flush Mr. Hammano?
-Date: Mon, 21 Jan 2008 03:42:21 -0800
-Message-ID: <7vprvvxv4y.fsf@gitster.siamese.dyndns.org>
-References: <e5bfff550801200210y212d0921x214773596810be52@mail.gmail.com>
-	<20070624192215@qkholland.gmail.com>
-	<86wsq3pg0q.fsf@lola.quinscape.zz>
+From: Mark Junker <mjscod@web.de>
+Subject: Re: [PATCH] Use FIX_UTF8_MAC to enable conversion from UTF8-MAC to
+ UTF8
+Date: Mon, 21 Jan 2008 12:43:45 +0100
+Message-ID: <fn20he$c4e$1@ger.gmane.org>
+References: <fn1nl6$ek5$1@ger.gmane.org> <fn1pj9$kkg$1@ger.gmane.org>	<fn1ptk$ljj$1@ger.gmane.org> <fn1q6b$ljj$2@ger.gmane.org>	<7vve5nzdqx.fsf@gitster.siamese.dyndns.org>	<fn1sk4$uh4$1@ger.gmane.org> <7vejcbzbge.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jan 21 12:43:03 2008
+Content-Type: multipart/mixed;
+ boundary="------------080404070304090502010406"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 21 12:44:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGv3O-0001Xj-5w
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 12:43:02 +0100
+	id 1JGv4k-0001sz-TP
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 12:44:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753058AbYAULmd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 06:42:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753067AbYAULmd
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 06:42:33 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36644 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751668AbYAULmc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 06:42:32 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 22D0E43E1;
-	Mon, 21 Jan 2008 06:42:31 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C44C043E0;
-	Mon, 21 Jan 2008 06:42:27 -0500 (EST)
-In-Reply-To: <86wsq3pg0q.fsf@lola.quinscape.zz> (David Kastrup's message of
-	"Mon, 21 Jan 2008 12:36:05 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753322AbYAULn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 06:43:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752233AbYAULn5
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 06:43:57 -0500
+Received: from main.gmane.org ([80.91.229.2]:39192 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752013AbYAULn4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 06:43:56 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JGv48-00083h-Kq
+	for git@vger.kernel.org; Mon, 21 Jan 2008 11:43:48 +0000
+Received: from 80.146.179.234 ([80.146.179.234])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 11:43:48 +0000
+Received: from mjscod by 80.146.179.234 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 11:43:48 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 80.146.179.234
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X; de; rv:1.8.1.9) Gecko/20071031 Thunderbird/2.0.0.9 Mnenhy/0.7.5.0
+In-Reply-To: <7vejcbzbge.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71271>
 
-Please stop feeding a troll already.
+This is a multi-part message in MIME format.
+--------------080404070304090502010406
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Junio C Hamano schrieb:
+
+> You memcpy() what the library gave you in *result to the
+> statically allocated "temp".  d_name[] in "temp" comes from the
+> structure definition in the user visible include file, which
+> could be much shorter than what the library gave you in *result.
+> The structure definition I showed in my message you are
+> responding to illustrates the issue.  If MacOS uses a similar
+> trick to define d_name[256] and sometimes returns much longer
+> name in *result, you are truncating the name by copying only the
+> first part of the structure and first 256 bytes of d_name[]. 
+
+Now I understand what you mean. Ok, I'll try to change this and make 
+this work on other platforms too.
+
+I didn't know that the readdir function is allowed to return something 
+longer for d_name than the specified length.
+
+Regards,
+Mark
+
+
+--------------080404070304090502010406
+Content-Type: multipart/appledouble;
+ boundary="------------ad090101050909050006030208"; x-mac-type="0"; x-mac-creator="0";
+ name="0001-Use-FIX_UTF8_MAC-to-enable-conversion-from-UTF8-MAC.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename*0="0001-Use-FIX_UTF8_MAC-to-enable-conversion-from-UTF8-MAC.pat";
+ filename*1="ch"
+
+--------------ad090101050909050006030208
+Content-Type: application/applefile
+Content-Transfer-Encoding: base64
+
+BxYFAAAAAgAAAAAAAAAAAAAAAAAAAAAABQADAAAAVgAAAB8AAAAJAAAAdQAAACAAAAAIAAAA
+lQAAABAAAAAEAAAApQAAAAAAAAACAAAApQAAADoFAAAwMDAxLVVzZS1GSVhfVVRGOF8jN0Ix
+QTQwLnBhdGNoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACDTScPkE8nDwAMbUsB
+UCcPAAABAAAABQgAAAQIAAAAMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAQAAAAeL0Fw
+cGxpY2F0aW9ucy9TdWJFdGhhRWRpdC5hcHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdAAAAOgAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAdAAAAOgAAAFcAAABX
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAdAAAAOgAA
+AFcAAABXAAAAVwAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAd
+AAAAOgAAAFcAAABXAAAAVwAAAFcAAABXAAAAVwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAHQAAAFYAAABWAAAAVgAAAFYAAABWAAAAVgAAAFYAAABWAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAADoAAABWAAAAVwAAAFYAAABWAAAAVgAA
+AFYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB0AAAA5
+AAAAVgAAAFcAAABXAAAAVwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAdAAAAOQAAAFYAAABWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAADkAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA
+AAUIAAAECAAAADKsYFoAFgEAAAAcADIAAHVzcm8AAAAKAAD//wAAAAAo9l8A
+
+--------------ad090101050909050006030208
+Content-Type: application/octet-stream; name="0001-Use-FIX_UTF8_#7B1A40.patch"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline; filename="0001-Use-FIX_UTF8_#7B1A40.patch"
+
+RnJvbSAyMzlkZTgzNGE0ZDY3YjQxNzZhOGRiZjU1MDRmYTJmMzM1OTg5YWFhIE1vbiBTZXAg
+MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBNYXJrIEp1bmtlciA8bWpzY29kQHdlYi5kZT4KRGF0
+ZTogU3VuLCAyMCBKYW4gMjAwOCAxNjo1OTozMiArMDEwMApTdWJqZWN0OiBbUEFUQ0hdIFVz
+ZSBGSVhfVVRGOF9NQUMgdG8gZW5hYmxlIGNvbnZlcnNpb24gZnJvbSBVVEY4LU1BQyB0byBV
+VEY4CgpTaWduZWQtb2ZmLWJ5OiBNYXJrIEp1bmtlciA8bWpzY29kQHdlYi5kZT4KLS0tCiBN
+YWtlZmlsZSAgICAgICAgICB8ICAgIDUgKysrKysKIGNvbXBhdC9yZWFkZGlyLmMgIHwgICAz
+MCArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysKIGdpdC1jb21wYXQtdXRpbC5oIHwg
+ICAgNSArKysrKwogc2V0dXAuYyAgICAgICAgICAgfCAgIDEyICsrKysrKysrKysrKwogNCBm
+aWxlcyBjaGFuZ2VkLCA1MiBpbnNlcnRpb25zKCspLCAwIGRlbGV0aW9ucygtKQoKZGlmZiAt
+LWdpdCBhL01ha2VmaWxlIGIvTWFrZWZpbGUKaW5kZXggNWFhYzBjMC4uZTU1OTE0ZSAxMDA2
+NDQKLS0tIGEvTWFrZWZpbGUKKysrIGIvTWFrZWZpbGUKQEAgLTQxNyw2ICs0MTcsNyBAQCBp
+ZmVxICgkKHVuYW1lX1MpLERhcndpbikKIAllbmRpZgogCU5PX1NUUkxDUFkgPSBZZXNQbGVh
+c2UKIAlOT19NRU1NRU0gPSBZZXNQbGVhc2UKKwlGSVhfVVRGOF9NQUMgPSBZZXNQbGVhc2UK
+IGVuZGlmCiBpZmVxICgkKHVuYW1lX1MpLFN1bk9TKQogCU5FRURTX1NPQ0tFVCA9IFllc1Bs
+ZWFzZQpAQCAtNjE2LDYgKzYxNywxMCBAQCBpZmRlZiBOT19TVFJMQ1BZCiAJQ09NUEFUX0NG
+TEFHUyArPSAtRE5PX1NUUkxDUFkKIAlDT01QQVRfT0JKUyArPSBjb21wYXQvc3RybGNweS5v
+CiBlbmRpZgoraWZkZWYgRklYX1VURjhfTUFDCisJQ09NUEFUX0NGTEFHUyArPSAtREZJWF9V
+VEY4X01BQworCUNPTVBBVF9PQkpTICs9IGNvbXBhdC9yZWFkZGlyLm8KK2VuZGlmCiBpZmRl
+ZiBOT19TVFJUT1VNQVgKIAlDT01QQVRfQ0ZMQUdTICs9IC1ETk9fU1RSVE9VTUFYCiAJQ09N
+UEFUX09CSlMgKz0gY29tcGF0L3N0cnRvdW1heC5vCmRpZmYgLS1naXQgYS9jb21wYXQvcmVh
+ZGRpci5jIGIvY29tcGF0L3JlYWRkaXIuYwpuZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRleCAw
+MDAwMDAwLi45NmE3MjRhCi0tLSAvZGV2L251bGwKKysrIGIvY29tcGF0L3JlYWRkaXIuYwpA
+QCAtMCwwICsxLDMwIEBACisjaW5jbHVkZSAiLi4vZ2l0LWNvbXBhdC11dGlsLmgiCisjaW5j
+bHVkZSAiLi4vdXRmOC5oIgorCisjdW5kZWYgcmVhZGRpcgorCitzdGF0aWMgc3RydWN0IGRp
+cmVudCAqdGVtcF9kaXJlbnQgPSBOVUxMOworc3RhdGljIHNpemVfdCB0ZW1wX2RpcmVudF9s
+ZW5ndGggPSAwOworCitzdHJ1Y3QgZGlyZW50ICpnaXRyZWFkZGlyKERJUiAqZGlycCkKK3sK
+KwlzdHJ1Y3QgZGlyZW50ICpyZXN1bHQgPSByZWFkZGlyKGRpcnApOworCWlmIChyZXN1bHQg
+IT0gTlVMTCkgeworCQljaGFyICp1dGY4ID0gcmVlbmNvZGVfc3RyaW5nKHJlc3VsdC0+ZF9u
+YW1lLCAiVVRGOCIsICJVVEY4LU1BQyIpOworCQlpZiAodXRmOCAhPSBOVUxMKSB7CisJCQlz
+aXplX3QgdXRmOF9sZW4gPSBzdHJsZW4odXRmOCk7CisJCQkvKiBDcmVhdGUgYSBjb3B5IG9m
+IHRoZSBkaXJlbnQgZGF0YSBvbmx5IGlmIGNvbnZlcnNpb24gaXMgcG9zc2libGUuICovCisJ
+CQlpZiAocmVzdWx0LT5kX3JlY2xlbiA+IHRlbXBfZGlyZW50X2xlbmd0aCkgeworCQkJCS8q
+IEVuc3VyZSB0aGF0IHRoZSBidWZmZXIgaXMgbGFyZ2UgZW5vdWdoIGFuZCBhdm9pZAorCQkJ
+CSAqIHRvbyBtdWNoIGFsbG9jYXRpb25zLiAqLworCQkJCXRlbXBfZGlyZW50X2xlbmd0aCA9
+IHJlc3VsdC0+ZF9yZWNsZW47CisJCQkJdGVtcF9kaXJlbnQgPSByZWFsbG9jKHRlbXBfZGly
+ZW50LCB0ZW1wX2RpcmVudF9sZW5ndGgpOworCQkJfQorCQkJbWVtY3B5KHRlbXBfZGlyZW50
+LCByZXN1bHQsIHJlc3VsdC0+ZF9yZWNsZW4pOworCQkJbWVtY3B5KHRlbXBfZGlyZW50LT5k
+X25hbWUsIHV0ZjgsIHV0ZjhfbGVuICsgMSk7CisJCQlmcmVlKHV0ZjgpOworCQkJcmVzdWx0
+ID0gdGVtcF9kaXJlbnQ7CisJCX0KKwl9CisJcmV0dXJuIHJlc3VsdDsKK30KZGlmZiAtLWdp
+dCBhL2dpdC1jb21wYXQtdXRpbC5oIGIvZ2l0LWNvbXBhdC11dGlsLmgKaW5kZXggYjZlZjU0
+NC4uY2QwMjMzZCAxMDA2NDQKLS0tIGEvZ2l0LWNvbXBhdC11dGlsLmgKKysrIGIvZ2l0LWNv
+bXBhdC11dGlsLmgKQEAgLTIwMiw2ICsyMDIsMTEgQEAgdm9pZCAqZ2l0bWVtbWVtKGNvbnN0
+IHZvaWQgKmhheXN0YWNrLCBzaXplX3QgaGF5c3RhY2tsZW4sCiAgICAgICAgICAgICAgICAg
+Y29uc3Qgdm9pZCAqbmVlZGxlLCBzaXplX3QgbmVlZGxlbGVuKTsKICNlbmRpZgogCisjaWZk
+ZWYgRklYX1VURjhfTUFDCisjZGVmaW5lIHJlYWRkaXIgZ2l0cmVhZGRpcgorc3RydWN0IGRp
+cmVudCAqZ2l0cmVhZGRpcihESVIgKmRpcnApOworI2VuZGlmCisKICNpZmRlZiBfX0dMSUJD
+X1BSRVJFUQogI2lmIF9fR0xJQkNfUFJFUkVRKDIsIDEpCiAjZGVmaW5lIEhBVkVfU1RSQ0hS
+TlVMCmRpZmYgLS1naXQgYS9zZXR1cC5jIGIvc2V0dXAuYwppbmRleCBhZGVkZTE2Li40Y2Vj
+MjhiIDEwMDY0NAotLS0gYS9zZXR1cC5jCisrKyBiL3NldHVwLmMKQEAgLTEsNSArMSw4IEBA
+CiAjaW5jbHVkZSAiY2FjaGUuaCIKICNpbmNsdWRlICJkaXIuaCIKKyNpZmRlZiBGSVhfVVRG
+OF9NQUMKKyNpbmNsdWRlICJ1dGY4LmgiCisjZW5kaWYKIAogc3RhdGljIGludCBpbnNpZGVf
+Z2l0X2RpciA9IC0xOwogc3RhdGljIGludCBpbnNpZGVfd29ya190cmVlID0gLTE7CkBAIC0x
+MzEsNiArMTM0LDE1IEBAIGNvbnN0IGNoYXIgKipnZXRfcGF0aHNwZWMoY29uc3QgY2hhciAq
+cHJlZml4LCBjb25zdCBjaGFyICoqcGF0aHNwZWMpCiAJcCA9IHBhdGhzcGVjOwogCXByZWZp
+eGxlbiA9IHByZWZpeCA/IHN0cmxlbihwcmVmaXgpIDogMDsKIAlkbyB7CisjaWZkZWYgRklY
+X1VURjhfTUFDCisJCS8qIFJlZW5jb2RlIGFzIFVURjggKGNvbXBvc2VkKSB0byBoYXZlIGEg
+Y291bnRlcnBhcnQgZm9yIHRoZQorCQkgKiByZWFkZGlyLXJlcGxhY2VtZW50IG9uIE1hY09T
+IFguCisJCSAqLworCQljaGFyICp1dGY4ID0gcmVlbmNvZGVfc3RyaW5nKGVudHJ5LCAiVVRG
+OCIsICJVVEY4LU1BQyIpOworCQlpZiAodXRmOCAhPSBOVUxMKSB7CisJCQllbnRyeSA9IHV0
+Zjg7CisJCX0KKyNlbmRpZgogCQkqcCA9IHByZWZpeF9wYXRoKHByZWZpeCwgcHJlZml4bGVu
+LCBlbnRyeSk7CiAJfSB3aGlsZSAoKGVudHJ5ID0gKisrcCkgIT0gTlVMTCk7CiAJcmV0dXJu
+IChjb25zdCBjaGFyICoqKSBwYXRoc3BlYzsKLS0gCjEuNS40LnJjMy4zOC5nODE2NgoK
+
+--------------ad090101050909050006030208--
+
+
+--------------080404070304090502010406--
