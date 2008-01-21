@@ -1,74 +1,112 @@
-From: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.4-rc4
-Date: Mon, 21 Jan 2008 23:22:22 +0100
-Message-ID: <BB330DC7-9F38-4D41-85A2-D475701B6083@zib.de>
-References: <7vsl13wmas.fsf@gitster.siamese.dyndns.org> <7vsl0r3nvc.fsf@gitster.siamese.dyndns.org>
-Reply-To: prohaska-wjoc1KHpMeg@public.gmane.org
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-To: Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Mon Jan 21 23:22:10 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from ag-out-0910.google.com ([72.14.246.187])
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Mon, 21 Jan 2008 14:34:32 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801211407130.2957@woody.linux-foundation.org>
+References: <478E1FED.5010801@web.de> <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org> <478F99E7.1050503@web.de> <alpine.LFD.1.00.0801171017460.14959@woody.linux-foundation.org> <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org>
+ <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org> <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se> <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org> <Pine.LNX.4.64.0801211509490.17095! @ds9.cixit.se> <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org>
+ <alpine.LFD.1.00.0801! 210934400.2957@woody.linux-foundation.org> <C6C0E6A1-053B-48CE-90B3-8FFB44061C3B@sb.org> <alpine.LFD.1.00.08! 01211129130.2957@woody.linux-foundation.org> <373E260A-6786-4932-956A-68706AA7C469@sb.org> <alpine.LFD.1.00.!
+ 0801211210270.2957@woody.linux-foundation.org> <7EB98659-4036-45DA-BD50-42CB23ED517A@sb.org> <alpine.LFD.1.0! 0.0801211323120.2957@woody.linux-foundation.org> <C373E12A-2AC4-4961-833A-7D51584143C9@sb.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Peter Karlsson <peter@softwolves.pp.se>,
+	Mark Junker <mjscod@web.de>,
+	Pedro Melo <melo@simplicidade.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Mon Jan 21 23:36:00 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH51r-0004bN-RU
-	for gcvm-msysgit@m.gmane.org; Mon, 21 Jan 2008 23:22:09 +0100
-Received: by ag-out-0910.google.com with SMTP id 32so2643766agc.3
-        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Jan 2008 14:21:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=UKnQATcxbMjE8W3ss3H1CgRw6RSJl4ujBd+9PJ42F6Y=;
-        b=GFHMZJBFx48+Kr1O/qXLOk7A/Dcg2se/wWS4CKGR/g5dDCzZ5SOc9KPan5dCGqwUjf5NemKGneUpHHvUvjKW3mVwwdMIhsVdzZTD5yc+IV4xsiYB0q9xhXUWa/bwQPecZHXAEHvd6X6hFSQ93pfWQZOKW12WyuJTAY4ZcW7wnuo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=j7a/Ej9JOOK6jjRBuxYfRvt1VOywfTVt6swlXUbXHaPibmPtKWJGwOsLI4FSPC6Fll16tjBbNCHATbAxKJ6XrpC2GRC1TA360B2/9wlCm5J9bR1UbL2mlIbCSoFiw6rLvCL1bi/afQe8mzBfrfWzxYcgc3O4sfxJQ5LBAhm3tpI=
-Received: by 10.151.6.2 with SMTP id j2mr237563ybi.22.1200954084165;
-        Mon, 21 Jan 2008 14:21:24 -0800 (PST)
-Received: by 10.106.73.1 with SMTP id v1gr1447pra;
-	Mon, 21 Jan 2008 14:21:24 -0800 (PST)
-X-Sender: prohaska-wjoc1KHpMeg@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.114.12.9 with SMTP id 9mr1634661wal.19.1200954083516; Mon, 21 Jan 2008 14:21:23 -0800 (PST)
-Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id h49si3119785nzf.5.2008.01.21.14.21.22; Mon, 21 Jan 2008 14:21:23 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
-Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) smtp.mail=prohaska-wjoc1KHpMeg@public.gmane.org
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0LMLLHM003056; Mon, 21 Jan 2008 23:21:21 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db939bb.pool.einsundeins.de [77.185.57.187]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0LMLJfQ023319 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO); Mon, 21 Jan 2008 23:21:20 +0100 (MET)
-In-Reply-To: <7vsl0r3nvc.fsf-jO8aZxhGsIagbBziECNbOZn29agUkmeCHZ5vskTnxNA@public.gmane.org>
-X-Mailer: Apple Mail (2.753)
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1JH5FD-00015T-Ix
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 23:35:56 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754082AbYAUWfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 17:35:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752616AbYAUWfO
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 17:35:14 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:43408 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752158AbYAUWfM (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 17:35:12 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0LMYXpF031095
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 21 Jan 2008 14:34:34 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0LMYWhj023374;
+	Mon, 21 Jan 2008 14:34:32 -0800
+In-Reply-To: <C373E12A-2AC4-4961-833A-7D51584143C9@sb.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.723 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71358>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71359>
 
 
 
-On Jan 21, 2008, at 3:37 AM, Junio C Hamano wrote:
+On Mon, 21 Jan 2008, Kevin Ballard wrote:
+> 
+> I'm really surprised that, after all of this, you're still horribly
+> misunderstanding my argument. I never said it was invisible. NEVER.
 
-> The fourth rc for the next feature release GIT 1.5.4 is available
-> at the usual places:
+You said it was invisible when you treat things "as text". Here's the 
+quote:
 
-The matching msysgit setup is available at
+	.. when you treat filenames as text, it DOESN'T MATTER if the 
+ 	string gets normalized ..
 
-   http://code.google.com/p/msysgit/downloads/
+Without ever apparently realizing that "as text" is part of the problem in 
+itself. What is "text" to one person is gibberish to another.
 
-Commands that are not yet supported on Windows are no longer
-included in the setup.  If you find any commands that should
-not be included, please report this to the msysgit list.
+In particular, the biggest reason to not normalize is that you don't know 
+it's text or Unicode in the first place. Which is why git doesn't do it.
 
-I haven't pushed the branches because repo.or.cz seems to have
-problems.
+And no, even with filenames you don't know that they are "text". People 
+encode stuff in them. And people don't always use UTF-8. 
 
-	Steffen
+Of course, you could ask everybody to create OS X-only programs that know 
+that under OS X, you only have a subset of filenames. If so, you're 
+complaining about the wrong tool. Especially when the whole point of the 
+tool was to be distributed (not to mention coming from an environment that 
+simply doesn't have the same silly limitations OS X has).
+
+So here's a few clues:
+
+ - "as text" isn't "as unicode": it may well be Latin1 or EUC-JP or
+   something. Yes, it's still used. Git doesn't care, and very consciously 
+   has avoided forcing character sets, even if the *default* (and notice 
+   how it's overridable) commit message encoding may be utf-8.
+
+ - In fact, even in unicode, the difference between "identical" and 
+   "equivalent" strings exists, and even in the standard, unicode 
+   strings are very much defined to be arbitrary codepoint sequences, not 
+   normalized.
+
+So even for the very specific case of unicode text, it's simply not true 
+that "it doesn't matter if the string gets normalized". The unicode spec 
+itself talks about cases where even canonical normalization makes a 
+difference.
+
+Search for this quote:
+
+  "Not all processes are required to respect canonical equivalence. For 
+   example:
+
+    * A function that collects a set of the General_Category values 
+      present in a string will and should produce a different value for 
+      <angstrom sign, semicolon> than for <A, combining ring above, greek 
+      question mark>, even though they are canonically equivalent.
+    * A function that does a binary comparison of strings will also find 
+      these two sequences different."
+
+and notice that first case. Even things that are *very*much* aware of 
+Unicode text do actually have cases where canonical equivalence doesn't 
+mean crud.
+
+		Linus
