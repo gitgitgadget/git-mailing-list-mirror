@@ -1,81 +1,82 @@
-From: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
-Subject: Re: =?ISO-8859-15?Q?=5BANNOUNCE=5D?= GIT 1.5.4-rc4
-Date: Mon, 21 Jan 2008 14:16:40 +0100
-Message-ID: <1JGwW0-0NMsgy0@fwd27.aul.t-online.de>
-References: <1JGuDL-2AugiG0@fwd26.aul.t-online.de>
- <7vy7ajxvji.fsf@gitster.siamese.dyndns.org>
-Reply-To: "MichaelTiloDressel@t-online.de" <MichaelTiloDressel@t-online.de>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: Time to flush Mr. Hammano?
+Date: Mon, 21 Jan 2008 15:18:53 +0200
+Message-ID: <47949BBD.6060308@dawes.za.net>
+References: <e5bfff550801200210y212d0921x214773596810be52@mail.gmail.com> <20070624192215@qkholland.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 21 14:19:05 2008
+Cc: gi mailing list <git@vger.kernel.org>
+To: Quim K Holland <qkholland@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 14:22:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGwYL-0004Gy-ES
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 14:19:05 +0100
+	id 1JGwbG-0005BG-Sb
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 14:22:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752080AbYAUNSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 08:18:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751981AbYAUNSf
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 08:18:35 -0500
-Received: from mailout07.sul.t-online.de ([194.25.134.83]:40350 "EHLO
-	mailout07.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751504AbYAUNSf (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 08:18:35 -0500
-Received: from fwd27.aul.t-online.de 
-	by mailout07.sul.t-online.com with smtp 
-	id 1JGwWK-0001Xn-00; Mon, 21 Jan 2008 14:17:00 +0100
-Received: from localhost (bpsG94ZOrhbtbwz5owAi9DutXsMRvKJfG9hfnIgTs6PS55YTAHjOpIOR0E65KAhgPC@[172.20.101.250]) by fwd27.aul.t-online.de
-	with esmtp id 1JGwW0-0NMsgy0; Mon, 21 Jan 2008 14:16:40 +0100
-In-Reply-To: <7vy7ajxvji.fsf@gitster.siamese.dyndns.org>
-X-UMS: email
-X-Mailer: TOI Kommunikationscenter V9-1-3
-X-ID: bpsG94ZOrhbtbwz5owAi9DutXsMRvKJfG9hfnIgTs6PS55YTAHjOpIOR0E65KAhgPC@t-dialin.net
-X-TOI-MSGID: 2d0713e3-ff13-46a2-bc7d-1fb4b7bffce4
+	id S1752255AbYAUNVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 08:21:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752245AbYAUNVh
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 08:21:37 -0500
+Received: from hapkido.dreamhost.com ([66.33.216.122]:42373 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751818AbYAUNVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 08:21:37 -0500
+Received: from spunkymail-a9.g.dreamhost.com (sd-green-bigip-145.dreamhost.com [208.97.132.145])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id 3478E179E90
+	for <git@vger.kernel.org>; Mon, 21 Jan 2008 05:21:36 -0800 (PST)
+Received: from [192.168.201.100] (dsl-146-26-189.telkomadsl.co.za [165.146.26.189])
+	by spunkymail-a9.g.dreamhost.com (Postfix) with ESMTP id 0B70821268;
+	Mon, 21 Jan 2008 05:20:03 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <20070624192215@qkholland.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71281>
 
+Quim K Holland wrote:
+> "Marco Costalba" <mcostalba@gmail.com> wrote:
+> 
+> Reading mailing list threads it is becoming common these days to hear
+>  about contributors with patches ready to be sent as soon as 1.5.4 is
+>  out.
+> 
+> Would be a good idea to open a new branch new_stuff as a target for 
+> this pending stuff?
+> 
+> Back when Mr. Torvalds was still leading the development there was
+> not this stupid stability freeze and many useful patches were
+> accepted every day.  For the past few months Mr. Hammano has not been
+> adding much useful code himself, did not join interesting discussions
+> such as Unicode normalization issues, nor gave much useful comments
+> on patches. He has mostly been busy rejecting useful patches and
+> sending not so useful comments.
+> 
+> Can we vote Mr. Hammano out and ask Mr. Torvalds to come back as the
+> project leader?  I do not mean any disrespect to Mr. Hammano, but
+> don't people think he outlived his usefulness as the project leader?
 
+That's Mr Hamano (one 'm'), and personally, I think that only when you 
+have contributed to this project yourself, would you have a leg to stand 
+on when you criticise him.
 
-From: Junio C Hamano 
- 
->Michael Dressel writes:
+As an observer, I think that Junio is doing a superb job of managing the 
+sometimes quite torrential flow of patches contributed to git. As Linus 
+himself has often said (Paraphrased, of course):
 
->> Concerning RPM specs.
->>
->> I created rpm packages on a x86_64 SuSE 10.3 system.
->>
->> There were two complains about unmatched dependencies for expat-devel
->> and perl(Error)
->> I could not get rid off.
->
->Thanks.
->
->perl-error and expat-devel are both packaged outside git.
->Aren't they listed in dependencies?  At least I think
->expat-devel is on the build dependency.
+The role of the maintainer is often more to *reject* patches than to 
+accept them, so as to maintain the quality of the code base.
 
->Our Makefile tries to install our own copy of perl::Error if the
->build platform does not have one, which we do not want to do
->when building a binary package.  Perhaps perl-error needs to be
->on the build dependency to deal with this issue?  I dunno, as I
->am not an RPM person.
+Having said that, the amount of *constructive* criticism that 
+accompanies those rejections is amazing. Often I have seen multiple 
+pages of response to a 2 line patch, so that the contributor (and other 
+observers) can better understand the reason for the rejection, and how 
+to construct a better patch that would be accepted.
 
-The packages are in the dependency list. Only that they are
-not installed (under the name given in the dependency list)
-on my system. Nevertheless the build and install
-and some simple tests work well.
+Regards,
 
-For perl(Error) you have explained why it works. For openssh-client
-I guess that things may be provided by packages
-named differently. This is probably only an issue with SuSE.
-
-Cheers,
-Michael
+Rogan
