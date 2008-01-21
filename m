@@ -1,102 +1,96 @@
-From: Theodore Tso <tytso@MIT.EDU>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Mon, 21 Jan 2008 16:18:02 -0500
-Message-ID: <20080121211802.GH29792@mit.edu>
-References: <Pine.LNX.4.64.0801211509490.17095!@ds9.cixit.se> <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org> <alpine.LFD.1.00.0801210934400.2957@woody.linux-foundation.org> <C6C0E6A1-053B-48CE-90B3-8FFB44061C3B@sb.org> <20080121195703.GE29792@mit.edu> <998717B0-0165-4383-AAB8-33BD2A49954E@sb.org> <20080121201530.GF29792@mit.edu> <8F85366A-C990-47B1-BF60-936185B9E438@sb.org> <20080121204614.GG29792@mit.edu> <6E303071-82A4-4D69-AA0C-EC41168B9AFE@sb.org>
+Date: Tue, 22 Jan 2008 10:17:45 +1300
+Message-ID: <46a038f90801211317v4902ffd3ic8ccc35f8df72bd9@mail.gmail.com>
+References: <478E1FED.5010801@web.de>
+	 <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org>
+	 <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org>
+	 <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se>
+	 <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org>
+	 <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org>
+	 <C6C0E6A1-053B-48CE-90B3-8FFB44061C3B@sb.org>
+	 <373E260A-6786-4932-956A-68706AA7C469@sb.org>
+	 <alpine.LFD.1.00.0801211210270.2957@woody.linux-foundation.org>
+	 <7EB98659-4036-45DA-BD50-42CB23ED517A@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Peter Karlsson <peter@softwolves.pp.se>,
-	Mark Junker <mjscod@web.de>,
-	Pedro Melo <melo@simplicidade.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Peter Karlsson" <peter@softwolves.pp.se>,
+	"Mark Junker" <mjscod@web.de>,
+	"Pedro Melo" <melo@simplicidade.org>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Mon Jan 21 22:19:25 2008
+To: "Kevin Ballard" <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Mon Jan 21 22:19:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH439-0007em-3z
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 22:19:23 +0100
+	id 1JH437-0007em-54
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 22:19:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758524AbYAUVSm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 16:18:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759661AbYAUVSl
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 16:18:41 -0500
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:46855 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759613AbYAUVSk (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 16:18:40 -0500
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m0LLI4v4027668;
-	Mon, 21 Jan 2008 16:18:04 -0500 (EST)
-Received: from closure.thunk.org (c-76-19-244-124.hsd1.ma.comcast.net [76.19.244.124])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m0LLI2oA000437
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 21 Jan 2008 16:18:03 -0500 (EST)
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@mit.edu>)
-	id 1JH41q-00083E-Go; Mon, 21 Jan 2008 16:18:02 -0500
+	id S1758949AbYAUVRt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jan 2008 16:17:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757498AbYAUVRs
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 16:17:48 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:51868 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757176AbYAUVRr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 16:17:47 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so955668ugc.16
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 13:17:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=7Ek1ye0VsBHMnO6a9McbZ/xfFe+UqMcp8Wiq1EesqWk=;
+        b=RGmzKupJMe7j7CN/8403pALumhIcXlkMryywsKmSPrrkRAOKOaaa/QQoHdz30EaXm/zeMQswu/S8iTuuB0yYDhgGC+b8jZFo0tmeduAZ49NZdO6wHukdQolDT60WlAsU4zy9hby0qUFIqndetzvvC4w437nMnAndwv8kMrgRIxk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Fbqisyu2/RhgnNxHB487oX6/WOpGtHDNU6vstIhSWzMkp4nDJpvvQmO7dhRUkt75Zaft1irjly40f1ohEwIaIXyZCzxvAbVrHpUXoBA9UWqfKiK0V5SJY+pqiAm1iDip6bDdHD6F9xsitrm4Wsiu/uW8jW0VBqVsEDs1kygajvc=
+Received: by 10.66.219.11 with SMTP id r11mr5295015ugg.31.1200950265373;
+        Mon, 21 Jan 2008 13:17:45 -0800 (PST)
+Received: by 10.66.252.2 with HTTP; Mon, 21 Jan 2008 13:17:45 -0800 (PST)
+In-Reply-To: <7EB98659-4036-45DA-BD50-42CB23ED517A@sb.org>
 Content-Disposition: inline
-In-Reply-To: <6E303071-82A4-4D69-AA0C-EC41168B9AFE@sb.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71343>
 
-On Mon, Jan 21, 2008 at 03:58:03PM -0500, Kevin Ballard wrote:
-> You're making the huge assumption that the HFS+ normalization algorithms 
-> will change. As the technote states:
+On Jan 22, 2008 9:53 AM, Kevin Ballard <kevin@sb.org> wrote:
+> On Jan 21, 2008, at 3:33 PM, Linus Torvalds wrote:
+> > Umm. What's this inability to see that data is data is data?
 >
-> "Platform algorithms tend to evolve with the Unicode standard. The HFS Plus 
-> algorithms cannot evolve because such evolution would invalidate existing 
-> HFS Plus volumes."
+> I'm not sure what you mean. I stated a fact - at least on OS X, the
+> filename does not contribute to the listed filesize, so changing the
+> encoding of the filename doesn't change the filesize. This isn't a
+> philosophical point, it's a factual statement.
 
-Great, so even worse.  Does the tech note then specify exactly what
-version of Unicode HFS+ is using to do its "normalization"?  Or
-exactly what characters it will normalize?  After all, Unicode has
-added all sorts of characters since 1998, and I'm sure some of them
-were combining characters.
+Kevin,
 
-And you *really* want to continue argue that a sane thing for a
-cross-platform system to do is to pervert its hash algorithm to take
-into account *one* particular OS that happened to freeze a
-normalization algorithm at some arbitrary point in time, approximately
-nine years ago?  Talk about the tail wagging the dog!!  Especially
-when you can't even justify why it was done nine years ago!
+as you might know, Linus' "other hobby" is to write kernels ;-) From
+taht POV, a filename is as much data as the data in the file. Doing
+odd things like sorting it, searching through it, etc, is all work for
+code higher in the stack that is free to mangle the data in any way it
+wants, including creating nice case-insensitive indexes, and
+who-knows-what for ideogram-based languages. In contrast, the core OS
+treats user data a sacred stuff, and I'm thankful it does.
 
-> It must have bought somebody something, or they never would have done it.
+And from a kernel/filesystem POV, a directory is also a file. So if a
+filename has a different number of octets, the directory will be
+different.
 
-Your faith in the HFS+ designers is touching.
+=46or all the searching and matching, it really makes sense to have
+something like locate or SpotLight or whatever to index user files
+that should be easy to find and match, because all the locale rules
+for matching are hideously expensive to apply. Even today, most UTF-8
+aware (and supposedly collation-smart) applications have trouble
+matching MART=CDN when asked for mart=EDn in a case-insensitive search.
+That pesky latin =ED trips them up everytime.
 
-> I have no idea why HFS+ stores filenames in a normalized form, and further 
-> I am smart enough to know that speculating is completely pointless. I 
-> assume the authors had a good reason (which should be a safe assumption, 
-> filesystem authors are a smart bunch). The reason may not be valid anymore, 
-> but if it was valid back in 1998, then I can accept it without complaining.
+cheers,
 
-Well, I *AM* a filesystem designer (ext2/ext3/ext4), and well before
-1998, I knew that trying to do anything with Unicode normalization was
-a fool's errand.  So if you're going to blindly trust filesystme
-designers (not something I would recommend, actually :-), trust me.
-What HFS+ is doing is dumb, dumb, dumb.
 
-And even if *you* can accept it, why should the git designers pervert
-any core part of git's design to support this behaviour?  Especially
-if it's legacy behaviour which will hopefully be going away, say when
-MacOS adopts ZFS --- there's an opportunity for them to start afresh,
-and not make the same mistakes they made nine years ago!
-
-So why don't you suggest some kind of sane fix in the Mac specific
-code that doesn't impact any core part of git, such as its hash
-algorithm?  It would be far more productive than trying to defend a
-bad design decision made nine years ago....   :-}
-
-					- Ted
+martin
