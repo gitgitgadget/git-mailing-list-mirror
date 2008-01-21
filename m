@@ -1,60 +1,67 @@
-From: =?ISO-8859-1?Q?Gr=E9goire_Barbier?= <devel@gbarbier.org>
-Subject: Re: [PATCH] http-push: making HTTP push more robust and more user-friendly
-Date: Mon, 21 Jan 2008 11:27:37 +0100
-Message-ID: <47947399.3000507@gbarbier.org>
-References: <1200250979-19604-1-git-send-email-gb@gbarbier.org>	<7vbq7ppbyh.fsf@gitster.siamese.dyndns.org>	<47946F67.5060601@gbarbier.org> <7vmyqzzdhf.fsf@gitster.siamese.dyndns.org>
+From: Mark Junker <mjscod@web.de>
+Subject: Re: [PATCH] Use FIX_UTF8_MAC to enable conversion from UTF8-MAC to
+ UTF8
+Date: Mon, 21 Jan 2008 11:36:55 +0100
+Message-ID: <fn1sk4$uh4$1@ger.gmane.org>
+References: <fn1nl6$ek5$1@ger.gmane.org> <fn1pj9$kkg$1@ger.gmane.org>	<fn1ptk$ljj$1@ger.gmane.org> <fn1q6b$ljj$2@ger.gmane.org> <7vve5nzdqx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 21 11:28:20 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 21 11:37:41 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGtt0-0004up-7k
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 11:28:14 +0100
+	id 1JGu26-0007HT-CE
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 11:37:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758354AbYAUK1m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jan 2008 05:27:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758281AbYAUK1m
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 05:27:42 -0500
-Received: from relay4-v.mail.gandi.net ([217.70.178.78]:46236 "EHLO
-	relay4-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752394AbYAUK1l (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 05:27:41 -0500
-Received: from localhost (mfilter3-v.gandi.net [217.70.178.37])
-	by relay4-v.mail.gandi.net (Postfix) with ESMTP id 3E801BA1F;
-	Mon, 21 Jan 2008 11:27:39 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at mfilter3-v.mgt.gandi.net
-Received: from relay4-v.mail.gandi.net ([217.70.178.78])
-	by localhost (mfilter3-v.mgt.gandi.net [217.70.178.37]) (amavisd-new, port 10024)
-	with ESMTP id OSMoawsEJWxV; Mon, 21 Jan 2008 10:51:14 +0100 (CET)
-Received: from [192.168.79.1] (soy95-1-82-229-96-169.fbx.proxad.net [82.229.96.169])
-	by relay4-v.mail.gandi.net (Postfix) with ESMTP id A894CBA26;
-	Mon, 21 Jan 2008 11:27:33 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <7vmyqzzdhf.fsf@gitster.siamese.dyndns.org>
+	id S1758778AbYAUKhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 05:37:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758812AbYAUKhH
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 05:37:07 -0500
+Received: from main.gmane.org ([80.91.229.2]:51768 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758506AbYAUKhF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 05:37:05 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JGu1T-0004na-6t
+	for git@vger.kernel.org; Mon, 21 Jan 2008 10:36:59 +0000
+Received: from 80.146.179.234 ([80.146.179.234])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 10:36:59 +0000
+Received: from mjscod by 80.146.179.234 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 10:36:59 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 80.146.179.234
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X; de; rv:1.8.1.9) Gecko/20071031 Thunderbird/2.0.0.9 Mnenhy/0.7.5.0
+In-Reply-To: <7vve5nzdqx.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71256>
 
-Junio C Hamano a =E9crit :
-> Thanks for correction.  I need to update Release Notes...
+Junio C Hamano schrieb:
 
-Curl 7.16 has been released in october 2006=20
-(http://curl.haxx.se/changes.html), rather than 2003 like for 7.10.
+> I do not know how Macintosh libc implements "struc dirent", but
+> this approach does not work in general.
 
-The consequences is that a lot of not so old distributions may be=20
-concerned. I only checked Fedora, which does not provide curl > 7.15=20
-before Fedora 7 (issued late may 2007).
+IMHO there is no need that this approach works in general because this 
+is a fix for MacOSX systems only. I also use d_namlen which might not be 
+available on other systems. But on MacOSX this works as expected.
 
-(BTW you may guess well that I'm using a Fedora Core 6 for my git=20
-patches...)
+> yet you can obtain a path component longer than 256 bytes.
+> Apparently the library allocates longer d_name[] field than what
+> is shown to the user.
 
---=20
-Gr=E9goire Barbier - gb =E0 gbarbier.org - +33 6 21 35 73 49
+This is not a problem either because on MacOSX we get decomposed UTF8 
+and we always convert to composed UTF8. This means that the string 
+returned from reencode_string will always be smaller than the original 
+filename that had to be reencoded.
+
+Regards,
+Mark
