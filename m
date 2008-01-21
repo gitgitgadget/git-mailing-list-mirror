@@ -1,59 +1,137 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git gui and commit-msg hook
-Date: Sun, 20 Jan 2008 20:32:40 -0800
-Message-ID: <7vmyqz3ijb.fsf@gitster.siamese.dyndns.org>
-References: <054F21930D24A0428E5B4588462C7AEDC5F8DB@ednex512.dsto.defence.gov.au>
-	<054F21930D24A0428E5B4588462C7AEDC5F8DC@ednex512.dsto.defence.gov.au>
-	<20080121040819.GE24004@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/2] Teach fast-import to honor pack.compression and pack.depth
+Date: Sun, 20 Jan 2008 23:36:54 -0500
+Message-ID: <20080121043654.GA27521@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Blucher, Guy" <Guy.Blucher@dsto.defence.gov.au>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jan 21 05:33:18 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 21 05:37:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGoLV-0008CQ-Tm
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 05:33:18 +0100
+	id 1JGoPX-0000XZ-Cc
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 05:37:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756480AbYAUEct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jan 2008 23:32:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756800AbYAUEct
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 23:32:49 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54871 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756305AbYAUEcs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jan 2008 23:32:48 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CDE03BE6;
-	Sun, 20 Jan 2008 23:32:47 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id AA71D3BE5;
-	Sun, 20 Jan 2008 23:32:42 -0500 (EST)
-In-Reply-To: <20080121040819.GE24004@spearce.org> (Shawn O. Pearce's message
-	of "Sun, 20 Jan 2008 23:08:19 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756900AbYAUEg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jan 2008 23:36:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756899AbYAUEg6
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Jan 2008 23:36:58 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:56724 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756891AbYAUEg5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jan 2008 23:36:57 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JGoOp-0006pu-Ce; Sun, 20 Jan 2008 23:36:43 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3CAC020FBAE; Sun, 20 Jan 2008 23:36:54 -0500 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71215>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+We now use the configured pack.compression and pack.depth values
+within fast-import, as like builtin-pack-objects fast-import is
+generating a packfile for consumption by the Git tools.
 
-> "Blucher, Guy" <Guy.Blucher@dsto.defence.gov.au> wrote:
->> I've just setup a commit-msg hook in my local repository.  It works as
->> advertised from the command-line when using git commit, but if I use git
->> gui to do the commit, then the hook is ignored.
->
-> Fixed in my latest git-gui master, which will be gitgui-0.9.2 or .3.
->
-> I apparently missed git 1.5.4-rc4, but will have to ask Junio nicely
-> if this can be included into 1.5.4 final.
+We use the same behavior as builtin-pack-objects does for these
+options, allowing core.compression to supply the default value
+for pack.compression.
 
-Absolutely.  That's a consistency-and-usability bugfix, isn't
-it?
+The default setting for pack.depth within fast-import is still 10
+as users will generally repack fast-import generated packfiles by
+`repack -f`.  A large delta depth within the fast-import packfile
+can significantly slow down such a later repack.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+
+ This may be post 1.5.4 material, but its pretty trivial.
+
+ fast-import.c |   32 +++++++++++++++++++++++++++++---
+ 1 files changed, 29 insertions(+), 3 deletions(-)
+
+diff --git a/fast-import.c b/fast-import.c
+index 45b4edf..f6872fe 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -275,6 +275,8 @@ struct recent_command
+ static unsigned long max_depth = 10;
+ static off_t max_packsize = (1LL << 32) - 1;
+ static int force_update;
++static int pack_compression_level = Z_DEFAULT_COMPRESSION;
++static int pack_compression_seen;
+ 
+ /* Stats and misc. counters */
+ static uintmax_t alloc_count;
+@@ -1038,7 +1040,7 @@ static int store_object(
+ 		delta = NULL;
+ 
+ 	memset(&s, 0, sizeof(s));
+-	deflateInit(&s, zlib_compression_level);
++	deflateInit(&s, pack_compression_level);
+ 	if (delta) {
+ 		s.next_in = delta;
+ 		s.avail_in = deltalen;
+@@ -1066,7 +1068,7 @@ static int store_object(
+ 			delta = NULL;
+ 
+ 			memset(&s, 0, sizeof(s));
+-			deflateInit(&s, zlib_compression_level);
++			deflateInit(&s, pack_compression_level);
+ 			s.next_in = (void *)dat->buf;
+ 			s.avail_in = dat->len;
+ 			s.avail_out = deflateBound(&s, s.avail_in);
+@@ -2282,6 +2284,27 @@ static void import_marks(const char *input_file)
+ 	fclose(f);
+ }
+ 
++static int git_pack_config(const char *k, const char *v)
++{
++	if (!strcmp(k, "pack.depth")) {
++		max_depth = git_config_int(k, v);
++		if (max_depth > MAX_DEPTH)
++			max_depth = MAX_DEPTH;
++		return 0;
++	}
++	if (!strcmp(k, "pack.compression")) {
++		int level = git_config_int(k, v);
++		if (level == -1)
++			level = Z_DEFAULT_COMPRESSION;
++		else if (level < 0 || level > Z_BEST_COMPRESSION)
++			die("bad pack compression level %d", level);
++		pack_compression_level = level;
++		pack_compression_seen = 1;
++		return 0;
++	}
++	return git_default_config(k, v);
++}
++
+ static const char fast_import_usage[] =
+ "git-fast-import [--date-format=f] [--max-pack-size=n] [--depth=n] [--active-branches=n] [--export-marks=marks.file]";
+ 
+@@ -2289,7 +2312,10 @@ int main(int argc, const char **argv)
+ {
+ 	unsigned int i, show_stats = 1;
+ 
+-	git_config(git_default_config);
++	git_config(git_pack_config);
++	if (!pack_compression_seen && core_compression_seen)
++		pack_compression_level = core_compression_level;
++
+ 	alloc_objects(object_entry_alloc);
+ 	strbuf_init(&command_buf, 0);
+ 	atom_table = xcalloc(atom_table_sz, sizeof(struct atom_str*));
+-- 
+1.5.4.rc4.1109.g30426
