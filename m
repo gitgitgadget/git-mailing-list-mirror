@@ -1,100 +1,81 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Mon, 21 Jan 2008 13:42:47 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801211334540.2957@woody.linux-foundation.org>
-References: <478E1FED.5010801@web.de>  <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org>  <478F99E7.1050503@web.de>  <alpine.LFD.1.00.0801171017460.14959@woody.linux-foundation.org>  <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org> 
- <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org>  <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se>  <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org>  <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org> 
- <alpine.LFD.1.00.0801210934400.2957@woody.linux-foundation.org> <46a038f90801211306g3dd9a167wb74d06e444b18b93@mail.gmail.com>
+Date: Tue, 22 Jan 2008 10:43:16 +1300
+Message-ID: <46a038f90801211343q4a36195dp319beb3020e57600@mail.gmail.com>
+References: <478E1FED.5010801@web.de>
+	 <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se>
+	 <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org>
+	 <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org>
+	 <C6C0E6A1-053B-48CE-90B3-8FFB44061C3B@sb.org>
+	 <373E260A-6786-4932-956A-68706AA7C469@sb.org>
+	 <alpine.LFD.1.00.0801211210270.2957@woody.linux-foundation.org>
+	 <7EB98659-4036-45DA-BD50-42CB23ED517A@sb.org>
+	 <46a038f90801211317v4902ffd3ic8ccc35f8df72bd9@mail.gmail.com>
+	 <E46A8ED2-7E95-41CF-A5A7-2CB9BC18F95D@sb.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kevin Ballard <kevin@sb.org>,
-	Peter Karlsson <peter@softwolves.pp.se>,
-	Mark Junker <mjscod@web.de>,
-	Pedro Melo <melo@simplicidade.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Peter Karlsson" <peter@softwolves.pp.se>,
+	"Mark Junker" <mjscod@web.de>,
+	"Pedro Melo" <melo@simplicidade.org>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 21 22:43:45 2008
+To: "Kevin Ballard" <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Mon Jan 21 22:44:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH4Qf-00086o-F9
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 22:43:41 +0100
+	id 1JH4Qq-0008AY-MJ
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 22:43:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753819AbYAUVnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 16:43:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753677AbYAUVnL
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 16:43:11 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:54660 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752859AbYAUVnJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 16:43:09 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0LLglga027485
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 21 Jan 2008 13:42:48 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0LLgl1r021391;
-	Mon, 21 Jan 2008 13:42:47 -0800
-In-Reply-To: <46a038f90801211306g3dd9a167wb74d06e444b18b93@mail.gmail.com>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.723 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1753688AbYAUVnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 16:43:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753887AbYAUVnT
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 16:43:19 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:30520 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753677AbYAUVnS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 16:43:18 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so959602ugc.16
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 13:43:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=c1ZdFyZWqK3oajV5diieKTY2rDN4a2naLzuQNkbFYKk=;
+        b=ZslkOmiXs+mMfGnltmOOQ1ZT6ehyhF8ib+ScBnR7TdVD7l85+dkJSVDEwVGuokL9GRFBgHxLkkB7rt/23Ox4SeVYYxm4hCWG1xtoevZ8Fk/Ub+NmZ0H2ZlOC3/YLs5h52iNh7hJjL3gDNueL3lmRG82EsbGyBz0fTU2c4IlVrpA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pvfsgCWpLXaPdpguHK/LMDZVsrqr06ZtdldXKE09oT2bLiadKLcZ0qAC1/fhofDo+4dMbLVLdP/cY2Pgd/x7Cxs6h0/iaN8ZC2xuPqsIsJOLKlQZxRT1mkxLSSQi+VgyecIrYNYSrVhyi8AoNGyK+X603tHPB3t40Bv9ccZvavM=
+Received: by 10.66.252.18 with SMTP id z18mr5250029ugh.37.1200951796678;
+        Mon, 21 Jan 2008 13:43:16 -0800 (PST)
+Received: by 10.66.252.2 with HTTP; Mon, 21 Jan 2008 13:43:16 -0800 (PST)
+In-Reply-To: <E46A8ED2-7E95-41CF-A5A7-2CB9BC18F95D@sb.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71350>
+
+On Jan 22, 2008 10:28 AM, Kevin Ballard <kevin@sb.org> wrote:
+> That's certainly a reasonable POV. However, it's not the only one. As
+> evidenced by the Mac, treating filenames as strings rather than bytes
+> is a viable alternative POV - you can't argue that it doesn't work,
+> because OS X proves it does.
+
+With its own slew of bugs. See Ted's reply earlier for a mouthful of
+woe in HFS+ that is not easy to workaround.
+
+> Perhaps you should try OS X. Every single Cocoa app should do the
+
+OSX has given me enough grief with other filesystem and general OS
+problems that I have definitely abandoned it after 2 years trying to
+use it part-time. It has been back to linux for me ;-)
+
+cheers,
 
 
 
-On Tue, 22 Jan 2008, Martin Langhoff wrote:
-> 
-> (slightly offtopic) are you praising UTF-8 as storage format (for disk
-> and network) or in general? UTF-8-aware string ops like counting
-> characters seem to me a horrendous thing at the ASM level.
-
-I'm praising UTF-8 (without normalization) as a wonderful format where you 
-can do 99.9% of everything without ever caring about all the expensive 
-stuff.
-
-But in order to do that, you really need to avoid normalization, and you 
-also need to accept mis-formed UTF-8 strings (because even if it is real 
-UTF-8, the string may actually be just a fragment of some larger string).
-
-Once you do that (and _only_ if you do that), then UTF-8 is actually a 
-wonderful thing. You can consider it to be a traditional "everything is a 
-stream of bytes", and everything that only cares about a stream of byte 
-will work wonderfully well.
-
-And then, the (actually relatively few) things that want to do things like 
-show things on the screen, or check for equivalence, or worry about width 
-of the characters, *those* can still do so. 
-
-So the beauty of UTF-8 is that you can switch between thinking of it like 
-just a binary blob and thinking of it like text, and everythign works 
-(including the traditional C null-termination).
-
-And yes, that was obviously the explicit design goal. It's a good thing.
-
-> More on topic, I suspect Kevin's experience is more on end-user apps,
-> where input sanitization and even canonicalisation are common
-> practice.
-
-Sure. And I'm not arguing against them. Knowing the rules for combining 
-characters is really important for input and output. 
-
-> At least in Moodle we store *exactly*  what the user POSTed and
-> cleanup^Wcorrupt it when displaying it, so that if it does happen that
-> the cleanup was buggy, we never corrupted the data.
-
-Absolutely. It's what the kernel does, and I think that's what perl does 
-too for their "strings". It works really well. It also allows you to 
-handle binary data (ie data that *really* isn't text) with shared routines 
-etc etc.
-
-And that's the beauty of non-normalized (and possibly badly formed) UTF-8.
-
-		Linus
+martin
