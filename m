@@ -1,82 +1,66 @@
-From: Rogan Dawes <lists@dawes.za.net>
+From: "David Tweed" <david.tweed@gmail.com>
 Subject: Re: Time to flush Mr. Hammano?
-Date: Mon, 21 Jan 2008 15:18:53 +0200
-Message-ID: <47949BBD.6060308@dawes.za.net>
-References: <e5bfff550801200210y212d0921x214773596810be52@mail.gmail.com> <20070624192215@qkholland.gmail.com>
+Date: Mon, 21 Jan 2008 14:12:09 +0000
+Message-ID: <e1dab3980801210612k3c0a52d1l8d868a2b49f4b558@mail.gmail.com>
+References: <e5bfff550801200210y212d0921x214773596810be52@mail.gmail.com>
+	 <20070624192215@qkholland.gmail.com> <47949BBD.6060308@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: gi mailing list <git@vger.kernel.org>
-To: Quim K Holland <qkholland@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 21 14:22:09 2008
+Cc: "Quim K Holland" <qkholland@gmail.com>,
+	"gi mailing list" <git@vger.kernel.org>
+To: "Rogan Dawes" <lists@dawes.za.net>
+X-From: git-owner@vger.kernel.org Mon Jan 21 15:12:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JGwbG-0005BG-Sb
-	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 14:22:07 +0100
+	id 1JGxOM-0003OP-Vd
+	for gcvg-git-2@gmane.org; Mon, 21 Jan 2008 15:12:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752255AbYAUNVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 08:21:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752245AbYAUNVh
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 08:21:37 -0500
-Received: from hapkido.dreamhost.com ([66.33.216.122]:42373 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751818AbYAUNVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 08:21:37 -0500
-Received: from spunkymail-a9.g.dreamhost.com (sd-green-bigip-145.dreamhost.com [208.97.132.145])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id 3478E179E90
-	for <git@vger.kernel.org>; Mon, 21 Jan 2008 05:21:36 -0800 (PST)
-Received: from [192.168.201.100] (dsl-146-26-189.telkomadsl.co.za [165.146.26.189])
-	by spunkymail-a9.g.dreamhost.com (Postfix) with ESMTP id 0B70821268;
-	Mon, 21 Jan 2008 05:20:03 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <20070624192215@qkholland.gmail.com>
+	id S1752740AbYAUOMP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 09:12:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752454AbYAUOMO
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 09:12:14 -0500
+Received: from wr-out-0506.google.com ([64.233.184.231]:25473 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752124AbYAUOMO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 09:12:14 -0500
+Received: by wr-out-0506.google.com with SMTP id c49so551111wra.1
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 06:12:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=CN9Ff2tkb+C6EHcsgXbgm4h9bUWsHd2axLeZdGuP3uo=;
+        b=u/BmIH+dlUbLZn906acFheo5CCi6J56PcvAi9zTczX2akCxTJxsO3Al+uQNVNTaNOo6UMynJzQ2Ge5K95z3AjHDW+IU8dKrEgYN0ckhsYWXpXew54kiF7MvP6CdMwZrKXBucUp44bA26lXIfTey71S5ohO1SdAbcOrfC/qWgmW4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WAkcvtCtiZIFPjjdFUfa0U3nGtXJBAwC3b/CWlp3oj+/g5s8JfkDdU+IbUFtCSlh9261hWwF36AlTpOo6r/yiRltXs6Z36ksztgNBVtIVUuY+85gx3LCaFNjcdEiSme0SrT1/IRQ3XdlM2apmCps/Z+RMf6SJszDcv6im+PVogs=
+Received: by 10.150.96.10 with SMTP id t10mr2329105ybb.1.1200924729957;
+        Mon, 21 Jan 2008 06:12:09 -0800 (PST)
+Received: by 10.150.53.15 with HTTP; Mon, 21 Jan 2008 06:12:09 -0800 (PST)
+In-Reply-To: <47949BBD.6060308@dawes.za.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71282>
 
-Quim K Holland wrote:
-> "Marco Costalba" <mcostalba@gmail.com> wrote:
-> 
-> Reading mailing list threads it is becoming common these days to hear
->  about contributors with patches ready to be sent as soon as 1.5.4 is
->  out.
-> 
-> Would be a good idea to open a new branch new_stuff as a target for 
-> this pending stuff?
-> 
-> Back when Mr. Torvalds was still leading the development there was
-> not this stupid stability freeze and many useful patches were
-> accepted every day.  For the past few months Mr. Hammano has not been
-> adding much useful code himself, did not join interesting discussions
-> such as Unicode normalization issues, nor gave much useful comments
-> on patches. He has mostly been busy rejecting useful patches and
-> sending not so useful comments.
-> 
-> Can we vote Mr. Hammano out and ask Mr. Torvalds to come back as the
-> project leader?  I do not mean any disrespect to Mr. Hammano, but
-> don't people think he outlived his usefulness as the project leader?
+One other point no-one has mentioned: even if Junio were to be doing
+more stabilisation than normal in a project (and I don't think he is),
+version control software is one of those things like a filesystem
+where paying attention to stability is really important. Unlike a
+buggy music player (say), a buggy git could destroy everything up to
+your last backup.
 
-That's Mr Hamano (one 'm'), and personally, I think that only when you 
-have contributed to this project yourself, would you have a leg to stand 
-on when you criticise him.
+I appreciate all the work everyone in the community is currently doing
+on stabilisation.
 
-As an observer, I think that Junio is doing a superb job of managing the 
-sometimes quite torrential flow of patches contributed to git. As Linus 
-himself has often said (Paraphrased, of course):
-
-The role of the maintainer is often more to *reject* patches than to 
-accept them, so as to maintain the quality of the code base.
-
-Having said that, the amount of *constructive* criticism that 
-accompanies those rejections is amazing. Often I have seen multiple 
-pages of response to a 2 line patch, so that the contributor (and other 
-observers) can better understand the reason for the rejection, and how 
-to construct a better patch that would be accepted.
-
-Regards,
-
-Rogan
+-- 
+cheers, dave tweed__________________________
+david.tweed@gmail.com
+Rm 124, School of Systems Engineering, University of Reading.
+"we had no idea that when we added templates we were adding a Turing-
+complete compile-time language." -- C++ standardisation committee
