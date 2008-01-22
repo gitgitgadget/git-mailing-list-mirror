@@ -1,70 +1,63 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH] Use FIX_UTF8_MAC to enable conversion from UTF8-MAC to UTF8
-Date: Tue, 22 Jan 2008 23:34:58 +0100
-Message-ID: <200801222334.58874.robin.rosenberg.lists@dewire.com>
-References: <fn1nl6$ek5$1@ger.gmane.org> <alpine.LFD.1.00.0801212304460.2957@woody.linux-foundation.org> <7vmyqythwa.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+From: Annard Brouwer <ab_lists@mac.com>
+Subject: Re: Using email between 2 developers to keep git repositories in sync
+Date: Tue, 22 Jan 2008 23:52:40 +0100
+Message-ID: <2D91636D-197A-41C8-8BB3-D5002135BF99@mac.com>
+References: <7A02F7D1-9EB0-43AB-96F9-DDD71D4EF5FE@mac.com> <alpine.LNX.1.00.0801221713120.13593@iabervon.org>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Mark Junker <mjscod@web.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 23:38:26 2008
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Jan 22 23:53:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHRl7-0001zd-6u
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 23:38:21 +0100
+	id 1JHRzZ-0007IS-B5
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 23:53:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752793AbYAVWhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2008 17:37:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753033AbYAVWhu
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 17:37:50 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:28549 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751558AbYAVWht (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2008 17:37:49 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 1562480264C;
-	Tue, 22 Jan 2008 23:37:46 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QfMLwEoKnoKg; Tue, 22 Jan 2008 23:37:45 +0100 (CET)
-Received: from [10.9.0.8] (unknown [10.9.0.8])
-	by dewire.com (Postfix) with ESMTP id 1BBF080019B;
-	Tue, 22 Jan 2008 23:37:44 +0100 (CET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-In-Reply-To: <7vmyqythwa.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753607AbYAVWws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 17:52:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753487AbYAVWwr
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 17:52:47 -0500
+Received: from smtpoutm.mac.com ([17.148.16.79]:60270 "EHLO smtpoutm.mac.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753393AbYAVWwr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2008 17:52:47 -0500
+Received: from mac.com (asmtp005-s [10.150.69.68])
+	by smtpoutm.mac.com (Xserve/smtpout016/MantshX 4.0) with ESMTP id m0MMqje9013068;
+	Tue, 22 Jan 2008 14:52:45 -0800 (PST)
+Received: from [192.168.42.85] ([80.71.54.130])
+	(authenticated bits=0)
+	by mac.com (Xserve/asmtp005/MantshX 4.0) with ESMTP id m0MMqeh7003178
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Tue, 22 Jan 2008 14:52:43 -0800 (PST)
+In-Reply-To: <alpine.LNX.1.00.0801221713120.13593@iabervon.org>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71476>
 
-tisdagen den 22 januari 2008 skrev Junio C Hamano:
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
-> > Again, as an OSX-only workaround it's probably acceptable, and perhaps 
-> > that's the only thing to look at right now. But it does strike me as a 
-> > design mistake to do it at that level.
-> 
-> Yes, we would need a reverse conversion when going from index to
-> work tree, including entry.c, in order to be able to emulate
-> this on filesystems that do not take "equivalent" but different
-> names on open(), creat() and lstat().
+Thank you all for your suggestions! The problem is that each of us  
+having a local server accessible to the other is not possible.  
+Therefore I will follow the path of sending patches by email and on  
+releases we can synchronise using bundles. I think that's the best fit  
+for our model of developing code semi-independently.
 
-About this size:
+Cheers!
+Annard
 
-http://rosenberg.homelinux.net/cgi-bin/gitweb/gitweb.cgi?p=GIT.git;a=commitdiff;h=766d84eff841172c3754f67c66363a1d60038de5
+On 22 Jan 2008, at 23:22, Daniel Barkalow wrote:
 
-And messed up expanded tests:
-
-http://rosenberg.homelinux.net/cgi-bin/gitweb/gitweb.cgi?p=GIT.git;a=commitdiff;h=5d73e28397f7ec0f85fcb8e31e91326afbcfea19
-
-Junio: @Maybe in five years@, you said.. Four more to go.
-
--- robin
+> I think bundles or email or both is likely to be the correct  
+> solution, but
+> you should know that you don't need a shared server if you each have a
+> server the other can read from. Each of you sets up a public  
+> repository
+> with the same basic history, and you each have local clones of your  
+> public
+> repository, and you pull from the other into your local clone and
+> (assuming you want to accept the other's changes) you do the merge and
+> push to your own public server.
