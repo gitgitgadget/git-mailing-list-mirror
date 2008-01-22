@@ -1,68 +1,63 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Use FIX_UTF8_MAC to enable conversion from UTF8-MAC to UTF8
-Date: Tue, 22 Jan 2008 09:21:56 -0500 (EST)
-Message-ID: <alpine.LFD.1.00.0801220917310.20753@xanadu.home>
-References: <fn1nl6$ek5$1@ger.gmane.org> <fn1pj9$kkg$1@ger.gmane.org>
- <fn1ptk$ljj$1@ger.gmane.org> <fn1q6b$ljj$2@ger.gmane.org>
- <7vve5nzdqx.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0801212025050.2957@woody.linux-foundation.org>
+From: "Mark Levedahl" <mlevedahl@gmail.com>
+Subject: Re: Using email between 2 developers to keep git repositories in sync
+Date: Tue, 22 Jan 2008 09:35:12 -0500
+Message-ID: <30e4a070801220635q4978fd2fvc469ca00af4e11cc@mail.gmail.com>
+References: <7A02F7D1-9EB0-43AB-96F9-DDD71D4EF5FE@mac.com>
+	 <alpine.LSU.1.00.0801221255530.5731@racer.site>
+	 <m3k5m2klmh.fsf@roke.D-201>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, Mark Junker <mjscod@web.de>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jan 22 15:22:59 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	ab_lists@mac.com, git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 15:36:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHK1G-0005VA-Ny
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 15:22:31 +0100
+	id 1JHKED-00028m-Nn
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 15:35:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753520AbYAVOV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2008 09:21:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753444AbYAVOV6
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 09:21:58 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:52763 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753297AbYAVOV5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2008 09:21:57 -0500
-Received: from xanadu.home ([66.131.194.97]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JV100JV1UKKT180@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 22 Jan 2008 09:21:56 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LFD.1.00.0801212025050.2957@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+	id S1752237AbYAVOfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 09:35:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751754AbYAVOfS
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 09:35:18 -0500
+Received: from hs-out-0708.google.com ([64.233.178.241]:11159 "EHLO
+	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752051AbYAVOfQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2008 09:35:16 -0500
+Received: by hs-out-2122.google.com with SMTP id 54so2146549hsz.5
+        for <git@vger.kernel.org>; Tue, 22 Jan 2008 06:35:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=0S9ISs5t2uhSVosQKtqsakU6rCNh2bBfylD+BSslMAs=;
+        b=VI0/SoagbZoQypyKMKGIqSwMTmGxBOoA/tjEGSvTl5v9ECsaIgf9l4CBEMSov037wmx/+qJ3PwNyJ6nZb6mxocB6/uzzOyqmcC9xy1KuyrsNIhlFM0vswFvew3yXx6JyFbwwpAO97ZYAhkPQcCku+O8YQo09i7sz4yUHzrT1C40=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=InyTpWIkpt+of9hWWR3/tn0xxpIVYhn5wi3qjm7uMVRxVW/rzYyHe+w0vQKbkEym2FzqP/CTCZgaagBx8USw7dyum9kni4h22Ex1ttDr/XSskYmyyKUlYFb5rxcgv4mGJJwp1Q3gYWkQexV09DIx9P5HnzXIKByaNfZtx4RxkWk=
+Received: by 10.142.79.15 with SMTP id c15mr4043137wfb.105.1201012512348;
+        Tue, 22 Jan 2008 06:35:12 -0800 (PST)
+Received: by 10.143.15.6 with HTTP; Tue, 22 Jan 2008 06:35:12 -0800 (PST)
+In-Reply-To: <m3k5m2klmh.fsf@roke.D-201>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71453>
 
-On Mon, 21 Jan 2008, Linus Torvalds wrote:
+On Jan 22, 2008 8:53 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+>
+> Besides, after initial setup IMHO it is much better to exchange
+> patches for review. Although usually there are more than two
+> developers in such case...
+>
+Bundles allow you to maintain identical history on two or more
+disconnected servers, and this is a very distinct advantage over
+patches. Absent use of bundles to distribute the integrated changes,
+the development history seen by both parties will diverge.
 
-> First off, the common case is that the filename likely has everything in 
-> plain 7-bit ascii. So rather than re-encoding by default, the first thing 
-> to do is to just see if it even needs re-encoding. Even if it's as simple 
-> as saying "does it have any high bits at all", that's going to be a *huge* 
-> performance win.
-> 
-> So start off with something like
-> 
-> 	int is_usascii(const char *p)
-> 	{
-> 		char c;
-> 
-> 		do {
-> 			c = *p++;
-> 		} while (c > 0);
-> 		return !c;
-> 	}
-
-You need to use "signed char" here.  On ARM a char is unsigned by 
-default.  That's the case on some other systems too.
-
-
-Nicolas
+Mark
