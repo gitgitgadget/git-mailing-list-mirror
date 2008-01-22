@@ -1,102 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: tracking a file from another project in my own project
-Date: Tue, 22 Jan 2008 07:23:28 -0800 (PST)
-Message-ID: <m3fxwplw1i.fsf@roke.D-201>
-References: <20080122093546.72db8da0@synchrotron-soleil.Fr>
-	<7v7ii2rzbq.fsf@gitster.siamese.dyndns.org>
-	<20080122145658.18b6ef89@synchrotron-soleil.Fr>
+From: "Ciprian Dorin Craciun" <ciprian.craciun@gmail.com>
+Subject: Coping commits from one branch to another
+Date: Tue, 22 Jan 2008 17:45:18 +0200
+Message-ID: <8e04b5820801220745m3736686exf631f31c9e6d785a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: picca <picca@synchrotron-soleil.Fr>
-X-From: git-owner@vger.kernel.org Tue Jan 22 16:24:11 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 22 16:46:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHKyt-000351-9L
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 16:24:07 +0100
+	id 1JHLJw-0003ER-Rb
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 16:45:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751947AbYAVPXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2008 10:23:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752101AbYAVPXd
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 10:23:33 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:48134 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751947AbYAVPXc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2008 10:23:32 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so430049nfb.21
-        for <git@vger.kernel.org>; Tue, 22 Jan 2008 07:23:30 -0800 (PST)
+	id S1751225AbYAVPpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 10:45:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751433AbYAVPpW
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 10:45:22 -0500
+Received: from nz-out-0506.google.com ([64.233.162.237]:19050 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751072AbYAVPpW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2008 10:45:22 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so1440917nze.1
+        for <git@vger.kernel.org>; Tue, 22 Jan 2008 07:45:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=TWGhtC+thRAvyuPYDcq8eS3JNW+iVsvyD/uvpNrBU5g=;
-        b=k5LVCXYokhk1l3Cwxq0o4LHvy2kJAchXDfYxyIRQrc8r1UK7I4KGdVX1Y19ICA0Wr2ZLvLm2hKXzA0XCLmwoA2iqn6OqOP/yYOODn/YeqcgaNyNrveRmWcX7mFmWzJHZExQF5K2nNtf0UxdgwSTfIUCVqxvkkvXt7ZLX2qbXYps=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=+zFbEobOIYL9NvkbZyZ04KebLpuwj74Bal3q9TnpKXw=;
+        b=WE2Yj3/qiOuSK5gjzGZ/KewVrJ0nTcMSs+lB6Myfru+4ttjM70M+PM0qyKW1rFQ67ZsfLi57YggbvZWdy+THV86CmB7HG2iqr5i/L9r1aQSWScxbazDIhpJ2ZmXnaKWva7Ee+Vjh6r2kqEEU5N9uWwHYJvV/99gsuKv1JdahV+g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=yHQ2KKmqa8RHptif9N5P8lcAbFtjsx5H7nRLnT8lKxH1Ba1RtrG3TLYDDpGllFVWWD3gWS4VGy/ob++izPQ982a1Bdhhk4nSit7EwKbJHLwWH1LiO+cCL6tL0gG4JFbnobzYPzkdAyscks7Gf1ikkE7oZaJl/YMLJ+lBwlRBf58=
-Received: by 10.78.134.2 with SMTP id h2mr11276405hud.77.1201015410224;
-        Tue, 22 Jan 2008 07:23:30 -0800 (PST)
-Received: from roke.D-201 ( [83.8.211.135])
-        by mx.google.com with ESMTPS id z30sm2945242hub.19.2008.01.22.07.23.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 22 Jan 2008 07:23:28 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id m0MFSVcI002091;
-	Tue, 22 Jan 2008 16:28:31 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m0MFS974002086;
-	Tue, 22 Jan 2008 16:28:09 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <20080122145658.18b6ef89@synchrotron-soleil.Fr>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=hmfgeUfNkbpXNmKzWEMNWRGN12YGVfgVxJqHpg/MineTvX36E7YcvVz7sCfcusQRoFtYo7f65/jy7RCdu2XdN/RTAC2t5Rg3TvFdBc6lLtINjoDuZUPzzvxsuSVSH/5AqfsJSOXtXGU+xJpSg9pTSB5nIWBhYeEzCZleahWFFOk=
+Received: by 10.110.46.14 with SMTP id t14mr3698509tit.16.1201016718939;
+        Tue, 22 Jan 2008 07:45:18 -0800 (PST)
+Received: by 10.70.109.19 with HTTP; Tue, 22 Jan 2008 07:45:18 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71456>
 
-picca <picca@synchrotron-soleil.Fr> writes:
+    Hello all!
 
-> On Tue, 22 Jan 2008 01:20:41 -0800
-> Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> > If I were you I'd probably just keep git.git as a submodule in
-> > your project and have two symlinks from your toplevel pointing
-> > at git.git/strbuf.[ch] (or from src/ to ../git.git/strbuf.[ch]).
-> 
-> So submodule is a requirement to achieved this comportment ?
+    My question is how can I use git-rebase -- or a similar command --
+to actually copy the commits from one branch to another.
 
-If you want to have strbuf.[ch] automatically tracked from git.git
-the you would have to have git.git project somehow embedded in your
-repository.  Using submodules is one solution.
+    For example I have cloned the linux kernel repository and I have
+the following branches:
+    -- v2.6.22-stable
+    -- v2.6.23-local
+    -- v2.6.23-stable
+    -- v2.6.23-local
 
-Currently there is no way to do "sparse checkout", i.e. automatically
-checkout only needed files (even if git.git clone has all the
-objects), but feel free to implement it... ;-) (just kidding).
+    The difference between v2.6.x-stable and v2.6.x-local are just a
+few minor patches (which are not in the default kernel tree) and some
+script files added to make the compilation and deployment easier for
+my setup. Thus v2.6.x-local is an ancestor of v2.6.x-stable. Now when
+v2.6.24 will arrive I would like to "copy" the commits from
+v2.6.23-local to v2.6.24-local.
 
-Or you can try to convince strbuf authors to make it into separate
-project, which would be fetched into git.git like gitk was.  And you
-could then pull from this project directly or indirectly (submodule)
-into your project.
-  
-> If someone want to clone my project.git, must he also clone the
-> git.git project or he loose the ability to follow by it's own the
-> strbuf.[ch] file ?
+    One solution would be to use:
+    git rebase --onto v2.6.24-local v2.6.23-stable v2.6.23-local
 
-True.
+    But this will not copy the commits, but actually move them. (And I
+do not see anything about this case in the git rebase documentation,
+or pointers to other commands similar to rebase.)
 
-> > Or "merge -s subtree".
-> 
-> I read the git help merge -s explanation but I do not understand how
-> it can help in my case.
+    So how should this be done?
 
-Using subtree merge strategy you can join histories of your project
-and git.git, embedding git.git as a subdirectory like gitk and git-gui
-are now in git.git.  It is an alternative to using submodules.
+    Thanks,
+    Ciprian Craciun.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+    P.S.: The simplest solution would be to obtain the list of commits
+and apply them with cherry-pick... But this is not that straight
+forward...
