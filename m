@@ -1,96 +1,137 @@
 From: Kevin Ballard <kevin@sb.org>
 Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Mon, 21 Jan 2008 19:42:44 -0500
-Message-ID: <32CA7B5D-FED0-4C70-A7DE-14E24B74FD1F@sb.org>
-References: <Pine.LNX.4.64.0801211509490.17095!@ds9.cixit.se> <C6C0E6A1-053B-48CE-90B3-8FFB44061C3B@sb.org> <20080121195703.GE29792@mit.edu> <998717B0-0165-4383-AAB8-33BD2A49954E@sb.org> <20080121201530.GF29792@mit.edu> <8F85366A-C990-47B1-BF60-936185B9E438@sb.org> <20080121204614.GG29792@mit.edu> <6E303071-82A4-4D69-AA0C-EC41168B9AFE@sb.org> <20080121211802.GH29792@mit.edu> <45C7CC4A-155F-4FE4-B741-8EE6CF7D3700@sb.org> <46a038f90801211349mfb57c0an9416832c2967c172@mail.gmail.com> <BA2377B5-BE7E-40F2-9C3C-679663A966A4@sb.org> <alpine.LSU.1.00.0801220031490.5731@racer.site>
+Date: Mon, 21 Jan 2008 19:47:49 -0500
+Message-ID: <F663E088-BCAD-4C5D-89D5-EAF97A29C1DE@sb.org>
+References: <478E1FED.5010801@web.de> <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org> <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org> <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se> <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org> <Pine.LNX.4.64.0801211509490.17095! @ds9.cixit.se> <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org> <alpine.LFD.1.00.0801! 210934400.2957@woody.linux-foundation.org> <C6C0E6A1-053B-48CE-90B3-8FFB44061C3B@sb.org> <alpine.LFD.1.00.08! 01211129130.2957@woody.linux-foundation.org> <373E260A-6786-4932-956A-68706AA7C469@sb.org> <alpine.LFD.1.00.! 0801211210270.2957@woody.linux-foundation.org> <7EB98659-4036-45DA-BD50-42CB23ED517A@sb.org> <alpine.LFD.1.0! 0.0801211323120.2957@woody.linux-foundation.org> <C373E12A-2AC4-4961-833A-7D5158
+ 4143C9@sb.org> <alpine.LFD.1.00.0! 801211407130.2957@woody.linux-foundation.org> <0CA4DF3F-1B64-4F62-8794-6F82C21BD068@sb.org> <alpine.LFD.1.00.0801211538590.2957@woody.linux-foundation.org>
 Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: multipart/signed; boundary=Apple-Mail-33--682934982; micalg=sha1; protocol="application/pkcs7-signature"
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 22 01:43:21 2008
+Content-Type: multipart/signed; boundary=Apple-Mail-34--682629314; micalg=sha1; protocol="application/pkcs7-signature"
+Cc: Peter Karlsson <peter@softwolves.pp.se>,
+	Mark Junker <mjscod@web.de>,
+	Pedro Melo <melo@simplicidade.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jan 22 01:48:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH7EU-0004r3-RQ
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 01:43:19 +0100
+	id 1JH7JU-00062B-QO
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 01:48:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756772AbYAVAmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 19:42:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756214AbYAVAmt
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 19:42:49 -0500
-Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:60719 "EHLO
-	randymail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1755844AbYAVAms (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 19:42:48 -0500
+	id S1756214AbYAVAr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 19:47:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755954AbYAVAr7
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 19:47:59 -0500
+Received: from balanced.mail.policyd.dreamhost.com ([208.97.132.119]:48049
+	"EHLO randymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755841AbYAVAr6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 19:47:58 -0500
 Received: from KBALLARD.RES.WPI.NET (KBALLARD.RES.WPI.NET [130.215.239.91])
-	by randymail-a2.g.dreamhost.com (Postfix) with ESMTP id 29024EEE8D;
-	Mon, 21 Jan 2008 16:42:47 -0800 (PST)
-In-Reply-To: <alpine.LSU.1.00.0801220031490.5731@racer.site>
+	by randymail-a1.g.dreamhost.com (Postfix) with ESMTP id 6AB2E18DA2E;
+	Mon, 21 Jan 2008 16:47:51 -0800 (PST)
+In-Reply-To: <alpine.LFD.1.00.0801211538590.2957@woody.linux-foundation.org>
 X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71381>
 
 
---Apple-Mail-33--682934982
+--Apple-Mail-34--682629314
 Content-Type: text/plain;
 	charset=US-ASCII;
 	format=flowed;
 	delsp=yes
 Content-Transfer-Encoding: 7bit
 
-On Jan 21, 2008, at 7:36 PM, Johannes Schindelin wrote:
+Please read to the bottom of this email. As near as I can figure out,  
+you haven't done that on any of my previous emails.
 
-> Hi,
->
+On Jan 21, 2008, at 6:44 PM, Linus Torvalds wrote:
+
 > On Mon, 21 Jan 2008, Kevin Ballard wrote:
->
->> On Jan 21, 2008, at 4:49 PM, Martin Langhoff wrote:
 >>
->>> LOL! Spare us the flamefesting and you will have plenty of time for
->>> learning git internals. You might even learn something.
->>
->> Ah, so I'm flaming while you are providing a well-reasoned and
->> articulate argument? Glad to know the difference.
+>> I find it amusing that you keep arguing against having git treat  
+>> filenames as
+>> unicode when
 >
-> ENOUGH ALREADY!
+> NO I DO NOT!
 >
-> Yes, you are flaming.  You sent easily over 30 totally useless mails  
+> Dammit, stop this idiocy.
+>
+> I think it's fine having git treat filenames "as unicode", as long  
+> as you
+> don't do any munging on it.
+
+When I say "treat filenames as unicode" I'm implying the equivalence  
+comparisons and everything else that we've been talking about.
+
+> Why? Because if it's utf-8, then treating them "as unicode" means  
+> exactly
+> the same as treating them "as a user-specified string".
+
+If that's what "as unicode" meant, then the phrase "as unicode" has  
+zero meaning.
+
+> So stop lying about this whole thing. I have never *ever* argued  
+> against
+> unicode per se.
+
+No, you've argued against unicode equivalency in filenames. Can't you  
+figure out, when the entire time I've been talking about equivalency,  
+that I'm *still* talking about equivalency?
+
+> All my complaints - every single one of them - comes down to making  
+> the
+> idiotic choice of trying to munge those strings (not even strictly
+> "normalize") into something they are not.
+
+Yes, I understand quite well that you are against munging strings.
+
+> And what you don't seem to understand is that once you accept  
+> _unmodified_
+> raw UTF-8 as a good unicode transport mechanism, suddenly other  
+> encodings
+> are possible. I'm not out to force my world-view on users. If they are
+> using legacy encodings (whether in filenames *or* in commit texts or  
 > in
-> this thread.  Over a couple of days.
+> their file contents), that's *their* choice.
 
-And so has EVERYONE ELSE. You cannot hold me to a standard which you  
-yourself do not apply.
+You're not using raw UTF-8, you're just using raw bytes. Calling it  
+UTF-8 doesn't mean anything, since you don't actually know that's what  
+it is. But this is fairly irrelevant.
 
-> And Martin is right, in that same amount of time, you could have  
-> learnt
-> the internals of git _easily_.  Especially since I provided an own  
-> chapter
-> in the manual for people like you.
+> I actually personally happen to use UTF-8-encoded unicode.
+>
+> I'm just not stupid enough to think that (a) corrupting it is a good  
+> idea,
+> *or* (b) that I should force every Asian installation of git to also  
+> force
+> people to use unicode (or even having all the conversion libraries and
+> overheads!)
+>
+> So stop this idiotic "unicode == normalization" crap.
+>
+> I'm a huge fan of UTF-8. But that does not mean that I think  
+> normalization
+> is a good idea.
 
-As I said before, I've been responding to emails in the midst of doing  
-other things. So no, I can't learn an entirely new system in my off- 
-time between other tasks, but I can respond to emails.
+How many times must I say the same thing over and over? I'm not  
+arguing that forced normalization is a good thing. I'm arguing that,  
+in a system which is unicode-aware top to bottom, forced normalization  
+is irrelevant to the user, since they don't care about the exact byte  
+sequence. And I'm also arguing that git should have some solution to  
+this problem. I find it interesting that you're perfectly happy to  
+rant and rail against your misperception of my argument, and yet you  
+consistently and repeatedly ignore my offers to stop this argument and  
+work towards a solution, as well as my comments on existing proposed  
+solutions.
 
-> So instead of _PESTERING_ us with things that we do _NOT CARE_  
-> about, you
-> could _DO SOMETHING USEFUL_ instead.
+Are you even reading to the end of my emails?
 
-You sure argue a lot for something you don't care about.
-
-I'm especially annoyed since I have made MANY offerings to stop this  
-argument and work towards a solution, but NOBODY ELSE seems to care  
-enough to actually accept that offer.
-
-And treating me like a moron (using all caps?) just shows how bad you  
-are at actually reading my emails. I've been giving you and everyone  
-else the courtesy of actually reading your emails, glad to know nobody  
-else has bothered to read to the end of mine.
-
--Kevin Ballard
+- Kevin Ballard
 
 -- 
 Kevin Ballard
@@ -100,7 +141,7 @@ http://www.tildesoft.com
 
 
 
---Apple-Mail-33--682934982
+--Apple-Mail-34--682629314
 Content-Disposition: attachment;
 	filename=smime.p7s
 Content-Type: application/pkcs7-signature;
@@ -139,16 +180,16 @@ ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
 MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
 A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEDsG8BKvlrEW0HUBIxWI
 gjUwCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
-DxcNMDgwMTIyMDA0MjQ0WjAjBgkqhkiG9w0BCQQxFgQUkHllHSXzgIFVbV+iDP6d0Z3th1EwgYUG
+DxcNMDgwMTIyMDA0NzUwWjAjBgkqhkiG9w0BCQQxFgQU6GmN2eNVgEfhk2611Y1m05u5k0swgYUG
 CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
 IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
 AhA7BvASr5axFtB1ASMViII1MIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
 BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
 b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhA7BvASr5axFtB1ASMViII1MA0GCSqGSIb3DQEBAQUA
-BIIBANxRIHahFsv9NNrRhvGjEeIxfIkB83pve27BpGXY0P3Zh4yxqUehY796Wqq/50cEMverX4EW
-3LVEQe3fPyK6yvgvAzHCHUQX6x2cUtqJevJyg5Dy/N8tjPVuBOp3W8sZg/2wRHqlfZ8yti80xcMC
-J6RXJ5GyVmKEnl0kjdbgXWPdLAqLxDEYP6d4rbogknYtN4cu7MPTEYXiZonztjtLIAsDSBkwimUm
-jPZj1TuLAVgyVesLoTcWlmpGlginhtY1DTmpvqCDER27cwXfY0D1S0tAZy5BUNPUrntNIbI1/B94
-7cMUCBbxqjCA/SnKqB5vnkj7iyhKtMawNT6d3wMIeNQAAAAAAAA=
+BIIBAGmTSceGeleP2HEM096dhniyGbeJCilruud3O7qzAHuBIza4cuxvcFM1dvd9XJEBjaNEGZaE
++qFmArtJtudMFmR4U680YmLPrCOAMYjQsHhSoeX5vy0OaF2uivtK9SMfEygm595PlOAIfm3/g5op
+8BqwuMuhlYL2OKFrg7nNomOqJ+4uJ8MZhwrmnIIfP3bGUGrLvFsgxK0OeL5L3u/fg6xBTH16AzFY
+fsVYywKt4tbhmQcyf3U3bVx97zcltC/LB1RhdoDVccgxYem6k12h2KK574MDYex5pOk8KMZbxjQ0
+QZTnyOIkIElR8ap+T7UedaQ3RRAVRdMWdbQS6bd7Oq0AAAAAAAA=
 
---Apple-Mail-33--682934982--
+--Apple-Mail-34--682629314--
