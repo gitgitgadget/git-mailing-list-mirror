@@ -1,73 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] read-cache.c: fix timestamp comparison
-Date: Tue, 22 Jan 2008 01:47:59 -0800
-Message-ID: <7v3asqry28.fsf@gitster.siamese.dyndns.org>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
-	<alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de>
-	<7vir1xmazm.fsf@gitster.siamese.dyndns.org>
-	<7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org>
-	<7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org>
-	<7vr6gb3nv1.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801202114580.2957@woody.linux-foundation.org>
-	<7vd4rv3ds5.fsf@gitster.siamese.dyndns.org>
-	<7vtzl71x1c.fsf@gitster.siamese.dyndns.org>
-	<7vprvv1wnu.fsf@gitster.siamese.dyndns.org>
-	<7vlk6j1wjj.fsf@gitster.siamese.dyndns.org>
-	<7vhch71vvb.fsf@gitster.siamese.dyndns.org>
-	<7v8x2j1sul.fsf@gitster.siamese.dyndns.org>
-	<7vzluzzhud.fsf_-_@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801211022350.2957@woody.linux-foundation.org>
-	<alpine.LFD.1.00.0801211104590.2957@woody.linux-foundation.org>
-	<alpine.LFD.1.00.0801211120350.2957@woody.linux-foundation.org>
-	<7vabmyykvg.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801211242330.2957@woody.linux-foundation.org>
+From: Sam Vilain <sam.vilain@catalyst.net.nz>
+Subject: Re: [PATCH] [RFC] Design for pathname encoding gitattribute [RESEND]
+Date: Tue, 22 Jan 2008 22:57:27 +1300
+Message-ID: <4795BE07.4040500@catalyst.net.nz>
+References: <20080122050215.DE198200A2@wilber.wgtn.cat-it.co.nz>	<7vlk6iv0ik.fsf@gitster.siamese.dyndns.org> <7vr6gatidd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jan 22 10:48:58 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Peter Karlsson <peter@softwolves.pp.se>,
+	Mark Junker <mjscod@web.de>,
+	Pedro Melo <melo@simplicidade.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Kevin Ballard <kevin@sb.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 10:57:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHFkO-0003ql-3q
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 10:48:48 +0100
+	id 1JHFt0-0006fu-2n
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 10:57:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755728AbYAVJsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2008 04:48:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756367AbYAVJsH
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 04:48:07 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64681 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755671AbYAVJsG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2008 04:48:06 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 245B64329;
-	Tue, 22 Jan 2008 04:48:04 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 98C2B4328;
-	Tue, 22 Jan 2008 04:48:01 -0500 (EST)
-In-Reply-To: <alpine.LFD.1.00.0801211242330.2957@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Mon, 21 Jan 2008 13:22:15 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1761214AbYAVJ4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 04:56:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761961AbYAVJ4t
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 04:56:49 -0500
+Received: from godel.catalyst.net.nz ([202.78.240.40]:35362 "EHLO
+	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761948AbYAVJ4r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2008 04:56:47 -0500
+Received: from 203-97-235-49.cable.telstraclear.net ([203.97.235.49] helo=[192.168.69.104])
+	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <sam.vilain@catalyst.net.nz>)
+	id 1JHFrl-0007aR-B5; Tue, 22 Jan 2008 22:56:25 +1300
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <7vr6gatidd.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71439>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Junio C Hamano wrote:
+> To support the above scenarios, I think each instance of
+> repository needs to be able to say "this path (specified with a
+> matching pattern in the filename encoding) should be converted
+> this way coming in, and that way going out."  UTF-8 only project
+> would have NKC<->NKD on HFS+ partition, and nothing on
+> everywhere else.
 
-> The stupid thing is that I literally _grepped_ for the code testing 
-> "ce_mode".
->
-> I had missed that one because I had looked for things like
->
-> 	if ([!].*ce_mode)
->
-> but that switch statement meant that the comparison to zero was 
-> non-local and my grep didn't see it.
+I think there is another reason to do this - simple sanity.  Two people
+adding the same filename should not end up with a different tree ID, if
+they for whatever reason ended up entering a differing equivalent
+variant of the same Unicode NKC form.
 
-Would a patch to sparse help you in cases like this?
+But, that rule of sanity breaks the C semantics sanity, so it must be a
+per-project setting.  Not a necessity, but a good feature I think.  It
+can be enforced with external scripts/hooks of course.
+
+What happens on the way in and out of the filesystem, I see that as a
+side issue.  Once you define what the normalized form is for the
+project, then the features should just fall into place without messy
+heuristics.  There is also a correct behaviour when faced with
+filesystems that have a different idea about who enforces encoding rules
+- so long as you can detect what those ideas are :).  It also means that
+users can choose to use the same local encoding as their locale, which
+might interoperate better with other apps.
+
+The readdir() (case|normalization) tolerance change is good in its own
+right, but it's a slightly different scenario, and an independent
+question to what is the normalized form.  Of course, on case folding,
+unicode normalizing filesystems you'd have to have a mixture of these
+settings for sane operation.
+
+On the chicken and egg thing, I guess .gitattributes is too late, you're
+right - unless you say that at each directory level, the globbing is
+always C.  But I haven't thought about that very hard.  I was just
+re-using a mechanism that already exists rather than try to invent
+something new.  I do agree with Dscho's point that mixing encodings in a
+repository is not necessarily a use case worth catering for.
+
+Sam.
