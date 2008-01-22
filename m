@@ -1,129 +1,70 @@
 From: Kevin Ballard <kevin@sb.org>
 Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Mon, 21 Jan 2008 21:33:12 -0500
-Message-ID: <34103945-2078-4983-B409-2D01EF071A8B@sb.org>
-References: <478E1FED.5010801@web.de> <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org> <Pine.LNX.4.64.0801211509490.17095! @ds9.cixit.se> <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org> <alpine.LFD.1.00.0801! 210934400.2957@woody.linux-foundation.org> <C6C0E6A1-053B-48CE-90B3-8FFB44061C3B@sb.org> <alpine.LFD.1.00.08! 01211129130.2957@woody.linux-foundation.org> <373E260A-6786-4932-956A-68706AA7C469@sb.org> <alpine.LFD.1.00.! 0801211210270.2957@woody.linux-foundation.org> <7EB98659-4036-45DA-BD50-42CB23ED517A@sb.org> <alpine.LFD.1.0! 0.0801211323120.2957@woody.linux-foundation.org> <C373E12A-2AC4-4961-833A-7D51584143C9@sb.org> <alpine.LFD.1.00.0! 801211407130.2957@woody.linux-foundation.org> <0CA4DF3F-1B64-4F62-8794-6F82C21BD068@sb.org> <alpine.LFD.1.00.0801211538590.2957@woody
- .linux-foundation.org> <F663E088-BCAD-4C5D-89D5-EAF97A29C1DE@sb.org> <alpine.LFD.1.00.0801211656130.2957@woody.linux-foundation.org> <alpine.LFD.1.00.0801211702050.2957@woody.linux-foundation.org>
+Date: Mon, 21 Jan 2008 21:34:49 -0500
+Message-ID: <31F9ADDC-008D-4F06-97E6-CF1D16238DF9@sb.org>
+References: <Pine.LNX.4.64.0801211509490.17095!@ds9.cixit.se> <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org> <alpine.LFD.1.00.0801210934400.2957@woody.linux-foundation.org> <C6C0E6A1-053B-48CE-90B3-8FFB44061C3B@sb.org> <20080121195703.GE29792@mit.edu> <998717B0-0165-4383-AAB8-33BD2A49954E@sb.org> <20080121201530.GF29792@mit.edu> <8F85366A-C990-47B1-BF60-936185B9E438@sb.org> <20080121204614.GG29792@mit.edu> <6E303071-82A4-4D69-AA0C-EC41168B9AFE@sb.org> <20080121211802.GH29792@mit.edu> <45C7CC4A-155F-4FE4-B741-8EE6CF7D3700@sb.org> <85zluy4xf0.fsf@lola.goethe.zz>
 Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: multipart/signed; boundary=Apple-Mail-36--676306513; micalg=sha1; protocol="application/pkcs7-signature"
-Cc: Peter Karlsson <peter@softwolves.pp.se>,
+Content-Type: multipart/signed; boundary=Apple-Mail-37--676209896; micalg=sha1; protocol="application/pkcs7-signature"
+Cc: Theodore Tso <tytso@MIT.EDU>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Peter Karlsson <peter@softwolves.pp.se>,
 	Mark Junker <mjscod@web.de>,
 	Pedro Melo <melo@simplicidade.org>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jan 22 03:33:51 2008
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Jan 22 03:35:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH8xS-0003hc-55
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 03:33:50 +0100
+	id 1JH8z0-0003yp-61
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 03:35:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752771AbYAVCdT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 21:33:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752766AbYAVCdT
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 21:33:19 -0500
-Received: from balanced.mail.policyd.dreamhost.com ([208.97.132.119]:35090
-	"EHLO randymail-a8.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752682AbYAVCdT (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 21:33:19 -0500
+	id S1752817AbYAVCe4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 21:34:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752795AbYAVCe4
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 21:34:56 -0500
+Received: from mailbigip.dreamhost.com ([208.97.132.5]:52562 "EHLO
+	randymail-a8.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752782AbYAVCez (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 21:34:55 -0500
 Received: from KBALLARD.RES.WPI.NET (KBALLARD.RES.WPI.NET [130.215.239.91])
-	by randymail-a8.g.dreamhost.com (Postfix) with ESMTP id 369F6AF837;
-	Mon, 21 Jan 2008 18:33:14 -0800 (PST)
-In-Reply-To: <alpine.LFD.1.00.0801211702050.2957@woody.linux-foundation.org>
+	by randymail-a8.g.dreamhost.com (Postfix) with ESMTP id 071D6AF836;
+	Mon, 21 Jan 2008 18:34:51 -0800 (PST)
+In-Reply-To: <85zluy4xf0.fsf@lola.goethe.zz>
 X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71403>
 
 
---Apple-Mail-36--676306513
+--Apple-Mail-37--676209896
 Content-Type: text/plain;
 	charset=US-ASCII;
 	format=flowed;
 	delsp=yes
 Content-Transfer-Encoding: 7bit
 
-Linus, have you even bothered to read my arguments, or do you just get  
-a kick out of building these straw man arguments? You have  
-consistently failed to actually address what I'm talking about, and  
-instead persist in explaining stuff I already know, as if that was the  
-answer to anything I've been talking about. You are clearly incapable  
-of understanding my basic point, no matter how simple I break it down.  
-I suspect it's because you've been working low-level so long you can't  
-think high-level, and so you manage to misinterpret my high-level  
-arguments as boneheaded low-level mistakes.
+On Jan 21, 2008, at 5:38 PM, David Kastrup wrote:
 
-Anyway, please see my countless former emails where I ask to work  
-towards a solution instead of just arguing.
+>> How many times must I say I never suggested actually changing git's
+>> hashing algorithm? And if you want me to suggest a fix to git that
+>> works, first you have to wait for me to learn how git's internals
+>> work, and frankly, I have too much work on my plate right now to
+>> devote the time necessary to learning git's internals well enough to
+>> fix this problem.
+>
+> Then please understand that you have too much work on your plate right
+> now to devote the time necessary to provide any constructive  
+> criticism.
+> A smart person in this situation would shut up until he has the time.
+
+A smart person would not join the conversation late and respond to  
+points that have already been exhausted ages ago.
 
 -Kevin Ballard
-
-On Jan 21, 2008, at 8:13 PM, Linus Torvalds wrote:
-
->
->
-> On Mon, 21 Jan 2008, Linus Torvalds wrote:
->>
->> Think about the file name "Abc", and think about what happens when  
->> you
->> create it.
->>
->> Now, think about what happens if that filename is considered  
->> equivalent in
->> case..
->>
->> See? The filesystem has to *corrupt* the filename.
->
-> Let me make this really clear, because I'm afraid that you won't get  
-> it
-> when I leave out any steps of the way.
->
-> Let us say that there is a filename "xyz" that is equivalent to a  
-> filename
-> "abc" in *any* way. It does not matter if xyz/abc is Hello/hello, or
-> whether it's two canonically equivalent strings.
->
-> So now, do
->
-> 	close(open(xyz, O_WRONLY | O_CREAT, 0666));
-> 	close(open(abc, O_WRONLY | O_CREAT, 0666));
->
-> and then look at the directory contents afterwards.
->
-> There are two, and only two, choices here (*):
-> - the filesystem created both files, and they show up as created
-> - the filesystem decided they were equivalent, and munged one (or  
-> both)
->   of them
->
-> Now, let's go back to my claim:
-> - munging user data is unacceptable
-> and realize that equivalence BY DEFINITION must do it.
->
-> So no, you do *not* get to have your cake and eat it too. You simply
-> fundamentally *cannot* have both filename equivalence and a non- 
-> munging
-> filesystem. See above why.
->
-> 		Linus
->
-> (*) Actually, there is third choice above, which is:
->
-> - the filesystem created the first file, and errored out on the second
->   because it noticed it was equivalent - but not identical - to one it
->   already had
->
->   This one is actually a perfectly fine choice, but it's not "your"  
-> kind
->   of equivalence, since it actually makes a difference between two
->   equivalent but non-identical names. So the filenames aren't actually
->   interchangable, and this case is really more of a "the filesystem  
-> has
->   some very specific limitations on what it allows".
->
 
 -- 
 Kevin Ballard
@@ -133,7 +74,7 @@ http://www.tildesoft.com
 
 
 
---Apple-Mail-36--676306513
+--Apple-Mail-37--676209896
 Content-Disposition: attachment;
 	filename=smime.p7s
 Content-Type: application/pkcs7-signature;
@@ -172,16 +113,16 @@ ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
 MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
 A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEDsG8BKvlrEW0HUBIxWI
 gjUwCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
-DxcNMDgwMTIyMDIzMzEzWjAjBgkqhkiG9w0BCQQxFgQUbTsGJTmxteu9Gw8B8+nE6SeC2howgYUG
+DxcNMDgwMTIyMDIzNDQ5WjAjBgkqhkiG9w0BCQQxFgQUAJEbIUu6KGCqV9LSuhIxcD2c/D0wgYUG
 CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
 IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
 AhA7BvASr5axFtB1ASMViII1MIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
 BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
 b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhA7BvASr5axFtB1ASMViII1MA0GCSqGSIb3DQEBAQUA
-BIIBADJ8KS9wBMh7ILC1suVQhdPGePg/Ix5zYm65AETNDLaAPKc9MtzkJDAWOmGv8FFxdzITUHT8
-zCPeFIdEuU4LHp6Vs9v3lH3dL/npdFKtQ1dOSYq70KGthQw5tnqsDE6WIhnfqa62UTvU0ofixOfu
-Nh7ScUJPNx6WivOVWVgj+B25yj2lB4Rtkg4y1zwtlOySevMcqzsVjHa8kslwYujeE0AG9Ohd7ATp
-8XoVO2jUp3F4f9UOtNSyf7/aC/xZ0712rWoGTLSX219axYm9HXl8kAhdIMKxG02OITI/iy3rq28R
-DLOSiJ5SlEkAk7iB6e1aIbPE/HWE7GyO7HMGn0Ky3c0AAAAAAAA=
+BIIBAJd29tGX3f4HwjYcEi+xNvCkN4qNjsezPbIPRKBRP5TBBDQ7b9xybw9Ebat4Ylm0Y7zLAv57
+pXUx0JQgFic9Gwn5ExygT1y6gN+YU3v9tvMc8M/FhS5OeUjBExhEBIepPGaN7xxHEFaSYu+0AQnv
+hsyvJZh2HupQXLmNOXm5xWIIfEQbcZsdAykCtJDxBVqlleIWGuiP6wJKWxIFMF/QLTE1oH6lRtDQ
++wdG4ZZCRAMbVW7LS3kqC26sJcyaXfZ76IJSm+couoeF/zpVlzlPutbK7nrccTz29YERi3gwpOoA
+p8Cs6CgPAvgBFqR/CyprqQgoYmfmk3r3zmPwtiywYtQAAAAAAAA=
 
---Apple-Mail-36--676306513--
+--Apple-Mail-37--676209896--
