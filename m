@@ -1,101 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Using email between 2 developers to keep git repositories in sync
-Date: Tue, 22 Jan 2008 05:53:32 -0800 (PST)
-Message-ID: <m3k5m2klmh.fsf@roke.D-201>
-References: <7A02F7D1-9EB0-43AB-96F9-DDD71D4EF5FE@mac.com>
-	<alpine.LSU.1.00.0801221255530.5731@racer.site>
+From: picca <picca@synchrotron-soleil.Fr>
+Subject: Re: tracking a file from another project in my own project
+Date: Tue, 22 Jan 2008 14:56:58 +0100
+Organization: Soleil
+Message-ID: <20080122145658.18b6ef89@synchrotron-soleil.Fr>
+References: <20080122093546.72db8da0@synchrotron-soleil.Fr>
+	<7v7ii2rzbq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: ab_lists@mac.com, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 22 14:54:24 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 14:57:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHJZp-0003Zq-8W
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 14:54:10 +0100
+	id 1JHJci-0004ao-6f
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 14:57:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752446AbYAVNxj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2008 08:53:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751761AbYAVNxj
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 08:53:39 -0500
-Received: from mu-out-0910.google.com ([209.85.134.185]:42201 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751134AbYAVNxi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2008 08:53:38 -0500
-Received: by mu-out-0910.google.com with SMTP id w8so1991675mue.1
-        for <git@vger.kernel.org>; Tue, 22 Jan 2008 05:53:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=eQNtagZ0nceF8v+AUKo1pEBXLKcs9qxri6I7+8CuOHo=;
-        b=eOswOoE2av8VLb8A4e/RUdgqlbb3PHh/u75nL2JxY121cNpJO+En/Nk/Qwc3U+MZ5NvBbRa885MwhX5j8fJmMbs+/oxIgh99ZwWMJG1oEZZHaI1KraKFQSamEHhwjxtSwwv5ZYOsfW1YtV6KcVtmKpGpBPqYlUQseuph+teidqQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=OOnnwUcKVK2eN0STPXSQghYkrPCdIUcksW87Nq0zvMFoiFBYReDt1d0J24geXslUgSRD/Ie/HWsF4njEvx0x3eCKiLP6lZ9fxKNbLNWLN3FYap/kXgoL4xvFQ8THS52W/iEoJZDSH7FQhSCroSXn7JhwkT36PlDLzZS5AeSYZsk=
-Received: by 10.78.139.14 with SMTP id m14mr11140365hud.25.1201010014194;
-        Tue, 22 Jan 2008 05:53:34 -0800 (PST)
-Received: from roke.D-201 ( [83.8.211.135])
-        by mx.google.com with ESMTPS id s34sm2887834hub.31.2008.01.22.05.53.31
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 22 Jan 2008 05:53:32 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id m0MDwXa3001618;
-	Tue, 22 Jan 2008 14:58:40 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m0MDwVbT001615;
-	Tue, 22 Jan 2008 14:58:31 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <alpine.LSU.1.00.0801221255530.5731@racer.site>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751690AbYAVN4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 08:56:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbYAVN4h
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 08:56:37 -0500
+Received: from dns2.synchrotron-soleil.fr ([195.221.0.6]:59424 "EHLO
+	raclette.synchrotron-soleil.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751690AbYAVN4g (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Jan 2008 08:56:36 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 74390300FC;
+	Tue, 22 Jan 2008 14:43:14 +0100 (CET)
+X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
+Received: from raclette.synchrotron-soleil.fr ([127.0.0.1])
+	by localhost (raclette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4G+zG5v9iKXl; Tue, 22 Jan 2008 14:43:12 +0100 (CET)
+Received: from venusbis.synchrotron-soleil.fr (venusbis.synchrotron-soleil.fr [195.221.0.152])
+	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id F1019300D2;
+	Tue, 22 Jan 2008 14:43:11 +0100 (CET)
+Received: from localhost.localdomain ([195.221.5.120]) by venusbis.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 22 Jan 2008 14:57:26 +0100
+In-Reply-To: <7v7ii2rzbq.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.2.0 (GTK+ 2.12.1; i486-pc-linux-gnu)
+X-OriginalArrivalTime: 22 Jan 2008 13:57:26.0042 (UTC) FILETIME=[B81D0FA0:01C85CFE]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71450>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, 22 Jan 2008 01:20:41 -0800
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> On Tue, 22 Jan 2008, ab_lists@mac.com wrote:
-> 
-> > However I need to share code with a co-developer. He also has a code 
-> > base that I need access to. For several reasons, a shared server will 
-> > not work so I was thinking of using email to send patches back and 
-> > forth.
-> 
-> My recommendation: Use bundles.  Just make the initial "clone" like this:
-> 
-> 	$ git bundle create initial.bundle --all
-> 
-> Send the file "initial.bundle" (which you just created) to your 
-> co-developer.  He should now initialise his repository:
-> 
-> 	$ mkdir my-new-workdir
-> 	$ cd my-new-workdir
-> 	$ git init
-> 	$ git pull /path/to/initial.bundle master
-> 
-> (Someone tried to get "git clone /path/to/bundle" to work, but I don't 
-> know if that work was ever completed, so I assume it was not.)
-> 
-> Whenever he wants to send you an update, he has to do something like this:
-> 
-> 	$ git bundle create update.bundle --all --since=2.weeks.ago
-> 
-> and send you the resulting file named "update.bundle".
+> If I were you I'd probably just keep git.git as a submodule in
+> your project and have two symlinks from your toplevel pointing
+> at git.git/strbuf.[ch] (or from src/ to ../git.git/strbuf.[ch]).
 
-If I remember correctly either in GitFaq or GitTios at GitWIki 
-(http://git.or.cz/gitwiki/), or in "Git in Nutshell" guide there
-is description how to generate incremental bundle containing all
-objects you created since last bundle and only those objects.
+So submodule is a requirement to achieved this comportment ?
 
-Besides, after initial setup IMHO it is much better to exchange
-patches for review. Although usually there are more than two
-developers in such case...
+If someone want to clone my project.git, must he also clone the
+git.git project or he loose the ability to follow by it's own the
+strbuf.[ch] file ?
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+> Or "merge -s subtree".
+
+I red the git help merge -s explanation but I do not understand how
+it can help in my case.
+
+Thanks
+
+Frederic
