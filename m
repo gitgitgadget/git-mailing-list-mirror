@@ -1,70 +1,80 @@
-From: picca <picca@synchrotron-soleil.Fr>
-Subject: Re: tracking a file from another project in my own project
-Date: Tue, 22 Jan 2008 14:56:58 +0100
-Organization: Soleil
-Message-ID: <20080122145658.18b6ef89@synchrotron-soleil.Fr>
-References: <20080122093546.72db8da0@synchrotron-soleil.Fr>
-	<7v7ii2rzbq.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: Re: [PATCH] contrib/hooks/post-receive-email: add a From: line to the email header
+Date: Tue, 22 Jan 2008 15:12:04 +0100
+Message-ID: <CA518F22-C0E4-4C2E-A86C-6E8CB1776FAE@lrde.epita.fr>
+References: <20071108094809.22151.qmail@97f06c2e73713e.315fe32.mid.smarden.org> <7vode52hag.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 14:57:16 2008
+Cc: Gerrit Pape <pape@smarden.org>,
+	Git Mailing List <git@vger.kernel.org>, tv@eagain.net
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 15:13:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHJci-0004ao-6f
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 14:57:08 +0100
+	id 1JHJrv-0001gn-4h
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 15:12:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751690AbYAVN4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2008 08:56:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbYAVN4h
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 08:56:37 -0500
-Received: from dns2.synchrotron-soleil.fr ([195.221.0.6]:59424 "EHLO
-	raclette.synchrotron-soleil.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751690AbYAVN4g (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Jan 2008 08:56:36 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 74390300FC;
-	Tue, 22 Jan 2008 14:43:14 +0100 (CET)
-X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
-Received: from raclette.synchrotron-soleil.fr ([127.0.0.1])
-	by localhost (raclette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 4G+zG5v9iKXl; Tue, 22 Jan 2008 14:43:12 +0100 (CET)
-Received: from venusbis.synchrotron-soleil.fr (venusbis.synchrotron-soleil.fr [195.221.0.152])
-	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id F1019300D2;
-	Tue, 22 Jan 2008 14:43:11 +0100 (CET)
-Received: from localhost.localdomain ([195.221.5.120]) by venusbis.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 22 Jan 2008 14:57:26 +0100
-In-Reply-To: <7v7ii2rzbq.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.2.0 (GTK+ 2.12.1; i486-pc-linux-gnu)
-X-OriginalArrivalTime: 22 Jan 2008 13:57:26.0042 (UTC) FILETIME=[B81D0FA0:01C85CFE]
+	id S1754277AbYAVOMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 09:12:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754228AbYAVOMU
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 09:12:20 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:58178 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752602AbYAVOMT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2008 09:12:19 -0500
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1JHJrL-0003uf-QB; Tue, 22 Jan 2008 15:12:15 +0100
+In-Reply-To: <7vode52hag.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71451>
 
-On Tue, 22 Jan 2008 01:20:41 -0800
-Junio C Hamano <gitster@pobox.com> wrote:
+On Nov 8, 2007, at 10:55 AM, Junio C Hamano wrote:
 
-> If I were you I'd probably just keep git.git as a submodule in
-> your project and have two symlinks from your toplevel pointing
-> at git.git/strbuf.[ch] (or from src/ to ../git.git/strbuf.[ch]).
+> Gerrit Pape <pape@smarden.org> writes:
+>
+>> $committer is already extracted from the latest existing rev, so  
+>> add the
+>> corresponding From: line to the email header.
+>
+> You may fight this out with Andy if you want to, but I think I'd
+> side with the existing behaviour.
+>
+> commit e6dc8d60fbd2c84900a26545c5d360b0e202d95b
+> Author: Andy Parkins <andyparkins@gmail.com>
+> Date:   Fri Sep 28 15:24:26 2007 +0100
+>
+>     post-receive-hook: Remove the From field from the generated  
+> email header so that the pusher's name is used
+>
+>     Using the name of the committer of the revision at the tip of the
+>     updated ref is not sensible.  That information is available in  
+> the email
+>     itself should it be wanted, and by supplying a "From", we were
+>     effectively hiding the person who performed the push - which is  
+> useful
+>     information in itself.
+>
+>     Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-So submodule is a requirement to achieved this comportment ?
 
-If someone want to clone my project.git, must he also clone the
-git.git project or he loose the ability to follow by it's own the
-strbuf.[ch] file ?
+Hi guys,
+the problem with this change is that when one uses Gitosis all the  
+commits are pushed with the `git' user so emails always appear to  
+come from git@fqdn.  I guess it would be worth to add an option to  
+retain the old behavior (where $committer was extracted from the last  
+commit pushed and used in the `From' field), don't you think?
 
-> Or "merge -s subtree".
-
-I red the git help merge -s explanation but I do not understand how
-it can help in my case.
-
-Thanks
-
-Frederic
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
