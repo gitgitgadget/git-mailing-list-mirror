@@ -1,102 +1,69 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Mon, 21 Jan 2008 17:13:48 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801211702050.2957@woody.linux-foundation.org>
-References: <478E1FED.5010801@web.de> <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org> <Pine.LNX.4.64.0801211509490.17095! @ds9.cixit.se> <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org> <alpine.LFD.1.00.0801! 210934400.2957@woody.linux-foundation.org>
- <C6C0E6A1-053B-48CE-90B3-8FFB44061C3B@sb.org> <alpine.LFD.1.00.08! 01211129130.2957@woody.linux-foundation.org> <373E260A-6786-4932-956A-68706AA7C469@sb.org> <alpine.LFD.1.00.! 0801211210270.2957@woody.linux-foundation.org> <7EB98659-4036-45DA-BD50-42CB23ED517A@sb.org>
- <alpine.LFD.1.0! 0.0801211323120.2957@woody.linux-foundation.org> <C373E12A-2AC4-4961-833A-7D51584143C9@sb.org> <alpine.LFD.1.00.0! 801211407130.2957@woody.linux-foundation.org> <0CA4DF3F-1B64-4F62-8794-6F82C21BD068@sb.org>
- <alpine.LFD.1.00.0801211538590.2957@woody.linux-foundation.org> <F663E088-BCAD-4C5D-89D5-EAF97A29C1DE@sb.org> <alpine.LFD.1.00.0801211656130.2957@woody.linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
+Subject: Re: [ANNOUNCE] GIT 1.5.4-rc4
+Date: Tue, 22 Jan 2008 01:21:56 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801220121300.5731@racer.site>
+References: <7vsl13wmas.fsf@gitster.siamese.dyndns.org> <7vsl0r3nvc.fsf@gitster.siamese.dyndns.org> <BB330DC7-9F38-4D41-85A2-D475701B6083@zib.de>
+Reply-To: Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Peter Karlsson <peter@softwolves.pp.se>,
-	Mark Junker <mjscod@web.de>,
-	Pedro Melo <melo@simplicidade.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Tue Jan 22 02:14:42 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>,  Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+To: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Tue Jan 22 02:22:30 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from ag-out-0910.google.com ([72.14.246.185])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH7iq-0003Xb-O3
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 02:14:41 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753928AbYAVBOA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 20:14:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753981AbYAVBN7
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 20:13:59 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:55453 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752356AbYAVBN7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 20:13:59 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0M1Dnnt008032
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 21 Jan 2008 17:13:50 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0M1Dmlx029462;
-	Mon, 21 Jan 2008 17:13:48 -0800
-In-Reply-To: <alpine.LFD.1.00.0801211656130.2957@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.722 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
-Sender: git-owner@vger.kernel.org
+	id 1JH7qP-0005RA-KE
+	for gcvm-msysgit@m.gmane.org; Tue, 22 Jan 2008 02:22:29 +0100
+Received: by ag-out-0910.google.com with SMTP id 32so108166agc.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Jan 2008 17:22:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=0r1AUjqf2qczxr62kb7v5/eeAqEILRt8wt1z7gGapds=;
+        b=NUAKhthZiyhMic7Gzk/X3mJ+84w5xbmXdAX0eUCzK96CkAUCoCrg8OAu0FYUGZKMYUcZx9qjnMHE8fo8eZwOoI0r78A2FVqEhO0jOge24ny8HJs+2IWr0ymo1vgWY77F+yRIKWRgLhX7KeGwh/rfmvRKuddkffefE193TGNxNwY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=idfUW+DBd9kqKvTuySYAnxvtOsYdolmPHSoNtkDPUkXjLNUoEOLEedGMC5sXpCLPuu65I2Kv1bfiLjIy7MhZhNEMujCK9o5noRO2j4nybVn3b5D/h8BOujDQWrYxlg0EW1dqJfUBDv31fLfYUcGs1cXx6xWojKGwPNxvHafW9hE=
+Received: by 10.100.138.4 with SMTP id l4mr453626and.2.1200964919722;
+        Mon, 21 Jan 2008 17:21:59 -0800 (PST)
+Received: by 10.44.219.52 with SMTP id r52gr1450hsg;
+	Mon, 21 Jan 2008 17:21:59 -0800 (PST)
+X-Sender: Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.35.14.4 with SMTP id r4mr13409900pyi.2.1200964919293; Mon, 21 Jan 2008 17:21:59 -0800 (PST)
+Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id a28si4922178pye.0.2008.01.21.17.21.58; Mon, 21 Jan 2008 17:21:59 -0800 (PST)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
+Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
+Received: (qmail invoked by alias); 22 Jan 2008 01:21:57 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40] by mail.gmx.net (mp057) with SMTP; 22 Jan 2008 02:21:57 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19CBSUaWAJCLW7TE9JaALQCLdp7ZwSMEnYGNz0I2v ZemGPC7znDx8S4
+X-X-Sender: gene099-OGWIkrnhIhzN0uC3ymp8PA@public.gmane.org
+In-Reply-To: <BB330DC7-9F38-4D41-85A2-D475701B6083-wjoc1KHpMeg@public.gmane.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71392>
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71393>
 
 
+Hi,
 
-On Mon, 21 Jan 2008, Linus Torvalds wrote:
-> 
-> Think about the file name "Abc", and think about what happens when you 
-> create it.
-> 
-> Now, think about what happens if that filename is considered equivalent in 
-> case..
-> 
-> See? The filesystem has to *corrupt* the filename.
+On Mon, 21 Jan 2008, Steffen Prohaska wrote:
 
-Let me make this really clear, because I'm afraid that you won't get it 
-when I leave out any steps of the way.
+> I haven't pushed the branches because repo.or.cz seems to have problems.
 
-Let us say that there is a filename "xyz" that is equivalent to a filename 
-"abc" in *any* way. It does not matter if xyz/abc is Hello/hello, or 
-whether it's two canonically equivalent strings.
+Can you elaborate?  What kind of problems?
 
-So now, do
-
-	close(open(xyz, O_WRONLY | O_CREAT, 0666));
-	close(open(abc, O_WRONLY | O_CREAT, 0666));
-
-and then look at the directory contents afterwards.
-
-There are two, and only two, choices here (*):
- - the filesystem created both files, and they show up as created
- - the filesystem decided they were equivalent, and munged one (or both) 
-   of them
-
-Now, let's go back to my claim:
- - munging user data is unacceptable
-and realize that equivalence BY DEFINITION must do it.
-
-So no, you do *not* get to have your cake and eat it too. You simply 
-fundamentally *cannot* have both filename equivalence and a non-munging 
-filesystem. See above why.
-
-		Linus
-
-(*) Actually, there is third choice above, which is:
-
- - the filesystem created the first file, and errored out on the second 
-   because it noticed it was equivalent - but not identical - to one it 
-   already had
-
-   This one is actually a perfectly fine choice, but it's not "your" kind 
-   of equivalence, since it actually makes a difference between two 
-   equivalent but non-identical names. So the filenames aren't actually 
-   interchangable, and this case is really more of a "the filesystem has 
-   some very specific limitations on what it allows".
+Ciao,
+Dscho
