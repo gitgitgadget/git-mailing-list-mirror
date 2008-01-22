@@ -1,76 +1,125 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Apologies for the massive and pointless thread
-Date: Tue, 22 Jan 2008 08:57:26 +0100
-Message-ID: <8563xm47ix.fsf@lola.goethe.zz>
-References: <00C73A5A-D81D-41F5-A57D-BD84A1065C1B@sb.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH/RFC] pack-objects documentation and usage update
+Date: Tue, 22 Jan 2008 09:03:05 +0100
+Message-ID: <4795A339.40103@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Peter Karlsson <peter@softwolves.pp.se>,
-	Mark Junker <mjscod@web.de>,
-	Pedro Melo <melo@simplicidade.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Dmitry Potapov <dpotapov@gmail.com>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Tue Jan 22 08:58:02 2008
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 22 09:03:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHE1A-0008K3-3z
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 08:58:00 +0100
+	id 1JHE6j-0001Ek-JH
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 09:03:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754588AbYAVH5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2008 02:57:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754774AbYAVH5a
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 02:57:30 -0500
-Received: from mail-in-09.arcor-online.net ([151.189.21.49]:48168 "EHLO
-	mail-in-09.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753755AbYAVH53 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Jan 2008 02:57:29 -0500
-Received: from mail-in-18-z2.arcor-online.net (mail-in-18-z2.arcor-online.net [151.189.8.35])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id E44D4302A42;
-	Tue, 22 Jan 2008 08:57:27 +0100 (CET)
-Received: from mail-in-06.arcor-online.net (mail-in-06.arcor-online.net [151.189.21.46])
-	by mail-in-18-z2.arcor-online.net (Postfix) with ESMTP id D27B6510117;
-	Tue, 22 Jan 2008 08:57:27 +0100 (CET)
-Received: from lola.goethe.zz (dslb-084-061-008-019.pools.arcor-ip.net [84.61.8.19])
-	by mail-in-06.arcor-online.net (Postfix) with ESMTP id C1D2435E6A7;
-	Tue, 22 Jan 2008 08:57:27 +0100 (CET)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 110761C3D4E5; Tue, 22 Jan 2008 08:57:26 +0100 (CET)
-In-Reply-To: <00C73A5A-D81D-41F5-A57D-BD84A1065C1B@sb.org> (Kevin Ballard's
-	message of "Mon, 21 Jan 2008 23:55:45 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-X-Virus-Scanned: ClamAV version 0.92, clamav-milter version 0.92 on mail-in-06.arcor-online.net
-X-Virus-Status: Clean
+	id S1754807AbYAVIDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 03:03:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754163AbYAVIDJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 03:03:09 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:24386 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753480AbYAVIDH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2008 03:03:07 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JHE5w-00047T-F5
+	for git@vger.kernel.org; Tue, 22 Jan 2008 09:02:56 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP id 54457546
+	for <git@vger.kernel.org>; Tue, 22 Jan 2008 09:03:05 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71429>
 
-Kevin Ballard <kevin@sb.org> writes:
+With the previous ordering in the short usage help it was difficult to
+spot that either a base-name or --stdout must be specified. Some
+punctuation is dropped because it is more hindrance than help.
 
-> I want to apologize for the recent thread entitled "git on MacOSX and
-> files with decomposed utf-8 file names".
+The documentation of --reflog is added and the synopsis updated to include
+all options that pack-objects understands.
 
-[...]
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+Since this patch does not fill in the missing documentation of
+--keep-unreachable, I marked it as RFC.
 
-> Unfortunately, my argument seems to have been completely lost in the
-> noise, and everybody ended up with some idea of what my argument was
-> that was completely invalid.
+08cdfb13374 says about --keep-unreachable:
 
-You still consider everybody who does not share your point of view an
-idiot.  And telling people that is not going to change their mind.  You
-need to come up with an argument that convinces anybody, and "the
-designers are smart people, they must have thought something smart even
-though I don't actually get it myself" does not convince anybody.  And
-that has been your main argument.
+    This new option is meant to be used in conjunction with the
+    options "git repack -a -d" usually invokes the underlying
+    pack-objects with.  When this option is given, objects unreachable
+    from the refs in packs named with --unpacked= option are added
+    to the resulting pack, in addition to the reachable objects that
+    are not in packs marked with *.keep files.
 
-And you consider others dense for not accepting it?
+but this sentence is too complicated for my small brain.
 
+-- Hannes
+
+ Documentation/git-pack-objects.txt |   15 ++++++++++++---
+ builtin-pack-objects.c             |    4 ++--
+ 2 files changed, 14 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index 74cc7c1..6a3ddc9 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -9,9 +9,13 @@ git-pack-objects - Create a packed archive of objects
+ SYNOPSIS
+ --------
+ [verse]
+-'git-pack-objects' [-q] [--no-reuse-delta] [--delta-base-offset] [--non-empty]
+-	[--local] [--incremental] [--window=N] [--depth=N] [--all-progress]
+-	[--revs [--unpacked | --all]*] [--stdout | base-name] < object-list
++'git-pack-objects' [-q | --progress | --all-progress]
++        [--max-pack-size=N] [--local] [--incremental]
++        [--window=N] [--window-memory=N] [--depth=N]
++        [--no-reuse-delta] [--no-reuse-object] [--delta-base-offset]
++        [--threads=N] [--non-empty] [--revs [--unpacked | --all]*] [--reflog]
++        [--keep-unreachable] --stdout | base-name < ref-or-object-list
++
+
+
+ DESCRIPTION
+@@ -73,6 +77,11 @@ base-name::
+ 	as if all refs under `$GIT_DIR/refs` are specified to be
+ 	included.
+
++--reflog::
++	This implies `--revs`. In addition to the objects reachable
++	from the revision arguments, pack also those objects that
++	are reachable from those revisions' reflogs.
++
+ --window=[N], --depth=[N]::
+ 	These two options affect how the objects contained in
+ 	the pack are stored using delta compression.  The
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index ec10238..cd7a272 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -20,12 +20,12 @@
+ #endif
+
+ static const char pack_usage[] = "\
+-git-pack-objects [{ -q | --progress | --all-progress }] \n\
++git-pack-objects [-q | --progress | --all-progress] \n\
+ 	[--max-pack-size=N] [--local] [--incremental] \n\
+ 	[--window=N] [--window-memory=N] [--depth=N] \n\
+ 	[--no-reuse-delta] [--no-reuse-object] [--delta-base-offset] \n\
+ 	[--threads=N] [--non-empty] [--revs [--unpacked | --all]*] [--reflog] \n\
+-	[--stdout | base-name] [--keep-unreachable] [<ref-list | <object-list]";
++	[--keep-unreachable] --stdout | base-name < ref-or-object-list";
+
+ struct object_entry {
+ 	struct pack_idx_entry idx;
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+1.5.4.rc3.24.g25a9a
