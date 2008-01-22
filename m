@@ -1,80 +1,125 @@
-From: Sam Vilain <sam.vilain@catalyst.net.nz>
-Subject: Re: [PATCH] [RFC] Design for pathname encoding gitattribute [RESEND]
-Date: Tue, 22 Jan 2008 23:44:53 +1300
-Message-ID: <4795C925.2090409@catalyst.net.nz>
-References: <20080122050215.DE198200A2@wilber.wgtn.cat-it.co.nz>	<7vlk6iv0ik.fsf@gitster.siamese.dyndns.org>	<7vr6gatidd.fsf@gitster.siamese.dyndns.org>	<4795BE07.4040500@catalyst.net.nz> <7vprvuqh94.fsf@gitster.siamese.dyndns.org>
+From: "Reece Dunn" <msclrhd@googlemail.com>
+Subject: Re: [RFC] File system difference handling in git
+Date: Tue, 22 Jan 2008 10:52:30 +0000
+Message-ID: <3f4fd2640801220252q6a6557cdma4ca0a2c41223593@mail.gmail.com>
+References: <3f4fd2640801220121w60cb9a69u8519a7ceb81d3414@mail.gmail.com>
+	 <7vtzl6qhtk.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 11:44:23 2008
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 11:53:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHGc9-0003yi-QG
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 11:44:22 +0100
+	id 1JHGkX-0006Qc-FK
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 11:53:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760167AbYAVKnw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jan 2008 05:43:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759103AbYAVKnv
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 05:43:51 -0500
-Received: from godel.catalyst.net.nz ([202.78.240.40]:41567 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759451AbYAVKnu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2008 05:43:50 -0500
-Received: from 203-97-235-49.cable.telstraclear.net ([203.97.235.49] helo=[192.168.69.104])
-	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <sam.vilain@catalyst.net.nz>)
-	id 1JHGbb-0001NV-69; Tue, 22 Jan 2008 23:43:47 +1300
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <7vprvuqh94.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.0
+	id S1757039AbYAVKwc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jan 2008 05:52:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756879AbYAVKwc
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 05:52:32 -0500
+Received: from rv-out-0910.google.com ([209.85.198.186]:37409 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756620AbYAVKwb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Jan 2008 05:52:31 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so2091785rvb.1
+        for <git@vger.kernel.org>; Tue, 22 Jan 2008 02:52:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=OIUn9GDMfaRtPhdJwb9y3wreXTSbgK8Ov/2W3FLSlkw=;
+        b=xGLls51Xb7ibNgY642c1y2v1wMhiewFxc595XLXVYbFCuVpB5mmyWq/ZOUtcjmzaPdeZ0EJJMq0tc0J6XQBormTsgRFb6nZUItwpXVzE4SNFTehdFdXszkhzG/6uYVUsJWsNXNCT2Kz6BSijHqtol+Pweq9lbeQ5UHI+0TWe8Xs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KShziyLPZ+OLL5Wrp0F0tZ9bxJLEjbpRTWI0f+Hj7KYFe8dkh4ozNAV+clL7bx+mMBrMqvymQT78SrWoJtrGihpQlzVr9G0P63n4hiXJSzEXReJZIe/GUw6Ofc+dmqxj7qFIzw4Zz6+SMGj7ulNWicgTQSDnQj2ZiaekVp4MFaA=
+Received: by 10.141.162.16 with SMTP id p16mr5262577rvo.243.1200999150492;
+        Tue, 22 Jan 2008 02:52:30 -0800 (PST)
+Received: by 10.141.123.8 with HTTP; Tue, 22 Jan 2008 02:52:30 -0800 (PST)
+In-Reply-To: <7vtzl6qhtk.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71444>
 
-Junio C Hamano wrote:
-> Sam Vilain <sam.vilain@catalyst.net.nz> writes:
->=20
->> On the chicken and egg thing, ...
->> ...  I do agree with Dscho's point that mixing encodings in a
->> repository is not necessarily a use case worth catering for.
->=20
-> Are you talking about "repository" as in "a specific clone", or
-> "a project that can be cloned by many people and checked out to
-> suit cloner's needs"?  I definitely agree that mixing encodings
-> in a project (i.e. "paths in tree objects") does not make any
-> sense _if_ clones of the projects _may_ want to check things out
-> in different pathname encodings from each other.  And if all
-> clones would want to check things out the same way, it does not
-> really matter what encoding the paths in tree objects are.
+On 22/01/2008, Junio C Hamano <gitster@pobox.com> wrote:
+> "Reece Dunn" <msclrhd@googlemail.com> writes:
+>
+> >   1.  File name representation
+> >
+> > For Linux file systems ...
+> > Therefore, you have:
+> >
+> >    os_to_git_path( const NATIVECHAR * ospath, strbuf * gitpath );
+> >    git_to_os_path( const char * gitpath, const NATIVECHAR * ospath,=
+ int oslen );
+>
+> It is not that simple, I am afraid.  Legacy encodings can be
+> used in pathnames.  With bog-standard traditional UNIX pathname
+> semantics, all pathnames are sequences of non-NUL, non-slash
+> bytes, separated with slashes, so if you do not allow choices
+> (which is a very sensible ideal world scenario), you can declare
+> that the "git" encoding is UTF-8 and always check things out
+> as-is.
 
-I'm referring to the normalized form in the object database - ie what
-affects the generated SHA1s - what you check it out to locally is a
-developer's choice, and assuming that they can handle whatever issues
-they create by doing this, then that should be fine.
+So the upshot of this is that you need to use a platform (Operating
+System, filesystem, locale, etc.) that match what the git repository
+was created in, otherwise there are going to be issues when
+interpreting paths correctly.
 
-> I am not absolutely sure if you are talking about mixing
-> encodings depending on parts of the tree in a specific clone (my
-> earlier "Documenta=C3=A7=C3=A3o/ja/ =E3=81=8A=E8=AA=AD=E3=81=BF=E4=B8=
-=8B=E3=81=95=E3=81=84" example).  I would
-> certainly say it would be a very low priority for us to support
-> such usage, as I imagine that multi-language trees would most
-> likely be checked out in UTF-8 everywhere, but it _might_ be
-> something people may find real need for.
+The locale issue asside, can the above proposal help users working on
+Mac, Linux and Windows interoperate with each other?
 
-Agreed - not something you want to condone, but if it's just as easy to
-come up with a design that doesn't limit to one encoding for a whole
-repository, it might help some people.
+I understand that there is not going to be a universal magic fix; what
+I'm interested in is minimising the differences between Operating
+Systems. This may be a futile effort, as it is likely you will need
+some knowledge of the properties of the filesystem being used (as
+filesystems with different properties can be used on the same
+Operating System).
 
-The use case for mixed encodings I had in mind was when you clone some
-repository that's got them mixed, and you need to tell git the encoding
-per-path to get the darned thing to behave sensibly for you (presumably
-while you write a patch to submit upstream to fix it).
+> >   2.  Case (in)sensitivity
+> >
+> > Here, you have the following cases:
+> > ...
+> >   3.  git says that the files are different, but the filesystem say=
+s
+> > that the files are the same.
+> >
+> > Allow the move, updating the git directory tree only.
+>
+> Sorry, I cannot really tell what you are talking about.  You
+> seem to imply, with "Allow the move", that you are describing a
+> scenario that involves a move of one existing file to another,
+> but it is not clear.  E.g. did you mean, by 3, "When the user
+> says 'move a b', and if git says a and b are different but if
+> the filesystem says a and b are the same, then..."?
 
-Sam.
+This is what I am saying. For example, if you say:
+
+   git mv myfile.H myfile.h
+
+on a case sensitive filesystem (e.g. ext3), this will work, however on
+a case insensitive filesystem (e.g. ntfs) git would complain that the
+files are the same.
+
+The workaround is to say:
+
+   git mv myfile.H myfile.h.tmp
+   git mv myfile.h.tmp myfile.h
+
+but this is not ideal, especially if you are automating some move opera=
+tions.
+
+This also applies to the VCS importers (e.g. git-p4) that can delete a
+file that is a case-only move on case insensitive filesystems.
+
+The question then becomes what happens on Mac (with the Unicode
+decomposing behaviour) if they differ in the way they are stored (e.g.
+in Linus' '=E4' vs 'a=A8' example)?
+
+- Reece
