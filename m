@@ -1,61 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Tiny bug report, interaction between alias and help
-Date: Mon, 21 Jan 2008 22:43:29 -0500
-Message-ID: <20080122034329.GA1271@coredump.intra.peff.net>
-References: <20080119142750.GA9182@phenix.progiciels-bpi.ca> <20080119174146.GA3913@coredump.intra.peff.net> <fcaeb9bf0801200159k26303a18ned2eef8e6b5b65d2@mail.gmail.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH] Use FIX_UTF8_MAC to enable conversion from UTF8-MAC to
+ UTF8
+Date: Mon, 21 Jan 2008 20:08:46 -0800
+Message-ID: <47956C4E.1080903@zytor.com>
+References: <fn1nl6$ek5$1@ger.gmane.org> <fn1pj9$kkg$1@ger.gmane.org>	<fn1ptk$ljj$1@ger.gmane.org> <fn1q6b$ljj$2@ger.gmane.org> <7vve5nzdqx.fsf@gitster.siamese.dyndns.org> <fn1sk4$uh4$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?iso-8859-1?Q?Fran=E7ois?= Pinard <pinard@iro.umontreal.ca>,
-	git mailing list <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 04:44:05 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Mark Junker <mjscod@web.de>
+X-From: git-owner@vger.kernel.org Tue Jan 22 05:09:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHA3P-000102-Rw
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 04:44:04 +0100
+	id 1JHARr-0005u8-4v
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 05:09:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752620AbYAVDnd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 22:43:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752285AbYAVDnd
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 22:43:33 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3437 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752079AbYAVDnc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 22:43:32 -0500
-Received: (qmail 30659 invoked by uid 111); 22 Jan 2008 03:43:30 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 21 Jan 2008 22:43:30 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Jan 2008 22:43:29 -0500
-Content-Disposition: inline
-In-Reply-To: <fcaeb9bf0801200159k26303a18ned2eef8e6b5b65d2@mail.gmail.com>
+	id S1753410AbYAVEIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 23:08:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753361AbYAVEIt
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 23:08:49 -0500
+Received: from terminus.zytor.com ([198.137.202.10]:35126 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752619AbYAVEIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 23:08:48 -0500
+Received: from mail.hos.anvin.org (c-67-169-144-158.hsd1.ca.comcast.net [67.169.144.158])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.14.1/8.14.1) with ESMTP id m0M48lrk006923
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 21 Jan 2008 20:08:47 -0800
+Received: from tazenda.hos.anvin.org (tazenda.hos.anvin.org [172.27.0.16])
+	by mail.hos.anvin.org (8.14.2/8.13.8) with ESMTP id m0M48lFd028146;
+	Mon, 21 Jan 2008 20:08:47 -0800
+Received: from tazenda.hos.anvin.org (localhost.localdomain [127.0.0.1])
+	by tazenda.hos.anvin.org (8.14.2/8.13.6) with ESMTP id m0M48kHN014800;
+	Mon, 21 Jan 2008 20:08:46 -0800
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <fn1sk4$uh4$1@ger.gmane.org>
+X-Virus-Scanned: ClamAV 0.91.2/5516/Mon Jan 21 16:29:15 2008 on terminus.zytor.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71413>
 
-On Sun, Jan 20, 2008 at 04:59:13PM +0700, Nguyen Thai Ngoc Duy wrote:
+Mark Junker wrote:
+> Junio C Hamano schrieb:
+> 
+>> I do not know how Macintosh libc implements "struc dirent", but
+>> this approach does not work in general.
+> 
+> IMHO there is no need that this approach works in general because this 
+> is a fix for MacOSX systems only. I also use d_namlen which might not be 
+> available on other systems. But on MacOSX this works as expected.
+> 
+>> yet you can obtain a path component longer than 256 bytes.
+>> Apparently the library allocates longer d_name[] field than what
+>> is shown to the user.
+> 
+> This is not a problem either because on MacOSX we get decomposed UTF8 
+> and we always convert to composed UTF8. This means that the string 
+> returned from reencode_string will always be smaller than the original 
+> filename that had to be reencoded.
+> 
 
-> I've been hit by this and came up with a similar approach as well. But
-> I dropped it because it made aliases higher precedence than git-foo
-> while git aliases cannot override git-foo (builtin or external ones).
-> Is there any other way to make "git-help" respect git command
-> executing order?
+That's not true!  There are strings which gets longer when a composing 
+normalization is applied.  Please see section 3.3 of Unicode Techical 
+Report 36:
 
-Yes, and that is an issue in my refactored patch as well. The tricky
-thing is that usually we say "try git-foo as a real git command, and
-then fall back to aliases" but we can't here, because "try git-foo"
-involves exec'ing something else.
+	http://www.unicode.org/reports/tr36/
 
-It should be possible to do a lookup on "git-foo" and find out if it is
-a real git command, but I don't know how involved that will be. I'll
-look at it before I resend post-1.5.4.
+ > People assume that NFC always composes, and thus is the same or
+ > shorter length than the original source. However, some characters
+ > decompose in NFC.
 
-And of course the other option is "so what?" People with alias.commit
-set will get the alias text rather than the man page. But they will
-quickly figure out that alias.commit doesn't actually _work_, and
-presumably remove it.
+(NFC = Normalization Form Composing.)
 
--Peff
+U+1D160 MUSICAL SYMBOL EIGHT NOTE is given as an example with a 3x 
+expansion factor when encoded in UTF-8 (I don't know what it expands to; 
+seems odd to me.)
+
+	-hpa
