@@ -1,101 +1,106 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] http-push: making HTTP push more robust and more
- user-friendly
-Date: Tue, 22 Jan 2008 00:58:50 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801220056080.5731@racer.site>
-References: <1200250979-19604-1-git-send-email-gb@gbarbier.org> <7vbq7ppbyh.fsf@gitster.siamese.dyndns.org> <47946F67.5060601@gbarbier.org> <7vmyqzzdhf.fsf@gitster.siamese.dyndns.org> <47947399.3000507@gbarbier.org> <7vabmzzbcc.fsf@gitster.siamese.dyndns.org>
- <alpine.LSU.1.00.0801211212010.5731@racer.site> <7vejcbx795.fsf@gitster.siamese.dyndns.org> <20080121202953.GA18440@glandium.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Mon, 21 Jan 2008 17:01:21 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801211656130.2957@woody.linux-foundation.org>
+References: <478E1FED.5010801@web.de> <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se> <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org> <Pine.LNX.4.64.0801211509490.17095! @ds9.cixit.se> <440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org>
+ <alpine.LFD.1.00.0801! 210934400.2957@woody.linux-foundation.org> <C6C0E6A1-053B-48CE-90B3-8FFB44061C3B@sb.org> <alpine.LFD.1.00.08! 01211129130.2957@woody.linux-foundation.org> <373E260A-6786-4932-956A-68706AA7C469@sb.org> <alpine.LFD.1.00.!
+ 0801211210270.2957@woody.linux-foundation.org> <7EB98659-4036-45DA-BD50-42CB23ED517A@sb.org> <alpine.LFD.1.0! 0.0801211323120.2957@woody.linux-foundation.org> <C373E12A-2AC4-4961-833A-7D51584143C9@sb.org> <alpine.LFD.1.00.0! 801211407130.2957@woody.linux-foundation.org>
+ <0CA4DF3F-1B64-4F62-8794-6F82C21BD068@sb.org> <alpine.LFD.1.00.0801211538590.2957@woody.linux-foundation.org> <F663E088-BCAD-4C5D-89D5-EAF97A29C1DE@sb.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-15?Q?Gr=E9goire_Barbier?= <devel@gbarbier.org>,
-	git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Tue Jan 22 01:59:26 2008
+Cc: Peter Karlsson <peter@softwolves.pp.se>,
+	Mark Junker <mjscod@web.de>,
+	Pedro Melo <melo@simplicidade.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Tue Jan 22 02:02:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH7U4-00006m-Bm
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 01:59:24 +0100
+	id 1JH7X6-0000sB-1t
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 02:02:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756684AbYAVA6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 19:58:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753129AbYAVA6y
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 19:58:54 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56987 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755954AbYAVA6x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jan 2008 19:58:53 -0500
-Received: (qmail invoked by alias); 22 Jan 2008 00:58:51 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp043) with SMTP; 22 Jan 2008 01:58:51 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+CpONfZlaChCqtam/E3CJvcm8foFC4mguvclj8jf
-	fpTgPjsAD3USRz
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080121202953.GA18440@glandium.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1757282AbYAVBBg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 20:01:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756932AbYAVBBf
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 20:01:35 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:58352 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754699AbYAVBBe (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 20:01:34 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0M11LYo007441
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 21 Jan 2008 17:01:22 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0M11LIn029014;
+	Mon, 21 Jan 2008 17:01:21 -0800
+In-Reply-To: <F663E088-BCAD-4C5D-89D5-EAF97A29C1DE@sb.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.723 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71383>
 
-Hi,
 
-On Mon, 21 Jan 2008, Mike Hommey wrote:
 
-> On Mon, Jan 21, 2008 at 12:18:14PM -0800, Junio C Hamano wrote:
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > 
-> > > IMHO it is safer to disable it for curl < 7.0xa -- even if it affects a 
-> > > number of distros -- than to give the illusion that it works, when it does 
-> > > not.
-> > >
-> > > As for fixing it in the non-MULTI case, I have a hunch that Mike's 
-> > > cleanups will help that, but that this is a 1.5.5 feature.
-> > >
-> > > So, I would like to read in the ReleaseNotes something like this:
-> > >
-> > > -- snip --
-> > > Support for pushing via HTTP was broken with curl versions prior to 7.16, 
-> > > so we disabled it for now.  However, it is likely that a major cleanup of 
-> > > the http transport code -- scheduled after the release of git 1.5.4 -- 
-> > > will be supported with more curl versions.
-> > > -- snap --
-> > 
-> > That's tempting but I suspect that it might be a wrong approach.
-> > 
-> > I think two important questions are:
-> > 
-> >  * Do we know that the current code is broken for everybody, or
-> >    just broken for the majority of people who do nontrivial
-> >    things?
+On Mon, 21 Jan 2008, Kevin Ballard wrote:
+
+> > I think it's fine having git treat filenames "as unicode", as long as you
+> > don't do any munging on it.
 > 
-> IIRC, http-push simply doesn't work without CURL_MULTI. 
+> When I say "treat filenames as unicode" I'm implying the equivalence
+> comparisons and everything else that we've been talking about.
 
-I have to agree.  When I last tried without CURL_MULTI (IIRC it was just 
-once, when I had an ancient curl available), it would just not work, and I 
-gave up/in and installed a newer curl, thus enabling CURL_MULTI.
+Yes, because you're an idiot.
 
-> >  * Is the code in 1.5.3.8 any better?  IOW, did we make it worse
-> >    during 1.5.4 cycle?
+I've told you over and over again that equivalence is stupid.
+
+It's stupid when it's "equivalent except for case", and it's stupid when 
+it's "canonically equivalent".
+
+> No, you've argued against unicode equivalency in filenames. Can't you figure
+> out, when the entire time I've been talking about equivalency, that I'm
+> *still* talking about equivalency?
+
+I agree: normalization and equivalency is idiotic.
+
+But the two actually go hand in hand:
+
+> > All my complaints - every single one of them - comes down to making the
+> > idiotic choice of trying to munge those strings (not even strictly
+> > "normalize") into something they are not.
 > 
-> Changes in http-push.c since 1.5.3.8 mostly involve cleanup. It
-> didn't change anything about CURL_MULTI or lack thereof.
+> Yes, I understand quite well that you are against munging strings.
 
-I meant to look into http-push and curl_multi, ever since Daniel asked me 
-(or for that matter, other people knowing about the issues) do do it.
+You don't seem to.
 
-Alas, I forgot about it.
+The thing is, the two are inexorably intertwined. Any filename equivalence 
+(except for the trivial "identity" equivalence) INVARIABLY means that 
+filenames get munged.
 
-So I am half-convinced that http-push w/o CURL_MULTI was broken since long 
-ago (pre 1.5.3).
+Why?
 
-I'll try tomorrow, since I have a (kinda) working http-push setup 
-available then.
+Think about the file name "Abc", and think about what happens when you 
+create it.
 
-Ciao,
-Dscho
+Now, think about what happens if that filename is considered equivalent in 
+case..
+
+See? The filesystem has to *corrupt* the filename.
+
+Can you not UNDERSTAND this? Equivalence and normalization is STUPID. It's 
+just two sides of the exact same coin. They both INVARIABLY cause the 
+filename to be munged.
+
+And changing user data is not acceptable.
+
+Do you get it now?
+
+			Linus "probably not" Torvalds
