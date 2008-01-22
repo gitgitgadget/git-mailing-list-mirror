@@ -1,124 +1,68 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] git-commit: exit non-zero if we fail to commit the index
-Date: Tue, 22 Jan 2008 13:26:40 -0600
-Message-ID: <47964370.8010300@nrlssc.navy.mil>
-References: <7v63xtmc9z.fsf@gitster.siamese.dyndns.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [RFC] File system difference handling in git
+Date: Tue, 22 Jan 2008 21:21:03 +0100
+Message-ID: <85ve5l393k.fsf@lola.goethe.zz>
+References: <3f4fd2640801220121w60cb9a69u8519a7ceb81d3414@mail.gmail.com>
+	<alpine.LFD.1.00.0801220829080.2957@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 20:34:11 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Reece Dunn <msclrhd@googlemail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jan 22 21:22:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHOsi-00013u-SA
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 20:34:01 +0100
+	id 1JHPdJ-0002Db-NQ
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 21:22:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751554AbYAVTd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2008 14:33:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751442AbYAVTdZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 14:33:25 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:42419 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751407AbYAVTdY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2008 14:33:24 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0MJQe5L005667;
-	Tue, 22 Jan 2008 13:26:40 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 22 Jan 2008 13:26:40 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <7v63xtmc9z.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 22 Jan 2008 19:26:40.0613 (UTC) FILETIME=[B6C16150:01C85D2C]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15680001
-X-TM-AS-Result: : Yes--9.180200-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjQzLTcwMDA3NS0xMzkw?=
-	=?us-ascii?B?MTAtNzAwMTYwLTcwMzczMS03MDA3NTYtNzAzNzg4LTcwNDQyNS0x?=
-	=?us-ascii?B?MjE1ODgtNzAxNDU1LTEyMTY2NS03MDIwODQtNzA5NTg0LTcwMDE2?=
-	=?us-ascii?B?My03MDA5NzEtNzAwOTQyLTcwNzIyNS03MDE0NTAtNzAwNDgxLTcw?=
-	=?us-ascii?B?NDI1Ny0xODgwMTktNzA2MjkwLTMwMDAxNS03MDQ0NzMtNzA1NzE4?=
-	=?us-ascii?B?LTcwMzcxMi03MDkxMzctNzExNjI0LTcwMTM4NC03MDQ3NDctNzAy?=
-	=?us-ascii?B?MTE4LTcxMTk1My03MDI3MjYtNzAxNjE4LTcwMTA1My03MDAzOTgt?=
-	=?us-ascii?B?MTA1MjUwLTcwNjI0OS03MDAzMjQtMTQ4MDM5LTE0ODA1MS0yMDA0?=
-	=?us-ascii?B?Mg==?=
+	id S1752699AbYAVUVY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 15:21:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752507AbYAVUVY
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 15:21:24 -0500
+Received: from mail-in-17.arcor-online.net ([151.189.21.57]:43027 "EHLO
+	mail-in-17.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752517AbYAVUVX (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Jan 2008 15:21:23 -0500
+Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
+	by mail-in-17.arcor-online.net (Postfix) with ESMTP id 0BFBB2BB711;
+	Tue, 22 Jan 2008 21:21:22 +0100 (CET)
+Received: from mail-in-08.arcor-online.net (mail-in-08.arcor-online.net [151.189.21.48])
+	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id D76192DAE65;
+	Tue, 22 Jan 2008 21:21:21 +0100 (CET)
+Received: from lola.goethe.zz (dslb-084-061-036-024.pools.arcor-ip.net [84.61.36.24])
+	by mail-in-08.arcor-online.net (Postfix) with ESMTP id A105F2BB702;
+	Tue, 22 Jan 2008 21:21:06 +0100 (CET)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 9919B1C3D4E5; Tue, 22 Jan 2008 21:21:03 +0100 (CET)
+In-Reply-To: <alpine.LFD.1.00.0801220829080.2957@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 22 Jan 2008 08:56:28 -0800 (PST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.92/5521/Tue Jan 22 15:55:56 2008 on mail-in-08.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71467>
 
----
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> On Tue, 22 Jan 2008, Reece Dunn wrote:
+>> 
+>>   1.  File name representation
+>> 
+>> For Linux file systems (correct me if I am wrong here), they all store
+>> the file name as-is. The question here is what happens on
+>> Windows-based file systems (e.g. NTFS) that are being read on Linux?
+>
+> Generally, Linux tries to follow the conventions of the filesystem, so 
+> it's generally case-preserving and case-sensitive (but not normalizing in 
+> any way - the case sensitivity is literally a upcase lookup table, so you 
+> do "upcase(c1) == upcase(c2)" for each UCS-2 character, no combining or 
+> decomposition).
 
-Junio C Hamano wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> writes:
-> 
->>>  We would need to tell the user that the index is not where
->>> it is when we detect the error, though.
->> The new index we are trying to rename will be deleted.
->> Are you saying we should 
->>   warn the user that the index is now out of sync?
-> 
-> Yeah, something like that.  But I think that once this happens
-> there is no easy and sane recovery path for the user, as the
-> most likely cause of the failure there would be the user running
-> out of quota, so "git reset HEAD" which may be the way to
-> recover from that failure would not have enough room to create a
-> new index file anyway.
+s/sensitiv/insensitiv/g
 
-If you're interested, here's a patch.
-
--brandon
-
-
- builtin-commit.c |   15 +++++++++++----
- 1 files changed, 11 insertions(+), 4 deletions(-)
-
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 0227936..d8deb1a 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -122,19 +122,23 @@ static void rollback_index_files(void)
- 	}
- }
- 
--static void commit_index_files(void)
-+static int commit_index_files(void)
- {
-+	int err = 0;
-+
- 	switch (commit_style) {
- 	case COMMIT_AS_IS:
- 		break; /* nothing to do */
- 	case COMMIT_NORMAL:
--		commit_lock_file(&index_lock);
-+		err = commit_lock_file(&index_lock);
- 		break;
- 	case COMMIT_PARTIAL:
--		commit_lock_file(&index_lock);
-+		err = commit_lock_file(&index_lock);
- 		rollback_lock_file(&false_lock);
- 		break;
- 	}
-+
-+	return err;
- }
- 
- /*
-@@ -926,7 +930,10 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	unlink(git_path("MERGE_HEAD"));
- 	unlink(git_path("MERGE_MSG"));
- 
--	commit_index_files();
-+	if (commit_index_files())
-+		die ("Repository has been updated, but unable to write\n"
-+		     "new_index file. Check that disk is not full or quota is\n"
-+		     "not exceeded, and then \"git reset HEAD\" to recover.");
- 
- 	rerere();
- 	run_hook(get_index_file(), "post-commit", NULL);
 -- 
-1.5.4.rc4.16.gdd591
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
