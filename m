@@ -1,87 +1,78 @@
-From: David Kastrup <dak@gnu.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Mon, 21 Jan 2008 21:32:21 +0100
-Message-ID: <85tzl66ht6.fsf@lola.goethe.zz>
-References: <478E1FED.5010801@web.de>
-	<alpine.LFD.1.00.0801161424040.2806@woody.linux-foundation.org>
-	<7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org>
-	<alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org>
-	<B45968C6-3029-48B6-BED2-E7D5A88747F7@sb.org>
-	<alpine.LFD.1.00.0801161707150.2806@woody.linux-foundation.org>
-	<8AC4CC86-A711-483D-9F9C-5F8497006A1D@sb.org>
-	<alpine.LFD.1.00.0801161959210.2806@woody.linux-foundation.org>
-	<B719D4A2-0D05-4C55-95FC-AB880D58E1AC@wincent.com>
-	<alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org>
-	<478F99E7.1050503@web.de>
-	<alpine.LFD.1.00.0801171017460.14959@woody.linux-foundation.org>
-	<F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org>
-	<alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0801181114430.817@ds9.cixit.se>
-	<alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0801211509490.17095@ds9.cixit.se>
-	<440E4426-BFB5-4836-93DF-05C99EF204E6@sb.org>
-	<alpine.LFD.1.00.0801211151180.20753@xanadu.home>
+Date: Tue, 22 Jan 2008 14:06:12 +1300
+Message-ID: <46a038f90801211706p1d428509ne2c74a647b40b1c2@mail.gmail.com>
+References: <Pine.LNX.4.64.0801211509490.17095!@ds9.cixit.se>
+	 <8F85366A-C990-47B1-BF60-936185B9E438@sb.org>
+	 <20080121204614.GG29792@mit.edu>
+	 <6E303071-82A4-4D69-AA0C-EC41168B9AFE@sb.org>
+	 <20080121211802.GH29792@mit.edu>
+	 <45C7CC4A-155F-4FE4-B741-8EE6CF7D3700@sb.org>
+	 <46a038f90801211349mfb57c0an9416832c2967c172@mail.gmail.com>
+	 <BA2377B5-BE7E-40F2-9C3C-679663A966A4@sb.org>
+	 <alpine.LSU.1.00.0801220031490.5731@racer.site>
+	 <32CA7B5D-FED0-4C70-A7DE-14E24B74FD1F@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kevin Ballard <kevin@sb.org>,
-	Peter Karlsson <peter@softwolves.pp.se>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Mark Junker <mjscod@web.de>,
-	Pedro Melo <melo@simplicidade.org>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Jan 22 02:06:34 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Kevin Ballard" <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Tue Jan 22 02:07:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JH7aj-0001g9-MG
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 02:06:18 +0100
+	id 1JH7bN-0001vp-Eo
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 02:06:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754002AbYAVBFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jan 2008 20:05:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757314AbYAVBFm
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 20:05:42 -0500
-Received: from mail-in-05.arcor-online.net ([151.189.21.45]:40933 "EHLO
-	mail-in-05.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757076AbYAVBFj (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jan 2008 20:05:39 -0500
-Received: from mail-in-20-z2.arcor-online.net (mail-in-20-z2.arcor-online.net [151.189.8.85])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 2C63D18364B;
-	Tue, 22 Jan 2008 02:05:38 +0100 (CET)
-Received: from mail-in-09.arcor-online.net (mail-in-09.arcor-online.net [151.189.21.49])
-	by mail-in-20-z2.arcor-online.net (Postfix) with ESMTP id 1E3BF10781B;
-	Tue, 22 Jan 2008 02:05:38 +0100 (CET)
-Received: from lola.goethe.zz (dslb-084-061-102-235.pools.arcor-ip.net [84.61.102.235])
-	by mail-in-09.arcor-online.net (Postfix) with ESMTP id ED09B3425E1;
-	Tue, 22 Jan 2008 02:05:37 +0100 (CET)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 385961C3E011; Mon, 21 Jan 2008 21:32:21 +0100 (CET)
-In-Reply-To: <alpine.LFD.1.00.0801211151180.20753@xanadu.home> (Nicolas
-	Pitre's message of "Mon, 21 Jan 2008 12:08:29 -0500 (EST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.92/5515/Tue Jan 22 00:03:56 2008 on mail-in-09.arcor-online.net
-X-Virus-Status: Clean
+	id S1755643AbYAVBGT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jan 2008 20:06:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755269AbYAVBGS
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Jan 2008 20:06:18 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:58234 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756980AbYAVBGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jan 2008 20:06:17 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so986473ugc.16
+        for <git@vger.kernel.org>; Mon, 21 Jan 2008 17:06:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=HiJob575StrDKS047dRmB1NzOKh23gsTsFSRHqAOzyE=;
+        b=r/YVS5OIpigSRdzUHuJHbr30YXN9rpKWzt/5L1Yi0XcKMqOB+brr0Sex053GzOsLIOPhuCBHmek1XrxrrUYGrSwmPJo49yaMh/Hq1D8U5J/XdA/3BzGpxpDG5X9ayMF5847AvDjf23n1/N6zD+TSS2ehtlAILka6m+3QDTLkuwQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JHG3ZkF1VcgDVEL6ldxOL9pHUZFdqedtuY5QhK8eXKIStNtI2IIvQ4niqUPw3SdKzHvyVCZQ6rRR2KKijhZMQ16CwBY2WKLzQWowTaJMeCdV7iBvdx/F0FAhLnQP16H4SJs+FvhDzdGDR7GRd+bSkEzcYy4UxkvvBMAfXKMnLqQ=
+Received: by 10.67.98.15 with SMTP id a15mr4955611ugm.69.1200963972263;
+        Mon, 21 Jan 2008 17:06:12 -0800 (PST)
+Received: by 10.66.252.2 with HTTP; Mon, 21 Jan 2008 17:06:12 -0800 (PST)
+In-Reply-To: <32CA7B5D-FED0-4C70-A7DE-14E24B74FD1F@sb.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71391>
 
-Nicolas Pitre <nico@cam.org> writes:
+On Jan 22, 2008 1:42 PM, Kevin Ballard <kevin@sb.org> wrote:
+> And so has EVERYONE ELSE. You cannot hold me to a standard which you
+> yourself do not apply.
 
-> Normalization will always hurt performances.  This is an overhead.
-> Sometimes that overhead might be insignificant and not be perceptible,
-> but sometimes it is.  And Git is clearly in the later
-> case. Performances will be hurt big time the day it is made aware of
-> that normalization.  This is why there is so much resistance about it,
-> especially when the benefits of normalizing file names are not shown
-> to be worth their cost in performance and complexity, as other systems
-> do rather fine without it.
+Hi Kevin,
 
-Normalization is cheap if you normalize user input.  The user will
-always be quite slower than any reasonable normalization algorithm.  But
-in the filesystem, one is normalizing the same stuff over and over.
+not sure if you are just joking, but perhaps you have not noticed that
+in technical lists like these, you get karma to voice strong opinions
+once you've contributed lots of good code. *That* is the standard -
+and Johannes has earned his karma points, as Ted and Linus have, by
+learning the slow way and writing tons of code. Alas, you don't seem
+to have time for such a thing!
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Strong opinions without working code tend to not get much respect. So
+that is the standard that is applied to all of us, including you.
+
+cheers,
+
+
+martin
