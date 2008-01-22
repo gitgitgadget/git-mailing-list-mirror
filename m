@@ -1,72 +1,67 @@
-From: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.4-rc4
-Date: Tue, 22 Jan 2008 06:50:41 +0100
-Message-ID: <E4060387-3AC5-474A-9D57-15885C29702B@zib.de>
-References: <7vsl13wmas.fsf@gitster.siamese.dyndns.org> <7vsl0r3nvc.fsf@gitster.siamese.dyndns.org> <BB330DC7-9F38-4D41-85A2-D475701B6083@zib.de> <alpine.LSU.1.00.0801220121300.5731@racer.site>
-Reply-To: prohaska-wjoc1KHpMeg@public.gmane.org
-Mime-Version: 1.0 (Apple Message framework v753)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>, Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
-To: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Tue Jan 22 06:51:24 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from py-out-1314.google.com ([64.233.166.174])
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] [RFC] Design for pathname encoding gitattribute [RESEND]
+Date: Mon, 21 Jan 2008 22:26:43 -0800
+Message-ID: <7vlk6iv0ik.fsf@gitster.siamese.dyndns.org>
+References: <20080122050215.DE198200A2@wilber.wgtn.cat-it.co.nz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Peter Karlsson <peter@softwolves.pp.se>,
+	Mark Junker <mjscod@web.de>,
+	Pedro Melo <melo@simplicidade.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Kevin Ballard <kevin@sb.org>
+To: Sam Vilain <sam.vilain@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Tue Jan 22 07:27:56 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHC2c-0007vZ-Oa
-	for gcvm-msysgit@m.gmane.org; Tue, 22 Jan 2008 06:51:23 +0100
-Received: by py-out-1314.google.com with SMTP id p69so6245797pyb.5
-        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Jan 2008 21:50:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=Hq5NH5045X3IlHNqJaETFG18KiuZi6lAeDnAPq2E374=;
-        b=dcDCUYeD6X2HgYzTQSHFzIouj4F4CODsrEGQp58B7Z/oPsG47fq5nXZ2QL0xmvcJT8+kM2j1IvyzIBioPjz13tMgejnuuv8DPVWF429f5Y/1DnlTp0CT8+dtDDIdWxl0LVeIO2x/RuzpO+dKrQJeYhpoWq2oyyqpOF5p2aRPOgo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=YIRjGiXZ41FOAESC0DZry5ACDdakdMylf90URtnaBqa/+9g+lM+oNsiy/fyTX02YSWKoJ2h7lqSOjA1abrKMqilEzJsMl7MdvStV9rxh7Mu/48LZ9WFph7A/SaK14mLPCN2OQp4BsYLt7Us2bPjIot5yHPxUdSDLp7CZdoVptlc=
-Received: by 10.100.253.12 with SMTP id a12mr220215ani.28.1200981045732;
-        Mon, 21 Jan 2008 21:50:45 -0800 (PST)
-Received: by 10.44.13.45 with SMTP id 45gr1455hsm;
-	Mon, 21 Jan 2008 21:50:45 -0800 (PST)
-X-Sender: prohaska-wjoc1KHpMeg@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.35.99.14 with SMTP id b14mr13677124pym.4.1200981045138; Mon, 21 Jan 2008 21:50:45 -0800 (PST)
-Received: from mailer.zib.de (mailer.zib.de [130.73.108.11]) by mx.google.com with ESMTP id h49si3288314nzf.5.2008.01.21.21.50.44; Mon, 21 Jan 2008 21:50:45 -0800 (PST)
-Received-SPF: pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) client-ip=130.73.108.11;
-Authentication-Results: mx.google.com; spf=pass (google.com: best guess record for domain of prohaska-wjoc1KHpMeg@public.gmane.org designates 130.73.108.11 as permitted sender) smtp.mail=prohaska-wjoc1KHpMeg@public.gmane.org
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31]) by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0M5nkEZ015137; Tue, 22 Jan 2008 06:50:43 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db94148.pool.einsundeins.de [77.185.65.72]) (authenticated bits=0) by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0M5neYg029653 (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO); Tue, 22 Jan 2008 06:49:45 +0100 (MET)
-In-Reply-To: <alpine.LSU.1.00.0801220121300.5731-OGWIkrnhIhzN0uC3ymp8PA@public.gmane.org>
-X-Mailer: Apple Mail (2.753)
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+	id 1JHCbz-0006AT-Nc
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 07:27:56 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754096AbYAVG1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 01:27:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753720AbYAVG1L
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 01:27:11 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56391 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754089AbYAVG1K (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2008 01:27:10 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BD856173;
+	Tue, 22 Jan 2008 01:27:07 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D460B6170;
+	Tue, 22 Jan 2008 01:26:54 -0500 (EST)
+In-Reply-To: <20080122050215.DE198200A2@wilber.wgtn.cat-it.co.nz> (Sam
+	Vilain's message of "Tue, 22 Jan 2008 17:41:59 +1300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71420>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71421>
 
+Sam Vilain <sam.vilain@catalyst.net.nz> writes:
 
+> Some projects may like to enforce a particular encoding is used for
+> all filenames in the repository.  Within the UTF-8 encoding, there are
+> four normal forms (see http://unicode.org/reports/tr15/), any of which
+> may be a reasonable repository format choice.  Additionally, some
+> filesystems may have a single encoding that they support when writing
+> local filenames.  To support this, iconv and a normalization library
+> must have the information they need to perform the correct conversion.
 
-On Jan 22, 2008, at 2:21 AM, Johannes Schindelin wrote:
+Isn't there a chicken-and-egg problem?  The attributes are by
+nature per-path, and you need to match the pathname string with
+a pattern to decide which attribute definition to apply to a
+given path.  Before knowing what encoding the pathname you have
+just read from readdir(3), how would you match that pathname
+with the pattern in the gitattributes file?
 
-> Hi,
->
-> On Mon, 21 Jan 2008, Steffen Prohaska wrote:
->
->> I haven't pushed the branches because repo.or.cz seems to have  
->> problems.
->
-> Can you elaborate?  What kind of problems?
-
-I got DNS lookup failures and could not connect.  Now it works
-and I pushed.
-
-	Steffen
+I can buy the .git/config (and an in-tree .git-encoding,
+perhaps), though.
