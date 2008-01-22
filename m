@@ -1,73 +1,75 @@
-From: "Russ Dill" <russ.dill@gmail.com>
-Subject: Re: I don't want the .git directory next to my code.
-Date: Tue, 22 Jan 2008 03:27:42 -0700
-Message-ID: <f9d2a5e10801220227i6dfb6185g555911f0d999fa60@mail.gmail.com>
-References: <478D79BD.7060006@talkingspider.com>
-	 <86hcheig3n.fsf@blue.stonehenge.com>
-	 <478D82FA.2030404@talkingspider.com> <478D95D8.5040806@theory.org>
-	 <478E3D8E.1090300@talkingspider.com>
-	 <alpine.LFD.1.00.0801161000310.2806@woody.linux-foundation.org>
-	 <alpine.LFD.1.00.0801161019250.2806@woody.linux-foundation.org>
-	 <478EEAC4.2010006@talkingspider.com>
-	 <20080117151725.GC2816@coredump.intra.peff.net>
-	 <478FA8B0.2000205@talkingspider.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] [RFC] Design for pathname encoding gitattribute [RESEND]
+Date: Tue, 22 Jan 2008 02:36:23 -0800
+Message-ID: <7vprvuqh94.fsf@gitster.siamese.dyndns.org>
+References: <20080122050215.DE198200A2@wilber.wgtn.cat-it.co.nz>
+	<7vlk6iv0ik.fsf@gitster.siamese.dyndns.org>
+	<7vr6gatidd.fsf@gitster.siamese.dyndns.org>
+	<4795BE07.4040500@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>, git@vger.kernel.org
-To: Mike <fromlists@talkingspider.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 11:28:19 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Peter Karlsson <peter@softwolves.pp.se>,
+	Mark Junker <mjscod@web.de>,
+	Pedro Melo <melo@simplicidade.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Kevin Ballard <kevin@sb.org>
+To: Sam Vilain <sam.vilain@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Tue Jan 22 11:37:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHGMY-0007qm-Sh
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 11:28:15 +0100
+	id 1JHGVB-0001qd-8V
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 11:37:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757172AbYAVK1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2008 05:27:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756927AbYAVK1p
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 05:27:45 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:47665 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754742AbYAVK1o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2008 05:27:44 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so394948nfb.21
-        for <git@vger.kernel.org>; Tue, 22 Jan 2008 02:27:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=mZwQtmT8FKlIfi5rnI4nVhqsPeQ61TnZ7QbRshSYigU=;
-        b=iKQ5jmF2GQd9GvTkl+nYSzQ13ZIF6rQyf8s5RkSaA7izzAESZBcrEo5Wbth1c+dVMeFsZtwhE++RX93R53Tiq7YVlcNuBFNHp53R4X3QjMKC/VKiIF1c3D0/wl99qW1ycJA2y2NRGsMqh5Kc0TCe6b4vXIP1ui1N6TrVHd02p4s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=xqx6B7t4Eat9qAWxKEXaTz7qoms/R+yLHOSR+FTzby7SGrlQPONi7CPU6qoRzZ+L4OWTaDCx21ifJEGywgUefmmKEZDaZ4XRlnuklWR1VLZtC1/2KW7PCY+PZSZ4xV0BJMsbnU9mUP3/9BXwzDQcnOWz1RtRTK0FqHPFUTwBMiM=
-Received: by 10.78.176.20 with SMTP id y20mr10751403hue.36.1200997662423;
-        Tue, 22 Jan 2008 02:27:42 -0800 (PST)
-Received: by 10.78.41.16 with HTTP; Tue, 22 Jan 2008 02:27:42 -0800 (PST)
-In-Reply-To: <478FA8B0.2000205@talkingspider.com>
-Content-Disposition: inline
+	id S1755942AbYAVKgi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jan 2008 05:36:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755052AbYAVKgh
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 05:36:37 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34058 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755276AbYAVKgg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Jan 2008 05:36:36 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 431E459A1;
+	Tue, 22 Jan 2008 05:36:35 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6721A59A0;
+	Tue, 22 Jan 2008 05:36:25 -0500 (EST)
+In-Reply-To: <4795BE07.4040500@catalyst.net.nz> (Sam Vilain's message of "Tue,
+	22 Jan 2008 22:57:27 +1300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71442>
 
-> Linus posted a response about deployment and development being
-> separated, so I had to point out why that doesn't work for web apps in
-> interpreted languages.
->
+Sam Vilain <sam.vilain@catalyst.net.nz> writes:
 
-If your primary concern is preventing information leakage, then a
-publish model is absolutely what you want. You definetely don't want
-some random intermediary file out on the server, or some file that was
-never checked into source control.
+> On the chicken and egg thing, ...
+> ...  I do agree with Dscho's point that mixing encodings in a
+> repository is not necessarily a use case worth catering for.
 
-By publish, I don't just mean to the public server, I also mean to
-whatever development roots you have.
+Are you talking about "repository" as in "a specific clone", or
+"a project that can be cloned by many people and checked out to
+suit cloner's needs"?  I definitely agree that mixing encodings
+in a project (i.e. "paths in tree objects") does not make any
+sense _if_ clones of the projects _may_ want to check things out
+in different pathname encodings from each other.  And if all
+clones would want to check things out the same way, it does not
+really matter what encoding the paths in tree objects are.
 
-With a good publishing model and a good SCM, you also get
-reproducibility and testability as well. Its easy to ensure that what
-is checked into source control is what you are testing, and its easy
-to rollback production servers to a different version.
+I am not absolutely sure if you are talking about mixing
+encodings depending on parts of the tree in a specific clone (my
+earlier "Documenta=C3=A7=C3=A3o/ja/ =E3=81=8A=E8=AA=AD=E3=81=BF=E4=B8=8B=
+=E3=81=95=E3=81=84" example).  I would
+certainly say it would be a very low priority for us to support
+such usage, as I imagine that multi-language trees would most
+likely be checked out in UTF-8 everywhere, but it _might_ be
+something people may find real need for.
