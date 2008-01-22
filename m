@@ -1,117 +1,92 @@
-From: "Rafael Garcia-Suarez" <rgarciasuarez@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] [RFC] Design for pathname encoding gitattribute [RESEND]
-Date: Tue, 22 Jan 2008 10:13:12 +0100
-Message-ID: <b77c1dce0801220113y3f33c7fjf8fd0cd2c2763274@mail.gmail.com>
+Date: Tue, 22 Jan 2008 01:16:15 -0800
+Message-ID: <7vbq7erzj4.fsf@gitster.siamese.dyndns.org>
 References: <20080122050215.DE198200A2@wilber.wgtn.cat-it.co.nz>
-	 <7vlk6iv0ik.fsf@gitster.siamese.dyndns.org>
-	 <7vr6gatidd.fsf@gitster.siamese.dyndns.org>
+	<7vlk6iv0ik.fsf@gitster.siamese.dyndns.org>
+	<7vr6gatidd.fsf@gitster.siamese.dyndns.org>
+	<fn48bp$ff8$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Sam Vilain" <sam.vilain@catalyst.net.nz>, git@vger.kernel.org,
-	"Peter Karlsson" <peter@softwolves.pp.se>,
-	"Mark Junker" <mjscod@web.de>,
-	"Pedro Melo" <melo@simplicidade.org>,
-	"Martin Langhoff" <martin.langhoff@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Dmitry Potapov" <dpotapov@gmail.com>,
-	"Kevin Ballard" <kevin@sb.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 10:13:51 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mark Junker <mjscod@web.de>
+X-From: git-owner@vger.kernel.org Tue Jan 22 10:17:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHFCY-0001zL-3W
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 10:13:50 +0100
+	id 1JHFFc-0002th-Fd
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 10:17:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753982AbYAVJNU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jan 2008 04:13:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754007AbYAVJNU
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 04:13:20 -0500
-Received: from hs-out-0708.google.com ([64.233.178.247]:41256 "EHLO
-	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752894AbYAVJNR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Jan 2008 04:13:17 -0500
-Received: by hs-out-2122.google.com with SMTP id 54so2066806hsz.5
-        for <git@vger.kernel.org>; Tue, 22 Jan 2008 01:13:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=8RHdD9+R3zP/R9RK2lwR+LdFVWiaGXbIL1+9x2GYavU=;
-        b=b5/u2oDgCr8hXuRPNgMlPYSwaSfim4r8eNCPehVk/z2Ul801Knm0toG90xj71nV8ZiRa2ZwpGD9Etmt3WH0hYubXqyiuc7EdmF8ORMH4yKdw+5XgwdMK5i1/vKE03wIxxYTOGX67tCqRilWFG56iV+8UeX+YEE/7XBSHBv7AKA4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=egLl8WfNDJ0RTHiegtigrPRZXknJmXF9FVu2SxOmTUAqw4zkAlIYqF90yqD5zbp547J8bvNqYYJ0z8kmS8HhYcrStFbjIJopPrwr7twMmRo+V5nGeon4sB43DS04M7Hlcm5KWIbAUVyEFW4GRMkrG3nT29ME+n2WZDaNd1909Rc=
-Received: by 10.142.194.1 with SMTP id r1mr3761237wff.197.1200993192404;
-        Tue, 22 Jan 2008 01:13:12 -0800 (PST)
-Received: by 10.142.212.20 with HTTP; Tue, 22 Jan 2008 01:13:12 -0800 (PST)
-In-Reply-To: <7vr6gatidd.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1755478AbYAVJQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 04:16:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755426AbYAVJQ3
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 04:16:29 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63254 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755404AbYAVJQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2008 04:16:28 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 306C8388A;
+	Tue, 22 Jan 2008 04:16:26 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 86CE33889;
+	Tue, 22 Jan 2008 04:16:22 -0500 (EST)
+In-Reply-To: <fn48bp$ff8$1@ger.gmane.org> (Mark Junker's message of "Tue, 22
+	Jan 2008 09:09:33 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71435>
 
-On 22/01/2008, Junio C Hamano wrote:
-> If the project uses UTF-8-NFC, we would need to adjust check-in
-> and check-out codepath like Linus's readdir(3) hack suggested,
-> but that needs to be done only on HFS+.  Of course, the project
-> participants need to be careful not to create files that HFS+
-> cannot handle (two paths that happen to be equivalent strings
-> should not be created), but I do not think that is such a big
-> issue as some people seem to make a big deal out of.  If you
+Mark Junker <mjscod@web.de> writes:
 
-Right, I don't see that as a big issue -- for new files. But we can hav=
-e
-files that were created in the past as non-handleable by HFS+, and late=
-r
-renamed to something more portable.
-
-More generally, the consensus encoding might change over time. We can
-imagine a project which contains, say, a test file which a latin-1 name=
-,
-that gets later renamed to a UTF-8 name, (due to a project policy
-change), but making necessary to adjust the said test. A checkout of th=
-e
-earlier version would have that test failing. (But maybe I'm just
-handwaving towards a non-existent problem here. I'd consider the issue
-as minor anyway.)
-
-> want to be interoperable with different filesystems, you should
-> not create two paths that are different only in case, and if
-> there are participants who are on such a filesystem, the mistake
-> is quickly spotted and corrected.  It happened in git.git to a
-> file other than that infamous M=E4rchen.  It's exactly the same
-> issue [*1*].
+> Just to sum up what you wrote and to be sure that I understand you
+> correctly:
 >
-> In short, initially I did not like Linus's readdir(3) hack very
-> much, but the more I think about it, I like it the better.
+> Lets have two encodings:
+> - Encoding for path names stored in the repository
+> - Encoding for path names from/to file systems
 >
-> We pick a reasonable default (i.e. "no conversion") at the
-> technical level, and recommend (but do not pay for the overhead
-> of enforcing) a reasonable normalization as the BCP at the human
-> level.  Only on filesystems that mangle the pathnames, or if you
-> want legacy encodings on the filesystem, we would need to pay
-> overhead for conversion and help people with actual code to do
-> so.
->
-> To support the above scenarios, I think each instance of
-> repository needs to be able to say "this path (specified with a
-> matching pattern in the filename encoding) should be converted
-> this way coming in, and that way going out."  UTF-8 only project
-> would have NKC<->NKD on HFS+ partition, and nothing on
-> everywhere else.  EUC-JP project that checks out as-is would
-> specify nothing either, but people on Shift_JIS platforms would
-> locally specify that EUC-JP <-> Shift_JIS conversion to be made.
+> Do conversion only if they are different. Both encodings are configurable.
 
-Sounds sane, except maybe the part where you specify paths with a
-pattern. Do you really need this layer of complexity? Pattern matching
-in different encodings has proven to be troublesome. Usually that's
-where UTF-8 normalisation rules and locale-specific behaviours kick in,
-esp. when you're starting to use \w or \d characters classes, or case
-insensitivity. For example, if you want to do it correctly, "I" will
-match /i/ case-insensitively, except in Turkish locales... (Sorry, I'm
-just handwaving again here...)
+Not really.
+
+ 1. Encoding for the project does not have to be specified at
+    all.  The project participants are expected to know about it
+    out of band.
+
+ 2. Conversion for path names between filesystems and the
+    project (i.e. "paths in tree objects") can be specified per
+    repository (i.e. "a particular clone of the project").  We
+    could even allow the conversion function to be different
+    per-path-component but I suspect that would be a much
+    future addition that nobody would use in practice.
+
+ 3. Suggest use of UTF-8-NFC as the project encoding as a BCP,
+    but never enforce it.  It is a responsibility of the owner
+    of the particular repository to make sure that the
+    conversions used in a particular repository (again, "a
+    particular clone of the project") produces the desired
+    encoding in the tree objects.
+
+But please take these with a moderately large grain of salt, as
+I was more or less handwaving and pretending to know what I was
+talking about ;-).  I think this should work in theory, but I at
+the same time suspect that there are many more places than just
+readdir(3) that need to be wrapped if we take this approach, and
+the intrusiveness factor might make this infeasible in practice.
+
+The difference between your version and my 1. and 2. is very
+subtle, but comes primarily from my desire not to have to use
+the word "canonical".  Yours define "this canonical encoding is
+used in the repository, and we convert back and forth to that
+local encoding", as opposed to my saying "here are to and from
+conversion functions".  The latter is more in line with how we
+define smudge/clean filters for blob contents conversion, in
+that the "encoding" used in in-repository blob does not have to
+even have a name.
