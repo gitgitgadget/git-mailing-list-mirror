@@ -1,83 +1,124 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: tracking a file from another project in my own project
-Date: Tue, 22 Jan 2008 19:34:42 +0100
-Message-ID: <200801221934.43767.jnareb@gmail.com>
-References: <20080122093546.72db8da0@synchrotron-soleil.Fr> <m3fxwplw1i.fsf@roke.D-201> <877ii17opo.fsf@osv.gnss.ru>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH] git-commit: exit non-zero if we fail to commit the index
+Date: Tue, 22 Jan 2008 13:26:40 -0600
+Message-ID: <47964370.8010300@nrlssc.navy.mil>
+References: <7v63xtmc9z.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: picca <picca@synchrotron-soleil.fr>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sergei Organov <osv@javad.com>
-X-From: git-owner@vger.kernel.org Tue Jan 22 19:35:32 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 20:34:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHNy2-0003n0-RS
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 19:35:27 +0100
+	id 1JHOsi-00013u-SA
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 20:34:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752016AbYAVSex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2008 13:34:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751998AbYAVSex
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 13:34:53 -0500
-Received: from mu-out-0910.google.com ([209.85.134.190]:54461 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751934AbYAVSew (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2008 13:34:52 -0500
-Received: by mu-out-0910.google.com with SMTP id w8so2111026mue.1
-        for <git@vger.kernel.org>; Tue, 22 Jan 2008 10:34:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=MLY14NUQllOe6wYB8NvaB7NBzeqEeWnD2jcaGG6GhIQ=;
-        b=ap/WpySZfBEMig5d0eDGnE9kD/Kh8BEt/lkbUcEC/KnLpEOmxHKLQQRNBex8R3UEN8BXhW66c8HREFooa4zwzh/CCcsdAsZLBvuup6ioQveUWTTbaNUZiI4P08G2d8+MTODL9tpubjH1JWXnRHEdxidwsf6lA2/qAFOCmWmTSP4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=bZ/UhELjjliS4ugAaTW6ef5A/lTL/VFctYOXMLZ7SdL8kyZNr7OcKCQ2PCQdNVYXXwLDsLkZDIMzXrOlwIbOAHC4k/+Bcsf/CgKde9MIroUa3ReAEgBIL9iqbHufFDCnMLu1jrfcllbgWJgDVIXuhJEQDtrqb1oTFyb2X3hdxEg=
-Received: by 10.82.167.5 with SMTP id p5mr15380864bue.2.1201026890320;
-        Tue, 22 Jan 2008 10:34:50 -0800 (PST)
-Received: from ?192.168.1.10? ( [83.8.211.135])
-        by mx.google.com with ESMTPS id u14sm1707467gvf.1.2008.01.22.10.34.47
-        (version=SSLv3 cipher=OTHER);
-        Tue, 22 Jan 2008 10:34:48 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <877ii17opo.fsf@osv.gnss.ru>
-Content-Disposition: inline
+	id S1751554AbYAVTd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 14:33:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751442AbYAVTdZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 14:33:25 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:42419 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751407AbYAVTdY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2008 14:33:24 -0500
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0MJQe5L005667;
+	Tue, 22 Jan 2008 13:26:40 -0600
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 22 Jan 2008 13:26:40 -0600
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <7v63xtmc9z.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 22 Jan 2008 19:26:40.0613 (UTC) FILETIME=[B6C16150:01C85D2C]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15680001
+X-TM-AS-Result: : Yes--9.180200-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjQzLTcwMDA3NS0xMzkw?=
+	=?us-ascii?B?MTAtNzAwMTYwLTcwMzczMS03MDA3NTYtNzAzNzg4LTcwNDQyNS0x?=
+	=?us-ascii?B?MjE1ODgtNzAxNDU1LTEyMTY2NS03MDIwODQtNzA5NTg0LTcwMDE2?=
+	=?us-ascii?B?My03MDA5NzEtNzAwOTQyLTcwNzIyNS03MDE0NTAtNzAwNDgxLTcw?=
+	=?us-ascii?B?NDI1Ny0xODgwMTktNzA2MjkwLTMwMDAxNS03MDQ0NzMtNzA1NzE4?=
+	=?us-ascii?B?LTcwMzcxMi03MDkxMzctNzExNjI0LTcwMTM4NC03MDQ3NDctNzAy?=
+	=?us-ascii?B?MTE4LTcxMTk1My03MDI3MjYtNzAxNjE4LTcwMTA1My03MDAzOTgt?=
+	=?us-ascii?B?MTA1MjUwLTcwNjI0OS03MDAzMjQtMTQ4MDM5LTE0ODA1MS0yMDA0?=
+	=?us-ascii?B?Mg==?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71466>
 
-Sergei Organov wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
->> picca <picca@synchrotron-soleil.Fr> writes:
->>> Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> [...]
-> 
->>>> Or "merge -s subtree".
->>> 
->>> I read the git help merge -s explanation but I do not understand how
->>> it can help in my case.
->>
->> Using subtree merge strategy you can join histories of your project
->> and git.git, embedding git.git as a subdirectory like gitk and
->> git-gui are now in git.git.  It is an alternative to using
->> submodules. 
-> 
-> Is subtree merge strategy documented?
-> 
-> $ grep subtree Documentation/merge-strategies.txt
-> $
+---
 
-Documentation/howto/using-merge-subtree.txt
 
-But I agree that it should be also described, or at least mentioned
-in Documentation/merge-strategies.txt
+Junio C Hamano wrote:
+> Brandon Casey <casey@nrlssc.navy.mil> writes:
+> 
+>>>  We would need to tell the user that the index is not where
+>>> it is when we detect the error, though.
+>> The new index we are trying to rename will be deleted.
+>> Are you saying we should 
+>>   warn the user that the index is now out of sync?
+> 
+> Yeah, something like that.  But I think that once this happens
+> there is no easy and sane recovery path for the user, as the
+> most likely cause of the failure there would be the user running
+> out of quota, so "git reset HEAD" which may be the way to
+> recover from that failure would not have enough room to create a
+> new index file anyway.
+
+If you're interested, here's a patch.
+
+-brandon
+
+
+ builtin-commit.c |   15 +++++++++++----
+ 1 files changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 0227936..d8deb1a 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -122,19 +122,23 @@ static void rollback_index_files(void)
+ 	}
+ }
+ 
+-static void commit_index_files(void)
++static int commit_index_files(void)
+ {
++	int err = 0;
++
+ 	switch (commit_style) {
+ 	case COMMIT_AS_IS:
+ 		break; /* nothing to do */
+ 	case COMMIT_NORMAL:
+-		commit_lock_file(&index_lock);
++		err = commit_lock_file(&index_lock);
+ 		break;
+ 	case COMMIT_PARTIAL:
+-		commit_lock_file(&index_lock);
++		err = commit_lock_file(&index_lock);
+ 		rollback_lock_file(&false_lock);
+ 		break;
+ 	}
++
++	return err;
+ }
+ 
+ /*
+@@ -926,7 +930,10 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	unlink(git_path("MERGE_HEAD"));
+ 	unlink(git_path("MERGE_MSG"));
+ 
+-	commit_index_files();
++	if (commit_index_files())
++		die ("Repository has been updated, but unable to write\n"
++		     "new_index file. Check that disk is not full or quota is\n"
++		     "not exceeded, and then \"git reset HEAD\" to recover.");
+ 
+ 	rerere();
+ 	run_hook(get_index_file(), "post-commit", NULL);
 -- 
-Jakub Narebski
-Poland
+1.5.4.rc4.16.gdd591
