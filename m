@@ -1,84 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] [RFC] Design for pathname encoding gitattribute [RESEND]
-Date: Mon, 21 Jan 2008 22:37:00 -0800
-Message-ID: <7vejcav01f.fsf@gitster.siamese.dyndns.org>
-References: <20080122050215.DE198200A2@wilber.wgtn.cat-it.co.nz>
-	<alpine.LSU.1.00.0801220527550.5731@racer.site>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Use FIX_UTF8_MAC to enable conversion from UTF8-MAC to
+ UTF8
+Date: Mon, 21 Jan 2008 23:16:54 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801212304460.2957@woody.linux-foundation.org>
+References: <fn1nl6$ek5$1@ger.gmane.org> <fn1pj9$kkg$1@ger.gmane.org> <fn1ptk$ljj$1@ger.gmane.org> <fn1q6b$ljj$2@ger.gmane.org> <7vve5nzdqx.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801212025050.2957@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sam Vilain <sam.vilain@catalyst.net.nz>, git@vger.kernel.org,
-	Peter Karlsson <peter@softwolves.pp.se>,
-	Mark Junker <mjscod@web.de>,
-	Pedro Melo <melo@simplicidade.org>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Dmitry Potapov <dpotapov@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 22 07:37:59 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mark Junker <mjscod@web.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 22 08:17:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHCli-0007xx-Jw
-	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 07:37:59 +0100
+	id 1JHDOJ-0007pT-S7
+	for gcvg-git-2@gmane.org; Tue, 22 Jan 2008 08:17:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751715AbYAVGhX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jan 2008 01:37:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbYAVGhX
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 01:37:23 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56777 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751407AbYAVGhW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Jan 2008 01:37:22 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 260566384;
-	Tue, 22 Jan 2008 01:37:21 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5AC786383;
-	Tue, 22 Jan 2008 01:37:12 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0801220527550.5731@racer.site> (Johannes
-	Schindelin's message of "Tue, 22 Jan 2008 05:35:40 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759345AbYAVHRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 02:17:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752488AbYAVHRU
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 02:17:20 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:45116 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759293AbYAVHRT (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Jan 2008 02:17:19 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0M7GsjS022112
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 21 Jan 2008 23:16:55 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0M7Gss8009933;
+	Mon, 21 Jan 2008 23:16:54 -0800
+In-Reply-To: <alpine.LFD.1.00.0801212025050.2957@woody.linux-foundation.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-4.723 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71423>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Tue, 22 Jan 2008, Sam Vilain wrote:
->
->>  Documentation/gitattributes.txt |   19 +++++++++++++++++++
->
-> As I said on IRC already, I don't think that this is served well as a=
-n=20
-> "attribute"... it is most likely that the issue either affects _all_=20
-> filenames , or _none_.
 
-I do not think .gitattributes is the way to go, but I do not
-think this has to be all or nothing either.
+On Mon, 21 Jan 2008, Linus Torvalds wrote:
+> 
+> I do suspect that if you really want to make this portable, and able to 
+> handle an expanding d_name[] too, I think you need to make sure you 
+> allocate a big-enough one. And if you worry about d_name perhaps being a 
+> pointer, that really does mean that you'd need to convert the 
+> system-supplied "struct dirent" into a "git_dirent_t" that you can 
+> control.
+> 
+> That said, I think this patch has a bigger problem, namely just 
+> fundamentally that
+> 
+> 	char *utf8 = reencode_string(entry, "UTF8", "UTF8-MAC");
+> 
+> is just unbelievably slow. That's just not how it should be done.
 
-I can well imagine somebody wanting to do:
+Having thought about this some more, I'm starting to suspect that the 
+"readdir()" wrapper thing won't work very well.
 
-	Documentation/ja/README-spelled-in-Japanese
-	Documentation/ja/... other files in Japanese ...
-	Documentation/zh/README-spelled-in-Chinese
-	Documentation/zh/... other files in Chinese ...
+Yes, it will work on OS X, but for all the wrong reasons. It works there 
+just because of the stupid normalization that OS X does both on filename 
+input and output, so if we hook into readdir() and munge the name there, 
+we'll still be able to use the munged name for lstat() and open().
 
-and have all files under Documentation/ja/ in EUC-JP while
-Documentation/zh/ are BIG5 or whatever (I do not speak nor write
-Chinese).
+However, we'll never be able to test it on a sane Unix system, and it 
+won't ever be able to handle the case of a filesystem actually being 
+Latin1 but git being asked to try to transparently convert it to utf-8 in 
+order to work with others.
 
-Maybe the project originates from Brasil and the string
-"Documentation" itself is spelled as "Documenta=C3=A7=C3=A3o" and in
-Latin-1 (no, I do not write pt_BR either, and I admit at this
-point this is a contrived example that I cannot _that_ well
-imagine, but is not so far-fetched).
+Because most of those readdir() calls will just be fed back not just to 
+the filesystem as lstat() calls later, but also to the recursive directory 
+traversal itself, so if we munge the name, we're also going to screw name 
+lookup.
 
-So we _could_ have .git-encoding in Documentation/ja/ and
-Documentation/zh/ each of which says "this directory and
-everything below are in this encoding, unless overriden
-otherwise by a deeper directory".
+Again, as an OSX-only workaround it's probably acceptable, and perhaps 
+that's the only thing to look at right now. But it does strike me as a 
+design mistake to do it at that level.
+
+It would be conceptually nicer to do it in "add_file_to_index()" instead. 
+Ie anything that creates a "struct cache_entry" would do the 
+conversion. 
+
+So it would be good if somebody looked at what happens if you do the OSX 
+hack in add_file_to_index() instead, and see if it works there..
+
+		Linus
