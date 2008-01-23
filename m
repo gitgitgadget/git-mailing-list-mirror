@@ -1,157 +1,187 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: I'm a total push-over..
-Date: Tue, 22 Jan 2008 23:23:51 -0800
-Message-ID: <7vprvtngxk.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.1.00.0801221515350.1741@woody.linux-foundation.org>
-	<7vabmxqnz8.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801221844570.1741@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jan 23 08:25:08 2008
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Wed, 23 Jan 2008 03:15:02 -0500
+Message-ID: <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org>
+References: <F663E088-BCAD-4C5D-89D5-EAF97A29C1DE@sb.org> <alpine.LFD.1.00.0801211656130.2957@woody.linux-foundation.org> <alpine.LFD.1.00.0801211702050.2957@woody.linux-foundati!on.org> <34103945-2078-4983-B409-2D01EF071A8B@sb.org> <alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org> <E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org> <20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu> <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org> <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: multipart/signed; boundary=Apple-Mail-60--569396072; micalg=sha1; protocol="application/pkcs7-signature"
+Cc: Theodore Tso <tytso@MIT.EDU>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Wed Jan 23 09:15:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHZys-0008UY-GM
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 08:25:06 +0100
+	id 1JHalt-0004a0-O9
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 09:15:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752975AbYAWHYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 02:24:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753249AbYAWHYK
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 02:24:10 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49052 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752873AbYAWHYI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2008 02:24:08 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A4A226A2C;
-	Wed, 23 Jan 2008 02:24:03 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C44786A2B;
-	Wed, 23 Jan 2008 02:23:58 -0500 (EST)
-In-Reply-To: <alpine.LFD.1.00.0801221844570.1741@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Tue, 22 Jan 2008 18:58:53 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752684AbYAWIPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 03:15:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751578AbYAWIPN
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 03:15:13 -0500
+Received: from sd-green-bigip-74.dreamhost.com ([208.97.132.74]:47084 "EHLO
+	randymail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751512AbYAWIPM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Jan 2008 03:15:12 -0500
+Received: from KBALLARD.RES.WPI.NET (KBALLARD.RES.WPI.NET [130.215.239.91])
+	by randymail-a4.g.dreamhost.com (Postfix) with ESMTP id EC0EC195942;
+	Wed, 23 Jan 2008 00:15:09 -0800 (PST)
+In-Reply-To: <20080123064139.GC16297@glandium.org>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71517>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Basically, I dislike having two copies of the same data. If something can 
-> be computed from something else, then only the original data should exist, 
-> and the other thing should be recomputed.
+--Apple-Mail-60--569396072
+Content-Type: text/plain;
+	charset=ISO-8859-1;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: quoted-printable
 
-Yes, I agree with that in principle. Storing computable values
-makes sense only when it is expensive to recompute.  We did not
-have cache-tree for quite a long time until you noticed that it
-was rather expensive and wasteful to recompute tree objects from
-unchanged parts of the index every time.
+On Jan 23, 2008, at 1:41 AM, Mike Hommey wrote:
 
-It's the same argument; when the hashing performance starts to
-become noticeable, we can think about storing and reusing it,
-not before.
+> On Tue, Jan 22, 2008 at 08:33:25PM -0500, Theodore Tso wrote:
+>> On Tue, Jan 22, 2008 at 04:38:37PM -0800, Linus Torvalds wrote:
+>>> One thing I'd like somebody to check: what _does_ happen with OS X =20=
 
-> I did consider doing the indexing only on demand, and we can certainly 
-> simply just "turn it off" when we know it's never going to get used (ie 
-> "git ls-files"). So in that sense, it's easy to get rid of the overhead, 
-> but it didn't really seem like the conceptual complexity (even if it's 
-> just a couple of lines) is really worth it. It's not like git ls-files is 
-> really performance-critical anyway.
+>>> and NFS
+>>> (OS X as a client, not server)? In particular:
+>>>
+>>> - Is it suddenly sane and case-sensitive?
+>>
+>> Using a Linux server, and a OS X client, over NFS, it is in
+>> case-sensitive.  This is not unexpected, since you can mount UFS
+>> partitions on Mac OS X, or reformat HFS+ filesystems and make them be
+>> case-sensitive.
+>>
+>>> - Does the NFS client do any unicode conversion?
+>>
+>> Nope:
+>>
+>> # perl -CO -e 'print pack("U",0x00C4)."\n"'  | xargs touch
+>> # ls -l | cat -v
+>> total 0
+>> 0 -rw-r--r--   1 nobody  nobody  0 Jan 22 20:30 M-CM-^D
+>>
+>> It's pretty clear the Unicode conversion is being done in HFS+, not =20=
 
-Yes, ls-files is cheap.  So is lstat(2) on Linux.  It only
-matters when you do it many many times.
+>> in
+>> the VFS layer of Mac OS X.
+>
+> There must be something at the VFS layer, or some other layer:
+> - IIRC, Joliet iso9660 volumes end up being mounted with files names =20=
 
-In any case, the change does not look too bad.  The best time
-(real) of running git-ls-files in the kernel repository on my
-box is 0.010s vs 0.011s (10% improvement, heh!, which is the
-same as the master version) and empty commit is both 0.082s (no
-change).
+> in
+>  NFS when the real file names are NFC on the disk.
 
--- >8 --
-[PATCH] lazy index hashing
+I assume you mean NFD, not NFS, but here's what one of the HFS+ =20
+engineers had to say:
 
-This delays the hashing of index names until it becomes necessary for
-the first time.
+"In Mac OS X,  SMB, MSDOS, UDF, ISO 9660 (Joliet), NTFS and ZFS file =20
+systems all store in one form -- NFC.  We store in NFC since that what =20=
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- cache.h      |    1 +
- read-cache.c |   26 +++++++++++++++++++++++---
- 2 files changed, 24 insertions(+), 3 deletions(-)
+is expected for these files systems."
 
-diff --git a/cache.h b/cache.h
-index 409738c..e4aeff0 100644
---- a/cache.h
-+++ b/cache.h
-@@ -191,6 +191,7 @@ struct index_state {
- 	struct cache_tree *cache_tree;
- 	time_t timestamp;
- 	void *alloc;
-+	unsigned name_hash_initialized : 1;
- 	struct hash_table name_hash;
- };
- 
-diff --git a/read-cache.c b/read-cache.c
-index 9477c0b..e45f4b3 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -34,12 +34,11 @@ static unsigned int hash_name(const char *name, int namelen)
- 	return hash;
- }
- 
--static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
-+static void hash_index_entry(struct index_state *istate, struct cache_entry *ce)
- {
- 	void **pos;
- 	unsigned int hash = hash_name(ce->name, ce_namelen(ce));
- 
--	istate->cache[nr] = ce;
- 	pos = insert_hash(hash, ce, &istate->name_hash);
- 	if (pos) {
- 		ce->next = *pos;
-@@ -47,6 +46,24 @@ static void set_index_entry(struct index_state *istate, int nr, struct cache_ent
- 	}
- }
- 
-+static void lazy_init_name_hash(struct index_state *istate)
-+{
-+	int nr;
-+
-+	if (istate->name_hash_initialized)
-+		return;
-+	for (nr = 0; nr < istate->cache_nr; nr++)
-+		hash_index_entry(istate, istate->cache[nr]);
-+	istate->name_hash_initialized = 1;
-+}
-+
-+static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
-+{
-+	istate->cache[nr] = ce;
-+	if (istate->name_hash_initialized)
-+		hash_index_entry(istate, ce);
-+}
-+
- /*
-  * We don't actually *remove* it, we can just mark it invalid so that
-  * we won't find it in lookups.
-@@ -75,7 +92,10 @@ static void replace_index_entry(struct index_state *istate, int nr, struct cache
- int index_name_exists(struct index_state *istate, const char *name, int namelen)
- {
- 	unsigned int hash = hash_name(name, namelen);
--	struct cache_entry *ce = lookup_hash(hash, &istate->name_hash);
-+	struct cache_entry *ce;
-+
-+	lazy_init_name_hash(istate);
-+	ce = lookup_hash(hash, &istate->name_hash);
- 
- 	while (ce) {
- 		if (!(ce->ce_flags & CE_UNHASHED)) {
--- 
-1.5.4.rc4.14.g6fc74
+> - Likewise for Samba shares.
+
+See above.
+
+> - When I had my problems with iso9660 rockridge volumes using NFC (you
+>  can create that just fine with mkisofs), the volume is mounted =20
+> without
+>  normalisation, i.e. if you get to a shell and want to access files,
+>  you must use NFC, but at least the Finder does transliteration at =20
+> some
+>  stage, because going into the mount point and opening some files fail
+>  because it's trying to open the file with the name transliterated to
+>  NFD. I just hope the same doesn't happen with other filesystems.
+
+Can you produce a reproducible set of steps for this? Because the =20
+Finder shouldn't be doing any of this work on its own, all the =20
+normalization stuff happens directly in HFS+.
+
+> Also, OSX using NFD widely, a file created from non Unix applications
+> may end up being named in NFD on any file system. File contents, too,
+> may end up being transliterated whenever a file is modified with non
+> Unix applications, introducing unwanted changes.
+> Typing file names in the Terminal might also make them encoded in NFD,
+> too.
+
+Entirely possible, though renormalizing file contents seems a bit less =20=
+
+likely. I will point out that the text input system in OS X seems to =20
+default to producing NFC (at least, typing `echo 'M=E4rchen' | xxd` in =20=
+
+the Terminal shows that the input string there is NFC). So user input =20=
+
+will most likely produce NFC, the only way you're probably going to =20
+end up with NFD is if you move a file from HFS+ to another filesystem.
+
+-Kevin Ballard
+
+--=20
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
+
+
+
+--Apple-Mail-60--569396072
+Content-Disposition: attachment;
+	filename=smime.p7s
+Content-Type: application/pkcs7-signature;
+	name=smime.p7s
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGMjCCAusw
+ggJUoAMCAQICEDsG8BKvlrEW0HUBIxWIgjUwDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
+JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
+ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA3MDQyMzIxMjM0OVoXDTA4MDQyMjIxMjM0
+OVowVzEQMA4GA1UEBBMHQmFsbGFyZDEOMAwGA1UEKhMFS2V2aW4xFjAUBgNVBAMTDUtldmluIEJh
+bGxhcmQxGzAZBgkqhkiG9w0BCQEWDGtldmluQHNiLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEP
+ADCCAQoCggEBAN/koURrN2ndrAiuAuHHrdFz+hLGQ7ZsXloGnObjALGOFY3Kmk2FCwAJPIha5GfM
+YFmZIoqxs+DbOWOn6KZ9hcQ5wf4EOgokayrEs3G72T+G8ZE4aXrw0CWJzKLjaIQeDZNZoHA44jlZ
+dG70wtZske898IoPz6YHpkcXiulllATfd8Pa7EgjPri5hKFiRXKI52OsOQTX6cNMMZJUIm8DvfQ5
+jmDyAtywNZGSGeUAMbWnpuLq7H18zpye2Q1hr+p4kucazMb+i7OHXPvX7yx2jMjhN5jw/gYkuzQQ
+JExp1fJyAZQ/av/ZgaxWchhhi4ziFXIlX3B09DTlOQlF53P3fi0CAwEAAaMpMCcwFwYDVR0RBBAw
+DoEMa2V2aW5Ac2Iub3JnMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEFBQADgYEAw/qc6zq+0Qy2
+XaodDlt2L6Vq1DzaVWjV152BFjidmsyhyCkCuyYdAcDp17opIfrNCBbOX5DdY6cpFpnSCxCZeIEB
+PDc3TaaFPtzr8qrpcNDohRSdt+qFLUeMHzlidAiAjvjI3tPKv3JLTakWdQR/XPHsg4mWoaVQU2hM
+HOQBw8EwggM/MIICqKADAgECAgENMA0GCSqGSIb3DQEBBQUAMIHRMQswCQYDVQQGEwJaQTEVMBMG
+A1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0ZSBD
+b25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQwIgYD
+VQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNvbmFs
+LWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNMDMwNzE3MDAwMDAwWhcNMTMwNzE2MjM1OTU5WjBiMQsw
+CQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoGA1UE
+AxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0EwgZ8wDQYJKoZIhvcNAQEBBQAD
+gY0AMIGJAoGBAMSmPFVzVftOucqZWh5owHUEcJ3f6f+jHuy9zfVb8hp2vX8MOmHyv1HOAdTlUAow
+1wJjWiyJFXCO3cnwK4Vaqj9xVsuvPAsH5/EfkTYkKhPPK9Xzgnc9A74r/rsYPge/QIACZNenpruf
+ZdHFKlSFD0gEf6e20TxhBEAeZBlyYLf7AgMBAAGjgZQwgZEwEgYDVR0TAQH/BAgwBgEB/wIBADBD
+BgNVHR8EPDA6MDigNqA0hjJodHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUGVyc29uYWxGcmVl
+bWFpbENBLmNybDALBgNVHQ8EBAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZhdGVM
+YWJlbDItMTM4MA0GCSqGSIb3DQEBBQUAA4GBAEiM0VCD6gsuzA2jZqxnD3+vrL7CF6FDlpSdf0wh
+uPg2H6otnzYvwPQcUCCTcDz9reFhYsPZOhl+hLGZGwDFGguCdJ4lUJRix9sncVcljd2pnDmOjCBP
+ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
+MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
+A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEDsG8BKvlrEW0HUBIxWI
+gjUwCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
+DxcNMDgwMTIzMDgxNTAzWjAjBgkqhkiG9w0BCQQxFgQUR1dBWOIqhfmtT7XEKlsa8oVt3HswgYUG
+CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
+IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
+AhA7BvASr5axFtB1ASMViII1MIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
+BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
+b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhA7BvASr5axFtB1ASMViII1MA0GCSqGSIb3DQEBAQUA
+BIIBAHFYyu9P4steOxPIF8++3QZJ+/e3DkQOKFzUoY6EWPX8nJjgx805RLCXCWzxnitDn9VVTods
+Gk7YGI/YrOgdnyDK1vBcfBvP/1kEkNNNgnlYKsizLCade3WLULENq9gznV+OprcWtvyHIKd2/pj/
+b0TaS3ik/B1VIZrigUwM2o7nJjGlFVwzNNOnQQbTD38DOekmeXCPD+iOaa89mSxy8WCEO7sJRQKJ
+V6i22zyDCJEd2jJ7D0vdmOTnrgMp3FqJauU71rsC7aWMeWKhAFoWAeOLEPDMZ83KE3ADbjF56+9+
+K8C4NjKegajrfZkbP5RKpRJYufGgF4xgNMvq5rz4gmcAAAAAAAA=
+
+--Apple-Mail-60--569396072--
