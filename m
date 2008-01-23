@@ -1,87 +1,167 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [STGIT PATCH] replace "git repo-config" usage by "git config"
-Date: Wed, 23 Jan 2008 16:42:41 +0000
-Message-ID: <b0943d9e0801230842w250ab963t16a1ab3c8024487e@mail.gmail.com>
-References: <1200453554-14163-1-git-send-email-dpmcgee@gmail.com>
-	 <200801162147.33448.kumbayo84@arcor.de>
-	 <200801162158.26450.kumbayo84@arcor.de>
-	 <20080117074559.GB25213@diana.vm.bytemark.co.uk>
-	 <20080118042447.GA13178@diana.vm.bytemark.co.uk>
-	 <b0943d9e0801230335m4a2d1855uf465d0d134f3ef39@mail.gmail.com>
-	 <20080123161014.GA5850@diana.vm.bytemark.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Peter Oberndorfer" <kumbayo84@arcor.de>, git@vger.kernel.org,
-	"Pavel Roskin" <proski@gnu.org>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Jan 23 17:43:24 2008
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Wed, 23 Jan 2008 11:58:15 -0500
+Message-ID: <769D0E1A-8399-458B-8328-FF3642D833BC@sb.org>
+References: <alpine.LFD.1.00.0801211702050.2957@woody.linux-foundati!on.org> <34103945-2078-4983-B409-2D01EF071A8B@sb.org> <alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org> <E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org> <20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu> <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org> <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org> <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org> <20080123094052.GB6969@glandium.org>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: multipart/signed; boundary=Apple-Mail-62--538003574; micalg=sha1; protocol="application/pkcs7-signature"
+Cc: Theodore Tso <tytso@MIT.EDU>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Wed Jan 23 17:59:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHih1-0001zS-I8
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 17:43:15 +0100
+	id 1JHiw6-0000BD-0n
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 17:58:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753612AbYAWQmo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jan 2008 11:42:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753010AbYAWQmo
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 11:42:44 -0500
-Received: from nz-out-0506.google.com ([64.233.162.233]:8307 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753598AbYAWQmn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Jan 2008 11:42:43 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so1796813nze.1
-        for <git@vger.kernel.org>; Wed, 23 Jan 2008 08:42:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=I6erW8udAli+QcxiUyxVim85hSIUFM+NHZnybji7nFk=;
-        b=ur0FNj8d+0lMpbbkqLmoUZcFg0qsq0mrJW7uHXLHO+XZ/QGIFNMFeTSfYFN2LT7HEysm3nwm6OoEhCTULQAbugKokBrvL7nDfMPuJmlmFx+CX2U4PWNHindRt/SM5CIuk/xPN6cEx8SuxUP3UgzX4vHMzazW042KAyFoaRl12/8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lLhFq4kAbF2w3Cgyiz/G48vqnQLXqXWwn8MFmImZsBBSA6YbrPcChtYAl58jfXGm/pP3J74V1evMWfmsg9k1q+YYq3HuwgwZ5897KvFtk6Ar/m6PsJKrk+FQzIilTjQqChdb5nAezvSQ6tZR6Cz4whuQsG0IApOTNJCljiOFTAA=
-Received: by 10.141.171.6 with SMTP id y6mr6486042rvo.84.1201106561756;
-        Wed, 23 Jan 2008 08:42:41 -0800 (PST)
-Received: by 10.140.193.5 with HTTP; Wed, 23 Jan 2008 08:42:41 -0800 (PST)
-In-Reply-To: <20080123161014.GA5850@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1752267AbYAWQ6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 11:58:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752446AbYAWQ6T
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 11:58:19 -0500
+Received: from sd-green-bigip-74.dreamhost.com ([208.97.132.74]:52826 "EHLO
+	randymail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751686AbYAWQ6S (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Jan 2008 11:58:18 -0500
+Received: from KBALLARD.RES.WPI.NET (KBALLARD.RES.WPI.NET [130.215.239.91])
+	by randymail-a2.g.dreamhost.com (Postfix) with ESMTP id 576E6EE2EC;
+	Wed, 23 Jan 2008 08:58:17 -0800 (PST)
+In-Reply-To: <20080123094052.GB6969@glandium.org>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71555>
 
-On 23/01/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2008-01-23 11:35:03 +0000, Catalin Marinas wrote:
-> > The 'goto' checks the local status before pushing but doesn't repor=
-t
-> > this (and my machine is slow and it might wait even 20 seconds or
-> > more, it is useful to get some messages).
+
+--Apple-Mail-62--538003574
+Content-Type: text/plain;
+	charset=US-ASCII;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: 7bit
+
+On Jan 23, 2008, at 4:40 AM, Mike Hommey wrote:
+
+> On Wed, Jan 23, 2008 at 03:15:02AM -0500, Kevin Ballard  
+> <kevin@sb.org> wrote:
+>> "In Mac OS X,  SMB, MSDOS, UDF, ISO 9660 (Joliet), NTFS and ZFS file
+>> systems all store in one form -- NFC.  We store in NFC since that  
+>> what
+>> is expected for these files systems."
 >
-> No, it doesn't anymore, so it should be faster than before. Instead o=
-f
-> checking the entire tree for cleanliness, it just relies on
-> git-read-tree -u -m to abort without changes if any of the files that
-> need updating are dirty.
+> That's the point. It's stored in NFC, but what applications see is  
+> NFD.
 
-Ah, OK. BTW, even if the tree was clean, a 'goto' failed on my Linux
-tree earlier today with the following message:
+I was actually asking for you to show this instead of just asserting  
+it, but I realized I have access to an SMB share myself so I just  
+tested.
 
-$ stg goto realview-eb-header
-Popped realview-pb1176 -- realview-ioaddress
-fatal: Entry 'arch/arm/mach-realview/realview_pb11mp.c' not uptodate.
-Cannot merge.
-stg goto: Command aborted (all changes rolled back)
+And you're right. That's very curious. I guess they did that because  
+the entire Carbon stack was written assuming NFD (back at the same  
+time HFS+ was created), and they wanted to provide a consistent  
+interface to applications. Since the filesystem already uses NFC,  
+renormalizing to NFD shouldn't lose anything (want the original  
+representation back? just normalize back to NFC).
 
-It worked fine after running 'stg status' once (and not showing any
-changes). In the old GIT interface, we use to call refresh_index (i.e.
-'git update-index -q --unmerged --refresh'). Does this still happen?
+>>> - Likewise for Samba shares.
+>>
+>> See above.
+>>
+>>> - When I had my problems with iso9660 rockridge volumes using NFC  
+>>> (you
+>>> can create that just fine with mkisofs), the volume is mounted
+>>> without
+>>> normalisation, i.e. if you get to a shell and want to access files,
+>>> you must use NFC, but at least the Finder does transliteration at
+>>> some
+>>> stage, because going into the mount point and opening some files  
+>>> fail
+>>> because it's trying to open the file with the name transliterated to
+>>> NFD. I just hope the same doesn't happen with other filesystems.
+>>
+>> Can you produce a reproducible set of steps for this? Because the
+>> Finder shouldn't be doing any of this work on its own, all the
+>> normalization stuff happens directly in HFS+.
+>
+> Simple : on a Linux host, create files with NFC names, and create an  
+> iso
+> image with mkisofs, with rockridge but no joliet. Burn this to a  
+> disc, and
+> insert the disc in your OSX host, and try to open files from the  
+> finder.
+> Interestingly, IIRC, Finder is able to copy the files, though.
+>
+> As a bonus, try the same with an iso volume name in NFC, it's even  
+> better :
+> the created mount point is NFD, but it tries to mount on the name in  
+> NFC and
+> fails. And then you just can't eject the CD anymore.
 
-The message above also shows what I meant with messages not being very
-clear. It reports "Popped" but actually failed. Showing "Popping ...
-done" would be better.
+I was actually hoping for something I could test myself.
 
---=20
-Catalin
+-Kevin Ballard
+
+-- 
+Kevin Ballard
+http://kevin.sb.org
+kevin@sb.org
+http://www.tildesoft.com
+
+
+
+--Apple-Mail-62--538003574
+Content-Disposition: attachment;
+	filename=smime.p7s
+Content-Type: application/pkcs7-signature;
+	name=smime.p7s
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGMjCCAusw
+ggJUoAMCAQICEDsG8BKvlrEW0HUBIxWIgjUwDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
+JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
+ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA3MDQyMzIxMjM0OVoXDTA4MDQyMjIxMjM0
+OVowVzEQMA4GA1UEBBMHQmFsbGFyZDEOMAwGA1UEKhMFS2V2aW4xFjAUBgNVBAMTDUtldmluIEJh
+bGxhcmQxGzAZBgkqhkiG9w0BCQEWDGtldmluQHNiLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEP
+ADCCAQoCggEBAN/koURrN2ndrAiuAuHHrdFz+hLGQ7ZsXloGnObjALGOFY3Kmk2FCwAJPIha5GfM
+YFmZIoqxs+DbOWOn6KZ9hcQ5wf4EOgokayrEs3G72T+G8ZE4aXrw0CWJzKLjaIQeDZNZoHA44jlZ
+dG70wtZske898IoPz6YHpkcXiulllATfd8Pa7EgjPri5hKFiRXKI52OsOQTX6cNMMZJUIm8DvfQ5
+jmDyAtywNZGSGeUAMbWnpuLq7H18zpye2Q1hr+p4kucazMb+i7OHXPvX7yx2jMjhN5jw/gYkuzQQ
+JExp1fJyAZQ/av/ZgaxWchhhi4ziFXIlX3B09DTlOQlF53P3fi0CAwEAAaMpMCcwFwYDVR0RBBAw
+DoEMa2V2aW5Ac2Iub3JnMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEFBQADgYEAw/qc6zq+0Qy2
+XaodDlt2L6Vq1DzaVWjV152BFjidmsyhyCkCuyYdAcDp17opIfrNCBbOX5DdY6cpFpnSCxCZeIEB
+PDc3TaaFPtzr8qrpcNDohRSdt+qFLUeMHzlidAiAjvjI3tPKv3JLTakWdQR/XPHsg4mWoaVQU2hM
+HOQBw8EwggM/MIICqKADAgECAgENMA0GCSqGSIb3DQEBBQUAMIHRMQswCQYDVQQGEwJaQTEVMBMG
+A1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0ZSBD
+b25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQwIgYD
+VQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNvbmFs
+LWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNMDMwNzE3MDAwMDAwWhcNMTMwNzE2MjM1OTU5WjBiMQsw
+CQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoGA1UE
+AxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0EwgZ8wDQYJKoZIhvcNAQEBBQAD
+gY0AMIGJAoGBAMSmPFVzVftOucqZWh5owHUEcJ3f6f+jHuy9zfVb8hp2vX8MOmHyv1HOAdTlUAow
+1wJjWiyJFXCO3cnwK4Vaqj9xVsuvPAsH5/EfkTYkKhPPK9Xzgnc9A74r/rsYPge/QIACZNenpruf
+ZdHFKlSFD0gEf6e20TxhBEAeZBlyYLf7AgMBAAGjgZQwgZEwEgYDVR0TAQH/BAgwBgEB/wIBADBD
+BgNVHR8EPDA6MDigNqA0hjJodHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUGVyc29uYWxGcmVl
+bWFpbENBLmNybDALBgNVHQ8EBAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZhdGVM
+YWJlbDItMTM4MA0GCSqGSIb3DQEBBQUAA4GBAEiM0VCD6gsuzA2jZqxnD3+vrL7CF6FDlpSdf0wh
+uPg2H6otnzYvwPQcUCCTcDz9reFhYsPZOhl+hLGZGwDFGguCdJ4lUJRix9sncVcljd2pnDmOjCBP
+ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
+MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
+A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEDsG8BKvlrEW0HUBIxWI
+gjUwCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
+DxcNMDgwMTIzMTY1ODE2WjAjBgkqhkiG9w0BCQQxFgQUfxSwvK4Q33IEjVx/D7FJKLiSo9kwgYUG
+CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
+IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
+AhA7BvASr5axFtB1ASMViII1MIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
+BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
+b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhA7BvASr5axFtB1ASMViII1MA0GCSqGSIb3DQEBAQUA
+BIIBAA5hOGXcl0Z2lccItjEaHB0Muri2xY8n8pY6YcQ+F4MEptIaLfF1mXRGZbfGQnAO6Y0vuaUj
+rJo0A4a3bcN4VlMjBHZKUwwWFbJhaVo2y5STahmlp9JvG4zIrCJbrcdmHULNaonP6Y7BvAk7Y0Lg
+OCARkoKtkn7fnJImsT57PyEms6DybrtrTJ0M3Xx0XidwWqgbaz5s4W80890+2pIGi+/6F0/RotdB
+UWPThyT4kztNqk0/NuDcfLhiZdmPLZOj0JYUnSEFRxI5q6BX/0t4oQEp2zqG0d2TGactusH1obJv
+FxvK5+EI4OnBBtBMFIR0fwd1iEpocjTmXAo9KDz7XKMAAAAAAAA=
+
+--Apple-Mail-62--538003574--
