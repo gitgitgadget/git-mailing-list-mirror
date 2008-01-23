@@ -1,134 +1,83 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] git-commit: exit non-zero if we fail to commit the index
-Date: Wed, 23 Jan 2008 11:21:22 -0600
-Message-ID: <47977792.5080001@nrlssc.navy.mil>
-References: <7vfxwpqvfg.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: I'm a total push-over..
+Date: Wed, 23 Jan 2008 09:29:31 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801230922190.1741@woody.linux-foundation.org>
+References: <alpine.LFD.1.00.0801221515350.1741@woody.linux-foundation.org> <7vabmxqnz8.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801221844570.1741@woody.linux-foundation.org> <7vprvtngxk.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801231224300.5731@racer.site>
+ <alpine.LFD.1.00.0801230817390.1741@woody.linux-foundation.org> <alpine.LSU.1.00.0801231630480.5731@racer.site> <alpine.LFD.1.00.0801230906000.1741@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 23 18:26:19 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 23 18:32:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHjMH-0003Xl-1J
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 18:25:53 +0100
+	id 1JHjRm-00065K-Ci
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 18:31:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755926AbYAWRXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 12:23:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755613AbYAWRXL
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 12:23:11 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:54219 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753635AbYAWRXB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2008 12:23:01 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0NHLMus018500;
-	Wed, 23 Jan 2008 11:21:23 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 23 Jan 2008 11:21:23 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <7vfxwpqvfg.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 23 Jan 2008 17:21:23.0051 (UTC) FILETIME=[605A33B0:01C85DE4]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15680001
-X-TM-AS-Result: : Yes--8.726000-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjQzLTcwMjE0My03MDgx?=
-	=?us-ascii?B?NDMtNzAzNzg4LTcwMjA4NC03MDQ0MjUtNzAwOTcxLTEwNjQyMC03?=
-	=?us-ascii?B?MTE5NTMtNzAwNzU4LTEyMTY2NS03MDA3NTYtNzAwMTYzLTcwNTg2?=
-	=?us-ascii?B?MS03MDA3MDYtNzAwMTYwLTcwMDA3NS0xMzkwMTAtNzAzNzMxLTcw?=
-	=?us-ascii?B?NzIyNS03MDE0NTAtNzAwNDgxLTcxMDA3OC03MDA3OTAtMTg3MDY3?=
-	=?us-ascii?B?LTcwNjAyMy03MDEzMDUtNzAwNDc2LTcwMjY0MC03MDE0NTUtNzA0?=
-	=?us-ascii?B?MjU3LTE4ODAxOS03MDYyOTAtMzAwMDE1LTcwNDQ3My03MDU3MTgt?=
-	=?us-ascii?B?NzAzNzEyLTcwOTEzNy03MTE2MjQtNzAxMzg0LTcwNDc0Ny03MDIx?=
-	=?us-ascii?B?MTgtNzAyNzI2LTcwMTYxOC03MDEwNTMtNzAwMzk4LTEwNTI1MC03?=
-	=?us-ascii?B?MDYyNDktNzAwMzI0LTE0ODAzOS0xNDgwNTEtMjAwNDA=?=
+	id S1757472AbYAWRa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 12:30:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757339AbYAWRa0
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 12:30:26 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:47389 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757472AbYAWRaX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Jan 2008 12:30:23 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0NHTViJ023748
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 23 Jan 2008 09:29:32 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0NHTVmi018292;
+	Wed, 23 Jan 2008 09:29:31 -0800
+In-Reply-To: <alpine.LFD.1.00.0801230906000.1741@woody.linux-foundation.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.723 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71560>
-
-In certain rare cases, the creation of the commit object
-and update of HEAD can succeed, but then installing the
-updated index will fail. This is most likely caused by a
-full disk or exceeded disk quota. When this happens the
-new index file will be removed, and the repository will
-be left with the original now-out-of-sync index. The
-user can recover with a "git reset HEAD" once the disk
-space issue is resolved.
-
-We should detect this failure and offer the user some
-helpful guidance.
-
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71561>
 
 
-Junio C Hamano wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> writes:
->> If you're interested, here's a patch.
+
+On Wed, 23 Jan 2008, Linus Torvalds wrote:
 > 
-> Looks Ok from a quick glance.  I am mired at day job this week
-> so it may take a while for me to come up with a commit log
-> message though.
+> > But I really hope that you are not proposing to use the case-ignoring 
+> > hash when we are _not_ on a case-challenged filesystem...
+> 
+> I actually suspect that we could, and nobody will notice. The hash would 
+> cause a few more collissions, but not so you'd know.
 
-Oh, I had /ASS/u/ME/d this was simple enough that the one-liner
-was sufficient.
+To clarify: the thing I want to point out that the decision to *hash* the 
+filenames in a case-insensitive hash, is very different from the decision 
+to then *compare* the filenames when traversing the hash with a 
+case-insensitive compare.
 
-This patch includes a commit message that hopefully provides a better
-base for you to modify.
+And this difference is actually very important. Hashing things together 
+that are "equivalent" according to any random rule is what makes it 
+possible to then *check* for equivalence cheaply (because you only need to 
+make the potentially expensive check with the subset of cases where it 
+might trigger), but it in no way forces you to actually recode or mangle 
+or compare things equivalently.
 
--brandon
+In fact, I'd argue that this is what HFS+ did wrong in the first place: 
+they had stupid/incompetent people who didn't understand about this, so 
+they normalized the string *before* the hashing rather than as part of the 
+hash itself, and thus actually corrupt the string itself.
 
+So what you can do (and I'd argue that we do) is to have a hash that can 
+handle almost arbitrary input, but then never corrupt the filename, and 
+always compare exactly by default.
 
- builtin-commit.c |   15 +++++++++++----
- 1 files changed, 11 insertions(+), 4 deletions(-)
+Then, depending on a config option, we can decide to change the compare so 
+that equivalent (according to whatever rule) filenames either cause a 
+warning (people on sane filesystems, but working with people who aren't), 
+or are silently considered the same file (people on insane filesystems).
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 0227936..d8deb1a 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -122,19 +122,23 @@ static void rollback_index_files(void)
- 	}
- }
- 
--static void commit_index_files(void)
-+static int commit_index_files(void)
- {
-+	int err = 0;
-+
- 	switch (commit_style) {
- 	case COMMIT_AS_IS:
- 		break; /* nothing to do */
- 	case COMMIT_NORMAL:
--		commit_lock_file(&index_lock);
-+		err = commit_lock_file(&index_lock);
- 		break;
- 	case COMMIT_PARTIAL:
--		commit_lock_file(&index_lock);
-+		err = commit_lock_file(&index_lock);
- 		rollback_lock_file(&false_lock);
- 		break;
- 	}
-+
-+	return err;
- }
- 
- /*
-@@ -926,7 +930,10 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	unlink(git_path("MERGE_HEAD"));
- 	unlink(git_path("MERGE_MSG"));
- 
--	commit_index_files();
-+	if (commit_index_files())
-+		die ("Repository has been updated, but unable to write\n"
-+		     "new_index file. Check that disk is not full or quota is\n"
-+		     "not exceeded, and then \"git reset HEAD\" to recover.");
- 
- 	rerere();
- 	run_hook(get_index_file(), "post-commit", NULL);
--- 
-1.5.4.rc4.17.g0830c
+			Linus
