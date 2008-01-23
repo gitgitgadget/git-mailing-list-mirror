@@ -1,112 +1,84 @@
-From: "pradeep singh rautela" <rautelap@gmail.com>
-Subject: Re: Why does git track directory listed in .gitignore/".git/info/exclude"?
-Date: Wed, 23 Jan 2008 19:34:19 +0530
-Message-ID: <6bc632150801230604p2589c893pa05bb6f27e482de8@mail.gmail.com>
-References: <6bc632150801230554l3b24e1e4lb4641bf7c16857c0@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Wed, 23 Jan 2008 09:26:06 -0500 (EST)
+Message-ID: <alpine.LFD.1.00.0801230923450.22568@xanadu.home>
+References: <478E1FED.5010801@web.de>
+ <7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org>
+ <alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org>
+ <B45968C6-3029-48B6-BED2-E7D5A88747F7@sb.org>
+ <alpine.LFD.1.00.0801161707150.2806@woody.linux-foundation.org>
+ <8AC4CC86-A711-483D-9F9C-5F8497006A1D@sb.org>
+ <alpine.LFD.1.00.0801161959210.2806@woody.linux-foundation.org>
+ <B719D4A2-0D05-4C55-95FC-AB880D58E1AC@wincent.com>
+ <alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org>
+ <478F99E7.1050503@web.de>
+ <alpine.LFD.1.00.0801171017460.14959@woody.linux-foundation.org>
+ <F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org>
+ <alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0801181114430.817@ds9.cixit.se>
+ <alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org>
+ <7vr6gedgk9.fsf@gitster.siamese.dyndns.org>
+ <m17ii1fecy.fsf@ebiederm.dsl.xmission.com>
+ <7vsl0pp7u5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 23 15:05:02 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Peter Karlsson <peter@softwolves.pp.se>,
+	Mark Junker <mjscod@web.de>,
+	Pedro Melo <melo@simplicidade.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 23 15:27:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHgDk-0001sM-9j
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 15:04:53 +0100
+	id 1JHgZC-0002Dp-0e
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 15:27:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130AbYAWOEW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 09:04:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751392AbYAWOEW
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 09:04:22 -0500
-Received: from wx-out-0506.google.com ([66.249.82.234]:61122 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751023AbYAWOEV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2008 09:04:21 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so1661154wxd.4
-        for <git@vger.kernel.org>; Wed, 23 Jan 2008 06:04:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=hKhpl2NtoZttrp9sGI3EfvpFGCX7c5V1q5l+uozyzlQ=;
-        b=cqs9aVyC7TVFuXD5pVGSyQm8Ho4bmspdky2a/2UfCA3Lt7WFxrSUE5HYsYHNwLNxxlqI/hiOiYYld4AT/TlijjpiLWvJeQJ4S11Q6Nl4aFdvZQGYhSfPdTPtl72aw9leqoI23zhhYMNqfA8PHh/iSQjPUveG9ZORqNKFCt2DmtQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YH/Yk2yUMeLhAhsP7oPGvamKP4VG47j2bNdiWCnBk9woXby8bmS6hVRqfPGWvtD+/sYNdHwxSO2+KnT0ZEo0z5Y9Ei01YXDlkEeyU3bm0IFZL9oBMZixjb4svjVZXVOCQy9HIvnFbZHe27sfQlc9Nw2CKdQqyzjIJUPEEJXa8JM=
-Received: by 10.142.154.20 with SMTP id b20mr4911319wfe.13.1201097059944;
-        Wed, 23 Jan 2008 06:04:19 -0800 (PST)
-Received: by 10.142.102.10 with HTTP; Wed, 23 Jan 2008 06:04:19 -0800 (PST)
-In-Reply-To: <6bc632150801230554l3b24e1e4lb4641bf7c16857c0@mail.gmail.com>
-Content-Disposition: inline
+	id S1752447AbYAWO0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 09:26:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752821AbYAWO0J
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 09:26:09 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:59286 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752447AbYAWO0H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2008 09:26:07 -0500
+Received: from xanadu.home ([66.131.194.97]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JV3004HZPFI6NB0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 23 Jan 2008 09:26:06 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7vsl0pp7u5.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71543>
 
-Apologies to all.Kindly pardon my novice experiments with git.
-Some more trial and error method led to find that you have to put a *
-at the end of the directory too.
-i.e xen-3.1.0-src/*
+On Tue, 22 Jan 2008, Junio C Hamano wrote:
 
-But i still would like to ask git gurus here.
-Isn't it fine to include a directory name as
+> ebiederm@xmission.com (Eric W. Biederman) writes:
+> 
+> > Random thought.  Would it make sense to implement a git paranoid
+> > mode to autodetect name mangling.
+> >
+> > I.e.  After opening or creating a file by name we do a readdir in the
+> > same directory to make certain we can find that same name/inode
+> > combination.  Then on name-mangling systems we can autodetect they
+> > exist and limit ourselves to just what they don't mangle with no
+> > prior knowledge.  By refusing to process names that actively
+> > get mangled.   For small directories that you frequently see in
+> > development it shouldn't even be that slow.
+> 
+> Inside init-db where we already check how the filesystem
+> behaves, we could have an autodetection.
 
-   $directory_name/
-    instead of
-   $directory_name/*
-
-?
-Thoughts?
-
-Thanks,
-          --Pradeep
-On 23/01/2008, pradeep singh rautela <rautelap@gmail.com> wrote:
-> Hi All,
->
-> I have an source directory, which in turn has some other directories too.
-> I do not want to track one of these directories.
-> So i added the directory name in .gitignore as well as in
-> .git/info/exclude for my repo.
->
-> i.e i have added following line to both of them -
-> xen-3.1.0-src/
->
-> I copied xen-3.1.0-src from archives in the git repo's base directory.
->
-> Now when i do a git-status i get
-> # On branch master
-> # Untracked files:
-> #   (use "git add <file>..." to include in what will be committed)
-> #
-> #       xen-3.1.0-src/
-> nothing added to commit but untracked files present (use "git add" to track)
->
-> Why is git seeing xen-3.1.0-src directory at all?
-> Is this the expected behaviour?
->
-> I thought i should not get this message after adding relevant entries
-> in .gitignore or in info/exclude .
->
-> What am i doing wrong here?
-> Is there a way that this can be done without having to witness this
-> message everytime i do a git status?
->
-> Please CC me as I am not subscribed to the list.
->
-> Thanks,
->          ~Pradeep
-> --
-> --
-> pradeep singh rautela
-> http://eagain.wordpress.com
-> http://emptydomain.googlepages.com
->
+I wonder if that is good enough.  Git repositories can be copied over to 
+different filesystems.
 
 
--- 
---
-pradeep singh rautela
-http://eagain.wordpress.com
-http://emptydomain.googlepages.com
+Nicolas
