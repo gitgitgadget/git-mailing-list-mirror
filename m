@@ -1,40 +1,40 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Wed, 23 Jan 2008 08:16:33 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801230808440.1741@woody.linux-foundation.org>
-References: <34103945-2078-4983-B409-2D01EF071A8B@sb.org> <alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org> <E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org> <20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu>
- <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org> <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org> <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org> <20080123094052.GB6969@glandium.org> <20080123133802.GC7415@mit.edu>
+Subject: Re: I'm a total push-over..
+Date: Wed, 23 Jan 2008 08:25:01 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0801230817390.1741@woody.linux-foundation.org>
+References: <alpine.LFD.1.00.0801221515350.1741@woody.linux-foundation.org> <7vabmxqnz8.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801221844570.1741@woody.linux-foundation.org> <7vprvtngxk.fsf@gitster.siamese.dyndns.org>
+ <alpine.LSU.1.00.0801231224300.5731@racer.site>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mike Hommey <mh@glandium.org>, Kevin Ballard <kevin@sb.org>,
-	git@vger.kernel.org
-To: Theodore Tso <tytso@MIT.EDU>
-X-From: git-owner@vger.kernel.org Wed Jan 23 17:17:42 2008
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 23 17:26:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHiIG-00072h-Nc
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 17:17:41 +0100
+	id 1JHiQt-0002nO-FE
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 17:26:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677AbYAWQRE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 11:17:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752760AbYAWQRE
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 11:17:04 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:44929 "EHLO
+	id S1752331AbYAWQ0F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 11:26:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751998AbYAWQ0D
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 11:26:03 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:35318 "EHLO
 	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752695AbYAWQRB (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Jan 2008 11:17:01 -0500
+	by vger.kernel.org with ESMTP id S1752267AbYAWQ0B (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Jan 2008 11:26:01 -0500
 Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0NGGY4E019680
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0NGP21q020221
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 23 Jan 2008 08:16:35 -0800
+	Wed, 23 Jan 2008 08:25:03 -0800
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0NGGXov015456;
-	Wed, 23 Jan 2008 08:16:34 -0800
-In-Reply-To: <20080123133802.GC7415@mit.edu>
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0NGP1QI015793;
+	Wed, 23 Jan 2008 08:25:01 -0800
+In-Reply-To: <alpine.LSU.1.00.0801231224300.5731@racer.site>
 User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-2.724 required=5 tests=AWL,BAYES_00
+X-Spam-Status: No, hits=-2.723 required=5 tests=AWL,BAYES_00
 X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
 X-MIMEDefang-Filter: lf$Revision: 1.188 $
 X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
@@ -42,41 +42,45 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71551>
 
 
 
-On Wed, 23 Jan 2008, Theodore Tso wrote:
+On Wed, 23 Jan 2008, Johannes Schindelin wrote:
 > 
-> So this demonstrates that on my MacOS 10.4.11 system, on NFS, MacOS is
-> doing no normalization, as it is creating two files.  On HFS+, MacOS
-> is mapping both filenames to the same decomposed name.
+> I fully expect it to be noticable with that UTF-8 "normalisation".  But 
+> then, the infrastructure is there, and whoever has an itch to scratch...
 
-Well, it demonstrates that (a) the OS and (b) _perl_ don't mangle 
-filenames on non-HFS+ filesystems.
+Actually, it's going to be totally invisible even with UTF-8 
+normalization, because we're going to do it sanely.
 
-The problem is that since most native applications *expect* that name 
-mangling, they'll probably do name mangling of their own (internally) just 
-to compare the names!
+And by "sanely" I mean just having the code test the high bit, and using 
+US-ASCII as-is (possibly with that " & ~0x20 " thing to ignore case in 
+it).
 
-So I would not be surprised if the globbing libraries, for example, will 
-do NFD-mangling in order to glob "correctly", so even programs ported from 
-real Unix might end up getting pathnames subtly changed into NFD as part 
-of some hot library-on-library action with UTF hackery inside.
+End result: practically all projects will never notice anything at all for 
+99.9% of all files. One extra well-predicted branch, and a few more hash 
+collissions for cases where you have both "Makefile" and "makefile" etc.
 
-Things like the finder etc, which must be very aware of the fact that 
-filenames get corrupted, would presumably internally always convert 
-everything they get into NFD in order to compare names from different 
-sources. And as part of that, programs may well corrupt the name before 
-they then use it to create a pathname.
+Doing names with *lots* of UTF-8 characters will be rather slower. It's 
+still not horrible to do if you do it the smart way, though. In fact, it's 
+pretty simple, just a few table lookups (one to find the NFD form, one to 
+do the upcasing).
 
-The fact that your perl program works under NFS, but creates NFD on a VFAT 
-volume, does imply that they probably used at least some of the same 
-routines they use in HFS+ for VFAT. Not entirely surprising: doing case 
-insensitive stuff with Unicode is nasty code, so why not share it (even if 
-it's then incorrect for FAT)..
+And yes, for hashing, it makes sense to turn things into NFD because it's 
+generally simpler, but the point is that you really don't actually modify 
+the name itself at all, you just hash things (or compare things) character 
+by expanded character.
 
-Piece of crap it is, though. Apple has painted themselves into a nasty 
-corner there.
+IOW, only a total *moron* does Unicode name comparisons with
+
+	strcmp(convert_to_nfd(a), convert_to_nfd(b));
+
+which is essentially what Apple does. It's quite possible to do
+
+	utf8_nfd_strcmp(a,b)
+
+and (a) do it tons and tons faster and (b) never have to modify the 
+strings themselves. Same goes (even more) for hashing.
 
 			Linus
