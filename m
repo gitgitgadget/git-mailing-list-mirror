@@ -1,131 +1,104 @@
 From: Kevin Ballard <kevin@sb.org>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Wed, 23 Jan 2008 03:15:02 -0500
-Message-ID: <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org>
-References: <F663E088-BCAD-4C5D-89D5-EAF97A29C1DE@sb.org> <alpine.LFD.1.00.0801211656130.2957@woody.linux-foundation.org> <alpine.LFD.1.00.0801211702050.2957@woody.linux-foundati!on.org> <34103945-2078-4983-B409-2D01EF071A8B@sb.org> <alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org> <E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org> <20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu> <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org> <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org>
+Subject: Re: git filter-branch should run git gc --auto
+Date: Wed, 23 Jan 2008 03:18:32 -0500
+Message-ID: <C1A3D16A-1797-4895-ABE3-CB6A48C27F1F@sb.org>
+References: <20080119123557.GA30778@diana.vm.bytemark.co.uk> <20080119223249.8227.31460.stgit@yoghurt> <1200783050.5724.196.camel@brick> <20080120033737.GA7767@soma> <20080120093436.GA10924@diana.vm.bytemark.co.uk> <7vlk6k8fyp.fsf@gitster.siamese.dyndns.org> <20080121224818.GA8872@untitled> <7vr6gawvkt.fsf@gitster.siamese.dyndns.org> <20080122003911.GA16453@hand.yhbt.net> <7vtzl6vd7v.fsf@gitster.siamese.dyndns.org> <BE604744-0D26-4A39-85CE-B5C0C8C00F9E@sb.org> <7v1w89qmw3.fsf@gitster.siamese.dyndns.org> <60D6C8F5-EF88-48F0-92CA-8E49838C0CB9@sb.org> <4796CB78.2070607@vilain.net>
 Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: multipart/signed; boundary=Apple-Mail-60--569396072; micalg=sha1; protocol="application/pkcs7-signature"
-Cc: Theodore Tso <tytso@MIT.EDU>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Wed Jan 23 09:15:49 2008
+Content-Type: multipart/signed; boundary=Apple-Mail-61--569186416; micalg=sha1; protocol="application/pkcs7-signature"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Wed Jan 23 09:19:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHalt-0004a0-O9
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 09:15:46 +0100
+	id 1JHapC-0005OX-01
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 09:19:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752684AbYAWIPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 03:15:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751578AbYAWIPN
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 03:15:13 -0500
-Received: from sd-green-bigip-74.dreamhost.com ([208.97.132.74]:47084 "EHLO
-	randymail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751512AbYAWIPM (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Jan 2008 03:15:12 -0500
+	id S1751155AbYAWISg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 03:18:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750942AbYAWISg
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 03:18:36 -0500
+Received: from balanced.mail.policyd.dreamhost.com ([208.97.132.119]:32804
+	"EHLO randymail-a8.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750789AbYAWISf (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Jan 2008 03:18:35 -0500
 Received: from KBALLARD.RES.WPI.NET (KBALLARD.RES.WPI.NET [130.215.239.91])
-	by randymail-a4.g.dreamhost.com (Postfix) with ESMTP id EC0EC195942;
-	Wed, 23 Jan 2008 00:15:09 -0800 (PST)
-In-Reply-To: <20080123064139.GC16297@glandium.org>
+	by randymail-a8.g.dreamhost.com (Postfix) with ESMTP id 3CC8CAF81B;
+	Wed, 23 Jan 2008 00:18:34 -0800 (PST)
+In-Reply-To: <4796CB78.2070607@vilain.net>
 X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71518>
 
 
---Apple-Mail-60--569396072
+--Apple-Mail-61--569186416
 Content-Type: text/plain;
-	charset=ISO-8859-1;
+	charset=US-ASCII;
 	format=flowed;
 	delsp=yes
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 
-On Jan 23, 2008, at 1:41 AM, Mike Hommey wrote:
+On Jan 23, 2008, at 12:07 AM, Sam Vilain wrote:
 
-> On Tue, Jan 22, 2008 at 08:33:25PM -0500, Theodore Tso wrote:
->> On Tue, Jan 22, 2008 at 04:38:37PM -0800, Linus Torvalds wrote:
->>> One thing I'd like somebody to check: what _does_ happen with OS X =20=
-
->>> and NFS
->>> (OS X as a client, not server)? In particular:
->>>
->>> - Is it suddenly sane and case-sensitive?
->>
->> Using a Linux server, and a OS X client, over NFS, it is in
->> case-sensitive.  This is not unexpected, since you can mount UFS
->> partitions on Mac OS X, or reformat HFS+ filesystems and make them be
->> case-sensitive.
->>
->>> - Does the NFS client do any unicode conversion?
->>
->> Nope:
->>
->> # perl -CO -e 'print pack("U",0x00C4)."\n"'  | xargs touch
->> # ls -l | cat -v
->> total 0
->> 0 -rw-r--r--   1 nobody  nobody  0 Jan 22 20:30 M-CM-^D
->>
->> It's pretty clear the Unicode conversion is being done in HFS+, not =20=
-
->> in
->> the VFS layer of Mac OS X.
+> Kevin Ballard wrote:
+>> I'm actually considering what the cost would be of switching macports
+>> to git (not that it will ever happen - too many anonymous people pull
+>> from svn trunk). Right now the svn trunk contains a subfolder for the
+>> source code and another subfolder for all ~4400+ Portfiles. In such a
+>> theoretical move, I'd want to split that up, probably into two
+>> unrelated branches. Doing so would mean running git-filter-branch  
+>> over
+>> a linear commit history that's 31580 objects long, with a tree filter
+>> to prune the dports directory away and a msg filter to remove the  
+>> svn-
+>> id stuff that git-svn left behind.
 >
-> There must be something at the VFS layer, or some other layer:
-> - IIRC, Joliet iso9660 volumes end up being mounted with files names =20=
+> You could have used git-svn --no-metadata :)
 
-> in
->  NFS when the real file names are NFC on the disk.
+Sure, except I imported the svn repo with the intention of continuing  
+to track it. I'm only floating the idea now of converting the upstream  
+repo to git, but as I said before we have enough anonymous checkouts  
+of people tracking trunk that we probably can't justify switching  
+VCSs, especially when svn is now bundled on Leopard but git isn't.
 
-I assume you mean NFD, not NFS, but here's what one of the HFS+ =20
-engineers had to say:
+> Using a commit filter to implement the pruning will be much faster;
+> you'll need to make a temporary index, use git-read-tree, git-rm, then
+> git-commit.  This way you avoid the expense of checking out the files
+> just to delete them in your rewrite hook.
 
-"In Mac OS X,  SMB, MSDOS, UDF, ISO 9660 (Joliet), NTFS and ZFS file =20
-systems all store in one form -- NFC.  We store in NFC since that what =20=
+I suspect an index filter would be simpler, and that's really what I  
+meant when I said tree filter.
 
-is expected for these files systems."
+>> I'd also have to
+>> figure out some way to remove the commit objects entirely that only
+>> reference the dports directory.
+>
+> This can be done with a parent filter.
 
-> - Likewise for Samba shares.
+Good to know.
 
-See above.
+>> I'd suggest a patch to run git gc --auto, but it looks like you just
+>> did in a subsequent email. As for your comments about the reflogs,
+>> can't I disable recording those, at least temporarily? I'd rather
+>> clean up after myself as I work rather than balloon the repository  
+>> and
+>> collapse it in a single operation at the end.
+>
+> Honestly, the optimisation I mention above will save you much more  
+> time.
+> Note that you can run git-repack -d every half hour out of cron, it is
+> safe and will let it clean as you go.
 
-> - When I had my problems with iso9660 rockridge volumes using NFC (you
->  can create that just fine with mkisofs), the volume is mounted =20
-> without
->  normalisation, i.e. if you get to a shell and want to access files,
->  you must use NFC, but at least the Finder does transliteration at =20
-> some
->  stage, because going into the mount point and opening some files fail
->  because it's trying to open the file with the name transliterated to
->  NFD. I just hope the same doesn't happen with other filesystems.
+That's a reasonable suggestion. And I'm still just thinking about  
+this, so I have no idea if I'll ever actually have to run git-filter- 
+branch on this massive history.
 
-Can you produce a reproducible set of steps for this? Because the =20
-Finder shouldn't be doing any of this work on its own, all the =20
-normalization stuff happens directly in HFS+.
-
-> Also, OSX using NFD widely, a file created from non Unix applications
-> may end up being named in NFD on any file system. File contents, too,
-> may end up being transliterated whenever a file is modified with non
-> Unix applications, introducing unwanted changes.
-> Typing file names in the Terminal might also make them encoded in NFD,
-> too.
-
-Entirely possible, though renormalizing file contents seems a bit less =20=
-
-likely. I will point out that the text input system in OS X seems to =20
-default to producing NFC (at least, typing `echo 'M=E4rchen' | xxd` in =20=
-
-the Terminal shows that the input string there is NFC). So user input =20=
-
-will most likely produce NFC, the only way you're probably going to =20
-end up with NFD is if you move a file from HFS+ to another filesystem.
-
--Kevin Ballard
-
---=20
+-- 
 Kevin Ballard
 http://kevin.sb.org
 kevin@sb.org
@@ -133,7 +106,7 @@ http://www.tildesoft.com
 
 
 
---Apple-Mail-60--569396072
+--Apple-Mail-61--569186416
 Content-Disposition: attachment;
 	filename=smime.p7s
 Content-Type: application/pkcs7-signature;
@@ -172,16 +145,16 @@ ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
 MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
 A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEDsG8BKvlrEW0HUBIxWI
 gjUwCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
-DxcNMDgwMTIzMDgxNTAzWjAjBgkqhkiG9w0BCQQxFgQUR1dBWOIqhfmtT7XEKlsa8oVt3HswgYUG
+DxcNMDgwMTIzMDgxODMzWjAjBgkqhkiG9w0BCQQxFgQUp1IXuzZ5wMYgiiohEGwhRiX/KOcwgYUG
 CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
 IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
 AhA7BvASr5axFtB1ASMViII1MIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
 BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
 b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhA7BvASr5axFtB1ASMViII1MA0GCSqGSIb3DQEBAQUA
-BIIBAHFYyu9P4steOxPIF8++3QZJ+/e3DkQOKFzUoY6EWPX8nJjgx805RLCXCWzxnitDn9VVTods
-Gk7YGI/YrOgdnyDK1vBcfBvP/1kEkNNNgnlYKsizLCade3WLULENq9gznV+OprcWtvyHIKd2/pj/
-b0TaS3ik/B1VIZrigUwM2o7nJjGlFVwzNNOnQQbTD38DOekmeXCPD+iOaa89mSxy8WCEO7sJRQKJ
-V6i22zyDCJEd2jJ7D0vdmOTnrgMp3FqJauU71rsC7aWMeWKhAFoWAeOLEPDMZ83KE3ADbjF56+9+
-K8C4NjKegajrfZkbP5RKpRJYufGgF4xgNMvq5rz4gmcAAAAAAAA=
+BIIBABPnRew3Vs4lUoxaSFC0Uj2IQjqhTK7wP/rBFZXK/URL/VVcrY6ZHsAZUDxk7U4b60llWr/N
+FFp8lCsPVsASwP8RwMebH6KU2t3tqge/O9ljA+xgEdN2ECxq1ovAiLSTAMbTUcKQY/2ihl4yYHuk
+Zur9hRnnwkBwlhcMPTlF/aEXCHuBKihMo6NxBLaRyinNzHbgonmtHfnZ9NwqSrjXfxpX4BrvQU+i
+x+SDhtyM8AF88RodUHjckCW6f4355/6pX60I8DFEcB2cQ7EkDSkOEGWP8qdWCJUwMKEeCxDjkYTk
+3Pi4dgdBUnrOsLEmU7gyh4utBUe5bbCATOzExEmZmMcAAAAAAAA=
 
---Apple-Mail-60--569396072--
+--Apple-Mail-61--569186416--
