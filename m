@@ -1,94 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Wed, 23 Jan 2008 13:19:45 -0800
-Message-ID: <7vve5kgrym.fsf@gitster.siamese.dyndns.org>
-References: <478E1FED.5010801@web.de>
-	<7652B11D-9B9F-45EA-9465-8294B701FE7C@sb.org>
-	<alpine.LFD.1.00.0801161522160.2806@woody.linux-foundation.org>
-	<B45968C6-3029-48B6-BED2-E7D5A88747F7@sb.org>
-	<alpine.LFD.1.00.0801161707150.2806@woody.linux-foundation.org>
-	<8AC4CC86-A711-483D-9F9C-5F8497006A1D@sb.org>
-	<alpine.LFD.1.00.0801161959210.2806@woody.linux-foundation.org>
-	<B719D4A2-0D05-4C55-95FC-AB880D58E1AC@wincent.com>
-	<alpine.LFD.1.00.0801170842280.14959@woody.linux-foundation.org>
-	<478F99E7.1050503@web.de>
-	<alpine.LFD.1.00.0801171017460.14959@woody.linux-foundation.org>
-	<F666FFD2-9777-47EA-BEF4-C78906CA8901@simplicidade.org>
-	<alpine.LFD.1.00.0801171100330.14959@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0801181114430.817@ds9.cixit.se>
-	<alpine.LFD.1.00.0801180909000.2957@woody.linux-foundation.org>
-	<7vr6gedgk9.fsf@gitster.siamese.dyndns.org>
-	<m17ii1fecy.fsf@ebiederm.dsl.xmission.com>
-	<7vsl0pp7u5.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801230923450.22568@xanadu.home>
+From: Aidan Van Dyk <aidan@highrise.ca>
+Subject: Trying to get GIT running on SCO OpenServer
+Date: Wed, 23 Jan 2008 16:26:13 -0500
+Message-ID: <20080123212613.GN2230@yugib.highrise.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Peter Karlsson <peter@softwolves.pp.se>,
-	Mark Junker <mjscod@web.de>,
-	Pedro Melo <melo@simplicidade.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Jan 23 22:20:42 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="LQ77YLfPrO/qF/pM"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 23 22:51:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHn1P-0007gI-Ld
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 22:20:36 +0100
+	id 1JHnVe-00035q-91
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 22:51:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751646AbYAWVUG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 16:20:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752110AbYAWVUF
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 16:20:05 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41438 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751605AbYAWVUD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2008 16:20:03 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D8FA642E6;
-	Wed, 23 Jan 2008 16:19:59 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 213DC42DD;
-	Wed, 23 Jan 2008 16:19:47 -0500 (EST)
-In-Reply-To: <alpine.LFD.1.00.0801230923450.22568@xanadu.home> (Nicolas
-	Pitre's message of "Wed, 23 Jan 2008 09:26:06 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751103AbYAWVvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 16:51:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751508AbYAWVvQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 16:51:16 -0500
+Received: from yugib.highrise.ca ([205.150.199.213]:54070 "EHLO
+	yugib.highrise.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751473AbYAWVvP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2008 16:51:15 -0500
+X-Greylist: delayed 1499 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Jan 2008 16:51:15 EST
+Received: from localhost (yugib.highrise.ca [205.150.199.213])
+	by yugib.highrise.ca (Postfix) with ESMTP id 1E33F111E3A;
+	Wed, 23 Jan 2008 16:26:13 -0500 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71573>
 
-Nicolas Pitre <nico@cam.org> writes:
 
-> On Tue, 22 Jan 2008, Junio C Hamano wrote:
->
->> ebiederm@xmission.com (Eric W. Biederman) writes:
->> 
->> > Random thought.  Would it make sense to implement a git paranoid
->> > mode to autodetect name mangling.
->> >
->> > I.e.  After opening or creating a file by name we do a readdir in the
->> > same directory to make certain we can find that same name/inode
->> > combination.  Then on name-mangling systems we can autodetect they
->> > exist and limit ourselves to just what they don't mangle with no
->> > prior knowledge.  By refusing to process names that actively
->> > get mangled.   For small directories that you frequently see in
->> > development it shouldn't even be that slow.
->> 
->> Inside init-db where we already check how the filesystem
->> behaves, we could have an autodetection.
->
-> I wonder if that is good enough.  Git repositories can be copied over to 
-> different filesystems.
+--LQ77YLfPrO/qF/pM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Do you mean "cp -a"?  If I am not mistaken we already have that
-issue, due to core.filemode, when user does that across
-filesystems with different behaviours.
 
-There is not much we can do against "cp -a" other than telling
-users that some configurations need to be adjusted.
+I know - openserver, yuch, bla bla bla... Not my choice, but sometimes
+we have to do things we don't like...
+
+But, I've come across this in strbuf.c:
+        va_start(ap, fmt);
+        len = vsnprintf(sb->buf + sb->len, sb->alloc - sb->len, fmt, ap);
+        va_end(ap);
+        if (len < 0)
+                die("your vsnprintf is broken");
+
+Now, that would seem to be the interpretation of vsnprintf I'm familiar
+with too, but I read this in the SCO vsnprintf man page:
+
+   snprintf (vsnprintf) behaves like sprintf (vsprintf), except that no
+   more than maxsize characters are placed into the array, including the
+   terminating null character. If more than maxsize characters were
+   requested, the output array will contain exactly maxsize characters,
+   with a null character being the last (when maxsize is nonzero); a
+   negative value is returned.
+
+   [...] 
+
+   vfprintf(S-osr5), vprintf(S-osr5), and vsprintf(S-osr5) are conformant
+   with :
+
+   X/Open Portability Guide, Issue 3, 1989 ;
+   and ANSI X3.159-1989 Programming Language -- C .
+
+I guess this means that git is designed to not work on on systems such
+as SCO that have what we (myself included) consider "broken" vsnprintf.
+
+Is there any interest in trying to get strbuf to work with such broken
+vsnprintf implementations?
+
+I've got a couple of other small patches to make it "compile" on
+OpenServer, but if this is too brain-dead to be worth supporting, there
+is no point in cluttering things up more for compatibility which can't
+really be used anyways.
+
+a.
+
+
+
+-- 
+Aidan Van Dyk                                             Create like a god,
+aidan@highrise.ca                                       command like a king,
+http://www.highrise.ca/                                   work like a slave.
+
+--LQ77YLfPrO/qF/pM
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFHl7D1uVxNPsxNPScRArWQAJ9fF3QEpXpyXLTe4m/8G/IV3OWjLgCePM88
+zVxevQbr8pUMlFkoY1qcD54=
+=qiC2
+-----END PGP SIGNATURE-----
+
+--LQ77YLfPrO/qF/pM--
