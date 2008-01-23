@@ -1,51 +1,53 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: stgit: config option for diff-opts
-Date: Tue, 22 Jan 2008 22:04:21 -0500
-Message-ID: <9e4733910801221904k5f66a231t9cb8330eff3861c4@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: stgit: config option for diff-opts
+Date: Wed, 23 Jan 2008 04:18:29 +0100
+Message-ID: <20080123031829.GB25508@diana.vm.bytemark.co.uk>
+References: <9e4733910801221904k5f66a231t9cb8330eff3861c4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 23 04:04:58 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 23 04:19:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHVv6-0006c0-6S
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 04:04:56 +0100
+	id 1JHW92-0001TP-2K
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 04:19:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752894AbYAWDEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2008 22:04:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752923AbYAWDEZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 22:04:25 -0500
-Received: from wa-out-1112.google.com ([209.85.146.182]:29240 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752876AbYAWDEZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2008 22:04:25 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so4770699wah.23
-        for <git@vger.kernel.org>; Tue, 22 Jan 2008 19:04:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=CSi6V2gp7EITVgQKKtWptFn1hY0N+3UXnvOuSdRsWmc=;
-        b=powh2Vz7Gt990tg+u5Du0Mq2+ZonWhW/X2/kbDAGXqJGDdv9mAd0mPMUx+xCUtDQg7qedRm8nw0o4v9YcT2vR3JguQbSLGBeux4irmOpni18h6tfX5+oCA3XU0SH4ZAuFDp9jF3C2nrkr3666eDJBRmITnAba/ICQxPwJm4RFmc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=xzAMAriGakXhEFI+LbRXGFziAeFIPNKexioXTjKnkq3k3ahXqPLGhG+wtPqJrtNFoOILfCiw1scrG2Lk2pKWpWfyBuy6OjLQ332WsaOQfToKFyBAIE+UY5NO8mbiW+7z7t49q2B3sw7CIcK4Iawtv9gPVVmrMK2Mc9KiZqAhA5o=
-Received: by 10.114.194.1 with SMTP id r1mr7626058waf.40.1201057462014;
-        Tue, 22 Jan 2008 19:04:22 -0800 (PST)
-Received: by 10.114.93.14 with HTTP; Tue, 22 Jan 2008 19:04:21 -0800 (PST)
+	id S1752983AbYAWDSk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jan 2008 22:18:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752969AbYAWDSk
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 22:18:40 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3579 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752901AbYAWDSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2008 22:18:39 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JHW8D-0006jX-00; Wed, 23 Jan 2008 03:18:29 +0000
 Content-Disposition: inline
+In-Reply-To: <9e4733910801221904k5f66a231t9cb8330eff3861c4@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71505>
 
-Could I get a config option added to stgit for diff-opts? So that I
-can always have git diff -M set on renames.
+On 2008-01-22 22:04:21 -0500, Jon Smirl wrote:
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+> Could I get a config option added to stgit for diff-opts? So that I
+> can always have git diff -M set on renames.
+
+Good idea. I've often needed this myself, without consciously
+realizing it -- my bash is set to save an infinite amount of history,
+so Ctrl+R always helps me out ...
+
+Will whip up, unless someone beats me to it. It's getting sorta late,
+so I won't have time for at least a day or two.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
