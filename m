@@ -1,86 +1,98 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: I'm a total push-over..
-Date: Wed, 23 Jan 2008 10:31:11 +0100
-Message-ID: <4797095F.9020602@op5.se>
-References: <alpine.LFD.1.00.0801221515350.1741@woody.linux-foundation.org> <4796FBB6.9080609@op5.se> <20080123091558.GP14871@dpotapov.dyndns.org>
+From: Theodore Tso <tytso@MIT.EDU>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Wed, 23 Jan 2008 08:38:02 -0500
+Message-ID: <20080123133802.GC7415@mit.edu>
+References: <34103945-2078-4983-B409-2D01EF071A8B@sb.org> <alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org> <E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org> <20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu> <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org> <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org> <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org> <20080123094052.GB6969@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 23 14:11:05 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Kevin Ballard <kevin@sb.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Wed Jan 23 14:39:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHfNZ-0005d2-2i
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 14:10:57 +0100
+	id 1JHfoe-0000m2-SU
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 14:38:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751357AbYAWNKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 08:10:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbYAWNKZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 08:10:25 -0500
-Received: from mail.op5.se ([193.201.96.20]:41978 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751009AbYAWNKY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2008 08:10:24 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 7FB661F08056;
-	Wed, 23 Jan 2008 14:10:22 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
+	id S1751527AbYAWNiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 08:38:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbYAWNiZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 08:38:25 -0500
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:44628 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751393AbYAWNiY (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Jan 2008 08:38:24 -0500
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m0NDc47t023168;
+	Wed, 23 Jan 2008 08:38:04 -0500 (EST)
+Received: from closure.thunk.org (c-66-30-1-139.hsd1.ma.comcast.net [66.30.1.139])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m0NDc2jh006017
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 23 Jan 2008 08:38:03 -0500 (EST)
+Received: from tytso by closure.thunk.org with local (Exim 4.67)
+	(envelope-from <tytso@mit.edu>)
+	id 1JHfnm-0007cD-LH; Wed, 23 Jan 2008 08:38:02 -0500
+Content-Disposition: inline
+In-Reply-To: <20080123094052.GB6969@glandium.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-Scanned-By: MIMEDefang 2.42
 X-Spam-Flag: NO
-X-Spam-Score: -3.665
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.665 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=0.691, BAYES_00=-2.599,
-	DATE_IN_PAST_03_06=0.044]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KL0q7qqBC3DX; Wed, 23 Jan 2008 14:10:20 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.27])
-	by mail.op5.se (Postfix) with ESMTP id A9BE81F0805B;
-	Wed, 23 Jan 2008 14:10:08 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <20080123091558.GP14871@dpotapov.dyndns.org>
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71539>
 
-Dmitry Potapov wrote:
-> On Wed, Jan 23, 2008 at 09:32:54AM +0100, Andreas Ericsson wrote:
->> The FNV hash would be better (pasted below), but I doubt
->> anyone will ever care, and there will be larger differences
->> between architectures with this one than the lt_git hash (well,
->> a function's gotta have a name).
-> 
-> Actually, Bob Jenkins' lookup3 hash is twice faster in my tests
-> than FNV, and also it is much less likely to have any collision.
-> 
+Here's a reliable test case to test filename normalization on Mac OS.
 
->From http://burtleburtle.net/bob/hash/doobs.html
----
-FNV Hash
+------ cut here -------
+cat > test.pl << EOF
+#!/usr/bin/perl -CO
+print "M".pack("U",0x00E4)."rchen\n";
+print "Ma".pack("U",0x0308)."rchen\n";
+EOF
+chmod +x test.pl
+./test.pl | xargs touch
+echo M* | xxd -g1
+------ cut here -------
 
-I need to fill this in. Search the web for FNV hash. It's faster than my hash on Intel (because Intel has fast multiplication), but slower on most other platforms. Preliminary tests suggested it has decent distributions. 
----
+On an NFS mounted filesystem, what you will get is this:
 
-My tests ran on Intel. I also noticed I had a few hashes commented out when
-doing the test, one of them being Paul Hsie's. For some reason, Jenkin's and
-Hsie's didn't perform well for me last time I used the comparison thing (I
-did a more thorough job back then, with tests running for several minutes
-per hash and table-size, so I commented out the poor candidates).
+0000000: 4d 61 cc 88 72 63 68 65 6e 20 4d c3 a4 72 63 68  Ma..rchen M..rch
+0000010: 65 6e 0a                                         en.
 
-I still believe that for this very simple case, the lookup3.c case is not
-very practical, as the code is that much more complicated, which was my
-main point with posting the comparison. Iow, not "switch to this hash,
-because it's better", but rather "the hash is not as bad as you think and
-will probably work well for all practical purposes".
+and on an HFS+ mounted filesystem, what you will get is this:
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+0000000: 4d 61 cc 88 72 63 68 65 6e 0a                    Ma..rchen.
+
+So this demonstrates that on my MacOS 10.4.11 system, on NFS, MacOS is
+doing no normalization, as it is creating two files.  On HFS+, MacOS
+is mapping both filenames to the same decomposed name.
+
+More (or not) surprisingly, given Kevin Ballard's "reliable source":
+
+  "In Mac OS X,  SMB, MSDOS, UDF, ISO 9660 (Joliet), NTFS and ZFS file
+  systems all store in one form -- NFC.  We store in NFC since that what is
+  expected for these files systems."
+
+Using a Sony Reader (which uses an internal FAT filesystem) hooked up
+to a MacOS 10.4.11 system:
+
+% /fs/u1/tmp/test.pl  | xargs touch
+% echo M* | xxd -g1
+0000000: 4d 61 cc 88 72 63 68 65 6e 0a                    Ma..rchen.
+
+.. which is the decomposed form.  So it looks like on FAT/MSDOS
+filesystems MacOS 10.4.11 normalizes files to NFD, which will *not* do
+the right thing as far as Windows compatibility is concerned on USB
+sticks, et. al.  Mac OS users would be well advised not to use
+non-ASCII names in their filesystems if they care about interoperating
+with other systems.  :-P
+
+							- Ted
