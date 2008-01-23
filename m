@@ -1,82 +1,146 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git filter-branch should run git gc --auto
-Date: Wed, 23 Jan 2008 11:22:23 -0800
-Message-ID: <7vfxwoibyo.fsf@gitster.siamese.dyndns.org>
-References: <1200783050.5724.196.camel@brick> <20080120033737.GA7767@soma>
-	<20080120093436.GA10924@diana.vm.bytemark.co.uk>
-	<7vlk6k8fyp.fsf@gitster.siamese.dyndns.org>
-	<20080121224818.GA8872@untitled>
-	<7vr6gawvkt.fsf@gitster.siamese.dyndns.org>
-	<20080122003911.GA16453@hand.yhbt.net>
-	<7vtzl6vd7v.fsf@gitster.siamese.dyndns.org>
-	<BE604744-0D26-4A39-85CE-B5C0C8C00F9E@sb.org>
-	<7v1w89qmw3.fsf@gitster.siamese.dyndns.org>
-	<20080123064430.GD16297@glandium.org>
+Subject: Re: [PATCH] git-commit: exit non-zero if we fail to commit the index
+Date: Wed, 23 Jan 2008 12:01:03 -0800
+Message-ID: <7vzluwgvls.fsf@gitster.siamese.dyndns.org>
+References: <7vfxwpqvfg.fsf@gitster.siamese.dyndns.org>
+	<47977792.5080001@nrlssc.navy.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kevin Ballard <kevin@sb.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Wed Jan 23 20:23:17 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Jan 23 21:01:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHlBi-00025c-Dh
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 20:23:06 +0100
+	id 1JHlnC-0001Gj-I9
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 21:01:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751309AbYAWTWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 14:22:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751319AbYAWTWe
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 14:22:34 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:34105 "EHLO
+	id S1751677AbYAWUBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 15:01:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751761AbYAWUBU
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 15:01:20 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36469 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750948AbYAWTWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2008 14:22:33 -0500
+	with ESMTP id S1751583AbYAWUBT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2008 15:01:19 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D119E3CB4;
-	Wed, 23 Jan 2008 14:22:30 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8482F3C51;
+	Wed, 23 Jan 2008 15:01:16 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id F2E7E3CB3;
-	Wed, 23 Jan 2008 14:22:26 -0500 (EST)
-In-Reply-To: <20080123064430.GD16297@glandium.org> (Mike Hommey's message of
-	"Wed, 23 Jan 2008 07:44:30 +0100")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6925D3C4F;
+	Wed, 23 Jan 2008 15:01:11 -0500 (EST)
+In-Reply-To: <47977792.5080001@nrlssc.navy.mil> (Brandon Casey's message of
+	"Wed, 23 Jan 2008 11:21:22 -0600")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71566>
 
-Mike Hommey <mh@glandium.org> writes:
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-> I wonder if it wouldn't be possible to have filter-branch use
-> fast-import, so that it would create a pack instead of a lot of loose
-> objects.
+> In certain rare cases, the creation of the commit object
+> and update of HEAD can succeed, but then installing the
+> updated index will fail. This is most likely caused by a
+> full disk or exceeded disk quota. When this happens the
+> new index file will be removed, and the repository will
+> be left with the original now-out-of-sync index. The
+> user can recover with a "git reset HEAD" once the disk
+> space issue is resolved.
+>
+> We should detect this failure and offer the user some
+> helpful guidance.
+>
+> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+> ---
 
-I do not think it will help.  The objects in packs fast-import
-creates cannot be accessed from outside fast-import.  Not even
-the rest of the core routines running inside that fast-import
-process cannot access them via the usual read_sha1_file()
-interface, as described in detail in a recent thread [*1*].  The
-only way to make it available while you are still feeding new
-data to fast-import is to explicitly tell it to finalize the
-current pack by issuing a 'mark' command (and fast-import will
-start writing to a new pack).
+Thanks, looks much better, especially with S-o-b: line.
 
-And filters need to be able to read the objects previous steps
-produced to do their work.
+>> Brandon Casey <casey@nrlssc.navy.mil> writes:
+>>> If you're interested, here's a patch.
+>> 
+>> Looks Ok from a quick glance.  I am mired at day job this week
+>> so it may take a while for me to come up with a commit log
+>> message though.
+>
+> Oh, I had /ASS/u/ME/d this was simple enough that the one-liner
+> was sufficient.
 
-Which means that instead of having to deal with many loose
-objects, you will now face many little packs, each contains data
-changed perhaps at most one commit's worth.  You would need to
-"repack -a -d" to consolidate these little packs every once in a
-while, and I suspect more often than you would need to repack
-loose objects, as handling many packs is much more expensive
-than handling many loose objects.
+I do not get the funny punctuation, sorry.
 
-[Reference]
+Anyway, here is a bit more detailed reason behind my request.
 
-*1* http://thread.gmane.org/gmane.comp.version-control.git/70964/focus=71076
+ (1) The subject is primarily to help people who look at
+     shortlog (or "gitk") to get the overview of recent changes,
+     or in general "changes within a given range".
+
+     Readers are most interested in what areas are affected
+     (e.g. the command from the end-user's point of view, or the
+     internal implementation) and what the nature of the change
+     was (e.g. bugfix vs enhancement).  To help them, the
+     Subject: line summarizes "what the change is about".
+
+     Your Subject: line is _perfect_.  It identifies the area as
+     "git-commit" instead of "builtin-commit.c", because it is
+     not about fixing internal implementation of that file, but
+     about the end-user experience interacting with the command.
+     It also makes it clear that it is a fix by saying that we
+     failed to exit with non-zero status code upon some failure.
+
+ (2) The body of the commit log message is primarily to help
+     people who look at this particular commit 6 months down the
+     road to see why things got there that way.  
+
+     Reason behind the logic in the code _after_ the change can
+     be left in in-code comments.  The reason behind the change
+     itself (why the logic behind the code _before_ the change
+     was faulty or insufficient, and the logic behind the new
+     code is better) is not captured well in such a comment (and
+     we do not want to clutter the code comments with a long "in
+     ancient versions we used to do this but then we updated it
+     to do that but now we do it this way instead." --- I made
+     that mistake earlier and I suspect some of the older source
+     files still have them).
+
+     The commit log message should describe why the change was
+     needed (e.g. "The earlier code assumed X because it knew Y
+     won't happen, but that is not the case anymore since commit
+     Z, so this code stops relying on that assumption and
+     implements the logic this way instead"), why the proposed
+     implementation was thought to be the best one to choose
+     (e.g. "We alternatively could do W and it may have some
+     performance edge, but this way the code is simpler and in
+     my benchmark with real life data I did not see significant
+     gain from the added complexity").
+
+     How the code was changed in this commit does not need to be
+     described; that can be seen in "git show $this_commit"
+     output easily.
+
+In this particular case, I think it is probably sufficient to
+briefly describe what "failure to commit the index", mentioned
+in the summary line, means.  For more complex fixes and
+enhancements, it would make a good log message to also describe
+what the plausible cases the updated codepath is triggered, from
+the point of view of the committer/author when making the commit
+(IOW, what scenarios the updated behaviour intends to handle),
+like you did in this version.
+
+Such a description will help the person who finds the change was
+faulty or insufficient 6 months down the road by allowing him to
+say "Aha, the change considered these cases but forgot to
+consider this case, and missed the fact that this part of the
+code needs to work differently in that particular case" while
+making further fixes.  Otherwise the person will be left
+wondering if the omission of handing that case he encountered
+was deliberate or a simple oversight.  With the comment, he can
+make his fix with more confidence.
+
+In addition, at the end of the body, there is expected to be
+your S-o-b: line, so it will never be "1-liner".
+
+In any case, thanks for a fix.  Will apply.
