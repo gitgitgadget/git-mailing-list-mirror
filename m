@@ -1,88 +1,67 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Thu, 24 Jan 2008 12:37:26 +1300
-Message-ID: <46a038f90801231537j6899a1a2t57cd5af9449267f9@mail.gmail.com>
-References: <34103945-2078-4983-B409-2D01EF071A8B@sb.org>
-	 <20080123000841.GA22704@mit.edu>
-	 <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org>
-	 <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org>
-	 <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org>
-	 <20080123094052.GB6969@glandium.org> <20080123133802.GC7415@mit.edu>
-	 <alpine.LFD.1.00.0801230808440.1741@woody.linux-foundation.org>
-	 <98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Trying to get GIT running on SCO OpenServer
+Date: Wed, 23 Jan 2008 23:48:16 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801232346010.5731@racer.site>
+References: <20080123212613.GN2230@yugib.highrise.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Theodore Tso" <tytso@mit.edu>, "Mike Hommey" <mh@glandium.org>,
-	git@vger.kernel.org
-To: "Kevin Ballard" <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Thu Jan 24 00:38:10 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Aidan Van Dyk <aidan@highrise.ca>
+X-From: git-owner@vger.kernel.org Thu Jan 24 00:48:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHpAY-0006hz-2w
-	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 00:38:10 +0100
+	id 1JHpKy-0001so-SK
+	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 00:48:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751998AbYAWXh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 18:37:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751919AbYAWXh3
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 18:37:29 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:16919 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751900AbYAWXh2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2008 18:37:28 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so202767ugc.16
-        for <git@vger.kernel.org>; Wed, 23 Jan 2008 15:37:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=h1px1zBsIi2H83b1DkXWxHPnLhKnlvAh2t3kJZB3GDE=;
-        b=pm6M9Ay4mcpL01CwdD7xpxboLaB9tBl9sUxKq8oHoPchuVlLbOvrAHQ6aj5KRvn7PyEN9QxMrLJW+ex/VvO0n5rZDn5bkInS10OchWqj847i6sVrCQj5jceE3s6aqixDfpIUk/BCbu771YkHgEu4dXui/LaT5Sn1bIfrmYPxVAQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=rU8cOEndXwpFju/mkQrRrGXADa724x5KzrjuRnsrKRQA1hA1jzv6KwflOO9YWIyW2sXb9eYPN+ZMYsWaqTh2+98fWoL+fBLyUZAzBBDiEKHtOsdM+fFQDGL1Okk6Z93B2KPUqdBxZkZ+XGQdQj6J3ar/V7QSDg7PAa7b2t0UR/A=
-Received: by 10.66.217.20 with SMTP id p20mr1526503ugg.51.1201131446499;
-        Wed, 23 Jan 2008 15:37:26 -0800 (PST)
-Received: by 10.66.252.2 with HTTP; Wed, 23 Jan 2008 15:37:26 -0800 (PST)
-In-Reply-To: <98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org>
-Content-Disposition: inline
+	id S1751754AbYAWXs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 18:48:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751900AbYAWXs0
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 18:48:26 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41891 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751691AbYAWXsZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2008 18:48:25 -0500
+Received: (qmail invoked by alias); 23 Jan 2008 23:48:23 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp009) with SMTP; 24 Jan 2008 00:48:23 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19yOAJ6Evhy8M0JWqT9vvvrXQo3DSYM270uQmEN2t
+	xdQW7IwTI7sDHB
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080123212613.GN2230@yugib.highrise.ca>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71576>
 
-On Jan 24, 2008 6:19 AM, Kevin Ballard <kevin@sb.org> wrote:
-> I don't get why you're still calling it corruption
+Hi,
 
-Because in a modern Internet-aware world, whoever designs a FS needs
-to acknowledge that they will need to store files from other systems
-that have other assumptions. That is, if they want to interoperate.
+On Wed, 23 Jan 2008, Aidan Van Dyk wrote:
 
-As you noted not long ago, it is a serious problem if an HFS+
-partition is shared over NFS. If you look at all the apps that have
-problems with this aspect of HFS+ , they are all apps that transfer
-files over the network over diverse protocols. That's why it's a
-problem with git, because the files may be coming from a different
-machine, running any arbitrary OS that git supports.
+> I know - openserver, yuch, bla bla bla... Not my choice, but sometimes 
+> we have to do things we don't like...
 
-In such scenario, can you understand why everyone is saying that HFS+
-and the VFS should not mangle names, even if it makes sense to some
-use cases under OSX? And do you understand why the same applies to
-git, being a network-sharing-oriented app?
+Hehe.  They say: "de mortuis nil nisi bene".
 
-So -- if OSX was doing things to make it easier for users to find
-matching files at the Finder level, that'd be _fine_. But the FS has
-to deal with a lot more variety than that. So this is a bad design
-decision -- perhaps less obvious under OS8/9, but completely
-disastrous with a network OS such as OSX. Call it "different" if you
-want, but that's a euphemism for "wrong".
+>    snprintf (vsnprintf) behaves like sprintf (vsprintf), except that no
+>    more than maxsize characters are placed into the array, including the
+>    terminating null character. If more than maxsize characters were
+>    requested, the output array will contain exactly maxsize characters,
+>    with a null character being the last (when maxsize is nonzero); a
+>    negative value is returned.
 
-cheers,
+FWIW we had the same problem in MinGW, and Hannes Sixt solved it:
 
+http://repo.or.cz/w/git/mingw/j6t.git?a=commitdiff;h=b8e84a68f01a2386b2071e1bdc8e24de809a3f6d
 
+That might give you an idea how to solve the issue.  Maybe you even make a 
+git patch out of it?  With a Makefile variable BROKEN_SNPRINTF=YesPlease, 
+maybe?
 
-m
+Hth,
+Dscho
