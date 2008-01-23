@@ -1,146 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-commit: exit non-zero if we fail to commit the index
-Date: Wed, 23 Jan 2008 12:01:03 -0800
-Message-ID: <7vzluwgvls.fsf@gitster.siamese.dyndns.org>
-References: <7vfxwpqvfg.fsf@gitster.siamese.dyndns.org>
-	<47977792.5080001@nrlssc.navy.mil>
+From: "Jay Soffian" <jaysoffian@gmail.com>
+Subject: Re: git on MacOSX and files with decomposed utf-8 file names
+Date: Wed, 23 Jan 2008 15:18:33 -0500
+Message-ID: <76718490801231218i53c19e22lda34f2eec88627f8@mail.gmail.com>
+References: <34103945-2078-4983-B409-2D01EF071A8B@sb.org>
+	 <20080123000841.GA22704@mit.edu>
+	 <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org>
+	 <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org>
+	 <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org>
+	 <20080123094052.GB6969@glandium.org> <20080123133802.GC7415@mit.edu>
+	 <alpine.LFD.1.00.0801230808440.1741@woody.linux-foundation.org>
+	 <98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Jan 23 21:01:59 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Theodore Tso" <tytso@mit.edu>, "Mike Hommey" <mh@glandium.org>,
+	git@vger.kernel.org
+To: "Kevin Ballard" <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Wed Jan 23 21:19:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHlnC-0001Gj-I9
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 21:01:50 +0100
+	id 1JHm42-0000dW-9f
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 21:19:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751677AbYAWUBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 15:01:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751761AbYAWUBU
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 15:01:20 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36469 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751583AbYAWUBT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2008 15:01:19 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8482F3C51;
-	Wed, 23 Jan 2008 15:01:16 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6925D3C4F;
-	Wed, 23 Jan 2008 15:01:11 -0500 (EST)
-In-Reply-To: <47977792.5080001@nrlssc.navy.mil> (Brandon Casey's message of
-	"Wed, 23 Jan 2008 11:21:22 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751858AbYAWUSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 15:18:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751809AbYAWUSg
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 15:18:36 -0500
+Received: from wa-out-1112.google.com ([209.85.146.182]:21527 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751307AbYAWUSf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2008 15:18:35 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so5249322wah.23
+        for <git@vger.kernel.org>; Wed, 23 Jan 2008 12:18:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=OfxOqvn6Z4ZvxnIrq5B6MYLJPgxx74aILy5RGd92v2A=;
+        b=fI8zvxW1wPmG0Ii8fRdKAKXK0eBrt5psn0blDve43n9INd5toDMPpzMoQOBtJQjSXCEqN7mNMPq2ZC7reYFXzLGzc5rJi5ICepE9npwoOZCSQLgyHQTv8kmIO6uVS+J0tUlXg7dKV3Ji2KundlxXb9HKZTHU9uUncul3KIZypBg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bcrzXyFvL6Udcd86jNFZ4K5REiXkMq8XYBRftODpMK6yL8UBNZPP7NxUKsm+PR7vy3lz51LbMDM8QcSkhuFb5vWioCp+pcgIu03fZrHY/6PTo2ZXAdqfpVXl1ke9uc+WoeqPL8xhCkl/G8BSWYfEQKGDhV4uG4c2E3xMKhXCAsA=
+Received: by 10.114.181.1 with SMTP id d1mr511799waf.10.1201119513357;
+        Wed, 23 Jan 2008 12:18:33 -0800 (PST)
+Received: by 10.114.14.17 with HTTP; Wed, 23 Jan 2008 12:18:33 -0800 (PST)
+In-Reply-To: <98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71567>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
-
-> In certain rare cases, the creation of the commit object
-> and update of HEAD can succeed, but then installing the
-> updated index will fail. This is most likely caused by a
-> full disk or exceeded disk quota. When this happens the
-> new index file will be removed, and the repository will
-> be left with the original now-out-of-sync index. The
-> user can recover with a "git reset HEAD" once the disk
-> space issue is resolved.
+On 1/23/08, Kevin Ballard <kevin@sb.org> wrote:
 >
-> We should detect this failure and offer the user some
-> helpful guidance.
->
-> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
-> ---
+> I don't get why you're still calling it corruption when, on an HFS+
+> system, NFD-encoding is correct. It would be corruption for HFS+ to
+> write anything else but NFD.
 
-Thanks, looks much better, especially with S-o-b: line.
+How about this: it's lossy. It's lossy in a similar sense that TIFF ->
+JPEG -> TIFF doesn't give you back exactly the same bytes, even though
+(modulo the compression level) the two TIFFs might be visually
+indistinguishable.
 
->> Brandon Casey <casey@nrlssc.navy.mil> writes:
->>> If you're interested, here's a patch.
->> 
->> Looks Ok from a quick glance.  I am mired at day job this week
->> so it may take a while for me to come up with a commit log
->> message though.
->
-> Oh, I had /ASS/u/ME/d this was simple enough that the one-liner
-> was sufficient.
+You seem to have an issue with calling this "corruption", but to most
+of us, if you have a system where you don't get back *exactly the same
+data* that you put in, then the data has been corrupted.
 
-I do not get the funny punctuation, sorry.
+Now, please stop trolling this point, agree to disagree, and either
+contribute some code or be quiet and allow others to make progress.
 
-Anyway, here is a bit more detailed reason behind my request.
-
- (1) The subject is primarily to help people who look at
-     shortlog (or "gitk") to get the overview of recent changes,
-     or in general "changes within a given range".
-
-     Readers are most interested in what areas are affected
-     (e.g. the command from the end-user's point of view, or the
-     internal implementation) and what the nature of the change
-     was (e.g. bugfix vs enhancement).  To help them, the
-     Subject: line summarizes "what the change is about".
-
-     Your Subject: line is _perfect_.  It identifies the area as
-     "git-commit" instead of "builtin-commit.c", because it is
-     not about fixing internal implementation of that file, but
-     about the end-user experience interacting with the command.
-     It also makes it clear that it is a fix by saying that we
-     failed to exit with non-zero status code upon some failure.
-
- (2) The body of the commit log message is primarily to help
-     people who look at this particular commit 6 months down the
-     road to see why things got there that way.  
-
-     Reason behind the logic in the code _after_ the change can
-     be left in in-code comments.  The reason behind the change
-     itself (why the logic behind the code _before_ the change
-     was faulty or insufficient, and the logic behind the new
-     code is better) is not captured well in such a comment (and
-     we do not want to clutter the code comments with a long "in
-     ancient versions we used to do this but then we updated it
-     to do that but now we do it this way instead." --- I made
-     that mistake earlier and I suspect some of the older source
-     files still have them).
-
-     The commit log message should describe why the change was
-     needed (e.g. "The earlier code assumed X because it knew Y
-     won't happen, but that is not the case anymore since commit
-     Z, so this code stops relying on that assumption and
-     implements the logic this way instead"), why the proposed
-     implementation was thought to be the best one to choose
-     (e.g. "We alternatively could do W and it may have some
-     performance edge, but this way the code is simpler and in
-     my benchmark with real life data I did not see significant
-     gain from the added complexity").
-
-     How the code was changed in this commit does not need to be
-     described; that can be seen in "git show $this_commit"
-     output easily.
-
-In this particular case, I think it is probably sufficient to
-briefly describe what "failure to commit the index", mentioned
-in the summary line, means.  For more complex fixes and
-enhancements, it would make a good log message to also describe
-what the plausible cases the updated codepath is triggered, from
-the point of view of the committer/author when making the commit
-(IOW, what scenarios the updated behaviour intends to handle),
-like you did in this version.
-
-Such a description will help the person who finds the change was
-faulty or insufficient 6 months down the road by allowing him to
-say "Aha, the change considered these cases but forgot to
-consider this case, and missed the fact that this part of the
-code needs to work differently in that particular case" while
-making further fixes.  Otherwise the person will be left
-wondering if the omission of handing that case he encountered
-was deliberate or a simple oversight.  With the comment, he can
-make his fix with more confidence.
-
-In addition, at the end of the body, there is expected to be
-your S-o-b: line, so it will never be "1-liner".
-
-In any case, thanks for a fix.  Will apply.
+j.
