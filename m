@@ -1,86 +1,112 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Wed, 23 Jan 2008 10:40:52 +0100
-Organization: glandium.org
-Message-ID: <20080123094052.GB6969@glandium.org>
-References: <alpine.LFD.1.00.0801211702050.2957@woody.linux-foundati!on.org> <34103945-2078-4983-B409-2D01EF071A8B@sb.org> <alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org> <E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org> <20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu> <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org> <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org> <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH] git-gui: Use gitattribute "encoding" for file content display
+Date: Wed, 23 Jan 2008 11:28:35 +0100
+Message-ID: <200801231128.36504.jnareb@gmail.com>
+References: <20080123054709.GA13166@spearce.org> <7v7ii1ozly.fsf@gitster.siamese.dyndns.org> <EFF72DA9-A717-44A1-9C5C-649D08BB7E96@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@MIT.EDU>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Wed Jan 23 10:41:34 2008
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Finn Arne Gangstad <finnag@pvv.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michele Ballabio <barra_cuda@katamail.com>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed Jan 23 11:29:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHc6p-0004S9-8u
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 10:41:27 +0100
+	id 1JHcrT-0002pi-98
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 11:29:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751134AbYAWJkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 04:40:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750972AbYAWJkz
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 04:40:55 -0500
-Received: from smtp23.orange.fr ([80.12.242.97]:56525 "EHLO smtp23.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750767AbYAWJky (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2008 04:40:54 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2311.orange.fr (SMTP Server) with ESMTP id AB44A7000126
-	for <git@vger.kernel.org>; Wed, 23 Jan 2008 10:40:52 +0100 (CET)
-Received: from vaio.glandium.org (APuteaux-153-1-83-190.w86-205.abo.wanadoo.fr [86.205.41.190])
-	by mwinf2311.orange.fr (SMTP Server) with ESMTP id 835687000096;
-	Wed, 23 Jan 2008 10:40:52 +0100 (CET)
-X-ME-UUID: 20080123094052538.835687000096@mwinf2311.orange.fr
-Received: from mh by vaio.glandium.org with local (Exim 4.63)
-	(envelope-from <mh@glandium.org>)
-	id 1JHc6G-0001wY-3N; Wed, 23 Jan 2008 10:40:52 +0100
+	id S1752057AbYAWK2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 05:28:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752067AbYAWK2w
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 05:28:52 -0500
+Received: from fk-out-0910.google.com ([209.85.128.190]:18831 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752050AbYAWK2v (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2008 05:28:51 -0500
+Received: by fk-out-0910.google.com with SMTP id z23so2090532fkz.5
+        for <git@vger.kernel.org>; Wed, 23 Jan 2008 02:28:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=2qdPDIIGdn3vkdqOKQ4odNYbw31OX4WJ/0cRwhECako=;
+        b=FxdmOcZca+cAadjYIjAMvUplQiieGSbobw53w95gBuH6Jol6cRhv3zur6i28U28b12psvlSp4AgAPhlpzhfo1QR1o3o14VX+XzFJvcMQA98mlcWjz4BQqdwM9V/hvSIlJ8G+jV+/z25VmojhTac4WbIdW/9gjRpk6vmuQzeiA8w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=pB5NUlaH9OSn7dIWbYgCLFN5HkjAjcFeXf/JOFXurZ/7a04q2erOJDllaAOs2zox4/BpX5b4BA3z6e9h+VIZqzOQwCSherwkzthQvlzhJlVjWlI/yegsBfqoy/enOZQBb/siHsIVpwT7UMH4lT7WHf/XdlqP9U/gqCwN5OpvjzA=
+Received: by 10.82.186.5 with SMTP id j5mr16025669buf.12.1201084128841;
+        Wed, 23 Jan 2008 02:28:48 -0800 (PST)
+Received: from ?192.168.1.10? ( [83.8.202.8])
+        by mx.google.com with ESMTPS id 13sm13625103fks.8.2008.01.23.02.28.45
+        (version=SSLv3 cipher=OTHER);
+        Wed, 23 Jan 2008 02:28:47 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <EFF72DA9-A717-44A1-9C5C-649D08BB7E96@zib.de>
 Content-Disposition: inline
-In-Reply-To: <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: mh@glandium.org
-X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71530>
 
-On Wed, Jan 23, 2008 at 03:15:02AM -0500, Kevin Ballard <kevin@sb.org> wrote:
-> "In Mac OS X,  SMB, MSDOS, UDF, ISO 9660 (Joliet), NTFS and ZFS file  
-> systems all store in one form -- NFC.  We store in NFC since that what  
-> is expected for these files systems."
-
-That's the point. It's stored in NFC, but what applications see is NFD.
-
-> >- Likewise for Samba shares.
+On Wed. 23 Jan 2008, Steffen Prohaska wrote:
+> On Jan 23, 2008, at 6:55 AM, Junio C Hamano wrote:
+>> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>>
+>>> git-gui: Use gitattribute "encoding" for file content display
+>>>
+>>> Most folks using git-gui on internationalized files have complained
+>>> that it doesn't recognize UTF-8 correctly.  In the past we have just
+>>> ignored the problem and showed the file contents as binary/US-ASCII,
+>>> which is wrong no matter how you look at it.
+>>
+>> Hmmm.
+>>
+>> At least for now in 1.5.4, I'd prefer the way gitk shows UTF-8
+>> (if I recall correctly latin-1 or other legacy encoding, as long
+>> as LANG/LC_* is given appropriately, as well) contents without
+>> per-path configuration without introducing new attributes.
 > 
-> See above.
-> 
-> >- When I had my problems with iso9660 rockridge volumes using NFC (you
-> > can create that just fine with mkisofs), the volume is mounted  
-> >without
-> > normalisation, i.e. if you get to a shell and want to access files,
-> > you must use NFC, but at least the Finder does transliteration at  
-> >some
-> > stage, because going into the mount point and opening some files fail
-> > because it's trying to open the file with the name transliterated to
-> > NFD. I just hope the same doesn't happen with other filesystems.
-> 
-> Can you produce a reproducible set of steps for this? Because the  
-> Finder shouldn't be doing any of this work on its own, all the  
-> normalization stuff happens directly in HFS+.
+> Shouldn't we first try harder to get things right without adding
+> an attribute?  Maybe we could continue a good tradition and look
+> at the content of the first: we could first look for hints in the
+> file about the encoding.  XML and many text files contain such
+> hints already to help editors.  For example,  Python source can
+> explicitly contain the encoding [1]; and I guess there are many
+> other examples.
 
-Simple : on a Linux host, create files with NFC names, and create an iso
-image with mkisofs, with rockridge but no joliet. Burn this to a disc, and
-insert the disc in your OSX host, and try to open files from the finder.
-Interestingly, IIRC, Finder is able to copy the files, though.
+For example LaTeX files either use inputenc package to set encoding
+(e.g. \usepackage[latin2]{inputenc}) or use magic first line to
+specify TCX (TeX character translation) file 
+(e.g. %& -translate-file=il2-t1).
 
-As a bonus, try the same with an iso volume name in NFC, it's even better :
-the created mount point is NFD, but it tries to mount on the name in NFC and
-fails. And then you just can't eject the CD anymore.
+Emacs encourages to use file variables, either in the form of magic
+first line, or file variables at the end of file; I think the same
+is true for Vim.
 
-Mike
+
+I'd like then for it to be at least as configurable as diff.*.funcname 
+is for diff.
+
+> If we don't find a direct hint, we could have 
+> some magic auto-detection similar to what we do for autocrlf.
+
+We can at least try to and check for UTF-16 magic first two bytes, and 
+detect if we have character which is invalid in UTF-8 (for performance 
+I guess checking only beginning of file)... 
+
+> As a fallback the user could specify a default encoding.  But only
+> as a last resort, I'd use explicit attributes.
+
+...and then falling back to fallback encoding, like gitweb does.
+
+-- 
+Jakub Narebski
+Poland
