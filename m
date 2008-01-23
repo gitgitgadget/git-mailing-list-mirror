@@ -1,74 +1,79 @@
-From: David Kastrup <dak@gnu.org>
+From: "Jonathan del Strother" <maillist@steelskies.com>
 Subject: Re: git on MacOSX and files with decomposed utf-8 file names
-Date: Wed, 23 Jan 2008 09:45:30 +0100
-Message-ID: <85tzl5udzp.fsf@lola.goethe.zz>
-References: <alpine.LFD.1.00.0!801211407130.2957@woody.linux-foundation.org>
-	<0CA4DF3F-1B64-4F62-8794-6F82C21BD068@sb.org>
-	<alpine.LFD.1.00.0801211538590.2957@woody.linux-foundation.org>
-	<F663E088-BCAD-4C5D-89D5-EAF97A29C1DE@sb.org>
-	<alpine.LFD.1.00.0801211656130.2957@woody.linux-foundation.org>
-	<alpine.LFD.1.00.0801211702050.2957@woody.linux-foundati!on.org>
-	<34103945-2078-4983-B409-2D01EF071A8B@sb.org>
-	<alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org>
-	<E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org>
-	<20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu>
-	<E6F76F93-24C9-4D10-813C-770A9C3A9828@sb.org>
+Date: Wed, 23 Jan 2008 09:02:43 +0000
+Message-ID: <57518fd10801230102n4f430219p2701c7561f184569@mail.gmail.com>
+References: <alpine.LFD.1.00.0801211702050.2957@woody.linux-foundati!on.org>
+	 <alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org>
+	 <E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org>
+	 <20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu>
+	 <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org>
+	 <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org>
+	 <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org>
+	 <20080123084345.GN14871@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@MIT.EDU>, git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Wed Jan 23 09:46:14 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Kevin Ballard" <kevin@sb.org>, "Mike Hommey" <mh@glandium.org>,
+	"Theodore Tso" <tytso@mit.edu>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Dmitry Potapov" <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 23 10:03:34 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHbFL-0003ps-0U
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 09:46:11 +0100
+	id 1JHbWA-0000B6-21
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 10:03:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751849AbYAWIpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 03:45:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751824AbYAWIpg
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 03:45:36 -0500
-Received: from mail-in-07.arcor-online.net ([151.189.21.47]:37401 "EHLO
-	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751175AbYAWIpf (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Jan 2008 03:45:35 -0500
-Received: from mail-in-13-z2.arcor-online.net (mail-in-13-z2.arcor-online.net [151.189.8.30])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id 78DE324AE78;
-	Wed, 23 Jan 2008 09:45:33 +0100 (CET)
-Received: from mail-in-04.arcor-online.net (mail-in-04.arcor-online.net [151.189.21.44])
-	by mail-in-13-z2.arcor-online.net (Postfix) with ESMTP id 520BF1B8E57;
-	Wed, 23 Jan 2008 09:45:33 +0100 (CET)
-Received: from lola.goethe.zz (dslb-084-061-046-029.pools.arcor-ip.net [84.61.46.29])
-	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 12F731BF3D5;
-	Wed, 23 Jan 2008 09:45:33 +0100 (CET)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 8D9B41C3D4E5; Wed, 23 Jan 2008 09:45:29 +0100 (CET)
-In-Reply-To: <E6F76F93-24C9-4D10-813C-770A9C3A9828@sb.org> (Kevin Ballard's
-	message of "Tue, 22 Jan 2008 19:38:04 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.92/5528/Wed Jan 23 07:59:37 2008 on mail-in-04.arcor-online.net
-X-Virus-Status: Clean
+	id S1751061AbYAWJCr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jan 2008 04:02:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbYAWJCq
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 04:02:46 -0500
+Received: from py-out-1112.google.com ([64.233.166.180]:58403 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750942AbYAWJCo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Jan 2008 04:02:44 -0500
+Received: by py-out-1112.google.com with SMTP id u52so4055527pyb.10
+        for <git@vger.kernel.org>; Wed, 23 Jan 2008 01:02:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=SplK1uDbYYaO2j8YBuSjLqRZ6XkcvdyGxF2nR7Cu+uA=;
+        b=gDKs5wTO0BuJtEK+2zqILgsfsV95vTHllSQA35exGDLVwt+asmqz3w75zQ34ftcD4RNR+4+u+OlWbPVLplC8n6FXSV+G23mvqeUauKBwpTOUJyOGwsfS3rj5/y8vblWodh6RGYpeUK67hCq5cCn3Lbjqqmk7h6eHbzQPd0odQmg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=hR4VtMv9CW8j5dmsAhQ/NEDgeqJ8P2MFtquwCtNKZbOB/tLOewNCwepV17H7VFRmCBWLJ0b6GR5VDdxLw057EcprplnxmbLiqE1HVTNUZfP1j6X+RlonWAldgj56WxpyALQbaY7fC63ecSzFu/yJFfuyHhL8HwZqoIRiPLcttfI=
+Received: by 10.140.164.1 with SMTP id m1mr6144059rve.266.1201078963048;
+        Wed, 23 Jan 2008 01:02:43 -0800 (PST)
+Received: by 10.141.5.2 with HTTP; Wed, 23 Jan 2008 01:02:43 -0800 (PST)
+In-Reply-To: <20080123084345.GN14871@dpotapov.dyndns.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: f7075fa9c5c5161a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71524>
 
-Kevin Ballard <kevin@sb.org> writes:
+On Jan 23, 2008 8:43 AM, Dmitry Potapov <dpotapov@gmail.com> wrote:
+> On Wed, Jan 23, 2008 at 03:15:02AM -0500, Kevin Ballard wrote:
+> >
+> > Entirely possible, though renormalizing file contents seems a bit l=
+ess
+> > likely. I will point out that the text input system in OS X seems t=
+o
+> > default to producing NFC (at least, typing `echo 'M=E4rchen' | xxd`=
+ in
+> > the Terminal shows that the input string there is NFC).
+>
+> I wonder what happens if you do this:
+>
+> touch 'M=E4rchen'
+> echo M*rchen | xxd -g1
+>
+> Will that produce NFC or NFD?
+>
 
-> I just finished talking to one of the HFS+ developers, so I suspect I
-> know a lot more on this subject now than you do.
-
-Uh, Ted is a filesystem developer.  I can't count the hours I spent
-talking with my father, a theoretical physicist, but that does not make
-me qualified to consider myself a better authority on physics than a
-sub-average actual grad student of the matter.
-
-If you don't manage to check your arrogance eventually, you'll be
-causing more damage to your cause than if you just shut up.  You make
-abundantly clear that you don't understand the _implications_ of the
-details you may or not may happen to find out.
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+0000000: 4d 61 cc 88 72 63 68 65 6e 0a                    Ma..rchen.
