@@ -1,56 +1,73 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 2/2] read-cache.c: fix timestamp comparison
-Date: Tue, 22 Jan 2008 19:53:56 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801221953030.1741@woody.linux-foundation.org>
-References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com> <7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org> <7vr6gb3nv1.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801202114580.2957@woody.linux-foundation.org> <7vd4rv3ds5.fsf@gitster.siamese.dyndns.org>
- <7vtzl71x1c.fsf@gitster.siamese.dyndns.org> <7vprvv1wnu.fsf@gitster.siamese.dyndns.org> <7vlk6j1wjj.fsf@gitster.siamese.dyndns.org> <7vhch71vvb.fsf@gitster.siamese.dyndns.org> <7v8x2j1sul.fsf@gitster.siamese.dyndns.org> <7vzluzzhud.fsf_-_@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0801211022350.2957@woody.linux-foundation.org> <alpine.LFD.1.00.0801211104590.2957@woody.linux-foundation.org> <alpine.LFD.1.00.0801211120350.2957@woody.linux-foundation.org> <7vabmyykvg.fsf@gitster.siamese.dyndns.org>
- <alpine.LFD.1.00.0801211242330.2957@woody.linux-foundation.org> <alpine.LFD.1.00.0801221355110.1741@woody.linux-foundation.org> <7vir1lp646.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: What's not in 'master', and likely not to be until 1.5.4
+Date: Tue, 22 Jan 2008 23:44:28 -0500
+Message-ID: <20080123044428.GK24004@spearce.org>
+References: <7v4pdislrf.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7vir1xmazm.fsf@gitster.siamese.dyndns.org> <7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org> <7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org> <47908CAF.90101@viscovery.net> <alpine.LSU.1.00.0801181948060.5731@racer.site> <alpine.LSU.1.00.0801182055340.5731@racer.site> <20080121044632.GH24004@spearce.org> <alpine.LSU.1.00.0801211034040.5731@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 23 04:55:03 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 23 05:45:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHWha-00087D-Oh
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 04:55:03 +0100
+	id 1JHXUB-00018U-9W
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 05:45:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753188AbYAWDyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2008 22:54:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753044AbYAWDyc
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 22:54:32 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:57746 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753119AbYAWDyb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Jan 2008 22:54:31 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0N3rwki016507
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 22 Jan 2008 19:53:59 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0N3ruY8022271;
-	Tue, 22 Jan 2008 19:53:57 -0800
-In-Reply-To: <7vir1lp646.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-3.224 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1753097AbYAWEoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 23:44:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753135AbYAWEoe
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 23:44:34 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:43554 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752357AbYAWEod (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2008 23:44:33 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JHXTF-000350-Nj; Tue, 22 Jan 2008 23:44:17 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3478E20FBAE; Tue, 22 Jan 2008 23:44:28 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LSU.1.00.0801211034040.5731@racer.site>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71509>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Note: There might be yet a better way.  Instead of trying each and every 
+> time, we could detect the presence of msgfmt with something like this:
+> 
+> +ifeq $(shell msgfmt2 2>/dev/null >/dev/null; echo $?) = 127
+> +	MSGFMT = $(TCL_PATH) po/po2msg.sh
+> +endif
 
+I like it.  I'm applying this diff (which I tested) to git-gui:
 
-On Tue, 22 Jan 2008, Junio C Hamano wrote:
->
-> read-cache.c: fix a couple more CE_REMOVE conversion
+diff --git a/Makefile b/Makefile
+index 1baf4b0..5f1023e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -198,6 +198,9 @@ ifdef NO_MSGFMT
+ 	MSGFMT ?= $(TCL_PATH) po/po2msg.sh
+ else
+ 	MSGFMT ?= msgfmt
++	ifeq ($(shell $(MSGFMT) >/dev/null 2>&1 || echo $$?),127)
++		MSGFMT := $(TCL_PATH) po/po2msg.sh
++	endif
+ endif
+ 
+ msgsdir     = $(gg_libdir)/msgs
 
-Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
-
-			Linus
+-- 
+Shawn.
