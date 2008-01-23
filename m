@@ -1,97 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git filter-branch should run git gc --auto
-Date: Wed, 23 Jan 2008 13:00:37 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801231256400.5731@racer.site>
-References: <1200783050.5724.196.camel@brick> <20080120033737.GA7767@soma> <20080120093436.GA10924@diana.vm.bytemark.co.uk> <7vlk6k8fyp.fsf@gitster.siamese.dyndns.org> <20080121224818.GA8872@untitled> <7vr6gawvkt.fsf@gitster.siamese.dyndns.org>
- <20080122003911.GA16453@hand.yhbt.net> <7vtzl6vd7v.fsf@gitster.siamese.dyndns.org> <BE604744-0D26-4A39-85CE-B5C0C8C00F9E@sb.org> <7v1w89qmw3.fsf@gitster.siamese.dyndns.org> <20080123064430.GD16297@glandium.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: I'm a total push-over..
+Date: Wed, 23 Jan 2008 10:31:11 +0100
+Message-ID: <4797095F.9020602@op5.se>
+References: <alpine.LFD.1.00.0801221515350.1741@woody.linux-foundation.org> <4796FBB6.9080609@op5.se> <20080123091558.GP14871@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Kevin Ballard <kevin@sb.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Wed Jan 23 14:01:16 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 23 14:11:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHfEB-0002Ks-KM
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 14:01:16 +0100
+	id 1JHfNZ-0005d2-2i
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 14:10:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752159AbYAWNAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 08:00:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751605AbYAWNAp
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 08:00:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51507 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751959AbYAWNAo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2008 08:00:44 -0500
-Received: (qmail invoked by alias); 23 Jan 2008 13:00:43 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp018) with SMTP; 23 Jan 2008 14:00:43 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/xnXdV1tTxYYoOVy1qE107QxFcbLkjPAcOXlYOND
-	AmN+2VKll5rm/3
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080123064430.GD16297@glandium.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751357AbYAWNKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 08:10:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbYAWNKZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 08:10:25 -0500
+Received: from mail.op5.se ([193.201.96.20]:41978 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751009AbYAWNKY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2008 08:10:24 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 7FB661F08056;
+	Wed, 23 Jan 2008 14:10:22 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -3.665
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.665 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=0.691, BAYES_00=-2.599,
+	DATE_IN_PAST_03_06=0.044]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KL0q7qqBC3DX; Wed, 23 Jan 2008 14:10:20 +0100 (CET)
+Received: from clix.int.op5.se (unknown [192.168.1.27])
+	by mail.op5.se (Postfix) with ESMTP id A9BE81F0805B;
+	Wed, 23 Jan 2008 14:10:08 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <20080123091558.GP14871@dpotapov.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71538>
 
-Hi,
-
-On Wed, 23 Jan 2008, Mike Hommey wrote:
-
-> On Tue, Jan 22, 2008 at 06:46:52PM -0800, Junio C Hamano wrote:
-> > Kevin Ballard <kevin@sb.org> writes:
-> > 
-> > > I just glanced at git-filter-branch.sh (and I must say I was 
-> > > incredibly surprised to find out it was a shell script) and it seems 
-> > > it never runs git-gc or git-repack. Doesn't that end up with the 
-> > > same problems as git-svn sans git-repack when filtering a large 
-> > > number of commits? I was just thinking, if I were to 
-> > > git-filter-branch on my massive repo (in fact, the same repo that 
-> > > started this thread, with over 33000 commits in the upstream svn 
-> > > repo), even if I just do something as simple as change the commit 
-> > > msg wont I end up with thousands of unreachable objects? I shudder 
-> > > to think how many unreachable objects I would have if I pruned the 
-> > > entire dports directory off of the tree.
-> > >
-> > > Am I missing something, or does git-filter-branch really not do any 
-> > > garbage collection? I tried reading the source, but complex bash 
-> > > scripts are almost as bad as perl in terms of readability.
-> > 
-> > Theoretically yes, and it largely depends on what you do, but 
-> > filter-branch goes over the objects that already exists in your 
-> > repository, and hopefully you won't be rewriting majority of them.
-> > 
-> > So the impact of not repacking is probably much less painful in 
-> > practice.
-> > 
-> > But again as I said, it largely depends on what you do in your filter.  
-> > If you are upcasing (or convert to NFD ;-)) the contents of all of 
-> > your blob objects, you would certainly want to repack every once in a 
-> > while.
+Dmitry Potapov wrote:
+> On Wed, Jan 23, 2008 at 09:32:54AM +0100, Andreas Ericsson wrote:
+>> The FNV hash would be better (pasted below), but I doubt
+>> anyone will ever care, and there will be larger differences
+>> between architectures with this one than the lt_git hash (well,
+>> a function's gotta have a name).
 > 
-> I wonder if it wouldn't be possible to have filter-branch use 
-> fast-import, so that it would create a pack instead of a lot of loose 
-> objects.
+> Actually, Bob Jenkins' lookup3 hash is twice faster in my tests
+> than FNV, and also it is much less likely to have any collision.
+> 
 
-Not really; the filters are very much tuned to the index-modification and 
-commit process.
+>From http://burtleburtle.net/bob/hash/doobs.html
+---
+FNV Hash
 
-And I doubt that the gc --auto would help much; git-filter-branch creates 
-gazillions of files, and that is likely to bring performance down.  If, 
-that is, you choose _not_ to heed the comment in 
-Documentation/git-filter-branch.txt lines 44-46:
+I need to fill this in. Search the web for FNV hash. It's faster than my hash on Intel (because Intel has fast multiplication), but slower on most other platforms. Preliminary tests suggested it has decent distributions. 
+---
 
-	Note that since this operation is extensively I/O expensive, it 
-	might be a good idea to redirect the temporary directory off-disk 
-	with the '-d' option, e.g. on tmpfs.  Reportedly the speedup is 
-	very noticeable.
+My tests ran on Intel. I also noticed I had a few hashes commented out when
+doing the test, one of them being Paul Hsie's. For some reason, Jenkin's and
+Hsie's didn't perform well for me last time I used the comparison thing (I
+did a more thorough job back then, with tests running for several minutes
+per hash and table-size, so I commented out the poor candidates).
 
-Ciao,
-Dscho
+I still believe that for this very simple case, the lookup3.c case is not
+very practical, as the code is that much more complicated, which was my
+main point with posting the comparison. Iow, not "switch to this hash,
+because it's better", but rather "the hash is not as bad as you think and
+will probably work well for all practical purposes".
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
