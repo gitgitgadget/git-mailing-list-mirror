@@ -1,69 +1,62 @@
-From: "Mark Desnoyer" <mdesnoyer@gmail.com>
-Subject: Re: Files not deleted when merging after a rename
-Date: Tue, 22 Jan 2008 21:08:21 -0500
-Message-ID: <d997e2110801221808r22f19ec9qc1c452e13c7698df@mail.gmail.com>
-References: <d997e2110801211145o5fe0a1bbpb1e32dd71b70568e@mail.gmail.com>
-	 <20080121212015.GB5263@steel.home>
-	 <d997e2110801211345x6ee35d48s2038fbd773149110@mail.gmail.com>
-	 <20080122072825.GA2971@steel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: I'm a total push-over..
+Date: Tue, 22 Jan 2008 18:23:23 -0800
+Message-ID: <7vabmxqnz8.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.00.0801221515350.1741@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 23 03:08:55 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jan 23 03:24:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHV2q-00031q-Su
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 03:08:53 +0100
+	id 1JHVHe-0006X1-Dt
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 03:24:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752057AbYAWCIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2008 21:08:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751897AbYAWCIX
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 21:08:23 -0500
-Received: from wa-out-1112.google.com ([209.85.146.181]:14976 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751858AbYAWCIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jan 2008 21:08:22 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so4746139wah.23
-        for <git@vger.kernel.org>; Tue, 22 Jan 2008 18:08:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=fMRjG64pKPPm6peRIDz8u/IzVEzM10qDLqQknY7hRZs=;
-        b=IPtbwZOQF3p/9yi3Gks45ZxTSYShZJdOgzgeRgXQP8/S+veAkF3ss22LcApPcXqwTeXtRUYXVHi2wpdt3dOfPjwpofKXUY3Qb/cIvyV1XJexZP6yTtMm77gsaV/axXCcmWLAyMMINTVoeyb1vZCED2+ZyC8nLApM72OwiFCiX28=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ROt60LvWnM8kPMNOPWkqFyZevT6WKIVhFnrzGKdSDH0kgPiS8RSwoy6+V7ywlSDYT515mFCNcUT7+9vl+Syq7DvYxPuvCheB55/27jdmt3Ml8/EJOXBqOe7DtcsownW3Wtib8kxhtem1DolHWXqig0mmBjiqNEh1BBWwXF9yltE=
-Received: by 10.114.121.1 with SMTP id t1mr6165108wac.67.1201054101494;
-        Tue, 22 Jan 2008 18:08:21 -0800 (PST)
-Received: by 10.114.174.11 with HTTP; Tue, 22 Jan 2008 18:08:21 -0800 (PST)
-In-Reply-To: <20080122072825.GA2971@steel.home>
-Content-Disposition: inline
+	id S1752492AbYAWCXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 21:23:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751897AbYAWCXk
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 21:23:40 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58656 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751761AbYAWCXj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2008 21:23:39 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 05D486896;
+	Tue, 22 Jan 2008 21:23:38 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BDFB6893;
+	Tue, 22 Jan 2008 21:23:35 -0500 (EST)
+In-Reply-To: <alpine.LFD.1.00.0801221515350.1741@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 22 Jan 2008 15:37:30 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71493>
 
-Definitely not Winblows. I try to avoid it even with a 10ft pole. I'm
-running Ubuntu 7.10.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Could you define "exclusively tracked files"? I'm not sure what you mean here.
+> Ok, here's an interesting patch based on the current 'next' (since it very 
+> intimately requires the new in-memory index format).
 
--Mark
+This is nice.  It does not do anything specific with HFS+ issues
+but aims for faster look-ups, which would help everybody.
 
-On Jan 22, 2008 2:28 AM, Alex Riesen <raa.lkml@gmail.com> wrote:
-> Mark Desnoyer, Mon, Jan 21, 2008 22:45:40 +0100:
-> > Alex,
-> >
-> > The directory did not have any untracked files in it. Looking a little
-> > more carefully, I realized that there were subdirectories in foo/bar/.
->
-> Were these subdirectories containing exclusively tracked files?
-> Or is it Winblows and some process was blocking the deletion?
->
->
+Two things I noticed (only two, not necessarily because you are
+good but mostly because I am still mired in day job and could
+not get enough uninterrupted minutes to read the patch ;-)):
+
+ - You might want to store the hash table (once computed) in the
+   index extension section, and lazily unpack the table the
+   first time index_name_exists() or set_index_entry() is called
+   on the given istate, instead of unpacking it immediately when
+   you read from the disk.  That way, ls-files does not have to
+   suffer at all.
+
+ - You would need to get rid of the table in discard_index().
