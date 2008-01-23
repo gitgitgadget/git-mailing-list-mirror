@@ -1,112 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH] git-gui: Use gitattribute "encoding" for file content display
-Date: Wed, 23 Jan 2008 11:28:35 +0100
-Message-ID: <200801231128.36504.jnareb@gmail.com>
-References: <20080123054709.GA13166@spearce.org> <7v7ii1ozly.fsf@gitster.siamese.dyndns.org> <EFF72DA9-A717-44A1-9C5C-649D08BB7E96@zib.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's not in 'master', and likely not to be until 1.5.4
+Date: Wed, 23 Jan 2008 11:12:36 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801231111310.5731@racer.site>
+References: <7v4pdislrf.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801132224540.8333@wbgn129.biozentrum.uni-wuerzburg.de> <7vir1xmazm.fsf@gitster.siamese.dyndns.org> <7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org> <7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org>
+ <47908CAF.90101@viscovery.net> <alpine.LSU.1.00.0801181948060.5731@racer.site> <alpine.LSU.1.00.0801182055340.5731@racer.site> <20080121044632.GH24004@spearce.org> <alpine.LSU.1.00.0801211034040.5731@racer.site> <20080123044428.GK24004@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Finn Arne Gangstad <finnag@pvv.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michele Ballabio <barra_cuda@katamail.com>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Wed Jan 23 11:29:40 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: paulus@samba.org, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Jan 23 12:13:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHcrT-0002pi-98
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 11:29:39 +0100
+	id 1JHdXh-0000UU-Gp
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 12:13:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752057AbYAWK2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 05:28:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752067AbYAWK2w
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 05:28:52 -0500
-Received: from fk-out-0910.google.com ([209.85.128.190]:18831 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752050AbYAWK2v (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2008 05:28:51 -0500
-Received: by fk-out-0910.google.com with SMTP id z23so2090532fkz.5
-        for <git@vger.kernel.org>; Wed, 23 Jan 2008 02:28:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=2qdPDIIGdn3vkdqOKQ4odNYbw31OX4WJ/0cRwhECako=;
-        b=FxdmOcZca+cAadjYIjAMvUplQiieGSbobw53w95gBuH6Jol6cRhv3zur6i28U28b12psvlSp4AgAPhlpzhfo1QR1o3o14VX+XzFJvcMQA98mlcWjz4BQqdwM9V/hvSIlJ8G+jV+/z25VmojhTac4WbIdW/9gjRpk6vmuQzeiA8w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=pB5NUlaH9OSn7dIWbYgCLFN5HkjAjcFeXf/JOFXurZ/7a04q2erOJDllaAOs2zox4/BpX5b4BA3z6e9h+VIZqzOQwCSherwkzthQvlzhJlVjWlI/yegsBfqoy/enOZQBb/siHsIVpwT7UMH4lT7WHf/XdlqP9U/gqCwN5OpvjzA=
-Received: by 10.82.186.5 with SMTP id j5mr16025669buf.12.1201084128841;
-        Wed, 23 Jan 2008 02:28:48 -0800 (PST)
-Received: from ?192.168.1.10? ( [83.8.202.8])
-        by mx.google.com with ESMTPS id 13sm13625103fks.8.2008.01.23.02.28.45
-        (version=SSLv3 cipher=OTHER);
-        Wed, 23 Jan 2008 02:28:47 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <EFF72DA9-A717-44A1-9C5C-649D08BB7E96@zib.de>
-Content-Disposition: inline
+	id S1752272AbYAWLMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 06:12:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752223AbYAWLMq
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 06:12:46 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37024 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752050AbYAWLMo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2008 06:12:44 -0500
+Received: (qmail invoked by alias); 23 Jan 2008 11:12:42 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp044) with SMTP; 23 Jan 2008 12:12:42 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+7fg1/kXK7cse8dHskiJxjUEa5u8n2I3XxhcQYIq
+	Z1HyzXZLpx/6eL
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20080123044428.GK24004@spearce.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71531>
 
-On Wed. 23 Jan 2008, Steffen Prohaska wrote:
-> On Jan 23, 2008, at 6:55 AM, Junio C Hamano wrote:
->> "Shawn O. Pearce" <spearce@spearce.org> writes:
->>
->>> git-gui: Use gitattribute "encoding" for file content display
->>>
->>> Most folks using git-gui on internationalized files have complained
->>> that it doesn't recognize UTF-8 correctly.  In the past we have just
->>> ignored the problem and showed the file contents as binary/US-ASCII,
->>> which is wrong no matter how you look at it.
->>
->> Hmmm.
->>
->> At least for now in 1.5.4, I'd prefer the way gitk shows UTF-8
->> (if I recall correctly latin-1 or other legacy encoding, as long
->> as LANG/LC_* is given appropriately, as well) contents without
->> per-path configuration without introducing new attributes.
+Hi,
+
+On Tue, 22 Jan 2008, Shawn O. Pearce wrote:
+
+> diff --git a/Makefile b/Makefile
+> index 1baf4b0..5f1023e 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -198,6 +198,9 @@ ifdef NO_MSGFMT
+>  	MSGFMT ?= $(TCL_PATH) po/po2msg.sh
+>  else
+>  	MSGFMT ?= msgfmt
+> +	ifeq ($(shell $(MSGFMT) >/dev/null 2>&1 || echo $$?),127)
+> +		MSGFMT := $(TCL_PATH) po/po2msg.sh
+> +	endif
+>  endif
+>  
+>  msgsdir     = $(gg_libdir)/msgs
 > 
-> Shouldn't we first try harder to get things right without adding
-> an attribute?  Maybe we could continue a good tradition and look
-> at the content of the first: we could first look for hints in the
-> file about the encoding.  XML and many text files contain such
-> hints already to help editors.  For example,  Python source can
-> explicitly contain the encoding [1]; and I guess there are many
-> other examples.
 
-For example LaTeX files either use inputenc package to set encoding
-(e.g. \usepackage[latin2]{inputenc}) or use magic first line to
-specify TCX (TeX character translation) file 
-(e.g. %& -translate-file=il2-t1).
+Thanks!
 
-Emacs encourages to use file variables, either in the form of magic
-first line, or file variables at the end of file; I think the same
-is true for Vim.
+Paul, you might want to do something like that for gitk, too.  I imagine 
+that the diff even applies as-is...
 
-
-I'd like then for it to be at least as configurable as diff.*.funcname 
-is for diff.
-
-> If we don't find a direct hint, we could have 
-> some magic auto-detection similar to what we do for autocrlf.
-
-We can at least try to and check for UTF-16 magic first two bytes, and 
-detect if we have character which is invalid in UTF-8 (for performance 
-I guess checking only beginning of file)... 
-
-> As a fallback the user could specify a default encoding.  But only
-> as a last resort, I'd use explicit attributes.
-
-...and then falling back to fallback encoding, like gitweb does.
-
--- 
-Jakub Narebski
-Poland
+Ciao,
+Dscho
