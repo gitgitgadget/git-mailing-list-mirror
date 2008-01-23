@@ -1,391 +1,129 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: I'm a total push-over..
-Date: Tue, 22 Jan 2008 19:19:12 -0800 (PST)
-Message-ID: <alpine.LFD.1.00.0801221913500.1741@woody.linux-foundation.org>
-References: <alpine.LFD.1.00.0801221515350.1741@woody.linux-foundation.org> <7vabmxqnz8.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801221844570.1741@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] read-cache.c: fix timestamp comparison
+Date: Tue, 22 Jan 2008 19:34:33 -0800
+Message-ID: <7vir1lp646.fsf@gitster.siamese.dyndns.org>
+References: <1200022189-2400-1-git-send-email-mlevedahl@gmail.com>
+	<7vir1xmazm.fsf@gitster.siamese.dyndns.org>
+	<7v63xrh3mw.fsf_-_@gitster.siamese.dyndns.org>
+	<7vfxwvfmd8.fsf_-_@gitster.siamese.dyndns.org>
+	<7vr6gb3nv1.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.1.00.0801202114580.2957@woody.linux-foundation.org>
+	<7vd4rv3ds5.fsf@gitster.siamese.dyndns.org>
+	<7vtzl71x1c.fsf@gitster.siamese.dyndns.org>
+	<7vprvv1wnu.fsf@gitster.siamese.dyndns.org>
+	<7vlk6j1wjj.fsf@gitster.siamese.dyndns.org>
+	<7vhch71vvb.fsf@gitster.siamese.dyndns.org>
+	<7v8x2j1sul.fsf@gitster.siamese.dyndns.org>
+	<7vzluzzhud.fsf_-_@gitster.siamese.dyndns.org>
+	<alpine.LFD.1.00.0801211022350.2957@woody.linux-foundation.org>
+	<alpine.LFD.1.00.0801211104590.2957@woody.linux-foundation.org>
+	<alpine.LFD.1.00.0801211120350.2957@woody.linux-foundation.org>
+	<7vabmyykvg.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.1.00.0801211242330.2957@woody.linux-foundation.org>
+	<alpine.LFD.1.00.0801221355110.1741@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 23 04:19:56 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jan 23 04:35:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHW9Z-0001an-6F
-	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 04:19:54 +0100
+	id 1JHWOo-0004kT-9l
+	for gcvg-git-2@gmane.org; Wed, 23 Jan 2008 04:35:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752984AbYAWDTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jan 2008 22:19:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751858AbYAWDTW
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 22:19:22 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:42187 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752984AbYAWDTV (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Jan 2008 22:19:21 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0N3JDYr015337
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 22 Jan 2008 19:19:14 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0N3JCRX021165;
-	Tue, 22 Jan 2008 19:19:13 -0800
-In-Reply-To: <alpine.LFD.1.00.0801221844570.1741@woody.linux-foundation.org>
-User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
-X-Spam-Status: No, hits=-4.824 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_33,J_CHICKENPOX_64,J_CHICKENPOX_66,PATCH_UNIFIED_DIFF_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1752879AbYAWDex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jan 2008 22:34:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752969AbYAWDex
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Jan 2008 22:34:53 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63191 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751602AbYAWDew (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jan 2008 22:34:52 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D124A7B60;
+	Tue, 22 Jan 2008 22:34:46 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D4FE7B3E;
+	Tue, 22 Jan 2008 22:34:41 -0500 (EST)
+In-Reply-To: <alpine.LFD.1.00.0801221355110.1741@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 22 Jan 2008 14:00:25 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71507>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> Ok, having looked a bit more, I found another two cases that my grep had 
+> missed. They were regular if-statements, just more complex than my stupid 
+> grep pattern had taken into account.
+>
+> Both are in read-cache.c:
+>
+> read-cache.c:                   if (stage || istate->cache[pos]->ce_mode) {
+> read-cache.c:                   if (ce_stage(p) == stage && (stage || p->ce_mode))
+>
+> and I'd send a patch, except my tree right now is in pretty bad shape 
+> because I'm also trying to see if I can add a name hash to the index.
 
-On Tue, 22 Jan 2008, Linus Torvalds wrote:
-> 
-> And the patch to do that is very simple too. 
+-- >8 --
+read-cache.c: fix a couple more CE_REMOVE conversion
 
-Ok, I pushed the squashed/fixed commit to the "new-lstat" branch. It's now 
-based on your 'next' branch, and I should have renamed it, since it's not 
-about any of the old lstat() optimizations any more. Whatever.
+It is a D/F conflict if you want to add "foo/bar" to the index
+when "foo" already exists.  Also it is a conflict if you want to
+add a file "foo" when "foo/bar" exists.
 
-But here it is also as a full patch, with a fixed up subject line etc. You 
-tend to want to have them as topic-branches, and it's probably easier this 
-way.
+An exception is when the existing entry is there only to mark "I
+used to be here but I am being removed".  This is needed for
+operations such as "git read-tree -m -u" that update the index
+and then reflect the result to the work tree --- we need to
+remember what to remove somewhere, and we use the index for
+that.  In such a case, an existing file "foo" is being removed
+and we can create "foo/" directory and hang "bar" underneath it
+without any conflict.
 
-		Linus
+We used to use (ce->ce_mode == 0) to mark an entry that is being
+removed, but (CE_REMOVE & ce->ce_flags) is used for that purpose
+these days.  An earlier commit forgot to convert the logic in
+the code that checks D/F conflict condition.
 
+The old code knew that "to be removed" entries cannot be at
+higher stage and actively checked that condition, but it was an
+unnecessary check.  This patch removes the extra check as well.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-From ca98bbc7b0cc1d9d088a8c6ae80e733115a1f775 Mon Sep 17 00:00:00 2001
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Tue, 22 Jan 2008 18:41:14 -0800
-Subject: [PATCH] Create pathname-based hash-table lookup into index
+ read-cache.c |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-This creates a hash index of every single file added to the index.
-Right now that hash index isn't actually used for much: I implemented a
-"cache_name_exists()" function that uses it to efficiently look up a
-filename in the index without having to do the O(logn) binary search,
-but quite frankly, that's not why this patch is interesting.
-
-No, the whole and only reason to create the hash of the filenames in the
-index is that by modifying the hash function, you can fairly easily do
-things like making it always hash equivalent names into the same bucket.
-
-That, in turn, means that suddenly questions like "does this name exist
-in the index under an _equivalent_ name?" becomes much much cheaper.
-
-Guiding principles behind this patch:
-
- - it shouldn't be too costly. In fact, my primary goal here was to
-   actually speed up "git commit" with a fully populated kernel tree, by
-   being faster at checking whether a file already existed in the index. I
-   did succeed, but only barely:
-
-	Best before:
-		[torvalds@woody linux]$ time git commit > /dev/null
-		real    0m0.255s
-		user    0m0.168s
-		sys     0m0.088s
-
-	Best after:
-
-		[torvalds@woody linux]$ time ~/git/git commit > /dev/null
-		real    0m0.233s
-		user    0m0.144s
-		sys     0m0.088s
-
-   so some things are actually faster (~8%).
-
-   Caveat: that's really the best case. Other things are invariably going
-   to be slightly slower, since we populate that index cache, and quite
-   frankly, few things really use it to look things up.
-
-   That said, the cost is really quite small. The worst case is probably
-   doing a "git ls-files", which will do very little except puopulate the
-   index, and never actually looks anything up in it, just lists it.
-
-	Before:
-		[torvalds@woody linux]$ time git ls-files > /dev/null
-		real    0m0.016s
-		user    0m0.016s
-		sys     0m0.000s
-
-	After:
-		[torvalds@woody linux]$ time ~/git/git ls-files > /dev/null
-		real    0m0.021s
-		user    0m0.012s
-		sys     0m0.008s
-
-   and while the thing has really gotten relatively much slower, we're
-   still talking about something almost unmeasurable (eg 5ms). And that
-   really should be pretty much the worst case.
-
-   So we lose 5ms on one "benchmark", but win 22ms on another. Pick your
-   poison - this patch has the advantage that it will _likely_ speed up
-   the cases that are complex and expensive more than it slows down the
-   cases that are already so fast that nobody cares. But if you look at
-   relative speedups/slowdowns, it doesn't look so good.
-
- - It should be simple and clean
-
-   The code may be a bit subtle (the reasons I do hash removal the way I
-   do etc), but it re-uses the existing hash.c files, so it really is
-   fairly small and straightforward apart from a few odd details.
-
-Now, this patch on its own doesn't really do much, but I think it's worth
-looking at, if only because if done correctly, the name hashing really can
-make an improvement to the whole issue of "do we have a filename that
-looks like this in the index already". And at least it gets real testing
-by being used even by default (ie there is a real use-case for it even
-without any insane filesystems).
-
-NOTE NOTE NOTE! The current hash is a joke. I'm ashamed of it, I'm just
-not ashamed of it enough to really care. I took all the numbers out of my
-nether regions - I'm sure it's good enough that it works in practice, but
-the whole point was that you can make a really much fancier hash that
-hashes characters not directly, but by their upper-case value or something
-like that, and thus you get a case-insensitive hash, while still keeping
-the name and the index itself totally case sensitive.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
- cache.h      |    6 +++
- dir.c        |    2 +-
- read-cache.c |   98 ++++++++++++++++++++++++++++++++++++++++++++++++++++------
- 3 files changed, 95 insertions(+), 11 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index 3a47cdc..409738c 100644
---- a/cache.h
-+++ b/cache.h
-@@ -3,6 +3,7 @@
- 
- #include "git-compat-util.h"
- #include "strbuf.h"
-+#include "hash.h"
- 
- #include SHA1_HEADER
- #include <zlib.h>
-@@ -109,6 +110,7 @@ struct ondisk_cache_entry {
- };
- 
- struct cache_entry {
-+	struct cache_entry *next;
- 	unsigned int ce_ctime;
- 	unsigned int ce_mtime;
- 	unsigned int ce_dev;
-@@ -131,6 +133,7 @@ struct cache_entry {
- #define CE_UPDATE    (0x10000)
- #define CE_REMOVE    (0x20000)
- #define CE_UPTODATE  (0x40000)
-+#define CE_UNHASHED  (0x80000)
- 
- static inline unsigned create_ce_flags(size_t len, unsigned stage)
- {
-@@ -188,6 +191,7 @@ struct index_state {
- 	struct cache_tree *cache_tree;
- 	time_t timestamp;
- 	void *alloc;
-+	struct hash_table name_hash;
- };
- 
- extern struct index_state the_index;
-@@ -211,6 +215,7 @@ extern struct index_state the_index;
- #define refresh_cache(flags) refresh_index(&the_index, (flags), NULL, NULL)
- #define ce_match_stat(ce, st, options) ie_match_stat(&the_index, (ce), (st), (options))
- #define ce_modified(ce, st, options) ie_modified(&the_index, (ce), (st), (options))
-+#define cache_name_exists(name, namelen) index_name_exists(&the_index, (name), (namelen))
- #endif
- 
- enum object_type {
-@@ -297,6 +302,7 @@ extern int read_index_from(struct index_state *, const char *path);
- extern int write_index(struct index_state *, int newfd);
- extern int discard_index(struct index_state *);
- extern int verify_path(const char *path);
-+extern int index_name_exists(struct index_state *istate, const char *name, int namelen);
- extern int index_name_pos(struct index_state *, const char *name, int namelen);
- #define ADD_CACHE_OK_TO_ADD 1		/* Ok to add */
- #define ADD_CACHE_OK_TO_REPLACE 2	/* Ok to replace file/directory */
-diff --git a/dir.c b/dir.c
-index 1b9cc7a..6543105 100644
---- a/dir.c
-+++ b/dir.c
-@@ -346,7 +346,7 @@ static struct dir_entry *dir_entry_new(const char *pathname, int len)
- 
- struct dir_entry *dir_add_name(struct dir_struct *dir, const char *pathname, int len)
- {
--	if (cache_name_pos(pathname, len) >= 0)
-+	if (cache_name_exists(pathname, len))
- 		return NULL;
- 
- 	ALLOC_GROW(dir->entries, dir->nr+1, dir->alloc);
 diff --git a/read-cache.c b/read-cache.c
-index 8ba8f0f..abee0fc 100644
+index 8ba8f0f..8f5d02a 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -23,6 +23,70 @@
- 
- struct index_state the_index;
- 
-+static unsigned int hash_name(const char *name, int namelen)
-+{
-+	unsigned int hash = 0x123;
-+
-+	do {
-+		unsigned char c = *name++;
-+		hash = hash*101 + c;
-+	} while (--namelen);
-+	return hash;
-+}
-+
-+static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
-+{
-+	void **pos;
-+	unsigned int hash = hash_name(ce->name, ce_namelen(ce));
-+
-+	istate->cache[nr] = ce;
-+	pos = insert_hash(hash, ce, &istate->name_hash);
-+	if (pos) {
-+		ce->next = *pos;
-+		*pos = ce;
-+	}
-+}
-+
-+/*
-+ * We don't actually *remove* it, we can just mark it invalid so that
-+ * we won't find it in lookups.
-+ *
-+ * Not only would we have to search the lists (simple enough), but
-+ * we'd also have to rehash other hash buckets in case this makes the
-+ * hash bucket empty (common). So it's much better to just mark
-+ * it.
-+ */
-+static void remove_hash_entry(struct index_state *istate, struct cache_entry *ce)
-+{
-+	ce->ce_flags |= CE_UNHASHED;
-+}
-+
-+static void replace_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
-+{
-+	struct cache_entry *old = istate->cache[nr];
-+
-+	if (ce != old) {
-+		remove_hash_entry(istate, old);
-+		set_index_entry(istate, nr, ce);
-+	}
-+	istate->cache_changed = 1;
-+}
-+
-+int index_name_exists(struct index_state *istate, const char *name, int namelen)
-+{
-+	unsigned int hash = hash_name(name, namelen);
-+	struct cache_entry *ce = lookup_hash(hash, &istate->name_hash);
-+
-+	while (ce) {
-+		if (!(ce->ce_flags & CE_UNHASHED)) {
-+			if (!cache_name_compare(name, namelen, ce->name, ce->ce_flags))
-+				return 1;
-+		}
-+		ce = ce->next;
-+	}
-+	return 0;
-+}
-+
- /*
-  * This only updates the "non-critical" parts of the directory
-  * cache, ie the parts that aren't tracked by GIT, and only used
-@@ -323,6 +387,9 @@ int index_name_pos(struct index_state *istate, const char *name, int namelen)
- /* Remove entry, return true if there are more entries to go.. */
- int remove_index_entry_at(struct index_state *istate, int pos)
- {
-+	struct cache_entry *ce = istate->cache[pos];
-+
-+	remove_hash_entry(istate, ce);
- 	istate->cache_changed = 1;
- 	istate->cache_nr--;
- 	if (pos >= istate->cache_nr)
-@@ -697,8 +764,7 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
- 
- 	/* existing match? Just replace it. */
- 	if (pos >= 0) {
--		istate->cache_changed = 1;
--		istate->cache[pos] = ce;
-+		replace_index_entry(istate, pos, ce);
- 		return 0;
- 	}
- 	pos = -pos-1;
-@@ -758,7 +824,7 @@ int add_index_entry(struct index_state *istate, struct cache_entry *ce, int opti
- 		memmove(istate->cache + pos + 1,
- 			istate->cache + pos,
- 			(istate->cache_nr - pos - 1) * sizeof(ce));
--	istate->cache[pos] = ce;
-+	set_index_entry(istate, pos, ce);
- 	istate->cache_changed = 1;
- 	return 0;
- }
-@@ -887,11 +953,8 @@ int refresh_index(struct index_state *istate, unsigned int flags, const char **p
- 			has_errors = 1;
- 			continue;
- 		}
--		istate->cache_changed = 1;
--		/* You can NOT just free istate->cache[i] here, since it
--		 * might not be necessarily malloc()ed but can also come
--		 * from mmap(). */
--		istate->cache[i] = new;
-+
-+		replace_index_entry(istate, i, new);
- 	}
- 	return has_errors;
- }
-@@ -966,6 +1029,20 @@ static void convert_from_disk(struct ondisk_cache_entry *ondisk, struct cache_en
- 	memcpy(ce->name, ondisk->name, len + 1);
- }
- 
-+static inline size_t estimate_cache_size(size_t ondisk_size, unsigned int entries)
-+{
-+	long per_entry;
-+
-+	per_entry = sizeof(struct cache_entry) - sizeof(struct ondisk_cache_entry);
-+
-+	/*
-+	 * Alignment can cause differences. This should be "alignof", but 
-+	 * since that's a gcc'ism, just use the size of a pointer.
-+	 */
-+	per_entry += sizeof(void *);
-+	return ondisk_size + entries*per_entry;
-+}
-+
- /* remember to discard_cache() before reading a different cache! */
- int read_index_from(struct index_state *istate, const char *path)
- {
-@@ -1016,7 +1093,7 @@ int read_index_from(struct index_state *istate, const char *path)
- 	 * has room for a few  more flags, we can allocate using the same
- 	 * index size
- 	 */
--	istate->alloc = xmalloc(mmap_size);
-+	istate->alloc = xmalloc(estimate_cache_size(mmap_size, istate->cache_nr));
- 
- 	src_offset = sizeof(*hdr);
- 	dst_offset = 0;
-@@ -1027,7 +1104,7 @@ int read_index_from(struct index_state *istate, const char *path)
- 		disk_ce = (struct ondisk_cache_entry *)((char *)mmap + src_offset);
- 		ce = (struct cache_entry *)((char *)istate->alloc + dst_offset);
- 		convert_from_disk(disk_ce, ce);
--		istate->cache[i] = ce;
-+		set_index_entry(istate, i, ce);
- 
- 		src_offset += ondisk_ce_size(ce);
- 		dst_offset += ce_size(ce);
-@@ -1065,6 +1142,7 @@ int discard_index(struct index_state *istate)
- 	istate->cache_nr = 0;
- 	istate->cache_changed = 0;
- 	istate->timestamp = 0;
-+	free_hash(&istate->name_hash);
- 	cache_tree_free(&(istate->cache_tree));
- 	free(istate->alloc);
- 	istate->alloc = NULL;
--- 
-1.5.4.rc4.1130.g9ad85
+@@ -615,7 +615,7 @@ static int has_dir_name(struct index_state *istate,
+ 			 * it is Ok to have a directory at the same
+ 			 * path.
+ 			 */
+-			if (stage || istate->cache[pos]->ce_mode) {
++			if (!(istate->cache[pos]->ce_flags & CE_REMOVE)) {
+ 				retval = -1;
+ 				if (!ok_to_replace)
+ 					break;
+@@ -637,8 +637,9 @@ static int has_dir_name(struct index_state *istate,
+ 			    (p->name[len] != '/') ||
+ 			    memcmp(p->name, name, len))
+ 				break; /* not our subdirectory */
+-			if (ce_stage(p) == stage && (stage || p->ce_mode))
+-				/* p is at the same stage as our entry, and
++			if (ce_stage(p) == stage && !(p->ce_flags & CE_REMOVE))
++				/*
++				 * p is at the same stage as our entry, and
+ 				 * is a subdirectory of what we are looking
+ 				 * at, so we cannot have conflicts at our
+ 				 * level or anything shorter.
