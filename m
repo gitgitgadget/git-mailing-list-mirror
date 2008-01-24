@@ -1,70 +1,60 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Trying to get GIT running on SCO OpenServer
-Date: Wed, 23 Jan 2008 16:17:16 -0800 (PST)
-Message-ID: <m3bq7ckrh7.fsf@roke.D-201>
+Date: Wed, 23 Jan 2008 16:25:01 -0800
+Message-ID: <7vsl0oax42.fsf@gitster.siamese.dyndns.org>
 References: <20080123212613.GN2230@yugib.highrise.ca>
 	<alpine.LSU.1.00.0801232346010.5731@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Aidan Van Dyk <aidan@highrise.ca>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 24 01:17:58 2008
+X-From: git-owner@vger.kernel.org Thu Jan 24 01:25:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHpn0-0002BF-Se
-	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 01:17:55 +0100
+	id 1JHpuk-0004JC-UB
+	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 01:25:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754410AbYAXARV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 19:17:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754301AbYAXARU
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 19:17:20 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:14062 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753996AbYAXART (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2008 19:17:19 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so208969ugc.16
-        for <git@vger.kernel.org>; Wed, 23 Jan 2008 16:17:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=MsuUVa/T7a5Hy0ca3UVE8L9wflyZGzwUjGTFmLsESxw=;
-        b=G0YoW/XxZ6ByqtY97OgMFtkT83g2vzevaasGh8TBwa56X0PEjYnujg9lG6lc47J2tc8XzDJ2tdeY5NaUrBzZo4kIx+P6WE+PHAabnF81Gy5eL9APL79tlhNJ4Otw2U1Rn5OE3HrYoIIgr/H+FrPshPDUk+kGNEzg0droIsypn/E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=a6W0AMkfwcoppTNsmmOmDWYo9XTU+hX7MMJbTxIwpm+ak/uywXWThcPFjM6jWJmUlBE5TdHX2nkO+WB1X0rktzaZp0+R0Ks5JUpqciduRAFjoGpfDYN3KdeFZw6foSzvAWWpRzxechcFJApVsYAIq6c4QIFqLD4mOahXCYXMrts=
-Received: by 10.67.115.15 with SMTP id s15mr1550810ugm.63.1201133837481;
-        Wed, 23 Jan 2008 16:17:17 -0800 (PST)
-Received: from roke.D-201 ( [83.8.202.8])
-        by mx.google.com with ESMTPS id b17sm74829fka.4.2008.01.23.16.17.15
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 23 Jan 2008 16:17:16 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id m0O0H4RJ013685;
-	Thu, 24 Jan 2008 01:17:05 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m0O0Gbi1013677;
-	Thu, 24 Jan 2008 01:16:37 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <alpine.LSU.1.00.0801232346010.5731@racer.site>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751996AbYAXAZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 19:25:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752492AbYAXAZX
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 19:25:23 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55358 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751679AbYAXAZX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2008 19:25:23 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E84E2FB5;
+	Wed, 23 Jan 2008 19:25:21 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B0502FB4;
+	Wed, 23 Jan 2008 19:25:17 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0801232346010.5731@racer.site> (Johannes
+	Schindelin's message of "Wed, 23 Jan 2008 23:48:16 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71579>
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+> FWIW we had the same problem in MinGW, and Hannes Sixt solved it:
+>
+> http://repo.or.cz/w/git/mingw/j6t.git?a=commitdiff;h=b8e84a68f01a2386b2071e1bdc8e24de809a3f6d
+>
 > That might give you an idea how to solve the issue.  Maybe you even make a 
 > git patch out of it?  With a Makefile variable BROKEN_SNPRINTF=YesPlease, 
 > maybe?
 
-I think the "convention" is to use BROKEN_SNPRINTF=UnfortunatelyYes ;-)
+Hmmm.  Looking at that change makes me wonder if that solution
+is Kosher.  The value of the va_list you pass to vsnprintf() is
+unspecified after the call.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+It may be Ok as mingw-only "compatibility wrapper", but I think
+you have to be a bit careful.  It is not a general solution for
+any BROKEN_SNPRINTF.
