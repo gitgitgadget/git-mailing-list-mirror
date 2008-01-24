@@ -1,66 +1,88 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: [PATCH] Check for -amend as a common wrong usage of --amend.
-Date: Thu, 24 Jan 2008 20:35:25 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <4798E87D.8030701@obry.net>
-References: <1201198439-3516-1-git-send-email-pascal@obry.net> <alpine.LSU.1.00.0801241818441.5731@racer.site> <4798DE6A.1050201@obry.net> <20080124192532.GA3389@hashpling.org>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: Re: [PATCH] HP-UX traditionally has no sys/select.h
+Date: Thu, 24 Jan 2008 20:39:42 +0100
+Message-ID: <20080124193942.GM30676@schiele.dyndns.org>
+References: <20080124175300.GI30676@schiele.dyndns.org> <7vd4rravin.fsf@gitster.siamese.dyndns.org>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pascal Obry <pascal.obry@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Thu Jan 24 20:36:41 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="TOmSpbqtysumMR8M"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 24 20:41:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JI7sF-0004Ko-UK
-	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 20:36:32 +0100
+	id 1JI7ws-0006IS-4i
+	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 20:41:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756661AbYAXTfh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2008 14:35:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756640AbYAXTfc
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 14:35:32 -0500
-Received: from smtp2e.orange.fr ([80.12.242.111]:14528 "EHLO smtp2e.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756632AbYAXTf3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2008 14:35:29 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2e28.orange.fr (SMTP Server) with ESMTP id D484270007ED
-	for <git@vger.kernel.org>; Thu, 24 Jan 2008 20:35:27 +0100 (CET)
-Received: from [192.168.0.100] (AVelizy-151-1-7-190.w82-120.abo.wanadoo.fr [82.120.149.190])
-	by mwinf2e28.orange.fr (SMTP Server) with ESMTP id 73FE67000456;
-	Thu, 24 Jan 2008 20:35:27 +0100 (CET)
-X-ME-UUID: 20080124193527475.73FE67000456@mwinf2e28.orange.fr
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <20080124192532.GA3389@hashpling.org>
-X-Enigmail-Version: 0.95.6
+	id S1758059AbYAXTj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2008 14:39:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758049AbYAXTjz
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 14:39:55 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:16802 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758046AbYAXTjy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2008 14:39:54 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so371112ugc.16
+        for <git@vger.kernel.org>; Thu, 24 Jan 2008 11:39:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        bh=/W7ZAZUdqqEeKZ3hi9aZo2AWuMe5EW4bjvmCXh8GUSc=;
+        b=WZwKrwEJmltflkQD7Mug8q/n9wGD4ToN6Mi7Llgsrox5jylYo/IF8BAqZ8Nkf/9xaQPMn1Dgf0TdgUIM5ZgHzc7w9JlGR0vol78USMBfb068rwTesn/6PZPdPmlo/salipThIf6/5gfOqtGtZ98b1+2iAjX+KQRsF1AgT433Yw4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=Aax9xCG+lz+w4u9iKsuyxkURlcrvr8+Qks4Cu86387/ygwY6/Tv+YysVF85qUjWbJvzoQNqxEA4M92mcgZ3tAErSIWqa3Q3f7anj9tkGcb9UkhZLAmB0/p+q+yIcrPKS3XxTvn/wRpMtG9H59GMlMRSZ0dNDvIX5MjNz+iKF5Yc=
+Received: by 10.67.101.17 with SMTP id d17mr2620245ugm.53.1201203584999;
+        Thu, 24 Jan 2008 11:39:44 -0800 (PST)
+Received: from sigkill.schiele.dyndns.org ( [91.18.121.55])
+        by mx.google.com with ESMTPS id g28sm2454923fkg.2.2008.01.24.11.39.43
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 24 Jan 2008 11:39:43 -0800 (PST)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id 9F6874BFF1; Thu, 24 Jan 2008 20:39:42 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vd4rravin.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71655>
 
-Charles Bailey a =E9crit :
-> Would this be better handled by a commit-msg hook.  E.g.:
 
-I do not agree. Why check this late as this option is boggus? And=20
-furthermore I do not want to have to install this commit message hook i=
-n=20
-all my Git repositories.
+--TOmSpbqtysumMR8M
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Pascal.
+On Thu, Jan 24, 2008 at 11:11:44AM -0800, Junio C Hamano wrote:
+> We had a thread on this issue mid December.
+> Does this help?
+
+Yes, checking for the _POSIX_VERSION is also a working approach.
+
+Robert
 
 --=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
 
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+"Quidquid latine dictum sit, altum sonatur."
+
+--TOmSpbqtysumMR8M
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.4-svn0 (GNU/Linux)
+
+iD8DBQFHmOl+xcDFxyGNGNcRAqXAAKDK5HYWn4SUyh0eD86tHhhUD2Eb+QCZAa1T
+7MTyhGYIJmV7mAbQjpb1jrA=
+=E9sC
+-----END PGP SIGNATURE-----
+
+--TOmSpbqtysumMR8M--
