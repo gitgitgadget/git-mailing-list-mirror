@@ -1,126 +1,107 @@
-From: JM Ibanez <jm@orangeandbronze.com>
-Subject: Re: Stripping 'git-svn-id' from commit messages, and switching to svn.noMetadata
-Date: Thu, 24 Jan 2008 16:44:41 +0800
-Organization: Orange & Bronze Software Labs, Ltd. Co.
-Message-ID: <87wspzobnq.fsf@adler.orangeandbronze.com>
-References: <877ii0p89b.fsf@adler.orangeandbronze.com>
-	<4797D6C6.207@vilain.net>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [StGit PATCH] Homogenize buffer names
+Date: Thu, 24 Jan 2008 09:51:27 +0100
+Message-ID: <87ejc71u9c.fsf@lysator.liu.se>
+References: <20080124075530.25461.20753.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Thu Jan 24 09:45:29 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>,
+	Karl =?utf-8?Q?Hasselstr?= =?utf-8?Q?=C3=B6m?= 
+	<kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Jan 24 10:21:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHxiC-00073B-1T
-	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 09:45:28 +0100
+	id 1JHyGj-0008RI-Ep
+	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 10:21:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752875AbYAXIo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2008 03:44:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752454AbYAXIo6
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 03:44:58 -0500
-Received: from nz-out-0506.google.com ([64.233.162.233]:48066 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752663AbYAXIo5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2008 03:44:57 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so108464nze.1
-        for <git@vger.kernel.org>; Thu, 24 Jan 2008 00:44:54 -0800 (PST)
-Received: by 10.142.99.21 with SMTP id w21mr133947wfb.55.1201164293686;
-        Thu, 24 Jan 2008 00:44:53 -0800 (PST)
-Received: from adler.orangeandbronze.com ( [61.28.150.66])
-        by mx.google.com with ESMTPS id i15sm903420wxd.17.2008.01.24.00.44.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 24 Jan 2008 00:44:53 -0800 (PST)
-Jabber-ID: jmibanez@gmail.com
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAMFBMVEUBAQEPDw8aGhoiIiIy
- MjJGRkZaWlp0dHScnJy+vr7R0dHb29vn5+fx8fH29vb///+JzcfYAAAAAWJLR0QAiAUdSAAAAAlw
- SFlzAAAewgAAHsIBbtB1PgAAAi5JREFUOMul1E9o01AYAPAvUQ87JV+3gcemrYi32q7oQRC7gtWD
- OLs6jx5svQhDCk0GggeHTaWgt/ZF5gRlkHZePCg0lTE8SWvnUXHU3QRxyYYryrCpr4PlT81OeyE5
- fD/y5b0v73vQP2DA4aBcWvMEQjJvPKAiF66nhSsrw9CNFnOIo3PyMKRj6cmoEJt/sOiGrhBHFpnx
- qdScG64FAODEWCJ9ddoFOyhQGJ3wx6eCj51wOoDAABNmghHfrAP+BC4gD8AzvI8Nn3HAr0xUQJoL
- WIbng+dtmB58AXiajd7MfQu6ftgfNCFrvbENdpwC4j5sWXFm73HMSrVqxfdmMG7Be2BxIpGYDIIw
- mPSYPSuYEUVRKmTjg2ViyIYtpSITeuUEnkdfzFGSWr1aJwoppwLI+C46QFWVOlluatrbCJ5MOqCp
- 1bTyrUsfO8bn1MK3NRt8Txsv8Wi+pOumpLUcAMebD7NK651h/LintlZsyEaUQkjStI7595XaWrQg
- BDhyF2Ck1NNN42tz1gIBjswMinGj0zfM9RZn/yiAyzcp3NH7Rr/93YZtZM69pmV6plMxNhzrSLEL
- XxCZtkHjq5wDfkvt9Rd4qm2YfZNzbp/eB13/ebth0Ew9N6ib+uYSrYhufnJv0eTyUvpRodrobHBu
- 2CGiRHJniw0YboOKmE1hUnzODcNuRVJIPgP/txohspoPcx49SHfDPOfRnLtyUfZ79nmt+oTzhCKB
- A04GONwh8w9J0EXBeLkUcQAAAABJRU5ErkJggg==
-In-Reply-To: <4797D6C6.207@vilain.net> (Sam Vilain's message of "Thu\, 24 Jan 2008 13\:07\:34 +1300")
+	id S1752579AbYAXJUi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2008 04:20:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752883AbYAXJUi
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 04:20:38 -0500
+Received: from mail.lysator.liu.se ([130.236.254.3]:42160 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752579AbYAXJUf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Jan 2008 04:20:35 -0500
+X-Greylist: delayed 1746 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Jan 2008 04:20:35 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id D3C61200A234;
+	Thu, 24 Jan 2008 09:51:27 +0100 (CET)
+Received: from mail.lysator.liu.se ([127.0.0.1])
+	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 16944-01-24; Thu, 24 Jan 2008 09:51:27 +0100 (CET)
+Received: from krank (unknown [87.96.142.66])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id 4E126200A225;
+	Thu, 24 Jan 2008 09:51:27 +0100 (CET)
+Received: by krank (Postfix, from userid 1000)
+	id 5330B7B4077; Thu, 24 Jan 2008 09:51:27 +0100 (CET)
+In-Reply-To: <20080124075530.25461.20753.stgit@yoghurt> ("Karl =?utf-8?Q?H?=
+ =?utf-8?Q?asselstr=C3=B6m=22's?= message of "Thu\, 24 Jan 2008 08\:55\:59
+ +0100")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71608>
 
-Sam Vilain <sam@vilain.net> writes:
+Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
 
-> JM Ibanez wrote:
->> Hi,
->> 
->> I've been trying to convert an existing git-svn clone to noMetadata
->> (i.e. get rid of git-svn-id in the commit messages), primarily because
->> I've been using it to track two SVN repos which were originally just a
->> single repo-- they have the same UUID but are located on different
->> machines, and have branched significantly, so content-wise are no longer
->> the same repo.
->> 
->> Because the two repos have a single line of commits which they share, it
->> would be best if I could store that history in my git repo (as I need to
->> use it for merging between the two trees). Graphically, my current
->> history looks something like this:
->> 
->> 
->>     A -- B -- C -- D -- E -- a -- b -- c
->> 
->>     A'-- B'-- C'-- D'-- E'-- x -- y -- z
->> 
->> where, in reality, this should be represented as:
->> 
->>     A -- B -- C -- D -- E -- a -- b -- c
->>                          \
->>                           +- x -- y -- z
+> It was driving me crazy that I couldn't tab-complete "*stg" to
+> "*stgit*" because there was always a "*stgit edit*" buffer lying
+> around.
+
+At least I have been annoyed by it as well. So I think it's an ok
+change.
+
+> Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 >
-> Stop.
+> ---
 >
-> Use a graft.  in .git/info/grafts, put (expanding to the full SHA1s):
+> David, do you agree with this fix?
+>
+>  contrib/stgit.el |    6 +++---
+>  1 files changed, 3 insertions(+), 3 deletions(-)
+>
+>
+> diff --git a/contrib/stgit.el b/contrib/stgit.el
+> index 4d0faca..e8bbb2c 100644
+> --- a/contrib/stgit.el
+> +++ b/contrib/stgit.el
+> @@ -293,7 +293,7 @@ Commands:
+>    (let ((patch (if (stgit-applied-at-point)
+>                     (stgit-patch-at-point)
+>                   (error "This patch is not applied")))
+> -        (edit-buf (get-buffer-create "*stgit edit*"))
+> +        (edit-buf (get-buffer-create "*StGit edit*"))
+>          (dir default-directory))
+>      (log-edit 'stgit-confirm-edit t nil edit-buf)
+>      (set (make-local-variable 'stgit-edit-patch) patch)
+> @@ -313,7 +313,7 @@ Commands:
+>  (defun stgit-new ()
+>    "Create a new patch"
+>    (interactive)
+> -  (let ((edit-buf (get-buffer-create "*stgit edit*")))
+> +  (let ((edit-buf (get-buffer-create "*StGit edit*")))
+>      (log-edit 'stgit-confirm-new t nil edit-buf)))
+> =20
+>  (defun stgit-confirm-new ()
+> @@ -352,7 +352,7 @@ Commands:
+>  (defun stgit-coalesce (patch-names)
+>    "Run stg coalesce on the named patches"
+>    (interactive (list (stgit-marked-patches)))
+> -  (let ((edit-buf (get-buffer-create "*stgit edit*"))
+> +  (let ((edit-buf (get-buffer-create "*StGit edit*"))
+>          (dir default-directory))
+>      (log-edit 'stgit-confirm-coalesce t nil edit-buf)
+>      (set (make-local-variable 'stgit-patches) patch-names)
+>
 
-Actually, I forgot to mention that I already have grafts between the two
-to track merges I performed previously. So, in fact, the history looks
-like something this:
-
-     A -- B -- C -- D -- E -- a -- b -- c -- d -- e -- f -- m3
-                         \         \          \             /
-                          \         \          \   /-------+
-     A'-- B'-- C'-- D'-- E'-- x -- y -- m1-- z -- m2
-
-
-where x, m1, m2, and m3 are squashed merge commits + grafts.
-
-After git filter-branch with a graft of x to E, I get x having two
-parents as what is needed *but* because the parent IDs are part of the
-commit object, I now get x' y', etc, something like this:
-
-
-
-     A -- B -- C -- D -- E -- a -- b -- c -- ...
-                         |         |
-                         |         |
-                         |         +--- m1'- z'-- m2' -- ...
-                         \         \
-                          \         \
-                           -- x -- y -- m1-- z -- ...
-
-
-sort of. In any case, I get duplicate commits of m1, z, etc. after the
-primary graft point. Is this expected?
-
--- 
-JM Ibanez
-Software Architect
-Orange & Bronze Software Labs, Ltd. Co.
-
-jm@orangeandbronze.com
-http://software.orangeandbronze.com/
+--=20
+David K=C3=A5gedal
