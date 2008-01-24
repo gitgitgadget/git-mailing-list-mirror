@@ -1,104 +1,126 @@
-From: Willy Tarreau <w@1wt.eu>
-Subject: Multiple working trees with GIT ?
-Date: Thu, 24 Jan 2008 08:49:52 +0100
-Message-ID: <20080124074952.GA8793@1wt.eu>
+From: JM Ibanez <jm@orangeandbronze.com>
+Subject: Re: Stripping 'git-svn-id' from commit messages, and switching to svn.noMetadata
+Date: Thu, 24 Jan 2008 16:44:41 +0800
+Organization: Orange & Bronze Software Labs, Ltd. Co.
+Message-ID: <87wspzobnq.fsf@adler.orangeandbronze.com>
+References: <877ii0p89b.fsf@adler.orangeandbronze.com>
+	<4797D6C6.207@vilain.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 24 09:21:21 2008
+Cc: git <git@vger.kernel.org>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Thu Jan 24 09:45:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHxKq-0000hm-Rg
-	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 09:21:21 +0100
+	id 1JHxiC-00073B-1T
+	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 09:45:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753236AbYAXIUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2008 03:20:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753205AbYAXIUu
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 03:20:50 -0500
-Received: from 1wt.eu ([62.212.114.60]:1582 "EHLO 1wt.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753134AbYAXIUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2008 03:20:50 -0500
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
+	id S1752875AbYAXIo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2008 03:44:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752454AbYAXIo6
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 03:44:58 -0500
+Received: from nz-out-0506.google.com ([64.233.162.233]:48066 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752663AbYAXIo5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2008 03:44:57 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so108464nze.1
+        for <git@vger.kernel.org>; Thu, 24 Jan 2008 00:44:54 -0800 (PST)
+Received: by 10.142.99.21 with SMTP id w21mr133947wfb.55.1201164293686;
+        Thu, 24 Jan 2008 00:44:53 -0800 (PST)
+Received: from adler.orangeandbronze.com ( [61.28.150.66])
+        by mx.google.com with ESMTPS id i15sm903420wxd.17.2008.01.24.00.44.47
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 24 Jan 2008 00:44:53 -0800 (PST)
+Jabber-ID: jmibanez@gmail.com
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAMFBMVEUBAQEPDw8aGhoiIiIy
+ MjJGRkZaWlp0dHScnJy+vr7R0dHb29vn5+fx8fH29vb///+JzcfYAAAAAWJLR0QAiAUdSAAAAAlw
+ SFlzAAAewgAAHsIBbtB1PgAAAi5JREFUOMul1E9o01AYAPAvUQ87JV+3gcemrYi32q7oQRC7gtWD
+ OLs6jx5svQhDCk0GggeHTaWgt/ZF5gRlkHZePCg0lTE8SWvnUXHU3QRxyYYryrCpr4PlT81OeyE5
+ fD/y5b0v73vQP2DA4aBcWvMEQjJvPKAiF66nhSsrw9CNFnOIo3PyMKRj6cmoEJt/sOiGrhBHFpnx
+ qdScG64FAODEWCJ9ddoFOyhQGJ3wx6eCj51wOoDAABNmghHfrAP+BC4gD8AzvI8Nn3HAr0xUQJoL
+ WIbng+dtmB58AXiajd7MfQu6ftgfNCFrvbENdpwC4j5sWXFm73HMSrVqxfdmMG7Be2BxIpGYDIIw
+ mPSYPSuYEUVRKmTjg2ViyIYtpSITeuUEnkdfzFGSWr1aJwoppwLI+C46QFWVOlluatrbCJ5MOqCp
+ 1bTyrUsfO8bn1MK3NRt8Txsv8Wi+pOumpLUcAMebD7NK651h/LintlZsyEaUQkjStI7595XaWrQg
+ BDhyF2Ck1NNN42tz1gIBjswMinGj0zfM9RZn/yiAyzcp3NH7Rr/93YZtZM69pmV6plMxNhzrSLEL
+ XxCZtkHjq5wDfkvt9Rd4qm2YfZNzbp/eB13/ebth0Ew9N6ib+uYSrYhufnJv0eTyUvpRodrobHBu
+ 2CGiRHJniw0YboOKmE1hUnzODcNuRVJIPgP/txohspoPcx49SHfDPOfRnLtyUfZ79nmt+oTzhCKB
+ A04GONwh8w9J0EXBeLkUcQAAAABJRU5ErkJggg==
+In-Reply-To: <4797D6C6.207@vilain.net> (Sam Vilain's message of "Thu\, 24 Jan 2008 13\:07\:34 +1300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71607>
 
-Hi all,
+Sam Vilain <sam@vilain.net> writes:
 
-I'm having long thoughts about how to use GIT to manage a distro. One of
-the aspects which comes very often is the notion of "variant" for a
-packaging. For instance, the whole project could consist in a list of packages
-with their branches, but this list may vary depending on the platform, the
-medium, etc... I was searching how to propagate common changes withing variants
-with the least hassle.
+> JM Ibanez wrote:
+>> Hi,
+>> 
+>> I've been trying to convert an existing git-svn clone to noMetadata
+>> (i.e. get rid of git-svn-id in the commit messages), primarily because
+>> I've been using it to track two SVN repos which were originally just a
+>> single repo-- they have the same UUID but are located on different
+>> machines, and have branched significantly, so content-wise are no longer
+>> the same repo.
+>> 
+>> Because the two repos have a single line of commits which they share, it
+>> would be best if I could store that history in my git repo (as I need to
+>> use it for merging between the two trees). Graphically, my current
+>> history looks something like this:
+>> 
+>> 
+>>     A -- B -- C -- D -- E -- a -- b -- c
+>> 
+>>     A'-- B'-- C'-- D'-- E'-- x -- y -- z
+>> 
+>> where, in reality, this should be represented as:
+>> 
+>>     A -- B -- C -- D -- E -- a -- b -- c
+>>                          \
+>>                           +- x -- y -- z
+>
+> Stop.
+>
+> Use a graft.  in .git/info/grafts, put (expanding to the full SHA1s):
 
-I figured out that having one file list per variant will be very annoying. In
-another project, that's already what I have and frankly, applying the same
-change to 10 files is counter-productive. Since the lists will often be the
-sames except for a few entries, and since most updates will be relevant to
-all variants, I thought branches will be my best friends.
+Actually, I forgot to mention that I already have grafts between the two
+to track merges I performed previously. So, in fact, the history looks
+like something this:
 
-But I would like to be able to always access file lists, without having to
-constantly git-checkout <variant-X>.
-
-Finally, I found a very convenient solution, but I don't know if there are
-any risks using it. If we can conclude to a riskless usage (with/without
-some adjustments), I can contribute a script to setup this environment.
-
-The idea is to have multiple working trees in a subdirectory of the normal
-one. Some would probably like them to be movable anywhere else, but let's
-not complicate things first. But in order not to constantly have to pull/push
-in every tree, I set up the .git repo of each working tree with many symlinks :
-
-  project/
-          .git/ (normal repo)
-          ... master checked out there by default ...
-          worktree/
-                   variant_a/
-                             .git/ (symlinks)
-                   variant_b/
-                             .git/ (symlinks)
-                   variant_c/
-                             .git/ (symlinks)
+     A -- B -- C -- D -- E -- a -- b -- c -- d -- e -- f -- m3
+                         \         \          \             /
+                          \         \          \   /-------+
+     A'-- B'-- C'-- D'-- E'-- x -- y -- m1-- z -- m2
 
 
-Each variant is set up like this :
-    4096 Jan 24 08:44 .git
-      19 Jan 24 08:27 .git/HEAD
-      28 Jan 24 08:30 .git/logs
-     419 Jan 24 08:44 .git/logs/HEAD
-      26 Jan 24 08:31 .git/logs/refs -> ../../../../.git/logs/refs
-      18 Jan 24 08:31 .git/refs -> ../../../.git/refs
-      21 Jan 24 08:31 .git/objects -> ../../../.git/objects
-      18 Jan 24 08:31 .git/info -> ../../../.git/info
-      19 Jan 24 08:31 .git/hooks -> ../../../.git/hooks
-      25 Jan 24 08:31 .git/description -> ../../../.git/description
-      20 Jan 24 08:31 .git/config -> ../../../.git/config
-     118 Jan 24 08:44 .git/index
-      22 Jan 24 08:31 .git/branches -> ../../../.git/branches
-      63 Jan 24 08:44 .git/FETCH_HEAD
-      41 Jan 24 08:44 .git/ORIG_HEAD
+where x, m1, m2, and m3 are squashed merge commits + grafts.
 
-In fact, I found that each directory which hosts a HEAD file needs to
-remain a directory because of this head, but all other dirs can be
-symlinks to original tree.
+After git filter-branch with a graft of x to E, I get x having two
+parents as what is needed *but* because the parent IDs are part of the
+commit object, I now get x' y', etc, something like this:
 
-This works pretty well. I can simply cd worktree/variant_a and work on a
-file, or pull master, or even git-cherry-pick from other branches (pretty
-convenient for this usage). But I don't know what caveats I may encounter.
 
-Maybe there are other solutions too. I see that we tend to replace symlinks
-everywhere with ref files. We might as well (in a far future version) accept
-a file for ".git" which would contain a path to the central repo and the
-branch's head.
 
-I'm open to comments. Please keep me CC, I'm not subscribed to the git list.
+     A -- B -- C -- D -- E -- a -- b -- c -- ...
+                         |         |
+                         |         |
+                         |         +--- m1'- z'-- m2' -- ...
+                         \         \
+                          \         \
+                           -- x -- y -- m1-- z -- ...
 
-Thanks,
-Willy
+
+sort of. In any case, I get duplicate commits of m1, z, etc. after the
+primary graft point. Is this expected?
+
+-- 
+JM Ibanez
+Software Architect
+Orange & Bronze Software Labs, Ltd. Co.
+
+jm@orangeandbronze.com
+http://software.orangeandbronze.com/
