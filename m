@@ -1,107 +1,93 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [StGit PATCH] Homogenize buffer names
-Date: Thu, 24 Jan 2008 09:51:27 +0100
-Message-ID: <87ejc71u9c.fsf@lysator.liu.se>
-References: <20080124075530.25461.20753.stgit@yoghurt>
+From: "Anthony Bolton" <Anthony.Bolton@ipl.com>
+Subject: Query about documentation of git pull -n
+Date: Thu, 24 Jan 2008 09:24:55 -0000
+Message-ID: <72481CA3A5A6474EA49CFD2CF28A5D5D02CA348A@hektor.iplbath.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>,
-	Karl =?utf-8?Q?Hasselstr?= =?utf-8?Q?=C3=B6m?= 
-	<kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Jan 24 10:21:10 2008
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 24 10:25:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHyGj-0008RI-Ep
-	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 10:21:09 +0100
+	id 1JHyL4-0001Kk-Ia
+	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 10:25:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752579AbYAXJUi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2008 04:20:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752883AbYAXJUi
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 04:20:38 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:42160 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752579AbYAXJUf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Jan 2008 04:20:35 -0500
-X-Greylist: delayed 1746 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Jan 2008 04:20:35 EST
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id D3C61200A234;
-	Thu, 24 Jan 2008 09:51:27 +0100 (CET)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 16944-01-24; Thu, 24 Jan 2008 09:51:27 +0100 (CET)
-Received: from krank (unknown [87.96.142.66])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 4E126200A225;
-	Thu, 24 Jan 2008 09:51:27 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id 5330B7B4077; Thu, 24 Jan 2008 09:51:27 +0100 (CET)
-In-Reply-To: <20080124075530.25461.20753.stgit@yoghurt> ("Karl =?utf-8?Q?H?=
- =?utf-8?Q?asselstr=C3=B6m=22's?= message of "Thu\, 24 Jan 2008 08\:55\:59
- +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1752981AbYAXJZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2008 04:25:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753016AbYAXJZI
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 04:25:08 -0500
+Received: from vanessa.ipl.com ([217.205.167.12]:33040 "EHLO vanessa.ipl.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752883AbYAXJZG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Jan 2008 04:25:06 -0500
+X-IPL-MailScanner-Watermark: 1201771496.99123@k8jnwBp22F4Qv/XONRcURA
+Received: from hektor.iplbath.com (hektor [192.0.0.90])
+	by vanessa.ipl.com (8.13.1/8.13.1) with ESMTP id m0O9OtjG000907
+	for <git@vger.kernel.org>; Thu, 24 Jan 2008 09:24:55 GMT
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Query about documentation of git pull -n
+Thread-Index: Acheas7nEglouqNmTL25mNnhC3RFZg==
+X-IPL-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71609>
 
-Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
+Comment from a new user:
+ 
+The git-pull man pages imply that "git pull -n" and "git pull --no-tags"
+are the same, but -n seems to do something different entirely (same with
+git fetch). I found this in msysgit but the msysgit boys say that it's
+actually a problem with core git.
+ 
+If -n is intended to be different from --no-tags than can you update the
+documentation please?
+ 
+Regards,
+Anthony
+____________________________________________________________
 
-> It was driving me crazy that I couldn't tab-complete "*stg" to
-> "*stgit*" because there was always a "*stgit edit*" buffer lying
-> around.
+Anthony Bolton
+phone: +44 (0)1225 475290, email: anthony.bolton@ipl.com
 
-At least I have been annoyed by it as well. So I think it's an ok
-change.
+IPL Information Processing Limited 
+www.ipl.com
+____________________________________________________________
 
-> Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
->
-> ---
->
-> David, do you agree with this fix?
->
->  contrib/stgit.el |    6 +++---
->  1 files changed, 3 insertions(+), 3 deletions(-)
->
->
-> diff --git a/contrib/stgit.el b/contrib/stgit.el
-> index 4d0faca..e8bbb2c 100644
-> --- a/contrib/stgit.el
-> +++ b/contrib/stgit.el
-> @@ -293,7 +293,7 @@ Commands:
->    (let ((patch (if (stgit-applied-at-point)
->                     (stgit-patch-at-point)
->                   (error "This patch is not applied")))
-> -        (edit-buf (get-buffer-create "*stgit edit*"))
-> +        (edit-buf (get-buffer-create "*StGit edit*"))
->          (dir default-directory))
->      (log-edit 'stgit-confirm-edit t nil edit-buf)
->      (set (make-local-variable 'stgit-edit-patch) patch)
-> @@ -313,7 +313,7 @@ Commands:
->  (defun stgit-new ()
->    "Create a new patch"
->    (interactive)
-> -  (let ((edit-buf (get-buffer-create "*stgit edit*")))
-> +  (let ((edit-buf (get-buffer-create "*StGit edit*")))
->      (log-edit 'stgit-confirm-new t nil edit-buf)))
-> =20
->  (defun stgit-confirm-new ()
-> @@ -352,7 +352,7 @@ Commands:
->  (defun stgit-coalesce (patch-names)
->    "Run stg coalesce on the named patches"
->    (interactive (list (stgit-marked-patches)))
-> -  (let ((edit-buf (get-buffer-create "*stgit edit*"))
-> +  (let ((edit-buf (get-buffer-create "*StGit edit*"))
->          (dir default-directory))
->      (log-edit 'stgit-confirm-coalesce t nil edit-buf)
->      (set (make-local-variable 'stgit-patches) patch-names)
->
 
---=20
-David K=C3=A5gedal
+ 
+
+
+The information transmitted is intended only for the person
+or entity to which it is addressed and may contain
+confidential and/or privileged material. If you are not the
+addressee, any disclosure, reproduction, copying,
+distribution, or other dissemination or use of this
+communication is strictly prohibited. If you have received
+this transmission in error please notify the sender
+immediately and then delete this email.
+
+Any representations or commitments expressed in this email
+are subject to contract.
+
+This message has been scanned for viruses and dangerous
+content. However, it is essential that the recipient also
+checks this message using commercially available mail
+scanning and anti-virus software. IPL Information Processing
+Limited accepts no liability for any loss or damage resulting
+from any virus or other dangerous content in this message.
+
+IPL Information Processing Limited is registered in England
+and Wales under company registration number 1418818.
+Registration took place at Cardiff on 10 May 1979. IPL
+Information Processing Limited's registered office and
+normal place of business is Eveleigh House, Grove Street,
+Bath, BA1 5LR, United Kingdom. IPL is also registered for
+Value Added Tax (VAT) under registration number GB 601 2931 83.
