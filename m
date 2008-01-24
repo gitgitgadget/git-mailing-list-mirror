@@ -1,61 +1,79 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [STGIT PATCH] replace "git repo-config" usage by "git config"
-Date: Thu, 24 Jan 2008 19:08:35 +0100
-Message-ID: <20080124180835.GA28723@diana.vm.bytemark.co.uk>
-References: <1200453554-14163-1-git-send-email-dpmcgee@gmail.com> <200801162147.33448.kumbayo84@arcor.de> <200801162158.26450.kumbayo84@arcor.de> <20080117074559.GB25213@diana.vm.bytemark.co.uk> <20080118042447.GA13178@diana.vm.bytemark.co.uk> <b0943d9e0801230335m4a2d1855uf465d0d134f3ef39@mail.gmail.com> <20080123161014.GA5850@diana.vm.bytemark.co.uk> <b0943d9e0801230842w250ab963t16a1ab3c8024487e@mail.gmail.com> <20080124070125.GA19653@diana.vm.bytemark.co.uk> <b0943d9e0801240731q856925al267d81548f5e2091@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Oberndorfer <kumbayo84@arcor.de>, git@vger.kernel.org,
-	Pavel Roskin <proski@gnu.org>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 24 19:09:38 2008
+From: Pascal Obry <pascal.obry@gmail.com>
+Subject: [PATCH] Check for -amend as a common wrong usage of --amend.
+Date: Thu, 24 Jan 2008 19:13:59 +0100
+Message-ID: <1201198439-3516-1-git-send-email-pascal@obry.net>
+Cc: gitster@pobox.com, Pascal Obry <pascal@obry.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 24 19:14:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JI6W9-0003Zx-Dz
-	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 19:09:37 +0100
+	id 1JI6b1-0005cs-3a
+	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 19:14:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753032AbYAXSJH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2008 13:09:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753065AbYAXSJG
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 13:09:06 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1812 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753014AbYAXSJF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2008 13:09:05 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JI6V9-0007VS-00; Thu, 24 Jan 2008 18:08:35 +0000
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0801240731q856925al267d81548f5e2091@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753522AbYAXSOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2008 13:14:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753499AbYAXSOJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 13:14:09 -0500
+Received: from fg-out-1718.google.com ([72.14.220.159]:32071 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753477AbYAXSOH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2008 13:14:07 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so316027fga.17
+        for <git@vger.kernel.org>; Thu, 24 Jan 2008 10:14:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:to:cc:subject:date:message-id:x-mailer:from;
+        bh=Ww0rQm/ZQjfbeRV6KUwW6BZrTzVWIJzPLSK0mvgIed0=;
+        b=lv0KgOr6oBwBFwsn7xLujLGUWx/F6YZ0OkZRegzFkvHsMOMsOL57vzIrDwZF+/kc1LiTOTxMtRH+vKb9ESp+ONVxLezhiniS1Er5L46UfEG0Ftap2ezoEg8t4Kd0KGzvDbC6x7jnP2/W52cfZsSNm6neM2BMj9+58caCuMk5YS4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=to:cc:subject:date:message-id:x-mailer:from;
+        b=PFiHhG4FwzO+s6D7VKDXiJ6zN8LL+ZBIEVIap8T/Fy4ij2vIWdKmhhGmMFVZ9QiktXfysecMdF8+AGOtF9c2KXpWH653Bb+t2py8nXgSiUw9o/7Tuv5p980Xymsjme7WVcppphq482tkFePlmBMg8eki8vUMsAB8gjZ1yQ2QbOI=
+Received: by 10.82.187.2 with SMTP id k2mr1780012buf.16.1201198445783;
+        Thu, 24 Jan 2008 10:14:05 -0800 (PST)
+Received: from pascal.obry@gmail.com ( [82.120.149.190])
+        by mx.google.com with ESMTPS id v23sm2188927fkd.1.2008.01.24.10.14.02
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 24 Jan 2008 10:14:03 -0800 (PST)
+Received: by pascal.obry@gmail.com (sSMTP sendmail emulation); Thu, 24 Jan 2008 19:13:59 +0100
+X-Mailer: git-send-email 1.5.4.rc4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71639>
 
-On 2008-01-24 15:31:40 +0000, Catalin Marinas wrote:
+It happens from time to time to type -amend (with a single
+dash) when --amend is meant. In those case there is no mistake
+and git commit all files modified with the log message set
+to "end". As -amend is just doing something stupid it is
+better to check for this wrong usage and give hint to the
+user about the possible mistake.
 
-> Another thing, can the '--keep' option be added? Can it work with
-> the new structure? I use it quite often as I make some minor
-> modification and I'd like to pop patches without affecting the local
-> changes.
+Signed-off-by: Pascal Obry <pascal@obry.net>
+---
+ parse-options.c |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
 
-As is, it works out of the box as long as your local changes are in
-files not touched by the command.
-
-Making it work in other cases as well should be doable -- behind the
-scenes, we'd save the local changes much like a patch, and try to
-apply it at the end. (In fact, we should probably not create this
-"patch" until git-read-tree tells us it can't do its job due to local
-changes.)
-
-Adding the --keep flag once would make it available for all commands
-using the new infrastructure.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+diff --git a/parse-options.c b/parse-options.c
+index 7a08a0c..248515d 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -233,6 +233,13 @@ int parse_options(int argc, const char **argv, const struct option *options,
+ 			continue;
+ 		}
+ 
++		if (!strcmp(arg + 1, "amend")) {
++		        error("-amend looks suspicious, don't you meant --amend\n");
++		        args.argc--;
++		        args.argv++;
++		        break;
++		}
++
+ 		if (arg[1] != '-') {
+ 			args.opt = arg + 1;
+ 			do {
+-- 
+1.5.4.rc4.23.gcab31
