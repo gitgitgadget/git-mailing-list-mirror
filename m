@@ -1,67 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Trying to get GIT running on SCO OpenServer
-Date: Wed, 23 Jan 2008 23:48:16 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801232346010.5731@racer.site>
-References: <20080123212613.GN2230@yugib.highrise.ca>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Stripping 'git-svn-id' from commit messages, and switching to
+ svn.noMetadata
+Date: Thu, 24 Jan 2008 13:07:34 +1300
+Message-ID: <4797D6C6.207@vilain.net>
+References: <877ii0p89b.fsf@adler.orangeandbronze.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Aidan Van Dyk <aidan@highrise.ca>
-X-From: git-owner@vger.kernel.org Thu Jan 24 00:48:57 2008
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: JM Ibanez <jm@orangeandbronze.com>
+X-From: git-owner@vger.kernel.org Thu Jan 24 01:08:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHpKy-0001so-SK
-	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 00:48:57 +0100
+	id 1JHpdu-0007o1-RL
+	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 01:08:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751754AbYAWXs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jan 2008 18:48:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751900AbYAWXs0
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 18:48:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41891 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751691AbYAWXsZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jan 2008 18:48:25 -0500
-Received: (qmail invoked by alias); 23 Jan 2008 23:48:23 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp009) with SMTP; 24 Jan 2008 00:48:23 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19yOAJ6Evhy8M0JWqT9vvvrXQo3DSYM270uQmEN2t
-	xdQW7IwTI7sDHB
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080123212613.GN2230@yugib.highrise.ca>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753680AbYAXAHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jan 2008 19:07:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753607AbYAXAHn
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Jan 2008 19:07:43 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:59710 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751753AbYAXAHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jan 2008 19:07:42 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
+	id F264C21D114; Thu, 24 Jan 2008 13:07:39 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.4 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.1.7-deb
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id 9545C21D10B;
+	Thu, 24 Jan 2008 13:07:34 +1300 (NZDT)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <877ii0p89b.fsf@adler.orangeandbronze.com>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71577>
 
-Hi,
+JM Ibanez wrote:
+> Hi,
+> 
+> I've been trying to convert an existing git-svn clone to noMetadata
+> (i.e. get rid of git-svn-id in the commit messages), primarily because
+> I've been using it to track two SVN repos which were originally just a
+> single repo-- they have the same UUID but are located on different
+> machines, and have branched significantly, so content-wise are no longer
+> the same repo.
+> 
+> Because the two repos have a single line of commits which they share, it
+> would be best if I could store that history in my git repo (as I need to
+> use it for merging between the two trees). Graphically, my current
+> history looks something like this:
+> 
+> 
+>     A -- B -- C -- D -- E -- a -- b -- c
+> 
+>     A'-- B'-- C'-- D'-- E'-- x -- y -- z
+> 
+> where, in reality, this should be represented as:
+> 
+>     A -- B -- C -- D -- E -- a -- b -- c
+>                          \
+>                           +- x -- y -- z
 
-On Wed, 23 Jan 2008, Aidan Van Dyk wrote:
+Stop.
 
-> I know - openserver, yuch, bla bla bla... Not my choice, but sometimes 
-> we have to do things we don't like...
+Use a graft.  in .git/info/grafts, put (expanding to the full SHA1s):
 
-Hehe.  They say: "de mortuis nil nisi bene".
+x E
 
->    snprintf (vsnprintf) behaves like sprintf (vsprintf), except that no
->    more than maxsize characters are placed into the array, including the
->    terminating null character. If more than maxsize characters were
->    requested, the output array will contain exactly maxsize characters,
->    with a null character being the last (when maxsize is nonzero); a
->    negative value is returned.
+Then just run something like 'git filter-branch E..z'
 
-FWIW we had the same problem in MinGW, and Hannes Sixt solved it:
+That will at least stitch them together.
 
-http://repo.or.cz/w/git/mingw/j6t.git?a=commitdiff;h=b8e84a68f01a2386b2071e1bdc8e24de809a3f6d
+To figure out what git-svn is expecting, make a new repository, use
+git-svn init, and then git-svn fetch -rNNN (where NNN is a revision near
+the most recent).  That will at least show you what git-svn expects the
+metadata to look like, if you really want to go down the path you are
+going down...
 
-That might give you an idea how to solve the issue.  Maybe you even make a 
-git patch out of it?  With a Makefile variable BROKEN_SNPRINTF=YesPlease, 
-maybe?
-
-Hth,
-Dscho
+Sam.
