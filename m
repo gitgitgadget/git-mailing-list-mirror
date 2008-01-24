@@ -1,63 +1,114 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Stripping 'git-svn-id' from commit messages, and switching to
- svn.noMetadata
-Date: Fri, 25 Jan 2008 10:19:27 +1300
-Message-ID: <479900DF.9010904@vilain.net>
-References: <877ii0p89b.fsf@adler.orangeandbronze.com> <4797D6C6.207@vilain.net> <4798CC88.505@obry.net>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: Re: [PATCH] some systems don't have (and need) sys/select.h
+Date: Thu, 24 Jan 2008 22:58:03 +0100
+Message-ID: <20080124215803.GN30676@schiele.dyndns.org>
+References: <20080124183446.GJ30676@schiele.dyndns.org> <7vk5ly9b51.fsf@gitster.siamese.dyndns.org>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: JM Ibanez <jm@orangeandbronze.com>, git <git@vger.kernel.org>
-To: Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Thu Jan 24 22:20:09 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Epi5nlKhkk4Kf+ga"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 24 22:58:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JI9UR-0002YU-4b
-	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 22:20:03 +0100
+	id 1JIA5o-0001Dx-7S
+	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 22:58:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756534AbYAXVTc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2008 16:19:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756561AbYAXVTc
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 16:19:32 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:59158 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756419AbYAXVTb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2008 16:19:31 -0500
-Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
-	id A38DA21D12B; Fri, 25 Jan 2008 10:19:30 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.4 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.1.7-deb
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTP id 67BC921C7F9;
-	Fri, 25 Jan 2008 10:19:27 +1300 (NZDT)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <4798CC88.505@obry.net>
-X-Enigmail-Version: 0.94.2.0
+	id S1754839AbYAXV6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2008 16:58:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754375AbYAXV6J
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 16:58:09 -0500
+Received: from fg-out-1718.google.com ([72.14.220.152]:61208 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751981AbYAXV6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2008 16:58:07 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so375147fga.17
+        for <git@vger.kernel.org>; Thu, 24 Jan 2008 13:58:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        bh=mbd4tXeI1ccbb/5YnNb3fTbH2jNNZ85ZbbSS/YkFTIU=;
+        b=hUs3NAxb8EWpr16C9KukVA0QcoTFINtgiYwD1v4EvJgdh7P5nN2DsSqsZ8nGrAySI2x4gM5WsCeI/aUZVsw11CQX5ozYfidEibeZpJ8ic/Ert95/NridDlQjMS7fClqxo+n3F40SSgIWsoLaYJs6QHVCYLfAiiw/aBYUtVgJ418=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=aiUmqZ6mRG+ctbwdLbxHWLDxEIlTb9n9UqweS53CG02nP3QRTC+8Pmt7kqgtYpbW5Q3YdHYiLkrsOnmOgsY3NcoJa3MrAOguQx2T7CEb+0GlKPYj4pap1st9D7T/XgKFnhCwGzNii/9g1d68j/jRL2Ug0NoU7qmKPY3WVBEPg5s=
+Received: by 10.86.25.17 with SMTP id 17mr1104933fgy.15.1201211885520;
+        Thu, 24 Jan 2008 13:58:05 -0800 (PST)
+Received: from sigkill.schiele.dyndns.org ( [91.18.121.55])
+        by mx.google.com with ESMTPS id e20sm2003181fga.1.2008.01.24.13.58.04
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 24 Jan 2008 13:58:04 -0800 (PST)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id B092C5FE6; Thu, 24 Jan 2008 22:58:03 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vk5ly9b51.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71666>
 
-Pascal Obry wrote:
-> Sam Vilain a =E9crit :
->> Use a graft.  in .git/info/grafts, put (expanding to the full SHA1s)=
-:
+
+--Epi5nlKhkk4Kf+ga
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Jan 24, 2008 at 01:17:14PM -0800, Junio C Hamano wrote:
+> Robert Schiele <rschiele@gmail.com> writes:
 >=20
-> It is not the first time I see somebody talking about graft... I stil=
-l=20
-> don't know exactly what it is. Any pointers to literature about this?
+> > The select stuff is already in sys/time.h on on some systems like HP-UX
+> > thus we should not include sys/select.h in that case.
+> >
+> > Signed-off-by: Robert Schiele <rschiele@gmail.com>
+>=20
+> The patch looks good.  I'd rather try to be a bit more helpful
+> to people who want to port git to their system that is not
+> HP-UX, though.
+>=20
+> How about wording it like this?
+>=20
+> Subject: pre-POSIX.1-2001 systems do not have <sys/select.h>
+>=20
+> POSIX.1-2001 has declaration of select(2) in <sys/select.h>, but
+> in previous version of SUS, it is declared in <sys/time.h>,
+> which is already included in git-compat-util.h.
+>=20
+> This introduces NO_SYS_SELECT_H macro in the Makefile to be set
+> on older systems, to skip inclusion of <sys/select.h> that does
+> not exist on them.
+>=20
+> We could check _POSIX_VERSION with 200112L and do this
+> automatically, but earlier it was reported that the approach
+> does not work well on some vintage of HP-UX.  Other systems may
+> get _POSIX_VERSION itself wrong.  At least for now, this manual
+> configuration is safer.
 
-Documentation/repository-layout.txt in the distribution
+I have no strong opinion on the wording.  Sounds reasonable to me.
 
-Debian for one installs this to
-/usr/share/doc/git-doc/repository-layout.html
+Robert
 
-Sam.
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
+
+"Quidquid latine dictum sit, altum sonatur."
+
+--Epi5nlKhkk4Kf+ga
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.4-svn0 (GNU/Linux)
+
+iD8DBQFHmQnrxcDFxyGNGNcRAtORAKDzAd6mi7L5DX75H33/3GC5q6nN6wCfS05c
+kcIR4tawD803urAdfPaFVQg=
+=aK/b
+-----END PGP SIGNATURE-----
+
+--Epi5nlKhkk4Kf+ga--
