@@ -1,79 +1,63 @@
-From: Willy Tarreau <w@1wt.eu>
+From: "J. Bruce Fields" <bfields@fieldses.org>
 Subject: Re: Multiple working trees with GIT ?
-Date: Thu, 24 Jan 2008 15:10:41 +0100
-Message-ID: <20080124141041.GF13247@1wt.eu>
-References: <20080124074952.GA8793@1wt.eu> <Pine.LNX.4.64.0801240947230.14173@reaper.quantumfyre.co.uk> <alpine.LSU.1.00.0801241102260.5731@racer.site> <20080124125606.GB13247@1wt.eu> <alpine.LSU.1.00.0801241336510.5731@racer.site>
+Date: Thu, 24 Jan 2008 09:51:28 -0500
+Message-ID: <20080124145128.GA26164@fieldses.org>
+References: <20080124074952.GA8793@1wt.eu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 24 15:43:42 2008
+Cc: git@vger.kernel.org
+To: Willy Tarreau <w@1wt.eu>
+X-From: git-owner@vger.kernel.org Thu Jan 24 15:52:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JI3IO-0005oW-0R
-	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 15:43:12 +0100
+	id 1JI3Qv-0001r8-AF
+	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 15:52:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753104AbYAXOmI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2008 09:42:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753723AbYAXOmI
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 09:42:08 -0500
-Received: from 1wt.eu ([62.212.114.60]:1594 "EHLO 1wt.eu"
+	id S1752385AbYAXOva (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2008 09:51:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752337AbYAXOva
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 09:51:30 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:36222 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753330AbYAXOmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2008 09:42:04 -0500
+	id S1752153AbYAXOv3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2008 09:51:29 -0500
+Received: from bfields by fieldses.org with local (Exim 4.68)
+	(envelope-from <bfields@fieldses.org>)
+	id 1JI3QO-0006wp-Du; Thu, 24 Jan 2008 09:51:28 -0500
 Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0801241336510.5731@racer.site>
-User-Agent: Mutt/1.5.11
+In-Reply-To: <20080124074952.GA8793@1wt.eu>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71621>
 
-On Thu, Jan 24, 2008 at 01:38:45PM +0000, Johannes Schindelin wrote:
-> Hi,
+On Thu, Jan 24, 2008 at 08:49:52AM +0100, Willy Tarreau wrote:
+> Hi all,
 > 
-> On Thu, 24 Jan 2008, Willy Tarreau wrote:
+> I'm having long thoughts about how to use GIT to manage a distro. One of
+> the aspects which comes very often is the notion of "variant" for a
+> packaging. For instance, the whole project could consist in a list of packages
+> with their branches, but this list may vary depending on the platform, the
+> medium, etc... I was searching how to propagate common changes withing variants
+> with the least hassle.
 > 
-> > On Thu, Jan 24, 2008 at 11:04:42AM +0000, Johannes Schindelin wrote:
-> > 
-> > > On Thu, 24 Jan 2008, Julian Phillips wrote:
-> > > 
-> > > > You might want to have a look at the git-new-workdir script in 
-> > > > contrib, it does basically the same thing.  It's been there for 
-> > > > about 10 months now. It was based on an email from Junio:
-> > > > 
-> > > > http://article.gmane.org/gmane.comp.version-control.git/41513/
-> > > 
-> > > FWIW I have a patch to do something like that in "git branch" itself.
-> > >
-> > > > However, there are some caveats about using this approach, basically 
-> > > > about the fact that there is nothing stopping you from updating refs 
-> > > > that are currently checked out in another directory and causing 
-> > > > yourself all sorts of pain ... the topic has cropped up a couple of 
-> > > > times on the list since the script was added.
-> > > 
-> > > I agree; maybe we should have a telltale file 
-> > > "refs/heads/<bla>.checkedout" which is heeded by "git checkout" and 
-> > > "git branch -d/-D", as well as update_ref() (should only update that 
-> > > ref when it HEAD points to it)?
-> > 
-> > Why not generalize this into HEAD.$branch (thus limiting to one checkout 
-> > per branch) or HEAD.$checkoutdir ?
+> I figured out that having one file list per variant will be very annoying. In
+> another project, that's already what I have and frankly, applying the same
+> change to 10 files is counter-productive. Since the lists will often be the
+> sames except for a few entries, and since most updates will be relevant to
+> all variants, I thought branches will be my best friends.
 > 
-> Because multiple working trees for the same repository will always be a 
-> second-class citizen.  And I would rather not affect the common case too 
-> much.
+> But I would like to be able to always access file lists, without having to
+> constantly git-checkout <variant-X>.
 
-OK.
+Could just read-only access with git-show be enough for your purposes?:
 
-> Having a "lock" file which is heeded by just a few places which are 
-> supposed to update refs (thinking about it, just update_ref() should be 
-> enough), is at least a well-contained change.
+	git show <branch-name>:		# show top-level directory,
+	git show <branch-name>:lib/	# show lib/ directory, etc....
+	git show <branch-name>:lib/Makefile
 
-indeed, with the appropriate warnings/error messages, that makes a lot of sense.
-
-Cheers,
-Willy
+--b.
