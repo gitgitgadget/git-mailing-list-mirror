@@ -1,7 +1,7 @@
 From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 2/4] Refactor --diff-opts handling
-Date: Thu, 24 Jan 2008 09:07:33 +0100
-Message-ID: <20080124080726.25525.485.stgit@yoghurt>
+Subject: [StGit PATCH 3/4] Let "stg show" use the unified --diff-opts handling
+Date: Thu, 24 Jan 2008 09:08:04 +0100
+Message-ID: <20080124080739.25525.45807.stgit@yoghurt>
 References: <20080124075935.25525.24416.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -9,314 +9,79 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>,
 	Yann Dirson <ydirson@altern.org>
 To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 24 09:08:16 2008
+X-From: git-owner@vger.kernel.org Thu Jan 24 09:08:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JHx87-0005qW-Os
-	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 09:08:12 +0100
+	id 1JHx8b-0005yO-Hk
+	for gcvg-git-2@gmane.org; Thu, 24 Jan 2008 09:08:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753043AbYAXIHk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2008 03:07:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753016AbYAXIHk
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 03:07:40 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4370 "EHLO
+	id S1753063AbYAXIIL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2008 03:08:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753033AbYAXIIK
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 03:08:10 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4374 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752948AbYAXIHj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2008 03:07:39 -0500
+	with ESMTP id S1752843AbYAXIIJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2008 03:08:09 -0500
 Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
 	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1JHx7V-0005Ju-00; Thu, 24 Jan 2008 08:07:33 +0000
+	id 1JHx80-0005Kt-00; Thu, 24 Jan 2008 08:08:04 +0000
 In-Reply-To: <20080124075935.25525.24416.stgit@yoghurt>
 User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71602>
 
-Lots of commands take a -O/--diff-opts flag, and they all handle it
-identically. So break that out into a library function.
+This introduces a small UI change: "stg show" called that flag
+--show-opts. This could of course be avoided, but I don't think it's
+worth it, since git-diff and git-show accept mostly the same options.
 
 Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
 ---
 
- stgit/commands/diff.py   |   14 ++++----------
- stgit/commands/edit.py   |   14 +++-----------
- stgit/commands/export.py |   12 +++---------
- stgit/commands/files.py  |   13 ++++---------
- stgit/commands/mail.py   |   12 +++---------
- stgit/commands/status.py |   12 +++---------
- stgit/utils.py           |   12 ++++++++++++
- 7 files changed, 32 insertions(+), 57 deletions(-)
+Catalin, do you agree?
+
+ stgit/commands/show.py |   13 ++++---------
+ 1 files changed, 4 insertions(+), 9 deletions(-)
 
 
-diff --git a/stgit/commands/diff.py b/stgit/commands/diff.py
-index 1425518..7c213d1 100644
---- a/stgit/commands/diff.py
-+++ b/stgit/commands/diff.py
-@@ -46,12 +46,10 @@ directory =3D DirectoryHasRepository()
- options =3D [make_option('-r', '--range',
-                        metavar =3D 'rev1[..[rev2]]', dest =3D 'revs',
-                        help =3D 'show the diff between revisions'),
--           make_option('-O', '--diff-opts',
--                       help =3D 'options to pass to git-diff'),
-            make_option('-s', '--stat',
-                        help =3D 'show the stat instead of the diff',
--                       action =3D 'store_true')]
--
-+                       action =3D 'store_true')
-+           ] + make_diff_opts_option()
-=20
- def func(parser, options, args):
-     """Show the tree diff
-@@ -83,16 +81,12 @@ def func(parser, options, args):
-         rev1 =3D 'HEAD'
-         rev2 =3D None
-=20
--    if options.diff_opts:
--        diff_flags =3D options.diff_opts.split()
--    else:
--        diff_flags =3D []
--
-     if options.stat:
-         out.stdout_raw(git.diffstat(args, git_id(crt_series, rev1),
-                                     git_id(crt_series, rev2)) + '\n')
-     else:
-         diff_str =3D git.diff(args, git_id(crt_series, rev1),
--                            git_id(crt_series, rev2), diff_flags =3D d=
-iff_flags )
-+                            git_id(crt_series, rev2),
-+                            diff_flags =3D options.diff_flags)
-         if diff_str:
-             pager(diff_str)
-diff --git a/stgit/commands/edit.py b/stgit/commands/edit.py
-index 2e8ae37..da67275 100644
---- a/stgit/commands/edit.py
-+++ b/stgit/commands/edit.py
-@@ -61,8 +61,6 @@ directory =3D DirectoryGotoToplevel()
- options =3D [make_option('-d', '--diff',
-                        help =3D 'edit the patch diff',
+diff --git a/stgit/commands/show.py b/stgit/commands/show.py
+index 72d1be3..b77a9c8 100644
+--- a/stgit/commands/show.py
++++ b/stgit/commands/show.py
+@@ -38,9 +38,8 @@ options =3D [make_option('-b', '--branch',
                         action =3D 'store_true'),
--           make_option('-O', '--diff-opts',
--                       help =3D 'options to pass to git-diff'),
-            make_option('--undo',
-                        help =3D 'revert the commit generated by the la=
-st edit',
-                        action =3D 'store_true'),
-@@ -80,7 +78,8 @@ options =3D [make_option('-d', '--diff',
-                        help =3D 'replace the committer name with COMMN=
-AME'),
-            make_option('--commemail',
-                        help =3D 'replace the committer e-mail with COM=
-MEMAIL')
--           ] + make_sign_options() + make_message_options()
-+           ] + (make_sign_options() + make_message_options()
-+                + make_diff_opts_option())
-=20
- def __update_patch(pname, text, options):
-     """Update the current patch from the given text.
-@@ -130,13 +129,6 @@ def __generate_file(pname, write_fn, options):
-     """
-     patch =3D crt_series.get_patch(pname)
-=20
--    if options.diff_opts:
--        if not options.diff:
--            raise CmdException, '--diff-opts only available with --dif=
-f'
--        diff_flags =3D options.diff_opts.split()
--    else:
--        diff_flags =3D []
--
-     # generate the file to be edited
-     descr =3D patch.get_description().strip()
-     authdate =3D patch.get_authdate()
-@@ -164,7 +156,7 @@ def __generate_file(pname, write_fn, options):
-=20
-         tmpl_dict['diffstat'] =3D git.diffstat(rev1 =3D bottom, rev2 =3D=
- top)
-         tmpl_dict['diff'] =3D git.diff(rev1 =3D bottom, rev2 =3D top,
--                                     diff_flags =3D diff_flags)
-+                                     diff_flags =3D options.diff_flags=
-)
-=20
-     for key in tmpl_dict:
-         # make empty strings if key is not available
-diff --git a/stgit/commands/export.py b/stgit/commands/export.py
-index 9131729..16c64ba 100644
---- a/stgit/commands/export.py
-+++ b/stgit/commands/export.py
-@@ -64,11 +64,10 @@ options =3D [make_option('-d', '--dir',
-                        help =3D 'Use FILE as a template'),
-            make_option('-b', '--branch',
-                        help =3D 'use BRANCH instead of the default one=
-'),
--           make_option('-O', '--diff-opts',
--                       help =3D 'options to pass to git-diff'),
-            make_option('-s', '--stdout',
-                        help =3D 'dump the patches to the standard outp=
-ut',
--                       action =3D 'store_true')]
+            make_option('-u', '--unapplied',
+                        help =3D 'show the unapplied patches',
+-                       action =3D 'store_true'),
+-           make_option('-O', '--show-opts',
+-                       help =3D 'options to pass to "git show"')]
 +                       action =3D 'store_true')
 +           ] + make_diff_opts_option()
 =20
 =20
  def func(parser, options, args):
-@@ -89,11 +88,6 @@ def func(parser, options, args):
-             os.makedirs(dirname)
-         series =3D file(os.path.join(dirname, 'series'), 'w+')
+@@ -62,13 +61,9 @@ def func(parser, options, args):
+             patches =3D parse_patches(args, applied + unapplied + \
+                                     crt_series.get_hidden(), len(appli=
+ed))
 =20
--    if options.diff_opts:
--        diff_flags =3D options.diff_opts.split()
+-    if options.show_opts:
+-        show_flags =3D options.show_opts.split()
 -    else:
--        diff_flags =3D []
+-        show_flags =3D []
 -
-     applied =3D crt_series.get_applied()
-     if len(args) !=3D 0:
-         patches =3D parse_patches(args, applied)
-@@ -180,7 +174,7 @@ def func(parser, options, args):
-         f.write(descr)
-         f.write(git.diff(rev1 =3D patch.get_bottom(),
-                          rev2 =3D patch.get_top(),
--                         diff_flags =3D diff_flags))
-+                         diff_flags =3D options.diff_flags))
-         if not options.stdout:
-             f.close()
-         patch_no +=3D 1
-diff --git a/stgit/commands/files.py b/stgit/commands/files.py
-index 4550251..ab1f6a3 100644
---- a/stgit/commands/files.py
-+++ b/stgit/commands/files.py
-@@ -40,11 +40,10 @@ options =3D [make_option('-s', '--stat',
-                        action =3D 'store_true'),
-            make_option('-b', '--branch',
-                        help =3D 'use BRANCH instead of the default one=
-'),
--           make_option('-O', '--diff-opts',
--                       help =3D 'options to pass to git-diff'),
-            make_option('--bare',
-                        help =3D 'bare file names (useful for scripting=
-)',
--                       action =3D 'store_true')]
-+                       action =3D 'store_true')
-+           ] + make_diff_opts_option()
-=20
-=20
- def func(parser, options, args):
-@@ -65,9 +64,5 @@ def func(parser, options, args):
-     elif options.bare:
-         out.stdout_raw(git.barefiles(rev1, rev2) + '\n')
-     else:
--        if options.diff_opts:
--            diff_flags =3D options.diff_opts.split()
--        else:
--            diff_flags =3D []
--
--        out.stdout_raw(git.files(rev1, rev2, diff_flags =3D diff_flags=
-) + '\n')
-+        out.stdout_raw(git.files(rev1, rev2, diff_flags =3D options.di=
-ff_flags)
-+                       + '\n')
-diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
-index eea84f2..4aa16fb 100644
---- a/stgit/commands/mail.py
-+++ b/stgit/commands/mail.py
-@@ -144,11 +144,10 @@ options =3D [make_option('-a', '--all',
-                        action =3D 'store_true'),
-            make_option('-b', '--branch',
-                        help =3D 'use BRANCH instead of the default one=
-'),
--           make_option('-O', '--diff-opts',
--                       help =3D 'options to pass to git-diff'),
-            make_option('-m', '--mbox',
-                        help =3D 'generate an mbox file instead of send=
-ing',
--                       action =3D 'store_true')]
-+                       action =3D 'store_true')
-+           ] + make_diff_opts_option()
-=20
-=20
- def __get_sender():
-@@ -426,11 +425,6 @@ def __build_message(tmpl, patch, patch_nr, total_n=
-r, msg_id, ref_id, options):
-             prefix_str =3D confprefix + ' '
-         else:
-             prefix_str =3D ''
--       =20
--    if options.diff_opts:
--        diff_flags =3D options.diff_opts.split()
--    else:
--        diff_flags =3D []
-=20
-     total_nr_str =3D str(total_nr)
-     patch_nr_str =3D str(patch_nr).zfill(len(total_nr_str))
-@@ -450,7 +444,7 @@ def __build_message(tmpl, patch, patch_nr, total_nr=
-, msg_id, ref_id, options):
-                  'diff':         git.diff(
-                      rev1 =3D git_id(crt_series, '%s//bottom' % patch)=
-,
-                      rev2 =3D git_id(crt_series, '%s//top' % patch),
--                     diff_flags =3D diff_flags),
-+                     diff_flags =3D options.diff_flags),
-                  'diffstat':     git.diffstat(
-                      rev1 =3D git_id(crt_series, '%s//bottom'%patch),
-                      rev2 =3D git_id(crt_series, '%s//top' % patch)),
-diff --git a/stgit/commands/status.py b/stgit/commands/status.py
-index 02a5832..6da4516 100644
---- a/stgit/commands/status.py
-+++ b/stgit/commands/status.py
-@@ -59,11 +59,10 @@ options =3D [make_option('-m', '--modified',
-            make_option('-x', '--noexclude',
-                        help =3D 'do not exclude any files from listing=
-',
-                        action =3D 'store_true'),
--           make_option('-O', '--diff-opts',
--                       help =3D 'options to pass to git-diff'),
-            make_option('--reset',
-                        help =3D 'reset the current tree changes',
--                       action =3D 'store_true')]
-+                       action =3D 'store_true')
-+           ] + make_diff_opts_option()
-=20
-=20
- def status(files, modified, new, deleted, conflict, unknown, noexclude=
-,
-@@ -115,11 +114,6 @@ def func(parser, options, args):
-             resolved_all()
-             git.reset()
-     else:
--        if options.diff_opts:
--            diff_flags =3D options.diff_opts.split()
--        else:
--            diff_flags =3D []
--
-         status(args, options.modified, options.new, options.deleted,
-                options.conflict, options.unknown, options.noexclude,
--               diff_flags =3D diff_flags)
-+               options.diff_flags)
-diff --git a/stgit/utils.py b/stgit/utils.py
-index 2ff1d74..00776b0 100644
---- a/stgit/utils.py
-+++ b/stgit/utils.py
-@@ -313,6 +313,18 @@ def make_message_options():
-               metavar =3D 'FILE', dest =3D 'save_template', type =3D '=
-string',
-               help =3D 'save the message template to FILE and exit')]
-=20
-+def make_diff_opts_option():
-+    def diff_opts_callback(option, opt_str, value, parser):
-+        if value:
-+            parser.values.diff_flags.extend(value.split())
-+        else:
-+            parser.values.diff_flags =3D []
-+    return [optparse.make_option(
-+        '-O', '--diff-opts', dest =3D 'diff_flags', default =3D [],
-+        action =3D 'callback', callback =3D diff_opts_callback,
-+        type =3D 'string', metavar =3D 'OPTIONS',
-+        help =3D 'extra options to pass to "git diff"')]
-+
- # Exit codes.
- STGIT_SUCCESS =3D 0        # everything's OK
- STGIT_GENERAL_ERROR =3D 1  # seems to be non-command-specific error
+     commit_ids =3D [git_id(crt_series, patch) for patch in patches]
+-    commit_str =3D '\n'.join([git.pretty_commit(commit_id, flags =3D s=
+how_flags)
++    commit_str =3D '\n'.join([git.pretty_commit(commit_id,
++                                              flags =3D options.diff_f=
+lags)
+                             for commit_id in commit_ids])
+     if commit_str:
+         pager(commit_str)
