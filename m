@@ -1,84 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: On pathnames
-Date: Fri, 25 Jan 2008 00:59:10 -0500
-Message-ID: <20080125055910.GB21973@coredump.intra.peff.net>
-References: <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org> <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org> <20080123094052.GB6969@glandium.org> <20080123133802.GC7415@mit.edu> <alpine.LFD.1.00.0801230808440.1741@woody.linux-foundation.org> <98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org> <alpine.LFD.1.00.0801230930390.1741@woody.linux-foundation.org> <7vprvr7x8h.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0801242227250.13593@iabervon.org>
+From: Jeremy Maitin-Shepard <jbms@cmu.edu>
+Subject: Re: I'm a total push-over..
+Date: Fri, 25 Jan 2008 00:21:16 -0500
+Message-ID: <87fxwmv5tf.fsf@jbms.ath.cx>
+References: <alpine.LFD.1.00.0801230922190.1741@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Kevin Ballard <kevin@sb.org>, Theodore Tso <tytso@MIT.EDU>,
-	Mike Hommey <mh@glandium.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Jan 25 07:00:06 2008
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jan 25 07:07:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIHbZ-0005wa-0M
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 06:59:57 +0100
+	id 1JIHj9-0007Xx-Q9
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 07:07:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757748AbYAYF7Q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jan 2008 00:59:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757381AbYAYF7Q
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 00:59:16 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3995 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757332AbYAYF7N (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 00:59:13 -0500
-Received: (qmail 18388 invoked by uid 111); 25 Jan 2008 05:59:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 25 Jan 2008 00:59:11 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Jan 2008 00:59:10 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.1.00.0801242227250.13593@iabervon.org>
+	id S1751295AbYAYGHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2008 01:07:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752017AbYAYGHR
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 01:07:17 -0500
+Received: from deleuze.hcoop.net ([69.90.123.67]:56980 "EHLO deleuze.hcoop.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750954AbYAYGHP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 01:07:15 -0500
+X-Greylist: delayed 2754 seconds by postgrey-1.27 at vger.kernel.org; Fri, 25 Jan 2008 01:07:15 EST
+Received: from c-67-165-107-197.hsd1.pa.comcast.net ([67.165.107.197] helo=localhost)
+	by deleuze.hcoop.net with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <jbms@cmu.edu>)
+	id 1JIH0A-0007Xu-16; Fri, 25 Jan 2008 00:21:18 -0500
+In-Reply-To: <alpine.LFD.1.00.0801230922190.1741@woody.linux-foundation.org>
+X-Habeas-SWE-9: mark in spam to <http://www.habeas.com/report/>.
+X-Habeas-SWE-8: Message (HCM) and not spam. Please report use of this
+X-Habeas-SWE-7: warrant mark warrants that this is a Habeas Compliant
+X-Habeas-SWE-6: email in exchange for a license for this Habeas
+X-Habeas-SWE-5: Sender Warranted Email (SWE) (tm). The sender of this
+X-Habeas-SWE-4: Copyright 2002 Habeas (tm)
+X-Habeas-SWE-3: like Habeas SWE (tm)
+X-Habeas-SWE-2: brightly anticipated
+X-Habeas-SWE-1: winter into spring
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71682>
 
-On Thu, Jan 24, 2008 at 11:00:44PM -0500, Daniel Barkalow wrote:
+Linus Torvalds wrote:
+[snip]
+> So what you can do (and I'd argue that we do) is to have a hash that can 
+> handle almost arbitrary input, but then never corrupt the filename, and 
+> always compare exactly by default.
 
-> I think it would be nicer to have:
->=20
-> $ git checkout branch
-> Warning: xt_CONNMARK.c conflicts with xt_connmark.c; not checking it =
-out
-> $ git checkout xt_CONNMARK.c --as xt_CONNMARK_caps.c
-> $ edit xt_CONNMARK_caps.c
-> $ git add xt_CONNMARK_caps.c
->=20
-> Where the index, when support for filesystems with filename restricti=
-ons=20
-> is enabled, keeps track both of the name of the file in the project a=
-nd=20
-> the name of the file in the filesystem, with this mapping determined=20
-> entirely by the user asking for problem files to be present under=20
-> different names in the working tree.
+In general, there may be a large number of comparison function options
+that git will eventually support, and they will likely not all form a
+single chain of increasing "strictness".
 
-Hrm. That makes me think: what if rather than doing utf8-ish
-comparisons, the index stores a bidirectional mapping for any "munged"
-names, and you can manipulate that mapping?
+Given that the hash values aren't even being stored on disk (and if they
+were, a simple approach of also storing an identifier for the hash
+function to know whether they stored values are still valid could be
+used), having a chain of increasingly "strict" comparison functions and
+using a hash function that corresponds to the least strict one is useful
+for exactly one reason: giving (possibly several different levels of)
+non-fatal warnings for various types of duplicates.
 
-As in, the index entry for M=E4rchen has an extra entry saying "I am
-actually on the filesystem as Ma"rchen" (let's call this an alias) and
-there is a pseudo-entry in the index for Ma"rchen that says "I'm not
-really here. See M=E4rchen" (let's call this a backref).
+But since multiple hash functions will be needed anyway to support
+different notions of case-insensitivity, if the warning is not enabled,
+there is no reason to use a case-insensitive hash function with a
+byte-exact comparison.
 
-Then index-modifying commands like "git-add" or "git-checkout" can set
-up the mapping, either manually (using --as or similar) or using a
-particular munging scheme (git config core.filemunge hfs). Any time we
-give an index path to the filesystem, we use its alias name. Any time w=
-e
-look up an index entry and it ends up being a backref, we dereference
-until we get a real entry. Index iterators would need to skip backrefs.
-
-I think all systems would follow the same codepath, there is no penalty
-for filenames which don't use the mapping, and it would be testable on
-non-challenged filesystems. But perhaps I am missing some obvious
-deficiency or impossibility.
-
--Peff
+-- 
+Jeremy Maitin-Shepard
