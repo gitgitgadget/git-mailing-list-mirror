@@ -1,118 +1,92 @@
-From: Chris Mason <chris.mason@oracle.com>
-Subject: Re: [Btrfs-devel] btrfs and git-reflog
-Date: Fri, 25 Jan 2008 10:50:16 -0500
-Message-ID: <200801251050.16697.chris.mason@oracle.com>
-References: <873asmcodd.fsf@burly.wgtn.ondioline.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: On pathnames
+Date: Fri, 25 Jan 2008 11:25:05 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0801251111540.13593@iabervon.org>
+References: <34103945-2078-4983-B409-2D01EF071A8B@sb.org> <alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org> <E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org> <20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu>
+ <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org> <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org> <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org> <20080123094052.GB6969@glandium.org> <20080123133802.GC7415@mit.edu>
+ <alpine.LFD.1.00.0801230808440.1741@woody.linux-foundation.org> <98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org> <alpine.LFD.1.00.0801230930390.1741@woody.linux-foundation.org> <7vprvr7x8h.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0801242227250.13593@iabervon.org>
+ <7vprvq7cy7.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801251134570.5731@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Paul Collins <paul@burly.ondioline.org>, git@vger.kernel.org
-To: btrfs-devel@oss.oracle.com
-X-From: git-owner@vger.kernel.org Fri Jan 25 16:51:12 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Kevin Ballard <kevin@sb.org>, Theodore Tso <tytso@MIT.EDU>,
+	Mike Hommey <mh@glandium.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 25 17:25:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIQpj-0008AM-CC
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 16:51:11 +0100
+	id 1JIRN6-0005Ye-R6
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 17:25:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757134AbYAYPum (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2008 10:50:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757093AbYAYPum
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 10:50:42 -0500
-Received: from rgminet01.oracle.com ([148.87.113.118]:44888 "EHLO
-	rgminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757105AbYAYPuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 10:50:40 -0500
-Received: from agmgw1.us.oracle.com (agmgw1.us.oracle.com [152.68.180.212])
-	by rgminet01.oracle.com (Switch-3.2.4/Switch-3.1.6) with ESMTP id m0PFoTQD015854;
-	Fri, 25 Jan 2008 08:50:29 -0700
-Received: from acsmt353.oracle.com (acsmt353.oracle.com [141.146.40.153])
-	by agmgw1.us.oracle.com (Switch-3.2.0/Switch-3.2.0) with ESMTP id m0OKQXuM018564;
-	Fri, 25 Jan 2008 08:50:29 -0700
-Received: from cpe-72-225-43-119.rochester.res.rr.com by acsmt359.oracle.com
-	with ESMTP id 7020369921201276226; Fri, 25 Jan 2008 09:50:26 -0600
-User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
-In-Reply-To: <873asmcodd.fsf@burly.wgtn.ondioline.org>
-Content-Disposition: inline
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
-X-Whitelist: TRUE
+	id S1753277AbYAYQZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2008 11:25:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753164AbYAYQZJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 11:25:09 -0500
+Received: from iabervon.org ([66.92.72.58]:40604 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752482AbYAYQZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 11:25:07 -0500
+Received: (qmail 13123 invoked by uid 1000); 25 Jan 2008 16:25:05 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 25 Jan 2008 16:25:05 -0000
+In-Reply-To: <alpine.LSU.1.00.0801251134570.5731@racer.site>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71716>
 
-On Friday 25 January 2008, Paul Collins wrote:
-> I was just playing with git 1.5.3.8 and btrfs 0.11, and I noticed
-> something odd.
->
-> If I prepare a very simple repository:
->
->   $ mkdir foo
->   $ cd foo
->   $ git init
->   Initialized empty Git repository in .git/
->   $ echo hi > blort
->   $ git add .
->   $ git commit -m create
->   Created initial commit 4ae9415: create
->    1 files changed, 1 insertions(+), 0 deletions(-)
->    create mode 100644 blort
->
-> and then attempt to expire the reflogs
->
->   $ git-reflog expire --all
->
-> on ext3, git-reflog completes its work and exits immediately;
->
-> and on btrfs, it gets stuck in some sort of loop that causes it to
-> allocate more and more memory until I kill it or it pushes the
-> machine into OOM.
->
-It works something like this:
+On Fri, 25 Jan 2008, Johannes Schindelin wrote:
 
-readdir(.git/logs/refs/heads)
-# this returns .git/logs/refs/heads/master
-# <do some work>
+> Hi,
+> 
+> On Thu, 24 Jan 2008, Junio C Hamano wrote:
+> 
+> > Daniel Barkalow <barkalow@iabervon.org> writes:
+> > 
+> > > $ git checkout branch
+> > > Warning: xt_CONNMARK.c conflicts with xt_connmark.c; not checking it out
+> > > $ git checkout xt_CONNMARK.c --as xt_CONNMARK_caps.c
+> > > $ edit xt_CONNMARK_caps.c
+> > > $ git add xt_CONNMARK_caps.c
+> > 
+> > Heh, I like that very much.
+> 
+> It would make it easier to test on Linux, too, yes.
+> 
+> But then, it would break the build process all the same.
 
-open(.git/logs/refs/heads/master.lock, O_CREAT);
-# <do more work>, write to master.lock
+Sure, but it would permit a user of a filesystem that can't handle the 
+project to make modifications that generate a commit the filesystem can 
+handle, which is currently pretty difficult.
 
-rename(master.lock, master)
+$ git checkout xt_CONNMARK.c --as xt_CONNMARK_tmp.c
+$ mv xt_CONNMARK_tmp.c xt_connmark_flag.c
+$ edit Makefile
+$ git add xt_connmark_flag.c
+$ git commit -a
 
-readdir(.git/logs/refs/heads)
+(The key thing here being that git will determine that you removed 
+xt_CONNMARK.c despite open(xt_CONNMARK.c) returning something unrelated)
 
-readdir again returns .git/logs/refs/heads/master, which is arguably
-correct.  It is a new file that just happens to have a name
-that git already saw.  So, git loops over this file infinitely because
-it doesn't realize it has already processed it.
+Remember that this level of support is to allow users who can't have the 
+project checked out in their filesystems to manipulate the project's data, 
+not to actually make the project work as presented in the filesystem by 
+git.
 
-This happens because btrfs doesn't return the hash of the
-file name as the offset to readdir.  It returns the inode number,
-and since master is a new file, btrfs considers it a non-duplicate
-entry.
+> And the implementation would _need_ the index extension Linus seems to 
+> resent so.
 
-The btrfs patch below changes my readdir code to force the
-directory f_pos field to the max offset allowed when we've
-seen all the directory entries.  This prevents the readdir
-call from looping forever in the face of newly added files.
+Linus was objecting to having redundant information stored, because it 
+could get skewed. If the information being stored is not redundant (i.e., 
+the normal case is that entries have a flag saying they exist in the 
+filesystem under their own names, and the new cases are that the entry 
+isn't present in the filesystem at all or that the entry is present in the 
+filesystem under some other name), that isn't an issue.
 
-But, git might want to add some checks to see if it has
-already processed things.
-
-diff -r 21e9b461f802 inode.c
---- a/inode.c	Thu Jan 24 16:13:14 2008 -0500
-+++ b/inode.c	Fri Jan 25 10:28:49 2008 -0500
-@@ -1430,7 +1431,7 @@ read_dir_items:
- 			di = (struct btrfs_dir_item *)((char *)di + di_len);
- 		}
- 	}
--	filp->f_pos++;
-+	filp->f_pos = INT_LIMIT(typeof(filp->f_pos));
- nopos:
- 	ret = 0;
- err:
+	-Daniel
+*This .sig left intentionally blank*
