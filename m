@@ -1,305 +1,261 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Reduce the number of connects when fetching
-Date: Fri, 25 Jan 2008 13:33:56 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0801251326260.13593@iabervon.org>
+Subject: [PATCH] Add support for host aliases in config files
+Date: Fri, 25 Jan 2008 13:39:03 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0801251336080.13593@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jan 25 19:34:31 2008
+X-From: git-owner@vger.kernel.org Fri Jan 25 19:39:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JITNl-00029Z-Jh
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 19:34:30 +0100
+	id 1JITSr-0004Lf-Qb
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 19:39:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754741AbYAYSd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2008 13:33:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754635AbYAYSd6
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 13:33:58 -0500
-Received: from iabervon.org ([66.92.72.58]:46211 "EHLO iabervon.org"
+	id S1754507AbYAYSjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2008 13:39:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754635AbYAYSjO
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 13:39:14 -0500
+Received: from iabervon.org ([66.92.72.58]:37078 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754036AbYAYSd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 13:33:57 -0500
-Received: (qmail 24814 invoked by uid 1000); 25 Jan 2008 18:33:56 -0000
+	id S1754382AbYAYSjN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 13:39:13 -0500
+Received: (qmail 25115 invoked by uid 1000); 25 Jan 2008 18:39:03 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 25 Jan 2008 18:33:56 -0000
+  by localhost with SMTP; 25 Jan 2008 18:39:03 -0000
 User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71725>
 
-This shares the connection between getting the remote ref list and
-getting objects in the first batch. (A second connection is still used
-to follow tags)
+This allows users with different preferences for access methods to the
+same remote repositories to rewrite each other's URLs to get the
+desired access.
+
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
-This got a certain amount of approval back in October and no comments 
-against it. There was further discussion on how to deal with the current 
-need for a second connection, but this patch is, in any case, a necessary 
-first step. I think it was primarily not included at the time because it 
-depended on the transport.c code which hadn't gotten into master at the 
-time.
+ Documentation/config.txt |   15 ++++++
+ remote.c                 |  112 ++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 124 insertions(+), 3 deletions(-)
 
- builtin-fetch-pack.c |   74 ++++++++++++++++++++++++++-----------------------
- fetch-pack.h         |    2 +
- transport.c          |   41 +++++++++++++++++++--------
- 3 files changed, 70 insertions(+), 47 deletions(-)
-
-diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
-index e68e015..0f63c81 100644
---- a/builtin-fetch-pack.c
-+++ b/builtin-fetch-pack.c
-@@ -7,6 +7,7 @@
- #include "pack.h"
- #include "sideband.h"
- #include "fetch-pack.h"
-+#include "remote.h"
- #include "run-command.h"
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 877eda9..dae79ce 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -596,6 +596,21 @@ help.format::
+ 	Values 'man', 'info', 'web' and 'html' are supported. 'man' is
+ 	the default. 'web' and 'html' are the same.
  
- static int transfer_unpack_limit = -1;
-@@ -548,14 +549,14 @@ static int get_pack(int xd[2], char **pack_lockfile)
- }
- 
- static struct ref *do_fetch_pack(int fd[2],
-+		const struct ref *orig_ref,
- 		int nr_match,
- 		char **match,
- 		char **pack_lockfile)
- {
--	struct ref *ref;
-+	struct ref *ref = copy_ref_list(orig_ref);
- 	unsigned char sha1[20];
- 
--	get_remote_heads(fd[0], &ref, 0, NULL, 0);
- 	if (is_repository_shallow() && !server_supports("shallow"))
- 		die("Server does not support shallow clients");
- 	if (server_supports("multi_ack")) {
-@@ -573,10 +574,6 @@ static struct ref *do_fetch_pack(int fd[2],
- 			fprintf(stderr, "Server supports side-band\n");
- 		use_sideband = 1;
- 	}
--	if (!ref) {
--		packet_flush(fd[1]);
--		die("no matching remote head");
--	}
- 	if (everything_local(&ref, nr_match, match)) {
- 		packet_flush(fd[1]);
- 		goto all_done;
-@@ -650,7 +647,7 @@ static void fetch_pack_setup(void)
- int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- {
- 	int i, ret, nr_heads;
--	struct ref *ref;
-+	struct ref *ref = NULL;
- 	char *dest = NULL, **heads;
- 
- 	nr_heads = 0;
-@@ -706,9 +703,34 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 	if (!dest)
- 		usage(fetch_pack_usage);
- 
--	ref = fetch_pack(&args, dest, nr_heads, heads, NULL);
-+	int fd[2];
-+	struct child_process *conn = git_connect(fd, (char *)dest, args.uploadpack,
-+                          args.verbose ? CONNECT_VERBOSE : 0);
-+	if (conn) {
-+		get_remote_heads(fd[0], &ref, 0, NULL, 0);
++host.<name>.base::
++	The base URL which should be used for this particular
++	host. This can be used by a user who has a better access
++	method to a repository than other users to make use of the
++	preferable path despite getting URLs from other users using
++	more commonly-available methods. Alternatively, a user who
++	only has less privileged access to a repository than the usual
++	audience can use this mechanism to replace disallowed methods
++	with public ones.
 +
-+		ref = fetch_pack(&args, fd, conn, ref, dest, nr_heads, heads, NULL);
-+		close(fd[0]);
-+		close(fd[1]);
-+		if (finish_connect(conn))
-+			ref = NULL;
-+	} else {
-+		ref = NULL;
-+	}
- 	ret = !ref;
++host.<name>.alias::
++	Additional base URLs which refer to this host. If a URL
++	matches this, any access to it will use the URL formed with
++	the corresponding base URL instead of the given URL.
++
+ http.proxy::
+ 	Override the HTTP proxy, normally configured using the 'http_proxy'
+ 	environment variable (see linkgit:curl[1]).  This can be overridden
+diff --git a/remote.c b/remote.c
+index 0e00680..76ed576 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2,6 +2,15 @@
+ #include "remote.h"
+ #include "refs.h"
  
-+	if (!ret && nr_heads) {
-+		/* If the heads to pull were given, we should have
-+		 * consumed all of them by matching the remote.
-+		 * Otherwise, 'git-fetch remote no-such-ref' would
-+		 * silently succeed without issuing an error.
-+		 */
-+		for (i = 0; i < nr_heads; i++)
-+			if (heads[i] && heads[i][0]) {
-+				error("no such remote ref %s", heads[i]);
-+				ret = 1;
-+			}
-+	}
- 	while (ref) {
- 		printf("%s %s\n",
- 		       sha1_to_hex(ref->old_sha1), ref->name);
-@@ -719,16 +741,15 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- }
++struct host {
++	const char *name;
++
++	const char *base;
++
++	const char **alias;
++	int alias_nr;
++};
++
+ static struct remote **remotes;
+ static int allocated_remotes;
  
- struct ref *fetch_pack(struct fetch_pack_args *my_args,
-+		       int fd[], struct child_process *conn,
-+		       const struct ref *ref,
- 		const char *dest,
- 		int nr_heads,
- 		char **heads,
- 		char **pack_lockfile)
- {
--	int i, ret;
--	int fd[2];
--	struct child_process *conn;
--	struct ref *ref;
- 	struct stat st;
-+	struct ref *ref_cpy;
+@@ -11,9 +20,32 @@ static int allocated_branches;
+ static struct branch *current_branch;
+ static const char *default_remote_name;
  
- 	fetch_pack_setup();
- 	memcpy(&args, my_args, sizeof(args));
-@@ -737,29 +758,15 @@ struct ref *fetch_pack(struct fetch_pack_args *my_args,
- 			st.st_mtime = 0;
- 	}
++static struct host **hosts;
++static int allocated_hosts;
++
+ #define BUF_SIZE (2048)
+ static char buffer[BUF_SIZE];
  
--	conn = git_connect(fd, (char *)dest, args.uploadpack,
--                          args.verbose ? CONNECT_VERBOSE : 0);
- 	if (heads && nr_heads)
- 		nr_heads = remove_duplicates(nr_heads, heads);
--	ref = do_fetch_pack(fd, nr_heads, heads, pack_lockfile);
--	close(fd[0]);
--	close(fd[1]);
--	ret = finish_connect(conn);
--
--	if (!ret && nr_heads) {
--		/* If the heads to pull were given, we should have
--		 * consumed all of them by matching the remote.
--		 * Otherwise, 'git-fetch remote no-such-ref' would
--		 * silently succeed without issuing an error.
--		 */
--		for (i = 0; i < nr_heads; i++)
--			if (heads[i] && heads[i][0]) {
--				error("no such remote ref %s", heads[i]);
--				ret = 1;
--			}
-+	if (!ref) {
-+		packet_flush(fd[1]);
-+		die("no matching remote head");
- 	}
-+	ref_cpy = do_fetch_pack(fd, ref, nr_heads, heads, pack_lockfile);
- 
--	if (!ret && args.depth > 0) {
-+	if (args.depth > 0) {
- 		struct cache_time mtime;
- 		char *shallow = git_path("shallow");
- 		int fd;
-@@ -787,8 +794,5 @@ struct ref *fetch_pack(struct fetch_pack_args *my_args,
- 		}
- 	}
- 
--	if (ret)
--		ref = NULL;
--
--	return ref;
-+	return ref_cpy;
- }
-diff --git a/fetch-pack.h b/fetch-pack.h
-index a7888ea..8d35ef6 100644
---- a/fetch-pack.h
-+++ b/fetch-pack.h
-@@ -16,6 +16,8 @@ struct fetch_pack_args
- };
- 
- struct ref *fetch_pack(struct fetch_pack_args *args,
-+		int fd[], struct child_process *conn,
-+		const struct ref *ref,
- 		const char *dest,
- 		int nr_heads,
- 		char **heads,
-diff --git a/transport.c b/transport.c
-index babaa21..53fb2ec 100644
---- a/transport.c
-+++ b/transport.c
-@@ -563,6 +563,8 @@ struct git_transport_data {
- 	unsigned thin : 1;
- 	unsigned keep : 1;
- 	int depth;
-+	struct child_process *conn;
-+	int fd[2];
- 	const char *uploadpack;
- 	const char *receivepack;
- };
-@@ -593,20 +595,20 @@ static int set_git_option(struct transport *connection,
- 	return 1;
- }
- 
-+static int connect_setup(struct transport *transport)
++static const char *alias_url(const char *url)
 +{
-+	struct git_transport_data *data = transport->data;
-+	data->conn = git_connect(data->fd, transport->url, data->uploadpack, 0);
-+	return 0;
++	int i, j;
++	for (i = 0; i < allocated_hosts; i++) {
++		if (!hosts[i])
++			continue;
++		for (j = 0; j < hosts[i]->alias_nr; j++) {
++			if (!prefixcmp(url, hosts[i]->alias[j])) {
++				char *ret = malloc(strlen(hosts[i]->base) -
++						   strlen(hosts[i]->alias[j]) +
++						   strlen(url) + 1);
++				strcpy(ret, hosts[i]->base);
++				strcat(ret, url + strlen(hosts[i]->alias[j]));
++				return ret;
++			}
++		}
++	}
++	return url;
 +}
 +
- static struct ref *get_refs_via_connect(struct transport *transport)
+ static void add_push_refspec(struct remote *remote, const char *ref)
  {
- 	struct git_transport_data *data = transport->data;
- 	struct ref *refs;
--	int fd[2];
--	char *dest = xstrdup(transport->url);
--	struct child_process *conn = git_connect(fd, dest, data->uploadpack, 0);
- 
--	get_remote_heads(fd[0], &refs, 0, NULL, 0);
--	packet_flush(fd[1]);
--
--	finish_connect(conn);
--
--	free(dest);
-+	connect_setup(transport);
-+	get_remote_heads(data->fd[0], &refs, 0, NULL, 0);
- 
- 	return refs;
+ 	int nr = remote->push_refspec_nr + 1;
+@@ -41,6 +73,11 @@ static void add_url(struct remote *remote, const char *url)
+ 	remote->url_nr = nr;
  }
-@@ -617,7 +619,7 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	struct git_transport_data *data = transport->data;
- 	char **heads = xmalloc(nr_heads * sizeof(*heads));
- 	char **origh = xmalloc(nr_heads * sizeof(*origh));
--	struct ref *refs;
-+	const struct ref *refs;
- 	char *dest = xstrdup(transport->url);
- 	struct fetch_pack_args args;
- 	int i;
-@@ -632,13 +634,27 @@ static int fetch_refs_via_pack(struct transport *transport,
  
- 	for (i = 0; i < nr_heads; i++)
- 		origh[i] = heads[i] = xstrdup(to_fetch[i]->name);
--	refs = fetch_pack(&args, dest, nr_heads, heads, &transport->pack_lockfile);
++static void add_url_alias(struct remote *remote, const char *url)
++{
++	add_url(remote, alias_url(url));
++}
 +
-+	refs = transport_get_remote_refs(transport);
-+	if (!data->conn) {
-+		struct ref *refs_tmp;
-+		connect_setup(transport);
-+		get_remote_heads(data->fd[0], &refs_tmp, 0, NULL, 0);
-+		free_refs(refs_tmp);
+ static struct remote *make_remote(const char *name, int len)
+ {
+ 	int i, empty = -1;
+@@ -121,6 +158,48 @@ static struct branch *make_branch(const char *name, int len)
+ 	return branches[empty];
+ }
+ 
++static struct host *make_host(const char *name, int len)
++{
++	int i, empty = -1;
++
++	for (i = 0; i < allocated_hosts; i++) {
++		if (!hosts[i]) {
++			if (empty < 0)
++				empty = i;
++		} else {
++			if (len ? (!strncmp(name, hosts[i]->name, len) &&
++				   !hosts[i]->name[len]) :
++			    !strcmp(name, hosts[i]->name))
++				return hosts[i];
++		}
 +	}
 +
-+	refs = fetch_pack(&args, data->fd, data->conn, transport->remote_refs,
-+			  dest, nr_heads, heads, &transport->pack_lockfile);
-+	close(data->fd[0]);
-+	close(data->fd[1]);
-+	if (finish_connect(data->conn))
-+		refs = NULL;
-+	data->conn = NULL;
++	if (empty < 0) {
++		empty = allocated_hosts;
++		allocated_hosts += allocated_hosts ? allocated_hosts : 1;
++		hosts = xrealloc(hosts,
++				 sizeof(*hosts) * allocated_hosts);
++		memset(hosts + empty, 0,
++		       (allocated_hosts - empty) * sizeof(*hosts));
++	}
++	hosts[empty] = xcalloc(1, sizeof(struct host));
++	if (len)
++		hosts[empty]->name = xstrndup(name, len);
++	else
++		hosts[empty]->name = xstrdup(name);
++
++	return hosts[empty];
++}
++
++static void add_alias(struct host *host, const char *name)
++{
++	int nr = host->alias_nr + 1;
++	host->alias =
++		xrealloc(host->alias, nr * sizeof(char *));
++	host->alias[nr-1] = name;
++	host->alias_nr = nr;
++}
++
+ static void read_remotes_file(struct remote *remote)
+ {
+ 	FILE *f = fopen(git_path("remotes/%s", remote->name), "r");
+@@ -154,7 +233,7 @@ static void read_remotes_file(struct remote *remote)
  
- 	for (i = 0; i < nr_heads; i++)
- 		free(origh[i]);
- 	free(origh);
- 	free(heads);
--	free_refs(refs);
- 	free(dest);
- 	return (refs ? 0 : -1);
+ 		switch (value_list) {
+ 		case 0:
+-			add_url(remote, xstrdup(s));
++			add_url_alias(remote, xstrdup(s));
+ 			break;
+ 		case 1:
+ 			add_push_refspec(remote, xstrdup(s));
+@@ -206,7 +285,7 @@ static void read_branches_file(struct remote *remote)
+ 	} else {
+ 		branch = "refs/heads/master";
+ 	}
+-	add_url(remote, p);
++	add_url_alias(remote, p);
+ 	add_fetch_refspec(remote, branch);
+ 	remote->fetch_tags = 1; /* always auto-follow */
  }
-@@ -721,6 +737,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 		ret->disconnect = disconnect_git;
+@@ -233,6 +312,20 @@ static int handle_config(const char *key, const char *value)
+ 			add_merge(branch, xstrdup(value));
+ 		return 0;
+ 	}
++	if (!prefixcmp(key, "host.")) {
++		struct host *host;
++		name = key + 5;
++		subkey = strrchr(name, '.');
++		if (!subkey)
++			return 0;
++		host = make_host(name, subkey - name);
++		if (!value)
++			return 0;
++		if (!strcmp(subkey, ".base"))
++			host->base = xstrdup(value);
++	        else if (!strcmp(subkey, ".alias"))
++			add_alias(host, xstrdup(value));
++	}
+ 	if (prefixcmp(key,  "remote."))
+ 		return 0;
+ 	name = key + 7;
+@@ -284,6 +377,18 @@ static int handle_config(const char *key, const char *value)
+ 	return 0;
+ }
  
- 		data->thin = 1;
-+		data->conn = NULL;
- 		data->uploadpack = "git-upload-pack";
- 		if (remote && remote->uploadpack)
- 			data->uploadpack = remote->uploadpack;
++static void alias_all_urls(void)
++{
++	int i, j;
++	for (i = 0; i < allocated_remotes; i++) {
++		if (!remotes[i])
++			continue;
++		for (j = 0; j < remotes[i]->url_nr; j++) {
++			remotes[i]->url[j] = alias_url(remotes[i]->url[j]);
++		}
++	}
++}
++
+ static void read_config(void)
+ {
+ 	unsigned char sha1[20];
+@@ -300,6 +405,7 @@ static void read_config(void)
+ 			make_branch(head_ref + strlen("refs/heads/"), 0);
+ 	}
+ 	git_config(handle_config);
++	alias_all_urls();
+ }
+ 
+ struct refspec *parse_ref_spec(int nr_refspec, const char **refspec)
+@@ -355,7 +461,7 @@ struct remote *remote_get(const char *name)
+ 			read_branches_file(ret);
+ 	}
+ 	if (!ret->url)
+-		add_url(ret, name);
++		add_url_alias(ret, name);
+ 	if (!ret->url)
+ 		return NULL;
+ 	ret->fetch = parse_ref_spec(ret->fetch_refspec_nr, ret->fetch_refspec);
 -- 
 1.5.4.rc3.4.g16335
