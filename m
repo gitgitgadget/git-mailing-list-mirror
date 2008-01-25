@@ -1,64 +1,305 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: I'm a total push-over..
-Date: Fri, 25 Jan 2008 18:24:46 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801251822530.23841@racer.site>
-References: <alpine.LFD.1.00.0801230922190.1741@woody.linux-foundation.org> <87fxwmv5tf.fsf@jbms.ath.cx> <alpine.LSU.1.00.0801251250120.5731@racer.site> <87abmtvkd8.fsf@jbms.ath.cx>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Reduce the number of connects when fetching
+Date: Fri, 25 Jan 2008 13:33:56 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0801251326260.13593@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Jeremy Maitin-Shepard <jbms@cmu.edu>
-X-From: git-owner@vger.kernel.org Fri Jan 25 19:25:32 2008
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Jan 25 19:34:31 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JITF5-00072k-Mc
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 19:25:32 +0100
+	id 1JITNl-00029Z-Jh
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 19:34:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753669AbYAYSY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2008 13:24:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753718AbYAYSY7
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 13:24:59 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34342 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753659AbYAYSY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 13:24:58 -0500
-Received: (qmail invoked by alias); 25 Jan 2008 18:24:56 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp040) with SMTP; 25 Jan 2008 19:24:56 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18P5WMBt5kPvd4Jl8D37jwEHxtmY7QqdXllEAcNij
-	Ya/HEHGcTZtdln
-X-X-Sender: gene099@racer.site
-In-Reply-To: <87abmtvkd8.fsf@jbms.ath.cx>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754741AbYAYSd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2008 13:33:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754635AbYAYSd6
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 13:33:58 -0500
+Received: from iabervon.org ([66.92.72.58]:46211 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754036AbYAYSd5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 13:33:57 -0500
+Received: (qmail 24814 invoked by uid 1000); 25 Jan 2008 18:33:56 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 25 Jan 2008 18:33:56 -0000
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71724>
 
-Hi,
+This shares the connection between getting the remote ref list and
+getting objects in the first batch. (A second connection is still used
+to follow tags)
+---
+This got a certain amount of approval back in October and no comments 
+against it. There was further discussion on how to deal with the current 
+need for a second connection, but this patch is, in any case, a necessary 
+first step. I think it was primarily not included at the time because it 
+depended on the transport.c code which hadn't gotten into master at the 
+time.
 
-On Fri, 25 Jan 2008, Jeremy Maitin-Shepard wrote:
+ builtin-fetch-pack.c |   74 ++++++++++++++++++++++++++-----------------------
+ fetch-pack.h         |    2 +
+ transport.c          |   41 +++++++++++++++++++--------
+ 3 files changed, 70 insertions(+), 47 deletions(-)
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > The upside of such a hash function: less code to maintain.
-> 
-> A simple hash function that doesn't try to do anything regarding 
-> case-insensitivity is extremely short and simple and therefore is hardly 
-> a maintenance burden.
-
-You misunderstand me.  If the complicated hash function is the one that is 
-less exercised, you _will_ face problems.
-
-OTOH if you _already_ need the "complicated" hash function, there is 
-_little_ point not to use it, and be consistent between platforms, 
-_especially_ since now all people eat the same dog food.
-
-So I never thought about the simple hash function as being a burden.
-
-Hth,
-Dscho
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index e68e015..0f63c81 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -7,6 +7,7 @@
+ #include "pack.h"
+ #include "sideband.h"
+ #include "fetch-pack.h"
++#include "remote.h"
+ #include "run-command.h"
+ 
+ static int transfer_unpack_limit = -1;
+@@ -548,14 +549,14 @@ static int get_pack(int xd[2], char **pack_lockfile)
+ }
+ 
+ static struct ref *do_fetch_pack(int fd[2],
++		const struct ref *orig_ref,
+ 		int nr_match,
+ 		char **match,
+ 		char **pack_lockfile)
+ {
+-	struct ref *ref;
++	struct ref *ref = copy_ref_list(orig_ref);
+ 	unsigned char sha1[20];
+ 
+-	get_remote_heads(fd[0], &ref, 0, NULL, 0);
+ 	if (is_repository_shallow() && !server_supports("shallow"))
+ 		die("Server does not support shallow clients");
+ 	if (server_supports("multi_ack")) {
+@@ -573,10 +574,6 @@ static struct ref *do_fetch_pack(int fd[2],
+ 			fprintf(stderr, "Server supports side-band\n");
+ 		use_sideband = 1;
+ 	}
+-	if (!ref) {
+-		packet_flush(fd[1]);
+-		die("no matching remote head");
+-	}
+ 	if (everything_local(&ref, nr_match, match)) {
+ 		packet_flush(fd[1]);
+ 		goto all_done;
+@@ -650,7 +647,7 @@ static void fetch_pack_setup(void)
+ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, ret, nr_heads;
+-	struct ref *ref;
++	struct ref *ref = NULL;
+ 	char *dest = NULL, **heads;
+ 
+ 	nr_heads = 0;
+@@ -706,9 +703,34 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ 	if (!dest)
+ 		usage(fetch_pack_usage);
+ 
+-	ref = fetch_pack(&args, dest, nr_heads, heads, NULL);
++	int fd[2];
++	struct child_process *conn = git_connect(fd, (char *)dest, args.uploadpack,
++                          args.verbose ? CONNECT_VERBOSE : 0);
++	if (conn) {
++		get_remote_heads(fd[0], &ref, 0, NULL, 0);
++
++		ref = fetch_pack(&args, fd, conn, ref, dest, nr_heads, heads, NULL);
++		close(fd[0]);
++		close(fd[1]);
++		if (finish_connect(conn))
++			ref = NULL;
++	} else {
++		ref = NULL;
++	}
+ 	ret = !ref;
+ 
++	if (!ret && nr_heads) {
++		/* If the heads to pull were given, we should have
++		 * consumed all of them by matching the remote.
++		 * Otherwise, 'git-fetch remote no-such-ref' would
++		 * silently succeed without issuing an error.
++		 */
++		for (i = 0; i < nr_heads; i++)
++			if (heads[i] && heads[i][0]) {
++				error("no such remote ref %s", heads[i]);
++				ret = 1;
++			}
++	}
+ 	while (ref) {
+ 		printf("%s %s\n",
+ 		       sha1_to_hex(ref->old_sha1), ref->name);
+@@ -719,16 +741,15 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+ }
+ 
+ struct ref *fetch_pack(struct fetch_pack_args *my_args,
++		       int fd[], struct child_process *conn,
++		       const struct ref *ref,
+ 		const char *dest,
+ 		int nr_heads,
+ 		char **heads,
+ 		char **pack_lockfile)
+ {
+-	int i, ret;
+-	int fd[2];
+-	struct child_process *conn;
+-	struct ref *ref;
+ 	struct stat st;
++	struct ref *ref_cpy;
+ 
+ 	fetch_pack_setup();
+ 	memcpy(&args, my_args, sizeof(args));
+@@ -737,29 +758,15 @@ struct ref *fetch_pack(struct fetch_pack_args *my_args,
+ 			st.st_mtime = 0;
+ 	}
+ 
+-	conn = git_connect(fd, (char *)dest, args.uploadpack,
+-                          args.verbose ? CONNECT_VERBOSE : 0);
+ 	if (heads && nr_heads)
+ 		nr_heads = remove_duplicates(nr_heads, heads);
+-	ref = do_fetch_pack(fd, nr_heads, heads, pack_lockfile);
+-	close(fd[0]);
+-	close(fd[1]);
+-	ret = finish_connect(conn);
+-
+-	if (!ret && nr_heads) {
+-		/* If the heads to pull were given, we should have
+-		 * consumed all of them by matching the remote.
+-		 * Otherwise, 'git-fetch remote no-such-ref' would
+-		 * silently succeed without issuing an error.
+-		 */
+-		for (i = 0; i < nr_heads; i++)
+-			if (heads[i] && heads[i][0]) {
+-				error("no such remote ref %s", heads[i]);
+-				ret = 1;
+-			}
++	if (!ref) {
++		packet_flush(fd[1]);
++		die("no matching remote head");
+ 	}
++	ref_cpy = do_fetch_pack(fd, ref, nr_heads, heads, pack_lockfile);
+ 
+-	if (!ret && args.depth > 0) {
++	if (args.depth > 0) {
+ 		struct cache_time mtime;
+ 		char *shallow = git_path("shallow");
+ 		int fd;
+@@ -787,8 +794,5 @@ struct ref *fetch_pack(struct fetch_pack_args *my_args,
+ 		}
+ 	}
+ 
+-	if (ret)
+-		ref = NULL;
+-
+-	return ref;
++	return ref_cpy;
+ }
+diff --git a/fetch-pack.h b/fetch-pack.h
+index a7888ea..8d35ef6 100644
+--- a/fetch-pack.h
++++ b/fetch-pack.h
+@@ -16,6 +16,8 @@ struct fetch_pack_args
+ };
+ 
+ struct ref *fetch_pack(struct fetch_pack_args *args,
++		int fd[], struct child_process *conn,
++		const struct ref *ref,
+ 		const char *dest,
+ 		int nr_heads,
+ 		char **heads,
+diff --git a/transport.c b/transport.c
+index babaa21..53fb2ec 100644
+--- a/transport.c
++++ b/transport.c
+@@ -563,6 +563,8 @@ struct git_transport_data {
+ 	unsigned thin : 1;
+ 	unsigned keep : 1;
+ 	int depth;
++	struct child_process *conn;
++	int fd[2];
+ 	const char *uploadpack;
+ 	const char *receivepack;
+ };
+@@ -593,20 +595,20 @@ static int set_git_option(struct transport *connection,
+ 	return 1;
+ }
+ 
++static int connect_setup(struct transport *transport)
++{
++	struct git_transport_data *data = transport->data;
++	data->conn = git_connect(data->fd, transport->url, data->uploadpack, 0);
++	return 0;
++}
++
+ static struct ref *get_refs_via_connect(struct transport *transport)
+ {
+ 	struct git_transport_data *data = transport->data;
+ 	struct ref *refs;
+-	int fd[2];
+-	char *dest = xstrdup(transport->url);
+-	struct child_process *conn = git_connect(fd, dest, data->uploadpack, 0);
+ 
+-	get_remote_heads(fd[0], &refs, 0, NULL, 0);
+-	packet_flush(fd[1]);
+-
+-	finish_connect(conn);
+-
+-	free(dest);
++	connect_setup(transport);
++	get_remote_heads(data->fd[0], &refs, 0, NULL, 0);
+ 
+ 	return refs;
+ }
+@@ -617,7 +619,7 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	struct git_transport_data *data = transport->data;
+ 	char **heads = xmalloc(nr_heads * sizeof(*heads));
+ 	char **origh = xmalloc(nr_heads * sizeof(*origh));
+-	struct ref *refs;
++	const struct ref *refs;
+ 	char *dest = xstrdup(transport->url);
+ 	struct fetch_pack_args args;
+ 	int i;
+@@ -632,13 +634,27 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 
+ 	for (i = 0; i < nr_heads; i++)
+ 		origh[i] = heads[i] = xstrdup(to_fetch[i]->name);
+-	refs = fetch_pack(&args, dest, nr_heads, heads, &transport->pack_lockfile);
++
++	refs = transport_get_remote_refs(transport);
++	if (!data->conn) {
++		struct ref *refs_tmp;
++		connect_setup(transport);
++		get_remote_heads(data->fd[0], &refs_tmp, 0, NULL, 0);
++		free_refs(refs_tmp);
++	}
++
++	refs = fetch_pack(&args, data->fd, data->conn, transport->remote_refs,
++			  dest, nr_heads, heads, &transport->pack_lockfile);
++	close(data->fd[0]);
++	close(data->fd[1]);
++	if (finish_connect(data->conn))
++		refs = NULL;
++	data->conn = NULL;
+ 
+ 	for (i = 0; i < nr_heads; i++)
+ 		free(origh[i]);
+ 	free(origh);
+ 	free(heads);
+-	free_refs(refs);
+ 	free(dest);
+ 	return (refs ? 0 : -1);
+ }
+@@ -721,6 +737,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		ret->disconnect = disconnect_git;
+ 
+ 		data->thin = 1;
++		data->conn = NULL;
+ 		data->uploadpack = "git-upload-pack";
+ 		if (remote && remote->uploadpack)
+ 			data->uploadpack = remote->uploadpack;
+-- 
+1.5.4.rc3.4.g16335
