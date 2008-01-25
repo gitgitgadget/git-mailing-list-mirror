@@ -1,244 +1,312 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 6/9] Build-in merge-recursive
-Date: Fri, 25 Jan 2008 18:25:00 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0801251823250.13593@iabervon.org>
+Subject: [PATCH 1/9] Allow callers of unpack_trees() to handle failure
+Date: Fri, 25 Jan 2008 18:24:37 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0801251819091.13593@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Jan 26 00:26:16 2008
+X-From: git-owner@vger.kernel.org Sat Jan 26 00:26:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIXw4-0006nZ-Hx
-	for gcvg-git-2@gmane.org; Sat, 26 Jan 2008 00:26:12 +0100
+	id 1JIXvz-0006nZ-Rl
+	for gcvg-git-2@gmane.org; Sat, 26 Jan 2008 00:26:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754410AbYAYXZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2008 18:25:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751728AbYAYXZG
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 18:25:06 -0500
-Received: from iabervon.org ([66.92.72.58]:45115 "EHLO iabervon.org"
+	id S1754459AbYAYXYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2008 18:24:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752454AbYAYXYl
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 18:24:41 -0500
+Received: from iabervon.org ([66.92.72.58]:45105 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753176AbYAYXZC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 18:25:02 -0500
-Received: (qmail 4449 invoked by uid 1000); 25 Jan 2008 23:25:00 -0000
+	id S1753720AbYAYXYj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 18:24:39 -0500
+Received: (qmail 4410 invoked by uid 1000); 25 Jan 2008 23:24:37 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 25 Jan 2008 23:25:00 -0000
+  by localhost with SMTP; 25 Jan 2008 23:24:37 -0000
 User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71751>
 
-This makes write_tree_from_memory(), which writes the active cache as
-a tree and returns the struct tree for it, available to other code. It
-also makes available merge_trees(), which does the internal merge of
-two trees with a known base, and merge_recursive(), which does the
-recursive internal merge of two commits with a list of common
-ancestors.
+Return an error from unpack_trees() instead of calling die(), and exit
+with an error in read-tree. The merge function can return negative to
+abort.
 
-The first two of these will be used by checkout -m, and the third is
-presumably useful in general, although the implementation of checkout
--m which entirely matches the behavior of the shell version does not
-use it (since it ignores the difference of ancestry between the old
-branch and the new branch).
+This will be used in builtin-checkout -m.
 
 Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
- Makefile                                       |    2 +-
- merge-recursive.c => builtin-merge-recursive.c |   44 ++++++++++++-----------
- builtin.h                                      |    1 +
- git.c                                          |    1 +
- merge-recursive.h                              |   20 +++++++++++
- 5 files changed, 46 insertions(+), 22 deletions(-)
- rename merge-recursive.c => builtin-merge-recursive.c (98%)
- create mode 100644 merge-recursive.h
+ builtin-read-tree.c |    3 +-
+ unpack-trees.c      |   85 ++++++++++++++++++++++++++++----------------------
+ 2 files changed, 50 insertions(+), 38 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index dd12b6a..47f91f9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -258,7 +258,6 @@ PROGRAMS = \
- 	git-upload-pack$X \
- 	git-pack-redundant$X git-var$X \
- 	git-merge-tree$X git-imap-send$X \
--	git-merge-recursive$X \
- 	$(EXTRA_PROGRAMS)
- 
- # Empty...
-@@ -362,6 +361,7 @@ BUILTIN_OBJS = \
- 	builtin-merge-base.o \
- 	builtin-merge-file.o \
- 	builtin-merge-ours.o \
-+	builtin-merge-recursive.o \
- 	builtin-mv.o \
- 	builtin-name-rev.o \
- 	builtin-pack-objects.o \
-diff --git a/merge-recursive.c b/builtin-merge-recursive.c
-similarity index 98%
-rename from merge-recursive.c
-rename to builtin-merge-recursive.c
-index c292a77..651a25b 100644
---- a/merge-recursive.c
-+++ b/builtin-merge-recursive.c
-@@ -7,6 +7,7 @@
- #include "cache-tree.h"
- #include "commit.h"
- #include "blob.h"
-+#include "builtin.h"
- #include "tree-walk.h"
- #include "diff.h"
- #include "diffcore.h"
-@@ -17,6 +18,7 @@
- #include "xdiff-interface.h"
- #include "interpolate.h"
- #include "attr.h"
-+#include "merge-recursive.h"
- 
- static int subtree_merge;
- 
-@@ -232,7 +234,7 @@ static int unmerged_index(void)
- 	return 0;
- }
- 
--static struct tree *git_write_tree(void)
-+struct tree *write_tree_from_memory(void)
- {
- 	struct tree *result = NULL;
- 
-@@ -1495,12 +1497,12 @@ static int process_entry(const char *path, struct stage_data *entry,
- 	return clean_merge;
- }
- 
--static int merge_trees(struct tree *head,
--		       struct tree *merge,
--		       struct tree *common,
--		       const char *branch1,
--		       const char *branch2,
--		       struct tree **result)
-+int merge_trees(struct tree *head,
-+		struct tree *merge,
-+		struct tree *common,
-+		const char *branch1,
-+		const char *branch2,
-+		struct tree **result)
- {
- 	int code, clean;
- 
-@@ -1552,7 +1554,7 @@ static int merge_trees(struct tree *head,
- 		clean = 1;
- 
- 	if (index_only)
--		*result = git_write_tree();
-+		*result = write_tree_from_memory();
- 
- 	return clean;
- }
-@@ -1572,12 +1574,12 @@ static struct commit_list *reverse_commit_list(struct commit_list *list)
-  * Merge the commits h1 and h2, return the resulting virtual
-  * commit object and a flag indicating the cleanness of the merge.
-  */
--static int merge(struct commit *h1,
--		 struct commit *h2,
--		 const char *branch1,
--		 const char *branch2,
--		 struct commit_list *ca,
--		 struct commit **result)
-+int merge_recursive(struct commit *h1,
-+		    struct commit *h2,
-+		    const char *branch1,
-+		    const char *branch2,
-+		    struct commit_list *ca,
-+		    struct commit **result)
- {
- 	struct commit_list *iter;
- 	struct commit *merged_common_ancestors;
-@@ -1622,11 +1624,11 @@ static int merge(struct commit *h1,
- 		 * "conflicts" were already resolved.
- 		 */
- 		discard_cache();
--		merge(merged_common_ancestors, iter->item,
--		      "Temporary merge branch 1",
--		      "Temporary merge branch 2",
--		      NULL,
--		      &merged_common_ancestors);
-+		merge_recursive(merged_common_ancestors, iter->item,
-+				"Temporary merge branch 1",
-+				"Temporary merge branch 2",
-+				NULL,
-+				&merged_common_ancestors);
- 		call_depth--;
- 
- 		if (!merged_common_ancestors)
-@@ -1695,7 +1697,7 @@ static int merge_config(const char *var, const char *value)
- 	return git_default_config(var, value);
- }
- 
--int main(int argc, char *argv[])
-+int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- {
- 	static const char *bases[20];
- 	static unsigned bases_count = 0;
-@@ -1749,7 +1751,7 @@ int main(int argc, char *argv[])
- 		struct commit *ancestor = get_ref(bases[i]);
- 		ca = commit_list_insert(ancestor, &ca);
+diff --git a/builtin-read-tree.c b/builtin-read-tree.c
+index c0ea034..e4c6317 100644
+--- a/builtin-read-tree.c
++++ b/builtin-read-tree.c
+@@ -269,7 +269,8 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+ 		parse_tree(tree);
+ 		init_tree_desc(t+i, tree->buffer, tree->size);
  	}
--	clean = merge(h1, h2, branch1, branch2, ca, &result);
-+	clean = merge_recursive(h1, h2, branch1, branch2, ca, &result);
+-	unpack_trees(nr_trees, t, &opts);
++	if (unpack_trees(nr_trees, t, &opts))
++		return 128;
  
- 	if (active_cache_changed &&
- 	    (write_cache(index_fd, active_cache, active_nr) ||
-diff --git a/builtin.h b/builtin.h
-index cb675c4..428160d 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -57,6 +57,7 @@ extern int cmd_mailsplit(int argc, const char **argv, const char *prefix);
- extern int cmd_merge_base(int argc, const char **argv, const char *prefix);
- extern int cmd_merge_ours(int argc, const char **argv, const char *prefix);
- extern int cmd_merge_file(int argc, const char **argv, const char *prefix);
-+extern int cmd_merge_recursive(int argc, const char **argv, const char *prefix);
- extern int cmd_mv(int argc, const char **argv, const char *prefix);
- extern int cmd_name_rev(int argc, const char **argv, const char *prefix);
- extern int cmd_pack_objects(int argc, const char **argv, const char *prefix);
-diff --git a/git.c b/git.c
-index 15fec89..114ea75 100644
---- a/git.c
-+++ b/git.c
-@@ -330,6 +330,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "merge-base", cmd_merge_base, RUN_SETUP },
- 		{ "merge-file", cmd_merge_file },
- 		{ "merge-ours", cmd_merge_ours, RUN_SETUP },
-+		{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
- 		{ "mv", cmd_mv, RUN_SETUP | NEED_WORK_TREE },
- 		{ "name-rev", cmd_name_rev, RUN_SETUP },
- 		{ "pack-objects", cmd_pack_objects, RUN_SETUP },
-diff --git a/merge-recursive.h b/merge-recursive.h
-new file mode 100644
-index 0000000..f37630a
---- /dev/null
-+++ b/merge-recursive.h
-@@ -0,0 +1,20 @@
-+#ifndef MERGE_RECURSIVE_H
-+#define MERGE_RECURSIVE_H
-+
-+int merge_recursive(struct commit *h1,
-+		    struct commit *h2,
-+		    const char *branch1,
-+		    const char *branch2,
-+		    struct commit_list *ancestors,
-+		    struct commit **result);
-+
-+int merge_trees(struct tree *head,
-+		struct tree *merge,
-+		struct tree *common,
-+		const char *branch1,
-+		const char *branch2,
-+		struct tree **result);
-+
-+struct tree *write_tree_from_memory(void);
-+
-+#endif
+ 	/*
+ 	 * When reading only one tree (either the most basic form,
+diff --git a/unpack-trees.c b/unpack-trees.c
+index aa2513e..a56e1c9 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -219,6 +219,8 @@ static int unpack_trees_rec(struct tree_entry_list **posns, int len,
+ 				}
+ #endif
+ 				ret = o->fn(src, o, remove);
++				if (ret < 0)
++					return ret;
+ 
+ #if DBRT_DEBUG > 1
+ 				printf("Added %d entries\n", ret);
+@@ -360,7 +362,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	}
+ 
+ 	if (o->trivial_merges_only && o->nontrivial_merge)
+-		die("Merge requires file-level merging");
++		return error("Merge requires file-level merging");
+ 
+ 	check_updates(active_cache, active_nr, o);
+ 	return 0;
+@@ -368,10 +370,10 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 
+ /* Here come the merge functions */
+ 
+-static void reject_merge(struct cache_entry *ce)
++static int reject_merge(struct cache_entry *ce)
+ {
+-	die("Entry '%s' would be overwritten by merge. Cannot merge.",
+-	    ce->name);
++	return error("Entry '%s' would be overwritten by merge. Cannot merge.",
++		     ce->name);
+ }
+ 
+ static int same(struct cache_entry *a, struct cache_entry *b)
+@@ -389,18 +391,18 @@ static int same(struct cache_entry *a, struct cache_entry *b)
+  * When a CE gets turned into an unmerged entry, we
+  * want it to be up-to-date
+  */
+-static void verify_uptodate(struct cache_entry *ce,
++static int verify_uptodate(struct cache_entry *ce,
+ 		struct unpack_trees_options *o)
+ {
+ 	struct stat st;
+ 
+ 	if (o->index_only || o->reset)
+-		return;
++		return 0;
+ 
+ 	if (!lstat(ce->name, &st)) {
+ 		unsigned changed = ce_match_stat(ce, &st, CE_MATCH_IGNORE_VALID);
+ 		if (!changed)
+-			return;
++			return 0;
+ 		/*
+ 		 * NEEDSWORK: the current default policy is to allow
+ 		 * submodule to be out of sync wrt the supermodule
+@@ -409,12 +411,12 @@ static void verify_uptodate(struct cache_entry *ce,
+ 		 * checked out.
+ 		 */
+ 		if (S_ISGITLINK(ntohl(ce->ce_mode)))
+-			return;
++			return 0;
+ 		errno = 0;
+ 	}
+ 	if (errno == ENOENT)
+-		return;
+-	die("Entry '%s' not uptodate. Cannot merge.", ce->name);
++		return 0;
++	return error("Entry '%s' not uptodate. Cannot merge.", ce->name);
+ }
+ 
+ static void invalidate_ce_path(struct cache_entry *ce)
+@@ -480,7 +482,8 @@ static int verify_clean_subdirectory(struct cache_entry *ce, const char *action,
+ 		 * ce->name is an entry in the subdirectory.
+ 		 */
+ 		if (!ce_stage(ce)) {
+-			verify_uptodate(ce, o);
++			if (verify_uptodate(ce, o))
++				return -1;
+ 			ce->ce_mode = 0;
+ 		}
+ 		cnt++;
+@@ -499,8 +502,8 @@ static int verify_clean_subdirectory(struct cache_entry *ce, const char *action,
+ 		d.exclude_per_dir = o->dir->exclude_per_dir;
+ 	i = read_directory(&d, ce->name, pathbuf, namelen+1, NULL);
+ 	if (i)
+-		die("Updating '%s' would lose untracked files in it",
+-		    ce->name);
++		return error("Updating '%s' would lose untracked files in it",
++			     ce->name);
+ 	free(pathbuf);
+ 	return cnt;
+ }
+@@ -509,16 +512,16 @@ static int verify_clean_subdirectory(struct cache_entry *ce, const char *action,
+  * We do not want to remove or overwrite a working tree file that
+  * is not tracked, unless it is ignored.
+  */
+-static void verify_absent(struct cache_entry *ce, const char *action,
+-		struct unpack_trees_options *o)
++static int verify_absent(struct cache_entry *ce, const char *action,
++			 struct unpack_trees_options *o)
+ {
+ 	struct stat st;
+ 
+ 	if (o->index_only || o->reset || !o->update)
+-		return;
++		return 0;
+ 
+ 	if (has_symlink_leading_path(ce->name, NULL))
+-		return;
++		return 0;
+ 
+ 	if (!lstat(ce->name, &st)) {
+ 		int cnt;
+@@ -528,7 +531,7 @@ static void verify_absent(struct cache_entry *ce, const char *action,
+ 			 * ce->name is explicitly excluded, so it is Ok to
+ 			 * overwrite it.
+ 			 */
+-			return;
++			return 0;
+ 		if (S_ISDIR(st.st_mode)) {
+ 			/*
+ 			 * We are checking out path "foo" and
+@@ -557,7 +560,7 @@ static void verify_absent(struct cache_entry *ce, const char *action,
+ 			 * deleted entries here.
+ 			 */
+ 			o->pos += cnt;
+-			return;
++			return 0;
+ 		}
+ 
+ 		/*
+@@ -569,12 +572,13 @@ static void verify_absent(struct cache_entry *ce, const char *action,
+ 		if (0 <= cnt) {
+ 			struct cache_entry *ce = active_cache[cnt];
+ 			if (!ce_stage(ce) && !ce->ce_mode)
+-				return;
++				return 0;
+ 		}
+ 
+-		die("Untracked working tree file '%s' "
+-		    "would be %s by merge.", ce->name, action);
++		return error("Untracked working tree file '%s' "
++			     "would be %s by merge.", ce->name, action);
+ 	}
++	return 0;
+ }
+ 
+ static int merged_entry(struct cache_entry *merge, struct cache_entry *old,
+@@ -592,12 +596,14 @@ static int merged_entry(struct cache_entry *merge, struct cache_entry *old,
+ 		if (same(old, merge)) {
+ 			memcpy(merge, old, offsetof(struct cache_entry, name));
+ 		} else {
+-			verify_uptodate(old, o);
++			if (verify_uptodate(old, o))
++				return -1;
+ 			invalidate_ce_path(old);
+ 		}
+ 	}
+ 	else {
+-		verify_absent(merge, "overwritten", o);
++		if (verify_absent(merge, "overwritten", o))
++			return -1;
+ 		invalidate_ce_path(merge);
+ 	}
+ 
+@@ -609,10 +615,12 @@ static int merged_entry(struct cache_entry *merge, struct cache_entry *old,
+ static int deleted_entry(struct cache_entry *ce, struct cache_entry *old,
+ 		struct unpack_trees_options *o)
+ {
+-	if (old)
+-		verify_uptodate(old, o);
+-	else
+-		verify_absent(ce, "removed", o);
++	if (old) {
++		if (verify_uptodate(old, o))
++			return -1;
++	} else
++		if (verify_absent(ce, "removed", o))
++			return -1;
+ 	ce->ce_mode = 0;
+ 	add_cache_entry(ce, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
+ 	invalidate_ce_path(ce);
+@@ -700,7 +708,7 @@ int threeway_merge(struct cache_entry **stages,
+ 	/* #14, #14ALT, #2ALT */
+ 	if (remote && !df_conflict_head && head_match && !remote_match) {
+ 		if (index && !same(index, remote) && !same(index, head))
+-			reject_merge(index);
++			return reject_merge(index);
+ 		return merged_entry(remote, index, o);
+ 	}
+ 	/*
+@@ -708,7 +716,7 @@ int threeway_merge(struct cache_entry **stages,
+ 	 * make sure that it matches head.
+ 	 */
+ 	if (index && !same(index, head)) {
+-		reject_merge(index);
++		return reject_merge(index);
+ 	}
+ 
+ 	if (head) {
+@@ -759,8 +767,10 @@ int threeway_merge(struct cache_entry **stages,
+ 			remove_entry(remove);
+ 			if (index)
+ 				return deleted_entry(index, index, o);
+-			else if (ce && !head_deleted)
+-				verify_absent(ce, "removed", o);
++			else if (ce && !head_deleted) {
++				if (verify_absent(ce, "removed", o))
++					return -1;
++			}
+ 			return 0;
+ 		}
+ 		/*
+@@ -776,7 +786,8 @@ int threeway_merge(struct cache_entry **stages,
+ 	 * conflict resolution files.
+ 	 */
+ 	if (index) {
+-		verify_uptodate(index, o);
++		if (verify_uptodate(index, o))
++			return -1;
+ 	}
+ 
+ 	remove_entry(remove);
+@@ -856,11 +867,11 @@ int twoway_merge(struct cache_entry **src,
+ 			/* all other failures */
+ 			remove_entry(remove);
+ 			if (oldtree)
+-				reject_merge(oldtree);
++				return reject_merge(oldtree);
+ 			if (current)
+-				reject_merge(current);
++				return reject_merge(current);
+ 			if (newtree)
+-				reject_merge(newtree);
++				return reject_merge(newtree);
+ 			return -1;
+ 		}
+ 	}
+@@ -887,7 +898,7 @@ int bind_merge(struct cache_entry **src,
+ 		return error("Cannot do a bind merge of %d trees\n",
+ 			     o->merge_size);
+ 	if (a && old)
+-		die("Entry '%s' overlaps.  Cannot bind.", a->name);
++		return error("Entry '%s' overlaps.  Cannot bind.", a->name);
+ 	if (!a)
+ 		return keep_entry(old, o);
+ 	else
 -- 
 1.5.4.rc3.4.g16335
