@@ -1,73 +1,81 @@
-From: Jeremy Maitin-Shepard <jbms@cmu.edu>
-Subject: Re: I'm a total push-over..
-Date: Fri, 25 Jan 2008 00:21:16 -0500
-Message-ID: <87fxwmv5tf.fsf@jbms.ath.cx>
-References: <alpine.LFD.1.00.0801230922190.1741@woody.linux-foundation.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's a "work tree"?
+Date: Fri, 25 Jan 2008 01:14:21 -0500
+Message-ID: <20080125061421.GC21973@coredump.intra.peff.net>
+References: <4798E26D.3040707@talkingspider.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jan 25 07:07:50 2008
+To: Mike <fromlists@talkingspider.com>
+X-From: git-owner@vger.kernel.org Fri Jan 25 07:15:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIHj9-0007Xx-Q9
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 07:07:48 +0100
+	id 1JIHqD-0000eA-If
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 07:15:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751295AbYAYGHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2008 01:07:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752017AbYAYGHR
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 01:07:17 -0500
-Received: from deleuze.hcoop.net ([69.90.123.67]:56980 "EHLO deleuze.hcoop.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750954AbYAYGHP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 01:07:15 -0500
-X-Greylist: delayed 2754 seconds by postgrey-1.27 at vger.kernel.org; Fri, 25 Jan 2008 01:07:15 EST
-Received: from c-67-165-107-197.hsd1.pa.comcast.net ([67.165.107.197] helo=localhost)
-	by deleuze.hcoop.net with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <jbms@cmu.edu>)
-	id 1JIH0A-0007Xu-16; Fri, 25 Jan 2008 00:21:18 -0500
-In-Reply-To: <alpine.LFD.1.00.0801230922190.1741@woody.linux-foundation.org>
-X-Habeas-SWE-9: mark in spam to <http://www.habeas.com/report/>.
-X-Habeas-SWE-8: Message (HCM) and not spam. Please report use of this
-X-Habeas-SWE-7: warrant mark warrants that this is a Habeas Compliant
-X-Habeas-SWE-6: email in exchange for a license for this Habeas
-X-Habeas-SWE-5: Sender Warranted Email (SWE) (tm). The sender of this
-X-Habeas-SWE-4: Copyright 2002 Habeas (tm)
-X-Habeas-SWE-3: like Habeas SWE (tm)
-X-Habeas-SWE-2: brightly anticipated
-X-Habeas-SWE-1: winter into spring
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+	id S1751307AbYAYGOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2008 01:14:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752055AbYAYGOY
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 01:14:24 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3611 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750954AbYAYGOY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 01:14:24 -0500
+Received: (qmail 18444 invoked by uid 111); 25 Jan 2008 06:14:22 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 25 Jan 2008 01:14:22 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Jan 2008 01:14:21 -0500
+Content-Disposition: inline
+In-Reply-To: <4798E26D.3040707@talkingspider.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71683>
 
-Linus Torvalds wrote:
-[snip]
-> So what you can do (and I'd argue that we do) is to have a hash that can 
-> handle almost arbitrary input, but then never corrupt the filename, and 
-> always compare exactly by default.
+On Thu, Jan 24, 2008 at 02:09:33PM -0500, Mike wrote:
 
-In general, there may be a large number of comparison function options
-that git will eventually support, and they will likely not all form a
-single chain of increasing "strictness".
+> I'm trying to figure out what a "work tree" is.  as in --work-tree. This 
+> is a new command right, the tutorials I've read don't have it. The man 
+> page has the syntax but I don't know what it's for.
 
-Given that the hash values aren't even being stored on disk (and if they
-were, a simple approach of also storing an identifier for the hash
-function to know whether they stored values are still valid could be
-used), having a chain of increasingly "strict" comparison functions and
-using a hash function that corresponds to the least strict one is useful
-for exactly one reason: giving (possibly several different levels of)
-non-fatal warnings for various types of duplicates.
+The work tree is the place where your checked out files reside. E.g.,
+in an ordinary repo (made with "git init" or "git clone") everything
+that isn't in the .git directory.
 
-But since multiple hash functions will be needed anyway to support
-different notions of case-insensitivity, if the warning is not enabled,
-there is no reason to use a case-insensitive hash function with a
-byte-exact comparison.
+> $ cd /www/mysitedocroot
+> $ git --git-dir /gitdir/mysitegit/ add .
+> fatal: add must be run in a work tree
 
--- 
-Jeremy Maitin-Shepard
+You are using --git-dir to point to a repository directory that isn't
+".git". That's OK, and it will generally assume that your current
+directory is the work tree. E.g., this works:
+
+  mkdir repo && cd repo
+  git init
+  mv .git mygitdir
+  touch file
+  git --git-dir=mygitdir add file
+
+However, there is a config option "core.bare" which indicates that a
+repository is "bare", meaning that it has no work tree (and that is
+presumably what's happening in your example). So you could use
+--work-tree=. to override that in your example (though you might just be
+better off setting config.bare to false).
+
+The more probable use case for --work-tree is something like
+
+  $ cd /gitdir/mysitegit
+  $ git --work-tree=/www/mysitedocroot add .
+
+i.e., you are in the git dir, so you specify the work tree rather than
+the other way around. You could even do this:
+
+  $ cd /some/other/directory
+  $ git --git-dir=/gitdir/mysitegit --work-tree=/www/mysitedocroot add .
+
+although I'm not sure it's that useful.
+
+-Peff
