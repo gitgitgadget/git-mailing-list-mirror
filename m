@@ -1,109 +1,114 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: On pathnames
-Date: Thu, 24 Jan 2008 23:00:44 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0801242227250.13593@iabervon.org>
-References: <34103945-2078-4983-B409-2D01EF071A8B@sb.org> <alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org> <E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org> <20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu>
- <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org> <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org> <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org> <20080123094052.GB6969@glandium.org> <20080123133802.GC7415@mit.edu>
- <alpine.LFD.1.00.0801230808440.1741@woody.linux-foundation.org> <98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org> <alpine.LFD.1.00.0801230930390.1741@woody.linux-foundation.org> <7vprvr7x8h.fsf@gitster.siamese.dyndns.org>
+Date: Thu, 24 Jan 2008 20:12:36 -0800
+Message-ID: <7vy7ae7dcb.fsf@gitster.siamese.dyndns.org>
+References: <34103945-2078-4983-B409-2D01EF071A8B@sb.org>
+	<alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org>
+	<E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org>
+	<20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu>
+	<alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org>
+	<20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org>
+	<4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org>
+	<20080123094052.GB6969@glandium.org> <20080123133802.GC7415@mit.edu>
+	<alpine.LFD.1.00.0801230808440.1741@woody.linux-foundation.org>
+	<98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org>
+	<alpine.LFD.1.00.0801230930390.1741@woody.linux-foundation.org>
+	<7vprvr7x8h.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.1.00.0801241722130.22568@xanadu.home>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-407850424-1201233513=:13593"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Kevin Ballard <kevin@sb.org>, Theodore Tso <tytso@MIT.EDU>,
 	Mike Hommey <mh@glandium.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 25 05:01:25 2008
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Jan 25 05:13:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIFkp-0008HH-Tx
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 05:01:24 +0100
+	id 1JIFwd-0002HZ-HI
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 05:13:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753048AbYAYEAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2008 23:00:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752760AbYAYEAx
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 23:00:53 -0500
-Received: from iabervon.org ([66.92.72.58]:45618 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752055AbYAYEAw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2008 23:00:52 -0500
-Received: (qmail 1021 invoked by uid 1000); 25 Jan 2008 04:00:44 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 25 Jan 2008 04:00:44 -0000
-In-Reply-To: <7vprvr7x8h.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
-Content-ID: <alpine.LNX.1.00.0801242258410.13593@iabervon.org>
+	id S1752897AbYAYENE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jan 2008 23:13:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752868AbYAYEND
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 23:13:03 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45685 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752713AbYAYENA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Jan 2008 23:13:00 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 177676F90;
+	Thu, 24 Jan 2008 23:12:59 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 146CB6F8A;
+	Thu, 24 Jan 2008 23:12:48 -0500 (EST)
+In-Reply-To: <alpine.LFD.1.00.0801241722130.22568@xanadu.home> (Nicolas
+	Pitre's message of "Thu, 24 Jan 2008 17:31:27 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71678>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Nicolas Pitre <nico@cam.org> writes:
 
---1547844168-407850424-1201233513=:13593
-Content-Type: TEXT/PLAIN; CHARSET=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
-Content-ID: <alpine.LNX.1.00.0801242258411.13593@iabervon.org>
+> On Thu, 24 Jan 2008, Junio C Hamano wrote:
+>
+>> If it is a new file, we won't find any name that is equivalent
+>> to $A in the index, and we use the name $A obtained from
+>> readdir(3).
+>>=20
+>> BUT with a twist.
+>>=20
+>> If the filesystem is known to be inconveniently case folding, we
+>> are better off registering $B instead of $A (assuming we can
+>> convert from $A to $B).
+>
+> Why?
+>
+> If you have no other representation for the file name than $A already=
+,=20
+> then I don't see why Git would have to play similar evil games and=20
+> corru^H^H^Hnvert $A into $B.  Just store $A in the index and tree=20
+> objects and be done with it.
 
-On Thu, 24 Jan 2008, Junio C Hamano wrote:
+Because this "conversion" is limited to the case where the
+filesystem is known to be inconveniently case folding, I
+personally do not care about this part of the outline that
+deeply.  It would not bite _me_ or my friends either way.
 
-> The same thing should apply to two files that cannot be checked
-> out at the same time on case insensitive filesystems.  Perhaps
-> we could have something like:
-> 
-> 	$ git show :xt_CONNMARK.c >xt_connmark-1.c
-> 	$ edit xt_connmark-1.c
-> 	$ git add --as xt_CONNMARK.c xt_connmark-1.c
+But I would imagine that a person who has to work on HFS+ would
+appreciate it if these two sequences behaved the same way:
 
-I think it would be nicer to have:
+    $ edit M=C3=A4rchen ;# assume this is a new file
+    $ git add M=C3=A4rchen ;# we were told that IM gives $B (aka NFC)
 
-$ git checkout branch
-Warning: xt_CONNMARK.c conflicts with xt_connmark.c; not checking it out
-$ git checkout xt_CONNMARK.c --as xt_CONNMARK_caps.c
-$ edit xt_CONNMARK_caps.c
-$ git add xt_CONNMARK_caps.c
+vs
 
-Where the index, when support for filesystems with filename restrictions 
-is enabled, keeps track both of the name of the file in the project and 
-the name of the file in the filesystem, with this mapping determined 
-entirely by the user asking for problem files to be present under 
-different names in the working tree.
+    $ edit M=C3=A4rchen ;# assume this is a new file
+    $ git add M*en ;# now readdir(3) gives $A (aka NFD)
 
-Of course, you can already do:
+If we always convert $A (less interoperable form) to $B (more
+interoperable form) on inconveniently case folding filesystems,
+the new index entry will always be in form $B.  Without the
+conversion, the former will give form $B while the latter will
+give form $A.  It is, as you said, "similar evil game to
+corrupt", but it is not even a corruption at that point, because
+the inconveniently case folding filesystem already corrupted the
+pathname before we get our hands on it, and it won't make a
+difference for HFS+ only people anyway.
 
-$ git update-index --cacheinfo 100644 $(git hash-object -w xt_connmark-1.c) xt_CONNMARK.c
+However, if the resulting tree that adds a new file is prepared
+on an inconveniently case folding filesystem, the conversion
+process, by definition, would make the resulting tree more
+interoperable with other systems than without.
 
-> If it is a new file, we won't find any name that is equivalent
-> to $A in the index, and we use the name $A obtained from
-> readdir(3).
-> 
-> BUT with a twist.
-> 
-> If the filesystem is known to be inconveniently case folding, we
-> are better off registering $B instead of $A (assuming we can
-> convert from $A to $B).
-
-Is it not the case that, when a user has a file in the filesystem with the 
-name Ma"rchen, the user will still type:
-
-$ git add Märchen
-
-and so we see filenames which are convenient, and we don't overly care 
-what readdir(3) returns for new filenames? I suppose there is the case of:
-
-$ touch Märchen
-$ git add .
-
-Which has to figure out what the files in foo are. But the common case for 
-a new filename is that it gets provided by the user in argv, and the right 
-file contents come from the one that open(2) returns, and there's no 
-obvious way to get the filename that readdir(3) would return for a 
-filename in argv anyway.
-
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-407850424-1201233513=:13593--
+So I do not see any downside of doing the conversion on such a
+filesystem but there is this "interoperability" upside.
