@@ -1,78 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: I'm a total push-over..
-Date: Thu, 24 Jan 2008 22:50:19 -0800
-Message-ID: <7vejc6761g.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.1.00.0801221515350.1741@woody.linux-foundation.org>
-	<7vabmxqnz8.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801221844570.1741@woody.linux-foundation.org>
-	<alpine.LFD.1.00.0801221913500.1741@woody.linux-foundation.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: stg clean removes conflicting patch
+Date: Fri, 25 Jan 2008 09:04:34 +0100
+Message-ID: <20080125080434.GA5599@diana.vm.bytemark.co.uk>
+References: <1201233317.2811.17.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jan 25 07:51:05 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Pavel Roskin <proski@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Jan 25 09:07:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIIP3-0008VC-AC
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 07:51:05 +0100
+	id 1JIJac-0002JQ-8C
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 09:07:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753365AbYAYGuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2008 01:50:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753014AbYAYGue
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 01:50:34 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53860 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752632AbYAYGud (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 01:50:33 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BC87623B;
-	Fri, 25 Jan 2008 01:50:32 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C145A623A;
-	Fri, 25 Jan 2008 01:50:28 -0500 (EST)
-In-Reply-To: <alpine.LFD.1.00.0801221913500.1741@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Tue, 22 Jan 2008 19:19:12 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758866AbYAYIFO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jan 2008 03:05:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760663AbYAYIFM
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 03:05:12 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3347 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764447AbYAYIFI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 03:05:08 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JIJYA-0001Sm-00; Fri, 25 Jan 2008 08:04:34 +0000
+Content-Disposition: inline
+In-Reply-To: <1201233317.2811.17.camel@dv>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71685>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On 2008-01-24 22:55:17 -0500, Pavel Roskin wrote:
 
-> +static inline size_t estimate_cache_size(size_t ondisk_size, unsigned int entries)
-> +{
-> +	long per_entry;
-> +
-> +	per_entry = sizeof(struct cache_entry) - sizeof(struct ondisk_cache_entry);
-> +
-> +	/*
-> +	 * Alignment can cause differences. This should be "alignof", but 
-> +	 * since that's a gcc'ism, just use the size of a pointer.
-> +	 */
-> +	per_entry += sizeof(void *);
-> +	return ondisk_size + entries*per_entry;
-> +}
-> +
+> If "stg push" fails, the subsequent "stg clean" will remove the
+> patch that could not been applied. I think it's wrong.
 
-I wonder if the issue Dave Miller addressed with
-69ae517541ed5ab7d4fdcd8f82a9b8bd949df347 (fast-import: fix
-unalinged allocation and access) applies here.
+I agree. It's consistent -- a conflicting patch is empty -- but
+clearly the wrong thing to do from a usability perspective.
 
-commit 69ae517541ed5ab7d4fdcd8f82a9b8bd949df347
-Author: David S. Miller <davem@davemloft.net>
-Date:   Fri Dec 14 20:39:16 2007 -0800
+> I've made a patch for the testsuite that should pass once the bug is
+> fixed. Try removing "stg clean" from the test. and it will pass. But
+> "stg clean" should make no difference here.
 
-    fast-import: fix unalinged allocation and access
-    
-    The specialized pool allocator fast-import uses aligned objects on the
-    size of a pointer, which was not sufficient at least on Sparc.  Instead,
-    make the alignment for objects of type unitmax_t.
-    
-    Signed-off-by: David S. Miller <davem@davemloft.net>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Good!
+
+=46or known-to-be-failing tests, you can use test_expect_failure. I'll
+amend your patch to do that when I pick it up (if Catalin doesn't beat
+me to it).
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
