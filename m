@@ -1,92 +1,109 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: stg clean removes conflicting patch
-Date: Thu, 24 Jan 2008 22:55:17 -0500
-Message-ID: <1201233317.2811.17.camel@dv>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: On pathnames
+Date: Thu, 24 Jan 2008 23:00:44 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0801242227250.13593@iabervon.org>
+References: <34103945-2078-4983-B409-2D01EF071A8B@sb.org> <alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org> <E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org> <20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu>
+ <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org> <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org> <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org> <20080123094052.GB6969@glandium.org> <20080123133802.GC7415@mit.edu>
+ <alpine.LFD.1.00.0801230808440.1741@woody.linux-foundation.org> <98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org> <alpine.LFD.1.00.0801230930390.1741@woody.linux-foundation.org> <7vprvr7x8h.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Karl =?ISO-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 25 04:55:49 2008
+Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-407850424-1201233513=:13593"
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Kevin Ballard <kevin@sb.org>, Theodore Tso <tytso@MIT.EDU>,
+	Mike Hommey <mh@glandium.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 25 05:01:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIFfQ-00079r-2X
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 04:55:48 +0100
+	id 1JIFkp-0008HH-Tx
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 05:01:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752364AbYAYDzV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2008 22:55:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752514AbYAYDzU
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 22:55:20 -0500
-Received: from c60.cesmail.net ([216.154.195.49]:54779 "EHLO c60.cesmail.net"
+	id S1753048AbYAYEAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2008 23:00:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752760AbYAYEAx
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 23:00:53 -0500
+Received: from iabervon.org ([66.92.72.58]:45618 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752279AbYAYDzT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2008 22:55:19 -0500
-Received: from unknown (HELO relay.cesmail.net) ([192.168.1.81])
-  by c60.cesmail.net with ESMTP; 24 Jan 2008 22:55:18 -0500
-Received: from [192.168.1.21] (static-72-92-88-10.phlapa.fios.verizon.net [72.92.88.10])
-	by relay.cesmail.net (Postfix) with ESMTP id C1CF3618FE1;
-	Thu, 24 Jan 2008 22:55:17 -0500 (EST)
-X-Mailer: Evolution 2.12.3 (2.12.3-1.fc8) 
+	id S1752055AbYAYEAw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2008 23:00:52 -0500
+Received: (qmail 1021 invoked by uid 1000); 25 Jan 2008 04:00:44 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 25 Jan 2008 04:00:44 -0000
+In-Reply-To: <7vprvr7x8h.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+Content-ID: <alpine.LNX.1.00.0801242258410.13593@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71677>
 
-Hello!
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-If "stg push" fails, the subsequent "stg clean" will remove the patch
-that could not been applied.  I think it's wrong.  Especially when doing
-"stg pull", it can happen that I want to run "stg clean" to get rid of
-the patches applied upstream so I can concentrate on the conflict.
-Instead, the conflicting patch is removed too.
+--1547844168-407850424-1201233513=:13593
+Content-Type: TEXT/PLAIN; CHARSET=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
+Content-ID: <alpine.LNX.1.00.0801242258411.13593@iabervon.org>
 
-I've made a patch for the testsuite that should pass once the bug is
-fixed.  Try removing "stg clean" from the test. and it will pass.  But
-"stg clean" should make no difference here.
+On Thu, 24 Jan 2008, Junio C Hamano wrote:
 
-Add test to ensure that "stg clean" preserves conflicting patches
+> The same thing should apply to two files that cannot be checked
+> out at the same time on case insensitive filesystems.  Perhaps
+> we could have something like:
+> 
+> 	$ git show :xt_CONNMARK.c >xt_connmark-1.c
+> 	$ edit xt_connmark-1.c
+> 	$ git add --as xt_CONNMARK.c xt_connmark-1.c
 
-From: Pavel Roskin <proski@gnu.org>
+I think it would be nicer to have:
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
----
+$ git checkout branch
+Warning: xt_CONNMARK.c conflicts with xt_connmark.c; not checking it out
+$ git checkout xt_CONNMARK.c --as xt_CONNMARK_caps.c
+$ edit xt_CONNMARK_caps.c
+$ git add xt_CONNMARK_caps.c
 
- t/t2500-clean.sh |   17 +++++++++++++++++
- 1 files changed, 17 insertions(+), 0 deletions(-)
+Where the index, when support for filesystems with filename restrictions 
+is enabled, keeps track both of the name of the file in the project and 
+the name of the file in the filesystem, with this mapping determined 
+entirely by the user asking for problem files to be present under 
+different names in the working tree.
 
+Of course, you can already do:
 
-diff --git a/t/t2500-clean.sh b/t/t2500-clean.sh
-index 3364c18..ad8f892 100755
---- a/t/t2500-clean.sh
-+++ b/t/t2500-clean.sh
-@@ -24,4 +24,21 @@ test_expect_success 'Clean empty patches' '
-     [ "$(echo $(stg unapplied))" = "" ]
- '
- 
-+test_expect_success 'Create a conflict' '
-+    stg new p1 -m p1 &&
-+    echo bar > foo.txt &&
-+    stg refresh &&
-+    stg pop &&
-+    stg new p2 -m p2
-+    echo quux > foo.txt &&
-+    stg refresh &&
-+    ! stg push
-+'
-+
-+test_expect_success 'Make sure conflicting patches are preserved' '
-+    stg clean &&
-+    [ "$(echo $(stg applied))" = "p0 p2 p1" ] &&
-+    [ "$(echo $(stg unapplied))" = "" ]
-+'
-+
- test_done
+$ git update-index --cacheinfo 100644 $(git hash-object -w xt_connmark-1.c) xt_CONNMARK.c
 
+> If it is a new file, we won't find any name that is equivalent
+> to $A in the index, and we use the name $A obtained from
+> readdir(3).
+> 
+> BUT with a twist.
+> 
+> If the filesystem is known to be inconveniently case folding, we
+> are better off registering $B instead of $A (assuming we can
+> convert from $A to $B).
 
--- 
-Regards,
-Pavel Roskin
+Is it not the case that, when a user has a file in the filesystem with the 
+name Ma"rchen, the user will still type:
+
+$ git add Märchen
+
+and so we see filenames which are convenient, and we don't overly care 
+what readdir(3) returns for new filenames? I suppose there is the case of:
+
+$ touch Märchen
+$ git add .
+
+Which has to figure out what the files in foo are. But the common case for 
+a new filename is that it gets provided by the user in argv, and the right 
+file contents come from the one that open(2) returns, and there's no 
+obvious way to get the filename that readdir(3) would return for a 
+filename in argv anyway.
+
+	-Daniel
+*This .sig left intentionally blank*
+--1547844168-407850424-1201233513=:13593--
