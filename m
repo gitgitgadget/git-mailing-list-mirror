@@ -1,50 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git pull manpage: don't include -n from fetch-options.txt
-Date: Thu, 24 Jan 2008 17:36:33 -0800
-Message-ID: <7vfxwm8z4u.fsf@gitster.siamese.dyndns.org>
-References: <72481CA3A5A6474EA49CFD2CF28A5D5D02CA348A@hektor.iplbath.com>
-	<alpine.LSU.1.00.0801241058330.5731@racer.site>
-	<20080124232418.GC4475@genesis.frugalware.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: stgit: patch import with fuzz
+Date: Thu, 24 Jan 2008 22:01:37 -0500
+Message-ID: <9e4733910801241901t230898d2t90ce2a14152e1af1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Jan 25 02:37:20 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 25 04:02:11 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIDVP-0002r4-FZ
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 02:37:19 +0100
+	id 1JIEpV-0004VK-Pw
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 04:02:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751809AbYAYBgq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2008 20:36:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751920AbYAYBgq
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 20:36:46 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:37626 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751582AbYAYBgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2008 20:36:45 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 033B537ED;
-	Thu, 24 Jan 2008 20:36:44 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8639337D6;
-	Thu, 24 Jan 2008 20:36:40 -0500 (EST)
-In-Reply-To: <20080124232418.GC4475@genesis.frugalware.org> (Miklos Vajna's
-	message of "Fri, 25 Jan 2008 00:24:19 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752470AbYAYDBi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jan 2008 22:01:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752459AbYAYDBi
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 22:01:38 -0500
+Received: from rv-out-0910.google.com ([209.85.198.190]:14568 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751295AbYAYDBh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jan 2008 22:01:37 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so501469rvb.1
+        for <git@vger.kernel.org>; Thu, 24 Jan 2008 19:01:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=VQbD/x1D4XibZak6hLPV36nks2Si/m1d4SMAYET0Lvw=;
+        b=oU0S6xR5Y9MWIZJxFyUnaQNsjqEYeszsSkYoevbK9uHpACOC9Q18sdGFbjJry2O07lVHAVsq1m6KgDdL76YMZdT37t5AxIeqUaonDzJFQBxavWlKvSuSec0y/uF2HmFNoIuhRsdk36Ne7cDYpUpWO8qxxUtBeA4LirsR3TyLlg4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ZypGo6N4rsdUbdmVHdv6ImSrHwa1A3zlBNbBM9TdbqZPICKe76ZJ4R/8u85bFBqDDcIhAjVYDLvPk4Txvp8UifNATJLMK/2UjBWRc65ZNqW+WBtsxX/jrB0+mxA5YQ/HDoZOqPzqo+5/xor8TFgd4oBSWC3mvdJnTy8b4JoJ8TE=
+Received: by 10.140.193.16 with SMTP id q16mr1050449rvf.109.1201230097258;
+        Thu, 24 Jan 2008 19:01:37 -0800 (PST)
+Received: by 10.140.166.14 with HTTP; Thu, 24 Jan 2008 19:01:37 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71674>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+Is there a way to allow a patch import with fuzz?
 
-> The -n option stands for --no-summary in git pull
+jonsmirl@terra:~/ds$ stg import patches-i2c/jds-mpc-i2c-to-of
+Checking for changes in the working directory ... done
+Importing patch "jds-mpc-i2c-to-of" ...
+error: patch failed: arch/powerpc/sysdev/fsl_soc.c:318
+error: arch/powerpc/sysdev/fsl_soc.c: patch does not apply
+  Warning: Diff written to the .stgit-failed.patch file
+  stg import: git failed with code 1
 
-Ok, but does that mean --no-tags does not exist there?
+Import it manually....
+
+jonsmirl@terra:~/ds$ patch -p1 <patches-i2c/jds-mpc-i2c-to-of
+patching file arch/powerpc/sysdev/fsl_soc.c
+Hunk #1 succeeded at 320 with fuzz 2 (offset 2 lines).
+patching file drivers/i2c/busses/Makefile
+patching file drivers/i2c/busses/i2c-mpc-drv.c
+patching file drivers/i2c/busses/powerpc-common.c
+patching file drivers/i2c/busses/powerpc-common.h
+patching file include/linux/mod_devicetable.h
+jonsmirl@terra:~/ds$
+
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
