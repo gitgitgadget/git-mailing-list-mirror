@@ -1,81 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: What's a "work tree"?
-Date: Fri, 25 Jan 2008 01:14:21 -0500
-Message-ID: <20080125061421.GC21973@coredump.intra.peff.net>
-References: <4798E26D.3040707@talkingspider.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: I'm a total push-over..
+Date: Thu, 24 Jan 2008 22:50:19 -0800
+Message-ID: <7vejc6761g.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.1.00.0801221515350.1741@woody.linux-foundation.org>
+	<7vabmxqnz8.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.1.00.0801221844570.1741@woody.linux-foundation.org>
+	<alpine.LFD.1.00.0801221913500.1741@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mike <fromlists@talkingspider.com>
-X-From: git-owner@vger.kernel.org Fri Jan 25 07:15:09 2008
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jan 25 07:51:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIHqD-0000eA-If
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 07:15:05 +0100
+	id 1JIIP3-0008VC-AC
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 07:51:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751307AbYAYGOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2008 01:14:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752055AbYAYGOY
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 01:14:24 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3611 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750954AbYAYGOY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 01:14:24 -0500
-Received: (qmail 18444 invoked by uid 111); 25 Jan 2008 06:14:22 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 25 Jan 2008 01:14:22 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Jan 2008 01:14:21 -0500
-Content-Disposition: inline
-In-Reply-To: <4798E26D.3040707@talkingspider.com>
+	id S1753365AbYAYGuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2008 01:50:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753014AbYAYGue
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 01:50:34 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53860 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752632AbYAYGud (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 01:50:33 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4BC87623B;
+	Fri, 25 Jan 2008 01:50:32 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C145A623A;
+	Fri, 25 Jan 2008 01:50:28 -0500 (EST)
+In-Reply-To: <alpine.LFD.1.00.0801221913500.1741@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 22 Jan 2008 19:19:12 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71684>
 
-On Thu, Jan 24, 2008 at 02:09:33PM -0500, Mike wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> I'm trying to figure out what a "work tree" is.  as in --work-tree. This 
-> is a new command right, the tutorials I've read don't have it. The man 
-> page has the syntax but I don't know what it's for.
+> +static inline size_t estimate_cache_size(size_t ondisk_size, unsigned int entries)
+> +{
+> +	long per_entry;
+> +
+> +	per_entry = sizeof(struct cache_entry) - sizeof(struct ondisk_cache_entry);
+> +
+> +	/*
+> +	 * Alignment can cause differences. This should be "alignof", but 
+> +	 * since that's a gcc'ism, just use the size of a pointer.
+> +	 */
+> +	per_entry += sizeof(void *);
+> +	return ondisk_size + entries*per_entry;
+> +}
+> +
 
-The work tree is the place where your checked out files reside. E.g.,
-in an ordinary repo (made with "git init" or "git clone") everything
-that isn't in the .git directory.
+I wonder if the issue Dave Miller addressed with
+69ae517541ed5ab7d4fdcd8f82a9b8bd949df347 (fast-import: fix
+unalinged allocation and access) applies here.
 
-> $ cd /www/mysitedocroot
-> $ git --git-dir /gitdir/mysitegit/ add .
-> fatal: add must be run in a work tree
+commit 69ae517541ed5ab7d4fdcd8f82a9b8bd949df347
+Author: David S. Miller <davem@davemloft.net>
+Date:   Fri Dec 14 20:39:16 2007 -0800
 
-You are using --git-dir to point to a repository directory that isn't
-".git". That's OK, and it will generally assume that your current
-directory is the work tree. E.g., this works:
-
-  mkdir repo && cd repo
-  git init
-  mv .git mygitdir
-  touch file
-  git --git-dir=mygitdir add file
-
-However, there is a config option "core.bare" which indicates that a
-repository is "bare", meaning that it has no work tree (and that is
-presumably what's happening in your example). So you could use
---work-tree=. to override that in your example (though you might just be
-better off setting config.bare to false).
-
-The more probable use case for --work-tree is something like
-
-  $ cd /gitdir/mysitegit
-  $ git --work-tree=/www/mysitedocroot add .
-
-i.e., you are in the git dir, so you specify the work tree rather than
-the other way around. You could even do this:
-
-  $ cd /some/other/directory
-  $ git --git-dir=/gitdir/mysitegit --work-tree=/www/mysitedocroot add .
-
-although I'm not sure it's that useful.
-
--Peff
+    fast-import: fix unalinged allocation and access
+    
+    The specialized pool allocator fast-import uses aligned objects on the
+    size of a pointer, which was not sufficient at least on Sparc.  Instead,
+    make the alignment for objects of type unitmax_t.
+    
+    Signed-off-by: David S. Miller <davem@davemloft.net>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
