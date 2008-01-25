@@ -1,70 +1,152 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: On pathnames
-Date: Fri, 25 Jan 2008 11:36:00 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801251134570.5731@racer.site>
-References: <34103945-2078-4983-B409-2D01EF071A8B@sb.org> <alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org> <E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org> <20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu>
- <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org> <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org> <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org> <20080123094052.GB6969@glandium.org> <20080123133802.GC7415@mit.edu>
- <alpine.LFD.1.00.0801230808440.1741@woody.linux-foundation.org> <98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org> <alpine.LFD.1.00.0801230930390.1741@woody.linux-foundation.org> <7vprvr7x8h.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0801242227250.13593@iabervon.org>
- <7vprvq7cy7.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Kevin Ballard <kevin@sb.org>, Theodore Tso <tytso@MIT.EDU>,
-	Mike Hommey <mh@glandium.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 25 12:37:29 2008
+From: "Roger C. Soares" <rogersoares@intelinet.com.br>
+Subject: [EGIT PATCH] showing commiter and parent commit(s) on the revision detail viewer
+Date: Fri, 25 Jan 2008 10:02:09 -0200
+Message-ID: <1201262529-3306-1-git-send-email-rogersoares@intelinet.com.br>
+Cc: robin.rosenberg.lists@dewire.com,
+	"Roger C. Soares" <rogersoares@intelinet.com.br>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 25 13:08:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIMs4-0001GG-69
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 12:37:20 +0100
+	id 1JINLl-0002M0-Vk
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 13:08:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755850AbYAYLgT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2008 06:36:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752631AbYAYLgS
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 06:36:18 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48378 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755836AbYAYLgN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 06:36:13 -0500
-Received: (qmail invoked by alias); 25 Jan 2008 11:36:11 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp003) with SMTP; 25 Jan 2008 12:36:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Y2/VSxlFYL+X7QgzSj5SaQhyjS+Pz06g3kJC6We
-	HzMpiIMeM3Un5k
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vprvq7cy7.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753632AbYAYMHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2008 07:07:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753330AbYAYMHX
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 07:07:23 -0500
+Received: from cvxbsd.convex.com.br ([200.152.177.10]:1402 "HELO
+	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1753632AbYAYMHW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 07:07:22 -0500
+Received: (qmail 6105 invoked by uid 0); 25 Jan 2008 10:10:28 -0200
+Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
+ (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
+ Processed in 1.961442 secs); 25 Jan 2008 12:10:28 -0000
+Received: from unknown (HELO localhost.localdomain) (189.5.248.8)
+  by cvxbsd.convex.com.br with SMTP; 25 Jan 2008 12:10:26 -0000
+X-Mailer: git-send-email 1.5.3.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71700>
 
-Hi,
+---
+ .../src/org/spearce/egit/ui/GitHistoryPage.java    |   57 +++++++++++++++++---
+ 1 files changed, 49 insertions(+), 8 deletions(-)
 
-On Thu, 24 Jan 2008, Junio C Hamano wrote:
-
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > $ git checkout branch
-> > Warning: xt_CONNMARK.c conflicts with xt_connmark.c; not checking it out
-> > $ git checkout xt_CONNMARK.c --as xt_CONNMARK_caps.c
-> > $ edit xt_CONNMARK_caps.c
-> > $ git add xt_CONNMARK_caps.c
-> 
-> Heh, I like that very much.
-
-It would make it easier to test on Linux, too, yes.
-
-But then, it would break the build process all the same.
-
-And the implementation would _need_ the index extension Linus seems to 
-resent so.
-
-Ciao,
-Dscho
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
+index 649df3f..cc11b97 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
+@@ -88,7 +88,9 @@ import org.spearce.egit.core.internal.mapping.GitFileHistoryProvider;
+ import org.spearce.egit.core.internal.mapping.GitFileRevision;
+ import org.spearce.egit.core.project.RepositoryMapping;
+ import org.spearce.egit.ui.internal.actions.GitCompareRevisionAction;
++import org.spearce.jgit.lib.Commit;
+ import org.spearce.jgit.lib.ObjectId;
++import org.spearce.jgit.lib.PersonIdent;
+ import org.spearce.jgit.lib.Tag;
+ import org.spearce.jgit.lib.TopologicalSorter;
+ import org.spearce.jgit.lib.Repository.StGitPatch;
+@@ -221,14 +223,16 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
+ 				if(selection2.length == 1) {
+ 					// if the table item is not visible in the UI and it's selected via keyboard
+ 					// this listener is called before the listener that sets the item data.
+-					if(selection2[0] == null) {
++					GitCommitFileRevision revision = (GitCommitFileRevision) selection2[0];
++					if(revision == null) {
+ 						int ix = table.getSelectionIndex();
+-						GitFileRevision revision = (GitFileRevision) fileRevisions.get(ix);
++						revision = (GitCommitFileRevision) fileRevisions.get(ix);
+ 						selection2[0] = revision;
+ 					}
+-					setRevisionInfoTextViewers(selection2[0]);
++					setRevisionInfoTextViewers(revision);
+ 				}
+ 
++
+ 				compareAction.setCurrentFileRevision(fileRevisions.get(0));
+ 				compareAction.selectionChanged(new StructuredSelection(
+ 						selection2));
+@@ -554,7 +558,7 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
+ 		revCommentTextViewer = new TextViewer(composite, SWT.H_SCROLL | SWT.V_SCROLL | SWT.READ_ONLY);
+ 	}
+ 
+-	/* private */void setRevisionInfoTextViewers(IFileRevision rev) {
++	/* private */void setRevisionInfoTextViewers(GitCommitFileRevision rev) {
+ 		StringBuilder revisionInfo = new StringBuilder();
+ 		if (appliedPatches != null) {
+ 			String id = rev.getContentIdentifier();
+@@ -570,7 +574,7 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
+ 			}
+ 		}
+ 		if (revisionInfo.length() == 0) {
+-			revisionInfo.append("Commit: ");
++			revisionInfo.append("Commit ID: ");
+ 			revisionInfo.append(rev.getContentIdentifier());
+ 		}
+ 
+@@ -673,10 +677,30 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
+ 			e.printStackTrace();
+ 		}
+ 
++		Commit commit = rev.getCommit();
+ 		revisionInfo.append("\nAuthor: ");
+-		revisionInfo.append(rev.getAuthor());
+-		revisionInfo.append("\nDate: ");
+-		revisionInfo.append(DATETIMETZ_FORMAT.format(new Date(rev.getTimestamp())));
++		revisionInfo.append(formatPersonIdentForRevInfo(commit.getAuthor()));
++		revisionInfo.append("\nCommiter: ");
++		revisionInfo.append(formatPersonIdentForRevInfo(commit.getCommitter()));
++		if(commit.getParentIds() != null) {
++			for(ObjectId pid : commit.getParentIds()) {
++				revisionInfo.append("\nParent: ");
++				revisionInfo.append(pid.toString());
++				try {
++					Commit pc = repositoryMapping.getRepository().mapCommit(pid);
++					revisionInfo.append(" (");
++					String cmesg = pc.getMessage();
++					int enterIndex = cmesg.indexOf("\n");
++					if(enterIndex > 0) {
++						cmesg = cmesg.substring(0, enterIndex);
++					}
++					revisionInfo.append(cmesg);
++					revisionInfo.append(" )");
++				} catch (IOException e) {
++					e.printStackTrace();
++				}
++			}
++		}
+ 
+ 		String comment = rev.getComment();
+ 		revDetailTextViewer.setDocument(new Document(revisionInfo.toString()));
+@@ -691,6 +715,23 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
+ 		if (workbenchPageSite != null) {
+ 			workbenchPageSite.getActionBars().getStatusLineManager().setMessage(comment);
+ 		}
++
++	}
++
++	private String formatPersonIdentForRevInfo(PersonIdent p) {
++		StringBuilder sb = new StringBuilder();
++		sb.append(p.getName());
++		if(p.getEmailAddress() != null) {
++			sb.append(" <");
++			sb.append(p.getEmailAddress());
++			sb.append(">");
++		}
++		if(p.getWhen() != null) {
++			sb.append(" ");
++			sb.append(DATETIMETZ_FORMAT.format(p.getWhen()));
++		}
++
++		return sb.toString();
+ 	}
+ 
+ 	/* private */void cleanRevisionInfoTextViewers() {
+-- 
+1.5.3.7
