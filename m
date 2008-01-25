@@ -1,90 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: On pathnames
-Date: Fri, 25 Jan 2008 17:34:47 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801251733040.5731@racer.site>
-References: <34103945-2078-4983-B409-2D01EF071A8B@sb.org> <alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org> <E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org> <20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu>
- <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org> <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org> <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org> <20080123094052.GB6969@glandium.org> <20080123133802.GC7415@mit.edu>
- <alpine.LFD.1.00.0801230808440.1741@woody.linux-foundation.org> <98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org> <alpine.LFD.1.00.0801230930390.1741@woody.linux-foundation.org> <7vprvr7x8h.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0801242227250.13593@iabervon.org>
- <7vprvq7cy7.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801251134570.5731@racer.site> <alpine.LNX.1.00.0801251111540.13593@iabervon.org>
+From: Jeremy Maitin-Shepard <jbms@cmu.edu>
+Subject: Re: I'm a total push-over..
+Date: Fri, 25 Jan 2008 13:19:15 -0500
+Message-ID: <87abmtvkd8.fsf@jbms.ath.cx>
+References: <alpine.LFD.1.00.0801230922190.1741@woody.linux-foundation.org>
+	<87fxwmv5tf.fsf@jbms.ath.cx>
+	<alpine.LSU.1.00.0801251250120.5731@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Kevin Ballard <kevin@sb.org>, Theodore Tso <tytso@MIT.EDU>,
-	Mike Hommey <mh@glandium.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Jan 25 18:35:41 2008
+Content-Type: text/plain
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 25 19:19:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JISSl-00019C-S7
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 18:35:36 +0100
+	id 1JIT9d-0004yy-WC
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 19:19:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754504AbYAYRfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2008 12:35:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753687AbYAYRfD
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 12:35:03 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34353 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753968AbYAYRfB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 12:35:01 -0500
-Received: (qmail invoked by alias); 25 Jan 2008 17:34:59 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp029) with SMTP; 25 Jan 2008 18:34:59 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18NfS0YvmYNfSxFmjwCKh3VfIWPluKDnZYHQDs50i
-	MxG9T+hXqb+Il0
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LNX.1.00.0801251111540.13593@iabervon.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755590AbYAYSTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2008 13:19:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755581AbYAYSTW
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 13:19:22 -0500
+Received: from deleuze.hcoop.net ([69.90.123.67]:50497 "EHLO deleuze.hcoop.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755575AbYAYSTU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 13:19:20 -0500
+Received: from c-67-165-107-197.hsd1.pa.comcast.net ([67.165.107.197] helo=localhost)
+	by deleuze.hcoop.net with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <jbms@cmu.edu>)
+	id 1JIT92-0006lp-EA; Fri, 25 Jan 2008 13:19:16 -0500
+X-Habeas-SWE-9: mark in spam to <http://www.habeas.com/report/>.
+X-Habeas-SWE-8: Message (HCM) and not spam. Please report use of this
+X-Habeas-SWE-7: warrant mark warrants that this is a Habeas Compliant
+X-Habeas-SWE-6: email in exchange for a license for this Habeas
+X-Habeas-SWE-5: Sender Warranted Email (SWE) (tm). The sender of this
+X-Habeas-SWE-4: Copyright 2002 Habeas (tm)
+X-Habeas-SWE-3: like Habeas SWE (tm)
+X-Habeas-SWE-2: brightly anticipated
+X-Habeas-SWE-1: winter into spring
+In-Reply-To: <alpine.LSU.1.00.0801251250120.5731@racer.site> (Johannes
+	Schindelin's message of "Fri, 25 Jan 2008 12:51:43 +0000 (GMT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71722>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Fri, 25 Jan 2008, Daniel Barkalow wrote:
+> On Fri, 25 Jan 2008, Jeremy Maitin-Shepard wrote:
 
-> On Fri, 25 Jan 2008, Johannes Schindelin wrote:
-> 
-> > On Thu, 24 Jan 2008, Junio C Hamano wrote:
-> > 
-> > > Daniel Barkalow <barkalow@iabervon.org> writes:
-> > > 
-> > > > $ git checkout branch
-> > > > Warning: xt_CONNMARK.c conflicts with xt_connmark.c; not checking it out
-> > > > $ git checkout xt_CONNMARK.c --as xt_CONNMARK_caps.c
-> > > > $ edit xt_CONNMARK_caps.c
-> > > > $ git add xt_CONNMARK_caps.c
-> > > 
-> > > Heh, I like that very much.
-> > 
-> > It would make it easier to test on Linux, too, yes.
-> > 
-> > But then, it would break the build process all the same.
-> 
-> Sure, but it would permit a user of a filesystem that can't handle the 
-> project to make modifications that generate a commit the filesystem can 
-> handle, which is currently pretty difficult.
-> 
-> $ git checkout xt_CONNMARK.c --as xt_CONNMARK_tmp.c
-> $ mv xt_CONNMARK_tmp.c xt_connmark_flag.c
-> $ edit Makefile
-> $ git add xt_connmark_flag.c
-> $ git commit -a
+>> But since multiple hash functions will be needed anyway to support 
+>> different notions of case-insensitivity, if the warning is not enabled, 
+>> there is no reason to use a case-insensitive hash function with a 
+>> byte-exact comparison.
 
-AFAICT it is possible right now:
+> No, only multiple compare functions will be needed.  The hash function can 
+> be built in such a manner that it guarantees that file names being equal 
+> with _any_ of the compare functions fall into the same bucket.
 
-$ git checkout xt_CONNMARK.c
-$ git mv xt_CONNMARK.c xt_connmark_flag.c
-$ git checkout xt_connmark.c
-$ edit Makefile
-$ git add Makefile
-$ git commit
+In theory, I agree that this is possible, but in practice it may not be
+reasonable at all.  Consider two possible comparison functions:
 
-Ciao,
-Dscho
+1. compare file names as strings case-insensitively assuming a latin 1
+encoding
+
+2. compare file names as strings case-insensitively assuming a UTF-8
+encoding
+
+Actually writing a hash function such that two strings hash to the same
+value if either of these comparison functions says that the strings are
+equal would appear to be rather difficult.
+
+> The upside of such a hash function: less code to maintain.
+
+A simple hash function that doesn't try to do anything regarding
+case-insensitivity is extremely short and simple and therefore is hardly
+a maintenance burden.
+
+Although in some cases it is possible to "share" a hash function, except
+for the "warning" purpose, actually doing so doesn't make much sense.
+Using the "case-insensitive" hash function when you intend to use an
+"exact" comparison function just amounts to using a hash function that
+is unequivocally worse: it is slower, more complicated, and has a higher
+collision rate.
+
+-- 
+Jeremy Maitin-Shepard
