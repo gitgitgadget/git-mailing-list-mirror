@@ -1,261 +1,90 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Add support for host aliases in config files
-Date: Fri, 25 Jan 2008 13:39:03 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0801251336080.13593@iabervon.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Add support for host aliases in config files
+Date: Fri, 25 Jan 2008 10:52:27 -0800 (PST)
+Message-ID: <m3fxwlagbu.fsf@localhost.localdomain>
+References: <alpine.LNX.1.00.0801251336080.13593@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jan 25 19:39:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Jan 25 19:53:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JITSr-0004Lf-Qb
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 19:39:46 +0100
+	id 1JITfk-0000ya-4M
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 19:53:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754507AbYAYSjO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2008 13:39:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754635AbYAYSjO
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 13:39:14 -0500
-Received: from iabervon.org ([66.92.72.58]:37078 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754382AbYAYSjN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 13:39:13 -0500
-Received: (qmail 25115 invoked by uid 1000); 25 Jan 2008 18:39:03 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 25 Jan 2008 18:39:03 -0000
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1755806AbYAYSwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2008 13:52:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754152AbYAYSwc
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 13:52:32 -0500
+Received: from mu-out-0910.google.com ([209.85.134.189]:19182 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755806AbYAYSwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 13:52:31 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so739296mue.5
+        for <git@vger.kernel.org>; Fri, 25 Jan 2008 10:52:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=1nuwdnt2EsbKW0aDg6CTclkpv2z8Y86cdJX7WJe49+I=;
+        b=qpCSqAfOUxjvJoHyMM267HwJahGuU7XpX7L9ON4ivMXXSde1uG2RLBIJoKTELdEym6Qt9X2qproqzXt5uA3NDQ9hUJzmKrNqm7YmpMoKmQ8MalAhdnNLsoQRy0/1aNpNnJnxOIsZ632Col04D3+46QZYv8ak4k2W6GZ66+nFKM8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=bR4gu/4YK/lAzRWkhcPOWaQbnOkH2GOs08D1qPzvPDd8uaPQ8kQLbqWASr7MpYszU4wWQ7BW1mW9JF1og1E0I+Xna5ZmhVT4Dw74k+G4moV2m3IUC3+CBIupLbKbkAKMImFG1rCkdX/fWTsZAU2wJKx2S8y2O57wpwyJJtKOK64=
+Received: by 10.78.147.6 with SMTP id u6mr3496479hud.59.1201287149192;
+        Fri, 25 Jan 2008 10:52:29 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.250.186])
+        by mx.google.com with ESMTPS id d23sm905354nfh.4.2008.01.25.10.52.26
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 25 Jan 2008 10:52:27 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m0PIqJmL009934;
+	Fri, 25 Jan 2008 19:52:20 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m0PIq6CR009927;
+	Fri, 25 Jan 2008 19:52:06 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <alpine.LNX.1.00.0801251336080.13593@iabervon.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71726>
 
-This allows users with different preferences for access methods to the
-same remote repositories to rewrite each other's URLs to get the
-desired access.
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
----
- Documentation/config.txt |   15 ++++++
- remote.c                 |  112 ++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 124 insertions(+), 3 deletions(-)
+> This allows users with different preferences for access methods to the
+> same remote repositories to rewrite each other's URLs to get the
+> desired access.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 877eda9..dae79ce 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -596,6 +596,21 @@ help.format::
- 	Values 'man', 'info', 'web' and 'html' are supported. 'man' is
- 	the default. 'web' and 'html' are the same.
- 
-+host.<name>.base::
-+	The base URL which should be used for this particular
-+	host. This can be used by a user who has a better access
-+	method to a repository than other users to make use of the
-+	preferable path despite getting URLs from other users using
-+	more commonly-available methods. Alternatively, a user who
-+	only has less privileged access to a repository than the usual
-+	audience can use this mechanism to replace disallowed methods
-+	with public ones.
-+
-+host.<name>.alias::
-+	Additional base URLs which refer to this host. If a URL
-+	matches this, any access to it will use the URL formed with
-+	the corresponding base URL instead of the given URL.
-+
- http.proxy::
- 	Override the HTTP proxy, normally configured using the 'http_proxy'
- 	environment variable (see linkgit:curl[1]).  This can be overridden
-diff --git a/remote.c b/remote.c
-index 0e00680..76ed576 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2,6 +2,15 @@
- #include "remote.h"
- #include "refs.h"
- 
-+struct host {
-+	const char *name;
-+
-+	const char *base;
-+
-+	const char **alias;
-+	int alias_nr;
-+};
-+
- static struct remote **remotes;
- static int allocated_remotes;
- 
-@@ -11,9 +20,32 @@ static int allocated_branches;
- static struct branch *current_branch;
- static const char *default_remote_name;
- 
-+static struct host **hosts;
-+static int allocated_hosts;
-+
- #define BUF_SIZE (2048)
- static char buffer[BUF_SIZE];
- 
-+static const char *alias_url(const char *url)
-+{
-+	int i, j;
-+	for (i = 0; i < allocated_hosts; i++) {
-+		if (!hosts[i])
-+			continue;
-+		for (j = 0; j < hosts[i]->alias_nr; j++) {
-+			if (!prefixcmp(url, hosts[i]->alias[j])) {
-+				char *ret = malloc(strlen(hosts[i]->base) -
-+						   strlen(hosts[i]->alias[j]) +
-+						   strlen(url) + 1);
-+				strcpy(ret, hosts[i]->base);
-+				strcat(ret, url + strlen(hosts[i]->alias[j]));
-+				return ret;
-+			}
-+		}
-+	}
-+	return url;
-+}
-+
- static void add_push_refspec(struct remote *remote, const char *ref)
- {
- 	int nr = remote->push_refspec_nr + 1;
-@@ -41,6 +73,11 @@ static void add_url(struct remote *remote, const char *url)
- 	remote->url_nr = nr;
- }
- 
-+static void add_url_alias(struct remote *remote, const char *url)
-+{
-+	add_url(remote, alias_url(url));
-+}
-+
- static struct remote *make_remote(const char *name, int len)
- {
- 	int i, empty = -1;
-@@ -121,6 +158,48 @@ static struct branch *make_branch(const char *name, int len)
- 	return branches[empty];
- }
- 
-+static struct host *make_host(const char *name, int len)
-+{
-+	int i, empty = -1;
-+
-+	for (i = 0; i < allocated_hosts; i++) {
-+		if (!hosts[i]) {
-+			if (empty < 0)
-+				empty = i;
-+		} else {
-+			if (len ? (!strncmp(name, hosts[i]->name, len) &&
-+				   !hosts[i]->name[len]) :
-+			    !strcmp(name, hosts[i]->name))
-+				return hosts[i];
-+		}
-+	}
-+
-+	if (empty < 0) {
-+		empty = allocated_hosts;
-+		allocated_hosts += allocated_hosts ? allocated_hosts : 1;
-+		hosts = xrealloc(hosts,
-+				 sizeof(*hosts) * allocated_hosts);
-+		memset(hosts + empty, 0,
-+		       (allocated_hosts - empty) * sizeof(*hosts));
-+	}
-+	hosts[empty] = xcalloc(1, sizeof(struct host));
-+	if (len)
-+		hosts[empty]->name = xstrndup(name, len);
-+	else
-+		hosts[empty]->name = xstrdup(name);
-+
-+	return hosts[empty];
-+}
-+
-+static void add_alias(struct host *host, const char *name)
-+{
-+	int nr = host->alias_nr + 1;
-+	host->alias =
-+		xrealloc(host->alias, nr * sizeof(char *));
-+	host->alias[nr-1] = name;
-+	host->alias_nr = nr;
-+}
-+
- static void read_remotes_file(struct remote *remote)
- {
- 	FILE *f = fopen(git_path("remotes/%s", remote->name), "r");
-@@ -154,7 +233,7 @@ static void read_remotes_file(struct remote *remote)
- 
- 		switch (value_list) {
- 		case 0:
--			add_url(remote, xstrdup(s));
-+			add_url_alias(remote, xstrdup(s));
- 			break;
- 		case 1:
- 			add_push_refspec(remote, xstrdup(s));
-@@ -206,7 +285,7 @@ static void read_branches_file(struct remote *remote)
- 	} else {
- 		branch = "refs/heads/master";
- 	}
--	add_url(remote, p);
-+	add_url_alias(remote, p);
- 	add_fetch_refspec(remote, branch);
- 	remote->fetch_tags = 1; /* always auto-follow */
- }
-@@ -233,6 +312,20 @@ static int handle_config(const char *key, const char *value)
- 			add_merge(branch, xstrdup(value));
- 		return 0;
- 	}
-+	if (!prefixcmp(key, "host.")) {
-+		struct host *host;
-+		name = key + 5;
-+		subkey = strrchr(name, '.');
-+		if (!subkey)
-+			return 0;
-+		host = make_host(name, subkey - name);
-+		if (!value)
-+			return 0;
-+		if (!strcmp(subkey, ".base"))
-+			host->base = xstrdup(value);
-+	        else if (!strcmp(subkey, ".alias"))
-+			add_alias(host, xstrdup(value));
-+	}
- 	if (prefixcmp(key,  "remote."))
- 		return 0;
- 	name = key + 7;
-@@ -284,6 +377,18 @@ static int handle_config(const char *key, const char *value)
- 	return 0;
- }
- 
-+static void alias_all_urls(void)
-+{
-+	int i, j;
-+	for (i = 0; i < allocated_remotes; i++) {
-+		if (!remotes[i])
-+			continue;
-+		for (j = 0; j < remotes[i]->url_nr; j++) {
-+			remotes[i]->url[j] = alias_url(remotes[i]->url[j]);
-+		}
-+	}
-+}
-+
- static void read_config(void)
- {
- 	unsigned char sha1[20];
-@@ -300,6 +405,7 @@ static void read_config(void)
- 			make_branch(head_ref + strlen("refs/heads/"), 0);
- 	}
- 	git_config(handle_config);
-+	alias_all_urls();
- }
- 
- struct refspec *parse_ref_spec(int nr_refspec, const char **refspec)
-@@ -355,7 +461,7 @@ struct remote *remote_get(const char *name)
- 			read_branches_file(ret);
- 	}
- 	if (!ret->url)
--		add_url(ret, name);
-+		add_url_alias(ret, name);
- 	if (!ret->url)
- 		return NULL;
- 	ret->fetch = parse_ref_spec(ret->fetch_refspec_nr, ret->fetch_refspec);
+[...]
+> +host.<name>.base::
+> +	The base URL which should be used for this particular
+> +	host. This can be used by a user who has a better access
+> +	method to a repository than other users to make use of the
+> +	preferable path despite getting URLs from other users using
+> +	more commonly-available methods. Alternatively, a user who
+> +	only has less privileged access to a repository than the usual
+> +	audience can use this mechanism to replace disallowed methods
+> +	with public ones.
+> +
+> +host.<name>.alias::
+> +	Additional base URLs which refer to this host. If a URL
+> +	matches this, any access to it will use the URL formed with
+> +	the corresponding base URL instead of the given URL.
+> +
+
+>From this I could not get how those configuration are meant to be
+used. Perhaps some usage example?
+
+BTW. wouldn't the same be solved better by enabling remote.<name>.url
+to be multi-valued, first working for fetch, all URLs for push?
+
 -- 
-1.5.4.rc3.4.g16335
+Jakub Narebski
+Poland
+ShadeHawk on #git
