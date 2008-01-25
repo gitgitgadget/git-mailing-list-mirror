@@ -1,81 +1,58 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: On pathnames
-Date: Fri, 25 Jan 2008 13:50:38 +0100
-Message-ID: <85odbaoyqp.fsf@lola.goethe.zz>
-References: <34103945-2078-4983-B409-2D01EF071A8B@sb.org>
-	<alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org>
-	<E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org>
-	<20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu>
-	<alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org>
-	<20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org>
-	<4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org>
-	<20080123094052.GB6969@glandium.org> <20080123133802.GC7415@mit.edu>
-	<alpine.LFD.1.00.0801230808440.1741@woody.linux-foundation.org>
-	<98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org>
-	<alpine.LFD.1.00.0801230930390.1741@woody.linux-foundation.org>
-	<7vprvr7x8h.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.1.00.0801241722130.22568@xanadu.home>
-	<7vy7ae7dcb.fsf@gitster.siamese.dyndns.org>
-	<alpine.LSU.1.00.0801251137030.5731@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: I'm a total push-over..
+Date: Fri, 25 Jan 2008 12:51:43 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801251250120.5731@racer.site>
+References: <alpine.LFD.1.00.0801230922190.1741@woody.linux-foundation.org> <87fxwmv5tf.fsf@jbms.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
-	git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Kevin Ballard <kevin@sb.org>, Theodore Tso <tytso@MIT.EDU>,
-	Mike Hommey <mh@glandium.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 25 13:51:17 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Jeremy Maitin-Shepard <jbms@cmu.edu>
+X-From: git-owner@vger.kernel.org Fri Jan 25 13:52:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIO1Z-0007Uz-Ka
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 13:51:14 +0100
+	id 1JIO2j-0007xd-7j
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 13:52:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754811AbYAYMuk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jan 2008 07:50:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754782AbYAYMuk
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 07:50:40 -0500
-Received: from mail-in-07.arcor-online.net ([151.189.21.47]:54488 "EHLO
-	mail-in-07.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754802AbYAYMui convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 07:50:38 -0500
-Received: from mail-in-09-z2.arcor-online.net (mail-in-09-z2.arcor-online.net [151.189.8.21])
-	by mail-in-07.arcor-online.net (Postfix) with ESMTP id B7F5924B0B9;
-	Fri, 25 Jan 2008 13:50:36 +0100 (CET)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-09-z2.arcor-online.net (Postfix) with ESMTP id A323328EDBE;
-	Fri, 25 Jan 2008 13:50:36 +0100 (CET)
-Received: from lola.goethe.zz (dslb-084-061-040-038.pools.arcor-ip.net [84.61.40.38])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 681C536E877;
-	Fri, 25 Jan 2008 13:50:36 +0100 (CET)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id E372E1C29911; Fri, 25 Jan 2008 13:50:38 +0100 (CET)
-In-Reply-To: <alpine.LSU.1.00.0801251137030.5731@racer.site> (Johannes
-	Schindelin's message of "Fri, 25 Jan 2008 12:25:22 +0000 (GMT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.92/5550/Fri Jan 25 08:02:45 2008 on mail-in-02.arcor-online.net
-X-Virus-Status: Clean
+	id S1754851AbYAYMvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2008 07:51:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754609AbYAYMvz
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 07:51:55 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58805 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754782AbYAYMvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 07:51:54 -0500
+Received: (qmail invoked by alias); 25 Jan 2008 12:51:52 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp040) with SMTP; 25 Jan 2008 13:51:52 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+0Dc98Z6i0ZTh+hTb8mH/BiO/0YL/hYEw+sC9ZSF
+	vMI8TXWzBTLYk5
+X-X-Sender: gene099@racer.site
+In-Reply-To: <87fxwmv5tf.fsf@jbms.ath.cx>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71704>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> it seems that for some strange reason, "git add M=E4rchen" puts the
-> mangled filename into the index, even if "echo M=E4rchen" shows the
-> unmangled filename.
+On Fri, 25 Jan 2008, Jeremy Maitin-Shepard wrote:
 
-echo is likely a shell builtin.  So "git add M=E4rchen" goes through ex=
-ec
-while echo doesn't.
+> But since multiple hash functions will be needed anyway to support 
+> different notions of case-insensitivity, if the warning is not enabled, 
+> there is no reason to use a case-insensitive hash function with a 
+> byte-exact comparison.
 
-What does /bin/echo M=E4rchen yield?
+No, only multiple compare functions will be needed.  The hash function can 
+be built in such a manner that it guarantees that file names being equal 
+with _any_ of the compare functions fall into the same bucket.
 
---=20
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+The upside of such a hash function: less code to maintain.
+
+Hth,
+Dscho
