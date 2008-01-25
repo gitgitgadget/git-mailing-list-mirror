@@ -1,109 +1,89 @@
-From: Robert Schiele <rschiele@gmail.com>
-Subject: Re: [PATCH] autoconf: Add test for sys/select.h header file
-Date: Fri, 25 Jan 2008 13:53:04 +0100
-Message-ID: <20080125125304.GO30676@schiele.dyndns.org>
-References: <20080124183446.GJ30676@schiele.dyndns.org> <1201259981-7115-1-git-send-email-jnareb@gmail.com> <alpine.LSU.1.00.0801251229250.5731@racer.site>
-Reply-To: Robert Schiele <rschiele@gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="UdiMmEj9EzJj2jSc"
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: On pathnames
+Date: Fri, 25 Jan 2008 13:53:54 +0100
+Message-ID: <FAC8E3EF-7F18-4601-8B4F-09ED24228C21@wincent.com>
+References: <34103945-2078-4983-B409-2D01EF071A8B@sb.org> <alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org> <E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org> <20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu> <alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org> <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org> <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org> <20080123094052.GB6969@glandium.org> <20080123133802.GC7415@mit.edu> <alpine.LFD.1.00.0801230808440.1741@woody.linux-foundation.org> <98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org> <alpine.LFD.1.00.0801230930390.1741@woody.linux-foundation.org> <7vprvr7x8h.fsf@gitster.siamese.dyndns.org> <alpine.LFD.1.00.0801241722130.22568@xanadu.home> <7vy7ae7dcb.fsf@gitster.siamese.dyndns.org> <alpi
+ ne.LSU.1.00.0801251137030.5731@racer.site>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
+	git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Kevin Ballard <kevin@sb.org>, Theodore Tso <tytso@MIT.EDU>,
+	Mike Hommey <mh@glandium.org>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 25 13:53:49 2008
+X-From: git-owner@vger.kernel.org Fri Jan 25 13:55:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIO3y-0008Rk-Os
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 13:53:43 +0100
+	id 1JIO5c-0000Zz-7q
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 13:55:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754858AbYAYMxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2008 07:53:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754802AbYAYMxM
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 07:53:12 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:49507 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754609AbYAYMxK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 07:53:10 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so502734ugc.16
-        for <git@vger.kernel.org>; Fri, 25 Jan 2008 04:53:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
-        bh=Ms84qnJkNAwH/Cfq3mp4SFb9r/lJMfFEAEOTUhIWLIE=;
-        b=c5lBdEyFtkrb2LdqWIDleQ+Y58ZtOhVqbHse5J8hTfgB3LrVaH/HDp1WiP25byI5Tu/Iae/ootOlPJtKvazz6bg6RXdKuImMxGtCIYkrVLVquvuZoCVzVdfLkOsnArFc2tJNG5rukR3K6sNn/+/2yEAoVOkgALJXisI/sSGowXw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
-        b=b4x6aeIVROkq6DnYA+6VH0LvXPmGNvhqSgMWoZLF82EOqkzvwDBFS3HksCIfsTr0iTp+orVU8WKdLop9cnHMTasIR98MTCGmw65WnMXE4w0vTJaiEycbhhou3qMTV8S3hzXEHHRvmDQmxY5siOZQx8Ef5BKn1mDi/hn8snsBFxE=
-Received: by 10.67.101.17 with SMTP id d17mr3509752ugm.53.1201265587028;
-        Fri, 25 Jan 2008 04:53:07 -0800 (PST)
-Received: from sigkill.schiele.dyndns.org ( [91.18.108.130])
-        by mx.google.com with ESMTPS id l12sm2081995fgb.8.2008.01.25.04.53.06
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 25 Jan 2008 04:53:06 -0800 (PST)
-Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
-	id 0C22B4BFE5; Fri, 25 Jan 2008 13:53:04 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0801251229250.5731@racer.site>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1754972AbYAYMyy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jan 2008 07:54:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754964AbYAYMyy
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 07:54:54 -0500
+Received: from wincent.com ([72.3.236.74]:59368 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754905AbYAYMyx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Jan 2008 07:54:53 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m0PCrsS9015321;
+	Fri, 25 Jan 2008 06:53:55 -0600
+In-Reply-To: <alpine.LSU.1.00.0801251137030.5731@racer.site>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71706>
+
+El 25/1/2008, a las 13:25, Johannes Schindelin escribi=F3:
+
+> The strange thing is that
+>
+> http://colabti.de/irclogger/irclogger_log/git?date=3D2008-01-25,Fri&s=
+el=3D57#l89
+>
+> the command line seems not to be mangling the name.
+>
+> Summary:
+>
+> it seems that for some strange reason, "git add M=E4rchen" puts the =20
+> mangled
+> filename into the index, even if "echo M=E4rchen" shows the unmangled
+> filename.
+>
+> Ciao,
+> Dscho
 
 
---UdiMmEj9EzJj2jSc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Not sure if I grokked the IRC interchange fully but check this out:
 
-On Fri, Jan 25, 2008 at 12:30:27PM +0000, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Fri, 25 Jan 2008, Jakub Narebski wrote:
->=20
-> > diff --git a/configure.ac b/configure.ac
-> > index af177fd..85d7ef5 100644
-> > --- a/configure.ac
-> > +++ b/configure.ac
-> > @@ -235,6 +235,12 @@ test -n "$NEEDS_SOCKET" && LIBS=3D"$LIBS -lsocket"
-> >  ## Checks for header files.
-> >  AC_MSG_NOTICE([CHECKS for header files])
-> >  #
-> > +# Define NO_SYS_SELECT_H if you don't have sys/select.h.
-> > +AC_CHECK_HEADER([sys/select.h],
-> > +[NO_SYS_SELECT_H=3D],
-> > +[NO_SYS_SELECT_H=3DUnfortunatelyYes])
-> > +AC_SUBST(NO_SYS_SELECT_H)
-> > +#
->=20
-> Just because I am curious: would that not define "NO_SYS_SELECT_H" in bot=
-h=20
-> cases?  IOW would the "ifdef NO_SYS_SELECT_H" not be triggered all the=20
-> time?
+$ touch M=E4rchen
+$ echo M=E4rchen | xxd -g1
+0000000: 4d 61 cc 88 72 63 68 65 6e 0a                    Ma..rchen.
+$ echo M=E4rchen | xxd -g1
+0000000: 4d c3 a4 72 63 68 65 6e 0a                       M..rchen.
 
-No, in make the empty string is equal to not being defined.
+The first one shows me creating the file, then typing "echo M" and =20
+hitting tab so that the shell autocompletes the filename for me based =20
+on what it sees in the current directory. Note how it's decomposed.
 
-Robert
+The second one shows me manually typing the string "M=E4rchen" with no =
+=20
+tab autocompletion (literally typing =A8 then a), and you'll notice tha=
+t =20
+this time it is precomposed.
 
---=20
-Robert Schiele
-Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
+So that might explain why "echo M=E4rchen" is showing an unmangled name=
+; =20
+if he just typed it out like I did then that would be the expected =20
+result.
 
-"Quidquid latine dictum sit, altum sonatur."
-
---UdiMmEj9EzJj2jSc
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.4-svn0 (GNU/Linux)
-
-iD8DBQFHmduwxcDFxyGNGNcRAjO0AKCy1a7GCZirWma4l/Uq+KrexKDOTQCfbcW6
-7c/2gS2/Hj+IB3/Xu7iOTDI=
-=7men
------END PGP SIGNATURE-----
-
---UdiMmEj9EzJj2jSc--
+Cheers,
+Wincent
