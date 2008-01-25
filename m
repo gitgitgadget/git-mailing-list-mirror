@@ -1,63 +1,74 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: stgit: per branch cover letters
-Date: Fri, 25 Jan 2008 09:57:50 -0500
-Message-ID: <9e4733910801250657p2d7fdc66o8a631d7587125949@mail.gmail.com>
+From: Chris Mason <chris.mason@oracle.com>
+Subject: Re: [Btrfs-devel] btrfs and git-reflog
+Date: Fri, 25 Jan 2008 10:01:23 -0500
+Message-ID: <200801251001.23462.chris.mason@oracle.com>
+References: <873asmcodd.fsf@burly.wgtn.ondioline.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jan 25 15:58:30 2008
+Cc: Paul Collins <paul@burly.ondioline.org>, git@vger.kernel.org
+To: btrfs-devel@oss.oracle.com
+X-From: git-owner@vger.kernel.org Fri Jan 25 16:03:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIQ0a-0002rR-Mn
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 15:58:21 +0100
+	id 1JIQ51-0004ej-88
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 16:02:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753774AbYAYO5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2008 09:57:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754141AbYAYO5w
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 09:57:52 -0500
-Received: from wa-out-1112.google.com ([209.85.146.178]:16718 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753774AbYAYO5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 09:57:51 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1114625wah.23
-        for <git@vger.kernel.org>; Fri, 25 Jan 2008 06:57:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=1QFSWkl6FRLOiVajalQpWMdIVTWqWXhmE15Ymq3U2RA=;
-        b=O2Az5VcjT9sDyzESS7JQpyYZrzY37FziigevK6ERvNq+ml13Qe9KF8PIGZ0qlQVt2+99MUutacHH4YrApnYsNaUoGu/FCWk1FXJEohhKHXXV3Gdwh+NiOzQnp4WhUMjICiaqflvlWTXsJuFlJD3/dpbswFN7Qb+9kWrpo6njkc8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=AzoEuDoWaKoGUB6kGKigL09Lgkz1+dh+z5vdJTluMzn3HoS8MDyvJF8nuE3VhOjQ+lH7InkX6NZ6JiEyRVxo22vFp8JDxQiFaG9CGG8OqIGC6wH/mPtqwEd3UjUeReBGspfLkOg2x6u+IqeqK2YRLxsitO9WMl2lQR0HT5MC6I4=
-Received: by 10.114.77.1 with SMTP id z1mr142445waa.56.1201273070987;
-        Fri, 25 Jan 2008 06:57:50 -0800 (PST)
-Received: by 10.114.93.14 with HTTP; Fri, 25 Jan 2008 06:57:50 -0800 (PST)
+	id S1754874AbYAYPCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jan 2008 10:02:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754690AbYAYPCN
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 10:02:13 -0500
+Received: from agminet01.oracle.com ([141.146.126.228]:64062 "EHLO
+	agminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753434AbYAYPCM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 10:02:12 -0500
+Received: from agmgw2.us.oracle.com (agmgw2.us.oracle.com [152.68.180.213])
+	by agminet01.oracle.com (Switch-3.2.4/Switch-3.1.7) with ESMTP id m0PF271O017523;
+	Fri, 25 Jan 2008 09:02:07 -0600
+Received: from acsmt353.oracle.com (acsmt353.oracle.com [141.146.40.153])
+	by agmgw2.us.oracle.com (Switch-3.2.0/Switch-3.2.0) with ESMTP id m0PEHmn3000579;
+	Fri, 25 Jan 2008 08:02:06 -0700
+Received: from cpe-72-225-43-119.rochester.res.rr.com by acsmt359.oracle.com
+	with ESMTP id 7015875011201273293; Fri, 25 Jan 2008 09:01:33 -0600
+User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
+In-Reply-To: <873asmcodd.fsf@burly.wgtn.ondioline.org>
 Content-Disposition: inline
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Whitelist: TRUE
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71712>
 
-It would be convenient to have per branch cover letters that are
-stored by stg and get automatically applied when a patch set is
-mailed. Use 'stg edit'  to alter them. The first time you email a
-series you would get an editor to write the cover letter if you hadn't
-already done it. You could track the "to=" this way also.
+On Friday 25 January 2008, Paul Collins wrote:
+> I was just playing with git 1.5.3.8 and btrfs 0.11, and I noticed
+> something odd.
+>
+> If I prepare a very simple repository:
+>
+>   $ mkdir foo
+>   $ cd foo
+>   $ git init
+>   Initialized empty Git repository in .git/
+>   $ echo hi > blort
+>   $ git add .
+>   $ git commit -m create
+>   Created initial commit 4ae9415: create
+>    1 files changed, 1 insertions(+), 0 deletions(-)
+>    create mode 100644 blort
+>
+> and then attempt to expire the reflogs
+>
+>   $ git-reflog --expire --all
+>
+> on ext3, git-reflog completes its work and exits immediately;
 
-Another useful feature would be a config option that says something
-like "prompt for new version" when mailed.  Now each time you mail the
-series it throws you into the cover page editor with an incremented
-patch version. You can just quit out of the editor if you don't want
-to increment the version.
+Strange, but I can reproduce here.  I'll take a look, thanks for this report.
 
-I didn't know I wanted features like this until I made a patch that
-has gone through 25 versions.
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
+-chris
