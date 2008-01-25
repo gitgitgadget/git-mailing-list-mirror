@@ -1,67 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: On pathnames
-Date: Thu, 24 Jan 2008 20:21:04 -0800
-Message-ID: <7vprvq7cy7.fsf@gitster.siamese.dyndns.org>
-References: <34103945-2078-4983-B409-2D01EF071A8B@sb.org>
-	<alpine.LFD.1.00.0801211846010.2957@woody.linux-foundation.org>
-	<E3E4F5B3-1740-47E4-A432-C881830E2037@sb.org>
-	<20080122133427.GB17804@mit.edu> <20080123000841.GA22704@mit.edu>
-	<alpine.LFD.1.00.0801221625510.1741@woody.linux-foundation.org>
-	<20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org>
-	<4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org>
-	<20080123094052.GB6969@glandium.org> <20080123133802.GC7415@mit.edu>
-	<alpine.LFD.1.00.0801230808440.1741@woody.linux-foundation.org>
-	<98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org>
-	<alpine.LFD.1.00.0801230930390.1741@woody.linux-foundation.org>
-	<7vprvr7x8h.fsf@gitster.siamese.dyndns.org>
-	<alpine.LNX.1.00.0801242227250.13593@iabervon.org>
+Date: Fri, 25 Jan 2008 00:59:10 -0500
+Message-ID: <20080125055910.GB21973@coredump.intra.peff.net>
+References: <20080123013325.GB1320@mit.edu> <20080123064139.GC16297@glandium.org> <4697E0BA-7243-4C35-A384-0BD261EC21AF@sb.org> <20080123094052.GB6969@glandium.org> <20080123133802.GC7415@mit.edu> <alpine.LFD.1.00.0801230808440.1741@woody.linux-foundation.org> <98F90EB6-1930-4643-8C6C-CA11CB123BAA@sb.org> <alpine.LFD.1.00.0801230930390.1741@woody.linux-foundation.org> <7vprvr7x8h.fsf@gitster.siamese.dyndns.org> <alpine.LNX.1.00.0801242227250.13593@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Kevin Ballard <kevin@sb.org>, Theodore Tso <tytso@MIT.EDU>,
 	Mike Hommey <mh@glandium.org>
 To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Jan 25 05:21:50 2008
+X-From: git-owner@vger.kernel.org Fri Jan 25 07:00:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIG4b-0003lG-BE
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 05:21:49 +0100
+	id 1JIHbZ-0005wa-0M
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 06:59:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753106AbYAYEVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jan 2008 23:21:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753108AbYAYEVT
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Jan 2008 23:21:19 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46068 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753065AbYAYEVS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jan 2008 23:21:18 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id EAFBE1112;
-	Thu, 24 Jan 2008 23:21:16 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 08C9E110D;
-	Thu, 24 Jan 2008 23:21:06 -0500 (EST)
-In-Reply-To: <alpine.LNX.1.00.0801242227250.13593@iabervon.org> (Daniel
-	Barkalow's message of "Thu, 24 Jan 2008 23:00:44 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757748AbYAYF7Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jan 2008 00:59:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757381AbYAYF7Q
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 00:59:16 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3995 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757332AbYAYF7N (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 00:59:13 -0500
+Received: (qmail 18388 invoked by uid 111); 25 Jan 2008 05:59:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 25 Jan 2008 00:59:11 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 25 Jan 2008 00:59:10 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.1.00.0801242227250.13593@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71681>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On Thu, Jan 24, 2008 at 11:00:44PM -0500, Daniel Barkalow wrote:
 
+> I think it would be nicer to have:
+>=20
 > $ git checkout branch
-> Warning: xt_CONNMARK.c conflicts with xt_connmark.c; not checking it out
+> Warning: xt_CONNMARK.c conflicts with xt_connmark.c; not checking it =
+out
 > $ git checkout xt_CONNMARK.c --as xt_CONNMARK_caps.c
 > $ edit xt_CONNMARK_caps.c
 > $ git add xt_CONNMARK_caps.c
+>=20
+> Where the index, when support for filesystems with filename restricti=
+ons=20
+> is enabled, keeps track both of the name of the file in the project a=
+nd=20
+> the name of the file in the filesystem, with this mapping determined=20
+> entirely by the user asking for problem files to be present under=20
+> different names in the working tree.
 
-Heh, I like that very much.
+Hrm. That makes me think: what if rather than doing utf8-ish
+comparisons, the index stores a bidirectional mapping for any "munged"
+names, and you can manipulate that mapping?
+
+As in, the index entry for M=E4rchen has an extra entry saying "I am
+actually on the filesystem as Ma"rchen" (let's call this an alias) and
+there is a pseudo-entry in the index for Ma"rchen that says "I'm not
+really here. See M=E4rchen" (let's call this a backref).
+
+Then index-modifying commands like "git-add" or "git-checkout" can set
+up the mapping, either manually (using --as or similar) or using a
+particular munging scheme (git config core.filemunge hfs). Any time we
+give an index path to the filesystem, we use its alias name. Any time w=
+e
+look up an index entry and it ends up being a backref, we dereference
+until we get a real entry. Index iterators would need to skip backrefs.
+
+I think all systems would follow the same codepath, there is no penalty
+for filenames which don't use the mapping, and it would be testable on
+non-challenged filesystems. But perhaps I am missing some obvious
+deficiency or impossibility.
+
+-Peff
