@@ -1,110 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] git pull manpage: don't include -n from fetch-options.txt
-Date: Fri, 25 Jan 2008 10:17:38 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801251016170.5731@racer.site>
-References: <72481CA3A5A6474EA49CFD2CF28A5D5D02CA348A@hektor.iplbath.com> <alpine.LSU.1.00.0801241058330.5731@racer.site> <20080124232418.GC4475@genesis.frugalware.org> <7vfxwm8z4u.fsf@gitster.siamese.dyndns.org>
- <20080125092839.GF4475@genesis.frugalware.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: stg clean removes conflicting patch
+Date: Fri, 25 Jan 2008 11:17:27 +0100
+Message-ID: <20080125101727.GA7101@diana.vm.bytemark.co.uk>
+References: <1201233317.2811.17.camel@dv> <20080125080434.GA5599@diana.vm.bytemark.co.uk> <b0943d9e0801250153t30c5b9b8w4c08af107cfdf202@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Fri Jan 25 11:18:27 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 25 11:18:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JILde-0008GT-3T
-	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 11:18:22 +0100
+	id 1JILdd-0008GT-El
+	for gcvg-git-2@gmane.org; Fri, 25 Jan 2008 11:18:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760121AbYAYKRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2008 05:17:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760174AbYAYKRw
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 05:17:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51529 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760107AbYAYKRu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 05:17:50 -0500
-Received: (qmail invoked by alias); 25 Jan 2008 10:17:49 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp013) with SMTP; 25 Jan 2008 11:17:49 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/omatNUE3oKazJ0vkCGmfAhpn56YPtWx8+7MKqm5
-	u2rdx5ynQcSA4I
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080125092839.GF4475@genesis.frugalware.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1760031AbYAYKRr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jan 2008 05:17:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760107AbYAYKRq
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 05:17:46 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3267 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760031AbYAYKRp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jan 2008 05:17:45 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JILcm-0001rH-00; Fri, 25 Jan 2008 10:17:28 +0000
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0801250153t30c5b9b8w4c08af107cfdf202@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71697>
 
-From: Miklos Vajna <vmiklos@frugalware.org>
+On 2008-01-25 09:53:46 +0000, Catalin Marinas wrote:
 
-The -n option stands for --no-summary in git pull
+> On 25/01/2008, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+>
+> > On 2008-01-24 22:55:17 -0500, Pavel Roskin wrote:
+> >
+> > > If "stg push" fails, the subsequent "stg clean" will remove the
+> > > patch that could not been applied. I think it's wrong.
+> >
+> > I agree. It's consistent -- a conflicting patch is empty -- but
+> > clearly the wrong thing to do from a usability perspective.
+>
+> Got broken by commit fe1cee2e49d9995852ba92d8fba1d064acf2fca9 which
+> removes the check_conflicts() call.
 
-[jes: reworded the description to avoid mentioning 'git-fetch';
- also exclude '-n' conditional on git-pull -- ugly because of
- the missing "else" statement in asciidoc]
+Ah, thanks. I didn't realize it used to work.
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+> As I said in a different post, we should add these back (and to the
+> 'goto' command as well) to make StGIT safer.
 
-	On Fri, 25 Jan 2008, Miklos Vajna wrote:
+The right thing to do would be to check for conflicts before
+attempting any kind of modification, I guess.
 
-	> On Thu, Jan 24, 2008 at 05:36:33PM -0800, Junio C Hamano 
-	> <gitster@pobox.com> wrote:
-	>
-	> > > The -n option stands for --no-summary in git pull
-	> >
-	> > Ok, but does that mean --no-tags does not exist there?
-	> 
-	> Oops, my bad. Here is an updated patch to just remove '-n' and 
-	> keep '--no-tags'.
-
-	How about this instead?
-
- Documentation/fetch-options.txt |   12 ++++++++----
- Documentation/git-pull.txt      |    1 +
- 2 files changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 61e48cc..b675911 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -23,11 +23,15 @@
- 	fetches is a descendant of `<lbranch>`.  This option
- 	overrides that check.
- 
-+ifdef::git-pull[]
-+\--no-tags::
-+endif::git-pull[]
-+ifndef::git-pull[]
- -n, \--no-tags::
--	By default, `git-fetch` fetches tags that point at
--	objects that are downloaded from the remote repository
--	and stores them locally.  This option disables this
--	automatic tag following.
-+endif::git-pull[]
-+	By default, tags that point at objects that are downloaded
-+	from the remote repository are fetched and stored locally.
-+	This option disables this automatic tag following.
- 
- -t, \--tags::
- 	Most of the tags are fetched automatically as branch
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index 77fdaf1..f9f1e0d 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -25,6 +25,7 @@ OPTIONS
- -------
- include::merge-options.txt[]
- 
-+:git-pull: 1
- include::fetch-options.txt[]
- 
- include::pull-fetch-param.txt[]
--- 
-1.5.4.rc4.36.g6e122
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
