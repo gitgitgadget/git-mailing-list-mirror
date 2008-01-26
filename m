@@ -1,96 +1,59 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 2/2] cvsserver: Fix for histories with multiple roots
-Date: Sat, 26 Jan 2008 10:54:06 +0100
-Message-ID: <12013412462758-git-send-email-prohaska@zib.de>
-References: <12013412461111-git-send-email-prohaska@zib.de>
-Cc: Steffen Prohaska <prohaska@zib.de>
+From: =?UTF-8?Q?J=C3=B6rg?= Sommer <joerg@alea.gnuu.de>
+Subject: Re: [PATCH] Check for -amend as a common wrong usage of --amend.
+Date: Sat, 26 Jan 2008 00:10:21 +0000 (UTC)
+Message-ID: <slrnfpkujd.all.joerg@alea.gnuu.de>
+References: <1201198439-3516-1-git-send-email-pascal@obry.net>
+ <4798D5E7.8070907@obry.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 26 10:54:49 2008
+X-From: git-owner@vger.kernel.org Sat Jan 26 11:29:10 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIhkI-0004HJ-Si
-	for gcvg-git-2@gmane.org; Sat, 26 Jan 2008 10:54:43 +0100
+	id 1JIiHb-0005Bu-Mc
+	for gcvg-git-2@gmane.org; Sat, 26 Jan 2008 11:29:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753961AbYAZJyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jan 2008 04:54:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753942AbYAZJyM
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 04:54:12 -0500
-Received: from mailer.zib.de ([130.73.108.11]:34314 "EHLO mailer.zib.de"
+	id S1754284AbYAZK2Z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Jan 2008 05:28:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754297AbYAZK2Z
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 05:28:25 -0500
+Received: from banki.eumelnet.de ([83.246.114.63]:4217 "EHLO uucp.gnuu.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753940AbYAZJyJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jan 2008 04:54:09 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0Q9s7m0002561
-	for <git@vger.kernel.org>; Sat, 26 Jan 2008 10:54:07 +0100 (CET)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0Q9s6Zw008160;
-	Sat, 26 Jan 2008 10:54:06 +0100 (MET)
-X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <12013412461111-git-send-email-prohaska@zib.de>
+	id S1754230AbYAZK2Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jan 2008 05:28:25 -0500
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id 05902488025; Sat, 26 Jan 2008 11:28:22 +0100 (CET)
+Received: from news by alea.gnuu.de with local (Exim 4.63)
+	(envelope-from <news@alea.gnuu.de>)
+	id 1JIYcn-00019W-DL
+	for git@vger.kernel.org; Sat, 26 Jan 2008 01:10:21 +0100
+Path: not-for-mail
+Newsgroups: local.mailinglist.git
+X-Trace: alea.gnuu.de 1201306221 32517 192.168.0.5 (26 Jan 2008 00:10:21 GMT)
+X-Complaints-To: usenet@alea.gnuu.de
+User-Agent: slrn/pre0.9.9-77 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71772>
 
-Git histories may have multiple roots, which can cause
-git merge-base to fail and this caused git cvsserver to die.
+Hi Pascal,
 
-This commit teaches git cvsserver to handle a failing git
-merge-base gracefully, and modifies the test case to verify this.
-All the test cases now use a history with two roots.
+Pascal Obry <pascal@obry.net> wrote:
+> Typing too fast I've just made this mistake the third time today. It =
+is=20
+> of course easy to revert but a check seems appropriate here.
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- git-cvsserver.perl              |    5 +++++
- t/t9400-git-cvsserver-server.sh |   10 +++++++++-
- 2 files changed, 14 insertions(+), 1 deletions(-)
+Why not use an alias?
 
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index ecded3b..534b41e 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -2543,6 +2543,11 @@ sub update
-                     if ($parent eq $lastpicked) {
-                         next;
-                     }
-+                    # or it may fail to find a merge base.  In this
-+                    # case we just ignore this merge.
-+                    if (system("git merge-base $lastpicked $parent >/dev/null 2>/dev/null")) {
-+                        next;
-+                    }
-                     my $base = safe_pipe_capture('git-merge-base',
- 						 $lastpicked, $parent);
-                     chomp $base;
-diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
-index 1f2749e..75d1ce4 100755
---- a/t/t9400-git-cvsserver-server.sh
-+++ b/t/t9400-git-cvsserver-server.sh
-@@ -37,6 +37,13 @@ test_expect_success 'setup' '
-   echo >empty &&
-   git add empty &&
-   git commit -q -m "First Commit" &&
-+  mkdir secondroot &&
-+  ( cd secondroot &&
-+  git init &&
-+  touch secondrootfile &&
-+  git add secondrootfile &&
-+  git commit -m "second root") &&
-+  git pull secondroot master &&
-   git clone -q --local --bare "$WORKDIR/.git" "$SERVERDIR" >/dev/null 2>&1 &&
-   GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
-   GIT_DIR="$SERVERDIR" git config gitcvs.logfile "$SERVERDIR/gitcvs.log"
-@@ -46,7 +53,8 @@ test_expect_success 'setup' '
- # as argument to co -d
- test_expect_success 'basic checkout' \
-   'GIT_CONFIG="$git_config" cvs -Q co -d cvswork master &&
--   test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5))" = "empty/1.1/"'
-+   test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5 | head -n 1))" = "empty/1.1/"
-+   test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5 | tail -n 1))" = "secondrootfile/1.1/"'
- 
- #------------------------
- # PSERVER AUTHENTICATION
--- 
-1.5.4.rc4.42.gacc73
+% git config --get alias.cia
+commit --amend
+
+Bye, J=C3=B6rg.
+--=20
+Two types have compatible type if their types are the same.
+[ANSI C, 6.2.7]
