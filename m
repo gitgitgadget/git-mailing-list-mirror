@@ -1,73 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-gui and scrollbars
-Date: Fri, 25 Jan 2008 20:55:40 -0500
-Message-ID: <20080126015540.GP24004@spearce.org>
-References: <alpine.DEB.1.00.0801251536250.13600@an.sumeria>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Check for -amend as a common wrong usage of --amend.
+Date: Fri, 25 Jan 2008 22:20:41 -0800
+Message-ID: <7vd4rp3y6e.fsf@gitster.siamese.dyndns.org>
+References: <1201198439-3516-1-git-send-email-pascal@obry.net>
+	<alpine.LSU.1.00.0801241818441.5731@racer.site>
+	<4798DE6A.1050201@obry.net>
+	<20080124204711.GC17765@kodama.kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Adam Flott <adam@npjh.com>
-X-From: git-owner@vger.kernel.org Sat Jan 26 02:56:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
+To: Joey Hess <joey@kitenet.net>
+X-From: git-owner@vger.kernel.org Sat Jan 26 07:21:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIaHL-0001ka-Vw
-	for gcvg-git-2@gmane.org; Sat, 26 Jan 2008 02:56:20 +0100
+	id 1JIePr-00075F-DK
+	for gcvg-git-2@gmane.org; Sat, 26 Jan 2008 07:21:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755374AbYAZBzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jan 2008 20:55:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755424AbYAZBzq
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Jan 2008 20:55:46 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:57474 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755130AbYAZBzp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jan 2008 20:55:45 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JIaGa-0004Rv-7n; Fri, 25 Jan 2008 20:55:32 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id AE65420FBAE; Fri, 25 Jan 2008 20:55:40 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0801251536250.13600@an.sumeria>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751971AbYAZGUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jan 2008 01:20:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752211AbYAZGUv
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 01:20:51 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36171 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751636AbYAZGUu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jan 2008 01:20:50 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CF6D24BA;
+	Sat, 26 Jan 2008 01:20:48 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id EB6B924B7;
+	Sat, 26 Jan 2008 01:20:43 -0500 (EST)
+In-Reply-To: <20080124204711.GC17765@kodama.kitenet.net> (Joey Hess's message
+	of "Thu, 24 Jan 2008 15:47:11 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71762>
 
-Adam Flott <adam@npjh.com> wrote:
-> Is it possible to have git-gui only show the scrollbars when text is too
-> large for the window? Or is this a limitation of TK?
+Joey Hess <joey@kitenet.net> writes:
 
-Its possible, but its a PITA in Tk.
+> Some option parsers avoid this sort of ambiguity by not allowing short
+> options that take a string to be bundled in the same word with other
+> short options.
+>
+> So, for example, git-commit -am<msg> would not be allowed, while
+> git-commit -a -m<msg> and perhaps git-commit -am <msg> would be allowed.
+>
+> There could still be problems if there were a --mend option that could
+> be typoed as -mend.
+>
+> I don't know enough about compatability to say if this would work for git.
 
-There isn't a "hide scrollbars unless needed" option in Tk like
-there is say in Java's Swing library.  You have to code up the Tk
-procedure to dynamically create (and destroy) the scrollbars as
-necessary based upon the associated text widget's extent.
-
-I've done this in the revision picker megawidget that git-gui uses
-in the create branch and checkout branch dialogs, but I haven't
-done it for the blame window, or the diff window, or the file lists.
-
-It also bit me recently as it seems Tk can delete the associated Tcl
-procedure name for the scrollbar widget but still have the window
-existing, and then I managed to get another Tk event processed that
-wanted to update the scrollbar which was now partially destroyed
-(or maybe it was partially created, I'm not sure).  Total suck.
-
-I'm not inclined to do it in those other loctions anytime soon,
-as I want to do some other GUI rebuilding work first.  I imagine
-I'd try to make the scrollbars hidden when not needed once that
-work is completed.  But its certainly a ways off.
-
--- 
-Shawn.
+Yeah, I think that is quite a sensible workaround.
