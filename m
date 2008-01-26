@@ -1,195 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add builtin dump command, to query a repository using a pipe.
-Date: Sat, 26 Jan 2008 01:35:44 -0800
-Message-ID: <7vve5hyln3.fsf@gitster.siamese.dyndns.org>
-References: <fnduk3$d0c$1@ger.gmane.org>
+From: Robert Schiele <rschiele@gmail.com>
+Subject: Re: [PATCH] autoconf: Add test for sys/select.h header file
+Date: Sat, 26 Jan 2008 10:42:53 +0100
+Message-ID: <20080126094253.GP30676@schiele.dyndns.org>
+References: <20080124183446.GJ30676@schiele.dyndns.org> <1201259981-7115-1-git-send-email-jnareb@gmail.com> <7v8x2d3xya.fsf@gitster.siamese.dyndns.org>
+Reply-To: Robert Schiele <rschiele@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Han-Wen Nienhuys <hanwen@google.com>
-X-From: git-owner@vger.kernel.org Sat Jan 26 10:36:30 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="KsSkVHHhotaZRe1D"
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 26 10:44:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIhSe-0000Rv-QT
-	for gcvg-git-2@gmane.org; Sat, 26 Jan 2008 10:36:29 +0100
+	id 1JIhaH-0002AE-PT
+	for gcvg-git-2@gmane.org; Sat, 26 Jan 2008 10:44:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752524AbYAZJf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jan 2008 04:35:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752823AbYAZJf4
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 04:35:56 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41424 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752524AbYAZJfx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jan 2008 04:35:53 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E66E2D7A;
-	Sat, 26 Jan 2008 04:35:50 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F4952D79;
-	Sat, 26 Jan 2008 04:35:46 -0500 (EST)
-In-Reply-To: <fnduk3$d0c$1@ger.gmane.org> (Han-Wen Nienhuys's message of "Fri,
-	25 Jan 2008 16:24:34 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753106AbYAZJnY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jan 2008 04:43:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754610AbYAZJnG
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 04:43:06 -0500
+Received: from fg-out-1718.google.com ([72.14.220.157]:45019 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752769AbYAZJm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jan 2008 04:42:58 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so951863fga.17
+        for <git@vger.kernel.org>; Sat, 26 Jan 2008 01:42:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        bh=U1oXVR/KC3yZM0L/DQ0BzsclAKgEz/5mkn+yarpIoHo=;
+        b=bcBuiPpNQVkXRbS/jQek0L6CFdEsGEFy115Sa0oXBMi+ZkS05+AZdzxz8cXcvOF+Bl0gmRXMUraITUTOEda9NHfIGMaX6tjbUySFXdjkKKDREV7Km8JqHtj9tk5f9wQReyHOKtH5AnVATzyya/zQwLZ4wFT/JdifZLp83RcYrNU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:from:reply-to;
+        b=x4ruwYdLoJ0UAVrBjovKmxAlfyHIPsdxdJXttn9nPMWjQC2l8dB8sbj/xE0V+60gfPcu+YMgTyXIFhd5qq5KDx1zlf0Pl4dug3g4dX+YH5JxQTYKjMO8L5Dp306ZGHiGZdCOgL5Kr96Ny/et6T/kTzb8GeyN2wfUJRp4soxLeKE=
+Received: by 10.86.100.7 with SMTP id x7mr2839948fgb.10.1201340576363;
+        Sat, 26 Jan 2008 01:42:56 -0800 (PST)
+Received: from sigkill.schiele.dyndns.org ( [91.18.125.111])
+        by mx.google.com with ESMTPS id 3sm4712338fge.7.2008.01.26.01.42.55
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 26 Jan 2008 01:42:55 -0800 (PST)
+Received: by sigkill.schiele.dyndns.org (Postfix, from userid 1000)
+	id 4A1F948A17; Sat, 26 Jan 2008 10:42:54 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7v8x2d3xya.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71768>
 
-Han-Wen Nienhuys <hanwen@xs4all.nl> writes:
 
-> This command prints either contents or metadata on stdout for SHA1s or
-> symbolic object names supplied to its stdin, so you can extract many
-> pieces of data of the repository using a single subprocess.
->
-> Documentation will follow once the code is approved.
+--KsSkVHHhotaZRe1D
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I will comment on this part at the end.
+On Fri, Jan 25, 2008 at 10:25:33PM -0800, Junio C Hamano wrote:
+> The issue is not really about "do we have <sys/select.h>?" but
+> is about "do we need to include <sys/select.h> in order to
+> obtain declaration of select(2)?" so this is covering only a
 
-> +typedef unsigned char sha1_t[20];
+This is true.  Actually HP-UX 11.23 for instance has sys/select.h but this =
+is
+not intended to be included to get the select call but this is intended to =
+be
+included by kernel drivers that implement the interface the kernel needs to
+_provide_ the select call.  In that case the test determines that sys/selec=
+t.h
+exists but it does not notice that it is not the header to include.  It does
+not hurt though since including sys/select.h outside of a kernel driver is a
+no-op and we include sys/time.h which is really needed anyway.
 
-Hmph.  We do not seem to do typedefs like this elsewhere.  Would
-it be worth doing so everywhere?  I generally stay away from a
-new type that is "an array of some type".
+> half of the issue.  But I guess we will find out if the system
+> does not offer select(2) whether <sys/select.h> is included or
+> not, so this is not too bad.
+>=20
+> Will apply.  I do not think it would have problems but even if
+> it does it is small and easy to revert before the final.
 
-> +void print_metadata(struct strbuf command_buf) {
+At least on the systems I know it does not hurt even when it does not always
+exactly what it is intended to do.
 
-Style.  "{" at the beginning of a function goes to the beginning
-of a line.
+Robert
 
-Are you sure you want to pass "struct strbuf" by value?  As you
-do not use anything other than its .buf, you may instead want to
-make the parameter "const char *" and have the caller do buf.buf
-business.
+--=20
+Robert Schiele
+Dipl.-Wirtsch.informatiker	mailto:rschiele@gmail.com
 
-> +	char *obj_name = strchr(command_buf.buf, ' ') + 1;
+"Quidquid latine dictum sit, altum sonatur."
 
-Wasts reader's time by making him wonder if this needs to check
-for malformed command buffer.  The answer happens to be no only
-because the caller does something stupid ;-)
+--KsSkVHHhotaZRe1D
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-	if (!prefixcmp(command_buf.buf, "metadata "))
-		print_metadata(command_buf);
-	
-and the strchr is guaranteed to find that ' ' after metadata.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.4-svn0 (GNU/Linux)
 
-	if (!prefixcmp(command_buf.buf, "metadata "))
-        	print_metadata(command_buf.buf + 9);
+iD8DBQFHmwCdxcDFxyGNGNcRAhZOAKD91tTty2NRLYvEL+0yFlyEqKX4xgCcDbsP
+GdZTN0rSr5iRI6PXYk6qYi4=
+=I+WO
+-----END PGP SIGNATURE-----
 
-would give you the beginning of obj_name in the parameter
-without any need for the strchr().
-
-> +	sha1_t sha1 = {0};
-> +	const char *type_name = "none";
-> +	unsigned long size = 0;
-> +	char header[200];
-> +
-> +	if (!get_sha1(obj_name, sha1)) {
-> +		enum object_type type = sha1_object_info(sha1, &size);
-> +		type_name = type ? typename(type) : "none";
-> +	}
-> +	sprintf(header, "%s %lu %s\n", type_name, size, sha1_to_hex(sha1));
-> +	write_or_die(1, header, strlen(header));  
-> +}
-> +
-> +
-> +void print_show(struct strbuf command_buf) {
-> +	char *type = strchr(command_buf.buf, ' ') + 1;
-
-Likewise.
-
-> +	char *obj_name;
-> +	sha1_t sha1;
-> +	unsigned long size;
-> +	char header[200];
-> +	void *buf;
-> +	
-> +	if (!type)
-> +		die("commmand format error: %s\n", command_buf.buf);
-
-Especially, this will never trigger, although "if (!*type)" would.
-
-> +  
-> +	obj_name = strchr(type, ' ');
-> +	if (!obj_name)
-> +		die("commmand format error: %s\n", command_buf.buf);
-
-I am not sure if this interface that "die()"s on an obviously
-malformed input is nice to the user (which is the process at the
-other end of the pipe).  It only gets abrupt disconnection
-without any diagnosis.  But the user may deserve it, as it is
-about "obviously malformed" input.  I do not have strong opinion
-about this.
-
-> +	*obj_name = '\0';
-> +	obj_name++;
-> +  
-> +	if (get_sha1(obj_name, sha1))
-> +		die("not a valid object name: %s", obj_name);
-> +  
-> +	buf = read_object_with_reference(sha1, type, &size, NULL);
-
-This is not nice and definitely needs to be tightened for a case
-where the object does not exist in this repository.  Otherwise
-safe use of this dump "server" will require one "metadata" query
-to protect "print" query from barfing for each object.
-
-> +	sprintf(header, "len %lu\n", size);
-> +	write_or_die(1, header, strlen(header));
-> +	write_or_die(1, buf, size);
-> +	write_or_die(1, "\n", 1);
-> +}
-
-IOW, this needs an if() statement that triggers upon (buf == NULL)
-to return an error message back to the other end.
-
-Now, back to the proposed commit log message.
-
-> Documentation will follow once the code is approved.
-
-This sends a wrong message to the list audiences.  It roughly
-says:
-
-    I wrote something new.  It is used to read many pieces of
-    data without having to spawn a subprocesses per request.
-    Isn't it nice?
-
-    Oh, by the way, I am not giving you more than the absolute
-    minimum information right now, the code, to let you become
-    qualified to say "Ah, yes, that new feature makes sense, it
-    meshes well with the way how the rest of the system works,
-    and I think it is a good addition to the git.git project".
-    If you really want to know how it interfaces to the outside
-    world (i.e. how the input is structured is parsed, and how
-    the output is structured and is designed to be parsed, how
-    errors are reported), go read it.
-
-    But trust me, it's a good code, and you will have
-    documentation once it is accepted anyway.
-
-But the external interface matters.  It often matters more than
-the details of how the interface is implemented (which is the
-code).  If the interface is wrong, time spent on reading and
-commenting on the code is often wasted.  I had to read all the
-code to notice that I may not necessarily agree with the
-response of the command to a malformed input, or missing
-objects.  If it was documented, it would have been more obvious
-and many other people would have responded, including the ones
-who may not be inclined to work on or review dump "server"
-implementation side written in C, but are _very much_ interested
-in using such a server as a client, perhaps from their
-higher-level language scripts.
-
-If the patch was about a completely new command and sizeable, it
-is very likely that I might have felt defeated and said "Ah, Ok,
-I choose to stay unqualified to judge this patch to say 'yes,
-this is a good idea', if I have to wade through that amount of
-code".  Most likely many others would do the same.
-
-Please don't do that again.  It also gives a false impression
-that this kind of submission is an appropriate and acceptable
-approach to people new to the list.
+--KsSkVHHhotaZRe1D--
