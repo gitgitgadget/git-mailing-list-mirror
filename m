@@ -1,102 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pull --rebase: be cleverer with rebased upstream branches
-Date: Sat, 26 Jan 2008 11:34:05 -0800
-Message-ID: <7vk5lwz8ia.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LSU.1.00.0801211542150.5731@racer.site>
-	<7vir1nxcoh.fsf@gitster.siamese.dyndns.org>
-	<alpine.LSU.1.00.0801261801360.23907@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] pull --rebase: be cleverer with rebased upstream
+ branches
+Date: Sat, 26 Jan 2008 19:49:13 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801261945210.23907@racer.site>
+References: <alpine.LSU.1.00.0801211542150.5731@racer.site> <7vir1nxcoh.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0801261801360.23907@racer.site> <7vk5lwz8ia.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 26 20:34:53 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 26 20:50:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIqnb-0005zq-Sq
-	for gcvg-git-2@gmane.org; Sat, 26 Jan 2008 20:34:44 +0100
+	id 1JIr2Q-00020k-1A
+	for gcvg-git-2@gmane.org; Sat, 26 Jan 2008 20:50:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752813AbYAZTeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jan 2008 14:34:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752799AbYAZTeN
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 14:34:13 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:65424 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752733AbYAZTeM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jan 2008 14:34:12 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C26B94473;
-	Sat, 26 Jan 2008 14:34:10 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 26080446F;
-	Sat, 26 Jan 2008 14:34:08 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0801261801360.23907@racer.site> (Johannes
-	Schindelin's message of "Sat, 26 Jan 2008 18:04:37 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753010AbYAZTt3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jan 2008 14:49:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752870AbYAZTt3
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 14:49:29 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33235 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752650AbYAZTt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jan 2008 14:49:29 -0500
+Received: (qmail invoked by alias); 26 Jan 2008 19:49:27 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp030) with SMTP; 26 Jan 2008 20:49:27 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18F7Gl6kj4FvGPNNSNKQgXKnM1mpHfnsdAyo4v/AN
+	S5tPanBrEw9uI7
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vk5lwz8ia.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71788>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> When the upstream branch is tracked, we can detect if that branch
-> was rebased since it was last fetched.  Teach git to use that
-> information to rebase from the old remote head onto the new remote head.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Sat, 26 Jan 2008, Junio C Hamano wrote:
 
-This is certainly nicer than the original (which is not in
-1.5.3, so even this late in the cycle it is "fixing up a new
-feature we will be introducing in 1.5.4" category that I will
-apply).  But I think a bit of caution and perhaps an
-illustration or two in the doucmentation would help.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > When the upstream branch is tracked, we can detect if that branch was 
+> > rebased since it was last fetched.  Teach git to use that information 
+> > to rebase from the old remote head onto the new remote head.
+> 
+> This is certainly nicer than the original (which is not in 1.5.3, so 
+> even this late in the cycle it is "fixing up a new feature we will be 
+> introducing in 1.5.4" category that I will apply).  But I think a bit of 
+> caution and perhaps an illustration or two in the doucmentation would 
+> help.
 
-If you do "git fetch" from the origin since the last time you
-ran "pull --rebase" for the remote, we will have the same
-issue.  Suppose you have this history:
+Well, I half expected it to be post-1.5.4.
 
-                   .---x---x---x
-                  /
-         .---A---B
-        /
-    ---0---o---o---A'--B'--C'--D'
-                \
-                 o---o---A''-B''-C''-D''-E''
+> If you do "git fetch" from the origin since the last time you ran "pull 
+> --rebase" for the remote, we will have the same issue.
 
-Originally your upstream had 0---A---B; you built your 'x' on
-top of it.  Then the upstream rebases and publishes history that
-leads to D' (i.e. A and B are rewritten).  Later, the history is
-further rewritten and E'' is the latest upstream tip.
+Yes, that occurred to me, too.
 
-If you haven't done "git fetch" since you started building on
-top of B, refs/remotes/ will still say B and using B as base
-(and E'' as onto) will give you the right rebase.  Earlier, we
-did not use B in the rebase in any way, so your patch is
-definitely an improvement.
+> So it might make sense to make the logic to figure out B, given
+> your local history that leads from 0 to x's (and nothing else),
+> a bit cleverer than looking at the tracking branch.  We can look
+> at reflog for example.  "git log -g --pretty=oneline" may have
+> entries of this form:
+> 
+>     * branch: Created from B
+>     * rebase finished <branch> onto B
+> 
+> and the latest (i.e. younguest) entry is where the part of your current 
+> history to be rebased (i.e. base commit) starts.  This is much more 
+> reliable than looking at the tracking branch, whose answer may or may 
+> not match B at all.
 
-However, if you have run "git fetch" (say, to peek what the
-upstream has been up to), your refs/remote/ may say D'.  Using
-that as the base and rebasing onto E'' is not quite optimal,
-isn't it?
+I did not want to do that, because it is quite possible that the reflogs 
+were disabled, or that the relevant reflogs were already expired.
 
-So it might make sense to make the logic to figure out B, given
-your local history that leads from 0 to x's (and nothing else),
-a bit cleverer than looking at the tracking branch.  We can look
-at reflog for example.  "git log -g --pretty=oneline" may have
-entries of this form:
+However, I think that it might be a good approach to try reflogs first, 
+and fallback to what I sent if there are no reflogs (or if it is detected 
+that the reflog entry is not possibly the correct one, since what was 
+rebased to is no longer an ancestor of the current branch).
 
-    * branch: Created from B
-    * rebase finished <branch> onto B
-
-and the latest (i.e. younguest) entry is where the part of your
-current history to be rebased (i.e. base commit) starts.  This
-is much more reliable than looking at the tracking branch, whose
-answer may or may not match B at all.
-
-I do not mean this comment makes your approach invalid, though.
-It is a start in the good direction.
+Ciao,
+Dscho
