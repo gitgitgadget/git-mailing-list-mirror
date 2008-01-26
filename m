@@ -1,94 +1,116 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Check for -amend as a common wrong usage of --amend.
-Date: Sat, 26 Jan 2008 11:42:16 +0100
-Message-ID: <20080126104216.GA13922@artemis.madism.org>
-References: <1201198439-3516-1-git-send-email-pascal@obry.net> <alpine.LSU.1.00.0801241818441.5731@racer.site> <4798DE6A.1050201@obry.net> <20080124204711.GC17765@kodama.kitenet.net> <7vd4rp3y6e.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="AqsLC8rIMeq19msA";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Joey Hess <joey@kitenet.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 26 11:42:55 2008
+From: Mike Hommey <mh@glandium.org>
+Subject: [Resend PATCH] Fix some memory leaks in various places
+Date: Sat, 26 Jan 2008 11:50:27 +0100
+Message-ID: <1201344627-21609-1-git-send-email-mh@glandium.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 26 11:49:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIiUw-0008Cm-1L
-	for gcvg-git-2@gmane.org; Sat, 26 Jan 2008 11:42:54 +0100
+	id 1JIibE-0001Lk-AP
+	for gcvg-git-2@gmane.org; Sat, 26 Jan 2008 11:49:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754589AbYAZKmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jan 2008 05:42:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754542AbYAZKmV
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 05:42:21 -0500
-Received: from pan.madism.org ([88.191.52.104]:35053 "EHLO hermes.madism.org"
+	id S1751646AbYAZKsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jan 2008 05:48:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751666AbYAZKsy
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 05:48:54 -0500
+Received: from vuizook.err.no ([85.19.215.103]:53806 "EHLO vuizook.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753960AbYAZKmU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jan 2008 05:42:20 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 71BB92BAF7;
-	Sat, 26 Jan 2008 11:42:17 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id D96134D66FF; Sat, 26 Jan 2008 11:42:16 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, Joey Hess <joey@kitenet.net>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vd4rp3y6e.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1751530AbYAZKsx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jan 2008 05:48:53 -0500
+Received: from aputeaux-153-1-83-190.w86-205.abo.wanadoo.fr ([86.205.41.190] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JIib5-0007z2-DS
+	for git@vger.kernel.org; Sat, 26 Jan 2008 11:49:21 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JIicF-0005cv-Lo
+	for git@vger.kernel.org; Sat, 26 Jan 2008 11:50:27 +0100
+X-Mailer: git-send-email 1.5.4.rc3.30.gb084e
+X-Spam-Status: (score 2.2): No, score=2.2 required=5.0 tests=RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71774>
 
 
---AqsLC8rIMeq19msA
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Mike Hommey <mh@glandium.org>
+---
 
-On Sat, Jan 26, 2008 at 06:20:41AM +0000, Junio C Hamano wrote:
-> Joey Hess <joey@kitenet.net> writes:
->=20
-> > Some option parsers avoid this sort of ambiguity by not allowing short
-> > options that take a string to be bundled in the same word with other
-> > short options.
-> >
-> > So, for example, git-commit -am<msg> would not be allowed, while
-> > git-commit -a -m<msg> and perhaps git-commit -am <msg> would be allowed.
-> >
-> > There could still be problems if there were a --mend option that could
-> > be typoed as -mend.
-> >
-> > I don't know enough about compatability to say if this would work for g=
-it.
->=20
-> Yeah, I think that is quite a sensible workaround.
+ I think I sent this already last month, but since I see that nowhere on
+ next or master, I'm resending, just in case it got lost.
 
-  I agree, I think that we should refuse things where the string after a
-/one/ dash starts with 3 or more consecutive characters that are also
-the beginning of a long option. I think that 2 is usually a bit "short"
-to assume that it's a typo. I'll provide a patch soon
+ builtin-init-db.c |    1 +
+ http-walker.c     |   10 ++++++++++
+ walker.c          |    2 ++
+ 3 files changed, 13 insertions(+), 0 deletions(-)
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---AqsLC8rIMeq19msA
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHmw6IvGr7W6HudhwRAsK4AJ9BHlIK9MGtk2po/XxhB6eoEn3RpgCdE1T7
-zd40/ibV9qaye6So2v0bTIU=
-=WMNS
------END PGP SIGNATURE-----
-
---AqsLC8rIMeq19msA--
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index e1393b8..df61758 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -415,6 +415,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 	safe_create_dir(path, 1);
+ 	strcpy(path+len, "/info");
+ 	safe_create_dir(path, 1);
++	free(path);
+ 
+ 	if (shared_repository) {
+ 		char buf[10];
+diff --git a/http-walker.c b/http-walker.c
+index 2c37868..1a02f86 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -231,6 +231,8 @@ static void finish_object_request(struct object_request *obj_req)
+ {
+ 	struct stat st;
+ 
++	free(obj_req->url);
++
+ 	fchmod(obj_req->local, 0444);
+ 	close(obj_req->local); obj_req->local = -1;
+ 
+@@ -897,9 +899,17 @@ static int fetch_ref(struct walker *walker, char *ref, unsigned char *sha1)
+ static void cleanup(struct walker *walker)
+ {
+ 	struct walker_data *data = walker->data;
++	struct alt_base *prev_altbase, *altbase = data->alt;
++	while (altbase) {
++		free(altbase->base);
++		prev_altbase = altbase;
++		altbase = altbase->next;
++		free(prev_altbase);
++	}
+ 	http_cleanup();
+ 
+ 	curl_slist_free_all(data->no_pragma_header);
++	free(data);
+ }
+ 
+ struct walker *get_http_walker(const char *url)
+diff --git a/walker.c b/walker.c
+index adc3e80..64fc419 100644
+--- a/walker.c
++++ b/walker.c
+@@ -299,6 +299,7 @@ int walker_fetch(struct walker *walker, int targets, char **target,
+ 			goto unlock_and_fail;
+ 	}
+ 	free(msg);
++	free(sha1);
+ 
+ 	return 0;
+ 
+@@ -306,6 +307,7 @@ unlock_and_fail:
+ 	for (i = 0; i < targets; i++)
+ 		if (lock[i])
+ 			unlock_ref(lock[i]);
++	free(sha1);
+ 
+ 	return -1;
+ }
+-- 
+1.5.4.rc3.30.gb084e
