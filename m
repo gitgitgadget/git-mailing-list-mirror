@@ -1,136 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Secure central repositories by UNIX socket
- authentication
-Date: Sun, 27 Jan 2008 18:51:06 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801271841230.23907@racer.site>
-References: <20080127103934.GA2735@spearce.org> <alpine.LSU.1.00.0801271402330.23907@racer.site> <20080127173212.GW24004@spearce.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Jan 27 19:52:04 2008
+From: Shawn Bohrer <shawn.bohrer@gmail.com>
+Subject: [PATCH] Fix off by one error in prep_exclude.
+Date: Sun, 27 Jan 2008 13:55:31 -0600
+Message-ID: <1201463731-1963-1-git-send-email-shawn.bohrer@gmail.com>
+References: <47975FE6.4050709@viscovery.net>
+Cc: j.sixt@viscovery.net, Johannes.Schindelin@gmx.de,
+	gitster@pobox.com, Shawn Bohrer <shawn.bohrer@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 27 20:57:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJCbn-00005N-Ig
-	for gcvg-git-2@gmane.org; Sun, 27 Jan 2008 19:52:00 +0100
+	id 1JJDdB-0001RQ-DN
+	for gcvg-git-2@gmane.org; Sun, 27 Jan 2008 20:57:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753710AbYA0Sv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jan 2008 13:51:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753847AbYA0Sv1
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jan 2008 13:51:27 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35834 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753583AbYA0Sv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jan 2008 13:51:26 -0500
-Received: (qmail invoked by alias); 27 Jan 2008 18:51:24 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp045) with SMTP; 27 Jan 2008 19:51:24 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+XBesve2uXUQ78twfs2d9IaHwOxIngxt+YI2/BP6
-	pKeaYbzrx5a671
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080127173212.GW24004@spearce.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752472AbYA0T46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jan 2008 14:56:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752202AbYA0T46
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jan 2008 14:56:58 -0500
+Received: from an-out-0708.google.com ([209.85.132.246]:48681 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751552AbYA0T45 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jan 2008 14:56:57 -0500
+Received: by an-out-0708.google.com with SMTP id d31so306676and.103
+        for <git@vger.kernel.org>; Sun, 27 Jan 2008 11:56:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        bh=Q2w1LyKGFWWcHvOIRd02vQ3PokdE4hinkcUnrD2L7Os=;
+        b=ZNDM3ZlqGaFD0d5F6cXX2EtW6LhY/Hyke2m2OVF3gAzflMDAS2H95dsZg7N8OAd0NjuRsQ9H4ngzbhEathBBm12g8DLKy8ghsXn5m93Az853bi+3MeLi5NgTVfLfqAJBkzI0COCMCBLXJSFG3iUyAEkoxn+tgyIuredoGoJ0zqg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=tT3537jy0kMgpFqycEqydzrJ2v7fL2sskHLrQ5to7Emd3O+EV4BJiT3MouWHc2Ztg7fMWLincLWjVm56o/KZmjKVQkn6GK07bPDfoaJB7HjTsJ47SJHtXwlreyggVkiKdQAbc0w5LIOUsCGDrPRaIkoaLHv8y78Ja2guLZ5lWTU=
+Received: by 10.100.41.16 with SMTP id o16mr9981776ano.116.1201463816368;
+        Sun, 27 Jan 2008 11:56:56 -0800 (PST)
+Received: from lintop ( [70.112.149.232])
+        by mx.google.com with ESMTPS id j13sm7979287rne.9.2008.01.27.11.56.49
+        (version=SSLv3 cipher=OTHER);
+        Sun, 27 Jan 2008 11:56:53 -0800 (PST)
+Received: by lintop (sSMTP sendmail emulation); Sun, 27 Jan 2008 13:55:31 -0600
+X-Mailer: git-send-email 1.5.4.rc5.1.g813e
+In-Reply-To: <47975FE6.4050709@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71827>
 
-Hi,
+base + current already includes the trailing slash so adding
+one removes the first character of the next directory.
 
-On Sun, 27 Jan 2008, Shawn O. Pearce wrote:
+Signed-off-by: Shawn Bohrer <shawn.bohrer@gmail.com>
+---
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > On Sun, 27 Jan 2008, Shawn O. Pearce wrote:
-> > 
-> > >     ## Owner (not jdoe)
-> > >     ##
-> > >   cat >foo.git/hooks/update <<'EOF'
-> > >   #!/bin/sh
-> > >   test -z "$GIT_REMOTE_USER" || exit
-> > >   case "$GIT_REMOTE_USER" in
-> > >   jdoe)     exit 0;;
-> > >   spearce)  exit 0;;
-> > >   *)        exit 1
-> > >   esac
-> > >   EOF
-> > >   chmod u+x foo.git/hooks/update
-> > >   chmod 700 foo.git
-> > > 
-> > >   git daemon \
-> > >       --export-all \
-> > >       --enable=receive-pack \
-> > >       --base=`pwd` \
-> > >       --listen=/tmp/shawn-git
-> > > 
-> > >     ## Other User
-> > >     ##
-> > >   git push jdoe@server:/tmp/shawn-git/foo.git master
-> > 
-> > I probably miss something, but if you already go through SSH, the 
-> > $USER is set appropriately, no?
-> 
-> Sure, $USER is set.  For "jdoe".  But due to the "chmod 700 foo.git" 
-> above jdoe isn't actually allowed access to the repository directory. So 
-> it doesn't matter what $USER is set to, jdoe cannot get to the files of 
-> the repository.
+This fixes the oops part of the issue Johannes found, but doesn't
+address the fact that we probably should remove files that aren't
+a part of the repository at in the first place.
 
-Ah, that's what I missed.  I thought you already used git-shell, and did 
-not really read the chmod part.
+ dir.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> So if you want to give out write access, but have it be limited to what 
-> `git receive-pack` will permit (especially when coupled with an update 
-> hook like contrib/hooks/update-paranoid) you need to limit what a user 
-> can do to *only* executing git-receive-pack, but you also need to allow 
-> that receive-pack to actually have write permission on the repository.
-> 
-> So you come down to four options:
-> 
-> 1) Make git-receive-pack setuid to the repository owner.
->    This is uh, ugly.
-
-Concur.
-
-> 2) Use the SSH key feature to have remote users login as
->    the repository owner, but use the authorized_keys file
->    to force them to only execute git-shell.
->    This is uh, ugly, especially with 50+ users.
-
-Slight variation: do not permit other users access to your machine, except 
-via git-shell.  Then you don't need chmod 0700.
-
-> 3) Export git-daemon over TCP and --enable=receive-pack.
->    This doesn't get us any authentication.  Sure the
->    user is limited to what the update hook allows, but
->    the update hook has no way to trust who the remote
->    peer is.  You might as well not bother.
-
-Right.  --enable=receive-pack was meant for environments where you have to 
-trust everybody anyway (think "Visual" SourceSafe, or PVCS with 
-repositories on network shares).
-
-> 4) Add full user authentication to git-daemon and then do #3.
->    The user authentication can provide data down into the update
->    hook, such as by setting the $GIT_REMOTE_USER environment
->    variable.  That's basically this change, except I'm using bog
->    standard SSH to perform the authentication for me.
-
-AFAIR the plan was to keep git-daemon as simple and stupid as possible; in 
-particular _not_ to add any authentication.
-
-> If we don't do something like this then I think we need to teach 
-> git-daemon how to accept SSL connections, and then once you give it SSL 
-> you need to implement peer authentication by certificates, and then have 
-> git_connect() in connect.c also implement setting up SSL connections, 
-> and doing peer authentication with certificates.  Ick.
-
-I never tried anything like this, but it should not be _that_ difficult, 
-should it?  Of course, I should read up on it before I say something about 
-it first ;-)
-
-Ciao,
-Dscho
+diff --git a/dir.c b/dir.c
+index 3e345c2..9e5879a 100644
+--- a/dir.c
++++ b/dir.c
+@@ -237,7 +237,7 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
+ 			current = 0;
+ 		}
+ 		else {
+-			cp = strchr(base + current + 1, '/');
++			cp = strchr(base + current, '/');
+ 			if (!cp)
+ 				die("oops in prep_exclude");
+ 			cp++;
+-- 
+1.5.4-rc2.GIT
