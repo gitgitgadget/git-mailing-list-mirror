@@ -1,87 +1,107 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Submodules use case: web development based on modular CMS
-Date: Sun, 27 Jan 2008 01:39:56 +0100
-Message-ID: <200801270139.57830.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] cvsserver: Fix for histories with multiple roots
+Date: Sat, 26 Jan 2008 17:56:47 -0800
+Message-ID: <7v8x2cyqsg.fsf@gitster.siamese.dyndns.org>
+References: <12013412461111-git-send-email-prohaska@zib.de>
+	<12013412462758-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 27 01:40:43 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Jan 27 02:57:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIvZh-00026p-Id
-	for gcvg-git-2@gmane.org; Sun, 27 Jan 2008 01:40:42 +0100
+	id 1JIwmC-0008QZ-A0
+	for gcvg-git-2@gmane.org; Sun, 27 Jan 2008 02:57:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753313AbYA0AkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jan 2008 19:40:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753380AbYA0AkJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 19:40:09 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:17092 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753189AbYA0AkH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jan 2008 19:40:07 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so750837ugc.16
-        for <git@vger.kernel.org>; Sat, 26 Jan 2008 16:40:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=dh8QrUTb/pd56VJX82cMpOJc8nOM3InaAOkr0N7Q1Ys=;
-        b=sfYApQkfbgj866nfqja8MAOYUfggVT4UU26q241GP88tOiWvoY9sFD6EW0F4KFdSXCIUURplIbcU1wfgzpy0EoJJuyvRdhkwawGTjbN067IQhUzAYFCZS2OfKrb57rm/nyjfcuORW9z2+8gEjoRZtqCI33WLu4CbgZicMn6eAIg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=xF2g3yDY0bd3Rq4Y+/IHYdWOlO/VzHAce+khakAficHmgvhfUydJtfa/OuQrj9Gr5e4nYaZSgCwqdfGZ4bMJ1FSeR2cJVY+5SBe9Ss6aaYpwejAqVRHfvRHZVyHBZHggA3oK1Oh/GgECT0OHZkyUBToa0argi/3Nl8ZeNYfX+iQ=
-Received: by 10.66.243.4 with SMTP id q4mr1200061ugh.5.1201394405410;
-        Sat, 26 Jan 2008 16:40:05 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.247.37])
-        by mx.google.com with ESMTPS id s7sm12104880uge.86.2008.01.26.16.40.02
-        (version=SSLv3 cipher=OTHER);
-        Sat, 26 Jan 2008 16:40:03 -0800 (PST)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1752470AbYA0B4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jan 2008 20:56:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbYA0B4y
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 20:56:54 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51573 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752330AbYA0B4y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jan 2008 20:56:54 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3EDC740F1;
+	Sat, 26 Jan 2008 20:56:52 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9950040F0;
+	Sat, 26 Jan 2008 20:56:49 -0500 (EST)
+In-Reply-To: <12013412462758-git-send-email-prohaska@zib.de> (Steffen
+	Prohaska's message of "Sat, 26 Jan 2008 10:54:06 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71796>
 
-A bit of time ago I have stumbled upon the following blog entry 
-(question): "Agaric wants version control that lets Drupal core and 
-contrib replace entire directories within our checkouts"[1]
-  http://tinyurl.com/yv3jp4
+Steffen Prohaska <prohaska@zib.de> writes:
 
-Here the author want to use version control system for customized 
-version of CMS system, namely:
- * Drupal core
- * selected Drupal contributed modules ("inside" Drupal core)
- * own work (theme, custom modules) (also "inside" Drupal core)
-And of course he wants to have development branches: dev, test and live, 
-and want to always checkout correct versions of Drupal, Drupal modules 
-and own work.
+> Git histories may have multiple roots, which can cause
+> git merge-base to fail and this caused git cvsserver to die.
+>
+> This commit teaches git cvsserver to handle a failing git
+> merge-base gracefully, and modifies the test case to verify this.
+> All the test cases now use a history with two roots.
+>
+> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+> ---
+>  git-cvsserver.perl              |    5 +++++
+>  t/t9400-git-cvsserver-server.sh |   10 +++++++++-
+>  2 files changed, 14 insertions(+), 1 deletions(-)
+>
+> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+> index ecded3b..534b41e 100755
+> --- a/git-cvsserver.perl
+> +++ b/git-cvsserver.perl
+> @@ -2543,6 +2543,11 @@ sub update
+>                      if ($parent eq $lastpicked) {
+>                          next;
+>                      }
+> +                    # or it may fail to find a merge base.  In this
+> +                    # case we just ignore this merge.
+> +                    if (system("git merge-base $lastpicked $parent >/dev/null 2>/dev/null")) {
+> +                        next;
+> +                    }
+>                      my $base = safe_pipe_capture('git-merge-base',
+>  						 $lastpicked, $parent);
+>                      chomp $base;
 
-Somebody (in comments) proposed using Subversion externals; I have 
-proposed using Git submodules (subproject) support.  Nevertheless while 
-I have at one time manage PHPNuke portal using CVS and vendor branches, 
-and even had half-written automatic fast checkout/fast export script, 
-I haven't worked with submodules in Git, nor with using Git to manage 
-web site.
+That is a "Yes, but..." patch.
 
-Comments (here, and as comments to mentioned blog article) about how 
-such thing should be done with Git very appreciated. (And for example 
-how Git submodules differ from svn:externals and why git way is 
-better ;-)).
+Running merge-base always twice, due to fear of uncommon case of
+failure, feels quite backwards.
 
+Doesn't this work equally well without running a rather
+expensive merge-base twice?
 
-P.S. BTW. Drupal is considering moving from CVS to some other SCM, see
-http://groups.drupal.org/revision-control-systems .  Perhaps Git would 
-be the choice?  Is anybody here active in Drupal development?  Is for 
-example their Version Control API too CVS-centric (single file history 
-centric)?
+ git-cvsserver.perl |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
 
-[1]http://agaricdesign.com/note/agaric-wants-version-control-lets-drupal-core-and-contrib-replace-entire-directories-within-our-checkouts
--- 
-Jakub Narebski
-Poland
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index ecded3b..afe3d0b 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -2543,8 +2543,15 @@ sub update
+                     if ($parent eq $lastpicked) {
+                         next;
+                     }
+-                    my $base = safe_pipe_capture('git-merge-base',
++		    my $base = eval {
++			    safe_pipe_capture('git-merge-base',
+ 						 $lastpicked, $parent);
++		    };
++		    # The two branches may not be related at all,
++		    # in which case merge base simply fails to find
++		    # any, but that's Ok.
++		    next if ($@);
++
+                     chomp $base;
+                     if ($base) {
+                         my @merged;
