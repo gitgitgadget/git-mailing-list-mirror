@@ -1,98 +1,87 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [EGIT PATCH] showing commiter and parent commit(s) on the revision detail viewer
-Date: Sun, 27 Jan 2008 01:34:10 +0100
-Message-ID: <200801270134.11892.robin.rosenberg.lists@dewire.com>
-References: <1201262529-3306-1-git-send-email-rogersoares@intelinet.com.br>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Submodules use case: web development based on modular CMS
+Date: Sun, 27 Jan 2008 01:39:56 +0100
+Message-ID: <200801270139.57830.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="utf-8"
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Roger C. Soares" <rogersoares@intelinet.com.br>
-X-From: git-owner@vger.kernel.org Sun Jan 27 01:34:50 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 27 01:40:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIvU1-0000zF-RN
-	for gcvg-git-2@gmane.org; Sun, 27 Jan 2008 01:34:50 +0100
+	id 1JIvZh-00026p-Id
+	for gcvg-git-2@gmane.org; Sun, 27 Jan 2008 01:40:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752981AbYA0AeK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jan 2008 19:34:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753019AbYA0AeJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 19:34:09 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:12998 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752962AbYA0AeH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jan 2008 19:34:07 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 1509980285B;
-	Sun, 27 Jan 2008 01:34:06 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SpM9zZccmOzG; Sun, 27 Jan 2008 01:34:05 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 40AFC8027FD;
-	Sun, 27 Jan 2008 01:34:05 +0100 (CET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-In-Reply-To: <1201262529-3306-1-git-send-email-rogersoares@intelinet.com.br>
+	id S1753313AbYA0AkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jan 2008 19:40:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753380AbYA0AkJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 19:40:09 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:17092 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753189AbYA0AkH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jan 2008 19:40:07 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so750837ugc.16
+        for <git@vger.kernel.org>; Sat, 26 Jan 2008 16:40:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=dh8QrUTb/pd56VJX82cMpOJc8nOM3InaAOkr0N7Q1Ys=;
+        b=sfYApQkfbgj866nfqja8MAOYUfggVT4UU26q241GP88tOiWvoY9sFD6EW0F4KFdSXCIUURplIbcU1wfgzpy0EoJJuyvRdhkwawGTjbN067IQhUzAYFCZS2OfKrb57rm/nyjfcuORW9z2+8gEjoRZtqCI33WLu4CbgZicMn6eAIg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=xF2g3yDY0bd3Rq4Y+/IHYdWOlO/VzHAce+khakAficHmgvhfUydJtfa/OuQrj9Gr5e4nYaZSgCwqdfGZ4bMJ1FSeR2cJVY+5SBe9Ss6aaYpwejAqVRHfvRHZVyHBZHggA3oK1Oh/GgECT0OHZkyUBToa0argi/3Nl8ZeNYfX+iQ=
+Received: by 10.66.243.4 with SMTP id q4mr1200061ugh.5.1201394405410;
+        Sat, 26 Jan 2008 16:40:05 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.247.37])
+        by mx.google.com with ESMTPS id s7sm12104880uge.86.2008.01.26.16.40.02
+        (version=SSLv3 cipher=OTHER);
+        Sat, 26 Jan 2008 16:40:03 -0800 (PST)
+User-Agent: KMail/1.9.3
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71795>
 
-Hi Roger,
+A bit of time ago I have stumbled upon the following blog entry 
+(question): "Agaric wants version control that lets Drupal core and 
+contrib replace entire directories within our checkouts"[1]
+  http://tinyurl.com/yv3jp4
 
-The general idea is ok. Some minor coments though.
+Here the author want to use version control system for customized 
+version of CMS system, namely:
+ * Drupal core
+ * selected Drupal contributed modules ("inside" Drupal core)
+ * own work (theme, custom modules) (also "inside" Drupal core)
+And of course he wants to have development branches: dev, test and live, 
+and want to always checkout correct versions of Drupal, Drupal modules 
+and own work.
 
->Re: [EGIT PATCH] showing commiter and parent commit(s) on the revision detail viewer
-"Show" and final period.
+Somebody (in comments) proposed using Subversion externals; I have 
+proposed using Git submodules (subproject) support.  Nevertheless while 
+I have at one time manage PHPNuke portal using CVS and vendor branches, 
+and even had half-written automatic fast checkout/fast export script, 
+I haven't worked with submodules in Git, nor with using Git to manage 
+web site.
 
-fredagen den 25 januari 2008 skrev Roger C. Soares:
-> @@ -221,14 +223,16 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
->  				if(selection2.length == 1) {
->  					// if the table item is not visible in the UI and it's selected via keyboard
->  					// this listener is called before the listener that sets the item data.
-> -					if(selection2[0] == null) {
-> +					GitCommitFileRevision revision = (GitCommitFileRevision) selection2[0];
-> +					if(revision == null) {
->  						int ix = table.getSelectionIndex();
-> -						GitFileRevision revision = (GitFileRevision) fileRevisions.get(ix);
-> +						revision = (GitCommitFileRevision) fileRevisions.get(ix);
->  						selection2[0] = revision;
->  					}
-> -					setRevisionInfoTextViewers(selection2[0]);
-> +					setRevisionInfoTextViewers(revision);
-I'm rather allergic to casts, so if we could have only one I'd feel better. Something like
+Comments (here, and as comments to mentioned blog article) about how 
+such thing should be done with Git very appreciated. (And for example 
+how Git submodules differ from svn:externals and why git way is 
+better ;-)).
 
-					IFileRevision revision = selection2[0];
-					if(revision == null) {
- 						int ix = table.getSelectionIndex();
-						revision = fileRevisions.get(ix);
- 						selection2[0] = revision;
- 					}
-					setRevisionInfoTextViewers((GitCommitFileRevision)revision);
 
->  				}
->  
-> +
-two lines of whitepspace
+P.S. BTW. Drupal is considering moving from CVS to some other SCM, see
+http://groups.drupal.org/revision-control-systems .  Perhaps Git would 
+be the choice?  Is anybody here active in Drupal development?  Is for 
+example their Version Control API too CVS-centric (single file history 
+centric)?
 
->  		if (revisionInfo.length() == 0) {
-> -			revisionInfo.append("Commit: ");
-> +			revisionInfo.append("Commit ID: ");
-I prefer just commit. It's shorter and that it is the id is obvious.
-
-> +		revisionInfo.append(formatPersonIdentForRevInfo(commit.getAuthor()));
-> +		revisionInfo.append("\nCommiter: ");
-Two t's in "Committer"
-
-> +				} catch (IOException e) {
-> +					e.printStackTrace();
-We should start doing error handling better. But that's a separate chapter. Add a // TODO for now. 
-I'll address them one all one one go later, unless someone does it for me.
-
--- robin
+[1]http://agaricdesign.com/note/agaric-wants-version-control-lets-drupal-core-and-contrib-replace-entire-directories-within-our-checkouts
+-- 
+Jakub Narebski
+Poland
