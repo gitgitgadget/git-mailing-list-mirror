@@ -1,87 +1,69 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] Don't expect verify_pack() callers to set pack_size
-Date: Sun, 27 Jan 2008 12:18:26 -0500
-Message-ID: <20080127171826.GV24004@spearce.org>
-References: <1201446098-18868-1-git-send-email-mh@glandium.org>
+From: Adrian Bunk <bunk@kernel.org>
+Subject: git-revert is a memory hog
+Date: Sun, 27 Jan 2008 19:27:48 +0200
+Message-ID: <20080127172748.GD2558@does.not.exist>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Sun Jan 27 18:19:27 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 27 18:28:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJBAC-0005Rq-Dk
-	for gcvg-git-2@gmane.org; Sun, 27 Jan 2008 18:19:24 +0100
+	id 1JJBIU-0007sU-9d
+	for gcvg-git-2@gmane.org; Sun, 27 Jan 2008 18:27:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750882AbYA0RSl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jan 2008 12:18:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750836AbYA0RSl
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jan 2008 12:18:41 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:37595 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750831AbYA0RSk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jan 2008 12:18:40 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JJB9F-0001P9-Ix; Sun, 27 Jan 2008 12:18:25 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 74AB520FBAE; Sun, 27 Jan 2008 12:18:27 -0500 (EST)
+	id S1753198AbYA0R11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jan 2008 12:27:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753324AbYA0R11
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jan 2008 12:27:27 -0500
+Received: from smtp5.pp.htv.fi ([213.243.153.39]:54501 "EHLO smtp5.pp.htv.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752995AbYA0R10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jan 2008 12:27:26 -0500
+Received: from does.not.exist (cs181133002.pp.htv.fi [82.181.133.2])
+	by smtp5.pp.htv.fi (Postfix) with ESMTP id 2357B5BC019
+	for <git@vger.kernel.org>; Sun, 27 Jan 2008 19:27:25 +0200 (EET)
 Content-Disposition: inline
-In-Reply-To: <1201446098-18868-1-git-send-email-mh@glandium.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71821>
 
-Mike Hommey <mh@glandium.org> wrote:
-> Since use_pack() will end up populating pack_size if it is not already set,
-> we can just adapt the code in verify_packfile() such that it doesn't require
-> pack_size to be set beforehand.
-> 
-> This allows callers not to have to set pack_size themselves, and we can thus
-> revert changes from 1c23d794.
+I'm not sure whether this is already known, but when recently working 
+for some time from a computer with "only" 512 MB RAM I ran into the huge 
+memory usage of git-revert when it tries to revert old commits.
 
-That's a good improvement in code clarity.  When I implemented
-1c23 I wasn't sure what was initialized in the struct packed_git
-that the HTTP code was slugging around in request->userData, and
-it was hard to track down.  1c23 was a quick fix to get HTTP fetch
-working again when sp/mmap merged into next.
+Example (in Linus' kernel tree with git 1.5.3.8):
 
-I'm guessing you have figured out it is not actually open at this
-point, which makes sense as we did fclose() calls to close out
-the writer.  So sha1_file.c needs to open a new file descriptor.
-use_pack() will force it to be opened and the open packfile function
-does update the pack_size if we don't have it yet.
+<--  snip  -->
 
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
+$ git-revert d19fbe8a7
+Auto-merged drivers/input/input.c
+CONFLICT (content): Merge conflict in drivers/input/input.c
+Auto-merged include/linux/input.h
+CONFLICT (content): Merge conflict in include/linux/input.h
+Automatic revert failed.  After resolving the conflicts,
+mark the corrected paths with 'git add <paths>' and commit the result.
+$ 
 
-> diff --git a/pack-check.c b/pack-check.c
-> index d7dd62b..e7f0126 100644
-> --- a/pack-check.c
-> +++ b/pack-check.c
-> @@ -37,14 +37,16 @@ static int verify_packfile(struct packed_git *p,
->  	 */
->  
->  	SHA1_Init(&ctx);
-> -	while (offset < pack_sig) {
-> +	do {
->  		unsigned int remaining;
->  		unsigned char *in = use_pack(p, w_curs, offset, &remaining);
->  		offset += remaining;
-> +		if (pack_sig == 0)
-> +			pack_sig = p->pack_size - 20;
+<--  snip  -->
 
-fyi, we prefer "if (!pack_sig)" in Git for equality with 0 tests.
+In top you can see that this took > 800 MB of RAM !
+
+I don't know how easy it would be to implement, but shouldn't git-revert 
+be able to be as fast and less memory consuming as
+  git-show d19fbe8a7 | patch -p1 -R
+?
+
+cu
+Adrian
 
 -- 
-Shawn.
+
+       "Is there not promise of rain?" Ling Tan asked suddenly out
+        of the darkness. There had been need of rain for many days.
+       "Only a promise," Lao Er said.
+                                       Pearl S. Buck - Dragon Seed
