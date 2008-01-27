@@ -1,158 +1,114 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: I'm a total push-over..
-Date: Sun, 27 Jan 2008 11:21:28 +0300
-Message-ID: <20080127082128.GH26664@dpotapov.dyndns.org>
-References: <e51f66da0801230601n6edd2639lff70415afa9f9026@mail.gmail.com> <4797518A.3040704@op5.se> <e51f66da0801240519u4c8e6ddfrb7af8df34552252a@mail.gmail.com> <4798B633.8040606@op5.se> <37fcd2780801240828vac82e6ds4da5aecde56e8d2f@mail.gmail.com> <alpine.LFD.1.00.0801240839590.2803@woody.linux-foundation.org> <e51f66da0801251252r1950c2d5g12caa5e71b9a37a@mail.gmail.com> <alpine.LFD.1.00.0801251407010.5056@hp.linux-foundation.org> <e51f66da0801260416p5f5ffb98w16fe832fe62dc7c9@mail.gmail.com> <alpine.LFD.1.00.0801262247140.3222@www.l.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marko Kreen <markokr@gmail.com>, Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Jan 27 09:22:21 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH v2] cvsserver: Fix for histories with multiple roots
+Date: Sun, 27 Jan 2008 10:37:09 +0100
+Message-ID: <12014266292347-git-send-email-prohaska@zib.de>
+References: <7v8x2cyqsg.fsf@gitster.siamese.dyndns.org>
+Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Jan 27 10:38:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJ2mS-0001HK-KR
-	for gcvg-git-2@gmane.org; Sun, 27 Jan 2008 09:22:21 +0100
+	id 1JJ3xl-0006lp-Ef
+	for gcvg-git-2@gmane.org; Sun, 27 Jan 2008 10:38:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750997AbYA0IVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jan 2008 03:21:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750922AbYA0IVh
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jan 2008 03:21:37 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:19508 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750831AbYA0IVg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jan 2008 03:21:36 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so1264717fga.17
-        for <git@vger.kernel.org>; Sun, 27 Jan 2008 00:21:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=FPg3HKBHTgPk6XKJ9L9tfdGpZnQpjAL+S92UPeGbU4Q=;
-        b=MK6yQTeSznBNJkjadJU+Njva/ZstzRYdqiw0oil37+jf4m4mU9LEGs+YONZEScpyZNJLswBsLCu0Iyx9LBUtL0doLhPr1x1t0Gapr+DCwB2EwCADzWvpEfopKfh7yMfPnNfBOLcFG8GVg3bH8EL2yo9zNjeZTz6mt8b+dQFcyjw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=x1W9xWT5gt+dna051wj1lN+pzFaQtjttl/Xarlk6uxMTXSdIQtB1kQT0LOXn7DYnWRJ6JBikPqjoG73cX0kbkjrVCcV0iMAlRew6HjnwJCR8gvAkXeWP5kv3k+hMJSOHd8weBp+BMznQNvfCtlkWjRvNoMO2sNiK1SMAEAxWKF4=
-Received: by 10.86.74.15 with SMTP id w15mr108007fga.37.1201422092726;
-        Sun, 27 Jan 2008 00:21:32 -0800 (PST)
-Received: from localhost ( [85.141.188.123])
-        by mx.google.com with ESMTPS id l12sm4399550fgb.8.2008.01.27.00.21.30
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 27 Jan 2008 00:21:31 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.1.00.0801262247140.3222@www.l.google.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1750951AbYA0JhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jan 2008 04:37:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750869AbYA0JhV
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jan 2008 04:37:21 -0500
+Received: from mailer.zib.de ([130.73.108.11]:41047 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750831AbYA0JhS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jan 2008 04:37:18 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m0R9bDqj019778;
+	Sun, 27 Jan 2008 10:37:13 +0100 (CET)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m0R9b9hR024424;
+	Sun, 27 Jan 2008 10:37:09 +0100 (MET)
+X-Mailer: git-send-email 1.5.2.4
+In-Reply-To: <7v8x2cyqsg.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71810>
 
-On Sat, Jan 26, 2008 at 10:51:18PM -0800, Linus Torvalds wrote:
-> 
-> 
-> On Sat, 26 Jan 2008, Marko Kreen wrote:
-> > 
-> > Here you misunderstood me, I was proposing following:
-> > 
-> > int hash_folded(const char *str, int len)
-> > {
-> >    char buf[512];
-> >    do_folding(buf, str, len);
-> >    return do_hash(buf, len);
-> > }
-> > 
-> > That is - the folded string should stay internal to hash function.
-> 
-> If it's internal, it's much better, but you still missed the performance 
-> angle.
-> 
-> The fact is, hashing can take shortcuts that folding cannot do!
-> 
-> Case folding, by definition, has to be "exact" (since the whole point is 
-> what you're going to use the same folding function to do the compare, so 
-> if you play games with folding, the compares will be wrong).
+Junio,
+here is a replacement for the second patch.  Different from your diff,
+I replaced tabs with 8 spaces because all of the surrounding code
+uses spaces for indentation.
 
-Let's rename do_folding as something else, because it is not a real
-folding, but a preparation step for hash calculation. Keeping these
-steps separately simplifies the code, and allows further optimization,
-for instance, you do not need this do_folding step on a case-sensitive
-filesystem. Though it is certainly possible to mix both steps together,
-it bloats the code and makes it less readable. Of course, the idea to
-avoid a temporary buffer and do everything at once is very appealing,
-so I gave it a try -- and here is a 32-bit version of name_hash(), but
-I am not very happy with the result:
+    Steffen
 
+---- snip ---
 
-#define rot(x,k) (((x)<<(k)) | ((x)>>(32-(k))))
+Git histories may have multiple roots, which can cause
+git merge-base to fail and this caused git cvsserver to die.
 
-#define mix(a,b,c) \
-{ \
-	a -= c;  a ^= rot(c, 4);  c += b; \
-	b -= a;  b ^= rot(a, 6);  a += c; \
-	c -= b;  c ^= rot(b, 8);  b += a; \
-	a -= c;  a ^= rot(c,16);  c += b; \
-	b -= a;  b ^= rot(a,19);  a += c; \
-	c -= b;  c ^= rot(b, 4);  b += a; \
-}
-#define final(a,b,c) \
-{ \
-	c ^= b; c -= rot(b,14); \
-	a ^= c; a -= rot(c,11); \
-	b ^= a; b -= rot(a,25); \
-	c ^= b; c -= rot(b,16); \
-	a ^= c; a -= rot(c,4);  \
-	b ^= a; b -= rot(a,14); \
-	c ^= b; c -= rot(b,24); \
-}
+This commit teaches git cvsserver to handle a failing git
+merge-base gracefully, and modifies the test case to verify this.
+All the test cases now use a history with two roots.
 
-#define hash_value(x) \
-	hs[hp] += (x); \
-	if (++hp == 3) { \
-		mix (hs[0], hs[1], hs[2]); \
-		hp = 0; \
-	}
-unsigned int name_hash(const char *name, unsigned size)
-{
-	unsigned hp = 0;
-	unsigned hs[3];
-	hs[0] = hs[1] = hs[2] = 0xdeadbeef + size;
+Thanks to Junio C Hamano for the implementation that avoids
+calling git-merge-base twice.
 
-	do {
-		unsigned char c;
-		if (size >= sizeof(unsigned)) {
-			unsigned val = get_unaligned_uint(name);
-			if (!(val & 0x80808080)) {
-				val &= ~0x20202020;
-				hash_value(val);
-				name += sizeof(val);
-				size -= sizeof(val);
-				continue;
-			}
-		}
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ git-cvsserver.perl              |   11 +++++++++--
+ t/t9400-git-cvsserver-server.sh |   10 +++++++++-
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
-		while (!((c = *name) & 0x80)) {
-			hash_value(c & ~0x20);
-			name++;
-			if (!--size)
-				goto done:
-		}
-
-		do {
-			// TODO: add denormalization for Mac
-			unsigned val = towupper (utf8_to_wchar(&name, &size));
-			hash_value(val);
-		} while (size && (*name & 0x80));
-
-	} while (size);
-done:
-	if (hp)
-		final(a,b,c);
-	return hs[2];
-}
-
-
-Dmitry
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index ecded3b..920e7de 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -2543,8 +2543,15 @@ sub update
+                     if ($parent eq $lastpicked) {
+                         next;
+                     }
+-                    my $base = safe_pipe_capture('git-merge-base',
+-						 $lastpicked, $parent);
++                    my $base = eval {
++                            safe_pipe_capture('git-merge-base',
++                                                 $lastpicked, $parent);
++                    };
++                    # The two branches may not be related at all,
++                    # in which case merge base simply fails to find
++                    # any, but that's Ok.
++                    next if ($@);
++
+                     chomp $base;
+                     if ($base) {
+                         my @merged;
+diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
+index 1f2749e..75d1ce4 100755
+--- a/t/t9400-git-cvsserver-server.sh
++++ b/t/t9400-git-cvsserver-server.sh
+@@ -37,6 +37,13 @@ test_expect_success 'setup' '
+   echo >empty &&
+   git add empty &&
+   git commit -q -m "First Commit" &&
++  mkdir secondroot &&
++  ( cd secondroot &&
++  git init &&
++  touch secondrootfile &&
++  git add secondrootfile &&
++  git commit -m "second root") &&
++  git pull secondroot master &&
+   git clone -q --local --bare "$WORKDIR/.git" "$SERVERDIR" >/dev/null 2>&1 &&
+   GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
+   GIT_DIR="$SERVERDIR" git config gitcvs.logfile "$SERVERDIR/gitcvs.log"
+@@ -46,7 +53,8 @@ test_expect_success 'setup' '
+ # as argument to co -d
+ test_expect_success 'basic checkout' \
+   'GIT_CONFIG="$git_config" cvs -Q co -d cvswork master &&
+-   test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5))" = "empty/1.1/"'
++   test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5 | head -n 1))" = "empty/1.1/"
++   test "$(echo $(grep -v ^D cvswork/CVS/Entries|cut -d/ -f2,3,5 | tail -n 1))" = "secondrootfile/1.1/"'
+ 
+ #------------------------
+ # PSERVER AUTHENTICATION
+-- 
+1.5.4.rc4.42.gacc73
