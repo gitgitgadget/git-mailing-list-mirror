@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] Secure central repositories by UNIX socket authentication
-Date: Sun, 27 Jan 2008 12:32:13 -0500
-Message-ID: <20080127173212.GW24004@spearce.org>
-References: <20080127103934.GA2735@spearce.org> <alpine.LSU.1.00.0801271402330.23907@racer.site>
+Subject: Re: git-revert is a memory hog
+Date: Sun, 27 Jan 2008 12:38:08 -0500
+Message-ID: <20080127173808.GX24004@spearce.org>
+References: <20080127172748.GD2558@does.not.exist>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jan 27 18:32:52 2008
+To: Adrian Bunk <bunk@kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 27 18:38:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJBNC-0000mT-Hq
-	for gcvg-git-2@gmane.org; Sun, 27 Jan 2008 18:32:50 +0100
+	id 1JJBSu-0002SL-8B
+	for gcvg-git-2@gmane.org; Sun, 27 Jan 2008 18:38:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752995AbYA0RcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jan 2008 12:32:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752960AbYA0RcR
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jan 2008 12:32:17 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:38681 "EHLO
+	id S1752126AbYA0RiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jan 2008 12:38:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752039AbYA0RiN
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Jan 2008 12:38:13 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:39280 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752664AbYA0RcQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jan 2008 12:32:16 -0500
+	with ESMTP id S1751831AbYA0RiM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jan 2008 12:38:12 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JJBMW-00020N-DK; Sun, 27 Jan 2008 12:32:08 -0500
+	id 1JJBSG-0002Hr-4E; Sun, 27 Jan 2008 12:38:04 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 759C520FBAE; Sun, 27 Jan 2008 12:32:13 -0500 (EST)
+	id 04FFA20FBAE; Sun, 27 Jan 2008 12:38:08 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0801271402330.23907@racer.site>
+In-Reply-To: <20080127172748.GD2558@does.not.exist>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -41,97 +41,38 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71823>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Sun, 27 Jan 2008, Shawn O. Pearce wrote:
+Adrian Bunk <bunk@kernel.org> wrote:
+> I'm not sure whether this is already known, but when recently working 
+> for some time from a computer with "only" 512 MB RAM I ran into the huge 
+> memory usage of git-revert when it tries to revert old commits.
 > 
-> >     ## Owner (not jdoe)
-> >     ##
-> >   cat >foo.git/hooks/update <<'EOF'
-> >   #!/bin/sh
-> >   test -z "$GIT_REMOTE_USER" || exit
-> >   case "$GIT_REMOTE_USER" in
-> >   jdoe)     exit 0;;
-> >   spearce)  exit 0;;
-> >   *)        exit 1
-> >   esac
-> >   EOF
-> >   chmod u+x foo.git/hooks/update
-> >   chmod 700 foo.git
-> > 
-> >   git daemon \
-> >       --export-all \
-> >       --enable=receive-pack \
-> >       --base=`pwd` \
-> >       --listen=/tmp/shawn-git
-> > 
-> >     ## Other User
-> >     ##
-> >   git push jdoe@server:/tmp/shawn-git/foo.git master
+> Example (in Linus' kernel tree with git 1.5.3.8):
 > 
-> I probably miss something, but if you already go through SSH, the $USER is 
-> set appropriately, no?
+> $ git-revert d19fbe8a7
+...
+> In top you can see that this took > 800 MB of RAM !
+> 
+> I don't know how easy it would be to implement, but shouldn't git-revert 
+> be able to be as fast and less memory consuming as
+>   git-show d19fbe8a7 | patch -p1 -R
 
-Sure, $USER is set.  For "jdoe".  But due to the "chmod 700 foo.git"
-above jdoe isn't actually allowed access to the repository directory.
-So it doesn't matter what $USER is set to, jdoe cannot get to the
-files of the repository.
- 
-> So you could do without git-daemon entirely, and replace the 
-> GIT_REMOTE_USER variable in the hook by USER.
+Its more like:
 
-No, you can't.
+	git-diff-tree -M d19fbe8a7^ d19fbe8a7 | git-apply -R --index
 
-If you give write access to a repository such that a user can push into
-it, there is little point in using the update hook to control access to
-the repository.  Why?  Because anyone with write access can just use the
-standard Git commands (e.g. `git --git-dir=foo.git branch -D next`)
-to maniplate the repository in ways that the update hook wouldn't like.
+In other words its doing rename detection.  Its possible that the
+rename detector fired for added/removed paths and it took some
+significant amount of memory to figure out what was renamed.
+Maybe we hung onto stuff for too long, but it has to do rename
+detection and that takes memory to store the matrix and file
+contents.  Once memory is allocated by git we don't give it back
+to the kernel, even if we free'd it internally.
 
-So if you want to give out write access, but have it be limited
-to what `git receive-pack` will permit (especially when coupled
-with an update hook like contrib/hooks/update-paranoid) you need
-to limit what a user can do to *only* executing git-receive-pack,
-but you also need to allow that receive-pack to actually have write
-permission on the repository.
-
-So you come down to four options:
-
-1) Make git-receive-pack setuid to the repository owner.
-   This is uh, ugly.
-
-2) Use the SSH key feature to have remote users login as
-   the repository owner, but use the authorized_keys file
-   to force them to only execute git-shell.
-   This is uh, ugly, especially with 50+ users.
-
-3) Export git-daemon over TCP and --enable=receive-pack.
-   This doesn't get us any authentication.  Sure the
-   user is limited to what the update hook allows, but
-   the update hook has no way to trust who the remote
-   peer is.  You might as well not bother.
-
-4) Add full user authentication to git-daemon and then do #3.
-   The user authentication can provide data down into the update
-   hook, such as by setting the $GIT_REMOTE_USER environment
-   variable.  That's basically this change, except I'm using bog
-   standard SSH to perform the authentication for me.
-
-If we don't do something like this then I think we need to teach
-git-daemon how to accept SSL connections, and then once you give it
-SSL you need to implement peer authentication by certificates, and
-then have git_connect() in connect.c also implement setting up SSL
-connections, and doing peer authentication with certificates.  Ick.
-
-Relying on SSH is the better approach in my opinion.  It comes with
-a set of well trusted servers (OpenSSH) and user client tools that
-many users and administrators already understand (e.g. ssh-agent).
-
-Someone on #git yesterday mentioned that a problem half-deferred
-(user authentication) is a problem half-solved.  I've half-deferred
-the authentication problem to SSH, much as we already have it
-deferred to SSH...  :-)
+If you really are tight on memory and have to do a revert you can
+use the above, but minus the -M, to setup the change, but you may
+run into trouble if renames were involved.
 
 -- 
 Shawn.
