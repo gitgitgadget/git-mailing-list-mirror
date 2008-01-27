@@ -1,107 +1,130 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] cvsserver: Fix for histories with multiple roots
-Date: Sat, 26 Jan 2008 17:56:47 -0800
-Message-ID: <7v8x2cyqsg.fsf@gitster.siamese.dyndns.org>
-References: <12013412461111-git-send-email-prohaska@zib.de>
-	<12013412462758-git-send-email-prohaska@zib.de>
+Subject: Re: [Resend PATCH] Fix some memory leaks in various places
+Date: Sat, 26 Jan 2008 18:18:36 -0800
+Message-ID: <7v4pd0yps3.fsf@gitster.siamese.dyndns.org>
+References: <1201344627-21609-1-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun Jan 27 02:57:40 2008
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sun Jan 27 03:19:27 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JIwmC-0008QZ-A0
-	for gcvg-git-2@gmane.org; Sun, 27 Jan 2008 02:57:40 +0100
+	id 1JIx7A-0003sI-Uf
+	for gcvg-git-2@gmane.org; Sun, 27 Jan 2008 03:19:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752470AbYA0B4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jan 2008 20:56:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbYA0B4y
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 20:56:54 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51573 "EHLO
+	id S1757598AbYA0CSt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jan 2008 21:18:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757325AbYA0CSt
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Jan 2008 21:18:49 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:52655 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752330AbYA0B4y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jan 2008 20:56:54 -0500
+	with ESMTP id S1757497AbYA0CSn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jan 2008 21:18:43 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3EDC740F1;
-	Sat, 26 Jan 2008 20:56:52 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 00CF6460E;
+	Sat, 26 Jan 2008 21:18:42 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9950040F0;
-	Sat, 26 Jan 2008 20:56:49 -0500 (EST)
-In-Reply-To: <12013412462758-git-send-email-prohaska@zib.de> (Steffen
-	Prohaska's message of "Sat, 26 Jan 2008 10:54:06 +0100")
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 25F7B460D;
+	Sat, 26 Jan 2008 21:18:38 -0500 (EST)
+In-Reply-To: <1201344627-21609-1-git-send-email-mh@glandium.org> (Mike
+	Hommey's message of "Sat, 26 Jan 2008 11:50:27 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71797>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+Mike Hommey <mh@glandium.org> writes:
 
-> Git histories may have multiple roots, which can cause
-> git merge-base to fail and this caused git cvsserver to die.
->
-> This commit teaches git cvsserver to handle a failing git
-> merge-base gracefully, and modifies the test case to verify this.
-> All the test cases now use a history with two roots.
->
-> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
-> ---
->  git-cvsserver.perl              |    5 +++++
->  t/t9400-git-cvsserver-server.sh |   10 +++++++++-
->  2 files changed, 14 insertions(+), 1 deletions(-)
->
-> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-> index ecded3b..534b41e 100755
-> --- a/git-cvsserver.perl
-> +++ b/git-cvsserver.perl
-> @@ -2543,6 +2543,11 @@ sub update
->                      if ($parent eq $lastpicked) {
->                          next;
->                      }
-> +                    # or it may fail to find a merge base.  In this
-> +                    # case we just ignore this merge.
-> +                    if (system("git merge-base $lastpicked $parent >/dev/null 2>/dev/null")) {
-> +                        next;
-> +                    }
->                      my $base = safe_pipe_capture('git-merge-base',
->  						 $lastpicked, $parent);
->                      chomp $base;
+> diff --git a/builtin-init-db.c b/builtin-init-db.c
+> index e1393b8..df61758 100644
+> --- a/builtin-init-db.c
+> +++ b/builtin-init-db.c
+> @@ -415,6 +415,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+>  	safe_create_dir(path, 1);
+>  	strcpy(path+len, "/info");
+>  	safe_create_dir(path, 1);
+> +	free(path);
+>  
+>  	if (shared_repository) {
+>  		char buf[10];
 
-That is a "Yes, but..." patch.
+This is "technically correct but do we care?" category
+immediately before exiting.
 
-Running merge-base always twice, due to fear of uncommon case of
-failure, feels quite backwards.
+> diff --git a/http-walker.c b/http-walker.c
+> index 2c37868..1a02f86 100644
+> --- a/http-walker.c
+> +++ b/http-walker.c
+> @@ -231,6 +231,8 @@ static void finish_object_request(struct object_request *obj_req)
+>  {
+>  	struct stat st;
+>  
+> +	free(obj_req->url);
+> +
+>  	fchmod(obj_req->local, 0444);
+>  	close(obj_req->local); obj_req->local = -1;
+>  
 
-Doesn't this work equally well without running a rather
-expensive merge-base twice?
+I am not sure about this.  Instead of freeing this memory early,
+the function's sole caller, process_object_response(), may be
+the right place to do this after calling this function.
 
- git-cvsserver.perl |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
+Who is responsible for reclaiming the memory for obj_req itself
+that is passed to the callback function process_object_response()?
+Having two different functions release_object_request() and
+finish_object_request() that clean things up differently makes
+me feel somewhat queasy.
 
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index ecded3b..afe3d0b 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -2543,8 +2543,15 @@ sub update
-                     if ($parent eq $lastpicked) {
-                         next;
-                     }
--                    my $base = safe_pipe_capture('git-merge-base',
-+		    my $base = eval {
-+			    safe_pipe_capture('git-merge-base',
- 						 $lastpicked, $parent);
-+		    };
-+		    # The two branches may not be related at all,
-+		    # in which case merge base simply fails to find
-+		    # any, but that's Ok.
-+		    next if ($@);
-+
-                     chomp $base;
-                     if ($base) {
-                         my @merged;
+> @@ -897,9 +899,17 @@ static int fetch_ref(struct walker *walker, char *ref, unsigned char *sha1)
+>  static void cleanup(struct walker *walker)
+>  {
+>  	struct walker_data *data = walker->data;
+> +	struct alt_base *prev_altbase, *altbase = data->alt;
+> +	while (altbase) {
+> +		free(altbase->base);
+> +		prev_altbase = altbase;
+> +		altbase = altbase->next;
+> +		free(prev_altbase);
+> +	}
+>  	http_cleanup();
+>  
+>  	curl_slist_free_all(data->no_pragma_header);
+> +	free(data);
+>  }
+>  
+>  struct walker *get_http_walker(const char *url)
+
+Looks Ok.
+
+> diff --git a/walker.c b/walker.c
+> index adc3e80..64fc419 100644
+> --- a/walker.c
+> +++ b/walker.c
+> @@ -299,6 +299,7 @@ int walker_fetch(struct walker *walker, int targets, char **target,
+>  			goto unlock_and_fail;
+>  	}
+>  	free(msg);
+> +	free(sha1);
+>  
+>  	return 0;
+>  
+> @@ -306,6 +307,7 @@ unlock_and_fail:
+>  	for (i = 0; i < targets; i++)
+>  		if (lock[i])
+>  			unlock_ref(lock[i]);
+> +	free(sha1);
+>  
+>  	return -1;
+>  }
+
+This does not seem to free something that should not get freed,
+but there is another leak, I think.  If write_ref_log_details is
+set and write_ref_sha1() fails, goto unlock_and_fail will leak
+msg, won't it?
