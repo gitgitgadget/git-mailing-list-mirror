@@ -1,89 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Add test for rebase -i with commits that do not pass
- pre-commit
-Date: Mon, 28 Jan 2008 16:33:28 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801281632300.23907@racer.site>
-References: <20080128154232.900.qmail@c07ab49f5b12dd.315fe32.mid.smarden.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: "git add" and absolute paths
+Date: Mon, 28 Jan 2008 13:32:23 -0500
+Message-ID: <20080128183223.GA31140@coredump.intra.peff.net>
+References: <916BAC14-A5E4-4666-A29E-2CDF114DCD87@wincent.com> <m33asi9jxp.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Mon Jan 28 17:34:23 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Wincent Colaiuta <win@wincent.com>,
+	git mailing list <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 19:33:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJWwA-00070j-Bb
-	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 17:34:22 +0100
+	id 1JJYmx-0001zY-Ma
+	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 19:33:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753029AbYA1Qdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 11:33:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752729AbYA1Qdt
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 11:33:49 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51151 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752624AbYA1Qds (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 11:33:48 -0500
-Received: (qmail invoked by alias); 28 Jan 2008 16:33:46 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp012) with SMTP; 28 Jan 2008 17:33:46 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/eaVBHUcTePbuY4nPVkY+j+/ljOR0I5ObFn8Mbwz
-	oJqu4gkfpgBl9Q
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080128154232.900.qmail@c07ab49f5b12dd.315fe32.mid.smarden.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752369AbYA1Sc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 13:32:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751791AbYA1Sc1
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 13:32:27 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1565 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752296AbYA1Sc0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 13:32:26 -0500
+Received: (qmail 30871 invoked by uid 111); 28 Jan 2008 18:32:25 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 28 Jan 2008 13:32:25 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Jan 2008 13:32:23 -0500
+Content-Disposition: inline
+In-Reply-To: <m33asi9jxp.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71895>
 
+On Mon, Jan 28, 2008 at 05:08:44AM -0800, Jakub Narebski wrote:
 
-This accompanies c5b09feb(Avoid update hook during git-rebase --interactive)
-to prove that Debian's Bug#458782 (git-core: git-rebase doesn't work when
-trying to squash changes into commits created with --no-verify) is indeed
-fixed now.
+> > I understand that you can't add arbitrary paths outside of your
+> > worktree, but if the absolute path specifies something _inside_ your
+> > worktree then it seems that this is either a bug or a "usability
+> > shortcoming" if you prefer to avoid the term "bug".
+> 
+> If I remember correctly this issue was discussed on git mailing list,
+> and I guess there were even some patches implementing that, but I
+> don't know what happened iwth them: freeze persiod, troubles with
+> Cygwin (MS Windows), or what...
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+I think the thread just trailed off, and no replacement patch got
+submitted. See this thread:
 
-	On Mon, 28 Jan 2008, Gerrit Pape wrote:
+  http://mid.gmane.org/200712032153.31322.robin.rosenberg.lists@dewire.com
 
-	> Hi, IIRC I managed to reproduce the problem below, but currently 
-	> don't have the time to track it down.  Hopefully someone else 
-	> can work on it, there's even a patch suggested.
-
-	It is even in 1.5.4-rc1.
-
- t/t3404-rebase-interactive.sh |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
-
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 74a7eb3..e33ea4e 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -324,4 +324,20 @@ test_expect_success 'rebase a detached HEAD' '
- 	test $grandparent = $(git rev-parse HEAD~2)
- '
- 
-+test_expect_success 'rebase a commit violating pre-commit' '
-+
-+	mkdir -p .git/hooks &&
-+	PRE_COMMIT=.git/hooks/pre-commit &&
-+	echo "#!/bin/sh" > $PRE_COMMIT &&
-+	echo "test -z \"\$(git diff --cached --check)\"" >> $PRE_COMMIT &&
-+	chmod a+x $PRE_COMMIT &&
-+	echo "monde! " >> file1 &&
-+	test_tick &&
-+	! git commit -m doesnt-verify file1 &&
-+	git commit -m doesnt-verify --no-verify file1 &&
-+	test_tick &&
-+	FAKE_LINES=2 git rebase -i HEAD~2
-+
-+'
-+
- test_done
--- 
-1.5.4.rc5.15.g8231f
+-Peff
