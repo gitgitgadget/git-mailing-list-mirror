@@ -1,104 +1,140 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Wincent Colaiuta <win@wincent.com>
 Subject: Re: How to split a patch
-Date: Mon, 28 Jan 2008 02:40:38 -0800
-Message-ID: <7vr6g2teqh.fsf@gitster.siamese.dyndns.org>
-References: <4d8e3fd30801280105g2876cedfjbe1ba323ede57e0a@mail.gmail.com>
-	<7vhcgyuwsx.fsf@gitster.siamese.dyndns.org>
-	<4d8e3fd30801280132k59676921h272addab6cac6899@mail.gmail.com>
-	<vpqfxwi5ljf.fsf@bauges.imag.fr>
-	<7vy7aatfck.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>,
+Date: Mon, 28 Jan 2008 11:44:28 +0100
+Message-ID: <E8308544-2613-463D-8277-5C1B40709A7B@wincent.com>
+References: <4d8e3fd30801280105g2876cedfjbe1ba323ede57e0a@mail.gmail.com> <7vhcgyuwsx.fsf@gitster.siamese.dyndns.org> <4d8e3fd30801280132k59676921h272addab6cac6899@mail.gmail.com> <vpqfxwi5ljf.fsf@bauges.imag.fr> <7vy7aatfck.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	"Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
 	"git mailing list" <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Jan 28 11:41:48 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 11:45:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJRQr-00044b-6c
-	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 11:41:41 +0100
+	id 1JJRUS-0005Bc-T8
+	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 11:45:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756921AbYA1Kky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 05:40:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755630AbYA1Kkx
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 05:40:53 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57052 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756597AbYA1Kkv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 05:40:51 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A8F8160C;
-	Mon, 28 Jan 2008 05:40:50 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DE15E160A;
-	Mon, 28 Jan 2008 05:40:44 -0500 (EST)
-In-Reply-To: <7vy7aatfck.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 28 Jan 2008 02:27:23 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755397AbYA1Kox convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jan 2008 05:44:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754668AbYA1Kox
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 05:44:53 -0500
+Received: from wincent.com ([72.3.236.74]:37290 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755156AbYA1Kov convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jan 2008 05:44:51 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m0SAiTN1023137;
+	Mon, 28 Jan 2008 04:44:30 -0600
+In-Reply-To: <7vy7aatfck.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71876>
 
-Junio C Hamano <gitster@pobox.com> writes:
+El 28/1/2008, a las 11:27, Junio C Hamano escribi=F3:
 
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>
+>> "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com> writes:
+>>
+>>> Yes it helps but I still wonder whether thereis a "simpler" way to =
+=20
+>>> achive that.
+>>> Is it possible to split a patch selecting the hunk in git gui or an=
+y
+>>> other graphical
+>>> tool?
+>>
+>> You can apply the patch without commiting it, and them make several
+>> partial commits, by right-click "stage hunk for commit" in git-gui.
+>
 > Yes, and you can do the same with "git add -i".  These tools are
 > not quite nice, as they encourage a wrong workflow of committing
 > what you haven't had as a whole in the work tree.  By
 > definition, you are making untested commits between your base
 > commit (that presumably was tested well) and your final commit
 > (that would also be tested well).
-> ...
-> There is no such tool yet, though.
-> 
-> The splitting you can do with "rebase -i" instead walks
-> forwards.  That also lets you test before you make commits in
-> each step.
 
-Having said all that, what I tend to do in practice is something
-like this:
+And as another alternative, seeing as Git is so easy to script, it is =20
+trivial to make a script that checks out all the commits in a series =20
+and runs the test suite against them. This of course assumes that you =20
+have a test suite!
 
- (1) Prepare a perfect state (i.e. what to become the final
-     commit in the series) in work tree.  Make a commit.  Let's
-     say I was working on 'master' branch.
+=46or example, this is the script that I use on a topic branch before =20
+submitting the corresponding patch series. It's one of the first =20
+scripts for Git that I wrote, so it is probably a bit na=EFve, but it =20
+works in the basic case. Basically bails if "make clean && make test" =20
+doesn't work for any commit in the series.
 
- (2) Checkout the state before the series.  If I currently have
-     a three commit series that I want to split further, that
-     would be HEAD~3.  If I just made a huge change without
-     making intermediate commits, that would be HEAD~1:
+I've used this on the series that I've sent to the Git mailing list, =20
+but you can use it internally on your local projects too before =20
+merging topic branches.
 
-     $ git checkout HEAD~3
+Cheers,
+Wincent
 
- (3) Get the final state in the work tree, to decide what to put
-     in and what to omit from the first in the series:
+#!/bin/sh -e
+#
+# check-series.sh
+# Check all commits in a topic branch before submission
+#
+# Created by Wincent Colaiuta on 23 November 2007.
+# Copyright 2007 Wincent Colaiuta.
 
-     $ git diff -R master | git apply --index
+#
+# Functions
+#
 
- (4) Use "git-add -i" to prepare what I want in the first
-     commit.
+die () {
+   echo "$1"
+   exit 1
+}
 
-     $ git add -i
+#
+# Main
+#
 
- (5) When the index is in a good shape, drop all other changes
-     from the work tree.  This is what I thought would be a good
-     first commit:
+git diff --quiet || die "Unstaged changes; won't start"
+git diff --cached --quiet || die "Staged changes; won't start"
 
-     $ git diff -R | git apply
+# parse HEAD (something like "ref: refs/heads/my_local_branch") to get =
+=20
+remote and merge
+GIT_DIR=3D$(git rev-parse --git-dir)
+TOPIC=3D"$GIT_DIR/HEAD"
+test -f "$TOPIC" || die "No HEAD found at '$TOPIC'"
+BRANCH_REF=3D$(< "$TOPIC")
+if [ "${BRANCH_REF%%: */*}" !=3D "ref" ]; then
+   die "expected HEAD '$BRANCH_REF' to be of the form 'ref: .../...'"
+fi
+BRANCH=3D${BRANCH_REF##*/}
+REMOTE=3D$(git config branch.$BRANCH.remote) || die "failed to get =20
+branch.$BRANCH.remote"
+MERGE=3D$(git config branch.$BRANCH.merge) || die "failed to get branch=
+=2E=20
+$BRANCH.merge"
+MERGE=3D${MERGE##*/}
 
- (6) Test it.  Make corrections.  Perfect it.  Then commit.
+# remember which branch we were on prior to starting
+trap 'git checkout $BRANCH' exit
 
-     $ git commit
+# will check all commits in topic branch not present in origin
+echo "On branch $BRANCH"
+echo "Commits to be checked:"
+git rev-list --pretty=3Doneline HEAD ^$REMOTE/$MERGE
+for COMMIT in $(git rev-list HEAD ^$REMOTE/$MERGE); do
+   echo "Checking $COMMIT"
+   git checkout $COMMIT
+   make clean
+   make test || die "Commit $COMMIT is bad"
+done
 
- (7) Go back to step (3), until the commit that I make in step
-     (6) matches 'master'.
-
- (8) Reset 'master' with HEAD:
-
-    $ git branch -f master HEAD
-    $ git checkout master
+echo "All revisions passed!"
