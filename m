@@ -1,89 +1,60 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [RFC] Authenticate push via PGP signature, not SSH
-Date: Mon, 28 Jan 2008 09:48:30 +0100
-Message-ID: <20080128084830.GB15935@artemis.madism.org>
-References: <479D5611.4010205@vilain.net>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: How to split a patch
+Date: Mon, 28 Jan 2008 10:05:31 +0100
+Message-ID: <4d8e3fd30801280105g2876cedfjbe1ba323ede57e0a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="LpQ9ahxlCli8rRTG";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Mon Jan 28 09:49:31 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "gi mailing list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 28 10:06:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJPgH-0004ca-H9
-	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 09:49:29 +0100
+	id 1JJPwn-0000ff-7w
+	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 10:06:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759664AbYA1Ise (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 03:48:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759657AbYA1Isd
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 03:48:33 -0500
-Received: from pan.madism.org ([88.191.52.104]:50482 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759634AbYA1Isc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 03:48:32 -0500
-Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id E2A012D82B;
-	Mon, 28 Jan 2008 09:48:30 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 5142161A0; Mon, 28 Jan 2008 09:48:30 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+	id S1752550AbYA1JFf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 04:05:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752615AbYA1JFf
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 04:05:35 -0500
+Received: from hs-out-0708.google.com ([64.233.178.240]:56908 "EHLO
+	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750878AbYA1JFd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 04:05:33 -0500
+Received: by hs-out-2122.google.com with SMTP id 54so1481912hsz.5
+        for <git@vger.kernel.org>; Mon, 28 Jan 2008 01:05:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=8F/sFWNTTbISS88QxtDylYYvgvKTpSfDC8YxyFiDYn4=;
+        b=lQk7FCSFGiGPCRSDv2hqIQv629HF08hutMONhN3AFCr53wl/HUPHIz26XFwkaHOLniAYECMLI/CvE9pxY6Bx3v+Cz/AhDrpmPfbt+YCb6TjZxCG4mSJNsLbc84SnZ0GYT8kwtqAWUa+YGpPOtKuNjk4CBCBYRt9fDzKHeUiZ+1o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=E/AyIsDBpmkLCMG6NMYXq5jUA7z5rm4Xqc7RN1HGh8DiRh4mfT9/KpyZ/kxWp6TP2GChBagcXsqMZnP2nlmeXKMh6DjEtfA/iB92durTwcujvaeh4JnOtwefVez6io8gO84km08drpDUeKZGO3fwIWySQj7EwAfEcjdlbP7M2I8=
+Received: by 10.143.17.13 with SMTP id u13mr2095725wfi.69.1201511131948;
+        Mon, 28 Jan 2008 01:05:31 -0800 (PST)
+Received: by 10.143.196.10 with HTTP; Mon, 28 Jan 2008 01:05:31 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <479D5611.4010205@vilain.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71865>
 
+Hi all,
+I have a big patch that affects a single file that needs to be split in
+a few logical patches.
 
---LpQ9ahxlCli8rRTG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I know ho to do the opposite process, rebase -i and squash is something
+I'm really used to do but this time that trick is not going to help me.
 
-On Mon, Jan 28, 2008 at 06:12:34AM +0000, Sam Vilain wrote:
-> This does force potential contributors to get PGP keys, and get them
-> signed - but that seems to me to be a reasonable barrier of entry and
-> may even help drive some PGP adoption.
->=20
-> Remember this is a proof of concept, so let's discuss the design first
-> and not worry too much about the glaring bugs yet.
+What is the preferred way to split a big patch in a series of smaller patches?
 
-  FWIW I'm really interested into such a "thing", and that I'd like to
-avoid giving unix (even with git-shell, not only because of security,
-but because it pollutes the machine setup a lot) accounts to my git
-servers, though would like to let people help in my Debian packaging.
-Fors us GPG isn't an issue, as every single DD or wannabe has a GPG key
-:)
+Thanks.
 
-  Note though that the fact that you need to push a dummy tag is somehow
-disgusting IMHO, it should at least be integrated into git-push so that
-the user doesn't have to generate the dummy tag himself.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---LpQ9ahxlCli8rRTG
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHnZbevGr7W6HudhwRAnN/AKCQsCQYQgYxYund0ZreLorFV3jHbACffQ4Y
-OKgn0oV1KYrv6j3i236bSxQ=
-=MYbd
------END PGP SIGNATURE-----
-
---LpQ9ahxlCli8rRTG--
+Ciao,
+-- 
+Paolo
+http://paolo.ciarrocchi.googlepages.com/
