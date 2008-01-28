@@ -1,53 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-revert is a memory hog
-Date: Mon, 28 Jan 2008 01:01:49 -0500
-Message-ID: <20080128060149.GB13521@coredump.intra.peff.net>
-References: <20080127172748.GD2558@does.not.exist> <20080127173808.GX24004@spearce.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/2] Documentation: config: add "browser.<tool>.path".
+Date: Mon, 28 Jan 2008 08:02:23 +0100
+Message-ID: <20080128080223.de8a67d2.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Adrian Bunk <bunk@kernel.org>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jan 28 07:02:25 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>, Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Jan 28 07:57:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJN4Z-0001nx-Om
-	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 07:02:24 +0100
+	id 1JJNvU-0004HS-LX
+	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 07:57:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751006AbYA1GBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 01:01:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750959AbYA1GBx
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 01:01:53 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4146 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750976AbYA1GBw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 01:01:52 -0500
-Received: (qmail 24442 invoked by uid 111); 28 Jan 2008 06:01:51 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 28 Jan 2008 01:01:51 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Jan 2008 01:01:49 -0500
-Content-Disposition: inline
-In-Reply-To: <20080127173808.GX24004@spearce.org>
+	id S1751474AbYA1G4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 01:56:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751344AbYA1G4W
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 01:56:22 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:50810 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751285AbYA1G4V (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 01:56:21 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id B4E191AB2EB;
+	Mon, 28 Jan 2008 07:56:19 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 092B91AB2E2;
+	Mon, 28 Jan 2008 07:56:18 +0100 (CET)
+X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71852>
 
-On Sun, Jan 27, 2008 at 12:38:08PM -0500, Shawn O. Pearce wrote:
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ Documentation/config.txt |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-> >   git-show d19fbe8a7 | patch -p1 -R
-> 
-> Its more like:
-> 
-> 	git-diff-tree -M d19fbe8a7^ d19fbe8a7 | git-apply -R --index
-> 
-> In other words its doing rename detection.  Its possible that the
-> rename detector fired for added/removed paths and it took some
-> significant amount of memory to figure out what was renamed.
-
-It's doubtful. There are only two files in that diff, and neither is a
-candidate for rename detection.
-
--Peff
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 877eda9..c2fedd1 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -367,6 +367,10 @@ branch.<name>.rebase::
+ 	it unless you understand the implications (see linkgit:git-rebase[1]
+ 	for details).
+ 
++browser.<tool>.path::
++	Override the path for the given tool that may be used to
++	browse help. See linkgit:git-help[1].
++
+ clean.requireForce::
+ 	A boolean to make git-clean do nothing unless given -f
+ 	or -n.   Defaults to true.
+-- 
+1.5.4.rc4.16.g1009
