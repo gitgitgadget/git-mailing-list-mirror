@@ -1,77 +1,92 @@
-From: "Sebastian Schuberth" <sschuberth@gmail.com>
-Subject: Re: git merge with tkdiff fails (extra operand)
-Date: Mon, 28 Jan 2008 15:37:23 +0100
-Message-ID: <bdca99240801280637s1e90f182tc02026501c23a4da@mail.gmail.com>
-References: <fnk90t$gkq$1@ger.gmane.org>
-	 <alpine.LSU.1.00.0801281309240.23907@racer.site>
-	 <bdca99240801280605i55f3df00na0eea23488d26e17@mail.gmail.com>
-	 <alpine.LSU.1.00.0801281423390.23907@racer.site>
+From: Asheesh Laroia <asheesh@asheesh.org>
+Subject: Re: [RFC] Secure central repositories by UNIX socket
+ authentication
+Date: Mon, 28 Jan 2008 09:23:51 -0500 (EST)
+Message-ID: <alpine.DEB.1.00.0801280922160.3774@alchemy.localdomain>
+References: <20080127103934.GA2735@spearce.org> <7vsl0ix4gh.fsf@gitster.siamese.dyndns.org> <20080128004722.GZ24004@spearce.org> <7vabmqwgvt.fsf@gitster.siamese.dyndns.org> <20080128075125.GC24004@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 28 15:38:09 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jan 28 15:55:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJV7Y-0003Pw-2w
-	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 15:38:00 +0100
+	id 1JJVNk-0000jv-2H
+	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 15:54:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753605AbYA1Oh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 09:37:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753568AbYA1Oh0
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 09:37:26 -0500
-Received: from hs-out-0708.google.com ([64.233.178.250]:43665 "EHLO
-	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752831AbYA1OhZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 09:37:25 -0500
-Received: by hs-out-2122.google.com with SMTP id 54so1574878hsz.5
-        for <git@vger.kernel.org>; Mon, 28 Jan 2008 06:37:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=I6HiGblA7cIZI25O05wfYyMzM1uaxafxMJJdp4auuSQ=;
-        b=FRYpYDfnYLqyYiaJVvYDVNEtJef8S5/lNUyD9L7w4VlKAjnnzKPWZKtrhJvuLDIn13J+DCvUFCpOKJeuzoUsXXaNnv/U0rO7k8vf9cJPpE4k4sjBmC259jfC3Hp0oRIyYk2effEL/75Do3ou2OtUo9beOzXkJGgpxF8Ca4DMAV4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NkrfHo4r5fGaDg3uJXwNNBFerxnXbTATTyQelQdE08tpXJtmKbBVGJe21eimLeH+HHYuuDwjEt/60WEpBWJSL/0Xk2NtVtAhbfUNJiguCE4weDn5tHmuS7hQkyqZZT+nN6nGJR9UvF9pCSE0aPqaCaU6IbzjiAwn5VmtjoQM9Mo=
-Received: by 10.141.132.8 with SMTP id j8mr3489215rvn.7.1201531043339;
-        Mon, 28 Jan 2008 06:37:23 -0800 (PST)
-Received: by 10.140.134.7 with HTTP; Mon, 28 Jan 2008 06:37:23 -0800 (PST)
-In-Reply-To: <alpine.LSU.1.00.0801281423390.23907@racer.site>
-Content-Disposition: inline
+	id S1752831AbYA1OyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 09:54:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753193AbYA1OyE
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 09:54:04 -0500
+Received: from wide-rose.makesad.us ([203.178.130.147]:37888 "EHLO
+	rose.makesad.us" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751730AbYA1OyB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 09:54:01 -0500
+X-Greylist: delayed 1803 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Jan 2008 09:54:01 EST
+Received: from alchemy (localhost [127.0.0.1])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by rose.makesad.us (Postfix) with ESMTP id 2E25B34D062;
+	Mon, 28 Jan 2008 09:23:56 -0500 (EST)
+Received: from localhost (localhost [127.0.0.1])
+	by alchemy (Postfix) with ESMTP id E5A396EACF;
+	Mon, 28 Jan 2008 09:23:51 -0500 (EST)
+X-X-Sender: paulproteus@alchemy.localdomain
+In-Reply-To: <20080128075125.GC24004@spearce.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71891>
 
-> > > It seems that tkdiff calls diff with arguments that diff does not like.
-> > > What version of tkdiff do you use?
-> >
-> > I'm running TkDiff 4.0.2 (and "diff (GNU diffutils) 2.8.7").
-> >
-> > > P.S.: to make sure that it is tkdiff, I would search for this line in
-> > > tkdiff:
-> > >
-> > >         set g(debug) f
-> > >
-> > > and change the "f" to "t".
-> >
-> > I cannot find this line in my version of tkdiff ... in fact, the
-> > string "debug" does not occur anywhere in the file.
->
-> Ah, I was looking at the latest and greatest: 4.1.3.  You can, too:
->
-> http://tkdiff.cvs.sourceforge.net/tkdiff/src/tkdiff?revision=1.48&view=markup
+On Mon, 28 Jan 2008, Shawn O. Pearce wrote:
 
-Thanks, with that version it works for me (the link actually downloads
-version 4.1.4 currently). Maybe the minimum version of TkDiff should
-be listed as a prerequisite, or "git mergetool" should be enhanced to
-support older versions, too.
+> Junio C Hamano <gitster@pobox.com> wrote:
+>> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>>
+>>> Hmm.  core.sharedrepository is sometimes a bad solution.
+>>>
+>>> core.sharedrepository means I need to give write access to both the 
+>>> refs database and the object database to all members of the project. 
+>>> Some of whom may not be able to be trusted with tools like "rm", but 
+>>> who need real shell access to that system anyway.  And sometimes 
+>>> management won't allow users to have two accounts on the same system 
+>>> (one that is fixed to git-shell, and one that has a real shell) 
+>>> because the world would implode if a user was given two different 
+>>> accounts for two different access purposes.
+>>
+>> Ok, that was the motiviation I did not get from your original message. 
+>> It begins to make sense somewhat.
+>>
+>> Another approach to do the same I can think of, without having to add 
+>> 50 new accounts for 50 users, would be to collect a ssh key from each 
+>> of these 50 users, and have 1 line per user in the authorized_keys file 
+>> of gitadmin.gitadmin user (who owns the repository with the paranoia 
+>> hook that decides the authorization aspect of the repository).  The 
+>> authentication would come from the environment="Name=value" option in 
+>> the authorized_keys file. Each of your aunt tillies can push or fetch 
+>> over ssh using the key she has in the gitadmin.gitadmin's 
+>> authorized_keys file.
+>
+> Yea.  The downside to this is we have to maintain that authorized_keys 
+> file.  Today each user can generate their own SSH key and upload to 
+> their own authorized_keys file.
+>
+> I've had enough cases of users losing their SSH key and needing to 
+> recreate it that I'd rather not have to manage a 50 user long 
+> authorized_keys file.
+
+For what it's worth, if you haven't seen gitosis yet, you might want to 
+take a look - at least it makes managing the keys easy. 
+http://scie.nti.st/2007/11/14/hosting-git-repositories-the-easy-and-secure-way 
+has a nice tutorial.
+
+-- Asheesh.
 
 -- 
-Sebastian Schuberth
+He who despairs over an event is a coward, but he who holds hopes for
+the human condition is a fool.
+ 		-- Albert Camus
