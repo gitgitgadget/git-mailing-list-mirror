@@ -1,78 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: "git add" and absolute paths
-Date: Mon, 28 Jan 2008 05:08:44 -0800 (PST)
-Message-ID: <m33asi9jxp.fsf@localhost.localdomain>
-References: <916BAC14-A5E4-4666-A29E-2CDF114DCD87@wincent.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git merge with tkdiff fails (extra operand)
+Date: Mon, 28 Jan 2008 13:13:17 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801281309240.23907@racer.site>
+References: <fnk90t$gkq$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git mailing list <git@vger.kernel.org>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 14:09:30 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 14:14:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJTjn-0007L2-MZ
-	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 14:09:24 +0100
+	id 1JJToO-0000Tq-1u
+	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 14:14:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759428AbYA1NIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 08:08:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759129AbYA1NIt
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 08:08:49 -0500
-Received: from fg-out-1718.google.com ([72.14.220.158]:17295 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758654AbYA1NIr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 08:08:47 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so1702727fga.17
-        for <git@vger.kernel.org>; Mon, 28 Jan 2008 05:08:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=b4ZtEdeLY+bgcOihQ2ZP7JvlakXKIb/6GCmYxLds4jU=;
-        b=QMdSe+cdSuiEqnvixmzrb0OLCs/Tlq/hjjkiwvdjamkEZyvGFh6f8uS93U4RaFreDv55zmvmOt/balPHl0FmK9NQmKWencRO/65jQ8pu2pr97t9mRjkgNmyMxScq4wbJ0hNmN3+InbsZY7XmIe0Xxm0Y01XysH5c9/PN5yt++ZU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=Eu36vc3/IJoZb6ozBH+7oSg4d6LWS2IJBpf62gcF9WyXHN+Dophpwn2d36Lf3WiayM4pjqrAJEmoD+D47a+NkFIIGBG0Y2eS51jsd7IfCwCh8qwD8msvFVvNDYEHZFiU/MkeVOkpwdcsgYvWpJZJwc/XqFx8mSmYWxjMsV9PY5w=
-Received: by 10.82.161.19 with SMTP id j19mr9704881bue.25.1201525725680;
-        Mon, 28 Jan 2008 05:08:45 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.198.108])
-        by mx.google.com with ESMTPS id t2sm7029515gve.3.2008.01.28.05.08.42
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 Jan 2008 05:08:44 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m0SD8aRH018086;
-	Mon, 28 Jan 2008 14:08:37 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m0SD8YTn018083;
-	Mon, 28 Jan 2008 14:08:34 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <916BAC14-A5E4-4666-A29E-2CDF114DCD87@wincent.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1755481AbYA1NNh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 08:13:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755542AbYA1NNh
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 08:13:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53219 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755222AbYA1NNg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 08:13:36 -0500
+Received: (qmail invoked by alias); 28 Jan 2008 13:13:34 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp048) with SMTP; 28 Jan 2008 14:13:34 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18M1tl4dUcMMhz3GwPYCCR2EojdE7NJmLyED77wIV
+	Auiv2R/H9zNpP/
+X-X-Sender: gene099@racer.site
+In-Reply-To: <fnk90t$gkq$1@ger.gmane.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71887>
 
-Wincent Colaiuta <win@wincent.com> writes:
+Hi,
 
-> I was somewhat surprised the other day to see that you can't pass
-> absolute paths to "git add":
->
-[cut] 
+On Mon, 28 Jan 2008, Sebastian Schuberth wrote:
+
+> I'm running Git 1.5.3.7 under SuSE 10.0. After pulling and getting a 
+> merge conflict, "git mergetool" by default is configured to run tkdiff. 
+> Unfortunately, tkdiff starts with an error:
 > 
-> I understand that you can't add arbitrary paths outside of your
-> worktree, but if the absolute path specifies something _inside_ your
-> worktree then it seems that this is either a bug or a "usability
-> shortcoming" if you prefer to avoid the term "bug".
+> diff failed:
+> diff: extra operand
+> `Amira/QxViewer.cpp.REMOTE.28414`
+> diff: Try diff --help for more information.
+> 
+> I'm not sure whether the error is with the tkdiff integration into Git, 
+> or with tkdiff itself (as it refers to the help for "diff").
 
-If I remember correctly this issue was discussed on git mailing list,
-and I guess there were even some patches implementing that, but I
-don't know what happened iwth them: freeze persiod, troubles with
-Cygwin (MS Windows), or what...
+It seems that tkdiff calls diff with arguments that diff does not like.  
+What version of tkdiff do you use?
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Ciao,
+Dscho
+
+P.S.: to make sure that it is tkdiff, I would search for this line in 
+tkdiff:
+
+	set g(debug) f
+
+and change the "f" to "t".
