@@ -1,67 +1,73 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Is there a reason to keep walker.c ?
-Date: Mon, 28 Jan 2008 08:17:49 +0100
-Organization: glandium.org
-Message-ID: <20080128071749.GA12488@glandium.org>
-References: <20080127204535.GA4702@glandium.org> <alpine.LNX.1.00.0801271603280.13593@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Secure central repositories by UNIX socket authentication
+Date: Sun, 27 Jan 2008 23:25:58 -0800
+Message-ID: <7vabmqwgvt.fsf@gitster.siamese.dyndns.org>
+References: <20080127103934.GA2735@spearce.org>
+	<7vsl0ix4gh.fsf@gitster.siamese.dyndns.org>
+	<20080128004722.GZ24004@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Jan 28 08:16:02 2008
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jan 28 08:26:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJODq-0007r2-1G
-	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 08:16:02 +0100
+	id 1JJOOM-0001pE-6k
+	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 08:26:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751499AbYA1HPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 02:15:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750980AbYA1HPc
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 02:15:32 -0500
-Received: from vuizook.err.no ([85.19.215.103]:53504 "EHLO vuizook.err.no"
+	id S1751556AbYA1H0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 02:26:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750776AbYA1H0H
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 02:26:07 -0500
+Received: from rune.pobox.com ([208.210.124.79]:39428 "EHLO rune.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750780AbYA1HPb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 02:15:31 -0500
-Received: from aputeaux-153-1-85-206.w86-205.abo.wanadoo.fr ([86.205.43.206] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1JJODj-000881-0J; Mon, 28 Jan 2008 08:16:01 +0100
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1JJOFZ-0003SR-Dw; Mon, 28 Jan 2008 08:17:49 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.1.00.0801271603280.13593@iabervon.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-Spam-Status: (score 2.2): No, score=2.2 required=5.0 tests=RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
+	id S1751149AbYA1H0G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 02:26:06 -0500
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id 9AF3918E283;
+	Mon, 28 Jan 2008 02:26:26 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 3217B18E281;
+	Mon, 28 Jan 2008 02:26:22 -0500 (EST)
+In-Reply-To: <20080128004722.GZ24004@spearce.org> (Shawn O. Pearce's message
+	of "Sun, 27 Jan 2008 19:47:22 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71856>
 
-On Sun, Jan 27, 2008 at 04:23:17PM -0500, Daniel Barkalow wrote:
-> On Sun, 27 Jan 2008, Mike Hommey wrote:
-> 
-> > Hi,
-> > 
-> > While working on the http code refactoring, I got to wonder if the
-> > walker.c "wrapper", that is only used for the http transport, is still
-> > worth keeping. If there are plans for others transport to use this code,
-> > obviously, it would be worth keeping, but on the contrary, I think it
-> > would simplify the http transport code even more. What do you think ?
-> 
-> It would be a good base for sftp (i.e. dumb file access over ssh). In 
-> fact, I think stuff should ideally be moved into walker.c such that the 
-> HTTP-specific code just handles access to files by filename and the logic 
-> of what files to request in what order is in walker.c. I think this would 
-> get the simplification you're looking for while making it easy to add sftp 
-> or any other situation where you have only slow remote filesystem-like 
-> access to the repository.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-I like this idea. I'll probably implement that, then.
+> Hmm.  core.sharedrepository is sometimes a bad solution.
+>
+> core.sharedrepository means I need to give write access to both the
+> refs database and the object database to all members of the project.
+> Some of whom may not be able to be trusted with tools like "rm",
+> but who need real shell access to that system anyway.  And sometimes
+> management won't allow users to have two accounts on the same system
+> (one that is fixed to git-shell, and one that has a real shell)
+> because the world would implode if a user was given two different
+> accounts for two different access purposes.
 
-Mike
+Ok, that was the motiviation I did not get from your original
+message.  It begins to make sense somewhat.
+
+Another approach to do the same I can think of, without having
+to add 50 new accounts for 50 users, would be to collect a ssh
+key from each of these 50 users, and have 1 line per user in the
+authorized_keys file of gitadmin.gitadmin user (who owns the
+repository with the paranoia hook that decides the authorization
+aspect of the repository).  The authentication would come from
+the environment="Name=value" option in the authorized_keys file.
+Each of your aunt tillies can push or fetch over ssh using the
+key she has in the gitadmin.gitadmin's authorized_keys file.
+
+I suspect the "hackiness" factor from the aesthetics viewpoint
+is probably about the same, but this would work with the current
+code without patches, no?
