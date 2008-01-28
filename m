@@ -1,246 +1,104 @@
-From: Boaz Harrosh <bharrosh@panasas.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: How to split a patch
-Date: Mon, 28 Jan 2008 12:37:59 +0200
-Message-ID: <479DB087.30405@panasas.com>
-References: <4d8e3fd30801280105g2876cedfjbe1ba323ede57e0a@mail.gmail.com>	 <7vhcgyuwsx.fsf@gitster.siamese.dyndns.org> <4d8e3fd30801280132k59676921h272addab6cac6899@mail.gmail.com>
+Date: Mon, 28 Jan 2008 02:40:38 -0800
+Message-ID: <7vr6g2teqh.fsf@gitster.siamese.dyndns.org>
+References: <4d8e3fd30801280105g2876cedfjbe1ba323ede57e0a@mail.gmail.com>
+	<7vhcgyuwsx.fsf@gitster.siamese.dyndns.org>
+	<4d8e3fd30801280132k59676921h272addab6cac6899@mail.gmail.com>
+	<vpqfxwi5ljf.fsf@bauges.imag.fr>
+	<7vy7aatfck.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------000008000607080002000107"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	git mailing list <git@vger.kernel.org>
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 11:38:55 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"git mailing list" <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Jan 28 11:41:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJRO9-0003JU-UT
-	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 11:38:54 +0100
+	id 1JJRQr-00044b-6c
+	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 11:41:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752774AbYA1KiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 05:38:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752596AbYA1KiW
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 05:38:22 -0500
-Received: from bzq-219-195-70.pop.bezeqint.net ([62.219.195.70]:47966 "EHLO
-	bh-buildlin2.bhalevy.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752571AbYA1KiV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 05:38:21 -0500
-Received: from bh-buildlin2.bhalevy.com (localhost.localdomain [127.0.0.1])
-	by bh-buildlin2.bhalevy.com (8.14.1/8.14.1) with ESMTP id m0SAbxtE005554;
-	Mon, 28 Jan 2008 12:38:00 +0200
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <4d8e3fd30801280132k59676921h272addab6cac6899@mail.gmail.com>
+	id S1756921AbYA1Kky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 05:40:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755630AbYA1Kkx
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 05:40:53 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57052 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756597AbYA1Kkv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 05:40:51 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A8F8160C;
+	Mon, 28 Jan 2008 05:40:50 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DE15E160A;
+	Mon, 28 Jan 2008 05:40:44 -0500 (EST)
+In-Reply-To: <7vy7aatfck.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 28 Jan 2008 02:27:23 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71875>
 
-This is a multi-part message in MIME format.
---------------000008000607080002000107
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Mon, Jan 28 2008 at 11:32 +0200, "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com> wrote:
-> On Jan 28, 2008 10:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com> writes:
->>
->>> I know ho to do the opposite process, rebase -i and squash is something
->>> I'm really used to do but this time that trick is not going to help me.
->>>
->>> What is the preferred way to split a big patch in a series of
->>> smaller patches?
->>
->> I personally found the procedure described there a bit on the
->> sketchy side, but does "SPLITTING COMMITS" section of git-rebase
->> manual help?
+> Yes, and you can do the same with "git add -i".  These tools are
+> not quite nice, as they encourage a wrong workflow of committing
+> what you haven't had as a whole in the work tree.  By
+> definition, you are making untested commits between your base
+> commit (that presumably was tested well) and your final commit
+> (that would also be tested well).
+> ...
+> There is no such tool yet, though.
 > 
-> Yes it helps but I still wonder whether thereis a "simpler" way to achive that.
-> Is it possible to split a patch selecting the hunk in git gui or any
-> other graphical
-> tool?
-> 
-> That would be a good starting point for a newbie (like me).
-> 
-> Thanks!
-> 
-> Ciao,
-What I do is edit the patch, let me explain.
-- I create a new branch based at the base of the big patch. Now
-  I have the original branch for reference. Lets say the original
-  branch is called ALL, and this new branch SPLIT. and BASE is the base.
-- # git-checkout -b SPLIT BASE
-- # git-diff -R ALL >edit-the-patch-001.patch
-- now I open the patch file with an editor. I use kwrite because of
-  the good color highlighting.
-- I remove all the hunks that I don't need, and am left with only the
-  parts that I want to be in the first patch.
-- I save the patch.
-- If at the edit stage I have changed a big hunk and only used part
-  of it I need to run fixpatch script attached below. If I only removed
-  complete hunks then I'm good to go.
-- I now use:
-  # patch -p 1 < edit-the-patch-001.patch
-- # git-commit -a
-- and git-commit --amend until the first patch is good
-- now do the 
-  # git-diff -R ALL >edit-the-patch-002.patch
-  and so on until there is nothing left. It is nice how
-  every time it gets smaller and smaller.
+> The splitting you can do with "rebase -i" instead walks
+> forwards.  That also lets you test before you make commits in
+> each step.
 
-[fixpatch command line]
-usage: fixpatch inputfile outputfile
-what I do is just
-# fixpatch edit-the-patch-001.patch{,}
+Having said all that, what I tend to do in practice is something
+like this:
 
-Boaz
+ (1) Prepare a perfect state (i.e. what to become the final
+     commit in the series) in work tree.  Make a commit.  Let's
+     say I was working on 'master' branch.
 
+ (2) Checkout the state before the series.  If I currently have
+     a three commit series that I want to split further, that
+     would be HEAD~3.  If I just made a huge change without
+     making intermediate commits, that would be HEAD~1:
 
---------------000008000607080002000107
-Content-Type: text/plain;
- name="fixpatch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="fixpatch"
+     $ git checkout HEAD~3
 
-#!/bin/sh
+ (3) Get the final state in the work tree, to decide what to put
+     in and what to omit from the first in the series:
 
-src="$1"
-dest="$2"
-tmp=/tmp/`basename $0`.tmp.$$
+     $ git diff -R master | git apply --index
 
-if [ -z "$dest" ]; then
-	dest="/dev/fd/1"
-elif [ "$src" == "$dest" ]; then
-	cp "$src" "$src.orig" || exit 1
-fi
+ (4) Use "git-add -i" to prepare what I want in the first
+     commit.
 
-awk '
-function dump_hunk()
-{
-	if (!hunk) {
-		return;
-	}
+     $ git add -i
 
-	if (!hsrc_line)
-		foffset = 1;
+ (5) When the index is in a good shape, drop all other changes
+     from the work tree.  This is what I thought would be a good
+     first commit:
 
-#	if (hsuffix !~ /\n$/) {
-#		hsuffix = hsuffix "\n";
-#	}
-	printf("@@ -%d,%d +%d,%d %s\n", -hsrc_line, hsrc_count,
-		-hsrc_line + foffset, hdest_count, hsuffix);
+     $ git diff -R | git apply
 
-	if (hunchanged + hdel + hadd != hlines) {
-		fflush();
-		printf("%s %d: Warning: Unchanged %d deleted %d added %d != lines %d\n",
-			FILENAME, FNR, hunchanged, hdel, hadd, hlines) > "/dev/stderr";
-	}
+ (6) Test it.  Make corrections.  Perfect it.  Then commit.
 
-	if (hunchanged + hdel != hsrc_count) {
-		fflush();
-		printf("%s %d: Warning: Unchanged %d deleted %d != hsrc_count %d\n",
-			FILENAME, FNR, hunchanged, hdel, hsrc_count) > "/dev/stderr";
-	}
+     $ git commit
 
-	if (hunchanged + hadd != hdest_count) {
-		fflush();
-		printf("%s %d: Warning: Unchanged %d added %d != hdest_count %d\n",
-			FILENAME, FNR, hunchanged, hadd, hdest_count) > "/dev/stderr";
-	}
+ (7) Go back to step (3), until the commit that I make in step
+     (6) matches 'master'.
 
-	for (i = 0; i < hlines; i++) {
-		print hline[i];
-		delete hline[i];
-	}
+ (8) Reset 'master' with HEAD:
 
-	foffset += hdest_count - hsrc_count;
-	hsrc_line = 0;
-	hsrc_count = 0;
-	hdest_line = 0;
-	hdest_count = 0;
-	hsuffix = "";
-
-	hunchanged = hadd = hdel = 0;
-	hlines = 0;
-	hunk = 0;
-}
-
-/^(diff|====)/ {
-	dump_hunk();
-	print;
-	foffset = 0;
-	next;
-}
-
-/^@@/ {
-	dump_hunk();
-	n = split($2, a, /,/);
-	hsrc_line = a[1]+0;
-	hsrc_oldcount = a[2]+0;
-	hsrc_count = 0;
-	if (n != 2 || hsrc_line > 0 || hsrc_oldcount < 0) {
-		fflush();
-		printf("%s %d: Error: Corrupt hunk header (n %d hsrc_line %d hsrc_oldcount %d)\n",
-			FILENAME, FNR, n, hsrc_line, hsrc_count) > "/dev/stderr";
-	}
-
-	n = split($3, a, /,/);
-	hdest_line = a[1]+0;
-	hdest_oldcount = a[2]+0;
-	hdest_count = 0;
-	if (n != 2 || hdest_line < 0 || hdest_oldcount < 0) {
-		fflush();
-		printf("%s %d: Error: Corrupt hunk header (hdest_line %d hdest_oldcount %d)\n",
-			FILENAME, FNR, hdest_line, hdest_oldcount) > "/dev/stderr";
-	}
-
-	hsuffix = $0;
-	sub(/^@@.*@@/, "@@", hsuffix);
-
-	hlines = 0;
-	hunk = 1;
-	next;
-}
-
-(!hunk) || /^#/ {
-	print;
-	next;
-}
-
-/^-/ {
-	hdel++;
-	hsrc_count++;
-}
-
-/^+/ {
-	hadd++;
-	hdest_count++;
-}
-
-/^ / {
-	hunchanged++;
-	hsrc_count++;
-	hdest_count++;
-}
-
-/^$/ || /^[^-+ ]/ {
-	fflush();
-	printf("%s %d: Warning: badly formatted line\n",
-		FILENAME, FNR) > "/dev/stderr";
-	exit(255);
-##	hadd++;
-##	hdest_count++;
-#	next;
-}
-
-{
-	hline[hlines++] = $0;
-}
-
-END {
-	dump_hunk()
-}
-' "$src" > "$tmp" && mv "$tmp" "$dest"
-
---------------000008000607080002000107--
+    $ git branch -f master HEAD
+    $ git checkout master
