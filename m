@@ -1,113 +1,121 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] filter-branch.sh: remove temporary directory on failure
-Date: Mon, 28 Jan 2008 15:16:02 -0600
-Message-ID: <479E4612.6030006@nrlssc.navy.mil>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH] config.c: Expand $HOME and tilde character in core.excludesfile
+Date: Mon, 28 Jan 2008 23:49:05 +0200
+Organization: Private
+Message-ID: <y7a9aaem.fsf@blue.sea.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 22:17:23 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 28 22:51:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJbLv-0005QF-LJ
-	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 22:17:16 +0100
+	id 1JJbsZ-0000gO-TD
+	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 22:51:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752549AbYA1VQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 16:16:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752633AbYA1VQm
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 16:16:42 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:47402 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751690AbYA1VQl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 16:16:41 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0SLG3RJ015860;
-	Mon, 28 Jan 2008 15:16:03 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 28 Jan 2008 15:16:03 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-X-OriginalArrivalTime: 28 Jan 2008 21:16:03.0018 (UTC) FILETIME=[FCBB6AA0:01C861F2]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15694001
-X-TM-AS-Result: : Yes--9.938600-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjQzLTcwMDE2MC0xMzk1?=
-	=?us-ascii?B?MDQtMTA2NDIwLTEzNjA3MC03MDA4NDktNzAzODAyLTcwMzc4OC03?=
-	=?us-ascii?B?MDE0NTUtNzAzNzQ3LTcwMzA5Ni03MDA3NTYtNzAzNzEyLTcwMjcz?=
-	=?us-ascii?B?Ny03MDc0NTEtMTIxNTM0LTcwMDQ3Ni0xMDYyMzAtNzAyMDUwLTcw?=
-	=?us-ascii?B?ODE3OS0xMjEyNzAtNzA0NzE0LTcwMTI0OS03MDIwNDQtNzA3ODAw?=
-	=?us-ascii?B?LTcwNzY1NC03MDc3NTAtMTg4MTIxLTE4ODAxOS0xMjE2MjQtNzA1?=
-	=?us-ascii?B?Mzg4LTcwMDk3MS03MDA5NzAtNzA5ODU5LTE0ODAzOS0xNDgwNTE=?=
+	id S1762275AbYA1Vts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 16:49:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754991AbYA1Vts
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 16:49:48 -0500
+Received: from main.gmane.org ([80.91.229.2]:33986 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754745AbYA1Vtq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 16:49:46 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JJbrH-0003UE-JJ
+	for git@vger.kernel.org; Mon, 28 Jan 2008 21:49:39 +0000
+Received: from a91-155-188-244.elisa-laajakaista.fi ([91.155.188.244])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 28 Jan 2008 21:49:39 +0000
+Received: from jari.aalto by a91-155-188-244.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 28 Jan 2008 21:49:39 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-188-244.elisa-laajakaista.fi
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
+Cancel-Lock: sha1:Lk8rdEKBwNSsqVwNteNZO11ewSg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71902>
 
-From: Brandon Casey <casey@nrlssc.navy.mil>
+c* str_replace(): New function. Generic replace command.
+* str_replace_home(): New funtion. Substitute $HOME and tilde(~) in string.
+* git_default_config(): Pass core.excludesfile to str_replace_home().
 
-One of the first things filter-branch does is to create a temporary
-directory. This directory is eventually removed by the script during
-normal operation, but is not removed if the script encounters an error.
-
-Set a trap to remove it when the script terminates for any reason.
-
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+Signed-off-by: Jari Aalto <jari.aalto AT cante.net>
 ---
 
+ From ac6941f5055b2acdded59627d228bbf03ba0d9fc
 
-Even though this directory may be useful for debugging when you encounter
-a problem, I wonder if the normal "error" will be _user_ error. In which
-case the user will adjust the command line parameters and try to rerun.
-Currently the user would then receive the message
+ config.c |   44 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 43 insertions(+), 1 deletions(-)
 
-     "$tempdir already exists, please remove it"
-
-Then, rm -rf the tempdir, then rerun.
-
-Is this necessary? Maybe anyone with the know-how to debug would also have the
-know-how to comment out the 'trap' in the script (or direct someone asking for
-help on the mailing list to do so).
-
-If we really want to leave this temporary directory around on failure, maybe
-we can at least remove it for some simple errors like:
-
-    line 198: die "Namespace $orig_namespace not empty"
-    line 217: die "Which ref do you want to rewrite?"
-    etc.
-
-by moving the 'trap - 0' higher up.
-
--brandon
-
-
- git-filter-branch.sh |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index ebf05ca..75970a9 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -189,6 +189,9 @@ cd "$tempdir/t" &&
- workdir="$(pwd)" ||
- die ""
+diff --git a/config.c b/config.c
+index 526a3f4..7c91689 100644
+--- a/config.c
++++ b/config.c
+@@ -309,6 +309,46 @@ int git_config_bool(const char *name, const char *value)
+ 	return git_config_int(name, value) != 0;
+ }
  
-+# Remove tempdir on exit
-+trap 'cd ../..; rm -rf "$tempdir"' 0
++char *str_replace(const char *str, const char *find, const char *replace)
++{
++        int maxlen   = strlen(str) + strlen(replace) + 1;
++        char *start  = strstr(str, find);
++        char *ptr    = (char *)malloc(maxlen);
++        int len      = strlen(find);
++        int llen, rlen;         /* left, right portion length */
 +
- # Make sure refs/original is empty
- git for-each-ref > "$tempdir"/backup-refs
- while read sha1 type name
-@@ -406,6 +409,8 @@ fi
- cd ../..
- rm -rf "$tempdir"
++        if (start == (char *)NULL) {
++                strcpy( ptr, str);
++        }
++        else{
++                rlen = strlen(start) - strlen(find);
++                llen = strlen(str) - strlen(start);
++                strncpy( ptr, str, llen);
++                strcat( ptr, replace);
++                strncat( ptr, start + len, rlen); /* Does not add  '\0' */
++                strcat( ptr, "");   /* Terminate with null string */
++        }
++
++        return ptr;
++}
++
++char *str_replace_home(const char *str)
++{
++        char *ret  = xstrdup(str);
++        char *home = getenv("HOME");
++
++        if (home != (char *)NULL ) {
++                if (strstr(str, "~") != NULL) {
++                        ret = str_replace(str, "~", home);
++                }
++                else if (strstr(str, "$HOME") != NULL) {
++                        ret = str_replace(str, "$HOME", home);
++                }
++        }
++
++        return ret;
++}
++
+ int git_default_config(const char *var, const char *value)
+ {
+ 	/* This needs a better name */
+@@ -447,7 +487,9 @@ int git_default_config(const char *var, const char *value)
+ 		if (!value)
+ 			die("core.excludesfile without value");
+ 		excludes_file = xstrdup(value);
+-		return 0;
++                /* expand $HOME and tilde(~) */
++                excludes_file = str_replace_home(excludes_file);
++                return 0;
+ 	}
  
-+trap - 0
-+
- unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE
- test -z "$ORIG_GIT_DIR" || GIT_DIR="$ORIG_GIT_DIR" && export GIT_DIR
- test -z "$ORIG_GIT_WORK_TREE" || GIT_WORK_TREE="$ORIG_GIT_WORK_TREE" &&
+ 	if (!strcmp(var, "core.whitespace")) {
 -- 
-1.5.4.rc5.2.g9a6d-dirty
+1.5.4-rc3.GIT
