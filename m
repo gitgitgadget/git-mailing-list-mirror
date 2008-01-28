@@ -1,77 +1,70 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [RFC] Secure central repositories by UNIX socket authentication
-Date: Mon, 28 Jan 2008 11:14:27 +0300
-Message-ID: <20080128081427.GP26664@dpotapov.dyndns.org>
-References: <20080127103934.GA2735@spearce.org> <alpine.LSU.1.00.0801271402330.23907@racer.site> <20080127173212.GW24004@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix off by one error in prep_exclude.
+Date: Mon, 28 Jan 2008 00:46:39 -0800
+Message-ID: <7vprvmuykw.fsf@gitster.siamese.dyndns.org>
+References: <47975FE6.4050709@viscovery.net>
+	<1201463731-1963-1-git-send-email-shawn.bohrer@gmail.com>
+	<alpine.LSU.1.00.0801272043040.23907@racer.site>
+	<7v3asiyk2i.fsf@gitster.siamese.dyndns.org>
+	<20080128003404.GA18276@lintop>
+	<7vodb6wtix.fsf@gitster.siamese.dyndns.org>
+	<479D805E.3000209@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc: Shawn Bohrer <shawn.bohrer@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jan 28 09:15:04 2008
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Jan 28 09:47:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJP8w-0004qe-ND
-	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 09:15:03 +0100
+	id 1JJPeZ-00049C-6T
+	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 09:47:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751825AbYA1IOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 03:14:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752098AbYA1IOc
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 03:14:32 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:30160 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751695AbYA1IOb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 03:14:31 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so1621781fga.17
-        for <git@vger.kernel.org>; Mon, 28 Jan 2008 00:14:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=nTvw5pgcu+swtHcz2eGMJ+WOsRZJ+0kz+IEPS1tRVnk=;
-        b=ZEYpkl4ypLN8LKERDBJ2Tw73E41wO7o+JVXYJTztweLHbl+OhTn9vGSOwG6JCEtU15PYtvtdt4h1r6kIMqJYFkhyb1CHXcK/h7Rk2EpuKOWc09/3fkWlG/9KHdLYKAKBqGiT1V3Zwv2d04SYCgp2aq70f5AcyBl9nETec3rIQgE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=Kk7DLqk3DJ2TS5CIirwUAzT7ooy6hj7I4SEA8Jd+n6M5xlX0mVqObMx/qLLRYfbvy0H6QbHhSZhjPLuxfAq1vwyJFi0lNmks1UYb8PAmpD9651xgNasIeZtcvYIuTHss16/IDL6qW75NhIENecXo3RRsVq87lU8keb0jyl8uqrY=
-Received: by 10.86.62.3 with SMTP id k3mr4962776fga.24.1201508070782;
-        Mon, 28 Jan 2008 00:14:30 -0800 (PST)
-Received: from localhost ( [85.141.188.213])
-        by mx.google.com with ESMTPS id e20sm7767134fga.1.2008.01.28.00.14.28
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 28 Jan 2008 00:14:30 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20080127173212.GW24004@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1757981AbYA1Iqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 03:46:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756154AbYA1Iqt
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 03:46:49 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53711 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754234AbYA1Iqr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 03:46:47 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id EC96569F6;
+	Mon, 28 Jan 2008 03:46:45 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 6071B69EF;
+	Mon, 28 Jan 2008 03:46:41 -0500 (EST)
+In-Reply-To: <479D805E.3000209@viscovery.net> (Johannes Sixt's message of
+	"Mon, 28 Jan 2008 08:12:30 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71863>
 
-On Sun, Jan 27, 2008 at 12:32:13PM -0500, Shawn O. Pearce wrote:
-> 
-> So you come down to four options:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-<snip>
+> The "problem" is not only with git-clean, but also in others, like
+> git-ls-files. Try this in you favorite repository:
+>
+>    $ git ls-files -o /*bin
+>
+> The output does not make a lot of sense. (Here it lists the contents of
+> /bin and /sbin.) Not that it hurts with ls-files, but
+>
+>    $ git clean -f /
+>
+> is basically a synonym for
+>
+>    $ rm -rf /
 
-How about gitosis? It requires only one extra user (usually called git),
-which is the owner of all repos. This user has git-shell as its login
-shell. All users are authorized by their ssh keys. The configuration and
-kyes are stored in the special repo called gitosis-admin. You can define
-what users to what repositories have read or write access. This is done
-by adding a user to one or more groups defined in gitosis configuration.
-You can have as much groups as you want. The default configuration looks
-like this:
-
-[group gitosis-admin]
-writable = gitosis-admin
-members = your-name
-
-It defines the gitosis-admin group, member of which can write to the
-gitosis-admin repo, and you are member of that group.
-
-WRRNING: I have not used gitosis myself, but it looks worthy of a try.
-
-Dmitry
+Yeah, /*bin is not inside the repository so it should not even
+be reported as "others".  Shouldn't the commands detect this and
+reject feeding such paths outside the work tree to the core,
+which always expect you to talk about paths inside?
