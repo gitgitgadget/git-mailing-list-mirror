@@ -1,133 +1,136 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] prefix_path(): disallow absolute paths
-Date: Mon, 28 Jan 2008 15:05:42 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801281503350.23907@racer.site>
-References: <47975FE6.4050709@viscovery.net> <1201463731-1963-1-git-send-email-shawn.bohrer@gmail.com> <alpine.LSU.1.00.0801272043040.23907@racer.site> <7v3asiyk2i.fsf@gitster.siamese.dyndns.org> <20080128003404.GA18276@lintop> <7vodb6wtix.fsf@gitster.siamese.dyndns.org>
- <479D805E.3000209@viscovery.net> <7vprvmuykw.fsf@gitster.siamese.dyndns.org> <479D9ADE.6010003@viscovery.net> <alpine.LSU.1.00.0801281210440.23907@racer.site>
+From: Gerrit Pape <pape@smarden.org>
+Subject: git-rebase doesn't work when trying to squash changes into commits
+	created with --no-verify
+Date: Mon, 28 Jan 2008 15:42:32 +0000
+Message-ID: <20080128154232.900.qmail@c07ab49f5b12dd.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Jan 28 16:07:00 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 28 16:43:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJVZO-0005b9-TM
-	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 16:06:47 +0100
+	id 1JJW8d-0003MU-AV
+	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 16:43:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761090AbYA1PGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 10:06:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755299AbYA1PGF
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 10:06:05 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51992 "HELO mail.gmx.net"
+	id S1759511AbYA1PmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 10:42:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759382AbYA1PmP
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 10:42:15 -0500
+Received: from a.ns.smarden.org ([212.42.242.37]:58594 "HELO a.mx.smarden.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1761524AbYA1PGC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 10:06:02 -0500
-Received: (qmail invoked by alias); 28 Jan 2008 15:06:00 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp047) with SMTP; 28 Jan 2008 16:06:00 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19rO70zFwFrI+MsS2suTK0basX56COW/82JjjrWaV
-	Cvt+VQtqWL69D7
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LSU.1.00.0801281210440.23907@racer.site>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1759244AbYA1PmO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 10:42:14 -0500
+Received: (qmail 901 invoked by uid 1000); 28 Jan 2008 15:42:32 -0000
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71893>
+
+Hi, IIRC I managed to reproduce the problem below, but currently don't
+have the time to track it down.  Hopefully someone else can work on it,
+there's even a patch suggested.
+
+Thanks, Gerrit.
 
 
-Without this fix, "git ls-files --others /" would list _all_ files,
-except for those tracked in the current repository.  Worse, "git clean /"
-would start removing them.
+http://bugs.debian.org/458782:
 
-Noticed by Johannes Sixt.
+----- Forwarded message from Raphael Hertzog <hertzog@debian.org> -----
 
-Incidentally, it fixes some strange code in builtin-mv.c by yours truly,
-where a slash was added to "dst" but then ignored, and instead taken from
-the source path.  This triggered the new check for absolute paths.
+Subject: Bug#458782: git-core: git-rebase doesn't work when trying to squash
+	changes into commits created with --no-verify
+Reply-To: Raphael Hertzog <hertzog@debian.org>, 458782@bugs.debian.org
+From: Raphael Hertzog <hertzog@debian.org>
+To: Debian Bug Tracking System <submit@bugs.debian.org>
+Date: Wed, 02 Jan 2008 21:27:35 +0100
 
-A test in t3101 started failing, too, because it tested ls-tree with
-not-really-absolute paths (expecting the leading "/" to be ignored).
-Those paths were changed to relative paths.
+I recently worked on a branch where I had to commit some test files that
+had trailing whitespaces (those files were used in a non-regression test
+and the trailing spaces were required and deliberate). Since I have the
+standard pre-commit hook enabled, this required me to add --no-verify to
+the "git commit" invocation.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+Later I discovered a bug in that commit and wanted to merge another change
+into it using "git rebase -i" and something like that:
+pick 1a5c8d6 The commit created with git commit --no-verify
+squash 57e9f03 A bugfix on top of the previous commit
+pick 120ecd5 Next commit
 
-	On Mon, 28 Jan 2008, Johannes Schindelin wrote:
+The result is that the rebase process failed badly:
+Rebasing (14/21)
+* You have some suspicious patch lines:
+*
+* In scripts/t/700_Dpkg_Control.t
+* trailing whitespace (line 27)
+scripts/t/700_Dpkg_Control.t:27:Empty-Field: 
+* trailing whitespace (line 44)
+scripts/t/700_Dpkg_Control.t:44:is($src->{'long-field'}, 
+* In scripts/t/700_Dpkg_Control/control-1
+* trailing whitespace (line 8)
+scripts/t/700_Dpkg_Control/control-1:8:empty-field: 
+* trailing whitespace (line 9)
+scripts/t/700_Dpkg_Control/control-1:9:     
+fatal: Entry 'ChangeLog' would be overwritten by merge. Cannot merge.
+Automatic cherry-pick failed.  After resolving the conflicts,
+mark the corrected paths with 'git add <paths>' and commit the result.
+When commiting, use the option '-c 120ecd5' to retain authorship and message.
+Could not apply 120ecd5... Next commit
 
-	> The failure of t3101 has something to do with ls-tree filtering 
-	> out invalid paths; I maintain that this behaviour is wrong to 
-	> begin with.
+The situation is the following :
+- the index contained the result of the pick + squash
+- the error message indicated to commit with -c 4c01fe, that is with the
+  information coming from the next commit of the rebase process... it
+  looks like the rebase process marked the previous step as done when in
+  fact the commit wasn't created due to lack of --no-verify.
 
-	This patch fixes the test.
+The (quick) fix is the following :
+--- /tmp/git-rebase--interactive	2008-01-02 21:24:00.000000000 +0100
++++ /usr/bin/git-rebase--interactive	2008-01-02 21:24:04.000000000 +0100
+@@ -272,7 +272,7 @@
+ 			# This is like --amend, but with a different message
+ 			eval "$author_script"
+ 			export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_AUTHOR_DATE
+-			$USE_OUTPUT git commit -F "$MSG" $EDIT_COMMIT
++			$USE_OUTPUT git commit --no-verify -F "$MSG" $EDIT_COMMIT
+ 			;;
+ 		t)
+ 			cp "$MSG" "$GIT_DIR"/MERGE_MSG
 
-	But as this fix illustrates, it is a change in semantics: where 
-	earlier
 
-		git ls-tree /README
+-- System Information:
+Debian Release: lenny/sid
+  APT prefers unstable
+  APT policy: (500, 'unstable'), (500, 'testing'), (500, 'stable'), (1, 'experimental')
+Architecture: i386 (i686)
 
-	was allowed, it is no longer.
+Kernel: Linux 2.6.23-1-686 (SMP w/1 CPU core)
+Locale: LANG=fr_FR.UTF-8, LC_CTYPE=fr_FR.UTF-8 (charmap=UTF-8)
+Shell: /bin/sh linked to /bin/bash
 
-	Comments?
+Versions of packages git-core depends on:
+ii  cpio                    2.9-9            GNU cpio -- a program to manage ar
+ii  libc6                   2.7-5            GNU C Library: Shared libraries
+ii  libcurl3-gnutls         7.17.1-1         Multi-protocol file transfer libra
+ii  libdigest-sha1-perl     2.11-2           NIST SHA-1 message digest algorith
+ii  liberror-perl           0.17-1           Perl module for error/exception ha
+ii  libexpat1               1.95.8-4         XML parsing C library - runtime li
+ii  perl-modules            5.8.8-12         Core Perl modules
+ii  zlib1g                  1:1.2.3.3.dfsg-8 compression library - runtime
 
- builtin-mv.c               |    4 ++--
- setup.c                    |    2 ++
- t/t3101-ls-tree-dirname.sh |    2 +-
- 3 files changed, 5 insertions(+), 3 deletions(-)
+Versions of packages git-core recommends:
+ii  curl                         7.17.1-1    Get a file from an HTTP, HTTPS or 
+ii  git-doc                      1:1.5.3.7-1 fast, scalable, distributed revisi
+ii  less                         409-1       Pager program similar to more
+ii  openssh-client [ssh-client]  1:4.7p1-1   secure shell client, an rlogin/rsh
+ii  patch                        2.5.9-4     Apply a diff file to an original
+ii  rsync                        2.6.9-6     fast remote file copy program (lik
 
-diff --git a/builtin-mv.c b/builtin-mv.c
-index 990e213..94f6dd2 100644
---- a/builtin-mv.c
-+++ b/builtin-mv.c
-@@ -164,7 +164,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 				}
- 
- 				dst = add_slash(dst);
--				dst_len = strlen(dst) - 1;
-+				dst_len = strlen(dst);
- 
- 				for (j = 0; j < last - first; j++) {
- 					const char *path =
-@@ -172,7 +172,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 					source[argc + j] = path;
- 					destination[argc + j] =
- 						prefix_path(dst, dst_len,
--							path + length);
-+							path + length + 1);
- 					modes[argc + j] = INDEX;
- 				}
- 				argc += last - first;
-diff --git a/setup.c b/setup.c
-index 2174e78..5a4aadc 100644
---- a/setup.c
-+++ b/setup.c
-@@ -13,6 +13,8 @@ const char *get_current_prefix()
- const char *prefix_path(const char *prefix, int len, const char *path)
- {
- 	const char *orig = path;
-+	if (is_absolute_path(path))
-+		die("no absolute paths allowed: '%s'", path);
- 	for (;;) {
- 		char c;
- 		if (*path != '.')
-diff --git a/t/t3101-ls-tree-dirname.sh b/t/t3101-ls-tree-dirname.sh
-index 39fe267..cc5b982 100755
---- a/t/t3101-ls-tree-dirname.sh
-+++ b/t/t3101-ls-tree-dirname.sh
-@@ -120,7 +120,7 @@ EOF
- # having 1.txt and path3
- test_expect_success \
-     'ls-tree filter odd names' \
--    'git ls-tree $tree 1.txt /1.txt //1.txt path3/1.txt /path3/1.txt //path3//1.txt path3 /path3/ path3// >current &&
-+    'git ls-tree $tree 1.txt ./1.txt .//1.txt path3/1.txt ./path3/1.txt .//path3//1.txt path3 ./path3/ path3// >current &&
-      cat >expected <<\EOF &&
- 100644 blob X	1.txt
- 100644 blob X	path3/1.txt
--- 
-1.5.4.rc5.15.g8231f
+-- no debconf information
+
+
+
+----- End forwarded message -----
