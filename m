@@ -1,63 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix off by one error in prep_exclude.
-Date: Mon, 28 Jan 2008 04:04:08 -0800
-Message-ID: <7vd4rmtavb.fsf@gitster.siamese.dyndns.org>
-References: <20080128003404.GA18276@lintop>
-	<1201480650-19716-1-git-send-email-shawn.bohrer@gmail.com>
-	<alpine.LSU.1.00.0801281159150.23907@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org,
-	j.sixt@viscovery.net
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 28 13:05:00 2008
+From: Wincent Colaiuta <win@wincent.com>
+Subject: "git add" and absolute paths
+Date: Mon, 28 Jan 2008 13:32:24 +0100
+Message-ID: <916BAC14-A5E4-4666-A29E-2CDF114DCD87@wincent.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 28 13:33:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJSjR-0004ET-9o
-	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 13:04:57 +0100
+	id 1JJTAY-00048r-JP
+	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 13:32:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754916AbYA1MEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 07:04:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751825AbYA1MEZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 07:04:25 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59501 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751475AbYA1MEZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 07:04:25 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 253C023F1;
-	Mon, 28 Jan 2008 07:04:20 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8B27D23F0;
-	Mon, 28 Jan 2008 07:04:15 -0500 (EST)
-In-Reply-To: <alpine.LSU.1.00.0801281159150.23907@racer.site> (Johannes
-	Schindelin's message of "Mon, 28 Jan 2008 11:59:50 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753301AbYA1Mc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 07:32:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751922AbYA1Mc1
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 07:32:27 -0500
+Received: from wincent.com ([72.3.236.74]:37451 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751316AbYA1Mc0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 07:32:26 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id m0SCWPTp024619
+	for <git@vger.kernel.org>; Mon, 28 Jan 2008 06:32:26 -0600
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71882>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+I was somewhat surprised the other day to see that you can't pass  
+absolute paths to "git add":
 
->> ...
->> This only causes a problem when a path component has a length of
->> zero which can happen when the user provides an absolute path to
->> a file or directory in the root directory (i.e. "/", or "/foo"),
->> or if the input is malformed and contains a double-slash such
->> as "foo//boo".
->> 
->> Signed-off-by: Shawn Bohrer <shawn.bohrer@gmail.com>
->
-> I'll try to remember even 6 months from now that this was the "git clean 
-> -n /" problem ;-)
+$ cd /tmp
+$ mkdir foo
+$ cd foo
+$ git init
+Initialized empty Git repository in .git/cuzco:foo
+$ echo "content" > file
+$ git add /tmp/foo/file
+fatal: unable to add /tmp/foo/file to index
+$ git add file
 
-Actually the quoted part of the message clearly tells that the
-patch is touching the wrong code.  It should not blame the user
-but the caller of the function that did not check such an input,
-which is where the fix should be in.
+I understand that you can't add arbitrary paths outside of your  
+worktree, but if the absolute path specifies something _inside_ your  
+worktree then it seems that this is either a bug or a "usability  
+shortcoming" if you prefer to avoid the term "bug".
+
+I also understand that providing a relative path is by far the most  
+common operation, but there are real use cases where it's easier to  
+pass an absolute path. For example: you're working at the console  
+inside the work tree but you also have a GUI file browser open  
+alongside. Sometimes it is simpler to drag-and-drop the file from the  
+GUI to the console window (thus inserting the absolute path to the  
+file) rather than typing out the relative path, even with  
+autocompletion.
+
+Out of curiosity I went back and looked at the last version of Git  
+before "add" became a built-in (1.3.3). It also barfs for absolute  
+paths:
+
+$ git add file
+Ignoring path /tmp/foo/file
+
+So I suspect it's always been this way. Do people agree that this  
+issue is worth addressing?
+
+Cheers,
+Wincent
