@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] Secure central repositories by UNIX socket authentication
-Date: Mon, 28 Jan 2008 02:56:42 -0500
-Message-ID: <20080128075642.GD24004@spearce.org>
-References: <20080127103934.GA2735@spearce.org> <7vsl0ix4gh.fsf@gitster.siamese.dyndns.org> <20080128004722.GZ24004@spearce.org> <7vabmqwgvt.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [RFC] Authenticate push via PGP signature, not SSH
+Date: Mon, 28 Jan 2008 03:12:58 -0500
+Message-ID: <20080128081258.GE24004@spearce.org>
+References: <479D5611.4010205@vilain.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 28 08:57:31 2008
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Mon Jan 28 09:13:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJOry-0000iX-R6
-	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 08:57:31 +0100
+	id 1JJP7Z-0004ZZ-S4
+	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 09:13:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752091AbYA1H4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 02:56:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751508AbYA1H4v
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 02:56:51 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:43026 "EHLO
+	id S1751622AbYA1INF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 03:13:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751149AbYA1INE
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 03:13:04 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:43957 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750802AbYA1H4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 02:56:50 -0500
+	with ESMTP id S1751622AbYA1IND (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 03:13:03 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JJOrE-000583-Ah; Mon, 28 Jan 2008 02:56:44 -0500
+	id 1JJP6x-0005mw-3m; Mon, 28 Jan 2008 03:12:59 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 3AD3620FBAE; Mon, 28 Jan 2008 02:56:43 -0500 (EST)
+	id CAD7420FBAE; Mon, 28 Jan 2008 03:12:58 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <7vabmqwgvt.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <479D5611.4010205@vilain.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -41,35 +41,75 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71861>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > Hmm.  core.sharedrepository is sometimes a bad solution.
-> >
-> > core.sharedrepository means I need to give write access to both the
-> > refs database and the object database to all members of the project.
-> > Some of whom may not be able to be trusted with tools like "rm",
-> > but who need real shell access to that system anyway.  And sometimes
-> > management won't allow users to have two accounts on the same system
-> > (one that is fixed to git-shell, and one that has a real shell)
-> > because the world would implode if a user was given two different
-> > accounts for two different access purposes.
+Sam Vilain <sam@vilain.net> wrote:
 ...
-> Another approach to do the same I can think of, without having
-> to add 50 new accounts for 50 users, would be to collect a ssh
-> key from each of these 50 users,
+> The key idea is to reject pushes if the PGP signature cannot be verified.
+...
+> When heads are pushed, the signed tags that are moved from refs/heads/
+> foo can be saved in an "archive" tag space, such as under refs/audit/
+> KEYID/ - this will allow, in the case of a network of git servers, for
+> servers to synchronise from each other, even when they
+> don't trust each other.
 
-Also, our network of servers and desktops is actually now managed
-entirely through Active Directory.  So all possible users already
-have accounts on every server.  Passwords are synchronized across
-the entire network.
+This is certainly interesting.  It would benefit from the recursive
+locking scheme we were talking about for the update hook, which
+someone (Steven Grimm?) wanted so they could execute git-svn
+transparently during push and have the update hook change the ref
+instead of receive-pack.
 
-In other words, all of the management overheads associated with
-user accounts has already been paid.  Centralized SSH/SSL/PGP key
-management is only adding an additional burden.  For my day-job
-anyway.
+The downside to this is you have to tag everything before you push
+it, so you need some sort of wrapper around git-push.  That isn't
+as hard as it sounds for the command line case, but it does make
+things more difficult for a usage from say git-gui.  :)
+
+I was also thinking about using GPG to sign the command packets
+being sent between send-pack and receive-pack.  If the GPG signature
+for that set of packets is good and a known key then the update is
+allowed to continue.  This avoids the mess of needing to run git-tag
+locally before push, and of needing to "unwrap" the temporary tag
+in the receiving repository, but it adds yet another extension to
+the send-pack/receive-pack protocol.
+ 
+> This does force potential contributors to get PGP keys, and get them
+> signed - but that seems to me to be a reasonable barrier of entry and
+> may even help drive some PGP adoption.
+
+In many cases today such contributers would have been forced to get
+an SSH account on the server they want to push to.  Getting an SSH
+account configured and a key installed may be more difficult than
+generating a PGP key pair and emailing in the public key.
+
+Of course the PGP based system is nicer in that the administrator
+might get a public key that has been signed by others he trusts,
+and thus is more readily able to verify that the contributor is
+who they think it is.
+
+
+To be perfectly honest, in a wide open source community I think
+the truely distributed nature of development like the linux kernel
+or git itself uses works very well.  Development schedules aren't
+organized into "next 30 minutes", "next 4 hours", and "next week".
+
+Peer review and community acceptance of changes is a very important
+concept.  Blindly accepting changes into a tree because of a PGP
+signature/SSL certificate/SSH key isn't really the norm, and is
+far from the best solution.  We've all posted cr**p^Wless-than-
+the-best-code to this list before, and yet many of us would have
+"committer access" to the git tree under a centralized model.
+
+I'm happy my changes aren't accepted just because I signed them.
+Its better that Linus/Nico/Dscho/Junio/you/et.al. have looked at
+them and also felt they were worthwhile.
+
+
+But in a smaller business type setting, where there's under 100
+employees working, odds are you've already created the user account
+on systems, and physically passed the initial password via a sticky
+note after checking the person's government issued IDs.  In such a
+setting having yet another authentication system (PGP keys) is just
+yet more work for the already over worked/under appreciated IT staff.
 
 -- 
 Shawn.
