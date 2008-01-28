@@ -1,60 +1,86 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: How to split a patch
-Date: Mon, 28 Jan 2008 10:05:31 +0100
-Message-ID: <4d8e3fd30801280105g2876cedfjbe1ba323ede57e0a@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Fix off by one error in prep_exclude.
+Date: Mon, 28 Jan 2008 10:05:34 +0100
+Message-ID: <479D9ADE.6010003@viscovery.net>
+References: <47975FE6.4050709@viscovery.net>	<1201463731-1963-1-git-send-email-shawn.bohrer@gmail.com>	<alpine.LSU.1.00.0801272043040.23907@racer.site>	<7v3asiyk2i.fsf@gitster.siamese.dyndns.org>	<20080128003404.GA18276@lintop>	<7vodb6wtix.fsf@gitster.siamese.dyndns.org>	<479D805E.3000209@viscovery.net> <7vprvmuykw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: "gi mailing list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jan 28 10:06:48 2008
+Cc: Shawn Bohrer <shawn.bohrer@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 28 10:06:43 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJPwn-0000ff-7w
-	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 10:06:33 +0100
+	id 1JJPwo-0000ff-Pp
+	for gcvg-git-2@gmane.org; Mon, 28 Jan 2008 10:06:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752550AbYA1JFf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 04:05:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752615AbYA1JFf
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 04:05:35 -0500
-Received: from hs-out-0708.google.com ([64.233.178.240]:56908 "EHLO
-	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750878AbYA1JFd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 04:05:33 -0500
-Received: by hs-out-2122.google.com with SMTP id 54so1481912hsz.5
-        for <git@vger.kernel.org>; Mon, 28 Jan 2008 01:05:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=8F/sFWNTTbISS88QxtDylYYvgvKTpSfDC8YxyFiDYn4=;
-        b=lQk7FCSFGiGPCRSDv2hqIQv629HF08hutMONhN3AFCr53wl/HUPHIz26XFwkaHOLniAYECMLI/CvE9pxY6Bx3v+Cz/AhDrpmPfbt+YCb6TjZxCG4mSJNsLbc84SnZ0GYT8kwtqAWUa+YGpPOtKuNjk4CBCBYRt9fDzKHeUiZ+1o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=E/AyIsDBpmkLCMG6NMYXq5jUA7z5rm4Xqc7RN1HGh8DiRh4mfT9/KpyZ/kxWp6TP2GChBagcXsqMZnP2nlmeXKMh6DjEtfA/iB92durTwcujvaeh4JnOtwefVez6io8gO84km08drpDUeKZGO3fwIWySQj7EwAfEcjdlbP7M2I8=
-Received: by 10.143.17.13 with SMTP id u13mr2095725wfi.69.1201511131948;
-        Mon, 28 Jan 2008 01:05:31 -0800 (PST)
-Received: by 10.143.196.10 with HTTP; Mon, 28 Jan 2008 01:05:31 -0800 (PST)
-Content-Disposition: inline
+	id S1754881AbYA1JFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 04:05:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753113AbYA1JFk
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 04:05:40 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:29765 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752615AbYA1JFj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 04:05:39 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JJPvd-0007BY-S7; Mon, 28 Jan 2008 10:05:22 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 0C709546; Mon, 28 Jan 2008 10:05:35 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vprvmuykw.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71866>
 
-Hi all,
-I have a big patch that affects a single file that needs to be split in
-a few logical patches.
+Junio C Hamano schrieb:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+> 
+>> The "problem" is not only with git-clean, but also in others, like
+>> git-ls-files. Try this in you favorite repository:
+>>
+>>    $ git ls-files -o /*bin
+>>
+>> The output does not make a lot of sense. (Here it lists the contents of
+>> /bin and /sbin.) Not that it hurts with ls-files, but
+>>
+>>    $ git clean -f /
+>>
+>> is basically a synonym for
+>>
+>>    $ rm -rf /
+> 
+> Yeah, /*bin is not inside the repository so it should not even
+> be reported as "others".  Shouldn't the commands detect this and
+> reject feeding such paths outside the work tree to the core,
+> which always expect you to talk about paths inside?
 
-I know ho to do the opposite process, rebase -i and squash is something
-I'm really used to do but this time that trick is not going to help me.
+That's what I had expected. But look:
 
-What is the preferred way to split a big patch in a series of smaller patches?
+   $ git ls-files -o /
+   [... tons of file names ...]
 
-Thanks.
+   $ git ls-files -o ..
+   fatal: '..' is outside repository
 
-Ciao,
--- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
+   $ git clean -n /    # with Shawn's patch
+   Would remove /bin/
+   [... etc ...]
+
+   $ git clean -n ..
+   fatal: '..' is outside repository
+
+Some mechanism for this is already there; it's just not complete enough.
+
+-- Hannes
