@@ -1,52 +1,70 @@
-From: Wayne Davison <wayne@opencoder.net>
-Subject: Re: [PATCH] config.c: Expand $HOME and tilde character in
-	core.excludesfile
-Date: Mon, 28 Jan 2008 15:52:05 -0800
-Message-ID: <20080128235205.GE8669@blorf.net>
-References: <y7a9aaem.fsf@blue.sea.net>
+From: Gustaf Hendeby <hendeby@isy.liu.se>
+Subject: Re: [ANNOUNCE] GIT 1.5.4-rc5
+Date: Tue, 29 Jan 2008 01:36:42 +0100
+Message-ID: <479E751A.1080308@isy.liu.se>
+References: <7vsl13wmas.fsf@gitster.siamese.dyndns.org> <7vsl0r3nvc.fsf@gitster.siamese.dyndns.org> <7vk5lutdzq.fsf@gitster.siamese.dyndns.org> <20080128183851.GB31140@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Tue Jan 29 00:52:52 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 29 01:37:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJdmQ-0001q3-7M
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 00:52:46 +0100
+	id 1JJeTX-0005ZK-DT
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 01:37:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755828AbYA1XwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 18:52:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756193AbYA1XwI
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 18:52:08 -0500
-Received: from dsl-74-220-69-132.cruzio.com ([74.220.69.132]:50431 "EHLO
-	dot.blorf.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753536AbYA1XwH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 18:52:07 -0500
-Received: by dot.blorf.net (Postfix, from userid 1000)
-	id EA3C16D84; Mon, 28 Jan 2008 15:52:05 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <y7a9aaem.fsf@blue.sea.net>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1755429AbYA2Agq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 19:36:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754839AbYA2Agq
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 19:36:46 -0500
+Received: from bogotron.isy.liu.se ([130.236.48.26]:43302 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752073AbYA2Agp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 19:36:45 -0500
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id C587C25A9E;
+	Tue, 29 Jan 2008 01:36:43 +0100 (MET)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 07692-06; Thu,  3 Jan 2008 00:53:57 +0100 (MET)
+Received: from pluring.isy.liu.se (pluring.isy.liu.se [130.236.56.134])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 3BBA325A9C;
+	Tue, 29 Jan 2008 01:36:43 +0100 (MET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <20080128183851.GB31140@coredump.intra.peff.net>
+X-Enigmail-Version: 0.95.6
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71909>
 
-On Mon, Jan 28, 2008 at 11:49:05PM +0200, Jari Aalto wrote:
-> +                        ret = str_replace(str, "~", home);
+On 01/28/2008 07:38 PM, Jeff King wrote:
+> On Mon, Jan 28, 2008 at 02:56:41AM -0800, Junio C Hamano wrote:
+> 
+>> Gustaf Hendeby (1):
+>>       send-email, fix breakage in combination with --compose
+> 
+> I submitted a followup test for this problem, but there was no
+> response. Can I please get an ACK/NAK/"resend after 1.5.4"?
 
-This would mangle a name with a tilde in it, e.g. "file.c~", etc.
+FWIW, I think it looks like a good extension to the test suit,
+but the added option should probably put it post 1.5.4 just to
+play it safe?  I also think it is the right thing to do not to
+document that new option.
 
-> +                        ret = str_replace(str, "$HOME", home);
+The last patch also needs a trivial fix-up to apply nicely.
 
-This would affect similarly named vars, e.g. $HOMER, etc.
+/Gustaf
 
-> +                strcat( ptr, "");   /* Terminate with null string */
-
-Calling strcat() requires a null-terminated string.  Instead, assign a
-'\0' char at the right position.
-
-..wayne..
+> 
+> For reference, the original message-id was:
+> 
+>   <20080122032353.GB24758@coredump.intra.peff.net>
