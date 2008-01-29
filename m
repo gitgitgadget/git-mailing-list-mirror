@@ -1,85 +1,120 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
-Subject: Re: [RFH/PATCH] prefix_path(): disallow absolute paths
-Date: Wed, 30 Jan 2008 06:53:48 +0900
-Message-ID: <200801292158.m0TLwA7u019321@mi0.bluebottle.com>
-References: <7vwspts9vj.fsf@gitster.siamese.dyndns.org>
- <47975FE6.4050709@viscovery.net>
- <1201463731-1963-1-git-send-email-shawn.bohrer@gmail.com>
- <alpine.LSU.1.00.0801272043040.23907@racer.site>
- <7v3asiyk2i.fsf@gitster.siamese.dyndns.org> <20080128003404.GA18276@lintop>
- <7vodb6wtix.fsf@gitster.siamese.dyndns.org> <479D805E.3000209@viscovery.net>
- <7vprvmuykw.fsf@gitster.siamese.dyndns.org> <479D9ADE.6010003@viscovery.net>
- <alpine.LSU.1.00.0801281210440.23907@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-revert is a memory hog
+Date: Tue, 29 Jan 2008 14:15:49 -0800
+Message-ID: <7vk5lsmg6i.fsf@gitster.siamese.dyndns.org>
+References: <20080127172748.GD2558@does.not.exist>
+	<20080128055933.GA13521@coredump.intra.peff.net>
+	<alpine.LFD.1.00.0801300844170.28476@www.l.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 29 22:55:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Adrian Bunk <bunk@kernel.org>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jan 29 23:17:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJyQU-0000mE-Bn
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 22:55:30 +0100
+	id 1JJylF-0000Rk-RO
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 23:16:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758802AbYA2Vy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2008 16:54:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755122AbYA2Vy0
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 16:54:26 -0500
-Received: from mi0.bluebottle.com ([206.188.25.15]:52811 "EHLO
-	mi0.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754691AbYA2VyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2008 16:54:24 -0500
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by mi0.bluebottle.com (8.13.1/8.13.1) with ESMTP id m0TLwA7u019321
-	for <git@vger.kernel.org>; Tue, 29 Jan 2008 13:58:10 -0800
-DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
-	h=received:from:to:cc:date:subject:in-reply-to:references:
-	mime-version:content-type:content-transfer-encoding:x-trusted-delivery;
-	b=wdACdvA9poHGOUs4Mq1HMiFAFqOLe0xaLrK631bvKfyJEll5Fa33EGjjtA+Jg2jxh
-	4Dw6Pxh3bWVNTibwB6AY9INisoYKGLcid4HiMZxI9KgrMBRWy9r4Zwh7ao7Vhhl
-Received: from nanako3.mail.bluebottle.com ([212.62.97.23])
-	(authenticated bits=0)
-	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m0TLs9ve005761
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 29 Jan 2008 13:54:15 -0800
-In-Reply-To: <7vwspts9vj.fsf@gitster.siamese.dyndns.org>
-X-Trusted-Delivery: <ce4591c2dfcd05ffcdc45e0c5aee5b6a>
+	id S1756746AbYA2WQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 17:16:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752333AbYA2WQA
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 17:16:00 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:64973 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752156AbYA2WP7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2008 17:15:59 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 954B23662;
+	Tue, 29 Jan 2008 17:15:57 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9226535F4;
+	Tue, 29 Jan 2008 17:15:51 -0500 (EST)
+In-Reply-To: <alpine.LFD.1.00.0801300844170.28476@www.l.google.com> (Linus
+	Torvalds's message of "Wed, 30 Jan 2008 08:51:09 +1100 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72003>
 
-Quoting Junio C Hamano <gitster@pobox.com>:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Currently, we:
+> On Mon, 28 Jan 2008, Jeff King wrote:
+>> 
+>> I tried to reproduce this, but my peak heap allocation was only around
+>> 20MB. Is your repository fully packed? Not packed at all? Can you use
+>> valgrind/massif to figure out where the memory is going?
 >
->  - Remove "." path component (i.e. the directory leading part
->    specified) from the input;
+> I definitely can reproduce it, it's horrid.
 >
->  - Remove ".." path component and strip one level of the prefix;
+> This is from "top" fairly late in the game, but with the thing not even 
+> done yet. Current git, pretty much fully (and fairly aggressively) packed 
+> current kernel repo, and using "diff.renamelmit=0".
 >
-> only from the beginning.  So if you give nonsense pathspec from
-> the command line, you can end up calling prefix_path() with things
-> like "/README", "/absolute/path/to//repository/tracked/file", and
-> "fo//o/../o".
+> 	4751 torvalds  20   0  852m 446m  47m R   72 22.4   2:46.58 git-merge-recur
 >
-> And not passing such ambiguous path like "fo//o" to the core
-> level but sanitizing matters.  Then core level can always do
-> memcmp() with "fo/o" to see they are talking about the same
-> path.
+> It finally finished with time reporting:
+>
+> 	208.15user 3.50system 4:01.50elapsed 87%CPU (0avgtext+0avgdata 0maxresident)k
+> 	238736inputs+4544outputs (8261major+280971minor)pagefaults 0swaps
+>
+> where those 280971 minor page faults are what largely indicates how much 
+> memory it used (the technical term for that number is "metric buttload of 
+> memory").
+>
+> But I'm in Melbourne right now on my laptop,and probably won't be able to 
+> debug this much. 
+>
+>> In your case, the patch doesn't apply cleanly, so we end up doing a
+>> 3-way merge (in my tests, it is git-merge-recursive which ends up taking
+>> up the memory).
+>
+> It is indeed git-merge-recursive. It just shouldn't take that much memory.
 
-I may be mistaken but I think "fo//o" and "fo//o/" are returned as two different strings "fo/o" and "fo/o/" from your patch. Shouldn't you clean-up the second one to "fo/o", too?
+Hmmmmm.  Obviously this depends on where you start your revert
+from, but that is not what I am getting.
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+: gitster linux-2.6/test; git reset --hard
+HEAD is now at 0ba6c33... Merge git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.25
+: gitster linux-2.6/test; /usr/bin/time git-revert d19fbe8a7
+Auto-merged drivers/input/input.c
+CONFLICT (content): Merge conflict in drivers/input/input.c
+Auto-merged include/linux/input.h
+CONFLICT (content): Merge conflict in include/linux/input.h
+Automatic revert failed.  After resolving the conflicts,
+mark the corrected paths with 'git add <paths>' or 'git rm <paths>' and commit the result.
+Command exited with non-zero status 1
+1.08user 0.06system 0:01.14elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+19867minor)pagefaults 0swaps
 
-----------------------------------------------------------------------
-Free pop3 email with a spam filter.
-http://www.bluebottle.com/tag/5
+Now, a possible alternative (that produces an identical result)
+is not much better, because it ends up using merge-recursive as
+its core.
+
+: gitster linux-2.6/test; git reset --hard                                      HEAD is now at 0ba6c33... Merge git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-2.6.25
+: gitster linux-2.6/test; rm -fr .dotest
+: gitster linux-2.6/test; /usr/bin/time sh -c 'git format-patch -R --binary --stdout -1 d19fbe8a7 | git am -3'
+Applying Input: prepare to sysfs integration
+error: patch failed: drivers/input/input.c:27
+error: drivers/input/input.c: patch does not apply
+error: patch failed: include/linux/input.h:12
+error: include/linux/input.h: patch does not apply
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+Auto-merged drivers/input/input.c
+CONFLICT (content): Merge conflict in drivers/input/input.c
+Auto-merged include/linux/input.h
+CONFLICT (content): Merge conflict in include/linux/input.h
+Failed to merge in the changes.
+Patch failed at 0001.
+When you have resolved this problem run "git-am -3 --resolved".
+If you would prefer to skip this patch, instead run "git-am -3 --skip".
+Command exited with non-zero status 1
+0.52user 0.25system 0:00.75elapsed 103%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+41208minor)pagefaults 0swaps
