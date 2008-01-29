@@ -1,65 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: fetch <repo> <branch>:<branch> fetches tags?
-Date: Mon, 28 Jan 2008 18:47:51 -0800
-Message-ID: <7v3ashs5yg.fsf@gitster.siamese.dyndns.org>
-References: <479E9063.5000403@nrlssc.navy.mil>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC] Authenticate push via PGP signature, not SSH
+Date: Mon, 28 Jan 2008 21:57:43 -0500
+Message-ID: <20080129025743.GH24004@spearce.org>
+References: <479D5611.4010205@vilain.net> <20080128081258.GE24004@spearce.org> <479E5021.7010404@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Tue Jan 29 03:48:42 2008
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Tue Jan 29 03:58:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJgWf-0000wV-Sg
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 03:48:42 +0100
+	id 1JJggL-0002zb-7h
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 03:58:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753081AbYA2CsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 21:48:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752556AbYA2CsK
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 21:48:10 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41042 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752534AbYA2CsJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 21:48:09 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 328BB1304;
-	Mon, 28 Jan 2008 21:48:08 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A97121303;
-	Mon, 28 Jan 2008 21:48:03 -0500 (EST)
-In-Reply-To: <479E9063.5000403@nrlssc.navy.mil> (Brandon Casey's message of
-	"Mon, 28 Jan 2008 20:33:07 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755944AbYA2C5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jan 2008 21:57:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754019AbYA2C5s
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 21:57:48 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:49552 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754188AbYA2C5r (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 21:57:47 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1JJgfF-0002CT-HU; Mon, 28 Jan 2008 21:57:33 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 8A14C20FBAE; Mon, 28 Jan 2008 21:57:43 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <479E5021.7010404@vilain.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71923>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+Sam Vilain <sam@vilain.net> wrote:
+> Shawn O. Pearce wrote:
+> > But in a smaller business type setting, where there's under 100
+> > employees working, odds are you've already created the user account
+> > on systems, and physically passed the initial password via a sticky
+> > note after checking the person's government issued IDs.  In such a
+> > setting having yet another authentication system (PGP keys) is just
+> > yet more work for the already over worked/under appreciated IT staff.
+> 
+> Agreed - again I'd personally consider allowing receive-pack with
+> reflogs in those environments if setting up PGP or SSH keys was a hassle.
 
-> I expect these to fetch tags automatically (and they do):
->
->    git fetch
->    git pull
->    git fetch <repo>
->    git pull <repo>
->
-> I expect these to _not_ fetch tags (and they don't):
->
->    git fetch <repo> <branch>
->    git pull <repo> <branch>
->
-> But, I did not expect these to fetch tags:
->
->    git fetch <repo> <branch>:<branch>
->    git pull <repo> <branch>:<branch>
+Yea, I already have reflogs enabled for all stored branches on the
+central server.  And since some branches have a no-delete policy
+(based upon the rules offered by contrib/hooks/update-paranoid) the
+reflogs are also effectively no-delete, even if the branch rewinds.
 
-Sigh... that matches my expectation.
+I also never run `git reflog expire`.  I might in another year or
+so consider it, but most of my no-delete branches also don't rewind
+very often (if ever) so there's very little disk to be gained by
+reflog expiry.
 
-Did we break it when we overhauled "git fetch", or was this an
-independent "improvement" that happened long before that?
+-- 
+Shawn.
