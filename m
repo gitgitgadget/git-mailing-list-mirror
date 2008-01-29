@@ -1,96 +1,81 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Added sub get_owner_file which checks if there's a file with project owner name
-Date: Tue, 29 Jan 2008 22:36:18 +0100
-Message-ID: <200801292236.19630.jnareb@gmail.com>
-References: <1201577766-11601-1-git-send-email-ribas@c3sl.ufpr.br> <200801291628.21026.jnareb@gmail.com> <479F925A.5020401@iksz.hu>
+From: Max Pollard <ajaxsupremo@yahoo.com>
+Subject: Re: Can git log <file> follow log of its origins?
+Date: Tue, 29 Jan 2008 13:40:14 -0800 (PST)
+Message-ID: <743519.95328.qm@web45916.mail.sp1.yahoo.com>
+References: <7vr6g0mip2.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>, git@vger.kernel.org
-To: Nagy =?utf-8?q?Bal=C3=A1zs?= <js@iksz.hu>
-X-From: git-owner@vger.kernel.org Tue Jan 29 22:37:43 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 29 22:40:54 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJy9E-0002g3-LT
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 22:37:41 +0100
+	id 1JJyCK-0003n8-F3
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 22:40:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758617AbYA2Vga convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jan 2008 16:36:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758601AbYA2Vga
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 16:36:30 -0500
-Received: from mu-out-0910.google.com ([209.85.134.187]:8188 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758521AbYA2Vg2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2008 16:36:28 -0500
-Received: by mu-out-0910.google.com with SMTP id i10so1768708mue.5
-        for <git@vger.kernel.org>; Tue, 29 Jan 2008 13:36:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=sxONvjCZkwJ4e1hHZXJu6sCoDWXROcvhojSBerOO7yo=;
-        b=hS1U15k9NkT+V7KccfZMH5DxNr3BjErLTfU33roQMOU/h8UwTVrA8SqqdsQkKvONDSXjLo5SssI352nyD2CwRovZhDdCFFG0XEoSVpS8NcYUQ4PY+rj17MlAhMtEt8DiRB0KN1feulJJYxHQrFaKtHudx3W2XLVarlqcbOIDXbQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=l6D6xcRGfgv/WAhObCz0JrTRaNFKIivb9I4kpccXOPwi8d4K4U3xJQ01hejzX3LOicPKS3OM+5pkP1rdOrbgyYKWOnA5Ck7AZT3bNclkRLk5kUmlgTX9VWTp58FqimYIeJo1ae3pJEbAJTAN7EZGv5Ni5iwHAlAYskYM7L4JbCc=
-Received: by 10.78.138.6 with SMTP id l6mr10418711hud.32.1201642587127;
-        Tue, 29 Jan 2008 13:36:27 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.244.23])
-        by mx.google.com with ESMTPS id d25sm17122512nfh.33.2008.01.29.13.36.24
-        (version=SSLv3 cipher=OTHER);
-        Tue, 29 Jan 2008 13:36:26 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <479F925A.5020401@iksz.hu>
-Content-Disposition: inline
+	id S1753595AbYA2VkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 16:40:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750837AbYA2VkT
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 16:40:19 -0500
+Received: from n4d.bullet.mail.tp2.yahoo.com ([203.188.202.147]:48813 "HELO
+	n4d.bullet.mail.tp2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751285AbYA2VkS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Jan 2008 16:40:18 -0500
+Received: from [202.43.196.225] by n4.bullet.mail.tp2.yahoo.com with NNFMP; 29 Jan 2008 21:40:16 -0000
+Received: from [217.12.4.214] by t2.bullet.tpe.yahoo.com with NNFMP; 29 Jan 2008 21:40:16 -0000
+Received: from [216.252.122.216] by t1.bullet.ukl.yahoo.com with NNFMP; 29 Jan 2008 21:40:15 -0000
+Received: from [69.147.65.172] by t1.bullet.sp1.yahoo.com with NNFMP; 29 Jan 2008 21:40:15 -0000
+Received: from [127.0.0.1] by omp507.mail.sp1.yahoo.com with NNFMP; 29 Jan 2008 21:40:15 -0000
+X-Yahoo-Newman-Property: ymail-5
+X-Yahoo-Newman-Id: 261786.5939.bm@omp507.mail.sp1.yahoo.com
+Received: (qmail 96299 invoked by uid 60001); 29 Jan 2008 21:40:14 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=31o+mjY4CQ8SSyaj+osAK3B0U5+ulSKkhUUBunoGlG4YaU5fY1pqw52/fo4JOOj+2KZd5AblTkD0b01cHk9FVYCLS5VTkwxQrQpqeY5+CbAA97cMiRTI/GUxUykn3XuaPWwrTBI8uwjCcntiLN0/5RaWS960kDpkH3ZegWaqDJA=;
+X-YMail-OSG: I0s_wy4VM1nPJooKdkihsGcjwLRhZIb.64mAGUq_abaRtTPKYQDBpiu_HKYUVsj_G7QTwuSQDu5zdp3xpX74WFDM1A--
+Received: from [66.122.195.143] by web45916.mail.sp1.yahoo.com via HTTP; Tue, 29 Jan 2008 13:40:14 PST
+In-Reply-To: <7vr6g0mip2.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72000>
 
-Nagy Bal=C3=A1zs wrote:
-> Jakub Narebski wrote:
 
->> But I think if IO matters it is better to generate projects list; yo=
-u
->> can even use gitweb for that, or you can simply add a line with URL
->> escaped project name (project path) relative to $projectroot, separa=
-ted
->> by space from the URL escaped (URI-encoded) project owner.  See also
->> "Gitweb repositories" section in gitweb/INSTALL.  Adding projects is
->> rare event.
->>  =20
-> Are you talking about I/O of an all-in CGI script? =20
+--- Junio C Hamano wrote:
 
-I am talking there between I/O difference between situation
-(configuration) when $projects_list is a directory (default),
-or is a file. If $projects_list is a directory, gitweb scans
-directory structure to find git repositories, which for large
-number of repositories might take time, even with filesystem
-cache, and with depth of searching bound by $project_maxdepth.
-Add to that finding symbolic name of the owner of repository
-directory, or (with the patch) reading a file per repo with repo
-owner.
+> Max Pollard writes:
+> 
+> > ...  So -C -C is the answer, with --name-status or --stat to
+> > actually show the result.
+> 
+> The real "answer" part in that example is not -C -C.  Obviously,
+> you would need double-C aka --find-copies-harder, because you
+> did not change a.txt when creating b.txt, so it is still needed.
+> 
+> But the essential part of the answer is "not giving b.txt as the
+> pathspec, so that whatever _other_ file that could have been
+> copied into it is still visible when the command works".
+> 
+> If you say "git log --name-status -C -C -- b.txt", you would be
+> back to square one.
 
-Reading and pasing single text file avoids this; it is faster.
-But for small repos it is easier to scan directory, and difference
-in performance is not much.
+Aha, point taken.  In this case, looks like I can do:
 
-> We can tune the =20
-> performance of this script, but changing the GIT_DIR structure just=20
-> because of a simple script is a bit overkill to me.
->=20
-> What if this script creates the $projects_list file, for example when=
-=20
-> the $projectroot's mtime changes?  We can even hold mtime info for ev=
-ery=20
-> project's config file.
+    $ git log -C -C --full-diff --name-status/--stat/--summary -- b.txt
 
-I don't understand what you wanted to say here. $projects_list file
-lists only project path (project name) and project owner.
+as Sean has suggested to get the copy information back.  Or are you saying that
+even with "--full-diff" I can lose copy information in some cases?
 
---=20
-Jakub Narebski
-Poland
+
+MP
+
+
+
+      ____________________________________________________________________________________
+Looking for last minute shopping deals?  
+Find them fast with Yahoo! Search.  http://tools.search.yahoo.com/newsearch/category.php?category=shopping
