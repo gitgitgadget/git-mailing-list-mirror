@@ -1,121 +1,140 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [RFC] Authenticate push via PGP signature, not SSH
-Date: Tue, 29 Jan 2008 20:08:45 +0100
-Message-ID: <20080129190845.GC30093@artemis.madism.org>
-References: <479D5611.4010205@vilain.net> <20080128081258.GE24004@spearce.org> <479E5021.7010404@vilain.net> <20080129041000.GK24004@spearce.org>
+From: Jim Meyering <jim@meyering.net>
+Subject: [PATCH] fix doc typos
+Date: Tue, 29 Jan 2008 20:38:55 +0100
+Message-ID: <87myqoxvzk.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="xo44VMWPx7vlQ2+2";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jan 29 20:09:24 2008
+Content-Type: text/plain; charset=us-ascii
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 29 20:39:44 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJvpj-0005eS-0H
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 20:09:23 +0100
+	id 1JJwIx-0000mu-IB
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 20:39:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754563AbYA2TIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2008 14:08:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754038AbYA2TIs
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 14:08:48 -0500
-Received: from pan.madism.org ([88.191.52.104]:58781 "EHLO hermes.madism.org"
+	id S934213AbYA2TjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 14:39:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934211AbYA2Ti7
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 14:38:59 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:45031 "EHLO smtp3-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751227AbYA2TIr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2008 14:08:47 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 11EEB2BE49;
-	Tue, 29 Jan 2008 20:08:45 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 4EB68151263; Tue, 29 Jan 2008 20:08:45 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Sam Vilain <sam@vilain.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20080129041000.GK24004@spearce.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S934204AbYA2Ti5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2008 14:38:57 -0500
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id DC78D17B59E
+	for <git@vger.kernel.org>; Tue, 29 Jan 2008 20:38:55 +0100 (CET)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id BA2F717B56C
+	for <git@vger.kernel.org>; Tue, 29 Jan 2008 20:38:55 +0100 (CET)
+Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
+	by rho.meyering.net (Acme Bit-Twister) with ESMTP id 7822319DE
+	for <git@vger.kernel.org>; Tue, 29 Jan 2008 20:38:55 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71988>
 
 
---xo44VMWPx7vlQ2+2
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Jim Meyering <meyering@redhat.com>
+---
+ Documentation/RelNotes-1.5.3.3.txt   |    2 +-
+ Documentation/git-config.txt         |    2 +-
+ Documentation/git-cvsserver.txt      |    4 ++--
+ Documentation/git-rev-parse.txt      |    6 +++---
+ Documentation/technical/racy-git.txt |    2 +-
+ 5 files changed, 8 insertions(+), 8 deletions(-)
 
-On Tue, Jan 29, 2008 at 04:10:00AM +0000, Shawn O. Pearce wrote:
-> * PGP public key storage:
->=20
->   Use a "hidden" ref called "refs/access-keys" to store a commit.
->   The access control change log is a normal Git commit chain.
->=20
->   The tree under this commit stores a file per <email> string.
->   Public keys for auth line validation are located by <email>,
->   from the tip of this branch.
->=20
->   This branch could be a symlink to another repository (e.g.
->   a site-wide "admin" repository) and the ODB for that other
->   repository could be an alternate for this repository.
+diff --git a/Documentation/RelNotes-1.5.3.3.txt b/Documentation/RelNotes-1.5.3.3.txt
+index 2a7bfdd..d213846 100644
+--- a/Documentation/RelNotes-1.5.3.3.txt
++++ b/Documentation/RelNotes-1.5.3.3.txt
+@@ -12,7 +12,7 @@ Fixes since v1.5.3.2
+  * The default shell on some FreeBSD did not execute the
+    argument parsing code correctly and made git unusable.
 
-  This won't work well, because I don't think GnuPG is able to check
-some signature against an armored GPG public Key (at least I didn't
-found a way to do that). You have to create one pubring per submitter,
-wich is kind of a waste in fact, and the format is horribly binary.
+- * git-svn incorrectly spawned pager even when the user user
++ * git-svn incorrectly spawned pager even when the user
+    explicitly asked not to.
 
-  I don't even know if you really need the versionning of this
-pseudo-keyring, and if a .git/keyring.gpg isn't enough.
+  * sample post-receive hook overquoted the envelope sender
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index e4d0e47..fa16171 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -130,7 +130,7 @@ See also <<FILES>>.
 
-  As a side note, you don't really need to use GIT_PUSH_*. It doesn't
-make anything safer (as the UIDs of a given public key are public
-information anyways), you just want to know which key signed that data,
-and the signature holds that information. Hence if you still want to
-have a flat-file based keyring (which I repeat I don't think gpg
-supports directly -- and that's really a shame) you'd better index them
-per key fingerprint than by author name.
+ -z, --null::
+ 	For all options that output values and/or keys, always
+-	end values with with the null character (instead of a
++	end values with the null character (instead of a
+ 	newline). Use newline instead as a delimiter between
+ 	key and value. This allows for secure parsing of the
+ 	output without getting confused e.g. by values that
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index d75e401..c831548 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -204,7 +204,7 @@ about `DBI->connect()`.
 
-  And then you just need to call gpg this way:
+ gitcvs.dbname::
+ 	Database name. The exact meaning depends on the
+-	used database driver, for SQLite this is a filename.
++	selected database driver, for SQLite this is a filename.
+ 	Supports variable substitution (see below). May
+ 	not contain semicolons (`;`).
+ 	Default: '%Ggitcvs.%m.sqlite'
+@@ -215,7 +215,7 @@ gitcvs.dbdriver::
+ 	with 'DBD::SQLite', reported to work with
+ 	'DBD::Pg', and reported *not* to work with 'DBD::mysql'.
+ 	Please regard this as an experimental feature. May not
+-	contain double colons (`:`).
++	contain colons (`:`).
+ 	Default: 'SQLite'
 
-$ gpg --keyring path/to/the/keyring.gpg --quiet --batch --status-fd 1 --ver=
-ify some-file.tar.gz.gpg 2>|/dev/null
-[GNUPG:] SIG_ID dw0VliO0DFjOQA3HUSHijYekQYY 2008-01-29 1201633002
-[GNUPG:] GOODSIG BC6AFB5BA1EE761C Pierre Habouzit <pierre.habouzit@polytech=
-nique.edu>
-[GNUPG:] VALIDSIG 72B4C59ADA78D70E055C129EBC6AFB5BA1EE761C 2008-01-29 12016=
-33002 0 3 0 17 2 00 72B4C59ADA78D70E055C129EBC6AFB5BA1EE761C
-[GNUPG:] TRUST_ULTIMATE
+ gitcvs.dbuser::
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 5d9c369..af98882 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -229,13 +229,13 @@ blobs contained in a commit.
+ * A colon, optionally followed by a stage number (0 to 3) and a
+   colon, followed by a path; this names a blob object in the
+   index at the given path.  Missing stage number (and the colon
+-  that follows it) names an stage 0 entry. During a merge, stage
++  that follows it) names a stage 0 entry. During a merge, stage
+   1 is the common ancestor, stage 2 is the target branch's version
+   (typically the current branch), and stage 3 is the version from
+   the branch being merged.
 
-  And if the key is not in your keyring this looks like:
-$ GNUPGHOME=3D/tmp gpg --verify --status-fd 1 some-file.tar.gz.gpg 2>/dev/n=
-ull
-[GNUPG:] ERRSIG BC6AFB5BA1EE761C 17 2 00 1201633002 9
-[GNUPG:] NO_PUBKEY BC6AFB5BA1EE761C
-                   ^^^^^^^^^^^^^^^^
-            that's the key id you look for.
+ Here is an illustration, by Jon Loeliger.  Both node B and C are
+-a commit parents of commit node A.  Parent commits are ordered
++commit parents of commit node A.  Parent commits are ordered
+ left-to-right.
 
+     G   H   I   J
+@@ -291,7 +291,7 @@ and its parent commits exists.  `r1{caret}@` notation means all
+ parents of `r1`.  `r1{caret}!` includes commit `r1` but excludes
+ its all parents.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+-Here are a handful examples:
++Here are a handful of examples:
 
---xo44VMWPx7vlQ2+2
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHn3m9vGr7W6HudhwRAp3eAJkBSeoQfLCVXBpImrXYXu9ljjvrYwCglP9O
-efBHlHHvXiE0MPBKY89J6bI=
-=+jEn
------END PGP SIGNATURE-----
-
---xo44VMWPx7vlQ2+2--
+    D                G H D
+    D F              G H I J D F
+diff --git a/Documentation/technical/racy-git.txt b/Documentation/technical/racy-git.txt
+index 5030d9f..6bdf034 100644
+--- a/Documentation/technical/racy-git.txt
++++ b/Documentation/technical/racy-git.txt
+@@ -184,7 +184,7 @@ In a large project where raciness avoidance cost really matters,
+ however, the initial computation of all object names in the
+ index takes more than one second, and the index file is written
+ out after all that happens.  Therefore the timestamp of the
+-index file will be more than one seconds later than the the
++index file will be more than one seconds later than the
+ youngest file in the working tree.  This means that in these
+ cases there actually will not be any racily clean entry in
+ the resulting index.
+--
+1.5.4.rc5.1.ge6bfe
