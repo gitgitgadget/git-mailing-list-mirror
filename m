@@ -1,81 +1,80 @@
-From: Max Pollard <ajaxsupremo@yahoo.com>
-Subject: Re: Can git log <file> follow log of its origins?
-Date: Tue, 29 Jan 2008 13:40:14 -0800 (PST)
-Message-ID: <743519.95328.qm@web45916.mail.sp1.yahoo.com>
-References: <7vr6g0mip2.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git-revert is a memory hog
+Date: Wed, 30 Jan 2008 08:51:09 +1100 (EST)
+Message-ID: <alpine.LFD.1.00.0801300844170.28476@www.l.google.com>
+References: <20080127172748.GD2558@does.not.exist> <20080128055933.GA13521@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 29 22:40:54 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Adrian Bunk <bunk@kernel.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 29 22:52:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJyCK-0003n8-F3
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 22:40:52 +0100
+	id 1JJyNJ-000843-MJ
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 22:52:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753595AbYA2VkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2008 16:40:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750837AbYA2VkT
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 16:40:19 -0500
-Received: from n4d.bullet.mail.tp2.yahoo.com ([203.188.202.147]:48813 "HELO
-	n4d.bullet.mail.tp2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751285AbYA2VkS (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Jan 2008 16:40:18 -0500
-Received: from [202.43.196.225] by n4.bullet.mail.tp2.yahoo.com with NNFMP; 29 Jan 2008 21:40:16 -0000
-Received: from [217.12.4.214] by t2.bullet.tpe.yahoo.com with NNFMP; 29 Jan 2008 21:40:16 -0000
-Received: from [216.252.122.216] by t1.bullet.ukl.yahoo.com with NNFMP; 29 Jan 2008 21:40:15 -0000
-Received: from [69.147.65.172] by t1.bullet.sp1.yahoo.com with NNFMP; 29 Jan 2008 21:40:15 -0000
-Received: from [127.0.0.1] by omp507.mail.sp1.yahoo.com with NNFMP; 29 Jan 2008 21:40:15 -0000
-X-Yahoo-Newman-Property: ymail-5
-X-Yahoo-Newman-Id: 261786.5939.bm@omp507.mail.sp1.yahoo.com
-Received: (qmail 96299 invoked by uid 60001); 29 Jan 2008 21:40:14 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=31o+mjY4CQ8SSyaj+osAK3B0U5+ulSKkhUUBunoGlG4YaU5fY1pqw52/fo4JOOj+2KZd5AblTkD0b01cHk9FVYCLS5VTkwxQrQpqeY5+CbAA97cMiRTI/GUxUykn3XuaPWwrTBI8uwjCcntiLN0/5RaWS960kDpkH3ZegWaqDJA=;
-X-YMail-OSG: I0s_wy4VM1nPJooKdkihsGcjwLRhZIb.64mAGUq_abaRtTPKYQDBpiu_HKYUVsj_G7QTwuSQDu5zdp3xpX74WFDM1A--
-Received: from [66.122.195.143] by web45916.mail.sp1.yahoo.com via HTTP; Tue, 29 Jan 2008 13:40:14 PST
-In-Reply-To: <7vr6g0mip2.fsf@gitster.siamese.dyndns.org>
+	id S1752017AbYA2Vvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 16:51:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752466AbYA2Vvl
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 16:51:41 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:36343 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750850AbYA2Vvk (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Jan 2008 16:51:40 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0TLpCVh014955
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 29 Jan 2008 13:51:13 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m0TLpAtA006171;
+	Tue, 29 Jan 2008 13:51:11 -0800
+X-X-Sender: torvalds@www.l.google.com
+In-Reply-To: <20080128055933.GA13521@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-2.421 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_63
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72001>
 
 
---- Junio C Hamano wrote:
 
-> Max Pollard writes:
+On Mon, 28 Jan 2008, Jeff King wrote:
 > 
-> > ...  So -C -C is the answer, with --name-status or --stat to
-> > actually show the result.
-> 
-> The real "answer" part in that example is not -C -C.  Obviously,
-> you would need double-C aka --find-copies-harder, because you
-> did not change a.txt when creating b.txt, so it is still needed.
-> 
-> But the essential part of the answer is "not giving b.txt as the
-> pathspec, so that whatever _other_ file that could have been
-> copied into it is still visible when the command works".
-> 
-> If you say "git log --name-status -C -C -- b.txt", you would be
-> back to square one.
+> I tried to reproduce this, but my peak heap allocation was only around
+> 20MB. Is your repository fully packed? Not packed at all? Can you use
+> valgrind/massif to figure out where the memory is going?
 
-Aha, point taken.  In this case, looks like I can do:
+I definitely can reproduce it, it's horrid.
 
-    $ git log -C -C --full-diff --name-status/--stat/--summary -- b.txt
+This is from "top" fairly late in the game, but with the thing not even 
+done yet. Current git, pretty much fully (and fairly aggressively) packed 
+current kernel repo, and using "diff.renamelmit=0".
 
-as Sean has suggested to get the copy information back.  Or are you saying that
-even with "--full-diff" I can lose copy information in some cases?
+	4751 torvalds  20   0  852m 446m  47m R   72 22.4   2:46.58 git-merge-recur
 
+It finally finished with time reporting:
 
-MP
+	208.15user 3.50system 4:01.50elapsed 87%CPU (0avgtext+0avgdata 0maxresident)k
+	238736inputs+4544outputs (8261major+280971minor)pagefaults 0swaps
 
+where those 280971 minor page faults are what largely indicates how much 
+memory it used (the technical term for that number is "metric buttload of 
+memory").
 
+But I'm in Melbourne right now on my laptop,and probably won't be able to 
+debug this much. 
 
-      ____________________________________________________________________________________
-Looking for last minute shopping deals?  
-Find them fast with Yahoo! Search.  http://tools.search.yahoo.com/newsearch/category.php?category=shopping
+> In your case, the patch doesn't apply cleanly, so we end up doing a
+> 3-way merge (in my tests, it is git-merge-recursive which ends up taking
+> up the memory).
+
+It is indeed git-merge-recursive. It just shouldn't take that much memory.
+
+		Linus
