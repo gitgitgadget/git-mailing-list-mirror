@@ -1,103 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Add info about $projectroot and $projects_list to
-	gitweb/README
-Date: Tue, 29 Jan 2008 20:52:32 +0100
-Message-ID: <20080129195231.31960.78215.stgit@localhost.localdomain>
+From: Max Pollard <ajaxsupremo@yahoo.com>
+Subject: Re: Can git log <file> follow log of its origins?
+Date: Tue, 29 Jan 2008 11:47:20 -0800 (PST)
+Message-ID: <146301.84241.qm@web45914.mail.sp1.yahoo.com>
+References: <BAYC1-PASMTP0711D909B278C305D7F28AAE350@CEZ.ICE>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 29 20:53:45 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Sean <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Tue Jan 29 20:54:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJwWY-00061z-Uz
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 20:53:39 +0100
+	id 1JJwXV-0006OI-AO
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 20:54:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750964AbYA2TxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2008 14:53:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751061AbYA2TxG
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 14:53:06 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:30470 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750959AbYA2TxE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2008 14:53:04 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so255081nfb.21
-        for <git@vger.kernel.org>; Tue, 29 Jan 2008 11:53:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:subject:to:date:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
-        bh=XDOVMEw5IRIq3S5M5j30z/L3M1JN+pJ4x6NaXkABsLE=;
-        b=AmHS40fEdyTMKYnFGGll1QBljPAqIWNgE88uOPnH+a4UpjNAkBb099d9fsDXgOxuqgfAtErULOj6L/OfuL3CaMrHg3qQ2eYm8rdIlQaX4cvnEiH0b1Alu59m2EF7um2170alB3TXcf7PqDvBxFfe6q++sOZfuvTW14iUkiuv43A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:subject:to:date:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
-        b=gS4qSomvRA6fTF+w90UBQbF3Gn/wEtcFE3P7b4V7QsGG0R3EMOIDoTDpqx4cNeKRZieq8xrHvOPugjJrNsHl+nlsmGT0acY5sNhlMMNozrsfs4uWW2cRfdg4QgpL+XKS5vF5bXY2sCrFH1Zmnh1MkcCplKF3PRGv/mGgsnqf7Yg=
-Received: by 10.78.166.7 with SMTP id o7mr10192968hue.31.1201636380716;
-        Tue, 29 Jan 2008 11:53:00 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.244.23])
-        by mx.google.com with ESMTPS id 4sm2860187hud.61.2008.01.29.11.52.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 29 Jan 2008 11:52:58 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m0TJqWL3031986
-	for <git@vger.kernel.org>; Tue, 29 Jan 2008 20:52:38 +0100
-User-Agent: StGIT/0.14.1
+	id S1751306AbYA2TyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 14:54:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751061AbYA2TyE
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 14:54:04 -0500
+Received: from n22b.bullet.mail.sp1.yahoo.com ([69.147.65.254]:45670 "HELO
+	n22b.bullet.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751100AbYA2TyD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Jan 2008 14:54:03 -0500
+Received: from [216.252.122.219] by n22.bullet.sp1.yahoo.com with NNFMP; 29 Jan 2008 19:54:01 -0000
+Received: from [69.147.65.162] by t4.bullet.sp1.yahoo.com with NNFMP; 29 Jan 2008 19:54:01 -0000
+Received: from [127.0.0.1] by omp407.mail.sp1.yahoo.com with NNFMP; 29 Jan 2008 19:54:01 -0000
+X-Yahoo-Newman-Property: ymail-5
+X-Yahoo-Newman-Id: 30709.86711.bm@omp407.mail.sp1.yahoo.com
+Received: (qmail 89599 invoked by uid 60001); 29 Jan 2008 19:47:21 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=OqRqPrQXKcGi5imxHFMgKr+FK/nqH58cDfS946TLZnL04+8JAB7ruwbpLugoLNq7+d4RLNdSUCgYR5ogyDB0jplnXf6fSFKnB6rqQUUr7LM0K1kug5tRg3YuF9O9AUuYEl8hfOsDqIPjnuIX8LXlu0bZuF1XcQlD0gLZSq6e9l4=;
+X-YMail-OSG: qToBwiIVM1kK5.3eZ5949dEjAoIqVo2nc5AGsWEBdSBMSCKIpR_4fHgUh.aBHTr38z2z6u_.rBZUhct6UGPHjTbrbg--
+Received: from [66.122.195.143] by web45914.mail.sp1.yahoo.com via HTTP; Tue, 29 Jan 2008 11:47:20 PST
+In-Reply-To: <BAYC1-PASMTP0711D909B278C305D7F28AAE350@CEZ.ICE>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71990>
 
 
-Those two configuration variables are important enough that it is
-worth to explicitely write about them in the "Gitweb config file
-variables" section even if they are usually set during build by
-GITWEB_PROJECTROOT and GITWEB_LIST build (Makefile) configuration
-variables.
+--- Sean wrote:
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
+> On Tue, 29 Jan 2008 09:48:05 -0800 (PST)
+> Max Pollard wrote:
+> 
+> > I only see the log corresponding to the 2nd commit (v1.5.3.5).  Is it
+> > possible to have the above command keep going and show the history of
+> > a.txt?  Or at least somehow indicate that b.txt originated from a.txt?
+> 
+> Hi Max,
+> 
+> Not sure it will leave you feeling totally satisfied but the
+> following command will at least show you the copy which
+> occurred in that commit:
+> 
+> $ git log --full-diff -C --find-copies-harder --stat -- b.txt
+> commit 578ecbc516e70ce7178545233192a08369a07101
+> Author: xyz <x@y.z>
+> Date:   Tue Jan 29 13:11:16 2008 -0500
+> 
+>     Copy a.txt to b.txt
+> 
+>  a.txt => b.txt |    0 
+>  1 files changed, 0 insertions(+), 0 deletions(-)
+> 
+> If you had done a rename instead of a copy, then "git log --follow b.txt"
+> would have done what you're looking for, but there is no corresponding option
+> to follow copies.
 
- gitweb/README |   17 +++++++++++++++--
- 1 files changed, 15 insertions(+), 2 deletions(-)
+Many thanks for that Sean.  I saw all the options in the manual, but couldn't
+figure out how to put them together.
+
+This is exactly the information I wanted.  It appears to identify copies in
+both text & binary files even if contents of b.txt are modified before commit
+(or at least modified in ways the copy-detection logic can identify copies).
 
 
-diff --git a/gitweb/README b/gitweb/README
-index b28f59f..4c8bedf 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -129,17 +129,30 @@ descriptions.
- Gitweb config file variables
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--You can set, among others,  the following variables in gitweb config files:
-+You can set, among others, the following variables in gitweb config files
-+(with the exception of $projectroot and $projects_list this list does
-+not include variables usually directly set during build):
-  * $GIT
-    Cure git executable to use.  By default set to "$GIT_BINDIR/git", which
-    in turn is by default set to "$(bindir)/git".  If you use git from binary
-    package, set this to "/usr/bin/git".  This can just be "git" if your
-    webserver has a sensible PATH.  If you have multiple git versions
--   installed it is / can be used to choose which one to use.
-+   installed it can be used to choose which one to use.
-  * $version
-    Gitweb version, set automatically when creating gitweb.cgi from
-    gitweb.perl. You might want to modify it if you are running modified
-    gitweb.
-+ * $projectroot
-+   Absolute filesystem path which will be prepended to project path;
-+   the path to repository is $projectroot/$project.  Set to
-+   $GITWEB_PROJECTROOT during installation.  This variable have to be
-+   set correctly for gitweb to find repositories.
-+ * $projects_list
-+   Source of projects list, either directory to scan, or text file
-+   with list of repositories (in the "<URI-encoded repository path> SPC
-+   <URI-encoded repository owner>" format).  Set to $GITWEB_LIST
-+   during installation.  If empty, $projectroot is used to scan for
-+   repositories.
-  * $my_url, $my_uri
-    URL and absolute URL of gitweb script; you might need to set those
-    variables if you are using 'pathinfo' feature: see also below.
+MP
+
+
+
+      ____________________________________________________________________________________
+Be a better friend, newshound, and 
+know-it-all with Yahoo! Mobile.  Try it now.  http://mobile.yahoo.com/;_ylt=Ahu06i62sR8HDtDypao8Wcj9tAcJ 
