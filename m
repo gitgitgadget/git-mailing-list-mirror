@@ -1,72 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: convert from perl internal to utf8 for commitdiff_plain
-Date: Mon, 28 Jan 2008 21:52:17 -0800
-Message-ID: <7vejc1qium.fsf@gitster.siamese.dyndns.org>
-References: <87ve5dicih.wl@mail2.atmark-techno.com>
-	<7vir1dqjg0.fsf@gitster.siamese.dyndns.org>
-	<87fxwhi3qj.wl@mail2.atmark-techno.com>
+From: Miles Bader <miles.bader@necel.com>
+Subject: Re: [PATCH] config.c: Expand $HOME and tilde character in core.excludesfile
+Date: Tue, 29 Jan 2008 14:59:42 +0900
+Message-ID: <buo7ihtcgtt.fsf@dhapc248.dev.necel.com>
+References: <y7a9aaem.fsf@blue.sea.net> <m3y7a98ttg.fsf@localhost.localdomain>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Yasushi SHOJI <yashi@atmark-techno.com>
-X-From: git-owner@vger.kernel.org Tue Jan 29 06:53:05 2008
+Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 29 07:00:57 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJjP7-0002Tt-6T
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 06:53:05 +0100
+	id 1JJjWf-000481-5T
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 07:00:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754179AbYA2Fw3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2008 00:52:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754258AbYA2Fw3
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 00:52:29 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49333 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753650AbYA2Fw2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2008 00:52:28 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D8A81289F;
-	Tue, 29 Jan 2008 00:52:26 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 58B9D289E;
-	Tue, 29 Jan 2008 00:52:24 -0500 (EST)
-In-Reply-To: <87fxwhi3qj.wl@mail2.atmark-techno.com> (Yasushi SHOJI's message
-	of "Tue, 29 Jan 2008 14:45:56 +0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753901AbYA2GAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 01:00:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753762AbYA2GAA
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 01:00:00 -0500
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:38467 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751785AbYA2F77 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2008 00:59:59 -0500
+Received: from relay11.aps.necel.com ([10.29.19.46])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id m0T5xhDH019844;
+	Tue, 29 Jan 2008 14:59:43 +0900 (JST)
+Received: from relay21.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay11.aps.necel.com with ESMTP; Tue, 29 Jan 2008 14:59:43 +0900
+Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay21.aps.necel.com with ESMTP; Tue, 29 Jan 2008 14:59:43 +0900
+Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
+	id B7F5F4B; Tue, 29 Jan 2008 14:59:42 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+Blat: Foop
+In-Reply-To: <m3y7a98ttg.fsf@localhost.localdomain> (Jakub Narebski's message
+	of "Mon, 28 Jan 2008 14:32:51 -0800 (PST)")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71951>
 
-Yasushi SHOJI <yashi@atmark-techno.com> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
+> First, git project does NOT use GNU ChangeLog convention for it's
+> commit messages.  We rather use descriptive commit messages.
 
-> At Mon, 28 Jan 2008 21:39:27 -0800,
-> Junio C Hamano wrote:
->> 
->> Yasushi SHOJI <yashi@atmark-techno.com> writes:
->> 
->> > This patch effectively revert the commitdiff plain part of the commit
->> >
->> > 	59b9f61a3f76762dc975e99cc05335a3b97ad1f9
->> >
->> > which converted from print to here-doc. but it doesn't
->> > explain why in the commit log.
->> 
->> I think the patch makes sense but the above is misleading.  Read
->> it again.
->> 
->> Doesn't it sound like you are accusing that 59b9f61a introduced
->> a regression when it converted existsing "print utf8()" to
->> "print <<here-doc" without saying that is what it is doing?
->
-> sorry about my stupid english.  What I meant was that because commit
-> log doesn't say _why_ it changed to here-doc, I couldn't be sure it
-> was ok to overwrite the change introduced by the commit 59b9f61a3.
->
-> IOW, I was tring to ask, "is it ok to revert back to print?"
+Not that what Jari wrote had much resemblance to GNU ChangeLog format...
 
-Sure.  Can I forge your Sign-off?
+-Miles
+
+-- 
+Opposition, n. In politics the party that prevents the Goverment from running
+amok by hamstringing it.
