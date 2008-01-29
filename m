@@ -1,54 +1,80 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: git-revert is a memory hog
-Date: Tue, 29 Jan 2008 17:30:10 -0500
-Message-ID: <20080129223010.GA4314@coredump.intra.peff.net>
-References: <20080127172748.GD2558@does.not.exist> <20080128055933.GA13521@coredump.intra.peff.net> <alpine.LFD.1.00.0801300844170.28476@www.l.google.com> <20080129222007.GA3985@coredump.intra.peff.net>
+Date: Tue, 29 Jan 2008 14:36:24 -0800
+Message-ID: <7vfxwgmf87.fsf@gitster.siamese.dyndns.org>
+References: <20080127172748.GD2558@does.not.exist>
+	<20080128055933.GA13521@coredump.intra.peff.net>
+	<alpine.LFD.1.00.0801300844170.28476@www.l.google.com>
+	<20080129222007.GA3985@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Adrian Bunk <bunk@kernel.org>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jan 29 23:30:48 2008
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Adrian Bunk <bunk@kernel.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 29 23:37:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJyye-0005bA-D7
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 23:30:48 +0100
+	id 1JJz4o-00080o-Dg
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 23:37:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753376AbYA2WaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2008 17:30:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753072AbYA2WaP
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 17:30:15 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2819 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751264AbYA2WaO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2008 17:30:14 -0500
-Received: (qmail 11424 invoked by uid 111); 29 Jan 2008 22:30:12 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 29 Jan 2008 17:30:12 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jan 2008 17:30:10 -0500
-Content-Disposition: inline
-In-Reply-To: <20080129222007.GA3985@coredump.intra.peff.net>
+	id S1753072AbYA2Wgj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 17:36:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753301AbYA2Wgj
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 17:36:39 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33297 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753044AbYA2Wgi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2008 17:36:38 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E1BB83AB0;
+	Tue, 29 Jan 2008 17:36:36 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A5FB3AAD;
+	Tue, 29 Jan 2008 17:36:30 -0500 (EST)
+In-Reply-To: <20080129222007.GA3985@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 29 Jan 2008 17:20:07 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72007>
 
-On Tue, Jan 29, 2008 at 05:20:07PM -0500, Jeff King wrote:
+Jeff King <peff@peff.net> writes:
 
-> The culprit seems to be diffcore-rename.c:476:
-> 
->   mx = xmalloc(sizeof(*mx) * num_create * num_src);
-> 
-> Where that ends up allocating about 450M. I think this is exactly the
-> sort of case that renamelimit was introduced to address.
+> On Wed, Jan 30, 2008 at 08:51:09AM +1100, Linus Torvalds wrote:
+>
+>> I definitely can reproduce it, it's horrid.
+>> 
+>> This is from "top" fairly late in the game, but with the thing not even 
+>> done yet. Current git, pretty much fully (and fairly aggressively) packed 
+>> current kernel repo, and using "diff.renamelmit=0".
+>
+> Hrm, setting diff.renamelimit to 0 lets me reproduce (I thought I tried
+> it before, but clearly not...).
 
-BTW, a much easier way to see the problem is with:
+Hmph.  But I wonder why this part does not trigger, even when
+you have renamelimit set to 0.
 
-  git diff -M -l0 d19fbe8a76
+	/*
+	 * This basically does a test for the rename matrix not
+	 * growing larger than a "rename_limit" square matrix, ie:
+	 *
+	 *    rename_dst_nr * rename_src_nr > rename_limit * rename_limit
+	 *
+	 * but handles the potential overflow case specially (and we
+	 * assume at least 32-bit integers)
+	 */
+	if (rename_limit <= 0 || rename_limit > 32767)
+		rename_limit = 32767;
+	if (rename_dst_nr > rename_limit && rename_src_nr > rename_limit)
+		goto cleanup;
+	if (rename_dst_nr * rename_src_nr > rename_limit * rename_limit)
+		goto cleanup;
 
-It's just a _really_ old commit, and the rename detection has to work on
-a large number of files.
-
--Peff
+I wonder if the second one for the overflow avoidance should be
+using || instead of &&, though.
