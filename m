@@ -1,102 +1,86 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] Secure central repositories by UNIX socket authentication
-Date: Mon, 28 Jan 2008 22:11:05 -0500
-Message-ID: <20080129031105.GI24004@spearce.org>
-References: <20080127103934.GA2735@spearce.org> <7vsl0ix4gh.fsf@gitster.siamese.dyndns.org> <20080128004722.GZ24004@spearce.org> <7vabmqwgvt.fsf@gitster.siamese.dyndns.org> <20080128075125.GC24004@spearce.org> <alpine.DEB.1.00.0801280922160.3774@alchemy.localdomain>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH 1/2] Add test to ensure that "stg clean" preserves
+	conflicting patches
+Date: Tue, 29 Jan 2008 04:11:12 +0100
+Message-ID: <20080129031014.1095.78501.stgit@yoghurt>
+References: <20080129030752.1095.27968.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Asheesh Laroia <asheesh@asheesh.org>
-X-From: git-owner@vger.kernel.org Tue Jan 29 04:11:44 2008
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 29 04:11:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJgsx-0005ho-Sw
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 04:11:44 +0100
+	id 1JJgsz-0005ho-7P
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 04:11:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753542AbYA2DLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jan 2008 22:11:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753273AbYA2DLM
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 22:11:12 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:50562 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753229AbYA2DLL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jan 2008 22:11:11 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JJgsB-0002p9-I4; Mon, 28 Jan 2008 22:10:55 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id C32A220FBAE; Mon, 28 Jan 2008 22:11:05 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0801280922160.3774@alchemy.localdomain>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753679AbYA2DLR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jan 2008 22:11:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754290AbYA2DLQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Jan 2008 22:11:16 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1866 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753641AbYA2DLO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jan 2008 22:11:14 -0500
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1JJgsR-0000bo-00; Tue, 29 Jan 2008 03:11:11 +0000
+In-Reply-To: <20080129030752.1095.27968.stgit@yoghurt>
+User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71936>
 
-Asheesh Laroia <asheesh@asheesh.org> wrote:
-> On Mon, 28 Jan 2008, Shawn O. Pearce wrote:
-> >
-> >I've had enough cases of users losing their SSH key and needing to 
-> >recreate it that I'd rather not have to manage a 50 user long 
-> >authorized_keys file.
-> 
-> For what it's worth, if you haven't seen gitosis yet, you might want to 
-> take a look - at least it makes managing the keys easy. 
-> http://scie.nti.st/2007/11/14/hosting-git-repositories-the-easy-and-secure-way 
-> has a nice tutorial.
+=46rom: Pavel Roskin <proski@gnu.org>
 
-Yea, I've looked at it before.  There's a few reasons I don't
-use gitosis, although it does look to be an excellent chunk of
-Git automation:
+If "stg push" fails, the subsequent "stg clean" will remove the patch
+that could not be applied. I think it's wrong. Especially when doing
+"stg pull", it can happen that I want to run "stg clean" to get rid of
+the patches applied upstream so I can concentrate on the conflict.
+Instead, the conflicting patch is removed too.
 
-* Its access controls aren't as powerful
+The test added by this patch should pass once the bug is fixed.
 
-  Frankly the contrib/hooks/update-paranoid script is a lot more
-  powerful then gitosis is, in terms of how it controls what
-  branches a user can modify, and even what files they can change
-  on a particular branch.  And yes, I really do have rulesets that
-  bend that hook to its limits.
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-* It uses the OpenSSH authorized_keys file format
+---
 
-  I'm required to use the F-Secure SSH commerical server at
-  day-job, because its "more trusthworthy" than the portable OpenSSH
-  distribution.  It uses a different syntax for the authorized keys,
-  but can do essentially the same restricted command concept.
+I doctored the commit message a bit, and made the failing test use
+test_expect_failure.
 
-* If its in git, I prefer raw repository access
+ t/t2500-clean.sh |   17 +++++++++++++++++
+ 1 files changed, 17 insertions(+), 0 deletions(-)
 
-  gitosis yanks stuff out into normal files to access it at runtime,
-  e.g. its configuration file.  I've had bad experiences with CVS not
-  properly updating its admin files when changes are made to them.
-  The update-paranoid hook I use actually cats the objects right
-  out of the admin ODB on demand, ensuring its always evaluating
-  the most recent version of the access rules.
 
-* Its Python based.
-
-  I don't grok Python, and would rather not learn to.  So hacking
-  on gitosis isn't something that I would be doing.  Ditto with
-  all of my day-job cohorts.  We use Perl, Bourne shell, and Java,
-  with some tiny amount of Tk thrown about (though I'd say I'm
-  probably the only one there that even remotely groks Tcl/Tk).
-
-But thanks for the pointer.
-
-Now if others corrected all of the above in gitosis (except the
-last item of course, I don't expect it to be rewritten in one of
-my preferred languages) I'd reconsider using it, because inventing
-wheels sucks.
-
--- 
-Shawn.
+diff --git a/t/t2500-clean.sh b/t/t2500-clean.sh
+index 3364c18..b38d868 100755
+--- a/t/t2500-clean.sh
++++ b/t/t2500-clean.sh
+@@ -24,4 +24,21 @@ test_expect_success 'Clean empty patches' '
+     [ "$(echo $(stg unapplied))" =3D "" ]
+ '
+=20
++test_expect_success 'Create a conflict' '
++    stg new p1 -m p1 &&
++    echo bar > foo.txt &&
++    stg refresh &&
++    stg pop &&
++    stg new p2 -m p2
++    echo quux > foo.txt &&
++    stg refresh &&
++    ! stg push
++'
++
++test_expect_failure 'Make sure conflicting patches are preserved' '
++    stg clean &&
++    [ "$(echo $(stg applied))" =3D "p0 p2 p1" ] &&
++    [ "$(echo $(stg unapplied))" =3D "" ]
++'
++
+ test_done
