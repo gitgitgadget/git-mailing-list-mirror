@@ -1,71 +1,63 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] git-relink: avoid hard linking in objects/info directory
-Date: Tue, 29 Jan 2008 16:41:30 -0600
-Message-ID: <479FAB9A.9040009@nrlssc.navy.mil>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-revert is a memory hog
+Date: Tue, 29 Jan 2008 17:45:58 -0500
+Message-ID: <20080129224558.GA4586@coredump.intra.peff.net>
+References: <20080127172748.GD2558@does.not.exist> <20080128055933.GA13521@coredump.intra.peff.net> <alpine.LFD.1.00.0801300844170.28476@www.l.google.com> <20080129222007.GA3985@coredump.intra.peff.net> <7vfxwgmf87.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Adrian Bunk <bunk@kernel.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 29 23:42:27 2008
+X-From: git-owner@vger.kernel.org Tue Jan 29 23:46:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJz9s-0001V3-4M
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 23:42:24 +0100
+	id 1JJzDx-0002wb-8z
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 23:46:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754760AbYA2Wlv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2008 17:41:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754681AbYA2Wlu
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 17:41:50 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50864 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753064AbYA2Wlt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2008 17:41:49 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0TMfVJk029749;
-	Tue, 29 Jan 2008 16:41:31 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 29 Jan 2008 16:41:31 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-X-OriginalArrivalTime: 29 Jan 2008 22:41:31.0112 (UTC) FILETIME=[17BA3680:01C862C8]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15694001
-X-TM-AS-Result: : Yes--8.472800-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjQzLTcwMjM3OS03MDQ5?=
-	=?us-ascii?B?MjctNzAzODA3LTcwMDgxMC03MDQ0MjEtNzAwMDU3LTcwMTQwMy03?=
-	=?us-ascii?B?MDYzOTAtNzAwMTYwLTE4ODAxOS03MDI1NjgtMTIxMzM4LTE0ODAz?=
-	=?us-ascii?B?OS0xNDgwNTE=?=
+	id S1751345AbYA2WqF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 17:46:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752148AbYA2WqE
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 17:46:04 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2449 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750964AbYA2WqC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2008 17:46:02 -0500
+Received: (qmail 11573 invoked by uid 111); 29 Jan 2008 22:46:00 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 29 Jan 2008 17:46:00 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jan 2008 17:45:58 -0500
+Content-Disposition: inline
+In-Reply-To: <7vfxwgmf87.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72009>
 
-git-relink is intended to search for packs and loose objects in
-common between two repositories and to replace the one set with
-hard links to the other. Files other than packs and loose objects
-should not be touched, so add the "info" sub-directory to the
-pattern of directory excludes.
+On Tue, Jan 29, 2008 at 02:36:24PM -0800, Junio C Hamano wrote:
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
- git-relink.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Hmph.  But I wonder why this part does not trigger, even when
+> you have renamelimit set to 0.
+> [...]
+> 	if (rename_limit <= 0 || rename_limit > 32767)
+> 		rename_limit = 32767;
 
-diff --git a/git-relink.perl b/git-relink.perl
-index f6b4f6a..d267404 100755
---- a/git-relink.perl
-+++ b/git-relink.perl
-@@ -40,7 +40,7 @@ my $master_dir = pop @dirs;
- opendir(D,$master_dir . "objects/")
- 	or die "Failed to open $master_dir/objects/ : $!";
- 
--my @hashdirs = grep !/^\.{1,2}$/, readdir(D);
-+my @hashdirs = grep !/^(\.{1,2}|info)$/, readdir(D);
- 
- foreach my $repo (@dirs) {
- 	$linked = 0;
--- 
-1.5.4.rc5.3.gb953
+It does trigger; we set the limit to the obscenely high 32767. My matrix
+was something like 8000x3500.
+
+> 	if (rename_dst_nr > rename_limit && rename_src_nr > rename_limit)
+> 		goto cleanup;
+> 	if (rename_dst_nr * rename_src_nr > rename_limit * rename_limit)
+> 		goto cleanup;
+> 
+> I wonder if the second one for the overflow avoidance should be
+> using || instead of &&, though.
+
+Hrm, yes, I think it can still overflow. (e.g., a 2 by 2^32-1
+situation). But changing it to || isn't right, either; you would
+disallow 1 by 101, which is quite do-able (and the normal case for -C
+-C, I would think).
+
+-Peff
