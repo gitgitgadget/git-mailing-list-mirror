@@ -1,140 +1,103 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: [PATCH] fix doc typos
-Date: Tue, 29 Jan 2008 20:38:55 +0100
-Message-ID: <87myqoxvzk.fsf@rho.meyering.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Add info about $projectroot and $projects_list to
+	gitweb/README
+Date: Tue, 29 Jan 2008 20:52:32 +0100
+Message-ID: <20080129195231.31960.78215.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 29 20:39:44 2008
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 29 20:53:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJwIx-0000mu-IB
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 20:39:35 +0100
+	id 1JJwWY-00061z-Uz
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 20:53:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934213AbYA2TjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2008 14:39:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934211AbYA2Ti7
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 14:38:59 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:45031 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934204AbYA2Ti5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2008 14:38:57 -0500
-Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id DC78D17B59E
-	for <git@vger.kernel.org>; Tue, 29 Jan 2008 20:38:55 +0100 (CET)
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id BA2F717B56C
-	for <git@vger.kernel.org>; Tue, 29 Jan 2008 20:38:55 +0100 (CET)
-Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
-	by rho.meyering.net (Acme Bit-Twister) with ESMTP id 7822319DE
-	for <git@vger.kernel.org>; Tue, 29 Jan 2008 20:38:55 +0100 (CET)
+	id S1750964AbYA2TxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 14:53:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751061AbYA2TxG
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 14:53:06 -0500
+Received: from nf-out-0910.google.com ([64.233.182.189]:30470 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750959AbYA2TxE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2008 14:53:04 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so255081nfb.21
+        for <git@vger.kernel.org>; Tue, 29 Jan 2008 11:53:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:subject:to:date:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
+        bh=XDOVMEw5IRIq3S5M5j30z/L3M1JN+pJ4x6NaXkABsLE=;
+        b=AmHS40fEdyTMKYnFGGll1QBljPAqIWNgE88uOPnH+a4UpjNAkBb099d9fsDXgOxuqgfAtErULOj6L/OfuL3CaMrHg3qQ2eYm8rdIlQaX4cvnEiH0b1Alu59m2EF7um2170alB3TXcf7PqDvBxFfe6q++sOZfuvTW14iUkiuv43A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:date:message-id:user-agent:mime-version:content-type:content-transfer-encoding;
+        b=gS4qSomvRA6fTF+w90UBQbF3Gn/wEtcFE3P7b4V7QsGG0R3EMOIDoTDpqx4cNeKRZieq8xrHvOPugjJrNsHl+nlsmGT0acY5sNhlMMNozrsfs4uWW2cRfdg4QgpL+XKS5vF5bXY2sCrFH1Zmnh1MkcCplKF3PRGv/mGgsnqf7Yg=
+Received: by 10.78.166.7 with SMTP id o7mr10192968hue.31.1201636380716;
+        Tue, 29 Jan 2008 11:53:00 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.244.23])
+        by mx.google.com with ESMTPS id 4sm2860187hud.61.2008.01.29.11.52.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 29 Jan 2008 11:52:58 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m0TJqWL3031986
+	for <git@vger.kernel.org>; Tue, 29 Jan 2008 20:52:38 +0100
+User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71989>
 
 
-Signed-off-by: Jim Meyering <meyering@redhat.com>
+Those two configuration variables are important enough that it is
+worth to explicitely write about them in the "Gitweb config file
+variables" section even if they are usually set during build by
+GITWEB_PROJECTROOT and GITWEB_LIST build (Makefile) configuration
+variables.
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
- Documentation/RelNotes-1.5.3.3.txt   |    2 +-
- Documentation/git-config.txt         |    2 +-
- Documentation/git-cvsserver.txt      |    4 ++--
- Documentation/git-rev-parse.txt      |    6 +++---
- Documentation/technical/racy-git.txt |    2 +-
- 5 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/RelNotes-1.5.3.3.txt b/Documentation/RelNotes-1.5.3.3.txt
-index 2a7bfdd..d213846 100644
---- a/Documentation/RelNotes-1.5.3.3.txt
-+++ b/Documentation/RelNotes-1.5.3.3.txt
-@@ -12,7 +12,7 @@ Fixes since v1.5.3.2
-  * The default shell on some FreeBSD did not execute the
-    argument parsing code correctly and made git unusable.
+ gitweb/README |   17 +++++++++++++++--
+ 1 files changed, 15 insertions(+), 2 deletions(-)
 
-- * git-svn incorrectly spawned pager even when the user user
-+ * git-svn incorrectly spawned pager even when the user
-    explicitly asked not to.
 
-  * sample post-receive hook overquoted the envelope sender
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index e4d0e47..fa16171 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -130,7 +130,7 @@ See also <<FILES>>.
-
- -z, --null::
- 	For all options that output values and/or keys, always
--	end values with with the null character (instead of a
-+	end values with the null character (instead of a
- 	newline). Use newline instead as a delimiter between
- 	key and value. This allows for secure parsing of the
- 	output without getting confused e.g. by values that
-diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-index d75e401..c831548 100644
---- a/Documentation/git-cvsserver.txt
-+++ b/Documentation/git-cvsserver.txt
-@@ -204,7 +204,7 @@ about `DBI->connect()`.
-
- gitcvs.dbname::
- 	Database name. The exact meaning depends on the
--	used database driver, for SQLite this is a filename.
-+	selected database driver, for SQLite this is a filename.
- 	Supports variable substitution (see below). May
- 	not contain semicolons (`;`).
- 	Default: '%Ggitcvs.%m.sqlite'
-@@ -215,7 +215,7 @@ gitcvs.dbdriver::
- 	with 'DBD::SQLite', reported to work with
- 	'DBD::Pg', and reported *not* to work with 'DBD::mysql'.
- 	Please regard this as an experimental feature. May not
--	contain double colons (`:`).
-+	contain colons (`:`).
- 	Default: 'SQLite'
-
- gitcvs.dbuser::
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 5d9c369..af98882 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -229,13 +229,13 @@ blobs contained in a commit.
- * A colon, optionally followed by a stage number (0 to 3) and a
-   colon, followed by a path; this names a blob object in the
-   index at the given path.  Missing stage number (and the colon
--  that follows it) names an stage 0 entry. During a merge, stage
-+  that follows it) names a stage 0 entry. During a merge, stage
-   1 is the common ancestor, stage 2 is the target branch's version
-   (typically the current branch), and stage 3 is the version from
-   the branch being merged.
-
- Here is an illustration, by Jon Loeliger.  Both node B and C are
--a commit parents of commit node A.  Parent commits are ordered
-+commit parents of commit node A.  Parent commits are ordered
- left-to-right.
-
-     G   H   I   J
-@@ -291,7 +291,7 @@ and its parent commits exists.  `r1{caret}@` notation means all
- parents of `r1`.  `r1{caret}!` includes commit `r1` but excludes
- its all parents.
-
--Here are a handful examples:
-+Here are a handful of examples:
-
-    D                G H D
-    D F              G H I J D F
-diff --git a/Documentation/technical/racy-git.txt b/Documentation/technical/racy-git.txt
-index 5030d9f..6bdf034 100644
---- a/Documentation/technical/racy-git.txt
-+++ b/Documentation/technical/racy-git.txt
-@@ -184,7 +184,7 @@ In a large project where raciness avoidance cost really matters,
- however, the initial computation of all object names in the
- index takes more than one second, and the index file is written
- out after all that happens.  Therefore the timestamp of the
--index file will be more than one seconds later than the the
-+index file will be more than one seconds later than the
- youngest file in the working tree.  This means that in these
- cases there actually will not be any racily clean entry in
- the resulting index.
---
-1.5.4.rc5.1.ge6bfe
+diff --git a/gitweb/README b/gitweb/README
+index b28f59f..4c8bedf 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -129,17 +129,30 @@ descriptions.
+ Gitweb config file variables
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+-You can set, among others,  the following variables in gitweb config files:
++You can set, among others, the following variables in gitweb config files
++(with the exception of $projectroot and $projects_list this list does
++not include variables usually directly set during build):
+  * $GIT
+    Cure git executable to use.  By default set to "$GIT_BINDIR/git", which
+    in turn is by default set to "$(bindir)/git".  If you use git from binary
+    package, set this to "/usr/bin/git".  This can just be "git" if your
+    webserver has a sensible PATH.  If you have multiple git versions
+-   installed it is / can be used to choose which one to use.
++   installed it can be used to choose which one to use.
+  * $version
+    Gitweb version, set automatically when creating gitweb.cgi from
+    gitweb.perl. You might want to modify it if you are running modified
+    gitweb.
++ * $projectroot
++   Absolute filesystem path which will be prepended to project path;
++   the path to repository is $projectroot/$project.  Set to
++   $GITWEB_PROJECTROOT during installation.  This variable have to be
++   set correctly for gitweb to find repositories.
++ * $projects_list
++   Source of projects list, either directory to scan, or text file
++   with list of repositories (in the "<URI-encoded repository path> SPC
++   <URI-encoded repository owner>" format).  Set to $GITWEB_LIST
++   during installation.  If empty, $projectroot is used to scan for
++   repositories.
+  * $my_url, $my_uri
+    URL and absolute URL of gitweb script; you might need to set those
+    variables if you are using 'pathinfo' feature: see also below.
