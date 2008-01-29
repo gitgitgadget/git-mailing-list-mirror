@@ -1,81 +1,60 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: --first-parent plus path limiting
-Date: Tue, 29 Jan 2008 10:05:01 +0100
-Message-ID: <479EEC3D.9030100@viscovery.net>
-References: <479EE405.1010001@viscovery.net> <7vk5ltow61.fsf@gitster.siamese.dyndns.org>
+Date: Tue, 29 Jan 2008 01:11:35 -0800
+Message-ID: <7v63xdov20.fsf@gitster.siamese.dyndns.org>
+References: <479EE405.1010001@viscovery.net>
+	<7vk5ltow61.fsf@gitster.siamese.dyndns.org>
+	<479EEC3D.9030100@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 29 10:05:52 2008
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Jan 29 10:13:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJmPc-00052j-At
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 10:05:48 +0100
+	id 1JJmWS-0007PU-LY
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 10:12:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753619AbYA2JFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2008 04:05:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753663AbYA2JFI
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 04:05:08 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:14208 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753619AbYA2JFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2008 04:05:06 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JJmOd-0004Fv-Pf; Tue, 29 Jan 2008 10:04:48 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id A95C56D9; Tue, 29 Jan 2008 10:05:01 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7vk5ltow61.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1755786AbYA2JLs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 04:11:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754278AbYA2JLs
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 04:11:48 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57237 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754100AbYA2JLq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2008 04:11:46 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D34133C01;
+	Tue, 29 Jan 2008 04:11:44 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5E67F3C00;
+	Tue, 29 Jan 2008 04:11:42 -0500 (EST)
+In-Reply-To: <479EEC3D.9030100@viscovery.net> (Johannes Sixt's message of
+	"Tue, 29 Jan 2008 10:05:01 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71971>
 
-Junio C Hamano schrieb:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> 
->> While trying to find out when builtin-fetch.c was merged into master, I
->> noticed that this:
->>
->> $ git log --first-parent --pretty=oneline -- builtin-fetch.c
->>
->> lists b888d61c (Make fetch a builtin), which I did not expect.
-> 
-> Why didn't you?
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-Because ... [see below]
+> I was expecting that it works like "First follow the first-parent, and
+> then simplify the history with respect to builtin-fetch.c."
 
->> This one
->> doesn't list it, as expected:
->>
->> $ git log --first-parent --pretty=oneline
-> 
-> Why did you expect that?  This tells "follow only the first
-> parent chain, ignoring all merges".
+If you first follow the first-parent, the result will by
+definition not have any merges, so there is nothing left to
+simplify.  History simplification is about merge removal,
+looking at all parents.
 
-With "as expected" I actually meant "as expected", not "contrary to
-expectations" ;) So, I did expect *not* to see the commit when the path is
-not limited.
+Removing commits from a single strand of pearls that do not
+touch the specified pathspecs is called "--dense" (which is on
+the default) and can be disabled with "--sparse".
 
-> The former is about "First simplify the history with respect to
-> builtin-fetch.c, and then follow the first-parent of the
-> simplified history.
-
-I was expecting that it works like "First follow the first-parent, and
-then simplify the history with respect to builtin-fetch.c." But that's
-certainly a matter of definition. In this case, I would have found my
-interpretation more useful, but then I don't use --first-parent that often...
-
-Thanks for your clarifications,
--- Hannes
+So, no, it is not a matter of definition, as "first follow the
+first-parent then simplify" does not make much sense.
