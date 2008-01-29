@@ -1,74 +1,67 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [RFH/PATCH] prefix_path(): disallow absolute paths
-Date: Tue, 29 Jan 2008 08:43:42 +0100
-Message-ID: <479ED92E.4020709@viscovery.net>
-References: <47975FE6.4050709@viscovery.net>	<1201463731-1963-1-git-send-email-shawn.bohrer@gmail.com>	<alpine.LSU.1.00.0801272043040.23907@racer.site>	<7v3asiyk2i.fsf@gitster.siamese.dyndns.org>	<20080128003404.GA18276@lintop>	<7vodb6wtix.fsf@gitster.siamese.dyndns.org>	<479D805E.3000209@viscovery.net>	<7vprvmuykw.fsf@gitster.siamese.dyndns.org>	<479D9ADE.6010003@viscovery.net>	<alpine.LSU.1.00.0801281210440.23907@racer.site>	<7vwspts9vj.fsf@gitster.siamese.dyndns.org>	<479ED3AE.5000403@viscovery.net> <7v3ashqedx.fsf@gitster.siamese.dyndns.org>
+From: "Miles Bader" <miles@gnu.org>
+Subject: Re: [PATCH] config.c: Expand $HOME and tilde character in core.excludesfile
+Date: Tue, 29 Jan 2008 16:51:32 +0900
+Message-ID: <fc339e4a0801282351r2f592a58ya9fef377be684e3d@mail.gmail.com>
+References: <y7a9aaem.fsf@blue.sea.net> <m3y7a98ttg.fsf@localhost.localdomain>
+	 <buo7ihtcgtt.fsf@dhapc248.dev.necel.com>
+	 <ee77f5c20801282325k3b2c888el7a2a97b78b799803@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 29 08:44:20 2008
+Cc: "Jakub Narebski" <jnareb@gmail.com>,
+	"Jari Aalto" <jari.aalto@cante.net>, git@vger.kernel.org
+To: "David Symonds" <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 29 08:52:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJl8i-0000K0-Oa
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 08:44:17 +0100
+	id 1JJlGH-00029X-4u
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 08:52:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753692AbYA2Hnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2008 02:43:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752920AbYA2Hnq
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 02:43:46 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:9213 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752478AbYA2Hnp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2008 02:43:45 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JJl7w-0007BM-5S; Tue, 29 Jan 2008 08:43:28 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 1B1C16D9; Tue, 29 Jan 2008 08:43:42 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7v3ashqedx.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753403AbYA2Hve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 02:51:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752373AbYA2Hve
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 02:51:34 -0500
+Received: from an-out-0708.google.com ([209.85.132.250]:26744 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752478AbYA2Hvd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2008 02:51:33 -0500
+Received: by an-out-0708.google.com with SMTP id d31so447179and.103
+        for <git@vger.kernel.org>; Mon, 28 Jan 2008 23:51:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=EWTa3sr4gLREQoVdeaclF2eGuU/2kqpLQzOqt1uZPi0=;
+        b=q4MAYlrn4Ofnk8MO3IJaoFj0LD9Jug4d9q5ryp5nyr46EooZxNpH/jrHOhL1WG/DET5PTd1fvlYB/tLfDRQPNk1bcn0BkdAILoa67WQab/7SAGQhtWj8yNYHc3g869LOv1Fz8qb1UaRL2VQgZ3qFc8HAA94ZG/ZubzlK5L9Hdq8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=kXNbkIJLxfx8+S0mCx9W4qjPx/U/nQFy9HB7fgx24XeknMdJpv7JO9t9erpKLdnmURfq8qp+Aybgt2veOVzkYaiDeHudvsFuRgK0alloDF+hTLvRp9PlfjNxuP/8t/OPRbrzo4qObYspEwRxnDA7nSFJtd0OT6X1GMGYbkAb4HE=
+Received: by 10.100.249.9 with SMTP id w9mr14110956anh.44.1201593092592;
+        Mon, 28 Jan 2008 23:51:32 -0800 (PST)
+Received: by 10.101.70.4 with HTTP; Mon, 28 Jan 2008 23:51:32 -0800 (PST)
+In-Reply-To: <ee77f5c20801282325k3b2c888el7a2a97b78b799803@mail.gmail.com>
+Content-Disposition: inline
+X-Google-Sender-Auth: d64c09b2bf2c38a7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71962>
 
-Junio C Hamano schrieb:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> 
->> I appreciate this new sanitary_copy_path() because I expect that we will
->> need at least one less #ifdef __MINGW32__/#endif compared to our current
->> Windows port.
-> 
-> I would have expected that the whole function would have
-> platform specific implementation to deal with Windows, not just
-> ifdef sprinkled everywhere that says "Oh, on this platform
-> directory separator is a backslash".
+On Jan 29, 2008 4:25 PM, David Symonds <dsymonds@gmail.com> wrote:
+> > Not that what Jari wrote had much resemblance to GNU ChangeLog format...
+>
+> What, like http://www.gnu.org/prep/standards/html_node/Style-of-Change-Logs.html#Style-of-Change-Logs
+> ? It looked like GNU style to me.
 
-I agree. Therefore, we would have *one* conditionalized definition of
-is_dir_sep() upfront, and use that in place of c == '/'.
+No, all the details are wrong.  Just about the only thing in common
+with ChangeLog format is that he used asterisks as bullets, and a
+colon to indicate the descriptive text -- but that's simply what
+people tend to do when making an itemized list in ascii...
 
-The #ifdef I'm addressing above is one that we had to introduce because in
-the old implementation of prefix_path() on Windows we had to rewrite the
-path more often than on *nix due to '\\' => '/' conversion. In your new
-implementation this rewriting now always takes place, but on *nix it more
-often turns out to be an identity operation.
+-Miles
 
-> Especially I have no idea how would that drive lettter stuff
-> would/should work.  When you are in C:\Documents\Panda\, how
-> would you express D:\Movie\Porn\My Favorite.mpg as a relative
-> path?
-
-You can't. But when would this be necessary?
-
--- Hannes
+-- 
+Do not taunt Happy Fun Ball.
