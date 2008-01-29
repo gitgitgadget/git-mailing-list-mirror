@@ -1,66 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: fetch <repo> <branch>:<branch> fetches tags?
-Date: Tue, 29 Jan 2008 00:54:42 -0800
-Message-ID: <7vabmpovu5.fsf@gitster.siamese.dyndns.org>
-References: <479E9063.5000403@nrlssc.navy.mil>
-	<7v3ashs5yg.fsf@gitster.siamese.dyndns.org>
-	<7vodb5qk2b.fsf@gitster.siamese.dyndns.org>
-	<loom.20080129T055937-532@post.gmane.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: --first-parent plus path limiting
+Date: Tue, 29 Jan 2008 10:05:01 +0100
+Message-ID: <479EEC3D.9030100@viscovery.net>
+References: <479EE405.1010001@viscovery.net> <7vk5ltow61.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 29 09:55:39 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 29 10:05:52 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJmFe-0002NR-Ee
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 09:55:30 +0100
+	id 1JJmPc-00052j-At
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 10:05:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753171AbYA2Iy4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2008 03:54:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753135AbYA2Iyz
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 03:54:55 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56645 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752509AbYA2Iyz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2008 03:54:55 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 7619E3A7D;
-	Tue, 29 Jan 2008 03:54:52 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 004053A7C;
-	Tue, 29 Jan 2008 03:54:48 -0500 (EST)
-In-Reply-To: <loom.20080129T055937-532@post.gmane.org> (Brandon Casey's
-	message of "Tue, 29 Jan 2008 08:46:19 +0000 (UTC)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753619AbYA2JFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 04:05:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753663AbYA2JFI
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 04:05:08 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:14208 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753619AbYA2JFG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2008 04:05:06 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1JJmOd-0004Fv-Pf; Tue, 29 Jan 2008 10:04:48 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id A95C56D9; Tue, 29 Jan 2008 10:05:01 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vk5ltow61.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71970>
 
-Brandon Casey <drafnel@gmail.com> writes:
+Junio C Hamano schrieb:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+> 
+>> While trying to find out when builtin-fetch.c was merged into master, I
+>> noticed that this:
+>>
+>> $ git log --first-parent --pretty=oneline -- builtin-fetch.c
+>>
+>> lists b888d61c (Make fetch a builtin), which I did not expect.
+> 
+> Why didn't you?
 
->> Having said that, I do not particularly think the new behaviour
->> is bad per-se.  If you are storing what you fetched locally in
->> tracking branches, you are interested in their work enough to
->> want to auto-follow their tags.
->
-> How is "tracking" defined? Is this a term that implies some configuration
-> to link a local branch to a remote branch? Or is any local branch created
-> from a remote branch considered "tracking"?
+Because ... [see below]
 
-I probably should have said "Instead of just letting fetch
-temporarily store the result in FETCH_HEAD and using it from
-there, you saved it away; that's a good indication of you care
-about it deeply enough".
+>> This one
+>> doesn't list it, as expected:
+>>
+>> $ git log --first-parent --pretty=oneline
+> 
+> Why did you expect that?  This tells "follow only the first
+> parent chain, ignoring all merges".
 
-It's really about what's convenient.  I was somewhat upset that
-the behaviour change was not I was very aware of (perhaps I said
-it was a good idea and I then forgot), I didn't think the
-earlier behaviour was broken, but if I have to choose, I think
-the new behaviour is probably slightly nicer than the old one.
+With "as expected" I actually meant "as expected", not "contrary to
+expectations" ;) So, I did expect *not* to see the commit when the path is
+not limited.
+
+> The former is about "First simplify the history with respect to
+> builtin-fetch.c, and then follow the first-parent of the
+> simplified history.
+
+I was expecting that it works like "First follow the first-parent, and
+then simplify the history with respect to builtin-fetch.c." But that's
+certainly a matter of definition. In this case, I would have found my
+interpretation more useful, but then I don't use --first-parent that often...
+
+Thanks for your clarifications,
+-- Hannes
