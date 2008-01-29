@@ -1,162 +1,150 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: convert from perl internal to utf8 for commitdiff_plain
-Date: Tue, 29 Jan 2008 03:09:50 -0800 (PST)
-Message-ID: <m3prvk99c8.fsf@localhost.localdomain>
-References: <87ve5dicih.wl@mail2.atmark-techno.com>
+Subject: Re: [PATCH] Added sub get_owner_file which checks if there's a file with project owner name
+Date: Tue, 29 Jan 2008 03:26:31 -0800 (PST)
+Message-ID: <m3lk6898kg.fsf@localhost.localdomain>
+References: <1201577766-11601-1-git-send-email-ribas@c3sl.ufpr.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-3
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Yasushi SHOJI <yashi@atmark-techno.com>
-X-From: git-owner@vger.kernel.org Tue Jan 29 12:10:55 2008
+To: Bruno Ribas <ribas@c3sl.ufpr.br>
+X-From: git-owner@vger.kernel.org Tue Jan 29 12:27:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJoMU-0000ck-RK
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 12:10:43 +0100
+	id 1JJocM-0005OD-LA
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 12:27:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753901AbYA2LJz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jan 2008 06:09:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753979AbYA2LJz
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 06:09:55 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:36871 "EHLO
+	id S1754136AbYA2L0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 06:26:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754098AbYA2L0f
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 06:26:35 -0500
+Received: from fg-out-1718.google.com ([72.14.220.153]:3647 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752383AbYA2LJy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Jan 2008 06:09:54 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so2052996fga.17
-        for <git@vger.kernel.org>; Tue, 29 Jan 2008 03:09:52 -0800 (PST)
+	with ESMTP id S1753979AbYA2L0e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2008 06:26:34 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so2057431fga.17
+        for <git@vger.kernel.org>; Tue, 29 Jan 2008 03:26:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:content-transfer-encoding:from:date;
-        bh=Gnr/je8+jLS/Pr2JKNnHD5JR58AvtNGhCWwLkifnbm4=;
-        b=NnIqgVRhx5VhvIe4lY11g5W4nfjZfrW6IQagBZhkzogMetwWamppBBhYn1sl4v4MSPqAvUJBE7feQAi6/DY29hpqOgRMqz/EWyv6K/i0/knDjTaSmhmAR8NgYIratg2k6f5mkD7aEpedSb1EeMXPIVYdK+Vr92btOMluu6xa5NQ=
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=/TJgl/HXaNslQjOMRYo6HujdI7OXQAsSXX97DRojXkI=;
+        b=UQJ+e7pH9IPo5zme1bduCtOY/xa8+nKC782M/9/FX6NIIowGRYf3NGiBGkLQn16C4G/I6ggnJK3t+u+/8xq8d3tjE4JitbcpP0HjzKylQHrj/jGfXnaXOAUGboUzFbCWxW6rlrruY0AtJ5/qUE9k/ZepwZhdd+Ef4/8Hku7aefA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:content-transfer-encoding:from:date;
-        b=SLq7uC9hRxPhPmd/O++EZM9kaBcpfvLkhXr9x6mH0x2IxzhsEY5ltQKFm9k2miMTBzgvdwoW909nS2xMUtVwDCpk6bymR7XTqR267g7skU9Qri/78cQEfm9O7dMFGhhWR54kV4yrkuoh0QVwmOHBvRLCkgBTPEWA1/ltvbdz2GA=
-Received: by 10.82.134.12 with SMTP id h12mr11925852bud.29.1201604992157;
-        Tue, 29 Jan 2008 03:09:52 -0800 (PST)
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=egQ6k1dSsFvOggeVrACv2r+2NHkgDwGLseXs5zg3Jx3pvkYC5b3Ba9keliv7PLKAOQQ31KPPr1cKbwvvWtCWLMOudv5UF4YId4C9ROIwooE036US4S8mhKLmatYriTuAmoUlwgWhu8Y6R+9zg3+IlM5zl4Xu276IXXbG1EuDYFo=
+Received: by 10.82.171.16 with SMTP id t16mr11979890bue.11.1201605992341;
+        Tue, 29 Jan 2008 03:26:32 -0800 (PST)
 Received: from localhost.localdomain ( [83.8.244.23])
-        by mx.google.com with ESMTPS id j8sm8814692gvb.7.2008.01.29.03.09.49
+        by mx.google.com with ESMTPS id i6sm1498780gve.5.2008.01.29.03.26.29
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 29 Jan 2008 03:09:50 -0800 (PST)
+        Tue, 29 Jan 2008 03:26:31 -0800 (PST)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m0TB9jlm027315;
-	Tue, 29 Jan 2008 12:09:46 +0100
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m0TBQQ7R027410;
+	Tue, 29 Jan 2008 12:26:26 +0100
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m0TB9ifX027312;
-	Tue, 29 Jan 2008 12:09:44 +0100
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m0TBQNjc027406;
+	Tue, 29 Jan 2008 12:26:23 +0100
 X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <87ve5dicih.wl@mail2.atmark-techno.com>
+In-Reply-To: <1201577766-11601-1-git-send-email-ribas@c3sl.ufpr.br>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71975>
 
-Yasushi SHOJI <yashi@atmark-techno.com> writes:
+Bruno Ribas <ribas@c3sl.ufpr.br> writes:
 
-> commitdiff with raw, or plain format if you are reading the code,
-> doesn't convert any word from perl internal to utf8, which is set to
-> charset in http header.  this cause a problem when commit includes no=
-n
-> ascii code.
+> This file ($projectroot/$project/owner) is good to have when we don't want to
+> maintain a project  list AND when we share same SSH account for all projects,
+> using ssh_acl for example.
+>
+> Signed-off-by: Bruno Ribas <ribas@c3sl.ufpr.br>
 
-Nice catch. Thanks.
-=20
-> here is a few example in the git tree:
->=20
-> http://git.kernel.org/?p=3Dgit/git.git;a=3Dcommitdiff_plain;h=3D6ba78=
-238a824282816944550edc4297dd2808a72
-> http://git.kernel.org/?p=3Dgit/git.git;a=3Dcommitdiff_plain;h=3De360b=
-ebf713b6b03768c62de8b94ddf9350b0953
-> http://git.kernel.org/?p=3Dgit/git.git;a=3Dcommitdiff_plain;h=3D9459a=
-a77a032621a29d53605542844641cca843a
+This explanation is a bit too complicated; it explains farther
+reasons, instead of immediate ones: you don't want to maintain project
+list file, and all repository directories have to have the same owner
+(for example when the same SSH account is shared for all projects,
+using ssh_acl to control access instead).
 
-=2E..but commit message could be improved :-)
+Besides with new faster config reader we probably would want to allow
+to use config file to set owner, instead of adding yet another file to
+the repo area; see commit 0e121a2cd42d28bc4034feedf8a13c5a91f85bd3
+  "gitweb: Use config file for repository description and URLs"
+This would have the advantage that you could use system config
+(/etc/gitconfig) to set fallback owner instead of relying on
+filesystem.  I'm not sure what should be the preference, though:
+gitweb.owner, then $GIT_DIR/owner, or vice versa?  I guess that
+reading $GIT_DIR/owner should take preference, as it is needed also
+for projects list page, where ordinary we didn't read individual
+repositories configuration.
 
-=46or example:
-
--- >8 --
-gitweb: Convert generated contents to utf8 in commitdiff_plain
-
-If the commit message, or commit author contains non-ascii, it must be
-converted from Perl internal representation to utf-8, to follow what
-got declared in HTTP header.  Use to_utf8() to do the conversion.
-
-This necessarily replaces here-doc with "print" statements.
-
-Signed-off-by: Yasushi SHOJI <yashi@atmark-techno.com>
-Acked-by: =A9smail D=F6nmez <ismail@pardus.org.tr>
-Acked-by: Jakub Narebski <jnareb@gmail.com>
--- >8 --
-
-> This patch effectively revert the commitdiff plain part of the commit
->=20
-> 	59b9f61a3f76762dc975e99cc05335a3b97ad1f9
->=20
-> which converted from print to here-doc. but it doesn't
-> explain why in the commit log.
-
-Sorry about that.
-
-IMVHO using here-doc for longer sequence of output lines is more
-readable than long "print" command, or sequence of print's. But of
-course if you have to parse / transform some parts of output it is
-simply not possible.
+I guess that it is meant to be post 1.5.4, isn't it?
 
 > ---
->  gitweb/gitweb.perl |   12 ++++++------
->  1 files changed, 6 insertions(+), 6 deletions(-)
->=20
+>  gitweb/gitweb.perl |   14 ++++++++++++++
+>  1 files changed, 14 insertions(+), 0 deletions(-)
+> 
 > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 6256641..5d9ac1d 100755
+> index 6256641..fac5f78 100755
 > --- a/gitweb/gitweb.perl
 > +++ b/gitweb/gitweb.perl
-> @@ -5048,16 +5048,16 @@ sub git_commitdiff {
->  			-expires =3D> $expires,
->  			-content_disposition =3D> 'inline; filename=3D"' . "$filename" . =
-'"');
->  		my %ad =3D parse_date($co{'author_epoch'}, $co{'author_tz'});
-> -		print <<TEXT;
-> -From: $co{'author'}
-> -Date: $ad{'rfc2822'} ($ad{'tz_local'})
-> -Subject: $co{'title'}
-> -TEXT
-> +		print "From: " . to_utf8($co{'author'}) . "\n";
-> +		print "Date: " . to_utf8($ad{'rfc2822'}) . " "
-> +			       . to_utf8($ad{'tz_local'}) . "\n";
-
-I think that date, or at least timezone would never have characters
-outside US-ASCII, so to_uft8 is not really necessary, but I guess that
-it is better to be safe than sorry.
-
-> +		print "Subject: " . to_utf8($co{'title'}) . "\n";
-> +
->  		print "X-Git-Tag: $tagname\n" if $tagname;
->  		print "X-Git-Url: " . $cgi->self_url() . "\n\n";
-> =20
->  		foreach my $line (@{$co{'comment'}}) {
-> -			print "$line\n";
-> +			print to_utf8($line) . "\n";
->  		}
->  		print "---\n\n";
+> @@ -1754,6 +1754,15 @@ sub git_get_project_list_from_file {
 >  	}
+>  }
+>  
+> +sub get_owner_file {
+> +    my $owner_file = shift;
 
-By the way, I guess that with new git we could just use --pretty=3Demai=
-l
-option to git-log / git-rev-list, and add X-Git-Tag and X-Git-Url at
-the beginning (or insert it after headers).  Perhaps also generate
-diff with the same diff command... but I think this improvement is to
-be done _after_ release.
+Here you use spaces instead of tabs in indent.
 
-=46or what is worth:
+> +
+> +	open my $fd, "$owner_file" or return undef;
 
-Acked-by: Jakub Narebski <jnareb@gmail.com>
+	open my $fd, $owner_file or return undef;
 
---=20
+would be simpler.
+
+> +	my $owner = <$fd>;
+> +	close $fd;
+> +	return to_utf8($owner);
+> +}
+
+I wonder if we should just bite the bullet and replace all such by
+generic subroutine called e.g. read_singleline_file, or something like
+that.  Or perhaps not, if we want to read alternatively from config,
+with different config variable key names and different preferences of
+file/config priority...
+
+> +
+>  sub git_get_project_owner {
+>  	my $project = shift;
+>  	my $owner;
+> @@ -1767,6 +1776,11 @@ sub git_get_project_owner {
+>  	if (exists $gitweb_project_owner->{$project}) {
+>  		$owner = $gitweb_project_owner->{$project};
+>  	}
+> +
+> +    if ( -f "$projectroot/$project/owner" ) {
+> +        $owner = get_owner_file("$projectroot/$project/owner");
+> +    }
+> +
+
+Here you use spaces. I think that you can lose spaces around condition
+in the above 'if'.
+
+>  	if (!defined $owner) {
+>  		$owner = get_file_owner("$projectroot/$project");
+>  	}
+> -- 
+> 1.5.3.8
+
+I hope that doesn't mean that this patch is based on v1.5.3.8
+gitweb...
+
+-- 
 Jakub Narebski
 Poland
 ShadeHawk on #git
