@@ -1,120 +1,141 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: fetch <repo> <branch>:<branch> fetches tags?
-Date: Tue, 29 Jan 2008 11:08:49 -0600
-Message-ID: <479F5DA1.2030900@nrlssc.navy.mil>
-References: <479E9063.5000403@nrlssc.navy.mil>	<7v3ashs5yg.fsf@gitster.siamese.dyndns.org>	<7vodb5qk2b.fsf@gitster.siamese.dyndns.org>	<loom.20080129T055937-532@post.gmane.org> <7vabmpovu5.fsf@gitster.siamese.dyndns.org>
+From: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
+Subject: Re: [PATCH] Added sub get_owner_file which checks if there's a file with project owner name
+Date: Tue, 29 Jan 2008 15:22:16 -0200
+Message-ID: <20080129172216.GA17875@c3sl.ufpr.br>
+References: <1201577766-11601-1-git-send-email-ribas@c3sl.ufpr.br> <m3lk6898kg.fsf@localhost.localdomain> <20080129142550.GA25312@c3sl.ufpr.br> <200801291628.21026.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 29 18:18:08 2008
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 29 18:22:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JJu5t-0000hD-N0
-	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 18:17:58 +0100
+	id 1JJuAe-0002oC-Go
+	for gcvg-git-2@gmane.org; Tue, 29 Jan 2008 18:22:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933747AbYA2RRP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2008 12:17:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933222AbYA2RRO
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 12:17:14 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:45571 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933738AbYA2RRM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2008 12:17:12 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0TH8nJn025502;
-	Tue, 29 Jan 2008 11:08:49 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 29 Jan 2008 11:08:49 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <7vabmpovu5.fsf@gitster.siamese.dyndns.org>
-X-OriginalArrivalTime: 29 Jan 2008 17:08:49.0405 (UTC) FILETIME=[9D9F72D0:01C86299]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15694001
-X-TM-AS-Result: : Yes--21.845000-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY1OC0xNTA2?=
-	=?us-ascii?B?NTctNzAwMDc1LTEzOTAxMC03MDAwNzMtNzAzNzMxLTcwNDA0OS03?=
-	=?us-ascii?B?MDg2NTUtNzA0NDI1LTcwMTQ1NS03MDcxMzYtNzA0ODg1LTcwMTQ1?=
-	=?us-ascii?B?MC03MDUzODgtNzAyMDQ0LTcwMTE0Ni03MDA2MzAtNzA4MTc5LTcw?=
-	=?us-ascii?B?MzM3OC03MDc3ODgtNzA2NDU0LTcwMTIwMi03MDgwNTgtNzA5NTg0?=
-	=?us-ascii?B?LTcwMDE1My03MDczNjEtNzAxMzM3LTcwNzU1My03MDEyMzYtNzAy?=
-	=?us-ascii?B?MDE2LTcwMTI5OC03MDM4NTEtNzAwNzgyLTcwOTE1NS03MDY1NjEt?=
-	=?us-ascii?B?NzA2NjM5LTcwNzgwMC03MDA4NDYtNzExNDMyLTcwNDQ5Ni03MDA5?=
-	=?us-ascii?B?NzEtMzAwMDE1LTcwNTkwMS03MDE0MzctNzA2ODkxLTcwNDcxMi03?=
-	=?us-ascii?B?MDIwMTItNzAyMjI4LTcxMDUxMi03MDE5MTQtNzAwNjE4LTE4NzA2?=
-	=?us-ascii?B?Ny03MDUxMDItNzAxODM3LTcwMDc3MS03MDIxMDItNzAyOTYyLTcw?=
-	=?us-ascii?B?OTgyMy03MDYyNDktNzA3NDUxLTcwMjM1OC03MDkwNjUtNzA0NDIx?=
-	=?us-ascii?B?LTE4ODEyMS03MDI2MDktNzEwNDQyLTcwMjE0My0xNDgwMzktMTQ4?=
-	=?us-ascii 
+	id S1752154AbYA2RWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 12:22:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751317AbYA2RWU
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 12:22:20 -0500
+Received: from urquell.c3sl.ufpr.br ([200.17.202.3]:49193 "EHLO
+	urquell.c3sl.ufpr.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751765AbYA2RWT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2008 12:22:19 -0500
+Received: from dalmore (dalmore.c3sl.ufpr.br [200.17.202.56])
+	by urquell.c3sl.ufpr.br (Postfix) with SMTP id 5276370000090;
+	Tue, 29 Jan 2008 15:22:16 -0200 (BRST)
+Received: by dalmore (sSMTP sendmail emulation); Tue, 29 Jan 2008 15:22:16 -0200
+Content-Disposition: inline
+In-Reply-To: <200801291628.21026.jnareb@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/71983>
 
-Junio C Hamano wrote:
-> Brandon Casey <drafnel@gmail.com> writes:
+On Tue, Jan 29, 2008 at 04:28:19PM +0100, Jakub Narebski wrote:
+> On Tue, 29 Jan 2008, Bruno Cesar Ribas wrote:
+> > On Tue, Jan 29, 2008 at 03:26:31AM -0800, Jakub Narebski wrote:
+> >> Bruno Ribas <ribas@c3sl.ufpr.br> writes:
+> >> 
+> >>> This file ($projectroot/$project/owner) is good to have when we don't want to
+> >>> maintain a project  list AND when we share same SSH account for all projects,
+> >>> using ssh_acl for example.
+> >>>
+> >>> Signed-off-by: Bruno Ribas <ribas@c3sl.ufpr.br>
+> >> 
+> >> This explanation is a bit too complicated; it explains farther
+> >> reasons, instead of immediate ones: you don't want to maintain project
+> >> list file, and all repository directories have to have the same owner
+> >> (for example when the same SSH account is shared for all projects,
+> >> using ssh_acl to control access instead).
+> > 
+> > I'm sorry about this complicated explanation.
 > 
->>> Having said that, I do not particularly think the new behaviour
->>> is bad per-se.  If you are storing what you fetched locally in
->>> tracking branches, you are interested in their work enough to
->>> want to auto-follow their tags.
->> How is "tracking" defined? Is this a term that implies some configuration
->> to link a local branch to a remote branch? Or is any local branch created
->> from a remote branch considered "tracking"?
+> It is not [that] bad description, but it could be better. Also, 80 columns
+> word wrap is good, but 72-76 would be even better :-)
 > 
-> I probably should have said "Instead of just letting fetch
-> temporarily store the result in FETCH_HEAD and using it from
-> there, you saved it away; that's a good indication of you care
-> about it deeply enough".
+> >> Besides with new faster config reader we probably would want to allow
+> >> to use config file to set owner, instead of adding yet another file to
+> >> the repo area; see commit 0e121a2cd42d28bc4034feedf8a13c5a91f85bd3
+> >>   "gitweb: Use config file for repository description and URLs"
+> >> This would have the advantage that you could use system config
+> >> (/etc/gitconfig) to set fallback owner instead of relying on
+> >> filesystem.  I'm not sure what should be the preference, though:
+> >> gitweb.owner, then $GIT_DIR/owner, or vice versa?  I guess that
+> >> reading $GIT_DIR/owner should take preference, as it is needed also
+> >> for projects list page, where ordinary we didn't read individual
+> >> repositories configuration.
+> > 
+> > Reading $GIT_DIR/owner would be the preference, Maybe it can generate project
+> > list page faster when machine have high IO waits (WA).
 > 
-> It's really about what's convenient.  I was somewhat upset that
-> the behaviour change was not I was very aware of (perhaps I said
-> it was a good idea and I then forgot), I didn't think the
-> earlier behaviour was broken, but if I have to choose, I think
-> the new behaviour is probably slightly nicer than the old one.
+> Yes, I also think so. Two file reads (description + owner) should be
+> still faster than one running git-config, and parsing its output.
+> 
+> But I think if IO matters it is better to generate projects list; you
+> can even use gitweb for that, or you can simply add a line with URL
+> escaped project name (project path) relative to $projectroot, separated
+> by space from the URL escaped (URI-encoded) project owner.  See also
+> "Gitweb repositories" section in gitweb/INSTALL.  Adding projects is
+> rare event.
+>  
+> > Having gitweb.owner is good too, but as you said I don't need to read
+> > individual repositories configuration.
+> > 
+> > Having another file at the repo area is not a problem (my say). Sometimes
+> > having files appears to be more organized than having everything in one file
+> > (my say again).
+> 
+> By the way, I have forgot to ask you to add description of new 'owner'
+> file to "Per-repository gitweb configuration" section in gitweb/README
 
-It feels a little inconsistent to me.
+I'm on the way to add description of 'owner' file, before commint should I
+implement gitweb.owner too? then that README comes with two way of seting
+owner. Or let only owner file for now?
 
-With this behavior adopted as standard, then all forms of fetch will
-fetch tags except for 'git-fetch <repo> <branch>'. I think this is
-probably the least used form for porcelain.
+> 
+> > I even made another patch about cloneURL, instead of looking for inside files
+> > and stuff, i made gitweb.conf a variable that says:
+> > - If i have a prefix path for HTTP,SSH,GIT[protocol]
+> > Then if this variable is set gitweb only mounts... like
+> > HTTPPREFIX="http://git.c3sl.ufpr.br/pub/scm"
+> > and gitweb sets it to $HTTPREFIX/$project
+> > 
+> > I made this because I don't want to set each project it's clone URL, so this 
+> > makes thing easier! What do you think?
+> 
+> I hope that this hack predates latest improvements to gitweb/README,
+> as you have just reimplemented GITWEB_BASE_URL build configuration
+> variable (only single base URL), and @git_base_url_list, which you
+> can set in gitweb config file (by default gitweb_config.perl).
 
-What I understand you to be saying is that creating a branch during
-fetch indicates "I care deeply enough, so I want tags". At the moment,
-I don't know why I would fetch if I didn't want to make a branch. Even
-if I just wanted to cherry-pick one patch, or one source file, or (some
-other contrived example), I think I would create a branch to give it
-some anchor point, and why not create the branch during the fetch.
+Ok, I'll check recent version of gitweb and i'll send this commit if relevant
+=)
 
-And, if I fetch now with the colon notation implying I want tags, later,
-if I 'git pull <repo> <branch>' from within that branch, why does that
-imply that I do not still want tags just because I'm not creating a 'new'
-branch.
+>  
+> If you have read current code carefully, you should notice that
+> currently gitweb generates URLs for repository in the following way:
+> 
+>  1. Per repository configuration:
+>     a. $projectroot/$project/cloneurl (one line perl URL)
+>     b. multivalued gitweb.url configuration variable in project config
+>  2. Global gitweb configuration
+>     a. $prefix/$project for each $prefix element in @git_base_url_list,
+>        which is set in gitweb_config.perl
+>  3. Build time defaults
+>     a. Single value in @git_base_url_list set using GITWEB_BASE_URL
+>        build configuration variable
+>  4. Otherwise it is not set (it is empty).
+> 
+> -- 
+> Jakub Narebski
+> Poland
 
-I think the current metric for indicating "caring deeply enough" is the
-remote tracking configuration. Tracking implies "I care deeply enough,
-I want tags", lack of tracking does not imply this. But I said this already
-in another email. I am not sure if this feels right because it is documented
-or because it is right.
-
-An alternative to this is to make fetch completely consistent so it either
-"always" gets tags, or "never" gets tags, and requires an option to reverse
-its behavior.
-
-It seems to me that "never" gets tags is the safer choice. This is because
-accidentally fetching tags is a pain to clean up, but if I forget to ask
-for tags, I just run the same command again and ask this time. If I fetch
-or pull and use the --tags (the current --tags should be changed to --all-tags)
-then I know what I am doing.
-
-The documented behavior for tracking branches and fetching tags could be
-retained by requiring a fetch option in the branch configuration and
-modifying git-remote and commands that use --track, to add the option
-by default. The big downside is that this would require existing repositories
-to update their config file which would also cause confusion.
-
--brandon
+-- 
+Bruno Ribas - ribas@c3sl.ufpr.br
+http://web.inf.ufpr.br/ribas
+C3SL: http://www.c3sl.ufpr.br 
