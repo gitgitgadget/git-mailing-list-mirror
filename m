@@ -1,85 +1,70 @@
-From: picca <picca@synchrotron-soleil.Fr>
-Subject: Problem with cvsimport
-Date: Wed, 30 Jan 2008 11:53:08 +0100
-Organization: Soleil
-Message-ID: <20080130115308.760d6e20@synchrotron-soleil.Fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] filter-branch.sh: remove temporary directory on
+ failure
+Date: Wed, 30 Jan 2008 11:51:31 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801301151050.23907@racer.site>
+References: <479E4612.6030006@nrlssc.navy.mil> <7v3asfkgii.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 30 11:54:22 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 30 12:52:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKAZu-0002JS-25
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 11:54:02 +0100
+	id 1JKBUX-0003yA-7k
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 12:52:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757967AbYA3KxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 05:53:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752634AbYA3KxW
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 05:53:22 -0500
-Received: from raclette.synchrotron-soleil.fr ([195.221.0.6]:33828 "EHLO
-	raclette.synchrotron-soleil.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758666AbYA3KxO (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Jan 2008 05:53:14 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 1301A3003C
-	for <git@vger.kernel.org>; Wed, 30 Jan 2008 11:38:21 +0100 (CET)
-X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
-Received: from raclette.synchrotron-soleil.fr ([127.0.0.1])
-	by localhost (raclette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Oh8NfUWWpUm5 for <git@vger.kernel.org>;
-	Wed, 30 Jan 2008 11:38:17 +0100 (CET)
-Received: from venusbis.synchrotron-soleil.fr (venusbis.synchrotron-soleil.fr [195.221.0.152])
-	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 5CB97300E3
-	for <git@vger.kernel.org>; Wed, 30 Jan 2008 11:38:17 +0100 (CET)
-Received: from localhost.localdomain ([195.221.5.120]) by venusbis.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 30 Jan 2008 11:54:08 +0100
-X-Mailer: Claws Mail 3.2.0 (GTK+ 2.12.5; i486-pc-linux-gnu)
-X-OriginalArrivalTime: 30 Jan 2008 10:54:08.0031 (UTC) FILETIME=[7017C2F0:01C8632E]
+	id S1760521AbYA3LwA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 06:52:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760373AbYA3Lv7
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 06:51:59 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60313 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758165AbYA3Lv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 06:51:58 -0500
+Received: (qmail invoked by alias); 30 Jan 2008 11:51:56 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp008) with SMTP; 30 Jan 2008 12:51:56 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/pJOJCawfpVD3earYylZwHW2+AEXAUX2cV+3JA3u
+	f5MVg0Z2BGI5aC
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v3asfkgii.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72055>
 
-Hello
+Hi,
 
+On Tue, 29 Jan 2008, Junio C Hamano wrote:
 
-When I try to import a project into git with the cvsimport tool, it
-works fine most of the time. I obtain a clean repository without all
-thoses CVS directories.
+> Brandon Casey <casey@nrlssc.navy.mil> writes:
+> 
+> > Even though this directory may be useful for debugging when you 
+> > encounter a problem, I wonder if the normal "error" will be _user_ 
+> > error. In which case the user will adjust the command line parameters 
+> > and try to rerun. Currently the user would then receive the message
+> >
+> >      "$tempdir already exists, please remove it"
+> >
+> > Then, rm -rf the tempdir, then rerun.
+> >
+> > Is this necessary? Maybe anyone with the know-how to debug would also 
+> > have the know-how to comment out the 'trap' in the script (or direct 
+> > someone asking for help on the mailing list to do so).
+> 
+> Makes sense to me.  Dscho?
 
-But sometimes during the import the cvs server hang and i need to do
-Ctrl+C the restart the command.
-cvsimport skip the already downloaded patchset but at the end I obtain
-this message
+To me, too.
 
----
-Generating pack...
-Done counting 1534 objects.
-Deltifying 1534 objects...
- 100% (1534/1534) done
-Writing 1534 objects...
- 100% (1534/1534) done
-Total 1534 (delta 1160), reused 0 (delta 0)
-Pack pack-8fb4f1c25c831ba29c7bd53989cb1b445b60bc07 created.
-Removing unused objects 100%...
-Done.
-DONE.
-fatal: Needed a single revision
-Can merge only exactly one commit into empty head
-Could not merge origin into the current branch.
----
+Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-So to resume:
-* In one shoot no problem at the end cvsimport checkout the
-right head.
-* multiple shoot impossible to merge origin into the current branch.
-
-How this problem can be solved ?
-
-Thanks
-
-Frederic
+Thanks,
+Dscho
