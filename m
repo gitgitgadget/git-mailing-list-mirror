@@ -1,107 +1,98 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH 4/5] Simplify editor selection logic
-Date: Wed, 30 Jan 2008 18:57:57 +0100
-Message-ID: <20080130175757.GA30529@diana.vm.bytemark.co.uk>
-References: <20080129030059.926.29897.stgit@yoghurt> <20080129030349.926.45486.stgit@yoghurt> <200801292109.37785.kumbayo84@arcor.de> <20080130072828.GA24648@diana.vm.bytemark.co.uk> <76718490801300655r3d1b5b41l2945b4f730faedb2@mail.gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH] filter-branch: assume HEAD if no revision supplied
+Date: Wed, 30 Jan 2008 13:33:04 -0600
+Message-ID: <47A0D0F0.1020800@nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Oberndorfer <kumbayo84@arcor.de>,
-	Catalin Marinas <catalin.marinas@gmail.com>,
-	git@vger.kernel.org
-To: Jay Soffian <jaysoffian+git@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 18:58:50 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 30 20:35:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKHCz-0003nP-3C
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 18:58:49 +0100
+	id 1JKIi4-0000Dm-Ol
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 20:35:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753479AbYA3R6Q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Jan 2008 12:58:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753306AbYA3R6Q
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 12:58:16 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1768 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753265AbYA3R6P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 12:58:15 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1JKHC9-0000Hy-00; Wed, 30 Jan 2008 17:57:57 +0000
-Content-Disposition: inline
-In-Reply-To: <76718490801300655r3d1b5b41l2945b4f730faedb2@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1755015AbYA3TeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 14:34:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753098AbYA3TeS
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 14:34:18 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:34133 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754832AbYA3TeR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 14:34:17 -0500
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0UJX5YW008960;
+	Wed, 30 Jan 2008 13:33:05 -0600
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 30 Jan 2008 13:33:05 -0600
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+X-OriginalArrivalTime: 30 Jan 2008 19:33:05.0017 (UTC) FILETIME=[EF2EC690:01C86376]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15694001
+X-TM-AS-Result: : Yes--9.019700-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjQzLTcwMjExMy03MDUx?=
+	=?us-ascii?B?MDItNzA0NDI1LTcwNzM5NS03MDIwMzctNzA0NzEyLTcwMjE0My03?=
+	=?us-ascii?B?MDI2MDktNzA2NTYxLTcwMDE2MC03MDE0NTUtNzEwNDQyLTcwMDc1?=
+	=?us-ascii?B?Ni03MDEyMDItMTA2NDIwLTcwNDQxMC03MDM3MjAtNzAwOTcwLTcw?=
+	=?us-ascii?B?NzgwMC0xMDUwNDAtNzAyNzkxLTcwMDQ3Ni03MDc3NTAtNzAyMDQ0?=
+	=?us-ascii?B?LTcwMDc4Mi03MDAzMDAtMTg4MDE5LTcwMzcxMi03MDUzODgtNzA5?=
+	=?us-ascii?B?ODU5LTcxMDIyNC03MDA3MDEtMTQ4MDM5LTE0ODA1MQ==?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72061>
 
-On 2008-01-30 09:55:18 -0500, Jay Soffian wrote:
+filter-branch previously took the first non-option argument as the name for
+a new branch. Since dfd05e38, it now takes a revision or a revision range
+and modifies the current branch. Update to operate on HEAD by default to
+conform with standard git interface practice.
 
-> On Jan 30, 2008 2:28 AM, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
 
-> > You could write it kind of like this:
-> >
-> >   def e(key): return os.environ.get(key, None)
-> >   def c(key): return config.get(key)
-> >   editor =3D filter(None, [e('GIT_EDITOR'), c('stgit.editor'), c('c=
-ore.editor'),
-> >                          e('VISUAL'), e('EDITOR'), 'vi'])[0]
->
-> Too clever by half if you ask me. Why not just:
->
-> editor =3D (os.environ.get('GIT_EDITOR') or
->           config.get('stgit.editor') or
->           config.get('core.editor') or
->           os.environ.get('VISUAL') or
->           os.environ.get('EDITOR') or
->           'vi')
->
-> And be done with it?
 
-Yes. It's more repetitive, but not much longer. With only five options
-and one default -- if there were more, my version would be nicer
-(IMHO).
+You may think that filter-branch _should_ require the user to specify the
+revision. If so, then '--default HEAD' should probably be removed from the
+other two places, and the usage and documentation should be updated to
+remove the brackets around <rev-list options> so not to imply that it is
+optional. The test for at least one non-option argument can still be
+removed since it can currently be circumvented by placing -- as the
+last argument and because it would allow format-patch to fail with
+a much nicer message: "Which ref do you want to rewrite?".
 
-> > Of course, if we're going to have code like this in several places
-> > (you already mentioned the pager), we could build a function like
-> > this:
-> >
-> >   editor =3D get_config(['GIT_EDITOR', 'stgit.editor', 'core.editor=
-',
-> >                        'VISUAL', 'EDITOR'], default =3D 'vi')
-> >
-> > that would differentiate between env variables and conf keys by
-> > looking for dots in the name or something.
->=20
-> def get_config(keys, default=3DNone):
->     rv =3D default
->     for k in keys:
->         if '.' in k:
->             d =3D config
->         else:
->             d =3D os.environ
->         if k in d:
->             rv =3D d[k]
->             break
->     return rv
+fwiw the behavior this patch implements is what I expected.
 
-'config' isn't a dict, so you have to use config.get, and you can't
-use 'k in config'. But otherwise yes. So something like this maybe:
+-brandon
 
-def get_config(keys, default =3D None):
-    rv =3D None
-    for k in keys:
-        if '.' in k:
-            rv =3D config.get(k)
-        else:
-            rv =3D os.environ.get(k, None)
-        if rv !=3D None:
-            return rv
-    return default
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+ git-filter-branch.sh |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index ebf05ca..cd1eeee 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -114,7 +114,6 @@ orig_namespace=refs/original/
+ force=
+ while :
+ do
+-	test $# = 0 && usage
+ 	case "$1" in
+ 	--)
+ 		shift
+@@ -210,7 +209,7 @@ GIT_WORK_TREE=.
+ export GIT_DIR GIT_WORK_TREE
+ 
+ # The refs should be updated if their heads were rewritten
+-git rev-parse --no-flags --revs-only --symbolic-full-name "$@" |
++git rev-parse --no-flags --revs-only --symbolic-full-name --default HEAD "$@" |
+ sed -e '/^^/d' >"$tempdir"/heads
+ 
+ test -s "$tempdir"/heads ||
+-- 
+1.5.4.rc5.14.gaa8fc
