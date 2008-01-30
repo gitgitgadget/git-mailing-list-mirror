@@ -1,269 +1,168 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 7/7] Redirect receive-pack hook output into sideband channel
-Date: Wed, 30 Jan 2008 01:22:18 -0500
-Message-ID: <20080130062218.GG15838@spearce.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [RFC] Authenticate push via PGP signature, not SSH
+Date: Wed, 30 Jan 2008 19:29:55 +1300
+Message-ID: <47A01963.1030703@vilain.net>
+References: <479D5611.4010205@vilain.net> <20080128081258.GE24004@spearce.org> <479E5021.7010404@vilain.net> <20080129041000.GK24004@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 07:23:23 2008
+Content-Transfer-Encoding: 7bit
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Jan 30 07:30:38 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JK6Lx-0001Yk-8m
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 07:23:21 +0100
+	id 1JK6Sy-0002uD-W2
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 07:30:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753970AbYA3GW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 01:22:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753554AbYA3GW2
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 01:22:28 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:58719 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754018AbYA3GWW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Jan 2008 01:22:22 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JK6Ky-0000Be-9M; Wed, 30 Jan 2008 01:22:20 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 07B4D20FBAE; Wed, 30 Jan 2008 01:22:19 -0500 (EST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751374AbYA3GaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 01:30:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbYA3GaE
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 01:30:04 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:60395 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751142AbYA3GaB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 01:30:01 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
+	id 2B75E21D170; Wed, 30 Jan 2008 19:29:59 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.4 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.1.7-deb
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id AD45121D125;
+	Wed, 30 Jan 2008 19:29:55 +1300 (NZDT)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <20080129041000.GK24004@spearce.org>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72037>
 
-If both send-pack and receive-pack have selected to enable the
-side-band-64k protocol extension we can redirect the stdout and
-stderr from any hooks we execute into the multiplexed band #2
-channel.  This allows recv_sideband running as an async "thread"
-in send-pack to automatically unpack the additional messages and
-display them on send-pack's stderr.
+Shawn O. Pearce wrote:
+> * New protocol extension to send-pack/receive-pack pair:
+> 
+>   If server wants to require (or optionally) accept a signed push
+>   event it sends a new capability string when it advertises its
+>   current known heads:
+> 
+>     auth-1=[0-9a-f]{40}
+  [...]
+>     <auth><pgp_sig>
+> 
+>     auth    ::= 'auth' ' ' <name> ' ' '<' <email> '>' '\n'
+>     name    ::= like a commit author-name
+>     email   ::= like a commit author-email
+>     pgp_sig ::= armored signature from PGP
+> 
+>   receive-pack expects this new auth pkt-line if the client asked
+>   to enable the auth-1 capablity in the first command.
+> 
+>   If receive-pack was configured (say by config receive.auth)
+>   to require authentication then it closes the connection if the
+>   client didn't request the capablity in the first command.
+> 
+>   receive-pack can generate the same SHA-1 hash from the commands
+>   it read from send-pack, and can verify the PGP signature on the
+>   auth line.
+> 
+>   This assures us the command stream wasn't modified, and likely
+>   originated from the named identity.  The rest of the packfile
+>   data is already well protected by its own SHA-1 footer and the
+>   individual object SHA-1s, and the roots pointing into that DAG
+>   (or sub-DAG) mentioned in the commands were verified by the PGP
+>   signature of them.
 
-There are two different styles of hooks in use within receive-pack,
-so our solution for perform this redirection varies a little.
+Ok - but I think if the client is pushing a signed tag to the tagname
+listed in the signed body of the tag, that no extra signature should be
+necessary.  It's only commits that need the extra information.
 
-In the update and post-update hooks there is no stdin provided to
-the hook so we can perform a naive loop around the stderr pipe,
-copying any received messages into band #2.  The stderr pipe is
-also dup'd over to stdout by start_command, so we get both sets of
-messages over this single fd.
+And remember, for global replication of the data between untrusted nodes
+to be possible, the signatures must be saved somewhere.  I have sketched
+a simple design below.
 
-In the pre-receive and post-receive hooks we need to supply the set
-of commands on stdin to the hook.  To avoid a deadlock with the
-hook we implement a poll loop within receive-pack, watching for
-when we can feed additional data into the hook and also for when
-we need to copy messages off the stderr pipe to band #2.  By doing
-this here in receive-pack we allow the hook author to not need to
-perform the same sort of complex poll based IO for its stdin and
-stdout/stderr handling.
+> * PGP public key storage:
+> 
+>   Use a "hidden" ref called "refs/access-keys" to store a commit.
+>   The access control change log is a normal Git commit chain.
+> 
+>   The tree under this commit stores a file per <email> string.
+>   Public keys for auth line validation are located by <email>,
+>   from the tip of this branch.
+> 
+>   This branch could be a symlink to another repository (e.g.
+>   a site-wide "admin" repository) and the ODB for that other
+>   repository could be an alternate for this repository.
+> 
+> 
+> * ref/access-keys security:
+> 
+>   Probably an update or pre-receive hook could verify pushes
+>   to this branch by something like this:
+> 
+>     - If the only difference between $old_sha1 $new_sha1 is
+>       a modification of $GIT_PUSHER_EMAIL then allow it
+>       (user is replacing their own key);
+> 
+>     - If the only difference between $old_sha1 $new_sha1 is
+>       modifications of names other than $GIT_PUSHER_EMAIL but
+>       the file content differences are only $GIT_PUSHER_EMAIL
+>       signing those public keys then allow it (the user doing
+>       the push is publishing some trust);
+> 
+>     - If the difference between $old_sha1 $new_sha1 is new
+>       keys added or existing keys removed then allow it only
+>       if $GIT_PUSHER_EMAIL is also listed inside of the
+>       "admin/" subtree and the new key is also signed by
+>       $GIT_PUSHER_EMAIL's key.
 
-Test vectors in t5401 needed to be modified slightly as any messages
-received through sideband #2 are prefixed on the send-pack side with
-"remote: ", indicating their origin.  As the test suite is always
-run with the same version of send-pack/receive-pack code we know
-they will agree to enable the side-band-64k extension.
+Ok perhaps it is best to wrap all this up in a single state branch, that
+has in it:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- receive-pack.c          |   91 +++++++++++++++++++++++++++++++++++++++-------
- t/t5401-update-hooks.sh |   22 ++++++------
- 2 files changed, 88 insertions(+), 25 deletions(-)
+   access-keys/
+     - tree with one key per e-mail address
+   access
+     - maps reference globs to e-mail addresses permitted to change
+       them - with a "+" if the address may rewind the ref
+   owners
+     - maps reference globs to e-mail addresses permitted to add entries
+       to the "access" map above
+   signatures/
+     - stores any detached signatures.  only the signatures verifying
+       updates since the last commit to the access meta-branch need to
+       be stored
+   packed-refs
+     - the new list of references (the refs/access commitid is naturally
+       absent or the same as the parent), or just the changed
+       references.
 
-diff --git a/receive-pack.c b/receive-pack.c
-index 8962c4c..f9f080b 100644
---- a/receive-pack.c
-+++ b/receive-pack.c
-@@ -56,7 +56,14 @@ static void write_head_info(void)
- 	for_each_ref(show_ref, NULL);
- 	if (!capabilities_sent)
- 		show_ref("capabilities^{}", null_sha1, 0, NULL);
-+}
- 
-+static void show_hook_output(char *msgs, ssize_t n)
-+{
-+	if (use_sideband)
-+		send_sideband(1, 2, msgs, n, use_sideband);
-+	else
-+		write_in_full(2, msgs, n);
- }
- 
- struct command {
-@@ -100,10 +107,13 @@ static int hook_status(int code, const char *hook_name)
- static int run_hook(const char *hook_name)
- {
- 	static char buf[sizeof(commands->old_sha1) * 2 + PATH_MAX + 4];
-+	static char msgs[128];
- 	struct command *cmd;
- 	struct child_process proc;
- 	const char *argv[2];
- 	int have_input = 0, code;
-+	size_t buf_len, buf_off;
-+	struct pollfd pfd[2];
- 
- 	for (cmd = commands; !have_input && cmd; cmd = cmd->next) {
- 		if (!cmd->error_string)
-@@ -119,28 +129,87 @@ static int run_hook(const char *hook_name)
- 	memset(&proc, 0, sizeof(proc));
- 	proc.argv = argv;
- 	proc.in = -1;
-+	proc.err = -1;
- 	proc.stdout_to_stderr = 1;
- 
- 	code = start_command(&proc);
- 	if (code)
- 		return hook_status(code, hook_name);
-+
-+	pfd[0].fd = proc.in;
-+	pfd[0].events = POLLOUT;
-+	pfd[1].fd = proc.err;
-+	pfd[1].events = POLLIN;
-+
- 	for (cmd = commands; cmd; cmd = cmd->next) {
--		if (!cmd->error_string) {
--			size_t n = snprintf(buf, sizeof(buf), "%s %s %s\n",
-+		if (cmd->error_string)
-+			continue;
-+		buf_off = 0;
-+		buf_len = snprintf(buf, sizeof(buf), "%s %s %s\n",
- 				sha1_to_hex(cmd->old_sha1),
- 				sha1_to_hex(cmd->new_sha1),
- 				cmd->ref_name);
--			if (write_in_full(proc.in, buf, n) != n)
--				break;
--		}
-+		do {
-+			if (poll(pfd, 2, -1) < 0) {
-+				if (errno == EINTR)
-+					continue;
-+				goto finish;
-+			}
-+			if (pfd[0].revents & POLLOUT) {
-+				ssize_t r = xwrite(proc.in, buf + buf_off, buf_len);
-+				if (r <= 0)
-+					goto finish;
-+				buf_len -= r;
-+				buf_off += r;
-+			}
-+			if (pfd[1].revents & POLLIN) {
-+				ssize_t r = xread(proc.err, msgs, sizeof(msgs));
-+				if (r <= 0)
-+					goto finish;
-+				show_hook_output(msgs, r);
-+			}
-+		} while (buf_len > 0);
-+	}
-+
-+finish:
-+	close(proc.in);
-+	proc.close_in = 0;
-+	for (;;) {
-+		ssize_t r = xread(proc.err, msgs, sizeof(msgs));
-+		if (r <= 0)
-+			break;
-+		show_hook_output(msgs, r);
- 	}
- 	return hook_status(finish_command(&proc), hook_name);
- }
- 
-+static int run_noinput_hook(const char **argv)
-+{
-+	static char msgs[128];
-+	struct child_process proc;
-+	int code;
-+
-+	memset(&proc, 0, sizeof(proc));
-+	proc.argv = argv;
-+	proc.no_stdin = 1;
-+	proc.stdout_to_stderr = 1;
-+	proc.err = -1;
-+
-+	code = start_command(&proc);
-+	if (code)
-+		return code;
-+	for (;;) {
-+		ssize_t sz = xread(proc.err, msgs, sizeof(msgs));
-+		if (sz <= 0)
-+			break;
-+		show_hook_output(msgs, sz);
-+	}
-+	return finish_command(&proc);
-+}
-+
- static int run_update_hook(struct command *cmd)
- {
- 	static const char update_hook[] = "hooks/update";
--	struct child_process proc;
- 	const char *argv[5];
- 
- 	if (access(update_hook, X_OK) < 0)
-@@ -152,12 +221,7 @@ static int run_update_hook(struct command *cmd)
- 	argv[3] = sha1_to_hex(cmd->new_sha1);
- 	argv[4] = NULL;
- 
--	memset(&proc, 0, sizeof(proc));
--	proc.argv = argv;
--	proc.no_stdin = 1;
--	proc.stdout_to_stderr = 1;
--
--	return hook_status(run_command(&proc), update_hook);
-+	return hook_status(run_noinput_hook(argv), update_hook);
- }
- 
- static const char *update(struct command *cmd)
-@@ -264,8 +328,7 @@ static void run_update_post_hook(struct command *cmd)
- 		argc++;
- 	}
- 	argv[argc] = NULL;
--	run_command_v_opt(argv, RUN_COMMAND_NO_STDIN
--		| RUN_COMMAND_STDOUT_TO_STDERR);
-+	run_noinput_hook(argv);
- }
- 
- static void execute_commands(const char *unpacker_error)
-diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
-index 9734fc5..6aae4f3 100755
---- a/t/t5401-update-hooks.sh
-+++ b/t/t5401-update-hooks.sh
-@@ -117,19 +117,19 @@ test_expect_failure 'send-pack produced no output' '
- '
- 
- cat <<EOF >expect
--STDOUT pre-receive
--STDERR pre-receive
--STDOUT update refs/heads/master
--STDERR update refs/heads/master
--STDOUT update refs/heads/tofail
--STDERR update refs/heads/tofail
--STDOUT post-receive
--STDERR post-receive
--STDOUT post-update
--STDERR post-update
-+remote: STDOUT pre-receive[K
-+remote: STDERR pre-receive[K
-+remote: STDOUT update refs/heads/master[K
-+remote: STDERR update refs/heads/master[K
-+remote: STDOUT update refs/heads/tofail[K
-+remote: STDERR update refs/heads/tofail[K
-+remote: STDOUT post-receive[K
-+remote: STDERR post-receive[K
-+remote: STDOUT post-update[K
-+remote: STDERR post-update[K
- EOF
- test_expect_success 'send-pack stderr contains hook messages' '
--	grep ^STD send.err >actual &&
-+	grep ^remote: send.err >actual &&
- 	git diff - actual <expect
- '
- 
--- 
-1.5.4.rc5.1126.g6ba14
+You don't necessarily need a new commit on this for every single push,
+just once "every so often", and perhaps for safety once for every change
+to the access file.
+
+This branch should then be auditable; replicating tools can go and
+verify that there have been no unauthorized changes.
+
+Forks don't necessarily need special treatment; they can exist under
+refs/forks/foobar/ - similar to the refs/remotes/ namespace, and have
+their own independent ACL branches within.
+
+Allowing "grant" permissions to refspaces would need to be handled
+specially; you can't simply grant access to change refs/access; the
+actual push to refs/access would need inspecting to see if the changed
+"access" file comes within the rights of the user that signed the update.
+
+I think this seems about right for a first cut.  Possibly bigger
+projects like Debian would like to say that for certain ref spaces,
+multiple signatures are required, so that no one PGP key retains
+complete control.  But I think these things are easily added as features
+on top of this basic infrastructure.
+
+Sound like something worth working towards?
+Sam.
