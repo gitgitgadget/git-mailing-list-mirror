@@ -1,33 +1,34 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 6/7] Add side-band-64k extension to send-pack/receive-pack for hook output
-Date: Wed, 30 Jan 2008 01:22:11 -0500
-Message-ID: <20080130062211.GF15838@spearce.org>
+Subject: [PATCH 7/7] Redirect receive-pack hook output into sideband channel
+Date: Wed, 30 Jan 2008 01:22:18 -0500
+Message-ID: <20080130062218.GG15838@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 07:23:21 2008
+X-From: git-owner@vger.kernel.org Wed Jan 30 07:23:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JK6Lw-0001Yk-Ic
+	id 1JK6Lx-0001Yk-8m
 	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 07:23:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753840AbYA3GWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 01:22:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753582AbYA3GWZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 01:22:25 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:58714 "EHLO
+	id S1753970AbYA3GW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 01:22:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753554AbYA3GW2
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 01:22:28 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:58719 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753840AbYA3GWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 01:22:15 -0500
+	with ESMTP id S1754018AbYA3GWW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Jan 2008 01:22:22 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JK6Kr-0000BK-69; Wed, 30 Jan 2008 01:22:13 -0500
+	id 1JK6Ky-0000Be-9M; Wed, 30 Jan 2008 01:22:20 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E074920FBC9; Wed, 30 Jan 2008 01:22:11 -0500 (EST)
+	id 07B4D20FBAE; Wed, 30 Jan 2008 01:22:19 -0500 (EST)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -39,285 +40,230 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72036>
 
-The fetch-pack/upload-pack protocol currently uses the side-band-64k
-protocol extension to pass the stderr output from the upload-pack
-side of the connection down to the fetch-pack side.  This lets the
-remote send progress messages from pack-objects down to the user,
-so they know the server is working on their behalf and don't just
-break a connection off.
+If both send-pack and receive-pack have selected to enable the
+side-band-64k protocol extension we can redirect the stdout and
+stderr from any hooks we execute into the multiplexed band #2
+channel.  This allows recv_sideband running as an async "thread"
+in send-pack to automatically unpack the additional messages and
+display them on send-pack's stderr.
 
-In the past we haven't needed this secondary channel during push,
-as most users only push over SSH and there is already a multiplexed
-stdout and stderr available as part of the native SSH protocol and
-client/server implementations.  All output from hooks executed
-by receive-pack on the remote side is sent to stderr, which is
-automatically routed back to the user's terminal by SSH, completely
-bypassing fetch-pack.
+There are two different styles of hooks in use within receive-pack,
+so our solution for perform this redirection varies a little.
 
-In Git 1.5.0 Linus allowed users to enable receive-pack as a service
-in git-daemon, which is useful in friendly office LAN situations
-where all of the users can be implicitly trusted.  However as
-git-daemon runs on a straight TCP/IP channel there is no automated
-multiplexing to bring the stderr output from any hooks back to the
-push client.
+In the update and post-update hooks there is no stdin provided to
+the hook so we can perform a naive loop around the stderr pipe,
+copying any received messages into band #2.  The stderr pipe is
+also dup'd over to stdout by start_command, so we get both sets of
+messages over this single fd.
 
-This change adds the sideband multiplexer/demultiplexer and uses
-it to wrap the status response from receive-pack into band #1,
-which is the standard payload band.  To keep this change smaller
-we do not wrap the hook output yet, which should be on band #2,
-the standard "stderr/verbose/progress" band.
+In the pre-receive and post-receive hooks we need to supply the set
+of commands on stdin to the hook.  To avoid a deadlock with the
+hook we implement a poll loop within receive-pack, watching for
+when we can feed additional data into the hook and also for when
+we need to copy messages off the stderr pipe to band #2.  By doing
+this here in receive-pack we allow the hook author to not need to
+perform the same sort of complex poll based IO for its stdin and
+stdout/stderr handling.
 
-One of the complexities of arranging the status response data into
-band #1 is the use of pkt-line for both the status reponse and for
-the sideband multiplexing.  We have to wrap the pkt-lines inside of
-another set of pkt-lines (but with the additional band field) to get
-the data correctly sent over the wire.  Further when we do actually
-flush we now have two flushes; one to end the status and another to
-end the multiplexing.  The first flush is actually still part of band
-
-The side-band-64k extension is only enabled if both sides have the
-capability, and only if send-pack sent commands to receive-pack
-for processing.  This allows both sides to transparently work with
-older clients or servers.
+Test vectors in t5401 needed to be modified slightly as any messages
+received through sideband #2 are prefixed on the send-pack side with
+"remote: ", indicating their origin.  As the test suite is always
+run with the same version of send-pack/receive-pack code we know
+they will agree to enable the side-band-64k extension.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- builtin-send-pack.c |   37 +++++++++++++++++++++++++++++++------
- pkt-line.c          |   28 +++++++++++++++++++++++++---
- pkt-line.h          |    2 ++
- receive-pack.c      |   17 ++++++++++++-----
- 4 files changed, 70 insertions(+), 14 deletions(-)
+ receive-pack.c          |   91 +++++++++++++++++++++++++++++++++++++++-------
+ t/t5401-update-hooks.sh |   22 ++++++------
+ 2 files changed, 88 insertions(+), 25 deletions(-)
 
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index 63fbcd2..5c4844c 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -3,6 +3,7 @@
- #include "tag.h"
- #include "refs.h"
- #include "pkt-line.h"
-+#include "sideband.h"
- #include "run-command.h"
- #include "remote.h"
- #include "send-pack.h"
-@@ -374,12 +375,18 @@ static int refs_pushed(struct ref *ref)
- 	return 0;
- }
- 
-+static int sideband_demux(int fd, void *data)
-+{
-+	return recv_sideband("send-pack", *((int*)data), fd, 2);
-+}
-+
- static int do_send_pack(int in, int out, struct remote *remote, const char *dest, int nr_refspec, const char **refspec)
- {
- 	struct ref *ref;
- 	int new_refs;
- 	int allow_deleting_refs = 0;
- 	int expect_status_report = 0;
-+	int use_sideband = 0;
- 	int flags = MATCH_REFS_NONE;
- 	int pushing = 0;
- 	int ret;
-@@ -398,6 +405,8 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 		expect_status_report = 1;
- 	if (server_supports("delete-refs"))
- 		allow_deleting_refs = 1;
-+	if (server_supports("side-band-64k"))
-+		use_sideband = 1;
- 
- 	/* match them up */
- 	if (!remote_tail)
-@@ -478,9 +487,10 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 			char *new_hex = sha1_to_hex(ref->new_sha1);
- 
- 			if (!pushing)
--				packet_write(out, "%s %s %s%c%s",
-+				packet_write(out, "%s %s %s%c%s%s",
- 					old_hex, new_hex, ref->name, 0,
--					(expect_status_report ? " report-status" : "")
-+					(expect_status_report ? " report-status" : ""),
-+					(use_sideband ? " side-band-64k" : "")
- 				);
- 			else
- 				packet_write(out, "%s %s %s",
-@@ -501,11 +511,26 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 	}
- 	close(out);
- 
--	if (pushing && expect_status_report)
--		ret = receive_status(in, remote_refs);
--	else
--		ret = 0;
-+	ret = 0;
-+	if (pushing) {
-+		struct async demux;
-+		int demux_in = in;
-+
-+		if (use_sideband) {
-+			memset(&demux, 0, sizeof(demux));
-+			demux.proc = sideband_demux;
-+			demux.data = &demux_in;
-+			if (start_async(&demux))
-+				die("send-pack: unable to start sideband demultiplexer");
-+			in = demux.out;
-+		}
-+
-+		if (expect_status_report)
-+			ret = receive_status(in, remote_refs);
- 
-+		if (use_sideband && (finish_async(&demux) || close(demux.out)))
-+			die("error in sideband demultiplexer");
-+	}
- 	print_push_status(dest, remote_refs);
- 
- 	if (!args.dry_run && remote) {
-diff --git a/pkt-line.c b/pkt-line.c
-index 5917e1d..0b5f422 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "pkt-line.h"
-+#include "sideband.h"
- 
- /*
-  * Write a packetized stream, where each line is preceded by
-@@ -37,14 +38,23 @@ ssize_t safe_write(int fd, const void *buf, ssize_t n)
-  * If we buffered things up above (we don't, but we should),
-  * we'd flush it here
-  */
-+void packet_sideband_flush(int fd, int band)
-+{
-+	if (band >= 0)
-+		send_sideband(fd, band, "0000", 4, LARGE_PACKET_MAX);
-+	else
-+		safe_write(fd, "0000", 4);
-+}
-+
- void packet_flush(int fd)
- {
--	safe_write(fd, "0000", 4);
-+	packet_sideband_flush(fd, -1);
- }
- 
- #define hex(a) (hexchar[(a) & 15])
- static void packet_vwrite(
- 	int fd,
-+	int band,
- 	const char *fmt,
- 	va_list args)
- {
-@@ -60,7 +70,10 @@ static void packet_vwrite(
- 	buffer[1] = hex(n >> 8);
- 	buffer[2] = hex(n >> 4);
- 	buffer[3] = hex(n);
--	safe_write(fd, buffer, n);
-+	if (band >= 0)
-+		send_sideband(fd, band, buffer, n, LARGE_PACKET_MAX);
-+	else
-+		safe_write(fd, buffer, n);
- }
- 
- void packet_write(int fd, const char *fmt, ...)
-@@ -68,7 +81,16 @@ void packet_write(int fd, const char *fmt, ...)
- 	va_list args;
- 
- 	va_start(args, fmt);
--	packet_vwrite(fd, fmt, args);
-+	packet_vwrite(fd, -1, fmt, args);
-+	va_end(args);
-+}
-+
-+void packet_sideband_write(int fd, int band, const char *fmt, ...)
-+{
-+	va_list args;
-+
-+	va_start(args, fmt);
-+	packet_vwrite(fd, band, fmt, args);
- 	va_end(args);
- }
- 
-diff --git a/pkt-line.h b/pkt-line.h
-index 9df653f..0b7ded1 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -7,7 +7,9 @@
-  * Silly packetized line writing interface
-  */
- void packet_flush(int fd);
-+void packet_sideband_flush(int fd, int band);
- void packet_write(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
-+void packet_sideband_write(int fd, int band, const char *fmt, ...) __attribute__((format (printf, 3, 4)));
- 
- int packet_read_line(int fd, char *buffer, unsigned size);
- ssize_t safe_write(int, const void *, ssize_t);
 diff --git a/receive-pack.c b/receive-pack.c
-index 7380395..8962c4c 100644
+index 8962c4c..f9f080b 100644
 --- a/receive-pack.c
 +++ b/receive-pack.c
-@@ -2,6 +2,7 @@
- #include "pack.h"
- #include "refs.h"
- #include "pkt-line.h"
-+#include "sideband.h"
- #include "run-command.h"
- #include "exec_cmd.h"
- #include "commit.h"
-@@ -14,8 +15,9 @@ static int receive_unpack_limit = -1;
- static int transfer_unpack_limit = -1;
- static int unpack_limit = 100;
- static int report_status;
-+static int use_sideband;
+@@ -56,7 +56,14 @@ static void write_head_info(void)
+ 	for_each_ref(show_ref, NULL);
+ 	if (!capabilities_sent)
+ 		show_ref("capabilities^{}", null_sha1, 0, NULL);
++}
  
--static char capabilities[] = " report-status delete-refs ";
-+static char capabilities[] = " report-status delete-refs side-band-64k ";
- static int capabilities_sent;
++static void show_hook_output(char *msgs, ssize_t n)
++{
++	if (use_sideband)
++		send_sideband(1, 2, msgs, n, use_sideband);
++	else
++		write_in_full(2, msgs, n);
+ }
  
- static int receive_pack_config(const char *var, const char *value)
-@@ -321,6 +323,8 @@ static void read_head_info(void)
- 			const char *reqcap = refname + reflen + 1;
- 			if (strstr(reqcap, "report-status"))
- 				report_status = 1;
-+			if (strstr(reqcap, "side-band-64k"))
-+				use_sideband = LARGE_PACKET_MAX;
- 		}
- 		cmd = xmalloc(sizeof(struct command) + len - 80);
- 		hashcpy(cmd->old_sha1, old_sha1);
-@@ -426,18 +430,19 @@ static const char *unpack(void)
- 
- static void report(const char *unpack_status)
+ struct command {
+@@ -100,10 +107,13 @@ static int hook_status(int code, const char *hook_name)
+ static int run_hook(const char *hook_name)
  {
-+	int band = use_sideband ? 1 : -1;
+ 	static char buf[sizeof(commands->old_sha1) * 2 + PATH_MAX + 4];
++	static char msgs[128];
  	struct command *cmd;
--	packet_write(1, "unpack %s\n",
-+	packet_sideband_write(1, band, "unpack %s\n",
- 		     unpack_status ? unpack_status : "ok");
- 	for (cmd = commands; cmd; cmd = cmd->next) {
+ 	struct child_process proc;
+ 	const char *argv[2];
+ 	int have_input = 0, code;
++	size_t buf_len, buf_off;
++	struct pollfd pfd[2];
+ 
+ 	for (cmd = commands; !have_input && cmd; cmd = cmd->next) {
  		if (!cmd->error_string)
--			packet_write(1, "ok %s\n",
-+			packet_sideband_write(1, band, "ok %s\n",
- 				     cmd->ref_name);
- 		else
--			packet_write(1, "ng %s %s\n",
-+			packet_sideband_write(1, band, "ng %s %s\n",
- 				     cmd->ref_name, cmd->error_string);
+@@ -119,28 +129,87 @@ static int run_hook(const char *hook_name)
+ 	memset(&proc, 0, sizeof(proc));
+ 	proc.argv = argv;
+ 	proc.in = -1;
++	proc.err = -1;
+ 	proc.stdout_to_stderr = 1;
+ 
+ 	code = start_command(&proc);
+ 	if (code)
+ 		return hook_status(code, hook_name);
++
++	pfd[0].fd = proc.in;
++	pfd[0].events = POLLOUT;
++	pfd[1].fd = proc.err;
++	pfd[1].events = POLLIN;
++
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+-		if (!cmd->error_string) {
+-			size_t n = snprintf(buf, sizeof(buf), "%s %s %s\n",
++		if (cmd->error_string)
++			continue;
++		buf_off = 0;
++		buf_len = snprintf(buf, sizeof(buf), "%s %s %s\n",
+ 				sha1_to_hex(cmd->old_sha1),
+ 				sha1_to_hex(cmd->new_sha1),
+ 				cmd->ref_name);
+-			if (write_in_full(proc.in, buf, n) != n)
+-				break;
+-		}
++		do {
++			if (poll(pfd, 2, -1) < 0) {
++				if (errno == EINTR)
++					continue;
++				goto finish;
++			}
++			if (pfd[0].revents & POLLOUT) {
++				ssize_t r = xwrite(proc.in, buf + buf_off, buf_len);
++				if (r <= 0)
++					goto finish;
++				buf_len -= r;
++				buf_off += r;
++			}
++			if (pfd[1].revents & POLLIN) {
++				ssize_t r = xread(proc.err, msgs, sizeof(msgs));
++				if (r <= 0)
++					goto finish;
++				show_hook_output(msgs, r);
++			}
++		} while (buf_len > 0);
++	}
++
++finish:
++	close(proc.in);
++	proc.close_in = 0;
++	for (;;) {
++		ssize_t r = xread(proc.err, msgs, sizeof(msgs));
++		if (r <= 0)
++			break;
++		show_hook_output(msgs, r);
  	}
--	packet_flush(1);
-+	packet_sideband_flush(1, band);
+ 	return hook_status(finish_command(&proc), hook_name);
  }
  
- static int delete_only(struct command *cmd)
-@@ -501,6 +506,8 @@ int main(int argc, char **argv)
- 			report(unpack_status);
- 		run_hook(post_receive_hook);
- 		run_update_post_hook(commands);
-+		if (use_sideband)
-+			packet_flush(1);
- 	}
- 	return 0;
++static int run_noinput_hook(const char **argv)
++{
++	static char msgs[128];
++	struct child_process proc;
++	int code;
++
++	memset(&proc, 0, sizeof(proc));
++	proc.argv = argv;
++	proc.no_stdin = 1;
++	proc.stdout_to_stderr = 1;
++	proc.err = -1;
++
++	code = start_command(&proc);
++	if (code)
++		return code;
++	for (;;) {
++		ssize_t sz = xread(proc.err, msgs, sizeof(msgs));
++		if (sz <= 0)
++			break;
++		show_hook_output(msgs, sz);
++	}
++	return finish_command(&proc);
++}
++
+ static int run_update_hook(struct command *cmd)
+ {
+ 	static const char update_hook[] = "hooks/update";
+-	struct child_process proc;
+ 	const char *argv[5];
+ 
+ 	if (access(update_hook, X_OK) < 0)
+@@ -152,12 +221,7 @@ static int run_update_hook(struct command *cmd)
+ 	argv[3] = sha1_to_hex(cmd->new_sha1);
+ 	argv[4] = NULL;
+ 
+-	memset(&proc, 0, sizeof(proc));
+-	proc.argv = argv;
+-	proc.no_stdin = 1;
+-	proc.stdout_to_stderr = 1;
+-
+-	return hook_status(run_command(&proc), update_hook);
++	return hook_status(run_noinput_hook(argv), update_hook);
  }
+ 
+ static const char *update(struct command *cmd)
+@@ -264,8 +328,7 @@ static void run_update_post_hook(struct command *cmd)
+ 		argc++;
+ 	}
+ 	argv[argc] = NULL;
+-	run_command_v_opt(argv, RUN_COMMAND_NO_STDIN
+-		| RUN_COMMAND_STDOUT_TO_STDERR);
++	run_noinput_hook(argv);
+ }
+ 
+ static void execute_commands(const char *unpacker_error)
+diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
+index 9734fc5..6aae4f3 100755
+--- a/t/t5401-update-hooks.sh
++++ b/t/t5401-update-hooks.sh
+@@ -117,19 +117,19 @@ test_expect_failure 'send-pack produced no output' '
+ '
+ 
+ cat <<EOF >expect
+-STDOUT pre-receive
+-STDERR pre-receive
+-STDOUT update refs/heads/master
+-STDERR update refs/heads/master
+-STDOUT update refs/heads/tofail
+-STDERR update refs/heads/tofail
+-STDOUT post-receive
+-STDERR post-receive
+-STDOUT post-update
+-STDERR post-update
++remote: STDOUT pre-receive[K
++remote: STDERR pre-receive[K
++remote: STDOUT update refs/heads/master[K
++remote: STDERR update refs/heads/master[K
++remote: STDOUT update refs/heads/tofail[K
++remote: STDERR update refs/heads/tofail[K
++remote: STDOUT post-receive[K
++remote: STDERR post-receive[K
++remote: STDOUT post-update[K
++remote: STDERR post-update[K
+ EOF
+ test_expect_success 'send-pack stderr contains hook messages' '
+-	grep ^STD send.err >actual &&
++	grep ^remote: send.err >actual &&
+ 	git diff - actual <expect
+ '
+ 
 -- 
 1.5.4.rc5.1126.g6ba14
