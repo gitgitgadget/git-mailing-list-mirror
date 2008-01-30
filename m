@@ -1,83 +1,96 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] Authenticate push via PGP signature, not SSH
-Date: Wed, 30 Jan 2008 01:16:05 -0500
-Message-ID: <20080130061605.GQ24004@spearce.org>
-References: <479D5611.4010205@vilain.net> <20080128081258.GE24004@spearce.org> <479E5021.7010404@vilain.net> <20080129041000.GK24004@spearce.org> <20080129190845.GC30093@artemis.madism.org> <20080130042201.GO24004@spearce.org> <47A01162.7070503@vilain.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb: Use config file or file for repository owner's name.
+Date: Tue, 29 Jan 2008 22:16:16 -0800
+Message-ID: <7vwsprj0sv.fsf@gitster.siamese.dyndns.org>
+References: <1201670898-15076-1-git-send-email-ribas@c3sl.ufpr.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Jan 30 07:16:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bruno Ribas <ribas@c3sl.ufpr.br>
+X-From: git-owner@vger.kernel.org Wed Jan 30 07:17:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JK6FX-0000G9-QV
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 07:16:44 +0100
+	id 1JK6Fn-0000KV-FZ
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 07:16:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751650AbYA3GQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 01:16:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752479AbYA3GQK
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 01:16:10 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:58435 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751555AbYA3GQJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 01:16:09 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JK6Ex-0008TU-AQ; Wed, 30 Jan 2008 01:16:07 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E181220FBAE; Wed, 30 Jan 2008 01:16:05 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <47A01162.7070503@vilain.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752987AbYA3GQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 01:16:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752900AbYA3GQX
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 01:16:23 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:51596 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752818AbYA3GQW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 01:16:22 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A7432B3A;
+	Wed, 30 Jan 2008 01:16:21 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 81F3A2B39;
+	Wed, 30 Jan 2008 01:16:18 -0500 (EST)
+In-Reply-To: <1201670898-15076-1-git-send-email-ribas@c3sl.ufpr.br> (Bruno
+	Ribas's message of "Wed, 30 Jan 2008 03:28:17 -0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72029>
 
-Sam Vilain <sam@vilain.net> wrote:
-> Shawn O. Pearce wrote:
-> > I just read the GnuPG manual and you are obviously correct.  The only
-> > way to get GnuPG to process a key is to load it onto a keyring.
-> > We could extract the armored (or binary) public key and load it
-> > onto a temporary keyring created just for the purpose of verifying
-> > this connection, but that's rather messy.
-> 
-> It should be fine just to throw the lot into a single keyring, and just
-> check which key verified it after the fact and whether that key was allowed.
-> 
-> The Perl Crypt::OpenPGP module doesn't suffer from this problem (and is
-> performant), though it suffers from a dependency stack that will hurt
-> everyone except Debian users ;-).
+Bruno Ribas <ribas@c3sl.ufpr.br> writes:
 
-Heh.  One of my Gentoo boxes seems to claim this would be an easier
-emerge than the Qt3 emerge that it keeps trying to do, and failing,
-for the past week and a half.  But yea, I don't have half the stuff
-its asking for installed.
- 
-> >> $ gpg --keyring path/to/the/keyring.gpg --quiet --batch --status-fd 1 --verify some-file.tar.gz.gpg 2>|/dev/null
-> >> [GNUPG:] SIG_ID dw0VliO0DFjOQA3HUSHijYekQYY 2008-01-29 1201633002
-> >> [GNUPG:] GOODSIG BC6AFB5BA1EE761C Pierre Habouzit <pierre.habouzit@polytechnique.edu>
-> >> [GNUPG:] VALIDSIG 72B4C59ADA78D70E055C129EBC6AFB5BA1EE761C 2008-01-29 1201633002 0 3 0 17 2 00 72B4C59ADA78D70E055C129EBC6AFB5BA1EE761C
-> ^^^ there GPG just told you which key was used.
+> Allow to use configuration variable gitweb.owner or $GIT_DIR/owner file to
+> set the repository owner, it checks $GIT_DIR/owner first, then falls back to
+> the gitweb.owner, if none exist uses filesystem directory's owner.
+>
+> Useful when we don't want to maintain project list file, and all
+> repository directories have to have the same owner (for example when the
+> same SSH account is shared for all projects, using ssh_acl to control
+> access instead).
 
-Yup.  I think that's what we'll have to do.  But managing the keyring
-is (I think) something we need to solve.  It should be able to be
-done remotely, assuming you have authority, and ideally through
-standard Git channels.
+> +sub gitweb_get_project_owner {
+> +	my $path = shift;
+> +
+> +	$git_dir = "$projectroot/$path";
+> +	open my $fd, "$projectroot/$path/owner"
+> +		or return git_get_project_config('owner');
+> +	my $owner = <$fd>;
+> +	close $fd;
+> +	if (defined $owner) {
+> +		chomp $owner;
+> +	}
+> +	return $owner;
+> +}
+> +
+>  sub git_get_project_owner {
+>  	my $project = shift;
+>  	my $owner;
+> @@ -1767,6 +1781,10 @@ sub git_get_project_owner {
+>  	if (exists $gitweb_project_owner->{$project}) {
+>  		$owner = $gitweb_project_owner->{$project};
+>  	}
+> +
+> +    if (!defined $owner) {
+> +        $owner = gitweb_get_project_owner($project);
+> +    }
+>  	if (!defined $owner) {
+>  		$owner = get_file_owner("$projectroot/$project");
+>  	}
 
-If we're going to the trouble of effectively replacing SSH for
-authenticated Git object push (at least for stuff that is open
-source and thus doesn't require privacy during upload) we might
-as well make sure it can actually be managed too.
+I am not sure about the effect of this change on a large scale
+site.  If you do not have the project list file, originally we
+just needed a stat per project, but now you open an extra file
+(either "owner" or "config") and read it, once per every
+project.
 
--- 
-Shawn.
+The project list page does that for every project, and it
+actually is worse because it also needs to open yet another file
+"description" from the directory.  It almost makes me wonder if
+are much better of to have a single file per project to read all
+the necessary information off of, instead of having to open many
+little files (currently it is only two---owner and description.
+But who knows what other little pieces of information you would
+want to add next week).
