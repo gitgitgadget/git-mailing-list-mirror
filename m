@@ -1,7 +1,7 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 5/7] Refactor send-pack/receive-pack capability handshake for extension
-Date: Wed, 30 Jan 2008 01:22:09 -0500
-Message-ID: <20080130062209.GE15838@spearce.org>
+Subject: [PATCH 4/7] Refactor packet_write to prepare to integrate with sideband
+Date: Wed, 30 Jan 2008 01:22:06 -0500
+Message-ID: <20080130062206.GD15838@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
@@ -11,23 +11,23 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JK6Lv-0001Yk-SY
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 07:23:20 +0100
+	id 1JK6Lv-0001Yk-65
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 07:23:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753780AbYA3GWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 01:22:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753970AbYA3GWW
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 01:22:22 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:58709 "EHLO
+	id S1753779AbYA3GWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 01:22:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753875AbYA3GWT
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 01:22:19 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:58704 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753780AbYA3GWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 01:22:12 -0500
+	with ESMTP id S1753774AbYA3GWK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 01:22:10 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JK6Ko-0000BA-Na; Wed, 30 Jan 2008 01:22:10 -0500
+	id 1JK6Kl-0000B3-Em; Wed, 30 Jan 2008 01:22:07 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 49FE120FBAE; Wed, 30 Jan 2008 01:22:09 -0500 (EST)
+	id 2594E20FBAE; Wed, 30 Jan 2008 01:22:06 -0500 (EST)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -39,90 +39,58 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72034>
 
-This refactors the capability selection in send-pack to be more
-like how fetch-pack handles the transmission to the remote peer,
-so we can easily add additional capability strings to the push
-protocol as needed.
+Simple refactoring to move the actual formatting into a
+helper function.  Later we'll integrate this new helper
+with sideband support, so we can embed a packet line
+within a multiplexed sideband stream.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- builtin-send-pack.c |   17 ++++++++---------
- receive-pack.c      |    3 ++-
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ pkt-line.c |   17 +++++++++++++----
+ 1 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index 8afb1d0..63fbcd2 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -378,10 +378,10 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
+diff --git a/pkt-line.c b/pkt-line.c
+index 355546a..5917e1d 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -43,16 +43,16 @@ void packet_flush(int fd)
+ }
+ 
+ #define hex(a) (hexchar[(a) & 15])
+-void packet_write(int fd, const char *fmt, ...)
++static void packet_vwrite(
++	int fd,
++	const char *fmt,
++	va_list args)
  {
- 	struct ref *ref;
- 	int new_refs;
--	int ask_for_status_report = 0;
- 	int allow_deleting_refs = 0;
- 	int expect_status_report = 0;
- 	int flags = MATCH_REFS_NONE;
-+	int pushing = 0;
- 	int ret;
+ 	static char buffer[1000];
+ 	static char hexchar[] = "0123456789abcdef";
+-	va_list args;
+ 	unsigned n;
  
- 	if (args.send_all)
-@@ -395,7 +395,7 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
+-	va_start(args, fmt);
+ 	n = vsnprintf(buffer + 4, sizeof(buffer) - 4, fmt, args);
+-	va_end(args);
+ 	if (n >= sizeof(buffer)-4)
+ 		die("protocol error: impossibly long line");
+ 	n += 4;
+@@ -63,6 +63,15 @@ void packet_write(int fd, const char *fmt, ...)
+ 	safe_write(fd, buffer, n);
+ }
  
- 	/* Does the other end support the reporting? */
- 	if (server_supports("report-status"))
--		ask_for_status_report = 1;
-+		expect_status_report = 1;
- 	if (server_supports("delete-refs"))
- 		allow_deleting_refs = 1;
- 
-@@ -477,18 +477,17 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 			char *old_hex = sha1_to_hex(ref->old_sha1);
- 			char *new_hex = sha1_to_hex(ref->new_sha1);
- 
--			if (ask_for_status_report) {
-+			if (!pushing)
- 				packet_write(out, "%s %s %s%c%s",
- 					old_hex, new_hex, ref->name, 0,
--					"report-status");
--				ask_for_status_report = 0;
--				expect_status_report = 1;
--			}
-+					(expect_status_report ? " report-status" : "")
-+				);
- 			else
- 				packet_write(out, "%s %s %s",
- 					old_hex, new_hex, ref->name);
-+			pushing++;
- 		}
--		ref->status = expect_status_report ?
-+		ref->status = pushing && expect_status_report ?
- 			REF_STATUS_EXPECTING_REPORT :
- 			REF_STATUS_OK;
- 	}
-@@ -502,7 +501,7 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 	}
- 	close(out);
- 
--	if (expect_status_report)
-+	if (pushing && expect_status_report)
- 		ret = receive_status(in, remote_refs);
- 	else
- 		ret = 0;
-diff --git a/receive-pack.c b/receive-pack.c
-index 3267495..7380395 100644
---- a/receive-pack.c
-+++ b/receive-pack.c
-@@ -318,7 +318,8 @@ static void read_head_info(void)
- 		refname = line + 82;
- 		reflen = strlen(refname);
- 		if (reflen + 82 < len) {
--			if (strstr(refname + reflen + 1, "report-status"))
-+			const char *reqcap = refname + reflen + 1;
-+			if (strstr(reqcap, "report-status"))
- 				report_status = 1;
- 		}
- 		cmd = xmalloc(sizeof(struct command) + len - 80);
++void packet_write(int fd, const char *fmt, ...)
++{
++	va_list args;
++
++	va_start(args, fmt);
++	packet_vwrite(fd, fmt, args);
++	va_end(args);
++}
++
+ static void safe_read(int fd, void *buffer, unsigned size)
+ {
+ 	size_t n = 0;
 -- 
 1.5.4.rc5.1126.g6ba14
