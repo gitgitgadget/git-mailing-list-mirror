@@ -1,98 +1,71 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] filter-branch: assume HEAD if no revision supplied
-Date: Wed, 30 Jan 2008 13:33:04 -0600
-Message-ID: <47A0D0F0.1020800@nrlssc.navy.mil>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: simple cvs-like git wrapper
+Date: Wed, 30 Jan 2008 14:49:53 -0500 (EST)
+Message-ID: <alpine.LNX.1.00.0801301439070.13593@iabervon.org>
+References: <20080129204048.GA9612@venus> <m3hcgw8dz7.fsf@localhost.localdomain> <20080130021050.GB9612@venus>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 20:35:16 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "Ed S. Peschko" <esp5@pge.com>
+X-From: git-owner@vger.kernel.org Wed Jan 30 20:50:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKIi4-0000Dm-Ol
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 20:35:01 +0100
+	id 1JKIxA-0007UH-IX
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 20:50:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755015AbYA3TeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 14:34:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753098AbYA3TeS
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 14:34:18 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:34133 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754832AbYA3TeR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 14:34:17 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0UJX5YW008960;
-	Wed, 30 Jan 2008 13:33:05 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 30 Jan 2008 13:33:05 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-X-OriginalArrivalTime: 30 Jan 2008 19:33:05.0017 (UTC) FILETIME=[EF2EC690:01C86376]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15694001
-X-TM-AS-Result: : Yes--9.019700-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNjQzLTcwMjExMy03MDUx?=
-	=?us-ascii?B?MDItNzA0NDI1LTcwNzM5NS03MDIwMzctNzA0NzEyLTcwMjE0My03?=
-	=?us-ascii?B?MDI2MDktNzA2NTYxLTcwMDE2MC03MDE0NTUtNzEwNDQyLTcwMDc1?=
-	=?us-ascii?B?Ni03MDEyMDItMTA2NDIwLTcwNDQxMC03MDM3MjAtNzAwOTcwLTcw?=
-	=?us-ascii?B?NzgwMC0xMDUwNDAtNzAyNzkxLTcwMDQ3Ni03MDc3NTAtNzAyMDQ0?=
-	=?us-ascii?B?LTcwMDc4Mi03MDAzMDAtMTg4MDE5LTcwMzcxMi03MDUzODgtNzA5?=
-	=?us-ascii?B?ODU5LTcxMDIyNC03MDA3MDEtMTQ4MDM5LTE0ODA1MQ==?=
+	id S1761995AbYA3Tt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 14:49:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761938AbYA3Tt6
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 14:49:58 -0500
+Received: from iabervon.org ([66.92.72.58]:39884 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761748AbYA3Tt4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 14:49:56 -0500
+Received: (qmail 1479 invoked by uid 1000); 30 Jan 2008 19:49:53 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 30 Jan 2008 19:49:53 -0000
+In-Reply-To: <20080130021050.GB9612@venus>
+User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72062>
 
-filter-branch previously took the first non-option argument as the name for
-a new branch. Since dfd05e38, it now takes a revision or a revision range
-and modifies the current branch. Update to operate on HEAD by default to
-conform with standard git interface practice.
+On Tue, 29 Jan 2008, Ed S. Peschko wrote:
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
+> > One thing (besides horrible branching and even worse merging)  which I
+> > hated in multi-user CVS is the "cvs update", namely the fact that if
+> > you want to commit changes, you _have_ to rebase them on top of
+> > current work. So when you are ready to commit, when you have tested
+> > everything, you are sometimes forced to resolve a merge to be able to
+> > commit... and have to test resolved merge... and perhaps again, and
+> > again.
+> 
+> Yeah, I realize that it's not exactly the best solution for every
+> project, but for projects tied to a piece of hardware (ie: a database, a
+> particular box, etc), its much more important to be in sync, to have 
+> 'one true view' of the world rather than to have the freedom to have 
+> multiple views.
 
+Actually, it's a simpler concern: with CVS (and most version control 
+systems), you can't make a permanent record of your state without 
+resolving conflicts. With git, you make the permanent record first, and 
+then resolve conflicts in order to get a state that includes your changes 
+and can be pushed to the shared location. With git, you can still have 
+"one true view" of the world; it's just that git really really doesn't 
+want to lose your work, so it refuses to overwrite your files unless 
+you've put them in its storage, where it can give them back if it does 
+something wrong with your working tree.
 
-You may think that filter-branch _should_ require the user to specify the
-revision. If so, then '--default HEAD' should probably be removed from the
-other two places, and the usage and documentation should be updated to
-remove the brackets around <rev-list options> so not to imply that it is
-optional. The test for at least one non-option argument can still be
-removed since it can currently be circumvented by placing -- as the
-last argument and because it would allow format-patch to fail with
-a much nicer message: "Which ref do you want to rewrite?".
+Of course, your "gvs update" could do a local git commit of the current 
+state, fetch the remote changes, and rebase the local commit onto them, so 
+it's not necessarily a workflow change. But note that, if the user fails 
+to do a manual merge, the user can try again, or try working on a 
+different branch, or fork at that point, depending on how hopeless the 
+situation is.
 
-fwiw the behavior this patch implements is what I expected.
-
--brandon
-
-
- git-filter-branch.sh |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
-
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index ebf05ca..cd1eeee 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -114,7 +114,6 @@ orig_namespace=refs/original/
- force=
- while :
- do
--	test $# = 0 && usage
- 	case "$1" in
- 	--)
- 		shift
-@@ -210,7 +209,7 @@ GIT_WORK_TREE=.
- export GIT_DIR GIT_WORK_TREE
- 
- # The refs should be updated if their heads were rewritten
--git rev-parse --no-flags --revs-only --symbolic-full-name "$@" |
-+git rev-parse --no-flags --revs-only --symbolic-full-name --default HEAD "$@" |
- sed -e '/^^/d' >"$tempdir"/heads
- 
- test -s "$tempdir"/heads ||
--- 
-1.5.4.rc5.14.gaa8fc
+	-Daniel
+*This .sig left intentionally blank*
