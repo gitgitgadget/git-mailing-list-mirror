@@ -1,56 +1,59 @@
-From: Bruno Ribas <ribas@c3sl.ufpr.br>
-Subject: [PATCH] gitweb: Make use of the $git_dir variable at sub git_get_project_description
-Date: Wed, 30 Jan 2008 03:37:56 -0200
-Message-ID: <1201671476-15725-1-git-send-email-ribas@c3sl.ufpr.br>
-Cc: Bruno Ribas <ribas@c3sl.ufpr.br>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 30 06:38:31 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] filter-branch.sh: remove temporary directory on failure
+Date: Tue, 29 Jan 2008 21:51:33 -0800
+Message-ID: <7v3asfkgii.fsf@gitster.siamese.dyndns.org>
+References: <479E4612.6030006@nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 30 06:52:33 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JK5eW-00018e-4o
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 06:38:28 +0100
+	id 1JK5s8-0004EL-Lx
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 06:52:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752399AbYA3Fh5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 00:37:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753647AbYA3Fh5
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 00:37:57 -0500
-Received: from urquell.c3sl.ufpr.br ([200.17.202.3]:36713 "EHLO
-	urquell.c3sl.ufpr.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752399AbYA3Fh4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 00:37:56 -0500
-Received: from localhost (unknown [201.21.136.136])
+	id S1754119AbYA3Fvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 00:51:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754112AbYA3Fvu
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 00:51:50 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50597 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754080AbYA3Fvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 00:51:50 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A2ED52811;
+	Wed, 30 Jan 2008 00:51:48 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	(Authenticated sender: ribas)
-	by urquell.c3sl.ufpr.br (Postfix) with ESMTP id 825C9700003CC;
-	Wed, 30 Jan 2008 03:37:55 -0200 (BRST)
-X-Mailer: git-send-email 1.5.3.8
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A6852810;
+	Wed, 30 Jan 2008 00:51:44 -0500 (EST)
+In-Reply-To: <479E4612.6030006@nrlssc.navy.mil> (Brandon Casey's message of
+	"Mon, 28 Jan 2008 15:16:02 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72026>
 
+Brandon Casey <casey@nrlssc.navy.mil> writes:
 
-Signed-off-by: Bruno Ribas <ribas@c3sl.ufpr.br>
----
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Even though this directory may be useful for debugging when you encounter
+> a problem, I wonder if the normal "error" will be _user_ error. In which
+> case the user will adjust the command line parameters and try to rerun.
+> Currently the user would then receive the message
+>
+>      "$tempdir already exists, please remove it"
+>
+> Then, rm -rf the tempdir, then rerun.
+>
+> Is this necessary? Maybe anyone with the know-how to debug would also have the
+> know-how to comment out the 'trap' in the script (or direct someone asking for
+> help on the mailing list to do so).
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e29ad0a..157f499 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1606,7 +1606,7 @@ sub git_get_project_description {
- 	my $path = shift;
- 
- 	$git_dir = "$projectroot/$path";
--	open my $fd, "$projectroot/$path/description"
-+	open my $fd, "$git_dir/description"
- 		or return git_get_project_config('description');
- 	my $descr = <$fd>;
- 	close $fd;
--- 
-1.5.3.8
+Makes sense to me.  Dscho?
