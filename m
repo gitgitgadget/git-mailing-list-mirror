@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: simple cvs-like git wrapper
-Date: Tue, 29 Jan 2008 23:00:02 -0500
-Message-ID: <20080130040002.GM24004@spearce.org>
-References: <20080129204048.GA9612@venus> <m3hcgw8dz7.fsf@localhost.localdomain> <20080130021050.GB9612@venus>
+Subject: Re: [RFC] Authenticate push via PGP signature, not SSH
+Date: Tue, 29 Jan 2008 23:22:01 -0500
+Message-ID: <20080130042201.GO24004@spearce.org>
+References: <479D5611.4010205@vilain.net> <20080128081258.GE24004@spearce.org> <479E5021.7010404@vilain.net> <20080129041000.GK24004@spearce.org> <20080129190845.GC30093@artemis.madism.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "Ed S. Peschko" <esp5@pge.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 05:00:55 2008
+Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Wed Jan 30 05:22:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JK47z-0006xz-CZ
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 05:00:47 +0100
+	id 1JK4TQ-0002t6-8S
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 05:22:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753087AbYA3EAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jan 2008 23:00:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753301AbYA3EAK
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 23:00:10 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:46706 "EHLO
+	id S1752312AbYA3EWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jan 2008 23:22:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751658AbYA3EWK
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Jan 2008 23:22:10 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:47869 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753072AbYA3EAI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jan 2008 23:00:08 -0500
+	with ESMTP id S1750850AbYA3EWJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jan 2008 23:22:09 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JK477-0002NH-Ey; Tue, 29 Jan 2008 22:59:53 -0500
+	id 1JK4SQ-00035G-QC; Tue, 29 Jan 2008 23:21:54 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2FBAC20FBAE; Tue, 29 Jan 2008 23:00:02 -0500 (EST)
+	id 4A0A820FBAE; Tue, 29 Jan 2008 23:22:02 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <20080130021050.GB9612@venus>
+In-Reply-To: <20080129190845.GC30093@artemis.madism.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -41,125 +41,127 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72020>
 
-"Ed S. Peschko" <esp5@pge.com> wrote:
-> In our case, our code is tied to a database and a database instance. An
-> environment equals attachment to a given oracle SID. If someone is out of sync
-> with other people's changes, then that person's environment is wrong.
-
-Surely not every single code change impacts the database schema
-and meaning of column values?  If that were truely the case then
-I'd say you have bigger issues to tackle.
-
-There's perfectly valid reasons a user (or several users) may go
-off on a branch for a little while.  Like maybe they are working
-together to refactor a chunk of front end user interface, to better
-handle result sets >100 rows, something that wasn't anticipated
-would ever happen when the system was first built.  It happens.
-There may not be any database changes involved on that but it may
-be distrubtive enough that you don't want to see their changes
-until its mostly done.
-
-I've been there, done that with Oracle and CVS.  Having Git makes
-it a whole lot easier to go off on a side branch when refactoring
-a chunk of UI, as you don't have to impact all of your coworkers
-right away.
- 
-> I agree with you, however, with the working on branches. We need the 
-> ability to do the small incremental commits, and then tie them back to
-> SOX requirements (bleah). 
-
-So, uh, mention the requirement using some sort of unique requirement
-identifier in each commit message, and use a commit-msg hook to
-make sure you didn't forget to include the requirement number.
-We make links like that in our issue tracking system with "lpmNNNN"
-keywords, where NNNN is the issue tracker number.
-
-If you ever want to know what changes were done for a particular
-requirement, pop open gitk and search for contains "soxNNNN", or use
-`git log --grep=soxNNN`, and there's your list.
- 
-> Hence the hope for the automatic merging along with a given branch - that, 
-> when you do an 'gvs update', it takes all the outstanding deltas on all the
-> branches that have been uploaded into the central repository, and applies 
-> them, one by one, to your local repository, and keeps the branch intact.
-
-I don't think you fully understand what git-merge does.  It retains
-the full history of every individual change made along that branch,
-as well as who performed the merge, and when.  Git also tracks if
-the merge makes changes that weren't on either parent branch, and
-correctly blames such changes to the individual who did the merge.
-Most older SCMs are simply not able to do such detailed reporting.
-Heck, some modern SCMs also can't do it.
-
-> That it basically does the perfect patch series functionality you are
-> talking about, but in an automatic way..
-
-Yea, git-merge is totally freaking automatic.  Except when there is
-a conflict.  Then you have to fix up a few things.  But Git isn't
-a mind reader (yet) so there will always be cases where it doesn't
-quite do what you wanted it to without a little additional guidence.
- 
-> A couple of questions:
+Pierre Habouzit <madcoder@debian.org> wrote:
+> On Tue, Jan 29, 2008 at 04:10:00AM +0000, Shawn O. Pearce wrote:
+> > * PGP public key storage:
+> > 
+> >   Use a "hidden" ref called "refs/access-keys" to store a commit.
+> >   The access control change log is a normal Git commit chain.
 > 
-> 	1. How do you get a list - on a shared, remote, repository - of all the 
->        branches that a shared repository contains, from the point of
-> 	   view of a client? ie: git-branch shows local branches..
+>   This won't work well, because I don't think GnuPG is able to check
+> some signature against an armored GPG public Key (at least I didn't
+> found a way to do that). You have to create one pubring per submitter,
+> wich is kind of a waste in fact, and the format is horribly binary.
 
-I think you are talking about `git ls-remote --heads url`.
+Gaaah.
+
+I hate tools that build their own little internal databases of
+objects, and don't let you store their data in other random places,
+like in any random file format you choose[*1*].  ;-)
+
+I just read the GnuPG manual and you are obviously correct.  The only
+way to get GnuPG to process a key is to load it onto a keyring.
+We could extract the armored (or binary) public key and load it
+onto a temporary keyring created just for the purpose of verifying
+this connection, but that's rather messy.
  
->     2. Could the above 'gvs update' be implemented in terms of a series 
-> 	   of 'git pull --rebase' or even 'git pull' merges from the
-> 	   centralized repository based on the output from the command 
->        above?
+>   I don't even know if you really need the versionning of this
+> pseudo-keyring, and if a .git/keyring.gpg isn't enough.
 
-Yes, but why are you merging all of the available branches?
-Why aren't you merging a single specific branch?  It seems very odd
-to me that you want to merge every branch available.  I just cannot
-see how that gives you any benefit over just having a single branch
-called "master" that you rebase your changes onto before pushing
-them, thus enforcing a mostly linear history.
+Well, I don't know about that.
 
-Only linear history has its downsides.  It doesn't really quite show
-you what the commits were developed against.  So it may be possible
-that after a rebase the end result compiles and works, but an
-earlier commit that used to work now doesn't, due to other changes.
+People come and go on a project.  It would be nice if there was
+a reasonably trusted store available as part of the project, that
+one can verify using a current trusted project member's public key,
+and obtain prior project member's public keys out of.  But maybe the
+Debian folks just doesn't worry about this as it isn't a real issue.
 
-If you are really worried about SOX requirements, I'd imagine you
-are also worried about SOX auditing.  In which case I would think
-that for most changes that are going to be part of your permenant
-history don't want to use rebase, but instead merge, to show the
-original history of every change.
+In the case of access control however I need to have a full history
+of who had access, during what time periods.  If someone has their
+access revoked, I need to know when it was revoked, and by whom.
+Git commit chains make for a nice log of such activity.  Obviously
+access changes don't need to be reflected through a GnuPG keyring,
+and can be as simple as a text file listing the allowed users.
 
-> Anyways, I wouldn't mind it if 'gvs update' paused at the end of
-> each merge - that you'd do a 'gvs update', it would show you exactly what
-> was going to merge before it did it (maybe even via a vimdiff of old and 
-> new side by side), and would allow you to do a regression test after
-> each patchset was applied..
+But as a remote administrator for my project (think repo.or.cz!)
+how do I add new users to the keyring.gpg on the server?  Being
+able to use the existing send-pack/receive-pack infrastructure to
+transport the new public key has nice advantages.  Web UIs are
+cool, but some of us are command line oriented animals.
 
-One of my favorite ways to regression test every commit in a series
-during a rebase is to use git-rebase -i:
+>   As a side note, you don't really need to use GIT_PUSH_*. It doesn't
+> make anything safer (as the UIDs of a given public key are public
+> information anyways), you just want to know which key signed that data,
+> and the signature holds that information. Hence if you still want to
+> have a flat-file based keyring (which I repeat I don't think gpg
+> supports directly -- and that's really a shame) you'd better index them
+> per key fingerprint than by author name.
 
-	$ git rebase -i
-	... editor opens ... which is vi ...
-	:%s/^pick /edit /
-	:wq
+Yea, I know, you haven't told me anything I didn't already know.
 
-	... so now it stops between every patch ...
-	$ while test -d .git/.dotest-merge; do \
-	make clean test && git-rebase --continue || break; done
+Having GIT_PUSHER_{NAME,EMAIL} makes it easier for a hook to
+obtain information about this person and use it in an automated
+email message.  Think a post-receive hook that automatically sends
+out announcement emails.
 
-If anything breaks, you are right there on the broken change and
-you can use `git show` to see it, `git commit --amend` to fix it up,
-you can test the fix, and finally then continue the rebase to move
-onto the next change.
+Having G_P_{NAME,EMAIL} makes it easier for the branch reflogs on the
+server to have names in them.  If you look at your local reflogs they
+are driven off GIT_COMMITTER_{NAME,EMAIL} and thus report something
+meaningful about who did a change.  But when we are in receive-pack
+and we update a reflog we don't really have this information, do we?
 
-I've got a 67 patch series I'm in the middle of doing at day-job
-using that exact process.  Takes a few minutes per commit as our
-build cycle is slow, but it works darn well.  I'm letting it run
-overnight as I expect it to get about 70% through before it finds
-a problem, if it is going to find one.
+Having G_P_{NAME,EMAIL} makes it easier to write a hook that looks
+up access control data and makes access control decisions based upon
+symbols we like to refer to other water transport devices with.
+I'd much rather refer to you by your given name 'Pierre' than by
+your GPG key id BC6AFB5BA1EE761C.  Especially if I have to list
+you in an access control file with 50 other people that lists which
+branches you are allowed to push changes into, and which ones you
+are restricted from.
+
+Yes, I know the key ids are unique enough for our needs.  But dammit,
+they just aren't friendly to work with when you are storing log
+records for later inspection, or maintaing an access list.
+
+There is after all reason we have a "tagger" field with a human
+readable name on it, rather than relying solely on the GPG key id
+of the signature.
+
+>   And then you just need to call gpg this way:
+> 
+> $ gpg --keyring path/to/the/keyring.gpg --quiet --batch --status-fd 1 --verify some-file.tar.gz.gpg 2>|/dev/null
+> [GNUPG:] SIG_ID dw0VliO0DFjOQA3HUSHijYekQYY 2008-01-29 1201633002
+> [GNUPG:] GOODSIG BC6AFB5BA1EE761C Pierre Habouzit <pierre.habouzit@polytechnique.edu>
+> [GNUPG:] VALIDSIG 72B4C59ADA78D70E055C129EBC6AFB5BA1EE761C 2008-01-29 1201633002 0 3 0 17 2 00 72B4C59ADA78D70E055C129EBC6AFB5BA1EE761C
+> [GNUPG:] TRUST_ULTIMATE
+> 
+>   And if the key is not in your keyring this looks like:
+> $ GNUPGHOME=/tmp gpg --verify --status-fd 1 some-file.tar.gz.gpg 2>/dev/null
+> [GNUPG:] ERRSIG BC6AFB5BA1EE761C 17 2 00 1201633002 9
+> [GNUPG:] NO_PUBKEY BC6AFB5BA1EE761C
+>                    ^^^^^^^^^^^^^^^^
+>             that's the key id you look for.
+
+Urgh.  So then we need to go and extract that key, load it onto a
+temporary keyring, then reinvoke gpg with the temporary keyring,
+just to verify the short command input we received?  Ouch.
+
+OK, maybe I'm making it sound worse than it really will be.
+
+I'm currently finishing a side-band-64k protocol extension to the
+send-pack/receive-pack pair.  My next task after I flush those
+RFC patches out to the list tonight will be to prototype at least
+some of the auth1 extension I described.  I'll maybe try to keep
+it really simple initially, which means doing what you suggested
+above and using a .git/keyring.gpg for the repository.  Its not
+easily remotely administered, but its only a damn proof of concept.
+
+
+
+*1* If you don't get this joke, well, uh, I can't help you.
+    Oh, ASCII formatted Git packfiles are on the way!  :)
 
 -- 
 Shawn.
