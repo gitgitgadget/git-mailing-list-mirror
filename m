@@ -1,115 +1,111 @@
-From: "Shawn O. Pearce" <spearce-o8xcbExO1WpAfugRpC6u6w@public.gmane.org>
-Subject: Re: git gui diff widget (was Re: [msysGit] Re: [cheetah]
- Questions about NOTES)
-Date: Wed, 30 Jan 2008 02:13:04 -0500
-Message-ID: <20080130071304.GS24004@spearce.org>
-References: <ecf0120c-2bde-407d-8a4e-2f50ea7d4b54@f47g2000hsd.googlegroups.com> <alpine.LSU.1.00.0801281126350.23907@racer.site> <20080129031713.GJ24004@spearce.org> <alpine.LSU.1.00.0801291207080.23907@racer.site> <20080130040336.GN24004@spearce.org> <75E9DFB9-BE1B-4B60-921D-EE0898DFA9F3@zib.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>, Kirill <kirillathome-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, Brian Hetro <whee-Q1H67ocemw/0qnVlFUAYEw@public.gmane.org>, msysGit <msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>, Git Mailing List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
-To: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Wed Jan 30 08:13:48 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.247])
+From: Luke Lu <git@vicaya.com>
+Subject: Re: [PATCH] Optimize rename detection for a huge diff
+Date: Tue, 29 Jan 2008 23:24:13 -0800
+Message-ID: <EB54EAD7-EC20-4449-B1A1-DEC5EECD70B3@vicaya.com>
+References: <20080127172748.GD2558@does.not.exist> <20080128055933.GA13521@coredump.intra.peff.net> <alpine.LFD.1.00.0801300844170.28476@www.l.google.com> <20080129222007.GA3985@coredump.intra.peff.net> <7vfxwgmf87.fsf@gitster.siamese.dyndns.org> <7vwspskynz.fsf@gitster.siamese.dyndns.org> <7vprvkj58q.fsf_-_@gitster.siamese.dyndns.org> <1AC39411-D78E-4663-A4E0-7B179AAA56EB@vicaya.com>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jeff King <peff@peff.net>, Adrian Bunk <bunk@kernel.org>,
+	git@vger.kernel.org
+To: Luke Lu <git@vicaya.com>
+X-From: git-owner@vger.kernel.org Wed Jan 30 08:25:08 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JK78k-0003m1-Gu
-	for gcvm-msysgit@m.gmane.org; Wed, 30 Jan 2008 08:13:46 +0100
-Received: by wa-out-0708.google.com with SMTP id n36so3946537wag.21
-        for <gcvm-msysgit@m.gmane.org>; Tue, 29 Jan 2008 23:13:18 -0800 (PST)
+	id 1JK7Jh-0005vi-Gn
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 08:25:05 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753646AbYA3HYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 02:24:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753541AbYA3HYX
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 02:24:23 -0500
+Received: from wx-out-0506.google.com ([66.249.82.239]:42778 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753203AbYA3HYW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 02:24:22 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so131693wxd.4
+        for <git@vger.kernel.org>; Tue, 29 Jan 2008 23:24:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:x-antiabuse:x-antiabuse:x-antiabuse:x-antiabuse:x-antiabuse:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=UF9SH+8ltBc4Ucbm5D7pr6f1STwSLAYJmVypUW051M8=;
-        b=fNNMvGj7+tpc3TiIHh++6ouf6rh/sFPSJfdkKnPOz6b+TUULr4D9XWnBFWZcKh+LoUlw6q9VE1aE+hxRiwODeuaTGT9eba608/D9DKuf+BTxV6mi5Zs9RErdPoHk5KFs43wSmTecQkYV9rn7GbuKETyfrvH/R4LJanx91hjUO7g=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:sender;
+        bh=JDDhvin/fNqoxUBlZI8n7MBZGBWNMA5MPhhme1QMKvs=;
+        b=soMgiazdGHaWcbeShJGxJU6PonbSSwQRXbiGvn13hObDZeJJEMOWD2bsLz56i3ICGtgrWy540zhqTWO/h8JORAS8f/PIametLjwVSbHaKBgLsC5wn/6ipVHdyVu62GfqJbLswpSZY77hyUzteCcEC7tNzziwfPjFItuZEAUyBkU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:x-antiabuse:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=hAmw8TSjPjkYGlVRy5Ave4bVTdIlCPh3xHl9f1HkhTxc4YxEXpf6/f1lAEmYeFgSTfId79fXQaZEyLqLvXwYvnh2fSyJsFbNHfrBjxSD398KPC0Lqd3BATpR7Vr5cn4fYGs2nQxl/Zmbs4YttjrnVfqIXPRE82Pc65Up/Q1cG0s=
-Received: by 10.114.204.7 with SMTP id b7mr276868wag.16.1201677195626;
-        Tue, 29 Jan 2008 23:13:15 -0800 (PST)
-Received: by 10.106.159.13 with SMTP id h13gr1541pre;
-	Tue, 29 Jan 2008 23:13:15 -0800 (PST)
-X-Sender: spearce-o8xcbExO1WpAfugRpC6u6w@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.114.131.9 with SMTP id e9mr2031124wad.5.1201677195368; Tue, 29 Jan 2008 23:13:15 -0800 (PST)
-Received: from corvette.plexpod.net (corvette.plexpod.net [64.38.20.226]) by mx.google.com with ESMTP id k36si10662495waf.0.2008.01.29.23.13.14; Tue, 29 Jan 2008 23:13:15 -0800 (PST)
-Received-SPF: neutral (google.com: 64.38.20.226 is neither permitted nor denied by best guess record for domain of spearce-o8xcbExO1WpAfugRpC6u6w@public.gmane.org) client-ip=64.38.20.226;
-Authentication-Results: mx.google.com; spf=neutral (google.com: 64.38.20.226 is neither permitted nor denied by best guess record for domain of spearce-o8xcbExO1WpAfugRpC6u6w@public.gmane.org) smtp.mail=spearce-o8xcbExO1WpAfugRpC6u6w@public.gmane.org
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org) by corvette.plexpod.net with esmtpa (Exim 4.68) (envelope-from <spearce-o8xcbExO1WpAfugRpC6u6w@public.gmane.org>) id 1JK788-0001oB-2b; Wed, 30 Jan 2008 02:13:08 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000) id 8F40720FBAE; Wed, 30 Jan 2008 02:13:04 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <75E9DFB9-BE1B-4B60-921D-EE0898DFA9F3-wjoc1KHpMeg@public.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - googlegroups.com
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+        d=gmail.com; s=gamma;
+        h=in-reply-to:references:mime-version:content-type:message-id:cc:content-transfer-encoding:from:subject:date:to:x-mailer:sender;
+        b=HmAx1IH3QJ1svWtIXw56Lm9VbqheDFPiZ1mAzWHaGXhZiMq0+oCu8hOhmQ/+ysfzuhbwsRpI39BYT+So3xvR1trW2G0ZWl6+NBq1j3m1IbNwlKSE/isu+UNe9g4QOoR6pRB7qJ5xCtGtR9qBE4VI8MB+ylz2RibtbFW7ruWYrCY=
+Received: by 10.70.25.1 with SMTP id 1mr273225wxy.44.1201677861397;
+        Tue, 29 Jan 2008 23:24:21 -0800 (PST)
+Received: from ?192.168.7.8? ( [69.181.4.225])
+        by mx.google.com with ESMTPS id i37sm1439699wxd.12.2008.01.29.23.24.16
+        (version=SSLv3 cipher=OTHER);
+        Tue, 29 Jan 2008 23:24:17 -0800 (PST)
+In-Reply-To: <1AC39411-D78E-4663-A4E0-7B179AAA56EB@vicaya.com>
+X-Mailer: Apple Mail (2.753)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72042>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72043>
 
+On Jan 29, 2008, at 10:57 PM, Luke Lu wrote:
+> On Jan 29, 2008, at 8:40 PM, Junio C Hamano wrote:
+>> When there are N deleted paths and M created paths, we used to
+>> allocate (N x M) "struct diff_score" that record how similar
+>> each of the pair is, and picked the <src,dst> pair that gives
+>> the best match first, and then went on to process worse matches.
+>>
+>> This sorting is done so that when two new files in the postimage
+>> that are similar to the same file deleted from the preimage, we
+>> can process the more similar one first, and when processing the
+>> second one, it can notice "Ah, the source I was planning to say
+>> I am a copy of is already taken by somebody else" and continue
+>> on to match itself with another file in the preimage with a
+>> lessor match.  This matters to a change introduced between
+>> 1.5.3.X series and 1.5.4-rc, that lets the code to favor unused
+>> matches first and then falls back to using already used
+>> matches.
+>>
+>> This instead allocates and keeps only a handful rename source
+>> candidates per new files in the postimage.  I.e. it makes the
+>> memory requirement from O(N x M) to O(M).
+>>
+>> For each dst, we compute similarlity with all sources (i.e. the
+>> number of similarity estimate computations is still O(N x M)),
+>> but we keep handful best src candidates for each dst.
+>
+> I can think of cases where you'll throw away better candidates this  
+> way. How about using a priority queue of size max(N, M)?
+>
+> I don't know about the details of the current algorithm but it  
+> seems to me that using a naive Rabin Karp fingerprinting approach  
+> would not use too much memory: say L is total number of bytes of  
+> created files and the fingerprint size S and hash size of 4 bytes.  
+> To keep track of M files You only need to keep 8(additional 4 bytes  
+> as an index to the file names)*(L/S + M(for filenames)) plus some  
+> overhead for the hash table in memory. One pass through D (number  
+> of bytes of deleted files) you can get the NxM scores. The score is  
+> defined as Wf * Mf + Wt, where Wf is the weight for fingerprinting  
+> match and Wt is the weight for title match score; Mf is the  
+> fingerprint match score = (number of matching fingerprints)/(number  
+> of fingerprints of original (deleted) file). Wf and Wt can be tuned  
+> to boost exact basename match.
+>
+> By pushing the scores into a priority queue you'll get the final  
+> top (max(N, M) = K) scores in the end. The computation complexity  
+> is really O(D+L+(MxN)logK) and memory requirement O(L)
+>
+> You can compute the entire linux source tree renaming (24K files  
+> and total 260MB uncompressed) this way using only about 92MB of  
+> memory in 18 seconds (limited by hash lookup speed, assuming 15M  
+> lookups per second based on my past experience).
 
-Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org> wrote:
-> On Jan 30, 2008, at 5:03 AM, Shawn O. Pearce wrote:
-> >
-> >Doing a diff against a random other tree-ish, or between two random
-> >tree-ishes would be possible, but a lot more of a challenge.
-> >
-> >The diff viewer in git-gui isn't exactly a reusable widget.
-> >We'd need to refactor that so it could take patch output from any
-> >of the patch generating git commands.  Doing such is on my list
-> >of things I'd like to fix in git-gui, but I haven't had time to
-> >do it yet.
-> 
-> Hmm, I'm not sure if such a full diff viewer is the most
-> important thing to address.  Most users (especially Windows
-> users) already have a favorite graphical diff tool and they expect
-> a mechanism to plug it into a git workflow.
+The estimate is based on fingerprint size of 64 bytes and a 2.4GHz  
+C2D class Intel CPU, YMMV. One can trade off the accuracy for less  
+memory by using larger fingerprint size and vice versa.
 
-I hear this a lot from a co-worker.  He really wants a side-by-side
-diff tool in git, as he doesn't like reading patches.  Me, I've
-never been able to read a side-by-side diff tool, but I can grok
-a unified diff quite easily.  To each his own, and git should help
-users as much as it can.
- 
-> I think a tool that presents the list of files with differences
-> and can launch an external tool for one of these files would be
-> very helpful.  I started to think about a command line version,
-> git-difftool, implementing this idea, but do not yet have code.
-> A GUI version would be preferable for cheetah anyway.  Maybe the
-> patch viewer you sketched above could provide a way to launch an
-> external tool for any of the files touched by the patch?  If the
-> widget would be reusable maybe it could also be used in gitk?
-
-Yea, that makes sense.  But we may want to go the other way,
-that is reuse gitk's patch viewer.  Or something.  The two tools
-(git-gui and gitk) grew their diff viewers independently, though
-I have to say that git-gui's was inspired by gitk's, and the work
-that Paul did on gitool waaaaay back when.
-
-Right now though I doubt there's a single line of code in common
-between them.  Hmm, I think they both use the Tk "text" widget.
-And a blue-ish color for hunk headers.  :)
-
-
-Adding a feature to git-gui to launch an external diff of that
-file against the index or HEAD shouldn't be too difficult, and I
-think is what would be most natural for the current UI.  The ugly
-part is pulling out the HEAD/index version into a temporary file
-and passing a nice -L (or something like) option to the user's diff
-viewer so they don't see the nasty temporary file name, but instead
-see a string that matches what git-gui is showing them.  And that
-option is going to differ for like every tool out there.  :-\
-
--- 
-Shawn.
+__Luke
