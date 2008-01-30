@@ -1,78 +1,80 @@
-From: "Rafael Garcia-Suarez" <rgarciasuarez@gmail.com>
-Subject: Re: [PATCH] git-relink: avoid hard linking in objects/info directory
-Date: Wed, 30 Jan 2008 09:08:52 +0100
-Message-ID: <b77c1dce0801300008r7c6c38f5i97ffd30d022d533b@mail.gmail.com>
-References: <479FAB9A.9040009@nrlssc.navy.mil>
-	 <b77c1dce0801292334p7c348744re6a7fdbb0f17d5b3@mail.gmail.com>
-	 <7vd4rjivy5.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's in git.git (stable frozen)
+Date: Wed, 30 Jan 2008 00:32:22 -0800
+Message-ID: <7v8x27iui1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Brandon Casey" <casey@nrlssc.navy.mil>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 09:09:30 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 30 09:33:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JK80c-0000JP-Dm
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 09:09:26 +0100
+	id 1JK8NT-0006rn-RL
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 09:33:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754124AbYA3II4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 03:08:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754036AbYA3II4
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 03:08:56 -0500
-Received: from hs-out-0708.google.com ([64.233.178.243]:24124 "EHLO
-	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752576AbYA3IIy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 03:08:54 -0500
-Received: by hs-out-2122.google.com with SMTP id 54so142343hsz.5
-        for <git@vger.kernel.org>; Wed, 30 Jan 2008 00:08:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=qFRgZPxurjB/tTRGr78pkiCoDOOuYnVXB6NJF1yUK1o=;
-        b=Jj9XpSTPwIGw4+CH0VYHaFLsBilTT7t7MpFyd5hp2AbxN+o2Zb+ZKGXjoOA4Wlxvc00WJGJW+DlOTyBqVquHGwKHL8zSsJRhpkM2tTo9Z19qU8mJg5AzngVR691CGzrsZjUl3Y5crhuZ10z5R0chE2ajQO5UBA7ipecxpRvSPZ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=nOZfqsu4XvxGQmzPZIBmq1SDqGSOOVLCOS9b3lFaMiunaVeITBfbY0crdthi/lJStIQEyldLxbAC1nyxU8CbTRn51AP4M3jFCIxBbayn8/CkvRWhZhFMIutUa7ah9njKN6JZSLaGApTLlZTrjLOhCVrByGfG8vnVrMi7QsgFwrQ=
-Received: by 10.142.99.21 with SMTP id w21mr170984wfb.55.1201680533132;
-        Wed, 30 Jan 2008 00:08:53 -0800 (PST)
-Received: by 10.142.212.20 with HTTP; Wed, 30 Jan 2008 00:08:52 -0800 (PST)
-In-Reply-To: <7vd4rjivy5.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754233AbYA3Icd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 03:32:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754228AbYA3Icd
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 03:32:33 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:56995 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754036AbYA3Icc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 03:32:32 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 18CAC3D4F;
+	Wed, 30 Jan 2008 03:32:30 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B1303D4E;
+	Wed, 30 Jan 2008 03:32:28 -0500 (EST)
+X-maint-at: aadd4efa715f56e0eac5ac459c8ff4933b56d4ce
+X-master-at: 0eab8ca68ad7bfcbb7c0aff37985116cbbdacd44
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72051>
 
-On 30/01/2008, Junio C Hamano <gitster@pobox.com> wrote:
-> The statement is trying to find directories whose names match
-> /^[0-9a-f]{2}$/ (two hexdigits) or /^pack$/.
+There shouldn't be anything eye-popping.  Hopefully we can do
+the final soonish, perhaps this weekend.
 
-Ah, I see better now.
+I may have made small touch-ups to a few commits, so please
+check them over.
 
-> But I do agree that listing things to skip is a fragile approach
-> than listing things you know are safe to relink.
->
-> How about doing it this way instead?
->
->  git-relink.perl |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/git-relink.perl b/git-relink.perl
-> index f6b4f6a..9101926 100755
-> --- a/git-relink.perl
-> +++ b/git-relink.perl
-> @@ -40,7 +40,7 @@ my $master_dir = pop @dirs;
->  opendir(D,$master_dir . "objects/")
->         or die "Failed to open $master_dir/objects/ : $!";
->
-> -my @hashdirs = grep !/^\.{1,2}$/, readdir(D);
-> +my @hashdirs = grep { ($_ eq 'pack') || /^[0-9a-f]{2}$/ } readdir(D);
+Thanks.
 
-Fine, except that one can factorize one step further:
-    grep /^(pack|[0-9a-f]{2})$/, readdir(D);
+* The 'master' branch has these since v1.5.4-rc5
+
+Brandon Casey (1):
+  git-relink: avoid hard linking in objects/info directory
+
+Bruno Ribas (1):
+  gitweb: Make use of the $git_dir variable at sub
+    git_get_project_description
+
+Christian Couder (3):
+  Documentation: config: add "browser.<tool>.path".
+  Documentation: help: specify supported html browsers.
+  instaweb: use 'browser.<tool>.path' config option if it's set.
+
+Jakub Narebski (1):
+  gitweb: Add info about $projectroot and $projects_list to gitweb/README
+
+Jeff King (1):
+  t9001: add missing && operators
+
+Jim Meyering (1):
+  fix doc typos
+
+Johannes Schindelin (1):
+  Add test for rebase -i with commits that do not pass pre-commit
+
+Junio C Hamano (1):
+  reflog-expire: Avoid creating new files in a directory inside readdir(3)
+    loop
+
+Yasushi SHOJI (1):
+  gitweb: Convert generated contents to utf8 in commitdiff_plain
