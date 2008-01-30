@@ -1,92 +1,96 @@
-From: Adam Piatyszek <ediap@users.sourceforge.net>
-Subject: Re: Why does git track directory listed in .gitignore/".git/info/exclude"?
-Date: Wed, 30 Jan 2008 13:35:05 +0100
-Message-ID: <47A06EF9.60704@users.sourceforge.net>
-References: <6bc632150801230554l3b24e1e4lb4641bf7c16857c0@mail.gmail.com> <6bc632150801230604p2589c893pa05bb6f27e482de8@mail.gmail.com> <alpine.LFD.1.00.0801231313590.2803@woody.linux-foundation.org>
+From: "Jay Soffian" <jaysoffian+git@gmail.com>
+Subject: Re: [StGit PATCH 4/5] Simplify editor selection logic
+Date: Wed, 30 Jan 2008 09:55:18 -0500
+Message-ID: <76718490801300655r3d1b5b41l2945b4f730faedb2@mail.gmail.com>
+References: <20080129030059.926.29897.stgit@yoghurt>
+	 <20080129030349.926.45486.stgit@yoghurt>
+	 <200801292109.37785.kumbayo84@arcor.de>
+	 <20080130072828.GA24648@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: pradeep singh rautela <rautelap@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jan 30 13:46:20 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Peter Oberndorfer" <kumbayo84@arcor.de>,
+	"Catalin Marinas" <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Wed Jan 30 15:55:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKCKV-0004YL-O8
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 13:46:16 +0100
+	id 1JKEM0-0007JG-IJ
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 15:55:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754994AbYA3Mpm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 07:45:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753343AbYA3Mpm
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 07:45:42 -0500
-Received: from ananke.et.put.poznan.pl ([150.254.29.121]:59809 "EHLO
-	ananke.et.put.poznan.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751480AbYA3Mpl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 07:45:41 -0500
-Received: from hydrus.et.put.poznan.pl (hydrus.et.put.poznan.pl [150.254.11.145])
-	by ananke.et.put.poznan.pl (8.13.8/8.13.8) with ESMTP id m0UCe2pQ026455;
-	Wed, 30 Jan 2008 13:40:43 +0100 (CET)
-	(envelope-from ediap@users.sourceforge.net)
-Received: from [150.254.11.73] (pc1073.et.put.poznan.pl [150.254.11.73])
-	by hydrus.et.put.poznan.pl (8.11.7p1+Sun/8.11.6) with ESMTP id m0UCZ5D06103;
-	Wed, 30 Jan 2008 13:35:06 +0100 (MET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071116)
-In-Reply-To: <alpine.LFD.1.00.0801231313590.2803@woody.linux-foundation.org>
-X-Enigmail-Version: 0.95.6
-OpenPGP: id=1F115CCB
-X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940, Antispam-Data: 2008.1.30.42651
-X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='__CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0, __USER_AGENT 0'
+	id S1754169AbYA3OzW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Jan 2008 09:55:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753732AbYA3OzW
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 09:55:22 -0500
+Received: from wa-out-1112.google.com ([209.85.146.181]:5446 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752848AbYA3OzV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Jan 2008 09:55:21 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so419110wah.23
+        for <git@vger.kernel.org>; Wed, 30 Jan 2008 06:55:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=O9GtRFnfSoz/vsrSfP2sGT3krlqv8AkMURxwqDswsuw=;
+        b=g9xdLVpa/iPz/wIKRCUTp1rmTzNR6JHlaKS23+pKQZy+fIzAI5eBXATkiUdQFPMs9581coi/WuRf2h7DuOr12SOy90fvYndTT3gnaSXVNcaVmxxc4fYRqRhKJFE6PXDM2LixStGLTLMQaxdBPkOOW53kZ0xlnv+B9pEXc0QWNEU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=eRjV95PVuwbULKPcKLGy/6iQa8klRA9evyHrZP8sPw8toVfhsCAbKdKDN5dZ8CpXp4Pv0ez4H/9/8ropmX5snxb230wffJB5pwOYXGqDMhc+ixHcVmrIOU/1oHo5b6d4ntOUF/FikzzEEn4yHwoevrhikvbY6waoW8gXMCzmUto=
+Received: by 10.114.149.2 with SMTP id w2mr984251wad.5.1201704918033;
+        Wed, 30 Jan 2008 06:55:18 -0800 (PST)
+Received: by 10.114.255.11 with HTTP; Wed, 30 Jan 2008 06:55:18 -0800 (PST)
+In-Reply-To: <20080130072828.GA24648@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
+X-Google-Sender-Auth: 067d2dbe4c8fdf1d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72057>
 
-* Linus Torvalds [23 I 2008 22:17]:
-> On Wed, 23 Jan 2008, pradeep singh rautela wrote:
->> But i still would like to ask git gurus here.
->> Isn't it fine to include a directory name as
->>
->>    $directory_name/
->>     instead of
->>    $directory_name/*
-> 
-> Heh.
-> 
-> I think your problem is that "/" itself. By adding it, the exclude 
-> information does *not* match the directory entry itself (because the 
-> directory entry itself is called just "xen-3.1.0-src" - note no slash!), 
-> and since you added it, it also doesn't match any names _under_ that 
-> directory exactly.
-> 
-> So what you *should* have done is to just tell git to ignore the directory 
-> named "xen-3.1.0-src", and you'd have been ok.
-> 
-> Using "xen-3.1.0-src/*" works too, but it is heavy-handed and unnecessary.
+On Jan 30, 2008 2:28 AM, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> You could write it kind of like this:
+>
+>   def e(key): return os.environ.get(key, None)
+>   def c(key): return config.get(key)
+>   editor =3D filter(None, [e('GIT_EDITOR'), c('stgit.editor'), c('cor=
+e.editor'),
+>                          e('VISUAL'), e('EDITOR'), 'vi'])[0]
 
-Hi Linus, Pradeep and All,
+Too clever by half if you ask me. Why not just:
 
-In my opinion, the exclude matching routine should convert "dir/" to 
-"dir", especially that the "git status" command lists untracked 
-directories with the trailing slash "/", e.g:
+editor =3D (os.environ.get('GIT_EDITOR') or
+          config.get('stgit.editor') or
+          config.get('core.editor') or
+          os.environ.get('VISUAL') or
+          os.environ.get('EDITOR') or
+          'vi')
 
-   ediap@lespaul ~/git/acm_ofdm $ git status
-   # On branch master
-   # Untracked files:
-   #   (use "git add <file>..." to include in what will be committed)
-   #
-   #       ldpc13.bm
-   #       results/
+And be done with it?
 
-So, most newbies will try to add "dir/" to .gitignore or 
-.git/info/exclude instead of "dir" in such a case.
+> Of course, if we're going to have code like this in several places
+> (you already mentioned the pager), we could build a function like
+> this:
+>
+>   editor =3D get_config(['GIT_EDITOR', 'stgit.editor', 'core.editor',
+>                        'VISUAL', 'EDITOR'], default =3D 'vi')
+>
+> that would differentiate between env variables and conf keys by
+> looking for dots in the name or something.
 
-Can you seen any drawbacks of such modification?
+def get_config(keys, default=3DNone):
+    rv =3D default
+    for k in keys:
+        if '.' in k:
+            d =3D config
+        else:
+            d =3D os.environ
+        if k in d:
+            rv =3D d[k]
+            break
+    return rv
 
-BR,
-/Adam
-
--- 
-.:.  Adam Piatyszek (ediap)  .:.....................................:.
-.:.  ediap@users.sourceforge.net  .:................................:.
+j.
