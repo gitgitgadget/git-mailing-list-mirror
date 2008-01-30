@@ -1,113 +1,120 @@
-From: "Ed S. Peschko" <esp5@pge.com>
-Subject: Re: simple cvs-like git wrapper
-Date: Wed, 30 Jan 2008 14:52:54 -0800
-Message-ID: <20080130225254.GC9612@venus>
-References: <20080129204048.GA9612@venus> <m3hcgw8dz7.fsf@localhost.localdomain> <20080130021050.GB9612@venus> <20080130040002.GM24004@spearce.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] filter-branch: assume HEAD if no revision supplied
+Date: Wed, 30 Jan 2008 17:35:03 -0600
+Message-ID: <47A109A7.1070502@nrlssc.navy.mil>
+References: <47A0D0F0.1020800@nrlssc.navy.mil>	<alpine.LSU.1.00.0801302034310.23907@racer.site> <7vk5lrgh56.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Jan 30 23:53:46 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 31 00:38:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKLoO-0004bw-9G
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 23:53:44 +0100
+	id 1JKMVL-0004TB-2D
+	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 00:38:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754523AbYA3WxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 17:53:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753544AbYA3WxL
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 17:53:11 -0500
-Received: from mta06.pge.com ([131.90.0.76]:43464 "EHLO mta06.pge.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753474AbYA3WxK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 17:53:10 -0500
-Received: from mta12.comp.pge.com (mta12.comp.pge.com [10.245.211.127])
-	by mta06.pge.com (Switch-3.3.1/Switch-3.2.4) with ESMTP id m0UMqt9Z014609;
-	Wed, 30 Jan 2008 14:52:55 -0800 (PST)
-Received: from mdssdr01.utility.pge.com (mdssdr01.utility.pge.com [10.244.52.48])
-	by mta12.comp.pge.com (Switch-3.3.1/Switch-3.3.0) with ESMTP id m0UMqsbZ029996;
-	Wed, 30 Jan 2008 14:52:54 -0800 (PST)
-Received: (from esp5@localhost)
-	by mdssdr01.utility.pge.com (8.11.7p3+Sun/8.11.7) id m0UMqsP11834;
-	Wed, 30 Jan 2008 14:52:54 -0800 (PST)
-X-Authentication-Warning: mdssdr01.utility.pge.com: esp5 set sender to esp5@pge.com using -f
-Content-Disposition: inline
-In-Reply-To: <20080130040002.GM24004@spearce.org>
-User-Agent: Mutt/1.4.2.1i
+	id S1751747AbYA3Xhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 18:37:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751694AbYA3Xhf
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 18:37:35 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:45719 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751181AbYA3Xhd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 18:37:33 -0500
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0UNZ4ED011812;
+	Wed, 30 Jan 2008 17:35:04 -0600
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 30 Jan 2008 17:35:04 -0600
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <7vk5lrgh56.fsf@gitster.siamese.dyndns.org>
+X-OriginalArrivalTime: 30 Jan 2008 23:35:04.0403 (UTC) FILETIME=[BD694230:01C86398]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15694001
+X-TM-AS-Result: : Yes--19.498100-0-2-1
+X-TM-AS-Category-Info: : 2:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
+	=?us-ascii?B?MTAtNzAzNzMxLTcwMjExMy03MDUxMDItNzA0NDI1LTcwNzM5NS03?=
+	=?us-ascii?B?MDIwMzctNzA0NzEyLTcwMjE0My03MDI2MDktNzA2NTYxLTcwMTYw?=
+	=?us-ascii?B?NC03MDUwNjEtNzA3NDUxLTExMzIyOC03MDc5MzUtNzA4MjE3LTcw?=
+	=?us-ascii?B?MTU4My03MDA5OTktNzAyMzU4LTcxMTQzMi03MDE0NTUtNzA4Njkw?=
+	=?us-ascii?B?LTcwNzM2MS0xMDUwNDAtMTA2NDIwLTcwMDQ3Ni03MDM3ODgtNzA0?=
+	=?us-ascii?B?MDgzLTcwMTQ2My03MDk1ODQtMTA1NzAwLTcwNDUwNC03MDc0MTAt?=
+	=?us-ascii?B?NzAyNTUxLTcwMDc1Ni03MTA1MTItNzAxODM3LTcwMzcxMi03MDQ5?=
+	=?us-ascii?B?ODAtNzA2NjQ5LTcwMzA5Ni03MDE0MjgtNzAxOTE0LTcwMDYxOC0x?=
+	=?us-ascii?B?MDYyMzAtNzAyNzkxLTcwOTI5MS03MDkwNjUtMTQ4MDM5LTE0ODA1?=
+	=?us-ascii?B?MS0yMDA0Mw==?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72077>
 
-On Tue, Jan 29, 2008 at 11:00:02PM -0500, Shawn O. Pearce wrote:
-> "Ed S. Peschko" <esp5@pge.com> wrote:
-> > In our case, our code is tied to a database and a database instance. An
-> > environment equals attachment to a given oracle SID. If someone is out of sync
-> > with other people's changes, then that person's environment is wrong.
+Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Surely not every single code change impacts the database schema
-> and meaning of column values?  If that were truely the case then
-> I'd say you have bigger issues to tackle.
+>> On Wed, 30 Jan 2008, Brandon Casey wrote:
+>>
+>>> filter-branch previously took the first non-option argument as the name 
+>>> for a new branch. Since dfd05e38, it now takes a revision or a revision 
+>>> range and modifies the current branch. Update to operate on HEAD by 
+>>> default to conform with standard git interface practice.
+>> FWIW I think the code wanted to let "git filter-branch" without options 
+>> print the usage.
+> 
+> That might be a valid safety concern to some folks.  Previously
+> we have seen people say "Whenever I see a command foo that I do
+> not know what it does, I type 'foo <Enter>' and expect it gives
+> the usage back.  So any new destructive command 'foo' should not
+> do a damage by using built-in default." (I think it was about
+> "git stash" without parameter).
+> 
+> By the way, I do not personally think it is worth to be heavily
+> supportive to the practice of trying an unknown command without
+> understanding, and I do not agree such a safety is necessarily a
+> good idea, especially if it makes normal use of the command more
+> cumbersome by people who understand what it does.
+> 
+> Even though "git stash" itself is not destrictive, you need to
+> know its "apply" subcommand to undo the action.  In that sense,
+> it is destructive to clueless people who blindly type whatever
+> command they see.
+> 
+> That's why we still allow you to say "git stash", but we removed
+> its "git stash <randam message>" syntax, which was risky when
+> subcommand name was misspelled even by people who know what the
+> command does.  I think we struck a good balance between
+> usability and safety there.  And I think we can do the same
+> here.
+>
+> Perhaps "git filter-branch <Enter>" can be prevented as in the
+> current implementation while "git filter-branch --foo-filter
+> foo" can default to HEAD to satisfy both needs.  The command
+> without any filter is supposed to be mostly no-op (unless you
+> are trying to rewrite the history with grafts).
 
-well, no, but I'd say 80-90% of the changes we have are ones that we
-want to instantly share with everybody. I was thinking that ones that
-we didn't would be prefixed, as in:
+That's what I was trying to do :)
 
-	git-branch exp-<change_name>
+The goal should be consistency in the user interface. New users will
+always get confused. Lack of consistency could cause confusion for
+experienced users. I sent a patch because it was intuitive to me for
+filter-branch to operate on HEAD based on my git experience, and I was
+surprised when it did not. For porcelain that take a revision argument
+it seems common to default to HEAD.
 
-and those would need to be renamed explicitly to become 'mainline'
-branches before they were merged..
+I think the stash case is a little bit different because it was
+actually causing problems for experienced users. A minor typo would
+bite experienced people from time to time.
 
-You've got some good points, and my original intent was to
-answer them point-by-point, but suffice to say:
+In that same consistency vein, I wonder if a user would be surprised
+that 'git filter-branch' prints usage information but 'git filter-branch --'
+operates on HEAD? Maybe the following patch would be better than the
+compromise solution. (following in another email)
 
-	1. I was hoping to make each branch correspond to a work request,
-	   that would be tracked for SOX. We also need to track the changes
-	   in mercury interactive, not git, so I've got some challenges
-	   there in making a wrapper to handle this.
+-brandon
 
-
-	2. A single, linear history on the remote end wouldn't be easy for
-	   reporting purposes.
-
-    3. A single linear history on the remote end wouldn't support 
-	   the rare cases where I *do* want a single change.
-
-
-I guess my scheme's workability depends on how effective git is at 
-doing merges from branch to branch, and how good it is at fixing
-conflicts in a way that is simple for the user. In CVS, I get: 
-
-    >>>>>
-    ...
-    =====
-    ...
-    <<<<<
-
-
-when a conflict occurs, and you need to resolve that conflict before
-re-committing again. Does git do a similar thing?
-
-Also, with git-ls-remote - is there a way to see more information 
-about the remote branch rather than just its name, ie: can you say:
-
-    git-ls-remote -l --heads origin
-
-to get a list of changes in the order they were made? And is there a 
-command that does what I want, ie:
-
-	git pull origin --all 
-
-Which pulls all branches from origin and merges them into the current
-branch in an intelligent way, ie: by order in which the branches were 
-committed, or even:
-
-	git pull origin --re: '^(?!exp)'
-
-which pulls in all branches matching a given regular expression (in this
-case, not matching 'exp' at the beginning..
-
-Ed
+PS. Please s/format-patch/filter-branch/ if I missed any. I keep
+doing that.
