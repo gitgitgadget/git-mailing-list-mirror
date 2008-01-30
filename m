@@ -1,75 +1,57 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
+From: Jim Meyering <jim@meyering.net>
 Subject: Re: [PATCH] fix doc typos
-Date: Wed, 30 Jan 2008 21:43:57 +0100
-Message-ID: <20080130204357.GC4475@genesis.frugalware.org>
+Date: Wed, 30 Jan 2008 21:56:27 +0100
+Message-ID: <87ir1brq10.fsf@rho.meyering.net>
 References: <87myqoxvzk.fsf@rho.meyering.net>
+	<20080130204357.GC4475@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="4t0ONBuCiVxn5iiM"
+Content-Type: text/plain; charset=us-ascii
 Cc: git list <git@vger.kernel.org>
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Wed Jan 30 21:44:59 2008
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Jan 30 21:57:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKJnd-0004B3-02
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 21:44:49 +0100
+	id 1JKJzU-0000q5-10
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 21:57:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752231AbYA3UoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 15:44:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752148AbYA3UoM
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 15:44:12 -0500
-Received: from mx3.mail.elte.hu ([157.181.1.138]:60898 "EHLO mx3.mail.elte.hu"
+	id S1752856AbYA3U4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 15:56:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752533AbYA3U4a
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 15:56:30 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:47118 "EHLO smtp3-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752066AbYA3UoL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 15:44:11 -0500
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1JKJms-0005Ur-IM
-	from <vmiklos@frugalware.org>; Wed, 30 Jan 2008 21:44:09 +0100
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 1FAAE1190525; Wed, 30 Jan 2008 21:43:57 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <87myqoxvzk.fsf@rho.meyering.net>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: 0.0
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=0.0 required=5.9 tests=none autolearn=no SpamAssassin version=3.2.3
-	_SUMMARY_
+	id S1752785AbYA3U4a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 15:56:30 -0500
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 8629517B5A9
+	for <git@vger.kernel.org>; Wed, 30 Jan 2008 21:56:28 +0100 (CET)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 7D10217B575
+	for <git@vger.kernel.org>; Wed, 30 Jan 2008 21:56:28 +0100 (CET)
+Received: from rho.meyering.net (localhost.localdomain [127.0.0.1])
+	by rho.meyering.net (Acme Bit-Twister) with ESMTP id 1510C19DE;
+	Wed, 30 Jan 2008 21:56:28 +0100 (CET)
+In-Reply-To: <20080130204357.GC4475@genesis.frugalware.org> (Miklos Vajna's
+	message of "Wed, 30 Jan 2008 21:43:57 +0100")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72068>
 
+Miklos Vajna <vmiklos@frugalware.org> wrote:
+> On Tue, Jan 29, 2008 at 08:38:55PM +0100, Jim Meyering <jim@meyering.net> wrote:
+>>  Here is an illustration, by Jon Loeliger.  Both node B and C are
+>> -a commit parents of commit node A.  Parent commits are ordered
+>> +commit parents of commit node A.  Parent commits are ordered
+>
+> wouldn't this be "Both commit node B and C are parents of commit node A."?
 
---4t0ONBuCiVxn5iiM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+That does sound better.
+While you're word-smithing, how about s/node B/nodes B/, too:
 
-On Tue, Jan 29, 2008 at 08:38:55PM +0100, Jim Meyering <jim@meyering.net> wrote:
->  Here is an illustration, by Jon Loeliger.  Both node B and C are
-> -a commit parents of commit node A.  Parent commits are ordered
-> +commit parents of commit node A.  Parent commits are ordered
+  "Both commit nodes B and C are parents of commit node A."
 
-wouldn't this be "Both commit node B and C are parents of commit node A."?
-
-- VMiklos
-
---4t0ONBuCiVxn5iiM
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFHoOGNe81tAgORUJYRAlxQAJ0WAjG1dGQEF8odJTygbvkPcYB/NgCeNm50
-ccFVZtMcR6TFAyb2qYs4nm4=
-=bnjo
------END PGP SIGNATURE-----
-
---4t0ONBuCiVxn5iiM--
+Send a patch.
