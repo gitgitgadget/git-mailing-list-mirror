@@ -1,85 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: convert from perl internal to utf8 for commitdiff_plain
-Date: Tue, 29 Jan 2008 21:10:01 -0800
-Message-ID: <7vejbzkifq.fsf@gitster.siamese.dyndns.org>
-References: <87ve5dicih.wl@mail2.atmark-techno.com>
-	<7vir1dqjg0.fsf@gitster.siamese.dyndns.org>
-	<87fxwhi3qj.wl@mail2.atmark-techno.com>
-	<7vejc1qium.fsf@gitster.siamese.dyndns.org>
-	<87ejc0j08t.wl@mail2.atmark-techno.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Yasushi SHOJI <yashi@atmark-techno.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 06:10:50 2008
+From: Bruno Ribas <ribas@c3sl.ufpr.br>
+Subject: [PATCH] gitweb: Use config file or file for repository owner's name.
+Date: Wed, 30 Jan 2008 03:28:17 -0200
+Message-ID: <1201670898-15076-1-git-send-email-ribas@c3sl.ufpr.br>
+Cc: Bruno Ribas <ribas@c3sl.ufpr.br>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 30 06:28:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JK5Di-0003TY-Rj
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 06:10:47 +0100
+	id 1JK5VE-0007Xh-LM
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 06:28:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752177AbYA3FKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 00:10:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbYA3FKP
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 00:10:15 -0500
-Received: from rune.pobox.com ([208.210.124.79]:43065 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750809AbYA3FKN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 00:10:13 -0500
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 0DABF18F225;
-	Wed, 30 Jan 2008 00:10:34 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	id S1753842AbYA3F2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 00:28:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753779AbYA3F2U
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 00:28:20 -0500
+Received: from urquell.c3sl.ufpr.br ([200.17.202.3]:37227 "EHLO
+	urquell.c3sl.ufpr.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752508AbYA3F2T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 00:28:19 -0500
+Received: from localhost (unknown [201.21.136.136])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id B461918F1C6;
-	Wed, 30 Jan 2008 00:10:30 -0500 (EST)
-In-Reply-To: <87ejc0j08t.wl@mail2.atmark-techno.com> (Yasushi SHOJI's message
-	of "Tue, 29 Jan 2008 21:16:02 +0900")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	(Authenticated sender: ribas)
+	by urquell.c3sl.ufpr.br (Postfix) with ESMTP id 01933700003CC;
+	Wed, 30 Jan 2008 03:28:17 -0200 (BRST)
+X-Mailer: git-send-email 1.5.3.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72023>
 
-Yasushi SHOJI <yashi@atmark-techno.com> writes:
+Allow to use configuration variable gitweb.owner or $GIT_DIR/owner file to
+set the repository owner, it checks $GIT_DIR/owner first, then falls back to
+the gitweb.owner, if none exist uses filesystem directory's owner.
 
->> > sorry about my stupid english.  What I meant was that because commi=
-> t
->> > log doesn't say _why_ it changed to here-doc, I couldn't be sure it
->> > was ok to overwrite the change introduced by the commit 59b9f61a3.
->> >
->> > IOW, I was tring to ask, "is it ok to revert back to print?"
->>=20
->> Sure.  Can I forge your Sign-off?
->
-> =46rom 127a6abaf23991394b3b2c5455c2522f9da1e8ac Mon Sep 17 00:00:00 200=
-> 1
-> =46rom: Yasushi SHOJI <yashi@wat.atmark-techno.com>
-> Date: Tue, 29 Jan 2008 20:48:33 +0900
-> Subject: [PATCH] gitweb: Convert generated contents to utf8 in commitdi=
-> ff_plain
-> MIME-Version: 1.0
-> Content-Type: text/plain; charset=3Dutf-8
-> Content-Transfer-Encoding: 8bit
+Useful when we don't want to maintain project list file, and all
+repository directories have to have the same owner (for example when the
+same SSH account is shared for all projects, using ssh_acl to control
+access instead).
 
-Please don't do this.  MIME headers do not belong to the body of
-the message.
+Signed-off-by: Bruno Ribas <ribas@c3sl.ufpr.br>
+---
+ gitweb/gitweb.perl |   18 ++++++++++++++++++
+ 1 files changed, 18 insertions(+), 0 deletions(-)
 
->
-> If the commit message, or commit author contains non-ascii, it must be
-> converted from Perl internal representation to utf-8, to follow what
-> got declared in HTTP header.  Use to_utf8() to do the conversion.
->
-> This necessarily replaces here-doc with "print" statements.
->
-> Signed-off-by: Yasushi SHOJI <yashi@atmark-techno.com>
-> Acked-by: =C4=B0smail D=C3=B6nmez <ismail@pardus.org.tr>
-> Acked-by: Jakub Narebski <jnareb@gmail.com>
-
-Will try to apply by hand; if you do not hear from me about this
-patch again, no need for resend.
-
-Thanks.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 6256641..e29ad0a 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1754,6 +1754,20 @@ sub git_get_project_list_from_file {
+ 	}
+ }
+ 
++sub gitweb_get_project_owner {
++	my $path = shift;
++
++	$git_dir = "$projectroot/$path";
++	open my $fd, "$projectroot/$path/owner"
++		or return git_get_project_config('owner');
++	my $owner = <$fd>;
++	close $fd;
++	if (defined $owner) {
++		chomp $owner;
++	}
++	return $owner;
++}
++
+ sub git_get_project_owner {
+ 	my $project = shift;
+ 	my $owner;
+@@ -1767,6 +1781,10 @@ sub git_get_project_owner {
+ 	if (exists $gitweb_project_owner->{$project}) {
+ 		$owner = $gitweb_project_owner->{$project};
+ 	}
++
++    if (!defined $owner) {
++        $owner = gitweb_get_project_owner($project);
++    }
+ 	if (!defined $owner) {
+ 		$owner = get_file_owner("$projectroot/$project");
+ 	}
+-- 
+1.5.3.8
