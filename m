@@ -1,93 +1,85 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [RFC] Authenticate push via PGP signature, not SSH
-Date: Wed, 30 Jan 2008 09:35:28 +0100
-Message-ID: <20080130083528.GC8698@artemis.madism.org>
-References: <479D5611.4010205@vilain.net> <20080128081258.GE24004@spearce.org> <479E5021.7010404@vilain.net> <20080129041000.GK24004@spearce.org> <20080129190845.GC30093@artemis.madism.org> <20080130042201.GO24004@spearce.org> <47A01162.7070503@vilain.net>
+From: picca <picca@synchrotron-soleil.Fr>
+Subject: Problem with cvsimport
+Date: Wed, 30 Jan 2008 11:53:08 +0100
+Organization: Soleil
+Message-ID: <20080130115308.760d6e20@synchrotron-soleil.Fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="NKoe5XOeduwbEQHU";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Jan 30 09:36:09 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jan 30 11:54:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JK8QL-0007h9-Kl
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 09:36:02 +0100
+	id 1JKAZu-0002JS-25
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 11:54:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754367AbYA3Ifb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 03:35:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751495AbYA3Ifa
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 03:35:30 -0500
-Received: from pan.madism.org ([88.191.52.104]:48968 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754355AbYA3Ifa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 03:35:30 -0500
-Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 53B19311B5;
-	Wed, 30 Jan 2008 09:35:29 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 9170A142339; Wed, 30 Jan 2008 09:35:28 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Sam Vilain <sam@vilain.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <47A01162.7070503@vilain.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1757967AbYA3KxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 05:53:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752634AbYA3KxW
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 05:53:22 -0500
+Received: from raclette.synchrotron-soleil.fr ([195.221.0.6]:33828 "EHLO
+	raclette.synchrotron-soleil.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758666AbYA3KxO (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Jan 2008 05:53:14 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 1301A3003C
+	for <git@vger.kernel.org>; Wed, 30 Jan 2008 11:38:21 +0100 (CET)
+X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
+Received: from raclette.synchrotron-soleil.fr ([127.0.0.1])
+	by localhost (raclette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Oh8NfUWWpUm5 for <git@vger.kernel.org>;
+	Wed, 30 Jan 2008 11:38:17 +0100 (CET)
+Received: from venusbis.synchrotron-soleil.fr (venusbis.synchrotron-soleil.fr [195.221.0.152])
+	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 5CB97300E3
+	for <git@vger.kernel.org>; Wed, 30 Jan 2008 11:38:17 +0100 (CET)
+Received: from localhost.localdomain ([195.221.5.120]) by venusbis.synchrotron-soleil.fr with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 30 Jan 2008 11:54:08 +0100
+X-Mailer: Claws Mail 3.2.0 (GTK+ 2.12.5; i486-pc-linux-gnu)
+X-OriginalArrivalTime: 30 Jan 2008 10:54:08.0031 (UTC) FILETIME=[7017C2F0:01C8632E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72054>
+
+Hello
 
 
---NKoe5XOeduwbEQHU
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+When I try to import a project into git with the cvsimport tool, it
+works fine most of the time. I obtain a clean repository without all
+thoses CVS directories.
 
-On Wed, Jan 30, 2008 at 08:50:33AM +0000, Sam Vilain wrote:
-> Shawn O. Pearce wrote:
-> > I just read the GnuPG manual and you are obviously correct.  The only
-> > way to get GnuPG to process a key is to load it onto a keyring.
-> > We could extract the armored (or binary) public key and load it
-> > onto a temporary keyring created just for the purpose of verifying
-> > this connection, but that's rather messy.
->=20
-> It should be fine just to throw the lot into a single keyring, and just
-> check which key verified it after the fact and whether that key was allow=
-ed.
->=20
-> The Perl Crypt::OpenPGP module doesn't suffer from this problem (and is
-> performant), though it suffers from a dependency stack that will hurt
-> everyone except Debian users ;-).
+But sometimes during the import the cvs server hang and i need to do
+Ctrl+C the restart the command.
+cvsimport skip the already downloaded patchset but at the end I obtain
+this message
 
-  Actually, if it's engineered like libgpgme (gpg made easy) is, well,
-it basically wraps calls to gpg, a thing that we can do ourselves easily
-usually :)
+---
+Generating pack...
+Done counting 1534 objects.
+Deltifying 1534 objects...
+ 100% (1534/1534) done
+Writing 1534 objects...
+ 100% (1534/1534) done
+Total 1534 (delta 1160), reused 0 (delta 0)
+Pack pack-8fb4f1c25c831ba29c7bd53989cb1b445b60bc07 created.
+Removing unused objects 100%...
+Done.
+DONE.
+fatal: Needed a single revision
+Can merge only exactly one commit into empty head
+Could not merge origin into the current branch.
+---
 
-  And here is the tool I mentioned in my other mail and forgot to give
-an url to: http://kitenet.net/~joey/code/jetring/
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+So to resume:
+* In one shoot no problem at the end cvsimport checkout the
+right head.
+* multiple shoot impossible to merge origin into the current branch.
 
---NKoe5XOeduwbEQHU
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+How this problem can be solved ?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+Thanks
 
-iD8DBQBHoDbQvGr7W6HudhwRAvvTAJ49MkGv+AHhUAoRbzdAtniig4XV6QCgl1k2
-n8P7Jpom1whLfxBrlZrOCNc=
-=1Wyl
------END PGP SIGNATURE-----
-
---NKoe5XOeduwbEQHU--
+Frederic
