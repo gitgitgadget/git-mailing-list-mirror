@@ -1,80 +1,107 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] git-relink: avoid hard linking in objects/info directory
-Date: Wed, 30 Jan 2008 10:19:22 -0600
-Message-ID: <47A0A38A.7050600@nrlssc.navy.mil>
-References: <479FAB9A.9040009@nrlssc.navy.mil>	 <b77c1dce0801292334p7c348744re6a7fdbb0f17d5b3@mail.gmail.com>	 <7vd4rjivy5.fsf@gitster.siamese.dyndns.org> <b77c1dce0801300008r7c6c38f5i97ffd30d022d533b@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH 4/5] Simplify editor selection logic
+Date: Wed, 30 Jan 2008 18:57:57 +0100
+Message-ID: <20080130175757.GA30529@diana.vm.bytemark.co.uk>
+References: <20080129030059.926.29897.stgit@yoghurt> <20080129030349.926.45486.stgit@yoghurt> <200801292109.37785.kumbayo84@arcor.de> <20080130072828.GA24648@diana.vm.bytemark.co.uk> <76718490801300655r3d1b5b41l2945b4f730faedb2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Rafael Garcia-Suarez <rgarciasuarez@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 17:24:40 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Peter Oberndorfer <kumbayo84@arcor.de>,
+	Catalin Marinas <catalin.marinas@gmail.com>,
+	git@vger.kernel.org
+To: Jay Soffian <jaysoffian+git@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 30 18:58:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKFjl-0005Eh-KO
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 17:24:34 +0100
+	id 1JKHCz-0003nP-3C
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 18:58:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756391AbYA3QXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 11:23:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756328AbYA3QXf
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 11:23:35 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:60320 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756059AbYA3QXe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 11:23:34 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0UGJMLN006395;
-	Wed, 30 Jan 2008 10:19:22 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 30 Jan 2008 10:19:22 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <b77c1dce0801300008r7c6c38f5i97ffd30d022d533b@mail.gmail.com>
-X-OriginalArrivalTime: 30 Jan 2008 16:19:22.0976 (UTC) FILETIME=[DFE80E00:01C8635B]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15694001
-X-TM-AS-Result: : Yes--4.327000-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
-	=?us-ascii?B?MTAtNzAwMDczLTcwOTc1NS03MDQ5MzQtNzAxNDU1LTcwMTE2My03?=
-	=?us-ascii?B?MDgxNzktNzA5MDY1LTE4ODAxOS03MDI1NjgtNzA0OTI3LTEyMTMz?=
-	=?us-ascii?B?OC0xNDgwMzktMTQ4MDUxLTIwMDQz?=
+	id S1753479AbYA3R6Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Jan 2008 12:58:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753306AbYA3R6Q
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 12:58:16 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1768 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753265AbYA3R6P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 12:58:15 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1JKHC9-0000Hy-00; Wed, 30 Jan 2008 17:57:57 +0000
+Content-Disposition: inline
+In-Reply-To: <76718490801300655r3d1b5b41l2945b4f730faedb2@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72060>
 
-Rafael Garcia-Suarez wrote:
-> On 30/01/2008, Junio C Hamano <gitster@pobox.com> wrote:
->> The statement is trying to find directories whose names match
->> /^[0-9a-f]{2}$/ (two hexdigits) or /^pack$/.
-> 
-> Ah, I see better now.
-> 
->> But I do agree that listing things to skip is a fragile approach
->> than listing things you know are safe to relink.
->>
->> How about doing it this way instead?
->>
->>  git-relink.perl |    2 +-
->>  1 files changed, 1 insertions(+), 1 deletions(-)
->>
->> diff --git a/git-relink.perl b/git-relink.perl
->> index f6b4f6a..9101926 100755
->> --- a/git-relink.perl
->> +++ b/git-relink.perl
->> @@ -40,7 +40,7 @@ my $master_dir = pop @dirs;
->>  opendir(D,$master_dir . "objects/")
->>         or die "Failed to open $master_dir/objects/ : $!";
->>
->> -my @hashdirs = grep !/^\.{1,2}$/, readdir(D);
->> +my @hashdirs = grep { ($_ eq 'pack') || /^[0-9a-f]{2}$/ } readdir(D);
-> 
-> Fine, except that one can factorize one step further:
->     grep /^(pack|[0-9a-f]{2})$/, readdir(D);
+On 2008-01-30 09:55:18 -0500, Jay Soffian wrote:
 
-Looks fine to me.
+> On Jan 30, 2008 2:28 AM, Karl Hasselstr=F6m <kha@treskal.com> wrote:
 
--brandon
+> > You could write it kind of like this:
+> >
+> >   def e(key): return os.environ.get(key, None)
+> >   def c(key): return config.get(key)
+> >   editor =3D filter(None, [e('GIT_EDITOR'), c('stgit.editor'), c('c=
+ore.editor'),
+> >                          e('VISUAL'), e('EDITOR'), 'vi'])[0]
+>
+> Too clever by half if you ask me. Why not just:
+>
+> editor =3D (os.environ.get('GIT_EDITOR') or
+>           config.get('stgit.editor') or
+>           config.get('core.editor') or
+>           os.environ.get('VISUAL') or
+>           os.environ.get('EDITOR') or
+>           'vi')
+>
+> And be done with it?
+
+Yes. It's more repetitive, but not much longer. With only five options
+and one default -- if there were more, my version would be nicer
+(IMHO).
+
+> > Of course, if we're going to have code like this in several places
+> > (you already mentioned the pager), we could build a function like
+> > this:
+> >
+> >   editor =3D get_config(['GIT_EDITOR', 'stgit.editor', 'core.editor=
+',
+> >                        'VISUAL', 'EDITOR'], default =3D 'vi')
+> >
+> > that would differentiate between env variables and conf keys by
+> > looking for dots in the name or something.
+>=20
+> def get_config(keys, default=3DNone):
+>     rv =3D default
+>     for k in keys:
+>         if '.' in k:
+>             d =3D config
+>         else:
+>             d =3D os.environ
+>         if k in d:
+>             rv =3D d[k]
+>             break
+>     return rv
+
+'config' isn't a dict, so you have to use config.get, and you can't
+use 'k in config'. But otherwise yes. So something like this maybe:
+
+def get_config(keys, default =3D None):
+    rv =3D None
+    for k in keys:
+        if '.' in k:
+            rv =3D config.get(k)
+        else:
+            rv =3D os.environ.get(k, None)
+        if rv !=3D None:
+            return rv
+    return default
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
