@@ -1,71 +1,60 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: simple cvs-like git wrapper
-Date: Wed, 30 Jan 2008 14:49:53 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0801301439070.13593@iabervon.org>
-References: <20080129204048.GA9612@venus> <m3hcgw8dz7.fsf@localhost.localdomain> <20080130021050.GB9612@venus>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [RFC] Authenticate push via PGP signature, not SSH
+Date: Thu, 31 Jan 2008 09:22:48 +1300
+Message-ID: <47A0DC98.9080406@vilain.net>
+References: <479D5611.4010205@vilain.net> <20080128081258.GE24004@spearce.org> <479E5021.7010404@vilain.net> <20080129041000.GK24004@spearce.org> <20080129190845.GC30093@artemis.madism.org> <20080130042201.GO24004@spearce.org> <47A01162.7070503@vilain.net> <20080130083528.GC8698@artemis.madism.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "Ed S. Peschko" <esp5@pge.com>
-X-From: git-owner@vger.kernel.org Wed Jan 30 20:50:50 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Wed Jan 30 21:22:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKIxA-0007UH-IX
-	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 20:50:36 +0100
+	id 1JKJSC-0003gp-7U
+	for gcvg-git-2@gmane.org; Wed, 30 Jan 2008 21:22:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761995AbYA3Tt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 14:49:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761938AbYA3Tt6
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 14:49:58 -0500
-Received: from iabervon.org ([66.92.72.58]:39884 "EHLO iabervon.org"
+	id S932850AbYA3UVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 15:21:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933738AbYA3UVm
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 15:21:42 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:56395 "EHLO mail.utsl.gen.nz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761748AbYA3Tt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 14:49:56 -0500
-Received: (qmail 1479 invoked by uid 1000); 30 Jan 2008 19:49:53 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 30 Jan 2008 19:49:53 -0000
-In-Reply-To: <20080130021050.GB9612@venus>
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S932914AbYA3UVk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 15:21:40 -0500
+Received: by mail.utsl.gen.nz (Postfix, from userid 65534)
+	id D8A7421D152; Thu, 31 Jan 2008 09:21:37 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb (2006-10-05) on 
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.4 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.1.7-deb
+Received: from [192.168.69.104] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTP id 7F22121D116;
+	Thu, 31 Jan 2008 09:21:32 +1300 (NZDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <20080130083528.GC8698@artemis.madism.org>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72064>
 
-On Tue, 29 Jan 2008, Ed S. Peschko wrote:
-
-> > One thing (besides horrible branching and even worse merging)  which I
-> > hated in multi-user CVS is the "cvs update", namely the fact that if
-> > you want to commit changes, you _have_ to rebase them on top of
-> > current work. So when you are ready to commit, when you have tested
-> > everything, you are sometimes forced to resolve a merge to be able to
-> > commit... and have to test resolved merge... and perhaps again, and
-> > again.
+Pierre Habouzit wrote:
+>> The Perl Crypt::OpenPGP module doesn't suffer from this problem (and is
+>> performant), though it suffers from a dependency stack that will hurt
+>> everyone except Debian users ;-).
 > 
-> Yeah, I realize that it's not exactly the best solution for every
-> project, but for projects tied to a piece of hardware (ie: a database, a
-> particular box, etc), its much more important to be in sync, to have 
-> 'one true view' of the world rather than to have the freedom to have 
-> multiple views.
+>   Actually, if it's engineered like libgpgme (gpg made easy) is, well,
+> it basically wraps calls to gpg, a thing that we can do ourselves easily
+> usually :)
 
-Actually, it's a simpler concern: with CVS (and most version control 
-systems), you can't make a permanent record of your state without 
-resolving conflicts. With git, you make the permanent record first, and 
-then resolve conflicts in order to get a state that includes your changes 
-and can be pushed to the shared location. With git, you can still have 
-"one true view" of the world; it's just that git really really doesn't 
-want to lose your work, so it refuses to overwrite your files unless 
-you've put them in its storage, where it can give them back if it does 
-something wrong with your working tree.
+It's nothing like gpgme - it brings together all of the Perl modules
+that together implement PGP completely.  It doesn't use gpg.
 
-Of course, your "gvs update" could do a local git commit of the current 
-state, fetch the remote changes, and rebase the local commit onto them, so 
-it's not necessarily a workflow change. But note that, if the user fails 
-to do a manual merge, the user can try again, or try working on a 
-different branch, or fork at that point, depending on how hopeless the 
-situation is.
-
-	-Daniel
-*This .sig left intentionally blank*
+Sam.
