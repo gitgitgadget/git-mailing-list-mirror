@@ -1,84 +1,90 @@
-From: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
-Subject: Re: [PATCH] gitweb: Use config file or file for repository owner's
-	name.
-Date: Thu, 31 Jan 2008 01:02:50 -0200
-Message-ID: <20080131030250.GA10011@c3sl.ufpr.br>
-References: <1201670898-15076-1-git-send-email-ribas@c3sl.ufpr.br> <7vwsprj0sv.fsf@gitster.siamese.dyndns.org> <20080131023629.GB7778@c3sl.ufpr.br> <7vsl0eg16c.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb: Use config file or file for repository owner's name.
+Date: Wed, 30 Jan 2008 19:06:44 -0800
+Message-ID: <7vabmmg0cb.fsf@gitster.siamese.dyndns.org>
+References: <1201670898-15076-1-git-send-email-ribas@c3sl.ufpr.br>
+	<7vwsprj0sv.fsf@gitster.siamese.dyndns.org>
+	<20080131023629.GB7778@c3sl.ufpr.br>
+	<7vsl0eg16c.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 31 04:03:48 2008
+To: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
+X-From: git-owner@vger.kernel.org Thu Jan 31 04:07:46 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKPi6-0004t2-J7
-	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 04:03:31 +0100
+	id 1JKPlx-0006Mp-OI
+	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 04:07:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764326AbYAaDC4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 22:02:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764338AbYAaDCz
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 22:02:55 -0500
-Received: from urquell.c3sl.ufpr.br ([200.17.202.3]:53109 "EHLO
-	urquell.c3sl.ufpr.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764326AbYAaDCy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 22:02:54 -0500
-Received: from localhost (unknown [189.25.95.131])
+	id S1764801AbYAaDG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 22:06:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764697AbYAaDGz
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 22:06:55 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40305 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764447AbYAaDGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 22:06:53 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A4712388A;
+	Wed, 30 Jan 2008 22:06:51 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	(Authenticated sender: ribas)
-	by urquell.c3sl.ufpr.br (Postfix) with ESMTP id 842C0700003C1;
-	Thu, 31 Jan 2008 01:02:51 -0200 (BRST)
-Content-Disposition: inline
-In-Reply-To: <7vsl0eg16c.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8A7E5387D;
+	Wed, 30 Jan 2008 22:06:46 -0500 (EST)
+In-Reply-To: <7vsl0eg16c.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 30 Jan 2008 18:48:43 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72096>
 
-On Wed, Jan 30, 2008 at 06:48:43PM -0800, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
 > Bruno Cesar Ribas <ribas@c3sl.ufpr.br> writes:
-> 
-> > On Tue, Jan 29, 2008 at 10:16:16PM -0800, Junio C Hamano wrote:
-> >> Bruno Ribas <ribas@c3sl.ufpr.br> writes:
-> >> 
-> >> <snip> 
-> >> I am not sure about the effect of this change on a large scale
-> >> site.  If you do not have the project list file, originally we
-> >> just needed a stat per project, but now you open an extra file
-> >> (either "owner" or "config") and read it, once per every
-> >> project.
-> >
-> > Opening the extra file has same problem as the description file. And, as
-> > gitweb allow us to create  "description" and "cloneurl" file there is no 
-> > problem having another file to open instead finding out who is the owner of
-> > the directory asking to the filesystem.
-> 
+> ...
+>> Opening the extra file has same problem as the description file. And, as
+>> gitweb allow us to create  "description" and "cloneurl" file there is no 
+>> problem having another file to open instead finding out who is the owner of
+>> the directory asking to the filesystem.
+>
 > We heard the same argument when cloneurl was added, and a
 > newcomer who does not know that may rightly use the same
-Well, it worked for cloneurl.
-
 > argument.  But I think we should work towards _reducing_ the
 > number of such ad-hoc one-line-per-information files, not using
 > existing ones as an excuse to add _more_ of them.
 
-Okay, I agree with you. We need to centralize information.
-One idea use $GIT_DIR/config only, sharing any other information. But I
-don't like the idea do parse $GIT_DIR/config everytime. Unless it caches
-gitweb only information in one line.
+Rephrasing to be constructive (but remember, this is all post
+1.5.4).
 
-Another Idea is to use $GIT_DIR/gitweb.conf with information [like the
-cached above], but generated by the gitweb admin.
+ * we would need for historical reasons to keep supporting
+   description and cloneurl for some time.  There may be some
+   others, but the goal should be to deprecate and remove these
+   ad-hoc one-file-per-piece-of-information files.
 
-Other to continue with all those files, but creating a gitweb.d/* .
+ * we also need for historical reasons to keep supporting some
+   other stuff found in $git_dir/config of the project.
 
-That's what I can think 1:02am =(
+If the config reading interface in gitweb is reasonably fast and
+cheap, we can move the existing description/cloneurl to gitweb
+config when deprecating them.  New ones such as "owner" would
+naturally fit there.
 
-Good night
--- 
-Bruno Ribas - ribas@c3sl.ufpr.br
-http://web.inf.ufpr.br/ribas
-C3SL: http://www.c3sl.ufpr.br 
+If the config reading interface is too slow (somebody has to
+bench it on a large set of repositories), maybe we would need to
+optimize _THAT_.  If it turns out to be unreasonable (e.g. we
+may really want to keep the implementation that spawns "git
+config" to do the work, rather than writing and having to
+maintain a pure Perl version of config parser inside gitweb,
+which is a reasonable position to take in the longer run, but
+spawning a process per repository may be too expensive). An
+alternative could be to separate out the pieces of information
+that are needed even when drawing the top-level project-list
+page, and come up with a _new_ single file that is easily
+parsable without spawning "git config" for gitweb to read them
+(e.g. "description", "owner", perhaps the toplevel project-list
+might want to list "cloneurl" as well in the future).
