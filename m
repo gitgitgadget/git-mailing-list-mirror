@@ -1,65 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: simple cvs-like git wrapper
-Date: Wed, 30 Jan 2008 22:17:14 -0800
-Message-ID: <7v63xafrit.fsf@gitster.siamese.dyndns.org>
-References: <20080129204048.GA9612@venus>
-	<m3hcgw8dz7.fsf@localhost.localdomain> <20080130021050.GB9612@venus>
-	<20080130040002.GM24004@spearce.org> <20080130225254.GC9612@venus>
-	<20080131040839.GW24004@spearce.org>
+From: Adam Piatyszek <ediap@users.sourceforge.net>
+Subject: Re: Why does git track directory listed in .gitignore/".git/info/exclude"?
+Date: Thu, 31 Jan 2008 08:05:34 +0100
+Message-ID: <47A1733E.9040103@users.sourceforge.net>
+References: <6bc632150801230554l3b24e1e4lb4641bf7c16857c0@mail.gmail.com>	<6bc632150801230604p2589c893pa05bb6f27e482de8@mail.gmail.com>	<alpine.LFD.1.00.0801231313590.2803@woody.linux-foundation.org>	<47A06EF9.60704@users.sourceforge.net> <7vprvjgi9v.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Ed S. Peschko" <esp5@pge.com>, Jakub Narebski <jnareb@gmail.com>,
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	pradeep singh rautela <rautelap@gmail.com>,
 	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jan 31 07:18:02 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 31 08:16:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKSkL-0002H2-Md
-	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 07:18:02 +0100
+	id 1JKTfK-0006iH-N8
+	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 08:16:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753125AbYAaGR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2008 01:17:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753137AbYAaGR2
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 01:17:28 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:54183 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752884AbYAaGR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2008 01:17:27 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 54B56278C;
-	Thu, 31 Jan 2008 01:17:26 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 962A02787;
-	Thu, 31 Jan 2008 01:17:21 -0500 (EST)
-In-Reply-To: <20080131040839.GW24004@spearce.org> (Shawn O. Pearce's message
-	of "Wed, 30 Jan 2008 23:08:39 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753316AbYAaHQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2008 02:16:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753261AbYAaHQJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 02:16:09 -0500
+Received: from ananke.et.put.poznan.pl ([150.254.29.121]:64728 "EHLO
+	ananke.et.put.poznan.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750857AbYAaHQH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2008 02:16:07 -0500
+Received: from hydrus.et.put.poznan.pl (hydrus.et.put.poznan.pl [150.254.11.145])
+	by ananke.et.put.poznan.pl (8.13.8/8.13.8) with ESMTP id m0V7A2tR016311;
+	Thu, 31 Jan 2008 08:10:44 +0100 (CET)
+	(envelope-from ediap@users.sourceforge.net)
+Received: from [150.254.11.74] (pc1074.et.put.poznan.pl [150.254.11.74])
+	by hydrus.et.put.poznan.pl (8.11.7p1+Sun/8.11.6) with ESMTP id m0V75YD00795;
+	Thu, 31 Jan 2008 08:05:35 +0100 (MET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071116)
+In-Reply-To: <7vprvjgi9v.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.6
+OpenPGP: id=1F115CCB
+X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940, Antispam-Data: 2008.1.30.225641
+X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='__CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0, __USER_AGENT 0'
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72105>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Hi Junio,
 
-> This is going to be slow as you are running git-merge for each
-> and every branch available to you.  You can do a lot better by
-> loading the branch DAG into memory in Perl/C/Python and doing a
-> graph coloring algorithm to see if a merge is necessary or not,
-> as if you are merging everything all of the time almost everything
-> is going to be always merged to everything else.  Which as I said
-> earlier is nuts.
+* Junio C Hamano [30 I 2008 21:39]:
+> When you say "foo", you mean "I want either 'foo' that is a
+> non-directory, or everything under 'foo' if that is a
+> directory".  When you say "foo/", you are saying "I do not want
+> 'foo' if it is a non-directory.  I want everything under 'foo'
+> if and only if that is a directory".  Compare:
+> 
+> 	git ls-files -s Makefile/
+>         git ls-files -s Makefile
+> 
+> The first one is silent, and the latter answers.  On the other
+> hand, for a directory, both of these give you the same:
+> 
+> 	git ls-files Documentation/
+>         git ls-files Documentation
+> 
 
-I guess you can ask "show-branch --independent" to cull branches
-that are pure subset of other branches.
+As you said above both "Documentation/" and "Documentation" match the 
+existing tracked directory named "Documentation". That is how ls-files 
+works and it is the only sane way. The problem is that I expect that 
+directory entries ending with "/" in .gitignore and .git/info/exclude 
+files are treated in a similar way, i.e. they are being _ignored_ with 
+all the stuff in them, in the same way as directory entries without the 
+ending slash. Unfortunately this is not the case. See this example:
 
-But no matter how you do this, the resulting history would be
-less efficient to bisect if you make Octopus.
+ediap@lespaul ~/tmp $ mkdir repo && cd repo
+ediap@lespaul ~/tmp/repo $ git init
+Initialized empty Git repository in .git/
+ediap@lespaul ~/tmp/repo $ touch a.txt
+ediap@lespaul ~/tmp/repo $ git add a.txt
+ediap@lespaul ~/tmp/repo $ git commit -m "a file"
+Created initial commit 1712595: a file
+  0 files changed, 0 insertions(+), 0 deletions(-)
+  create mode 100644 a.txt
+ediap@lespaul ~/tmp/repo $ mkdir d
+ediap@lespaul ~/tmp/repo $ touch d/b.txt
+ediap@lespaul ~/tmp/repo $ git status
+# On branch master
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       d/
+nothing added to commit but untracked files present (use "git add" to track)
+ediap@lespaul ~/tmp/repo $ echo "d/" > .gitignore
+ediap@lespaul ~/tmp/repo $ git add .gitignore
+ediap@lespaul ~/tmp/repo $ git commit -m "ignore"
+Created commit 29ebf4d: ignore
+  1 files changed, 1 insertions(+), 0 deletions(-)
+  create mode 100644 .gitignore
+ediap@lespaul ~/tmp/repo $ git status
+# On branch master
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       d/
+nothing added to commit but untracked files present (use "git add" to track)
 
-As you can ask "git log --no-merges" to omit merges from the
-listing, I am not sure if it is worth it to avoid two-side
-merges and insist on making an Octopus these days.
+
+But:
+
+ediap@lespaul ~/tmp/repo $ echo "d" > .gitignore
+ediap@lespaul ~/tmp/repo $ git add .gitignore
+ediap@lespaul ~/tmp/repo $ git commit --amend -m "ignore"
+Created commit 43198d4: ignore
+  1 files changed, 1 insertions(+), 0 deletions(-)
+  create mode 100644 .gitignore
+ediap@lespaul ~/tmp/repo $ git status
+# On branch master
+nothing to commit (working directory clean)
+
+
+I hope you now understand what I was trying to express in my previous 
+email. :-)
+
+BR,
+/Adam
+
+
+-- 
+.:.  Adam Piatyszek (ediap)  .:.....................................:.
+.:.  ediap@users.sourceforge.net  .:................................:.
