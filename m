@@ -1,84 +1,61 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Jeff King <peff@peff.net>
 Subject: Re: git-push: forced update of tag shows unabbreviated SHA1
-Date: Thu, 31 Jan 2008 11:01:35 +0100
-Message-ID: <47A19C7F.1060204@viscovery.net>
-References: <47A1948F.6080308@viscovery.net> <7vsl0ecp3i.fsf@gitster.siamese.dyndns.org>
+Date: Thu, 31 Jan 2008 05:06:25 -0500
+Message-ID: <20080131100625.GB25546@coredump.intra.peff.net>
+References: <47A1948F.6080308@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 31 11:02:14 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Jan 31 11:07:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKWFI-0002lE-CI
-	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 11:02:12 +0100
+	id 1JKWKM-0004II-Mz
+	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 11:07:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753492AbYAaKBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2008 05:01:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753239AbYAaKBk
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 05:01:40 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:45927 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751121AbYAaKBj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2008 05:01:39 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1JKWER-0001RJ-QQ; Thu, 31 Jan 2008 11:01:20 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 3D6FC6B7; Thu, 31 Jan 2008 11:01:35 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7vsl0ecp3i.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1766009AbYAaKG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2008 05:06:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765127AbYAaKG2
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 05:06:28 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3892 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752815AbYAaKG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2008 05:06:27 -0500
+Received: (qmail 28040 invoked by uid 111); 31 Jan 2008 10:06:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 31 Jan 2008 05:06:26 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 31 Jan 2008 05:06:25 -0500
+Content-Disposition: inline
+In-Reply-To: <47A1948F.6080308@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72117>
 
-Junio C Hamano schrieb:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> 
->> This is just a cosmetical flaw:
->> ...
->> To file:///home/jsixt/tmp/foo/B/../A
->>  + 639669ce44f84417f30842c622064827dda01461...475e55f T -> T (forced update)
->>
->> Notice that the original SHA1 is not abbreviated.
-> 
-> I suspect that is because you do not _have_ the original object,
-> so there is no uniquely usable abbreviation to name the object
-> in your repository.
+On Thu, Jan 31, 2008 at 10:27:43AM +0100, Johannes Sixt wrote:
 
-Yes, you are right. This also happens for a commit.
+> When a tag is changed to point to a new commit, then the tag is pushed to
+> a repo that still has the old tag, it is correctly pushed, but the old
+> SHA1 is reported with all 40 digits:
 
-> This obviously is not tested at all (not even compile tested),
-> but I think it would show you what is going on.
-> 
-> ---
->  builtin-send-pack.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-> index 8afb1d0..9c558ee 100644
-> --- a/builtin-send-pack.c
-> +++ b/builtin-send-pack.c
-> @@ -265,7 +265,7 @@ static const char *status_abbrev(unsigned char sha1[20])
->  {
->  	const char *abbrev;
->  	abbrev = find_unique_abbrev(sha1, DEFAULT_ABBREV);
-> -	return abbrev ? abbrev : sha1_to_hex(sha1);
-> +	return abbrev ? abbrev : "<you do not have it>";
->  }
+As Junio noted, this is because find_unique_abbrev returns NULL for
+objects we don't have. Actually, it is somewhat worse -- we return an
+erroneous abbreviation in the rare case that we are trying to find the
+abbreviation for something we don't have, but for which we do have a
+matching abbreviation. For example, if we have
 
-No, that would be information hiding. I prefer an unabbreviated name.
-Nevertheless, if we know the name, we could be able to find a suitable
-abbreviation. But it's really not *that* important...
+  1234567890123456789012345678901234567890
 
--- Hannes
+then for every 12345678* that we don't have, we will claim the correct
+abbreviation is 1234568.
+
+In practice, I doubt this is a problem.
+
+But getting back to your point: yes, I agree it is a little ugly.
+Rewriting find_unique_abbrev would be necessary for fixing it, and I'm
+not sure it is worth the trouble.
+
+-Peff
