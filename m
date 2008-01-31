@@ -1,95 +1,100 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] gitweb: Use config file or file for repository owner's
- name.
-Date: Thu, 31 Jan 2008 11:12:31 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0801311110280.23907@racer.site>
-References: <1201670898-15076-1-git-send-email-ribas@c3sl.ufpr.br> <7vwsprj0sv.fsf@gitster.siamese.dyndns.org> <20080131023629.GB7778@c3sl.ufpr.br> <7vsl0eg16c.fsf@gitster.siamese.dyndns.org> <7vabmmg0cb.fsf@gitster.siamese.dyndns.org>
- <m3bq728y4o.fsf@localhost.localdomain>
+Subject: Re: [PATCH] gitignore(5): Allow "foo/" in ignore list to match
+ directory "foo"
+Date: Thu, 31 Jan 2008 11:38:55 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0801311128190.23907@racer.site>
+References: <6bc632150801230554l3b24e1e4lb4641bf7c16857c0@mail.gmail.com> <6bc632150801230604p2589c893pa05bb6f27e482de8@mail.gmail.com> <alpine.LFD.1.00.0801231313590.2803@woody.linux-foundation.org> <47A06EF9.60704@users.sourceforge.net>
+ <7vprvjgi9v.fsf@gitster.siamese.dyndns.org> <47A1733E.9040103@users.sourceforge.net> <7vhcgue5nr.fsf_-_@gitster.siamese.dyndns.org> <7v63xae4lf.fsf_-_@gitster.siamese.dyndns.org> <20080131094124.GA25546@coredump.intra.peff.net> <7vfxwecmfe.fsf@gitster.siamese.dyndns.org>
+ <20080131104256.GF25546@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Bruno Cesar Ribas <ribas@c3sl.ufpr.br>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 31 12:13:41 2008
+	Adam Piatyszek <ediap@users.sourceforge.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	pradeep singh rautela <rautelap@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 31 12:40:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKXMT-00022B-3c
-	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 12:13:41 +0100
+	id 1JKXlv-00021h-Tx
+	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 12:40:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760349AbYAaLNI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2008 06:13:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758631AbYAaLNH
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 06:13:07 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56471 "HELO mail.gmx.net"
+	id S1754196AbYAaLj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2008 06:39:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753989AbYAaLj1
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 06:39:27 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37717 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755641AbYAaLND (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2008 06:13:03 -0500
-Received: (qmail invoked by alias); 31 Jan 2008 11:13:01 -0000
+	id S1753984AbYAaLj0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2008 06:39:26 -0500
+Received: (qmail invoked by alias); 31 Jan 2008 11:39:24 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp042) with SMTP; 31 Jan 2008 12:13:01 +0100
+  by mail.gmx.net (mp055) with SMTP; 31 Jan 2008 12:39:24 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19V8tdMAHBVHsDF5BxVJrn/NULTstYUpW5kHb4sNR
-	PPviDHafRmqOj4
+X-Provags-ID: V01U2FsdGVkX1/X18VgO1PXp6dcnSiIhMFt5ljK6FBmNLgZJYgzUi
+	Qo/8DFJd9eSBXQ
 X-X-Sender: gene099@racer.site
-In-Reply-To: <m3bq728y4o.fsf@localhost.localdomain>
+In-Reply-To: <20080131104256.GF25546@coredump.intra.peff.net>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72128>
 
 Hi,
 
-On Wed, 30 Jan 2008, Jakub Narebski wrote:
+On Thu, 31 Jan 2008, Jeff King wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> On Thu, Jan 31, 2008 at 02:35:33AM -0800, Junio C Hamano wrote:
 > 
-> > Junio C Hamano <gitster@pobox.com> writes:
+> > Without "foo/", you do not have to pay the price, so I think that is a 
+> > sane optimization, but at the same time it would make it worse if 
+> > "foo/" is actually used.  excluded_1() is called for the same pathname 
+> > from a loop to check for a match and you would end up running lstat(2) 
+> > three times (once each for EXC_CMDL, EXC_DIRS and EXC_FILE).
 > > 
-> >> Bruno Cesar Ribas <ribas@c3sl.ufpr.br> writes:
-> >> ...
-> >>> Opening the extra file has same problem as the description file. 
-> >>> And, as gitweb allow us to create "description" and "cloneurl" file 
-> >>> there is no problem having another file to open instead finding out 
-> >>> who is the owner of the directory asking to the filesystem.
-> >>
-> >> We heard the same argument when cloneurl was added, and a newcomer 
-> >> who does not know that may rightly use the same argument.  But I 
-> >> think we should work towards _reducing_ the number of such ad-hoc 
-> >> one-line-per-information files, not using existing ones as an excuse 
-> >> to add _more_ of them.
-> > 
-> > Rephrasing to be constructive (but remember, this is all post 1.5.4).
-> > 
-> >  * we would need for historical reasons to keep supporting
-> >    description and cloneurl for some time.  There may be some
-> >    others, but the goal should be to deprecate and remove these
-> >    ad-hoc one-file-per-piece-of-information files.
-> > 
-> >  * we also need for historical reasons to keep supporting some
-> >    other stuff found in $git_dir/config of the project.
-> > 
-> > If the config reading interface in gitweb is reasonably fast and 
-> > cheap, we can move the existing description/cloneurl to gitweb config 
-> > when deprecating them.  New ones such as "owner" would naturally fit 
-> > there.
+> > But maybe people who want "foo/" deserve it.  I dunno.
 > 
-> Currently gitweb parses repo config file _once_, using one call to 
-> git-config -z -l.
+> Ah, I didn't look at it that closely.
 > 
-> We could simply add description to the projects_list file, but it will 
-> be a bit backwards incompatibile change.
+> To do the laziness right, I think you would need to pass a pointer to 
+> the dtype around, and just fill it in the first time it is needed.
 
-Not if you say "the config overrides the description/cloneurl file", i.e. 
-when there is a description or a cloneurl from the config, don't even 
-bother to stat the single-line files.
+Just to add my two eurocents: I think the patch is complicated enough that 
+we could go the other way round: while parsing the ignore entries, we can 
+plainly state that entries with a trailing slash are ignored:
 
-That would help transition, and still be backwards compatible.  (BTW this 
-resembles what we did for the .git/remotes/* -> .git/config transition.)
+-- snipsnap --
+[PATCH] Warn if an ignore/exclude entry ends in a slash
 
-Ciao,
-Dscho
+Git does not like ignore entries ending in a slash; they will be ignored.
+So just be honest and warn the user about it.
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
+---
+
+ dir.c |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index 1b9cc7a..c3e9a0d 100644
+--- a/dir.c
++++ b/dir.c
+@@ -135,6 +135,11 @@ void add_exclude(const char *string, const char *base,
+ 	}
+ 	x->pattern = string;
+ 	x->patternlen = strlen(string);
++	if (x->patternlen && x->pattern[x->patternlen - 1] == '/') {
++		warning("Ignoring ignore entry because of trailing slash: %s",
++			string);
++		return;
++	}
+ 	x->base = base;
+ 	x->baselen = baselen;
+ 	x->flags = 0;
