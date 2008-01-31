@@ -1,80 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] filter-branch: only print usage information when no arguments supplied
-Date: Wed, 30 Jan 2008 17:34:55 -0800
-Message-ID: <7v3asehj5s.fsf@gitster.siamese.dyndns.org>
-References: <47A109A7.1070502@nrlssc.navy.mil>
-	<47A112C5.8010903@nrlssc.navy.mil>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 2/2] git-filter-branch.sh: don't use --default when calling
+ rev-list
+Date: Wed, 30 Jan 2008 19:35:21 -0600
+Message-ID: <47A125D9.2070105@nrlssc.navy.mil>
+References: <47A109A7.1070502@nrlssc.navy.mil> <1201738186-28132-1-git-send-email-casey@nrlssc.navy.mil> <47A11317.2010409@nrlssc.navy.mil> <alpine.LSU.1.00.0801310048350.23907@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Jan 31 02:35:51 2008
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 31 02:37:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKOLG-0001qV-Ov
-	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 02:35:51 +0100
+	id 1JKOMb-00029k-MI
+	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 02:37:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754798AbYAaBfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 20:35:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754691AbYAaBfS
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 20:35:18 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33068 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754756AbYAaBfR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 20:35:17 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 48CA2231C;
-	Wed, 30 Jan 2008 20:35:15 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id A1292231A;
-	Wed, 30 Jan 2008 20:35:11 -0500 (EST)
-In-Reply-To: <47A112C5.8010903@nrlssc.navy.mil> (Brandon Casey's message of
-	"Wed, 30 Jan 2008 18:13:57 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758758AbYAaBg2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jan 2008 20:36:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758063AbYAaBg2
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 20:36:28 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:56457 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754803AbYAaBg1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jan 2008 20:36:27 -0500
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m0V1ZM39012676;
+	Wed, 30 Jan 2008 19:35:22 -0600
+Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 30 Jan 2008 19:35:22 -0600
+User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
+In-Reply-To: <alpine.LSU.1.00.0801310048350.23907@racer.site>
+X-OriginalArrivalTime: 31 Jan 2008 01:35:22.0821 (UTC) FILETIME=[8BEC6F50:01C863A9]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15694001
+X-TM-AS-Result: : Yes--3.986500-0-31-1
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE1MDY2OC0xNTA1?=
+	=?us-ascii?B?NDEtNzAwMDc1LTEzOTAxMC03MDc0NTEtNzAyMDM3LTcwMjkwMC0x?=
+	=?us-ascii?B?MDY0MjAtNzAyNjA5LTcwMDE1MS03MDE0NTUtNzA1Mzg4LTcwOTE4?=
+	=?us-ascii?B?NS03MDE0MjgtNzAyMTY5LTcwODE0My03MDA2MDctMTQ4MDM5LTE0?=
+	=?us-ascii?B?ODA1MS0yMDA0MA==?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72088>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Wed, 30 Jan 2008, Brandon Casey wrote:
+> 
+>> This command requires a revision to be specified on the command line, so 
+>> remove '--default HEAD' from the arguments to git rev-list. They are 
+>> unnecessary.
+> 
+> But I thought that you wanted "git filter-branch --msg-filter=rot13" to 
+> work on HEAD by default?
 
-> Testing for whether command line arguments were supplied was being
-> performed during option parsing. This had the side effect of
-> printing usage information when a more appropriate error message
-> would have been printed had the script been allowed to continue.
->
-> Now this:
->
-> 	git filter-branch
->
-> will print usage information.
->
-> And these:
->
-> 	git filter-branch -d /tmp/work-dir
-> 	git filter-branch <non-existant-revision>
-> 	git filter-branch --
-> 	git filter-branch -- <non-existant-revision>
->
-> will print a message informing the user that filter-branch did
-> not know which reference to rewrite. Without this patch the
-> one with '-d' would also print usage information.
->
-> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
-> ---
->
->
-> I prefer my original patch since I think it is consistent
-> with the git interface.
+I do. But isn't that inconsistent with "git filter-branch" does _not_ work
+on HEAD by default and instead prints out usage information?
 
-I'd refrain from commenting on if it is consistent or not with
-"the git interface".
+If I do:
 
-But I would say I prefer your original better than this one.
-Will apply.
+	git filter-branch -d /tmp/git_temp
+
+and it is successful, I think I would also expect this to succeed:
+
+	git filter-branch
+
+So, I think the "operates on HEAD" by default is consistent with what other
+git tools do, but I think it is not consistent for filter-branch to sometimes
+operate on HEAD by default and sometimes error with usage information.
+
+Disclaimer: I have only used filter-branch for two tasks.
+
+-brandon
