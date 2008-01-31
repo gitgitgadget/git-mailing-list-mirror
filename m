@@ -1,37 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] Authenticate push via PGP signature, not SSH
-Date: Thu, 31 Jan 2008 00:43:05 -0500
-Message-ID: <20080131054304.GY24004@spearce.org>
-References: <479D5611.4010205@vilain.net> <20080128081258.GE24004@spearce.org> <479E5021.7010404@vilain.net> <20080129041000.GK24004@spearce.org> <20080129190845.GC30093@artemis.madism.org> <20080130042201.GO24004@spearce.org> <47A02EA8.50507@viscovery.net>
+Subject: Re: simple cvs-like git wrapper
+Date: Thu, 31 Jan 2008 01:01:37 -0500
+Message-ID: <20080131060136.GZ24004@spearce.org>
+References: <20080129204048.GA9612@venus> <m3hcgw8dz7.fsf@localhost.localdomain> <20080130021050.GB9612@venus> <20080130040002.GM24004@spearce.org> <20080130225254.GC9612@venus> <20080131040839.GW24004@spearce.org> <20080131054124.GG9612@venus>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Pierre Habouzit <madcoder@debian.org>, Sam Vilain <sam@vilain.net>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jan 31 06:43:48 2008
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "Ed S. Peschko" <esp5@pge.com>
+X-From: git-owner@vger.kernel.org Thu Jan 31 07:02:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKSDA-0004W3-Q8
-	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 06:43:45 +0100
+	id 1JKSV4-0007lz-9I
+	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 07:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295AbYAaFnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2008 00:43:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753239AbYAaFnK
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 00:43:10 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:53030 "EHLO
+	id S1751648AbYAaGBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2008 01:01:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751448AbYAaGBn
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 01:01:43 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:53785 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753062AbYAaFnJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2008 00:43:09 -0500
+	with ESMTP id S1751506AbYAaGBm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2008 01:01:42 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1JKSCZ-0004II-3b; Thu, 31 Jan 2008 00:43:07 -0500
+	id 1JKSUU-0004pF-QZ; Thu, 31 Jan 2008 01:01:38 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B178C20FBAE; Thu, 31 Jan 2008 00:43:05 -0500 (EST)
+	id AAF5120FBAE; Thu, 31 Jan 2008 01:01:37 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <47A02EA8.50507@viscovery.net>
+In-Reply-To: <20080131054124.GG9612@venus>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -42,47 +41,43 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72103>
 
-Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Shawn O. Pearce schrieb:
-> > I'm currently finishing a side-band-64k protocol extension to the
-> > send-pack/receive-pack pair.  My next task after I flush those
-> > RFC patches out to the list tonight will be to prototype at least
-> > some of the auth1 extension I described.
+"Ed S. Peschko" <esp5@pge.com> wrote:
+> > This is going to be slow as you are running git-merge for each
+> > and every branch available to you.  You can do a lot better by
+> > loading the branch DAG into memory in Perl/C/Python and doing a
+> > graph coloring algorithm to see if a merge is necessary or not,
+> > as if you are merging everything all of the time almost everything
+> > is going to be always merged to everything else.  Which as I said
+> > earlier is nuts.
 > 
-> I propose to make the syntax of the extension
-> 
-> server capability:  auth=<list of hash methods>:<challenge>
-> client response:    auth=<chosen hash method>
-> 
-> where <challenge> is a random sequence of non-blank ASCII text, not
-> necessarily of a fixed length, but perhaps of a minimum length.
-> 
-> Then we can extend the list of hash algorithms (that are used for
-> authentication purposes) if people think that SHA1 is not secure enough:
-> 
->     auth=SHA1,SHA256:random-stuff-goes-here
-> 
-> I'm not a security expert, so take this with a grain of salt.
+> hmm. Is there a simple method to get this graph? I'm assuming that you
+> would have to get all the local commits and compare them to the remote
+> commits, and only merge the branches that have commits not yet 
+> merged..
 
-I'm not certain this is worth the extra complexity.
+Something along these lines:
 
-One reason I proposed "auth-1" as the extension name is so we could
-introduce an "auth-2" and make changes in the future if we need to.
+	%remotes = \
+		git for-each-ref \
+		--format='%(objname) %(refname)' \
+		refs/remotes/origin;
 
-But I think there's little value in this authentication hash being
-anything other than SHA-1.  Remember that the data itself in the
-packfile following the authentication is only protected by SHA-1.
-If SHA-1 is considered too weak to protect the ref update commands
-then its likely also too weak to protect the file content following
-behind those same commands.
+	@lines = \
+		git rev-list \
+		keys %remotes \
+		--not HEAD
 
-Getting stronger authentication here than SHA-1 would probably
-require changing the commit object name hash to something stronger
-than SHA-1, and the tree object name hash, etc.  Remember that
-signed tags are only using the SHA-1 of the commit and that's only
-got the SHA-1 of the tree... ;-)
+	foreach $line in @lines {
+		if $remotes contains $line
+			git merge $remotes{$line}
+	}
+
+That gets you the graph.  The %(objname) string coming back from
+for-each-ref is in $line in the loop.  If you see $line inside that
+map you built from for-each-ref then that commit isn't yet in the
+current branch.  So you'd then want to merge that commit.
 
 -- 
 Shawn.
