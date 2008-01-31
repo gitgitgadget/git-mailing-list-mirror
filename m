@@ -1,101 +1,282 @@
-From: Adam Piatyszek <ediap@users.sourceforge.net>
-Subject: Re: [PATCH] gitignore(5): Allow "foo/" in ignore list to match directory
- "foo"
-Date: Thu, 31 Jan 2008 13:29:27 +0100
-Message-ID: <47A1BF27.7080802@users.sourceforge.net>
-References: <6bc632150801230554l3b24e1e4lb4641bf7c16857c0@mail.gmail.com> <6bc632150801230604p2589c893pa05bb6f27e482de8@mail.gmail.com> <alpine.LFD.1.00.0801231313590.2803@woody.linux-foundation.org> <47A06EF9.60704@users.sourceforge.net> <7vprvjgi9v.fsf@gitster.siamese.dyndns.org> <47A1733E.9040103@users.sourceforge.net> <7vhcgue5nr.fsf_-_@gitster.siamese.dyndns.org> <7v63xae4lf.fsf_-_@gitster.siamese.dyndns.org> <20080131094124.GA25546@coredump.intra.peff.net> <7vfxwecmfe.fsf@gitster.siamese.dyndns.org> <20080131104256.GF25546@coredump.intra.peff.net> <alpine.LSU.1.00.0801311128190.23907@racer.site>
+From: Thomas Arcila <tarcila@mc.com>
+Subject: [PATCH] gitk : External diff viewer.
+Date: Thu, 31 Jan 2008 17:00:02 +0100
+Organization: Mercury Computer Systems
+Message-ID: <1201795202.11689.9.camel@bod-tarcila2.ad.mc.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	pradeep singh rautela <rautelap@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 31 13:41:27 2008
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: msysGit <msysgit@googlegroups.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jan 31 17:01:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKYjO-0005rS-KW
-	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 13:41:27 +0100
+	id 1JKbr3-0000jl-Gp
+	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 17:01:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764684AbYAaMky convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Jan 2008 07:40:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765352AbYAaMky
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 07:40:54 -0500
-Received: from pisces.et.put.poznan.pl ([150.254.29.122]:36944 "EHLO
-	pisces.et.put.poznan.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764684AbYAaMkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2008 07:40:53 -0500
-Received: from hydrus.et.put.poznan.pl (hydrus.et.put.poznan.pl [150.254.11.145])
-	by pisces.et.put.poznan.pl (8.13.8/8.13.8) with ESMTP id m0VCU3HS018796;
-	Thu, 31 Jan 2008 13:30:05 +0100 (CET)
-	(envelope-from ediap@users.sourceforge.net)
-Received: from [150.254.11.74] (pc1074.et.put.poznan.pl [150.254.11.74])
-	by hydrus.et.put.poznan.pl (8.11.7p1+Sun/8.11.6) with ESMTP id m0VCTRD19047;
-	Thu, 31 Jan 2008 13:29:28 +0100 (MET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071116)
-In-Reply-To: <alpine.LSU.1.00.0801311128190.23907@racer.site>
-X-Enigmail-Version: 0.95.6
-OpenPGP: id=1F115CCB
-X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940, Antispam-Data: 2008.1.31.41437
-X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='__CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0, __USER_AGENT 0'
+	id S1761504AbYAaQA7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2008 11:00:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761149AbYAaQA6
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 11:00:58 -0500
+Received: from iris-63.mc.com ([63.96.239.141]:53964 "EHLO mc.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756136AbYAaQA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2008 11:00:56 -0500
+Received: from CHM-EMAIL1.ad.mc.com by mc.com (8.8.8+Sun/SMI-SVR4)
+	id LAA26957; Thu, 31 Jan 2008 11:00:54 -0500 (EST)
+Received: from fue-email2.ad.mc.com ([192.168.152.32]) by CHM-EMAIL1.ad.mc.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 31 Jan 2008 11:00:08 -0500
+Received: from 192.168.193.115 ([192.168.193.115]) by fue-email2.ad.mc.com ([192.168.152.32]) with Microsoft Exchange Server HTTP-DAV ;
+ Thu, 31 Jan 2008 16:00:02 +0000
+Received: from bod-tarcila2 by FUE-EMAIL2; 31 Jan 2008 17:00:02 +0100
+X-Mailer: Evolution 2.12.1 
+X-OriginalArrivalTime: 31 Jan 2008 16:00:08.0728 (UTC) FILETIME=[5A558980:01C86422]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72131>
 
-* Johannes Schindelin [31 I 2008 12:38]:
-> Just to add my two eurocents: I think the patch is complicated enough=
- that=20
-> we could go the other way round: while parsing the ignore entries, we=
- can=20
-> plainly state that entries with a trailing slash are ignored:
->=20
-> -- snipsnap --
-> [PATCH] Warn if an ignore/exclude entry ends in a slash
->=20
-> Git does not like ignore entries ending in a slash; they will be igno=
-red.
-> So just be honest and warn the user about it.
->=20
-> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Right click on patched file list view gives "External diff" popup menu entry,
+launching selected external diff tool.
+The diff tool is configurable through Edit/Preference/External diff tool.
 
-I agree that this is a reasonable remedy for this issue. So:
+Signed-off-by: Thomas Arcila <tarcila@mc.com>
+---
 
-Acked-by: Adam Pi=C4=85tyszek <ediap@users.sourceforge.net>
+Hi,
 
-BTW, the warning message is a bit "hidden" between the "Changed" and=20
-"Untracked" parts of a status message, e.g.:
+Here is a patch to gitk that allows to run an external diff viewer.
+It can be configured in Edit/Preferences/External diff tool.
 
-=3D=3D=3D=3D=3D >8 =3D=3D=3D=3D=3D
-# On branch master
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#
-#       modified:   src/Makefile
-#       modified:   src/ofdm.cpp
-#
-warning: Ignoring ignore entry because of trailing slash: results/
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       results/
-no changes added to commit (use "git add" and/or "git commit -a")
-=3D=3D=3D=3D=3D >8 =3D=3D=3D=3D=3D
+To see the diff between two files:
+- select revisions to diff
+- right click on a file in the patched files list view
+- choose "External diff"
 
-Is it possible to make warnings displayed in red or yellow colour on=20
-terminals that support colours?
+Any feedback is welcome.
+Thomas
 
-BR,
-/Adam
+ gitk |  132 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 128 insertions(+), 4 deletions(-)
 
-
---=20
-=2E:.  Adam Piatyszek (ediap)  .:.....................................:=
-=2E
-=2E:.  ediap@users.sourceforge.net  .:................................:=
-=2E
+diff --git a/gitk b/gitk
+index 5560e4d..6d727f4 100755
+--- a/gitk
++++ b/gitk
+@@ -1054,6 +1054,16 @@ proc makewindow {} {
+ 	-command {flist_hl 0}
+     $flist_menu add command -label [mc "Highlight this only"] \
+ 	-command {flist_hl 1}
++    $flist_menu add command -label [mc "External diff"] \
++        -command {external_diff}
++
++    global flist_menu_tree
++    set flist_menu_tree .flistctxmenutree
++    menu $flist_menu_tree -tearoff 0
++    $flist_menu_tree add command -label [mc "Highlight this too"] \
++	-command {flist_hl 0}
++    $flist_menu_tree add command -label [mc "Highlight this only"] \
++	-command {flist_hl 1}
+ }
+ 
+ # Windows sends all mouse wheel events to the current focused window, not
+@@ -1157,7 +1167,7 @@ proc savestuff {w} {
+     global maxwidth showneartags showlocalchanges
+     global viewname viewfiles viewargs viewperm nextviewnum
+     global cmitmode wrapcomment datetimeformat limitdiffs
+-    global colors bgcolor fgcolor diffcolors diffcontext selectbgcolor
++    global colors bgcolor fgcolor diffcolors diffcontext selectbgcolor extdifftool
+ 
+     if {$stuffsaved} return
+     if {![winfo viewable .]} return
+@@ -1182,6 +1192,7 @@ proc savestuff {w} {
+ 	puts $f [list set diffcolors $diffcolors]
+ 	puts $f [list set diffcontext $diffcontext]
+ 	puts $f [list set selectbgcolor $selectbgcolor]
++	puts $f [list set extdifftool $extdifftool]
+ 
+ 	puts $f "set geometry(main) [wm geometry .]"
+ 	puts $f "set geometry(topwidth) [winfo width .tf]"
+@@ -1719,7 +1730,7 @@ proc sel_flist {w x y} {
+ }
+ 
+ proc pop_flist_menu {w X Y x y} {
+-    global ctext cflist cmitmode flist_menu flist_menu_file
++    global ctext cflist cmitmode flist_menu flist_menu_tree flist_menu_file
+     global treediffs diffids
+ 
+     stopfinding
+@@ -1732,7 +1743,11 @@ proc pop_flist_menu {w X Y x y} {
+ 	set e [lindex $treediffs($diffids) [expr {$l-2}]]
+     }
+     set flist_menu_file $e
+-    tk_popup $flist_menu $X $Y
++    if {$cmitmode eq "tree"} {
++      tk_popup $flist_menu_tree $X $Y
++    } else {
++      tk_popup $flist_menu $X $Y
++    }
+ }
+ 
+ proc flist_hl {only} {
+@@ -1747,6 +1762,99 @@ proc flist_hl {only} {
+     set gdttype [mc "touching paths:"]
+ }
+ 
++proc external_diff {} {
++  global gitktmpdir nullid nullid2
++  global flist_menu_file
++  global diffids
++  global diffnum
++  global gitdir extdifftool
++
++  set diffidto [lindex $diffids 0]
++
++  if {[llength $diffids] == 1} {
++    # no reference commit given
++    set diffidto [lindex $diffids 0]
++    if {$diffidto eq $nullid} {
++      # diffing working copy with index
++      set diffidfrom $nullid2
++    } elseif {$diffidto eq $nullid2} {
++      # diffing index with HEAD
++      set diffidfrom "HEAD"
++    } else {
++      # use parent commit
++      global allparents
++      set diffidfrom $allparents($diffidto)
++    }
++  } else {
++    set diffidfrom [lindex $diffids 0]
++    set diffidto [lindex $diffids 1]
++  }
++
++  if {! [info exists diffnum]} {
++    set diffnum 0
++  } else {
++    set diffnum [expr $diffnum + 1]
++  }
++
++
++  set diffdir [file join $gitktmpdir "$diffnum"]
++  set diffok "true"
++
++  file mkdir $diffdir
++  if {$diffidto eq $nullid} {
++    set difftofile [file join $gitdir ".." $flist_menu_file]
++  } elseif {$diffidto eq $nullid2} {
++    set difftofile [file join $diffdir "\[index\] [file tail $flist_menu_file]"]
++    if {[catch {exec git show :$flist_menu_file > $difftofile} err]} {
++      error_popup "\"$flist_menu_file\" [mc "cannot be found in index. \
++                  File has probably been created, deleted or renamed, \
++                  in a different commit."]"
++      set diffok "false"
++    }
++  } else {
++    set difftofile [file join $diffdir "\[$diffidto\] [file tail $flist_menu_file]"]
++    if {[catch {exec git show $diffidto:$flist_menu_file > $difftofile} err]} {
++      error_popup "\"$flist_menu_file\" [mc "cannot be found in revision"] \
++                  $diffidto. [mc "File has probably been created, \
++                  deleted or renamed, in a different commit."]"
++      set diffok "false"
++    }
++  }
++
++  if {$diffidfrom == $nullid} {
++    set difffromfile [file join $gitdir ".." $flist_menu_file]
++  } elseif {$diffidfrom == $nullid2} {
++    set difffromfile [file join $diffdir "\[index\] [file tail $flist_menu_file]"]
++    if {[catch {exec git show :$flist_menu_file > $difffromfile} err]} {
++      error_popup "\"$flist_menu_file\" [mc "cannot be found in index. \
++                  File has probably been created, deleted or renamed, \
++                  in a different commit."]"
++      set diffok "false"
++    }
++   } else {
++    set difffromfile [file join $diffdir "\[$diffidfrom\] [file tail $flist_menu_file]"]
++    if {[catch {exec git show $diffidfrom:$flist_menu_file > $difffromfile} err]} {
++      error_popup "\"$flist_menu_file\" [mc "cannot be found in revision"] \
++                  $diffidfrom. [mc "File has probably been created, \
++                  deleted or renamed, in a different commit."]"
++      set diffok "false"
++    }
++  }
++
++  if {$diffok} {
++    # here we don't use shellquote because \ and everything must be escaped and not enclosed between ''
++    set quotedextdifftool \"[string map {\" \\\" \\ \\\\ \  \\\ } $extdifftool]\"
++    set cmd [concat | $quotedextdifftool [shellarglist [list $difffromfile $difftofile]]]
++    if {[catch {set fl [open $cmd]} err]} {
++      file delete -force [ file join $gitktmpdir $diffnum ]
++      error_popup [mc "$extdifftool command failed: $err"]
++    } else {
++      fconfigure $fl -blocking 0
++      filerun $fl [list file delete -force [file join $gitktmpdir $diffnum]]
++    }
++  }
++}
++
+ # Functions for adding and removing shell-type quoting
+ 
+ proc shellquote {str} {
+@@ -7802,9 +7910,13 @@ proc showtag {tag isnew} {
+ 
+ proc doquit {} {
+     global stopped
++    global gitktmpdir
++
+     set stopped 100
+     savestuff .
+     destroy .
++
++    catch {file delete -force $gitktmpdir}
+ }
+ 
+ proc mkfontdisp {font top which} {
+@@ -7933,7 +8045,7 @@ proc doprefs {} {
+     global maxwidth maxgraphpct
+     global oldprefs prefstop showneartags showlocalchanges
+     global bgcolor fgcolor ctext diffcolors selectbgcolor
+-    global tabstop limitdiffs
++    global tabstop limitdiffs extdifftool
+ 
+     set top .gitkprefs
+     set prefstop $top
+@@ -7980,6 +8092,13 @@ proc doprefs {} {
+     pack $top.ldiff.b $top.ldiff.l -side left
+     grid x $top.ldiff -sticky w
+ 
++    entry $top.extdifft -textvariable extdifftool
++    button $top.extdiffb -text [mc "External diff tool" ] -font optionfont \
++  -command {set extdifftool [tk_getOpenFile -title "External diff tool" \
++  -multiple "false"]}
++    grid x $top.extdiffb $top.extdifft -sticky w
++
++
+     label $top.cdisp -text [mc "Colors: press to choose"]
+     grid $top.cdisp - -sticky w -pady 10
+     label $top.bg -padx 40 -relief sunk -background $bgcolor
+@@ -8454,6 +8573,8 @@ set showlocalchanges 1
+ set limitdiffs 1
+ set datetimeformat "%Y-%m-%d %H:%M:%S"
+ 
++set extdifftool "meld"
++
+ set colors {green red blue magenta darkgrey brown orange}
+ set bgcolor white
+ set fgcolor black
+@@ -8507,6 +8628,9 @@ if {![file isdirectory $gitdir]} {
+     exit 1
+ }
+ 
++set gitktmpdir [file normalize [file join $gitdir ".." [format ".gitk-tmp.%s" [pid]]]]
++file mkdir $gitktmpdir
++
+ set mergeonly 0
+ set revtreeargs {}
+ set cmdline_files {}
+-- 
+1.5.3.8
