@@ -1,111 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] Authenticate push via PGP signature, not SSH
-Date: Wed, 30 Jan 2008 23:30:56 -0500
-Message-ID: <20080131043056.GX24004@spearce.org>
-References: <479D5611.4010205@vilain.net> <20080128081258.GE24004@spearce.org> <479E5021.7010404@vilain.net> <20080129041000.GK24004@spearce.org> <20080129190845.GC30093@artemis.madism.org> <20080130042201.GO24004@spearce.org> <20080130083315.GB8698@artemis.madism.org>
+From: "Ed S. Peschko" <esp5@pge.com>
+Subject: Re: simple cvs-like git wrapper
+Date: Wed, 30 Jan 2008 21:41:24 -0800
+Message-ID: <20080131054124.GG9612@venus>
+References: <20080129204048.GA9612@venus> <m3hcgw8dz7.fsf@localhost.localdomain> <20080130021050.GB9612@venus> <20080130040002.GM24004@spearce.org> <20080130225254.GC9612@venus> <20080131040839.GW24004@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Jan 31 05:31:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jan 31 06:42:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKR5V-0007le-Cp
-	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 05:31:45 +0100
+	id 1JKSBw-0004G5-9q
+	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 06:42:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754756AbYAaEbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jan 2008 23:31:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754682AbYAaEbN
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Jan 2008 23:31:13 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:49551 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751787AbYAaEbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jan 2008 23:31:12 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1JKR4Y-0001ol-TV; Wed, 30 Jan 2008 23:30:47 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1806520FBAE; Wed, 30 Jan 2008 23:30:56 -0500 (EST)
+	id S1751323AbYAaFln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2008 00:41:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751321AbYAaFln
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 00:41:43 -0500
+Received: from mta01.pge.com ([131.89.129.71]:56212 "EHLO mta01.pge.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750783AbYAaFlm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2008 00:41:42 -0500
+Received: from mta16.comp.pge.com (mta16.comp.pge.com [10.244.4.51])
+	by mta01.pge.com (Switch-3.3.1/Switch-3.3.0) with ESMTP id m0V5fQKD024578;
+	Wed, 30 Jan 2008 21:41:26 -0800 (PST)
+Received: from mdssdr01.utility.pge.com (mdssdr01.utility.pge.com [10.244.52.48])
+	by mta16.comp.pge.com (Switch-3.3.1/Switch-3.3.0) with ESMTP id m0V5fPG4024535;
+	Wed, 30 Jan 2008 21:41:25 -0800 (PST)
+Received: (from esp5@localhost)
+	by mdssdr01.utility.pge.com (8.11.7p3+Sun/8.11.7) id m0V5fOC12127;
+	Wed, 30 Jan 2008 21:41:24 -0800 (PST)
+X-Authentication-Warning: mdssdr01.utility.pge.com: esp5 set sender to esp5@pge.com using -f
 Content-Disposition: inline
-In-Reply-To: <20080130083315.GB8698@artemis.madism.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <20080131040839.GW24004@spearce.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72101>
 
-Pierre Habouzit <madcoder@debian.org> wrote:
-> On Wed, Jan 30, 2008 at 04:22:01AM +0000, Shawn O. Pearce wrote:
-> > [...] But maybe the
-> > Debian folks just doesn't worry about this as it isn't a real issue.
-> 
->   It is, we have since recently the princple of "Debian Maintainers",
-> people that are only allowed to upload their own package, and the
-> keyring used for that purpose is versionned using a custom development
-> of ours called jetring (by Joey Hess and al.), I suppose the sources are
-> somewhere around, and it has an internal ascii-armored database IIRC
-> _and_ a gpg-usable keyring, I think. Or is able to generate the keyring
-> at least.
+> Merging all branches on the remote named "origin" is simply not an
+> intelligent thing to do.  Nobody blindly merges everything available
+> from a remote, and nobody has ever asked for such a function before
+> in Git.  I still think its nuts, but I don't know all details of
+> your situation so I'll just shut up now and hope you know what you
+> are really asking for.
 
-I looked at jetring earlier today, after you posted the URL in
-your other email.  Its an interesting tool for distributed keyring
-management.  I can see why the Debian folks use it, but it does seem
-a little awkward if one has to create those change files by hand.
- 
->   But for the case I discussed, indeed, I'd use
-> /usr/share/keyrings/debian-keyring.gpg anyways, and won't be the one
-> updating it. That's why your developpement should be able to allow
-> checking against another keyring. IOW I'm less and less sure that you
-> want to manage the keyring _necessarily_ inside the git tree, and that
-> allowing any external way to manage a keyring (inside a git tree beeing
-> one of the options) is the most flexible way.
+Ok, I'm not going to belabor the point, but for the most part, the
+requests in our particular domain are separate. A developer for the
+most part works only on files that other developers are not working on.
 
-Of this you have convinced me.
+There are exceptions to this, but for the most part this is true..
+Hence, most of the time there will be no conflicts.
 
-If we get any sort of push authorization based upon PGP signatures
-implemented we should be validating against a keyring that is
-configured by a receive.keyring configuration option, and that
-defaults to $GIT_DIR/receive-keyring.gpg or something suitable.
-If you want to point receive-pack at an existing keyring on your
-system, you can and should do so.
- 
-> > Having GIT_PUSHER_{NAME,EMAIL} makes it easier for a hook to
-> > obtain information about this person and use it in an automated
-> > email message.  Think a post-receive hook that automatically sends
-> > out announcement emails.
-> 
->   okay, that makes sense. Sorry about the obvious parts, it sensed like
-> you didn't used gpg on a regular basis, hence wasn't sure of what you
-> already knew or not. I agree that for the sake of logging GIT_PUSHER_*
-> are nice, since as you can see on the CLI examples I gave, gpg says that
-> the email associated to my key is pierre.habouzit@polytechnique.edu
-> whereas I ususally contribute to open source projects using
-> madcoder@debian.org ;)
+Anyways, I'll try to improve on your script, but it looks like what I
+want to do.
 
-A repository owner may require that to push your GIT_PUSHER_*
-values must match the data found in your PGP key on their keyring,
-just to keep their logs in a particular way.  Others may not care
-and would allow anything, so long as the signature was validated
-by a key on the keyring.  But I think that level of checking is
-something we leave up to the repository owner.
+> This is going to be slow as you are running git-merge for each
+> and every branch available to you.  You can do a lot better by
+> loading the branch DAG into memory in Perl/C/Python and doing a
+> graph coloring algorithm to see if a merge is necessary or not,
+> as if you are merging everything all of the time almost everything
+> is going to be always merged to everything else.  Which as I said
+> earlier is nuts.
 
-Which leads me to three variables:
+hmm. Is there a simple method to get this graph? I'm assuming that you
+would have to get all the local commits and compare them to the remote
+commits, and only merge the branches that have commits not yet 
+merged..
 
-	GIT_PUSHER_NAME
-	GIT_PUSHER_EMAIL
-	GIT_PUSHER_KEYID
+Ed
 
-the latter being important if you really wanted to enforce the
-$GIT_PUSHER_EMAIL matching the data within the public key used.
-
--- 
-Shawn.
+> -- 
+> Shawn.
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
