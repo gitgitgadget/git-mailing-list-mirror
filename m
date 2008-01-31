@@ -1,90 +1,114 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 2/2] git-filter-branch.sh: don't use --default when calling
- rev-list
-Date: Thu, 31 Jan 2008 10:17:05 +0100
-Message-ID: <47A19211.5090409@op5.se>
-References: <47A109A7.1070502@nrlssc.navy.mil> <1201738186-28132-1-git-send-email-casey@nrlssc.navy.mil> <47A11317.2010409@nrlssc.navy.mil> <alpine.LSU.1.00.0801310048350.23907@racer.site> <47A125D9.2070105@nrlssc.navy.mil>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [RFC] Authenticate push via PGP signature, not SSH
+Date: Thu, 31 Jan 2008 10:25:27 +0100
+Message-ID: <20080131092527.GC24403@artemis.madism.org>
+References: <479D5611.4010205@vilain.net> <20080128081258.GE24004@spearce.org> <479E5021.7010404@vilain.net> <20080129041000.GK24004@spearce.org> <20080129190845.GC30093@artemis.madism.org> <20080130042201.GO24004@spearce.org> <20080130083315.GB8698@artemis.madism.org> <20080131043056.GX24004@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Jan 31 10:19:39 2008
+Content-Type: multipart/signed; boundary="uh9ZiVrAOUUm9fzH";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jan 31 10:26:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKVa7-0006Yh-7S
-	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 10:19:39 +0100
+	id 1JKVgK-0008R5-PH
+	for gcvg-git-2@gmane.org; Thu, 31 Jan 2008 10:26:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762046AbYAaJSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2008 04:18:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765651AbYAaJSm
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 04:18:42 -0500
-Received: from mail.op5.se ([193.201.96.20]:49977 "EHLO mail.op5.se"
+	id S1752340AbYAaJZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2008 04:25:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752222AbYAaJZc
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 04:25:32 -0500
+Received: from pan.madism.org ([88.191.52.104]:34057 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754896AbYAaJSi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2008 04:18:38 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 99F681F0804A;
-	Thu, 31 Jan 2008 10:18:36 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mVT+Xsc7wOb0; Thu, 31 Jan 2008 10:18:35 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.155])
-	by mail.op5.se (Postfix) with ESMTP id 986D91F0801E;
-	Thu, 31 Jan 2008 10:18:31 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <47A125D9.2070105@nrlssc.navy.mil>
+	id S1751718AbYAaJZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2008 04:25:29 -0500
+Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 495C531696;
+	Thu, 31 Jan 2008 10:25:27 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 3FFB74DF486; Thu, 31 Jan 2008 10:25:27 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20080131043056.GX24004@spearce.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72110>
 
-Brandon Casey wrote:
-> Johannes Schindelin wrote:
->> Hi,
->>
->> On Wed, 30 Jan 2008, Brandon Casey wrote:
->>
->>> This command requires a revision to be specified on the command line, so 
->>> remove '--default HEAD' from the arguments to git rev-list. They are 
->>> unnecessary.
->> But I thought that you wanted "git filter-branch --msg-filter=rot13" to 
->> work on HEAD by default?
-> 
-> I do. But isn't that inconsistent with "git filter-branch" does _not_ work
-> on HEAD by default and instead prints out usage information?
-> 
-> If I do:
-> 
-> 	git filter-branch -d /tmp/git_temp
-> 
-> and it is successful, I think I would also expect this to succeed:
-> 
-> 	git filter-branch
-> 
-> So, I think the "operates on HEAD" by default is consistent with what other
-> git tools do, but I think it is not consistent for filter-branch to sometimes
-> operate on HEAD by default and sometimes error with usage information.
-> 
 
-Well, if there's no filter specified it has nothing to do, so erroring out
-in the no-arguments-at-all case would be sensible.
+--uh9ZiVrAOUUm9fzH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-OTOH, it would be better to error out for the no-filter case explicitly,
-which would also cause the no-arguments case to error out.
+On Thu, Jan 31, 2008 at 04:30:56AM +0000, Shawn O. Pearce wrote:
+> Pierre Habouzit <madcoder@debian.org> wrote:
+> >   It is, we have since recently the princple of "Debian Maintainers",
+> > people that are only allowed to upload their own package, and the
+> > keyring used for that purpose is versionned using a custom development
+> > of ours called jetring (by Joey Hess and al.), I suppose the sources are
+> > somewhere around, and it has an internal ascii-armored database IIRC
+> > _and_ a gpg-usable keyring, I think. Or is able to generate the keyring
+> > at least.
+>=20
+> I looked at jetring earlier today, after you posted the URL in
+> your other email.  Its an interesting tool for distributed keyring
+> management.  I can see why the Debian folks use it, but it does seem
+> a little awkward if one has to create those change files by hand.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+  Well, *I* don't use it, it's just a fancy tool that replaces the fully
+manual (sigh) Debian keyring management for the DM keyring, so that it
+can be used by multiple people at the same time. I just pointed to it,
+as like you said, reinventing the wheel sucks. Though Joey will probably
+be open to improvements if needed :)
+
+> >   But for the case I discussed, indeed, I'd use
+> > /usr/share/keyrings/debian-keyring.gpg anyways, and won't be the one
+> > updating it. That's why your developpement should be able to allow
+> > checking against another keyring. IOW I'm less and less sure that you
+> > want to manage the keyring _necessarily_ inside the git tree, and that
+> > allowing any external way to manage a keyring (inside a git tree beeing
+> > one of the options) is the most flexible way.
+>=20
+> Of this you have convinced me.
+>=20
+> If we get any sort of push authorization based upon PGP signatures
+> implemented we should be validating against a keyring that is
+> configured by a receive.keyring configuration option, and that
+> defaults to $GIT_DIR/receive-keyring.gpg or something suitable.
+> If you want to point receive-pack at an existing keyring on your
+> system, you can and should do so.
+
+  Full ACK. Another issue that I didn't saw in the first place, is that
+if you want to store your keyring in git itself, then it brings the
+issue that you would have to write ACLs to protect the branch where it's
+stored, whereas it's usually _way_ more easy to just decorrelate both.
+IOW it's weak wrt security.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--uh9ZiVrAOUUm9fzH
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHoZQHvGr7W6HudhwRAvhJAJoD1gH+d8U5WLyzxS0P6HFVLnUIbQCcCFfs
+e301WKYb/PGfPEUAMsvgLmk=
+=CYOD
+-----END PGP SIGNATURE-----
+
+--uh9ZiVrAOUUm9fzH--
