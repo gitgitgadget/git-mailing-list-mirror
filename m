@@ -1,7 +1,7 @@
 From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 3/3] It's possible to edit unapplied patches now
-Date: Fri, 01 Feb 2008 08:50:57 +0100
-Message-ID: <20080201075041.7905.78693.stgit@yoghurt>
+Subject: [StGit PATCH 2/3] Convert "stg edit" to the new infrastructure
+Date: Fri, 01 Feb 2008 08:50:27 +0100
+Message-ID: <20080201075017.7905.41241.stgit@yoghurt>
 References: <20080201074708.7905.98305.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -9,57 +9,431 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org,
 	David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 01 09:23:49 2008
+X-From: git-owner@vger.kernel.org Fri Feb 01 09:23:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKrBc-0005El-Iv
-	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 09:23:49 +0100
+	id 1JKrBd-0005El-7O
+	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 09:23:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755426AbYBAIXG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Feb 2008 03:23:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752412AbYBAIXG
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 03:23:06 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3635 "EHLO
+	id S1755425AbYBAIXK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Feb 2008 03:23:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752412AbYBAIXJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 03:23:09 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3636 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755415AbYBAIXD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2008 03:23:03 -0500
+	with ESMTP id S1751143AbYBAIXG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2008 03:23:06 -0500
 Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
 	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1JKqfn-0008Jd-00; Fri, 01 Feb 2008 07:50:55 +0000
+	id 1JKqfJ-0008JJ-00; Fri, 01 Feb 2008 07:50:25 +0000
 In-Reply-To: <20080201074708.7905.98305.stgit@yoghurt>
 User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72157>
 
-With the rewrite, "stg edit" gained the ability to edit unapplied
-patches, so the emacs mode no longer has to check that a patch is
-applied before trying to edit it.
+The --annotate and --undo switches were dropped in the conversion.
+--annotate could be re-added, but --undo is more problematic since the
+command will now rewrite any applied patches on top of the edited
+patch. It seems best to leave this job to the fabled general undo
+command, expected Real Soon Now.
+
+In addition to the usual improvements from the new infrastructure,
+this patch has some additional benefits:
+
+  * There's a new -e/--edit flag, which forces interactive editing
+    even if options such as --sign or --author are given. (Normally,
+    interactive editing is skipped if the patch is modified with a
+    commandline option.)
+
+  * It's now possible to edit any patch, including unapplied patches.
+    Even diff editing works for all patches, including unapplied
+    patches. (In fact, editing unapplied patches is slightly safer,
+    since they don't mind a dirty index/worktree.)
 
 Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
 ---
 
- contrib/stgit.el |    4 +---
- 1 files changed, 1 insertions(+), 3 deletions(-)
+ stgit/commands/edit.py |  309 ++++++++++++++++++++++------------------=
+--------
+ 1 files changed, 142 insertions(+), 167 deletions(-)
 
 
-diff --git a/contrib/stgit.el b/contrib/stgit.el
-index e8bbb2c..bef41c7 100644
---- a/contrib/stgit.el
-+++ b/contrib/stgit.el
-@@ -290,9 +290,7 @@ Commands:
- (defun stgit-edit ()
-   "Edit the patch on the current line"
-   (interactive)
--  (let ((patch (if (stgit-applied-at-point)
--                   (stgit-patch-at-point)
--                 (error "This patch is not applied")))
-+  (let ((patch (stgit-patch-at-point))
-         (edit-buf (get-buffer-create "*StGit edit*"))
-         (dir default-directory))
-     (log-edit 'stgit-confirm-edit t nil edit-buf)
+diff --git a/stgit/commands/edit.py b/stgit/commands/edit.py
+index 9915e49..7daf156 100644
+--- a/stgit/commands/edit.py
++++ b/stgit/commands/edit.py
+@@ -18,14 +18,12 @@ along with this program; if not, write to the Free =
+Software
+ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 US=
+A
+ """
+=20
+-from optparse import OptionParser, make_option
+-from email.Utils import formatdate
++from optparse import make_option
+=20
+-from stgit.commands.common import *
+-from stgit.utils import *
++from stgit import git, utils
++from stgit.commands import common
++from stgit.lib import git as gitlib, transaction
+ from stgit.out import *
+-from stgit import stack, git
+-
+=20
+ help =3D 'edit a patch description or diff'
+ usage =3D """%prog [options] [<patch>]
+@@ -49,23 +47,19 @@ separator:
+   Diff text
+=20
+ Command-line options can be used to modify specific information
+-without invoking the editor.
++without invoking the editor. (With the --edit option, the editor is
++invoked even if such command-line options are given.)
+=20
+-If the patch diff is edited but the patch application fails, the
+-rejected patch is stored in the .stgit-failed.patch file (and also in
+-.stgit-edit.{diff,txt}). The edited patch can be replaced with one of
+-these files using the '--file' and '--diff' options.
+-"""
++If the patch diff is edited but does not apply, no changes are made to
++the patch at all. The edited patch is saved to a file which you can
++feed to "stg edit --file", once you have made sure it does apply."""
+=20
+-directory =3D DirectoryGotoToplevel()
++directory =3D common.DirectoryHasRepositoryLib()
+ options =3D [make_option('-d', '--diff',
+                        help =3D 'edit the patch diff',
+                        action =3D 'store_true'),
+-           make_option('--undo',
+-                       help =3D 'revert the commit generated by the la=
+st edit',
+-                       action =3D 'store_true'),
+-           make_option('-a', '--annotate', metavar =3D 'NOTE',
+-                       help =3D 'annotate the patch log entry'),
++           make_option('-e', '--edit', action =3D 'store_true',
++                       help =3D 'invoke interactive editor'),
+            make_option('--author', metavar =3D '"NAME <EMAIL>"',
+                        help =3D 'replae the author details with "NAME =
+<EMAIL>"'),
+            make_option('--authname',
+@@ -78,162 +72,143 @@ options =3D [make_option('-d', '--diff',
+                        help =3D 'replace the committer name with COMMN=
+AME'),
+            make_option('--commemail',
+                        help =3D 'replace the committer e-mail with COM=
+MEMAIL')
+-           ] + (make_sign_options() + make_message_options()
+-                + make_diff_opts_option())
+-
+-def __update_patch(pname, text, options):
+-    """Update the current patch from the given text.
+-    """
+-    patch =3D crt_series.get_patch(pname)
+-
+-    bottom =3D patch.get_bottom()
+-    top =3D patch.get_top()
+-
+-    if text:
+-        (message, author_name, author_email, author_date, diff
+-         ) =3D parse_patch(text)
+-    else:
+-        message =3D author_name =3D author_email =3D author_date =3D d=
+iff =3D None
+-
+-    out.start('Updating patch "%s"' % pname)
+-
+-    if options.diff:
+-        git.switch(bottom)
+-        try:
+-            git.apply_patch(diff =3D diff)
+-        except:
+-            # avoid inconsistent repository state
+-            git.switch(top)
+-            raise
+-
+-    def c(a, b):
+-        if a !=3D None:
+-            return a
+-        return b
+-    crt_series.refresh_patch(message =3D message,
+-                             author_name =3D c(options.authname, autho=
+r_name),
+-                             author_email =3D c(options.authemail, aut=
+hor_email),
+-                             author_date =3D c(options.authdate, autho=
+r_date),
+-                             committer_name =3D options.commname,
+-                             committer_email =3D options.commemail,
+-                             backup =3D True, sign_str =3D options.sig=
+n_str,
+-                             log =3D 'edit', notes =3D options.annotat=
+e)
+-
+-    if crt_series.empty_patch(pname):
+-        out.done('empty patch')
+-    else:
+-        out.done()
+-
+-def __generate_file(pname, write_fn, options):
+-    """Generate a file containing the description to edit
+-    """
+-    patch =3D crt_series.get_patch(pname)
+-
+-    # generate the file to be edited
+-    descr =3D patch.get_description().strip()
+-    authdate =3D patch.get_authdate()
+-
+-    tmpl =3D 'From: %(authname)s <%(authemail)s>\n'
+-    if authdate:
+-        tmpl +=3D 'Date: %(authdate)s\n'
+-    tmpl +=3D '\n%(descr)s\n'
+-
+-    tmpl_dict =3D {
+-        'descr': descr,
+-        'authname': patch.get_authname(),
+-        'authemail': patch.get_authemail(),
+-        'authdate': patch.get_authdate()
+-        }
+-
+-    if options.diff:
+-        # add the patch diff to the edited file
+-        bottom =3D patch.get_bottom()
+-        top =3D patch.get_top()
++           ] + (utils.make_sign_options() + utils.make_message_options=
+()
++                + utils.make_diff_opts_option())
+=20
+-        tmpl +=3D '---\n\n' \
+-                '%(diffstat)s\n' \
+-                '%(diff)s'
+-
+-        tmpl_dict['diff'] =3D git.diff(rev1 =3D bottom, rev2 =3D top,
+-                                     diff_flags =3D options.diff_flags=
+)
+-        tmpl_dict['diffstat'] =3D git.diffstat(tmpl_dict['diff'])
+-
+-    for key in tmpl_dict:
+-        # make empty strings if key is not available
+-        if tmpl_dict[key] is None:
+-            tmpl_dict[key] =3D ''
+-
+-    text =3D tmpl % tmpl_dict
+-
+-    # write the file to be edited
+-    write_fn(text)
+-
+-def __edit_update_patch(pname, options):
+-    """Edit the given patch interactively.
+-    """
+-    if options.diff:
+-        fname =3D '.stgit-edit.diff'
++def patch_diff(repository, cd, diff, diff_flags):
++    if diff:
++        diff =3D repository.diff_tree(cd.parent.data.tree, cd.tree, di=
+ff_flags)
++        return '\n'.join([git.diffstat(diff), diff])
+     else:
+-        fname =3D '.stgit-edit.txt'
+-    def write_fn(text):
+-        f =3D file(fname, 'w')
+-        f.write(text)
+-        f.close()
+-
+-    __generate_file(pname, write_fn, options)
+-
+-    # invoke the editor
+-    call_editor(fname)
+-
+-    __update_patch(pname, file(fname).read(), options)
++        return None
++
++def patch_description(cd, diff):
++    """Generate a string containing the description to edit."""
++
++    desc =3D ['From: %s <%s>' % (cd.author.name, cd.author.email),
++            'Date: %s' % cd.author.date.isoformat(),
++            '',
++            cd.message]
++    if diff:
++        desc +=3D ['---',
++                 '',
++                diff]
++    return '\n'.join(desc)
++
++def patch_desc(repository, cd, failed_diff, diff, diff_flags):
++    return patch_description(cd, failed_diff or patch_diff(
++            repository, cd, diff, diff_flags))
++
++def update_patch_description(repository, cd, text):
++    message, authname, authemail, authdate, diff =3D common.parse_patc=
+h(text)
++    cd =3D (cd.set_message(message)
++            .set_author(cd.author.set_name(authname)
++                                 .set_email(authemail)
++                                 .set_date(gitlib.Date.maybe(authdate)=
+)))
++    failed_diff =3D None
++    if diff:
++        tree =3D repository.apply(cd.parent.data.tree, diff)
++        if tree =3D=3D None:
++            failed_diff =3D diff
++        else:
++            cd =3D cd.set_tree(tree)
++    return cd, failed_diff
+=20
+ def func(parser, options, args):
+     """Edit the given patch or the current one.
+     """
+-    crt_pname =3D crt_series.get_current()
++    stack =3D directory.repository.current_stack
+=20
+-    if not args:
+-        pname =3D crt_pname
+-        if not pname:
+-            raise CmdException, 'No patches applied'
++    if len(args) =3D=3D 0:
++        if not stack.patchorder.applied:
++            raise common.CmdException(
++                'Cannot edit top patch, because no patches are applied=
+')
++        patchname =3D stack.patchorder.applied[-1]
+     elif len(args) =3D=3D 1:
+-        pname =3D args[0]
+-        if crt_series.patch_unapplied(pname) or crt_series.patch_hidde=
+n(pname):
+-            raise CmdException, 'Cannot edit unapplied or hidden patch=
+es'
+-        elif not crt_series.patch_applied(pname):
+-            raise CmdException, 'Unknown patch "%s"' % pname
++        [patchname] =3D args
++        if not stack.patches.exists(patchname):
++            raise common.CmdException('%s: no such patch' % patchname)
+     else:
+-        parser.error('incorrect number of arguments')
+-
+-    check_local_changes()
+-    check_conflicts()
+-    check_head_top_equal(crt_series)
+-
+-    if pname !=3D crt_pname:
+-        # Go to the patch to be edited
+-        applied =3D crt_series.get_applied()
+-        between =3D applied[:applied.index(pname):-1]
+-        pop_patches(crt_series, between)
+-
+-    if options.author:
+-        options.authname, options.authemail =3D name_email(options.aut=
+hor)
+-
+-    if options.undo:
+-        out.start('Undoing the editing of "%s"' % pname)
+-        crt_series.undo_refresh()
+-        out.done()
+-    elif options.save_template:
+-        __generate_file(pname, options.save_template, options)
+-    elif any([options.message, options.authname, options.authemail,
+-              options.authdate, options.commname, options.commemail,
+-              options.sign_str]):
+-        out.start('Updating patch "%s"' % pname)
+-        __update_patch(pname, options.message, options)
+-        out.done()
+-    else:
+-        __edit_update_patch(pname, options)
++        parser.error('Cannot edit more than one patch')
++
++    cd =3D orig_cd =3D stack.patches.get(patchname).commit.data
+=20
+-    if pname !=3D crt_pname:
+-        # Push the patches back
+-        between.reverse()
+-        push_patches(crt_series, between)
++    # Read patch from user-provided description.
++    if options.message =3D=3D None:
++        failed_diff =3D None
++    else:
++        cd, failed_diff =3D update_patch_description(stack.repository,=
+ cd,
++                                                   options.message)
++
++    # Modify author and committer data.
++    if options.author !=3D None:
++        options.authname, options.authemail =3D common.name_email(opti=
+ons.author)
++    for p, f, val in [('author', 'name', options.authname),
++                      ('author', 'email', options.authemail),
++                      ('author', 'date', gitlib.Date.maybe(options.aut=
+hdate)),
++                      ('committer', 'name', options.commname),
++                      ('committer', 'email', options.commemail)]:
++        if val !=3D None:
++            cd =3D getattr(cd, 'set_' + p)(
++                getattr(getattr(cd, p), 'set_' + f)(val))
++
++    # Add Signed-off-by: or similar.
++    if options.sign_str !=3D None:
++        cd =3D cd.set_message(utils.add_sign_line(
++                cd.message, options.sign_str, gitlib.Person.committer(=
+).name,
++                gitlib.Person.committer().email))
++
++    if options.save_template:
++        options.save_template(
++            patch_desc(stack.repository, cd, failed_diff,
++                       options.diff, options.diff_flags))
++        return utils.STGIT_SUCCESS
++
++    # Let user edit the patch manually.
++    if cd =3D=3D orig_cd or options.edit:
++        fn =3D '.stgit-edit.' + ['txt', 'patch'][bool(options.diff)]
++        cd, failed_diff =3D update_patch_description(
++            stack.repository, cd, utils.edit_string(
++                patch_desc(stack.repository, cd, failed_diff,
++                           options.diff, options.diff_flags),
++                fn))
++
++    def failed():
++        fn =3D '.stgit-failed.patch'
++        f =3D file(fn, 'w')
++        f.write(patch_desc(stack.repository, cd, failed_diff,
++                           options.diff, options.diff_flags))
++        f.close()
++        out.error('Edited patch did not apply.',
++                  'It has been saved to "%s".' % fn)
++        return utils.STGIT_COMMAND_ERROR
++
++    # If we couldn't apply the patch, fail without even trying to
++    # effect any of the changes.
++    if failed_diff:
++        return failed()
++
++    # The patch applied, so now we have to rewrite the StGit patch
++    # (and any patches on top of it).
++    iw =3D stack.repository.default_iw
++    trans =3D transaction.StackTransaction(stack, 'stg edit')
++    if patchname in trans.applied:
++        popped =3D trans.applied[trans.applied.index(patchname)+1:]
++        assert not trans.pop_patches(lambda pn: pn in popped)
++    else:
++        popped =3D []
++    trans.patches[patchname] =3D stack.repository.commit(cd)
++    try:
++        for pn in popped:
++            trans.push_patch(pn, iw)
++    except transaction.TransactionHalted:
++        pass
++    try:
++        # Either a complete success, or a conflict during push. But in
++        # either case, we've successfully effected the edits the user
++        # asked us for.
++        return trans.run(iw)
++    except transaction.TransactionException:
++        # Transaction aborted -- we couldn't check out files due to
++        # dirty index/worktree. The edits were not carried out.
++        return failed()
