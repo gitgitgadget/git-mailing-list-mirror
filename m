@@ -1,95 +1,76 @@
-From: "Roger C. Soares" <rogersoares@intelinet.com.br>
-Subject: [EGIT PATCH] Use keyboard arrow keys to go to the next and previous find results.
-Date: Fri,  1 Feb 2008 00:12:39 -0200
-Message-ID: <1201831959-3805-1-git-send-email-rogersoares@intelinet.com.br>
-Cc: robin.rosenberg@dewire.com,
-	"Roger C. Soares" <rogersoares@intelinet.com.br>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 01 03:07:46 2008
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: [PATCH] Make blame accept absolute paths
+Date: Fri, 1 Feb 2008 05:07:04 +0100
+Message-ID: <200802010507.05421.robin.rosenberg.lists@dewire.com>
+References: <47975FE6.4050709@viscovery.net> <7v7ihtqfm8.fsf@gitster.siamese.dyndns.org> <7vve5dox0o.fsf_-_@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 01 05:07:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKlJf-0001Et-9w
-	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 03:07:43 +0100
+	id 1JKnBd-0000x3-OP
+	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 05:07:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756509AbYBACHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2008 21:07:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756216AbYBACHE
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 21:07:04 -0500
-Received: from cvxbsd.convex.com.br ([200.152.177.10]:1650 "HELO
-	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1755565AbYBACHB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2008 21:07:01 -0500
-Received: (qmail 39530 invoked by uid 0); 1 Feb 2008 00:09:20 -0200
-Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
- (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
- Processed in 6.930854 secs); 01 Feb 2008 02:09:20 -0000
-Received: from unknown (HELO localhost.localdomain) (189.5.214.104)
-  by cvxbsd.convex.com.br with SMTP; 1 Feb 2008 02:09:13 -0000
-X-Mailer: git-send-email 1.5.3.7
+	id S1763107AbYBAEGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2008 23:06:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757072AbYBAEGy
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 23:06:54 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:8091 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1763107AbYBAEGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jan 2008 23:06:52 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 446D080266C;
+	Fri,  1 Feb 2008 05:06:50 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3It1pSBgIAu5; Fri,  1 Feb 2008 05:06:49 +0100 (CET)
+Received: from [10.9.0.4] (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id 96B5C802641;
+	Fri,  1 Feb 2008 05:06:49 +0100 (CET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
+In-Reply-To: <7vve5dox0o.fsf_-_@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72146>
 
-On the history find toolbar, if the pattern text field has focus,
-the down arrow key will generate a next event and the up arrow key
-will generate the previous event.
 
-Signed-off-by: Roger C. Soares <rogersoares@intelinet.com.br>
+Blame did not always use prefix_path.
+
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 ---
- .../src/org/spearce/egit/ui/FindToolbar.java       |   23 +++++++++++++++++++-
- 1 files changed, 22 insertions(+), 1 deletions(-)
+ builtin-blame.c |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
 
-diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/FindToolbar.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/FindToolbar.java
-index bc48371..5527453 100644
---- a/org.spearce.egit.ui/src/org/spearce/egit/ui/FindToolbar.java
-+++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/FindToolbar.java
-@@ -21,6 +21,8 @@ import java.util.List;
+This is a followup to "setup: sanitize absolute and funny paths in get_pathspec()"
+Thanks Junio for fixing this wish of mine.
+
+diff --git a/builtin-blame.c b/builtin-blame.c
+index c7e6887..f88c32a 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -1894,9 +1894,7 @@ static unsigned parse_score(const char *arg)
  
- import org.eclipse.core.runtime.Preferences;
- import org.eclipse.swt.SWT;
-+import org.eclipse.swt.events.KeyAdapter;
-+import org.eclipse.swt.events.KeyEvent;
- import org.eclipse.swt.events.ModifyEvent;
- import org.eclipse.swt.events.ModifyListener;
- import org.eclipse.swt.events.SelectionAdapter;
-@@ -193,7 +195,7 @@ public class FindToolbar extends Composite {
- 			}
- 		});
+ static const char *add_prefix(const char *prefix, const char *path)
+ {
+-	if (!prefix || !prefix[0])
+-		return path;
+-	return prefix_path(prefix, strlen(prefix), path);
++	return prefix_path(prefix, prefix ? strlen(prefix) : 0, path);
+ }
  
--		Listener findButtonsListener = new Listener() {
-+		final Listener findButtonsListener = new Listener() {
- 			public void handleEvent(Event event) {
- 				if (patternField.getText().length() > 0
- 						&& findResults.size() == 0) {
-@@ -242,6 +244,25 @@ public class FindToolbar extends Composite {
- 		nextButton.addListener(SWT.Selection, findButtonsListener);
- 		previousButton.addListener(SWT.Selection, findButtonsListener);
- 
-+		patternField.addKeyListener(new KeyAdapter() {
-+			private Event event = new Event();
-+
-+			@Override
-+			public void keyPressed(KeyEvent e) {
-+				if(e.keyCode == SWT.ARROW_DOWN) {
-+					if(nextButton.isEnabled()) {
-+						event.widget = nextButton;
-+						findButtonsListener.handleEvent(event);
-+					}
-+				} else if(e.keyCode == SWT.ARROW_UP) {
-+					if(previousButton.isEnabled()) {
-+						event.widget = previousButton;
-+						findButtonsListener.handleEvent(event);
-+					}
-+				}
-+			}
-+		});
-+
- 		caseItem.addSelectionListener(new SelectionAdapter() {
- 			public void widgetSelected(SelectionEvent e) {
- 				prefs.setValue(UIPreferences.FINDTOOLBAR_IGNORE_CASE, caseItem
+ /*
 -- 
-1.5.3.7
+1.5.4.rc4.25.g81cc
