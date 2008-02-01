@@ -1,142 +1,78 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Use config file or file for repository owner's name.
-Date: Fri, 1 Feb 2008 01:17:07 +0100
-Message-ID: <200802010117.08295.jnareb@gmail.com>
-References: <1201670898-15076-1-git-send-email-ribas@c3sl.ufpr.br> <m3bq728y4o.fsf@localhost.localdomain> <alpine.LSU.1.00.0801311110280.23907@racer.site>
+From: Tommy Thorn <tt1729@yahoo.com>
+Subject: git-p4 runs out of memory
+Date: Thu, 31 Jan 2008 17:18:53 -0800 (PST)
+Message-ID: <565265.29093.qm@web39507.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Bruno Cesar Ribas <ribas@c3sl.ufpr.br>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 01 01:17:53 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 01 02:26:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKjbM-0000xb-Jx
-	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 01:17:53 +0100
+	id 1JKkfU-0000ML-LI
+	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 02:26:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753339AbYBAARS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jan 2008 19:17:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755565AbYBAARS
-	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 19:17:18 -0500
-Received: from hs-out-0708.google.com ([64.233.178.243]:3251 "EHLO
-	hs-out-2122.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753012AbYBAARQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jan 2008 19:17:16 -0500
-Received: by hs-out-2122.google.com with SMTP id 54so751271hsz.5
-        for <git@vger.kernel.org>; Thu, 31 Jan 2008 16:17:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=xCxoAsXbVLkXpPi1uYWZIJRAoP+QMzcKvHvh7cwbZos=;
-        b=JJ6QCvDt48ij33775R+zf9shW946+d/2S11W4smRfHsTTKu8pfz/VflCjuKGDZryAzbdqTX4hNBB/j2AV6OBOuKALSNgfa+q9Cn5mAGMFv/0P+ckTfh5DaNnDy/9mMOo30ilV08xC4+PVMKEpXliAvO9P1FURJ9dpQHOAWLWGxQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=c7HnM5ygCI/MPgam5oY2EERLnMuXbinf/kDTlBj9RSSHAjbI/P/HtUNUXbc++w72mVyQ5lcIBFVODiVqxIa+Rld88Pby0AgeFspWUV+Egk87aCIAlg0xGlfYZUn6wVLPMzbUI5DiInMVrsaUK4ZRJn5oNFWKKNLYmvhN5h3mFvc=
-Received: by 10.114.209.1 with SMTP id h1mr3201285wag.115.1201825034801;
-        Thu, 31 Jan 2008 16:17:14 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.248.93])
-        by mx.google.com with ESMTPS id g17sm6226889nfd.10.2008.01.31.16.17.11
-        (version=SSLv3 cipher=OTHER);
-        Thu, 31 Jan 2008 16:17:12 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <alpine.LSU.1.00.0801311110280.23907@racer.site>
-Content-Disposition: inline
+	id S1753905AbYBABZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jan 2008 20:25:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751575AbYBABZf
+	(ORCPT <rfc822;git-outgoing>); Thu, 31 Jan 2008 20:25:35 -0500
+Received: from web39507.mail.mud.yahoo.com ([209.191.106.91]:44872 "HELO
+	web39507.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753713AbYBABZe (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 31 Jan 2008 20:25:34 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Thu, 31 Jan 2008 20:25:34 EST
+Received: (qmail 30040 invoked by uid 60001); 1 Feb 2008 01:18:53 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=Vaf0R9ybr3gkHJCC17ru9NVX6dluJSuDGNd07ud2G14Bn4Oj5U3kavvqOj8r2M8+fsWcEvknDEGY2+YgCfMth/UqrayJ425E/BKBbFysPNNBBYW2ZPDw4NUIminYa5151kmKqmAgfahFiH7V/O1B+G7bfUPf7V080IQB73R1K38=;
+X-YMail-OSG: aPWP2cUVM1lGIeYEcX96BZL5QrKX4fRJlVUeylH0e1I6DYMjmYfpjo5skn3Gapfo.dl7G3.e_oIN6pZ86cLaytt.NdDR.GcCkQd4h0TkmzKShj9xrC1ox7DQipxMyg--
+Received: from [216.228.112.21] by web39507.mail.mud.yahoo.com via HTTP; Thu, 31 Jan 2008 17:18:53 PST
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72144>
 
-On Thu, 31 Jan 2008, Johannes "Dscho" Schindelin wrote:
-> On Wed, 30 Jan 2008, Jakub Narebski wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->>> Junio C Hamano <gitster@pobox.com> writes:
->>> 
->>> Rephrasing to be constructive (but remember, this is all post 1.5.4).
->>> 
->>>  * we would need for historical reasons to keep supporting
->>>    description and cloneurl for some time.  There may be some
->>>    others, but the goal should be to deprecate and remove these
->>>    ad-hoc one-file-per-piece-of-information files.
->>> 
->>>  * we also need for historical reasons to keep supporting some
->>>    other stuff found in $git_dir/config of the project.
->>> 
->>> If the config reading interface in gitweb is reasonably fast and 
->>> cheap, we can move the existing description/cloneurl to gitweb config 
->>> when deprecating them.  New ones such as "owner" would naturally fit 
->>> there.
->> 
->> Currently gitweb parses repo config file _once_, using one call to 
->> git-config -z -l.
->> 
->> We could simply add description to the projects_list file, but it will 
->> be a bit backwards incompatibile change.
-> 
-> Not if you say "the config overrides the description/cloneurl file", i.e. 
-> when there is a description or a cloneurl from the config, don't even 
-> bother to stat the single-line files.
+Trying to survive in a heavily Perforce dominated 
+world, git-p4 looked like the perfect antidote. 
+Unfortunately I have a few problems:
 
-Errr... what I wanted to say there is instead of current format of
-'projects_list' file which is:
-  <URI-encoded project path> SPC <URI-encoded owner> LF
-add also project description to that file, so the format would be
-  <URI-encoded project path> SPC <URI-encoded owner> SPC
-    <one-line project description> LF
-(project description doesn't need to be URI encoded). This means
-avoiding reading $git_dir/description (and in rare cases also avoiding
-gitweb.description in $git_dir/config).
+0. git-p4 swells until it runs out of virtual space!
+It
+   appears that the scripts tries to read everything 
+   into memory:
 
-This is of course a bit backwards incompatibile.
+ filedata = p4CmdList('-x - print',
+                      stdin='\n'.join(['%s#%s' %
+(f['path'], f['rev'])
+                                       for f in
+files]),
+                      stdin_mode='w+')
 
-> That would help transition, and still be backwards compatible.  (BTW this 
-> resembles what we did for the .git/remotes/* -> .git/config transition.)
+  Short of rewriting git-p4, is it possible to clone
+in
+  multiple steps?
 
-Note that some of info is needed for 'projects_list' view, and some only
-for the 'summary' view.  For the 'projects_view' page we would want to
-avoid, I think, calling "git config -z -l" per repository (or opening
-$git_dir/config file and [limited] parsing it inside gitweb in Perl,
-like git-cvsserver does).  For 'summary' view we want usually to read
-repo config file for features nevertheless, and is only once per
-web-page, so we don't avoid it then.
+1. Short of full Perforce client support, support of 
+   exclusion would have helped. Dmitry Kakurin
+provided
+   a good start. I'll try to generalize it such that
+   multiple exclusion can be specified as 
 
-Currently for 'projects_list' view we have, when $projects_list is
-a directory (this includes situation when it is undef, and fallbacks
-to $projectroot):
- 1. Call git-for-each-ref to get last modification time
- 2. Read $git_dir/description file for description (which is generated
-    by default template, so is usualy present, if in useless form),
-    fallback to git-config / reading $git_dir/config, gitweb.description
- 3. Check owner of $git_dir (stat + getpwuid)
+     -//branch/file/blah
 
-With the addition of $git_dir/owner and gitweb.owner we would have
- 3'. Read $git_dir/owner file, usually not present,
-     fallback to gitweb.owner (which means reading and parsing
-     repo config!),
-     fallback to $git_dir owner (stat + getpwuid)
-so after consideration I think that adding gitweb.owner is a bit of
-a stupid idea from performance point of view, at least till we have
-'projects_list' caching. Only $git_dir/owner would be better.
- 
-BTW. what about filesystems where file / directory does not have
-an owner?
+2. Having "git p4 commit" be an alias of 
+   "git p4 submit" seems a mistake - this is not a 
+   commit like a git commit, but more like a git push.
+
+Thanks
+Tommy
 
 
-Another solution would be using $projectroot/.gitconfig, with simplified
-syntax easy parseable by Perl, with gitweb.<repo path>.<config>, where
-<config> is limited to 'description', 'owner' and 'url', and 
-gitweb.description for fallback description, gitweb.owner for fallback
-owner and owner for set of repositories, gitweb.baseurl for base URLs
-(gitweb.<repo>.url = gitweb.baseurl/<repo>).
 
-This would limit repo paths to not have embedded newlines in them, but
-this is not I think serious limitation :-)
-
--- 
-Jakub Narebski
-Poland
+      ____________________________________________________________________________________
+Be a better friend, newshound, and 
+know-it-all with Yahoo! Mobile.  Try it now.  http://mobile.yahoo.com/;_ylt=Ahu06i62sR8HDtDypao8Wcj9tAcJ 
