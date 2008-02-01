@@ -1,98 +1,65 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Problem with post-receive hook
-Date: Fri, 1 Feb 2008 13:01:11 -0600
-Message-ID: <18339.27767.633833.374795@lisa.zopyra.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] Added sub get_owner_file which checks if there's a file with project owner name
+Date: Fri, 1 Feb 2008 20:10:39 +0100
+Message-ID: <200802012010.40739.robin.rosenberg.lists@dewire.com>
+References: <1201577766-11601-1-git-send-email-ribas@c3sl.ufpr.br> <200802011418.59862.jnareb@gmail.com> <47A3449E.6070102@iksz.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 01 20:02:07 2008
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Bruno Cesar Ribas <ribas@c3sl.ufpr.br>, git@vger.kernel.org
+To: Nagy =?utf-8?q?Bal=C3=A1zs?= <js@iksz.hu>
+X-From: git-owner@vger.kernel.org Fri Feb 01 21:01:05 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JL19K-0004Se-6m
-	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 20:02:06 +0100
+	id 1JL24O-0000OP-3e
+	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 21:01:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753840AbYBATBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2008 14:01:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753599AbYBATBY
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 14:01:24 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:61323 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753522AbYBATBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2008 14:01:24 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id m11J1NC18307;
-	Fri, 1 Feb 2008 13:01:23 -0600
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1754894AbYBAUAb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Feb 2008 15:00:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755335AbYBAUAb
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 15:00:31 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:16624 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754335AbYBAUAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2008 15:00:30 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 16350802868;
+	Fri,  1 Feb 2008 21:00:29 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id u53R4mLGhCyc; Fri,  1 Feb 2008 21:00:27 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id D623A802662;
+	Fri,  1 Feb 2008 21:00:27 +0100 (CET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
+In-Reply-To: <47A3449E.6070102@iksz.hu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72183>
 
-I am having trouble getting the contributed post-receive hook to work,
-which worked just fine the last time I tried it.  I am using the
-latest code from the git repo directly and have also tried the 1.5.3.8
-version.
+fredagen den 1 februari 2008 skrev Nagy Bal=C3=A1zs:
+> Well, I came from ClearCase world, were registry service holds all=20
+> vob/view (repo) stuff.  What if we implement more or less the same=20
+> here?  I mean if you have a lot of public git repos, or at least comm=
+on=20
+> for a couple of people, we could store all the fundamental data (loca=
+l=20
+> storage path, share URL) of a group of repos in a single database.  W=
+e=20
+> could call them depots.  Moreover, we could use this as the source of=
+=20
+> git clone, God forbid, even remotely (some kind of git config=20
+> depot.url=3Dhttps://user:pass@git.example.org/depot.cgi/depotname).  =
+I=20
+> could continue but I'm afraid I'll run out of oxygen :)
 
-I am running the git-daemon through xinetd, and it is configured
-like so:
+I'll fill in: LDAP.
 
-% cat /etc/xinetd.d/git-daemon
-# description: The git server offers access to git repositories
-service git
-{
-        disable         = no
-        type            = UNLISTED
-        port            = 9418
-        socket_type     = stream
-        wait            = no
-        user            = rael
-        server          = /opt/git/bin/git-daemon
-        server_args     = --enable=receive-pack --verbose --syslog --inetd --export-all --base-path=/repos/git
-        log_on_failure  += USERID
-}
-
-I have a test repo in /repos/git/fun, and I can clone it, and push
-to it successfully.  I have configured the config file in /repos/git/fun
-like so:
-
-% cat /repos/git/fun/config
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = true
-        legacyheaders = false
-        logallrefupdates = true
-[repack]
-        usedeltabaseoffset = true
-[hooks]
-        mailinglist = rael@zopyra.com
-
-and have ensured that the hook /repos/git/config/fun/hooks/post-receive
-is executable.
-
-I have run it from the command line and it has printed out what I
-expected it to, but for some reason when the git daemon gets a pack,
-it does not seem to execute the hook.  I have looked through the git
-daemon code in daemon.c, and the receive-pack code, and I see nothing
-obvious that has changed since the last time I looked at it.
-
-I have verified that the git daemon works to upload the packs (I push
-changes, go somewhere else, clone and the changes are there; also, it
-shows the upload in the syslog file /var/log/messages), and I'm just
-at a loss.  The message file says, for example:
-
-Feb  1 11:25:47 zopyra git-daemon: [31240] Connection from 192.168.10.23:41527
-Feb  1 11:25:47 zopyra git-daemon: [31240] Extended attributes (12 bytes) exist <host=zopyra>
-Feb  1 11:25:47 zopyra git-daemon: [31240] Request upload-pack for '/fun'
-Feb  1 11:25:47 zopyra xinetd[2382]: EXIT: git status=0 pid=31240 duration=0(sec)
-
-so, nothing seems amiss here.
-
-Have I missed something really stupid?
-
-
-Bill
+-- robin
