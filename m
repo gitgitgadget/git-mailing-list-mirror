@@ -1,140 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] More test cases for sanitized path names
-Date: Fri, 01 Feb 2008 03:10:37 -0800
-Message-ID: <7vtzkt7x02.fsf@gitster.siamese.dyndns.org>
-References: <47975FE6.4050709@viscovery.net>
-	<200802010534.55925.robin.rosenberg.lists@dewire.com>
-	<7vabmlb0y0.fsf@gitster.siamese.dyndns.org>
-	<200802011010.41938.robin.rosenberg.lists@dewire.com>
-	<7v63x99dt9.fsf@gitster.siamese.dyndns.org>
-	<7v1w7x9cgf.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Documentation/git-stash.txt: Adjust SYNOPSIS command syntaxes
+Date: Fri, 01 Feb 2008 03:19:03 -0800 (PST)
+Message-ID: <m37iho9b70.fsf@localhost.localdomain>
+References: <7ihp802o.fsf@blue.sea.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Fri Feb 01 12:11:33 2008
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Fri Feb 01 12:19:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKtnr-0007L8-77
-	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 12:11:27 +0100
+	id 1JKtvr-0001UM-7r
+	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 12:19:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756070AbYBALKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2008 06:10:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755373AbYBALKy
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 06:10:54 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50411 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755554AbYBALKx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2008 06:10:53 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D9A3C1443;
-	Fri,  1 Feb 2008 06:10:51 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E61C81421;
-	Fri,  1 Feb 2008 06:10:43 -0500 (EST)
-In-Reply-To: <7v1w7x9cgf.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 01 Feb 2008 02:51:28 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755738AbYBALTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2008 06:19:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756147AbYBALTJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 06:19:09 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:37661 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755181AbYBALTI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2008 06:19:08 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so732167ugc.16
+        for <git@vger.kernel.org>; Fri, 01 Feb 2008 03:19:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=UEq8Jd6+olhKu2g5vCpx34HPiAi4bRVkfvIZaRxMpmE=;
+        b=HOHCJT/yUo+v9SZyfuDfOV4LgbrRBTHSyfS8OhmcuZ1jPEwj1os5WAP/D6NdXnUGGUhNtvFnmrun17ASZCwt86h4nyMqSNmMEHEgNSy4S2I7+4dDVR/p8mzUcDG2e25VlFImMlkVNUZulir/HvpHc3u0cVfR+JMjCvQ6yaY+iAM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=AU/KJqUAmzeyeF8QEUwccneC6Wfd/oBEM15cdMWn+hI+VTWYGukbBjBdPMA70sPXtMNEq0XzahDOlV3AL2Wowoh8D2f72ds+A+KWzw+wWrAQOgqQK9xC33kfdk0fcwYwKTX/D15ilThZZnKPBQIjWeom3z565VVibSkyc8XIVuY=
+Received: by 10.67.122.10 with SMTP id z10mr5343862ugm.44.1201864746796;
+        Fri, 01 Feb 2008 03:19:06 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.248.93])
+        by mx.google.com with ESMTPS id 18sm10921736ugk.18.2008.02.01.03.19.02
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 01 Feb 2008 03:19:03 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m11BIwOq016602;
+	Fri, 1 Feb 2008 12:18:58 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m11BIhhE016594;
+	Fri, 1 Feb 2008 12:18:43 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <7ihp802o.fsf@blue.sea.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72168>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jari Aalto <jari.aalto@cante.net> writes:
 
-> I haven't looked at the code, but I suspect that "git add" and
-> anything that uses the same logic as "ls-files --error-unmatch"
-> would still not work with the setup patch.
+> Change (list|...) to <list|...> to denote required command. Adjust
+> the 'save' command syntax to better reflect the call parameters:
+> [save] [message...] => [save [message...]].
 
-Ok, I looked at the code.
+While I agree with the second change, i.e. the "[save [message...]]"
+part, I think that the first part is a mistake.  Parentheses does not
+imply the optional part: brackets do; parentheses are meant to
+delimit the alternatives.  Angle brackets if I understand correctly
+are meant to denote part which you have to enter, the user supplied
+info (the reast ou have to enter literally).
 
-I already had a fix for "ls-files --error-unmatch" in the
-weatherbaloon patch.  The logic to complain and fail nonsense
-paths was needed for "add".
+So IMVHO the SYNOPSIS for git-stash(1) should read:
 
-The attached is on top of the previous one and your test case
-updates.  We may want to also add tests for --error-unmatch.
+SYNOPSIS
+--------
+[verse]
+'git-stash' (list | show [<stash>] | apply [<stash>] | clear)
+'git-stash' [save [<message>...]]
 
-It is very tempting to enhance pathspec API in such a way that
-it is not just a NULL terminated array of (char*) pointers, but
-a pointer to a richer structure that knows the number of
-elements and which strings need to be freed (and we would invent
-a "free_pathspec()" function to free them) and such, but that is
-an independent surgery that is outside of the scope of flying
-weatherbaloons.
+or
 
----
+'git-stash' [save [<message...>]]
 
- builtin-add.c    |   12 ++++++++++++
- t/t7010-setup.sh |   20 ++++++++++++++------
- 2 files changed, 26 insertions(+), 6 deletions(-)
+> -- 
+> Welcome to FOSS revolution: we fix and modify until it shines
+> 
 
-diff --git a/builtin-add.c b/builtin-add.c
-index 4a91e3e..820110e 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -228,6 +228,18 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		goto finish;
- 	}
- 
-+	if (*argv) {
-+		/* Was there an invalid path? */
-+		if (pathspec) {
-+			int num;
-+			for (num = 0; pathspec[num]; num++)
-+				; /* just counting */
-+			if (argc != num)
-+				exit(1); /* error message already given */
-+		} else
-+			exit(1); /* error message already given */
-+	}
-+
- 	fill_directory(&dir, pathspec, ignored_too);
- 
- 	if (show_only) {
-diff --git a/t/t7010-setup.sh b/t/t7010-setup.sh
-index 60c4a46..e809e0e 100755
---- a/t/t7010-setup.sh
-+++ b/t/t7010-setup.sh
-@@ -135,20 +135,28 @@ test_expect_success 'blame using absolute path names' '
- 	diff -u f1.txt f2.txt
- '
- 
--test_expect_failure 'add a directory outside the work tree' '
-+test_expect_success 'setup deeper work tree' '
-+	test_create_repo tester
-+'
-+
-+test_expect_success 'add a directory outside the work tree' '(
-+	cd tester &&
- 	d1="$(cd .. ; pwd)" &&
- 	git add "$d1"
--	echo $?
--'
-+)'
- 
--test_expect_failure 'add a file outside the work tree, nasty case 1' '(
-+test_expect_success 'add a file outside the work tree, nasty case 1' '(
-+	cd tester &&
- 	f="$(pwd)x" &&
-+	echo "$f" &&
- 	touch "$f" &&
- 	git add "$f"
- )'
- 
--test_expect_failure 'add a file outside the work tree, nasty case 2' '(
--	f="$(pwd|sed "s/.$//")x" &&
-+test_expect_success 'add a file outside the work tree, nasty case 2' '(
-+	cd tester &&
-+	f="$(pwd | sed "s/.$//")x" &&
-+	echo "$f" &&
- 	touch "$f" &&
- 	git add "$f"
- )'
+Nice one. Can I add it to http://git.or.cz/gitwiki/FortuneCookies ?
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
