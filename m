@@ -1,197 +1,275 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: [PATCH] --format=pretty: new modifiers cID, cIS, CIY
-Date: Sat, 02 Feb 2008 00:12:53 +0200
-Organization: Private
-Message-ID: <odb072ca.fsf@blue.sea.net>
+From: Wink Saville <wink@saville.com>
+Subject: git-svn segmetation fault
+Date: Fri, 01 Feb 2008 14:32:29 -0800
+Message-ID: <47A39DFD.9020905@saville.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 01 23:14:15 2008
+X-From: git-owner@vger.kernel.org Fri Feb 01 23:33:37 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JL49B-0001dR-Ei
-	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 23:14:09 +0100
+	id 1JL4Rs-0007vd-Ai
+	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 23:33:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753933AbYBAWNi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2008 17:13:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753780AbYBAWNi
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 17:13:38 -0500
-Received: from main.gmane.org ([80.91.229.2]:53611 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753708AbYBAWNg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2008 17:13:36 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JL48b-0007vq-8y
-	for git@vger.kernel.org; Fri, 01 Feb 2008 22:13:33 +0000
-Received: from a91-155-183-103.elisa-laajakaista.fi ([91.155.183.103])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 01 Feb 2008 22:13:33 +0000
-Received: from jari.aalto by a91-155-183-103.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 01 Feb 2008 22:13:33 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-183-103.elisa-laajakaista.fi
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
-Cancel-Lock: sha1:Kk7h+XFP6/Bpbms+5qoyFAI6I0U=
+	id S1758501AbYBAWcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2008 17:32:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755975AbYBAWcf
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 17:32:35 -0500
+Received: from an-out-0708.google.com ([209.85.132.246]:57214 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756576AbYBAWce (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2008 17:32:34 -0500
+Received: by an-out-0708.google.com with SMTP id d31so315900and.103
+        for <git@vger.kernel.org>; Fri, 01 Feb 2008 14:32:32 -0800 (PST)
+Received: by 10.100.242.20 with SMTP id p20mr8489479anh.1.1201905152600;
+        Fri, 01 Feb 2008 14:32:32 -0800 (PST)
+Received: from ?192.168.0.133? ( [70.91.206.233])
+        by mx.google.com with ESMTPS id m33sm4711518ele.17.2008.02.01.14.32.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 01 Feb 2008 14:32:31 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72185>
 
-The default ISO 8601 modifier %ci is quite verbose displaying
-everything up to the timezone. This consumes considerable amount of
-characters.  The new modifiers offer way to display just the needed
-amount of information, down to:
+I was doing an git-svn dcommit and got a seg fault. The first
+phase of updating svn completed and then it seg faulted on the
+second. So I suspect I'm out of sync and need to recover,
+any guidance appreciated.
 
-	%cID	date: YYYY-MM-DD
-	%cIH	hour: YYYY-MM-DD HH:MM
-	%cIS	second: YYYY-MM-DD HH:MM:SS
+If it's any help the svn repo is at http://async-msgcomp.googlecode.com/svn.
+If someone needs it I happen to have a backup of the git repo before
+doing the commit and then after the seg fault.
 
-Signed-off-by: Jari Aalto <jari.aalto AT cante.net>
----
- Documentation/pretty-formats.txt |    5 ++++-
- cache.h                          |    3 +++
- date.c                           |   17 +++++++++++++++++
- pretty.c                         |   35 ++++++++++++++++++++++++++++++-----
- 4 files changed, 54 insertions(+), 6 deletions(-)
+If there is any other information that someone needs I can try
+to supply it.
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 0193c3c..cb1bbac 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -113,7 +113,10 @@ The placeholders are:
- - '%cD': committer date, RFC2822 style
- - '%cr': committer date, relative
- - '%ct': committer date, UNIX timestamp
--- '%ci': committer date, ISO 8601 format
-+- '%ci': committer date, ISO 8601 format, long YYYY-MM-DD HH:MM:SS TZ
-+- '%cIM': committer date, ISO 8601 format, short YYYY-MM-DD HH:MM
-+- '%cIS': committer date, ISO 8601 format, short YYYY-MM-DD HH:MM:SS
-+- '%cID': committer date, ISO 8601 format, short YYYY-MM-DD
- - '%e': encoding
- - '%s': subject
- - '%b': body
-diff --git a/cache.h b/cache.h
-index 549f4bb..1fae94a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -444,6 +444,9 @@ enum date_mode {
- 	DATE_SHORT,
- 	DATE_LOCAL,
- 	DATE_ISO8601,
-+	DATE_ISO8601_YYYYMMDD,
-+	DATE_ISO8601_YYYYMMDDHHMM,
-+	DATE_ISO8601_YYYYMMDDHHMMSS,
- 	DATE_RFC2822
- };
- 
-diff --git a/date.c b/date.c
-index 8f70500..ded9caa 100644
---- a/date.c
-+++ b/date.c
-@@ -144,6 +144,23 @@ const char *show_date(unsigned long time, int tz, enum date_mode mode)
- 				tm->tm_mday,
- 				tm->tm_hour, tm->tm_min, tm->tm_sec,
- 				tz);
-+	else if (mode == DATE_ISO8601_YYYYMMDD)
-+		sprintf(timebuf, "%04d-%02d-%02d",
-+				tm->tm_year + 1900,
-+				tm->tm_mon + 1,
-+				tm->tm_mday);
-+	else if (mode == DATE_ISO8601_YYYYMMDDHHMM)
-+		sprintf(timebuf, "%04d-%02d-%02d %02d:%02d",
-+				tm->tm_year + 1900,
-+				tm->tm_mon + 1,
-+				tm->tm_mday,
-+				tm->tm_hour, tm->tm_min);
-+	else if (mode == DATE_ISO8601_YYYYMMDDHHMMSS)
-+		sprintf(timebuf, "%04d-%02d-%02d %02d:%02d:%02d",
-+				tm->tm_year + 1900,
-+				tm->tm_mon + 1,
-+				tm->tm_mday,
-+				tm->tm_hour, tm->tm_min, tm->tm_sec);
- 	else if (mode == DATE_RFC2822)
- 		sprintf(timebuf, "%.3s, %d %.3s %d %02d:%02d:%02d %+05d",
- 			weekday_names[tm->tm_wday], tm->tm_mday,
-diff --git a/pretty.c b/pretty.c
-index b987ff2..5a8774b 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -282,9 +282,11 @@ static char *logmsg_reencode(const struct commit *commit,
- 	return out;
- }
- 
--static void format_person_part(struct strbuf *sb, char part,
--                               const char *msg, int len)
-+static void format_person_part(struct strbuf *sb, char *ptr,
-+			       const char *msg, int len)
- {
-+	char part = ptr[0];
-+	char next = ptr[1];
- 	int start, end, tz = 0;
- 	unsigned long date;
- 	char *ep;
-@@ -359,6 +361,26 @@ static void format_person_part(struct strbuf *sb, char part,
- 	case 'i':	/* date, ISO 8601 */
- 		strbuf_addstr(sb, show_date(date, tz, DATE_ISO8601));
- 		return;
-+	case 'I':	/* date, ISO 8601 + fine grained details */
-+		switch (next) {
-+		case 'D':	/* up till date */
-+			strbuf_addstr(sb,
-+					show_date(date, tz,
-+						DATE_ISO8601_YYYYMMDD));
-+			return;
-+		case 'S':	/* up till date + sec */
-+			strbuf_addstr(sb,
-+					show_date(date, tz,
-+						DATE_ISO8601_YYYYMMDDHHMMSS));
-+
-+			return;
-+		default:	/* up till hour */
-+			strbuf_addstr(sb,
-+					show_date(date, tz,
-+						DATE_ISO8601_YYYYMMDDHHMM));
-+
-+		}
-+		return;
- 	}
- }
- 
-@@ -532,11 +554,11 @@ static void format_commit_item(struct strbuf *sb, const char *placeholder,
- 		strbuf_add(sb, msg + c->subject.off, c->subject.len);
- 		return;
- 	case 'a':
--		format_person_part(sb, placeholder[1],
-+		format_person_part(sb, placeholder + 1,
- 		                   msg + c->author.off, c->author.len);
- 		return;
- 	case 'c':
--		format_person_part(sb, placeholder[1],
-+		format_person_part(sb, placeholder + 1,
- 		                   msg + c->committer.off, c->committer.len);
- 		return;
- 	case 'e':
-@@ -571,7 +593,10 @@ void format_commit_message(const struct commit *commit,
- 		"cD",		/* committer date, RFC2822 style */
- 		"cr",		/* committer date, relative */
- 		"ct",		/* committer date, UNIX timestamp */
--		"ci",		/* committer date, ISO 8601 */
-+		"ci",		/* committer date, ISO 8601 full, with TZ */
-+		"cID",		/* committer date, ISO 8601 YYYY-MM-DD */
-+		"cIM",		/* committer date, ISO 8601 YYYY-MM-DD HH:MM */
-+		"cIS",		/* committer date, ISO 8601 YYYY-MM-DD HH:MM:SS*/
- 		"e",		/* encoding */
- 		"s",		/* subject */
- 		"b",		/* body */
--- 
-1.5.4-rc5.GIT-dirty
+Cheers,
 
+Wink Saville
 
--- 
-Welcome to FOSS revolution: we fix and modify until it shines
+<info>
+
+<Apparently there is no core dump file as ulimit -c is 0: />
+wink@ic2d1:$ ulimit -c
+0
+
+<here is the linux version: />
+wink@ic2d1:$ uname -a
+Linux ic2d1 2.6.22-14-generic #1 SMP Tue Dec 18 05:28:27 UTC 2007 x86_64 
+GNU/Linux
+
+<here is the git version: />
+wink@ic2d1:$ git --version
+git version 1.5.3.8
+
+<Here is the data from /var/log/kern.log: />
+Feb  1 13:51:31 ic2d1 kernel: [17438.627780] git-svn[21111]: segfault at 
+0000000000000010 rip 00002acfb82ac1ff rsp 00007ffff937d0d0 error 6
+
+<Here is the command and data output: />
+wink@ic2d1:$ git-svn dcommit
+Committing to https://async-msgcomp.googlecode.com/svn/trunk ...
+        C       android/mc/src/com/saville/android/mc/ActiveMc.java => 
+android/hmc/src/com/saville/hmc/ActiveHmc.java
+        C       java/msgcomp/src/com/saville/msgcomp/IMc.java => 
+android/hmc/src/com/saville/hmc/Hmc.java
+        C       android/mc/src/com/saville/android/mc/ActiveMc.java => 
+android/mc/src/com/saville/mc/ActiveMc.java
+        C       java/msgcomp/src/com/saville/msgcomp/IMc.java => 
+android/mc/src/com/saville/mc/MsgPump.java
+        C       java/msgcomp/src/com/saville/msgcomp/IMc.java => 
+java/hmc/src/com/saville/hmc/Hmc.java
+        C       android/hmc/src/com/saville/android/testhmc/TestHmc.java 
+=> java/hmc/src/com/saville/testhmc/Test.java
+        C       java/msgcomp/src/com/saville/msgcomp/IMc.java => 
+java/msgcomp/src/com/saville/msgcomp/IHmc.java
+        C       java/mc/src/com/saville/mc/Mc.java => java/src/McBase.java
+        C       java/mc/src/com/saville/mc/McMgr.java => java/src/McMgr.java
+        R       java/TestClient1/AGPLv3.LICENSE => AGPLv3.LICENSE
+        R       android/TestNet1/COPYING => COPYING
+        R       android/TestNet1/COPYING.LESSER => COPYING.LESSER
+        R       android/mc/src/com/saville/android/mc/McActivity.java => 
+android/mc/src/com/saville/mc/McActivity.java
+        R       android/mc/src/com/saville/android/mc/McService.java => 
+android/mc/src/com/saville/mc/McService.java
+        R       android/mc/src/com/saville/android/mc/ActiveMc.java => 
+java/hmc/src/com/saville/hmc/ActiveHmc.java
+        R       
+android/hmc/src/com/saville/android/testhmc/TestDeferredMsgs.java => 
+java/hmc/src/com/saville/testhmc/TestDeferredMsgs.java
+        R       
+android/hmc/src/com/saville/android/testhmc/TestHmcClient.java => 
+java/hmc/src/com/saville/testhmc/TestHmcClient.java
+        R       
+android/hmc/src/com/saville/android/testhmc/TestHmcServer.java => 
+java/hmc/src/com/saville/testhmc/TestHmcServer.java
+        R       
+android/hmc/src/com/saville/android/testhmc/TestUnhandledMsgs.java => 
+java/hmc/src/com/saville/testhmc/TestUnhandledMsgs.java
+        R       java/mc/src/com/saville/mc/Looper.java => 
+java/mc/src/com/saville/mc/MsgPump.java
+        R       android/hmc/src/com/saville/android/hmc/IState.java => 
+java/msgcomp/src/com/saville/msgcomp/IState.java
+        R       android/hmc/src/com/saville/android/hmc/State.java => 
+java/msgcomp/src/com/saville/msgcomp/State.java
+        R       android/hmc/src/com/saville/android/hmc/Hmc.java => 
+java/src/HmcBase.java
+        D       android/debug/COPYING
+        D       android/debug/COPYING.LESSER
+        D       android/hmc/COPYING
+        D       android/hmc/COPYING.LESSER
+        D       android/mc/COPYING
+        D       android/mc/COPYING.LESSER
+        D       android/mc/src/com/saville/android/mc/Mc.java
+        D       android/mc/src/com/saville/android/mc/McMgr.java
+        D       android/mctest/COPYING
+        D       android/mctest/COPYING.LESSER
+        D       android/serdes/COPYING
+        D       android/serdes/COPYING.LESSER
+        D       java/TestMsgPipe1/AGPLv3.LICENSE
+        D       java/TestMsgPipe2/AGPLv3.LICENSE
+        D       java/TestServer1/AGPLv3.LICENSE
+        D       java/debug/COPYING
+        D       java/debug/COPYING.LESSER
+        D       java/mcmaster/AGPLv3.LICENSE
+        D       java/msgcomp/COPYING
+        D       java/msgcomp/COPYING.LESSER
+        D       java/serdes/COPYING
+        D       java/serdes/COPYING.LESSER
+        M       android/TestNet1/.classpath
+        M       
+android/TestNet1/src/com/saville/android/testnet1/TestNet1.java
+        M       android/hmc/.classpath
+        M       android/hmc/src/com/saville/android/testhmc/TestHmc.java
+        A       android/hmc/src/com/saville/hmc/HmcBase.java
+        A       android/hmc/src/com/saville/testhmc
+        M       android/mc/AndroidManifest.xml
+        M       android/mc/src/com/saville/android/testmc/TestMc.java
+        M       android/mc/src/com/saville/android/testmc/TestMcService.java
+        A       android/mc/src/com/saville/mc/Mc.java
+        A       android/mc/src/com/saville/mc/McBase.java
+        A       android/mc/src/com/saville/mc/McMgr.java
+        M       android/mctest/.classpath
+        M       android/mctest/src/com/saville/android/mctest/McTest.java
+        M       
+android/mctest/src/com/saville/android/mctest/McTestClient.java
+        A       java/hmc/.classpath
+        A       java/hmc/.project
+        A       java/hmc/src/TestHmc.java
+        A       java/hmc/src/com/saville/hmc/HmcBase.java
+        A       java/hmcbase/.classpath
+        A       java/hmcbase/.project
+        M       java/mc/src/TestMc.java
+        M       java/mc/src/com/saville/mc/ActiveMc.java
+        M       java/mc/src/com/saville/mc/Mc.java
+        A       java/mc/src/com/saville/mc/McBase.java
+        T       java/mc/src/com/saville/mc/McMgr.java
+        M       java/mc/src/com/saville/mc/TcpMsgPipe.java
+        A       java/msgcomp/src/com/saville/msgcomp/IActiveMc.java
+        M       java/msgcomp/src/com/saville/msgcomp/IMc.java
+        A       java/msgcomp/src/com/saville/msgcomp/IMcMgr.java
+        M       java/msgcomp/src/com/saville/msgcomp/McId.java
+Committed r52
+        D       android/mc/COPYING.LESSER
+        D       android/mc/COPYING
+        M       android/mc/AndroidManifest.xml
+        A       android/mc/src/com/saville/mc/Mc.java
+        A       android/mc/src/com/saville/mc/McService.java
+        A       android/mc/src/com/saville/mc/McMgr.java
+        A       android/mc/src/com/saville/mc/MsgPump.java
+        A       android/mc/src/com/saville/mc/McBase.java
+        A       android/mc/src/com/saville/mc/ActiveMc.java
+        A       android/mc/src/com/saville/mc/McActivity.java
+        D       android/mc/src/com/saville/android/mc/Mc.java
+        D       android/mc/src/com/saville/android/mc/McService.java
+        D       android/mc/src/com/saville/android/mc/McMgr.java
+        D       android/mc/src/com/saville/android/mc/ActiveMc.java
+        D       android/mc/src/com/saville/android/mc/McActivity.java
+        M       android/mc/src/com/saville/android/testmc/TestMc.java
+        M       android/mc/src/com/saville/android/testmc/TestMcService.java
+        D       android/mctest/COPYING.LESSER
+        D       android/mctest/COPYING
+        M       android/mctest/.classpath
+        M       android/mctest/src/com/saville/android/mctest/McTest.java
+        M       
+android/mctest/src/com/saville/android/mctest/McTestClient.java
+        D       android/serdes/COPYING.LESSER
+        D       android/serdes/COPYING
+        D       android/debug/COPYING.LESSER
+        D       android/debug/COPYING
+        D       android/hmc/COPYING.LESSER
+        D       android/hmc/COPYING
+        M       android/hmc/.classpath
+        D       android/hmc/src/com/saville/android/hmc/State.java
+        D       android/hmc/src/com/saville/android/hmc/Hmc.java
+        D       android/hmc/src/com/saville/android/hmc/IState.java
+        D       
+android/hmc/src/com/saville/android/testhmc/TestHmcClient.java
+        D       
+android/hmc/src/com/saville/android/testhmc/TestDeferredMsgs.java
+        D       
+android/hmc/src/com/saville/android/testhmc/TestUnhandledMsgs.java
+        D       
+android/hmc/src/com/saville/android/testhmc/TestHmcServer.java
+        M       android/hmc/src/com/saville/android/testhmc/TestHmc.java
+        A       android/hmc/src/com/saville/hmc/HmcBase.java
+        A       android/hmc/src/com/saville/hmc/ActiveHmc.java
+        A       android/hmc/src/com/saville/hmc/Hmc.java
+        A       android/hmc/src/com/saville/testhmc
+        D       android/TestNet1/COPYING.LESSER
+        D       android/TestNet1/COPYING
+        M       android/TestNet1/.classpath
+        M       
+android/TestNet1/src/com/saville/android/testnet1/TestNet1.java
+        M       java/mc/src/TestMc.java
+        D       java/mc/src/com/saville/mc/Looper.java
+        M       java/mc/src/com/saville/mc/Mc.java
+        M       java/mc/src/com/saville/mc/McMgr.java
+        A       java/mc/src/com/saville/mc/MsgPump.java
+        A       java/mc/src/com/saville/mc/McBase.java
+        M       java/mc/src/com/saville/mc/ActiveMc.java
+        M       java/mc/src/com/saville/mc/TcpMsgPipe.java
+        D       java/TestClient1/AGPLv3.LICENSE
+        A       java/hmcbase/.classpath
+        A       java/hmcbase/.project
+        D       java/serdes/COPYING.LESSER
+        D       java/serdes/COPYING
+        D       java/msgcomp/COPYING.LESSER
+        D       java/msgcomp/COPYING
+        A       java/msgcomp/src/com/saville/msgcomp/IHmc.java
+        A       java/msgcomp/src/com/saville/msgcomp/State.java
+        A       java/msgcomp/src/com/saville/msgcomp/IActiveMc.java
+        M       java/msgcomp/src/com/saville/msgcomp/IMc.java
+        A       java/msgcomp/src/com/saville/msgcomp/IState.java
+        M       java/msgcomp/src/com/saville/msgcomp/McId.java
+        A       java/msgcomp/src/com/saville/msgcomp/IMcMgr.java
+        D       java/TestMsgPipe1/AGPLv3.LICENSE
+        D       java/debug/COPYING.LESSER
+        D       java/debug/COPYING
+        D       java/TestMsgPipe2/AGPLv3.LICENSE
+        D       java/TestServer1/AGPLv3.LICENSE
+        A       java/hmc/.classpath
+        A       java/hmc/.project
+        A       java/hmc/src/TestHmc.java
+        A       java/hmc/src/com/saville/hmc/HmcBase.java
+        A       java/hmc/src/com/saville/hmc/ActiveHmc.java
+        A       java/hmc/src/com/saville/hmc/Hmc.java
+        A       java/hmc/src/com/saville/testhmc/Test.java
+        A       java/hmc/src/com/saville/testhmc/TestHmcClient.java
+        A       java/hmc/src/com/saville/testhmc/TestDeferredMsgs.java
+        A       java/hmc/src/com/saville/testhmc/TestUnhandledMsgs.java
+        A       java/hmc/src/com/saville/testhmc/TestHmcServer.java
+        A       java/src/HmcBase.java
+        A       java/src/McMgr.java
+        A       java/src/McBase.java
+        D       java/mcmaster/AGPLv3.LICENSE
+        A       COPYING.LESSER
+        A       COPYING
+        A       AGPLv3.LICENSE
+Segmentation fault (core dumped)
