@@ -1,144 +1,165 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] gitignore(5): Allow "foo/" in ignore list to match directory
- "foo"
-Date: Fri, 01 Feb 2008 09:56:43 +0100
-Message-ID: <47A2DECB.5040007@op5.se>
-References: <6bc632150801230554l3b24e1e4lb4641bf7c16857c0@mail.gmail.com>	<47A06EF9.60704@users.sourceforge.net>	<7vprvjgi9v.fsf@gitster.siamese.dyndns.org>	<47A1733E.9040103@users.sourceforge.net>	<7vhcgue5nr.fsf_-_@gitster.siamese.dyndns.org>	<7v63xae4lf.fsf_-_@gitster.siamese.dyndns.org>	<20080131094124.GA25546@coredump.intra.peff.net>	<7vfxwecmfe.fsf@gitster.siamese.dyndns.org>	<20080131104256.GF25546@coredump.intra.peff.net>	<alpine.LSU.1.00.0801311128190.23907@racer.site>	<6bc632150801310356w1b2fa019n87d92986aed807c5@mail.gmail.com> <7vr6fxbr5a.fsf@gitster.siamese.dyndns.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] More test cases for sanitized path names
+Date: Fri, 1 Feb 2008 10:10:40 +0100
+Message-ID: <200802011010.41938.robin.rosenberg.lists@dewire.com>
+References: <47975FE6.4050709@viscovery.net> <200802010534.55925.robin.rosenberg.lists@dewire.com> <7vabmlb0y0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: pradeep singh rautela <rautelap@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	Adam Piatyszek <ediap@users.sourceforge.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 01 09:59:02 2008
+X-From: git-owner@vger.kernel.org Fri Feb 01 10:11:21 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKrjc-00060x-6b
-	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 09:58:56 +0100
+	id 1JKrvc-00013I-Sg
+	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 10:11:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752275AbYBAI6Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2008 03:58:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750918AbYBAI6Y
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 03:58:24 -0500
-Received: from mail.op5.se ([193.201.96.20]:58434 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751024AbYBAI6W (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2008 03:58:22 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 67CB51F0801E;
-	Fri,  1 Feb 2008 09:58:21 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.321
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.321 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=-0.078, BAYES_00=-2.599,
-	SUBJECT_FUZZY_TION=0.156]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id GK5IVQqRcGpX; Fri,  1 Feb 2008 09:58:18 +0100 (CET)
-Received: from clix.int.op5.se (unknown [192.168.1.155])
-	by mail.op5.se (Postfix) with ESMTP id 3951B1F0801D;
-	Fri,  1 Feb 2008 09:58:13 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
-In-Reply-To: <7vr6fxbr5a.fsf@gitster.siamese.dyndns.org>
+	id S1753673AbYBAJKg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2008 04:10:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751106AbYBAJKf
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 04:10:35 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:10669 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752162AbYBAJKc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2008 04:10:32 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 3FA831475CE1;
+	Fri,  1 Feb 2008 10:10:30 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bKzppdwk+76J; Fri,  1 Feb 2008 10:10:29 +0100 (CET)
+Received: from [10.9.0.4] (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id 5152580266C;
+	Fri,  1 Feb 2008 10:10:29 +0100 (CET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
+In-Reply-To: <7vabmlb0y0.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72159>
 
-Junio C Hamano wrote:
-> "pradeep singh rautela" <rautelap@gmail.com> writes:
+fredagen den 1 februari 2008 skrev Junio C Hamano:
+> Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
 > 
->> How about something like,
->>                   warning("Ignoring ignore entry because of trailing
->> slash: %s\n Remove the trailing slash from the directory name to
->> ignore it", string);
->> May be this will help absolute git newbies.
-> 
-> I am afraid that this is leading us in the wrong direction.
-> 
-> What would be the first reaction if somebody sees such a
-> message?
-> 
->     The message implies that the user said "foo/" which would be
->     ignored and the right substitution is "foo".  If that is the
->     right substitution, why doesn't the stupid "git" program do
->     that for the user automatically?!?!?!?!
-> 
-> See?
-> 
-> "Remove the trailing" suggestion assumes that we would want "foo/"
-> and "foo" to mean the same thing.
-> 
-> Maybe we do, but we usually match both directory "foo/" and
-> regular file "foo" when you say "foo", and we match only
-> directory "foo/" when you say "foo/", as you saw in the ls-files
-> example.
-> 
-> While I am not 100% convinced that we want to keep the
-> distinction between these two forms, I am far from thinking that
-> the existing distinction in other parts of the system is useless
-> and should be removed.
-> 
-> Maybe we would want to drop this distinction in the gitignore
-> entries, and the apparent inconsistency may not hurt in reality.
-> If that is what we would want, that is fine, but then we
-> shouldn't give a warning with a stupid piece of advice, but
-> instead just do it ourselves.
-> 
-> Like this on top of 'master' (i.e. discarding all the previous
-> patches), perhaps...
-> 
-> -- >8 --
-> [PATCH] gitignore(5): Allow "foo/" in ignore list to match directory "foo"
-> 
-> A pattern "foo/" in the exclude list did not match directory
-> "foo", but a pattern "foo" did.  This just strips the trailing
-> slash from such input.
-> 
-> This makes the behaviour slightly inconsistent with that of
-> pathspecs, where "foo/" only matches directory "foo" and not
-> regular file "foo" and make "foo/" in the ignore list match
-> regular file "foo" happily.  This may hopefully does not matter
-> in practice.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/gitignore.txt        |    3 +++
->  dir.c                              |   22 ++++++++++++++++++----
->  t/t3001-ls-files-others-exclude.sh |   26 ++++++++++++++++++++++++++
->  3 files changed, 47 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-> index 08373f5..081a4df 100644
-> --- a/Documentation/gitignore.txt
-> +++ b/Documentation/gitignore.txt
-> @@ -57,6 +57,9 @@ Patterns have the following format:
->     included again.  If a negated pattern matches, this will
->     override lower precedence patterns sources.
->  
-> + - If the pattern ends with a slash,
+> > +test_expect_failure 'add a directory outside the work tree' '
+> > +	d1="$(cd .. ; pwd)" &&
+> > +	git add "$d1"
+> > +	echo $?
+> > +'
+Oops. Remove the echo $?. It still fails, i.e. git add succeeds when
+it shouldn't. I was double checking it just before sending the patch.
 
-that slash
+> > +test_expect_failure 'add a file outside the work tree, nasty case 1' '(
+> > +	f="$(pwd)x" &&
+> > +	touch "$f" &&
+> > +	git add "$f"
+> > +)'
+> 
+> You are in the directory "t/trash", and try to add t/trashx, so
+> this should fail and you would want to make sure it fails.
+> 
+> But this has a few problems:
+> 
+>  * First, the obvious one.  You are creating a garbage file
+>    outside of t/trash directory.  Don't.  If you need to, dig a
+>    test directory one level lower inside t/trash and play around
+>    there.
+Can we move the default trash one level down for all tests? That
+would give us one free level to play with.
 
-> is removed for the
-> +   purpose of the following description.
-> +
->   - If the pattern does not contain a slash '/', git treats it as
->     a shell glob pattern and checks for a match against the
->     pathname without leading directories.
+>  * In general you should stay away from test_expect_failure.  If
+I respect that.
+[...]
+> I'd like to make the _first_ patch after 1.5.4 to be a fix-up
+> for tests that misuse test_expect_failure.  After that, we can
+> use test_expect_failure to mark tests that ought to pass but
+> don't because of bugs in the commands.  That way, people who are
+> absolutely bored can grep for test_expect_failure to see what
+> existing issues to tackle ;-).
 
-Otherwise it sounds as if the entire pattern is removed.
+If I recall things properly there are lots of test that test for success
+rather than checking that the command does what it should.
 
+Update follows.
+
+-- robin
+
+>From 11a52821ca81096987f53c29bf1b9ce373fe7fd4 Mon Sep 17 00:00:00 2001
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Date: Fri, 1 Feb 2008 05:29:38 +0100
+Subject: [PATCH] More test cases for sanitized path names
+
+Verify a few more commands and pathname variants.
+
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ t/t7010-setup.sh |   42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 42 insertions(+), 0 deletions(-)
+
+diff --git a/t/t7010-setup.sh b/t/t7010-setup.sh
+index da20ba5..ef30099 100755
+--- a/t/t7010-setup.sh
++++ b/t/t7010-setup.sh
+@@ -4,6 +4,10 @@ test_description='setup taking and sanitizing funny paths'
+ 
+ . ./test-lib.sh
+ 
++rm -rf .git
++test_create_repo repo
++cd repo
++
+ test_expect_success setup '
+ 
+ 	mkdir -p a/b/c a/e &&
+@@ -114,4 +118,42 @@ test_expect_success 'git ls-files (relative #3)' '
+ 
+ '
+ 
++test_expect_success 'commit using absolute path names' '
++	git commit -m "foo" &&
++	echo aa >>a/b/c/d &&
++	git commit -m "aa" "$(pwd)/a/b/c/d"
++'
++
++test_expect_success 'log using absolute path names' '
++	echo bb >>a/b/c/d &&
++	git commit -m "bb" $(pwd)/a/b/c/d &&
++
++	git log a/b/c/d >f1.txt &&
++	git log "$(pwd)/a/b/c/d" >f2.txt &&
++	diff -u f1.txt f2.txt
++'
++
++test_expect_success 'blame using absolute path names' '
++	git blame a/b/c/d >f1.txt &&
++	git blame "$(pwd)/a/b/c/d" >f2.txt &&
++	diff -u f1.txt f2.txt
++'
++
++test_expect_success 'add a directory outside the work tree' '
++	d1="$(cd .. ; pwd)" &&
++	! git add "$d1"
++'
++
++test_expect_success 'add a file outside the work tree, nasty case 1' '(
++	f="$(pwd)x" &&
++	touch "$f" &&
++	! git add "$f"
++)'
++
++test_expect_success 'add a file outside the work tree, nasty case 2' '(
++	f="$(pwd|sed "s/.$//")x" &&
++	touch "$f" &&
++	! git add "$f"
++)'
++
+ test_done
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.5.4.rc4.25.g81cc
