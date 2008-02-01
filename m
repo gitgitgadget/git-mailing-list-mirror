@@ -1,69 +1,65 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: simple cvs-like git wrapper
-Date: Fri, 1 Feb 2008 08:29:35 +0100
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20080201072935.GA941@informatik.uni-freiburg.de>
-References: <20080129204048.GA9612@venus> <m3hcgw8dz7.fsf@localhost.localdomain>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH 3/3] It's possible to edit unapplied patches now
+Date: Fri, 01 Feb 2008 08:50:57 +0100
+Message-ID: <20080201075041.7905.78693.stgit@yoghurt>
+References: <20080201074708.7905.98305.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Ed S. Peschko" <esp5@pge.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 01 09:20:52 2008
+Cc: git@vger.kernel.org,
+	David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 01 09:23:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKr8m-0004XN-A8
-	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 09:20:52 +0100
+	id 1JKrBc-0005El-Iv
+	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 09:23:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753202AbYBAIUO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Feb 2008 03:20:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752202AbYBAIUN
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 03:20:13 -0500
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:46724 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752162AbYBAIUM (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2008 03:20:12 -0500
-X-Greylist: delayed 3023 seconds by postgrey-1.27 at vger.kernel.org; Fri, 01 Feb 2008 03:20:11 EST
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1JKqLL-0007Pj-He; Fri, 01 Feb 2008 08:29:47 +0100
-Received: from zeisberg by login.informatik.uni-freiburg.de with local (Exim 4.63)
-	(envelope-from <zeisberg@login.informatik.uni-freiburg.de>)
-	id 1JKqL9-0000Pz-9e; Fri, 01 Feb 2008 08:29:35 +0100
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Jakub Narebski <jnareb@gmail.com>, "Ed S. Peschko" <esp5@pge.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <m3hcgw8dz7.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755426AbYBAIXG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Feb 2008 03:23:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752412AbYBAIXG
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 03:23:06 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3635 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755415AbYBAIXD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2008 03:23:03 -0500
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1JKqfn-0008Jd-00; Fri, 01 Feb 2008 07:50:55 +0000
+In-Reply-To: <20080201074708.7905.98305.stgit@yoghurt>
+User-Agent: StGIT/0.14.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72156>
 
-Hello,
+With the rewrite, "stg edit" gained the ability to edit unapplied
+patches, so the emacs mode no longer has to check that a patch is
+applied before trying to edit it.
 
-> Footonotes:
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> [*1*] I'd like to point to LKML post about creating perfect patch
-> *series*, but I have forgot to bookmark it, and canot find it again
-> (IIRC somebody posted link some time ago here on git mailing list).
-I remember:
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
-	http://groups.google.com/group/linux.kernel/browse_thread/thread/26f12=
-47fd4a2acbf/ac9743b603e53bae?lnk=3Dgst&q=3Dperfect+patch#ac9743b603e53b=
-ae
+---
 
-=2E  Do you mean that?
+ contrib/stgit.el |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
 
-Best regards
-Uwe
 
---=20
-Uwe Kleine-K=F6nig
+diff --git a/contrib/stgit.el b/contrib/stgit.el
+index e8bbb2c..bef41c7 100644
+--- a/contrib/stgit.el
++++ b/contrib/stgit.el
+@@ -290,9 +290,7 @@ Commands:
+ (defun stgit-edit ()
+   "Edit the patch on the current line"
+   (interactive)
+-  (let ((patch (if (stgit-applied-at-point)
+-                   (stgit-patch-at-point)
+-                 (error "This patch is not applied")))
++  (let ((patch (stgit-patch-at-point))
+         (edit-buf (get-buffer-create "*StGit edit*"))
+         (dir default-directory))
+     (log-edit 'stgit-confirm-edit t nil edit-buf)
