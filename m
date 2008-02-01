@@ -1,439 +1,144 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 2/3] Convert "stg edit" to the new infrastructure
-Date: Fri, 01 Feb 2008 08:50:27 +0100
-Message-ID: <20080201075017.7905.41241.stgit@yoghurt>
-References: <20080201074708.7905.98305.stgit@yoghurt>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] gitignore(5): Allow "foo/" in ignore list to match directory
+ "foo"
+Date: Fri, 01 Feb 2008 09:56:43 +0100
+Message-ID: <47A2DECB.5040007@op5.se>
+References: <6bc632150801230554l3b24e1e4lb4641bf7c16857c0@mail.gmail.com>	<47A06EF9.60704@users.sourceforge.net>	<7vprvjgi9v.fsf@gitster.siamese.dyndns.org>	<47A1733E.9040103@users.sourceforge.net>	<7vhcgue5nr.fsf_-_@gitster.siamese.dyndns.org>	<7v63xae4lf.fsf_-_@gitster.siamese.dyndns.org>	<20080131094124.GA25546@coredump.intra.peff.net>	<7vfxwecmfe.fsf@gitster.siamese.dyndns.org>	<20080131104256.GF25546@coredump.intra.peff.net>	<alpine.LSU.1.00.0801311128190.23907@racer.site>	<6bc632150801310356w1b2fa019n87d92986aed807c5@mail.gmail.com> <7vr6fxbr5a.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 01 09:23:51 2008
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: pradeep singh rautela <rautelap@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jeff King <peff@peff.net>,
+	Adam Piatyszek <ediap@users.sourceforge.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 01 09:59:02 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKrBd-0005El-7O
-	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 09:23:50 +0100
+	id 1JKrjc-00060x-6b
+	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 09:58:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755425AbYBAIXK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Feb 2008 03:23:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752412AbYBAIXJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 03:23:09 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3636 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751143AbYBAIXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2008 03:23:06 -0500
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1JKqfJ-0008JJ-00; Fri, 01 Feb 2008 07:50:25 +0000
-In-Reply-To: <20080201074708.7905.98305.stgit@yoghurt>
-User-Agent: StGIT/0.14.1
+	id S1752275AbYBAI6Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2008 03:58:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750918AbYBAI6Y
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 03:58:24 -0500
+Received: from mail.op5.se ([193.201.96.20]:58434 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751024AbYBAI6W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2008 03:58:22 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 67CB51F0801E;
+	Fri,  1 Feb 2008 09:58:21 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.321
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.321 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, AWL=-0.078, BAYES_00=-2.599,
+	SUBJECT_FUZZY_TION=0.156]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id GK5IVQqRcGpX; Fri,  1 Feb 2008 09:58:18 +0100 (CET)
+Received: from clix.int.op5.se (unknown [192.168.1.155])
+	by mail.op5.se (Postfix) with ESMTP id 3951B1F0801D;
+	Fri,  1 Feb 2008 09:58:13 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.9 (X11/20071115)
+In-Reply-To: <7vr6fxbr5a.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72158>
 
-The --annotate and --undo switches were dropped in the conversion.
---annotate could be re-added, but --undo is more problematic since the
-command will now rewrite any applied patches on top of the edited
-patch. It seems best to leave this job to the fabled general undo
-command, expected Real Soon Now.
+Junio C Hamano wrote:
+> "pradeep singh rautela" <rautelap@gmail.com> writes:
+> 
+>> How about something like,
+>>                   warning("Ignoring ignore entry because of trailing
+>> slash: %s\n Remove the trailing slash from the directory name to
+>> ignore it", string);
+>> May be this will help absolute git newbies.
+> 
+> I am afraid that this is leading us in the wrong direction.
+> 
+> What would be the first reaction if somebody sees such a
+> message?
+> 
+>     The message implies that the user said "foo/" which would be
+>     ignored and the right substitution is "foo".  If that is the
+>     right substitution, why doesn't the stupid "git" program do
+>     that for the user automatically?!?!?!?!
+> 
+> See?
+> 
+> "Remove the trailing" suggestion assumes that we would want "foo/"
+> and "foo" to mean the same thing.
+> 
+> Maybe we do, but we usually match both directory "foo/" and
+> regular file "foo" when you say "foo", and we match only
+> directory "foo/" when you say "foo/", as you saw in the ls-files
+> example.
+> 
+> While I am not 100% convinced that we want to keep the
+> distinction between these two forms, I am far from thinking that
+> the existing distinction in other parts of the system is useless
+> and should be removed.
+> 
+> Maybe we would want to drop this distinction in the gitignore
+> entries, and the apparent inconsistency may not hurt in reality.
+> If that is what we would want, that is fine, but then we
+> shouldn't give a warning with a stupid piece of advice, but
+> instead just do it ourselves.
+> 
+> Like this on top of 'master' (i.e. discarding all the previous
+> patches), perhaps...
+> 
+> -- >8 --
+> [PATCH] gitignore(5): Allow "foo/" in ignore list to match directory "foo"
+> 
+> A pattern "foo/" in the exclude list did not match directory
+> "foo", but a pattern "foo" did.  This just strips the trailing
+> slash from such input.
+> 
+> This makes the behaviour slightly inconsistent with that of
+> pathspecs, where "foo/" only matches directory "foo" and not
+> regular file "foo" and make "foo/" in the ignore list match
+> regular file "foo" happily.  This may hopefully does not matter
+> in practice.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/gitignore.txt        |    3 +++
+>  dir.c                              |   22 ++++++++++++++++++----
+>  t/t3001-ls-files-others-exclude.sh |   26 ++++++++++++++++++++++++++
+>  3 files changed, 47 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+> index 08373f5..081a4df 100644
+> --- a/Documentation/gitignore.txt
+> +++ b/Documentation/gitignore.txt
+> @@ -57,6 +57,9 @@ Patterns have the following format:
+>     included again.  If a negated pattern matches, this will
+>     override lower precedence patterns sources.
+>  
+> + - If the pattern ends with a slash,
 
-In addition to the usual improvements from the new infrastructure,
-this patch has some additional benefits:
+that slash
 
-  * There's a new -e/--edit flag, which forces interactive editing
-    even if options such as --sign or --author are given. (Normally,
-    interactive editing is skipped if the patch is modified with a
-    commandline option.)
+> is removed for the
+> +   purpose of the following description.
+> +
+>   - If the pattern does not contain a slash '/', git treats it as
+>     a shell glob pattern and checks for a match against the
+>     pathname without leading directories.
 
-  * It's now possible to edit any patch, including unapplied patches.
-    Even diff editing works for all patches, including unapplied
-    patches. (In fact, editing unapplied patches is slightly safer,
-    since they don't mind a dirty index/worktree.)
+Otherwise it sounds as if the entire pattern is removed.
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
-
----
-
- stgit/commands/edit.py |  309 ++++++++++++++++++++++------------------=
---------
- 1 files changed, 142 insertions(+), 167 deletions(-)
-
-
-diff --git a/stgit/commands/edit.py b/stgit/commands/edit.py
-index 9915e49..7daf156 100644
---- a/stgit/commands/edit.py
-+++ b/stgit/commands/edit.py
-@@ -18,14 +18,12 @@ along with this program; if not, write to the Free =
-Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 US=
-A
- """
-=20
--from optparse import OptionParser, make_option
--from email.Utils import formatdate
-+from optparse import make_option
-=20
--from stgit.commands.common import *
--from stgit.utils import *
-+from stgit import git, utils
-+from stgit.commands import common
-+from stgit.lib import git as gitlib, transaction
- from stgit.out import *
--from stgit import stack, git
--
-=20
- help =3D 'edit a patch description or diff'
- usage =3D """%prog [options] [<patch>]
-@@ -49,23 +47,19 @@ separator:
-   Diff text
-=20
- Command-line options can be used to modify specific information
--without invoking the editor.
-+without invoking the editor. (With the --edit option, the editor is
-+invoked even if such command-line options are given.)
-=20
--If the patch diff is edited but the patch application fails, the
--rejected patch is stored in the .stgit-failed.patch file (and also in
--.stgit-edit.{diff,txt}). The edited patch can be replaced with one of
--these files using the '--file' and '--diff' options.
--"""
-+If the patch diff is edited but does not apply, no changes are made to
-+the patch at all. The edited patch is saved to a file which you can
-+feed to "stg edit --file", once you have made sure it does apply."""
-=20
--directory =3D DirectoryGotoToplevel()
-+directory =3D common.DirectoryHasRepositoryLib()
- options =3D [make_option('-d', '--diff',
-                        help =3D 'edit the patch diff',
-                        action =3D 'store_true'),
--           make_option('--undo',
--                       help =3D 'revert the commit generated by the la=
-st edit',
--                       action =3D 'store_true'),
--           make_option('-a', '--annotate', metavar =3D 'NOTE',
--                       help =3D 'annotate the patch log entry'),
-+           make_option('-e', '--edit', action =3D 'store_true',
-+                       help =3D 'invoke interactive editor'),
-            make_option('--author', metavar =3D '"NAME <EMAIL>"',
-                        help =3D 'replae the author details with "NAME =
-<EMAIL>"'),
-            make_option('--authname',
-@@ -78,162 +72,143 @@ options =3D [make_option('-d', '--diff',
-                        help =3D 'replace the committer name with COMMN=
-AME'),
-            make_option('--commemail',
-                        help =3D 'replace the committer e-mail with COM=
-MEMAIL')
--           ] + (make_sign_options() + make_message_options()
--                + make_diff_opts_option())
--
--def __update_patch(pname, text, options):
--    """Update the current patch from the given text.
--    """
--    patch =3D crt_series.get_patch(pname)
--
--    bottom =3D patch.get_bottom()
--    top =3D patch.get_top()
--
--    if text:
--        (message, author_name, author_email, author_date, diff
--         ) =3D parse_patch(text)
--    else:
--        message =3D author_name =3D author_email =3D author_date =3D d=
-iff =3D None
--
--    out.start('Updating patch "%s"' % pname)
--
--    if options.diff:
--        git.switch(bottom)
--        try:
--            git.apply_patch(diff =3D diff)
--        except:
--            # avoid inconsistent repository state
--            git.switch(top)
--            raise
--
--    def c(a, b):
--        if a !=3D None:
--            return a
--        return b
--    crt_series.refresh_patch(message =3D message,
--                             author_name =3D c(options.authname, autho=
-r_name),
--                             author_email =3D c(options.authemail, aut=
-hor_email),
--                             author_date =3D c(options.authdate, autho=
-r_date),
--                             committer_name =3D options.commname,
--                             committer_email =3D options.commemail,
--                             backup =3D True, sign_str =3D options.sig=
-n_str,
--                             log =3D 'edit', notes =3D options.annotat=
-e)
--
--    if crt_series.empty_patch(pname):
--        out.done('empty patch')
--    else:
--        out.done()
--
--def __generate_file(pname, write_fn, options):
--    """Generate a file containing the description to edit
--    """
--    patch =3D crt_series.get_patch(pname)
--
--    # generate the file to be edited
--    descr =3D patch.get_description().strip()
--    authdate =3D patch.get_authdate()
--
--    tmpl =3D 'From: %(authname)s <%(authemail)s>\n'
--    if authdate:
--        tmpl +=3D 'Date: %(authdate)s\n'
--    tmpl +=3D '\n%(descr)s\n'
--
--    tmpl_dict =3D {
--        'descr': descr,
--        'authname': patch.get_authname(),
--        'authemail': patch.get_authemail(),
--        'authdate': patch.get_authdate()
--        }
--
--    if options.diff:
--        # add the patch diff to the edited file
--        bottom =3D patch.get_bottom()
--        top =3D patch.get_top()
-+           ] + (utils.make_sign_options() + utils.make_message_options=
-()
-+                + utils.make_diff_opts_option())
-=20
--        tmpl +=3D '---\n\n' \
--                '%(diffstat)s\n' \
--                '%(diff)s'
--
--        tmpl_dict['diff'] =3D git.diff(rev1 =3D bottom, rev2 =3D top,
--                                     diff_flags =3D options.diff_flags=
-)
--        tmpl_dict['diffstat'] =3D git.diffstat(tmpl_dict['diff'])
--
--    for key in tmpl_dict:
--        # make empty strings if key is not available
--        if tmpl_dict[key] is None:
--            tmpl_dict[key] =3D ''
--
--    text =3D tmpl % tmpl_dict
--
--    # write the file to be edited
--    write_fn(text)
--
--def __edit_update_patch(pname, options):
--    """Edit the given patch interactively.
--    """
--    if options.diff:
--        fname =3D '.stgit-edit.diff'
-+def patch_diff(repository, cd, diff, diff_flags):
-+    if diff:
-+        diff =3D repository.diff_tree(cd.parent.data.tree, cd.tree, di=
-ff_flags)
-+        return '\n'.join([git.diffstat(diff), diff])
-     else:
--        fname =3D '.stgit-edit.txt'
--    def write_fn(text):
--        f =3D file(fname, 'w')
--        f.write(text)
--        f.close()
--
--    __generate_file(pname, write_fn, options)
--
--    # invoke the editor
--    call_editor(fname)
--
--    __update_patch(pname, file(fname).read(), options)
-+        return None
-+
-+def patch_description(cd, diff):
-+    """Generate a string containing the description to edit."""
-+
-+    desc =3D ['From: %s <%s>' % (cd.author.name, cd.author.email),
-+            'Date: %s' % cd.author.date.isoformat(),
-+            '',
-+            cd.message]
-+    if diff:
-+        desc +=3D ['---',
-+                 '',
-+                diff]
-+    return '\n'.join(desc)
-+
-+def patch_desc(repository, cd, failed_diff, diff, diff_flags):
-+    return patch_description(cd, failed_diff or patch_diff(
-+            repository, cd, diff, diff_flags))
-+
-+def update_patch_description(repository, cd, text):
-+    message, authname, authemail, authdate, diff =3D common.parse_patc=
-h(text)
-+    cd =3D (cd.set_message(message)
-+            .set_author(cd.author.set_name(authname)
-+                                 .set_email(authemail)
-+                                 .set_date(gitlib.Date.maybe(authdate)=
-)))
-+    failed_diff =3D None
-+    if diff:
-+        tree =3D repository.apply(cd.parent.data.tree, diff)
-+        if tree =3D=3D None:
-+            failed_diff =3D diff
-+        else:
-+            cd =3D cd.set_tree(tree)
-+    return cd, failed_diff
-=20
- def func(parser, options, args):
-     """Edit the given patch or the current one.
-     """
--    crt_pname =3D crt_series.get_current()
-+    stack =3D directory.repository.current_stack
-=20
--    if not args:
--        pname =3D crt_pname
--        if not pname:
--            raise CmdException, 'No patches applied'
-+    if len(args) =3D=3D 0:
-+        if not stack.patchorder.applied:
-+            raise common.CmdException(
-+                'Cannot edit top patch, because no patches are applied=
-')
-+        patchname =3D stack.patchorder.applied[-1]
-     elif len(args) =3D=3D 1:
--        pname =3D args[0]
--        if crt_series.patch_unapplied(pname) or crt_series.patch_hidde=
-n(pname):
--            raise CmdException, 'Cannot edit unapplied or hidden patch=
-es'
--        elif not crt_series.patch_applied(pname):
--            raise CmdException, 'Unknown patch "%s"' % pname
-+        [patchname] =3D args
-+        if not stack.patches.exists(patchname):
-+            raise common.CmdException('%s: no such patch' % patchname)
-     else:
--        parser.error('incorrect number of arguments')
--
--    check_local_changes()
--    check_conflicts()
--    check_head_top_equal(crt_series)
--
--    if pname !=3D crt_pname:
--        # Go to the patch to be edited
--        applied =3D crt_series.get_applied()
--        between =3D applied[:applied.index(pname):-1]
--        pop_patches(crt_series, between)
--
--    if options.author:
--        options.authname, options.authemail =3D name_email(options.aut=
-hor)
--
--    if options.undo:
--        out.start('Undoing the editing of "%s"' % pname)
--        crt_series.undo_refresh()
--        out.done()
--    elif options.save_template:
--        __generate_file(pname, options.save_template, options)
--    elif any([options.message, options.authname, options.authemail,
--              options.authdate, options.commname, options.commemail,
--              options.sign_str]):
--        out.start('Updating patch "%s"' % pname)
--        __update_patch(pname, options.message, options)
--        out.done()
--    else:
--        __edit_update_patch(pname, options)
-+        parser.error('Cannot edit more than one patch')
-+
-+    cd =3D orig_cd =3D stack.patches.get(patchname).commit.data
-=20
--    if pname !=3D crt_pname:
--        # Push the patches back
--        between.reverse()
--        push_patches(crt_series, between)
-+    # Read patch from user-provided description.
-+    if options.message =3D=3D None:
-+        failed_diff =3D None
-+    else:
-+        cd, failed_diff =3D update_patch_description(stack.repository,=
- cd,
-+                                                   options.message)
-+
-+    # Modify author and committer data.
-+    if options.author !=3D None:
-+        options.authname, options.authemail =3D common.name_email(opti=
-ons.author)
-+    for p, f, val in [('author', 'name', options.authname),
-+                      ('author', 'email', options.authemail),
-+                      ('author', 'date', gitlib.Date.maybe(options.aut=
-hdate)),
-+                      ('committer', 'name', options.commname),
-+                      ('committer', 'email', options.commemail)]:
-+        if val !=3D None:
-+            cd =3D getattr(cd, 'set_' + p)(
-+                getattr(getattr(cd, p), 'set_' + f)(val))
-+
-+    # Add Signed-off-by: or similar.
-+    if options.sign_str !=3D None:
-+        cd =3D cd.set_message(utils.add_sign_line(
-+                cd.message, options.sign_str, gitlib.Person.committer(=
-).name,
-+                gitlib.Person.committer().email))
-+
-+    if options.save_template:
-+        options.save_template(
-+            patch_desc(stack.repository, cd, failed_diff,
-+                       options.diff, options.diff_flags))
-+        return utils.STGIT_SUCCESS
-+
-+    # Let user edit the patch manually.
-+    if cd =3D=3D orig_cd or options.edit:
-+        fn =3D '.stgit-edit.' + ['txt', 'patch'][bool(options.diff)]
-+        cd, failed_diff =3D update_patch_description(
-+            stack.repository, cd, utils.edit_string(
-+                patch_desc(stack.repository, cd, failed_diff,
-+                           options.diff, options.diff_flags),
-+                fn))
-+
-+    def failed():
-+        fn =3D '.stgit-failed.patch'
-+        f =3D file(fn, 'w')
-+        f.write(patch_desc(stack.repository, cd, failed_diff,
-+                           options.diff, options.diff_flags))
-+        f.close()
-+        out.error('Edited patch did not apply.',
-+                  'It has been saved to "%s".' % fn)
-+        return utils.STGIT_COMMAND_ERROR
-+
-+    # If we couldn't apply the patch, fail without even trying to
-+    # effect any of the changes.
-+    if failed_diff:
-+        return failed()
-+
-+    # The patch applied, so now we have to rewrite the StGit patch
-+    # (and any patches on top of it).
-+    iw =3D stack.repository.default_iw
-+    trans =3D transaction.StackTransaction(stack, 'stg edit')
-+    if patchname in trans.applied:
-+        popped =3D trans.applied[trans.applied.index(patchname)+1:]
-+        assert not trans.pop_patches(lambda pn: pn in popped)
-+    else:
-+        popped =3D []
-+    trans.patches[patchname] =3D stack.repository.commit(cd)
-+    try:
-+        for pn in popped:
-+            trans.push_patch(pn, iw)
-+    except transaction.TransactionHalted:
-+        pass
-+    try:
-+        # Either a complete success, or a conflict during push. But in
-+        # either case, we've successfully effected the edits the user
-+        # asked us for.
-+        return trans.run(iw)
-+    except transaction.TransactionException:
-+        # Transaction aborted -- we couldn't check out files due to
-+        # dirty index/worktree. The edits were not carried out.
-+        return failed()
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
