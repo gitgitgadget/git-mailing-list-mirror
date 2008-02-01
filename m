@@ -1,65 +1,197 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH] Added sub get_owner_file which checks if there's a file with project owner name
-Date: Fri, 1 Feb 2008 20:10:39 +0100
-Message-ID: <200802012010.40739.robin.rosenberg.lists@dewire.com>
-References: <1201577766-11601-1-git-send-email-ribas@c3sl.ufpr.br> <200802011418.59862.jnareb@gmail.com> <47A3449E.6070102@iksz.hu>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH] --format=pretty: new modifiers cID, cIS, CIY
+Date: Sat, 02 Feb 2008 00:12:53 +0200
+Organization: Private
+Message-ID: <odb072ca.fsf@blue.sea.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Bruno Cesar Ribas <ribas@c3sl.ufpr.br>, git@vger.kernel.org
-To: Nagy =?utf-8?q?Bal=C3=A1zs?= <js@iksz.hu>
-X-From: git-owner@vger.kernel.org Fri Feb 01 21:01:05 2008
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 01 23:14:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JL24O-0000OP-3e
-	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 21:01:04 +0100
+	id 1JL49B-0001dR-Ei
+	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 23:14:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754894AbYBAUAb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Feb 2008 15:00:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755335AbYBAUAb
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 15:00:31 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:16624 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1754335AbYBAUAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2008 15:00:30 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 16350802868;
-	Fri,  1 Feb 2008 21:00:29 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id u53R4mLGhCyc; Fri,  1 Feb 2008 21:00:27 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id D623A802662;
-	Fri,  1 Feb 2008 21:00:27 +0100 (CET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-In-Reply-To: <47A3449E.6070102@iksz.hu>
-Content-Disposition: inline
+	id S1753933AbYBAWNi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2008 17:13:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753780AbYBAWNi
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 17:13:38 -0500
+Received: from main.gmane.org ([80.91.229.2]:53611 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753708AbYBAWNg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2008 17:13:36 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JL48b-0007vq-8y
+	for git@vger.kernel.org; Fri, 01 Feb 2008 22:13:33 +0000
+Received: from a91-155-183-103.elisa-laajakaista.fi ([91.155.183.103])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Feb 2008 22:13:33 +0000
+Received: from jari.aalto by a91-155-183-103.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Feb 2008 22:13:33 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-183-103.elisa-laajakaista.fi
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
+Cancel-Lock: sha1:Kk7h+XFP6/Bpbms+5qoyFAI6I0U=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72184>
 
-fredagen den 1 februari 2008 skrev Nagy Bal=C3=A1zs:
-> Well, I came from ClearCase world, were registry service holds all=20
-> vob/view (repo) stuff.  What if we implement more or less the same=20
-> here?  I mean if you have a lot of public git repos, or at least comm=
-on=20
-> for a couple of people, we could store all the fundamental data (loca=
-l=20
-> storage path, share URL) of a group of repos in a single database.  W=
-e=20
-> could call them depots.  Moreover, we could use this as the source of=
-=20
-> git clone, God forbid, even remotely (some kind of git config=20
-> depot.url=3Dhttps://user:pass@git.example.org/depot.cgi/depotname).  =
-I=20
-> could continue but I'm afraid I'll run out of oxygen :)
+The default ISO 8601 modifier %ci is quite verbose displaying
+everything up to the timezone. This consumes considerable amount of
+characters.  The new modifiers offer way to display just the needed
+amount of information, down to:
 
-I'll fill in: LDAP.
+	%cID	date: YYYY-MM-DD
+	%cIH	hour: YYYY-MM-DD HH:MM
+	%cIS	second: YYYY-MM-DD HH:MM:SS
 
--- robin
+Signed-off-by: Jari Aalto <jari.aalto AT cante.net>
+---
+ Documentation/pretty-formats.txt |    5 ++++-
+ cache.h                          |    3 +++
+ date.c                           |   17 +++++++++++++++++
+ pretty.c                         |   35 ++++++++++++++++++++++++++++++-----
+ 4 files changed, 54 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 0193c3c..cb1bbac 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -113,7 +113,10 @@ The placeholders are:
+ - '%cD': committer date, RFC2822 style
+ - '%cr': committer date, relative
+ - '%ct': committer date, UNIX timestamp
+-- '%ci': committer date, ISO 8601 format
++- '%ci': committer date, ISO 8601 format, long YYYY-MM-DD HH:MM:SS TZ
++- '%cIM': committer date, ISO 8601 format, short YYYY-MM-DD HH:MM
++- '%cIS': committer date, ISO 8601 format, short YYYY-MM-DD HH:MM:SS
++- '%cID': committer date, ISO 8601 format, short YYYY-MM-DD
+ - '%e': encoding
+ - '%s': subject
+ - '%b': body
+diff --git a/cache.h b/cache.h
+index 549f4bb..1fae94a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -444,6 +444,9 @@ enum date_mode {
+ 	DATE_SHORT,
+ 	DATE_LOCAL,
+ 	DATE_ISO8601,
++	DATE_ISO8601_YYYYMMDD,
++	DATE_ISO8601_YYYYMMDDHHMM,
++	DATE_ISO8601_YYYYMMDDHHMMSS,
+ 	DATE_RFC2822
+ };
+ 
+diff --git a/date.c b/date.c
+index 8f70500..ded9caa 100644
+--- a/date.c
++++ b/date.c
+@@ -144,6 +144,23 @@ const char *show_date(unsigned long time, int tz, enum date_mode mode)
+ 				tm->tm_mday,
+ 				tm->tm_hour, tm->tm_min, tm->tm_sec,
+ 				tz);
++	else if (mode == DATE_ISO8601_YYYYMMDD)
++		sprintf(timebuf, "%04d-%02d-%02d",
++				tm->tm_year + 1900,
++				tm->tm_mon + 1,
++				tm->tm_mday);
++	else if (mode == DATE_ISO8601_YYYYMMDDHHMM)
++		sprintf(timebuf, "%04d-%02d-%02d %02d:%02d",
++				tm->tm_year + 1900,
++				tm->tm_mon + 1,
++				tm->tm_mday,
++				tm->tm_hour, tm->tm_min);
++	else if (mode == DATE_ISO8601_YYYYMMDDHHMMSS)
++		sprintf(timebuf, "%04d-%02d-%02d %02d:%02d:%02d",
++				tm->tm_year + 1900,
++				tm->tm_mon + 1,
++				tm->tm_mday,
++				tm->tm_hour, tm->tm_min, tm->tm_sec);
+ 	else if (mode == DATE_RFC2822)
+ 		sprintf(timebuf, "%.3s, %d %.3s %d %02d:%02d:%02d %+05d",
+ 			weekday_names[tm->tm_wday], tm->tm_mday,
+diff --git a/pretty.c b/pretty.c
+index b987ff2..5a8774b 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -282,9 +282,11 @@ static char *logmsg_reencode(const struct commit *commit,
+ 	return out;
+ }
+ 
+-static void format_person_part(struct strbuf *sb, char part,
+-                               const char *msg, int len)
++static void format_person_part(struct strbuf *sb, char *ptr,
++			       const char *msg, int len)
+ {
++	char part = ptr[0];
++	char next = ptr[1];
+ 	int start, end, tz = 0;
+ 	unsigned long date;
+ 	char *ep;
+@@ -359,6 +361,26 @@ static void format_person_part(struct strbuf *sb, char part,
+ 	case 'i':	/* date, ISO 8601 */
+ 		strbuf_addstr(sb, show_date(date, tz, DATE_ISO8601));
+ 		return;
++	case 'I':	/* date, ISO 8601 + fine grained details */
++		switch (next) {
++		case 'D':	/* up till date */
++			strbuf_addstr(sb,
++					show_date(date, tz,
++						DATE_ISO8601_YYYYMMDD));
++			return;
++		case 'S':	/* up till date + sec */
++			strbuf_addstr(sb,
++					show_date(date, tz,
++						DATE_ISO8601_YYYYMMDDHHMMSS));
++
++			return;
++		default:	/* up till hour */
++			strbuf_addstr(sb,
++					show_date(date, tz,
++						DATE_ISO8601_YYYYMMDDHHMM));
++
++		}
++		return;
+ 	}
+ }
+ 
+@@ -532,11 +554,11 @@ static void format_commit_item(struct strbuf *sb, const char *placeholder,
+ 		strbuf_add(sb, msg + c->subject.off, c->subject.len);
+ 		return;
+ 	case 'a':
+-		format_person_part(sb, placeholder[1],
++		format_person_part(sb, placeholder + 1,
+ 		                   msg + c->author.off, c->author.len);
+ 		return;
+ 	case 'c':
+-		format_person_part(sb, placeholder[1],
++		format_person_part(sb, placeholder + 1,
+ 		                   msg + c->committer.off, c->committer.len);
+ 		return;
+ 	case 'e':
+@@ -571,7 +593,10 @@ void format_commit_message(const struct commit *commit,
+ 		"cD",		/* committer date, RFC2822 style */
+ 		"cr",		/* committer date, relative */
+ 		"ct",		/* committer date, UNIX timestamp */
+-		"ci",		/* committer date, ISO 8601 */
++		"ci",		/* committer date, ISO 8601 full, with TZ */
++		"cID",		/* committer date, ISO 8601 YYYY-MM-DD */
++		"cIM",		/* committer date, ISO 8601 YYYY-MM-DD HH:MM */
++		"cIS",		/* committer date, ISO 8601 YYYY-MM-DD HH:MM:SS*/
+ 		"e",		/* encoding */
+ 		"s",		/* subject */
+ 		"b",		/* body */
+-- 
+1.5.4-rc5.GIT-dirty
+
+
+-- 
+Welcome to FOSS revolution: we fix and modify until it shines
