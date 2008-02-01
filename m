@@ -1,74 +1,141 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: simple cvs-like git wrapper
-Date: Fri, 1 Feb 2008 13:25:07 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802011318590.7372@racer.site>
-References: <20080129204048.GA9612@venus> <m3hcgw8dz7.fsf@localhost.localdomain> <20080130021050.GB9612@venus> <1201871157.D6625E4@ea26.dngr.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Documentation/git-stash.txt: Adjust SYNOPSIS command syntaxes
+Date: Fri, 01 Feb 2008 05:35:01 -0800 (PST)
+Message-ID: <m33asc94xn.fsf@localhost.localdomain>
+References: <7ihp802o.fsf@blue.sea.net> <m37iho9b70.fsf@localhost.localdomain>
+	<1w7w966m.fsf@blue.sea.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Ed S. Peschko" <esp5@pge.com>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Kate Rhodes <masukomi@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 01 14:26:21 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Fri Feb 01 14:35:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JKvuO-0003pQ-HV
-	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 14:26:20 +0100
+	id 1JKw3R-0007FV-4S
+	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 14:35:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757359AbYBANZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2008 08:25:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757019AbYBANZm
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 08:25:42 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60755 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756217AbYBANZk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2008 08:25:40 -0500
-Received: (qmail invoked by alias); 01 Feb 2008 13:25:38 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp006) with SMTP; 01 Feb 2008 14:25:38 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/IXlJfWXXIpsp2bjM3ylACjlZP5wOVNEr4L8KIJG
-	ja0dQhMCspMpdZ
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1201871157.D6625E4@ea26.dngr.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1755371AbYBANfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2008 08:35:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756961AbYBANfI
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 08:35:08 -0500
+Received: from py-out-1112.google.com ([64.233.166.180]:52148 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753038AbYBANfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2008 08:35:04 -0500
+Received: by py-out-1112.google.com with SMTP id u52so1621875pyb.10
+        for <git@vger.kernel.org>; Fri, 01 Feb 2008 05:35:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=Zmce71yYEQfJNKzcEVqxvnOd12Cyw77YnJ8oaVnKVsw=;
+        b=IWbCAb5CyaSaGQfHwJ1GdSnBY+DtgHhHEiRtEoHl/Z6QarStV03mKK4gaCqaUfVCswKe1eVv1viJgGYvuBsfaOTHg8Un9m9uPjBI3cdJCkY0MxdfKDhO0anDf3yfseq9W29JOLwL8fCELebpOFhUXDQz9C1edJS13md68kMaJOM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=jDvOeahnWi3Mu6lP6TcK128cSPp3Y0RK/22tqRadU+sCEvNst31sQ4/MGyiaLrFo5O7dBhBsAAvk2bQSlNQ7wXvpjZgXlqNjQDJdzbcccK3FGhlFNnw8aB1xiMcCYNUA7nZEVVe2ZMelQUAjiO4eIBWCBCDJknUZllCpe/h6dQk=
+Received: by 10.141.69.1 with SMTP id w1mr2482607rvk.147.1201872903330;
+        Fri, 01 Feb 2008 05:35:03 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.248.93])
+        by mx.google.com with ESMTPS id i8sm8623552nfh.1.2008.02.01.05.35.00
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 01 Feb 2008 05:35:01 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m11DYI7m017518;
+	Fri, 1 Feb 2008 14:34:29 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m11DXvRi017510;
+	Fri, 1 Feb 2008 14:33:57 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <1w7w966m.fsf@blue.sea.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72174>
 
-Hi,
+Jari Aalto <jari.aalto@cante.net> writes:
 
-On Fri, 1 Feb 2008, Kate Rhodes wrote:
+> * Fri 2008-02-01 Jakub Narebski <jnareb@gmail.com>
+> * Message-Id: m37iho9b70.fsf@localhost.localdomain
+> >
+> >
+> > 'git-stash' (list | show [<stash>] | apply [<stash>] | clear)
+> > 'git-stash' [save [<message>...]]
+> >
+> > Angle brackets if I understand correctly are meant to denote part
+> > which you have to enter, the user supplied info (the reast ou have to
+> > enter literally).
+> 
+> Nowhere I have seen "(" parenheses to mean "required". 
 
-> I'm leaning towards agreement with Shawn that you're a little confused 
-> as to how syncing works or you're not adequately expressing what you're 
-> really hoping for and why git isn't doing it and we're misunderstanding 
-> you.
+The "(" parentheses does not mean "required". They do mean "group",
+just like for regular expressions. So "A (B | C)" means "A B" or
+"A C".
 
-Well, the thing is: git (plumbing) does not really care about syncing and 
-how that works.  The core of git is "just" a very clever object database, 
-geared towards revision control.
+> The angle brackets are commonly used to tell that the part is to be
+> required:
+> 
+>     command <option> <file ...>
+> 
+> Reads:
+> 
+>     command -l file.txt
 
-So in theory, Ed could just go and write a porcelain for git, which does 
-_exactly_ what he wants, yet would be mostly interoperable with other git 
-porcelains.
+No, the "<" angle brackets are meant to denote: substitute your own
+(user) input, and not use as literal value. So "command <option>"
+mean select one of options ant put it in place of "<option>"
 
-I imagine that the "cvsish update" would boil down to fetching upstream, 
-updating the index with what the user has in the working directory 
-(something like "git add -u"), then write out a tree from that, and call 
-merge-recursive on that tree and the upstream's current tree.  Force fast 
-forward master, but keep the index, keeping the error output of 
-merge-recursive.  Done.
+> Whereas this has no known meaning:
+> 
+>     command (option) <file ...>
 
-However, you need to understand the internals of git enough to do that.  
-Especially the conflict management, and its relation with the index.
+It doesn't have meaning if there is no alternative in "("
+parentheses. So it makes sense to use:
 
-And I cannot see how that understanding would not lead to abandoning that 
-work-flow as suboptimal.  But hey, that's just my private opinion.
+      command (subcmd1 | subcmd2) <file ...>
 
-Ciao,
-Dscho
+but not
+
+      command (option) <file ...>
+
+> But this does:
+> 
+>     command [option] <file ...>
+
+The "[" brackets mean both "optional" and "group" (to reduce number of
+parentheses-like operators).
+ 
+> That's why I suggested to use:
+> 
+>     git stash <list | show [<stash>] | apply [<stash>] | clear>
+>     git stash [save [<message>...]]
+
+I hope that I have explained above why I think it is wrong. IMHO the
+"<" angle brackets mean: substitute your own input, and are not meant
+for grouping (limiting where alternates start and where end).
+
+> NOTE:
+> 
+> There exists curly braces notation that is sometimes used for
+> "required" part, but that not very common elsewhere other than
+> printed books from commercial vendors.
+> 
+>     command {one|two|three}
+> 
+> I would hesitate to select parentheses notation, which is relatively unknown
+> to mean "required" in the context of command syntax SYNOPSIS.
+
+Lack of "[" brackets means required.
+
+
+By the way, is the format used by SYNOPSIS in manpages somewhere
+specified, for example in some RFC, like BNF notation and BNF-like
+notation used by RFCs is?
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
