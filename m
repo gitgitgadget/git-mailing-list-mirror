@@ -1,127 +1,61 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: Re: [PATCH] Documentation/git-stash.txt: Adjust SYNOPSIS command syntaxes
-Date: Sat, 02 Feb 2008 00:37:44 +0200
-Organization: Private
-Message-ID: <k5lo716v.fsf@blue.sea.net>
-References: <7ihp802o.fsf@blue.sea.net> <m37iho9b70.fsf@localhost.localdomain>
-	<1w7w966m.fsf@blue.sea.net> <m33asc94xn.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: [PATCH] git-send-email: ssh/login style password requests
+Date: Fri, 1 Feb 2008 17:42:12 -0500
+Message-ID: <5F77BB5B-8D2B-42FD-A805-7195757B14EE@mit.edu>
+References: <1201841954-17949-1-git-send-email-mfwitten@mit.edu> <7vodb19edp.fsf@gitster.siamese.dyndns.org> <FE992810-2B2E-4C23-A7D3-AD4C39D925ED@MIT.EDU>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 01 23:39:10 2008
+X-From: git-owner@vger.kernel.org Fri Feb 01 23:43:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JL4XO-0001MA-2V
-	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 23:39:10 +0100
+	id 1JL4bF-0002gf-M0
+	for gcvg-git-2@gmane.org; Fri, 01 Feb 2008 23:43:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760063AbYBAWif (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2008 17:38:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761385AbYBAWie
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 17:38:34 -0500
-Received: from main.gmane.org ([80.91.229.2]:55400 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761356AbYBAWic (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2008 17:38:32 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JL4Wf-0000pv-BI
-	for git@vger.kernel.org; Fri, 01 Feb 2008 22:38:25 +0000
-Received: from a91-155-183-103.elisa-laajakaista.fi ([91.155.183.103])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 01 Feb 2008 22:38:25 +0000
-Received: from jari.aalto by a91-155-183-103.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 01 Feb 2008 22:38:25 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-183-103.elisa-laajakaista.fi
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
-Cancel-Lock: sha1:uTrYHetLKiw1OoZZdPczsWcRG1A=
+	id S1757323AbYBAWmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2008 17:42:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756309AbYBAWmQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 17:42:16 -0500
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:35864 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756414AbYBAWmP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2008 17:42:15 -0500
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m11MgDBM029380
+	for <git@vger.kernel.org>; Fri, 1 Feb 2008 17:42:13 -0500 (EST)
+Received: from MACGREGOR-FIVE-TWENTY-TWO.MIT.EDU (MACGREGOR-FIVE-TWENTY-TWO.MIT.EDU [18.239.7.11])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m11MgCeg007373
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Fri, 1 Feb 2008 17:42:13 -0500 (EST)
+In-Reply-To: <FE992810-2B2E-4C23-A7D3-AD4C39D925ED@MIT.EDU>
+X-Mailer: Apple Mail (2.915)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72187>
 
-* Fri 2008-02-01 Jakub Narebski <jnareb@gmail.com>
-* Message-Id: m33asc94xn.fsf@localhost.localdomain
-> Jari Aalto <jari.aalto@cante.net> writes:
+
+On 1 Feb 2008, at 1:38 PM, Michael Witten wrote:
+
+>> I like what the patch tries to do, but the system() there feels
+>> a tad ugly.  In addition it makes me wonder (1) what happens if
+>> you ^C out from this while loop
 >
->> * Fri 2008-02-01 Jakub Narebski <jnareb@gmail.com>
->> * Message-Id: m37iho9b70.fsf@localhost.localdomain
->> >
->> >
->> > 'git-stash' (list | show [<stash>] | apply [<stash>] | clear)
->> > 'git-stash' [save [<message>...]]
->> >
->> > Angle brackets if I understand correctly are meant to denote part
->> > which you have to enter, the user supplied info (the reast ou have to
->> > enter literally).
->> 
->> Nowhere I have seen "(" parenheses to mean "required". 
->
-> The "(" parentheses does not mean "required". They do mean "group",
-> just like for regular expressions. So "A (B | C)" means "A B" or
-> "A C".
+> Good question! Though I'm not sure you can handle this any other
+> way than to intercept the signal.
 
-In regexp language yes, but in describing the command syntaxes, I do not
-have come accross this. Would you have descriptive examples?
+It turns out that --compose will also leave some temporary files
+behind if git-send-email is terminated out of course.
 
->> The angle brackets are commonly used to tell that the part is to be
->> required:
->> 
->>     command <option> <file ...>
-> No, the "<" angle brackets are meant to denote: substitute your own
-> (user) input, and not use as literal value. So "command <option>"
-> mean select one of options ant put it in place of "<option>"
+Should I establish a general handler for SIGTERM and SIGINT?
 
-The angles primarily denote "required", and secondarily that you put
-there there the asked input.
-
-
->       command (subcmd1 | subcmd2) <file ...>
-
-Tat is highly uncommon. In angle bracket notation this is unabiguous:
-
-        command <parameter1|parameter2> <file ...>
-                A                       B
-
-In angles, it's clear that both A and B are required; in A, you must
-choose one.
-
-> The "[" brackets mean both "optional" and "group" (to reduce number of
-> parentheses-like operators).
-
-The bracket's primary meaning is to say "optional" in command
-definitions. They do not "group"; they nest -- saying that there are
-more "optionality" included.
-
->> That's why I suggested to use:
->> 
->>     git stash <list | show [<stash>] | apply [<stash>] | clear>
->>     git stash [save [<message>...]]
->
-> I hope that I have explained above why I think it is wrong. IMHO the
-> "<" angle brackets mean: substitute your own input, and are not meant
-> for grouping (limiting where alternates start and where end).
-
-Angle brackets do not mean "substitute your own input", but they deonote
-a requirement; how the requirement is filled is done according to the
-description in the documentation.
-
-    command <"save"|"load">
-
-In unabiguous way to say that the choices for words are "save" and
-"load" of which one of them must be supplied.
-
-The reason why angle angles are used is that they are shell redirection
-metacharacters --- which never appear in that quality in standard manual
-page SYNOPSIS. The angles cannot be understood in any other way than as
-a "requirement" in the command definition.
-
-Jari
-
--- 
-Welcome to FOSS revolution: we fix and modify until it shines
+Michael Witten
