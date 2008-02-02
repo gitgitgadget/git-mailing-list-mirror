@@ -1,95 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Sane use of test_expect_failure
-Date: Sat, 02 Feb 2008 02:06:35 -0800
-Message-ID: <7vhcgr3c5w.fsf_-_@gitster.siamese.dyndns.org>
-References: <47975FE6.4050709@viscovery.net>
-	<7v7ihtqfm8.fsf@gitster.siamese.dyndns.org>
-	<7vve5dox0o.fsf_-_@gitster.siamese.dyndns.org>
-	<200802010534.55925.robin.rosenberg.lists@dewire.com>
-	<7vabmlb0y0.fsf@gitster.siamese.dyndns.org>
-	<7vwspp9f9e.fsf_-_@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Documentation/git-stash.txt: Adjust SYNOPSIS command syntax
+Date: Sat, 02 Feb 2008 02:23:19 -0800 (PST)
+Message-ID: <m3lk637j3k.fsf@localhost.localdomain>
+References: <7ihp802o.fsf@blue.sea.net> <ir185c73.fsf@blue.sea.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 02 11:07:31 2008
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Sat Feb 02 11:24:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLFHR-0001yJ-Os
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 11:07:26 +0100
+	id 1JLFXR-0005bB-3N
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 11:23:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758577AbYBBKGr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2008 05:06:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758259AbYBBKGr
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 05:06:47 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41256 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758009AbYBBKGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Feb 2008 05:06:46 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 80FA24838;
-	Sat,  2 Feb 2008 05:06:40 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DF0E94837;
-	Sat,  2 Feb 2008 05:06:38 -0500 (EST)
-In-Reply-To: <7vwspp9f9e.fsf_-_@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 01 Feb 2008 01:50:53 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754528AbYBBKXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2008 05:23:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754544AbYBBKXX
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 05:23:23 -0500
+Received: from py-out-1112.google.com ([64.233.166.181]:7056 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754255AbYBBKXW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 05:23:22 -0500
+Received: by py-out-1112.google.com with SMTP id u52so2134582pyb.10
+        for <git@vger.kernel.org>; Sat, 02 Feb 2008 02:23:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=nydYaAvoMqzMdKJ0cEVH3p6wu+sqJ1uzw6sTJbNM4Yc=;
+        b=VpRQI5NMzebvkwPwHCPW1afJiM6NGekjQNsAMk9W+KxLja6NbMWP1yCpg/mA8o96MGkdB3JmiFuIKgGNQSA3LrU9OkroK1DViFHmQqTKyko56nUeDQq6Ly2U1SEh7SnkFQ5K74q9yNHAy9vYvwWx3lhFE2fw8OKJhvaWhHcWsU4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=hIvS6RNtxRR+gkFmvW2fvtTuY4esSz8bbV3VM3VLKP5bW4WgwGU/InfwDXWz7v+MhW051KdHI05Hq98hcf66+z2LwRMWLQQmnbfLpHcEdW76HLtWAyoN6LqFJVxXYO49vICj9qEvMCGihS6l4+c8TVLUGaqZHmHjFgFSeL6CyDU=
+Received: by 10.65.52.1 with SMTP id e1mr7738808qbk.79.1201947801163;
+        Sat, 02 Feb 2008 02:23:21 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.228.251])
+        by mx.google.com with ESMTPS id 1sm12210351nfv.3.2008.02.02.02.23.18
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 02 Feb 2008 02:23:19 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m12ANDGO026523;
+	Sat, 2 Feb 2008 11:23:14 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m12ANCGg026520;
+	Sat, 2 Feb 2008 11:23:12 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <ir185c73.fsf@blue.sea.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72243>
 
-As I promised, a patch to revamp test_expect_failure semantics
-has been applied to 'master' and pushed out.
+Jari Aalto <jari.aalto@cante.net> writes:
 
-The rule used to be that test_expect_failure is to see if the
-command sequence exits with non-zero status.  It was tempting to
-incorrectly use it like this:
+I think it would beb better if you split this patch in two,
+as it deals with two separate issues, and in one case it doesn't
+deal with the issue fully
 
-    test_expect_failure 'this should fail' '
-	setup1 &&
-        setup2 &&
-        setup3 &&
-        what you expect to fail
-    '
+> Change (list|...) to {list|...} to denote required commands.
 
-but was very error prone, because the failure can come from the
-earlier "setup" stages.
+This is one thing, and I think when you are resubmitting this patch
+for discussion (with Cc: to the authors that introduced the (-a|-b)
+syntax) you should change (list|...) to {list|...} *everywhere* in the
+git manpages.
 
-The new world order is that test_expect_failure is used to mark
-a known breakage, so that people can run "git grep t/" to see if
-there are things to work on.
+> Adjust
+> the 'save' command syntax to better reflect the call parameters:
+> [save] [message...] => [save [message...]].
 
-We have an example in cvsserver test:
+This is just simple bugfix in git-stash synopsis, and I think this
+patch would be accepted (especially now that it is after 1.5.4
+released, and after feature freeze) without doubt.
 
-    #TODO: cvsserver doesn't support update w/o -d
-    test_expect_failure "cvs update w/o -d doesn't create subdir (TODO)" '
-       ...
-       test ! -d test
-    '
-
-If git-cvsserver did not have this bug, this should succeed, but
-there is a known breakage that is waiting to be fixed.
-
-I may have missed tests that were using test_expect_failure to
-mark known bug that need to be fixed and converted that to
-test_expect_success to check an error exit status from the last
-command in the sequence.  IOW, a mistranslation of the above
-might have done:
-
-    test_expect_success "cvs update w/o -d doesn't create subdir (TODO)" '
-       ...
-       test -d test
-    '
-
-which would be wrong.  Fixing the bug would then "break" this
-test.
-
-Could people who added test_expect_failure in the past that this
-patch updated, look them over to catch such a misconversion
-please?
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
