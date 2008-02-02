@@ -1,441 +1,273 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] GIT 1.5.4
-Date: Fri, 01 Feb 2008 20:34:24 -0800
-Message-ID: <7vmyqk563z.fsf@gitster.siamese.dyndns.org>
+Subject: A note from the maintainer
+Date: Fri, 01 Feb 2008 20:35:02 -0800
+Message-ID: <7vlk64562x.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 02 05:36:15 2008
+X-From: git-owner@vger.kernel.org Sat Feb 02 05:36:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLA6u-0007Kf-FI
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 05:36:13 +0100
+	id 1JLA6w-0007Kf-5m
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 05:36:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753895AbYBBEe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2008 23:34:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754349AbYBBEe5
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 23:34:57 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53976 "EHLO
+	id S1764111AbYBBEfk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Feb 2008 23:35:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755774AbYBBEfk
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 23:35:40 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:53986 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753697AbYBBEez (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2008 23:34:55 -0500
+	with ESMTP id S1764111AbYBBEfY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2008 23:35:24 -0500
 Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 84A55489B;
-	Fri,  1 Feb 2008 23:34:53 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A5F8489D;
+	Fri,  1 Feb 2008 23:35:22 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C0F26489A;
-	Fri,  1 Feb 2008 23:34:46 -0500 (EST)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E8C4A489C;
+	Fri,  1 Feb 2008 23:35:19 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72223>
 
-The latest feature release GIT 1.5.4 is available at the usual
-places:
+Now a new feature release is out, it's a good time to welcome new
+people to the list.  This message talks about how git.git is managed,
+and how you can work with it.
 
-  http://www.kernel.org/pub/software/scm/git/
+* IRC and Mailing list
 
-  git-1.5.4.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.5.4.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.5.4.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.5.4-1.$arch.rpm	(RPM)
+Many active members of development community hang around on #git
+IRC channel on Freenode.  Its log is available at:
 
-It has been an unusually long cycle.  5 months since the last
-feature release 1.5.3 was really a bit too long.
+        http://colabti.de/irclogger/irclogger_log/git
 
-But I hope it was worth waiting for.  Thanks everybody for
-working hard to improve it.
+The development however is primarily done on this mailing list
+you are reading right now.  If you have patches, please send
+them to the list, following Documentation/SubmittingPatches.
 
+I usually try to read all patches posted to the list, and follow
+almost all the discussions on the list, unless the topic is about an
+obscure corner that I do not personally use.  But I am obviously not
+perfect.  If you sent a patch that you did not hear from anybody for
+three days, that is a very good indication that it was dropped on the
+floor --- please do not hesitate to remind me.
 
-Changes since v1.5.3:
-
- 1595 non-merge commits
-  165 contributors
-  684 files changed, 70435 insertions, 28984 deletions
-
-----------------------------------------------------------------
-
-GIT v1.5.4 Release Notes
-========================
-
-Removal
--------
-
- * "git svnimport" was removed in favor of "git svn".  It is still there
-   in the source tree (contrib/examples) but unsupported.
-
- * As git-commit and git-status have been rewritten, "git runstatus"
-   helper script lost all its users and has been removed.
-
-
-Temporarily disabled
---------------------
-
- * "git http-push" is known not to work well with cURL library older
-   than 7.16, and we had reports of repository corruption.  It is
-   disabled on such platforms for now.  Unfortunately, 1.5.3.8 shares
-   the same issue.  In other words, this does not mean you will be
-   fine if you stick to an older git release.  For now, please do not
-   use http-push from older git with cURL older than 7.16 if you
-   value your data. A proper fix will hopefully materialize in
-   later versions.
-
-
-Deprecation notices
--------------------
-
- * From v1.6.0, git will by default install dashed form of commands
-   (e.g. "git-commit") outside of users' normal $PATH, and will install
-   only selected commands ("git" itself, and "gitk") in $PATH.  This
-   implies:
-
-   - Using dashed forms of git commands (e.g. "git-commit") from the
-     command line has been informally deprecated since early 2006, but
-     now it officially is, and will be removed in the future.  Use
-     dash-less forms (e.g. "git commit") instead.
-
-   - Using dashed forms from your scripts, without first prepending the
-     return value from "git --exec-path" to the scripts' PATH, has been
-     informally deprecated since early 2006, but now it officially is.
-
-   - Use of dashed forms with "PATH=$(git --exec-path):$PATH; export
-     PATH" early in your script is not deprecated with this change.
-
-   Users are strongly encouraged to adjust their habits and scripts now
-   to prepare for this change.
-
- * The post-receive hook was introduced in March 2007 to supersede
-   the post-update hook, primarily to overcome the command line length
-   limitation of the latter.  Use of post-update hook will be deprecated
-   in future versions of git, starting from v1.6.0.
-
- * "git lost-found" was deprecated in favor of "git fsck"'s --lost-found
-   option, and will be removed in the future.
-
- * "git peek-remote" is deprecated, as "git ls-remote" was written in C
-   and works for all transports; "git peek-remote" will be removed in
-   the future.
-
- * "git repo-config" which was an old name for "git config" command
-   has been supported without being advertised for a long time.  The
-   next feature release will remove it.
-
- * From v1.6.0, the repack.usedeltabaseoffset config option will default
-   to true, which will give denser packfiles (i.e. more efficient storage).
-   The downside is that git older than version 1.4.4 will not be able
-   to directly use a repository packed using this setting.
-
- * From v1.6.0, the pack.indexversion config option will default to 2,
-   which is slightly more efficient, and makes repacking more immune to
-   data corruptions.  Git older than version 1.5.2 may revert to version 1
-   of the pack index with a manual "git index-pack" to be able to directly
-   access corresponding pack files.
-
-
-Updates since v1.5.3
---------------------
-
- * Comes with much improved gitk, with i18n.
-
- * Comes with git-gui 0.9.2 with i18n.
-
- * gitk is now merged as a subdirectory of git.git project, in
-   preparation for its i18n.
-
- * progress displays from many commands are a lot nicer to the eye.
-   Transfer commands show throughput data.
-
- * many commands that pay attention to per-directory .gitignore now do
-   so lazily, which makes the usual case go much faster.
-
- * Output processing for '--pretty=format:<user format>' has been
-   optimized.
-
- * Rename detection of diff family while detecting exact matches has
-   been greatly optimized.
-
- * Rename detection of diff family tries to make more natural looking
-   pairing.  Earlier, if multiple identical rename sources were
-   found in the preimage, the source used was picked pretty much at random.
-
- * Value "true" for color.diff and color.status configuration used to
-   mean "always" (even when the output is not going to a terminal).
-   This has been corrected to mean the same thing as "auto".
-
- * "git diff" Porcelain now respects diff.external configuration, which
-   is another way to specify GIT_EXTERNAL_DIFF.
-
- * "git diff" can be told to use different prefixes other than
-   "a/" and "b/" e.g. "git diff --src-prefix=l/ --dst-prefix=k/".
-
- * "git diff" sometimes did not quote paths with funny
-   characters properly.
-
- * "git log" (and any revision traversal commands) misbehaved
-   when --diff-filter is given but was not asked to actually
-   produce diff.
-
- * HTTP proxy can be specified per remote repository using
-   remote.*.httpproxy configuration, or global http.proxy configuration
-   variable.
-
- * Various Perforce importer updates.
-
- * Example update and post-receive hooks have been improved.
-
- * Any command that wants to take a commit object name can now use
-   ":/string" syntax to name a commit.
-
- * "git reset" is now built-in and its output can be squelched with -q.
-
- * "git reset --hard" does not make any sense in a bare
-   repository, but did not error out; fixed.
-
- * "git send-email" can optionally talk over ssmtp and use SMTP-AUTH.
-
- * "git rebase" learned --whitespace option.
-
- * In "git rebase", when you decide not to replay a particular change
-   after the command stopped with a conflict, you can say "git rebase
-   --skip" without first running "git reset --hard", as the command now
-   runs it for you.
-
- * "git rebase --interactive" mode can now work on detached HEAD.
-
- * Other minor to serious bugs in "git rebase -i" have been fixed.
-
- * "git rebase" now detaches head during its operation, so after a
-   successful "git rebase" operation, the reflog entry branch@{1} for
-   the current branch points at the commit before the rebase was
-   started.
-
- * "git rebase -i" also triggers rerere to help your repeated merges.
-
- * "git merge" can call the "post-merge" hook.
-
- * "git pack-objects" can optionally run deltification with multiple
-   threads.
-
- * "git archive" can optionally substitute keywords in files marked with
-   export-subst attribute.
-
- * "git cherry-pick" made a misguided attempt to repeat the original
-   command line in the generated log message, when told to cherry-pick a
-   commit by naming a tag that points at it.  It does not anymore.
-
- * "git for-each-ref" learned %(xxxdate:<date-format>) syntax to show the
-   various date fields in different formats.
-
- * "git gc --auto" is a low-impact way to automatically run a variant of
-   "git repack" that does not lose unreferenced objects (read: safer
-   than the usual one) after the user accumulates too many loose
-   objects.
-
- * "git clean" has been rewritten in C.
-
- * You need to explicitly set clean.requireForce to "false" to allow
-   "git clean" without -f to do any damage (lack of the configuration
-   variable used to mean "do not require -f option to lose untracked
-   files", but we now use the safer default).
-
- * The kinds of whitespace errors "git diff" and "git apply" notice (and
-   fix) can be controlled via 'core.whitespace' configuration variable
-   and 'whitespace' attribute in .gitattributes file.
-
- * "git push" learned --dry-run option to show what would happen if a
-   push is run.
-
- * "git push" does not update a tracking ref on the local side when the
-   remote refused to update the corresponding ref.
-
- * "git push" learned --mirror option.  This is to push the local refs
-   one-to-one to the remote, and deletes refs from the remote that do
-   not exist anymore in the repository on the pushing side.
-
- * "git push" can remove a corrupt ref at the remote site with the usual
-   ":ref" refspec.
-
- * "git remote" knows --mirror mode.  This is to set up configuration to
-   push into a remote repository to store local branch heads to the same
-   branch on the remote side, and remove branch heads locally removed
-   from local repository at the same time.  Suitable for pushing into a
-   back-up repository.
-
- * "git remote" learned "rm" subcommand.
-
- * "git cvsserver" can be run via "git shell".  Also, "cvs" is
-   recognized as a synonym for "git cvsserver", so that CVS users
-   can be switched to git just by changing their login shell.
-
- * "git cvsserver" acts more like receive-pack by running post-receive
-   and post-update hooks.
-
- * "git am" and "git rebase" are far less verbose.
-
- * "git pull" learned to pass --[no-]ff option to underlying "git
-   merge".
-
- * "git pull --rebase" is a different way to integrate what you fetched
-   into your current branch.
-
- * "git fast-export" produces data-stream that can be fed to fast-import
-   to reproduce the history recorded in a git repository.
-
- * "git add -i" takes pathspecs to limit the set of files to work on.
-
- * "git add -p" is a short-hand to go directly to the selective patch
-   subcommand in the interactive command loop and to exit when done.
-
- * "git add -i" UI has been colorized.  The interactive prompt
-   and menu can be colored by setting color.interactive
-   configuration.  The diff output (including the hunk picker)
-   are colored with color.diff configuration.
-
- * "git commit --allow-empty" allows you to create a single-parent
-   commit that records the same tree as its parent, overriding the usual
-   safety valve.
-
- * "git commit --amend" can amend a merge that does not change the tree
-   from its first parent.
-
- * "git commit" used to unconditionally strip comment lines that
-   began with '#' and removed excess blank lines.  This behavior has
-   been made configurable.
-
- * "git commit" has been rewritten in C.
-
- * "git stash random-text" does not create a new stash anymore.  It was
-   a UI mistake.  Use "git stash save random-text", or "git stash"
-   (without extra args) for that.
-
- * "git stash clear extra-text" does not clear the whole stash
-   anymore.  It is tempting to expect "git stash clear stash@{2}"
-   to drop only a single named stash entry, and it is rude to
-   discard everything when that is asked (but not provided).
-
- * "git prune --expire <time>" can exempt young loose objects from
-   getting pruned.
-
- * "git branch --contains <commit>" can list branches that are
-   descendants of a given commit.
-
- * "git log" learned --early-output option to help interactive GUI
-   implementations.
-
- * "git bisect" learned "skip" action to mark untestable commits.
-
- * "git bisect visualize" learned a shorter synonym "git bisect view".
-
- * "git bisect visualize" runs "git log" in a non-windowed
-   environments.  It also can be told what command to run (e.g. "git
-   bisect visualize tig").
-
- * "git format-patch" learned "format.numbered" configuration variable
-   to automatically turn --numbered option on when more than one commits
-   are formatted.
-
- * "git ls-files" learned "--exclude-standard" to use the canned set of
-   exclude files.
-
- * "git tag -a -f existing" begins the editor session using the existing
-   annotation message.
-
- * "git tag -m one -m bar" (multiple -m options) behaves similarly to
-   "git commit"; the parameters to -m options are formatted as separate
-   paragraphs.
-
- * The format "git show" outputs an annotated tag has been updated to
-   include "Tagger: " and "Date: " lines from the tag itself.  Strictly
-   speaking this is a backward incompatible change, but this is a
-   reasonable usability fix and people's scripts shouldn't have been
-   relying on the exact output from "git show" Porcelain anyway.
-
- * "git cvsimport" did not notice errors from underlying "cvsps"
-   and produced a corrupt import silently.
-
- * "git cvsexportcommit" learned -w option to specify and switch to the
-   CVS working directory.
-
- * "git checkout" from a subdirectory learned to use "../path" to allow
-   checking out a path outside the current directory without cd'ing up.
-
- * "git checkout" from and to detached HEAD leaves a bit more
-   information in the reflog.
-
- * "git send-email --dry-run" shows full headers for easier diagnosis.
-
- * "git merge-ours" is now built-in.
-
- * "git svn" learned "info" and "show-externals" subcommands.
-
- * "git svn" run from a subdirectory failed to read settings from the
-   .git/config.
-
- * "git svn" learned --use-log-author option, which picks up more
-   descriptive name from From: and Signed-off-by: lines in the commit
-   message.
-
- * "git svn" wasted way too much disk to record revision mappings
-   between svn and git; a new representation that is much more compact
-   for this information has been introduced to correct this.
-
- * "git svn" left temporary index files it used without cleaning them
-   up; this was corrected.
-
- * "git status" from a subdirectory now shows relative paths, which
-   makes copy-and-pasting for git-checkout/git-add/git-rm easier.  The
-   traditional behavior to show the full path relative to the top of
-   the work tree can be had by setting status.relativepaths
-   configuration variable to false.
-
- * "git blame" kept text for each annotated revision in core needlessly;
-   this has been corrected.
-
- * "git shortlog" learned to default to HEAD when the standard input is
-   a terminal and the user did not give any revision parameter.
-
- * "git shortlog" learned "-e" option to show e-mail addresses as well as
-   authors' names.
-
- * "git help" learned "-w" option to show documentation in browsers.
-
- * In addition there are quite a few internal clean-ups. Notably:
-
-   - many fork/exec have been replaced with run-command API,
-     brought from the msysgit effort.
-
-   - introduction and more use of the option parser API.
-
-   - enhancement and more use of the strbuf API.
-
- * Makefile tweaks to support HP-UX is in.
-
-Fixes since v1.5.3
-------------------
-
-All of the fixes in v1.5.3 maintenance series are included in
-this release, unless otherwise noted.
-
-These fixes are only in v1.5.4 and not backported to v1.5.3 maintenance
-series.
-
- * The way "git diff --check" behaves is much more consistent with the way
-   "git apply --whitespace=warn" works.
-
- * "git svn" talking with the SVN over HTTP will correctly quote branch
-   and project names.
-
- * "git config" did not work correctly on platforms that define
-   REG_NOMATCH to an even number.
-
- * Recent versions of AsciiDoc 8 has a change to break our
-   documentation; a workaround has been implemented.
-
- * "git diff --color-words" colored context lines in a wrong color.
+The list archive is available at a few public sites as well:
+
+        http://news.gmane.org/gmane.comp.version-control.git/
+        http://marc.theaimsgroup.com/?l=3Dgit
+        http://www.spinics.net/lists/git/
+
+and some people seem to prefer to read it over NNTP:
+
+        nntp://news.gmane.org/gmane.comp.version-control.git
+
+When you point at a message in a mailing list archive, using
+gmane is often the easiest to follow by readers, like this:
+
+        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=
+=3D217
+
+as it also allows people who subscribe to the mailing list as
+gmane newsgroup to "jump to" the article.
+
+* Repositories, branches and documentation.
+
+My public git.git repository is at:
+
+        git://git.kernel.org/pub/scm/git/git.git/
+
+Immediately after I publish to the primary repository at kernel.org, I
+also push into an alternate here:
+
+        git://repo.or.cz/alt-git.git/
+
+Impatient people might have better luck with the latter one.
+
+Their gitweb interfaces are found at:
+
+        http://git.kernel.org/?p=3Dgit/git.git
+        http://repo.or.cz/w/alt-git.git
+
+There are three branches in git.git repository that are not
+about the source tree of git: "todo", "html" and "man".  The
+first one was meant to contain TODO list for me, but I am not
+good at maintaining such a list so it is not as often updated as
+it could/should be.  It also contains some helper scripts I use
+to maintain git.
+
+The "html" and "man" are autogenerated documentation from the
+tip of the "master" branch; the tip of "html" is extracted to be
+visible at kernel.org at:
+
+        http://www.kernel.org/pub/software/scm/git/docs/
+
+The above URL is the top-level documentation page, and it has
+links to documentation of older releases.
+
+The script to maintain these two documentation branches are
+found in "todo" branch as dodoc.sh, if you are interested.  It
+is a good demonstration of how to use an update hook to automate
+a task.
+
+There are four branches in git.git repository that track the
+source tree of git: "master", "maint", "next", and "pu".  I may
+add more maintenance branches (e.g. "maint-1.5.1") if we have
+hugely backward incompatible feature updates in the future to keep
+an older release alive; I may not, but the distributed nature of
+git means any volunteer can run a stable-tree like that himself.
+
+The "master" branch is meant to contain what are very well
+tested and ready to be used in a production setting.  There
+could occasionally be minor breakages or brown paper bag bugs
+but they are not expected to be anything major, and more
+importantly quickly and trivially fixable.  Every now and
+then, a "feature release" is cut from the tip of this branch and
+they typically are named with three dotted decimal digits.  The
+last such release was v1.5.4 done on Feb 2nd this year.  You
+can expect that the tip of the "master" branch is always more
+stable than any of the released versions.
+
+Whenever a feature release is made, "maint" branch is forked off
+from "master" at that point.  Obvious, safe and urgent fixes
+after a feature release are applied to this branch and
+maintenance releases are cut from it.  The maintenance releases
+are named with four dotted decimal, named after the feature
+release they are updates to; the last such release was v1.5.3.8.
+New features never go to this branch.  This branch is also
+merged into "master" to propagate the fixes forward.
+
+A trivial and safe enhancement goes directly on top of "master".
+A new development, either initiated by myself or more often by
+somebody who found his or her own itch to scratch, does not
+usually happen on "master", however.  Instead, a separate topic
+branch is forked from the tip of "master", and it first is
+tested in isolation; I may make minimum fixups at this point.
+Usually there are a handful such topic branches that are running
+ahead of "master" in git.git repository.  I do not publish the
+tip of these branches in my public repository, however, partly
+to keep the number of branches that downstream developers need
+to worry about low, and primarily because I am lazy.
+
+I judge the quality of topic branches, taking advices from the
+mailing list discussions.  Some of them start out as "good idea
+but obviously is broken in some areas (e.g. breaks the existing
+testsuite)" and then with some more work (either by the original
+contributor or help from other people on the list) becomes "more
+or less done and can now be tested by wider audience".  Luckily,
+most of them start out in the latter, better shape.
+
+The "next" branch is to merge and test topic branches in the
+latter category.  In general, the branch always contains the tip
+of "master".  It might not be quite rock-solid production ready,
+but is expected to work more or less without major breakage.  I
+usually use "next" version of git for my own work, so it cannot
+be _that_ broken to prevent me from pushing the changes out.
+The "next" branch is where new and exciting things take place.
+
+The above three branches, "master", "maint" and "next" are never
+rewound, so you should be able to safely track them (this
+automatically means the topics that have been merged into "next"
+are never rebased, and you can find the tip of topic branches you
+are interested in from the output of "git log next").
+
+The "pu" (proposed updates) branch bundles all the remainder of
+topic branches.  The "pu" branch, and topic branches that are
+only in "pu", are subject to rebasing in general.  By the above
+definition of how "next" works, you can tell that this branch
+will contain quite experimental and obviously broken stuff.
+
+When a topic that was in "pu" proves to be in testable shape, it
+graduates to "next".  I do this with:
+
+        git checkout next
+        git merge that-topic-branch
+
+Sometimes, an idea that looked promising turns out to be not so
+good and the topic can be dropped from "pu" in such a case.
+
+A topic that is in "next" is expected to be tweaked and fixed to
+perfection before it is merged to "master" (that's why "master"
+can be expected to stay very stable).  Similarly to the above, I
+do it with this:
+
+        git checkout master
+        git merge that-topic-branch
+        git branch -d that-topic-branch
+
+Note that being in "next" is not a guarantee to appear in the
+next release (being in "master" is such a guarantee, unless it
+is later found seriously broken and reverted), or even in any
+future release.  There even were cases that topics needed
+reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" were entirely reverted
+from "next" because fatal flaws were found in them later.
+
+Starting from v1.5.0, "master" and "maint" have release notes
+for the next release in Documentation/RelNotes-* files, so that
+I do not have to run around summarizing what happened just
+before the release.
+
+
+* Other people's trees, trusted lieutenants and credits.
+
+Documentation/SubmittingPatches outlines who your changes should
+be sent to.  As described in contrib/README, I would delegate
+fixes and enhancements in contrib/ area to primary contributors
+of them.
+
+Although the following are included in git.git repository, they
+have their own authoritative repository and maintainers:
+
+ git-gui/ -- this subdirectory comes from Shawn Pearce's git-gui
+             project, which is found at:
+
+             git://repo.or.cz/git-gui.git
+
+ gitk     -- this file is maintained by Paul Mackerras, at:
+
+             git://git.kernel.org/pub/scm/gitk/gitk.git
+
+I would like to thank everybody who helped to raise git into the
+current shape.  Especially I would like to thank the git list
+regulars whose help I have relied on and expect to continue
+relying on heavily:
+
+ - Linus on general design issues.
+
+ - Linus, Shawn Pearce, Johannes Schindelin, Nicolas Pitre,
+   R=C3=A9ne Scharfe and Jeff King on general implementation issues.
+
+ - Shawn and Nicolas Pitre on pack issues.
+
+ - Martin Langhoff and Frank Lichtenheld on cvsserver and cvsimport.
+
+ - Paul Mackerras on gitk.
+
+ - Eric Wong on git-svn.
+
+ - Jakub Narebski, Petr Baudis, and Luben Tuikov on gitweb.
+
+ - J. Bruce Fields on documentaton issues.
+
+ - Johannes Schindelin and Johannes Sixt for their effort to
+   move things forward on the Windows front.  Although my
+   repository does not have much from the effort of MinGW team,
+   I expect a merge into mainline will happen so that everybody
+   can work from the same codebase.
+
+ - People on non-Linux platforms for keeping their eyes on
+   portability; especially, Randal Schwartz, Theodore Ts'o,
+   Jason Riedy, Thomas Glanzmann, but countless others as well.
+
+* This document
+
+The latest copy of this document is found in git.git repository,
+on 'todo' branch, as MaintNotes.
