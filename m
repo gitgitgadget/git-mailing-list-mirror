@@ -1,113 +1,93 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH] Add platform-independent .git "symlink"
-Date: Sat,  2 Feb 2008 11:36:19 +0100
-Message-ID: <1201948579-11807-1-git-send-email-hjemli@gmail.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 02 11:38:19 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 01/13] builtin-apply.c: refactor small part that matches context
+Date: Sat,  2 Feb 2008 02:54:07 -0800
+Message-ID: <1201949659-27725-2-git-send-email-gitster@pobox.com>
+References: <1201949659-27725-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 02 11:55:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLFlB-0000eG-Ly
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 11:38:10 +0100
+	id 1JLG1i-0005A3-Gs
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 11:55:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761618AbYBBKhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2008 05:37:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760623AbYBBKhd
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 05:37:33 -0500
-Received: from mail43.e.nsc.no ([193.213.115.43]:41475 "EHLO mail43.e.nsc.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759927AbYBBKhc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Feb 2008 05:37:32 -0500
-Received: from localhost.localdomain (ti231210a341-0149.bb.online.no [88.88.168.149])
-	by mail43.nsc.no (8.13.8/8.13.5) with ESMTP id m12AbGDc012966;
-	Sat, 2 Feb 2008 11:37:17 +0100 (MET)
-X-Mailer: git-send-email 1.5.4.GIT-dirty
+	id S1761946AbYBBKyn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2008 05:54:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761830AbYBBKym
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 05:54:42 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43741 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761722AbYBBKy1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 05:54:27 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 8737E50EA
+	for <git@vger.kernel.org>; Sat,  2 Feb 2008 05:54:24 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E48E650E9
+	for <git@vger.kernel.org>; Sat,  2 Feb 2008 05:54:23 -0500 (EST)
+X-Mailer: git-send-email 1.5.4.2.g41ac4
+In-Reply-To: <1201949659-27725-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72245>
 
-This patch allows .git to be a regular textfile containing the path of
-the real git directory (formatted like "GITDIR: <path>\n"), which is
-useful on platforms lacking support for real symlinks.
+This moves three "if" conditions out of line from find_offset()
+function, which is responsible for finding the matching place in
+the preimage to apply the patch.  There is no change in the
+logic of the program.
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
+ builtin-apply.c |   18 +++++++++++++-----
+ 1 files changed, 13 insertions(+), 5 deletions(-)
 
-All tests pass, but git-submodule needs to be updated to handle this
-feature. Incidentally, git-submodule might also be the first command
-wanting to use this feature; it probably should clone submodules into
-a bare repository in GIT_DIR/submodules/<modulename> of the containing
-repository to prevent dataloss during submodule update etc.
-
- setup.c |   38 ++++++++++++++++++++++++++++++++++++++
- 1 files changed, 38 insertions(+), 0 deletions(-)
-
-diff --git a/setup.c b/setup.c
-index adede16..87d6115 100644
---- a/setup.c
-+++ b/setup.c
-@@ -239,6 +239,38 @@ static int check_repository_format_gently(int *nongit_ok)
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 15432b6..2c052f8 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -1437,6 +1437,17 @@ static int read_old_data(struct stat *st, const char *path, struct strbuf *buf)
+ 	}
  }
  
- /*
-+ * Try to read the location of the git directory from the .git file,
-+ * return path to git directory if found.
-+ * Format of the .git file is
-+ *    GITDIR: <path>\n
-+ */
-+static const char *read_gitfile_gently(const char *path)
++static int match_fragment(const char *buf, unsigned long size,
++			  unsigned long try,
++			  const char *fragment, unsigned long fragsize)
 +{
-+	static char buf[PATH_MAX + 10];  /* "GITDIR: " + "\n" + "\0" */
-+	struct stat st;
-+	FILE *f;
-+	size_t len;
-+
-+	if (stat(path, &st))
-+		return NULL;
-+	if (!S_ISREG(st.st_mode) || st.st_size > PATH_MAX + 9)
-+		return NULL;
-+	f = fopen(path, "r");
-+	if (!f)
-+		return NULL;
-+	len = fread(buf, 1, st.st_size, f);
-+	fclose(f);
-+	if (len != st.st_size)
-+		return NULL;
-+	if (len < 10 || buf[len - 1] != '\n' || strncmp(buf, "GITDIR: ", 8))
-+		return NULL;
-+	buf[len - 1] = '\0';
-+	if (!is_git_directory(buf + 8))
-+		return NULL;
-+	return buf + 8;
++	if (try + fragsize > size)
++		return 0;
++	if (memcmp(buf + try, fragment, fragsize))
++		return 0;
++	return 1;
 +}
 +
-+/*
-  * We cannot decide in this function whether we are in the work tree or
-  * not, since the config can only be read _after_ this function was called.
-  */
-@@ -247,6 +279,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	const char *work_tree_env = getenv(GIT_WORK_TREE_ENVIRONMENT);
- 	static char cwd[PATH_MAX+1];
- 	const char *gitdirenv;
-+	const char *gitfile_dir;
- 	int len, offset;
+ static int find_offset(const char *buf, unsigned long size,
+ 		       const char *fragment, unsigned long fragsize,
+ 		       int line, int *lines)
+@@ -1461,8 +1472,7 @@ static int find_offset(const char *buf, unsigned long size,
+ 	}
+ 
+ 	/* Exact line number? */
+-	if ((start + fragsize <= size) &&
+-	    !memcmp(buf + start, fragment, fragsize))
++	if (match_fragment(buf, size, start, fragment, fragsize))
+ 		return start;
  
  	/*
-@@ -302,6 +335,11 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	 */
- 	offset = len = strlen(cwd);
- 	for (;;) {
-+		gitfile_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
-+		if (gitfile_dir) {
-+			setenv(GIT_DIR_ENVIRONMENT, gitfile_dir, 1);
-+			break;
-+		}
- 		if (is_git_directory(DEFAULT_GIT_DIR_ENVIRONMENT))
- 			break;
- 		if (is_git_directory(".")) {
+@@ -1494,9 +1504,7 @@ static int find_offset(const char *buf, unsigned long size,
+ 			try = forwards;
+ 		}
+ 
+-		if (try + fragsize > size)
+-			continue;
+-		if (memcmp(buf + try, fragment, fragsize))
++		if (!match_fragment(buf, size, try, fragment, fragsize))
+ 			continue;
+ 		n = (i >> 1)+1;
+ 		if (i & 1)
 -- 
-1.5.4.GIT-dirty
+1.5.4.2.g41ac4
