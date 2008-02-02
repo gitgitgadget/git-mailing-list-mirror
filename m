@@ -1,80 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Fix "git checkout -b foo ':/substring'"
-Date: Fri, 01 Feb 2008 19:06:56 -0800
-Message-ID: <7v1w7w6oq7.fsf@gitster.siamese.dyndns.org>
+From: Yahoo Microsoft Office <stgabriel@bellnet.ca>
+Subject: Result Last Notice
+Date: Fri, 1 Feb 2008 22:30:25 -0500
+Organization: Yahoo Microsoft Office
+Message-ID: <6k1gas$4kffa@toip40-bus.srvr.bell.ca>
+Reply-To: agent.zonalofficial_manager23@yahoo.co.uk
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 02 04:07:47 2008
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: info@bellnet.ca
+X-From: git-owner@vger.kernel.org Sat Feb 02 04:31:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JL8jK-0001Dz-P0
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 04:07:47 +0100
+	id 1JL95t-0005R2-OR
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 04:31:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754107AbYBBDHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2008 22:07:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753839AbYBBDHN
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 22:07:13 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48776 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751106AbYBBDHM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2008 22:07:12 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id B8AE13DAE;
-	Fri,  1 Feb 2008 22:07:10 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D0423DAD;
-	Fri,  1 Feb 2008 22:07:08 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753127AbYBBDa2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Feb 2008 22:30:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752846AbYBBDa2
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 22:30:28 -0500
+Received: from tomts28.bellnexxia.net ([209.226.175.102]:37471 "EHLO
+	tomts28-srv.bellnexxia.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752459AbYBBDa1 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Feb 2008 22:30:27 -0500
+Received: from toip40-bus.srvr.bell.ca ([67.69.240.41])
+          by tomts28-srv.bellnexxia.net
+          (InterMail vM.5.01.06.13 201-253-122-130-113-20050324) with ESMTP
+          id <20080202033025.IHZI8517.tomts28-srv.bellnexxia.net@toip40-bus.srvr.bell.ca>
+          for <git@vger.kernel.org>; Fri, 1 Feb 2008 22:30:25 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AnoUAA5yo0fR4q+H/2dsb2JhbACBWIYSiAQe
+Received: from tofep3.bellnexxia.net (HELO 67.69.240.41) ([209.226.175.135])
+  by toip40-bus.srvr.bell.ca with SMTP; 01 Feb 2008 22:30:25 -0500
+X-Mailer: Openwave WebEngine, version 2.8.11 (webedge20-101-194-20030622)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72215>
+X-Spam-Report: 6.8 points;
+ *  2.2 RCVD_HELO_IP_MISMATCH Received: HELO and IP do not match, but should
+ *  4.0 RCVD_NUMERIC_HELO Received: contains an IP address used for HELO
+ *  0.6 YOU_WON BODY: Who really wins?
+ *  0.1 MSGID_FROM_MTA_HEADER Message-Id was added by a relay
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72216>
 
-Because ':/substring' extended SHA1 expression cannot take
-postfix modifiers such as ^{tree} and ^{commit}, we would need
-to do it in multiple steps.  With the patch, you can start a new
-branch from a randomly-picked commit whose message has the named
-string in it.
+Attn:Winner=20
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+You won the sum of =A3(=A3500,000) GBP from our monthly , you are hereb=
+y advice to get back to us, to claimed your prize.
 
- * As we advertize that ":/string" syntax is usable for any
-   command that wnats to take a commit object name in the
-   Release Notes, we might want to put this in 1.5.4 final.  It
-   looks simple and safe enough.
+=46ull Name: Address: Age: Sex: Country Of Residence
+Contact Person.
+Agent Name: Mr.George Herri
+Agent Email: agent.zonalofficial_manager23@yahoo.co.uk
 
-diff --git a/git-checkout.sh b/git-checkout.sh
-index 5621c69..bd74d70 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -71,7 +71,8 @@ while test $# != 0; do
- done
- 
- arg="$1"
--if rev=$(git rev-parse --verify "$arg^0" 2>/dev/null)
-+rev=$(git rev-parse --verify "$arg" 2>/dev/null)
-+if rev=$(git rev-parse --verify "$rev^0" 2>/dev/null)
- then
- 	[ -z "$rev" ] && die "unknown flag $arg"
- 	new_name="$arg"
-@@ -82,11 +83,11 @@ then
- 	fi
- 	new="$rev"
- 	shift
--elif rev=$(git rev-parse --verify "$arg^{tree}" 2>/dev/null)
-+elif rev=$(git rev-parse --verify "$rev^{tree}" 2>/dev/null)
- then
- 	# checking out selected paths from a tree-ish.
- 	new="$rev"
--	new_name="$arg^{tree}"
-+	new_name="$rev^{tree}"
- 	shift
- fi
- [ "$1" = "--" ] && shift
+Result Last Notice=20
