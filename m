@@ -1,62 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Strange behavior with git rebase (-i)
-Date: Sat, 2 Feb 2008 17:08:34 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802021708030.7372@racer.site>
-References: <47A44974.7050907@samba.org> <alpine.LSU.1.00.0802021538300.7372@racer.site> <20080202162524.GB25945@dervierte>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] Documentation/git-reset.txt: Use HEAD~N syntax
+	everywhere (unify examples)
+Date: Sat, 2 Feb 2008 11:18:13 -0500
+Message-ID: <20080202161813.GA19797@fieldses.org>
+References: <3asc6spe.fsf@blue.sea.net> <7v7iho6p2m.fsf@gitster.siamese.dyndns.org> <20080202084406.GA15305@glandium.org> <8x235xa8.fsf@blue.sea.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 02 18:10:45 2008
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Sat Feb 02 18:12:51 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLLt6-0005ic-4U
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 18:10:44 +0100
+	id 1JLLv4-0006UE-MN
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 18:12:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763883AbYBBRJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2008 12:09:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751028AbYBBRJ2
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 12:09:28 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33783 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1763671AbYBBRJK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Feb 2008 12:09:10 -0500
-Received: (qmail invoked by alias); 02 Feb 2008 17:09:08 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp022) with SMTP; 02 Feb 2008 18:09:08 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+IFSNDIxaIJZYT3HBuuxjsnB3IINZBt6VY3Fv1fp
-	u1L+ZRtCTe43Y/
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20080202162524.GB25945@dervierte>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1751425AbYBBRMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2008 12:12:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbYBBRMN
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 12:12:13 -0500
+Received: from pie.citi.umich.edu ([141.211.133.115]:57944 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751082AbYBBRMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 12:12:12 -0500
+X-Greylist: delayed 3233 seconds by postgrey-1.27 at vger.kernel.org; Sat, 02 Feb 2008 12:12:12 EST
+Received: from bfields by fieldses.org with local (Exim 4.69)
+	(envelope-from <bfields@fieldses.org>)
+	id 1JLL4H-0006GQ-QL; Sat, 02 Feb 2008 11:18:13 -0500
+Content-Disposition: inline
+In-Reply-To: <8x235xa8.fsf@blue.sea.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72289>
 
-Hi,
-
-On Sat, 2 Feb 2008, Steven Walter wrote:
-
-> On Sat, Feb 02, 2008 at 03:42:06PM +0000, Johannes Schindelin wrote:
-> > I don't believe it.  "git branch" would have shown "* (no branch)" as 
-> > current branch, unless the rebase is finalized.
-> > 
-> > git rebase -i works on a _detached_ HEAD, for two reasons:
+On Sat, Feb 02, 2008 at 02:59:43PM +0200, Jari Aalto wrote:
+> * Sat 2008-02-02 Mike Hommey <mh@glandium.org> gmane.comp.version-control.git
+> * Message-Id: 20080202084406.GA15305@glandium.org
+> >> 
+> >> > -$ git reset --soft HEAD^      <1>
+> >> > +$ git reset --soft HEAD~1     <1>
+> >> > -<1> The last three commits (HEAD, HEAD^, and HEAD~2) were bad
+> >> > +<1> The last three commits (HEAD, HEAD~1, and HEAD~2) were bad
+> >> > -$ git reset --soft HEAD^ ;# go back to WIP state  <2>
+> >> > +$ git reset --soft HEAD~1 ;# go back to WIP state <2>
 > 
-> > On Sat, 2 Feb 2008, Stefan (metze) Metzmacher wrote:
-> > > I was using git 1.5.3.2
+> >> People need to refer to the HEAD^ (one commit ago) much more
+> >> often than HEAD~N for larger values of N. 
 > 
-> Did rebase -i in git 1.5.3.2 use a detached head?  I thought that was
-> new in 1.5.4.
+> I use HEAD~1 always, because I think the consistency in learning the
+> most important factor.
+> 
+> It does not matter what advanced users use. The documentation should
+> primarily focus the newcomers.
 
-rebase -i uses a detached HEAD since it was merged.  In 1.5.4, rebase 
-(note the absence of -i) uses a detached HEAD, too.
+That could have been an argument for disallowing the HEAD^ syntax
+entirely, but it's too late for that.
 
-Ciao,
-Dscho
+Even if we eradicated all mention of ^ from the in-tree documentation,
+it would still show up in lots of out-of-tree documentation and
+examples.  So we have to introduce it to newbies.  Fortunately, it isn't
+that hard.
+
+One way we can help them is by continuing to mix the two in examples, so
+let's continue with the current mixture.
+
+--b.
