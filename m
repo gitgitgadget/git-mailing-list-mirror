@@ -1,92 +1,61 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add platform-independent .git "symlink"
-Date: Sat, 2 Feb 2008 15:56:13 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802021550130.7372@racer.site>
-References: <1201948579-11807-1-git-send-email-hjemli@gmail.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.4
+Date: Sat, 2 Feb 2008 15:58:11 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802021557190.7372@racer.site>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <87k5lnwvzd.dancerj%dancer@netfort.gr.jp>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 02 16:57:24 2008
+Cc: git@vger.kernel.org
+To: Junichi Uekawa <dancer@netfort.gr.jp>
+X-From: git-owner@vger.kernel.org Sat Feb 02 16:59:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLKk6-0006u0-Um
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 16:57:23 +0100
+	id 1JLKly-0007dM-Sr
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 16:59:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758632AbYBBP4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2008 10:56:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758621AbYBBP4u
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 10:56:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33407 "HELO mail.gmx.net"
+	id S1758621AbYBBP6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2008 10:58:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758676AbYBBP6r
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 10:58:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46694 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757996AbYBBP4t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Feb 2008 10:56:49 -0500
-Received: (qmail invoked by alias); 02 Feb 2008 15:56:47 -0000
+	id S1758501AbYBBP6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 10:58:46 -0500
+Received: (qmail invoked by alias); 02 Feb 2008 15:58:44 -0000
 Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp044) with SMTP; 02 Feb 2008 16:56:47 +0100
+  by mail.gmx.net (mp036) with SMTP; 02 Feb 2008 16:58:44 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19nBSZI6ixnUWdBK09Z6VIClCBSaUg8bv/xwC8KmL
-	XkCQxzWQJOZgua
+X-Provags-ID: V01U2FsdGVkX1/eRkdCo2veCjDZGH3U3gevS6kq5Vm2rXlzI36vjv
+	xTkSf5eGT23jBK
 X-X-Sender: gene099@racer.site
-In-Reply-To: <1201948579-11807-1-git-send-email-hjemli@gmail.com>
+In-Reply-To: <87k5lnwvzd.dancerj%dancer@netfort.gr.jp>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72283>
 
 Hi,
 
-On Sat, 2 Feb 2008, Lars Hjemli wrote:
+On Sat, 2 Feb 2008, Junichi Uekawa wrote:
 
-> This patch allows .git to be a regular textfile containing the path of 
-> the real git directory (formatted like "GITDIR: <path>\n"), which is 
-> useful on platforms lacking support for real symlinks.
+> >    - Using dashed forms of git commands (e.g. "git-commit") from the
+> >      command line has been informally deprecated since early 2006, but
+> >      now it officially is, and will be removed in the future.  Use
+> >      dash-less forms (e.g. "git commit") instead.
+> 
+> Hmm...
+> 
+> There are supplimentary tools, such as 'git-dch' and 'git-buildpackage' 
+> which kind of supplied quasi-seamless extention to git family of tools, 
+> are they going to be affected in some way?
 
-Wow, that looks easier than I thought...
+AFAIU this only affects the programs that git installs.  Of course, git 
+will search in that location first, but then in the rest of PATH.
 
-> +static const char *read_gitfile_gently(const char *path)
-> +{
-> +	static char buf[PATH_MAX + 10];  /* "GITDIR: " + "\n" + "\0" */
-
-Why say "GITDIR:"?  Do you want to be able to set other things there, too, 
-like GITWORKDIR?
-
-> +	struct stat st;
-> +	FILE *f;
-> +	size_t len;
-> +
-> +	if (stat(path, &st))
-> +		return NULL;
-> +	if (!S_ISREG(st.st_mode) || st.st_size > PATH_MAX + 9)
-
-Why make it complicated? You could just test for st.st_size >= 
-sizeof(buf).
-
-> +		return NULL;
-> +	f = fopen(path, "r");
-> +	if (!f)
-> +		return NULL;
-> +	len = fread(buf, 1, st.st_size, f);
-> +	fclose(f);
-> +	if (len != st.st_size)
-> +		return NULL;
-
-Should this not rather use read_in_full()?
-
-> +	if (len < 10 || buf[len - 1] != '\n' || strncmp(buf, "GITDIR: ", 8))
-> +		return NULL;
-> +	buf[len - 1] = '\0';
-> +	if (!is_git_directory(buf + 8))
-> +		return NULL;
-> +	return buf + 8;
-> +}
-
-Should this not make the git directory absolute, just in case?
-
-Thanks,
+Ciao,
 Dscho
