@@ -1,71 +1,79 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Documentation/git-reset.txt: Use HEAD~N syntax
-	everywhere (unify examples)
-Date: Sat, 2 Feb 2008 11:18:13 -0500
-Message-ID: <20080202161813.GA19797@fieldses.org>
-References: <3asc6spe.fsf@blue.sea.net> <7v7iho6p2m.fsf@gitster.siamese.dyndns.org> <20080202084406.GA15305@glandium.org> <8x235xa8.fsf@blue.sea.net>
+From: Adam Flott <adam@npjh.com>
+Subject: man pages are littered with .ft C and others
+Date: Sat, 2 Feb 2008 11:25:00 -0600 (CST)
+Message-ID: <alpine.DEB.1.00.0802021055180.21831@an.sumeria>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Sat Feb 02 18:12:51 2008
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 02 18:26:29 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLLv4-0006UE-MN
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 18:12:47 +0100
+	id 1JLM8B-0002XY-Cu
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 18:26:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751425AbYBBRMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2008 12:12:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbYBBRMN
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 12:12:13 -0500
-Received: from pie.citi.umich.edu ([141.211.133.115]:57944 "EHLO fieldses.org"
+	id S1751423AbYBBRZc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2008 12:25:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751369AbYBBRZc
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 12:25:32 -0500
+Received: from npjh.com ([200.46.204.250]:61754 "EHLO npjh.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751082AbYBBRMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Feb 2008 12:12:12 -0500
-X-Greylist: delayed 3233 seconds by postgrey-1.27 at vger.kernel.org; Sat, 02 Feb 2008 12:12:12 EST
-Received: from bfields by fieldses.org with local (Exim 4.69)
-	(envelope-from <bfields@fieldses.org>)
-	id 1JLL4H-0006GQ-QL; Sat, 02 Feb 2008 11:18:13 -0500
-Content-Disposition: inline
-In-Reply-To: <8x235xa8.fsf@blue.sea.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751179AbYBBRZb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 12:25:31 -0500
+Received: from localhost (unknown [200.46.204.191])
+	by npjh.com (Postfix) with ESMTP id 668AC13517BD
+	for <git@vger.kernel.org>; Sat,  2 Feb 2008 17:25:30 +0000 (UTC)
+Received: from npjh.com ([200.46.204.250])
+ by localhost (mx1.hub.org [200.46.204.191]) (amavisd-maia, port 10024)
+ with ESMTP id 97995-03 for <git@vger.kernel.org>;
+ Sat,  2 Feb 2008 13:25:29 -0400 (AST)
+Received: from an.sumeria (unknown [70.124.58.159])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by npjh.com (Postfix) with ESMTP id 9350813517AE
+	for <git@vger.kernel.org>; Sat,  2 Feb 2008 17:25:29 +0000 (UTC)
+X-X-Sender: adam@an.sumeria
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72290>
 
-On Sat, Feb 02, 2008 at 02:59:43PM +0200, Jari Aalto wrote:
-> * Sat 2008-02-02 Mike Hommey <mh@glandium.org> gmane.comp.version-control.git
-> * Message-Id: 20080202084406.GA15305@glandium.org
-> >> 
-> >> > -$ git reset --soft HEAD^      <1>
-> >> > +$ git reset --soft HEAD~1     <1>
-> >> > -<1> The last three commits (HEAD, HEAD^, and HEAD~2) were bad
-> >> > +<1> The last three commits (HEAD, HEAD~1, and HEAD~2) were bad
-> >> > -$ git reset --soft HEAD^ ;# go back to WIP state  <2>
-> >> > +$ git reset --soft HEAD~1 ;# go back to WIP state <2>
-> 
-> >> People need to refer to the HEAD^ (one commit ago) much more
-> >> often than HEAD~N for larger values of N. 
-> 
-> I use HEAD~1 always, because I think the consistency in learning the
-> most important factor.
-> 
-> It does not matter what advanced users use. The documentation should
-> primarily focus the newcomers.
+I do remember at one point the man pages looking correctly (just tested
+v1.5.3.8 and it shows the same problem). Therefore it is probably
+some package I'm missing on my system.
 
-That could have been an argument for disallowing the HEAD^ syntax
-entirely, but it's too late for that.
+And now, I see this scattered all over:
 
-Even if we eradicated all mention of ^ from the in-tree documentation,
-it would still show up in lots of out-of-tree documentation and
-examples.  So we have to introduce it to newbies.  Fortunately, it isn't
-that hard.
+For example:
 
-One way we can help them is by continuing to mix the two in examples, so
-let's continue with the current mixture.
+      .ft C
+      $ git checkout master             \fB(1)\fR
+      $ git checkout master~2 Makefile  \fB(2)\fR
+      $ rm -f hello.c
+      $ git checkout hello.c            \fB(3)\fR
+      .ft
 
---b.
+Seems that "------------" and <n>, and a few others aren't being
+translated. Note: I'm not at all familiar with the layout of man pages
+so I have no idea how to fix it or even diagnose it further.
+
+
+Version info:
+up to date Kubuntu 7.10
+
+asciidoc/gutsy uptodate 8.2.1-2
+docbook-dsssl/gutsy uptodate 1.79-4
+docbook-utils/gutsy uptodate 0.6.14-1
+docbook-xml/gutsy uptodate 4.5-4
+docbook-xsl-doc-html/gutsy uptodate 1.72.0.dfsg.1-2
+docbook-xsl/gutsy uptodate 1.72.0.dfsg.1-2
+xmlto/gutsy uptodate 0.0.18-5.1build1
+
+
+Anyone else seeing this?
+
+
+Adam
