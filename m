@@ -1,68 +1,73 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: Re: Strange behavior with git rebase (-i)
-Date: Sat, 2 Feb 2008 11:25:24 -0500
-Message-ID: <20080202162524.GB25945@dervierte>
-References: <47A44974.7050907@samba.org> <alpine.LSU.1.00.0802021538300.7372@racer.site>
+From: walt <wa1ter@myrealbox.com>
+Subject: New behavior for git-branch?
+Date: Sat, 02 Feb 2008 08:57:52 -0800
+Organization: none
+Message-ID: <fo27d0$gs7$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Feb 02 17:26:19 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 02 17:57:49 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLLBr-0007oQ-Dr
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 17:26:03 +0100
+	id 1JLLgZ-0001Om-Iv
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 17:57:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750841AbYBBQZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2008 11:25:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750708AbYBBQZa
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 11:25:30 -0500
-Received: from an-out-0708.google.com ([209.85.132.243]:7351 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750768AbYBBQZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Feb 2008 11:25:29 -0500
-Received: by an-out-0708.google.com with SMTP id d31so369853and.103
-        for <git@vger.kernel.org>; Sat, 02 Feb 2008 08:25:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=kzmQ36O0ticxzakECNONkcA8rPNkMb86aRRDbzmPk+Y=;
-        b=IMy7rz7kMz86M1NATXtC4ZW4iOSPKjAHcJ/ZDwWQHvlVk043SmkaE2oCLLPJOaNDR6qnJ+qbLJQRfWOZxXijNyDO1qsox89Tmw9zQzA+vHvBHrySlIaze25xfpMcXaGtmEi6EpRACPDF8zOVNk/ZZFM82C4xAQKAnNfA4iWtRCw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=NRjw+eJ1DU8omyM9wiZuBVSDvs4/sBt37cXW5lLyNlY4zmizRpkZFaitxasW5K8n+DLejqO6EYI9BGlS/I/+JYbx5bOqMOsok0kxhSBXBsN24F7vt6h+flnuFEBcpT+Xz40X0fOABi+7nk2mIyY0jFK7z1JjlwW30DMOQUwcJ8M=
-Received: by 10.100.201.16 with SMTP id y16mr10328143anf.30.1201969527004;
-        Sat, 02 Feb 2008 08:25:27 -0800 (PST)
-Received: from dasbrennen.isa-geek.org ( [76.177.39.93])
-        by mx.google.com with ESMTPS id 36sm1847321aga.17.2008.02.02.08.25.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 02 Feb 2008 08:25:26 -0800 (PST)
-Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
-	id E946E6410C; Sat,  2 Feb 2008 11:25:24 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0802021538300.7372@racer.site>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+	id S1751076AbYBBQ5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2008 11:57:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750982AbYBBQ5P
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 11:57:15 -0500
+Received: from main.gmane.org ([80.91.229.2]:57949 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750800AbYBBQ5O (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 11:57:14 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JLLfy-0002dA-CM
+	for git@vger.kernel.org; Sat, 02 Feb 2008 16:57:10 +0000
+Received: from adsl-69-234-214-138.dsl.irvnca.pacbell.net ([69.234.214.138])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 02 Feb 2008 16:57:10 +0000
+Received: from wa1ter by adsl-69-234-214-138.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 02 Feb 2008 16:57:10 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-214-138.dsl.irvnca.pacbell.net
+User-Agent: Thunderbird 3.0a1pre (X11/2008020106)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72287>
 
-On Sat, Feb 02, 2008 at 03:42:06PM +0000, Johannes Schindelin wrote:
-> I don't believe it.  "git branch" would have shown "* (no branch)" as 
-> current branch, unless the rebase is finalized.
-> 
-> git rebase -i works on a _detached_ HEAD, for two reasons:
+Hi,
 
-> On Sat, 2 Feb 2008, Stefan (metze) Metzmacher wrote:
-> > I was using git 1.5.3.2
+I've been tracking Junio's git repository for a year or two
+and I've used git-bisect many times, but yesterday I got very
+disoriented while using git-bisect and git-branch together.
+I think I was confused by the output of 'git-branch -v'.
 
-Did rebase -i in git 1.5.3.2 use a detached head?  I thought that was
-new in 1.5.4.
--- 
--Steven Walter <stevenrwalter@gmail.com>
-Freedom is the freedom to say that 2 + 2 = 4
-B2F1 0ECC E605 7321 E818  7A65 FC81 9777 DC28 9E8F 
+As an example of the new behavior of git-branch, here is what
+I see this morning after pulling from Linus:
+
+$git-branch -v
+* master ae9458d Merge git://git.infradead.org/battery-2.6
+   origin 8af03e7 Merge branch 'for-2.6.25' of git://git.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc
+
+(I discovered the -a flag just this morning.)
+
+$git-branch -av
+* master        ae9458d Merge git://git.infradead.org/battery-2.6
+   origin        8af03e7 Merge branch 'for-2.6.25' of git://git.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc
+   origin/master aa62999 x86: fix bootup crash in native_read_tsc()
+
+In my confusion yesterday, I think I created a new 'origin' which
+has nothing to do with Linus' repository -- but I'm not sure.
+
+The old behavior of 'git-branch' always listed 'origin' as well
+as 'master', but (I think?) that 'origin' is no longer displayed
+using just -v.  Is this correct?  If so, what would be the right
+way to un-bollocks my local repository?
