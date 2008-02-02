@@ -1,130 +1,173 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: handle_alias() inside .git dir
-Date: Sat, 2 Feb 2008 04:02:20 -0500
-Message-ID: <837649D4-465F-4C85-BBE8-B004637EDEF7@sb.org>
-Mime-Version: 1.0 (Apple Message framework v919.1)
-Content-Type: multipart/signed; boundary=Apple-Mail-8-297441427; micalg=sha1; protocol="application/pkcs7-signature"
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 02 10:04:00 2008
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH] Documentation/git-stash.txt: Adjust SYNOPSIS command syntaxes
+Date: Sat, 02 Feb 2008 11:07:36 +0200
+Organization: Private
+Message-ID: <ejbv6813.fsf@blue.sea.net>
+References: <7ihp802o.fsf@blue.sea.net> <m37iho9b70.fsf@localhost.localdomain>
+	<1w7w966m.fsf@blue.sea.net> <m33asc94xn.fsf@localhost.localdomain>
+	<k5lo716v.fsf@blue.sea.net> <m3y7a46vmf.fsf@localhost.localdomain>
+	<tzks5d8d.fsf@blue.sea.net> <m3tzks6qfm.fsf@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: srackham@methods.co.nz
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 02 10:09:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLEI3-0004mN-PR
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 10:04:00 +0100
+	id 1JLENH-0005rQ-Qx
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 10:09:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757460AbYBBJC2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2008 04:02:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760563AbYBBJC0
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 04:02:26 -0500
-Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:51000 "EHLO
-	randymail-a8.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S932414AbYBBJCX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 2 Feb 2008 04:02:23 -0500
-Received: from KBALLARD.RES.WPI.NET (KBALLARD.RES.WPI.NET [130.215.239.91])
-	by randymail-a8.g.dreamhost.com (Postfix) with ESMTP id 1EA64AF850
-	for <git@vger.kernel.org>; Sat,  2 Feb 2008 01:02:21 -0800 (PST)
-X-Mailer: Apple Mail (2.919.1)
+	id S1761240AbYBBJIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2008 04:08:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765740AbYBBJIf
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 04:08:35 -0500
+Received: from main.gmane.org ([80.91.229.2]:51351 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932445AbYBBJIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 04:08:24 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JLEMC-00077y-MF
+	for git@vger.kernel.org; Sat, 02 Feb 2008 09:08:16 +0000
+Received: from a91-155-183-103.elisa-laajakaista.fi ([91.155.183.103])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 02 Feb 2008 09:08:16 +0000
+Received: from jari.aalto by a91-155-183-103.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 02 Feb 2008 09:08:16 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-183-103.elisa-laajakaista.fi
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
+Cancel-Lock: sha1:VPM+ZJgEHkDiPfu0a8aQ64mkFKw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72235>
 
+* Fri 2008-02-01 Jakub Narebski <jnareb@gmail.com>
+* Message-Id: m3tzks6qfm.fsf@localhost.localdomain
 
---Apple-Mail-8-297441427
-Content-Type: text/plain;
-	charset=US-ASCII;
-	format=flowed;
-	delsp=yes
-Content-Transfer-Encoding: 7bit
+>> he text should stand out as it it in environment,
+>> which do not render termcap or other terminal capabilities.
+>
+> Nevertheless it would be nice if our AsciiDoc configuration generated
+> italics or underline ...for manpage, and italics for HTML output for
+> placeholders, *in addition* to using angle parentheses (angle braces)
+> as delimites for placeholder parameters.
 
-It seems that using any aliases while inside a .git dir will end up  
-setting the work tree to the current dir, even though it's clearly not  
-a work tree. This means that having an alias like `git config alias.st  
-= status` and running `git st` inside a .git dir will proceed to spit  
-out a listing that claims that every file in the project is missing  
-rather than displaying an error about not being in a work tree like  
-`git status` will show.
+Sure, let's notify the asciidoc maintainer know about the wishes (CC'd)
 
-This happens because setup_git_directory_gently() ends up setting  
-GIT_DIR_ENVIRONMENT to "." if it detects that we are in the .git  
-directory, and then a subsequent call to setup_git_directory() calls  
-setup_git_directory_gently() again, which sees the GIT_DIR_ENVIRONMENT  
-and ends up calling set_work_tree(). The comment to set_work_tree()  
-says it's only called if GIT_DIR is set and calls what it does "old  
-behavior". I assume it exists for some sort of backwards  
-compatibility, but in quick testing simply commenting out line 266 of  
-setup.c (the call to set_work_tree) makes `git st` work as expected.  
-I'm not sure if this will have any adverse effect on anything else.  
-Does anybody know if this will cause problems?
+>> http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap12.html
+>>
+>> Here are the POSIX/Susv guidelines for the manual pages, I've marked the
+>> relevant points with **....**. We were both right: Angles mean required
+>> and grouping.
+>
+> Errr... as far as I understand angles means placeholders, i.e. user
+> supplied input. You can use "[<file>...]" for optional placeholder;
+> everything which is not inside brackets is required.
 
-Another option that seems like it should work is checking if we're a  
-bare repo, and if not then setting the work tree to our parent dir,  
-assuming any relevant config values or env variables aren't set that  
-would point elsewhere. I would try and implement this but after  
-looking at it for a few minutes, I fear 4AM is not the best of times  
-to try and figure out how this code works.
+If you choose to use the "optional", then you are _required_ to fill in
+the mentioned item. The "[....]" is applied in your example as well. The
+angles always keep it's nature, which is a requirement:
 
--Kevin Ballard
+    4. Frequently, names of parameters that _require_ substitution(...)
+
+        <parameter name>
+
+> It is used quite frequently in git manpages. Using parentheses to
+> delimit required alternate parts seems quite sensible.
+>
+>   'git-branch' (-m | -M) [<oldbranch>] <newbranch>
+
+The change is small, but important. People look at the manual paged any
+will get the wrong impression on "the standard notation"
+
+    git-branch {-m | -M} [<oldbranch>] <newbranch>
+               =       =
+               Change to use curlies
+
+> Note that in the POSIX/SUSV below parentheses / curly braces are not
+> mentioned.
+
+True. The precedence of curlies has however been set long ago in
+software books and in other Unix manaul pages.
+
+>> -----------------------------------------------------------------------
+>> http://www.opengroup.org/onlinepubs/009695399/utilities/xcu_chap01.html#tag_01_11
+>> 
+>> 12.1 Utility Argument Syntax
+>> http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap12.html#tag_12_01
+>> 
+>>     [...]
+>> 
+>>     4. Frequently, names of parameters that **require** substitution by
+>>     actual values are shown with embedded underscores. Alternatively,
+>>     parameters are shown as follows:
+>> 
+>>         <parameter name>
+>> 
+>>     The angle brackets are used for the symbolic grouping of a phrase
+>>     representing a single parameter and conforming applications shall
+>>     not include them in data submitted to the utility.
+>
+> This means that <param> denotes placeholder: parameter that requires
+> **subsititution** (this part should be emphasized!). Such parameter
+> might have multi-word name. Such parameter might be required, but
+> might be optional.
+
+It's never optional. For optionality, there is specific notation.
+Everybody knows how to read these; what is required and what is not:
+
+    command <arg> <arg>
+    command <arg> [<message>]
+    command <arg> [-lbc]
+
+The <message> here is symbolic and not to be taken literally, whereas
+text that is not eclosed inside angles, "-lbc", is to be taken
+literally and interpreted by the rules of "set of options".
+
+>>     [...]
+>>     7. Arguments or option-arguments enclosed in the '[' and ']'
+>>     notation are **optional** and can be omitted. Conforming applications
+>>     shall not include the '[' and ']' symbols in data submitted to the
+>>     utility.
+>> 
+>>     8. Arguments separated by the '|' vertical bar notation are
+>>     **mutually-exclusive.**
+>
+> Note that is natural that '[' and ']' also are limits of mutualy
+> exclusive parameters: "cmd [ A | B ]" means "cmd" or "cmd A" or "cmd B".
+> It is not specified explicitely, but IMHO is quite natural. And it is
+> what is used in different manpages, see examples I have provided in my
+> previous post in this subthread.
+
+We are in all agreement on this one.
+
+>>     9. Ellipses ( "..." ) are used to denote that one or **more**
+>>     occurrences of an option or operand are allowed. When an option or
+>>     an operand followed by ellipses is enclosed in brackets, **zero** or
+>>     more options or operands can be specified.
+>> 
+>>         utility_name [-g option_argument]...[operand...]
+>
+> Note that one is not followed strictly, and one should take note of
+> that. For example to make sure that everybody knows that it is zero or
+> more one would use [<param>...], and to make use that it is one or
+> more one would use "<param> [<param>...]", just to be sure.
+
+That's what it says. Outside of "[]" the ellipses mean (1+), indiside
+"[]", by rules of the brackets, it means (0+). I forgot to paste the
+two examples. Here:
+
+    utility_name -f option_argument...[operand...]
+    utility_name [-g option_argument]...[operand...]
+
+Jari
 
 -- 
-Kevin Ballard
-http://kevin.sb.org
-kevin@sb.org
-http://www.tildesoft.com
-
-
-
---Apple-Mail-8-297441427
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGMjCCAusw
-ggJUoAMCAQICEDsG8BKvlrEW0HUBIxWIgjUwDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
-JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
-ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA3MDQyMzIxMjM0OVoXDTA4MDQyMjIxMjM0
-OVowVzEQMA4GA1UEBBMHQmFsbGFyZDEOMAwGA1UEKhMFS2V2aW4xFjAUBgNVBAMTDUtldmluIEJh
-bGxhcmQxGzAZBgkqhkiG9w0BCQEWDGtldmluQHNiLm9yZzCCASIwDQYJKoZIhvcNAQEBBQADggEP
-ADCCAQoCggEBAN/koURrN2ndrAiuAuHHrdFz+hLGQ7ZsXloGnObjALGOFY3Kmk2FCwAJPIha5GfM
-YFmZIoqxs+DbOWOn6KZ9hcQ5wf4EOgokayrEs3G72T+G8ZE4aXrw0CWJzKLjaIQeDZNZoHA44jlZ
-dG70wtZske898IoPz6YHpkcXiulllATfd8Pa7EgjPri5hKFiRXKI52OsOQTX6cNMMZJUIm8DvfQ5
-jmDyAtywNZGSGeUAMbWnpuLq7H18zpye2Q1hr+p4kucazMb+i7OHXPvX7yx2jMjhN5jw/gYkuzQQ
-JExp1fJyAZQ/av/ZgaxWchhhi4ziFXIlX3B09DTlOQlF53P3fi0CAwEAAaMpMCcwFwYDVR0RBBAw
-DoEMa2V2aW5Ac2Iub3JnMAwGA1UdEwEB/wQCMAAwDQYJKoZIhvcNAQEFBQADgYEAw/qc6zq+0Qy2
-XaodDlt2L6Vq1DzaVWjV152BFjidmsyhyCkCuyYdAcDp17opIfrNCBbOX5DdY6cpFpnSCxCZeIEB
-PDc3TaaFPtzr8qrpcNDohRSdt+qFLUeMHzlidAiAjvjI3tPKv3JLTakWdQR/XPHsg4mWoaVQU2hM
-HOQBw8EwggM/MIICqKADAgECAgENMA0GCSqGSIb3DQEBBQUAMIHRMQswCQYDVQQGEwJaQTEVMBMG
-A1UECBMMV2VzdGVybiBDYXBlMRIwEAYDVQQHEwlDYXBlIFRvd24xGjAYBgNVBAoTEVRoYXd0ZSBD
-b25zdWx0aW5nMSgwJgYDVQQLEx9DZXJ0aWZpY2F0aW9uIFNlcnZpY2VzIERpdmlzaW9uMSQwIgYD
-VQQDExtUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgQ0ExKzApBgkqhkiG9w0BCQEWHHBlcnNvbmFs
-LWZyZWVtYWlsQHRoYXd0ZS5jb20wHhcNMDMwNzE3MDAwMDAwWhcNMTMwNzE2MjM1OTU5WjBiMQsw
-CQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoGA1UE
-AxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0EwgZ8wDQYJKoZIhvcNAQEBBQAD
-gY0AMIGJAoGBAMSmPFVzVftOucqZWh5owHUEcJ3f6f+jHuy9zfVb8hp2vX8MOmHyv1HOAdTlUAow
-1wJjWiyJFXCO3cnwK4Vaqj9xVsuvPAsH5/EfkTYkKhPPK9Xzgnc9A74r/rsYPge/QIACZNenpruf
-ZdHFKlSFD0gEf6e20TxhBEAeZBlyYLf7AgMBAAGjgZQwgZEwEgYDVR0TAQH/BAgwBgEB/wIBADBD
-BgNVHR8EPDA6MDigNqA0hjJodHRwOi8vY3JsLnRoYXd0ZS5jb20vVGhhd3RlUGVyc29uYWxGcmVl
-bWFpbENBLmNybDALBgNVHQ8EBAMCAQYwKQYDVR0RBCIwIKQeMBwxGjAYBgNVBAMTEVByaXZhdGVM
-YWJlbDItMTM4MA0GCSqGSIb3DQEBBQUAA4GBAEiM0VCD6gsuzA2jZqxnD3+vrL7CF6FDlpSdf0wh
-uPg2H6otnzYvwPQcUCCTcDz9reFhYsPZOhl+hLGZGwDFGguCdJ4lUJRix9sncVcljd2pnDmOjCBP
-ZV+V2vf3h9bGCE6u9uo05RAaWzVNd+NWIXiC3CEZNd4ksdMdRv9dX2VPMYIDEDCCAwwCAQEwdjBi
-MQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoG
-A1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEDsG8BKvlrEW0HUBIxWI
-gjUwCQYFKw4DAhoFAKCCAW8wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUx
-DxcNMDgwMjAyMDkwMjIxWjAjBgkqhkiG9w0BCQQxFgQUeJhm2P1jSGpV/U1f9VhsCkNU3B8wgYUG
-CSsGAQQBgjcQBDF4MHYwYjELMAkGA1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5n
-IChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENB
-AhA7BvASr5axFtB1ASMViII1MIGHBgsqhkiG9w0BCRACCzF4oHYwYjELMAkGA1UEBhMCWkExJTAj
-BgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQZXJz
-b25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhA7BvASr5axFtB1ASMViII1MA0GCSqGSIb3DQEBAQUA
-BIIBANlbHD4g8lWpd4wS7lM0YInuuV7vLPrklFMBmmO0wLARtL/OTXhJb+kvrF7Q53DfqC5fl67I
-A5kTbGAs1vHND3v37AF9Xh3oThewn4VWUQvSTexOxpZ3y3Jxr6GTZuHD1t8SI+RU3FSdBkJkfi0c
-32d99CfXg81NLljZ/Peand0o4nLzRskj0FqPrmeqfe7uCfiuv2gdOSo83ZGLJecYteaQFz6/0z1y
-sSEl7ZQViFaHThv2Ud31NgbehqQJ8SnRzw/NNZRzUujH8JjAt9mulBMrZxfDcZRV+GN13FoK04sg
-KCxfhNJeGL/XQ5vrFSXcFO5GnlPISxk2AzWdp6dj5VgAAAAAAAA=
-
---Apple-Mail-8-297441427--
+Welcome to FOSS revolution: we fix and modify until it shines
