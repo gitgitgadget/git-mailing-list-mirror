@@ -1,254 +1,180 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Documentation/git-stash.txt: Adjust SYNOPSIS command syntaxes
-Date: Fri, 01 Feb 2008 16:38:08 -0800 (PST)
-Message-ID: <m3y7a46vmf.fsf@localhost.localdomain>
-References: <7ihp802o.fsf@blue.sea.net> <m37iho9b70.fsf@localhost.localdomain>
-	<1w7w966m.fsf@blue.sea.net> <m33asc94xn.fsf@localhost.localdomain>
-	<k5lo716v.fsf@blue.sea.net>
+From: Wink Saville <wink@saville.com>
+Subject: Re: git-svn segmetation fault
+Date: Fri, 01 Feb 2008 16:50:55 -0800
+Message-ID: <47A3BE6F.6080304@saville.com>
+References: <47A39DFD.9020905@saville.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Sat Feb 02 01:39:19 2008
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 02 01:51:40 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JL6Pd-0003lc-QI
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 01:39:18 +0100
+	id 1JL6bY-0006ft-Nk
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 01:51:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759039AbYBBAiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2008 19:38:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765876AbYBBAiR
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 19:38:17 -0500
-Received: from py-out-1112.google.com ([64.233.166.176]:7485 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765821AbYBBAiM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2008 19:38:12 -0500
-Received: by py-out-1112.google.com with SMTP id u52so1939819pyb.10
-        for <git@vger.kernel.org>; Fri, 01 Feb 2008 16:38:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=KwB2ukj4GMVWoY5A6Yy+evsm5gjylS1MJj4iG31qRlU=;
-        b=INR2ATZF+r3SgS41aiuGjzzsMfJvQikwIaJso6gzU2pHj+BRseZRNKIusx/YDIa8GG7N7wXs4/C1NGGSuT3a4YWdn3BTi0vuTKsgAydwyheX0w6XLCQQQ8E1TVh9l+Km/H89C/hnbD5l3nqdpYeU3Kz14ADORIRTKbvEn7v1Zbw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=tOINbYyFp2JC4AE75HM2lj6uAJIIkVZQqpyfY7eMasKKEaIRO9kQ6j/nw+SDSVEmGb/mmTOpLVwFtzbh3rwXP7q08gNpbhPT5mDRe2Xlaf/NFvym9lJGNmIXtY2kXEMrAKDj7wrll8Xn8hd09NSxKM3i0sxu78QKwUyQ7XG8MOg=
-Received: by 10.65.95.12 with SMTP id x12mr6825043qbl.71.1201912691102;
-        Fri, 01 Feb 2008 16:38:11 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.228.251])
-        by mx.google.com with ESMTPS id d2sm10847529nfc.11.2008.02.01.16.38.07
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 01 Feb 2008 16:38:08 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m120c2ce022797;
-	Sat, 2 Feb 2008 01:38:03 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m120c0Uk022793;
-	Sat, 2 Feb 2008 01:38:00 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <k5lo716v.fsf@blue.sea.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754272AbYBBAvC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2008 19:51:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755346AbYBBAvB
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 19:51:01 -0500
+Received: from an-out-0708.google.com ([209.85.132.250]:10501 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754959AbYBBAvA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2008 19:51:00 -0500
+Received: by an-out-0708.google.com with SMTP id d31so324526and.103
+        for <git@vger.kernel.org>; Fri, 01 Feb 2008 16:50:59 -0800 (PST)
+Received: by 10.100.239.11 with SMTP id m11mr8644787anh.87.1201913459152;
+        Fri, 01 Feb 2008 16:50:59 -0800 (PST)
+Received: from ?192.168.0.133? ( [70.91.206.233])
+        by mx.google.com with ESMTPS id m33sm4935906ele.17.2008.02.01.16.50.57
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 01 Feb 2008 16:50:58 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <47A39DFD.9020905@saville.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72198>
 
-Jari Aalto <jari.aalto@cante.net> writes:
-
-> * Fri 2008-02-01 Jakub Narebski <jnareb@gmail.com>
-> * Message-Id: m33asc94xn.fsf@localhost.localdomain
->> Jari Aalto <jari.aalto@cante.net> writes:
->>
->>> * Fri 2008-02-01 Jakub Narebski <jnareb@gmail.com>
->>> * Message-Id: m37iho9b70.fsf@localhost.localdomain
->>>>
->>>>
->>>> 'git-stash' (list | show [<stash>] | apply [<stash>] | clear)
->>>> 'git-stash' [save [<message>...]]
->>>>
->>>> Angle brackets if I understand correctly are meant to denote part
->>>> which you have to enter, the user supplied info (the reast ou have to
->>>> enter literally).
->>> 
->>> Nowhere I have seen "(" parenheses to mean "required". 
->>
->> The "(" parentheses does not mean "required". They do mean "group",
->> just like for regular expressions. So "A (B | C)" means "A B" or
->> "A C".
-> 
-> In regexp language yes, but in describing the command syntaxes, I do not
-> have come accross this. Would you have descriptive examples?
-
-It seems that I was mistaken about that. Junio suggestion of following
-others example and using "{}" curly brackets for grouping alternate
-choices is IMHO a good solution.
-
-...or perhaps not. For example synopsis for git-branch uses this syntax.
-
->>> The angle brackets are commonly used to tell that the part is to be
->>> required:
->>> 
->>>     command <option> <file ...>
->>
->> No, the "<" angle brackets are meant to denote: substitute your own
->> (user) input, and not use as literal value. So "command <option>"
->> mean select one of options ant put it in place of "<option>"
-> 
-> The angles primarily denote "required", and secondarily that you put
-> there there the asked input.
-
-The "<>" angle brackets does not denote required. Not in git manpages,
-not in other manpages.
-
->>       command (subcmd1 | subcmd2) <file ...>
-> 
-> That is highly uncommon. 
-
-Perhaps, but is used in git manpages.
-
-> In angle bracket notation this is unabiguous:
-> 
->         command <parameter1|parameter2> <file ...>
->                 A                       B
-> 
-> In angles, it's clear that both A and B are required; in A, you must
-> choose one.
-
-THAT is highly uncommon.
-
->> The "[" brackets mean both "optional" and "group" (to reduce number of
->> parentheses-like operators).
-> 
-> The bracket's primary meaning is to say "optional" in command
-> definitions. They do not "group"; they nest -- saying that there are
-> more "optionality" included.
-
-They do group. "command [A|B]" means "command" or "command A" or
-"command B".
-
->>> That's why I suggested to use:
->>> 
->>>     git stash <list | show [<stash>] | apply [<stash>] | clear>
->>>     git stash [save [<message>...]]
->>
->> I hope that I have explained above why I think it is wrong. IMHO the
->> "<" angle brackets mean: substitute your own input, and are not meant
->> for grouping (limiting where alternates start and where end).
-> 
-> Angle brackets do not mean "substitute your own input", but they deonote
-> a requirement; how the requirement is filled is done according to the
-> description in the documentation.
-> 
->     command <"save"|"load">
-> 
-> In unabiguous way to say that the choices for words are "save" and
-> "load" of which one of them must be supplied.
-
-In our (git) manual pages "<text>" denotes placeholders.
-
-The traditional manpages use /italics/ (usually rendered as
-_underlined_ text on terminals) to denote placeholders (user supplied
-input).
-
-I think we better decide on syntax used in SYNOPSIS section, and
-perhaps even document it CodingGuidelines
+Wink Saville wrote:
+> I was doing an git-svn dcommit and got a seg fault. The first
+> phase of updating svn completed and then it seg faulted on the
+> second. So I suspect I'm out of sync and need to recover,
+> any guidance appreciated.
+>
+> If it's any help the svn repo is at 
+> http://async-msgcomp.googlecode.com/svn.
+> If someone needs it I happen to have a backup of the git repo before
+> doing the commit and then after the seg fault.
+>
+> If there is any other information that someone needs I can try
+> to supply it.
+>
+> Cheers,
+>
+> Wink Saville
+<snip/>
 
 
--- >8 --
+<As an update, I first tried to re-execute the dcommit, but that didn't 
+work: />
 
->From http://www.linux.com/articles/34212
+wink@ic2d1:$ git-svn dcommit
+Committing to https://async-msgcomp.googlecode.com/svn/trunk ...
+Merge conflict during commit: Your file or directory 
+'android/hmc/src/com/saville' is probably out-of-date: The version 
+resource does not correspond to the resource within the transaction.  
+Either the requested version resource is out of date (needs to be 
+updated), or the requested version resource is newer than the 
+transaction root (restart the commit). at /usr/bin/git-svn line 420
 
-  The SYNOPSIS section describes the usage of the command. In general,
-  it should look very much like a traditional usage message. [...]
-  By convention, optional arguments are surrounded by square brackets.
+<I than did a rebase that got me back in sync: />
 
->From man(7)
-
-  SYNOPSIS    briefly describes the command or function's  interface.   For
-              commands,  this shows the syntax of the command and its argu-
-              ments (including options); boldface is used  for  as-is  text
-              and  italics  are  used  to  indicate  replaceable arguments.
-              Brackets ([]) surround optional arguments, vertical bars  (|)
-              separate  choices,  and  ellipses (...) can be repeated.
-
->From manpages(5), Darwin documentation
-
- MANUAL PAGE SYNTAX
-     In manual page syntax, anything in a normal text font is required
-     text.  Anything in a boldface font is a flag or a subcommand.
-     Anything underlined is a user-specified argument such as a
-     filename.
-
-     Any argument surrounded by brackets is considered to be optional.
-     For example, [ filename ] would indicate an optional filename
-     argument.
-
-     Flags, arguments, or subcommands separated by a vertical
-     separator (|) are mutually exclusive.  For example, if -a turns
-     on an option and -b turns off the option, the syntax for this
-     command might be -a | -b.
-
-     In some cases, you may even see entire groups of arguments
-     wrapped with brackets and separated by a vertical separator. This
-     is one way of show-ing showing ing that a command has more than
-     one valid syntax.  In other manual pages, this is expressed by
-     having multiple lines in the synopsis, each of which begins with
-     the command name.  The separated format is more com-mon common
-     mon (and more readable), but is not always possible for commands
-     with particularly complex syntax.
-
-     Finally, the most important notational convention is the use of
-     the ellipsis (...).  This indicates that additional arguments may
-     be added at this point.  Depending on the author, you may see
-     this written in one of two ways:
-
-     argument [ argument... ]
-
-     argument...
-
-
-Some SYNOPSIS examples (where we use the following convention:
-*bold*, _underlined_):
-
-  *patch* [_options_] [_originalfile_ [_patchfile_]]    (shows nesting)
-  wget [_option_]... [_URL_]...                         (shows ellipsis)
-  rpm {-q|--query} [select-options] [query-options]     (shows grouping)
-  date [-u|--utc|--universal] [MMDDhhmm[[CC]YY][.ss]]   (alt + grouping)
-  *kill [ -s* _signal_ *| -p ] [ -a ] [ -- ]* _pid_ ... (as above)
-
-Inside yum(8), shows alternate which is also grouping
-  * clean [ packages | headers | metadata | cache | dbcache | all ]
-
-
-Some SYNOPISIS examples from git manpages, in AsciiDoc syntax (sources):
-
-'git-add' [-n] [-v] [-f] [--interactive | -i] [--patch | -p] [-u] [--refresh]
-          [--] <filepattern>...
-
-'git-am' [--signoff] [--dotest=<dir>] [--keep] [--utf8 | --no-utf8]
-         [--3way] [--interactive] [--binary]
-         [--whitespace=<option>] [-C<n>] [-p<n>]
-         <mbox>|<Maildir>...
-
-'git-apply' [--stat] [--numstat] [--summary] [--check] [--index]
-	  [--apply] [--no-add] [--build-fake-ancestor <file>] [-R | --reverse]
-	  [--allow-binary-replacement | --binary] [--reject] [-z]
-	  [-pNUM] [-CNUM] [--inaccurate-eof] [--cached]
-	  [--whitespace=<nowarn|warn|fix|error|error-all>]
-	  [--exclude=PATH] [--verbose] [<patch>...]
-
-'git-branch' [--color | --no-color] [-r | -a]
-	   [-v [--abbrev=<length> | --no-abbrev]]
-	   [--contains <commit>]
-'git-branch' [--track | --no-track] [-l] [-f] <branchname> [<start-point>]
-'git-branch' (-m | -M) [<oldbranch>] <newbranch>
-'git-branch' (-d | -D) [-r] <branchname>...
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+wink@ic2d1:$ git-svn rebase
+Index mismatch: 94bbfa6d433192de71060d1274f0b0eab8f49a30 != 
+2fcd3a5cc5a9ca062a41d0ff5ac30073f4fa23b0
+rereading 8ce31b64294bdb063c64c50b9358533ac8746af4
+        D       android/mc/COPYING.LESSER
+        D       android/mc/COPYING
+        M       android/mc/AndroidManifest.xml
+        A       android/mc/src/com/saville/mc/Mc.java
+        A       android/mc/src/com/saville/mc/McService.java
+        A       android/mc/src/com/saville/mc/McMgr.java
+        A       android/mc/src/com/saville/mc/MsgPump.java
+        A       android/mc/src/com/saville/mc/McBase.java
+        A       android/mc/src/com/saville/mc/ActiveMc.java
+        A       android/mc/src/com/saville/mc/McActivity.java
+        D       android/mc/src/com/saville/android/mc/Mc.java
+        D       android/mc/src/com/saville/android/mc/McService.java
+        D       android/mc/src/com/saville/android/mc/McMgr.java
+        D       android/mc/src/com/saville/android/mc/ActiveMc.java
+        D       android/mc/src/com/saville/android/mc/McActivity.java
+        M       android/mc/src/com/saville/android/testmc/TestMc.java
+        M       android/mc/src/com/saville/android/testmc/TestMcService.java
+        D       android/mctest/COPYING.LESSER
+        D       android/mctest/COPYING
+        M       android/mctest/.classpath
+        M       android/mctest/src/com/saville/android/mctest/McTest.java
+        M       
+android/mctest/src/com/saville/android/mctest/McTestClient.java
+        D       android/serdes/COPYING.LESSER
+        D       android/serdes/COPYING
+        D       android/debug/COPYING.LESSER
+        D       android/debug/COPYING
+        D       android/hmc/COPYING.LESSER
+        D       android/hmc/COPYING
+        M       android/hmc/.classpath
+        D       android/hmc/src/com/saville/android/hmc/State.java
+        D       android/hmc/src/com/saville/android/hmc/Hmc.java
+        D       android/hmc/src/com/saville/android/hmc/IState.java
+        D       
+android/hmc/src/com/saville/android/testhmc/TestHmcClient.java
+        D       
+android/hmc/src/com/saville/android/testhmc/TestDeferredMsgs.java
+        D       
+android/hmc/src/com/saville/android/testhmc/TestUnhandledMsgs.java
+        D       
+android/hmc/src/com/saville/android/testhmc/TestHmcServer.java
+        M       android/hmc/src/com/saville/android/testhmc/TestHmc.java
+        A       android/hmc/src/com/saville/hmc/HmcBase.java
+        A       android/hmc/src/com/saville/hmc/ActiveHmc.java
+        A       android/hmc/src/com/saville/hmc/Hmc.java
+        A       android/hmc/src/com/saville/testhmc
+        D       android/TestNet1/COPYING.LESSER
+        D       android/TestNet1/COPYING
+        M       android/TestNet1/.classpath
+        M       
+android/TestNet1/src/com/saville/android/testnet1/TestNet1.java
+        M       java/mc/src/TestMc.java
+        D       java/mc/src/com/saville/mc/Looper.java
+        M       java/mc/src/com/saville/mc/Mc.java
+        M       java/mc/src/com/saville/mc/McMgr.java
+        A       java/mc/src/com/saville/mc/MsgPump.java
+        A       java/mc/src/com/saville/mc/McBase.java
+        M       java/mc/src/com/saville/mc/ActiveMc.java
+        M       java/mc/src/com/saville/mc/TcpMsgPipe.java
+        D       java/TestClient1/AGPLv3.LICENSE
+        A       java/hmcbase/.classpath
+        A       java/hmcbase/.project
+        D       java/serdes/COPYING.LESSER
+        D       java/serdes/COPYING
+        D       java/msgcomp/COPYING.LESSER
+        D       java/msgcomp/COPYING
+        A       java/msgcomp/src/com/saville/msgcomp/IHmc.java
+        A       java/msgcomp/src/com/saville/msgcomp/State.java
+        A       java/msgcomp/src/com/saville/msgcomp/IActiveMc.java
+        M       java/msgcomp/src/com/saville/msgcomp/IMc.java
+        A       java/msgcomp/src/com/saville/msgcomp/IState.java
+        M       java/msgcomp/src/com/saville/msgcomp/McId.java
+        A       java/msgcomp/src/com/saville/msgcomp/IMcMgr.java
+        D       java/TestMsgPipe1/AGPLv3.LICENSE
+        D       java/debug/COPYING.LESSER
+        D       java/debug/COPYING
+        D       java/TestMsgPipe2/AGPLv3.LICENSE
+        D       java/TestServer1/AGPLv3.LICENSE
+        A       java/hmc/.classpath
+        A       java/hmc/.project
+        A       java/hmc/src/TestHmc.java
+        A       java/hmc/src/com/saville/hmc/HmcBase.java
+        A       java/hmc/src/com/saville/hmc/ActiveHmc.java
+        A       java/hmc/src/com/saville/hmc/Hmc.java
+        A       java/hmc/src/com/saville/testhmc/Test.java
+        A       java/hmc/src/com/saville/testhmc/TestHmcClient.java
+        A       java/hmc/src/com/saville/testhmc/TestDeferredMsgs.java
+        A       java/hmc/src/com/saville/testhmc/TestUnhandledMsgs.java
+        A       java/hmc/src/com/saville/testhmc/TestHmcServer.java
+        A       java/src/HmcBase.java
+        A       java/src/McMgr.java
+        A       java/src/McBase.java
+        D       java/mcmaster/AGPLv3.LICENSE
+        A       COPYING.LESSER
+        A       COPYING
+        A       AGPLv3.LICENSE
+r52 = 2336c1c70e92d572f5a1b248249b4f857142bc51 (git-svn)
+First, rewinding head to replay your work on top of it...
+HEAD is now at 2336c1c... Refactor to reduce duplicated code and have 
+pure Java Hmc/ActiveHmc.
+Nothing to do.
