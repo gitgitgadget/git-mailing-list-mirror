@@ -1,82 +1,113 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Documentation/git-stash.txt: Adjust SYNOPSIS command syntax
-Date: Sat, 02 Feb 2008 02:23:19 -0800 (PST)
-Message-ID: <m3lk637j3k.fsf@localhost.localdomain>
-References: <7ihp802o.fsf@blue.sea.net> <ir185c73.fsf@blue.sea.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH] Add platform-independent .git "symlink"
+Date: Sat,  2 Feb 2008 11:36:19 +0100
+Message-ID: <1201948579-11807-1-git-send-email-hjemli@gmail.com>
 Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Sat Feb 02 11:24:00 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 02 11:38:19 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLFXR-0005bB-3N
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 11:23:57 +0100
+	id 1JLFlB-0000eG-Ly
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 11:38:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754528AbYBBKXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2008 05:23:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754544AbYBBKXX
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 05:23:23 -0500
-Received: from py-out-1112.google.com ([64.233.166.181]:7056 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754255AbYBBKXW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Feb 2008 05:23:22 -0500
-Received: by py-out-1112.google.com with SMTP id u52so2134582pyb.10
-        for <git@vger.kernel.org>; Sat, 02 Feb 2008 02:23:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=nydYaAvoMqzMdKJ0cEVH3p6wu+sqJ1uzw6sTJbNM4Yc=;
-        b=VpRQI5NMzebvkwPwHCPW1afJiM6NGekjQNsAMk9W+KxLja6NbMWP1yCpg/mA8o96MGkdB3JmiFuIKgGNQSA3LrU9OkroK1DViFHmQqTKyko56nUeDQq6Ly2U1SEh7SnkFQ5K74q9yNHAy9vYvwWx3lhFE2fw8OKJhvaWhHcWsU4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=hIvS6RNtxRR+gkFmvW2fvtTuY4esSz8bbV3VM3VLKP5bW4WgwGU/InfwDXWz7v+MhW051KdHI05Hq98hcf66+z2LwRMWLQQmnbfLpHcEdW76HLtWAyoN6LqFJVxXYO49vICj9qEvMCGihS6l4+c8TVLUGaqZHmHjFgFSeL6CyDU=
-Received: by 10.65.52.1 with SMTP id e1mr7738808qbk.79.1201947801163;
-        Sat, 02 Feb 2008 02:23:21 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.228.251])
-        by mx.google.com with ESMTPS id 1sm12210351nfv.3.2008.02.02.02.23.18
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 02 Feb 2008 02:23:19 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m12ANDGO026523;
-	Sat, 2 Feb 2008 11:23:14 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m12ANCGg026520;
-	Sat, 2 Feb 2008 11:23:12 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <ir185c73.fsf@blue.sea.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1761618AbYBBKhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2008 05:37:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760623AbYBBKhd
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 05:37:33 -0500
+Received: from mail43.e.nsc.no ([193.213.115.43]:41475 "EHLO mail43.e.nsc.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759927AbYBBKhc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 05:37:32 -0500
+Received: from localhost.localdomain (ti231210a341-0149.bb.online.no [88.88.168.149])
+	by mail43.nsc.no (8.13.8/8.13.5) with ESMTP id m12AbGDc012966;
+	Sat, 2 Feb 2008 11:37:17 +0100 (MET)
+X-Mailer: git-send-email 1.5.4.GIT-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72244>
 
-Jari Aalto <jari.aalto@cante.net> writes:
+This patch allows .git to be a regular textfile containing the path of
+the real git directory (formatted like "GITDIR: <path>\n"), which is
+useful on platforms lacking support for real symlinks.
 
-I think it would beb better if you split this patch in two,
-as it deals with two separate issues, and in one case it doesn't
-deal with the issue fully
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+---
 
-> Change (list|...) to {list|...} to denote required commands.
+All tests pass, but git-submodule needs to be updated to handle this
+feature. Incidentally, git-submodule might also be the first command
+wanting to use this feature; it probably should clone submodules into
+a bare repository in GIT_DIR/submodules/<modulename> of the containing
+repository to prevent dataloss during submodule update etc.
 
-This is one thing, and I think when you are resubmitting this patch
-for discussion (with Cc: to the authors that introduced the (-a|-b)
-syntax) you should change (list|...) to {list|...} *everywhere* in the
-git manpages.
+ setup.c |   38 ++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 38 insertions(+), 0 deletions(-)
 
-> Adjust
-> the 'save' command syntax to better reflect the call parameters:
-> [save] [message...] => [save [message...]].
-
-This is just simple bugfix in git-stash synopsis, and I think this
-patch would be accepted (especially now that it is after 1.5.4
-released, and after feature freeze) without doubt.
-
+diff --git a/setup.c b/setup.c
+index adede16..87d6115 100644
+--- a/setup.c
++++ b/setup.c
+@@ -239,6 +239,38 @@ static int check_repository_format_gently(int *nongit_ok)
+ }
+ 
+ /*
++ * Try to read the location of the git directory from the .git file,
++ * return path to git directory if found.
++ * Format of the .git file is
++ *    GITDIR: <path>\n
++ */
++static const char *read_gitfile_gently(const char *path)
++{
++	static char buf[PATH_MAX + 10];  /* "GITDIR: " + "\n" + "\0" */
++	struct stat st;
++	FILE *f;
++	size_t len;
++
++	if (stat(path, &st))
++		return NULL;
++	if (!S_ISREG(st.st_mode) || st.st_size > PATH_MAX + 9)
++		return NULL;
++	f = fopen(path, "r");
++	if (!f)
++		return NULL;
++	len = fread(buf, 1, st.st_size, f);
++	fclose(f);
++	if (len != st.st_size)
++		return NULL;
++	if (len < 10 || buf[len - 1] != '\n' || strncmp(buf, "GITDIR: ", 8))
++		return NULL;
++	buf[len - 1] = '\0';
++	if (!is_git_directory(buf + 8))
++		return NULL;
++	return buf + 8;
++}
++
++/*
+  * We cannot decide in this function whether we are in the work tree or
+  * not, since the config can only be read _after_ this function was called.
+  */
+@@ -247,6 +279,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 	const char *work_tree_env = getenv(GIT_WORK_TREE_ENVIRONMENT);
+ 	static char cwd[PATH_MAX+1];
+ 	const char *gitdirenv;
++	const char *gitfile_dir;
+ 	int len, offset;
+ 
+ 	/*
+@@ -302,6 +335,11 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 	 */
+ 	offset = len = strlen(cwd);
+ 	for (;;) {
++		gitfile_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
++		if (gitfile_dir) {
++			setenv(GIT_DIR_ENVIRONMENT, gitfile_dir, 1);
++			break;
++		}
+ 		if (is_git_directory(DEFAULT_GIT_DIR_ENVIRONMENT))
+ 			break;
+ 		if (is_git_directory(".")) {
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.5.4.GIT-dirty
