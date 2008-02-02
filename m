@@ -1,68 +1,78 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: Re: [PATCH] --format=pretty: new modifiers cID, cIS, CIY
-Date: Sat, 02 Feb 2008 03:15:38 +0200
-Organization: Private
-Message-ID: <7iho6tvp.fsf@blue.sea.net>
-References: <odb072ca.fsf@blue.sea.net>
-	<7vir188ej4.fsf@gitster.siamese.dyndns.org>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: [PATCH] Avoid segfault when passed malformed refspec
+Date: Fri, 1 Feb 2008 20:26:02 -0500
+Message-ID: <BAYC1-PASMTP11F54ED60A103C52F2406AAE310@CEZ.ICE>
+References: <BAYC1-PASMTP124F1019C2D2CD7AA81CF5AE310@CEZ.ICE>
+	<7vzluk6ugn.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 02 02:21:09 2008
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 02 02:26:50 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JL742-0005Ef-OJ
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 02:21:03 +0100
+	id 1JL79a-0006GX-VE
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 02:26:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759655AbYBBBUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2008 20:20:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759558AbYBBBUK
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 20:20:10 -0500
-Received: from main.gmane.org ([80.91.229.2]:53346 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755276AbYBBBUI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2008 20:20:08 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1JL735-0007Ss-1K
-	for git@vger.kernel.org; Sat, 02 Feb 2008 01:20:03 +0000
-Received: from a91-155-183-103.elisa-laajakaista.fi ([91.155.183.103])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 02 Feb 2008 01:20:03 +0000
-Received: from jari.aalto by a91-155-183-103.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 02 Feb 2008 01:20:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-183-103.elisa-laajakaista.fi
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
-Cancel-Lock: sha1:8G4Tmbdi02QLe17IgqeMm4eFzME=
+	id S1760634AbYBBB0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2008 20:26:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760530AbYBBB0D
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 20:26:03 -0500
+Received: from bay0-omc2-s36.bay0.hotmail.com ([65.54.246.172]:48780 "EHLO
+	bay0-omc2-s36.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755929AbYBBB0C (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Feb 2008 20:26:02 -0500
+Received: from BAYC1-PASMTP11 ([65.54.191.184]) by bay0-omc2-s36.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 1 Feb 2008 17:26:01 -0800
+X-Originating-IP: [74.15.77.168]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([74.15.77.168]) by BAYC1-PASMTP11.CEZ.ICE over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Fri, 1 Feb 2008 17:26:00 -0800
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with smtp (Exim 4.43)
+	id 1JL84k-0008Jo-Up; Fri, 01 Feb 2008 21:25:50 -0500
+In-Reply-To: <7vzluk6ugn.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Sylpheed 2.4.8 (GTK+ 2.12.5; i686-pc-linux-gnu)
+X-OriginalArrivalTime: 02 Feb 2008 01:26:01.0023 (UTC) FILETIME=[91E45CF0:01C8653A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72202>
 
-* Fri 2008-02-01 Junio C Hamano <gitster@pobox.com>
-> But I do not like the idea of adding more short-hand format this
-> way.
+On Fri, 01 Feb 2008 17:03:04 -0800
+Junio C Hamano <gitster@pobox.com> wrote:
 
-I'd welcome if this mimimum set of ISO date handling woudl be included,
-because I feel they address the needs more versatily than the current
-%ci, which is too long with down to TZ.
+> Sean <seanlkml@sympatico.ca> writes:
+> >
+> > +		if (!rs[i].dst)
+> > +			rs[i].dst = xstrdup("");
+>
+> I haven't followed the codepath carefully before responding, it
+> feels like sweeping the breakage under the carpet, without
+> fixing the real issue.
+> 
+> If the problem is a badly formatted input, shouldn't the code
+> die loudly with diagnostic message, instead of pretending as if
+> the user said something different (and sensible), especially
+> without telling the user that that is what the code is doing?
+> 
 
-I find it that the YYY-MM-DD HH:MM meets the needs 99% of the case, like
-in ls(1) listing when the LC_* is properly configured.
+Hey Junio,
 
-[extensible syntax]
-> 	%c(name|initial) %c(time|local,HH:MM) %c(time|gmt,HH) <%c(email)>
+You're probably right.  It seemed like a reasonable fix at the time
+without having to understand the code too deeply.  With the above
+patch, the code does complain to the user:
 
-This would be good. In the mean time, when we wait for this feature to
-surface, the current patch would address immediate needs.
+  $ git-fetch ../repo refs/heads/* :refs/heads/* 
+  fatal: * refusing to create funny ref 'floop' locally
 
-Jari
+But surely a better error could be shown if fetch is made to
+squawk whenever a destination ref is omitted.   I just wasn't
+confident enough in the code, or in knowing what refspec rules
+are universally applicable.
 
--- 
-Welcome to FOSS revolution: we fix and modify until it shines
+Sean
