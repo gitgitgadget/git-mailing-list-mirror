@@ -1,97 +1,61 @@
-From: "Roger C. Soares" <rogersoares@intelinet.com.br>
-Subject: [EGIT PATCH] Remove unnecessary semicolon.
-Date: Sat,  2 Feb 2008 00:24:07 -0200
-Message-ID: <1201919047-10822-1-git-send-email-rogersoares@intelinet.com.br>
-Cc: robin.rosenberg@dewire.com,
-	"Roger C. Soares" <rogersoares@intelinet.com.br>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH] Documentation/git-stash.txt: Adjust SYNOPSIS command syntaxes
+Date: Sat, 02 Feb 2008 04:17:20 +0200
+Organization: Private
+Message-ID: <myqk5cgf.fsf@blue.sea.net>
+References: <7ihp802o.fsf@blue.sea.net> <m37iho9b70.fsf@localhost.localdomain>
+	<1w7w966m.fsf@blue.sea.net> <m33asc94xn.fsf@localhost.localdomain>
+	<k5lo716v.fsf@blue.sea.net>
+	<7vejbw8die.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 02 03:18:41 2008
+X-From: git-owner@vger.kernel.org Sat Feb 02 03:18:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JL7xo-0000VA-ST
+	id 1JL7xp-0000VA-Gs
 	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 03:18:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757333AbYBBCR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Feb 2008 21:17:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756872AbYBBCR5
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 21:17:57 -0500
-Received: from cvxbsd.convex.com.br ([200.152.177.10]:1413 "HELO
-	cvxbsd.convex.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1755827AbYBBCR4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Feb 2008 21:17:56 -0500
-Received: (qmail 6748 invoked by uid 0); 2 Feb 2008 00:20:23 -0200
-Received: from rogersoares@intelinet.com.br by cvxbsd.convex.com.br by uid 82 with qmail-scanner-1.20rc3 
- (uvscan: v4.3.20/v4817.  Clear:RC:1:. 
- Processed in 0.604066 secs); 02 Feb 2008 02:20:23 -0000
-Received: from unknown (HELO localhost.localdomain) (189.5.222.172)
-  by cvxbsd.convex.com.br with SMTP; 2 Feb 2008 02:20:22 -0000
-X-Mailer: git-send-email 1.5.3.7
+	id S1757386AbYBBCSB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Feb 2008 21:18:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757373AbYBBCSA
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Feb 2008 21:18:00 -0500
+Received: from main.gmane.org ([80.91.229.2]:45170 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756872AbYBBCR7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Feb 2008 21:17:59 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JL7x6-0001FD-Hv
+	for git@vger.kernel.org; Sat, 02 Feb 2008 02:17:56 +0000
+Received: from a91-155-183-103.elisa-laajakaista.fi ([91.155.183.103])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 02 Feb 2008 02:17:56 +0000
+Received: from jari.aalto by a91-155-183-103.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 02 Feb 2008 02:17:56 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-183-103.elisa-laajakaista.fi
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
+Cancel-Lock: sha1:TFluvv6tJMpzvhaopx8BMbvqyjk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72209>
 
-Signed-off-by: Roger C. Soares <rogersoares@intelinet.com.br>
----
- .../egit/core/internal/mapping/GitFileHistory.java |    1 -
- .../src/org/spearce/jgit/lib/GitIndex.java         |    2 +-
- .../org/spearce/jgit/lib/TopologicalWalker.java    |    2 +-
- .../src/org/spearce/jgit/lib/WorkDirCheckout.java  |    2 +-
- 4 files changed, 3 insertions(+), 4 deletions(-)
+* Fri 2008-02-01 Junio C Hamano <gitster@pobox.com>
+* Message-Id: 7vejbw8die.fsf@gitster.siamese.dyndns.org
 
-diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitFileHistory.java b/org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitFileHistory.java
-index 9e683a5..adf422d 100644
---- a/org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitFileHistory.java
-+++ b/org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitFileHistory.java
-@@ -232,7 +232,6 @@ public class GitFileHistory extends FileHistory implements IAdaptable {
- 					}
- 				else
- 					activeDiffLeafId = ObjectId.zeroId();
--					;
- 			}
- 
- 			Collection<IFileRevision> githistory;
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/GitIndex.java b/org.spearce.jgit/src/org/spearce/jgit/lib/GitIndex.java
-index bdcb71a..1fbd7f7 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/GitIndex.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/GitIndex.java
-@@ -653,7 +653,7 @@ public class GitIndex {
- 			if (updateNeeded)
- 				flags |= 0x4000;
- 			else
--				flags &= ~0x4000;;
-+				flags &= ~0x4000;
- 		}
- 	}
- 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/TopologicalWalker.java b/org.spearce.jgit/src/org/spearce/jgit/lib/TopologicalWalker.java
-index 16af0c6..0e937cb 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/TopologicalWalker.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/TopologicalWalker.java
-@@ -54,7 +54,7 @@ public class TopologicalWalker extends Walker {
- 			super(repostory, starts, relativeResourceName, leafIsBlob,
- 					followMainOnly, merges, activeDiffLeafId);
- 			this.returnAll = returnAll;
--			topoSorter = new TopologicalSorter<ObjectId>() {;
-+			topoSorter = new TopologicalSorter<ObjectId>() {
- 				@Override
- 				protected boolean filter(ObjectId element) {
- 					return returnAll ? true : collected.containsKey(element);
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/WorkDirCheckout.java b/org.spearce.jgit/src/org/spearce/jgit/lib/WorkDirCheckout.java
-index 6159469..3dde864 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/WorkDirCheckout.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/WorkDirCheckout.java
-@@ -124,7 +124,7 @@ public class WorkDirCheckout {
- 		}
- 	}
- 
--	ArrayList<String> conflicts  = new ArrayList<String>();;
-+	ArrayList<String> conflicts  = new ArrayList<String>();
- 	ArrayList<String> removed = new ArrayList<String>();
- 
- 	protected Tree head = null;
+> If we used braces {} it _might_ have been more similar to what other
+> people have traditionally done.
+
+I concur with { ... } (as earlier), I'll submit patches for those.
+
+Jari
+
 -- 
-1.5.3.7
+Welcome to FOSS revolution: we fix and modify until it shines
