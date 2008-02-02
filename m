@@ -1,86 +1,70 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: Re: [PATCH] Documentation/git-reset.txt: Use HEAD~N syntax everywhere (unify examples)
-Date: Sat, 02 Feb 2008 22:15:20 +0200
-Organization: Private
-Message-ID: <63x73yjr.fsf@blue.sea.net>
-References: <3asc6spe.fsf@blue.sea.net>
-	<7v7iho6p2m.fsf@gitster.siamese.dyndns.org>
-	<20080202084406.GA15305@glandium.org> <8x235xa8.fsf@blue.sea.net>
-	<20080202161813.GA19797@fieldses.org>
+From: Steven Walter <stevenrwalter@gmail.com>
+Subject: Re: git-svn segmetation fault
+Date: Sat, 2 Feb 2008 16:03:48 -0500
+Message-ID: <20080202210348.GA11722@dervierte>
+References: <47A39DFD.9020905@saville.com> <47A3BE6F.6080304@saville.com> <20080202034258.GA27814@dervierte> <47A3E9A8.1060102@saville.com> <20080202160332.GA25945@dervierte> <47A4BCE8.5030308@saville.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 02 21:16:45 2008
+Cc: git@vger.kernel.org
+To: Wink Saville <wink@saville.com>
+X-From: git-owner@vger.kernel.org Sat Feb 02 22:04:42 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLOmz-0001qi-Lg
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 21:16:38 +0100
+	id 1JLPXU-0006wd-VX
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 22:04:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760322AbYBBUQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2008 15:16:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760454AbYBBUQF
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 15:16:05 -0500
-Received: from main.gmane.org ([80.91.229.2]:46348 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760322AbYBBUQD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Feb 2008 15:16:03 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JLOmN-0003FV-8H
-	for git@vger.kernel.org; Sat, 02 Feb 2008 20:15:59 +0000
-Received: from a91-155-183-103.elisa-laajakaista.fi ([91.155.183.103])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 02 Feb 2008 20:15:59 +0000
-Received: from jari.aalto by a91-155-183-103.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 02 Feb 2008 20:15:59 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-183-103.elisa-laajakaista.fi
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
-Cancel-Lock: sha1:uLHOtryk+U5YCikBFWbpyjyk7MM=
+	id S1756849AbYBBVEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2008 16:04:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756400AbYBBVEH
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 16:04:07 -0500
+Received: from wa-out-1112.google.com ([209.85.146.178]:27900 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752775AbYBBVEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 16:04:04 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1732237wah.23
+        for <git@vger.kernel.org>; Sat, 02 Feb 2008 13:04:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=ucnjf2w4Sabr6d7s+vczYUFIOLGjlWvUNb726lBaMJo=;
+        b=diUprpjo3Z6K0YvPCtSTH8A/Xx/kaETP20592HbW9hbClUgeydObFisQhMmAYNq+EeTytKn2xnSLLS/GPW4BMNBf1zq86JVL97xHqlHlhSn/haqj1WufwHhsRe/OXqz+hiabDyEvRvpxDOq3LWp+XbFnXwpdb0pNg4XgLBGMUJo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=cQN11czgkDNvUm6k8NUqq7NajipnhS0gVSVLvg/QAQRs2aOXMrafGj0bQBPpE+cIQjcT6yWBLJACNyyR8gzZYVRtlCjmJVywXW4JfwUJfwBhS7X/RRx0aBZvCsoWGjh73SC3dPMBx+0C1NtHDBYemz1sIol3g6fBrTk0XbWrgyc=
+Received: by 10.114.175.16 with SMTP id x16mr5470353wae.116.1201986243751;
+        Sat, 02 Feb 2008 13:04:03 -0800 (PST)
+Received: from dasbrennen.isa-geek.org ( [76.177.39.93])
+        by mx.google.com with ESMTPS id i20sm6749682wxd.2.2008.02.02.13.03.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 02 Feb 2008 13:04:01 -0800 (PST)
+Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
+	id 430AF36400; Sat,  2 Feb 2008 16:03:48 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <47A4BCE8.5030308@saville.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72302>
 
-* Sat 2008-02-02 J. Bruce Fields <bfields@fieldses.org>
-* Message-Id: 20080202161813.GA19797@fieldses.org
-> On Sat, Feb 02, 2008 at 02:59:43PM +0200, Jari Aalto wrote:
->> I use HEAD~1 always, because I think the consistency in learning the
->> most important factor.
->> 
->> It does not matter what advanced users use. The documentation should
->> primarily focus the newcomers.
+On Sat, Feb 02, 2008 at 10:56:40AM -0800, Wink Saville wrote:
+> <I did that but a rebase command resulted in: />
 >
-> That could have been an argument for disallowing the HEAD^ syntax
-> entirely, but it's too late for that.
+> wink@ic2d1:$ git svn rebase
+> Unable to determine upstream SVN information from working tree history
 >
-> Even if we eradicated all mention of ^ from the in-tree documentation,
-> it would still show up in lots of out-of-tree documentation and
-> examples.  So we have to introduce it to newbies.  Fortunately, it isn't
-> that hard.
->
-> One way we can help them is by continuing to mix the two in examples, so
-> let's continue with the current mixture.
+> <I've bee using git-svn for a few days without trouble. Do I need
+> the do another "git svn clone" using the base url rather than
+> pointing to the trunk? />
 
-
-Yeah let's continue as usual. And every time you need to explain the
-difference, when you could just teach one. The is no doubt that
-
-    HEAD~N
-
-is superior to
-
-    HEAD^^^^^^^^^^^^^^^^^^^^^^^
-
-Count that. Optimizing keystrokes is hardly ever a brilliant idea from
-learning perspective.
-
-Jari
-
+You shouldn't have to clone again.  First time removing .git/svn, then
+running "git svn fetch" (which ought to rebuild what was there).  You
+ought to be able to rebase after that.
 -- 
-Welcome to FOSS revolution: we fix and modify until it shines
+-Steven Walter <stevenrwalter@gmail.com>
+Freedom is the freedom to say that 2 + 2 = 4
+B2F1 0ECC E605 7321 E818  7A65 FC81 9777 DC28 9E8F 
