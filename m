@@ -1,128 +1,70 @@
-From: Tommy Thorn <tommy-git@thorn.ws>
-Subject: [PATCH 2/3] git-p4: support exclude paths
-Date: Sun,  3 Feb 2008 01:21:05 -0800
-Message-ID: <dd96ea0b47e8ec67ef14e4e954aa9ec7bec3c295.1202029604.git.tommy-git@thorn.ws>
-References: <9439626e72a267ff29cb6eaa1c733ec4641341d9.1202029604.git.tommy-git@thorn.ws>
-Cc: Tommy Thorn <tommy-git@thorn.ws>
+From: =?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
+Subject: [PATCH] Unify the argument of the parameter -m
+Date: Sun,  3 Feb 2008 00:58:07 +0100
+Message-ID: <1201996688-5559-2-git-send-email-joerg@alea.gnuu.de>
+References: <1201996688-5559-1-git-send-email-joerg@alea.gnuu.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?q?J=C3=B6rg=20Sommer?= <joerg@alea.gnuu.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 03 11:03:55 2008
+X-From: git-owner@vger.kernel.org Sun Feb 03 11:34:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLbhZ-0001K7-5l
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 11:03:53 +0100
+	id 1JLcBc-0000IH-Lh
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 11:34:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758452AbYBCKDD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 05:03:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760493AbYBCKDC
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 05:03:02 -0500
-Received: from server204.webhostingpad.com ([69.65.0.218]:60868 "EHLO
-	server204.webhostingpad.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758301AbYBCKDA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Feb 2008 05:03:00 -0500
-Received: from 208.65.183.75.static.etheric.net ([208.65.183.75] helo=localhost.localdomain)
-	by server204.webhostingpad.com with esmtpa (Exim 4.68)
-	(envelope-from <tommy-git@thorn.ws>)
-	id 1JLb2C-0006wh-3Z; Sun, 03 Feb 2008 03:21:08 -0600
-X-Mailer: git-send-email 1.5.4.rc5.17.g22b645
-In-Reply-To: <9439626e72a267ff29cb6eaa1c733ec4641341d9.1202029604.git.tommy-git@thorn.ws>
-In-Reply-To: <9439626e72a267ff29cb6eaa1c733ec4641341d9.1202029604.git.tommy-git@thorn.ws>
-References: <9439626e72a267ff29cb6eaa1c733ec4641341d9.1202029604.git.tommy-git@thorn.ws>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - server204.webhostingpad.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - thorn.ws
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752977AbYBCKeW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Feb 2008 05:34:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752944AbYBCKeV
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 05:34:21 -0500
+Received: from banki.eumelnet.de ([83.246.114.63]:2814 "EHLO uucp.gnuu.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752109AbYBCKeT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 05:34:19 -0500
+Received: by uucp.gnuu.de (Postfix, from userid 10)
+	id D1BB3488043; Sun,  3 Feb 2008 11:00:17 +0100 (CET)
+Received: from ibook.localnet ([192.168.0.5] helo=alea.gnuu.de)
+	by alea.gnuu.de with esmtp (Exim 4.63)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JLbX7-0001St-E8
+	for git@vger.kernel.org; Sun, 03 Feb 2008 10:53:05 +0100
+Received: from joerg by alea.gnuu.de with local (Exim 4.69)
+	(envelope-from <joerg@alea.gnuu.de>)
+	id 1JLSFM-0001oM-L4; Sun, 03 Feb 2008 00:58:08 +0100
+X-Mailer: git-send-email 1.5.4.rc5
+In-Reply-To: <1201996688-5559-1-git-send-email-joerg@alea.gnuu.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72344>
 
-Teach git-p4 about the -/ option which adds depot paths to the exclude
-list, used when cloning. The option is chosen such that the natural
-Perforce syntax works, eg:
+In the text, the agument of -m is <master> which should be used in the
+command synopsis, too.
 
-  git p4 clone //branch/path/... -//branch/path/{large,old}/...
-
-Trailing ... on exclude paths are optional.
-
-This is a generalization of a change by Dmitry Kakurin (thanks).
-
-Signed-off-by: Tommy Thorn <tommy-git@thorn.ws>
+Signed-off-by: J=C3=B6rg Sommer <joerg@alea.gnuu.de>
 ---
- contrib/fast-import/git-p4 |   26 ++++++++++++++++++++++----
- 1 files changed, 22 insertions(+), 4 deletions(-)
+ Documentation/git-remote.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 553e237..2340876 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -876,18 +876,25 @@ class P4Sync(Command):
-         self.keepRepoPath = False
-         self.depotPaths = None
-         self.p4BranchesInGit = []
-+        self.cloneExclude = []
- 
-         if gitConfig("git-p4.syncFromOrigin") == "false":
-             self.syncWithOrigin = False
- 
-     def extractFilesFromCommit(self, commit):
-+        self.cloneExclude = [re.sub(r"\.\.\.$", "", path)
-+                             for path in self.cloneExclude]
-         files = []
-         fnum = 0
-         while commit.has_key("depotFile%s" % fnum):
-             path =  commit["depotFile%s" % fnum]
- 
--            found = [p for p in self.depotPaths
--                     if path.startswith (p)]
-+            if [p for p in self.cloneExclude
-+                if path.startswith (p)]:
-+                found = False
-+            else:
-+                found = [p for p in self.depotPaths
-+                         if path.startswith (p)]
-             if not found:
-                 fnum = fnum + 1
-                 continue
-@@ -1658,13 +1665,23 @@ class P4Clone(P4Sync):
-         P4Sync.__init__(self)
-         self.description = "Creates a new git repository and imports from Perforce into it"
-         self.usage = "usage: %prog [options] //depot/path[@revRange]"
--        self.options.append(
-+        self.options += [
-             optparse.make_option("--destination", dest="cloneDestination",
-                                  action='store', default=None,
--                                 help="where to leave result of the clone"))
-+                                 help="where to leave result of the clone"),
-+            optparse.make_option("-/", dest="cloneExclude",
-+                                 action="append", type="string",
-+                                 help="exclude depot path")
-+        ]
-         self.cloneDestination = None
-         self.needsGit = False
- 
-+    # This is required for the "append" cloneExclude action
-+    def ensure_value(self, attr, value):
-+        if not hasattr(self, attr) or getattr(self, attr) is None:
-+            setattr(self, attr, value)
-+        return getattr(self, attr)
-+
-     def defaultDestination(self, args):
-         ## TODO: use common prefix of args?
-         depotPath = args[0]
-@@ -1688,6 +1705,7 @@ class P4Clone(P4Sync):
-             self.cloneDestination = depotPaths[-1]
-             depotPaths = depotPaths[:-1]
- 
-+        self.cloneExclude = ["/"+p for p in self.cloneExclude]
-         for p in depotPaths:
-             if not p.startswith("//"):
-                 return False
--- 
-1.5.4.rc5.17.g22b645
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.tx=
+t
+index 10f6fa5..2cbd1f7 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git-remote'
+-'git-remote' add [-t <branch>] [-m <branch>] [-f] [--mirror] <name> <u=
+rl>
++'git-remote' add [-t <branch>] [-m <master>] [-f] [--mirror] <name> <u=
+rl>
+ 'git-remote' rm <name>
+ 'git-remote' show <name>
+ 'git-remote' prune <name>
+--=20
+1.5.4.rc5
