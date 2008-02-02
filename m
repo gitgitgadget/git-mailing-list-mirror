@@ -1,150 +1,122 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: Re: [PATCH] Documentation/git-stash.txt: Adjust SYNOPSIS command syntaxes
-Date: Sat, 02 Feb 2008 16:32:56 +0200
-Organization: Private
-Message-ID: <k5ln4eef.fsf@blue.sea.net>
-References: <7ihp802o.fsf@blue.sea.net> <m37iho9b70.fsf@localhost.localdomain>
-	<1w7w966m.fsf@blue.sea.net> <m33asc94xn.fsf@localhost.localdomain>
-	<k5lo716v.fsf@blue.sea.net> <m3y7a46vmf.fsf@localhost.localdomain>
-	<tzks5d8d.fsf@blue.sea.net> <m3tzks6qfm.fsf@localhost.localdomain>
-	<ejbv6813.fsf@blue.sea.net> <m3prvf7ku2.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: asciidoc-discuss@lists.metaperl.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 02 15:34:27 2008
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH] Add tests for .git file
+Date: Sat,  2 Feb 2008 16:02:51 +0100
+Message-ID: <1201964571-4801-1-git-send-email-hjemli@gmail.com>
+References: <1201948579-11807-1-git-send-email-hjemli@gmail.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 02 16:05:56 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLJRl-0005xo-5G
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 15:34:21 +0100
+	id 1JLJvj-0007Sb-8H
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 16:05:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754990AbYBBOdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2008 09:33:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752360AbYBBOdo
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 09:33:44 -0500
-Received: from main.gmane.org ([80.91.229.2]:49299 "EHLO ciao.gmane.org"
+	id S1758168AbYBBPEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2008 10:04:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758045AbYBBPEf
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 10:04:35 -0500
+Received: from mail44.e.nsc.no ([193.213.115.44]:39226 "EHLO mail44.e.nsc.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753888AbYBBOdn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Feb 2008 09:33:43 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JLJR7-0004N5-Iw
-	for git@vger.kernel.org; Sat, 02 Feb 2008 14:33:41 +0000
-Received: from a91-155-183-103.elisa-laajakaista.fi ([91.155.183.103])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 02 Feb 2008 14:33:41 +0000
-Received: from jari.aalto by a91-155-183-103.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 02 Feb 2008 14:33:41 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-183-103.elisa-laajakaista.fi
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
-Cancel-Lock: sha1:Ds1X6dwtpb8nSsm8D8SIVY37TLY=
+	id S1755529AbYBBPEe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 10:04:34 -0500
+Received: from localhost.localdomain (ti231210a341-0149.bb.online.no [88.88.168.149])
+	by mail44.nsc.no (8.13.8/8.13.5) with ESMTP id m12F3njN008203;
+	Sat, 2 Feb 2008 16:03:50 +0100 (MET)
+X-Mailer: git-send-email 1.5.4.GIT-dirty
+In-Reply-To: <1201948579-11807-1-git-send-email-hjemli@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72279>
 
-* Sat 2008-02-02 Jakub Narebski <jnareb@gmail.com>
-* Message-Id: m3prvf7ku2.fsf@localhost.localdomain
->>>> http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap12.html
->> 
->>     4. Frequently, names of parameters that _require_ substitution(...)
->> 
->>         <parameter name>
->
-> Excuse me, but item is "required" if it is not marked (...)
-> Angle brackets does not mean required parameters. Please read
-> carefully; they denote parameters which _require substitution_ (note
-> those _two_ words together), i.e. parameters that the user need to
-> replace with appropriate input.
+Verify that the basic plumbing works when .git is a file pointing at
+the real git directory.
 
-We're talking about the same subject. You emphasize the "substitution"
-aspect, which by nature of the context, is inherently present. If you
-read your paragraph, you also conclude "required" -- which I emphasised
-initially.
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+---
+ t/t0002-gitfile.sh |   71 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 71 insertions(+), 0 deletions(-)
+ create mode 100755 t/t0002-gitfile.sh
 
-SYNOPSIS dyntax:
-
-    command option
-
-Is inherently same as by spelling it more stronger:
-
-    command <option>
-
-But different from
-
-    command "option"
-
-The reason why I might be inclined to be on for angles is that they are
-commonly used in BNF, and thus familiar to many:
-
-    <A> ::= <B> <C>
-
->>> Note that in the POSIX/SUSV below parentheses / curly braces are not
->>> mentioned.
->> 
->> True. The precedence of curlies has however been set long ago in
->> software books and in other Unix manaul pages.
->
-> I have checked a bit of manual pages (in Linux), and only very few use
-> this convention. Do you have any statistics?
-
-If you have ever skimmed Unix program book manuals, say before Linux, in
-the Unix era, the industry quite feruently used angle curlies:
-
-    command [<options>] {save|load}
-
-Even today the braces are used to say "you must choose". E.g. in Oracle's
-SQL manuals. This is quite self explanatory for the basic SQL:
-
-    SELECT [DISTINCT] {*, column [AS ["<alias>"]], ...}
-    FROM   <table>
-    ;
-
->>>> -----------------------------------------------------------------------
->>>> http://www.opengroup.org/onlinepubs/009695399/utilities/xcu_chap01.html#tag_01_11
->>>> 
->>>> 12.1 Utility Argument Syntax
->>>> http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap12.html#tag_12_01
->>>> 
->>>>     [...]
->>>> 
->>>>     4. Frequently, names of parameters that **require** substitution by
->>>>     actual values are shown with embedded underscores. Alternatively,
->>>>     parameters are shown as follows:
->>>> 
->>>>         <parameter name>
->>>> 
->>>>     The angle brackets are used for the symbolic grouping of a phrase
->>>>     representing a single parameter and conforming applications shall
->>>>     not include them in data submitted to the utility.
->>>
-> Again: it is required if it is not optional. There is no notation for
-> required parts, except that they are not marked as optional. In the
-> "cmd <file>" it is not angle brackets around <file> that denotes that
-> this parameter is requires, it is lacks of "[" "]" brackets around
-> parameter that tells it.
->
->>     command <arg> <arg>
->>     command <arg> [<message>]
->>     command <arg> [-lbc]
->> 
->> The <message> here is symbolic and not to be taken literally, whereas
->> text that is not eclosed inside angles, "-lbc", is to be taken
->> literally and interpreted by the rules of "set of options".
->
-> All true. And all what I wanted to tell.
-
-I think we both read the instructions the same way. Perhaps our views do
-not differ. I'd be surprised, because that's the convention people are
-used to having read the notations so long.
-
-Jari
-
+diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
+new file mode 100755
+index 0000000..55276c6
+--- /dev/null
++++ b/t/t0002-gitfile.sh
+@@ -0,0 +1,71 @@
++#!/bin/sh
++
++test_description='.git file
++
++Verify that plumbing commands work when .git is a file
++'
++. ./test-lib.sh
++
++chkfile() {
++	D=$(echo $1 | cut -b 1-2) &&
++	F=$(echo $1 | cut -b 3-40) &&
++	if test ! -f $REAL/objects/$D/$F
++	then
++		echo "Object not found: $REAL/objects/$D/$F"
++		false
++	fi
++}
++
++test_expect_success 'setup' '
++	REAL=$(pwd)/.real &&
++	mv .git $REAL &&
++	echo "GITDIR: $REAL" >.git
++'
++
++test_expect_success 'check rev-parse --git-dir' '
++	test "$REAL" = "$(git rev-parse --git-dir)"
++'
++
++test_expect_success 'check hash-object' '
++	echo "foo" >bar &&
++	SHA=$(cat bar | git hash-object -w --stdin) &&
++	chkfile $SHA
++'
++
++test_expect_success 'check cat-file' '
++	git cat-file blob $SHA >actual &&
++	diff -u bar actual
++'
++
++test_expect_success 'check update-index' '
++	if test -f $REAL/index
++	then
++		echo "Hmm, $REAL/index exists?"
++		false
++	fi &&
++	rm -rf $REAL/objects/* &&
++	git update-index --add bar &&
++	if ! test -f $REAL/index
++	then
++		echo "$REAL/index not found"
++		false
++	fi &&
++	chkfile $SHA
++'
++
++test_expect_success 'check write-tree' '
++	SHA=$(git write-tree) &&
++	chkfile $SHA
++'
++
++test_expect_success 'check commit-tree' '
++	SHA=$(echo "commit bar" | git commit-tree $SHA) &&
++	chkfile $SHA
++'
++
++test_expect_success 'check rev-list' '
++	echo $SHA >$REAL/HEAD &&
++	test "$SHA" = "$(git rev-list HEAD)"
++'
++
++test_done
 -- 
-Welcome to FOSS revolution: we fix and modify until it shines
+1.5.4.GIT-dirty
