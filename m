@@ -1,173 +1,355 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: Re: [PATCH] Documentation/git-stash.txt: Adjust SYNOPSIS command syntaxes
-Date: Sat, 02 Feb 2008 11:07:36 +0200
-Organization: Private
-Message-ID: <ejbv6813.fsf@blue.sea.net>
-References: <7ihp802o.fsf@blue.sea.net> <m37iho9b70.fsf@localhost.localdomain>
-	<1w7w966m.fsf@blue.sea.net> <m33asc94xn.fsf@localhost.localdomain>
-	<k5lo716v.fsf@blue.sea.net> <m3y7a46vmf.fsf@localhost.localdomain>
-	<tzks5d8d.fsf@blue.sea.net> <m3tzks6qfm.fsf@localhost.localdomain>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: [PATCH] [git-gui] i18n: Fix a bunch of still untranslated strings.
+Date: Sat, 2 Feb 2008 10:20:17 +0100
+Organization: Alumni Technische =?iso-8859-1?q?Universit=E4t?= Hamburg-Harburg
+Message-ID: <200802021020.18017.stimming@tuhh.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: srackham@methods.co.nz
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 02 10:09:26 2008
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Feb 02 10:22:22 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLENH-0005rQ-Qx
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 10:09:24 +0100
+	id 1JLEZp-0000VK-SZ
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 10:22:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761240AbYBBJIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2008 04:08:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765740AbYBBJIf
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 04:08:35 -0500
-Received: from main.gmane.org ([80.91.229.2]:51351 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932445AbYBBJIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Feb 2008 04:08:24 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JLEMC-00077y-MF
-	for git@vger.kernel.org; Sat, 02 Feb 2008 09:08:16 +0000
-Received: from a91-155-183-103.elisa-laajakaista.fi ([91.155.183.103])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 02 Feb 2008 09:08:16 +0000
-Received: from jari.aalto by a91-155-183-103.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 02 Feb 2008 09:08:16 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-183-103.elisa-laajakaista.fi
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
-Cancel-Lock: sha1:VPM+ZJgEHkDiPfu0a8aQ64mkFKw=
+	id S1757486AbYBBJVt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2008 04:21:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753267AbYBBJVs
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 04:21:48 -0500
+Received: from smtp1.rz.tu-harburg.de ([134.28.202.166]:49250 "EHLO
+	smtp1.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755492AbYBBJVp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 04:21:45 -0500
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp1.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id m129LTVK013401
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sat, 2 Feb 2008 10:21:29 +0100
+Received: from [192.168.2.102] (p549028DC.dip0.t-ipconnect.de [84.144.40.220])
+	(user=alucst mech=LOGIN bits=0)
+	by mail2.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id m129LRAj011230
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 2 Feb 2008 10:21:29 +0100
+User-Agent: KMail/1.9.5
+Content-Disposition: inline
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.166
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72236>
 
-* Fri 2008-02-01 Jakub Narebski <jnareb@gmail.com>
-* Message-Id: m3tzks6qfm.fsf@localhost.localdomain
 
->> he text should stand out as it it in environment,
->> which do not render termcap or other terminal capabilities.
->
-> Nevertheless it would be nice if our AsciiDoc configuration generated
-> italics or underline ...for manpage, and italics for HTML output for
-> placeholders, *in addition* to using angle parentheses (angle braces)
-> as delimites for placeholder parameters.
+I'm unsure about the hunk in lib/index.tcl, though - this
+might have to be rewritten. All others are rather trivial.
 
-Sure, let's notify the asciidoc maintainer know about the wishes (CC'd)
+Signed-off-by: Christian Stimming <stimming@tuhh.de>
+---
+ lib/checkout_op.tcl |    6 ++--
+ lib/commit.tcl      |   16 +++++-----
+ lib/index.tcl       |    2 +-
+ lib/merge.tcl       |    5 +--
+ po/git-gui.pot      |   82 ++++++++++++++++++++++++++++++++++++--------------
+ 5 files changed, 73 insertions(+), 38 deletions(-)
 
->> http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap12.html
->>
->> Here are the POSIX/Susv guidelines for the manual pages, I've marked the
->> relevant points with **....**. We were both right: Angles mean required
->> and grouping.
->
-> Errr... as far as I understand angles means placeholders, i.e. user
-> supplied input. You can use "[<file>...]" for optional placeholder;
-> everything which is not inside brackets is required.
-
-If you choose to use the "optional", then you are _required_ to fill in
-the mentioned item. The "[....]" is applied in your example as well. The
-angles always keep it's nature, which is a requirement:
-
-    4. Frequently, names of parameters that _require_ substitution(...)
-
-        <parameter name>
-
-> It is used quite frequently in git manpages. Using parentheses to
-> delimit required alternate parts seems quite sensible.
->
->   'git-branch' (-m | -M) [<oldbranch>] <newbranch>
-
-The change is small, but important. People look at the manual paged any
-will get the wrong impression on "the standard notation"
-
-    git-branch {-m | -M} [<oldbranch>] <newbranch>
-               =       =
-               Change to use curlies
-
-> Note that in the POSIX/SUSV below parentheses / curly braces are not
-> mentioned.
-
-True. The precedence of curlies has however been set long ago in
-software books and in other Unix manaul pages.
-
->> -----------------------------------------------------------------------
->> http://www.opengroup.org/onlinepubs/009695399/utilities/xcu_chap01.html#tag_01_11
->> 
->> 12.1 Utility Argument Syntax
->> http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap12.html#tag_12_01
->> 
->>     [...]
->> 
->>     4. Frequently, names of parameters that **require** substitution by
->>     actual values are shown with embedded underscores. Alternatively,
->>     parameters are shown as follows:
->> 
->>         <parameter name>
->> 
->>     The angle brackets are used for the symbolic grouping of a phrase
->>     representing a single parameter and conforming applications shall
->>     not include them in data submitted to the utility.
->
-> This means that <param> denotes placeholder: parameter that requires
-> **subsititution** (this part should be emphasized!). Such parameter
-> might have multi-word name. Such parameter might be required, but
-> might be optional.
-
-It's never optional. For optionality, there is specific notation.
-Everybody knows how to read these; what is required and what is not:
-
-    command <arg> <arg>
-    command <arg> [<message>]
-    command <arg> [-lbc]
-
-The <message> here is symbolic and not to be taken literally, whereas
-text that is not eclosed inside angles, "-lbc", is to be taken
-literally and interpreted by the rules of "set of options".
-
->>     [...]
->>     7. Arguments or option-arguments enclosed in the '[' and ']'
->>     notation are **optional** and can be omitted. Conforming applications
->>     shall not include the '[' and ']' symbols in data submitted to the
->>     utility.
->> 
->>     8. Arguments separated by the '|' vertical bar notation are
->>     **mutually-exclusive.**
->
-> Note that is natural that '[' and ']' also are limits of mutualy
-> exclusive parameters: "cmd [ A | B ]" means "cmd" or "cmd A" or "cmd B".
-> It is not specified explicitely, but IMHO is quite natural. And it is
-> what is used in different manpages, see examples I have provided in my
-> previous post in this subthread.
-
-We are in all agreement on this one.
-
->>     9. Ellipses ( "..." ) are used to denote that one or **more**
->>     occurrences of an option or operand are allowed. When an option or
->>     an operand followed by ellipses is enclosed in brackets, **zero** or
->>     more options or operands can be specified.
->> 
->>         utility_name [-g option_argument]...[operand...]
->
-> Note that one is not followed strictly, and one should take note of
-> that. For example to make sure that everybody knows that it is zero or
-> more one would use [<param>...], and to make use that it is one or
-> more one would use "<param> [<param>...]", just to be sure.
-
-That's what it says. Outside of "[]" the ellipses mean (1+), indiside
-"[]", by rules of the brackets, it means (0+). I forgot to paste the
-two examples. Here:
-
-    utility_name -f option_argument...[operand...]
-    utility_name [-g option_argument]...[operand...]
-
-Jari
-
+diff --git a/lib/checkout_op.tcl b/lib/checkout_op.tcl
+index f243966..6e14117 100644
+--- a/lib/checkout_op.tcl
++++ b/lib/checkout_op.tcl
+@@ -280,7 +280,7 @@ The rescan will be automatically started now.
+ 	} elseif {[is_config_true gui.trustmtime]} {
+ 		_readtree $this
+ 	} else {
+-		ui_status {Refreshing file status...}
++		ui_status [mc "Refreshing file status..."]
+ 		set fd [git_read update-index \
+ 			-q \
+ 			--unmerged \
+@@ -320,7 +320,7 @@ method _readtree {} {
+ 	set readtree_d {}
+ 	$::main_status start \
+ 		[mc "Updating working directory to '%s'..." [_name $this]] \
+-		{files checked out}
++		[mc "files checked out"]
+ 
+ 	set fd [git_read --stderr read-tree \
+ 		-m \
+@@ -447,7 +447,7 @@ If you wanted to be on a branch, create one now starting from 'This Detached Che
+ 	} else {
+ 		repository_state commit_type HEAD MERGE_HEAD
+ 		set PARENT $HEAD
+-		ui_status "Checked out '$name'."
++		ui_status [mc "Checked out '%s'." $name]
+ 	}
+ 	delete_this
+ }
+diff --git a/lib/commit.tcl b/lib/commit.tcl
+index 947b201..40a7103 100644
+--- a/lib/commit.tcl
++++ b/lib/commit.tcl
+@@ -218,7 +218,7 @@ A good commit message has the following format:
+ 		return
+ 	}
+ 
+-	ui_status {Calling pre-commit hook...}
++	ui_status [mc "Calling pre-commit hook..."]
+ 	set pch_error {}
+ 	fconfigure $fd_ph -blocking 0 -translation binary -eofchar {}
+ 	fileevent $fd_ph readable \
+@@ -233,7 +233,7 @@ proc commit_prehook_wait {fd_ph curHEAD msg_p} {
+ 	if {[eof $fd_ph]} {
+ 		if {[catch {close $fd_ph}]} {
+ 			catch {file delete $msg_p}
+-			ui_status {Commit declined by pre-commit hook.}
++			ui_status [mc "Commit declined by pre-commit hook."]
+ 			hook_failed_popup pre-commit $pch_error
+ 			unlock_index
+ 		} else {
+@@ -256,7 +256,7 @@ proc commit_commitmsg {curHEAD msg_p} {
+ 		return
+ 	}
+ 
+-	ui_status {Calling commit-msg hook...}
++	ui_status [mc "Calling commit-msg hook..."]
+ 	set pch_error {}
+ 	fconfigure $fd_ph -blocking 0 -translation binary -eofchar {}
+ 	fileevent $fd_ph readable \
+@@ -271,7 +271,7 @@ proc commit_commitmsg_wait {fd_ph curHEAD msg_p} {
+ 	if {[eof $fd_ph]} {
+ 		if {[catch {close $fd_ph}]} {
+ 			catch {file delete $msg_p}
+-			ui_status {Commit declined by commit-msg hook.}
++			ui_status [mc "Commit declined by commit-msg hook."]
+ 			hook_failed_popup commit-msg $pch_error
+ 			unlock_index
+ 		} else {
+@@ -284,7 +284,7 @@ proc commit_commitmsg_wait {fd_ph curHEAD msg_p} {
+ }
+ 
+ proc commit_writetree {curHEAD msg_p} {
+-	ui_status {Committing changes...}
++	ui_status [mc "Committing changes..."]
+ 	set fd_wt [git_read write-tree]
+ 	fileevent $fd_wt readable \
+ 		[list commit_committree $fd_wt $curHEAD $msg_p]
+@@ -301,7 +301,7 @@ proc commit_committree {fd_wt curHEAD msg_p} {
+ 	if {[catch {close $fd_wt} err]} {
+ 		catch {file delete $msg_p}
+ 		error_popup [strcat [mc "write-tree failed:"] "\n\n$err"]
+-		ui_status {Commit failed.}
++		ui_status [mc "Commit failed."]
+ 		unlock_index
+ 		return
+ 	}
+@@ -345,7 +345,7 @@ A rescan will be automatically started now.
+ 	if {[catch {set cmt_id [eval git $cmd]} err]} {
+ 		catch {file delete $msg_p}
+ 		error_popup [strcat [mc "commit-tree failed:"] "\n\n$err"]
+-		ui_status {Commit failed.}
++		ui_status [mc "Commit failed."]
+ 		unlock_index
+ 		return
+ 	}
+@@ -365,7 +365,7 @@ A rescan will be automatically started now.
+ 		} err]} {
+ 		catch {file delete $msg_p}
+ 		error_popup [strcat [mc "update-ref failed:"] "\n\n$err"]
+-		ui_status {Commit failed.}
++		ui_status [mc "Commit failed."]
+ 		unlock_index
+ 		return
+ 	}
+diff --git a/lib/index.tcl b/lib/index.tcl
+index 30a244c..3c1fce7 100644
+--- a/lib/index.tcl
++++ b/lib/index.tcl
+@@ -310,7 +310,7 @@ proc add_helper {txt paths} {
+ 		update_index \
+ 			$txt \
+ 			$pathList \
+-			[concat $after {ui_status {Ready to commit.}}]
++			[concat $after {ui_status [mc "Ready to commit."]}]
+ 	}
+ }
+ 
+diff --git a/lib/merge.tcl b/lib/merge.tcl
+index 63e1427..cc26b07 100644
+--- a/lib/merge.tcl
++++ b/lib/merge.tcl
+@@ -116,8 +116,7 @@ method _start {} {
+ 	lappend cmd HEAD
+ 	lappend cmd $name
+ 
+-	set msg [mc "Merging %s and %s" $current_branch $stitle]
+-	ui_status "$msg..."
++	ui_status [mc "Merging %s and %s..." $current_branch $stitle]
+ 	set cons [console::new [mc "Merge"] "merge $stitle"]
+ 	console::exec $cons $cmd [cb _finish $cons]
+ 
+@@ -236,7 +235,7 @@ Continue with resetting the current changes?"]
+ 		set fd [git_read --stderr read-tree --reset -u -v HEAD]
+ 		fconfigure $fd -blocking 0 -translation binary
+ 		fileevent $fd readable [namespace code [list _reset_wait $fd]]
+-		$::main_status start [mc "Aborting"] {files reset}
++		$::main_status start [mc "Aborting"] [mc "files reset"]
+ 	} else {
+ 		unlock_index
+ 	}
+diff --git a/po/git-gui.pot b/po/git-gui.pot
+index dfa48ae..3f139da 100644
+--- a/po/git-gui.pot
++++ b/po/git-gui.pot
+@@ -8,7 +8,7 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: PACKAGE VERSION\n"
+ "Report-Msgid-Bugs-To: \n"
+-"POT-Creation-Date: 2007-11-24 10:36+0100\n"
++"POT-Creation-Date: 2008-02-02 10:14+0100\n"
+ "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+ "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+ "Language-Team: LANGUAGE <LL@li.org>\n"
+@@ -386,31 +386,31 @@ msgstr ""
+ msgid "File:"
+ msgstr ""
+ 
+-#: git-gui.sh:2545
+-msgid "Refresh"
++#: git-gui.sh:2573
++msgid "Apply/Reverse Hunk"
+ msgstr ""
+ 
+-#: git-gui.sh:2566
+-msgid "Apply/Reverse Hunk"
++#: git-gui.sh:2579
++msgid "Show Less Context"
+ msgstr ""
+ 
+-#: git-gui.sh:2572
+-msgid "Decrease Font Size"
++#: git-gui.sh:2586
++msgid "Show More Context"
+ msgstr ""
+ 
+-#: git-gui.sh:2576
+-msgid "Increase Font Size"
++#: git-gui.sh:2594
++msgid "Refresh"
+ msgstr ""
+ 
+-#: git-gui.sh:2581
+-msgid "Show Less Context"
++#: git-gui.sh:2615
++msgid "Decrease Font Size"
+ msgstr ""
+ 
+-#: git-gui.sh:2588
+-msgid "Show More Context"
++#: git-gui.sh:2619
++msgid "Increase Font Size"
+ msgstr ""
+ 
+-#: git-gui.sh:2602
++#: git-gui.sh:2630
+ msgid "Unstage Hunk From Commit"
+ msgstr ""
+ 
+@@ -766,6 +766,10 @@ msgstr ""
+ msgid "Updating working directory to '%s'..."
+ msgstr ""
+ 
++#: lib/checkout_op.tcl:323
++msgid "files checked out"
++msgstr ""
++
+ #: lib/checkout_op.tcl:353
+ #, tcl-format
+ msgid "Aborted checkout of '%s' (file level merging is required)."
+@@ -1182,11 +1186,40 @@ msgid ""
+ "- Remaining lines: Describe why this change is good.\n"
+ msgstr ""
+ 
+-#: lib/commit.tcl:257
++#: lib/commit.tcl:207
++#, tcl-format
++msgid "warning: Tcl does not support encoding '%s'."
++msgstr ""
++
++#: lib/commit.tcl:221
++msgid "Calling pre-commit hook..."
++msgstr ""
++
++#: lib/commit.tcl:236
++msgid "Commit declined by pre-commit hook."
++msgstr ""
++
++#: lib/commit.tcl:259
++msgid "Calling commit-msg hook..."
++msgstr ""
++
++#: lib/commit.tcl:274
++msgid "Commit declined by commit-msg hook."
++msgstr ""
++
++#: lib/commit.tcl:287
++msgid "Committing changes..."
++msgstr ""
++
++#: lib/commit.tcl:303
+ msgid "write-tree failed:"
+ msgstr ""
+ 
+-#: lib/commit.tcl:275
++#: lib/commit.tcl:304 lib/commit.tcl:348 lib/commit.tcl:368
++msgid "Commit failed."
++msgstr ""
++
++#: lib/commit.tcl:321
+ #, tcl-format
+ msgid "Commit %s appears to be corrupt"
+ msgstr ""
+@@ -1204,12 +1237,7 @@ msgstr ""
+ msgid "No changes to commit."
+ msgstr ""
+ 
+-#: lib/commit.tcl:303
+-#, tcl-format
+-msgid "warning: Tcl does not support encoding '%s'."
+-msgstr ""
+-
+-#: lib/commit.tcl:317
++#: lib/commit.tcl:347
+ msgid "commit-tree failed:"
+ msgstr ""
+ 
+@@ -1373,6 +1401,10 @@ msgstr ""
+ msgid "Unstaging %s from commit"
+ msgstr ""
+ 
++#: lib/index.tcl:313
++msgid "Ready to commit."
++msgstr ""
++
+ #: lib/index.tcl:326
+ #, tcl-format
+ msgid "Adding %s"
+@@ -1491,7 +1523,11 @@ msgstr ""
+ msgid "Aborting"
+ msgstr ""
+ 
+-#: lib/merge.tcl:266
++#: lib/merge.tcl:238
++msgid "files reset"
++msgstr ""
++
++#: lib/merge.tcl:265
+ msgid "Abort failed."
+ msgstr ""
+ 
 -- 
-Welcome to FOSS revolution: we fix and modify until it shines
+1.5.4.rc4
