@@ -1,70 +1,65 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Test :/string form for checkout
-Date: Sat, 2 Feb 2008 04:37:01 -0500 (EST)
-Message-ID: <alpine.LNX.1.00.0802020435560.13593@iabervon.org>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.4
+Date: Sat, 02 Feb 2008 18:45:21 +0900
+Message-ID: <200802020945.m129jp2V004256@mi1.bluebottle.com>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Feb 02 10:37:41 2008
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 02 10:46:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLEod-0003hH-0s
-	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 10:37:39 +0100
+	id 1JLEx7-0005Nw-I5
+	for gcvg-git-2@gmane.org; Sat, 02 Feb 2008 10:46:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753267AbYBBJhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2008 04:37:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758188AbYBBJhF
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 04:37:05 -0500
-Received: from iabervon.org ([66.92.72.58]:49609 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753053AbYBBJhD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Feb 2008 04:37:03 -0500
-Received: (qmail 29807 invoked by uid 1000); 2 Feb 2008 09:37:01 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 2 Feb 2008 09:37:01 -0000
-User-Agent: Alpine 1.00 (LNX 882 2007-12-20)
+	id S1759559AbYBBJpx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2008 04:45:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759278AbYBBJpw
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 04:45:52 -0500
+Received: from mi1.bluebottle.com ([206.188.25.14]:42847 "EHLO
+	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752092AbYBBJpv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 04:45:51 -0500
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m129jp2V004256
+	for <git@vger.kernel.org>; Sat, 2 Feb 2008 01:45:51 -0800
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:cc:date:subject:in-reply-to:references:
+	mime-version:content-type:content-transfer-encoding:x-trusted-delivery;
+	b=MGJYVTq4mDHz5YM42z3uWXNMbwLS0shm7mlui6ax3oVEYX2FwoYlslA2js790iqcX
+	uRXLrgMk8MzAOAurv0wRvG5mJnWts+vfABrkgTMQl8yKgk1j3crbZOH+pxyug09
+Received: from nanako3.mail.bluebottle.com ([212.62.97.23])
+	(authenticated bits=0)
+	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m129jhL6022846
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 2 Feb 2008 01:45:49 -0800
+In-Reply-To: <7vmyqk563z.fsf@gitster.siamese.dyndns.org>
+X-Trusted-Delivery: <5ff06e154aa53ec5bff1197bc40e0828>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72240>
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
----
-Here it is as a case in the test suite.
+Quoting Junio C Hamano <gitster@pobox.com>:
 
- t/t7201-co.sh |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
+> It has been an unusually long cycle.  5 months since the last
+> feature release 1.5.3 was really a bit too long.
+>
+> But I hope it was worth waiting for.  Thanks everybody for
+> working hard to improve it.
 
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 73d8a00..dbf1ace 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -214,6 +214,22 @@ test_expect_success 'checkout to detach HEAD with branchname^' '
- 	fi
- '
- 
-+test_expect_success 'checkout to detach HEAD with :/message' '
-+
-+	git checkout -f master && git clean -f &&
-+	git checkout ":/Initial" &&
-+	H=$(git rev-parse --verify HEAD) &&
-+	M=$(git show-ref -s --verify refs/heads/master) &&
-+	test "z$H" = "z$M" &&
-+	if git symbolic-ref HEAD >/dev/null 2>&1
-+	then
-+		echo "OOPS, HEAD is still symbolic???"
-+		false
-+	else
-+		: happy
-+	fi
-+'
-+
- test_expect_success 'checkout to detach HEAD with HEAD^0' '
- 
- 	git checkout -f master && git clean -f &&
+Thank *you* for doing superb job maintaining git.
+
 -- 
-1.5.4
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
+
+----------------------------------------------------------------------
+Get a free email account with anti spam protection.
+http://www.bluebottle.com/tag/2
