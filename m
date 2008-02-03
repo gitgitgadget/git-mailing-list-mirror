@@ -1,79 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] git-rebase.sh: Update USAGE string
-Date: Sun, 03 Feb 2008 13:14:21 -0800 (PST)
-Message-ID: <m3prvd68uy.fsf@localhost.localdomain>
-References: <prvd3i9e.fsf@blue.sea.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Sun Feb 03 22:15:01 2008
+From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH 1/3] git-fsck: report missing author/commit line in a commit as an error
+Date: Sun,  3 Feb 2008 22:22:37 +0100
+Message-ID: <12020737593747-git-send-email-mkoegler@auto.tuwien.ac.at>
+Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 03 22:23:48 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLmAz-0007TX-OJ
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 22:14:58 +0100
+	id 1JLmJW-0001mO-4a
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 22:23:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751321AbYBCVO0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 16:14:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbYBCVO0
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 16:14:26 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:36811 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750890AbYBCVOZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 16:14:25 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so1053384ugc.16
-        for <git@vger.kernel.org>; Sun, 03 Feb 2008 13:14:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        bh=NwXN3B4A7bdnr8c1k9KgCpZs4cr3uX3tK2VfFuCLHPc=;
-        b=k5X0k2PHOrlI0idcjdXOT1R8xrtH3i3w1VKp96O+csRXKkZYJ7Yf1cxBwPmjt6PPZoJHF/ctaf0E0HEYoDsjS1kn5CNM+zi+j8UqO7SmYnj7D7Th7vNG4kFgCrL1hJHvIJR4pjeN13zS1Mq40dG8eAYN0IzR7nLPjHsG4EWfpFA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
-        b=LlDI3laKa5L4H2y/ssQ1qiUoKiWhYL8wHBpjZw22yCmLVal8B/gOk1YXDJED69DMGm0uP1NwDJNBvKTSAQ5fsaAaMKQ0XbtAY2br08OZEZ7sTBqd90yKJ5l0LQmmEC0KVh+opX97z0ArOMpe3O/ng5STpSeWiOHmR3jXTDS707Y=
-Received: by 10.67.30.13 with SMTP id h13mr1771904ugj.45.1202073262824;
-        Sun, 03 Feb 2008 13:14:22 -0800 (PST)
-Received: from localhost.localdomain ( [83.8.194.5])
-        by mx.google.com with ESMTPS id m1sm5872172ugc.51.2008.02.03.13.14.20
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 03 Feb 2008 13:14:21 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m13LEFGw007580;
-	Sun, 3 Feb 2008 22:14:15 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m13LEEw9007576;
-	Sun, 3 Feb 2008 22:14:14 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
-In-Reply-To: <prvd3i9e.fsf@blue.sea.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751994AbYBCVWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 16:22:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754116AbYBCVWn
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 16:22:43 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:43563 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753698AbYBCVWm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 16:22:42 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 285D5680BF79;
+	Sun,  3 Feb 2008 22:22:40 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4kLabgPPCewT; Sun,  3 Feb 2008 22:22:40 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id 08861680BED8; Sun,  3 Feb 2008 22:22:39 +0100 (CET)
+X-Mailer: git-send-email 1.5.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72403>
 
-Jari Aalto <jari.aalto@cante.net> writes:
+A zero commit date could be caused by:
+* a missing author line
+* a missing commiter line
+* a malformed email address in the commiter line
+* a malformed commit date
 
-> Present the options in -s|--long (short, long) order.
+Simply reporting it as zero commit date is missleading.
 
-This is a good change (but might not make sense without the following
-one)...
+Additionally, it upgrades the message to an error (instead of an printf).
 
-> Mention merge and new whitespace option.
+Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+---
+ builtin-fsck.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-...and this is not; usage string is now too long.
-
-Please either use placeholder ([<whitespace>]), or enumerate
-only short version of commands ([-i] [-v] [-m]) in synopsis,
-or break synopsis into lines 80-column lines max.
-
-> -USAGE='[--interactive | -i] [-v] [--onto <newbase>] <upstream> [<branch>]'
-> +USAGE='[-i|--interactive] [-v|--verbose] [--whitespace={nowarn|warn|error|error-all|strip}] [-m|--merge] [--onto <newbase>] <upstream> [<branch>]'
-
+diff --git a/builtin-fsck.c b/builtin-fsck.c
+index 6fc9525..cc7524b 100644
+--- a/builtin-fsck.c
++++ b/builtin-fsck.c
+@@ -360,6 +360,9 @@ static int fsck_commit(struct commit *commit)
+ 		fprintf(stderr, "Checking commit %s\n",
+ 			sha1_to_hex(commit->object.sha1));
+ 
++	if (!commit->date)
++		return objerror(&commit->object, "invalid author/committer line");
++
+ 	if (memcmp(buffer, "tree ", 5))
+ 		return objerror(&commit->object, "invalid format - expected 'tree' line");
+ 	if (get_sha1_hex(buffer+5, tree_sha1) || buffer[45] != '\n')
+@@ -378,9 +381,6 @@ static int fsck_commit(struct commit *commit)
+ 		return objerror(&commit->object, "could not load commit's tree %s", tree_sha1);
+ 	if (!commit->parents && show_root)
+ 		printf("root %s\n", sha1_to_hex(commit->object.sha1));
+-	if (!commit->date)
+-		printf("bad commit date in %s\n",
+-		       sha1_to_hex(commit->object.sha1));
+ 	return 0;
+ }
+ 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.5.4.g22bc
