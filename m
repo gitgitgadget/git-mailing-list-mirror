@@ -1,73 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0 of 7] [resend] - Improve handling remotes, origin,
- submodules
-Date: Sun, 3 Feb 2008 22:43:43 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802032237320.7372@racer.site>
-References: <1202059867-1184-1-git-send-email-mlevedahl@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6] safecrlf: Add mechanism to warn about irreversible crlf conversions
+Date: Sun, 03 Feb 2008 14:53:11 -0800
+Message-ID: <7vejbtsld4.fsf@gitster.siamese.dyndns.org>
+References: <12019685081997-git-send-email-prohaska@zib.de>
+	<7vbq6yuxeh.fsf@gitster.siamese.dyndns.org>
+	<4C024D67-9FA5-451D-BB91-CE9464C6F50D@zib.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 03 23:44:56 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Feb 03 23:54:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLna2-00080B-OC
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 23:44:55 +0100
+	id 1JLniv-0001u5-7v
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 23:54:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751697AbYBCWoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 17:44:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752748AbYBCWoW
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 17:44:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57867 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751630AbYBCWoV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 17:44:21 -0500
-Received: (qmail invoked by alias); 03 Feb 2008 22:44:19 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp006) with SMTP; 03 Feb 2008 23:44:19 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+M3yxkvkSM/182UlVC3kK+DrVjyISo4CrraHhd3b
-	Tg5ssi37A9cFRg
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1202059867-1184-1-git-send-email-mlevedahl@gmail.com>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753005AbYBCWxc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 17:53:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752345AbYBCWxc
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 17:53:32 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:33271 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752692AbYBCWxc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 17:53:32 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CFCDE67B4;
+	Sun,  3 Feb 2008 17:53:30 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B96A67B1;
+	Sun,  3 Feb 2008 17:53:28 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72415>
 
-Hi,
+Steffen Prohaska <prohaska@zib.de> writes:
 
-On Sun, 3 Feb 2008, Mark Levedahl wrote:
+>> The whole point of git-apply is to apply the patch.  If you say
+>> --whitespace=fix and some contents (say one of the testsuite
+>> files in our t/ directory) needed to keep trailing newline, you
+>> obviously are left with a broken result, and you would recover
+>> by checking it out from index or HEAD and reapply.  Why
+>> shouldn't the same principle hold here?
+>
+> You are right.  All files should be committed before running
+> git apply and therefore the original files can be recovered by
+> git checkout.  Hmm ... so apply should either just warn or be
+> completely quiet as git blame is?  I think it should warn.
 
-> This patch series was inspired by several issues dealing with multiple 
-> remotes and submodules. The tests added as the last patch demonstrate 
-> the specific use pattern to be supported, and that does not work 
-> currently.
+I agree that warning is needed if the setting says "warn".
 
-It seems that everytime you send a new patch series, it gets longer/more 
-complicated/affects more and more of git.
+Of course, it could become part of an irreversible action if you
+did this:
 
-As far as I understood, your problem was _purely_ a submodule issue.  I 
-find it utterly unnerving that you keep trying to sneak in _anything_ 
-unrelated to submodules.
+	$ git commit ;# or whatever.  Now there is no local mods
+        $ git apply <patch-1
+	$ edit ;# to fix things up
+        $ git apply <patch-2
 
-Such as the origin issue.
+and if you get the warning from patch-2.
 
-I am getting pretty angry that you keep trying to complicating things in 
-that area!  origin is origin is origin.  It is the default remote.  It is 
-what you can change to fetch from somewhere else _by default_.  So I 
-absolutely detest your changes in that regard, who help _noboy_ except 
-people who like confusion.
-
-So just change remote.origin.url, but do not mess up our nice source code.
-
-If your issue is with git-submodule, then fix _that_, and do not "fix" 
-_anything_ else.
-
-Thankyouverymuch,
-Dscho
+But the safecrlf warning is primarily about a misdetection of
+binaryness, so I do not think this sequence is not something we
+would even want to worry about.
