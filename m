@@ -1,93 +1,66 @@
-From: Tommy Thorn <tommy-git@thorn.ws>
-Subject: Re: [PATCH 2/3] git-p4: support exclude paths
-Date: Sun, 03 Feb 2008 10:55:28 -0800
-Message-ID: <47A60E20.7060909@thorn.ws>
-References: <9439626e72a267ff29cb6eaa1c733ec4641341d9.1202029604.git.tommy-git@thorn.ws> <dd96ea0b47e8ec67ef14e4e954aa9ec7bec3c295.1202029604.git.tommy-git@thorn.ws> <200802031941.17010.simon@lst.de>
+From: Remi Vanicat <vanicat@debian.org>
+Subject: Re: What about git cp ?
+Date: Sun, 03 Feb 2008 19:55:14 +0100
+Message-ID: <87hcgplvjh.dlv@maison.homelinux.org>
+References: <38b2ab8a0802031023y2ed7a5aax6d3c404b08757a4d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Simon Hausmann <simon@lst.de>
-X-From: git-owner@vger.kernel.org Sun Feb 03 19:56:08 2008
+To: "Francis Moreau" <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 03 20:02:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLk0a-0001LK-Vd
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 19:56:05 +0100
+	id 1JLk6N-0003Eq-PD
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 20:02:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750885AbYBCSz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 13:55:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750957AbYBCSz2
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 13:55:28 -0500
-Received: from server204.webhostingpad.com ([69.65.0.218]:47414 "EHLO
-	server204.webhostingpad.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750859AbYBCSz1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Feb 2008 13:55:27 -0500
-Received: from 208.65.183.75.static.etheric.net ([208.65.183.75] helo=silver.numba-tu.com)
-	by server204.webhostingpad.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <tommy-git@thorn.ws>)
-	id 1JLjzx-0006GJ-3Q; Sun, 03 Feb 2008 12:55:25 -0600
-User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
-In-Reply-To: <200802031941.17010.simon@lst.de>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - server204.webhostingpad.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - thorn.ws
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751219AbYBCTBc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Feb 2008 14:01:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751205AbYBCTBc
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 14:01:32 -0500
+Received: from neuf-infra-smtp-out-sp604007av.neufgp.fr ([84.96.92.120]:36000
+	"EHLO neuf-infra-smtp-out-sp604007av.neufgp.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751160AbYBCTBb convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Feb 2008 14:01:31 -0500
+X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Sun, 03 Feb 2008 14:01:30 EST
+Received: from neuf-infra-smtp-out-sp604012av.neufgp.fr ([84.96.92.115])
+	by neuf-infra-smtp-out-sp604007av.neufgp.fr with neuf telecom
+	id kwxV1Y0092VLLWC071B900; Sun, 03 Feb 2008 19:55:18 +0100
+Received: from maison.homelinux.org ([80.118.117.236])
+	by neuf-infra-smtp-out-sp604012av.neufgp.fr with neuf telecom
+	id l6vF1Y00C566J2w0C00000; Sun, 03 Feb 2008 19:55:18 +0100
+Received: from moi by maison.homelinux.org with local (Exim 4.69)
+	(envelope-from <moi@vanicat.homelinux.org>)
+	id 1JLjzm-0006ga-NO; Sun, 03 Feb 2008 19:55:14 +0100
+In-Reply-To: <38b2ab8a0802031023y2ed7a5aax6d3c404b08757a4d@mail.gmail.com> (Francis Moreau's message of "Sun\, 3 Feb 2008 19\:23\:12 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: moi@vanicat.homelinux.org
+X-SA-Exim-Scanned: No (on maison.homelinux.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72393>
 
-Simon Hausmann wrote:
-> On Sunday 03 February 2008 10:21:05 Tommy Thorn wrote:
->   
->> Teach git-p4 about the -/ option which adds depot paths to the exclude
->> list, used when cloning. The option is chosen such that the natural
->> Perforce syntax works, eg:
->>
->>   git p4 clone //branch/path/... -//branch/path/{large,old}/...
->>
->> Trailing ... on exclude paths are optional.
->>
->> This is a generalization of a change by Dmitry Kakurin (thanks).
->>
->> Signed-off-by: Tommy Thorn <tommy-git@thorn.ws>
->>     
+"Francis Moreau" <francis.moro@gmail.com> writes:
+
+> Hello,
 >
-> Acked-By: Simon Hausmann <simon@lst.de>
+> I'm looking for a something which could be done by a git-cp command.
 >
-> I like it, Perforce'ish syntax. (Not that I like p4 though ;)
->   
-Thank you.
+> I'd like to copy a file with its history to a new  file but want to
+> keep the old one,
 
-I would appear that I have some mail server problems, so apologies if 
-you get multiple copies.
+Git don't attach history to a file, but to a content. Just do a:
+cp foo bar
+git add bar
+git commit -m "copying foo to bar"
 
-Also, this is the first Python hacking I've tried, so it's likely that 
-my changes needs improvement.
+And it will be done, and when needed, git will be able to know that
+this was a copy.
 
-With these two patches, I can now use git-p4. However in a perfect 
-world, git-p4 would:
-
-- include support everything that a (ugly) Perforce client can do, 
-including naming individual files
-  and remapping things around (a sick feature that never should be used 
-IMO), and
-
-- not consume memory proportional to the imported files.
-
-The former would require pervasive changes and likely break some 
-assumptions currently made.
-
-The latter is easy enough.
-
-
-Regards
-Tommy
+--=20
+R=C3=A9mi Vanicat
