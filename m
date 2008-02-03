@@ -1,77 +1,122 @@
-From: bdowning@lavos.net (Brian Downing)
-Subject: Re: [PATCH] compat: Add simplified merge sort implementation from glibc
-Date: Sat, 2 Feb 2008 22:50:34 -0600
-Message-ID: <20080203045033.GL26392@lavos.net>
-References: <20080203011130.GK26392@lavos.net> <alpine.LSU.1.00.0802030231080.7372@racer.site>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/4] help: make 'git-help--browse' usable outside 'git-help'.
+Date: Sun, 3 Feb 2008 06:00:29 +0100
+Message-ID: <200802030600.30074.chriscool@tuxfamily.org>
+References: <20080202073233.7a656fa8.chriscool@tuxfamily.org> <7vmyqj4xxw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
-	msysgit@googlegroups.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 03 05:51:13 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 03 05:55:04 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLWoy-0001zI-2U
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 05:51:12 +0100
+	id 1JLWsg-0002Tl-L2
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 05:55:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755564AbYBCEug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2008 23:50:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755341AbYBCEug
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 23:50:36 -0500
-Received: from mxsf01.insightbb.com ([74.128.0.71]:3173 "EHLO
-	mxsf01.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753791AbYBCEuf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Feb 2008 23:50:35 -0500
-X-IronPort-AV: E=Sophos;i="4.25,297,1199682000"; 
-   d="scan'208";a="206666026"
-Received: from unknown (HELO asav02.insightbb.com) ([172.31.249.124])
-  by mxsf01.insightbb.com with ESMTP; 02 Feb 2008 23:50:34 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah4FAIrWpEdKhvkY/2dsb2JhbACBWKp7
-X-IronPort-AV: E=Sophos;i="4.25,297,1199682000"; 
-   d="scan'208";a="197836287"
-Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
-  by asav02.insightbb.com with ESMTP; 02 Feb 2008 23:50:31 -0500
-Received: by mail.lavos.net (Postfix, from userid 1000)
-	id 1F48C309F21; Sat,  2 Feb 2008 22:50:34 -0600 (CST)
+	id S1754267AbYBCEyb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 Feb 2008 23:54:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754076AbYBCEyb
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 23:54:31 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:52227 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753886AbYBCEya convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 Feb 2008 23:54:30 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 9B1441AB2BB;
+	Sun,  3 Feb 2008 05:54:28 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 7768D1AB2AB;
+	Sun,  3 Feb 2008 05:54:28 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vmyqj4xxw.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <alpine.LSU.1.00.0802030231080.7372@racer.site>
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72326>
 
-On Sun, Feb 03, 2008 at 02:37:27AM +0000, Johannes Schindelin wrote:
-> I should add that this is a stripped-down version of glibc's sort() (yes, 
-> the GPL of glibc allows that we rip it, for all you license wieners out 
-> there).
-> 
-> AFAIR the discussion about the different implementations of a sort 
-> algorithm boiled down to one particular implementation being quicker than 
-> what this patch has, but with dubious licensing, and the glibc 
-> implementation without the modifications present in this patch being 
-> slower.
-> 
-> So I would like this to go in, evidently, if only as a starting point for 
-> people to play with sorting algorithms, to find the one which is optimal 
-> for our general use (we have quite some uses where we put in _almost_ 
-> sorted data, which seems to be the worst-case for many sorting 
-> algorithms).
+Le samedi 2 f=E9vrier 2008, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > +	struct strbuf page_path; /* it leaks but we exec bellow */
+> > +
+> > +	get_html_page_path(&page_path, page);
+> > +
+> > +	execl_git_cmd("help--browse", page_path.buf, NULL);
+> >  }
+>
+> And this part makes the reviewer even more worried. If page
+> could be NULL, then get_html_page_path() would be fed a NULL
+> pointer, which is given to strbuf_addf()!  Ugh.
+>
+> Then the reviewer would find out that cmd_to_page() would never
+> return NULL, as it has its own NULL-to-"git" fallback logic.
+>
+> I think the code is good, but the proposed commit log message
+> has some room for improvements.
 
-If this is what I am thinking of, the sort of dubious licensing was
-faster than glibc's quicksort.  This patch, however, is simplified from
-glibc's mergesort (which is what glibc uses for the qsort() call except
-for very large arrays), and was determined to be faster than both.
+Yeah, I could have explained some parts of the patch more.
+I will try to do better.
 
-See:
+> Something like...
+>
+>     [PATCH 1/4] help: make 'git-help--browse' usable outside 'git-hel=
+p'
+>
+>     "git-help--browse" helper is to launch a browser of the
+>     user's choice to view the HTML version of git documentation
+>     for a given command.  It used to take the name of a command,
+>     convert it to the path of the documentation by prefixing the
+>     directory name and appending the ".html" suffix, and start
+>     the browser on the path.
+>
+>     This updates the division of labor between the caller in
+>     help.c and git-help--browser helper.  The helper is now
+>     responsible for launching a browser of the user's choice
+>     on given URLs, and it is the caller's responsibility to
+>     tell it the paths to documentation files.
+>
+>     This is in preparation to reuse the logic to choose
+>     user's preferred browser in instaweb.
+>
+>     The helper had a provision for running it without any
+>     command name, in which case it showed the toplevel "git(7)"
+>     documentation, but the caller in help.c never makes such a
+>     call.  The helper now exits with a usage message when no
+>     path is given.
 
-http://groups.google.com/group/msysgit/browse_frm/thread/3c2eb564b9d0a994
+Great commit message indeed! Though I fear that such long messages (for=
+ a=20
+not very long patch) could take precious screen real estate when using =
+"git=20
+log" or otherwise bother some other readers.
 
-and the links from that thread for more information.
+Anyway do you want me to resend the patch or the series with improved c=
+ommit=20
+messages ?
 
--bcd
+>     Signed-off-by: ...
+>     ---
+>
+>      * Eric is CC'ed because the ultimate goal of this
+>        series is to get rid of the duplicated logic between
+>        help--browse and instaweb.
+>
+>      Makefile            |    2 +-
+>      git-help--browse.sh |   24 +++++++++---------------
+>     ...
+>
+> I have given only a cursory look at the remainder of the series
+> (I'll hopefully be in a mini vacation mode after the release),
+
+You definitely deserve it. Thanks for your great release and maintainer=
+=20
+work.
+
+> but I think overall the series makes sense.
+
+Thanks,
+Christian.
