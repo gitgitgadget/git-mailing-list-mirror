@@ -1,59 +1,90 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [ANNOUNCE] GIT 1.5.4
-Date: Sun, 3 Feb 2008 07:56:51 -0500
-Message-ID: <20080203125651.GA18392@mit.edu>
-References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <87k5lnwvzd.dancerj%dancer@netfort.gr.jp> <878x22j1km.dancerj%dancer@netfort.gr.jp> <20080203103804.GC323@artemis.madism.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: MKCOL fails, 403 error
+Date: Sun, 3 Feb 2008 15:31:01 +0100
+Organization: glandium.org
+Message-ID: <20080203143101.GB7946@glandium.org>
+References: <eae1aef50802030535u1402471fh182a230f3e0667ea@mail.gmail.com> <eae1aef50802030539l14287c7exa914696755e7ade4@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: Pierre Habouzit <madcoder@debian.org>,
-	Junichi Uekawa <dancer@netfort.gr.jp>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 03 14:41:56 2008
+Cc: git@vger.kernel.org, pasky@suse.cz
+To: Alan Smith <alanrogersmith@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 03 15:31:47 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLf6Y-0003Pd-8w
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 14:41:54 +0100
+	id 1JLfsl-0007uP-Rs
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 15:31:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754837AbYBCNlW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 08:41:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755919AbYBCNlW
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 08:41:22 -0500
-Received: from www.church-of-our-saviour.org ([69.25.196.31]:48166 "EHLO
-	thunker.thunk.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754447AbYBCNlV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 08:41:21 -0500
-X-Greylist: delayed 2641 seconds by postgrey-1.27 at vger.kernel.org; Sun, 03 Feb 2008 08:41:21 EST
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1JLePt-0003wY-MQ; Sun, 03 Feb 2008 07:57:49 -0500
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@mit.edu>)
-	id 1JLeP2-0005ND-R1; Sun, 03 Feb 2008 07:56:56 -0500
+	id S1754795AbYBCObF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 09:31:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754288AbYBCObF
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 09:31:05 -0500
+Received: from vuizook.err.no ([85.19.215.103]:52497 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754104AbYBCObE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 09:31:04 -0500
+Received: from aputeaux-153-1-85-206.w86-205.abo.wanadoo.fr ([86.205.43.206] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JLfsl-00015w-Aq; Sun, 03 Feb 2008 15:31:49 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JLfs5-0002Cc-EQ; Sun, 03 Feb 2008 15:31:01 +0100
 Content-Disposition: inline
-In-Reply-To: <20080203103804.GC323@artemis.madism.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@mit.edu
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <eae1aef50802030539l14287c7exa914696755e7ade4@mail.gmail.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Spam-Status: (score 2.2): No, score=2.2 required=5.0 tests=RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72356>
 
-On Sun, Feb 03, 2008 at 11:38:04AM +0100, Pierre Habouzit wrote:
->   http://www.google.com/trends?q=svn%2C+git%2C+mercurial%2C+bzr%2C+darcs&ctab=0&geo=all&date=all&sort=0
+On Sun, Feb 03, 2008 at 08:39:04AM -0500, Alan Smith wrote:
+> Hello everyone,
 > 
->   :)
+> I am assisting the admin of dsource.org to get git working on their
+> server. I have had problems but those were resolved by my upgrading to
+> the most recent version of git (who'd have thought Ubuntu would not
+> have a version newer than 1.5.2.5?) Let me give you the terminal
+> output, the best explanation I have of my problem:
+> 
+> $ git push upload --force --all -v
+> Pushing to http://git.dsource.org/projects/pineapple/
+> Getting pack list
+> Fetching remote heads...
+>   refs/
+>   refs/heads/
+>    refs/tags/
+> updating 'refs/heads/master'
+>   from 0000000000000000000000000000000000000000
+>   to   aae4714c3d1150974612a9de2f86223dd6882b3c
+>     sending 11 objects
+>     done
+> MKCOL 65f829e3b46d363c07ff4e534bb1a39a6660fa48 failed, aborting (22/403)
+>      sent ce937eb2f7092823f0a491fdf0ab449440eb5365
+> Updating remote server info
+>     sent 367d34569b5d5223db05770d093e23bcc1c0ba89
+>     sent c431db074337adc100edbe4be861f599b0d889ad
+>     sent 65016e7e3c0d7654d6745b7de6d6a0840dd39150
+> 
+> In spite of the obvious problem, the 403 error, the user which I used
+> to push to the remote server is in the apache group on that server.
+> The apache group is both the owner and group of all of the files and
+> directories in the git repository. Thus, I see no reason why it is
+> getting a 403 error.
+> 
+> I am pretty sure the MKCOL has something to do with the fact that
+> there is a directory in my local git repository which it doesn't seem
+> to be able to create in the remote repository.
+> 
+> I was told to run git-fsck but it doesn't complain when I do run it.
+> 
+> Does anyone have any ideas?
 
-Unfortunately the only problem with this trend chart is that if you
-take the baseline of git and mercurial starting in the time period
-between April 2004 and 2005 (i.e., before development of those two
-systems started), git's and mercurial's usage hasn't actually grown by
-that much.  The problem being of course that git and mercurial are
-words that can be used in other contexts, which is somewhat less
-likely with svn and bzr, which makes it harder to draw good
-conclusions.
+Do you have access to the apache error_log ?
 
-					- Ted
+Mike
