@@ -1,143 +1,178 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Tips for different workflows/use cases
-Date: Mon, 4 Feb 2008 00:49:20 +0300
-Message-ID: <20080203214920.GW29522@dpotapov.dyndns.org>
-References: <8b65902a0802030708i204d1714od850a59d9d25d0c1@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH RESEND] Avoid a useless prefix lookup in strbuf_expand()
+Date: Sun, 03 Feb 2008 13:53:32 -0800
+Message-ID: <7vsl09u2oz.fsf@gitster.siamese.dyndns.org>
+References: <1201950593-6119-1-git-send-email-mcostalba@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Guilhem Bonnefille <guilhem.bonnefille@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 03 22:50:53 2008
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 03 22:54:28 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLmji-0000hO-Ng
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 22:50:51 +0100
+	id 1JLmnD-0001fR-FN
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 22:54:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753971AbYBCVtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 16:49:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751035AbYBCVti
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 16:49:38 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:21135 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753904AbYBCVt0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 16:49:26 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so1056878ugc.16
-        for <git@vger.kernel.org>; Sun, 03 Feb 2008 13:49:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=gn7rtTCAVZ5BgdR++n7T6ulqCdx52jF67WFeOvlYuMQ=;
-        b=nrKt0G7SbeopR9bm8kLhZ2VL+amup7/H/xlscpm/3ZgzikOCYqHtU5VtW9chVX3uAjP35kZAIOJGYATHDr5BhxwK7B/BBINl9fNDLKCrE0nmgXM85LXgyDriCYGzJ5D2cosxiSpSwZTRcgOj4SIySznWcJBUzgI/0FzIKr10DmI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=Xd+7nmbIIGhU5VJD1gkWRaSM+fksJWLtOzGIFrp5dgGhV3/qgXaEPW1GTFzZswBQlUEQaWEpVmEH1eQVtK+A0J2cor2In+UYg8ypGSpX8dt9E0yFIvq3i9pS+uAeiJkqDhO1epKeAKE51AydwDYKlUk25e9SoxcIqBFxKlCYb2E=
-Received: by 10.66.254.15 with SMTP id b15mr1154769ugi.76.1202075364521;
-        Sun, 03 Feb 2008 13:49:24 -0800 (PST)
-Received: from localhost ( [85.141.189.132])
-        by mx.google.com with ESMTPS id o11sm6140681fkf.9.2008.02.03.13.49.22
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 03 Feb 2008 13:49:23 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <8b65902a0802030708i204d1714od850a59d9d25d0c1@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752335AbYBCVxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 16:53:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751560AbYBCVxz
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 16:53:55 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61203 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751386AbYBCVxy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 16:53:54 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0735A329D;
+	Sun,  3 Feb 2008 16:53:50 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 98C1B329A;
+	Sun,  3 Feb 2008 16:53:44 -0500 (EST)
+In-Reply-To: <1201950593-6119-1-git-send-email-mcostalba@gmail.com> (Marco
+	Costalba's message of "Sat, 2 Feb 2008 12:09:53 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72409>
 
-On Sun, Feb 03, 2008 at 04:08:07PM +0100, Guilhem Bonnefille wrote:
-> So, what is the best practices:
-> - should he decide to push/pull every time from the same repo or
-> should he only use the "pull" command on each repo (and never push)
+Marco Costalba <mcostalba@gmail.com> writes:
 
-If both computers are always online and you can connect at will then
-"pull" is the simplest solution. The problem with "push" is that pushing
-to the local branch of another that has the working directory attached
-to it will give you not exactly what you want. The default refspec for
-"push" is only suitable for pushing into a "bare" repository from where
-anyone can pull. However, if you do not want to have a separate bare
-repository for synchronization, you can avoid by providing suitable
-refspec for push.
+> diff --git a/pretty.c b/pretty.c
+> index b987ff2..64ead65 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -282,16 +282,18 @@ static char *logmsg_reencode(const struct commit *commit,
+>  	return out;
+>  }
+>  
+> -static void format_person_part(struct strbuf *sb, char part,
+> +/* returns placeholder length or 0 if placeholder is not known */
 
-Let's suppose that you have two computers (computer1 and computer2),
-and you can use computer1 to connect to computer2, but computer2 cannot
-access to computer1.
+That "return placeholder length" is a bit confusing, and I suspect
+the reason may be because the interface is misdesigned.
 
-In repository on computer1:
+This function gets only a single character "part" and adds the
+matching information to sb if found, otherwise it doesn't, so
+the only possible return values are 0 or 2.
 
-  git remote add computer2 $COMPUTER2_URL
-  git config remote.computer2.push "+refs/heads/*:refs/remotes/computer1/*"
+Wouldn't it be much cleaner if this returned a bool that says "I
+found and substituted that 'part' you asked me to handle"?
 
-Please, note I used 'computer1' in the refspec above. It is the prefix
-for local branches that will be added when they appear in the repository
-on computer2. If you have only two computers then you can use 'origin'
-instead of both 'computer1' and 'computer2' above, which will alow you
-to use push and pull without additional arguments.
+> +static size_t format_person_part(struct strbuf *sb, char part,
+>                                 const char *msg, int len)
+>  {
+> -	int start, end, tz = 0;
+> -	unsigned long date;
+> +	int start, end, tz = 0, end_of_data;
+> +	unsigned long date = 0;
+>  	char *ep;
+>  
+> -	/* parse name */
+> +	/* advance 'end' to point to email start delimiter */
+>  	for (end = 0; end < len && msg[end] != '<'; end++)
+>  		; /* do nothing */
+> +
+>  	/*
+>  	 * If it does not even have a '<' and '>', that is
+>  	 * quite a bogus commit author and we discard it;
+> @@ -301,65 +303,72 @@ static void format_person_part(struct strbuf *sb, char part,
+>  	 * which means start (beginning of email address) must
+>  	 * be strictly below len.
+>  	 */
+> -	start = end + 1;
+> -	if (start >= len - 1)
+> -		return;
+> -	while (end > 0 && isspace(msg[end - 1]))
+> -		end--;
 
-Now, you can safely push my changes from the current computer (computer1)
-to computer2:
+The comment you can see in the context seems to refer to the
+logic implemented by the part you are rewriting.  Don't you need
+to update it?  Also the ealier part of the same comment talks
+about safety against a malformed input and explains the "return;"
+you are removing here.  It is not clear where that logic has
+gone...
 
-  git push computer2
+> +	end_of_data = (end >= len - 1);
+> +
 
-Then when you start working on computer2, you can either merge changes:
+The variable name "end_of_data" is unclear.  What does this
+boolean mean?  The line is without address and timestamp?
+The item you are parsing is not properly terminated?
 
-  git merge computer1/master
+>  	if (part == 'n') {	/* name */
+> -		strbuf_add(sb, msg, end);
+> -		return;
+> +		if (!end_of_data) {
+> +			while (end > 0 && isspace(msg[end - 1]))
+> +				end--;
+> +			strbuf_add(sb, msg, end);
+> +		}
+> +		return 2;
+>  	}
+> +	start = ++end; /* save email start position */
 
-or if you want to have linear history then you have to use rebase your
-local changes on top of computer1
+What happens if end_of_data was already true in this case, I
+have to wonder...  Language lawyers may point out that the
+result of ++end would be undefined, which I do not personally
+care about in this case, but this feels dirty if not wrong.
 
-  git rebase computer1/master
+> @@ -451,23 +460,23 @@ static void format_commit_item(struct strbuf *sb, const char *placeholder,
+>  	/* these are independent of the commit */
+>  	switch (placeholder[0]) {
+>  	case 'C':
+> -		switch (placeholder[3]) {
+> -		case 'd':	/* red */
+> +		if (!prefixcmp(placeholder + 1, "red")) {
+>  			strbuf_addstr(sb, "\033[31m");
+> -			return;
+> -		case 'e':	/* green */
+> +			return 4;
+> +		} else if (!prefixcmp(placeholder + 1, "green")) {
+>  			strbuf_addstr(sb, "\033[32m");
+> -			return;
+> -		case 'u':	/* blue */
+> +			return 6;
+> +		} else if (!prefixcmp(placeholder + 1, "blue")) {
+>  			strbuf_addstr(sb, "\033[34m");
+> -			return;
+> -		case 's':	/* reset color */
+> +			return 5;
+> +		} else if (!prefixcmp(placeholder + 1, "reset")) {
+>  			strbuf_addstr(sb, "\033[m");
+> -			return;
+> -		}
+> +			return 6;
+> +		} else
+> +			return 0;
 
-Note: You should never rebase changes that you published (i.e. that you
-share with other peoples), because rebase re-writes history.  Also, if
-the first thing that you do when you change the computer is to merge
-changes for another then you do not need ever use rebase and you still
-will have linear history.
+While these look much cleaner than using the magic "check the
+third letter that happens to be unique" hack, the return values
+can easily go out-of-sync.  I'd suggest to have a static array
+of color names you support and iterate over it.
 
-Now, you back on computer1, and again you can either merge changes:
+> @@ -528,66 +537,33 @@ static void format_commit_item(struct strbuf *sb, const char *placeholder,
+>  ...
+>  void format_commit_message(const struct commit *commit,
+>                             const void *format, struct strbuf *sb)
+>  {
+> -	const char *placeholders[] = {
+> -		"H",		/* commit hash */
+> ...
+> -		"n",		/* newline */
+> -		"m",		/* left/right/bottom */
+> -		NULL
+> -	};
+>  	struct format_commit_context context;
+>  
+>  	memset(&context, 0, sizeof(context));
+>  	context.commit = commit;
+> -	strbuf_expand(sb, format, placeholders, format_commit_item, &context);
+> +	strbuf_expand(sb, format, format_commit_item, &context);
+>  }
 
- git pull computer2
-
-or rebase local changes
-
- git pull --rebase computer2
-
-Note:
- 'git pull' is equivalent 'git fetch' and 'git merge'
- 'git pull --rebase' is equivalent 'git fetch' and 'git rebase'
-
-
-> - should he decide to create a third repo and use it as central repo.
-
-Often it makes sense to create an extra repo. After all, disk space
-is cheap and having extra backup never hurts.
-
-> 
-> 2- It's a variation of the previous one. Now, one of the two computers
-> is a laptop. Is there any recommended practices to work with laptop?
-
-I suppose that laptop computer has limited online time. So, you have to
-push from it. You can push easier to a central "bare" repo, or directly
-to your other computer as I described above (laptop=computer1 and
-server=computer2).
-
-> 
-> 3- Now, the two computer are not connected via network. Two possible
-> solutions to sync our both computers: USB disk and e-mail.
-> Any recommendation in this context?
-
-Sending patches by emails is good to exchange ideas or to contribute to
-mainstream, but you cannot synchronize repositories in this way. If
-you really want to synchronize by emails, you should send bundles (man
-git-bundle). Bundles can be transfered by emails or using any other
-media. Alternatively, you can have a copy of your repository on a USB
-disk and synchronize with it using "pull" and "push" commands. However,
-if you use a USB disk with VFAT, you should mount it with 'shortname='
-'mixed' or 'winnt' on Linux.
-
-
-Dmitry
+This is much nicer.  We reduced duplicated data from our code.
