@@ -1,107 +1,68 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: man pages are littered with .ft C and others
-Date: Sun, 3 Feb 2008 11:39:47 +0100
-Message-ID: <200802031139.48752.jnareb@gmail.com>
-References: <alpine.DEB.1.00.0802021055180.21831@an.sumeria> <m34pcr6vnm.fsf@localhost.localdomain> <7vejbuxwpu.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6] safecrlf: Add mechanism to warn about irreversible crlf conversions
+Date: Sun, 03 Feb 2008 02:50:14 -0800
+Message-ID: <7vbq6yuxeh.fsf@gitster.siamese.dyndns.org>
+References: <12019685081997-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Adam Flott <adam@npjh.com>, git@vger.kernel.org,
-	Jonas Fonseca <fonseca@diku.dk>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 03 11:40:35 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Feb 03 11:50:59 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLcH0-0001YK-UA
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 11:40:31 +0100
+	id 1JLcR8-0003yX-Gm
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 11:50:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753642AbYBCKj7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 05:39:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753545AbYBCKj7
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 05:39:59 -0500
-Received: from fg-out-1718.google.com ([72.14.220.159]:43286 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753462AbYBCKj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 05:39:57 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so1611948fga.17
-        for <git@vger.kernel.org>; Sun, 03 Feb 2008 02:39:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=Vez7KmUAQb6t01Tcf2PFHOzJWJhPnsLBUMn7/BKohXg=;
-        b=CYg+vbHP0Fals96c9asVmRJ5rxswpOV1RNF2zwXAb3G2mhk1AqMXr2Dv9qpzNIdXiVuf9AfHibnBBJnJbyNbG5SzfCptVpPFCoIXwxvzOy4IL0njUr5jP2VvN/dBqEsX2kqlPLHhrrIwIv+tLgWFoU3JGgg2w1CQvYh7yNjRXPU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=UD6HPizMenIRTXx8OmRPIvn8YmzK1IkJlIIwjVIIW/n6RDVTIFkclltfJrPEZqkm+RxV66Oq1q/toKnDITAFl4InpparhHK96W9FtG6Fin+vmmzCovqDQHyMxG/N4Bycwehry0dGXcEO7mfvj93cU9qNgHuha7M/klUjy2kIEBQ=
-Received: by 10.78.156.6 with SMTP id d6mr9891926hue.22.1202035195576;
-        Sun, 03 Feb 2008 02:39:55 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.194.189])
-        by mx.google.com with ESMTPS id k10sm15848108nfh.17.2008.02.03.02.39.52
-        (version=SSLv3 cipher=OTHER);
-        Sun, 03 Feb 2008 02:39:53 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vejbuxwpu.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753895AbYBCKu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 05:50:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753855AbYBCKu0
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 05:50:26 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43755 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752436AbYBCKuZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 05:50:25 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E42105B75;
+	Sun,  3 Feb 2008 05:50:23 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 70E2C5B74;
+	Sun,  3 Feb 2008 05:50:21 -0500 (EST)
+In-Reply-To: <12019685081997-git-send-email-prohaska@zib.de> (Steffen
+	Prohaska's message of "Sat, 2 Feb 2008 17:08:28 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72349>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
->> 
->> I see the same error in manpages, for example in git-diff-tree(1)
-> 
-> http://thread.gmane.org/gmane.comp.version-control.git/53457/focus=53458
-> 
-> rings a bell?
+Steffen Prohaska <prohaska@zib.de> writes:
 
-You mean:
+> CRLF conversion bears a slight chance of corrupting data.
+> ...
+> thing to do, while for binary file it corrupts data.
 
-Julian Phillips:
-> Are you using docbook xsl 1.72?  There are known problems building the 
-> manpages with that version.  1.71 works, and 1.73 should work when it get 
-> released.
+The above 25-line or so are well written and deserve to be in
+the end user documentation somewhere, I think, to explain why it
+is a good idea to have these warnings to them..
 
-No, I am using docbook-style-xsl-1.68.1-1, and compiling git from RPM.
-Besids, I have different set of problems; only with literal blocks.
-So while DOCBOOK_XSL_172 is not set... let me check...
+> This commit modifies git apply to fail even if safecrlf=warn,
+> because git apply writes its changes back to the work tree
+> immediately.  The user would not have a chance to backup the old
+> version of the file if only a warning was printed.
 
-Hmmm...
+I do not get this logic at all.
 
-Before
-$ man git-diff-tree
+The whole point of git-apply is to apply the patch.  If you say
+--whitespace=fix and some contents (say one of the testsuite
+files in our t/ directory) needed to keep trailing newline, you
+obviously are left with a broken result, and you would recover
+by checking it out from index or HEAD and reapply.  Why
+shouldn't the same principle hold here?
 
-       Example:
-
-       .ft C
-       :100644 100644 5be4a4...... 000000...... M file.c
-       .ft
-
-$ make DOCBOOK_XSL_172=YesPlease doc
-$ man Documentation/git-diff-tree.1
-
-       Example:
-
-              :100644 100644 5be4a4...... 000000...... M file.cWhen -z  option  is
-              not  used, TAB, LF, and backslash characters in pathnames are repre-
-              sented as \t, \n, and \\, respectively.
-
-So setting DOCBOOK_XSL_172 while it fixes the bug (even if docbook-xsl
-is version 1.68.1, not 1.72), but introduces another.
-
-Unfortunately I don't know enough about AsciiDoc, DocBook and XML
-toolchain to even *try* to fix this issue.
-
-
-P.S. Alternate soution would be for SRPM to contain pre-compiled
-manpages, and not require asciidoc and its toolchain to provide
-manpages.
--- 
-Jakub Narebski
-Poland
+I haven't looked at the code of this round yet, but I promise I
+will.
