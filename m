@@ -1,96 +1,97 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [EGIT PATCH] Comment private modifier to improve performace.
-Date: Sun, 3 Feb 2008 23:25:47 +0100
-Message-ID: <200802032325.47844.robin.rosenberg@dewire.com>
-References: <1201919018-10782-1-git-send-email-rogersoares@intelinet.com.br> <200802030201.10971.robin.rosenberg@dewire.com> <47A61A30.3000904@intelinet.com.br>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v7] safecrlf: Add mechanism to warn about irreversible
+ crlf conversions
+Date: Sun, 3 Feb 2008 22:29:54 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802032222380.7372@racer.site>
+References: <4C024D67-9FA5-451D-BB91-CE9464C6F50D@zib.de> <1202053379677-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Roger C. Soares" <rogersoares@intelinet.com.br>
-X-From: git-owner@vger.kernel.org Sun Feb 03 23:26:23 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Feb 03 23:31:08 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLnI3-0002zk-1I
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 23:26:19 +0100
+	id 1JLnMf-0004Kw-IX
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 23:31:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752768AbYBCWZq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Feb 2008 17:25:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752766AbYBCWZq
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 17:25:46 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:4448 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752431AbYBCWZp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 17:25:45 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id E651D800686;
-	Sun,  3 Feb 2008 23:25:43 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gio7-WAC-6Wf; Sun,  3 Feb 2008 23:25:43 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 661CA800681;
-	Sun,  3 Feb 2008 23:25:43 +0100 (CET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-In-Reply-To: <47A61A30.3000904@intelinet.com.br>
-Content-Disposition: inline
+	id S1752334AbYBCWab (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 17:30:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbYBCWab
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 17:30:31 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52274 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752566AbYBCWaa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 17:30:30 -0500
+Received: (qmail invoked by alias); 03 Feb 2008 22:30:28 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp046) with SMTP; 03 Feb 2008 23:30:28 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19kj5U4M7Vk5zkaI0sCWc2ZbjuIQA2rucpBrFg8Mm
+	DmaKqSoGDIDs+J
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1202053379677-git-send-email-prohaska@zib.de>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72413>
 
-s=C3=B6ndagen den 3 februari 2008 skrev Roger C. Soares:
-> Ok, so some more points for your consideration:
->=20
-> . I saw this /* private */ notation on eclipse code and found it=20
-> interesting.
-It is.
+Hi,
 
-> . I won't bother measuaring any single case to make sure it is not=20
-> impacting performance under some circunstance, so resolving those=20
-> warnings puts me in the safe area. On the other hand, I think it is a=
-=20
-> lot easier to tell if a patch is breaking encapsulation in a bad way=20
-> just by reviewing it, which is something that is already done.=20
-We do not have a large number of people reviewing our code at this stag=
-e,
-so I would not trust that at the moment.
+On Sun, 3 Feb 2008, Steffen Prohaska wrote:
 
-> Especially if it has the private modifier commented out. Someone can=20
-> even do a script to uncomment them and verify that it still builds=20
-> without errors.
-There is more to reviewing than just looking at the diffs.
+> diff --git a/convert.c b/convert.c
+> index 80f114b..d580a62 100644
+> --- a/convert.c
+> +++ b/convert.c
+> @@ -95,9 +95,6 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
+>  		return 0;
+>  
+>  	gather_stats(src, len, &stats);
+> -	/* No CR? Nothing to convert, regardless. */
+> -	if (!stats.cr)
+> -		return 0;
 
-> . The ui part isn't supposed to be reused by other projects, so I thi=
-nk=20
-> encapsulation there is less important than for jgit. But even so, the=
-=20
-> default modifier (or package-private) is good enough for encapsulatio=
-n.=20
-> Other projects shouldn't write code in the the same packages from jgi=
-t,=20
-> if they do so they know that they are using internal things and they =
-can=20
-> run into problems in the future.
+Yes, you add it later, but would this not be "more correct" if you 
+prepended a "!checksafe &&" and kept the if here?  Of course, you'd _also_ 
+need it later, but then _inside_ the "if (checksafe)" clause.
 
-I'm thinking more about internal encapsulation between the classes with=
-in the=20
-project. Many of the classes in the ui (and jgit) packages have little =
-in=20
-common other than that they contribute to the same overall goal (an Ecl=
-ipse=20
-plugin). I guess that is what happens when things get build a small pat=
-ch at=20
-a time. Obviously we could have more packages, but that might make thin=
-gs=20
-worse by forcing us to have more public methods and having a lot of one=
- and=20
-two class packages feels wrong too (though it actually may be right). I=
- don't=20
-think I'll look at that right now though.
+> @@ -115,6 +112,30 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
+>  			return 0;
+>  	}
+>  
+> +	if (checksafe) {
+> +		if (action == CRLF_INPUT || auto_crlf <= 0) {
+> +			/* CRLFs would not be restored by checkout: check if we'd remove CRLFs */
 
--- robin
+There are lines in your patch that are substantially longer than 80 
+characters / line.  Please fix.
+
+> diff --git a/environment.c b/environment.c
+> index 18a1c4e..e351e99 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -35,6 +35,7 @@ int pager_use_color = 1;
+>  char *editor_program;
+>  char *excludes_file;
+>  int auto_crlf = 0;	/* 1: both ways, -1: only when adding git objects */
+> +enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
+
+I think this choice needs some defending.  At first I thought: "no way 
+that this will be the default; it affects too many users it should _not_ 
+affect".  The thing is, Unix users should not need to suffer, only because 
+other users are cursed by insane choices of their OS developers.
+
+However, safe_crlf != SAFE_CRLF_FALSE does not affect people who did not 
+set core.crlf = input or core.crlf = true.  And for those who set 
+core.crlf, the default makes sense, absolutely.
+
+So I think this patch should go in, with shortened lines (and possibly the 
+changes to the "if (!stats.cr)" if you agree with me).
+
+Ciao,
+Dscho
