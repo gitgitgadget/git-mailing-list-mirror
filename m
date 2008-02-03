@@ -1,8 +1,12 @@
 From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH 1/7] Teach remote machinery about core.origin config variable
-Date: Sun,  3 Feb 2008 12:20:43 -0500
-Message-ID: <1202059249-3532-2-git-send-email-mlevedahl@gmail.com>
+Subject: [PATCH 5/7] Teach git-submodule to use top-level remote when updating subprojects
+Date: Sun,  3 Feb 2008 12:20:47 -0500
+Message-ID: <1202059249-3532-6-git-send-email-mlevedahl@gmail.com>
 References: <1202059249-3532-1-git-send-email-mlevedahl@gmail.com>
+ <1202059249-3532-2-git-send-email-mlevedahl@gmail.com>
+ <1202059249-3532-3-git-send-email-mlevedahl@gmail.com>
+ <1202059249-3532-4-git-send-email-mlevedahl@gmail.com>
+ <1202059249-3532-5-git-send-email-mlevedahl@gmail.com>
 Cc: git@vger.kernel.org, Mark Levedahl <mlevedahl@gmail.com>
 To: gitster@pobox.org
 X-From: git-owner@vger.kernel.org Sun Feb 03 18:22:05 2008
@@ -10,131 +14,111 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLiXW-00062p-W4
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 18:21:59 +0100
+	id 1JLiXY-00062p-Ut
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 18:22:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758707AbYBCRVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 12:21:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755816AbYBCRVH
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 12:21:07 -0500
-Received: from fg-out-1718.google.com ([72.14.220.157]:19931 "EHLO
+	id S1758898AbYBCRVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 12:21:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758887AbYBCRVP
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 12:21:15 -0500
+Received: from fg-out-1718.google.com ([72.14.220.156]:20267 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758009AbYBCRVB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 12:21:01 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so1716391fga.17
-        for <git@vger.kernel.org>; Sun, 03 Feb 2008 09:20:58 -0800 (PST)
+	with ESMTP id S1752566AbYBCRVK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 12:21:10 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so1716427fga.17
+        for <git@vger.kernel.org>; Sun, 03 Feb 2008 09:21:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=JOt6CGBsUc7TjQjgDhkX5O4saAocoCJBIRyuUTx8PME=;
-        b=B82AaTvyobdpyQuzVFohBXUubBwSVrWw9yQQ8rhLmbB9kazW9xKdQ8m/xzySFob+N93aqsrc+N6IJIId10e8GtFisMFQnhGokf0hPOOozlTkdEA51bD9DalEBaKa4wtdQhpLXjoiZLeL/jJSkfCocQ4ABz7MvQmcOr2zbqIRfVU=
+        bh=y+Ja7A2s3sAhbe3dLyWsJwzxKpZuwk8Yu29dGOjy8II=;
+        b=xvckN18hlQ2JjW/4G/gUnCl8TluYYru038jOp+Rc+HEJo+B2iWnbIKzaIa6c4tDxLZzi/GdbIzjF7jeMnpYYyPIdoZjuAFTfBHZeiikC9sIw2hIMkfXblU/7KofbpPw3W5YAb0mrXOTlwYhL6M3hpUgCATexkXIeqqytTOyT6cg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=hTALprGw4tU4p4+4GXR0C4GusSJfgFJJC+9VN208+MQ0y9LC4pesZV2fA0BsHQOvV5wGDWj/PloAlDIoCEsuwzs3Pj7Ggufe1wr03MOHcAl/ZEKyNqyHT20yIKsKeTlRInvvGMvlxlXkFXwg1E/V/1dhyYiN3uH6OYAuDcGDHD0=
-Received: by 10.82.187.2 with SMTP id k2mr11178459buf.16.1202059257810;
-        Sun, 03 Feb 2008 09:20:57 -0800 (PST)
+        b=B0RMnVxbxqAkYMv0t63MzBph3hbBVlS6ZtlWEJ0YqbHLmg7h3lGsrDGxiIdcPTCqZwBPcxeh4JmLfgAJB1K7MDhvZJZYQkebabU8dNIvvZJCXPxhjS/WgINprJQsoqrSOuyQVOMDXqIMqd4EmEEN7SDqCbGPLJJJyACvkWhEEgg=
+Received: by 10.78.149.13 with SMTP id w13mr10532924hud.64.1202059269803;
+        Sun, 03 Feb 2008 09:21:09 -0800 (PST)
 Received: from localhost.localdomain ( [71.191.242.88])
-        by mx.google.com with ESMTPS id x6sm4293526gvf.0.2008.02.03.09.20.55
+        by mx.google.com with ESMTPS id x6sm4293526gvf.0.2008.02.03.09.21.06
         (version=SSLv3 cipher=OTHER);
-        Sun, 03 Feb 2008 09:20:56 -0800 (PST)
+        Sun, 03 Feb 2008 09:21:08 -0800 (PST)
 X-Mailer: git-send-email 1.5.4.18.g43c18
-In-Reply-To: <1202059249-3532-1-git-send-email-mlevedahl@gmail.com>
+In-Reply-To: <1202059249-3532-5-git-send-email-mlevedahl@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72373>
 
-This introduces a new configuration variable, core.origin, that
-defines the name of the default remote to be used. Traditionally, this
-is "origin", and could be overridden for a given branch. This change
-introduces a way to redefine the default as desired and have that honored
-regardless of the currently checked out head (e.g., core.origin is
-used when on a detached head or any other non-tracking branch).
+Modules that are defined using relative urls to the master project are
+assumed to be completely owned by the project. When running
+"submodule update" from the top level, it is reasonable that the entire
+project exists at the remote given by top-level branch.<name>.remote.
+Using the remote machinery, this remote can be different for each
+branch and can be different than the current defaults in each submodule.
+
+This teaches submodule to:
+
+1) Possibly define the current master's remote in each submodule, using
+the same relative url used by submodule init.
+2) Fetch each submodule's updates from the master's remote.
+
+Submodules defined using absolute urls (not relative to the parent) are
+not touched by this logic. Such modules are assumed to be independent
+of the master project so submodule can do no better than to fetch from
+their currently defined default remotes as already done.
 
 Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
 ---
- Documentation/config.txt |    6 ++++++
- git-parse-remote.sh      |    5 +++--
- remote.c                 |   11 ++++++++++-
- 3 files changed, 19 insertions(+), 3 deletions(-)
+ git-submodule.sh |   20 +++++++++++++++++++-
+ 1 files changed, 19 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 4e222f1..a890f5d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -291,6 +291,12 @@ core.editor::
- 	`GIT_EDITOR` environment, `core.editor`, `VISUAL` and
- 	`EDITOR` environment variables and then finally `vi`.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index bb0d265..8f31ebe 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -255,6 +255,8 @@ cmd_init()
  
-+core.origin::
-+	The name of the remote used by default for fetch / pull. If unset,
-+	origin is assumed. This value is used whenever the current branch
-+	has no corresponding branch.<name>.remote, such as when working on
-+	a detached head.
+ #
+ # Update each submodule path to correct revision, using clone and checkout as needed
++# For owned submodules (defined using relative url), we use master project's remote
++# and define that in each submodule if not already there
+ #
+ # $@ = requested paths (default to all)
+ #
+@@ -281,6 +283,7 @@ cmd_update()
+ 		shift
+ 	done
+ 
++	master_remote=$(get_default_remote)
+ 	git ls-files --stage -- "$@" | grep -e '^160000 ' |
+ 	while read mode sha1 stage path
+ 	do
+@@ -306,9 +309,24 @@ cmd_update()
+ 			die "Unable to find current revision in submodule path '$path'"
+ 		fi
+ 
++		baseurl="$(GIT_CONFIG=.gitmodules git config submodule."$name".url)"
++		case "$baseurl" in
++		./*|../*)
++			fetch_remote=$master_remote
++			(unset GIT_DIR ; cd "$path" && git config remote."$fetch_remote".url > nul) ||
++			(
++				absurl="$(resolve_relative_url $baseurl)"
++				unset GIT_DIR; cd "$path" && git remote add "$master_remote" "$absurl"
++			) || die "Unable to define remote '$fetch_remote' in submodule path '$path'"
++			;;
++		*)
++			fetch_remote=
++			;;
++		esac
 +
- core.pager::
- 	The command that git will use to paginate output.  Can be overridden
- 	with the `GIT_PAGER` environment variable.
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index 695a409..c7ac7c7 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -56,8 +56,9 @@ get_remote_url () {
+ 		if test "$subsha1" != "$sha1"
+ 		then
+-			(unset GIT_DIR; cd "$path" && git-fetch &&
++			(unset GIT_DIR; cd "$path" && git-fetch $fetch_remote &&
+ 				git-checkout -q "$sha1") ||
+ 			die "Unable to checkout '$sha1' in submodule path '$path'"
  
- get_default_remote () {
- 	curr_branch=$(git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||')
--	origin=$(git config --get "branch.$curr_branch.remote")
--	echo ${origin:-origin}
-+	git config --get "branch.$curr_branch.remote" ||
-+	git config --get "core.origin" ||
-+	echo origin
- }
- 
- get_remote_default_refs_for_push () {
-diff --git a/remote.c b/remote.c
-index 0e00680..302d499 100644
---- a/remote.c
-+++ b/remote.c
-@@ -10,6 +10,7 @@ static int allocated_branches;
- 
- static struct branch *current_branch;
- static const char *default_remote_name;
-+static const char *core_origin;
- 
- #define BUF_SIZE (2048)
- static char buffer[BUF_SIZE];
-@@ -233,6 +234,11 @@ static int handle_config(const char *key, const char *value)
- 			add_merge(branch, xstrdup(value));
- 		return 0;
- 	}
-+	if (!strcmp(key, "core.origin")) {
-+		if (value)
-+			core_origin = xstrdup(value);
-+		return 0;
-+	}
- 	if (prefixcmp(key,  "remote."))
- 		return 0;
- 	name = key + 7;
-@@ -291,7 +297,6 @@ static void read_config(void)
- 	int flag;
- 	if (default_remote_name) // did this already
- 		return;
--	default_remote_name = xstrdup("origin");
- 	current_branch = NULL;
- 	head_ref = resolve_ref("HEAD", sha1, 0, &flag);
- 	if (head_ref && (flag & REF_ISSYMREF) &&
-@@ -300,6 +305,10 @@ static void read_config(void)
- 			make_branch(head_ref + strlen("refs/heads/"), 0);
- 	}
- 	git_config(handle_config);
-+	if (!default_remote_name) {
-+		default_remote_name = core_origin ?
-+		core_origin : xstrdup("origin");
-+	}
- }
- 
- struct refspec *parse_ref_spec(int nr_refspec, const char **refspec)
 -- 
 1.5.4.18.g43c18
