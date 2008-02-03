@@ -1,111 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
-Subject: Re: [PATCH] compat: Add simplified merge sort
- implementation from glibc
-Date: Sun, 3 Feb 2008 02:37:27 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802030231080.7372@racer.site>
-References: <20080203011130.GK26392@lavos.net>
-Reply-To: Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
+From: Steven Walter <stevenrwalter@gmail.com>
+Subject: Re: git-svn segmetation fault
+Date: Sat, 2 Feb 2008 21:42:25 -0500
+Message-ID: <20080203024225.GA23647@dervierte>
+References: <47A39DFD.9020905@saville.com> <47A3BE6F.6080304@saville.com> <20080202034258.GA27814@dervierte> <47A3E9A8.1060102@saville.com> <20080202160332.GA25945@dervierte> <47A4BCE8.5030308@saville.com> <20080202210348.GA11722@dervierte> <47A51737.7050905@saville.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>, Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>,  git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-To: Brian Downing <bdowning-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Sun Feb 03 03:38:38 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from yw-out-2122.google.com ([74.125.46.24])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Wink Saville <wink@saville.com>
+X-From: git-owner@vger.kernel.org Sun Feb 03 03:43:04 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLUke-0007lF-5X
-	for gcvm-msysgit@m.gmane.org; Sun, 03 Feb 2008 03:38:37 +0100
-Received: by yw-out-2122.google.com with SMTP id 4so3593299ywc.37
-        for <gcvm-msysgit@m.gmane.org>; Sat, 02 Feb 2008 18:38:05 -0800 (PST)
+	id 1JLUov-000072-V0
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 03:43:02 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932564AbYBCCma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2008 21:42:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932357AbYBCCma
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 21:42:30 -0500
+Received: from an-out-0708.google.com ([209.85.132.242]:5025 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758075AbYBCCm3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 21:42:29 -0500
+Received: by an-out-0708.google.com with SMTP id d31so405031and.103
+        for <git@vger.kernel.org>; Sat, 02 Feb 2008 18:42:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=Ejt3DHeyIhOtEqanhpKvfeEfoad6kJ2FOXQ1JssAq/g=;
-        b=cIUeOKFdsCbGeb6iCbnqgB3uS9WH/SnANxaKBcKCtyuCXQFZ6h4g/b2nLntSXpXXT+EwWROw0BK4xpp7qkuVCO8FC6H3opQFsDjCf9fjp/fS/uZiA2R+DYHNXMtQeljojlx7R86pFH0WFZZqkAQ4lKr2Iq5vyEZHnBCyw6jqD4k=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=/bJad2S5rVzRPfMjDy/KM9dJ2BjVdqv62BICKYYTgMs=;
+        b=af24sfajrb8k73QZ7YF8AMv0QG1ueDrOmxQ7oNCR8q5ZAUMWGhRPh/fK8Al3OnaMPRbl8jGvtl3t0XoN608Ybewvst9Qm8S2HomXbPnriwxdQTlFizGRKbVAcQwbT6kP2FUCJSeiRNuupcTbZKk8rLfrZWMwzN1uSwPbniCRBOo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=6vdpuafJiuzEnqK2wfE1DnTbgFntM7jlp0BthA0PGvaMQZ6rVOr0mNIGp0CmQBHdMdav5A+Mt/pHYE4zh1+apNyMmw7+4Anx4gh5B9VZQhDCp55Y2893Jf2kWYMx45RsWsHSaD1fKnoK32EhzgQqsgtQ37i/CXdwKn94nye8Ke4=
-Received: by 10.100.173.18 with SMTP id v18mr720491ane.0.1202006281883;
-        Sat, 02 Feb 2008 18:38:01 -0800 (PST)
-Received: by 10.44.53.58 with SMTP id b58gr1594hsa;
-	Sat, 02 Feb 2008 18:38:01 -0800 (PST)
-X-Sender: Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.35.99.14 with SMTP id b14mr17749456pym.4.1202006281501; Sat, 02 Feb 2008 18:38:01 -0800 (PST)
-Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id x46si9839071pyg.3.2008.02.02.18.38.00; Sat, 02 Feb 2008 18:38:01 -0800 (PST)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
-Received: (qmail invoked by alias); 03 Feb 2008 02:38:00 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40] by mail.gmx.net (mp046) with SMTP; 03 Feb 2008 03:38:00 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/UYTEAhwrUoU1te3myEkrUiWfrwHOmOpttBBA5im r5/VB7X8fbvhh6
-X-X-Sender: gene099-OGWIkrnhIhzN0uC3ymp8PA@public.gmane.org
-In-Reply-To: <20080203011130.GK26392-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=ZOvq8iOl0wSx+3QlgWgR/iZFXVENLJ78qVmrn+5T5KZz+GHNAatmv+RBgaGMfPBNCfu22ZhFq24MiXiLkPxJ4xS31wGc6AJR9vU0woHyzSED/D/mLki0WqblUEHTMSxPBlZ4Hk0ah9hHMU62k8Y/g8iK+v+GmU22e0TTDPFjlbk=
+Received: by 10.101.71.16 with SMTP id y16mr11422544ank.50.1202006548311;
+        Sat, 02 Feb 2008 18:42:28 -0800 (PST)
+Received: from dasbrennen.isa-geek.org ( [76.177.39.93])
+        by mx.google.com with ESMTPS id 34sm9615439wra.23.2008.02.02.18.42.27
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 02 Feb 2008 18:42:27 -0800 (PST)
+Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
+	id C1A713640F; Sat,  2 Feb 2008 21:42:25 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <47A51737.7050905@saville.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72318>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72319>
 
+On Sat, Feb 02, 2008 at 05:21:59PM -0800, Wink Saville wrote:
+> What steps would be needed to recreate a "local git repo" from the
+> "git repo on srvr" that I could use against the svn repo?
+>
+> I tried a little test, I cloned my git repo on srvr locally to amc-xx
+> and added the [svn-remote "svn"] section to amc-xx/.git/config
+> and then did a git-svn fetch. From what happened it looks like I
+> just did a git svn clone and didn't save any time.
 
-Hi,
+After adding the svn-remote section, you'll want to copy
+.git/refs/remotes/origin/master to .git/refs/remotes/git-svn.  After
+doing that, "git svn fetch" should see that you have all the needed
+commits and do a quick rebuild of its metadata.
 
-On Sat, 2 Feb 2008, Brian Downing wrote:
+> Also, a follow up can I create an svn repo from a git repo.
 
-> qsort in Windows 2000 (and possibly other older Windows' C libraries)
-> is a Quicksort with the usual O(n^2) worst case.  Unfortunately, sorting
-> Git trees seems to get very close to that worst case quite often:
-> 
->     $ /git/gitbad runstatus
->     # On branch master
->     qsort, nmemb = 30842
->     done, 237838087 comparisons.
-> 
-> This patch adds a simplified version of the merge sort that is glibc's
-> qsort(3).  As a merge sort, this needs a temporary array equal in size
-> to the array that is to be sorted.
-> 
-> The complexity that was removed is:
-> 
-> * Doing direct stores for word-size and -aligned data.
-> * Falling back to quicksort if the allocation required to perform the
->   merge sort would likely push the machine into swap.
-> 
-> Even with these simplifications, this seems to outperform the Windows
-> qsort(3) implementation, even in Windows XP (where it is "fixed" and
-> doesn't trigger O(n^2) complexity on trees).
-> 
-> [jes: moved into compat/qsort.c, as per Johannes Sixt's suggestion]
-> 
-> Signed-off-by: Brian Downing <bdowning-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org>
-> Signed-off-by: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin-Mmb7MZpHnFY@public.gmane.org>
+I've not done it, but it should be possible.  You would create the new
+svn repository with a single empty commit (as empty as SVN would allow).
+Import that revision into your git repository with git-svn.  Then you
+would either rebase or use grafts to make all of your git commits a
+descendent of that single svn commit.  In that way, the next time you
+run "git svn dcommit" it will see all your local git commits as new
+commits to send to subversion.
 
-I should add that this is a stripped-down version of glibc's sort() (yes, 
-the GPL of glibc allows that we rip it, for all you license wieners out 
-there).
-
-AFAIR the discussion about the different implementations of a sort 
-algorithm boiled down to one particular implementation being quicker than 
-what this patch has, but with dubious licensing, and the glibc 
-implementation without the modifications present in this patch being 
-slower.
-
-So I would like this to go in, evidently, if only as a starting point for 
-people to play with sorting algorithms, to find the one which is optimal 
-for our general use (we have quite some uses where we put in _almost_ 
-sorted data, which seems to be the worst-case for many sorting 
-algorithms).
-
-Ciao,
-Dscho
+No guarantees though, as I've not tried it.
+-- 
+-Steven Walter <stevenrwalter@gmail.com>
+Freedom is the freedom to say that 2 + 2 = 4
+B2F1 0ECC E605 7321 E818  7A65 FC81 9777 DC28 9E8F 
