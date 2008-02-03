@@ -1,63 +1,94 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: Re: [PATCH] Documentation/git-reset.txt: Use HEAD~N syntax everywhere (unify examples)
-Date: Mon, 04 Feb 2008 01:48:15 +0200
-Organization: Private
-Message-ID: <bq6x38lc.fsf@blue.sea.net>
-References: <3asc6spe.fsf@blue.sea.net>
-	<7v7iho6p2m.fsf@gitster.siamese.dyndns.org>
-	<20080202084406.GA15305@glandium.org> <8x235xa8.fsf@blue.sea.net>
-	<20080203193024.GV29522@dpotapov.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] git-rebase.sh: Update USAGE string (No. 1)
+Date: Sun, 03 Feb 2008 15:52:23 -0800 (PST)
+Message-ID: <m3lk6161jo.fsf@localhost.localdomain>
+References: <prvd3i9e.fsf@blue.sea.net> <ir15399p.fsf@blue.sea.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 04 00:49:33 2008
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Mon Feb 04 00:53:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLoaY-0006Oa-UH
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 00:49:31 +0100
+	id 1JLodv-00076U-MD
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 00:53:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753492AbYBCXs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 18:48:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753471AbYBCXs5
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 18:48:57 -0500
-Received: from main.gmane.org ([80.91.229.2]:36524 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753457AbYBCXs4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 18:48:56 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JLoZx-00022m-Pf
-	for git@vger.kernel.org; Sun, 03 Feb 2008 23:48:53 +0000
-Received: from a91-155-178-181.elisa-laajakaista.fi ([91.155.178.181])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 03 Feb 2008 23:48:53 +0000
-Received: from jari.aalto by a91-155-178-181.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 03 Feb 2008 23:48:53 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-178-181.elisa-laajakaista.fi
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
-Cancel-Lock: sha1:vRXML0p/rdN4lAYPFFA135nlu14=
+	id S1753557AbYBCXw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 18:52:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753516AbYBCXw2
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 18:52:28 -0500
+Received: from fk-out-0910.google.com ([209.85.128.184]:38627 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753471AbYBCXw1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 18:52:27 -0500
+Received: by fk-out-0910.google.com with SMTP id z23so1749861fkz.5
+        for <git@vger.kernel.org>; Sun, 03 Feb 2008 15:52:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=1WRvvIHSiDpOAOh+r3yzboSXdSC6aDWV/CCwv3CZ1zM=;
+        b=Al42Ush7E1JUbEFz7jsLwY/Kl1uzJtza7K9k68hvi0ylF9j8uiivqdc0JrF6Hr0WRZ7pPBvvcCDdEl/U80EAwK8F/Jgyeua6Y3DvYBKfaLgpslz2nPTjwNOCkrSQ34nnDVNQYplQCii6c+V7/762NzYkx3plSZ1aP0e0tzmcAvo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=PCqz50/QGgaOFpGTYKB4/Bp2k20zsdyIbh36bjqJEC8oOEajAxv3iTHyjw3cC8eniY6ULrIvtmLPjxIMsXDEXNwKrDWjfNqqKKNuk+mG/GYvdT5i8w3niohFeicC3A1HXQKBZw2db8jwpWL2za/30za4KonOEHo2MkdhPF7Dikg=
+Received: by 10.82.187.2 with SMTP id k2mr11777758buf.16.1202082746031;
+        Sun, 03 Feb 2008 15:52:26 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.194.5])
+        by mx.google.com with ESMTPS id g17sm18006002nfd.10.2008.02.03.15.52.22
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 03 Feb 2008 15:52:23 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m13NqELi008538;
+	Mon, 4 Feb 2008 00:52:16 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m13NqBgp008535;
+	Mon, 4 Feb 2008 00:52:11 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <ir15399p.fsf@blue.sea.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72424>
 
-* Sun 2008-02-03 Dmitry Potapov <dpotapov@gmail.com>
-* Message-Id: 20080203193024.GV29522@dpotapov.dyndns.org
-> ^-syntax is very natural to specify the _previous_ commit. Have you
-> notice we usually say "previous", not "one commit before"?
+Jari Aalto <jari.aalto@cante.net> writes:
 
-Only if you're grown with git. Everywhere else the concept of HEAD or
-TIP is more natural, thus progression:
+> Subject: Re: [PATCH] git-rebase.sh: Update USAGE string (No. 1)
 
-    HEAD, HEAD~1, HEAD~2
+What's with the "(No. 1)" here? If you want to add some comment that
+should *not* be part of commit message, put it in brackets beside
+PATCH, for example "[PATCH/RFC]", "[PATCH (resend)]", 
+"[PATCH (amend)]", "[PATCH v2]" etc.
 
-Jari
+> Present the options in -s|--long (short, long) order.
+> Mention merge and new whitespace option.
+> 
+> ed-off-by: Jari Aalto <jari.aalto AT cante.net>
+
+I guess that it is copy'n'paste error, and it should be
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+
+>  
+> -USAGE='[--interactive | -i] [-v] [--onto <newbase>] <upstream> [<branch>]'
+> +USAGE='[-i|--interactive] [-v|--verbose]
+> +[--whitespace={nowarn|warn|error|error-all|strip}]
+
+I would say "[--whitespace=<option>]" or "[--whitespace=<action>]"
+instead of introducing yet not agreed upon notation (this has the
+advantage of shortening synopisis, which should be short IMHO).
+
+Besides here the mutually exclusive options are naturelly delimited,
+so you can say just (I think):
+   [--whitespace=nowarn|warn|error|error-all|strip]
+
+> +[-m|--merge] [--onto <newbase>] <upstream> [<branch>]'
+> +
 
 -- 
-Welcome to FOSS revolution: we fix and modify until it shines
+Jakub Narebski
+Poland
+ShadeHawk on #git
