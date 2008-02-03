@@ -1,97 +1,91 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH/RFC] gitweb: Make feed entries point to commitdiff view
-Date: Sun,  3 Feb 2008 12:38:46 +0100
-Message-ID: <1202038726-4221-1-git-send-email-jnareb@gmail.com>
-Cc: Florian La Roche <laroche@redhat.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 03 12:39:35 2008
+Subject: Re: [PATCH] Unify the name of the second option in the text
+Date: Sun, 03 Feb 2008 04:04:34 -0800 (PST)
+Message-ID: <m3y7a25jqt.fsf@localhost.localdomain>
+References: <1201996688-5559-1-git-send-email-joerg@alea.gnuu.de>
+	<1201996688-5559-2-git-send-email-joerg@alea.gnuu.de>
+	<1201996688-5559-3-git-send-email-joerg@alea.gnuu.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-15?q?J=F6rg_Sommer?= <joerg@alea.gnuu.de>
+X-From: git-owner@vger.kernel.org Sun Feb 03 13:05:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLdC8-00071w-Lj
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 12:39:33 +0100
+	id 1JLdb1-0005Aq-43
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 13:05:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754288AbYBCLjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 06:39:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756516AbYBCLjA
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 06:39:00 -0500
-Received: from py-out-1112.google.com ([64.233.166.183]:33125 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754267AbYBCLi7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 06:38:59 -0500
-Received: by py-out-1112.google.com with SMTP id u52so2614847pyb.10
-        for <git@vger.kernel.org>; Sun, 03 Feb 2008 03:38:58 -0800 (PST)
+	id S1759133AbYBCMEj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Feb 2008 07:04:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758269AbYBCMEj
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 07:04:39 -0500
+Received: from fg-out-1718.google.com ([72.14.220.154]:61641 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751078AbYBCMEi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Feb 2008 07:04:38 -0500
+Received: by fg-out-1718.google.com with SMTP id e21so1631949fga.17
+        for <git@vger.kernel.org>; Sun, 03 Feb 2008 04:04:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=H/MPSUjMbOWcBG6xeMllsSpQHml+dMTt30vze7tb7VE=;
-        b=Ksc44DofcxwSdSHthvbaannpRJ654SJzdgt94BP7OKG6FTxam0dej2h3Y7EYsuq4z3W5g8X9hSiqEBEKU+S7XGXsoZmbwY+VEU8GfRoH4Hw8I9MNBWqEOvJ+jA96RbIBmGGsBe9HOLaNHcyPm+bC1DHjAixnzUiTtQfoDT5o2AA=
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:content-transfer-encoding:from:date;
+        bh=z/n15FjM8wvGWaerfjiKpahmcbp2e/AZ8YLPxuInUlQ=;
+        b=WINrtLLsiX69ETdCSZy+lTzpiIbrTRwsLSvT2hB8VzVeL7TsllWJiHvfbst6SO4HJQqh2AQeV7Yyr4Y2hOGfvLZeruEzYXdJkFMDO4ZgyeDtCbGwHPV6dkyeDqzvX3B6ytDX1RqKNbkpHMckVjEaoSLYBtGSwzSeXdkhQK43nhw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=kRd7g+9GCpy75dAb9+9K76J8kBu+DvRgxJ/d8PO6l9VgixwZN37oml/GDoX5xbBtZShA8OsHS31ySaptfMNHUnD0HNgWfitJaK6nMwlEU5JEKPyBObHAhOcRvhqJpm99wY37xvFhJB9ezM75e87MdAma/yack85wjACj9sdgYeU=
-Received: by 10.65.180.9 with SMTP id h9mr10030602qbp.41.1202038737297;
-        Sun, 03 Feb 2008 03:38:57 -0800 (PST)
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:content-transfer-encoding:from:date;
+        b=Bma5AqgaA28TXgZFdPt5WUvGZTOkEufqRSRdVUx3bLXwnWlh/yC/zR+e/T52pGkFv+w4IIm3LWZ/nFgXitAt0dA27E2taJqz29zk2KYKSNvkzUlylrhYEL3obK/HjNQCS+YOWGCjlOx/85U0CwDJiEl3BkgoSCj45aNHrdUgVHI=
+Received: by 10.78.205.7 with SMTP id c7mr10032794hug.29.1202040275786;
+        Sun, 03 Feb 2008 04:04:35 -0800 (PST)
 Received: from localhost.localdomain ( [83.8.194.189])
-        by mx.google.com with ESMTPS id k5sm15951090nfd.23.2008.02.03.03.38.55
+        by mx.google.com with ESMTPS id c14sm16068645nfi.6.2008.02.03.04.04.32
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 03 Feb 2008 03:38:56 -0800 (PST)
+        Sun, 03 Feb 2008 04:04:34 -0800 (PST)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m13BcoPG004242;
-	Sun, 3 Feb 2008 12:38:51 +0100
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m13C4TtG004390;
+	Sun, 3 Feb 2008 13:04:29 +0100
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id m13BckSF004240;
-	Sun, 3 Feb 2008 12:38:46 +0100
-X-Mailer: git-send-email 1.5.4
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m13C4QYq004387;
+	Sun, 3 Feb 2008 13:04:26 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <1201996688-5559-3-git-send-email-joerg@alea.gnuu.de>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72353>
 
-From: Florian La Roche <laroche@redhat.com>
+J=F6rg Sommer <joerg@alea.gnuu.de> writes:
 
-Change feeds entries (feeds items) from pointing (linking) to 'commit'
-view to pointing to 'commitdiff' view.
+> Signed-off-by: J=F6rg Sommer <joerg@alea.gnuu.de>
+> ---
+>  Documentation/git-push.txt |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>=20
+> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+> index 5f24944..18e0c06 100644
+> --- a/Documentation/git-push.txt
+> +++ b/Documentation/git-push.txt
+> @@ -53,7 +53,7 @@ side are updated.
+>  +
+>  `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`.
+>  +
+> -A parameter <ref> without a colon pushes the <ref> from the source
+> +A parameter <refspec> without a colon pushes the <refspec> from the =
+source
+>  repository to the destination repository under the same name.
+>  +
+>  Pushing an empty <src> allows you to delete the <dst> ref from
 
-First, feed entries have whatchanged-like list of files which were
-modified in a commit, so 'commitdiff' view more naturally reflects
-feed entry (in more naturally alternate / extended version of a feed
-item). Second, this way the patches are shown directly and code review
-is done more easily via watching feeds.
+Err... that is incorrect without further surgery. <refspec> is either
+<ref>:<ref>, <ref> or some other exotic case; in the form <ref>:<ref>
+it can include globbing. The fragment above talks about situation
+where <refspec> is <ref>, and does not contain colon.
 
-[jn: Rewritten commit message]
-
-Signed-off-by: Florian La Roche <laroche@redhat.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This patch was originally send by Florian La Roche in
-  "[PATCH] gitweb: Change feeds from commit to commitdiff output"
-
-  Message-ID: <20080110130900.GA9395%40dudweiler.stuttgart.redhat.com>
-  http://thread.gmane.org/gmane.comp.version-control.git/70068
-
-As requested, Junio, I have marged this patch as an RFC, although
-I think that with the improved commit message the reason for this
-change is more obvious, and it is a go.
-
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index ae2d057..8ef2735 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -5565,7 +5565,7 @@ XML
- 			or next;
- 
- 		# print element (entry, item)
--		my $co_url = href(-full=>1, action=>"commit", hash=>$commit);
-+		my $co_url = href(-full=>1, action=>"commitdiff", hash=>$commit);
- 		if ($format eq 'rss') {
- 			print "<item>\n" .
- 			      "<title>" . esc_html($co{'title'}) . "</title>\n" .
--- 
-1.5.4
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
