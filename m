@@ -1,63 +1,66 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [ANNOUNCE] GIT 1.5.4
-Date: Sun, 3 Feb 2008 06:32:31 +0100
-Message-ID: <200802030632.31169.chriscool@tuxfamily.org>
-References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802030321150.7372@racer.site> <871w7uitnt.dancerj%dancer@netfort.gr.jp>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] compat: Add simplified merge sort implementation from glibc
+Date: Sat, 02 Feb 2008 22:22:44 -0800
+Message-ID: <7v1w7u1ruz.fsf@gitster.siamese.dyndns.org>
+References: <20080203011130.GK26392@lavos.net>
+	<alpine.LSU.1.00.0802030231080.7372@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junichi Uekawa <dancer@netfort.gr.jp>
-X-From: git-owner@vger.kernel.org Sun Feb 03 06:27:12 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Brian Downing <bdowning@lavos.net>,
+	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
+	msysgit@googlegroups.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 03 07:23:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLXNl-0007Rw-CE
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 06:27:09 +0100
+	id 1JLYGG-0007w2-S2
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 07:23:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750968AbYBCF0b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Feb 2008 00:26:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750940AbYBCF0b
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 00:26:31 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:36507 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750917AbYBCF0b convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Feb 2008 00:26:31 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 4B4AD1AB2AD;
-	Sun,  3 Feb 2008 06:26:30 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 277011AB2A8;
-	Sun,  3 Feb 2008 06:26:29 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <871w7uitnt.dancerj%dancer@netfort.gr.jp>
-Content-Disposition: inline
+	id S1758244AbYBCGW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 01:22:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757537AbYBCGW4
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 01:22:56 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59310 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753225AbYBCGWz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 01:22:55 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E1CA160F8;
+	Sun,  3 Feb 2008 01:22:52 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5936E60F7;
+	Sun,  3 Feb 2008 01:22:47 -0500 (EST)
+In-Reply-To: <alpine.LSU.1.00.0802030231080.7372@racer.site> (Johannes
+	Schindelin's message of "Sun, 3 Feb 2008 02:37:27 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72329>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Le dimanche 3 f=E9vrier 2008, Junichi Uekawa a =E9crit :
-> There are two parts to the problem
->
-> 1. Custom scripts installed in PATH
->    -> this is not a problem
->
-> 2. Custom scripts calling git tools with dash notation. (git-xxx).
->    -> they need to be modified and fixed.
->
-> I was initially worried about (1), but I realize now that it's a
-> no-op.  Now, I am worried about (2), and I realize I have quite a few
-> scripts to fix.
+> So I would like this to go in, evidently, if only as a starting point for 
+> people to play with sorting algorithms, to find the one which is optimal 
+> for our general use (we have quite some uses where we put in _almost_ 
+> sorted data, which seems to be the worst-case for many sorting 
+> algorithms).
 
-If you have some general purpose scripts that you can put under the GPL=
-,=20
-then we can perhaps integrate and fix them for you and everyone else.
+I do not think we want to spend arguing over the last few
+percent to get anything ultra-fast.  The aim for compat/ is to
+have a replacement for unusable platform-supplied stuff.
 
-Thanks in advance,
-Christian.
+The patch looked fine, thanks.
+
+If I may add a bikeshed comment, I probably would have modelled
+the make variable, not after ssl-with-crypto and libiconv, but
+after {arm,mozilla,ppc}-sha1, if I were naming it.  This is not
+like an absolute must-to-have: "on this platform, libc is not
+enough and we NEED to explicitly ask for -liconv".  It is more
+like a choose-to-use: "we could use openssl sha1 implementation,
+but I choose to use Mozilla one".
