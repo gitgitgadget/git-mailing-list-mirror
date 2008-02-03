@@ -1,87 +1,56 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE] GIT 1.5.4 (git popularity)
-Date: Sun, 03 Feb 2008 16:34:42 +0100
-Organization: At home
-Message-ID: <fo4muj$fek$1@ger.gmane.org>
-References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <87k5lnwvzd.dancerj%dancer@netfort.gr.jp> <878x22j1km.dancerj%dancer@netfort.gr.jp> <20080203103804.GC323@artemis.madism.org> <vpqodayrsag.fsf@bauges.imag.fr>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: MKCOL fails, 403 error
+Date: Sun, 3 Feb 2008 16:35:38 +0100
+Organization: glandium.org
+Message-ID: <20080203153538.GA17980@glandium.org>
+References: <eae1aef50802030535u1402471fh182a230f3e0667ea@mail.gmail.com> <eae1aef50802030539l14287c7exa914696755e7ade4@mail.gmail.com> <20080203143101.GB7946@glandium.org> <eae1aef50802030732s7536dfacufd0aaf41974c85d6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 03 16:35:37 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, pasky@suse.cz
+To: Alan Smith <alanrogersmith@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 03 16:36:09 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLgsW-0000M3-QA
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 16:35:33 +0100
+	id 1JLgt3-0000Yq-Is
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 16:36:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752180AbYBCPfB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Feb 2008 10:35:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751924AbYBCPfB
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 10:35:01 -0500
-Received: from main.gmane.org ([80.91.229.2]:37561 "EHLO ciao.gmane.org"
+	id S1753284AbYBCPfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 10:35:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752647AbYBCPfc
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 10:35:32 -0500
+Received: from vuizook.err.no ([85.19.215.103]:43715 "EHLO vuizook.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751453AbYBCPfA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 10:35:00 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JLgrs-0005AX-JG
-	for git@vger.kernel.org; Sun, 03 Feb 2008 15:34:52 +0000
-Received: from abuw189.neoplus.adsl.tpnet.pl ([83.8.194.189])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 03 Feb 2008 15:34:52 +0000
-Received: from jnareb by abuw189.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 03 Feb 2008 15:34:52 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abuw189.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1751924AbYBCPfb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 10:35:31 -0500
+Received: from aputeaux-153-1-85-206.w86-205.abo.wanadoo.fr ([86.205.43.206] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JLgtB-0007tz-Oo; Sun, 03 Feb 2008 16:36:19 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JLgsc-0004hs-B1; Sun, 03 Feb 2008 16:35:38 +0100
+Content-Disposition: inline
+In-Reply-To: <eae1aef50802030732s7536dfacufd0aaf41974c85d6@mail.gmail.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Spam-Status: (score 2.2): No, score=2.2 required=5.0 tests=RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72364>
 
-Matthieu Moy wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
->> On Sun, Feb 03, 2008 at 01:00:57AM +0000, Junichi Uekawa wrote:
->>>=20
->>> When I was idly googling around for traces of VCS and popularity,
->>> noticed that Git is actually pretty popular. =A0Googling for 'gitwe=
-b'
->>> and 'viewcvs' and other comparative web-frontend variants floating =
-in
->>> the cyberspace I get these number of hits (in rough estimate) :
->>>=20
->>> 10000000 CVS
->>> 1000000 SVN
->>> 100000 Git
->>> 10000 Mercurial / Darcs
->>> 1000 Bzr
->>>=20
->>> This is crude, and I'm sure someone else will come up with a better
->>> estimate. The point is, when there are so many users, people don't
->>> read the lists or the changelog, but rely on manuals, and be surpri=
-sed
->>> with this change.
->>
->> =A0 http://www.google.com/trends?q=3Dsvn%2C+git%2C+mercurial%2C+bzr%=
-2C+darcs&ctab=3D0&geo=3Dall&date=3Dall&sort=3D0
->=20
-> Debian's popularity contest gives an idea too
+On Sun, Feb 03, 2008 at 10:32:39AM -0500, Alan Smith wrote:
+> Mike,
+> 
+> I do have access to the log at /var/logs/apache2/error_log. What
+> should I be looking for?
 
-And Ohloh stack count gives yet another idea.  Both Debian popularity
-counter and number of Ohloh stacks are mentioned in GitSurvey2007[*1*],
-around question about used SCMs.  Google Trends above not yet, and
-perhaps will not because it is even more skewed than mentioned results,
-perhaps even more than result of Git _User's_ Survey 2007.
+For whatever error message shows up at the time corresponding to when
+the MKCOL request was done. You can grep MKCOL in the access_log to find
+out. That might help you understand why the MKCOL fails.
 
-[*1*] http://git.or.cz/gitwiki/GitSurvey2007#head-4ed59e7615e2dc4f4baa8=
-fa0beccde52c93789f8
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Mike
