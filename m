@@ -1,122 +1,66 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 1/4] help: make 'git-help--browse' usable outside 'git-help'.
-Date: Sun, 3 Feb 2008 06:00:29 +0100
-Message-ID: <200802030600.30074.chriscool@tuxfamily.org>
-References: <20080202073233.7a656fa8.chriscool@tuxfamily.org> <7vmyqj4xxw.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: handle_alias() inside .git dir
+Date: Sat, 2 Feb 2008 23:57:38 -0500
+Message-ID: <20080203045738.GA10660@coredump.intra.peff.net>
+References: <837649D4-465F-4C85-BBE8-B004637EDEF7@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 03 05:55:04 2008
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Sun Feb 03 05:58:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLWsg-0002Tl-L2
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 05:55:03 +0100
+	id 1JLWvk-0002sN-Ev
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 05:58:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754267AbYBCEyb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 Feb 2008 23:54:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754076AbYBCEyb
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 23:54:31 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:52227 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753886AbYBCEya convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 2 Feb 2008 23:54:30 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 9B1441AB2BB;
-	Sun,  3 Feb 2008 05:54:28 +0100 (CET)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 7768D1AB2AB;
-	Sun,  3 Feb 2008 05:54:28 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <7vmyqj4xxw.fsf@gitster.siamese.dyndns.org>
+	id S1754814AbYBCE5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Feb 2008 23:57:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754652AbYBCE5l
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 23:57:41 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2500 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753877AbYBCE5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 23:57:40 -0500
+Received: (qmail 17306 invoked by uid 111); 3 Feb 2008 04:57:39 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 02 Feb 2008 23:57:39 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 02 Feb 2008 23:57:38 -0500
 Content-Disposition: inline
+In-Reply-To: <837649D4-465F-4C85-BBE8-B004637EDEF7@sb.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72327>
 
-Le samedi 2 f=E9vrier 2008, Junio C Hamano a =E9crit :
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > +	struct strbuf page_path; /* it leaks but we exec bellow */
-> > +
-> > +	get_html_page_path(&page_path, page);
-> > +
-> > +	execl_git_cmd("help--browse", page_path.buf, NULL);
-> >  }
->
-> And this part makes the reviewer even more worried. If page
-> could be NULL, then get_html_page_path() would be fed a NULL
-> pointer, which is given to strbuf_addf()!  Ugh.
->
-> Then the reviewer would find out that cmd_to_page() would never
-> return NULL, as it has its own NULL-to-"git" fallback logic.
->
-> I think the code is good, but the proposed commit log message
-> has some room for improvements.
+On Sat, Feb 02, 2008 at 04:02:20AM -0500, Kevin Ballard wrote:
 
-Yeah, I could have explained some parts of the patch more.
-I will try to do better.
+> This happens because setup_git_directory_gently() ends up setting  
+> GIT_DIR_ENVIRONMENT to "." if it detects that we are in the .git  
+> directory, and then a subsequent call to setup_git_directory() calls  
+> setup_git_directory_gently() again, which sees the GIT_DIR_ENVIRONMENT  
+> and ends up calling set_work_tree(). The comment to set_work_tree() says 
+> it's only called if GIT_DIR is set and calls what it does "old behavior". 
+> I assume it exists for some sort of backwards compatibility, but in quick 
+> testing simply commenting out line 266 of setup.c (the call to 
+> set_work_tree) makes `git st` work as expected. I'm not sure if this will 
+> have any adverse effect on anything else. Does anybody know if this will 
+> cause problems?
 
-> Something like...
->
->     [PATCH 1/4] help: make 'git-help--browse' usable outside 'git-hel=
-p'
->
->     "git-help--browse" helper is to launch a browser of the
->     user's choice to view the HTML version of git documentation
->     for a given command.  It used to take the name of a command,
->     convert it to the path of the documentation by prefixing the
->     directory name and appending the ".html" suffix, and start
->     the browser on the path.
->
->     This updates the division of labor between the caller in
->     help.c and git-help--browser helper.  The helper is now
->     responsible for launching a browser of the user's choice
->     on given URLs, and it is the caller's responsibility to
->     tell it the paths to documentation files.
->
->     This is in preparation to reuse the logic to choose
->     user's preferred browser in instaweb.
->
->     The helper had a provision for running it without any
->     command name, in which case it showed the toplevel "git(7)"
->     documentation, but the caller in help.c never makes such a
->     call.  The helper now exits with a usage message when no
->     path is given.
+No, I don't think that's right. That call is there for people who have
+explicitly set GIT_DIR to use their cwd as the working tree, wherever it
+may be.
 
-Great commit message indeed! Though I fear that such long messages (for=
- a=20
-not very long patch) could take precious screen real estate when using =
-"git=20
-log" or otherwise bother some other readers.
+The problem is that setup_git_directory_gently actually _sets_ GIT_DIR.
+So the next time through when we call setup_git_directory_gently again,
+it thinks you have set it in the environment, which has the special
+meaning.
 
-Anyway do you want me to resend the patch or the series with improved c=
-ommit=20
-messages ?
+Unfortunately, it doesn't look like there's a simple fix. Because the
+semantics of the two are related, I think we need to set GIT_WORK_TREE
+whenever we set GIT_DIR, and we need some way of setting GIT_WORK_TREE
+to a value that means "I don't have a work tree."
 
->     Signed-off-by: ...
->     ---
->
->      * Eric is CC'ed because the ultimate goal of this
->        series is to get rid of the duplicated logic between
->        help--browse and instaweb.
->
->      Makefile            |    2 +-
->      git-help--browse.sh |   24 +++++++++---------------
->     ...
->
-> I have given only a cursory look at the remainder of the series
-> (I'll hopefully be in a mini vacation mode after the release),
-
-You definitely deserve it. Thanks for your great release and maintainer=
-=20
-work.
-
-> but I think overall the series makes sense.
-
-Thanks,
-Christian.
+-Peff
