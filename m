@@ -1,116 +1,88 @@
-From: Wink Saville <wink@saville.com>
-Subject: Re: git-svn segmetation fault
-Date: Sat, 02 Feb 2008 17:21:59 -0800
-Message-ID: <47A51737.7050905@saville.com>
-References: <47A39DFD.9020905@saville.com> <47A3BE6F.6080304@saville.com> <20080202034258.GA27814@dervierte> <47A3E9A8.1060102@saville.com> <20080202160332.GA25945@dervierte> <47A4BCE8.5030308@saville.com> <20080202210348.GA11722@dervierte>
+From: "Stefan (metze) Metzmacher" <metze@samba.org>
+Subject: Re: Strange behavior with git rebase (-i)
+Date: Sun, 03 Feb 2008 02:21:12 +0100
+Message-ID: <47A51708.4020406@samba.org>
+References: <47A44974.7050907@samba.org> <alpine.LSU.1.00.0802021538300.7372@racer.site> <20080202162524.GB25945@dervierte> <alpine.LSU.1.00.0802021708030.7372@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 03 02:22:58 2008
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig0762F2B744759405330B42CF"
+Cc: Steven Walter <stevenrwalter@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 03 02:23:00 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLTZR-0002X9-2h
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 02:22:57 +0100
+	id 1JLTZQ-0002X9-E9
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 02:22:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753376AbYBCBWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Feb 2008 20:22:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932109AbYBCBWL
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 20:22:11 -0500
-Received: from an-out-0708.google.com ([209.85.132.245]:28337 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752438AbYBCBWD (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1765889AbYBCBWD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Sat, 2 Feb 2008 20:22:03 -0500
-Received: by an-out-0708.google.com with SMTP id d31so400953and.103
-        for <git@vger.kernel.org>; Sat, 02 Feb 2008 17:22:02 -0800 (PST)
-Received: by 10.100.228.17 with SMTP id a17mr11294464anh.17.1202001722543;
-        Sat, 02 Feb 2008 17:22:02 -0800 (PST)
-Received: from ?192.168.0.133? ( [70.91.206.233])
-        by mx.google.com with ESMTPS id 7sm3091222agc.8.2008.02.02.17.22.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 02 Feb 2008 17:22:01 -0800 (PST)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <20080202210348.GA11722@dervierte>
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932091AbYBCBWD
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 20:22:03 -0500
+Received: from ip-217-172-181-76.mx-netz.de ([217.172.181.76]:34871 "EHLO
+	mail.mx-netz.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760354AbYBCBWA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Feb 2008 20:22:00 -0500
+Received: from [172.30.76.9] (unknown [172.30.76.9])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	(SASL METHOD:[PLAIN] USERNAME:[metze])
+	by mail.mx-netz.de (SMTP-MAIL-SERVER) with ESMTP
+	id C000520C54C; Sun,  3 Feb 2008 02:21:56 +0100 (CET)
+User-Agent: Thunderbird 1.5.0.14 (X11/20060911)
+In-Reply-To: <alpine.LSU.1.00.0802021708030.7372@racer.site>
+X-Enigmail-Version: 0.94.4.0
+OpenPGP: id=0E53083F
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72313>
 
-Steven Walter wrote:
-> On Sat, Feb 02, 2008 at 10:56:40AM -0800, Wink Saville wrote:
->   
->> <I did that but a rebase command resulted in: />
->>
->> wink@ic2d1:$ git svn rebase
->> Unable to determine upstream SVN information from working tree history
->>
->> <I've bee using git-svn for a few days without trouble. Do I need
->> the do another "git svn clone" using the base url rather than
->> pointing to the trunk? />
->>     
->
-> You shouldn't have to clone again.  First time removing .git/svn, then
-> running "git svn fetch" (which ought to rebuild what was there).  You
-> ought to be able to rebase after that.
->   
-I've messed something up, I've just re-cloned and all is well.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig0762F2B744759405330B42CF
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-Actually, a related question which you seem to imply from
-your answer to the crash. I have the local git repo and also
-one on a local server which I created as follows:
+Johannes Schindelin schrieb:
+> Hi,
+>=20
+> On Sat, 2 Feb 2008, Steven Walter wrote:
+>=20
+>> On Sat, Feb 02, 2008 at 03:42:06PM +0000, Johannes Schindelin wrote:
+>>> I don't believe it.  "git branch" would have shown "* (no branch)" as=
+=20
+>>> current branch, unless the rebase is finalized.
+>>>
+>>> git rebase -i works on a _detached_ HEAD, for two reasons:
+>>> On Sat, 2 Feb 2008, Stefan (metze) Metzmacher wrote:
+>>>> I was using git 1.5.3.2
+>> Did rebase -i in git 1.5.3.2 use a detached head?  I thought that was
+>> new in 1.5.4.
+>=20
+> rebase -i uses a detached HEAD since it was merged.  In 1.5.4, rebase=20
+> (note the absence of -i) uses a detached HEAD, too.
 
-local$: git svn clone -s https://async-msgcomp.googlecode.com/svn amc
-local$: ssh srvr
-srvr$: cd <to local server/path to repo>
-srvr$: mkdir amc.git
-srvr$: cd amc.git
-srvr$: git --bare init --shared
-srvr$: exit
-local$: cd amc
-local$: git remote add origin git:<to local server/path to repo/amc.git>
-local$: git push --all
+Hmm, I can't reproduce this...maybe I was just to stupid and didn't look
+at the git branch output carefully...
+
+metze
 
 
+--------------enig0762F2B744759405330B42CF
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-So at this point amc/.git/config looks like:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+Comment: Using GnuPG with SUSE - http://enigmail.mozdev.org
 
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = false
-        logallrefupdates = true
-[svn-remote "svn"]
-        url = https://async-msgcomp.googlecode.com/svn
-        fetch = trunk:refs/remotes/trunk
-        branches = branches/*:refs/remotes/*
-        tags = tags/*:refs/remotes/tags/*
-[remote "origin"]
-        url = git://192.168.0.8/amc.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
-wink@ic2d1:$
+iD8DBQFHpRcIm70gjA5TCD8RAs8aAJ4rV9XawVBMdLzzNswVHGmApiQYWwCeIXEm
+ZfARftvC9v4S0WNzLCnBgIY=
+=cINV
+-----END PGP SIGNATURE-----
 
-
-
-
-I now have three repositories one local git repo, one git repo on srvr
-and one svn repo at googlecode.com. I feel really good and backed up
-to the max:) But assume the svn repo is huge and the initial git svn
-clone takes a long time.
-
-What steps would be needed to recreate a "local git repo" from the
-"git repo on srvr" that I could use against the svn repo?
-
-I tried a little test, I cloned my git repo on srvr locally to amc-xx
-and added the [svn-remote "svn"] section to amc-xx/.git/config
-and then did a git-svn fetch. From what happened it looks like I
-just did a git svn clone and didn't save any time.
-
-Also, a follow up can I create an svn repo from a git repo.
-
-Anyway, thanks for the help,
-
-Wink
+--------------enig0762F2B744759405330B42CF--
