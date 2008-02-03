@@ -1,68 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6] safecrlf: Add mechanism to warn about irreversible crlf conversions
-Date: Sun, 03 Feb 2008 02:50:14 -0800
-Message-ID: <7vbq6yuxeh.fsf@gitster.siamese.dyndns.org>
-References: <12019685081997-git-send-email-prohaska@zib.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [ANNOUNCE] GIT 1.5.4
+Date: Sun, 3 Feb 2008 10:50:02 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802031048320.7372@racer.site>
+References: <7vmyqk563z.fsf@gitster.siamese.dyndns.org> <87k5lnwvzd.dancerj%dancer@netfort.gr.jp> <878x22j1km.dancerj%dancer@netfort.gr.jp> <alpine.LSU.1.00.0802030210240.7372@racer.site> <877ihmivav.dancerj%dancer@netfort.gr.jp> <alpine.LSU.1.00.0802030321150.7372@racer.site>
+ <871w7uitnt.dancerj%dancer@netfort.gr.jp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun Feb 03 11:50:59 2008
+To: Junichi Uekawa <dancer@netfort.gr.jp>
+X-From: git-owner@vger.kernel.org Sun Feb 03 11:51:18 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLcR8-0003yX-Gm
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 11:50:58 +0100
+	id 1JLcRP-00041R-W2
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 11:51:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753895AbYBCKu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 05:50:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753855AbYBCKu0
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 05:50:26 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43755 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752436AbYBCKuZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 05:50:25 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E42105B75;
-	Sun,  3 Feb 2008 05:50:23 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 70E2C5B74;
-	Sun,  3 Feb 2008 05:50:21 -0500 (EST)
-In-Reply-To: <12019685081997-git-send-email-prohaska@zib.de> (Steffen
-	Prohaska's message of "Sat, 2 Feb 2008 17:08:28 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754039AbYBCKuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 05:50:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754005AbYBCKuj
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 05:50:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40638 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753855AbYBCKui (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 05:50:38 -0500
+Received: (qmail invoked by alias); 03 Feb 2008 10:50:37 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp047) with SMTP; 03 Feb 2008 11:50:37 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18QG/BNQJgQ1/gu1KksF1UWIXQe8w0UctHhZAr8mT
+	0JZLThHm78X1mB
+X-X-Sender: gene099@racer.site
+In-Reply-To: <871w7uitnt.dancerj%dancer@netfort.gr.jp>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72350>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+Hi,
 
-> CRLF conversion bears a slight chance of corrupting data.
-> ...
-> thing to do, while for binary file it corrupts data.
+On Sun, 3 Feb 2008, Junichi Uekawa wrote:
 
-The above 25-line or so are well written and deserve to be in
-the end user documentation somewhere, I think, to explain why it
-is a good idea to have these warnings to them..
+> 2. Custom scripts calling git tools with dash notation. (git-xxx).
+>    -> they need to be modified and fixed.
 
-> This commit modifies git apply to fail even if safecrlf=warn,
-> because git apply writes its changes back to the work tree
-> immediately.  The user would not have a chance to backup the old
-> version of the file if only a warning was printed.
+Exactly, they need to be modified and fixed.  Which was why Junio wrote 
+that part of his message, to warn you and everybody that you will need to 
+fix your scripts.  Of course, you need not be in a hurry, this will not 
+affect you in the next few weeks.
 
-I do not get this logic at all.
-
-The whole point of git-apply is to apply the patch.  If you say
---whitespace=fix and some contents (say one of the testsuite
-files in our t/ directory) needed to keep trailing newline, you
-obviously are left with a broken result, and you would recover
-by checking it out from index or HEAD and reapply.  Why
-shouldn't the same principle hold here?
-
-I haven't looked at the code of this round yet, but I promise I
-will.
+Ciao,
+Dscho
