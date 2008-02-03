@@ -1,96 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
-Subject: Re: [PATCH] compat: Add simplified merge sort
- implementation from glibc
-Date: Sun, 3 Feb 2008 21:09:35 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802032109050.7372@racer.site>
-References: <20080203011130.GK26392@lavos.net> <alpine.LSU.1.00.0802030231080.7372@racer.site> <20080203045033.GL26392@lavos.net>
-Reply-To: Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] git-rebase.sh: Update USAGE string
+Date: Sun, 03 Feb 2008 13:14:21 -0800 (PST)
+Message-ID: <m3prvd68uy.fsf@localhost.localdomain>
+References: <prvd3i9e.fsf@blue.sea.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>, Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>,  git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-To: Brian Downing <bdowning-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Sun Feb 03 22:10:53 2008
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from wa-out-0708.google.com ([209.85.146.250])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Sun Feb 03 22:15:01 2008
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLm6w-00067g-HK
-	for gcvm-msysgit@m.gmane.org; Sun, 03 Feb 2008 22:10:47 +0100
-Received: by wa-out-0708.google.com with SMTP id n36so2525506wag.21
-        for <gcvm-msysgit@m.gmane.org>; Sun, 03 Feb 2008 13:10:17 -0800 (PST)
+	id 1JLmAz-0007TX-OJ
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 22:14:58 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751321AbYBCVO0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 16:14:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbYBCVO0
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 16:14:26 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:36811 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750890AbYBCVOZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 16:14:25 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so1053384ugc.16
+        for <git@vger.kernel.org>; Sun, 03 Feb 2008 13:14:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:received:received:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        bh=mPzYaDQ/wSJr3Ex9BiGvf8BtXJT3HoTFYZugsyaMebE=;
-        b=KvoUHROVZifGdQa96Zw4HaqlZRuFPV6G4MAg/AAf1u+2PGjpEysKwR/INwCuk/afmc9UrlyU9iQzy/753k+i6JjuNmPgMZoQjpdpofeisWjZd5GgxW54qNHGaM9RuNsN8KaHfg8q6XDZI4j0QbBMyM3nYby/TQ2p4n8lKSX85+U=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received:x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        bh=NwXN3B4A7bdnr8c1k9KgCpZs4cr3uX3tK2VfFuCLHPc=;
+        b=k5X0k2PHOrlI0idcjdXOT1R8xrtH3i3w1VKp96O+csRXKkZYJ7Yf1cxBwPmjt6PPZoJHF/ctaf0E0HEYoDsjS1kn5CNM+zi+j8UqO7SmYnj7D7Th7vNG4kFgCrL1hJHvIJR4pjeN13zS1Mq40dG8eAYN0IzR7nLPjHsG4EWfpFA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results:x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject:in-reply-to:message-id:references:user-agent:mime-version:content-type:x-y-gmx-trusted:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
-        b=GdGhHVEpkB/bDGse4wokLi8bOE03fYBLzlBT06vmIUE1mc4KNvDXyucoQPCcGmfh/Y1VoED69zUyWfljxql54IeVnTHuTCwOUDghDGoXLmYELtD+KkxCaA3x9V7WLSN0mSPbM0IopIkb0WAaXPW2ccaPqHpKh8pcY1znRp0UZR4=
-Received: by 10.141.116.16 with SMTP id t16mr183406rvm.20.1202073013670;
-        Sun, 03 Feb 2008 13:10:13 -0800 (PST)
-Received: by 10.44.219.52 with SMTP id r52gr1601hsg;
-	Sun, 03 Feb 2008 13:10:13 -0800 (PST)
-X-Sender: Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
-X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-Received: by 10.35.59.5 with SMTP id m5mr18843338pyk.0.1202073013113; Sun, 03 Feb 2008 13:10:13 -0800 (PST)
-Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by mx.google.com with SMTP id x46si11108566pyg.3.2008.02.03.13.10.12; Sun, 03 Feb 2008 13:10:13 -0800 (PST)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
-Authentication-Results: mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org
-Received: (qmail invoked by alias); 03 Feb 2008 21:10:10 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40] by mail.gmx.net (mp041) with SMTP; 03 Feb 2008 22:10:10 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/7lJRVuS77qGlTdbpslHTMelA4Ydr+kLyLmkn/mk Psacjt9V8rhBNi
-X-X-Sender: gene099-OGWIkrnhIhzN0uC3ymp8PA@public.gmane.org
-In-Reply-To: <20080203045033.GL26392-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:in-reply-to:message-id:lines:user-agent:mime-version:content-type:from:date;
+        b=LlDI3laKa5L4H2y/ssQ1qiUoKiWhYL8wHBpjZw22yCmLVal8B/gOk1YXDJED69DMGm0uP1NwDJNBvKTSAQ5fsaAaMKQ0XbtAY2br08OZEZ7sTBqd90yKJ5l0LQmmEC0KVh+opX97z0ArOMpe3O/ng5STpSeWiOHmR3jXTDS707Y=
+Received: by 10.67.30.13 with SMTP id h13mr1771904ugj.45.1202073262824;
+        Sun, 03 Feb 2008 13:14:22 -0800 (PST)
+Received: from localhost.localdomain ( [83.8.194.5])
+        by mx.google.com with ESMTPS id m1sm5872172ugc.51.2008.02.03.13.14.20
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 03 Feb 2008 13:14:21 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id m13LEFGw007580;
+	Sun, 3 Feb 2008 22:14:15 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id m13LEEw9007576;
+	Sun, 3 Feb 2008 22:14:14 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@fuw.edu.pl using -f
+In-Reply-To: <prvd3i9e.fsf@blue.sea.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
-	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72401>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72402>
 
+Jari Aalto <jari.aalto@cante.net> writes:
 
-Hi,
+> Present the options in -s|--long (short, long) order.
 
-On Sat, 2 Feb 2008, Brian Downing wrote:
+This is a good change (but might not make sense without the following
+one)...
 
-> On Sun, Feb 03, 2008 at 02:37:27AM +0000, Johannes Schindelin wrote:
-> > I should add that this is a stripped-down version of glibc's sort() 
-> > (yes, the GPL of glibc allows that we rip it, for all you license 
-> > wieners out there).
-> > 
-> > AFAIR the discussion about the different implementations of a sort 
-> > algorithm boiled down to one particular implementation being quicker 
-> > than what this patch has, but with dubious licensing, and the glibc 
-> > implementation without the modifications present in this patch being 
-> > slower.
-> > 
-> > So I would like this to go in, evidently, if only as a starting point 
-> > for people to play with sorting algorithms, to find the one which is 
-> > optimal for our general use (we have quite some uses where we put in 
-> > _almost_ sorted data, which seems to be the worst-case for many 
-> > sorting algorithms).
-> 
-> If this is what I am thinking of, the sort of dubious licensing was 
-> faster than glibc's quicksort.  This patch, however, is simplified from 
-> glibc's mergesort (which is what glibc uses for the qsort() call except 
-> for very large arrays), and was determined to be faster than both.
-> 
-> See:
-> 
-> http://groups.google.com/group/msysgit/browse_frm/thread/3c2eb564b9d0a994
-> 
-> and the links from that thread for more information.
+> Mention merge and new whitespace option.
 
-Yeah, sorry, I forgot that important fact.
+...and this is not; usage string is now too long.
 
-Thanks,
-Dscho
+Please either use placeholder ([<whitespace>]), or enumerate
+only short version of commands ([-i] [-v] [-m]) in synopsis,
+or break synopsis into lines 80-column lines max.
+
+> -USAGE='[--interactive | -i] [-v] [--onto <newbase>] <upstream> [<branch>]'
+> +USAGE='[-i|--interactive] [-v|--verbose] [--whitespace={nowarn|warn|error|error-all|strip}] [-m|--merge] [--onto <newbase>] <upstream> [<branch>]'
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
