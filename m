@@ -1,151 +1,96 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH RESEND] Avoid a useless prefix lookup in strbuf_expand()
-Date: Sun, 3 Feb 2008 23:22:36 +0100
-Message-ID: <e5bfff550802031422q7ac72ee4ra53bb4152e34ea29@mail.gmail.com>
-References: <1201950593-6119-1-git-send-email-mcostalba@gmail.com>
-	 <7vsl09u2oz.fsf@gitster.siamese.dyndns.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [EGIT PATCH] Comment private modifier to improve performace.
+Date: Sun, 3 Feb 2008 23:25:47 +0100
+Message-ID: <200802032325.47844.robin.rosenberg@dewire.com>
+References: <1201919018-10782-1-git-send-email-rogersoares@intelinet.com.br> <200802030201.10971.robin.rosenberg@dewire.com> <47A61A30.3000904@intelinet.com.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 03 23:23:16 2008
+To: "Roger C. Soares" <rogersoares@intelinet.com.br>
+X-From: git-owner@vger.kernel.org Sun Feb 03 23:26:23 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLnF5-00029x-1E
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 23:23:15 +0100
+	id 1JLnI3-0002zk-1I
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 23:26:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752162AbYBCWWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 17:22:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752136AbYBCWWj
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 17:22:39 -0500
-Received: from rv-out-0910.google.com ([209.85.198.190]:10481 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752042AbYBCWWi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 17:22:38 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1312493rvb.1
-        for <git@vger.kernel.org>; Sun, 03 Feb 2008 14:22:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ocad2u49/jkInkARU53TY/rpv4WidoFLPaLRUQtKVAs=;
-        b=xFWRlrMsIFixaf+BXvxQlXf3Aoxd439w6rrCPcYkjkhAUnAsbQCxAh69Ijz3SCt3X1DEqTULITOncf6bMvcys4hYwVgwWtAaXe9g2y5Tjij5F17Fu6KJUwcY9LWdTZD0366YG6wKfGDsNpzpDQDPKrxQdczT11rzlMgxemhIY6g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XaXK9rl0uMQuuZuVsTn1P8l6haZfdipiKEMw6DRAoRouMhorTfcKuCZ0UNP42rJm2E7z6eBY7QX0WJ5Z4Uo72pes7RRvHLZL6OgKgaF5CVpsTgNqXRTDCVRwci0ROMuI2ENSUWo9/m7HF81hWYgnGS1xR4b6wGleNvHVsdyvbBY=
-Received: by 10.140.133.16 with SMTP id g16mr4211232rvd.231.1202077356879;
-        Sun, 03 Feb 2008 14:22:36 -0800 (PST)
-Received: by 10.141.76.1 with HTTP; Sun, 3 Feb 2008 14:22:36 -0800 (PST)
-In-Reply-To: <7vsl09u2oz.fsf@gitster.siamese.dyndns.org>
+	id S1752768AbYBCWZq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Feb 2008 17:25:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752766AbYBCWZq
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 17:25:46 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:4448 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752431AbYBCWZp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 17:25:45 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id E651D800686;
+	Sun,  3 Feb 2008 23:25:43 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id gio7-WAC-6Wf; Sun,  3 Feb 2008 23:25:43 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 661CA800681;
+	Sun,  3 Feb 2008 23:25:43 +0100 (CET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
+In-Reply-To: <47A61A30.3000904@intelinet.com.br>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72412>
 
-On Feb 3, 2008 10:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Marco Costalba <mcostalba@gmail.com> writes:
->
-> >
-> > -static void format_person_part(struct strbuf *sb, char part,
-> > +/* returns placeholder length or 0 if placeholder is not known */
->
-> That "return placeholder length" is a bit confusing, and I suspect
-> the reason may be because the interface is misdesigned.
->
-> This function gets only a single character "part" and adds the
-> matching information to sb if found, otherwise it doesn't, so
-> the only possible return values are 0 or 2.
->
-> Wouldn't it be much cleaner if this returned a bool that says "I
-> found and substituted that 'part' you asked me to handle"?
->
+s=C3=B6ndagen den 3 februari 2008 skrev Roger C. Soares:
+> Ok, so some more points for your consideration:
+>=20
+> . I saw this /* private */ notation on eclipse code and found it=20
+> interesting.
+It is.
 
-It happens that _currently_ placeholders that start with 'a' or 'c'
-have length of 2 chars, so return value can be only 0 or 2, but this
-is by accident, the return value is really the length of parsed
-placeholder. Indeed if you see the return value of the caller
-format_commit_item() is also the length of the parsed placeholder and
-so should be our format_person_part() whom return value is forwarded
-by caller:
+> . I won't bother measuaring any single case to make sure it is not=20
+> impacting performance under some circunstance, so resolving those=20
+> warnings puts me in the safe area. On the other hand, I think it is a=
+=20
+> lot easier to tell if a patch is breaking encapsulation in a bad way=20
+> just by reviewing it, which is something that is already done.=20
+We do not have a large number of people reviewing our code at this stag=
+e,
+so I would not trust that at the moment.
 
-from format_commit_item()
+> Especially if it has the private modifier commented out. Someone can=20
+> even do a script to uncomment them and verify that it still builds=20
+> without errors.
+There is more to reviewing than just looking at the diffs.
 
-	case 'a':	/* author ... */
-		return format_person_part(sb, placeholder[1],
-		                   msg + c->author.off, c->author.len);
+> . The ui part isn't supposed to be reused by other projects, so I thi=
+nk=20
+> encapsulation there is less important than for jgit. But even so, the=
+=20
+> default modifier (or package-private) is good enough for encapsulatio=
+n.=20
+> Other projects shouldn't write code in the the same packages from jgi=
+t,=20
+> if they do so they know that they are using internal things and they =
+can=20
+> run into problems in the future.
 
+I'm thinking more about internal encapsulation between the classes with=
+in the=20
+project. Many of the classes in the ui (and jgit) packages have little =
+in=20
+common other than that they contribute to the same overall goal (an Ecl=
+ipse=20
+plugin). I guess that is what happens when things get build a small pat=
+ch at=20
+a time. Obviously we could have more packages, but that might make thin=
+gs=20
+worse by forcing us to have more public methods and having a lot of one=
+ and=20
+two class packages feels wrong too (though it actually may be right). I=
+ don't=20
+think I'll look at that right now though.
 
-
-> >       /*
-> >        * If it does not even have a '<' and '>', that is
-> >        * quite a bogus commit author and we discard it;
-> > @@ -301,65 +303,72 @@ static void format_person_part(struct strbuf *sb, char part,
-> >        * which means start (beginning of email address) must
-> >        * be strictly below len.
-> >        */
-> > -     start = end + 1;
-> > -     if (start >= len - 1)
-> > -             return;
-> > -     while (end > 0 && isspace(msg[end - 1]))
-> > -             end--;
->
-> The comment you can see in the context seems to refer to the
-> logic implemented by the part you are rewriting.  Don't you need
-> to update it?
-
-Why? if I had written
-
-end_of_data = (end > len - 1);
-
-instead of
-
-end_of_data = (end >= len - 1);
-
-I agree with you comment would have been obsoleted but is not the case.
-
->
-> > +     end_of_data = (end >= len - 1);
-> > +
->
-> The variable name "end_of_data" is unclear.  What does this
-> boolean mean?  The line is without address and timestamp?
-> The item you are parsing is not properly terminated?
->
-
-It means "we have nothing more to parse here" and we _could_ return
-now but we keep on because we need to know if the part placeholder is
-valid or is unkown, so we really need to go through following switch
-statement before to return with a correct return value.
-
-
-> >       if (part == 'n') {      /* name */
-> > -             strbuf_add(sb, msg, end);
-> > -             return;
-> > +             if (!end_of_data) {
-> > +                     while (end > 0 && isspace(msg[end - 1]))
-> > +                             end--;
-> > +                     strbuf_add(sb, msg, end);
-> > +             }
-> > +             return 2;
-> >       }
-> > +     start = ++end; /* save email start position */
->
-> What happens if end_of_data was already true in this case, I
-> have to wonder...  Language lawyers may point out that the
-> result of ++end would be undefined, which I do not personally
-> care about in this case, but this feels dirty if not wrong.
->
-
-Could be dirty, but is not wrong because when end_of_data flag as is
-set as is the case, any use of 'end' variable is skipped, only the
-following swicth statement is evaluated with the only purpose to
-compute a valid return value.
-
-
-Thanks for your review
-Marco
+-- robin
