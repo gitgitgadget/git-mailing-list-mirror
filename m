@@ -1,178 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RESEND] Avoid a useless prefix lookup in strbuf_expand()
-Date: Sun, 03 Feb 2008 13:53:32 -0800
-Message-ID: <7vsl09u2oz.fsf@gitster.siamese.dyndns.org>
-References: <1201950593-6119-1-git-send-email-mcostalba@gmail.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [EGIT PATCH] Comment private modifier to improve performace.
+Date: Sun, 3 Feb 2008 23:14:32 +0100
+Message-ID: <200802032314.34005.robin.rosenberg@dewire.com>
+References: <1201919018-10782-1-git-send-email-rogersoares@intelinet.com.br> <200802030326.40446.robin.rosenberg@dewire.com> <47A61E17.7060303@intelinet.com.br>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 03 22:54:28 2008
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Roger C. Soares" <rogersoares@intelinet.com.br>
+X-From: git-owner@vger.kernel.org Sun Feb 03 23:15:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLmnD-0001fR-FN
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 22:54:27 +0100
+	id 1JLn7J-00084R-5O
+	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 23:15:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752335AbYBCVxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 16:53:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751560AbYBCVxz
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 16:53:55 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61203 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751386AbYBCVxy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 16:53:54 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 0735A329D;
-	Sun,  3 Feb 2008 16:53:50 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 98C1B329A;
-	Sun,  3 Feb 2008 16:53:44 -0500 (EST)
-In-Reply-To: <1201950593-6119-1-git-send-email-mcostalba@gmail.com> (Marco
-	Costalba's message of "Sat, 2 Feb 2008 12:09:53 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752805AbYBCWOd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Feb 2008 17:14:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752898AbYBCWOd
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 17:14:33 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:4313 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752209AbYBCWOc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 17:14:32 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id BD55E800685;
+	Sun,  3 Feb 2008 23:14:30 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id IsjTXPtLEQTr; Sun,  3 Feb 2008 23:14:30 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 44161800681;
+	Sun,  3 Feb 2008 23:14:30 +0100 (CET)
+User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
+In-Reply-To: <47A61E17.7060303@intelinet.com.br>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72410>
 
-Marco Costalba <mcostalba@gmail.com> writes:
+s=F6ndagen den 3 februari 2008 skrev Roger C. Soares:
+> With the else warnings patch I'm ok.
+>=20
+> About the discouraged access, I read those warnings as: we are using=20
+> methods that are not part of the eclipse public API and they can chan=
+ge=20
+> in the future. Not depending on internal eclipse API will make egit l=
+ess=20
+> likely to break with a future eclipse version, which sounds like a go=
+od=20
+> thing to me. So, I would keep those.
 
-> diff --git a/pretty.c b/pretty.c
-> index b987ff2..64ead65 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -282,16 +282,18 @@ static char *logmsg_reencode(const struct commit *commit,
->  	return out;
->  }
->  
-> -static void format_person_part(struct strbuf *sb, char part,
-> +/* returns placeholder length or 0 if placeholder is not known */
+The thing with that one is that by default the warning is on, so removi=
+ng
+the setting doesn't remvoe the warning unless one disables it at the wo=
+rkspace
+level. I'll hold it back for the moment anyway and push the "else" and =
+"synthetic"
+patches. Thanks for your opinions on the subject matter.
 
-That "return placeholder length" is a bit confusing, and I suspect
-the reason may be because the interface is misdesigned.
-
-This function gets only a single character "part" and adds the
-matching information to sb if found, otherwise it doesn't, so
-the only possible return values are 0 or 2.
-
-Wouldn't it be much cleaner if this returned a bool that says "I
-found and substituted that 'part' you asked me to handle"?
-
-> +static size_t format_person_part(struct strbuf *sb, char part,
->                                 const char *msg, int len)
->  {
-> -	int start, end, tz = 0;
-> -	unsigned long date;
-> +	int start, end, tz = 0, end_of_data;
-> +	unsigned long date = 0;
->  	char *ep;
->  
-> -	/* parse name */
-> +	/* advance 'end' to point to email start delimiter */
->  	for (end = 0; end < len && msg[end] != '<'; end++)
->  		; /* do nothing */
-> +
->  	/*
->  	 * If it does not even have a '<' and '>', that is
->  	 * quite a bogus commit author and we discard it;
-> @@ -301,65 +303,72 @@ static void format_person_part(struct strbuf *sb, char part,
->  	 * which means start (beginning of email address) must
->  	 * be strictly below len.
->  	 */
-> -	start = end + 1;
-> -	if (start >= len - 1)
-> -		return;
-> -	while (end > 0 && isspace(msg[end - 1]))
-> -		end--;
-
-The comment you can see in the context seems to refer to the
-logic implemented by the part you are rewriting.  Don't you need
-to update it?  Also the ealier part of the same comment talks
-about safety against a malformed input and explains the "return;"
-you are removing here.  It is not clear where that logic has
-gone...
-
-> +	end_of_data = (end >= len - 1);
-> +
-
-The variable name "end_of_data" is unclear.  What does this
-boolean mean?  The line is without address and timestamp?
-The item you are parsing is not properly terminated?
-
->  	if (part == 'n') {	/* name */
-> -		strbuf_add(sb, msg, end);
-> -		return;
-> +		if (!end_of_data) {
-> +			while (end > 0 && isspace(msg[end - 1]))
-> +				end--;
-> +			strbuf_add(sb, msg, end);
-> +		}
-> +		return 2;
->  	}
-> +	start = ++end; /* save email start position */
-
-What happens if end_of_data was already true in this case, I
-have to wonder...  Language lawyers may point out that the
-result of ++end would be undefined, which I do not personally
-care about in this case, but this feels dirty if not wrong.
-
-> @@ -451,23 +460,23 @@ static void format_commit_item(struct strbuf *sb, const char *placeholder,
->  	/* these are independent of the commit */
->  	switch (placeholder[0]) {
->  	case 'C':
-> -		switch (placeholder[3]) {
-> -		case 'd':	/* red */
-> +		if (!prefixcmp(placeholder + 1, "red")) {
->  			strbuf_addstr(sb, "\033[31m");
-> -			return;
-> -		case 'e':	/* green */
-> +			return 4;
-> +		} else if (!prefixcmp(placeholder + 1, "green")) {
->  			strbuf_addstr(sb, "\033[32m");
-> -			return;
-> -		case 'u':	/* blue */
-> +			return 6;
-> +		} else if (!prefixcmp(placeholder + 1, "blue")) {
->  			strbuf_addstr(sb, "\033[34m");
-> -			return;
-> -		case 's':	/* reset color */
-> +			return 5;
-> +		} else if (!prefixcmp(placeholder + 1, "reset")) {
->  			strbuf_addstr(sb, "\033[m");
-> -			return;
-> -		}
-> +			return 6;
-> +		} else
-> +			return 0;
-
-While these look much cleaner than using the magic "check the
-third letter that happens to be unique" hack, the return values
-can easily go out-of-sync.  I'd suggest to have a static array
-of color names you support and iterate over it.
-
-> @@ -528,66 +537,33 @@ static void format_commit_item(struct strbuf *sb, const char *placeholder,
->  ...
->  void format_commit_message(const struct commit *commit,
->                             const void *format, struct strbuf *sb)
->  {
-> -	const char *placeholders[] = {
-> -		"H",		/* commit hash */
-> ...
-> -		"n",		/* newline */
-> -		"m",		/* left/right/bottom */
-> -		NULL
-> -	};
->  	struct format_commit_context context;
->  
->  	memset(&context, 0, sizeof(context));
->  	context.commit = commit;
-> -	strbuf_expand(sb, format, placeholders, format_commit_item, &context);
-> +	strbuf_expand(sb, format, format_commit_item, &context);
->  }
-
-This is much nicer.  We reduced duplicated data from our code.
+-- robin
