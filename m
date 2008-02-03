@@ -1,185 +1,212 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [EGIT PATCH] Comment private modifier to improve performace.
-Date: Sun, 3 Feb 2008 02:01:10 +0100
-Message-ID: <200802030201.10971.robin.rosenberg@dewire.com>
-References: <1201919018-10782-1-git-send-email-rogersoares@intelinet.com.br>
+From: Brian Downing <bdowning-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org>
+Subject: [PATCH] compat: Add simplified merge sort implementation
+ from glibc
+Date: Sat, 2 Feb 2008 19:11:30 -0600
+Message-ID: <20080203011130.GK26392@lavos.net>
+Reply-To: bdowning-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Roger C. Soares" <rogersoares@intelinet.com.br>
-X-From: git-owner@vger.kernel.org Sun Feb 03 02:01:51 2008
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=us-ascii
+Cc: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>, git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+To: Junio C Hamano <gitster-e+AXbWqSrlAAvxtiuMwx3w@public.gmane.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Sun Feb 03 02:12:08 2008
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from yw-out-2122.google.com ([74.125.46.26])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLTF0-0006wq-Tr
-	for gcvg-git-2@gmane.org; Sun, 03 Feb 2008 02:01:51 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765572AbYBCBBH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 Feb 2008 20:01:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753376AbYBCBBG
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Feb 2008 20:01:06 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:24637 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752855AbYBCBBE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 2 Feb 2008 20:01:04 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 18481800680;
-	Sun,  3 Feb 2008 02:01:02 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ER3wDkJPsDgR; Sun,  3 Feb 2008 02:01:01 +0100 (CET)
-Received: from [10.9.0.6] (unknown [10.9.0.6])
-	by dewire.com (Postfix) with ESMTP id 4044580019B;
-	Sun,  3 Feb 2008 02:01:01 +0100 (CET)
-User-Agent: KMail/1.9.6 (enterprise 0.20071123.740460)
-In-Reply-To: <1201919018-10782-1-git-send-email-rogersoares@intelinet.com.br>
+	id 1JLTOx-0000hG-Ki
+	for gcvm-msysgit@m.gmane.org; Sun, 03 Feb 2008 02:12:08 +0100
+Received: by yw-out-2122.google.com with SMTP id 4so3570590ywc.37
+        for <gcvm-msysgit@m.gmane.org>; Sat, 02 Feb 2008 17:11:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to:received:received:received-spf:authentication-results:x-ironport-av:received:x-ironport-anti-spam-filtered:x-ironport-anti-spam-result:x-ironport-av:received:received:date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        bh=5hGpslDn1bhm1wD9qp7oaHQxB0ZnuKjC6i98vVfvXq0=;
+        b=y3huPtHuUYpDUemei1WjN2qnvdxQ8FdSZ4N0aiUvvU3RMidmYXOKNmQO6UjdjRN73kQGz1W6iuLaVqXx4WPCGBRqVdKZWu12225ZUFoyYUA22ApsLg2b3XUA7dkp5dirWG1gLWmkA5K5+0kUq8UHFjQZaaXYnGUBNMRPMA4PKRo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results:x-ironport-av:x-ironport-anti-spam-filtered:x-ironport-anti-spam-result:date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent:reply-to:sender:precedence:x-google-loop:mailing-list:list-id:list-post:list-help:list-unsubscribe;
+        b=HEwbGPrln8J6/wpTTrFDcg+D/2zK7QyQHZJnx0b55gunODnsjLhar5xwovK7+VxjrnXdNNadAmVnanVWgt+g+8nptQLf30vwaH5Nb4w06p3/MaL3V1uMvSS9vfzFhk3RDGnhy8IF3iU6T0dLsBCRSrtKzzguzXhkFkpkCkt3qhA=
+Received: by 10.150.181.11 with SMTP id d11mr353018ybf.7.1202001092060;
+        Sat, 02 Feb 2008 17:11:32 -0800 (PST)
+Received: by 10.44.53.58 with SMTP id b58gr1587hsa;
+	Sat, 02 Feb 2008 17:11:32 -0800 (PST)
+X-Sender: bdowning-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org
+X-Apparently-To: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.35.124.20 with SMTP id b20mr17705113pyn.5.1202001091506; Sat, 02 Feb 2008 17:11:31 -0800 (PST)
+Received: from mxsf03.insightbb.com (mxsf03.insightbb.com [74.128.0.64]) by mx.google.com with ESMTP id x46si9748402pyg.3.2008.02.02.17.11.31; Sat, 02 Feb 2008 17:11:31 -0800 (PST)
+Received-SPF: neutral (google.com: 74.128.0.64 is neither permitted nor denied by best guess record for domain of bdowning-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org) client-ip=74.128.0.64;
+Authentication-Results: mx.google.com; spf=neutral (google.com: 74.128.0.64 is neither permitted nor denied by best guess record for domain of bdowning-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org) smtp.mail=bdowning-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org
+X-IronPort-AV: E=Sophos;i="4.25,296,1199682000";  d="scan'208";a="195603707"
+Received: from unknown (HELO asav01.insightbb.com) ([172.31.249.124]) by mxsf03.insightbb.com with ESMTP; 02 Feb 2008 20:11:31 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah4FADajpEdKhvkY/2dsb2JhbACBWKp+ggA
+X-IronPort-AV: E=Sophos;i="4.25,296,1199682000";  d="scan'208";a="113529150"
+Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24]) by asav01.insightbb.com with ESMTP; 02 Feb 2008 20:11:30 -0500
+Received: by mail.lavos.net (Postfix, from userid 1000) id 94CCC309F21; Sat,  2 Feb 2008 19:11:30 -0600 (CST)
 Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
+User-Agent: Mutt/1.5.9i
+Sender: msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72310>
+X-Google-Loop: groups
+Mailing-List: list msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org;
+	contact msysgit-owner-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <mailto:msysgit-help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit-unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72311>
 
-l=C3=B6rdagen den 2 februari 2008 skrev Roger C. Soares:
-> Changed private modifiers to default to improve perfomance and remove
-> warnings of the type:
-> Write access to enclosing field GitHistoryPage.hintShowDiffNow is
-> emulated by a synthetic accessor method. Increasing its visibility wi=
-ll
-> improve your performance
 
-I'm not fully convinced this is the right way after all. Good
-performance is obviously good, but so is good encapsulation.=20
-I've sometimes tried changing things like this even in pieces
-of code that I really thought it should matter, but not been able
-to measure any real improvemen even with performance measurment tools.
+qsort in Windows 2000 (and possibly other older Windows' C libraries)
+is a Quicksort with the usual O(n^2) worst case.  Unfortunately, sorting
+Git trees seems to get very close to that worst case quite often:
 
-Obviously seeing that warning is annoying so maybe we should just set i=
-t to
-ignore or exclude it from the project settings (if that is possible). T=
-he
-only project where I think it might make a difference is the jgit part =
-because
-that is where we optimize and that is where I experimented with visibil=
-ity
-changes. In the Eclipse part we need to encapsulate more, partly becaus=
-e=20
-Eclipse is less understood by the current authors than Java in general.=
-=20
-Encapsulation means encapsulating bad coding and bad design that comes
-from lack of understanding of the framework we are working within.
+    $ /git/gitbad runstatus
+    # On branch master
+    qsort, nmemb = 30842
+    done, 237838087 comparisons.
 
--- robin
+This patch adds a simplified version of the merge sort that is glibc's
+qsort(3).  As a merge sort, this needs a temporary array equal in size
+to the array that is to be sorted.
 
-=46rom f26deb2c14e1df7513b3954594ea09b7746fcb69 Mon Sep 17 00:00:00 200=
-1
-=46rom: Robin Rosenberg <robin.rosenberg@dewire.com>
-Date: Sun, 3 Feb 2008 01:46:33 +0100
-Subject: [PATCH] Ignore warning for "Access to enclosing method/field X=
- emulated by a synthetic accessor method"
+The complexity that was removed is:
 
-There is no measurable performance degradation from this. Increasing vi=
-sibility
-of methods and fields in order to get rid of this warning reduces encap=
-sulation.
+* Doing direct stores for word-size and -aligned data.
+* Falling back to quicksort if the allocation required to perform the
+  merge sort would likely push the machine into swap.
 
-Instead of choosing the Ignore setting we remove the setting from the p=
-roject,
-which may be somwhat hackish but has the benefit that the setting can b=
-e changed
-in the workspace for those that wants to investigate the issue.
+Even with these simplifications, this seems to outperform the Windows
+qsort(3) implementation, even in Windows XP (where it is "fixed" and
+doesn't trigger O(n^2) complexity on trees).
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+[jes: moved into compat/qsort.c, as per Johannes Sixt's suggestion]
+
+Signed-off-by: Brian Downing <bdowning-oU/tDdhfGLReoWH0uzbU5w@public.gmane.org>
+Signed-off-by: Steffen Prohaska <prohaska-wjoc1KHpMeg@public.gmane.org>
+Signed-off-by: Johannes Schindelin <johannes.schindelin-Mmb7MZpHnFY@public.gmane.org>
 ---
- .../.settings/org.eclipse.jdt.core.prefs           |    1 -
- .../.settings/org.eclipse.jdt.core.prefs           |    1 -
- .../.settings/org.eclipse.jdt.core.prefs           |    1 -
- .../.settings/org.eclipse.jdt.core.prefs           |    1 -
- .../.settings/org.eclipse.jdt.core.prefs           |    1 -
- 5 files changed, 0 insertions(+), 5 deletions(-)
+   Junio,
 
-diff --git a/org.spearce.egit.core.test/.settings/org.eclipse.jdt.core.=
-prefs b/org.spearce.egit.core.test/.settings/org.eclipse.jdt.core.prefs
-index deec031..7a0fbe4 100644
---- a/org.spearce.egit.core.test/.settings/org.eclipse.jdt.core.prefs
-+++ b/org.spearce.egit.core.test/.settings/org.eclipse.jdt.core.prefs
-@@ -55,7 +55,6 @@ org.eclipse.jdt.core.compiler.problem.redundantNullCh=
-eck=3Dwarning
- org.eclipse.jdt.core.compiler.problem.specialParameterHidingField=3Ddi=
-sabled
- org.eclipse.jdt.core.compiler.problem.staticAccessReceiver=3Derror
- org.eclipse.jdt.core.compiler.problem.suppressWarnings=3Denabled
--org.eclipse.jdt.core.compiler.problem.syntheticAccessEmulation=3Dwarni=
-ng
- org.eclipse.jdt.core.compiler.problem.typeParameterHiding=3Dwarning
- org.eclipse.jdt.core.compiler.problem.uncheckedTypeOperation=3Dwarning
- org.eclipse.jdt.core.compiler.problem.undocumentedEmptyBlock=3Dwarning
-diff --git a/org.spearce.egit.core/.settings/org.eclipse.jdt.core.prefs=
- b/org.spearce.egit.core/.settings/org.eclipse.jdt.core.prefs
-index fa7a0b7..bcde160 100644
---- a/org.spearce.egit.core/.settings/org.eclipse.jdt.core.prefs
-+++ b/org.spearce.egit.core/.settings/org.eclipse.jdt.core.prefs
-@@ -55,7 +55,6 @@ org.eclipse.jdt.core.compiler.problem.redundantNullCh=
-eck=3Dwarning
- org.eclipse.jdt.core.compiler.problem.specialParameterHidingField=3Ddi=
-sabled
- org.eclipse.jdt.core.compiler.problem.staticAccessReceiver=3Derror
- org.eclipse.jdt.core.compiler.problem.suppressWarnings=3Denabled
--org.eclipse.jdt.core.compiler.problem.syntheticAccessEmulation=3Dwarni=
-ng
- org.eclipse.jdt.core.compiler.problem.typeParameterHiding=3Dwarning
- org.eclipse.jdt.core.compiler.problem.uncheckedTypeOperation=3Dwarning
- org.eclipse.jdt.core.compiler.problem.undocumentedEmptyBlock=3Dwarning
-diff --git a/org.spearce.egit.ui/.settings/org.eclipse.jdt.core.prefs b=
-/org.spearce.egit.ui/.settings/org.eclipse.jdt.core.prefs
-index 0ef7591..0a89f52 100644
---- a/org.spearce.egit.ui/.settings/org.eclipse.jdt.core.prefs
-+++ b/org.spearce.egit.ui/.settings/org.eclipse.jdt.core.prefs
-@@ -55,7 +55,6 @@ org.eclipse.jdt.core.compiler.problem.redundantNullCh=
-eck=3Dwarning
- org.eclipse.jdt.core.compiler.problem.specialParameterHidingField=3Ddi=
-sabled
- org.eclipse.jdt.core.compiler.problem.staticAccessReceiver=3Derror
- org.eclipse.jdt.core.compiler.problem.suppressWarnings=3Denabled
--org.eclipse.jdt.core.compiler.problem.syntheticAccessEmulation=3Dwarni=
-ng
- org.eclipse.jdt.core.compiler.problem.typeParameterHiding=3Dwarning
- org.eclipse.jdt.core.compiler.problem.uncheckedTypeOperation=3Dwarning
- org.eclipse.jdt.core.compiler.problem.undocumentedEmptyBlock=3Dwarning
-diff --git a/org.spearce.jgit.test/.settings/org.eclipse.jdt.core.prefs=
- b/org.spearce.jgit.test/.settings/org.eclipse.jdt.core.prefs
-index 65d5c31..c203c20 100644
---- a/org.spearce.jgit.test/.settings/org.eclipse.jdt.core.prefs
-+++ b/org.spearce.jgit.test/.settings/org.eclipse.jdt.core.prefs
-@@ -55,7 +55,6 @@ org.eclipse.jdt.core.compiler.problem.redundantNullCh=
-eck=3Dwarning
- org.eclipse.jdt.core.compiler.problem.specialParameterHidingField=3Ddi=
-sabled
- org.eclipse.jdt.core.compiler.problem.staticAccessReceiver=3Derror
- org.eclipse.jdt.core.compiler.problem.suppressWarnings=3Denabled
--org.eclipse.jdt.core.compiler.problem.syntheticAccessEmulation=3Dwarni=
-ng
- org.eclipse.jdt.core.compiler.problem.typeParameterHiding=3Dwarning
- org.eclipse.jdt.core.compiler.problem.uncheckedTypeOperation=3Dwarning
- org.eclipse.jdt.core.compiler.problem.undocumentedEmptyBlock=3Dwarning
-diff --git a/org.spearce.jgit/.settings/org.eclipse.jdt.core.prefs b/or=
-g.spearce.jgit/.settings/org.eclipse.jdt.core.prefs
-index 4c38185..b0c694c 100644
---- a/org.spearce.jgit/.settings/org.eclipse.jdt.core.prefs
-+++ b/org.spearce.jgit/.settings/org.eclipse.jdt.core.prefs
-@@ -55,7 +55,6 @@ org.eclipse.jdt.core.compiler.problem.redundantNullCh=
-eck=3Dwarning
- org.eclipse.jdt.core.compiler.problem.specialParameterHidingField=3Ddi=
-sabled
- org.eclipse.jdt.core.compiler.problem.staticAccessReceiver=3Derror
- org.eclipse.jdt.core.compiler.problem.suppressWarnings=3Denabled
--org.eclipse.jdt.core.compiler.problem.syntheticAccessEmulation=3Dwarni=
-ng
- org.eclipse.jdt.core.compiler.problem.typeParameterHiding=3Dwarning
- org.eclipse.jdt.core.compiler.problem.uncheckedTypeOperation=3Dwarning
- org.eclipse.jdt.core.compiler.problem.undocumentedEmptyBlock=3Dwarning
---=20
-1.5.4.rc4.25.g81cc
+   This is for consideration for mainline Git now that 1.5.4 is out.  It
+   is used to avoid an awful qsort implementation on Windows 2000, and I
+   believe there was some discussion about other Unixes (AIX, etc) that
+   have a similar problem.
+
+   -bcd
+
+ Makefile          |    7 ++++++
+ compat/qsort.c    |   60 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ git-compat-util.h |    6 +++++
+ 3 files changed, 73 insertions(+), 0 deletions(-)
+ create mode 100644 compat/qsort.c
+
+diff --git a/Makefile b/Makefile
+index 92341c4..1698bc4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -137,6 +137,9 @@ all::
+ # Define THREADED_DELTA_SEARCH if you have pthreads and wish to exploit
+ # parallel delta searching when packing objects.
+ #
++# Define NEEDS_QUICK_QSORT if your qsort() implementation has O(n^2)
++# worst case complexity.
++#
+ 
+ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -722,6 +725,10 @@ ifdef NO_MEMMEM
+ 	COMPAT_CFLAGS += -DNO_MEMMEM
+ 	COMPAT_OBJS += compat/memmem.o
+ endif
++ifdef NEEDS_QUICK_QSORT
++	COMPAT_CFLAGS += -DNEEDS_QUICK_QSORT
++	COMPAT_OBJS += compat/qsort.o
++endif
+ 
+ ifdef THREADED_DELTA_SEARCH
+ 	BASIC_CFLAGS += -DTHREADED_DELTA_SEARCH
+diff --git a/compat/qsort.c b/compat/qsort.c
+new file mode 100644
+index 0000000..734866e
+--- /dev/null
++++ b/compat/qsort.c
+@@ -0,0 +1,60 @@
++#include "../git-compat-util.h"
++
++/* This merge sort implementation is simplified from glibc's. */
++static void msort_with_tmp(void *b, size_t n, size_t s,
++			   int (*cmp)(const void *, const void *),
++			   char *t)
++{
++	char *tmp;
++	char *b1, *b2;
++	size_t n1, n2;
++
++	if (n <= 1)
++		return;
++
++	n1 = n / 2;
++	n2 = n - n1;
++	b1 = b;
++	b2 = (char *)b + (n1 * s);
++
++	msort_with_tmp(b1, n1, s, cmp, t);
++	msort_with_tmp(b2, n2, s, cmp, t);
++
++	tmp = t;
++
++	while (n1 > 0 && n2 > 0) {
++		if (cmp(b1, b2) <= 0) {
++			memcpy(tmp, b1, s);
++			tmp += s;
++			b1 += s;
++			--n1;
++		} else {
++			memcpy(tmp, b2, s);
++			tmp += s;
++			b2 += s;
++			--n2;
++		}
++	}
++	if (n1 > 0)
++		memcpy(tmp, b1, n1 * s);
++	memcpy(b, t, (n - n2) * s);
++}
++
++void git_qsort(void *b, size_t n, size_t s,
++	       int (*cmp)(const void *, const void *))
++{
++	const size_t size = n * s;
++
++	if (size < 1024) {
++		char buf[size]; /* gcc-ism */
++
++		/* The temporary array is small, so put it on
++		   the stack.  */
++		msort_with_tmp(b, n, s, cmp, buf);
++	} else {
++		/* It's somewhat large, so malloc it.  */
++		char *tmp = malloc(size);
++		msort_with_tmp(b, n, s, cmp, tmp);
++		free(tmp);
++	}
++}
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 4df90cb..e848a73 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -426,4 +426,10 @@ static inline int strtol_i(char const *s, int base, int *result)
+ 	return 0;
+ }
+ 
++#ifdef NEEDS_QUICK_QSORT
++void git_qsort(void *base, size_t nmemb, size_t size,
++	       int(*compar)(const void *, const void *));
++#define qsort git_qsort
++#endif
++
+ #endif
+-- 
+1.5.4.rc3
