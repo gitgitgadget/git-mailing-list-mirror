@@ -1,77 +1,74 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0 of 7] [resend] - Improve handling remotes, origin,
- submodules
-Date: Mon, 4 Feb 2008 14:55:26 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802041449300.7372@racer.site>
-References: <1202059867-1184-1-git-send-email-mlevedahl@gmail.com> <alpine.LSU.1.00.0802032237320.7372@racer.site> <A3A63507-41CA-4FE0-BE77-BF6987E87AD2@zib.de>
+Subject: Re: [PATCH v7] safecrlf: Add mechanism to warn about irreversible
+ crlf conversions
+Date: Mon, 4 Feb 2008 15:01:52 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802041457190.7372@racer.site>
+References: <4C024D67-9FA5-451D-BB91-CE9464C6F50D@zib.de> <1202053379677-git-send-email-prohaska@zib.de> <alpine.LSU.1.00.0802032222380.7372@racer.site> <86F2B863-6FE8-407E-B535-3F49782DA5F9@zib.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mark Levedahl <mlevedahl@gmail.com>, gitster@pobox.com,
-	git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Feb 04 15:56:48 2008
+X-From: git-owner@vger.kernel.org Mon Feb 04 16:03:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JM2kV-0006kY-TF
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 15:56:44 +0100
+	id 1JM2qd-0000UG-QN
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 16:03:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751657AbYBDO4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 09:56:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751252AbYBDO4H
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 09:56:07 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45110 "HELO mail.gmx.net"
+	id S1751623AbYBDPCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 10:02:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751626AbYBDPCa
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 10:02:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42173 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751156AbYBDO4E (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 09:56:04 -0500
-Received: (qmail invoked by alias); 04 Feb 2008 14:56:02 -0000
+	id S1751574AbYBDPCa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 10:02:30 -0500
+Received: (qmail invoked by alias); 04 Feb 2008 15:02:28 -0000
 Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp022) with SMTP; 04 Feb 2008 15:56:02 +0100
+  by mail.gmx.net (mp051) with SMTP; 04 Feb 2008 16:02:28 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+wzxUMyY6wW4VUv7WIOEmqHaJ6B+Ul5j73+8yew0
-	il9m9/DNccjKYW
+X-Provags-ID: V01U2FsdGVkX19HgTpcsxdHGSOBTLGp9CtwjitX4PtzRIlX87deLt
+	1MnT46QElObtCD
 X-X-Sender: gene099@racer.site
-In-Reply-To: <A3A63507-41CA-4FE0-BE77-BF6987E87AD2@zib.de>
+In-Reply-To: <86F2B863-6FE8-407E-B535-3F49782DA5F9@zib.de>
 User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72512>
 
 Hi,
 
 On Mon, 4 Feb 2008, Steffen Prohaska wrote:
 
-> On Feb 3, 2008, at 11:43 PM, Johannes Schindelin wrote:
+> On Feb 3, 2008, at 11:29 PM, Johannes Schindelin wrote:
 > 
-> > If your issue is with git-submodule, then fix _that_, and do not "fix" 
-> > _anything_ else.
+> > However, safe_crlf != SAFE_CRLF_FALSE does not affect people who did 
+> > not set core.crlf = input or core.crlf = true.  And for those who set 
+> > core.crlf, the default makes sense, absolutely.
 > 
-> If I understood Mark correctly, this would not solve his problem
-> because he wants to *avoid* origin;
+> I add a comment to the commit message.
+> 
+> However, I don't fully agree with your comment.  If your Unix 
+> environment is as sane as you assume and you never exchange any data 
+> with the "cursed" people, you can safely set core.autocrlf=input and 
+> core.safecrlf=warn and still should never see any warning.  Well you'd 
+> spent some CPU cycles on verifying that your assumptions hold.
 
-So he should *avoid* origin.  Not redefine it.
+It is not only about spend CPU cycles.  It is about content-tracking.  
+Personally, I have no single repository which munges data when putting it 
+into the index.  That is what the crlf handling is: munging.  I want the 
+data verbatim, and if I decide to check in a file with carriage return 
+before line feed, then so be it.
 
-For example, if you want to update your submodules from their respective 
-"bollywog" remotes, it is perfectly fine with me to introduce a notion
-
-	$ git submodule update --from bollywog
-
-If you do not want to fetch from here one time, and from there the next, 
-then there is _simply_ _no_ _point_ in pointing to another remote _name_.
-
-You cannot put multiple urls into .gitmodules _anyway_, so they _have_ to 
-be modified locally, and then the people can look up their remote urls.
-
-Putting in another layer of indirection, which can very well be 
-unsynchronised is what I am strongly in "unfavour" of.
-
-Frankly, I am puzzled how long this discussion drags on.  If I would not 
-be concerned about the loss of simplicity of git's core _and concepts_, I 
-would not even bother to respond.
+Of course, the code paths in your patch would be less exercised, and 
+bugs/interactions could be conveniently hidden for all those who decide 
+not to activate safecrlf like me, but I do not see why Linux/Unix people 
+should be punished for a shortcoming that affects only projects which 
+partly work on Windows, and then only if non-POSIX tools are used.
 
 Ciao,
 Dscho
