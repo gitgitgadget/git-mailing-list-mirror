@@ -1,60 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/4] git-commit: Refactor creation of log message.
-Date: Mon, 4 Feb 2008 16:48:55 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802041646461.7372@racer.site>
-References: <2885c7896ba72adee6bc5c9e2210a8881904f601.head.git.bonzini@gnu.org> <14fc1ba3f94a773ab2e5b8cdf0c230962f32180d.1200933409.git.bonzini@gnu.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Feb 04 17:50:12 2008
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH] [v8] safecrlf: Add mechanism to warn about irreversible crlf conversions
+Date: Mon, 4 Feb 2008 17:43:52 +0100
+Message-ID: <459F2F36-7110-42A0-BDC1-FED70BC499BD@zib.de>
+References: <86F2B863-6FE8-407E-B535-3F49782DA5F9@zib.de> <12021001351967-git-send-email-prohaska@zib.de> <alpine.LSU.1.00.0802041502290.7372@racer.site>
+Mime-Version: 1.0 (Apple Message framework v753)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 04 17:51:35 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JM4WF-0000R6-9F
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 17:50:07 +0100
+	id 1JM4XR-0000v0-Ky
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 17:51:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752870AbYBDQte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 11:49:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752572AbYBDQte
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 11:49:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60902 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752111AbYBDQtd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 11:49:33 -0500
-Received: (qmail invoked by alias); 04 Feb 2008 16:49:31 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp007) with SMTP; 04 Feb 2008 17:49:31 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18AQNFD9rgA7Jyr/HGLBAOY+udsM4LmJgJ1OfiBYC
-	azQXcXD22qAYYu
-X-X-Sender: gene099@racer.site
-In-Reply-To: <14fc1ba3f94a773ab2e5b8cdf0c230962f32180d.1200933409.git.bonzini@gnu.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1752699AbYBDQuu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 11:50:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751633AbYBDQut
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 11:50:49 -0500
+Received: from mailer.zib.de ([130.73.108.11]:35838 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750979AbYBDQut (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 11:50:49 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id m14GgvIh002122;
+	Mon, 4 Feb 2008 17:42:57 +0100 (CET)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id m14GgrTu020762
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Mon, 4 Feb 2008 17:42:57 +0100 (MET)
+In-Reply-To: <alpine.LSU.1.00.0802041502290.7372@racer.site>
+X-Mailer: Apple Mail (2.753)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72524>
 
-Hi,
 
-On Mon, 21 Jan 2008, Paolo Bonzini wrote:
+On Feb 4, 2008, at 4:02 PM, Johannes Schindelin wrote:
 
-> This means that: 1) the commit may be aborted after editing the message
-> if there is a problem writing out the tree object (slight disadvantage);
+> Hi,
+>
+> On Mon, 4 Feb 2008, Steffen Prohaska wrote:
+>
+>>  - refactored to lines max 84 chars long.
+>
+> Why 84?  I think the standard is still 80.
 
-I consider this more than a slight disadvantage.  I regularly take ages 
-coming up with a good commit message, because I think that the overall 
-time balance is better with me spending more time on the message, but 
-every reader spending less time to guess what I meant.
+Because the surrounding code already had lines with
+more than 80 characters and the most natural refactoring
+without too much wrapping effort resulted in 84.
 
-So I would be quite annoyed to edit a message, only to find out that for 
-whatever reason the commit was not successful.
+Is 80 a strict limit?
 
-Are you _sure_ you need 3/4 for 4/4?
-
-Ciao,
-Dscho
+	Steffen
