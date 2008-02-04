@@ -1,104 +1,80 @@
-From: Michael Witten <mfwitten@MIT.EDU>
-Subject: [PATCH 2/3][V.2] git-send-email: SIG{TERM,INT} handlers
-Date: Sun,  3 Feb 2008 19:53:57 -0500
-Message-ID: <1202086438-16251-2-git-send-email-mfwitten@mit.edu>
-References: <5C100A3B-0B4A-4D4E-B68B-1A54674A795A@mit.edu>
- <1202086438-16251-1-git-send-email-mfwitten@mit.edu>
-Cc: git@vger.kernel.org, Michael Witten <mfwitten@mit.edu>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Feb 04 02:02:39 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 2/2] Documentation/SubmittingPatches: What's Acked-by and Tested-by?
+Date: Sun, 03 Feb 2008 17:02:28 -0800
+Message-ID: <7vwsplo7ob.fsf_-_@gitster.siamese.dyndns.org>
+References: <r6ft1sd1.fsf@blue.sea.net>
+	<7v7ihlpmkm.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jari Aalto <jari.aalto@cante.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 04 02:03:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLpjK-00044j-Fp
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 02:02:38 +0100
+	id 1JLpjp-0004Ac-7Q
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 02:03:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754530AbYBDBCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 20:02:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753103AbYBDBCG
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 20:02:06 -0500
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:35857 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753457AbYBDBCF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Feb 2008 20:02:05 -0500
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m140w3XF012257;
-	Sun, 3 Feb 2008 19:58:17 -0500 (EST)
-Received: from localhost.localdomain (WITTEN.MIT.EDU [18.239.2.43])
-	(authenticated bits=0)
-        (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m140rw7V001110
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 3 Feb 2008 19:54:02 -0500 (EST)
-X-Mailer: git-send-email 1.5.4.9.gcc769-dirty
-In-Reply-To: <1202086438-16251-1-git-send-email-mfwitten@mit.edu>
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1754686AbYBDBCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 20:02:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754018AbYBDBCg
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 20:02:36 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42496 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754019AbYBDBCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 20:02:35 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id DBBB41417;
+	Sun,  3 Feb 2008 20:02:32 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 63E291416;
+	Sun,  3 Feb 2008 20:02:30 -0500 (EST)
+In-Reply-To: <7v7ihlpmkm.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 03 Feb 2008 16:55:21 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72444>
 
-A single signal handler is used for both SIGTERM
-and SIGINT in order to clean up after an uncouth
-termination of git-send-email.
+We used to talk about "internal company procedures", but this
+document is about submitting patches to the git mailing list.
 
-In particular, the handler resets the text color
-(this cleanup was already present), turns on tty
-echoing (in case termination occurrs during a
-masked Password prompt), and informs the user of
-of any temporary files created by --compose.
+More useful information is when to say Acked-by: and Tested-by:.
 
-Signed-off-by: Michael Witten <mfwitten@mit.edu>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- git-send-email.perl |   25 +++++++++++++++++++++++--
- 1 files changed, 23 insertions(+), 2 deletions(-)
+ Documentation/SubmittingPatches |   16 ++++++++++++----
+ 1 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index fec55ea..14268fc 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -24,8 +24,6 @@ use Data::Dumper;
- use Term::ANSIColor;
- use Git;
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 7900223..0661293 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -216,10 +216,18 @@ then you just add a line saying
+ This line can be automatically added by git if you run the git-commit
+ command with the -s option.
  
--$SIG{INT} = sub { print color("reset"), "\n"; exit };
+-Some people also put extra tags at the end.  They'll just be ignored for
+-now, but you can do this to mark internal company procedures or just
+-point out some special detail about the sign-off.
 -
- package FakeTerm;
- sub new {
- 	my ($class, $reason) = @_;
-@@ -201,6 +199,29 @@ my %config_settings = (
-     "aliasesfile" => \@alias_files,
- );
++Notice that you can place your own Signed-off-by: line when
++forwarding somebody else's patch with the above rules for
++D-C-O.  Indeed you are encouraged to do so.  Do not forget to
++place an in-body "From: " line at the beginning to properly attribute
++the change to its true author (see (2) above).
++
++Some people also put extra tags at the end.
++
++"Acked-by:" says that the patch was reviewed by the person who
++is more familiar with the issues and the area the patch attempts
++to modify.  "Tested-by:" says the patch was tested by the person
++and found to have the desired effect.
  
-+# Handle Uncouth Termination
-+sub signal_handler {
-+
-+	# Make text normal
-+	print color("reset"), "\n";
-+
-+	# SMTP password masked
-+	system "stty echo";
-+
-+	# tmp files from --compose
-+	if (-e $compose_filename) {
-+		print "'$compose_filename' contains an intermediate version of the email you were composing.\n";
-+	}
-+	if (-e ($compose_filename . ".final")) {
-+		print "'$compose_filename.final' contains the composed email.\n"
-+	}
-+
-+	exit;
-+};
-+
-+$SIG{TERM} = \&signal_handler;
-+$SIG{INT}  = \&signal_handler;
-+
- # Begin by accumulating all the variables (defined above), that we will end up
- # needing, first, from the command line:
- 
--- 
-1.5.4.9.gcc769-dirty
+ ------------------------------------------------
+ MUA specific hints
