@@ -1,58 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Documentation/SubmittingPatches: Instruct how to use
- [PATCH] Subject header
-Date: Mon, 4 Feb 2008 00:29:34 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802040029020.7372@racer.site>
-References: <r6ft1sd1.fsf@blue.sea.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-rebase.sh: Update USAGE string (No. 1)
+Date: Sun, 03 Feb 2008 16:39:06 -0800
+Message-ID: <7vfxw9pnbp.fsf@gitster.siamese.dyndns.org>
+References: <prvd3i9e.fsf@blue.sea.net> <ir15399p.fsf@blue.sea.net>
+	<m3lk6161jo.fsf@localhost.localdomain> <zluh1sxv.fsf@blue.sea.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Mon Feb 04 01:30:48 2008
+X-From: git-owner@vger.kernel.org Mon Feb 04 01:39:55 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLpET-0006EZ-Fl
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 01:30:45 +0100
+	id 1JLpNI-00088a-HL
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 01:39:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753176AbYBDAaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 19:30:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753588AbYBDAaL
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 19:30:11 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44400 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752902AbYBDAaK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 19:30:10 -0500
-Received: (qmail invoked by alias); 04 Feb 2008 00:30:08 -0000
-Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
-  by mail.gmx.net (mp050) with SMTP; 04 Feb 2008 01:30:08 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/tmZcWr1ntrXN1gVQHE2JtJ1sv19OXFgJB3wNtmF
-	31mD4wuLvkb0NC
-X-X-Sender: gene099@racer.site
-In-Reply-To: <r6ft1sd1.fsf@blue.sea.net>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754116AbYBDAjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 19:39:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754104AbYBDAjT
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 19:39:19 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41563 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754070AbYBDAjS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 19:39:18 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C1F911B0;
+	Sun,  3 Feb 2008 19:39:16 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C818B11AF;
+	Sun,  3 Feb 2008 19:39:12 -0500 (EST)
+In-Reply-To: <zluh1sxv.fsf@blue.sea.net> (Jari Aalto's message of "Mon, 04 Feb
+	2008 02:11:40 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72437>
 
-Hi,
+Jari Aalto <jari.aalto@cante.net> writes:
 
-On Mon, 4 Feb 2008, Jari Aalto wrote:
+> * Sun 2008-02-03 Jakub Narebski <jnareb@gmail.com> INBOX
+>> I would say "[--whitespace=<option>]" or "[--whitespace=<action>]"
+>> instead of introducing yet not agreed upon notation (this has the
+>> advantage of shortening synopisis, which should be short IMHO).
+>
+> The "{a|b|c}" is a used syntax. See cpio(1).
+>  
+>     cpio  {-o|--create} [-0acvABLV] ...
 
-> @@ -37,6 +37,9 @@ Checklist (and a short version for the impatient):
->  	  maintainer (gitster@pobox.com). If you use
->  	  git-send-email(1), please test it first by sending
->  	  email to yourself.
-> +        - If you rework the patch, announce the message
-> +          in brackets. For example "[PATCH/RFC]", "[PATCH (resend)]",
-> +          "[PATCH v2]" etc.
+I do not think using {} for grouping is incorrect, and I think
+there is at least a consensus on the list that it is Ok as long
+as we consistently do so.
 
-Whitespace error?  (Spaces instead of Tabs)
+Unfortunately, the majority of, if not all of, our existing
+documents use () instead for that purpose.
 
-Ciao,
-Dscho
+So pros-and-cons are that (1) changing all of them to use {} is
+more politically correct (pro); (2) our use of (), as we
+consistently use them, does not hurt readability (neutral); and
+(3) it is a thankless makework to replace them all to {} _and
+make sure the conversion is correct_ (large con).  (4) also if
+other people make changes to documentation at the same time,
+that would add more work in conflict resolution (slight con).
+
+As you seem to have volunteered to do the conversion and
+validation, I do not see much problem to move from () to {} in
+principle.
+
+About the part your patch touches, [--whitespace={a|b|c}] is
+more precise than [--whitespace=a|b|c] Jakub suggested, but I
+suspect most sane people would not misinterpret the latter as
+"this part can be omitted but you could write '--whitespace=a',
+'b' or 'c' here", so...
