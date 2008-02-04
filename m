@@ -1,178 +1,81 @@
-From: Michael Witten <mfwitten@MIT.EDU>
-Subject: [PATCH 1/3][V.2] git-send-email: ssh/login style password requests
-Date: Sun,  3 Feb 2008 19:53:56 -0500
-Message-ID: <1202086438-16251-1-git-send-email-mfwitten@mit.edu>
-References: <5C100A3B-0B4A-4D4E-B68B-1A54674A795A@mit.edu>
-Cc: git@vger.kernel.org, Michael Witten <mfwitten@MIT.EDU>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Feb 04 01:59:15 2008
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2 (RFC)] Documentation/SubmittingPatches: discuss first then submit
+Date: Sun, 03 Feb 2008 17:00:16 -0800
+Message-ID: <7v3as9pmcf.fsf_-_@gitster.siamese.dyndns.org>
+References: <r6ft1sd1.fsf@blue.sea.net>
+	<7v7ihlpmkm.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jari Aalto <jari.aalto@cante.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 04 02:01:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLpg2-0003T4-U8
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 01:59:15 +0100
+	id 1JLphq-0003mF-1K
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 02:01:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754762AbYBDA6n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 19:58:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754355AbYBDA6n
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 19:58:43 -0500
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:35456 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754494AbYBDA6m (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Feb 2008 19:58:42 -0500
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m140w3XH012257;
-	Sun, 3 Feb 2008 19:58:18 -0500 (EST)
-Received: from localhost.localdomain (WITTEN.MIT.EDU [18.239.2.43])
-	(authenticated bits=0)
-        (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m140rw7U001110
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 3 Feb 2008 19:54:01 -0500 (EST)
-X-Mailer: git-send-email 1.5.4.9.gcc769-dirty
-In-Reply-To: <5C100A3B-0B4A-4D4E-B68B-1A54674A795A@mit.edu>
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1754494AbYBDBAd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 20:00:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754443AbYBDBAd
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 20:00:33 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42362 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754228AbYBDBAc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Feb 2008 20:00:32 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DBA31409;
+	Sun,  3 Feb 2008 20:00:31 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D9D131408;
+	Sun,  3 Feb 2008 20:00:28 -0500 (EST)
+In-Reply-To: <7v7ihlpmkm.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 03 Feb 2008 16:55:21 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72442>
 
-Whilst convenient, it is most unwise to record passwords
-in any place but one's brain. Moreover, it is especially
-foolish to store them in configuration files, even with
-access permissions set accordingly.
+This is something I've had in mind for some time.  I get enough
+e-mails as-is, and I suspect the workflow to get list members
+involved would work better if we get the discussion concluded on
+the list first before patches hit my tree (even 'next').
 
-git-send-email has been amended, so that if it detects
-an smtp username without a password, it promptly prompts
-for the password and masks the input for privacy.
-
-Furthermore, the argument to --smtp-pass has been rendered
-optional.
-
-The documentation has been updated to reflect these changes.
-
-Signed-off-by: Michael Witten <mfwitten@mit.edu>
 ---
+On top of the previous one to talk about [PATCH v2] and friends...
 
-	The backend ambiguity of Term:ReadLine is avoided, and EOF
-	is handled for the Password Prompt.
+ Documentation/SubmittingPatches |   23 ++++++++++++++++-------
+ 1 files changed, 16 insertions(+), 7 deletions(-)
 
- Documentation/git-send-email.txt |   39 +++++++++++++++++++++++++++++++++----
- git-send-email.perl              |   25 ++++++++++++++++++++---
- 2 files changed, 55 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 0554f2b..4f4caa4 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -96,11 +96,40 @@ The --cc option must be repeated for each user you want on the cc list.
- 	servers typically listen to smtp port 25 and ssmtp port
- 	465).
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index cd80148..0661293 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -34,9 +34,9 @@ Checklist (and a short version for the impatient):
+ 	- if your name is not writable in ASCII, make sure that
+ 	  you send off a message in the correct encoding.
+ 	- send the patch to the list (git@vger.kernel.org) and the
+-	  maintainer (gitster@pobox.com). If you use
+-	  git-send-email(1), please test it first by sending
+-	  email to yourself.
++	  maintainer (gitster@pobox.com) if (and only if) the patch
++	  is ready for inclusion. If you use git-send-email(1),
++	  please test it first by sending email to yourself.
  
----smtp-user, --smtp-pass::
--	Username and password for SMTP-AUTH. Defaults are the values of
--	the configuration values 'sendemail.smtpuser' and
--	'sendemail.smtppass', but see also 'sendemail.identity'.
--	If not set, authentication is not attempted.
-+--smtp-user::
-+	Username for SMTP-AUTH. In place of this option, the following
-+	configuration variables can be specified:
-++
-+--
-+		* sendemail.smtpuser
-+		* sendemail.<identity>.smtpuser (see sendemail.identity).
-+--
-++
-+However, --smtp-user always overrides these variables.
-++
-+If a username is not specified (with --smtp-user or a
-+configuration variable), then authentication is not attempted.
-+
-+--smtp-pass::
-+	Password for SMTP-AUTH. The argument is optional: If no
-+	argument is specified, then the empty string is used as
-+	the password.
-++
-+In place of this option, the following configuration variables
-+can be specified:
-++
-+--
-+		* sendemail.smtppass
-+		* sendemail.<identity>.smtppass (see sendemail.identity).
-+--
-++
-+However, --smtp-pass always overrides these variables.
-++
-+Furthermore, passwords need not be specified in configuration files
-+or on the command line. If a username has been specified (with
-+--smtp-user or a configuration variable), but no password has been
-+specified (with --smtp-pass or a configuration variable), then the
-+user is prompted for a password while the input is masked for privacy.
+ Long version:
  
- --smtp-ssl::
- 	If set, connects to the SMTP server using SSL.
-diff --git a/git-send-email.perl b/git-send-email.perl
-index a1a9d14..fec55ea 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -157,7 +157,7 @@ my $compose_filename = ".msg.$$";
+@@ -162,7 +162,8 @@ Note that your maintainer does not necessarily read everything
+ on the git mailing list.  If your patch is for discussion first,
+ send it "To:" the mailing list, and optionally "cc:" him.  If it
+ is trivially correct or after the list reached a consensus, send
+-it "To:" the maintainer and optionally "cc:" the list.
++it "To:" the maintainer and optionally "cc:" the list for
++inclusion.
  
- # Variables we fill in automatically, or via prompting:
- my (@to,@cc,@initial_cc,@bcclist,@xh,
--	$initial_reply_to,$initial_subject,@files,$author,$sender,$compose,$time);
-+	$initial_reply_to,$initial_subject,@files,$author,$sender,$smtp_authpass,$compose,$time);
- 
- my $envelope_sender;
- 
-@@ -177,7 +177,7 @@ my ($quiet, $dry_run) = (0, 0);
- 
- # Variables with corresponding config settings
- my ($thread, $chain_reply_to, $suppress_from, $signed_off_cc, $cc_cmd);
--my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_authpass, $smtp_ssl);
-+my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_ssl);
- my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts);
- my ($no_validate);
- 
-@@ -214,7 +214,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
- 		    "smtp-server=s" => \$smtp_server,
- 		    "smtp-server-port=s" => \$smtp_server_port,
- 		    "smtp-user=s" => \$smtp_authuser,
--		    "smtp-pass=s" => \$smtp_authpass,
-+		    "smtp-pass:s" => \$smtp_authpass,
- 		    "smtp-ssl!" => \$smtp_ssl,
- 		    "identity=s" => \$identity,
- 		    "compose" => \$compose,
-@@ -647,9 +647,26 @@ X-Mailer: git-send-email $gitversion
- 			die "Unable to initialize SMTP properly.  Is there something wrong with your config?";
- 		}
- 
--		if ((defined $smtp_authuser) && (defined $smtp_authpass)) {
-+		if (defined $smtp_authuser) {
-+
-+			if (!defined $smtp_authpass) {
-+
-+				system "stty -echo";
-+
-+				do {
-+					print "Password: ";
-+					$_ = <STDIN>;
-+					print "\n";
-+				} while (!defined $_);
-+
-+				chomp($smtp_authpass = $_);
-+
-+				system "stty echo";
-+			}
-+
- 			$auth ||= $smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp->message;
- 		}
-+
- 		$smtp->mail( $raw_from ) or die $smtp->message;
- 		$smtp->to( @recipients ) or die $smtp->message;
- 		$smtp->data or die $smtp->message;
--- 
-1.5.4.9.gcc769-dirty
+ Also note that your maintainer does not actively involve himself in
+ maintaining what are in contrib/ hierarchy.  When you send fixes and
