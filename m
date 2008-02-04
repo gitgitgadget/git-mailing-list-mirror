@@ -1,75 +1,77 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] Add platform-independent .git "symlink"
-Date: Mon, 4 Feb 2008 12:59:52 +0100
-Message-ID: <8c5c35580802040359v1a5d8c42xfbc592245a8917c2@mail.gmail.com>
-References: <8c5c35580802020959v613b9e32v321e97f93f2af761@mail.gmail.com>
-	 <1201975757-13771-1-git-send-email-hjemli@gmail.com>
-	 <alpine.LSU.1.00.0802021815510.7372@racer.site>
-	 <8c5c35580802021047o41a7de9fi84a6b33f0f779e2e@mail.gmail.com>
-	 <7vwsplporv.fsf@gitster.siamese.dyndns.org>
-	 <alpine.LSU.1.00.0802040024030.7372@racer.site>
+From: Paul Gardiner <osronline@glidos.net>
+Subject: Re: New to git: sorry for obvious question.
+Date: Mon, 04 Feb 2008 12:04:59 +0000
+Message-ID: <47A6FF6B.1000103@glidos.net>
+References: <47A6E130.7090909@glidos.net> <20080204105006.GA15855@bit.office.eurotux.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 04 13:00:30 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 04 13:05:58 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLzzu-0008J3-39
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 13:00:26 +0100
+	id 1JM04z-0001A6-FY
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 13:05:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069AbYBDL7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 06:59:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751881AbYBDL7x
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 06:59:53 -0500
-Received: from wa-out-1112.google.com ([209.85.146.179]:64265 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751762AbYBDL7x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 06:59:53 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so2909111wah.23
-        for <git@vger.kernel.org>; Mon, 04 Feb 2008 03:59:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=wSKwIDWrDu0XNs5K2Zo39ZJa532Jmcc6wfWbu3PEH/A=;
-        b=j2gEwv0yLfciNTClUbcFnIGMiigEkPLK+xwH8Edy6hFiMFuBCiiszuJVDvwLFvdiWJpNa4l1cKPmDHonvhtxBzpYlm04anbFMpJBKriQNjNnkKO9ppfmA6RzZGjK234dX8vDORiuxMN68CIaQNOK8eCOoyr0GnKpAbV9oXnU7rk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=nhnXq5lAZ2BglyrVEiAhmpNltOjR6Wnm1Lp8v2gULAHLiM4tdWV6om6u7pwZ3FC3To0QKYIOJeaIBjSr24x0LWkrcDXUoS6XWiSLEt3aeaZxMqcUQBkAd1PPHV0LYARLscLjL2UT2NTpYvuMZkgNjj9L1zLUE3B0QInv3fif35k=
-Received: by 10.115.74.1 with SMTP id b1mr6798945wal.93.1202126392407;
-        Mon, 04 Feb 2008 03:59:52 -0800 (PST)
-Received: by 10.115.73.7 with HTTP; Mon, 4 Feb 2008 03:59:52 -0800 (PST)
-In-Reply-To: <alpine.LSU.1.00.0802040024030.7372@racer.site>
-Content-Disposition: inline
+	id S1751670AbYBDMFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 07:05:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751817AbYBDMFJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 07:05:09 -0500
+Received: from mk-outboundfilter-2.mail.uk.tiscali.com ([212.74.114.38]:55174
+	"EHLO mk-outboundfilter-2.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751593AbYBDMFI (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Feb 2008 07:05:08 -0500
+X-Trace: 128902/mk-outboundfilter-2.mail.uk.tiscali.com/PIPEX/$MX-ACCEPTED/pipex-infrastructure/62.241.163.6
+X-SBRS: None
+X-RemoteIP: 62.241.163.6
+X-IP-MAIL-FROM: osronline@glidos.net
+X-IP-BHB: Once
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ao8CALOOpkc+8aMG/2dsb2JhbACqZg
+X-IP-Direction: IN
+Received: from astro.systems.pipex.net ([62.241.163.6])
+  by smtp.pipex.tiscali.co.uk with ESMTP; 04 Feb 2008 12:05:04 +0000
+Received: from [10.0.0.24] (80-42-19-184.dynamic.dsl.as9105.com [80.42.19.184])
+	by astro.systems.pipex.net (Postfix) with ESMTP id 612D8E000099
+	for <git@vger.kernel.org>; Mon,  4 Feb 2008 12:05:01 +0000 (GMT)
+User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
+In-Reply-To: <20080204105006.GA15855@bit.office.eurotux.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72494>
 
-On Feb 4, 2008 1:24 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Sun, 3 Feb 2008, Junio C Hamano wrote:
-> > For now I haven't picked up any of the "how about this way"
-> > revisions.
->
-> Yeah, I think all my comments have been addressed...  Lars, care to send a
-> new version?
+Luciano Rocha wrote:
+> On Mon, Feb 04, 2008 at 09:56:00AM +0000, Paul Gardiner wrote:
+>>  Hi,
+>>
+>>  I've moved a project from CVS on sourceforge to git on repo.or.cz.  I
+>>  want a local mirror on my own home server, so that it appears amongst
+>>  the projects shown by my own gitweb set up, and so it gets caught by
+>>  my backup system.  I've created the mirror with
+>>
+>>    git clone --bare <remote-url> <local-dir>
+>>
+>>  and that seems fine.  But how do I now keep it up to date.  I was
+>>  guessing a cron job doing some sort of git pull, but pull doesn't
+>>  look to work on --bare proj.git type repositories.
+> 
+> You want git fetch. Git pull also updates the working copy, which you
+> don't have.
+> 
+> Also, git clone --bare doesn't set up the origin configuration, and I
+> have to do it by hand:
+>   git config remote.origin.url "$url"
+>   git config remote.origin.fetch "+refs/heads/*:refs/heads/*"
 
-Sure, but we should come to a conclusion on "GITDIR" vs. "GIT_DIR" vs.
-"gitdir" vs. "directory" vs. "ref". The reason I used "GITDIR" was to
-keep the door open for additional parameters in the "gitfile" (but it
-should obviously have been "GIT_DIR" for that usage since its value is
-used to specify $GIT_DIR). If it's more likely that we'll use this as
-a general substitute for symlinks, I think "ref" is better due to the
-existing symbolic refs.
+Brilliant!! That works.
 
-My preference would be "GIT_DIR" (or "git_dir") since we also might
-want the "WORKDIR_HASH" Shawn mentioned.
+So why wouldn't git-fetch work when, instead of setting up the origin
+config, I put the url and refspec on the commandline? - not that it
+matters, just interested.
 
--- 
-larsh
+Cheers,
+	Paul.
