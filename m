@@ -1,103 +1,79 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH] Add platform-independent .git "symlink"
-Date: Mon, 04 Feb 2008 16:08:57 -0600
-Message-ID: <47A78CF9.6040001@nrlssc.navy.mil>
-References: <8c5c35580802020959v613b9e32v321e97f93f2af761@mail.gmail.com> <1201975757-13771-1-git-send-email-hjemli@gmail.com> <alpine.LSU.1.00.0802021815510.7372@racer.site> <alpine.LSU.1.00.0802021825220.7372@racer.site> <47A78104.9050909@nrlssc.navy.mil> <alpine.LSU.1.00.0802042128170.8543@racer.site>
+From: Tommy Thorn <tommy-git@thorn.ws>
+Subject: Re: [PATCH] git-p4: Fix indentation from tab to spaces
+Date: Mon, 04 Feb 2008 14:18:35 -0800
+Message-ID: <47A78F3B.5090002@thorn.ws>
+References: <87fxw8mp2w.fsf@nav-akl-pcn-343.mitacad.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Lars Hjemli <hjemli@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 04 23:10:19 2008
+Cc: git@vger.kernel.org
+To: Toby Allsopp <Toby.Allsopp@navman.co.nz>
+X-From: git-owner@vger.kernel.org Mon Feb 04 23:19:20 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JM9W6-0007AN-IF
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 23:10:18 +0100
+	id 1JM9eh-0001iS-Vm
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 23:19:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753452AbYBDWJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 17:09:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752884AbYBDWJq
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 17:09:46 -0500
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:56043 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752118AbYBDWJp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 17:09:45 -0500
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id m14M8wWm013182;
-	Mon, 4 Feb 2008 16:08:58 -0600
-Received: from tick.nrlssc.navy.mil ([128.160.25.48]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 4 Feb 2008 16:08:58 -0600
-User-Agent: Thunderbird 2.0.0.9 (X11/20071031)
-In-Reply-To: <alpine.LSU.1.00.0802042128170.8543@racer.site>
-X-OriginalArrivalTime: 04 Feb 2008 22:08:58.0254 (UTC) FILETIME=[8A363AE0:01C8677A]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15706001
-X-TM-AS-Result: : Yes--14.171900-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTcwMDA3NS0xMzkw?=
-	=?us-ascii?B?MTAtNzAxNDU1LTcwNDQyNS0xODgwMTktNzA1OTAxLTcwNzExOS03?=
-	=?us-ascii?B?MTE5NTMtNzA0NzEyLTcwMjAyMC03MDgxNzktNzAxNzE5LTcwMjcy?=
-	=?us-ascii?B?Ni03MDU1MDgtNzAwNzU5LTcwMjc2Mi03MDkzMjMtNzAwODQ5LTcw?=
-	=?us-ascii?B?MTgzNy03MTA0NDItNzA1MTAyLTcwMDQ1NC03MDc2NjMtNzA0NjM2?=
-	=?us-ascii?B?LTcwNDc5My03MDQ5ODAtNzA1MTY3LTcwMTIwMi03MDIwNDQtNzA5?=
-	=?us-ascii?B?NTg0LTcwMTkxNC0xMjExMTYtNzA2NzE5LTcwNDc4Mi0xMzYwNzAt?=
-	=?us-ascii?B?NzA5MDY1LTE0ODAzOS0xNDgwNTEtMjAwNDI=?=
+	id S1753810AbYBDWSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 17:18:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753792AbYBDWSf
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 17:18:35 -0500
+Received: from server204.webhostingpad.com ([69.65.0.218]:58462 "EHLO
+	server204.webhostingpad.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753311AbYBDWSf (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Feb 2008 17:18:35 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=default; d=thorn.ws;
+	h=Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:X-Source:X-Source-Args:X-Source-Dir;
+	b=uuFFk9QujBAu6yitvg11cbLDUYdYDqy1E2EwIKqPmv39BKYeS0KWJaKcAgp4fqXQ3JvUSqxajKMP5eX2d6O3SM9n2C2nlioQKY20JE/Ye7IIPM38jt4T46NAjkObVEd/;
+Received: from 208.65.183.75.static.etheric.net ([208.65.183.75] helo=silver.local)
+	by server204.webhostingpad.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <tommy-git@thorn.ws>)
+	id 1JM9e3-00065s-EY; Mon, 04 Feb 2008 16:18:31 -0600
+User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
+In-Reply-To: <87fxw8mp2w.fsf@nav-akl-pcn-343.mitacad.com>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - server204.webhostingpad.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - thorn.ws
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72579>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Mon, 4 Feb 2008, Brandon Casey wrote:
+Toby Allsopp wrote:
+> Signed-off-by: Toby Allsopp <toby.allsopp@navman.co.nz>
+> ---
+>  contrib/fast-import/git-p4 |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+> index c17afae..781a0cb 100755
+> --- a/contrib/fast-import/git-p4
+> +++ b/contrib/fast-import/git-p4
+> @@ -1646,7 +1646,7 @@ class P4Clone(P4Sync):
+>          depotPath = args[0]
+>          depotDir = re.sub("(@[^@]*)$", "", depotPath)
+>          depotDir = re.sub("(#[^#]*)$", "", depotDir)
+> -	depotDir = re.sub(r"\.\.\.$", "", depotDir)
+> +        depotDir = re.sub(r"\.\.\.$", "", depotDir)
+>          depotDir = re.sub(r"/$", "", depotDir)
+>          return os.path.split(depotDir)[1]
+>  
+>   
+Acked-by: Tommy Thorn <tommy-git@thorn.ws>
 
-> In my local version of git, you can say "git 
-> branch --new-workdir=../bla new-branch [branch-point]".
+I'm not sure that happend, but I did have some issues sending the patch 
+that should be fixed now.
 
-Ah, I see, you are creating a new branch too.
+Nobody commented on the most important one - the fix for git-p4 memory 
+appetite.
 
->> Have you thought about using git-clone instead?
-> 
-> Briefly.  But this is not about cloning the repository.  It is about 
-> having an additional working directory for the current repository.
-
-I think that is true at the low level, but from a high level it feels
-similar to me.
-
-After your "git branch --new-workdir=..." you have something that acts
-exactly like a full-fledged repository. It is very much dependent on
-the original repo, similarly to how a --shared repo is, and it now
-has new semantics in that operations within the new repo have an effect
-in the original repo (and vice-versa). Making new repositories from
-existing repositories is what git-clone does.
-
-  git-branch: makes new branches, or generally handles modifying branches.
-git-checkout: modifies the contents of the working directory.
-   git-clone: makes new repositories from existing repositories.
-
-Also, of the three, git-clone is the only one allowed to operate outside
-of the repo. The other two are required to be called from within a repo
-(or have GIT_DIR set), and currently only modify data within that repo.
-So, allowing them to have an effect outside of the repo would extend
-their current scope of operation.
-
->> It seems a good fit but would require a new option to specify a branch 
->> to checkout (which I believe is a requested feature for clone).
-> 
-> It is an often-requested feature for clone, but we have "clone -n" for 
-> now, and nobody seemed to care deeply enough to actually do something 
-> about it.
-
-I'll probably do it if it is not beyond me.
-
-> I _want_ the original 
-> repository to know that there is another working directory.
-
-Yes, your ideas are much better than simply adding the functionality of
-the git-new-workdir script (which is what I was planning on doing btw :)
-
--brandon
+Tommy
