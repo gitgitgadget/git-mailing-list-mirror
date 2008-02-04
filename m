@@ -1,72 +1,85 @@
-From: Miles Bader <miles.bader@necel.com>
-Subject: Re: The 7th number of the msysGit Herald
-Date: Mon, 04 Feb 2008 16:53:19 +0900
-Message-ID: <buo7ihl88eo.fsf__29070.5887171955$1202111706$gmane$org@dhapc248.dev.necel.com>
-References: <alpine.LSU.1.00.0802011653180.7372@racer.site>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH v3] git-rebase.sh: Update USAGE string
+Date: Mon, 04 Feb 2008 10:04:33 +0200
+Organization: Private
+Message-ID: <ir15171q.fsf_-_@blue.sea.net>
+References: <prvd3i9e.fsf@blue.sea.net> <ir15399p.fsf@blue.sea.net>
+	<m3lk6161jo.fsf@localhost.localdomain>
+	<7vodaxpo0i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: public-git-u79uwXL29TY76Z2rM5mHXA@hugh.gmane.org,
-	public-msysgit-/JYPxA39Uh5TLH3MbocFFw@hugh.gmane.org
-To: public-Johannes.Schindelin-Mmb7MZpHnFY@hugh.gmane.org
-X-From: git-owner@vger.kernel.org Mon Feb 04 08:54:58 2008
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 04 09:06:17 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLwAL-0004h9-2b
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 08:54:57 +0100
+	id 1JLwL2-0006rz-Nw
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 09:06:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753674AbYBDHyI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 02:54:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753658AbYBDHyH
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 02:54:07 -0500
-Received: from blaine.gmane.org ([80.91.229.8]:45044 "EHLO hugh.gmane.org"
+	id S1751861AbYBDIFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 03:05:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752335AbYBDIFW
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 03:05:22 -0500
+Received: from main.gmane.org ([80.91.229.2]:57765 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753257AbYBDHyF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 02:54:05 -0500
-Received: from public by hugh.gmane.org with local (Exim 4.63)
-	(envelope-from <public@hugh.gmane.org>)
-	id 1JLw9Q-00073o-3A
-	for git@vger.kernel.org; Mon, 04 Feb 2008 08:54:00 +0100
-Received: from tyo202.gate.nec.co.jp ([202.32.8.206])
-	by hugh.gmane.org with esmtp (Exim 4.63)
-	(envelope-from <miles.bader@necel.com>)
-	id 1JLw9H-00070K-J9; Mon, 04 Feb 2008 08:53:52 +0100
-Received: from relay31.aps.necel.com ([10.29.19.54])
-	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id m147rKFC026843;
-	Mon, 4 Feb 2008 16:53:20 +0900 (JST)
-Received: from relay11.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay31.aps.necel.com with ESMTP; Mon, 4 Feb 2008 16:53:20 +0900
-Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay11.aps.necel.com with ESMTP; Mon, 4 Feb 2008 16:53:20 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id D7F32513; Mon,  4 Feb 2008 16:53:19 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
-In-Reply-To: <alpine.LSU.1.00.0802011653180.7372@racer.site> (Johannes
-	Schindelin's message of "Fri, 1 Feb 2008 16:53:54 +0000 (GMT)")
+	id S1751697AbYBDIFV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 03:05:21 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JLwKI-0003SG-OP
+	for git@vger.kernel.org; Mon, 04 Feb 2008 08:05:14 +0000
+Received: from a91-155-178-181.elisa-laajakaista.fi ([91.155.178.181])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 04 Feb 2008 08:05:14 +0000
+Received: from jari.aalto by a91-155-178-181.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 04 Feb 2008 08:05:14 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-178-181.elisa-laajakaista.fi
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
+Cancel-Lock: sha1:vmvJDNTs7HDN+Y7JxB7la7pvUlE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72474>
 
+Present the options in -s|--long (short, long) order.
+Mention merge and new whitespace option.
 
+Signed-off-by: Jari Aalto <jari.aalto AT cante.net>
+---
+ ***********************************************************************
+ reworked patch (No. 3)
+ ***********************************************************************
 
-Johannes Schindelin <Johannes.Schindelin-Mmb7MZpHnFY@public.gmane.org>
-writes:
-> As we realised that we install more than we support, a few programs 
-> have been removed from the Git installer, notably the p4, arch, cvs 
-> and svn importers/exporters. At the moment, there are no plans to 
-> support Python in the MSys environment, so I am doubtful about the 
-> first two, but the latter two will most likely be supported later this 
-> year
+ [Junio C Hamano}
+ >>    [--whitespace=nowarn|warn|error|error-all|strip]
+ >
+ > I think that is probably the right thing to do in this case.  It
+ > is clear where the alternatives end, without adding extra
+ > grouping, so it keeps the description easy to read.
 
-The arch importer (at least) is written in Perl, is it not?
+ git-rebase.sh |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
--Miles
-
+diff --git a/git-rebase.sh b/git-rebase.sh
+index bdcea0e..6128455 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -3,7 +3,10 @@
+ # Copyright (c) 2005 Junio C Hamano.
+ #
+ 
+-USAGE='[--interactive | -i] [-v] [--onto <newbase>] <upstream> [<branch>]'
++USAGE='[-i|--interactive] [-v|--verbose]
++[--whitespace=nowarn|warn|error|error-all|strip]
++[-m|--merge] [--onto <newbase>] <upstream> [<branch>]'
++
+ LONG_USAGE='git-rebase replaces <branch> with a new branch of the
+ same name.  When the --onto option is provided the new branch starts
+ out with a HEAD equal to <newbase>, otherwise it is equal to <upstream>
 -- 
-What the fuck do white people have to be blue about!?  Banana Republic ran
-out of Khakis?  The Espresso Machine is jammed?  Hootie and The Blowfish are
-breaking up??!  Shit, white people oughtta understand, their job is to GIVE
-people the blues, not to get them!    -- George Carlin
+1.5.4-rc5.GIT-dirty
