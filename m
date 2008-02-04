@@ -1,114 +1,140 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0 of 7] [resend] - Improve handling remotes, origin, submodules
-Date: Mon, 04 Feb 2008 11:59:06 -0800
-Message-ID: <7vbq6wjxx1.fsf@gitster.siamese.dyndns.org>
-References: <1202059867-1184-1-git-send-email-mlevedahl@gmail.com>
-	<alpine.LSU.1.00.0802032237320.7372@racer.site>
-	<47A68C01.9000600@gmail.com>
-	<alpine.LSU.1.00.0802041443420.7372@racer.site>
-	<30e4a070802040924g550671ccsb11108c71c99e378@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFH] revision limiting sometimes ignored
+Date: Mon, 4 Feb 2008 12:03:42 -0800 (PST)
+Message-ID: <alpine.LFD.1.00.0802041146060.3034@hp.linux-foundation.org>
+References: <20080202122135.GA5783@code-monkey.de> <20080203030054.GA18654@coredump.intra.peff.net> <20080203043310.GA5984@coredump.intra.peff.net> <alpine.LFD.1.00.0802040922480.3034@hp.linux-foundation.org> <7vr6fsk08w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Mark Levedahl" <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 04 21:00:36 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 21:07:25 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JM7UH-0002bP-1d
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 21:00:17 +0100
+	id 1JM7Zg-0004Ab-J1
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 21:05:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757117AbYBDT7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 14:59:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757078AbYBDT7V
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 14:59:21 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35791 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756810AbYBDT7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 14:59:19 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A46B324B;
-	Mon,  4 Feb 2008 14:59:17 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id C82D03248;
-	Mon,  4 Feb 2008 14:59:13 -0500 (EST)
-In-Reply-To: <30e4a070802040924g550671ccsb11108c71c99e378@mail.gmail.com>
-	(Mark Levedahl's message of "Mon, 4 Feb 2008 12:24:32 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757358AbYBDUEl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 15:04:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757161AbYBDUEl
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 15:04:41 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:42647 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757357AbYBDUEk (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Feb 2008 15:04:40 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m14K3ggI024445
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 4 Feb 2008 12:03:44 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id m14K3ggE014735;
+	Mon, 4 Feb 2008 12:03:42 -0800
+In-Reply-To: <7vr6fsk08w.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LFD 882 2007-12-20)
+X-Spam-Status: No, hits=-3.215 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72553>
 
-"Mark Levedahl" <mlevedahl@gmail.com> writes:
 
-> BIG difference here:
-> $HOME = <name> of home directory, <name> is arbitrary. Files there are
-> found as $HOME/<foo> or <name>/foo, they are the same, and I am free
-> to set HOME=<arbitrary name>.
 
-I think you misunderstood Dscho's $HOME analogy.
+On Mon, 4 Feb 2008, Junio C Hamano wrote:
+> 
+> However, I am afraid that is not quite enough.  It is not just
+> "when we hit the root".
 
-For example, the value of HOME environment variable is used as a
-shorthand to where you go to when you say
+You're right. The proper test is actually "is the list of commits 
+disconnected".
 
-	$ cd
+Which is not an entirely trivial thing to test for efficiently.
 
-Everybody is happy that the variable is called HOME, and nobody
-would complain that the shell does not have another mechanism to
-let you have this in your .bashrc
+I suspect that we can solve it by not even bothering to be efficient, and 
+instead just ask that question when we hit the "are all commits negative" 
+query.
 
-	#!/bin/bash
-	HOMEENVVAR=BASE
-	BASE=/home/mark
-        export HOMEENVVAR BASE
+Gaah. This is that stupid apporach. The smarter one might be harder, 
+especially for the special cases where you truly have two totally 
+unconnected trees, ie:
 
-and make the parameterless "cd" honor the environment variable
-named with HOMEENVVER (in this case, BASE) instead.
+	a -> b -> c
 
-Remote shorthand is exactly like a variable name.  We say "git
-pull origin" and do not say "git pull $origin", but that is just
-a syntax issue.  And "git pull" and friends are defined to
-default to the value of the origin 'variable' exactly like "cd"
-is defined to default to the value of the HOME variable.
+	d -> e -> f
 
-I would agree 100% with Dscho on this point, if we did not have
-"clone -o".
+and do
 
-"clone -o" is like the above HOMEENVVAR variable.  It lets you
-rename what name other than origin is used to name what the
-origin 'variable' usually names, or at least pretends to let you
-do so.  But its effect may not extend far enough and if there is
-such inconsistency, that is a bug worth fixing.  For example, I
-think "git fetch" is Ok for basic use, because "clone -o" writes
-branch.master.remote in .git/config that points to the name you
-gave instead of 'origin', but there may be places that do use
-hardwired 'origin' and nothing else.
+	git rev-list c f ^b ^e
 
-And that is the only reason I am still responding to this
-thread.
+were you actually do not _have_ a single connected graph at all, but you 
+know the result should be "c" and "f" because they are *individually* 
+connected to what we already know is uninteresting.
 
-If a supermodule wants a specific remote to be used in a
-submodule, it should not default to 'origin' but it should name
-that specific remote explicitly.  Even if we added the mechanism
-that looks like HOMEENVVAR to tell commands other than "git
-fetch" to default to something other than 'origin', I do not
-think such a use of submodule should depend on that fallback.  I
-still haven't dismissed Dscho's argument that submodule related
-issues should be handled inside git-submodule for that reason.
+Not really tested at all, not really thought through. And that recursion 
+avoidance could be smarter.
 
-We could remove support for "clone -o" and consistently use
-'origin' as the default everywhere and completely remove the
-half-baked HOMEENVVAR lookalike.  I do not think such a move is
-a good idea, but the point is that the solution to your
-submodule problem should work even if we did so.  If the
-supermodule and a set of submodules are configured to use a
-specific remote that is not 'origin', it should use that
-specific remote by _naming_ it, not relying on where the
-fallback value is taken by other unrelated parts of the system,
-no?
+			Linus
+
+---
+ revision.c |   37 ++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 36 insertions(+), 1 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index 6e85aaa..26b2343 100644
+--- a/revision.c
++++ b/revision.c
+@@ -558,6 +558,41 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
+ 	free_patch_ids(&ids);
+ }
+ 
++static inline int commit_is_connected(struct commit *commit)
++{
++	struct commit_list *parents;
++	for (;;) {
++		if (commit->object.flags & UNINTERESTING)
++			return 1;
++		parents = commit->parents;
++		if (!parents)
++			return 0;
++		if (parents->next)
++			break;
++		commit = parents->item;
++	}
++
++	do {
++		if (!commit_is_connected(parents->item))
++			return 0;
++		parents = parents->next;
++	} while (parents);
++	return 1;
++}
++
++/* Check that the positive list is connected to the negative one.. */
++static int is_connected(struct commit_list *list)
++{
++	while (list) {
++		struct commit *commit = list->item;
++
++		list = list->next;
++		if (!commit_is_connected(commit))
++			return 0;
++	}
++	return 1;
++}
++
+ static int limit_list(struct rev_info *revs)
+ {
+ 	struct commit_list *list = revs->commits;
+@@ -579,7 +614,7 @@ static int limit_list(struct rev_info *revs)
+ 			return -1;
+ 		if (obj->flags & UNINTERESTING) {
+ 			mark_parents_uninteresting(commit);
+-			if (everybody_uninteresting(list))
++			if (everybody_uninteresting(list) && is_connected(newlist))
+ 				break;
+ 			continue;
+ 		}
