@@ -1,51 +1,66 @@
-From: Paul Gardiner <osronline@glidos.net>
-Subject: Re: New to git: sorry for obvious question.
-Date: Mon, 04 Feb 2008 14:17:51 +0000
-Message-ID: <47A71E8F.6030104@glidos.net>
-References: <47A6E130.7090909@glidos.net> <20080204105006.GA15855@bit.office.eurotux.com> <47A70ECE.2040606@panasas.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add platform-independent .git "symlink"
+Date: Mon, 4 Feb 2008 14:34:59 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802041434360.7372@racer.site>
+References: <8c5c35580802020959v613b9e32v321e97f93f2af761@mail.gmail.com> <1201975757-13771-1-git-send-email-hjemli@gmail.com> <alpine.LSU.1.00.0802021815510.7372@racer.site> <alpine.LSU.1.00.0802021825220.7372@racer.site> <20080204015707.GH24004@spearce.org>
+ <7vk5llmnf6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 04 15:19:08 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Lars Hjemli <hjemli@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 15:36:14 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JM2A6-0002BB-LH
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 15:19:07 +0100
+	id 1JM2Qf-00080Q-83
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 15:36:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754116AbYBDOR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 09:17:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753713AbYBDOR6
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 09:17:58 -0500
-Received: from mk-outboundfilter-1.mail.uk.tiscali.com ([212.74.114.37]:9844
-	"EHLO mk-outboundfilter-1.mail.uk.tiscali.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754040AbYBDOR5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Feb 2008 09:17:57 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ao8CAP6rpkc+8aIg/2dsb2JhbACrNA
-X-IP-Direction: IN
-Received: from ranger.systems.pipex.net ([62.241.162.32])
-  by smtp.pipex.tiscali.co.uk with ESMTP; 04 Feb 2008 14:17:55 +0000
-Received: from [10.0.0.24] (80-42-19-184.dynamic.dsl.as9105.com [80.42.19.184])
-	by ranger.systems.pipex.net (Postfix) with ESMTP id 8B878E000637
-	for <git@vger.kernel.org>; Mon,  4 Feb 2008 14:17:54 +0000 (GMT)
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <47A70ECE.2040606@panasas.com>
+	id S1752724AbYBDOfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 09:35:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752408AbYBDOfk
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 09:35:40 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51798 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752229AbYBDOfj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 09:35:39 -0500
+Received: (qmail invoked by alias); 04 Feb 2008 14:35:37 -0000
+Received: from host86-138-198-40.range86-138.btcentralplus.com (EHLO racer.home) [86.138.198.40]
+  by mail.gmx.net (mp035) with SMTP; 04 Feb 2008 15:35:37 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18EekUtrJAEgiqqkxSpaC1WTLKqqc7UIRlHK5pHfS
+	4BOaZGCjwJPm2e
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vk5llmnf6.fsf@gitster.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72507>
 
-Boaz Harrosh wrote:
-> On Mon, Feb 04 2008 at 12:50 +0200, Luciano Rocha <luciano@eurotux.com> wrote:
->> Also, git clone --bare doesn't set up the origin configuration, and I
->> have to do it by hand:
->>   git config remote.origin.url "$url"
->>   git config remote.origin.fetch "+refs/heads/*:refs/heads/*"
->>
-> Better do "git-remote add URL" then manual addition as above.
+Hi,
 
-Would that be git-remote add --mirror origin URL?
+On Sun, 3 Feb 2008, Junio C Hamano wrote:
+
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+> > The second biggest problem is checking out the same branch in two 
+> > different directories at once.  This becomes a problem only if you 
+> > modify the branch, but still, its a problem.
+> 
+> I agree.  The biggest benefit I am getting out of the workdir layout is 
+> that it allows me to check out the same branch in two directories, and 
+> let me work further on one while the other one is compiling and running 
+> the testsuite.  The other "compile and test tree" needs to be reset with 
+> --hard once I commit in the "edit tree", but by definition "reset 
+> --hard" is always a safe operation in a "compile and test tree".
+> 
+> In short, you need to know what you are doing.
+
+But that's exactly what you can use throw-away branches for.  I do.
+
+Ciao,
+Dscho
