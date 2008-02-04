@@ -1,72 +1,73 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: Re: [PATCH] Documentation/SubmittingPatches: Instruct how to use [PATCH] Subject header
-Date: Mon, 04 Feb 2008 10:12:14 +0200
-Organization: Private
-Message-ID: <ejbt16ox.fsf@blue.sea.net>
-References: <r6ft1sd1.fsf@blue.sea.net>
-	<alpine.LSU.1.00.0802040029020.7372@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] Fast forward strategies only, common, fork and path
+Date: Mon, 04 Feb 2008 00:22:20 -0800
+Message-ID: <7v8x21ku6b.fsf@gitster.siamese.dyndns.org>
+References: <402c10cd0802031654r3e0275a8s1d2163af9525e7d2@mail.gmail.com>
+	<402c10cd0802032251y626f373eke66c35b200ccf5b1@mail.gmail.com>
+	<7vwsplkwuq.fsf@gitster.siamese.dyndns.org>
+	<402c10cd0802040006yb654688l8dfc7140c507bc26@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 04 09:13:32 2008
+Cc: git@vger.kernel.org
+To: "Sverre Hvammen Johansen" <hvammen@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 09:23:13 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLwSI-00005G-Dc
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 09:13:30 +0100
+	id 1JLwbd-00022U-6d
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 09:23:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753492AbYBDIM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 03:12:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753486AbYBDIM5
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 03:12:57 -0500
-Received: from main.gmane.org ([80.91.229.2]:45594 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753322AbYBDIM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 03:12:56 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1JLwRi-0003kH-9V
-	for git@vger.kernel.org; Mon, 04 Feb 2008 08:12:54 +0000
-Received: from a91-155-178-181.elisa-laajakaista.fi ([91.155.178.181])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 04 Feb 2008 08:12:54 +0000
-Received: from jari.aalto by a91-155-178-181.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 04 Feb 2008 08:12:54 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-178-181.elisa-laajakaista.fi
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
-Cancel-Lock: sha1:mL0UgA1F8S1aSs59FTVngFkc3oQ=
+	id S1753294AbYBDIWf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 03:22:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753062AbYBDIWf
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 03:22:35 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:62050 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751340AbYBDIWe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 03:22:34 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id EBE472961;
+	Mon,  4 Feb 2008 03:22:29 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 720D32960;
+	Mon,  4 Feb 2008 03:22:27 -0500 (EST)
+In-Reply-To: <402c10cd0802040006yb654688l8dfc7140c507bc26@mail.gmail.com>
+	(Sverre Hvammen Johansen's message of "Mon, 4 Feb 2008 00:06:09
+	-0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72478>
 
-* Mon 2008-02-04 Johannes Schindelin <Johannes.Schindelin@gmx.de>
->
-> Whitespace error?  (Spaces instead of Tabs)
+"Sverre Hvammen Johansen" <hvammen@gmail.com> writes:
 
-There should be a big notice at the beginning of
-Documentation/SubmittingPatches:
+> ...  However, it might take some time.  What is the
+> time-frame for inclusion in 1.5.5?
 
-Junio, would you add this.
+The 1.5.4 cycle was too long (5 months).  A regular interval
+ought to be about 3 months but I'd really like to keep 1.5.5
+focused on obvious and unanimously supported changes that do not
+impact the existing semantics deeply, and keep it shorter than
+that.
 
-Jari
+I think it is too early to tell if this topic falls into that
+category.  The patch is only a few day old, and there has been
+no real discussion nor comments on it yet.  I also felt that the
+backstory was lacking and it would be hard to judge for people
+other than yourself how useful the new ff substrategies are in
+what context.
 
-----------------------------------------------------------------
-Checklist (and a short version for the impatient):
+The documentation updates talked about what the options do, but
+it was unclear why they could be useful in what situations and
+workflows.  At least it was not apparent to me on my cursory
+read.
 
-        General:
+> --ff=never will turn this off together with fast forward.  Maybe we
+> should have --ff=traditional that is the old behavior.
 
-                NOTE: Please set your editor to use tabs instead of
-                spaces. In Emacs this can be set with
-                (setq indent-tabs-mode t) and in vi this can be set 
-                with ...
-
-        Commits:
-
--- 
-Welcome to FOSS revolution: we fix and modify until it shines
+Sure, and I mildly suspect that it should be the default.
