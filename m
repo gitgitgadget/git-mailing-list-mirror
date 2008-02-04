@@ -1,73 +1,54 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add platform-independent .git "symlink"
-Date: Mon, 4 Feb 2008 22:19:37 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802042218280.8543@racer.site>
-References: <8c5c35580802020959v613b9e32v321e97f93f2af761@mail.gmail.com> <1201975757-13771-1-git-send-email-hjemli@gmail.com> <alpine.LSU.1.00.0802021815510.7372@racer.site> <alpine.LSU.1.00.0802021825220.7372@racer.site> <47A78104.9050909@nrlssc.navy.mil>
- <alpine.LSU.1.00.0802042128170.8543@racer.site> <47A78CF9.6040001@nrlssc.navy.mil>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH 4/4] git-submodule: prepare for the .git-file
+Date: Mon, 4 Feb 2008 23:23:04 +0100
+Organization: glandium.org
+Message-ID: <20080204222304.GA15178@glandium.org>
+References: <1202158761-31211-1-git-send-email-hjemli@gmail.com> <1202158761-31211-2-git-send-email-hjemli@gmail.com> <1202158761-31211-3-git-send-email-hjemli@gmail.com> <1202158761-31211-4-git-send-email-hjemli@gmail.com> <1202158761-31211-5-git-send-email-hjemli@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Lars Hjemli <hjemli@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Mon Feb 04 23:20:53 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 23:24:06 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JM9gI-0002G0-Ch
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 23:20:50 +0100
+	id 1JM9jL-0003Io-MH
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 23:24:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753815AbYBDWUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 17:20:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753692AbYBDWUQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 17:20:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46723 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753490AbYBDWUP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 17:20:15 -0500
-Received: (qmail invoked by alias); 04 Feb 2008 22:20:13 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp032) with SMTP; 04 Feb 2008 23:20:13 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+cUY0I4P2c/ajF2HPlWu3XzNNBOWvEG6p8JMNWy9
-	UDpT7sO+dUMwKB
-X-X-Sender: gene099@racer.site
-In-Reply-To: <47A78CF9.6040001@nrlssc.navy.mil>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754767AbYBDWX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 17:23:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754583AbYBDWX0
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 17:23:26 -0500
+Received: from vuizook.err.no ([85.19.215.103]:56443 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752780AbYBDWX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 17:23:26 -0500
+Received: from aputeaux-153-1-42-109.w82-124.abo.wanadoo.fr ([82.124.6.109] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1JM9jN-0002C7-Kn; Mon, 04 Feb 2008 23:24:07 +0100
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1JM9iS-000412-3x; Mon, 04 Feb 2008 23:23:04 +0100
+Content-Disposition: inline
+In-Reply-To: <1202158761-31211-5-git-send-email-hjemli@gmail.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-Spam-Status: (score 2.2): No, score=2.2 required=5.0 tests=RCVD_IN_PBL,RCVD_IN_SORBS_DUL,RDNS_DYNAMIC autolearn=disabled version=3.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72581>
 
-Hi,
+On Mon, Feb 04, 2008 at 09:59:21PM +0100, Lars Hjemli wrote:
+> -		if ! test -d "$path"/.git
+> +		if ! test -e "$path"/.git
 
-On Mon, 4 Feb 2008, Brandon Casey wrote:
+Is test -e supported by all shells we support ? I have some doubts...
 
-> Johannes Schindelin wrote:
-> > 
-> > On Mon, 4 Feb 2008, Brandon Casey wrote:
-> 
-> >> Have you thought about using git-clone instead?
-> > 
-> > Briefly.  But this is not about cloning the repository.  It is about 
-> > having an additional working directory for the current repository.
-> 
-> I think that is true at the low level, but from a high level it feels 
-> similar to me.
-> 
-> [...]
-> 
-> > I _want_ the original repository to know that there is another working 
-> > directory.
-> 
-> Yes, your ideas are much better than simply adding the functionality of 
-> the git-new-workdir script (which is what I was planning on doing btw :)
-
-Somehow these two statements do not work together.  Either you have a 
-clone, or you accept that a new working directory is actually working on 
-the _same_ repository.
-
-Ciao,
-Dscho
+Mike
