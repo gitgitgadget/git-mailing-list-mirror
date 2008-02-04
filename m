@@ -1,72 +1,125 @@
 From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH 4/4] git-submodule: prepare for the .git-file
-Date: Mon,  4 Feb 2008 21:59:21 +0100
-Message-ID: <1202158761-31211-5-git-send-email-hjemli@gmail.com>
+Subject: [PATCH 3/4] Add tests for .git file
+Date: Mon,  4 Feb 2008 21:59:20 +0100
+Message-ID: <1202158761-31211-4-git-send-email-hjemli@gmail.com>
 References: <1202158761-31211-1-git-send-email-hjemli@gmail.com>
  <1202158761-31211-2-git-send-email-hjemli@gmail.com>
  <1202158761-31211-3-git-send-email-hjemli@gmail.com>
- <1202158761-31211-4-git-send-email-hjemli@gmail.com>
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 04 22:02:07 2008
+X-From: git-owner@vger.kernel.org Mon Feb 04 22:02:12 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JM8S1-0008Ne-0X
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 22:02:01 +0100
+	id 1JM8S2-0008Ne-D4
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 22:02:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752349AbYBDVA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 16:00:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752418AbYBDVA6
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 16:00:58 -0500
-Received: from mail42.e.nsc.no ([193.213.115.42]:46870 "EHLO mail42.e.nsc.no"
+	id S1752725AbYBDVBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 16:01:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752735AbYBDVBG
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 16:01:06 -0500
+Received: from mail42.e.nsc.no ([193.213.115.42]:46892 "EHLO mail42.e.nsc.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752305AbYBDVA5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 16:00:57 -0500
+	id S1752725AbYBDVBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 16:01:04 -0500
 Received: from localhost.localdomain (ti231210a341-0149.bb.online.no [88.88.168.149])
-	by mail42.nsc.no (8.13.8/8.13.5) with ESMTP id m14L0REg021902;
+	by mail42.nsc.no (8.13.8/8.13.5) with ESMTP id m14L0REf021902;
 	Mon, 4 Feb 2008 22:00:31 +0100 (MET)
 X-Mailer: git-send-email 1.5.4.5.g25d066
-In-Reply-To: <1202158761-31211-4-git-send-email-hjemli@gmail.com>
+In-Reply-To: <1202158761-31211-3-git-send-email-hjemli@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72566>
 
-When git-submodule tried to detect 'active' submodules, it checked for the
-existence of a directory named '.git'. This isn't good enough now that .git
-can be a file pointing to the real $GIT_DIR so the tests are changed to
-reflect this.
+Verify that the basic plumbing works when .git is a file pointing at
+the real git directory.
 
 Signed-off-by: Lars Hjemli <hjemli@gmail.com>
 ---
- git-submodule.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ t/t0002-gitfile.sh |   71 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 71 insertions(+), 0 deletions(-)
+ create mode 100755 t/t0002-gitfile.sh
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index a6aaf40..220d64c 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -288,7 +288,7 @@ cmd_update()
- 			continue
- 		fi
- 
--		if ! test -d "$path"/.git
-+		if ! test -e "$path"/.git
- 		then
- 			module_clone "$path" "$url" || exit
- 			subsha1=
-@@ -362,7 +362,7 @@ cmd_status()
- 	do
- 		name=$(module_name "$path") || exit
- 		url=$(git config submodule."$name".url)
--		if test -z "url" || ! test -d "$path"/.git
-+		if test -z "url" || ! test -e "$path"/.git
- 		then
- 			say "-$sha1 $path"
- 			continue;
+diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
+new file mode 100755
+index 0000000..f8f39e6
+--- /dev/null
++++ b/t/t0002-gitfile.sh
+@@ -0,0 +1,71 @@
++#!/bin/sh
++
++test_description='.git file
++
++Verify that plumbing commands work when .git is a file
++'
++. ./test-lib.sh
++
++chkfile() {
++	D=$(echo $1 | cut -b 1-2) &&
++	F=$(echo $1 | cut -b 3-40) &&
++	if test ! -f $REAL/objects/$D/$F
++	then
++		echo "Object not found: $REAL/objects/$D/$F"
++		false
++	fi
++}
++
++test_expect_success 'setup' '
++	REAL=$(pwd)/.real &&
++	mv .git $REAL &&
++	echo "gitdir: $REAL" >.git
++'
++
++test_expect_success 'check rev-parse --git-dir' '
++	test "$REAL" = "$(git rev-parse --git-dir)"
++'
++
++test_expect_success 'check hash-object' '
++	echo "foo" >bar &&
++	SHA=$(cat bar | git hash-object -w --stdin) &&
++	chkfile $SHA
++'
++
++test_expect_success 'check cat-file' '
++	git cat-file blob $SHA >actual &&
++	diff -u bar actual
++'
++
++test_expect_success 'check update-index' '
++	if test -f $REAL/index
++	then
++		echo "Hmm, $REAL/index exists?"
++		false
++	fi &&
++	rm -rf $REAL/objects/* &&
++	git update-index --add bar &&
++	if ! test -f $REAL/index
++	then
++		echo "$REAL/index not found"
++		false
++	fi &&
++	chkfile $SHA
++'
++
++test_expect_success 'check write-tree' '
++	SHA=$(git write-tree) &&
++	chkfile $SHA
++'
++
++test_expect_success 'check commit-tree' '
++	SHA=$(echo "commit bar" | git commit-tree $SHA) &&
++	chkfile $SHA
++'
++
++test_expect_success 'check rev-list' '
++	echo $SHA >$REAL/HEAD &&
++	test "$SHA" = "$(git rev-list HEAD)"
++'
++
++test_done
 -- 
 1.5.4.5.g25d066
