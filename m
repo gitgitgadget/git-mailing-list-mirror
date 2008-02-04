@@ -1,85 +1,140 @@
-From: "Sverre Hvammen Johansen" <hvammen@gmail.com>
-Subject: Re: [RFC/PATCH] Fast forward strategies only, common, fork and path
-Date: Mon, 4 Feb 2008 00:06:09 -0800
-Message-ID: <402c10cd0802040006yb654688l8dfc7140c507bc26@mail.gmail.com>
-References: <402c10cd0802031654r3e0275a8s1d2163af9525e7d2@mail.gmail.com>
-	 <402c10cd0802032251y626f373eke66c35b200ccf5b1@mail.gmail.com>
-	 <7vwsplkwuq.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] builtin-mv: minimum fix to avoid losing files
+Date: Mon, 04 Feb 2008 00:09:56 -0800
+Message-ID: <7vhcgpkuqz.fsf@gitster.siamese.dyndns.org>
+References: <7v3as9mce7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 04 09:06:47 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 04 09:10:45 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLwLl-00076n-9N
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 09:06:45 +0100
+	id 1JLwPb-0007x9-57
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 09:10:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752773AbYBDIGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 03:06:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752768AbYBDIGM
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 03:06:12 -0500
-Received: from fg-out-1718.google.com ([72.14.220.152]:58187 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752748AbYBDIGK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 03:06:10 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so1923912fga.17
-        for <git@vger.kernel.org>; Mon, 04 Feb 2008 00:06:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=u3gvy28peKkSLZCqb40h4ptWYDRTf7CeZqnav4dKzKg=;
-        b=NJ6H4Ky1Gj8fSCBiqD73Vm6Lr0X1mWjy2C1nn8d2dQfzcs7pQsK2MiLLCEA1g7winFEmPF+ZgR0lTh1PCErx/y9RhEEgOGzPvX8NeFSy0ZP+UQ9GlCfr9RmGKg72tl0I/nKs28lIC1KxgCLLetJvzMUsJlz9U9DUUqlLR+mU+dc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SNsoj2MeM9AckfpzM+qRI0jXUXwT68y0pGLWQgqvpXSRsPi30sKufuAim49Hda7kDpBwFcpVfGDVuRKySYKsSYN/KhzB2cdtnHCkLTGaNAYMkbG/OgHZGhD0X+Mo+TsZ9N69fxi0NDsPhRELudfH10xSxuIRT1wYuZ6GecMcWhA=
-Received: by 10.82.107.15 with SMTP id f15mr12581049buc.0.1202112369085;
-        Mon, 04 Feb 2008 00:06:09 -0800 (PST)
-Received: by 10.82.156.13 with HTTP; Mon, 4 Feb 2008 00:06:09 -0800 (PST)
-In-Reply-To: <7vwsplkwuq.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752802AbYBDIKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 03:10:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752768AbYBDIKL
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 03:10:11 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61411 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752632AbYBDIKJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 03:10:09 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 971BB2305;
+	Mon,  4 Feb 2008 03:10:06 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CE4A522F3;
+	Mon,  4 Feb 2008 03:10:03 -0500 (EST)
+In-Reply-To: <7v3as9mce7.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 03 Feb 2008 23:03:28 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72476>
 
-On Feb 3, 2008 11:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Please make the next round an in-line patch.  Attachments cannot
-> be commented on, and an RFC patch is all about getting comments,
-> not about being included.  Whitespace breakages do not matter as
-> much as the final submissions; readability and commentability
-> matters more.
+An incorrect command "git mv subdir /outer/space" threw the
+subdirectory to outside of the repository and then noticed that
+/outer/space/subdir/ would be outside of the repository.  The
+error checking is backwards.
 
-I will post an update in a few days, with a few bug-fixes.
+This fixes the issue by being careful about use of the return
+value of get_pathspec().  Since the implementation already has
+handcrafted loop to munge each path on the command line, we use
+prefix_path() instead.
 
-> Instead of adding many new sub-strategies at once, I think it
-> would make it easier to review to split the patch into (1) code
-> movement without adding any functionality changes to make your
-> further changes easier, if such a change is needed in your work
-> (I did not really look at the attachment carefully), (2) add
-> logic to find out the set of independent parents to remove
-> redundant parents (perhaps using show-branch --independent? I
-> dunno) and conditionally use it, (3) add infrastructure to allow
-> adding different --ff=<what-to-do>, and then finally (4) a
-> separate patch for each of <what-to-do>.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-The patch is not easy to read for git-merge.sh.  You really need to
-apply the patch and then review the code.  If I follow your suggestion
-above it might be easier to read the patches.  I will do if tthere is
-a demand for a split.  However, it might take some time.  What is the
-time-frame for inclusion in 1.5.5?
+ * This minimally fixes the issue and applies on top of the
+   "setup: sanitize absolute and funny paths in get_pathspec()"
+   patch I showed during the rc freeze.
 
-> I suspect (2) is controversial if made unconditional.  Some
-> people do not even like the fast-forward "merges" we have
-> traditionally done.
+   Dscho CC'ed as he owns the largest number of lines in this
+   source file.
 
---ff=never will turn this off together with fast forward.  Maybe we
-should have --ff=traditional that is the old behavior.
+ builtin-mv.c  |    6 +++++-
+ t/t7001-mv.sh |   38 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 43 insertions(+), 1 deletions(-)
 
+diff --git a/builtin-mv.c b/builtin-mv.c
+index 94f6dd2..68aa2a6 100644
+--- a/builtin-mv.c
++++ b/builtin-mv.c
+@@ -19,6 +19,7 @@ static const char **copy_pathspec(const char *prefix, const char **pathspec,
+ 				  int count, int base_name)
+ {
+ 	int i;
++	int len = prefix ? strlen(prefix) : 0;
+ 	const char **result = xmalloc((count + 1) * sizeof(const char *));
+ 	memcpy(result, pathspec, count * sizeof(const char *));
+ 	result[count] = NULL;
+@@ -32,8 +33,11 @@ static const char **copy_pathspec(const char *prefix, const char **pathspec,
+ 			if (last_slash)
+ 				result[i] = last_slash + 1;
+ 		}
++		result[i] = prefix_path(prefix, len, result[i]);
++		if (!result[i])
++			exit(1); /* error already given */
+ 	}
+-	return get_pathspec(prefix, result);
++	return result;
+ }
+ 
+ static void show_list(const char *label, struct path_list *list)
+diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
+index b1243b4..fa382c5 100755
+--- a/t/t7001-mv.sh
++++ b/t/t7001-mv.sh
+@@ -118,4 +118,42 @@ test_expect_success "Sergey Vlasov's test case" '
+ 	git mv ab a
+ '
+ 
++test_expect_success 'absolute pathname' '(
++
++	rm -fr mine &&
++	mkdir mine &&
++	cd mine &&
++	test_create_repo one &&
++	cd one &&
++	mkdir sub &&
++	>sub/file &&
++	git add sub/file &&
++
++	git mv sub "$(pwd)/in" &&
++	! test -d sub &&
++	test -d in &&
++	git ls-files --error-unmatch in/file
++
++
++)'
++
++test_expect_success 'absolute pathname outside should fail' '(
++
++	rm -fr mine &&
++	mkdir mine &&
++	cd mine &&
++	out=$(pwd) &&
++	test_create_repo one &&
++	cd one &&
++	mkdir sub &&
++	>sub/file &&
++	git add sub/file &&
++
++	! git mv sub "$out/out" &&
++	test -d sub &&
++	! test -d ../in &&
++	git ls-files --error-unmatch sub/file
++
++)'
++
+ test_done
 -- 
-Sverre Hvammen Johansen
+1.5.4.18.gd0b8
