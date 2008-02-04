@@ -1,62 +1,75 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] git-rebase.sh: Update USAGE string (No. 1)
-Date: Mon, 4 Feb 2008 12:57:42 +0100
-Organization: glandium.org
-Message-ID: <20080204115741.GA23834@glandium.org>
-References: <prvd3i9e.fsf@blue.sea.net> <zluh1sxv.fsf@blue.sea.net> <7vfxw9pnbp.fsf@gitster.siamese.dyndns.org> <200802041115.22409.jnareb@gmail.com>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [PATCH] Add platform-independent .git "symlink"
+Date: Mon, 4 Feb 2008 12:59:52 +0100
+Message-ID: <8c5c35580802040359v1a5d8c42xfbc592245a8917c2@mail.gmail.com>
+References: <8c5c35580802020959v613b9e32v321e97f93f2af761@mail.gmail.com>
+	 <1201975757-13771-1-git-send-email-hjemli@gmail.com>
+	 <alpine.LSU.1.00.0802021815510.7372@racer.site>
+	 <8c5c35580802021047o41a7de9fi84a6b33f0f779e2e@mail.gmail.com>
+	 <7vwsplporv.fsf@gitster.siamese.dyndns.org>
+	 <alpine.LSU.1.00.0802040024030.7372@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 04 12:58:24 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 04 13:00:30 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLzxv-0007pY-Hn
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 12:58:23 +0100
+	id 1JLzzu-0008J3-39
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 13:00:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751729AbYBDL5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 06:57:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751832AbYBDL5u
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 06:57:50 -0500
-Received: from smtp23.orange.fr ([193.252.22.30]:32551 "EHLO smtp23.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751729AbYBDL5t (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 06:57:49 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2333.orange.fr (SMTP Server) with ESMTP id 1BF011C000A1
-	for <git@vger.kernel.org>; Mon,  4 Feb 2008 12:57:43 +0100 (CET)
-Received: from vaio.glandium.org (APuteaux-153-1-42-109.w82-124.abo.wanadoo.fr [82.124.6.109])
-	by mwinf2333.orange.fr (SMTP Server) with ESMTP id DCC441C0009C;
-	Mon,  4 Feb 2008 12:57:42 +0100 (CET)
-X-ME-UUID: 20080204115742904.DCC441C0009C@mwinf2333.orange.fr
-Received: from mh by vaio.glandium.org with local (Exim 4.63)
-	(envelope-from <mh@glandium.org>)
-	id 1JLzxG-0006Ey-9n; Mon, 04 Feb 2008 12:57:42 +0100
+	id S1752069AbYBDL7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 06:59:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751881AbYBDL7x
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 06:59:53 -0500
+Received: from wa-out-1112.google.com ([209.85.146.179]:64265 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751762AbYBDL7x (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 06:59:53 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so2909111wah.23
+        for <git@vger.kernel.org>; Mon, 04 Feb 2008 03:59:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=wSKwIDWrDu0XNs5K2Zo39ZJa532Jmcc6wfWbu3PEH/A=;
+        b=j2gEwv0yLfciNTClUbcFnIGMiigEkPLK+xwH8Edy6hFiMFuBCiiszuJVDvwLFvdiWJpNa4l1cKPmDHonvhtxBzpYlm04anbFMpJBKriQNjNnkKO9ppfmA6RzZGjK234dX8vDORiuxMN68CIaQNOK8eCOoyr0GnKpAbV9oXnU7rk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nhnXq5lAZ2BglyrVEiAhmpNltOjR6Wnm1Lp8v2gULAHLiM4tdWV6om6u7pwZ3FC3To0QKYIOJeaIBjSr24x0LWkrcDXUoS6XWiSLEt3aeaZxMqcUQBkAd1PPHV0LYARLscLjL2UT2NTpYvuMZkgNjj9L1zLUE3B0QInv3fif35k=
+Received: by 10.115.74.1 with SMTP id b1mr6798945wal.93.1202126392407;
+        Mon, 04 Feb 2008 03:59:52 -0800 (PST)
+Received: by 10.115.73.7 with HTTP; Mon, 4 Feb 2008 03:59:52 -0800 (PST)
+In-Reply-To: <alpine.LSU.1.00.0802040024030.7372@racer.site>
 Content-Disposition: inline
-In-Reply-To: <200802041115.22409.jnareb@gmail.com>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: mh@glandium.org
-X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72493>
 
-On Mon, Feb 04, 2008 at 11:15:20AM +0100, Jakub Narebski <jnareb@gmail.com> wrote:
-> Actually we are not entirely consistent here.  git-init(1) has 
->   --shared[={false|true|umask|group|all|world|everybody}]
-> in the option description, git-rev-list(1) has
->   [ --date={local|relative|default|iso|rfc|short} ]
+On Feb 4, 2008 1:24 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Sun, 3 Feb 2008, Junio C Hamano wrote:
+> > For now I haven't picked up any of the "how about this way"
+> > revisions.
+>
+> Yeah, I think all my comments have been addressed...  Lars, care to send a
+> new version?
 
-What is inconsistent here ? The first tells you you can use --shared without
-an argument. And it's [--shared[=<permissions>]] in the synopsis, so you
-may omit --shared, or use in alone, or specify permissions. The second tells
-you can't use --date without an additional argument.
+Sure, but we should come to a conclusion on "GITDIR" vs. "GIT_DIR" vs.
+"gitdir" vs. "directory" vs. "ref". The reason I used "GITDIR" was to
+keep the door open for additional parameters in the "gitfile" (but it
+should obviously have been "GIT_DIR" for that usage since its value is
+used to specify $GIT_DIR). If it's more likely that we'll use this as
+a general substitute for symlinks, I think "ref" is better due to the
+existing symbolic refs.
 
-Mike
+My preference would be "GIT_DIR" (or "git_dir") since we also might
+want the "WORKDIR_HASH" Shawn mentioned.
+
+-- 
+larsh
