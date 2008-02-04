@@ -1,65 +1,78 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH] fix misuse of prefix_path()
-Date: Mon,  4 Feb 2008 12:13:26 +0100
-Message-ID: <1202123606.47a6f3567ebb9@webmail.eunet.at>
-References: <7v3as9mce7.fsf@gitster.siamese.dyndns.org>
+From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
+	<nanako3@bluebottle.com>
+Subject: Re: [PATCH] git-rebase.sh: Update USAGE string (No. 1)
+Date: Mon, 04 Feb 2008 20:12:59 +0900
+Message-ID: <200802041113.m14BDLMl004301@mi1.bluebottle.com>
+References: <m3lk6161jo.fsf@localhost.localdomain>
+    <prvd3i9e.fsf@blue.sea.net>
+    <ir15399p.fsf@blue.sea.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 04 12:14:12 2008
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 12:14:15 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLzH7-0003lS-UE
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 12:14:10 +0100
+	id 1JLzH7-0003lS-9e
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 12:14:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751421AbYBDLNh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 06:13:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751372AbYBDLNh
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 06:13:37 -0500
-Received: from smtp3.srv.eunet.at ([193.154.160.89]:52383 "EHLO
-	smtp3.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751356AbYBDLN2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 06:13:28 -0500
-Received: from localhost (webmail01.srv.eunet.at [193.154.180.195])
-	by smtp3.srv.eunet.at (Postfix) with ESMTP id 8A97710A6F9;
-	Mon,  4 Feb 2008 12:13:26 +0100 (CET)
-Received: from cm56-163-160.liwest.at (cm56-163-160.liwest.at [86.56.163.160]) 
-	by webmail.eunet.at (IMP) with HTTP 
-	for <johsixt@mbox.eunet.at>; Mon,  4 Feb 2008 12:13:26 +0100
-In-Reply-To: <7v3as9mce7.fsf@gitster.siamese.dyndns.org>
-User-Agent: Internet Messaging Program (IMP) 3.2.8
-X-Originating-IP: 86.56.163.160
+	id S1751029AbYBDLNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 06:13:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbYBDLNW
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 06:13:22 -0500
+Received: from mi1.bluebottle.com ([206.188.25.14]:53329 "EHLO
+	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750848AbYBDLNV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 06:13:21 -0500
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m14BDLMl004301
+	for <git@vger.kernel.org>; Mon, 4 Feb 2008 03:13:21 -0800
+DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
+	h=received:from:to:cc:date:subject:in-reply-to:references:
+	mime-version:content-type:content-transfer-encoding:x-trusted-delivery;
+	b=DKXYrpVy1WEyltvJXBxnBUWc1hj2Z4yHJl5dzJoJsN538aPDisY6Sg+HDwbibPDj7
+	MZBurmzTJrFf7lIo0mOPF4bun3zTKIQCCA3w48VGLeevXC/yfHZsIpxosCG6qNl
+Received: from nanako3.mail.bluebottle.com ([212.62.97.23])
+	(authenticated bits=0)
+	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m14BDAQ9009449
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 4 Feb 2008 03:13:15 -0800
+In-Reply-To: <m3lk6161jo.fsf@localhost.localdomain>
+X-Trusted-Delivery: <f470ee661268175433264a04fb53b463>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72491>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> When DEFAULT_GIT_TEMPLATE_DIR is specified as a relative path,
-> init-db made it relative to exec_path using prefix_path(), which
-> is wrong.  prefix_path() is about a file inside the work tree.
-> There was a similar misuse in config.c that takes relative
-> ETC_GITCONFIG path.
+Quoting Jakub Narebski <jnareb@gmail.com>:
+
+> Jari Aalto <jari.aalto@cante.net> writes:
+>>  
+>> -USAGE='[--interactive | -i] [-v] [--onto <newbase>] <upstream> [<branch>]'
+>> +USAGE='[-i|--interactive] [-v|--verbose]
+>> +[--whitespace={nowarn|warn|error|error-all|strip}]
 >
-> A convenience function prefix_filename() can concatenate two paths
-> to form a path that points at somewhere outside the work tree.
-> Use it in these codepaths instead.
+> I would say "[--whitespace=<option>]" or "[--whitespace=<action>]"
+> instead of introducing yet not agreed upon notation (this has the
+> advantage of shortening synopisis, which should be short IMHO).
+>
+> Besides here the mutually exclusive options are naturelly delimited,
+> so you can say just (I think):
+>    [--whitespace=nowarn|warn|error|error-all|strip]
+>
+>> +[-m|--merge] [--onto <newbase>] <upstream> [<branch>]'
+>> +
 
-Thanks for catching that. But, no, your patch does not work. The reason is
-that prefix_filename() assumes that the prefix ends with a directory
-separator ('/'), but git_exec_path() doesn't have one.
+I tried to run "git rebase --interactive --whitespace=strip" but it does not seem to strip blank characters at the end of my lines.  Did I find a bug?
 
-prefix_path() has the same assumption, but at the same time it does the
-"../" sanitization. In the MinGW configuration both relative paths begin
-with "../" and prefix_path() removed one path component from the prefix,
-but left a trailing '/' behind. IOW, so far the code worked by accident,
-not by design ;)
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
 
-I'll work on a fix (later today).
-
--- Hannes
+----------------------------------------------------------------------
+Find out how you can get spam free email.
+http://www.bluebottle.com/tag/3
