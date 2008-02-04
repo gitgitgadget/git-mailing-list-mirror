@@ -1,90 +1,94 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0 of 7] [resend] - Improve handling remotes, origin,
- submodules
-Date: Mon, 4 Feb 2008 21:49:32 +0000 (GMT)
-Message-ID: <alpine.LSU.1.00.0802042149030.8543@racer.site>
-References: <1202059867-1184-1-git-send-email-mlevedahl@gmail.com> <alpine.LSU.1.00.0802032237320.7372@racer.site> <47A68C01.9000600@gmail.com> <alpine.LSU.1.00.0802041443420.7372@racer.site> <30e4a070802040924g550671ccsb11108c71c99e378@mail.gmail.com>
- <7vbq6wjxx1.fsf@gitster.siamese.dyndns.org> <alpine.LSU.1.00.0802042027470.8543@racer.site> <7v1w7sjt7n.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Possible kinder GIT-VERSION-GEN?
+Date: Mon, 04 Feb 2008 13:59:25 -0800
+Message-ID: <7vve54ids2.fsf@gitster.siamese.dyndns.org>
+References: <18343.30080.67524.3427@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 04 22:50:48 2008
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 23:00:16 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JM9DA-0000b1-Jy
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 22:50:45 +0100
+	id 1JM9MN-0003pK-Hg
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 23:00:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753855AbYBDVuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 16:50:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753696AbYBDVuL
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 16:50:11 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43759 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753643AbYBDVuJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 16:50:09 -0500
-Received: (qmail invoked by alias); 04 Feb 2008 21:50:08 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp003) with SMTP; 04 Feb 2008 22:50:08 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18RZxtVr3URB7aN7lH9LqwqlR7UYJBJcc3+OhGnpd
-	eyF2ZRn1eLktF4
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v1w7sjt7n.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1753664AbYBDV7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 16:59:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754080AbYBDV7n
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 16:59:43 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42749 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753645AbYBDV7m (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 16:59:42 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FCF84FB4;
+	Mon,  4 Feb 2008 16:59:41 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 99D674FB2;
+	Mon,  4 Feb 2008 16:59:37 -0500 (EST)
+In-Reply-To: <18343.30080.67524.3427@lisa.zopyra.com> (Bill Lear's message of
+	"Mon, 4 Feb 2008 14:28:48 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72577>
 
-Hi,
+Bill Lear <rael@zopyra.com> writes:
 
-On Mon, 4 Feb 2008, Junio C Hamano wrote:
+> I have my home directory under git control, and I have a build
+> directory (not tracked by git) under my home directory into which I
+> untar files and then in which I build things, including git.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > AFAICT "clone -o" was meant _only_ for this scenario:
-> >
-> > You have a slow connection, but someone can provide you with a thumb 
-> > drive, having the current repository.
-> >
-> > You clone it from the thumb drive, but of course you want to use your 
-> > (slow) connection for subsequent updates (i.e. you want to have a 
-> > different default remote).
-> >
-> > What you do is
-> >
-> > 	$ git clone -o thumbdrive /media/usbdisk/that-repository.git/
-> >
-> > Then, to be able to update from your preferred remote quickly, you add 
-> > the proper remote:
-> >
-> > 	$ git remote add --fetch origin git://git.kernel.org/shlub.git/
-> >
-> > In my understanding, this scenario is the only reason to live for 
-> > clone's -o option, and it would be actively wrong for it to change the 
-> > _name_ of the default remote to "thumbdrive".
-> 
-> Then we should fix "git-clone".
-> 
-> If you do the first command, I am reasonably sure that you would get:
-> 
-> 	[branch "master"]
->         	remote = thumbdrive
-> 
-> in your .git/config.  You may want to occasionally go back to thumbdrive 
-> for sneakernetting, so I do not think we should remove [remote 
-> "thumbdrive"] section the clone would leave, but the above "master 
-> branch would interact with thumbdrive repository" should not be there.
-> 
-> And that corrected behaviour and the intended use of -o should be 
-> documented.
+Let me make sure I understand you by rephrasing.  You are
+extracting git tarball as an untracked subdirectory in an
+unrelated project, and GIT-VERSION-GEN misbehaves.  One such
+misbehaviour is that it adds -dirty.
 
-Fully agree.  It is now point 38 on my ever-growing TODO list.
+And I think you are right.  The -dirty suffix should be relative
+to the output of "git describe".  Version string derived from
+any other codepath should not get the suffix, simply because we
+do not even know if it is dirty.  In fact, we should not even
+attempt to run that diff-index to figure out if it is dirty.
 
-Ciao,
-Dscho
+---
+
+ GIT-VERSION-GEN |   12 +++---------
+ 1 files changed, 3 insertions(+), 9 deletions(-)
+
+diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+index 38a3273..127c428 100755
+--- a/GIT-VERSION-GEN
++++ b/GIT-VERSION-GEN
+@@ -15,7 +15,9 @@ elif test -d .git &&
+ 	VN=$(git describe --abbrev=4 HEAD 2>/dev/null) &&
+ 	case "$VN" in
+ 	*$LF*) (exit 1) ;;
+-	v[0-9]*) : happy ;;
++	v[0-9]*)
++		dirty=$(sh -c 'git diff-index --name-only HEAD' 2>/dev/null) &&
++		VN="$VN-dirty" ;;
+ 	esac
+ then
+ 	VN=$(echo "$VN" | sed -e 's/-/./g');
+@@ -25,14 +27,6 @@ fi
+ 
+ VN=$(expr "$VN" : v*'\(.*\)')
+ 
+-dirty=$(sh -c 'git diff-index --name-only HEAD' 2>/dev/null) || dirty=
+-case "$dirty" in
+-'')
+-	;;
+-*)
+-	VN="$VN-dirty" ;;
+-esac
+-
+ if test -r $GVF
+ then
+ 	VC=$(sed -e 's/^GIT_VERSION = //' <$GVF)
