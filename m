@@ -1,81 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/2 (RFC)] Documentation/SubmittingPatches: discuss first then submit
-Date: Sun, 03 Feb 2008 17:00:16 -0800
-Message-ID: <7v3as9pmcf.fsf_-_@gitster.siamese.dyndns.org>
-References: <r6ft1sd1.fsf@blue.sea.net>
-	<7v7ihlpmkm.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jari Aalto <jari.aalto@cante.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 04 02:01:06 2008
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: [PATCH 2/3][V.2] git-send-email: SIG{TERM,INT} handlers
+Date: Sun,  3 Feb 2008 19:53:57 -0500
+Message-ID: <1202086438-16251-2-git-send-email-mfwitten@mit.edu>
+References: <5C100A3B-0B4A-4D4E-B68B-1A54674A795A@mit.edu>
+ <1202086438-16251-1-git-send-email-mfwitten@mit.edu>
+Cc: git@vger.kernel.org, Michael Witten <mfwitten@mit.edu>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Feb 04 02:02:39 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLphq-0003mF-1K
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 02:01:06 +0100
+	id 1JLpjK-00044j-Fp
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 02:02:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754494AbYBDBAd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Feb 2008 20:00:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754443AbYBDBAd
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 20:00:33 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42362 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754228AbYBDBAc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Feb 2008 20:00:32 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 5DBA31409;
-	Sun,  3 Feb 2008 20:00:31 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id D9D131408;
-	Sun,  3 Feb 2008 20:00:28 -0500 (EST)
-In-Reply-To: <7v7ihlpmkm.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 03 Feb 2008 16:55:21 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754530AbYBDBCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Feb 2008 20:02:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753103AbYBDBCG
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Feb 2008 20:02:06 -0500
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:35857 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753457AbYBDBCF (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Feb 2008 20:02:05 -0500
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id m140w3XF012257;
+	Sun, 3 Feb 2008 19:58:17 -0500 (EST)
+Received: from localhost.localdomain (WITTEN.MIT.EDU [18.239.2.43])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id m140rw7V001110
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 3 Feb 2008 19:54:02 -0500 (EST)
+X-Mailer: git-send-email 1.5.4.9.gcc769-dirty
+In-Reply-To: <1202086438-16251-1-git-send-email-mfwitten@mit.edu>
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72443>
 
-This is something I've had in mind for some time.  I get enough
-e-mails as-is, and I suspect the workflow to get list members
-involved would work better if we get the discussion concluded on
-the list first before patches hit my tree (even 'next').
+A single signal handler is used for both SIGTERM
+and SIGINT in order to clean up after an uncouth
+termination of git-send-email.
 
+In particular, the handler resets the text color
+(this cleanup was already present), turns on tty
+echoing (in case termination occurrs during a
+masked Password prompt), and informs the user of
+of any temporary files created by --compose.
+
+Signed-off-by: Michael Witten <mfwitten@mit.edu>
 ---
-On top of the previous one to talk about [PATCH v2] and friends...
+ git-send-email.perl |   25 +++++++++++++++++++++++--
+ 1 files changed, 23 insertions(+), 2 deletions(-)
 
- Documentation/SubmittingPatches |   23 ++++++++++++++++-------
- 1 files changed, 16 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index cd80148..0661293 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -34,9 +34,9 @@ Checklist (and a short version for the impatient):
- 	- if your name is not writable in ASCII, make sure that
- 	  you send off a message in the correct encoding.
- 	- send the patch to the list (git@vger.kernel.org) and the
--	  maintainer (gitster@pobox.com). If you use
--	  git-send-email(1), please test it first by sending
--	  email to yourself.
-+	  maintainer (gitster@pobox.com) if (and only if) the patch
-+	  is ready for inclusion. If you use git-send-email(1),
-+	  please test it first by sending email to yourself.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index fec55ea..14268fc 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -24,8 +24,6 @@ use Data::Dumper;
+ use Term::ANSIColor;
+ use Git;
  
- Long version:
+-$SIG{INT} = sub { print color("reset"), "\n"; exit };
+-
+ package FakeTerm;
+ sub new {
+ 	my ($class, $reason) = @_;
+@@ -201,6 +199,29 @@ my %config_settings = (
+     "aliasesfile" => \@alias_files,
+ );
  
-@@ -162,7 +162,8 @@ Note that your maintainer does not necessarily read everything
- on the git mailing list.  If your patch is for discussion first,
- send it "To:" the mailing list, and optionally "cc:" him.  If it
- is trivially correct or after the list reached a consensus, send
--it "To:" the maintainer and optionally "cc:" the list.
-+it "To:" the maintainer and optionally "cc:" the list for
-+inclusion.
++# Handle Uncouth Termination
++sub signal_handler {
++
++	# Make text normal
++	print color("reset"), "\n";
++
++	# SMTP password masked
++	system "stty echo";
++
++	# tmp files from --compose
++	if (-e $compose_filename) {
++		print "'$compose_filename' contains an intermediate version of the email you were composing.\n";
++	}
++	if (-e ($compose_filename . ".final")) {
++		print "'$compose_filename.final' contains the composed email.\n"
++	}
++
++	exit;
++};
++
++$SIG{TERM} = \&signal_handler;
++$SIG{INT}  = \&signal_handler;
++
+ # Begin by accumulating all the variables (defined above), that we will end up
+ # needing, first, from the command line:
  
- Also note that your maintainer does not actively involve himself in
- maintaining what are in contrib/ hierarchy.  When you send fixes and
+-- 
+1.5.4.9.gcc769-dirty
