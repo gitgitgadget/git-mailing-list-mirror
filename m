@@ -1,78 +1,103 @@
-From: "Sverre Hvammen Johansen" <hvammen@gmail.com>
-Subject: Re: [RFC/PATCH] Fast forward strategies only, common, fork and path
-Date: Sun, 3 Feb 2008 22:51:30 -0800
-Message-ID: <402c10cd0802032251y626f373eke66c35b200ccf5b1@mail.gmail.com>
-References: <402c10cd0802031654r3e0275a8s1d2163af9525e7d2@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] fix misuse of prefix_path()
+Date: Sun, 03 Feb 2008 23:03:28 -0800
+Message-ID: <7v3as9mce7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <johannes.sixt@telecom.at>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 04 07:52:06 2008
+X-From: git-owner@vger.kernel.org Mon Feb 04 08:04:26 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLvBU-0007sr-Sm
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 07:52:05 +0100
+	id 1JLvNH-000285-52
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 08:04:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752246AbYBDGvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 01:51:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752024AbYBDGvc
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 01:51:32 -0500
-Received: from fg-out-1718.google.com ([72.14.220.155]:56613 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751993AbYBDGvc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 01:51:32 -0500
-Received: by fg-out-1718.google.com with SMTP id e21so1907434fga.17
-        for <git@vger.kernel.org>; Sun, 03 Feb 2008 22:51:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=oVGtBCtbSESuFz7MEFAsRoUMpuawXFwRhfho+y86kGg=;
-        b=tTQ8WCWQdPWVqdvEvND5rTlPc4uPlCCHh6QeqTbFLQKmVwrNFEq1cylTL1rrScKOnIh4kc6Y6zAU0EqKjTZEt98czid3DUYU7DyqQ6JCReID+xkxly11LxFShBJJRjqlPXJR3t2j3G+UY1Vx7DsrULDrCkjgPPvuPDNC4EHrWsU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YStzvWA6xwou9gNyUHKRjDG7hRusmZwAnqyK3LikGjA6zwQxdwMZsy1ZMYz8ZtfWeomMcMRYNuUSvxB8F5U4NODWI9ijlHFwbA8OgxV9i44Es+t92GYjnbp/He4B/1NM3ff7isjpKhlyqumiFs/GLDYKY2epSfTNVlLKpRc7SUU=
-Received: by 10.82.161.19 with SMTP id j19mr12423126bue.25.1202107890218;
-        Sun, 03 Feb 2008 22:51:30 -0800 (PST)
-Received: by 10.82.156.13 with HTTP; Sun, 3 Feb 2008 22:51:30 -0800 (PST)
-In-Reply-To: <402c10cd0802031654r3e0275a8s1d2163af9525e7d2@mail.gmail.com>
-Content-Disposition: inline
+	id S1751892AbYBDHDl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 02:03:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751439AbYBDHDl
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 02:03:41 -0500
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58636 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751340AbYBDHDk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 02:03:40 -0500
+Received: from a-sasl-quonix (localhost [127.0.0.1])
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 84D93111E;
+	Mon,  4 Feb 2008 02:03:38 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id E0FA3111D;
+	Mon,  4 Feb 2008 02:03:35 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72465>
 
-On Feb 3, 2008 4:54 PM, Sverre Hvammen Johansen <hvammen@gmail.com> wrote:
-> This patch also uses the real heads found instead of those
-> specified for real merges.  This means that merge startegies
-> that only take two heads can now accept more than two heads
-> if they can be reduced down to only two real heads.  However,
-> fast-forward of head in combination with a real merge is
-> handled as before.
+When DEFAULT_GIT_TEMPLATE_DIR is specified as a relative path,
+init-db made it relative to exec_path using prefix_path(), which
+is wrong.  prefix_path() is about a file inside the work tree.
+There was a similar misuse in config.c that takes relative
+ETC_GITCONFIG path.
 
-I intend to also submit a patch that does fast forward in combination
-with a real merge.  This means that some case can be reduced down to
-only two real parents and we can select a  twohead strategy instead of
-an octopus strategy.  In cases where we have at least three real
-parents there is no point in doing this.  We only need to specify the
-fast forwarded head right after head to allow git-merge-octopus to do
-its best.
+A convenience function prefix_filename() can concatenate two paths
+to form a path that points at somewhere outside the work tree.
+Use it in these codepaths instead.
 
-I need some advise how to implement fast-forward in combination with a
-real merge.  I know how to do this with an update of the directory
-tree and the index with the fast forward before the real merge is
-done.  But, how canweI do this without updating the directory tree
-with the fast forward?  Or is it OK to always update the directory
-with the intermediate state we get from the fast forward?
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-> --
-> Sverre Hvammen Johansen
->
+ * This is probably an oversight in commits leading to
+   7f0e39fa and I think if this patch breaks, MinGW port would
+   be affected, hence I CC'ed j6t.
 
+   There are similar misuse in builtin-mv.c that needs to be
+   fixed.  But git-mv is more broken, independent from this
+   prefix_path() issue.  For example, it does not check if src
+   and dst are inside work tree, so (do not try this in a
+   repository you care about) "git mv compat /tmp/outer-space"
+   would throw tracked files in a work tree to outer space and
+   then fail without touching the index.  It needs a serious
+   overhaul, but because I do not use it myself, the level of
+   motivation to fix it myself is very low.  A low hanging
+   fruit, that is, for any git hacker wannabes...
 
+ builtin-init-db.c |    3 +--
+ config.c          |    5 +++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
+diff --git a/builtin-init-db.c b/builtin-init-db.c
+index e1393b8..e51d447 100644
+--- a/builtin-init-db.c
++++ b/builtin-init-db.c
+@@ -142,8 +142,7 @@ static void copy_templates(const char *git_dir, int len, const char *template_di
+ 		template_dir = DEFAULT_GIT_TEMPLATE_DIR;
+ 		if (!is_absolute_path(template_dir)) {
+ 			const char *exec_path = git_exec_path();
+-			template_dir = prefix_path(exec_path, strlen(exec_path),
+-						   template_dir);
++			template_dir = prefix_filename(exec_path, strlen(exec_path), template_dir);
+ 		}
+ 	}
+ 	strcpy(template_path, template_dir);
+diff --git a/config.c b/config.c
+index 526a3f4..0b0c9bd 100644
+--- a/config.c
++++ b/config.c
+@@ -485,8 +485,9 @@ const char *git_etc_gitconfig(void)
+ 		if (!is_absolute_path(system_wide)) {
+ 			/* interpret path relative to exec-dir */
+ 			const char *exec_path = git_exec_path();
+-			system_wide = prefix_path(exec_path, strlen(exec_path),
+-						system_wide);
++			system_wide = strdup(prefix_filename(exec_path,
++							     strlen(exec_path),
++							     system_wide));
+ 		}
+ 	}
+ 	return system_wide;
 -- 
-Sverre Hvammen Johansen
+1.5.4.18.gd0b8
