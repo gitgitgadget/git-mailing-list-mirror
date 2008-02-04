@@ -1,140 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] builtin-mv: minimum fix to avoid losing files
-Date: Mon, 04 Feb 2008 00:09:56 -0800
-Message-ID: <7vhcgpkuqz.fsf@gitster.siamese.dyndns.org>
-References: <7v3as9mce7.fsf@gitster.siamese.dyndns.org>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH] Documentation/SubmittingPatches: Instruct how to use [PATCH] Subject header
+Date: Mon, 04 Feb 2008 10:12:14 +0200
+Organization: Private
+Message-ID: <ejbt16ox.fsf@blue.sea.net>
+References: <r6ft1sd1.fsf@blue.sea.net>
+	<alpine.LSU.1.00.0802040029020.7372@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 04 09:10:45 2008
+X-From: git-owner@vger.kernel.org Mon Feb 04 09:13:32 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLwPb-0007x9-57
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 09:10:43 +0100
+	id 1JLwSI-00005G-Dc
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 09:13:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752802AbYBDIKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 03:10:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752768AbYBDIKL
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 03:10:11 -0500
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:61411 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752632AbYBDIKJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 03:10:09 -0500
-Received: from a-sasl-quonix (localhost [127.0.0.1])
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id 971BB2305;
-	Mon,  4 Feb 2008 03:10:06 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by a-sasl-quonix.pobox.com (Postfix) with ESMTP id CE4A522F3;
-	Mon,  4 Feb 2008 03:10:03 -0500 (EST)
-In-Reply-To: <7v3as9mce7.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 03 Feb 2008 23:03:28 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753492AbYBDIM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 03:12:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753486AbYBDIM5
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 03:12:57 -0500
+Received: from main.gmane.org ([80.91.229.2]:45594 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753322AbYBDIM4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 03:12:56 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1JLwRi-0003kH-9V
+	for git@vger.kernel.org; Mon, 04 Feb 2008 08:12:54 +0000
+Received: from a91-155-178-181.elisa-laajakaista.fi ([91.155.178.181])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 04 Feb 2008 08:12:54 +0000
+Received: from jari.aalto by a91-155-178-181.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 04 Feb 2008 08:12:54 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-178-181.elisa-laajakaista.fi
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
+Cancel-Lock: sha1:mL0UgA1F8S1aSs59FTVngFkc3oQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72477>
 
-An incorrect command "git mv subdir /outer/space" threw the
-subdirectory to outside of the repository and then noticed that
-/outer/space/subdir/ would be outside of the repository.  The
-error checking is backwards.
+* Mon 2008-02-04 Johannes Schindelin <Johannes.Schindelin@gmx.de>
+>
+> Whitespace error?  (Spaces instead of Tabs)
 
-This fixes the issue by being careful about use of the return
-value of get_pathspec().  Since the implementation already has
-handcrafted loop to munge each path on the command line, we use
-prefix_path() instead.
+There should be a big notice at the beginning of
+Documentation/SubmittingPatches:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+Junio, would you add this.
 
- * This minimally fixes the issue and applies on top of the
-   "setup: sanitize absolute and funny paths in get_pathspec()"
-   patch I showed during the rc freeze.
+Jari
 
-   Dscho CC'ed as he owns the largest number of lines in this
-   source file.
+----------------------------------------------------------------
+Checklist (and a short version for the impatient):
 
- builtin-mv.c  |    6 +++++-
- t/t7001-mv.sh |   38 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 1 deletions(-)
+        General:
 
-diff --git a/builtin-mv.c b/builtin-mv.c
-index 94f6dd2..68aa2a6 100644
---- a/builtin-mv.c
-+++ b/builtin-mv.c
-@@ -19,6 +19,7 @@ static const char **copy_pathspec(const char *prefix, const char **pathspec,
- 				  int count, int base_name)
- {
- 	int i;
-+	int len = prefix ? strlen(prefix) : 0;
- 	const char **result = xmalloc((count + 1) * sizeof(const char *));
- 	memcpy(result, pathspec, count * sizeof(const char *));
- 	result[count] = NULL;
-@@ -32,8 +33,11 @@ static const char **copy_pathspec(const char *prefix, const char **pathspec,
- 			if (last_slash)
- 				result[i] = last_slash + 1;
- 		}
-+		result[i] = prefix_path(prefix, len, result[i]);
-+		if (!result[i])
-+			exit(1); /* error already given */
- 	}
--	return get_pathspec(prefix, result);
-+	return result;
- }
- 
- static void show_list(const char *label, struct path_list *list)
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index b1243b4..fa382c5 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -118,4 +118,42 @@ test_expect_success "Sergey Vlasov's test case" '
- 	git mv ab a
- '
- 
-+test_expect_success 'absolute pathname' '(
-+
-+	rm -fr mine &&
-+	mkdir mine &&
-+	cd mine &&
-+	test_create_repo one &&
-+	cd one &&
-+	mkdir sub &&
-+	>sub/file &&
-+	git add sub/file &&
-+
-+	git mv sub "$(pwd)/in" &&
-+	! test -d sub &&
-+	test -d in &&
-+	git ls-files --error-unmatch in/file
-+
-+
-+)'
-+
-+test_expect_success 'absolute pathname outside should fail' '(
-+
-+	rm -fr mine &&
-+	mkdir mine &&
-+	cd mine &&
-+	out=$(pwd) &&
-+	test_create_repo one &&
-+	cd one &&
-+	mkdir sub &&
-+	>sub/file &&
-+	git add sub/file &&
-+
-+	! git mv sub "$out/out" &&
-+	test -d sub &&
-+	! test -d ../in &&
-+	git ls-files --error-unmatch sub/file
-+
-+)'
-+
- test_done
+                NOTE: Please set your editor to use tabs instead of
+                spaces. In Emacs this can be set with
+                (setq indent-tabs-mode t) and in vi this can be set 
+                with ...
+
+        Commits:
+
 -- 
-1.5.4.18.gd0b8
+Welcome to FOSS revolution: we fix and modify until it shines
