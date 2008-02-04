@@ -1,78 +1,62 @@
-From: =?utf-8?q?=E3=81=97=E3=82=89=E3=81=84=E3=81=97=E3=81=AA=E3=81=AA=E3=81=93?= 
-	<nanako3@bluebottle.com>
+From: Mike Hommey <mh@glandium.org>
 Subject: Re: [PATCH] git-rebase.sh: Update USAGE string (No. 1)
-Date: Mon, 04 Feb 2008 20:12:59 +0900
-Message-ID: <200802041113.m14BDLMl004301@mi1.bluebottle.com>
-References: <m3lk6161jo.fsf@localhost.localdomain>
-    <prvd3i9e.fsf@blue.sea.net>
-    <ir15399p.fsf@blue.sea.net>
+Date: Mon, 4 Feb 2008 12:57:42 +0100
+Organization: glandium.org
+Message-ID: <20080204115741.GA23834@glandium.org>
+References: <prvd3i9e.fsf@blue.sea.net> <zluh1sxv.fsf@blue.sea.net> <7vfxw9pnbp.fsf@gitster.siamese.dyndns.org> <200802041115.22409.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 04 12:14:15 2008
+X-From: git-owner@vger.kernel.org Mon Feb 04 12:58:24 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JLzH7-0003lS-9e
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 12:14:09 +0100
+	id 1JLzxv-0007pY-Hn
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 12:58:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751029AbYBDLNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 06:13:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751208AbYBDLNW
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 06:13:22 -0500
-Received: from mi1.bluebottle.com ([206.188.25.14]:53329 "EHLO
-	mi1.bluebottle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750848AbYBDLNV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 06:13:21 -0500
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by mi1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m14BDLMl004301
-	for <git@vger.kernel.org>; Mon, 4 Feb 2008 03:13:21 -0800
-DomainKey-Signature: a=rsa-sha1; s=mail; d=bluebottle.com; c=nofws; q=dns;
-	h=received:from:to:cc:date:subject:in-reply-to:references:
-	mime-version:content-type:content-transfer-encoding:x-trusted-delivery;
-	b=DKXYrpVy1WEyltvJXBxnBUWc1hj2Z4yHJl5dzJoJsN538aPDisY6Sg+HDwbibPDj7
-	MZBurmzTJrFf7lIo0mOPF4bun3zTKIQCCA3w48VGLeevXC/yfHZsIpxosCG6qNl
-Received: from nanako3.mail.bluebottle.com ([212.62.97.23])
-	(authenticated bits=0)
-	by fe1.bluebottle.com (8.13.1/8.13.1) with ESMTP id m14BDAQ9009449
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 4 Feb 2008 03:13:15 -0800
-In-Reply-To: <m3lk6161jo.fsf@localhost.localdomain>
-X-Trusted-Delivery: <f470ee661268175433264a04fb53b463>
+	id S1751729AbYBDL5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 06:57:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751832AbYBDL5u
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 06:57:50 -0500
+Received: from smtp23.orange.fr ([193.252.22.30]:32551 "EHLO smtp23.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751729AbYBDL5t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 06:57:49 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2333.orange.fr (SMTP Server) with ESMTP id 1BF011C000A1
+	for <git@vger.kernel.org>; Mon,  4 Feb 2008 12:57:43 +0100 (CET)
+Received: from vaio.glandium.org (APuteaux-153-1-42-109.w82-124.abo.wanadoo.fr [82.124.6.109])
+	by mwinf2333.orange.fr (SMTP Server) with ESMTP id DCC441C0009C;
+	Mon,  4 Feb 2008 12:57:42 +0100 (CET)
+X-ME-UUID: 20080204115742904.DCC441C0009C@mwinf2333.orange.fr
+Received: from mh by vaio.glandium.org with local (Exim 4.63)
+	(envelope-from <mh@glandium.org>)
+	id 1JLzxG-0006Ey-9n; Mon, 04 Feb 2008 12:57:42 +0100
+Content-Disposition: inline
+In-Reply-To: <200802041115.22409.jnareb@gmail.com>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: mh@glandium.org
+X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72492>
 
-Quoting Jakub Narebski <jnareb@gmail.com>:
+On Mon, Feb 04, 2008 at 11:15:20AM +0100, Jakub Narebski <jnareb@gmail.com> wrote:
+> Actually we are not entirely consistent here.  git-init(1) has 
+>   --shared[={false|true|umask|group|all|world|everybody}]
+> in the option description, git-rev-list(1) has
+>   [ --date={local|relative|default|iso|rfc|short} ]
 
-> Jari Aalto <jari.aalto@cante.net> writes:
->>  
->> -USAGE='[--interactive | -i] [-v] [--onto <newbase>] <upstream> [<branch>]'
->> +USAGE='[-i|--interactive] [-v|--verbose]
->> +[--whitespace={nowarn|warn|error|error-all|strip}]
->
-> I would say "[--whitespace=<option>]" or "[--whitespace=<action>]"
-> instead of introducing yet not agreed upon notation (this has the
-> advantage of shortening synopisis, which should be short IMHO).
->
-> Besides here the mutually exclusive options are naturelly delimited,
-> so you can say just (I think):
->    [--whitespace=nowarn|warn|error|error-all|strip]
->
->> +[-m|--merge] [--onto <newbase>] <upstream> [<branch>]'
->> +
+What is inconsistent here ? The first tells you you can use --shared without
+an argument. And it's [--shared[=<permissions>]] in the synopsis, so you
+may omit --shared, or use in alone, or specify permissions. The second tells
+you can't use --date without an additional argument.
 
-I tried to run "git rebase --interactive --whitespace=strip" but it does not seem to strip blank characters at the end of my lines.  Did I find a bug?
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
-
-----------------------------------------------------------------------
-Find out how you can get spam free email.
-http://www.bluebottle.com/tag/3
+Mike
