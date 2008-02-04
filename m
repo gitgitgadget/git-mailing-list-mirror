@@ -1,79 +1,73 @@
-From: Tommy Thorn <tommy-git@thorn.ws>
-Subject: Re: [PATCH] git-p4: Fix indentation from tab to spaces
-Date: Mon, 04 Feb 2008 14:18:35 -0800
-Message-ID: <47A78F3B.5090002@thorn.ws>
-References: <87fxw8mp2w.fsf@nav-akl-pcn-343.mitacad.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add platform-independent .git "symlink"
+Date: Mon, 4 Feb 2008 22:19:37 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802042218280.8543@racer.site>
+References: <8c5c35580802020959v613b9e32v321e97f93f2af761@mail.gmail.com> <1201975757-13771-1-git-send-email-hjemli@gmail.com> <alpine.LSU.1.00.0802021815510.7372@racer.site> <alpine.LSU.1.00.0802021825220.7372@racer.site> <47A78104.9050909@nrlssc.navy.mil>
+ <alpine.LSU.1.00.0802042128170.8543@racer.site> <47A78CF9.6040001@nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Toby Allsopp <Toby.Allsopp@navman.co.nz>
-X-From: git-owner@vger.kernel.org Mon Feb 04 23:19:20 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Lars Hjemli <hjemli@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Mon Feb 04 23:20:53 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JM9eh-0001iS-Vm
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 23:19:12 +0100
+	id 1JM9gI-0002G0-Ch
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 23:20:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753810AbYBDWSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 17:18:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753792AbYBDWSf
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 17:18:35 -0500
-Received: from server204.webhostingpad.com ([69.65.0.218]:58462 "EHLO
-	server204.webhostingpad.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753311AbYBDWSf (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Feb 2008 17:18:35 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=default; d=thorn.ws;
-	h=Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:X-Source:X-Source-Args:X-Source-Dir;
-	b=uuFFk9QujBAu6yitvg11cbLDUYdYDqy1E2EwIKqPmv39BKYeS0KWJaKcAgp4fqXQ3JvUSqxajKMP5eX2d6O3SM9n2C2nlioQKY20JE/Ye7IIPM38jt4T46NAjkObVEd/;
-Received: from 208.65.183.75.static.etheric.net ([208.65.183.75] helo=silver.local)
-	by server204.webhostingpad.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <tommy-git@thorn.ws>)
-	id 1JM9e3-00065s-EY; Mon, 04 Feb 2008 16:18:31 -0600
-User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
-In-Reply-To: <87fxw8mp2w.fsf@nav-akl-pcn-343.mitacad.com>
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - server204.webhostingpad.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - thorn.ws
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1753815AbYBDWUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 17:20:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753692AbYBDWUQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 17:20:16 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46723 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753490AbYBDWUP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 17:20:15 -0500
+Received: (qmail invoked by alias); 04 Feb 2008 22:20:13 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp032) with SMTP; 04 Feb 2008 23:20:13 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+cUY0I4P2c/ajF2HPlWu3XzNNBOWvEG6p8JMNWy9
+	UDpT7sO+dUMwKB
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47A78CF9.6040001@nrlssc.navy.mil>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72580>
 
-Toby Allsopp wrote:
-> Signed-off-by: Toby Allsopp <toby.allsopp@navman.co.nz>
-> ---
->  contrib/fast-import/git-p4 |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-> index c17afae..781a0cb 100755
-> --- a/contrib/fast-import/git-p4
-> +++ b/contrib/fast-import/git-p4
-> @@ -1646,7 +1646,7 @@ class P4Clone(P4Sync):
->          depotPath = args[0]
->          depotDir = re.sub("(@[^@]*)$", "", depotPath)
->          depotDir = re.sub("(#[^#]*)$", "", depotDir)
-> -	depotDir = re.sub(r"\.\.\.$", "", depotDir)
-> +        depotDir = re.sub(r"\.\.\.$", "", depotDir)
->          depotDir = re.sub(r"/$", "", depotDir)
->          return os.path.split(depotDir)[1]
->  
->   
-Acked-by: Tommy Thorn <tommy-git@thorn.ws>
+Hi,
 
-I'm not sure that happend, but I did have some issues sending the patch 
-that should be fixed now.
+On Mon, 4 Feb 2008, Brandon Casey wrote:
 
-Nobody commented on the most important one - the fix for git-p4 memory 
-appetite.
+> Johannes Schindelin wrote:
+> > 
+> > On Mon, 4 Feb 2008, Brandon Casey wrote:
+> 
+> >> Have you thought about using git-clone instead?
+> > 
+> > Briefly.  But this is not about cloning the repository.  It is about 
+> > having an additional working directory for the current repository.
+> 
+> I think that is true at the low level, but from a high level it feels 
+> similar to me.
+> 
+> [...]
+> 
+> > I _want_ the original repository to know that there is another working 
+> > directory.
+> 
+> Yes, your ideas are much better than simply adding the functionality of 
+> the git-new-workdir script (which is what I was planning on doing btw :)
 
-Tommy
+Somehow these two statements do not work together.  Either you have a 
+clone, or you accept that a new working directory is actually working on 
+the _same_ repository.
+
+Ciao,
+Dscho
