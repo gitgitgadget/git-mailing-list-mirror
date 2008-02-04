@@ -1,99 +1,58 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [BUG] (minor) "git status ." reports added files as untracked
-Date: Mon, 04 Feb 2008 18:19:09 +0100
-Message-ID: <vpqtzko8ws2.fsf@bauges.imag.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC,PATCH] Make git prune remove temporary packs that look like
+ write failures
+Date: Mon, 4 Feb 2008 17:21:23 +0000 (GMT)
+Message-ID: <alpine.LSU.1.00.0802041714560.7372@racer.site>
+References: <e1dab3980802040610s27a54a9due3b42db5f59c0cd5@mail.gmail.com>  <alpine.LSU.1.00.0802041512140.7372@racer.site> <e1dab3980802040724l5ef12528y69f1d572b7ac8d54@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 04 18:21:05 2008
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gi mailing list <git@vger.kernel.org>, Nicolas Pitre <nico@cam.org>
+To: David Tweed <david.tweed@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 18:23:03 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JM508-0004Bj-1X
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 18:21:00 +0100
+	id 1JM51h-0004o8-3g
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 18:22:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754766AbYBDRU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 12:20:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753877AbYBDRU2
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 12:20:28 -0500
-Received: from imag.imag.fr ([129.88.30.1]:57287 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753230AbYBDRU1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 12:20:27 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id m14HJFiG023398
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 4 Feb 2008 18:19:15 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1JM4yL-0001at-KE; Mon, 04 Feb 2008 18:19:09 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1JM4yL-0003xY-HY; Mon, 04 Feb 2008 18:19:09 +0100
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 04 Feb 2008 18:19:15 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1754809AbYBDRWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 12:22:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754134AbYBDRWD
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 12:22:03 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37049 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753877AbYBDRWB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 12:22:01 -0500
+Received: (qmail invoked by alias); 04 Feb 2008 17:21:59 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp057) with SMTP; 04 Feb 2008 18:21:59 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/IfKZTQqrIqDuzi5yPnAbfRQL9TrTC7sMggLJ838
+	j55CbFautfg1iG
+X-X-Sender: gene099@racer.site
+In-Reply-To: <e1dab3980802040724l5ef12528y69f1d572b7ac8d54@mail.gmail.com>
+User-Agent: Alpine 1.00 (LSU 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72528>
 
 Hi,
 
-I have a minor bug with git (head of master today): Briefly, added
-files in a toplevel directory show up as "untracked" for 
-"git status ." in a subdirectory. See below to reproduce.
+On Mon, 4 Feb 2008, David Tweed wrote:
 
-Indeed, I've always considered the fact that "git status ." reports
-untracked files outside the current directory as a bug, but I'm not
-sure whether this is intended or not. If not, then not looking for
-untracked files oustide the directory when doing a limited "status"
-would be a fix.
+> In response to this and to Nico's earlier mail, I _think_ the usage with 
+> repack is completely safe.
 
-No time for a patch, appologize :-(.
+It would have been nicer of you to defend that, instead of sending me off 
+to look for myself.  Having looked for myself, I am not convinced at all.
 
-/tmp/test$ git init
-Initialized empty Git repository in .git/
-/tmp/test$ mkdir subdir
-/tmp/test$ touch file1
-/tmp/test$ git add file1
-/tmp/test$ touch subdir/file2
-/tmp/test$ cd subdir/
-/tmp/test/subdir$ git add file2
-/tmp/test/subdir$ git status .
-# On branch master
-#
-# Initial commit
-#
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       new file: file2
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       ../file1                     <------------------- this one 
-                                                          shouldn't be here
-/tmp/test/subdir$ git status
-# On branch master
-#
-# Initial commit
-#
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       new file: ../file1
-#       new file: file2
-#
+And it would have been surprising: if your patch would play nicely with a 
+repack in progress, then it would fail to remove the temporary packs left 
+by a crashed repack.
 
-Regards,
-
---
-Matthieu
+Ciao,
+Dscho
