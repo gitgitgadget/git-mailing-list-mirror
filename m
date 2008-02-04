@@ -1,60 +1,72 @@
-From: Toby Allsopp <Toby.Allsopp@navman.co.nz>
-Subject: [PATCH] git-p4: Fix indentation from tab to spaces
-Date: Tue, 05 Feb 2008 09:41:43 +1300
-Message-ID: <87fxw8mp2w.fsf@nav-akl-pcn-343.mitacad.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 04 21:58:46 2008
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH 4/4] git-submodule: prepare for the .git-file
+Date: Mon,  4 Feb 2008 21:59:21 +0100
+Message-ID: <1202158761-31211-5-git-send-email-hjemli@gmail.com>
+References: <1202158761-31211-1-git-send-email-hjemli@gmail.com>
+ <1202158761-31211-2-git-send-email-hjemli@gmail.com>
+ <1202158761-31211-3-git-send-email-hjemli@gmail.com>
+ <1202158761-31211-4-git-send-email-hjemli@gmail.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 04 22:02:07 2008
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1JM8Oq-00077I-Nj
-	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 21:58:45 +0100
+	id 1JM8S1-0008Ne-0X
+	for gcvg-git-2@gmane.org; Mon, 04 Feb 2008 22:02:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751748AbYBDU6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Feb 2008 15:58:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751418AbYBDU6H
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 15:58:07 -0500
-Received: from ip-58-28-171-25.wxnz.net ([58.28.171.25]:41586 "EHLO
-	AKLEXFE01.mitacad.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751460AbYBDU6G (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Feb 2008 15:58:06 -0500
-X-Greylist: delayed 976 seconds by postgrey-1.27 at vger.kernel.org; Mon, 04 Feb 2008 15:58:06 EST
-Received: from AKLEXVS01.mitacad.com ([10.112.5.36]) by AKLEXFE01.mitacad.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 5 Feb 2008 09:41:44 +1300
-Received: from nav-akl-pcn-343.mitacad.com.navman.co.nz ([10.112.8.136]) by AKLEXVS01.mitacad.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 5 Feb 2008 09:41:44 +1300
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
-X-OriginalArrivalTime: 04 Feb 2008 20:41:44.0757 (UTC) FILETIME=[5ACDF650:01C8676E]
-X-TM-AS-Product-Ver: SMEX-8.0.0.1181-5.000.1023-15710.000
-X-TM-AS-Result: No--5.077000-8.000000-31
-X-TM-AS-User-Approved-Sender: No
-X-TM-AS-User-Blocked-Sender: No
+	id S1752349AbYBDVA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Feb 2008 16:00:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752418AbYBDVA6
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Feb 2008 16:00:58 -0500
+Received: from mail42.e.nsc.no ([193.213.115.42]:46870 "EHLO mail42.e.nsc.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752305AbYBDVA5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Feb 2008 16:00:57 -0500
+Received: from localhost.localdomain (ti231210a341-0149.bb.online.no [88.88.168.149])
+	by mail42.nsc.no (8.13.8/8.13.5) with ESMTP id m14L0REg021902;
+	Mon, 4 Feb 2008 22:00:31 +0100 (MET)
+X-Mailer: git-send-email 1.5.4.5.g25d066
+In-Reply-To: <1202158761-31211-4-git-send-email-hjemli@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/72565>
 
-Signed-off-by: Toby Allsopp <toby.allsopp@navman.co.nz>
+When git-submodule tried to detect 'active' submodules, it checked for the
+existence of a directory named '.git'. This isn't good enough now that .git
+can be a file pointing to the real $GIT_DIR so the tests are changed to
+reflect this.
+
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
 ---
- contrib/fast-import/git-p4 |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ git-submodule.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index c17afae..781a0cb 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -1646,7 +1646,7 @@ class P4Clone(P4Sync):
-         depotPath = args[0]
-         depotDir = re.sub("(@[^@]*)$", "", depotPath)
-         depotDir = re.sub("(#[^#]*)$", "", depotDir)
--	depotDir = re.sub(r"\.\.\.$", "", depotDir)
-+        depotDir = re.sub(r"\.\.\.$", "", depotDir)
-         depotDir = re.sub(r"/$", "", depotDir)
-         return os.path.split(depotDir)[1]
+diff --git a/git-submodule.sh b/git-submodule.sh
+index a6aaf40..220d64c 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -288,7 +288,7 @@ cmd_update()
+ 			continue
+ 		fi
  
+-		if ! test -d "$path"/.git
++		if ! test -e "$path"/.git
+ 		then
+ 			module_clone "$path" "$url" || exit
+ 			subsha1=
+@@ -362,7 +362,7 @@ cmd_status()
+ 	do
+ 		name=$(module_name "$path") || exit
+ 		url=$(git config submodule."$name".url)
+-		if test -z "url" || ! test -d "$path"/.git
++		if test -z "url" || ! test -e "$path"/.git
+ 		then
+ 			say "-$sha1 $path"
+ 			continue;
 -- 
-1.5.4.7.gd8534-dirty
+1.5.4.5.g25d066
